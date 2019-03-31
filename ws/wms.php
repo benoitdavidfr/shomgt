@@ -32,6 +32,7 @@ journal: |
   17/6/2017
     Reprise du serveur de cadastre et évolutions
 */
+//die("OK ligne ".__LINE__." de ".__FILE__);
 require_once __DIR__.'/wmsserver.inc.php';
 require_once __DIR__.'/geotiff.inc.php';
 require_once __DIR__.'/accesscntrl.inc.php';
@@ -61,6 +62,7 @@ try {
 catch (Exception $e) {
   WmsServer::exception(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
 }
+
 
 /*PhpDoc: classes
 name: class WmsShomGt
