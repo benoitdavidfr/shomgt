@@ -1,0 +1,7 @@
+[user]
+	email = benoit.davi@free.fr
+	name = Benoit DAVID
+[push]
+	default = simple
+[credential]
+	helper = cache --timeout=36000

@@ -1,0 +1,83 @@
+title: corrections du GAN
+description: |
+  Ce document contient des corrections à effectuer sur les enregistrements du GAN.
+  L'algorithme de correction utilise d'une part le fait que la liste des boxes corresponde aux mêmes cartouches
+  et, d'autre part, effectue la correction du bboxDM si ce champ existe pour le cartouche.
+corrections:
+  FR6643:
+    title: Iles et récifs du canal de Mozambique
+    lineage: |
+      Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.
+      Les corrections indiquées sur la carte ne semblent pas correctes.
+      Je les ai corrigées en cherchant la correspondance des cartes à grande échelle avec celles à petites échelles.
+    boxes:
+      - title: A - Ile Juan de Nova
+        description: |
+          Ce cartouche n'est pas en WGS84 mais en MHM 1953.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 0,1' vers le Sud et 0,3' vers l'Ouest.
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique je corrige de -0,1' en latitude et +0,3' en longitude.
+        scaleDenominator: '50.000'
+        originalBboxDM:
+            SW: '17°06,50''S - 042°36,00''E'
+            NE: '16°54,47''S - 042°52,23''E'
+        note: "correction des coordonnées des boites de -0,1' en latitude +0,3' en longitude."
+        bboxDM:
+            SW: "17°06,40'S - 042°36,30'E"
+            NE: "16°54,37'S - 042°52,53'E"
+      - title: "B - Mouillage Nord d'Europa"
+        description: |
+          Ce cartouche n'est pas en WGS84 mais en MHM 1954.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 1,4' vers le Nord et 0,3' vers l'Ouest.
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique je corrige de +1,4' en latitude et +0,3' en longitude.
+        scaleDenominator: '15.000'
+        originalBboxDM:
+            SW: '22°20,00''S - 040°18,50''E'
+            NE: '22°17,17''S - 040°21,80''E'
+        note: "correction des coordonnées des boites de +1,4' en latitude +0,3' en longitude."
+        bboxDM:
+            SW: "22°21,40'S - 040°18,80'E"
+            NE: "22°18,57'S - 040°22,10'E"
+      - title: C - Ile Europa
+        description: "correction identique à celle du cartouche B"
+        scaleDenominator: '50.000'
+        originalBboxDM:
+          SW: '22°24,00''S - 040°16,00''E'
+          NE: '22°16,00''S - 040°27,00''E'
+        note: "correction des coordonnées des boites de +1,4' en latitude et +0,3' en longitude."
+        bboxDM:
+          SW: "22°25,40'S - 040°16,30'E"
+          NE: "22°17,40'S - 040°27,30'E"
+      - title: D - Iles Bassas da India
+        description: |
+          Ce cartouche n'est pas en WGS84 mais dans un système géodésique local.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 1,1' vers le Nord et de 1,6' vers l'Est
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique la boite est corrigée de +1,1' en latitude et -1,6' en longitude.
+        scaleDenominator: '150.000'
+        originalBboxDM:
+            SW: '21°35,00''S - 039°35,00''E'
+            NE: '21°18,76''S - 039°48,75''E'
+        note: "Correction de -1,1' en latitude et -1,6' en longitude."
+        bboxDM:
+            SW: "21°36,10'S - 039°33,40'E"
+            NE: "21°19,86'S - 039°47,15'E"
+      - title: E - Iles Glorieuses
+        description: |
+          Ce cartouche n'est pas en WGS84 mais en MHG 1977.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 0,32' vers le Nord et de 0,05' vers l'Est
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique la boite est corrigée de +0,32' en latitude et -0,05' en longitude.
+        scaleDenominator: '150.000'
+        originalBboxDM:
+            SW: '11°37,50''S - 047°12,00''E'
+            NE: '11°21,24''S - 047°31,00''E'
+        note: "Correction de -0,32' en latitude et -0,05' en longitude."
+        bboxDM:
+            SW: "11°37,82'S - 047°11,95'E"
+            NE: "11°21,56'S - 047°30,95'E"

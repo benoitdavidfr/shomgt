@@ -1,0 +1,41 @@
+title: carte par défaut
+description: |
+  Passage le 22/1/2019 en https des stylesheets et des plugins pour corriger une erreur sur Firefox
+yamlClass: Map
+stylesheets:
+  - https://visu.gexplor.fr/viewer.css
+  - https://unpkg.com/leaflet@1.3/dist/leaflet.css
+  - https://visu.gexplor.fr/lib/control.coordinates.css
+plugins:
+  - https://visu.gexplor.fr/lib/leaflet.uGeoJSON.js
+  - https://visu.gexplor.fr/lib/leaflet.edgebuffer.js
+  - https://visu.gexplor.fr/lib/control.coordinates.js
+mapStyle: { height: 100%, width: 100%}
+view:
+  latlon: [48, 3]
+  zoom: 8
+scaleControl: { position: bottomleft, metric: true, imperial: false }
+attributions:
+  ign: "&copy; <a href='http://www.ign.fr'>IGN</a>"
+  shom: "&copy; <a href='http://www.shom.fr'>SHOM</a>"
+  osm: "Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors"
+  vliz: "&copy; <a href='http://www.vliz.be/en/'>VLIZ</a>"
+bases:
+  whiteimg:
+    title: Fond blanc
+    type: TileLayer
+    url: http://visu.gexplor.fr/utilityserver.php/whiteimg/{z}/{x}/{y}.jpg
+    options: { format: image/jpeg, minZoom: 0, maxZoom: 21, detectRetina: true }
+  cartesIGN:
+    title: Cartes IGN
+    type: TileLayer
+    url: http://igngp.geoapi.fr/tile.php/cartes/{z}/{x}/{y}.jpg
+    options: { format: image/jpeg, minZoom: 0, maxZoom: 18, detectRetina: true, attribution: ign }
+  orthos:
+    title: Ortho-images
+    type: TileLayer
+    url: http://igngp.geoapi.fr/tile.php/orthos/{z}/{x}/{y}.jpg
+    options: { format: image/jpeg, minZoom: 0, maxZoom: 20, detectRetina: true, attribution: ign }
+overlays:
+defaultLayers:
+  - cartesIGN

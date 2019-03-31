@@ -1,0 +1,153 @@
+title: Schéma JSON du fichier mapcat.json
+description: |
+  Le présent schéma JSON décrit le fichier mapcat.json qui contient l'historique du catalogue des cartes Shom.
+$schema: http://json-schema.org/schema#
+$id: https://benoitdavidfr.github.io/shomgt/mapcat.schema.yaml
+
+definitions:
+  bboxDM:
+    description: boite englobante en degrés, minutes en WGS84
+    type: object
+    required: [southlimit, westlimit, northlimit, eastlimit]
+    additionalProperties: false
+    properties:
+      southlimit:
+        description: latitude minimum
+        type: string
+        regexp: "^\\d+°(\\d+(,\\d+)?)?'(N|S)"
+      westlimit:
+        description: longitude minimum
+        type: string
+        regexp: "^\\d+°(\\d+(,\\d+)?)?'(E|W)"
+      northlimit:
+        description: latitude maximum
+        type: string
+        regexp: "^\\d+°(\\d+(,\\d+)?)?'(N|S)"
+      eastlimit:
+        description: longitude maximum
+        type: string
+        regexp: "^\\d+°(\\d+(,\\d+)?)?'(E|W)"
+  dcmi-box:
+    description: >
+      simplified [DCMI Box Encoding Scheme](http://dublincore.org/documents/dcmi-box/)
+      using geographical coordinates in WGS84 and in decimal degree
+    type: object
+    required: [southlimit, westlimit, northlimit, eastlimit]
+    additionalProperties: false
+    properties:
+      southlimit:
+        description: minimum WGS84 latitude in decimal degree
+        type: number
+        minimum: -90
+        maximum: 90
+      westlimit:
+        description: minimum WGS84 longitude in decimal degree
+        type: number
+        minimum: -180
+        maximum: 180
+      northlimit:
+        description: maximum WGS84 latitude in decimal degree
+        type: number
+        minimum: -90
+        maximum: 90
+      eastlimit:
+        description: maximum WGS84 longitude in decimal degree
+        type: number
+        minimum: -180
+        maximum: 180
+  
+type: object
+required: [ title, source, $schema, created, maps ]
+additionalProperties: false
+properties:
+  title: { type: string }
+  identifier: { type: string }
+  source: { type: array, items: { type: string }}
+  $schema: { type: string }
+  created: { type: string }
+  modified: { type: string }
+  maps:
+    description: dictionnaire des cartes indexé sur leur numéro précédé de FR
+    type: object
+    additionalProperties: false
+    patternProperties:
+      ^FR\d\d\d\d:
+        description: |
+          dictionnaire des versions de la carte dans l'ordre chronologique et indexé sur la date à laquelle
+          l'information a été connue en format Y-m-d
+        type: object
+        additionalProperties: false
+        patternProperties:
+          ^\d\d\d\d-\d\d-\d\d$:
+            description: description d'une version de carte ou indication de la fin de validité de la carte
+            oneOf:
+              - description: enregistrement indiquant que la carte n'est plus valide à cette date
+                type: object
+                required: [issued]
+                additionalProperties: false
+                properties:
+                  issued:
+                    const: notValid
+              - description: |
+                  description de la carte et de ses éventuels cartouches.
+                  Certaines cartes ne comportent pas d'espace principal et sont composées uniquement de cartouches
+                type: object
+                additionalProperties: false
+                required: [title, issued]
+                properties:
+                  num:
+                    description: numéro de la carte sans FR
+                    type: string
+                    regexp: '^\\d\\d\\d\\d'
+                  groupTitle:
+                    description: sur-titre optionnel identifiant un ensemble de cartes
+                    type: string
+                  title:
+                    description: titre de la carte
+                    type: string
+                  scaleDenominator:
+                    description: |
+                      dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
+                      absent ssi la carte ne comporte pas d'espace principal
+                    type: string
+                  bboxDM:
+                    description: |
+                      boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
+                      absente ssi la carte ne comporte pas d'espace principal
+                    $ref: '#/definitions/bboxDM'
+                  spatial:
+                    desscription: |
+                      la même boite encodée en DCMI-Box, absente ssi la carte ne comporte pas d'espace principal
+                    $ref: '#/definitions/dcmi-box'
+                  issued:
+                    description: édition de la carte
+                    type: string
+                  replaces:
+                    description: carte remplacée par la carte courante
+                    type: string
+                  references:
+                    description: si la carte est un fac-similé alors référence de la carte étrangère reproduite
+                    type: string
+                  note:
+                    description: commentaire associé à la carte
+                    type: string
+                  boxes:
+                    description: liste éventuelle de cartouches
+                    type: array
+                    items:
+                      type: object
+                      required: [title, scaleDenominator, bboxDM, spatial]
+                      properties:
+                        title:
+                          description: titre du cartouche
+                          type: string
+                        scaleDenominator:
+                          description: dénominateur de l'échelle avec un . comme séparateur des milliers
+                          type: string
+                          regexp: '^[\\d\\.]+'
+                        bboxDM:
+                          description: boite englobante du cartouche en degrés, minutes en WGS84
+                          $ref: '#/definitions/bboxDM'
+                        spatial:
+                          description: la même boite encodée DCMI-Box
+                          $ref: '#/definitions/dcmi-box'

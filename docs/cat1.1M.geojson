@@ -1,0 +1,777 @@
+{"type":"FeatureCollection","features":[
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6013",
+        "title": "Les passages du Nord-Ouest",
+        "issued": "Publication 1950",
+        "scaleDenominator": "1825400",
+        "bboxDM": {
+            "SW": "73°00,00'N - 107°00,00'W",
+            "NE": "83°50,00'N - 019°20,20'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -107,
+                    73
+                ],
+                [
+                    -19.336666666666666,
+                    73
+                ],
+                [
+                    -19.336666666666666,
+                    83.83333333333333
+                ],
+                [
+                    -107,
+                    83.83333333333333
+                ],
+                [
+                    -107,
+                    73
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6608",
+        "title": "Mer du Nord",
+        "issued": "Édition n°&nbsp;6 - 2018",
+        "scaleDenominator": "1500000",
+        "bboxDM": {
+            "SW": "48°10,00'N - 004°20,00'W",
+            "NE": "62°50,00'N - 012°36,00'E"
+        },
+        "references": "Fac similé carte NO n° 301 publiée en 1972 (édition 2009 - réimpression janvier 2015)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -4.333333333333333,
+                    48.166666666666664
+                ],
+                [
+                    12.6,
+                    48.166666666666664
+                ],
+                [
+                    12.6,
+                    62.833333333333336
+                ],
+                [
+                    -4.333333333333333,
+                    62.833333333333336
+                ],
+                [
+                    -4.333333333333333,
+                    48.166666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6618",
+        "title": "Atterrages Ouest des Iles Britanniques",
+        "issued": "Édition n°&nbsp;4 - 2016",
+        "scaleDenominator": "2180000",
+        "bboxDM": {
+            "SW": "48°15,00'N - 034°15,00'W",
+            "NE": "60°38,00'N - 000°55,00'W"
+        },
+        "references": "Fac similé carte GB n°4102 publiée en 1972 (édition août 2015)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -34.25,
+                    48.25
+                ],
+                [
+                    -0.9166666666666666,
+                    48.25
+                ],
+                [
+                    -0.9166666666666666,
+                    60.63333333333333
+                ],
+                [
+                    -34.25,
+                    60.63333333333333
+                ],
+                [
+                    -34.25,
+                    48.25
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6733",
+        "title": "Mer Rouge",
+        "issued": "Édition n°&nbsp;4 - 2015",
+        "scaleDenominator": "2250000",
+        "bboxDM": {
+            "SW": "10°20,00'N - 032°00,00'E",
+            "NE": "30°13,00'N - 045°38,10'E"
+        },
+        "references": "Fac similé carte GB n°4704 publiée en 1973 (édition février 2012)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    32,
+                    10.333333333333334
+                ],
+                [
+                    45.635,
+                    10.333333333333334
+                ],
+                [
+                    45.635,
+                    30.216666666666665
+                ],
+                [
+                    32,
+                    30.216666666666665
+                ],
+                [
+                    32,
+                    10.333333333333334
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6757",
+        "title": "Du Détroit de Gibraltar au Canal de Sicile",
+        "issued": "Édition n°&nbsp;2 - 1984",
+        "scaleDenominator": "2250000",
+        "bboxDM": {
+            "SW": "32°45,00'N - 006°44,00'W",
+            "NE": "45°52,22'N - 019°40,48'E"
+        },
+        "references": "Fac similé carte IT n°340 (édition 1983)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.733333333333333,
+                    32.75
+                ],
+                [
+                    19.674666666666667,
+                    32.75
+                ],
+                [
+                    19.674666666666667,
+                    45.870333333333335
+                ],
+                [
+                    -6.733333333333333,
+                    45.870333333333335
+                ],
+                [
+                    -6.733333333333333,
+                    32.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7016",
+        "title": "Mer Méditerranée - Bassin oriental",
+        "issued": "Édition n°&nbsp;2 - 1998",
+        "scaleDenominator": "2250000",
+        "bboxDM": {
+            "SW": "30°05,00'N - 009°55,00'E",
+            "NE": "43°39,25'N - 036°19,50'E"
+        },
+        "references": "Fac similé carte IT n°350 publiée en 1982 (édition 1997)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    9.916666666666666,
+                    30.083333333333332
+                ],
+                [
+                    36.325,
+                    30.083333333333332
+                ],
+                [
+                    36.325,
+                    43.65416666666667
+                ],
+                [
+                    9.916666666666666,
+                    43.65416666666667
+                ],
+                [
+                    9.916666666666666,
+                    30.083333333333332
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7243",
+        "title": "Mer Noire",
+        "issued": "Édition n°&nbsp;3 - 2018",
+        "scaleDenominator": "1200000",
+        "bboxDM": {
+            "SW": "40°00,00'N - 026°15,00'E",
+            "NE": "47°20,00'N - 042°00,00'E"
+        },
+        "references": "Fac similé Carte TR n°10 publiée en 1965 (réimpression novembre 2017)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    26.25,
+                    40
+                ],
+                [
+                    42,
+                    40
+                ],
+                [
+                    42,
+                    47.333333333333336
+                ],
+                [
+                    26.25,
+                    47.333333333333336
+                ],
+                [
+                    26.25,
+                    40
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7299",
+        "title": "Du Cap Bon (Ras At Tib) à Ra's At Tīn",
+        "issued": "Édition n°&nbsp;3 - 2018",
+        "scaleDenominator": "1175000",
+        "bboxDM": {
+            "SW": "30°13,00'N - 010°00,00'E",
+            "NE": "37°31,70'N - 023°51,80'E"
+        },
+        "references": "Fac similé carte GB n°176 publiée en 1988 (édition mai 2018)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    10,
+                    30.216666666666665
+                ],
+                [
+                    23.863333333333333,
+                    30.216666666666665
+                ],
+                [
+                    23.863333333333333,
+                    37.528333333333336
+                ],
+                [
+                    10,
+                    37.528333333333336
+                ],
+                [
+                    10,
+                    30.216666666666665
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7306",
+        "title": "De Ra's at Tīn à Iskenderun et à Būr Sa'īd (Port-Saïd)",
+        "issued": "Publication 1992",
+        "scaleDenominator": "1175000",
+        "bboxDM": {
+            "SW": "30°30,00'N - 022°27,00'E",
+            "NE": "37°45,00'N - 036°17,00'E"
+        },
+        "replaces": "(remplace 2243)",
+        "references": "Fac similé CarteTR n°30 puibliée en 1972 (édition avril 1985)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    22.45,
+                    30.5
+                ],
+                [
+                    36.28333333333333,
+                    30.5
+                ],
+                [
+                    36.28333333333333,
+                    37.75
+                ],
+                [
+                    22.45,
+                    37.75
+                ],
+                [
+                    22.45,
+                    30.5
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7321",
+        "title": "Des Récifs Bampton à l'île Hunter - Nouvelle-Calédonie - Vanuatu",
+        "issued": "Édition n°&nbsp;3 - 2017",
+        "scaleDenominator": "1500000",
+        "bboxDM": {
+            "SW": "26°16,00'S - 157°00,00'E",
+            "NE": "16°00,00'S - 173°04,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    157,
+                    -26.266666666666666
+                ],
+                [
+                    173.06666666666666,
+                    -26.266666666666666
+                ],
+                [
+                    173.06666666666666,
+                    -16
+                ],
+                [
+                    157,
+                    -16
+                ],
+                [
+                    157,
+                    -26.266666666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7338",
+        "title": "Du Détroit de Messina (Stretto di Messina) à la Mer de Marmara (Marmara Denizi) - Mer Ionienne et Mer Egée",
+        "issued": "Publication 1993",
+        "scaleDenominator": "1180000",
+        "bboxDM": {
+            "SW": "34°20,82'N - 014°58,12'E",
+            "NE": "41°41,28'N - 029°38,93'E"
+        },
+        "references": "Fac similé Carte GR n°109 publiée en 1992."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    14.968666666666667,
+                    34.347
+                ],
+                [
+                    29.648833333333332,
+                    34.347
+                ],
+                [
+                    29.648833333333332,
+                    41.688
+                ],
+                [
+                    14.968666666666667,
+                    41.688
+                ],
+                [
+                    14.968666666666667,
+                    34.347
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7347",
+        "title": "De l'Archipel des Tuamotu aux Iles Australes",
+        "issued": "Publication 1995",
+        "scaleDenominator": "1500000",
+        "bboxDM": {
+            "SW": "29°04,00'S - 149°40,00'W",
+            "NE": "14°06,00'S - 138°42,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -149.66666666666666,
+                    -29.066666666666666
+                ],
+                [
+                    -138.7,
+                    -29.066666666666666
+                ],
+                [
+                    -138.7,
+                    -14.1
+                ],
+                [
+                    -149.66666666666666,
+                    -14.1
+                ],
+                [
+                    -149.66666666666666,
+                    -29.066666666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7368",
+        "title": "De l'Ile Malden aux Iles de la Société",
+        "issued": "Publication 1995",
+        "scaleDenominator": "1600000",
+        "bboxDM": {
+            "SW": "18°22,00'S - 161°52,00'W",
+            "NE": "02°30,00'S - 150°54,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -161.86666666666667,
+                    -18.366666666666667
+                ],
+                [
+                    -150.9,
+                    -18.366666666666667
+                ],
+                [
+                    -150.9,
+                    -2.5
+                ],
+                [
+                    -161.86666666666667,
+                    -2.5
+                ],
+                [
+                    -161.86666666666667,
+                    -18.366666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7369",
+        "title": "Des Southern Cook Islands aux Iles de la Société et Australes",
+        "issued": "Publication 1995",
+        "scaleDenominator": "1500000",
+        "bboxDM": {
+            "SW": "24°24,00'S - 163°30,00'W",
+            "NE": "14°00,00'S - 147°26,00'W"
+        },
+        "replaces": "(remplace 6035)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -163.5,
+                    -24.4
+                ],
+                [
+                    -147.43333333333334,
+                    -24.4
+                ],
+                [
+                    -147.43333333333334,
+                    -14
+                ],
+                [
+                    -163.5,
+                    -14
+                ],
+                [
+                    -163.5,
+                    -24.4
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7370",
+        "title": "De Mururoa à Ducie Island",
+        "issued": "Publication 1995",
+        "scaleDenominator": "1500000",
+        "bboxDM": {
+            "SW": "26°30,00'S - 140°00,00'W",
+            "NE": "16°16,00'S - 124°00,00'W"
+        },
+        "replaces": "(remplace 6000)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -140,
+                    -26.5
+                ],
+                [
+                    -124,
+                    -26.5
+                ],
+                [
+                    -124,
+                    -16.266666666666666
+                ],
+                [
+                    -140,
+                    -16.266666666666666
+                ],
+                [
+                    -140,
+                    -26.5
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7371",
+        "title": "De Tahiti aux Iles Marquises",
+        "issued": "Publication 1996",
+        "scaleDenominator": "1580000",
+        "bboxDM": {
+            "SW": "18°06,00'S - 153°00,00'W",
+            "NE": "07°22,00'S - 136°56,00'W"
+        },
+        "replaces": "(remplace 6597)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -153,
+                    -18.1
+                ],
+                [
+                    -136.93333333333334,
+                    -18.1
+                ],
+                [
+                    -136.93333333333334,
+                    -7.366666666666666
+                ],
+                [
+                    -153,
+                    -7.366666666666666
+                ],
+                [
+                    -153,
+                    -18.1
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7591",
+        "title": "De Cape Goodenough à Cape Adare",
+        "issued": "Publication 2006",
+        "scaleDenominator": "2000000",
+        "bboxDM": {
+            "SW": "71°30,00'S - 122°30,00'E",
+            "NE": "57°40,00'S - 170°30,00'E"
+        },
+        "replaces": "(remplace 6061)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    122.5,
+                    -71.5
+                ],
+                [
+                    170.5,
+                    -71.5
+                ],
+                [
+                    170.5,
+                    -57.666666666666664
+                ],
+                [
+                    122.5,
+                    -57.666666666666664
+                ],
+                [
+                    122.5,
+                    -71.5
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7751",
+        "title": "Île Clipperton - Zone Economique Exclusive",
+        "issued": "Édition n°&nbsp;2 - 2017",
+        "scaleDenominator": "1570000",
+        "bboxDM": {
+            "SW": "05°00,00'N - 117°06,00'W",
+            "NE": "15°40,00'N - 101°18,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -117.1,
+                    5
+                ],
+                [
+                    -101.3,
+                    5
+                ],
+                [
+                    -101.3,
+                    15.666666666666666
+                ],
+                [
+                    -117.1,
+                    15.666666666666666
+                ],
+                [
+                    -117.1,
+                    5
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7800",
+        "title": "Golfe d'Aden et approches",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "1500000",
+        "bboxDM": {
+            "SW": "09°20,00'N - 041°20,00'E",
+            "NE": "18°00,00'N - 055°20,00'E"
+        },
+        "references": "Fac similé Carte GB n°2964 publiée en 2006 (édition janvier 2018)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    41.333333333333336,
+                    9.333333333333334
+                ],
+                [
+                    55.333333333333336,
+                    9.333333333333334
+                ],
+                [
+                    55.333333333333336,
+                    18
+                ],
+                [
+                    41.333333333333336,
+                    18
+                ],
+                [
+                    41.333333333333336,
+                    9.333333333333334
+                ]
+            ]
+        ]
+    }
+}
+]}

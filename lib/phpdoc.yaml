@@ -1,0 +1,11 @@
+title: lib - éléments partagés
+path: /geoapi/shomgt/lib
+doc: |
+  Package géométrique utilisant des coordonnées géographiques ou euclidiennes.
+phpScripts:
+phpIncludes:
+  - /geoapi/shomgt/lib/gebox.inc.php
+  - /geoapi/shomgt/lib/zoom.inc.php
+  - /geoapi/shomgt/lib/gegeom.inc.php
+  - /geoapi/shomgt/lib/coordsys.inc.php
+htmlFiles:

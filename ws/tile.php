@@ -1,0 +1,203 @@
+<?php
+/*PhpDoc:
+name: tile.php
+title: tile.php - webservice au standard XYZ d'accès aux GéoTIFF du Shom
+doc: |
+  Affichage des cartes Shom conformément au standard XYZ (voir https://en.wikipedia.org/wiki/Tiled_web_map)
+  facile à utiliser dans une carte Leaflet.
+  L'utilisation de l'option GET verbose=1 permet d'afficher des commentaires
+  Point d'accès:
+    end_point API:
+      http://localhost/geoapi/gt/ws/tile.php
+      https://geoapi.fr/gt/ws/tile.php
+    end_point layer:
+      http://localhost/geoapi/gt/ws/tile.php/{layer}
+      https://geoapi.fr/gt/ws/tile.php/{layer}
+    end_point tile:
+      http://localhost/geoapi/gt/ws/tile.php/{layer}/{z}/{x}/{y}.png
+      https://geoapi.fr/gt/ws/tile.php/{layer}/{z}/{x}/{y}.png
+  Test:
+    http://localhost/geoapi/gt/ws/tile.php/gtpyr/17/63957/45506.png
+journal: |
+  7-8/3/2019:
+    correction des différents bugs
+    ajout d'une tuile d'erreur
+  6/3/2019:
+    création
+*/
+
+require_once __DIR__.'/geotiff.inc.php';
+require_once __DIR__.'/cache.inc.php';
+require_once __DIR__.'/errortile.inc.php';
+require_once __DIR__.'/../lib/gegeom.inc.php';
+
+// liste des couches exposées par le service
+$layers = [
+  'gt20M'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/20.000.000",
+  ],
+  'gt10M'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/10.000.000",
+  ],
+  'gt4M'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/4.000.000",
+  ],
+  'gt2M'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/2.000.000",
+  ],
+  'gt1M'=> [
+   'title'=>"Cartes SHOM GeoTIFF 1/1.000.000",
+  ],
+  'gt500k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/500.000",
+  ],
+  'gt250k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/250.000",
+  ],
+  'gt100k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/100.000",
+  ],
+  'gt50k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/50.000",
+  ],
+  'gt25k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/25.000",
+  ],
+  'gt12k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/12.000",
+  ], 
+  'gtpyr'=> [
+    'title'=>"Pyramide des cartes SHOM GeoTIFF",
+  ],
+  'gtaem'=> [
+    'title'=>"Cartes SHOM AEM",
+    'abstract'=> "Cartes Shom Action de l'Etat en Mer (AEM)",
+  ],
+];
+
+$request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
+  : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
+$url = "$request_scheme://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+
+$verbose = isset($_GET['verbose']) ? $_GET['verbose'] : 0;
+  
+// end_point: tile.php
+if (!isset($_SERVER['PATH_INFO'])) {
+  $doc = [
+    "title"=> "Serveur de tuiles des cartes GéoTIFF du Shom",
+    "abstract"=> "Ce service expose des cartes du Shom sous forme de tuiles. Il est géré par le MTES pour répondre à ses besoins et son utilisation est réservée aux agents de l'Etat et de ses Etablissements publics administratifs (EPA) pour réaliser leurs missions de service public.
+Plus d'informations sur <a href='https://geoapi.fr/gt/'>https://geoapi.fr/gt/</a>.",
+    "contact"=> "contact@geoapi.fr",
+    "doc_url"=> "https://geoapi.fr/gt/",
+    "api_version"=> "2019-03-08",
+    "end_points"=> [
+      "tile.php"=> [
+        "GET"=> "documentation de l'API"
+      ],
+      "tile.php/{layer}"=> [
+        "GET"=> "documentation de la couche {layer}"
+      ],
+      "tile.php/{layer}/{z}/{x}/{y}.[png]"=> [
+        "GET"=> "tuile zoom {z} colonne {x} ligne {y} de la couche {layer} en format png"
+      ],
+    ],
+    "layers"=> [],
+  ];
+  foreach ($layers as $layername => $layer) {
+    $doclayer = [
+      "name"=> $layername,
+      "title"=> $layer['title'],
+      "url"=> "$url/$layername",
+      "tiles"=> "$url/$layername/{z}/{x}/{y}.png",
+    ];
+    if (isset($layer['abstract']))
+      $doclayer['abstract'] = $layer['abstract'];
+    $doclayer['format'] = 'image/png';
+    $doclayer['minZoom'] = 0;
+    $doclayer['maxZoom'] = 18;
+    $doclayer['attribution'] = "(c) <a href='https://www.shom.fr/'>SHOM</a>";
+    $doc['layers'][] = $doclayer;
+  }
+  header('Content-type: application/json; charset="utf-8"');
+  die(json_encode($doc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+}
+
+// end_point: tile.php/{layer}
+if (preg_match('!^/([^/]*)$!', $_SERVER['PATH_INFO'], $matches)) {
+  $lyrname = $matches[1];
+  if (!isset($layers[$lyrname])) {
+    header('HTTP/1.1 404 Not Found');
+    header('Content-type: text/plain; charset="utf-8"');
+    die("Erreur: couche $lyrname inexistante, voir la liste des couches sur $url\n");
+  }
+  $doclayer = [
+    "name"=> $lyrname,
+    "title"=> $layers[$lyrname]['title'],
+    "url"=> "$url/$lyrname",
+    "tiles"=> "$url/$lyrname/{z}/{x}/{y}.png",
+  ];
+  if (isset($layers[$lyrname]['abstract']))
+    $doclayer['abstract'] = $layers[$lyrname]['abstract'];
+  $doclayer['format'] = 'image/png';
+  $doclayer['minZoom'] = 0;
+  $doclayer['maxZoom'] = 18;
+  $doclayer['attribution'] = "(c) <a href='https://www.shom.fr/'>SHOM</a>";
+  header('Content-type: application/json; charset="utf-8"');
+  die(json_encode($doclayer, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+}
+
+// end_point: tile.php/{layer}/{z}/{x}/{y}.png
+if (!preg_match('!^/([^/]*)/(\d*)/(\d*)/(\d*)\.png$!', $_SERVER['PATH_INFO'], $matches)) {
+  header('HTTP/1.1 400 Bad Request');
+  header('Content-type: text/plain; charset="utf-8"');
+  die("Erreur: requête non reconnue, voir la documentation sur $url\n");
+}
+
+$lyrname = $matches[1];
+$z = (int)$matches[2];
+$x = (int)$matches[3];
+$y = (int)$matches[4];
+
+if (!isset($layers[$lyrname])) {
+  header('HTTP/1.1 404 Not Found');
+  header('Content-type: text/plain; charset="utf-8"');
+  die("Erreur: couche $lyrname inexistante, voir la liste des couches sur $url\n");
+}
+
+if (!$verbose)
+  Cache::readAndSend($lyrname, $z, $x, $y);
+
+try {
+  GeoTiff::init(__DIR__.'/shomgt.yaml', $verbose);
+  $image = GeoTiff::maketile(
+    $lyrname,
+    Zoom::tileEBox($z, $x, $y)->geo('WebMercator')->proj('WorldMercator'),
+    ['zoom'=>$z]
+  );  
+} catch (Exception $e) {
+  sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
+}
+if (0) { // Mise en cache
+  $nbDaysInCache = 0.5;
+  $nbSecondsInCache = $nbDaysInCache*24*60*60;
+  //$nbSecondsInCache = 1;
+  header('Cache-Control: max-age='.$nbSecondsInCache); // mise en cache pour $nbDaysInCache jours
+  header('Expires: '.date('r', time() + $nbSecondsInCache)); // mise en cache pour $nbDaysInCache jours
+  header('Last-Modified: '.date('r'));
+}
+if (!$verbose) {
+  header('Content-type: image/png');
+  // envoi de l'image
+  imagepng($image);
+  flush();
+  try {
+    Cache::write($lyrname, $z, $x, $y, $image);
+  } catch (Exception $e) {
+  }
+  imagedestroy($image);
+}
+else {
+  $href = "$url/$lyrname/$z/$x/$y.png";
+  echo "<a href='$href'><img src='$href'></a>\n";
+}
+die();

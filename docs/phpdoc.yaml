@@ -1,0 +1,8 @@
+title: docs - site Web du catalogue des cartes SHOM sur github
+path: /geoapi/shomgt/docs
+doc: |
+  Ce répertoire correpond au site sur https://benoitdavidfr.github.io/shomgt/
+  Le scrip catdata.php génère les fichiers catxxx.geojson et le fichier REMADE.md
+  mapcat.json et france.geojson sont des copies des fichiers de ../cat/
+phpScripts:
+  - /geoapi/shomgt/docs/catdata.php

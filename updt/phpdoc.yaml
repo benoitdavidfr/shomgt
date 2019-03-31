@@ -1,0 +1,92 @@
+title: updt - mise à jour des cartes raster GéoTIFF du SHOM pour les services de consultation
+path: /geoapi/shomgt/updt
+doc: |
+  Ce projet part d'une livraison Shom de cartes sous la forme d'archives .7z par carte
+  et effectue:
+    - une conversion des archives dans le format utilisé par les web-services et une installation des fichiers
+      produits dans le répertoire de stockage des GéoTiffs
+    - une mise à jour du catalogue des GéoTiffs shomgt.yaml stocké dans ../ws/
+  
+  La livraison Shom doit être stockée dans un répertoire de livraison stocké dans ~/html/shomgeotiff/incoming/{date}/
+  où {date} est la date de livraison sous la forme YYMMDD.
+  le répertoire de stockage des cartes est ~/html/shomgeotiff/current/ dans lequel chaque carte correspond
+  à un répertoire portant comme nom le numéro de la carte {mapno}, ex: 7121
+  Chaque répertoire de carte provient du dézippage du 7z de livraison.
+  Il contient en outre pour chaque GéoTiff nommé {gtname}:
+    - un fichier {gtname}.info produit par gdalinfo à partir du fichier au format GéoTiff
+    - un fichier {gtname}.png qui correspond au GéoTiff converti en PNG
+    - un répertoire {gtname} qui contient les dalles PNG correspondant à un découpage 1024 X 1024 du GéoTiff
+      ces dalles sont découpées de gauche à droite et du haut vers le bas
+      elles sont nommées par {x}-{y}.png où {x} est le numéro de colonne et {y} le numéro de ligne
+  
+  Les seuls fichiers utilisés par ws sont les dalles PNG.
+  Les fichiers de MD XML dont le nom est de la forme CARTO_GEOTIFF_{gtname}.xml sont utilisés par le module
+  catalogue pour connaitre la date de mise à jour des GéoTiff utilisés.
+  
+  Le nom {gtname} du GéoTiff est défini par le Shom.
+  Il est de la forme :
+    - {mapno}_pal300 pour la zone gégraphique principale de la carte numéro {mapno}, ex: 7121_pal300
+    - {mapno}_{gtid}_gtw pour chaque zone gégraphique secondaire de la carte numéro {mapno} identifiée par {gtid}
+      {gtid} est soit un numéro à partir de 1, soit une lettre à partir de A, ex: 7354_13_gtw
+
+  L'identifiant {mapno}/{gtname} est utilisé dans shomgt.yaml pour identifier un GéoTiff notamment dans le module ws.
+        
+  Algorithmes:
+    - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans ~/html/shomgeotiff/tmp/
+    - pour chaque carte et chaque GéoTiff:
+      - le fichier info est généré à partir du format GéoTIFF par gdal_info
+      - le GéoTiff est converti en PNG par gdal
+      - puis découpé en dalles 1024 X 1024
+    - génération d'un catalogue Yaml pour vérification
+    - fusion du catalogue avec le catalogue général
+    - suppression du cache ~/html/geoapi/gt/tilecache 
+  
+  Mise en oeuvre:
+    - tous les scripts doivent être appelés en ligne de commande
+    - dezip.php est appelé avec en paramètre le nom d'une livraison et génère les cmdes sh pour:
+      - dézipper les 7z de cette livraison,
+      - déplacer les répertoires dézippé dans le répertoire tmp
+      - générer pour chaque GéoTiff un fichier .info avec gdalinfo
+      - convertir chaque GéoTiff en PNG avec gdal_translate
+      - découper chaque GéoTiff en dalles 1024 X 1024 avec tile.php
+    - tile.php découpe un fichiers PNG en dalles 1024 X 1024
+    - gtshom.php génère un catalogue Yaml des nouvelles cartes et l'enregistre dans le fichier shomgt.yaml
+    - map.php permet de visualiser les nouvelles cartes avant de les inétgrer dans le catalogue
+    - merge.php fusionne la livraison dans les cartes visualisables
+      - prend en paramètre la liste des cartes à supprimer
+      - fusionne le fichier shomgt.yaml dans le fichier ../ws/shomgt.yaml
+      - déplace les cartes dans tmp vers le répetoire courant
+    
+  En pratique:
+    - En préalable à la mise à jour: actualiser le catalogue.
+    - La mise à jour nécessite les étapes suivantes:
+      - copier les fichier 7z de carte dans un répertoire de livraison et nommer ce répertoire par la date
+        sous la forme YYYYMMDD
+      - lancer en ligne de commande le script dezip.php en le pipant avec un sh ;
+        il enchaine différentes commandes de dezippage, de transformation en PNG et de découpage
+        seuls les PNG découpés sont conservés à la fin pour économiser de l'espace
+      - générer, pour vérification, le catalogue des nouveaux GéoTiff dans le navigateur avec le script shomgt.php
+      - si ok fusionner ce catalogue avec le précédent en utilisant shomgt.php par shomgt.php?merge=1
+      - remplacer à la main le fichier {shomgt}/ws/shomgt.yaml par cette fusion
+      - il peut être nécessaire de modifier à la main le fichier {shomgt}/ws/shomgt.yaml pour :
+        - ajuster les bordures qui ne conviennent pas
+        - modifier l'ordre d'affichage des GéoTiff
+      - déplacer les fichiers de {shomgt}/../../shomgeotiff/tmp dans {shomgt}/../../shomgeotiff/current
+      - effacer le tilecache qui est dans {shomgt}
+  
+  De plus, un fichier tiff rogné (crop) peut être généré avec le script crop.php
+  
+  ToDoList:
+    - gérer dans la mise à jour des cartes la suppression des cartes périmées
+    - revoir la génération de shomgt.yaml en utilisant l'extension des métadonnées à la place des coord du GAN
+      - cela a l'avantage de rendre le module updt indépendant du module cat
+    - permettre de changer l'ordre d'affichage des GéoTiffs
+  
+phpScripts:
+  - /geoapi/shomgt/updt/dezip.php
+  - /geoapi/shomgt/updt/tile.php
+  - /geoapi/shomgt/updt/genpng.php
+  - /geoapi/shomgt/updt/shomgt.php
+  - /geoapi/shomgt/updt/frame.php
+  - /geoapi/shomgt/updt/crop.php
+    

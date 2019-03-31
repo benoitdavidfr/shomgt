@@ -1,0 +1,97 @@
+<?php
+/*PhpDoc:
+name: map.php
+title: map.php - affichage de la carte du catalogue des cartes par tranches d'échelles
+doc: |
+journal: |
+  9/3/2019:
+    fork dans gt/cat
+  12/12/2018:
+    modif de l'URL de geoapi pour que le script fonctionne sur geoapi.fr
+  11/12/2018:
+    nouvelle version repartant de shomgtcatmap.php
+*/
+$lat0 = (isset($_GET['lat']) ? $_GET['lat'] : 46.5);
+$lon0 = (isset($_GET['lon']) ? $_GET['lon'] : 3);
+$zoom0 = (isset($_GET['zoom']) ? $_GET['zoom'] : 6);
+//echo "<pre>_SERVER="; print_r($_SERVER); die();
+$request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
+  : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
+$shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT_NAME']);
+?>
+<!DOCTYPE HTML><html><head><title>ShomgtCatMap</title><meta charset='UTF-8'>
+<!-- meta nécessaire pour le mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel='stylesheet' href='https://benoitdavidfr.github.io/leaflet/llmap.css'>
+  <!-- styles et src de Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+  <!-- Include the uGeoJSON plugin -->
+  <!-- <script src="https://benoitdavidfr.github.io/leaflet/leaflet.uGeoJSON.js"></script> -->
+  <!-- plug-in d'appel des GeoJSON en AJAX -->
+  <script src='https://benoitdavidfr.github.io/leaflet/leaflet-ajax.js'></script>
+  <!-- Include the edgebuffer plugin -->
+    <script src="https://benoitdavidfr.github.io/leaflet/leaflet.edgebuffer.js"></script>
+</head>
+<body>
+  <div id='map' style='height: 100%; width: 100%'></div>
+  <script>
+  var shomgtcaturl = <?php echo "'$shomgtcaturl'";?>;
+  var map = L.map('map').setView(<?php echo"[$lat0, $lon0], $zoom0";?>); // view pour la zone
+  L.control.scale({position:'bottomleft', metric:true, imperial:false}).addTo(map);
+  var attrshom = "&copy; <a href='http://data.shom.fr' target='_blank'>Shom</a>";
+  var baseLayers = {
+    "Pyramide GéoTIFF" : new L.TileLayer(
+      'https://geoapi.fr/shomgt/tile.php/gtpyr/{z}/{x}/{y}.png',
+      {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
+    ),
+    "Cartes IGN" : new L.TileLayer(
+      'http://igngp.geoapi.fr/tile.php/cartes/{z}/{x}/{y}.jpg',
+      {"format":"image/jpeg","minZoom":0,"maxZoom":18,"attribution":"&copy; <a href='http://www.ign.fr'>IGN</a>"}
+    ),
+    "Ortho-images" : new L.TileLayer(
+      'http://igngp.geoapi.fr/tile.php/orthos/{z}/{x}/{y}.jpg',
+      {"format":"image/jpeg","minZoom":0,"maxZoom":18,"attribution":"&copy; <a href='http://www.ign.fr'>IGN</a>"}
+    ),
+    "Fond blanc" : new L.TileLayer(
+      'http://visu.gexplor.fr/utilityserver.php/whiteimg/{z}/{x}/{y}.jpg',
+      {"format":"image/jpeg","minZoom":0,"maxZoom":21}
+    ),
+  };
+  map.addLayer(baseLayers["Pyramide GéoTIFF"]);
+  
+  var onEachFeature = function (feature, layer) {
+    id = 'FR'+feature.properties.num;
+    layer.bindPopup(
+      "<a href='"+shomgtcaturl+"/mapcat.php/"+id+"' target='_blank'>"+id+"</a>\n"
+      +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
+    );
+  }
+  var overlays = {
+    "ZEE" : new L.GeoJSON.AJAX(shomgtcaturl+'/france.geojson', {
+      style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature
+    }),
+<?php
+  // liste des scaleDenomnator, sous la forme [label => valeur], définissant n intervalles
+  $sds = [
+    '10M'=>1e7, '6.5M'=>6.5e6, '2.5M'=>2.5e6, '1.1M'=>1.1e6, '700k'=>7e5, '375k'=>3.75e5, '200k'=>2e5,
+    '100k'=>1e5, '50k'=>5e4, '25k'=>2.5e4, '12.5k'=>1.25e4, 0=>0];
+  foreach (array_keys($sds) as $no => $sdmin) {
+    $title = ($no <> 0) ? "$sdmin < sd <= $sdmax" : "sd > $sdmin";
+    $sdvmax = ($no <> 0) ? $sds[$sdmax] : '';
+    $sdvmin = $sds[$sdmin];
+    echo "    \"$title\" : new L.GeoJSON.AJAX(shomgtcaturl+'/geojson.php?sdmax=$sdvmax&sdmin=$sdvmin', {\n",
+         "        style: { color: 'green'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature\n",
+         "    }),\n";
+    $sdmax = $sdmin;
+  }
+?>
+  };
+  map.addLayer(overlays["700k < sd <= 1.1M"]);
+  L.control.layers(baseLayers, overlays).addTo(map);
+  </script>
+</body></html>

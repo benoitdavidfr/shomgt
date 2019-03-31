@@ -1,0 +1,46 @@
+title: ws - services de consultation des cartes raster GéoTIFF du SHOM
+path: /geoapi/shomgt/ws
+doc: |
+  Implémentation du service de tuiles
+  
+  Redéfinition des couches et les zooms correspondants:
+       0-5 20M
+        6  10M
+        7   4M
+        8   2M
+        9   1M
+       10  500k
+       11  250k
+       12  100k
+       13   50k
+       14   25k
+      15-18 12k  
+  
+  Evolutions importantes par rapport à la version précédente:
+    - remplacement de Spyc par le module Yaml de Symfony https://symfony.com/doc/current/components/yaml.html
+    - remplacement de syscoord qui est complexe par gexplor/geomce/coordsys plus simple
+      - il faut que je m'assure que toutes le cartes concernées sont publiées en WGS84
+    - modularisation l'appli en 3:
+      - les web-services (ws)
+        - tile.php + wms.php en WebMercator, en WorldMercator et en WGS 84 + catalog.php
+        - liste des GeoTIFF exposés
+      - intialisation et mise à jour des GéoTIFF pour les web-services à partir d'une livraison Shom (updt)
+      - identification des cartes pertinentes et de leur mise à jour (news)
+
+journal: |
+  10/3/2019:
+    ajout geojson
+phpScripts:
+  - /geoapi/shomgt/ws/tile.php
+  - /geoapi/shomgt/ws/wms.php
+  #- /geoapi/shomgt/ws/testtile.php
+  - /geoapi/shomgt/ws/geojson.php
+phpIncludes:
+  - /geoapi/shomgt/ws/geotiff.inc.php
+  - /geoapi/shomgt/ws/cache.inc.php
+  - /geoapi/shomgt/ws/errortile.inc.php
+  - /geoapi/shomgt/ws/wmsserver.inc.php
+  - /geoapi/shomgt/ws/accesscntrl.inc.php
+htmlFiles:
+#  - shomgt.yaml
+  - /geoapi/shomgt/ws/wmscapabilities.xml

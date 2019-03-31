@@ -1,0 +1,817 @@
+{"type":"FeatureCollection","features":[
+{
+    "type": "Feature",
+    "properties": {
+        "num": "3405",
+        "title": "D'Alger à la frontière de Tunisie",
+        "issued": "Édition n°&nbsp;5 - 1935",
+        "scaleDenominator": "584000",
+        "bboxDM": {
+            "SW": "36°08,30'N - 002°52,16'E",
+            "NE": "39°18,00'N - 009°14,97'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    2.8693333333333335,
+                    36.138333333333335
+                ],
+                [
+                    9.2495,
+                    36.138333333333335
+                ],
+                [
+                    9.2495,
+                    39.3
+                ],
+                [
+                    2.8693333333333335,
+                    39.3
+                ],
+                [
+                    2.8693333333333335,
+                    36.138333333333335
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "3976",
+        "title": "Mer Adriatique - Partie Sud",
+        "issued": "Édition n°&nbsp;7 - 2017",
+        "scaleDenominator": "514200",
+        "bboxDM": {
+            "SW": "39°22,80'N - 015°41,40'E",
+            "NE": "43°40,00'N - 019°49,30'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    15.69,
+                    39.38
+                ],
+                [
+                    19.821666666666665,
+                    39.38
+                ],
+                [
+                    19.821666666666665,
+                    43.666666666666664
+                ],
+                [
+                    15.69,
+                    43.666666666666664
+                ],
+                [
+                    15.69,
+                    39.38
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "5957",
+        "title": "Du rio Cacheu aux îles de Los",
+        "issued": "Édition n°&nbsp;2 - 1955",
+        "scaleDenominator": "547000",
+        "bboxDM": {
+            "SW": "09°03,00'N - 017°53,00'W",
+            "NE": "12°27,38'N - 012°57,50'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -17.883333333333333,
+                    9.05
+                ],
+                [
+                    -12.958333333333334,
+                    9.05
+                ],
+                [
+                    -12.958333333333334,
+                    12.456333333333333
+                ],
+                [
+                    -17.883333333333333,
+                    12.456333333333333
+                ],
+                [
+                    -17.883333333333333,
+                    9.05
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6606",
+        "title": "Canal de Sicile",
+        "issued": "Édition n°&nbsp;2 - 2014",
+        "scaleDenominator": "673600",
+        "bboxDM": {
+            "SW": "35°10,00'N - 008°35,00'E",
+            "NE": "39°10,00'N - 016°00,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    8.583333333333334,
+                    35.166666666666664
+                ],
+                [
+                    16,
+                    35.166666666666664
+                ],
+                [
+                    16,
+                    39.166666666666664
+                ],
+                [
+                    8.583333333333334,
+                    39.166666666666664
+                ],
+                [
+                    8.583333333333334,
+                    35.166666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6688",
+        "title": "Îles de la Société, de Manuae à Tahiti",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "592000",
+        "bboxDM": {
+            "SW": "18°40,00'S - 154°52,00'W",
+            "NE": "14°39,50'S - 148°45,50'W"
+        },
+        "note": "Nota&nbsp;: Mise aux normes internationales"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -154.86666666666667,
+                    -18.666666666666668
+                ],
+                [
+                    -148.75833333333333,
+                    -18.666666666666668
+                ],
+                [
+                    -148.75833333333333,
+                    -14.658333333333333
+                ],
+                [
+                    -154.86666666666667,
+                    -14.658333333333333
+                ],
+                [
+                    -154.86666666666667,
+                    -18.666666666666668
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6689",
+        "title": "Îles Tuamotu (Partie Ouest)",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "595000",
+        "bboxDM": {
+            "SW": "18°17,44'S - 150°00,00'W",
+            "NE": "14°13,00'S - 143°53,50'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -150,
+                    -18.290666666666667
+                ],
+                [
+                    -143.89166666666668,
+                    -18.290666666666667
+                ],
+                [
+                    -143.89166666666668,
+                    -14.216666666666667
+                ],
+                [
+                    -150,
+                    -14.216666666666667
+                ],
+                [
+                    -150,
+                    -18.290666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6690",
+        "title": "Îles Tuamotu (partie centrale) de Makemo à Tatakoto",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "592000",
+        "bboxDM": {
+            "SW": "18°42,00'S - 144°15,00'W",
+            "NE": "14°41,50'S - 138°08,50'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -144.25,
+                    -18.7
+                ],
+                [
+                    -138.14166666666668,
+                    -18.7
+                ],
+                [
+                    -138.14166666666668,
+                    -14.691666666666666
+                ],
+                [
+                    -144.25,
+                    -14.691666666666666
+                ],
+                [
+                    -144.25,
+                    -18.7
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6691",
+        "title": "Îles Tuamotu (partie Est) de Hao à Fangataufa",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "578000",
+        "bboxDM": {
+            "SW": "23°25,00'S - 142°00,00'W",
+            "NE": "17°40,00'S - 137°50,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -142,
+                    -23.416666666666668
+                ],
+                [
+                    -137.83333333333334,
+                    -23.416666666666668
+                ],
+                [
+                    -137.83333333333334,
+                    -17.666666666666668
+                ],
+                [
+                    -142,
+                    -17.666666666666668
+                ],
+                [
+                    -142,
+                    -23.416666666666668
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6692",
+        "title": "Des Îles Tuamotu aux Îles Gambier",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "574000",
+        "bboxDM": {
+            "SW": "24°20,00'S - 139°15,00'W",
+            "NE": "20°28,00'S - 133°08,50'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -139.25,
+                    -24.333333333333332
+                ],
+                [
+                    -133.14166666666668,
+                    -24.333333333333332
+                ],
+                [
+                    -133.14166666666668,
+                    -20.466666666666665
+                ],
+                [
+                    -139.25,
+                    -20.466666666666665
+                ],
+                [
+                    -139.25,
+                    -24.333333333333332
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7040",
+        "title": "La Manche",
+        "issued": "Édition n°&nbsp;4 - 2003",
+        "scaleDenominator": "560000",
+        "bboxDM": {
+            "SW": "48°00,00'N - 006°43,65'W",
+            "NE": "51°14,80'N - 001°52,00'E"
+        },
+        "references": "Fac similé carte GB n°2675 publiée en 1978 (edition décembre 1991)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.7275,
+                    48
+                ],
+                [
+                    1.8666666666666667,
+                    48
+                ],
+                [
+                    1.8666666666666667,
+                    51.24666666666667
+                ],
+                [
+                    -6.7275,
+                    51.24666666666667
+                ],
+                [
+                    -6.7275,
+                    48
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7049",
+        "title": "Des îles Loyauté à l'île Hunter",
+        "issued": "Édition n°&nbsp;2 - 2010",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "24°00,00'S - 167°45,00'E",
+            "NE": "20°37,00'S - 173°05,00'E"
+        },
+        "boxes": [
+            "A - Île Walpole",
+            "B - Île Matthew",
+            "C - Île Hunter"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    167.75,
+                    -24
+                ],
+                [
+                    173.08333333333334,
+                    -24
+                ],
+                [
+                    173.08333333333334,
+                    -20.616666666666667
+                ],
+                [
+                    167.75,
+                    -20.616666666666667
+                ],
+                [
+                    167.75,
+                    -24
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7203",
+        "title": "Des îles Baléares (Islas Baleares) à Marseille",
+        "issued": "Édition n°&nbsp;2 - 2006",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "38°49,93'N - 001°36,93'E",
+            "NE": "43°53,94'N - 006°12,93'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    1.6155,
+                    38.832166666666666
+                ],
+                [
+                    6.2155,
+                    38.832166666666666
+                ],
+                [
+                    6.2155,
+                    43.899
+                ],
+                [
+                    1.6155,
+                    43.899
+                ],
+                [
+                    1.6155,
+                    38.832166666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7204",
+        "title": "De Marseille à l'île d'Elbe (Isola d'Elba) et aux Bouches de Bonifacio",
+        "issued": "Publication 1989",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "41°06,00'N - 004°45,00'E",
+            "NE": "44°29,00'N - 011°30,00'E"
+        },
+        "replaces": "(remplace 1303,1865)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    4.75,
+                    41.1
+                ],
+                [
+                    11.5,
+                    41.1
+                ],
+                [
+                    11.5,
+                    44.483333333333334
+                ],
+                [
+                    4.75,
+                    44.483333333333334
+                ],
+                [
+                    4.75,
+                    41.1
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7210",
+        "title": "Atterrages de l'entrée de La Manche",
+        "issued": "Édition n°&nbsp;5 - 2018",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "48°20,00'N - 013°27,65'W",
+            "NE": "51°33,52'N - 004°52,00'W"
+        },
+        "references": "Fac similé carte GB n°2649 publiée en 1978 (édition février 2017)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -13.460833333333333,
+                    48.333333333333336
+                ],
+                [
+                    -4.866666666666667,
+                    48.333333333333336
+                ],
+                [
+                    -4.866666666666667,
+                    51.55866666666667
+                ],
+                [
+                    -13.460833333333333,
+                    51.55866666666667
+                ],
+                [
+                    -13.460833333333333,
+                    48.333333333333336
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7265",
+        "title": "Mer Egée - Partie Sud",
+        "issued": "Publication 1994",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "34°45,00'N - 022°28,00'E",
+            "NE": "38°14,00'N - 028°20,00'E"
+        },
+        "replaces": "(remplace 1457)",
+        "references": "Fac similé Carte GR n°4 publiée en 1985."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    22.466666666666665,
+                    34.75
+                ],
+                [
+                    28.333333333333332,
+                    34.75
+                ],
+                [
+                    28.333333333333332,
+                    38.233333333333334
+                ],
+                [
+                    22.466666666666665,
+                    38.233333333333334
+                ],
+                [
+                    22.466666666666665,
+                    34.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7357",
+        "title": "Iles Marquises (Fenua Enata)",
+        "issued": "Publication 2000",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "11°48,00'S - 141°18,00'W",
+            "NE": "06°50,00'S - 137°53,00'W"
+        },
+        "replaces": "(remplace 6198)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -141.3,
+                    -11.8
+                ],
+                [
+                    -137.88333333333333,
+                    -11.8
+                ],
+                [
+                    -137.88333333333333,
+                    -6.833333333333333
+                ],
+                [
+                    -141.3,
+                    -6.833333333333333
+                ],
+                [
+                    -141.3,
+                    -11.8
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7374",
+        "title": "Côte de la Guyane française",
+        "issued": "Édition n°&nbsp;2 - 2017",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "04°10,00'N - 055°28,00'W",
+            "NE": "07°33,00'N - 050°30,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -55.46666666666667,
+                    4.166666666666667
+                ],
+                [
+                    -50.5,
+                    4.166666666666667
+                ],
+                [
+                    -50.5,
+                    7.55
+                ],
+                [
+                    -55.46666666666667,
+                    7.55
+                ],
+                [
+                    -55.46666666666667,
+                    4.166666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7507",
+        "title": "Du Golfe du Lion aux Bouches de Bonifacio",
+        "issued": "Publication 1996",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "40°35,00'N - 003°00,00'E",
+            "NE": "44°00,00'N - 009°45,00'E"
+        },
+        "replaces": "(remplace 6632,6632P)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    3,
+                    40.583333333333336
+                ],
+                [
+                    9.75,
+                    40.583333333333336
+                ],
+                [
+                    9.75,
+                    44
+                ],
+                [
+                    3,
+                    44
+                ],
+                [
+                    3,
+                    40.583333333333336
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7592",
+        "title": "Du Glacier Dibble au Glacier Mertz",
+        "issued": "Publication 2004",
+        "scaleDenominator": "500000",
+        "bboxDM": {
+            "SW": "67°25,00'S - 134°00,00'E",
+            "NE": "64°02,00'S - 146°06,00'E"
+        },
+        "replaces": "(remplace 6101.CA)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    134,
+                    -67.41666666666667
+                ],
+                [
+                    146.1,
+                    -67.41666666666667
+                ],
+                [
+                    146.1,
+                    -64.03333333333333
+                ],
+                [
+                    134,
+                    -64.03333333333333
+                ],
+                [
+                    134,
+                    -67.41666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7661",
+        "title": "De Cabo de la Nao à Barcelona et Islas Baleares",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "425000",
+        "bboxDM": {
+            "SW": "38°36,90'N - 000°30,00'W",
+            "NE": "41°23,30'N - 004°50,00'E"
+        },
+        "references": "Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -0.5,
+                    38.615
+                ],
+                [
+                    4.833333333333333,
+                    38.615
+                ],
+                [
+                    4.833333333333333,
+                    41.388333333333335
+                ],
+                [
+                    -0.5,
+                    41.388333333333335
+                ],
+                [
+                    -0.5,
+                    38.615
+                ]
+            ]
+        ]
+    }
+}
+]}

@@ -1,0 +1,56 @@
+title: cat - catalogue des cartes raster GéoTIFF du SHOM
+path: /geoapi/shomgt/cat
+doc: |
+  Ce module gère un catalogue des cartes pertinentes du Shom afin:
+    - de connaitre celles qu'il est nécessaire de commander au Shom (ajout ou actualisation)
+    - d'exposer les caractéristiques des cartes utilisées par le module de mise à jour des cartes
+    
+  Le catalogue doit être régulièrement actualisé, il est construit à partir de 2 sources du Shom:
+    - le flux WFS de la liste des cartes Shom
+    - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent des informations actualisées chaque semaine
+      sur chaque carte non périmée
+  
+  Mise en oeuvre:
+    - le script build.php permet de lire le flux WFS et les GANs correspondants
+      - il fabrique un fichier mapcat.pser qui est un catalogue historisé des cartes.
+        Il contient l'historique des GANs construit à partir des différents clichés pris.
+        Il est structuré comme un dictionnaire dont le champ maps contient un dictionnaire des historiques des cartes
+        avec 2 niveaux d'index:
+          - d'une part l'id de la carte et,
+          - d'autre part, la date de mise à jour de l'info sous la forme YYYY-MM-DD.
+      - les cartes sont structurés par la classe MapCat (définie dans mapcat.inc.php)
+        qui permet d'accéder par différentes méthodes au catalogue.
+      - le catalogue est exposé en JSON et en GeoJSON
+    - le script index.php :
+      - expose en JSON les cartes stockées dans mapcat.pser soit uniquement les plus récents (action=showGan),
+        soit avec l'historique complet (action=showGanHistory)
+    - le script map.php affiche le catalogue sous la forme d'une carte
+    - le script geojson.php affiche le catalogue sous la forme d'un flux GeoJSON, il est utilisé par la carte
+    - le script mapcat.php permet de consulter le catalogue
+      - par défaut il liste les cartes en HTML
+      - accès à la description d'une carte
+      - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
+  
+  A FAIRE:
+    - détecter les cartes qui disparaissent du catalogue et doivent être invalidées
+    
+journal: |
+  15-17/3/2019:
+    refonte importante
+    prises en compte de corrections du GAN définies dans gancorrections.yaml
+    Ces corrections permettent de visualiser les petites iles du canal du Mozambique
+    Le fichier shomgt.yaml peut être généré à partir des GAN
+    Il manque encore la possibilité de gérer l'ordre des cartes.
+    
+phpScripts:
+  - /geoapi/shomgt/cat/index.php
+  - /geoapi/shomgt/cat/mapcat.php
+  - /geoapi/shomgt/cat/build.php
+  - /geoapi/shomgt/cat/map.php
+  - /geoapi/shomgt/cat/geojson.php
+phpIncludes:
+  - /geoapi/shomgt/cat/mapcat.inc.php
+  - /geoapi/shomgt/cat/lib.inc.php
+  - /geoapi/shomgt/cat/map.inc.php
+  - /geoapi/shomgt/cat/wfsserver.inc.php
+  - /geoapi/shomgt/cat/wfsjson.inc.php

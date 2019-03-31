@@ -1,0 +1,67 @@
+title: Schéma JSON du fichier shomgt.yaml
+definitions:
+  geotiff:
+    title: schema de description de chaque GéoTIFF
+    description: |
+      Chaque GéoTIFF est identifié par son nom qui correspond au nom du fichier contenant l'image
+      Lorsqu'un GéoTIFF intersecte l'antiméridien, par convention east > 180
+      De plus, le planisphère (0101/0101_pal300) est géré de manière spécifique:
+        - d'une part, il correspond pour un même fichier à 2 entrées.
+        - d'autre part, les longitudes ne respectent pas l'intervalle de valeur
+    type: object
+    required: [ title, width, height, south, west, north, east, left, top, right, bottom ]
+    properties:
+      title: {type: string, description: numéro et titre}
+      scaleden: {type: number, description: dénominateur de l'échelle (optionnel)}
+      edition: {type: string, description: édition de la carte (optionnel)}
+      width: {type: number, description: largeur en pixels}
+      height: {type: number, description: hauteur en pixels}
+      west: {type: number, minimum: -180, maximum: 180, description: limite West en degrés décimaux > -180 & < 180}
+      south: {type: number, minimum: -90, maximum: 90, description: limite Sud en degrés décimaux > -90 & < 90}
+      east:
+        type: number
+        minimum: -180
+        maximum: 360
+        description: |
+          limite Est en degrés décimaux > -180 & < 180 & > west
+          Pour les GéoTiff à cheval sur l'anti-méridien, west peut être supérieur à 180
+      north:
+        type: number
+        minimum: -90
+        maximum: 90
+        description: limite Nord en degrés décimaux > -90 & < 90 & > south
+      left: {type: number, description: nbre de pixels à couper à gauche}
+      top: {type: number, description: nbre de pixels à couper en haut}
+      right: {type: number, description: "nbre de pixels à couper à droite, si négatif width+right"}
+      bottom: {type: number, description: "nbre de pixels à couper en bas, si négatif height+bottom"}
+      partiallyDeleted:
+        type: boolean
+        description: true pour indiquer que le GéoTIFF est partiellement effacée, absent sinon
+
+description: |
+  Le fichier shomgt.yaml décrit les GéoTIFF regroupés en couches correspondant approximativement aux échelles suivantes:
+    - gt12k : les cartes approx. au 1/12k
+    - gt25k : les cartes approx. au 1/25k
+    - gt50k : les cartes approx. au 1/50k 
+    - gt100k : les cartes approx. au 1/150k, 1/100k et 1/175k
+    - gt250k : les cartes approx. au 1/250k
+    - gt500k, gt1M, gt2M, gt4M, gt10M, gt20M
+  Il existe de plus 2 couches particulières:
+    - gtaem: regoupant les cartes de l'action de l'Etat en mer (AEM)
+    - gtMancheGrid : contenant la carte MancheGrid
+type: object
+required: [ name, title, description, lineage, path ]
+properties:
+  name: { type: string }
+  title: { type: string }
+  description: { type: [string, 'null'] }
+  lineage: { type: [string, 'null'] }
+  path: { type: string }
+  $schema: { type: string }
+patternProperties:
+  ^gt(\d+[kM]|aem|MancheGrid):
+    type: [object, 'null']
+    patternProperties:
+      ^\d\d\d\d/\d\d\d\d_(pal300|[\dA-Z]+_gtw):
+        $ref: '#/definitions/geotiff'
+additionalProperties: false

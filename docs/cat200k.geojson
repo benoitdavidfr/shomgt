@@ -1,0 +1,3008 @@
+{"type":"FeatureCollection","features":[
+{
+    "type": "Feature",
+    "properties": {
+        "num": "5962",
+        "title": "De Tuléar au Cap Ste-Marie",
+        "issued": "Publication 1953",
+        "scaleDenominator": "312400",
+        "bboxDM": {
+            "SW": "26°00,00'S - 043°10,00'E",
+            "NE": "23°17,00'S - 045°11,20'E"
+        },
+        "boxes": [
+            "Androka"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    43.166666666666664,
+                    -26
+                ],
+                [
+                    45.18666666666667,
+                    -26
+                ],
+                [
+                    45.18666666666667,
+                    -23.283333333333335
+                ],
+                [
+                    43.166666666666664,
+                    -23.283333333333335
+                ],
+                [
+                    43.166666666666664,
+                    -26
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6498",
+        "title": "Îles Crozet",
+        "issued": "Édition n°&nbsp;3 - 2017",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "46°50,00'S - 049°30,00'E",
+            "NE": "45°20,50'S - 052°38,50'E"
+        },
+        "boxes": [
+            "A - Île aux Cochons - Côte Est, Mouillage de la Meurthe"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    49.5,
+                    -46.833333333333336
+                ],
+                [
+                    52.641666666666666,
+                    -46.833333333333336
+                ],
+                [
+                    52.641666666666666,
+                    -45.34166666666667
+                ],
+                [
+                    49.5,
+                    -45.34166666666667
+                ],
+                [
+                    49.5,
+                    -46.833333333333336
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6569",
+        "title": "Mer d'Alboran",
+        "issued": "Édition n°&nbsp;2 - 2006",
+        "scaleDenominator": "202000",
+        "bboxDM": {
+            "SW": "35°50,86'N - 004°23,76'W",
+            "NE": "37°04,00'N - 002°10,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -4.396,
+                    35.84766666666667
+                ],
+                [
+                    -2.1666666666666665,
+                    35.84766666666667
+                ],
+                [
+                    -2.1666666666666665,
+                    37.06666666666667
+                ],
+                [
+                    -4.396,
+                    37.06666666666667
+                ],
+                [
+                    -4.396,
+                    35.84766666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6570",
+        "title": "Mer d'Alboran",
+        "issued": "Publication 1968",
+        "scaleDenominator": "203000",
+        "bboxDM": {
+            "SW": "35°04,12'N - 004°21,81'W",
+            "NE": "36°18,00'N - 002°08,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -4.3635,
+                    35.068666666666665
+                ],
+                [
+                    -2.1333333333333333,
+                    35.068666666666665
+                ],
+                [
+                    -2.1333333333333333,
+                    36.3
+                ],
+                [
+                    -4.3635,
+                    36.3
+                ],
+                [
+                    -4.3635,
+                    35.068666666666665
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6741",
+        "title": "Îles Kerguelen",
+        "issued": "Édition n°&nbsp;2 - 2017",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "50°10,50'S - 067°20,00'E",
+            "NE": "48°10,00'S - 071°50,50'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    67.33333333333333,
+                    -50.175
+                ],
+                [
+                    71.84166666666667,
+                    -50.175
+                ],
+                [
+                    71.84166666666667,
+                    -48.166666666666664
+                ],
+                [
+                    67.33333333333333,
+                    -48.166666666666664
+                ],
+                [
+                    67.33333333333333,
+                    -50.175
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6768",
+        "title": "Nouvelle-Calédonie (partie Sud) - Ile des Pins",
+        "issued": "Édition n°&nbsp;3 - 2010",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "23°33,84'S - 165°00,20'E",
+            "NE": "21°32,33'S - 168°12,20'E"
+        },
+        "note": "Nota&nbsp;: Les modifications effectuées sur la carte n° 6786 au cours de l'édition n° 3 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    165.00333333333333,
+                    -23.564
+                ],
+                [
+                    168.20333333333335,
+                    -23.564
+                ],
+                [
+                    168.20333333333335,
+                    -21.538833333333333
+                ],
+                [
+                    165.00333333333333,
+                    -21.538833333333333
+                ],
+                [
+                    165.00333333333333,
+                    -23.564
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6951",
+        "title": "De Fos-sur-Mer à Capo Mele",
+        "issued": "Édition n°&nbsp;4 - 2018",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "42°19,94'N - 004°49,93'E",
+            "NE": "43°59,94'N - 008°11,94'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    4.832166666666667,
+                    42.33233333333333
+                ],
+                [
+                    8.199,
+                    42.33233333333333
+                ],
+                [
+                    8.199,
+                    43.999
+                ],
+                [
+                    4.832166666666667,
+                    43.999
+                ],
+                [
+                    4.832166666666667,
+                    42.33233333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6990",
+        "title": "De la Pointe de Penmarc'h à la Gironde",
+        "issued": "Édition n°&nbsp;4 - 2015",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "45°28,34'N - 006°00,08'W",
+            "NE": "47°55,42'N - 000°54,58'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.001333333333333,
+                    45.47233333333333
+                ],
+                [
+                    -0.9096666666666666,
+                    45.47233333333333
+                ],
+                [
+                    -0.9096666666666666,
+                    47.92366666666667
+                ],
+                [
+                    -6.001333333333333,
+                    47.92366666666667
+                ],
+                [
+                    -6.001333333333333,
+                    45.47233333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "6991",
+        "title": "De la Gironde à Cabo Peñas",
+        "issued": "Édition n°&nbsp;4 - 2015",
+        "scaleDenominator": "368000",
+        "bboxDM": {
+            "SW": "43°13,93'N - 005°53,08'W",
+            "NE": "45°42,94'N - 000°47,58'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -5.884666666666667,
+                    43.232166666666664
+                ],
+                [
+                    -0.7929999999999999,
+                    43.232166666666664
+                ],
+                [
+                    -0.7929999999999999,
+                    45.715666666666664
+                ],
+                [
+                    -5.884666666666667,
+                    45.715666666666664
+                ],
+                [
+                    -5.884666666666667,
+                    43.232166666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7008",
+        "title": "Du Cabo de San Sebastian à Fos-sur-Mer",
+        "issued": "Édition n°&nbsp;2 - 2005",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "41°13,93'N - 002°54,93'E",
+            "NE": "43°39,94'N - 005°15,06'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    2.9154999999999998,
+                    41.232166666666664
+                ],
+                [
+                    5.251,
+                    41.232166666666664
+                ],
+                [
+                    5.251,
+                    43.66566666666667
+                ],
+                [
+                    2.9154999999999998,
+                    43.66566666666667
+                ],
+                [
+                    2.9154999999999998,
+                    41.232166666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7025",
+        "title": "Ile de Corse",
+        "issued": "Édition n°&nbsp;3 - 2018",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "40°48,44'N - 007°50,44'E",
+            "NE": "43°18,94'N - 010°07,94'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    7.8406666666666665,
+                    40.80733333333333
+                ],
+                [
+                    10.132333333333333,
+                    40.80733333333333
+                ],
+                [
+                    10.132333333333333,
+                    43.315666666666665
+                ],
+                [
+                    7.8406666666666665,
+                    43.315666666666665
+                ],
+                [
+                    7.8406666666666665,
+                    40.80733333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7076",
+        "title": "De Saint-Nazaire à Saint-Malo",
+        "issued": "Édition n°&nbsp;2 - 2015",
+        "scaleDenominator": "345000",
+        "bboxDM": {
+            "SW": "47°00,00'N - 006°35,50'W",
+            "NE": "49°19,00'N - 001°30,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.591666666666667,
+                    47
+                ],
+                [
+                    -1.5,
+                    47
+                ],
+                [
+                    -1.5,
+                    49.31666666666667
+                ],
+                [
+                    -6.591666666666667,
+                    49.31666666666667
+                ],
+                [
+                    -6.591666666666667,
+                    47
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7108",
+        "title": "Approches du Canal de Bristol",
+        "issued": "Édition n°&nbsp;6 - 2013",
+        "scaleDenominator": "237000",
+        "bboxDM": {
+            "SW": "49°52,20'N - 006°39,90'W",
+            "NE": "52°14,01'N - 004°30,00'W"
+        },
+        "references": "Fac similé carte GB n°1178 publiée en 1979 (edition novembre 2012)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.665,
+                    49.87
+                ],
+                [
+                    -4.5,
+                    49.87
+                ],
+                [
+                    -4.5,
+                    52.2335
+                ],
+                [
+                    -6.665,
+                    52.2335
+                ],
+                [
+                    -6.665,
+                    49.87
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7171",
+        "title": "Approches des Îles Saint-Paul et Amsterdam",
+        "issued": "Édition n°&nbsp;3 - 2017",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "39°17,00'S - 076°30,00'E",
+            "NE": "36°53,50'S - 078°33,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    76.5,
+                    -39.28333333333333
+                ],
+                [
+                    78.55,
+                    -39.28333333333333
+                ],
+                [
+                    78.55,
+                    -36.891666666666666
+                ],
+                [
+                    76.5,
+                    -36.891666666666666
+                ],
+                [
+                    76.5,
+                    -39.28333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7195",
+        "title": "Côte Ouest du Peloponnèse - De Nísos Zákinthos à Ákra Taínaro",
+        "issued": "Publication 1988",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "35°45,00'N - 020°27,00'E",
+            "NE": "38°00,00'N - 022°31,00'E"
+        },
+        "references": "Fac similé Carte GR n°22 publiée en 1986."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    20.45,
+                    35.75
+                ],
+                [
+                    22.516666666666666,
+                    35.75
+                ],
+                [
+                    22.516666666666666,
+                    38
+                ],
+                [
+                    20.45,
+                    38
+                ],
+                [
+                    20.45,
+                    35.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7196",
+        "title": "Côte Sud de Grèce",
+        "issued": "Publication 1988",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "34°25,00'N - 022°28,00'E",
+            "NE": "36°54,00'N - 024°29,00'E"
+        },
+        "replaces": "(remplace 3057)",
+        "references": "Fac similé Carte GR n°43 publiée en 1986"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    22.466666666666665,
+                    34.416666666666664
+                ],
+                [
+                    24.483333333333334,
+                    34.416666666666664
+                ],
+                [
+                    24.483333333333334,
+                    36.9
+                ],
+                [
+                    22.466666666666665,
+                    36.9
+                ],
+                [
+                    22.466666666666665,
+                    34.416666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7229",
+        "title": "De Nice à Piombino",
+        "issued": "Publication 1989",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "42°50,00'N - 007°15,00'E",
+            "NE": "44°30,83'N - 010°40,33'E"
+        },
+        "references": "Fac similé carte IT n°909 publiée en 1987."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    7.25,
+                    42.833333333333336
+                ],
+                [
+                    10.672166666666667,
+                    42.833333333333336
+                ],
+                [
+                    10.672166666666667,
+                    44.51383333333333
+                ],
+                [
+                    7.25,
+                    44.51383333333333
+                ],
+                [
+                    7.25,
+                    42.833333333333336
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7244",
+        "title": "De Porto Corsini à Velebitski Kanal - Golfe de Venise",
+        "issued": "Édition n°&nbsp;4 - 2015",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "44°13,00'N - 012°08,00'E",
+            "NE": "45°50,00'N - 015°28,00'E"
+        },
+        "references": "Fac similé Carte HR n°3410 (publication de 1988)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    12.133333333333333,
+                    44.21666666666667
+                ],
+                [
+                    15.466666666666667,
+                    44.21666666666667
+                ],
+                [
+                    15.466666666666667,
+                    45.833333333333336
+                ],
+                [
+                    12.133333333333333,
+                    45.833333333333336
+                ],
+                [
+                    12.133333333333333,
+                    44.21666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7255",
+        "title": "De El Lādhiqiyeh à Soûr",
+        "issued": "Publication 1991",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "33°15,50'N - 034°02,70'E",
+            "NE": "35°45,00'N - 036°05,70'E"
+        },
+        "replaces": "(remplace 2060)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    34.045,
+                    33.25833333333333
+                ],
+                [
+                    36.095,
+                    33.25833333333333
+                ],
+                [
+                    36.095,
+                    35.75
+                ],
+                [
+                    34.045,
+                    35.75
+                ],
+                [
+                    34.045,
+                    33.25833333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7256",
+        "title": "De Soûr à Al Arīsh",
+        "issued": "Édition n°&nbsp;2 - 2014",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "30°58,43'N - 033°26,98'E",
+            "NE": "33°31,94'N - 035°29,99'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    33.449666666666666,
+                    30.97383333333333
+                ],
+                [
+                    35.499833333333335,
+                    30.97383333333333
+                ],
+                [
+                    35.499833333333335,
+                    33.532333333333334
+                ],
+                [
+                    33.449666666666666,
+                    33.532333333333334
+                ],
+                [
+                    33.449666666666666,
+                    30.97383333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7257",
+        "title": "De Libreville à Gamba",
+        "issued": "Publication 1995",
+        "scaleDenominator": "351300",
+        "bboxDM": {
+            "SW": "02°57,00'S - 007°44,00'E",
+            "NE": "00°32,50'N - 010°06,00'E"
+        },
+        "replaces": "(remplace 6360)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    7.733333333333333,
+                    -2.95
+                ],
+                [
+                    10.1,
+                    -2.95
+                ],
+                [
+                    10.1,
+                    0.5416666666666666
+                ],
+                [
+                    7.733333333333333,
+                    0.5416666666666666
+                ],
+                [
+                    7.733333333333333,
+                    -2.95
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7272",
+        "title": "Iles Ioniennes (Iónioi Nísoi) - De Nísos Othonoí à Nísos Zákinthos",
+        "issued": "Édition n°&nbsp;2 - 2016",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "37°45,00'N - 019°20,00'E",
+            "NE": "40°11,00'N - 021°24,50'E"
+        },
+        "references": "Fac similé carte GR n°21 publiée en 1988 (édition décembre 2002 - réimpression 2007)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    19.333333333333332,
+                    37.75
+                ],
+                [
+                    21.408333333333335,
+                    37.75
+                ],
+                [
+                    21.408333333333335,
+                    40.18333333333333
+                ],
+                [
+                    19.333333333333332,
+                    40.18333333333333
+                ],
+                [
+                    19.333333333333332,
+                    37.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7291",
+        "title": "De Piombino à Fiumicino et côte Est de Corse",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "41°28,00'N - 009°13,00'E",
+            "NE": "43°08,25'N - 012°32,85'E"
+        },
+        "references": "Fac similé carte IT n°913 publiée en 1990."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    9.216666666666667,
+                    41.46666666666667
+                ],
+                [
+                    12.5475,
+                    41.46666666666667
+                ],
+                [
+                    12.5475,
+                    43.1375
+                ],
+                [
+                    9.216666666666667,
+                    43.1375
+                ],
+                [
+                    9.216666666666667,
+                    41.46666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7311",
+        "title": "La Manche (Partie Ouest) - De Isles of Scilly et de l'Ile d'Ouessant aux Casquets",
+        "issued": "Édition n°&nbsp;3 - 2009",
+        "scaleDenominator": "375000",
+        "bboxDM": {
+            "SW": "48°14,94'N - 006°55,09'W",
+            "NE": "50°47,95'N - 001°10,08'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.918166666666667,
+                    48.249
+                ],
+                [
+                    -1.168,
+                    48.249
+                ],
+                [
+                    -1.168,
+                    50.799166666666665
+                ],
+                [
+                    -6.918166666666667,
+                    50.799166666666665
+                ],
+                [
+                    -6.918166666666667,
+                    48.249
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7312",
+        "title": "La Manche (Partie Est)",
+        "issued": "Édition n°&nbsp;2 - 2009",
+        "scaleDenominator": "372400",
+        "bboxDM": {
+            "SW": "49°04,94'N - 003°00,08'W",
+            "NE": "51°35,45'N - 002°44,92'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -3.001333333333333,
+                    49.08233333333333
+                ],
+                [
+                    2.748666666666667,
+                    49.08233333333333
+                ],
+                [
+                    2.748666666666667,
+                    51.590833333333336
+                ],
+                [
+                    -3.001333333333333,
+                    51.590833333333336
+                ],
+                [
+                    -3.001333333333333,
+                    49.08233333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7326",
+        "title": "De Promontorio del Gargano à Šibenik et à Ploče",
+        "issued": "Édition n°&nbsp;2 - 2015",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "41°40,00'N - 015°29,00'E",
+            "NE": "44°00,00'N - 017°40,00'E"
+        },
+        "references": "Fac similé Carte HR n°3412 publiée en 1991."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    15.483333333333333,
+                    41.666666666666664
+                ],
+                [
+                    17.666666666666668,
+                    41.666666666666664
+                ],
+                [
+                    17.666666666666668,
+                    44
+                ],
+                [
+                    15.483333333333333,
+                    44
+                ],
+                [
+                    15.483333333333333,
+                    41.666666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7333",
+        "title": "De Al Burullus à Al 'Arīsh",
+        "issued": "Édition n°&nbsp;5 - 2017",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "30°44,05'N - 030°58,00'E",
+            "NE": "32°30,00'N - 034°12,30'E"
+        },
+        "references": "Fac similé carte GB n°2573 publiée en 1982 (édition mars 2017).",
+        "boxes": [
+            "Al 'Arīsh Harbour"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    30.966666666666665,
+                    30.734166666666667
+                ],
+                [
+                    34.205,
+                    30.734166666666667
+                ],
+                [
+                    34.205,
+                    32.5
+                ],
+                [
+                    30.966666666666665,
+                    32.5
+                ],
+                [
+                    30.966666666666665,
+                    30.734166666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7349",
+        "title": "De la Réunion à Maurice (Mauritius) - Ile Tromelin",
+        "issued": "Publication 1996",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "21°45,00'S - 054°40,00'E",
+            "NE": "19°23,00'S - 058°21,00'E"
+        },
+        "replaces": "(remplace 1234)",
+        "boxes": [
+            "A - Ile Tromelin"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    54.666666666666664,
+                    -21.75
+                ],
+                [
+                    58.35,
+                    -21.75
+                ],
+                [
+                    58.35,
+                    -19.383333333333333
+                ],
+                [
+                    54.666666666666664,
+                    -19.383333333333333
+                ],
+                [
+                    54.666666666666664,
+                    -21.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7382",
+        "title": "De Calabar à Bata - Isla de Bioko",
+        "issued": "Édition n°&nbsp;3 - 2013",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "01°35,00'N - 007°38,00'E",
+            "NE": "05°04,00'N - 010°00,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    7.633333333333333,
+                    1.5833333333333335
+                ],
+                [
+                    10,
+                    1.5833333333333335
+                ],
+                [
+                    10,
+                    5.066666666666666
+                ],
+                [
+                    7.633333333333333,
+                    5.066666666666666
+                ],
+                [
+                    7.633333333333333,
+                    1.5833333333333335
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7383",
+        "title": "De Bata à Libreville - Ilhas do Príncipe et de Sǎo Tomé",
+        "issued": "Publication 1996",
+        "scaleDenominator": "351000",
+        "bboxDM": {
+            "SW": "00°07,50'S - 006°22,00'E",
+            "NE": "02°15,00'N - 009°50,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    6.366666666666666,
+                    -0.125
+                ],
+                [
+                    9.833333333333334,
+                    -0.125
+                ],
+                [
+                    9.833333333333334,
+                    2.25
+                ],
+                [
+                    6.366666666666666,
+                    2.25
+                ],
+                [
+                    6.366666666666666,
+                    -0.125
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7384",
+        "title": "De Greenville à Sassandra",
+        "issued": "Publication 1995",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "02°50,00'N - 009°22,00'W",
+            "NE": "05°12,50'N - 005°54,00'W"
+        },
+        "replaces": "(remplace 4833)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -9.366666666666667,
+                    2.8333333333333335
+                ],
+                [
+                    -5.9,
+                    2.8333333333333335
+                ],
+                [
+                    -5.9,
+                    5.208333333333333
+                ],
+                [
+                    -9.366666666666667,
+                    5.208333333333333
+                ],
+                [
+                    -9.366666666666667,
+                    2.8333333333333335
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7385",
+        "title": "De Sassandra à la Lagune Aby",
+        "issued": "Publication 1996",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "03°07,50'N - 006°22,00'W",
+            "NE": "05°30,00'N - 002°54,00'W"
+        },
+        "replaces": "(remplace 4820)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.366666666666666,
+                    3.125
+                ],
+                [
+                    -2.9,
+                    3.125
+                ],
+                [
+                    -2.9,
+                    5.5
+                ],
+                [
+                    -6.366666666666666,
+                    5.5
+                ],
+                [
+                    -6.366666666666666,
+                    3.125
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7386",
+        "title": "De Nouadhibou à Nouakchott",
+        "issued": "Publication 1998",
+        "scaleDenominator": "331000",
+        "bboxDM": {
+            "SW": "17°56,00'N - 018°15,00'W",
+            "NE": "21°13,00'N - 015°53,00'W"
+        },
+        "replaces": "(remplace 6114,6115)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -18.25,
+                    17.933333333333334
+                ],
+                [
+                    -15.883333333333333,
+                    17.933333333333334
+                ],
+                [
+                    -15.883333333333333,
+                    21.216666666666665
+                ],
+                [
+                    -18.25,
+                    21.216666666666665
+                ],
+                [
+                    -18.25,
+                    17.933333333333334
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7387",
+        "title": "De Nouakchott à Saint-Louis",
+        "issued": "Publication 1998",
+        "scaleDenominator": "336000",
+        "bboxDM": {
+            "SW": "15°54,00'N - 019°22,00'W",
+            "NE": "18°10,50'N - 015°54,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -19.366666666666667,
+                    15.9
+                ],
+                [
+                    -15.9,
+                    15.9
+                ],
+                [
+                    -15.9,
+                    18.175
+                ],
+                [
+                    -19.366666666666667,
+                    18.175
+                ],
+                [
+                    -19.366666666666667,
+                    15.9
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7388",
+        "title": "De Saint-Louis au fleuve Saloum",
+        "issued": "Publication 1997",
+        "scaleDenominator": "340000",
+        "bboxDM": {
+            "SW": "13°47,50'N - 019°51,00'W",
+            "NE": "16°05,50'N - 016°23,00'W"
+        },
+        "replaces": "(remplace 6116)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -19.85,
+                    13.791666666666666
+                ],
+                [
+                    -16.383333333333333,
+                    13.791666666666666
+                ],
+                [
+                    -16.383333333333333,
+                    16.091666666666665
+                ],
+                [
+                    -19.85,
+                    16.091666666666665
+                ],
+                [
+                    -19.85,
+                    13.791666666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7389",
+        "title": "Du fleuve Saloum à Ilhéu de Caió",
+        "issued": "Publication 1997",
+        "scaleDenominator": "342000",
+        "bboxDM": {
+            "SW": "11°47,50'N - 018°41,00'W",
+            "NE": "14°06,50'N - 015°13,00'W"
+        },
+        "replaces": "(remplace 6125)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -18.683333333333334,
+                    11.791666666666666
+                ],
+                [
+                    -15.216666666666667,
+                    11.791666666666666
+                ],
+                [
+                    -15.216666666666667,
+                    14.108333333333333
+                ],
+                [
+                    -18.683333333333334,
+                    14.108333333333333
+                ],
+                [
+                    -18.683333333333334,
+                    11.791666666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7484",
+        "title": "De Paramaribo aux Iles du Salut",
+        "issued": "Édition n°&nbsp;2 - 2017",
+        "scaleDenominator": "299000",
+        "bboxDM": {
+            "SW": "05°05,00'N - 055°25,00'W",
+            "NE": "07°05,00'N - 052°28,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -55.416666666666664,
+                    5.083333333333333
+                ],
+                [
+                    -52.46666666666667,
+                    5.083333333333333
+                ],
+                [
+                    -52.46666666666667,
+                    7.083333333333333
+                ],
+                [
+                    -55.416666666666664,
+                    7.083333333333333
+                ],
+                [
+                    -55.416666666666664,
+                    5.083333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7485",
+        "title": "Des Iles du Salut à Cabo Orange",
+        "issued": "Édition n°&nbsp;2 - 2017",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "04°20,00'N - 052°43,00'W",
+            "NE": "06°20,00'N - 049°45,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -52.71666666666667,
+                    4.333333333333333
+                ],
+                [
+                    -49.75,
+                    4.333333333333333
+                ],
+                [
+                    -49.75,
+                    6.333333333333333
+                ],
+                [
+                    -52.71666666666667,
+                    6.333333333333333
+                ],
+                [
+                    -52.71666666666667,
+                    4.333333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7490",
+        "title": "Archipel des Comores",
+        "issued": "Publication 2013",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "13°25,00'S - 042°58,00'E",
+            "NE": "11°03,00'S - 046°30,00'E"
+        },
+        "replaces": "(remplace 5983)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    42.96666666666667,
+                    -13.416666666666666
+                ],
+                [
+                    46.5,
+                    -13.416666666666666
+                ],
+                [
+                    46.5,
+                    -11.05
+                ],
+                [
+                    42.96666666666667,
+                    -11.05
+                ],
+                [
+                    42.96666666666667,
+                    -13.416666666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7491",
+        "title": "De Nosy Bé à la Baie d'Antsiranana - Récif du Geyser - Iles Glorieuses",
+        "issued": "Publication 1998",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "13°37,00'S - 046°23,00'E",
+            "NE": "11°15,00'S - 049°55,00'E"
+        },
+        "replaces": "(remplace 5561)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    46.38333333333333,
+                    -13.616666666666667
+                ],
+                [
+                    49.916666666666664,
+                    -13.616666666666667
+                ],
+                [
+                    49.916666666666664,
+                    -11.25
+                ],
+                [
+                    46.38333333333333,
+                    -11.25
+                ],
+                [
+                    46.38333333333333,
+                    -13.616666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7508",
+        "title": "De Capo Caccia à Capo Sant' Elia",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "38°25,10'N - 007°00,03'E",
+            "NE": "40°50,41'N - 009°13,52'E"
+        },
+        "references": "Fac similé carte IT n°911 publiée en 1994 (réimpression mai 2017)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    7.0005,
+                    38.41833333333334
+                ],
+                [
+                    9.225333333333333,
+                    38.41833333333334
+                ],
+                [
+                    9.225333333333333,
+                    40.84016666666667
+                ],
+                [
+                    7.0005,
+                    40.84016666666667
+                ],
+                [
+                    7.0005,
+                    38.41833333333334
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7509",
+        "title": "De Capo Sant'Elia à Capo Bellavista",
+        "issued": "Publication 1995",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "38°17,40'N - 008°50,00'E",
+            "NE": "39°59,98'N - 012°03,21'E"
+        },
+        "references": "Fac similé Carte IT n°949 publiée en 1995."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    8.833333333333334,
+                    38.29
+                ],
+                [
+                    12.0535,
+                    38.29
+                ],
+                [
+                    12.0535,
+                    39.99966666666667
+                ],
+                [
+                    8.833333333333334,
+                    39.99966666666667
+                ],
+                [
+                    8.833333333333334,
+                    38.29
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7510",
+        "title": "De Capo Bellavista aux Bouches de Bonifacio",
+        "issued": "Publication 1995",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "39°55,00'N - 008°50,00'E",
+            "NE": "41°36,28'N - 012°05,37'E"
+        },
+        "references": "Fac similé Carte IT n°912 publiée en 1995."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    8.833333333333334,
+                    39.916666666666664
+                ],
+                [
+                    12.0895,
+                    39.916666666666664
+                ],
+                [
+                    12.0895,
+                    41.60466666666667
+                ],
+                [
+                    8.833333333333334,
+                    41.60466666666667
+                ],
+                [
+                    8.833333333333334,
+                    39.916666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7531",
+        "title": "Nísos Krítí (Partie Est) - De Nísos Thíra (Santorin) à Nísos Kásos",
+        "issued": "Publication 2001",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "34°45,00'N - 024°12,00'E",
+            "NE": "36°26,00'N - 027°15,00'E"
+        },
+        "replaces": "(remplace 5740, 5740S, 5741, 5741S)",
+        "references": "Fac similé Carte GR n°44 publiée en 1995."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    24.2,
+                    34.75
+                ],
+                [
+                    27.25,
+                    34.75
+                ],
+                [
+                    27.25,
+                    36.43333333333333
+                ],
+                [
+                    24.2,
+                    36.43333333333333
+                ],
+                [
+                    24.2,
+                    34.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7539",
+        "title": "De Dubrovnik à Durrës",
+        "issued": "Publication 2006",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "40°45,00'N - 017°25,00'E",
+            "NE": "43°04,00'N - 019°38,00'E"
+        },
+        "replaces": "(remplace 3552, 3568)",
+        "references": "Fac similé Carte HR n°3414 publiée en 1998."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    17.416666666666668,
+                    40.75
+                ],
+                [
+                    19.633333333333333,
+                    40.75
+                ],
+                [
+                    19.633333333333333,
+                    43.06666666666667
+                ],
+                [
+                    17.416666666666668,
+                    43.06666666666667
+                ],
+                [
+                    17.416666666666668,
+                    40.75
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7549",
+        "title": "De Augusta à Punta Stilo - Détroit de Messina (Stretto di Messina)",
+        "issued": "Publication 2010",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "36°57,01'N - 014°30,00'E",
+            "NE": "38°29,27'N - 017°36,17'E"
+        },
+        "references": "Fac similé carte IT n°918 publiée en 1960 (édition juillet 1993)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    14.5,
+                    36.95016666666667
+                ],
+                [
+                    17.602833333333333,
+                    36.95016666666667
+                ],
+                [
+                    17.602833333333333,
+                    38.487833333333334
+                ],
+                [
+                    14.5,
+                    38.487833333333334
+                ],
+                [
+                    14.5,
+                    36.95016666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7550",
+        "title": "Du Détroit de Gibraltar à Kenitra",
+        "issued": "Édition n°&nbsp;2 - 2016",
+        "scaleDenominator": "324000",
+        "bboxDM": {
+            "SW": "34°04,00'N - 009°09,00'W",
+            "NE": "36°15,00'N - 005°15,00'W"
+        },
+        "references": "Fac similé carte ES n°81 publiée en 2009 (édition juin 2018)",
+        "boxes": [
+            "A - Embouchure de l'Oued Sebou",
+            "B - Cours de l'Oued Sebou"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -9.15,
+                    34.06666666666667
+                ],
+                [
+                    -5.25,
+                    34.06666666666667
+                ],
+                [
+                    -5.25,
+                    36.25
+                ],
+                [
+                    -9.15,
+                    36.25
+                ],
+                [
+                    -9.15,
+                    34.06666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7551",
+        "title": "De Kenitra au Cap Beddouza (Cap Cantin)",
+        "issued": "Édition n°&nbsp;2 - 2016",
+        "scaleDenominator": "331000",
+        "bboxDM": {
+            "SW": "32°15,00'N - 010°24,00'W",
+            "NE": "34°29,00'N - 006°30,00'W"
+        },
+        "references": "Fac similé Carte ES n°82 publiée en 2000 (édition décembre 2000 – réimpression juin 2015).",
+        "boxes": [
+            "A - Port de Rabat",
+            "B - Port de Jorf Lasfar"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -10.4,
+                    32.25
+                ],
+                [
+                    -6.5,
+                    32.25
+                ],
+                [
+                    -6.5,
+                    34.483333333333334
+                ],
+                [
+                    -10.4,
+                    34.483333333333334
+                ],
+                [
+                    -10.4,
+                    32.25
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7588",
+        "title": "Côtes du Gabon et du Congo - De Gamba à Pointe Noire",
+        "issued": "Édition n°&nbsp;2 - 2016",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "05°01,00'S - 008°40,00'E",
+            "NE": "02°40,00'S - 012°03,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    8.666666666666666,
+                    -5.016666666666667
+                ],
+                [
+                    12.05,
+                    -5.016666666666667
+                ],
+                [
+                    12.05,
+                    -2.6666666666666665
+                ],
+                [
+                    8.666666666666666,
+                    -2.6666666666666665
+                ],
+                [
+                    8.666666666666666,
+                    -5.016666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7605",
+        "title": "Archipel des Açores - Groupe Central",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "37°27,00'N - 030°00,00'W",
+            "NE": "39°30,00'N - 026°15,00'W"
+        },
+        "references": "Fac similé carte PT n° 43102 publiée en 1997 (édition janvier 2013)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -30,
+                    37.45
+                ],
+                [
+                    -26.25,
+                    37.45
+                ],
+                [
+                    -26.25,
+                    39.5
+                ],
+                [
+                    -30,
+                    39.5
+                ],
+                [
+                    -30,
+                    37.45
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7629",
+        "title": "Petites Antilles - Partie Sud - De Saint Lucia à Grenada et Barbados",
+        "issued": "Publication 2013",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "11°59,00'N - 062°00,00'W",
+            "NE": "14°03,50'N - 058°53,50'W"
+        },
+        "references": "Fac similé carte GB n°1043 publiée en 2006"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -62,
+                    11.983333333333333
+                ],
+                [
+                    -58.891666666666666,
+                    11.983333333333333
+                ],
+                [
+                    -58.891666666666666,
+                    14.058333333333334
+                ],
+                [
+                    -62,
+                    14.058333333333334
+                ],
+                [
+                    -62,
+                    11.983333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7630",
+        "title": "Petites Antilles - Partie Nord - De Anguilla à la Guadeloupe",
+        "issued": "Édition n°&nbsp;4 - 2017",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "15°47,00'N - 063°27,00'W",
+            "NE": "18°46,00'N - 061°20,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -63.45,
+                    15.783333333333333
+                ],
+                [
+                    -61.333333333333336,
+                    15.783333333333333
+                ],
+                [
+                    -61.333333333333336,
+                    18.766666666666666
+                ],
+                [
+                    -63.45,
+                    18.766666666666666
+                ],
+                [
+                    -63.45,
+                    15.783333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7631",
+        "title": "Petites Antilles - Partie centrale",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "304400",
+        "bboxDM": {
+            "SW": "13°40,00'N - 062°20,00'W",
+            "NE": "16°41,54'N - 060°13,00'W"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -62.333333333333336,
+                    13.666666666666666
+                ],
+                [
+                    -60.21666666666667,
+                    13.666666666666666
+                ],
+                [
+                    -60.21666666666667,
+                    16.692333333333334
+                ],
+                [
+                    -62.333333333333336,
+                    16.692333333333334
+                ],
+                [
+                    -62.333333333333336,
+                    13.666666666666666
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7658",
+        "title": "Détroit de Gibraltar et Mer d'Alboran",
+        "issued": "Édition n°&nbsp;3 - 2018",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "34°52,00'N - 006°12,00'W",
+            "NE": "37°10,00'N - 002°02,00'W"
+        },
+        "references": "Fac similé carte ES n°45 publiée en 1979 (édition novembre 2017)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.2,
+                    34.86666666666667
+                ],
+                [
+                    -2.033333333333333,
+                    34.86666666666667
+                ],
+                [
+                    -2.033333333333333,
+                    37.166666666666664
+                ],
+                [
+                    -6.2,
+                    37.166666666666664
+                ],
+                [
+                    -6.2,
+                    34.86666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7659",
+        "title": "De Cabo de Gata à Cabo de Las Huertas et de Cap Milonia à Cap Ivi",
+        "issued": "Publication 2014",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "35°03,00'N - 002°21,00'W",
+            "NE": "38°23,00'N - 000°34,00'E"
+        },
+        "replaces": "(remplace 3678,6611)",
+        "references": "Fac similé carte ES n°46 publiée en 1977 (édition octobre 2013)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -2.35,
+                    35.05
+                ],
+                [
+                    0.5666666666666667,
+                    35.05
+                ],
+                [
+                    0.5666666666666667,
+                    38.38333333333333
+                ],
+                [
+                    -2.35,
+                    38.38333333333333
+                ],
+                [
+                    -2.35,
+                    35.05
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7660",
+        "title": "De Cabo Tiñoso à Cabo Canet - Islas Ibiza, Formentera, Cabrera et Côte Sud-Ouest de Mallorca",
+        "issued": "Édition n°&nbsp;2 - 2017",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "37°23,00'N - 001°10,00'W",
+            "NE": "39°41,00'N - 003°08,00'E"
+        },
+        "references": "Fac similé carte ES n°47 publiée en 1976 (édition septembre 2016)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -1.1666666666666667,
+                    37.38333333333333
+                ],
+                [
+                    3.1333333333333333,
+                    37.38333333333333
+                ],
+                [
+                    3.1333333333333333,
+                    39.68333333333333
+                ],
+                [
+                    -1.1666666666666667,
+                    39.68333333333333
+                ],
+                [
+                    -1.1666666666666667,
+                    37.38333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7699",
+        "title": "De Punta Alice à Torre Canne et Canale d'Otranto",
+        "issued": "Édition n°&nbsp;3 - 2017",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "39°23,00'N - 016°28,00'E",
+            "NE": "40°54,90'N - 019°39,83'E"
+        },
+        "references": "Fac similé Carte IT n°920 publiée en 1992 (édition mai 2009)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    16.466666666666665,
+                    39.38333333333333
+                ],
+                [
+                    19.663833333333333,
+                    39.38333333333333
+                ],
+                [
+                    19.663833333333333,
+                    40.915
+                ],
+                [
+                    16.466666666666665,
+                    40.915
+                ],
+                [
+                    16.466666666666665,
+                    39.38333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7752",
+        "title": "De Cabo Silleiro à Cabo Carvoeiro",
+        "issued": "Publication 2010",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "39°00,00'N - 011°00,00'W",
+            "NE": "42°20,00'N - 008°00,00'W"
+        },
+        "replaces": "(remplace 3388.CA, 7277.CA)",
+        "references": "Fac similé Carte PT n° 23202 publiée en 2001."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -11,
+                    39
+                ],
+                [
+                    -8,
+                    39
+                ],
+                [
+                    -8,
+                    42.333333333333336
+                ],
+                [
+                    -11,
+                    42.333333333333336
+                ],
+                [
+                    -11,
+                    39
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7753",
+        "title": "De Cabo Carvoeiro à Cabo de São Vicente",
+        "issued": "Publication 2010",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "36°10,00'N - 011°00,00'W",
+            "NE": "39°30,00'N - 008°00,00'W"
+        },
+        "references": "Fac similé carte PT n° 23203 (septembre 2006)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -11,
+                    36.166666666666664
+                ],
+                [
+                    -8,
+                    36.166666666666664
+                ],
+                [
+                    -8,
+                    39.5
+                ],
+                [
+                    -11,
+                    39.5
+                ],
+                [
+                    -11,
+                    36.166666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7754",
+        "title": "De Cabo de São Vicente au Détroit de Gibraltar",
+        "issued": "Publication 2010",
+        "scaleDenominator": "375000",
+        "bboxDM": {
+            "SW": "35°10,00'N - 009°45,00'W",
+            "NE": "37°30,00'N - 005°16,00'W"
+        },
+        "note": "Nota&nbsp;: La publication de la carte 7754 intègre la modification du dispositif de séparation du trafic au large de Cabo de São Vicente qui entre en vigueur le 01 décembre 2010 à 0000 UTC. Avant cette date, les navigateurs doivent utiliser la carte 7300 (édition n° 2-2008).",
+        "references": "Fac similé carte ES n°44 publiée en 1978 (édition mai 2008)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -9.75,
+                    35.166666666666664
+                ],
+                [
+                    -5.266666666666667,
+                    35.166666666666664
+                ],
+                [
+                    -5.266666666666667,
+                    37.5
+                ],
+                [
+                    -9.75,
+                    37.5
+                ],
+                [
+                    -9.75,
+                    35.166666666666664
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7760",
+        "title": "Nouvelle-Calédonie (partie Nord)",
+        "issued": "Publication 2018",
+        "scaleDenominator": "307000",
+        "bboxDM": {
+            "SW": "20°36,07'S - 162°32,30'E",
+            "NE": "17°36,60'S - 164°43,20'E"
+        },
+        "replaces": "(remplace 3972.CA)",
+        "note": "Nota&nbsp;: Porter le cadre de la carte 7760 et la légende \"7760 (INT 6840)\" sur la carte 7268. Porter le renvoi hors cadre \"Voir carte adjacente 7760 (INT 6840)\" sur la carte 7761 (INT 6841) (au Nord Ouest). Porter le renvoi hors cadre \"Voir carte adjacente 7760 (INT 6840)\" sur la carte 7762 (INT 6842) (au Nord Ouest)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    162.53833333333333,
+                    -20.601166666666668
+                ],
+                [
+                    164.72,
+                    -20.601166666666668
+                ],
+                [
+                    164.72,
+                    -17.61
+                ],
+                [
+                    162.53833333333333,
+                    -17.61
+                ],
+                [
+                    162.53833333333333,
+                    -20.601166666666668
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7761",
+        "title": "Nouvelle-Calédonie (Partie Nord-Est)",
+        "issued": "Publication 2018",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "21°00,00'S - 163°59,10'E",
+            "NE": "18°56,10'S - 167°11,58'E"
+        },
+        "note": "Nota&nbsp;: La carte 2799.CA - Edition n°2 - 1956 a été supprimée lors de la publication de la carte 7762. Porter le renvoi hors cadre \"Voir carte adjacente 7761 (INT 6841)\" sur la carte 3972 (à l'Est). Porter le renvoi hors cadre \"VC 7761 (INT 6841)\" sur la carte 6686 (au Nord). Porter le renvoi hors cadre \"Voir carte adjacente 7761 (INT 6841) Adjoining chart 7761 (INT 6841)\" sur la carte 7762 (au Nord-Est). Porter le cadre de la carte 7761 et la légende \"7761 (INT 6841)\" sur la carte 7268."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    163.985,
+                    -21
+                ],
+                [
+                    167.193,
+                    -21
+                ],
+                [
+                    167.193,
+                    -18.935
+                ],
+                [
+                    163.985,
+                    -18.935
+                ],
+                [
+                    163.985,
+                    -21
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7762",
+        "title": "Nouvelle-Calédonie (Partie Ouest)",
+        "issued": "Publication 2017",
+        "scaleDenominator": "300000",
+        "bboxDM": {
+            "SW": "22°53,00'S - 163°01,00'E",
+            "NE": "19°56,50'S - 165°12,00'E"
+        },
+        "replaces": "(remplace 1946.CA, 2799.CA)",
+        "note": "Nota&nbsp;: Remplacer le renvoi hors cadre \"Voir carte adjacente 2799\" par \"Voir carte adjacente 7762 (INT6842)\" sur la carte 3972 (au Sud), rayer le renvoi hors cadre \"Voir carte adjacente 1946\" sur la carte 6768 (au Nord-Ouest), rayer le renvoi hors cadre \"VC 2799\" sur la carte 6686 (au Nord-Ouest), rayer les limites de cartes et légendes \"1946\" et \"2799\" sur la carte 7268, porter un renvoi hors cadre \"Voir carte adjacente 7762 (INT6842)\" sur la carte 6768 (à l'Ouest), porter un renvoi hors cadre \"VC 7762 (INT6842)\" sur la carte 6686 (à l'Ouest), porter le cadre de la carte et la légende \"7762 (INT6842)\" sur la carte 7268."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    163.01666666666668,
+                    -22.883333333333333
+                ],
+                [
+                    165.2,
+                    -22.883333333333333
+                ],
+                [
+                    165.2,
+                    -19.941666666666666
+                ],
+                [
+                    163.01666666666668,
+                    -19.941666666666666
+                ],
+                [
+                    163.01666666666668,
+                    -22.883333333333333
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7774",
+        "title": "de Fiumicino à Punta Licosa",
+        "issued": "Publication 2013",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "40°06,94'N - 011°47,95'E",
+            "NE": "41°48,04'N - 015°03,57'E"
+        },
+        "replaces": "(remplace 2122)",
+        "references": "Fac similé carte IT n°914 publiée en 2001 (réimpression octobre 2012)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    11.799166666666666,
+                    40.11566666666667
+                ],
+                [
+                    15.0595,
+                    40.11566666666667
+                ],
+                [
+                    15.0595,
+                    41.800666666666665
+                ],
+                [
+                    11.799166666666666,
+                    41.800666666666665
+                ],
+                [
+                    11.799166666666666,
+                    40.11566666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7775",
+        "title": "De Cefalù à Trapani et Isole Ègadi",
+        "issued": "Publication 2013",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "37°52,94'N - 011°55,95'E",
+            "NE": "40°16,32'N - 014°06,63'E"
+        },
+        "references": "Fac similé carte IT n°916 publiée en 2001 (réimpression décembre 2010)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    11.9325,
+                    37.882333333333335
+                ],
+                [
+                    14.1105,
+                    37.882333333333335
+                ],
+                [
+                    14.1105,
+                    40.272
+                ],
+                [
+                    11.9325,
+                    40.272
+                ],
+                [
+                    11.9325,
+                    37.882333333333335
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7776",
+        "title": "De Punta Licosa à Capo d'Orlando",
+        "issued": "Publication 2013",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "38°05,00'N - 014°14,00'E",
+            "NE": "40°29,56'N - 016°15,71'E"
+        },
+        "replaces": "(remplace 4646)",
+        "references": "Fac similé carte IT n°915 publiée en 1994 (réimpression juillet 2012)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    14.233333333333333,
+                    38.083333333333336
+                ],
+                [
+                    16.261833333333332,
+                    38.083333333333336
+                ],
+                [
+                    16.261833333333332,
+                    40.492666666666665
+                ],
+                [
+                    14.233333333333333,
+                    40.492666666666665
+                ],
+                [
+                    14.233333333333333,
+                    38.083333333333336
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7777",
+        "title": "De Punta Stilo à Capo S. Maria di Leuca",
+        "issued": "Publication 2014",
+        "scaleDenominator": "250000",
+        "bboxDM": {
+            "SW": "38°07,00'N - 016°21,00'E",
+            "NE": "40°32,00'N - 018°23,00'E"
+        },
+        "replaces": "(remplace 4030,4044,4071)",
+        "references": "Fac similé carte IT n°919 publiée en 1991 (réimpression octobre 2011)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    16.35,
+                    38.11666666666667
+                ],
+                [
+                    18.383333333333333,
+                    38.11666666666667
+                ],
+                [
+                    18.383333333333333,
+                    40.53333333333333
+                ],
+                [
+                    16.35,
+                    40.53333333333333
+                ],
+                [
+                    16.35,
+                    38.11666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7786",
+        "title": "De Lagune Aby à Tema",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "03°23,17'N - 003°17,98'W",
+            "NE": "05°45,17'N - 000°10,01'E"
+        },
+        "references": "Fac similé carte GB n°1383 publiée en 2004 (édition juin 2017)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -3.2996666666666665,
+                    3.3861666666666665
+                ],
+                [
+                    0.16683333333333333,
+                    3.3861666666666665
+                ],
+                [
+                    0.16683333333333333,
+                    5.752833333333333
+                ],
+                [
+                    -3.2996666666666665,
+                    5.752833333333333
+                ],
+                [
+                    -3.2996666666666665,
+                    3.3861666666666665
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7787",
+        "title": "De Tema à Cotonou",
+        "issued": "Édition n°&nbsp;2 - 2018",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "04°08,25'N - 000°38,01'W",
+            "NE": "06°30,25'N - 002°49,99'E"
+        },
+        "references": "Fac similé carte GB n°1384 publiée en 2005 (édition septembre 2017)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -0.6335,
+                    4.1375
+                ],
+                [
+                    2.8331666666666666,
+                    4.1375
+                ],
+                [
+                    2.8331666666666666,
+                    6.504166666666666
+                ],
+                [
+                    -0.6335,
+                    6.504166666666666
+                ],
+                [
+                    -0.6335,
+                    4.1375
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7788",
+        "title": "De Cotonou à Pennington River",
+        "issued": "Publication 2011",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "04°13,12'N - 002°22,44'E",
+            "NE": "06°35,12'N - 005°50,44'E"
+        },
+        "references": "Fac similé carte GB n°1385 publiée en 2004 (édition mars 2010)."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    2.374,
+                    4.218666666666667
+                ],
+                [
+                    5.8406666666666665,
+                    4.218666666666667
+                ],
+                [
+                    5.8406666666666665,
+                    6.585333333333333
+                ],
+                [
+                    2.374,
+                    6.585333333333333
+                ],
+                [
+                    2.374,
+                    4.218666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7789",
+        "title": "De Pennington River à Opobo River",
+        "issued": "Publication 2011",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "02°40,00'N - 004°25,00'E",
+            "NE": "05°02,00'N - 007°53,00'E"
+        },
+        "references": "Fac similé Carte GB n°1386 publiée en 2004."
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    4.416666666666667,
+                    2.6666666666666665
+                ],
+                [
+                    7.883333333333333,
+                    2.6666666666666665
+                ],
+                [
+                    7.883333333333333,
+                    5.033333333333333
+                ],
+                [
+                    4.416666666666667,
+                    5.033333333333333
+                ],
+                [
+                    4.416666666666667,
+                    2.6666666666666665
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7796",
+        "title": "Ilha da Madeira, Ilhas Desertas et Ilha do Porto Santo",
+        "issued": "Publication 2015",
+        "scaleDenominator": "350000",
+        "bboxDM": {
+            "SW": "32°06,08'N - 017°58,00'W",
+            "NE": "33°21,00'N - 015°09,99'W"
+        },
+        "replaces": "(remplace 2463.CA)",
+        "note": "Nota&nbsp;: Porter en magenta une limite de carte et sa légende 7796 sur la carte 7270.",
+        "references": "Fac similé extrait PT 33101 (publication 2003) et extrait PT36401 (publication 2001 (réimpression décembre 2012))",
+        "boxes": [
+            "A - Ilha do Porto Santo"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -17.966666666666665,
+                    32.101333333333336
+                ],
+                [
+                    -15.1665,
+                    32.101333333333336
+                ],
+                [
+                    -15.1665,
+                    33.35
+                ],
+                [
+                    -17.966666666666665,
+                    33.35
+                ],
+                [
+                    -17.966666666666665,
+                    32.101333333333336
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "8003",
+        "title": "Guide pour la préparation de la traversée du golfe de Suez",
+        "issued": "Publication 1997",
+        "scaleDenominator": "301800",
+        "bboxDM": {
+            "SW": "27°15,00'N - 032°15,00'E",
+            "NE": "30°00,00'N - 034°20,00'E"
+        },
+        "references": "Fac similé GB 5501"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    32.25,
+                    27.25
+                ],
+                [
+                    34.333333333333336,
+                    27.25
+                ],
+                [
+                    34.333333333333336,
+                    30
+                ],
+                [
+                    32.25,
+                    30
+                ],
+                [
+                    32.25,
+                    27.25
+                ]
+            ]
+        ]
+    }
+}
+]}
