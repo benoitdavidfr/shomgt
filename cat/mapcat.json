@@ -7231,6 +7231,24 @@
                     "eastlimit": 5.251
                 },
                 "issued": "Édition n° 2 - 2005"
+            },
+            "2019-03-08": {
+                "num": "7008",
+                "groupTitle": "Mer Méditerranée - Côtes d'Espagne et de France",
+                "title": "Du Cabo de San Sebastian à Fos-sur-Mer",
+                "scaleDenominator": "250.000",
+                "bboxDM": {
+                    "SW": "41°13,93'N - 002°54,93'E",
+                    "NE": "43°39,94'N - 005°12,9'E"
+                },
+                "spatial": {
+                    "southlimit": 41.232166666666664,
+                    "westlimit": 2.9154999999999998,
+                    "northlimit": 43.66566666666667,
+                    "eastlimit": 5.2015
+                },
+                "issued": "Édition n° 2 - 2005",
+                "corrections": "Correction du bord Est de la carte à partir de l'information sur la carte"
             }
         },
         "FR7011": {

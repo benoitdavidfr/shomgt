@@ -1,25 +1,8 @@
 <?php
-/ *PhpDoc:
+/*PhpDoc:
 name: shomgt.php
 title: shomgt.php - génération du catalogue shomgt.yaml des GéoTiff de la livraison courante
 doc: |
-  REFLEXIONS
-  Ce script pourrait être revu selon les orientations suivantes:
-    1) plutot que générer le catalogue de la livraison, reconstruire le catalogue de tous les GéoTiff en cours
-      - l'avantage est de pouvoir effectuer des corrections d'extension ou de modifier l'ordre des cartes
-        sur les GéoTiff courants plutot que sur la livraison en cours
-    2) utiliser les MD ISO et non le GAN pour déterminer l'extension de la carte sans ses bords
-    3) définir un fichier de corrections des extensions de carte pour tenir compte d'erreurs possibles
-    4) définir un fichier d'ordonnancement des cartes
-    5) tenir compte des cartes à supprimer, il faut le lier à la livraison
-  
-  Le principe devient donc de fabriquer un catalogue optimisé des GéoTiff pour son utilisation dans ws
-  Je pars des répertoires des cartes dans current et notamment:
-    - du fichier .info (produit par gdalinfo sur le .tif) qui donne:
-      - l'extension du GéoTiff avec ses bords
-      - la largeur et la hauteur du GéoTiff en nbre de pixels
-    - du fichier des MD ISO qui donne l'extension du GéoTiff sans ses bords
-  ===
   Lecture des infos et extraction des coordonnées géographiques des coins
   génération du fichier Yaml des paramètres
   a priori buggé sur 2 points:
@@ -27,6 +10,27 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  1/4/2019:
+    Les GéoTiff pris en compte sont ceux dans current
+    Suppression de l'option merge'
+  30/3/2019:
+    REFLEXIONS
+    Ce script pourrait être revu selon les orientations suivantes:
+     1) plutot que générer le catalogue de la livraison, reconstruire le catalogue de tous les GéoTiff en cours
+       - l'avantage est de pouvoir effectuer des corrections d'extension ou de modifier l'ordre des cartes
+         sur les GéoTiff courants plutot que sur la livraison en cours
+     2) utiliser les MD ISO et non le GAN pour déterminer l'extension de la carte sans ses bords
+     3) définir un fichier de corrections des extensions de carte pour tenir compte d'erreurs possibles
+     4) définir un fichier d'ordonnancement des cartes
+     5) tenir compte des cartes à supprimer, il faut le lier à la livraison
+  
+    Le principe devient donc de fabriquer un catalogue optimisé des GéoTiff pour son utilisation dans ws
+    Je pars des répertoires des cartes dans current et notamment:
+       - du fichier .info (produit par gdalinfo sur le .tif) qui donne:
+         - l'extension du GéoTiff avec ses bords
+         - la largeur et la hauteur du GéoTiff en nbre de pixels
+       - du fichier des MD ISO qui donne l'extension du GéoTiff sans ses bords
+     
   17/3/2019:
     - le GAN de certaines cartes est faux, notamment la carte 6643
     - un fichier de corrections est intégré dans le traitement des GAN dans shomgt/cat
@@ -36,12 +40,12 @@ journal: |
   9-10/3/2019:
     création
 */
+require_once __DIR__.'/../../../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
+use Symfony\Component\Yaml\Yaml;
 
 header('Content-type: text/plain; charset="utf8"');
-
-$merge = (php_sapi_name()=='cli') ? (($argc > 1) && ($argv[1]=='merge')) : isset($_GET['merge']);
 
 // classe définissant l'intervalle d'échelles de chaque couche de GéoTiff
 class LayerScaleDen {
@@ -136,22 +140,21 @@ function gdalinfo(string $filepath): array {
 
 require __DIR__.'/../cat/mapcat.inc.php';
 
-$newshomgt = []; // [ {lyrname} => [ {gtname} => {GéoTiff} ]]
-$shomgeotiff = realpath(__DIR__.'/../../../shomgeotiff');
-$tmppath = "$shomgeotiff/tmp";
-$tmp = opendir($tmppath)
-  or die("Erreur d'ouverture du répertoire $tmppath");
+$shomgt = Yaml::parseFile(__DIR__.'/shomgt.default.yaml'); // [ {lyrname} => [ {gtname} => {GéoTiff} ]]
+$currentpath = realpath(__DIR__.'/../../../shomgeotiff/current');
+$current = opendir($currentpath)
+  or die("Erreur d'ouverture du répertoire $currentpath");
 $dmax = 0;
-while (($mapname = readdir($tmp)) !== false) {
-  if (!is_dir("$tmppath/$mapname") || in_array($mapname, ['.','..','0101bis'])) 
+while (($mapname = readdir($current)) !== false) {
+  if (!is_dir("$currentpath/$mapname") || in_array($mapname, ['.','..','0101','0101bis'])) 
     continue;
-  $mapdir = opendir("$tmppath/$mapname")
-    or die("Erreur d'ouverture du répertoire $tmppath/$mapname");
+  $mapdir = opendir("$currentpath/$mapname")
+    or die("Erreur d'ouverture du répertoire $currentpath/$mapname");
   while (($file = readdir($mapdir)) !== false) {
     if (!preg_match('!^(.*)\.info$!', $file, $matches))
       continue;
     $fbname = $matches[1];
-    if (!($gdalinfo = gdalinfo("$tmppath/$mapname/$fbname.info")))
+    if (!($gdalinfo = gdalinfo("$currentpath/$mapname/$fbname.info")))
       continue;
     $gtbbox = $gdalinfo['gbox'];
     $width = $gdalinfo['width'];
@@ -178,7 +181,7 @@ while (($mapname = readdir($tmp)) !== false) {
     $top = ceil(($gdalbox->north() - $ganbox->north())/ $gdalbox->dy() * $height);
     if (($top <= 0) || ($top > $height/2))
       $top = 400;
-    $newshomgt[$lyrName]["$mapname/$fbname"] = [
+    $shomgt[$lyrName]["$mapname/$fbname"] = [
       'title'=> $title,
       'edition'=> $shomgtgan['issued'],
       'scaleden'=> $shomgtgan['scaleDenominator'],
@@ -224,9 +227,7 @@ function genyaml(array $shomgt): string {
   return $yaml;
 }
 
-require_once __DIR__.'/../../../vendor/autoload.php';
-use Symfony\Component\Yaml\Yaml;
-
+// fabrique un texte décalé de $nbchar caractères
 function tab(int $nbchar, string $text): string {
   $result = '';
   foreach (explode("\n", $text) as $line)
@@ -234,29 +235,14 @@ function tab(int $nbchar, string $text): string {
   return $result;
 }
 
-if (!$merge) {
-  // affichage du fragment Yaml correspondant aux nouvelles cartes
-  echo genyaml($newshomgt);
+foreach ($shomgt as $key => $value) {
+  if (substr($key, 0, 2) == 'gt')
+    continue;
+  if (strpos($value, "\n") == false)
+    echo "$key: $value\n";
+  else
+    echo "$key: |\n",tab(2, $value);
 }
-else {
-  // fusion de l'ancien et du nouveau fichier
-  $oldshomgt = Yaml::parsefile(__DIR__.'/../ws/shomgt.yaml');
-  foreach ($newshomgt as $lyrname => $layer) {
-    if ($lyrname == 'gt20M')
-      continue;
-    if (isset($oldshomgt[$lyrname]))
-      $oldshomgt[$lyrname] = array_merge($oldshomgt[$lyrname], $newshomgt[$lyrname]);
-    else
-      $oldshomgt[$lyrname] = $newshomgt[$lyrname];
-  }
-  foreach ($oldshomgt as $key => $value) {
-    if (substr($key, 0, 2) == 'gt')
-      continue;
-    if (strpos($value, "\n") == false)
-      echo "$key: $value\n";
-    else
-      echo "$key: |\n",tab(2, $value);
-  }
-  echo genyaml($oldshomgt);
-}
+echo genyaml($shomgt);
+
 die();

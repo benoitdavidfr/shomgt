@@ -25,7 +25,7 @@ if ($argc <= 1) {
     or die("Erreur d'ouverture du répertoire $dirpath");
   echo "Quelle livraison ?\n";
   while (($filename = readdir($dir)) !== false) {
-    if (!in_array($filename, ['.','..'])) {
+    if (!in_array($filename, ['.','..','.DS_Store'])) {
       echo " - $filename\n";
     }
   }
@@ -48,7 +48,7 @@ $dir = opendir($dirpath)
   or die("Erreur d'ouverture du répertoire $dirpath\n");
 echo "echo cd $dirpath\n"; echo "cd $dirpath\n";
 while (($filename = readdir($dir)) !== false) {
-  if (!preg_match('!\.7z$!', $filename))
+  if (!preg_match('!^\d+\.7z$!', $filename))
     continue;
   echo "echo 7z x $filename\n";
   echo "7z x $filename\n";

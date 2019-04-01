@@ -81,3 +81,13 @@ corrections:
         bboxDM:
             SW: "11°37,82'S - 047°11,95'E"
             NE: "11°21,56'S - 047°30,95'E"
+  FR7008:
+    title: Du Cabo de San Sebastian à Fos-sur-Mer
+    lineage: Correction du bord Est de la carte à partir de l'information sur la carte
+    originalBboxDM:
+        SW: "41°13,93'N - 002°54,93'E"
+        NE: "43°39,94'N - 005°15,06'E"
+    bboxDM:
+        SW: "41°13,93'N - 002°54,93'E"
+        NE: "43°39,94'N - 005°12,9'E"
+EOF:

@@ -4,7 +4,20 @@ name: genpng.php
 title: genpng.php - génération des PNG à partir des TIF dans le répertoite tmp
 doc: |
   script appelé par dezip.php
+    - itère sur les répertoires de tmp
+      - itère sur les fichiers .tif
+        - génère le fichier .info
+        - génère un fichier .png
+        - supprime le fichier .tif
+        - crée un répertoire pour les dalles PNG
+    - itère sur les PNG créés
+      - découpe le PNG en dalles
+      - supprime le PNG
+    - transfère les répertoires des nouvelles cartes dans current
+    - génère le nouveau shomgt.yaml et le met dans ../ws/
 journal: |
+  1/4/2019:
+    transfert des nouvelles cartes dans current et fabication du nouveau shomgt.yaml
   10/3/2019:
     création
 */
@@ -60,3 +73,12 @@ foreach ($pngFiles as $pngFile) {
   // suppression du .png non découpé pour économiser de la place
   echo "echo rm $pngFile\n"; echo "rm $pngFile\n";
 }
+
+// transfert des noueaux GéoTiff dans current
+echo "echo mv $tmppath/* $shomgeotiff/current/\n"; echo "mv $tmppath/* $shomgeotiff/current/\n";
+
+// génère le nouveau shomgt.yaml et le met dans ws
+echo "echo 'php shomgt.php > ../ws/shomgt.yaml'\n"; echo "php shomgt.php > ../ws/shomgt.yaml\n";
+
+// efface le cache des tuiles
+echo "echo rm -r ",__DIR__,"/../tilecache\n"; echo "rm -r ",__DIR__,"/../tilecache\n";

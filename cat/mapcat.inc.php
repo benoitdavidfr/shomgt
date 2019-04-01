@@ -6,6 +6,8 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  1/4/2019:
+    correction pattern MapBBox
   15-17/3/2019:
     refonte importante
     prises en compte de corrections du GAN définies dans gancorrections.yaml
@@ -36,7 +38,7 @@ class MapBBox {
   // analyse des coordonnées d'un point en DM Lat Lon et génération en 4 valeurs latDM, lonDM, latDD, lonDD
   function analCoord(string $text): array {
     // ATTENTION: les caractères ° et - peuvent être non ASCII
-    if (!preg_match("!^((\d+)[^\\d](\d\d),(\d\d)'(N|S)) . ((\d+)[^\\d]+(\d\d),(\d\d)'(E|W))$!u", $text, $matches))
+    if (!preg_match("!^((\d+)[^\\d](\d\d),(\d\d)'(N|S)) . ((\d+)[^\\d]+(\d+),(\d+)'(E|W))$!u", $text, $matches))
       throw new Exception("Erreur match sur MapBBox::analCoord($text)");
     //print_r($matches);
     return [
@@ -230,7 +232,7 @@ class MapCat {
       $titre2 = substr($titre2, 12);
       
       if (!preg_match('!^1&nbsp;:((&nbsp;\d+)+)$!', $carte['echelle'], $matches))
-        throw new Exception("Erreur sur match sur echele cartouche $carte[echelle]");
+        throw new Exception("Erreur sur match sur echelle cartouche $carte[echelle]");
       $scaleD = str_replace('&nbsp;','', $matches[1]);
       
       $this->boxes[] = [
@@ -251,9 +253,11 @@ class MapCat {
     $frnum = 'FR'.$this->num;
     if (!isset(self::$gancorrections[$frnum])) return;
     $corr = self::$gancorrections[$frnum];
+    //print_r($corr);
     foreach ($this->boxes as $ibox => $box) {
       if (($ibox == 0) && isset($corr['bboxDM'])) {
         $bboxDM = $corr['bboxDM'];
+        echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
         $this->boxes[0]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
       }
       elseif (isset($corr['boxes'][$ibox-1]['bboxDM'])) {
