@@ -1,0 +1,11 @@
+title: paramètres de mise à jour
+description: |
+  paramètres utilisés pour mettre à jour le portefeuille de cartes
+  onTop liste des couples de GéoTiff (gt1, gt2) pour lesquels gt1 doit s'afficher au dessus de gt2
+  delete liste par GéoTiff des rectangles à effacer sous la forme [{lonmin}, {latmin}, {lonmax}, {latmax}]
+onTop:
+
+# Rectangle en coord géo. (lon,lat) à effacer dans le GéoTiff
+rectsToDelete:
+  7081/7081_pal300:
+    - [-7.0, 42.1797, 2.1094, 49.8364]
