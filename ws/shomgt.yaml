@@ -158,34 +158,6 @@ gt250k:
     top: 609 # nbre de pixels de la bordure haute
 
 gt100k:
-  6713/6713_pal300:
-    title: 6713 - Côte Nord-Est de la Corse
-    edition: Édition n°&nbsp;5 - 2016
-    scaleden: 152000
-    width: 9922
-    height: 13819
-    south: 41.922019
-    west: 8.906736
-    north: 43.519464
-    east: 10.462408
-    left: 589 # nbre de pixels de la bordure gauche
-    bottom: 373 # nbre de pixels de la bordure basse
-    right: 490 # nbre de pixels de la bordure droite
-    top: 472 # nbre de pixels de la bordure haute
-  6821/6821_pal300:
-    title: 6821 - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
-    edition: Édition n°&nbsp;2 - 2009
-    scaleden: 152000
-    width: 9922
-    height: 13819
-    south: 41.688469
-    west: 7.936589
-    north: 43.291881
-    east: 9.492261
-    left: 590 # nbre de pixels de la bordure gauche
-    bottom: 374 # nbre de pixels de la bordure basse
-    right: 489 # nbre de pixels de la bordure droite
-    top: 462 # nbre de pixels de la bordure haute
   7019/7019_1_gtw:
     title: 7019-A - De Capo Dell'Arma à Capo Mele
     edition: Édition n°&nbsp;4 - 2014

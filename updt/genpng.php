@@ -13,14 +13,19 @@ doc: |
     - itère sur les PNG créés
       - découpe le PNG en dalles
       - supprime le PNG
+    - suppression des cartes à supprimer
     - transfère les répertoires des nouvelles cartes dans current
     - génère le nouveau shomgt.yaml et le met dans ../ws/
 journal: |
+  2/4/2019:
+    suppression des cartes à supprimer
   1/4/2019:
     transfert des nouvelles cartes dans current et fabication du nouveau shomgt.yaml
   10/3/2019:
     création
 */
+require_once __DIR__.'/../../../vendor/autoload.php';
+use Symfony\Component\Yaml\Yaml;
 
 header('Content-type: text/plain; charset="utf8"');
 
@@ -74,11 +79,41 @@ foreach ($pngFiles as $pngFile) {
   echo "echo rm $pngFile\n"; echo "rm $pngFile\n";
 }
 
-// transfert des noueaux GéoTiff dans current
-echo "echo mv $tmppath/* $shomgeotiff/current/\n"; echo "mv $tmppath/* $shomgeotiff/current/\n";
+// supprime les cartes à supprimer
+if (($argc > 1) && is_file("$shomgeotiff/incoming/$argv[1]/index.yaml")) {
+  echo "echo $shomgeotiff/incoming/$argv[1]/index.yaml existe\n";
+  $index = Yaml::parseFile("$shomgeotiff/incoming/$argv[1]/index.yaml");
+  if (isset($index['toDelete'])) {
+    foreach ($index['toDelete'] as $toDelete => $toDeleteTitle) {
+      if (substr($toDelete, 0, 2))
+        $toDelete = substr($toDelete, 2);
+      echo "echo \"Suppresion de la carte $toDelete - $toDeleteTitle\"\n";
+      if (is_dir("$shomgeotiff/current/$toDelete")) {
+        echo "echo rm -r $shomgeotiff/current/$toDelete\n"; echo "rm -r $shomgeotiff/current/$toDelete\n";
+      }
+      else
+        echo "echo \"La carte $toDelete n'existe pas dans current\"\n";
+    }
+  }
+}
+
+// transfert des noueaux GéoTiff dans current en supprimant l'ancien s'il existe
+$tmpdir = opendir($tmppath)
+  or die("Erreur d'ouverture du répertoire $tmppath\n");
+while (($mapname = readdir($tmpdir)) !== false) {
+  if (!is_dir("$tmppath/$mapname") || in_array($mapname, ['.','..']))
+    continue;
+  if (is_dir("$shomgeotiff/current/$mapname")) {
+    echo "echo rm -r $shomgeotiff/current/$mapname\n"; echo "rm -r $shomgeotiff/current/$mapname\n";
+  }
+  echo "echo mv $tmppath/$mapname $shomgeotiff/current/\n"; echo "mv $tmppath/$mapname $shomgeotiff/current/\n";
+}
+closedir($tmpdir);
 
 // génère le nouveau shomgt.yaml et le met dans ws
 echo "echo 'php shomgt.php > ../ws/shomgt.yaml'\n"; echo "php shomgt.php > ../ws/shomgt.yaml\n";
 
 // efface le cache des tuiles
-echo "echo rm -r ",__DIR__,"/../tilecache\n"; echo "rm -r ",__DIR__,"/../tilecache\n";
+if (is_dir(__DIR__.'/../tilecache')) {
+  echo "echo rm -r ",__DIR__,"/../tilecache\n"; echo "rm -r ",__DIR__,"/../tilecache\n";
+}

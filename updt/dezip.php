@@ -59,5 +59,5 @@ while (($filename = readdir($dir)) !== false) {
 closedir($dir);
 
 echo "echo cd ",__DIR__,"\n"; echo "cd ",__DIR__,"\n";
-echo "echo php genpng.php\n"; echo "php genpng.php | sh\n";
+echo "echo 'php genpng.php $argv[1] | sh'\n"; echo "php genpng.php $argv[1] | sh\n";
 die("\n");
