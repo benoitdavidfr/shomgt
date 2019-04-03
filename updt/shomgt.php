@@ -52,16 +52,16 @@ class LayerScaleDen {
   // liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d'échelle des GéoTiff
   // contenus dans la couche
   static $layersScaleDenMax = [
-    '12k'=> 1.8e4,
-    '25k'=> 3e4,
-    '50k'=> 9e4,
-    '100k'=> 2e5,
-    '250k'=> 3e5,
+    '12k'=> 1.7e4,
+    '25k'=> 3.5e4,
+    '50k'=> 7e4,
+    '100k'=> 1.6e5,
+    '250k'=> 3.5e5,
     '500k'=> 7e5,
-    '1M'=> 1.5e6,
+    '1M'=> 1.4e6,
     '2M'=> 3e6,
     '4M'=> 6e6,
-    '10M'=> 1.6e7,
+    '10M'=> 1.4e7,
     '20M'=> 9e999,
   ];
   
@@ -100,7 +100,13 @@ while (($mapname = readdir($current)) !== false) {
     $gtbbox = $gdalinfo['gbox'];
     $width = $gdalinfo['width'];
     $height = $gdalinfo['height'];
-    $shomgtgan = MapCat::getCatInfoFromGtName("$mapname/$fbname", $gtbbox);
+    try {
+      $shomgtgan = MapCat::getCatInfoFromGtName("$mapname/$fbname", $gtbbox);
+    }
+    catch (Exception $e) {
+      echo "# Erreur ",$e->getMessage()," sur MapCat::getCatInfoFromGtName($mapname/$fbname, gtbbox)\n";
+      continue;
+    }
     //echo "<pre>shomgtgan="; print_r($shomgtgan); echo "</pre>\n";
     $lyrName = LayerScaleDen::getLyrName(str_replace('.','',$shomgtgan['scaleDenominator']));
     if (preg_match('!^. - !', $shomgtgan['title']))

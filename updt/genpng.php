@@ -97,7 +97,7 @@ if (($argc > 1) && is_file("$shomgeotiff/incoming/$argv[1]/index.yaml")) {
   }
 }
 
-// transfert des noueaux GéoTiff dans current en supprimant l'ancien s'il existe
+// transfert des nouveaux GéoTiff dans current en supprimant l'ancien s'il existe
 $tmpdir = opendir($tmppath)
   or die("Erreur d'ouverture du répertoire $tmppath\n");
 while (($mapname = readdir($tmpdir)) !== false) {
@@ -109,11 +109,3 @@ while (($mapname = readdir($tmpdir)) !== false) {
   echo "echo mv $tmppath/$mapname $shomgeotiff/current/\n"; echo "mv $tmppath/$mapname $shomgeotiff/current/\n";
 }
 closedir($tmpdir);
-
-// génère le nouveau shomgt.yaml et le met dans ws
-echo "echo 'php shomgt.php > ../ws/shomgt.yaml'\n"; echo "php shomgt.php > ../ws/shomgt.yaml\n";
-
-// efface le cache des tuiles
-if (is_dir(__DIR__.'/../tilecache')) {
-  echo "echo rm -r ",__DIR__,"/../tilecache\n"; echo "rm -r ",__DIR__,"/../tilecache\n";
-}

@@ -8,6 +8,10 @@ doc: |
   sans paramètre liste les répertoires de livraison
   produit des commandes shell. Doit être pipé avec un shell.
   lance à la fin genpng.php
+
+  php dezip.php 20170531 20170613 20170614 20170619 20170626 20170717 20181123 20181130 20181203 20190114 | sh
+  php dezip.php 20170619 20170626 20170717 20181123 20181130 20181203 20190114 | sh
+  
 journal: |
   10/3/2019:
     ajout suppression des gros fichiers non indispensables
@@ -33,31 +37,40 @@ if ($argc <= 1) {
   die("\n");
 }
 
-echo "# effacement du contenu de tmp ou création du répertoire s'il n'existe pas\n";
-$tmppath = "$shomgeotiff/tmp";
-if (is_dir($tmppath)) {
-  echo "echo rm -r $tmppath/*\n"; echo "rm -r $tmppath/*\n";
-}
-else {
+array_shift($argv); // le nom du script php
+foreach ($argv as $incoming) {
+  echo "# suppression de tmp s'il existe et recréation du répertoire\n";
+  $tmppath = "$shomgeotiff/tmp";
+  if (is_dir($tmppath)) {
+    echo "echo rm -r $tmppath\n"; echo "rm -r $tmppath\n";
+  }
   echo "echo mkdir $tmppath\n"; echo "mkdir $tmppath\n"; 
-}
   
-// extraction des 7z et déplacement dans tmp
-$dirpath = "$shomgeotiff/incoming/$argv[1]";
-$dir = opendir($dirpath)
-  or die("Erreur d'ouverture du répertoire $dirpath\n");
-echo "echo cd $dirpath\n"; echo "cd $dirpath\n";
-while (($filename = readdir($dir)) !== false) {
-  if (!preg_match('!^\d+\.7z$!', $filename))
-    continue;
-  echo "echo 7z x $filename\n";
-  echo "7z x $filename\n";
-  $filename = substr($filename, 0, strlen($filename)-3);
-  echo "echo mv $filename ../../tmp/\n";
-  echo "mv $filename ../../tmp/\n";
-}
-closedir($dir);
+  // extraction des 7z et déplacement dans tmp
+  $dirpath = "$shomgeotiff/incoming/$incoming";
+  $dir = opendir($dirpath)
+    or die("Erreur d'ouverture du répertoire $dirpath\n");
+  echo "echo cd $dirpath\n"; echo "cd $dirpath\n";
+  while (($filename = readdir($dir)) !== false) {
+    if (!preg_match('!^\d+\.7z$!', $filename))
+      continue;
+    echo "echo 7z -y x $filename\n";
+    echo "7z -y x $filename\n";
+    $filename = substr($filename, 0, strlen($filename)-3);
+    echo "echo mv $filename ../../tmp/\n";
+    echo "mv $filename ../../tmp/\n";
+  }
+  closedir($dir);
 
-echo "echo cd ",__DIR__,"\n"; echo "cd ",__DIR__,"\n";
-echo "echo 'php genpng.php $argv[1] | sh'\n"; echo "php genpng.php $argv[1] | sh\n";
+  echo "echo cd ",__DIR__,"\n"; echo "cd ",__DIR__,"\n";
+  echo "echo 'php genpng.php $incoming | sh'\n"; echo "php genpng.php $argv[1] | sh\n";
+}
+
+// génère le nouveau shomgt.yaml et le met dans ws
+echo "echo 'php shomgt.php > ../ws/shomgt.yaml'\n"; echo "php shomgt.php > ../ws/shomgt.yaml\n";
+
+// efface le cache des tuiles
+if (is_dir(__DIR__.'/../tilecache')) {
+  echo "echo rm -r ",__DIR__,"/../tilecache\n"; echo "rm -r ",__DIR__,"/../tilecache\n";
+}
 die("\n");

@@ -61,8 +61,8 @@ if ($rectsToDelete) {
     if (!imagefilledrectangle($image, $x0, $y0, $x1, $y1, $transparent))
       throw new Exception("erreur de imagefilledrectangle() ligne ".__LINE__);
   }
-  if (!imagealphablending($image, true))
-    throw new Exception("erreur de imagealphablending() ligne ".__LINE__);
+  imagealphablending($image, true)
+    or error("erreur de imagealphablending() ligne ".__LINE__);
 }
 
 $dalle = @imagecreate(1024, 1024)
@@ -73,7 +73,8 @@ for ($i=0; $i<floor($width/1024); $i++) {
     imagecopy($dalle, $image, 0, 0, $i*1024, $j*1024, 1024, 1024)
       or error("erreur de imagecopy() ligne ".__LINE__);
     $tilepath = sprintf('%s/%X-%X.png', $dirpath, $i, $j);
-    imageSaveAlpha($dalle, true);
+    imageSaveAlpha($dalle, true)
+      or error("erreur de imageSaveAlpha() ligne ".__LINE__);
     imagepng($dalle, $tilepath)
       or error("erreur de imagepng() ligne ".__LINE__);
     //echo "dalle $tilepath créée\n";
@@ -85,7 +86,7 @@ imagedestroy($dalle);
 $i = floor($width/1024);
 $w = $width - 1024 * $i;
 if ($w) {
-  echo "création de la colonne $i\n";
+  //echo "création de la colonne $i\n";
   //echo "w=$w<br>\n";
   $dalle = @imagecreate($w, 1024)
     or error("erreur de imagecreate() ligne ".__LINE__);
@@ -104,7 +105,7 @@ if ($w) {
 $j = floor($height/1024);
 $h = $height - 1024 * $j;
 if ($h) {
-  echo "création de la ligne $j\n";
+  //echo "création de la ligne $j\n";
   //echo "h=$h<br>\n";
   $dalle = @imagecreate(1024, $h)
     or error("erreur de imagecreate() ligne ".__LINE__);
@@ -125,7 +126,7 @@ $w = $width - 1024 * $i;
 $j = floor($height/1024);
 $h = $height - 1024 * $j;
 if ($w && $h) {
-  echo "création de la cellule $i $j\n";
+  //echo "création de la cellule $i $j\n";
   $dalle = @imagecreate($w, $h)
     or error("erreur de imagecreate() ligne ".__LINE__);
   imagecopy($dalle, $image, 0, 0, $i*1024, $j*1024, $w, $h)
@@ -152,5 +153,5 @@ if (0) { // Affichage
   }
   echo "</table>\n";
 }
-die("Découpage OK du fichier $pngpath\n");
-
+echo "Découpage OK du fichier $pngpath en ",($i+1)," X ",$j+1," dalles\n";
+die();

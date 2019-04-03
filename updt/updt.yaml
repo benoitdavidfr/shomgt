@@ -4,6 +4,12 @@ description: |
   onTop liste des couples de GéoTiff (gt1, gt2) pour lesquels gt1 doit s'afficher au dessus de gt2
   delete liste par GéoTiff des rectangles à effacer sous la forme [{lonmin}, {latmin}, {lonmax}, {latmax}]
 onTop:
+  6623/6623_pal300: 6757/6757_pal300
+  7210/7210_pal300: 7311/7311_pal300
+  7204/7204_pal300: 7507/7507_pal300
+  7761/7761_pal300: 7762/7762_pal300
+  7302/7302_pal300: 6948/6848_pal300
+  6948/6948_pal300: 7482/7482_pal300
 
 # Rectangle en coord géo. (lon,lat) à effacer dans le GéoTiff
 rectsToDelete:
