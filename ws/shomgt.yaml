@@ -32,20 +32,6 @@ gt20M:
     bottom: 384 # nbre de pixels de la bordure basse
     right: 626 # nbre de pixels de la bordure droite
     top: 594 # nbre de pixels de la bordure haute
-  5438/5438_pal300:
-    title: 5438 - Océan Pacifique
-    edition: Édition n°&nbsp;3 - 1943
-    scaleden: 27000000
-    width: 13819
-    height: 9922
-    south: -68.204469
-    west: 52.265547
-    north: 74.773422
-    east: 343.312481
-    left: 1242 # nbre de pixels de la bordure gauche
-    bottom: 1127 # nbre de pixels de la bordure basse
-    right: 1238 # nbre de pixels de la bordure droite
-    top: 1203 # nbre de pixels de la bordure haute
 
 gt10M:
   5417/5417_pal300:

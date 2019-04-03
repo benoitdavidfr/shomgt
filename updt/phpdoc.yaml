@@ -31,24 +31,27 @@ doc: |
 
   L'identifiant {mapno}/{gtname} est utilisé dans shomgt.yaml pour identifier un GéoTiff notamment dans le module ws.
         
-  Algorithmes:
-    - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans {shomgt}/../../shomgeotiff/tmp/
-    - pour chaque carte et chaque GéoTiff:
-      - le fichier info est généré à partir du format GéoTIFF par gdal_info
-      - le GéoTiff est converti en PNG par gdal
-      - puis découpé en dalles 1024 X 1024
+  Algorithme:
+    - pour chaque livraison
+      - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans {shomgt}/../../shomgeotiff/tmp/
+      - pour chaque carte et chaque GéoTiff:
+        - le fichier info est généré à partir du format GéoTIFF par gdal_info
+        - le GéoTiff est converti en PNG par gdal puis supprimé
+        - le PNG est découpé en dalles 1024 X 1024 puis supprimé
+      - transfert des cartes de {shomgt}/../../shomgeotiff/tmp/ dans {shomgt}/../../shomgeotiff/current/
+      - les cartes à supprimer le sont
     - génération du catalogue Yaml et écriture dans ../ws/shomgt.yaml
     - suppression du cache {shomgt}/tilecache 
   
   Mise en oeuvre:
     - tous les scripts doivent être appelés en ligne de commande
-    - dezip.php est appelé avec en paramètre le nom d'une livraison et génère les cmdes sh pour:
-      - dézipper les 7z de cette livraison,
-      - déplacer les répertoires dézippé dans le répertoire tmp
+    - updt.php est appelé avec en paramètre les noms des livraisons et génère les cmdes sh pour:
+      - dézipper les 7z des livraisons,
+      - déplacer les répertoires dézippés dans le répertoire tmp
       - générer pour chaque GéoTiff un fichier .info avec gdalinfo
       - convertir chaque GéoTiff en PNG avec gdal_translate
       - découper chaque GéoTiff en dalles 1024 X 1024 avec tile.php
-    - tile.php découpe un fichiers PNG en dalles 1024 X 1024
+    - tile.php découpe un fichiers PNG en dalles 1024 X 1024 et effectue un effacement de la partie définie dans updt.yaml
     - gtshom.php génère un catalogue Yaml des nouvelles cartes et l'enregistre dans le fichier shomgt.yaml
     
   En pratique:
@@ -56,16 +59,15 @@ doc: |
     - La mise à jour nécessite les étapes suivantes:
       - copier les fichier 7z de carte dans un répertoire de livraison et nommer ce répertoire par la date
         sous la forme YYYYMMDD
-      - lancer en ligne de commande le script dezip.php en le pipant avec un sh ;
+      - lancer en ligne de commande le script updt.php en le pipant avec un sh ;
         il enchaine différentes commandes de dezippage, de transformation en PNG et de découpage
         seuls les PNG découpés sont conservés à la fin pour économiser de l'espace
   
   ToDoList:
-    - gérer dans la mise à jour des cartes la suppression des cartes périmées
     - permettre de changer l'ordre d'affichage des GéoTiffs
   
 phpScripts:
-  - /geoapi/shomgt/updt/dezip.php
+  - /geoapi/shomgt/updt/updt.php
   - /geoapi/shomgt/updt/tile.php
   - /geoapi/shomgt/updt/genpng.php
   - /geoapi/shomgt/updt/shomgt.php

@@ -1,20 +1,24 @@
 <?php
 /*PhpDoc:
-name: dezip.php
-title: dezip.php - dezipage des fichiers de carte d'une livraison Shom
+name: updt.php
+title: updt.php - installe une ou plusieurs livraisons dans portefeuille de shomgt
 doc: |
   script à appeler en ligne de commande
-  doit être appelé avec le nom du répertoire de livraison en paramètre
+  doit être appelé avec en paramètre les noms des répertoires de livraison
   sans paramètre liste les répertoires de livraison
   produit des commandes shell. Doit être pipé avec un shell.
-  lance à la fin genpng.php
+  dezip une livraison dans tmp puis lance genpng.php
+  à la fin génère shomgt.yaml et efface le cache des tuiles
 
-  php dezip.php 20170531 20170613 20170614 20170619 20170626 20170717 20181123 20181130 20181203 20190114 | sh
-  php dezip.php 20170619 20170626 20170717 20181123 20181130 20181203 20190114 | sh
+  appel avec ttes les livraisons:
+  php updt.php 20170531 20170613 20170614 20170619 20170626 20170717 20181123 20181130 20181203 20190114 | sh
   
 journal: |
+  2-3/4/2019:
+    traitement de plusieurs livraisons
+    chgt de nom
   10/3/2019:
-    ajout suppression des gros fichiers non indispensables
+    suppression des gros fichiers non indispensables
   9/3/2019:
     création
 */
@@ -54,11 +58,9 @@ foreach ($argv as $incoming) {
   while (($filename = readdir($dir)) !== false) {
     if (!preg_match('!^\d+\.7z$!', $filename))
       continue;
-    echo "echo 7z -y x $filename\n";
-    echo "7z -y x $filename\n";
+    echo "echo 7z -y x $filename\n"; echo "7z -y x $filename\n";
     $filename = substr($filename, 0, strlen($filename)-3);
-    echo "echo mv $filename ../../tmp/\n";
-    echo "mv $filename ../../tmp/\n";
+    echo "echo mv $filename ../../tmp/\n"; echo "mv $filename ../../tmp/\n";
   }
   closedir($dir);
 

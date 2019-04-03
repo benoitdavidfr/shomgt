@@ -84,10 +84,10 @@ if (($argc > 1) && is_file("$shomgeotiff/incoming/$argv[1]/index.yaml")) {
   echo "echo $shomgeotiff/incoming/$argv[1]/index.yaml existe\n";
   $index = Yaml::parseFile("$shomgeotiff/incoming/$argv[1]/index.yaml");
   if (isset($index['toDelete'])) {
-    foreach ($index['toDelete'] as $toDelete => $toDeleteTitle) {
+    foreach (array_keys($index['toDelete']) as $toDelete) {
       if (substr($toDelete, 0, 2))
         $toDelete = substr($toDelete, 2);
-      echo "echo \"Suppresion de la carte $toDelete - $toDeleteTitle\"\n";
+      echo "echo \"Suppresion de la carte $toDelete\"\n";
       if (is_dir("$shomgeotiff/current/$toDelete")) {
         echo "echo rm -r $shomgeotiff/current/$toDelete\n"; echo "rm -r $shomgeotiff/current/$toDelete\n";
       }
