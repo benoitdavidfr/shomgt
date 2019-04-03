@@ -65,6 +65,7 @@ doc: |
   
   ToDoList:
     - permettre de changer l'ordre d'affichage des GéoTiffs
+    - vérifier les GéoTiff à cheval sur l'antiméridien
   
 phpScripts:
   - /geoapi/shomgt/updt/updt.php

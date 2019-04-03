@@ -10,6 +10,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  3/4/2019:
+    gestion des contraintes d'ordre des GT défini dans updt.yaml
   1/4/2019:
     Les GéoTiff pris en compte sont ceux dans current
     Suppression de l'option merge'
@@ -43,9 +45,9 @@ journal: |
 require_once __DIR__.'/../../../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
+require __DIR__.'/gdalinfo.inc.php';
+require __DIR__.'/../cat/mapcat.inc.php';
 use Symfony\Component\Yaml\Yaml;
-
-header('Content-type: text/plain; charset="utf8"');
 
 // classe définissant l'intervalle d'échelles de chaque couche de GéoTiff
 class LayerScaleDen {
@@ -78,8 +80,7 @@ class LayerScaleDen {
   }
 }
 
-require __DIR__.'/gdalinfo.inc.php';
-require __DIR__.'/../cat/mapcat.inc.php';
+header('Content-type: text/plain; charset="utf8"');
 
 $shomgt = Yaml::parseFile(__DIR__.'/shomgt.default.yaml'); // [ {lyrname} => [ {gtname} => {GéoTiff} ]]
 $currentpath = realpath(__DIR__.'/../../../shomgeotiff/current');
@@ -146,32 +147,69 @@ while (($mapname = readdir($current)) !== false) {
   }
 }
 
-function genyaml(array $shomgt): string {
-  $yaml = '';
-  foreach ($shomgt as $lyrName => $layer) {
-    if (substr($lyrName, 0, 2) <> 'gt')
-      continue;
-    $yaml .= "\n$lyrName:\n";
-    if (!$layer)
-      continue;
-    foreach ($layer as $gtname => $gt) {
-      $yaml .= "  $gtname:\n"
-            ."    title: $gt[title]\n"
-            .(isset($gt['edition']) ? "    edition: $gt[edition]\n" : '')
-            .(isset($gt['scaleden']) ? sprintf("    scaleden: %d\n",str_replace('.','',$gt['scaleden'])) : '')
-            .sprintf("    width: %d\n",$gt['width'])
-            .sprintf("    height: %d\n",$gt['height'])
-            .sprintf("    south: %.6f\n",$gt['south'])
-            .sprintf("    west: %.6f\n",$gt['west'])
-            .sprintf("    north: %.6f\n",$gt['north'])
-            .sprintf("    east: %.6f\n",$gt['east'])
-            .sprintf("    left: %d # nbre de pixels de la bordure gauche\n",$gt['left'])
-            .sprintf("    bottom: %d # nbre de pixels de la bordure basse\n",$gt['bottom'])
-            .sprintf("    right: %d # nbre de pixels de la bordure droite\n",$gt['right'])
-            .sprintf("    top: %d # nbre de pixels de la bordure haute\n",$gt['top']);
-    }
+
+// chgt d'ordre des GT dans les couches pour respecter les contraintes définies dans updt.yaml
+class OnTop {
+  static $onTop; // couples (gt1, gt2) où gt1 est au dessus de gt2, cad gt1 doit être après gt2 dans la liste
+  
+  static function init(string $yamlpath) {
+    $updt = Yaml::parseFile($yamlpath);
+    self::$onTop = $updt['onTop'];
   }
-  return $yaml;
+  
+  static function num(array $array, string $key): int {
+    foreach ($array as $num => $value)
+      if ($value == $key)
+        return $num;
+    return -1;
+  }
+  
+  // change l'ordre du tableau $gtnames en mettant l'élément topNum juste après bellowNum
+  static function chgOrder(array $gtnames, int $topNum, int $bellowNum): array {
+    // recopie des élts avant topnum
+    if ($topNum == 0)
+      $result = [];
+    else
+      $result = array_slice($gtnames, 0, $topNum);
+    if ($bellowNum > $topNum + 1)
+      $result = array_merge($result, array_slice($gtnames, $topNum, $bellowNum - $topNum - 1));
+    $result[] = $gtnames[$bellowNum];
+    $result[] = $gtnames[$topNum];
+    if ($bellowNum < count($gtnames))
+      $result = array_merge($result, array_slice($gtnames, $bellowNum +1));
+    //echo "result="; print_r($result);
+    return $result;
+  }
+  
+  // L'algorithme consiste pour chaque couple (top, bellow) à mettre top juste après bellow
+  static function assess(string $lyrname, array $layer): array {
+    //echo "layer="; print_r($layer);
+    $gtnames = array_keys($layer);
+    //echo "layer $lyrname, gtnames="; print_r($gtnames);
+    foreach (self::$onTop as $top => $bellow) {
+      if (!isset($layer[$top]) || !isset($layer[$bellow]))
+        continue;
+      $topNum = self::num($gtnames, $top);
+      $bellowNum = self::num($gtnames, $bellow);
+      //echo "top=$top doit être après bellow=$bellow\n";
+      //echo "topNum=$topNum, bellowNum=$bellowNum\n";
+      if ($bellowNum > $topNum)
+        $gtnames = self::chgOrder($gtnames, $topNum, $bellowNum);
+      //echo "layer $lyrname, gtnames="; print_r($gtnames);
+    }
+    // fabrication d'une nouvelle layer respectant le nouvel ordre des gtnames
+    $newLayer = [];
+    foreach ($gtnames as $gtname)
+      $newLayer[$gtname] = $layer[$gtname];
+    return $newLayer;
+  }
+};
+
+OnTop::init(__DIR__.'/updt.yaml');
+foreach ($shomgt as $lyrname => $layer) {
+  if ((substr($lyrname, 0, 2) == 'gt') && $layer) {
+    $shomgt[$lyrname] = OnTop::assess($lyrname, $layer);
+  }
 }
 
 // fabrique un texte décalé de $nbchar caractères
@@ -182,14 +220,34 @@ function tab(int $nbchar, string $text): string {
   return $result;
 }
 
+// génération de la sortie
 foreach ($shomgt as $key => $value) {
-  if (substr($key, 0, 2) == 'gt')
-    continue;
-  if (strpos($value, "\n") == false)
-    echo "$key: $value\n";
-  else
-    echo "$key: |\n",tab(2, $value);
+  if (substr($key, 0, 2) <> 'gt') {
+    if (strpos($value, "\n") == false)
+      echo "$key: $value\n";
+    else
+      echo "$key: |\n",tab(2, $value);
+  }
+  else {
+    echo "\n$key:\n";
+    if (!$value)
+      continue;
+    foreach ($value as $gtname => $gt) {
+      echo  "  $gtname:\n",
+            "    title: $gt[title]\n",
+            (isset($gt['edition']) ? "    edition: $gt[edition]\n" : ''),
+            (isset($gt['scaleden']) ? sprintf("    scaleden: %d\n",str_replace('.','',$gt['scaleden'])) : ''),
+            sprintf("    width: %d\n",$gt['width']),
+            sprintf("    height: %d\n",$gt['height']),
+            sprintf("    south: %.6f\n",$gt['south']),
+            sprintf("    west: %.6f\n",$gt['west']),
+            sprintf("    north: %.6f\n",$gt['north']),
+            sprintf("    east: %.6f\n",$gt['east']),
+            sprintf("    left: %d # nbre de pixels de la bordure gauche\n",$gt['left']),
+            sprintf("    bottom: %d # nbre de pixels de la bordure basse\n",$gt['bottom']),
+            sprintf("    right: %d # nbre de pixels de la bordure droite\n",$gt['right']),
+            sprintf("    top: %d # nbre de pixels de la bordure haute\n",$gt['top']);
+    }
+  }
 }
-echo genyaml($shomgt);
-
 die();

@@ -458,20 +458,6 @@ gt2M:
     bottom: 1078 # nbre de pixels de la bordure basse
     right: 1122 # nbre de pixels de la bordure droite
     top: 1396 # nbre de pixels de la bordure haute
-  6623/6623_pal300:
-    title: 6623 - De La Manche au Détroit de Gibraltar et à l'archipel des Açores
-    edition: Édition n°&nbsp;6 - 2018
-    scaleden: 2770000
-    width: 13819
-    height: 9922
-    south: 32.248506
-    west: -37.481500
-    north: 53.027681
-    east: 2.314550
-    left: 1123 # nbre de pixels de la bordure gauche
-    bottom: 1066 # nbre de pixels de la bordure basse
-    right: 1123 # nbre de pixels de la bordure droite
-    top: 1416 # nbre de pixels de la bordure haute
   6757/6757_pal300:
     title: 6757 - Du Détroit de Gibraltar au Canal de Sicile
     edition: Édition n°&nbsp;2 - 1984
@@ -486,6 +472,20 @@ gt2M:
     bottom: 1216 # nbre de pixels de la bordure basse
     right: 1243 # nbre de pixels de la bordure droite
     top: 1266 # nbre de pixels de la bordure haute
+  6623/6623_pal300:
+    title: 6623 - De La Manche au Détroit de Gibraltar et à l'archipel des Açores
+    edition: Édition n°&nbsp;6 - 2018
+    scaleden: 2770000
+    width: 13819
+    height: 9922
+    south: 32.248506
+    west: -37.481500
+    north: 53.027681
+    east: 2.314550
+    left: 1123 # nbre de pixels de la bordure gauche
+    bottom: 1066 # nbre de pixels de la bordure basse
+    right: 1123 # nbre de pixels de la bordure droite
+    top: 1416 # nbre de pixels de la bordure haute
   6898/6898_pal300:
     title: 6898 - Mer des Antilles (Mer des Caraïbes)
     edition: Édition n°&nbsp;4 - 2014
@@ -966,20 +966,6 @@ gt500k:
     bottom: 515 # nbre de pixels de la bordure basse
     right: 408 # nbre de pixels de la bordure droite
     top: 556 # nbre de pixels de la bordure haute
-  7210/7210_pal300:
-    title: 7210 - Atterrages de l'entrée de La Manche
-    edition: Édition n°&nbsp;5 - 2018
-    scaleden: 500000
-    width: 13819
-    height: 9922
-    south: 47.989731
-    west: -13.743314
-    north: 52.207847
-    east: -4.602178
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 777 # nbre de pixels de la bordure basse
-    right: 400 # nbre de pixels de la bordure droite
-    top: 1586 # nbre de pixels de la bordure haute
   7311/7311_pal300:
     title: 7311 - La Manche (Partie Ouest) - De Isles of Scilly et de l'Ile d'Ouessant aux Casquets
     edition: Édition n°&nbsp;3 - 2009
@@ -994,6 +980,20 @@ gt500k:
     bottom: 513 # nbre de pixels de la bordure basse
     right: 417 # nbre de pixels de la bordure droite
     top: 560 # nbre de pixels de la bordure haute
+  7210/7210_pal300:
+    title: 7210 - Atterrages de l'entrée de La Manche
+    edition: Édition n°&nbsp;5 - 2018
+    scaleden: 500000
+    width: 13819
+    height: 9922
+    south: 47.989731
+    west: -13.743314
+    north: 52.207847
+    east: -4.602178
+    left: 428 # nbre de pixels de la bordure gauche
+    bottom: 777 # nbre de pixels de la bordure basse
+    right: 400 # nbre de pixels de la bordure droite
+    top: 1586 # nbre de pixels de la bordure haute
   7312/7312_pal300:
     title: 7312 - La Manche (Partie Est)
     edition: Édition n°&nbsp;2 - 2009
@@ -1064,20 +1064,6 @@ gt500k:
     bottom: 496 # nbre de pixels de la bordure basse
     right: 418 # nbre de pixels de la bordure droite
     top: 583 # nbre de pixels de la bordure haute
-  7491/7491_pal300:
-    title: 7491 - De Nosy Bé à la Baie d'Antsiranana - Récif du Geyser - Iles Glorieuses
-    edition: Publication 1998
-    scaleden: 350000
-    width: 13819
-    height: 9922
-    south: -13.747900
-    west: 46.251381
-    north: -11.094553
-    east: 50.011647
-    left: 485 # nbre de pixels de la bordure gauche
-    bottom: 494 # nbre de pixels de la bordure basse
-    right: 350 # nbre de pixels de la bordure droite
-    top: 579 # nbre de pixels de la bordure haute
   7507/7507_pal300:
     title: 7507 - Du Golfe du Lion aux Bouches de Bonifacio
     edition: Publication 1996
@@ -1514,20 +1500,6 @@ gt250k:
     bottom: 487 # nbre de pixels de la bordure basse
     right: 543 # nbre de pixels de la bordure droite
     top: 584 # nbre de pixels de la bordure haute
-  7761/7761_pal300:
-    title: 7761 - Nouvelle-Calédonie (Partie Nord-Est)
-    edition: Publication 2018
-    scaleden: 300000
-    width: 13819
-    height: 9922
-    south: -21.118431
-    west: 163.883394
-    north: -18.802903
-    east: 167.294481
-    left: 412 # nbre de pixels de la bordure gauche
-    bottom: 512 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 563 # nbre de pixels de la bordure haute
   7762/7762_pal300:
     title: 7762 - Nouvelle-Calédonie (Partie Ouest)
     edition: Publication 2017
@@ -1542,6 +1514,20 @@ gt250k:
     bottom: 497 # nbre de pixels de la bordure basse
     right: 539 # nbre de pixels de la bordure droite
     top: 594 # nbre de pixels de la bordure haute
+  7761/7761_pal300:
+    title: 7761 - Nouvelle-Calédonie (Partie Nord-Est)
+    edition: Publication 2018
+    scaleden: 300000
+    width: 13819
+    height: 9922
+    south: -21.118431
+    west: 163.883394
+    north: -18.802903
+    east: 167.294481
+    left: 412 # nbre de pixels de la bordure gauche
+    bottom: 512 # nbre de pixels de la bordure basse
+    right: 412 # nbre de pixels de la bordure droite
+    top: 563 # nbre de pixels de la bordure haute
 
 gt100k:
   5978/5978_2_gtw:
@@ -3561,20 +3547,6 @@ gt50k:
     left: 419 # nbre de pixels de la bordure gauche
     bottom: 516 # nbre de pixels de la bordure basse
     right: 419 # nbre de pixels de la bordure droite
-    top: 590 # nbre de pixels de la bordure haute
-  7471/7471_pal300:
-    title: 7471 - D'Anguilla à Saint-Barthélemy
-    edition: Édition n°&nbsp;3 - 2017
-    scaleden: 60000
-    width: 13819
-    height: 9922
-    south: 17.793294
-    west: -63.287300
-    north: 18.248686
-    east: -62.624364
-    left: 431 # nbre de pixels de la bordure gauche
-    bottom: 509 # nbre de pixels de la bordure basse
-    right: 431 # nbre de pixels de la bordure droite
     top: 590 # nbre de pixels de la bordure haute
   7482/7482_pal300:
     title: 7482 - De l'Ilet à Kahouanne aux Saintes
