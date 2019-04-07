@@ -61,11 +61,11 @@ doc: |
         sous la forme YYYYMMDD
       - lancer en ligne de commande le script updt.php en le pipant avec un sh ;
         il enchaine différentes commandes de dezippage, de transformation en PNG et de découpage
-        seuls les PNG découpés sont conservés à la fin pour économiser de l'espace
+        seuls les PNG découpés sont conservés à la fin pour économiser l'espace
   
   ToDoList:
-    - permettre de changer l'ordre d'affichage des GéoTiffs
-    - vérifier les GéoTiff à cheval sur l'antiméridien
+    - gérer "0101 - Planisphère terrestre"
+    - vérifier les GéoTiff à cheval sur l'anti-méridien
   
 phpScripts:
   - /geoapi/shomgt/updt/updt.php
@@ -74,4 +74,5 @@ phpScripts:
   - /geoapi/shomgt/updt/shomgt.php
   - /geoapi/shomgt/updt/frame.php
   - /geoapi/shomgt/updt/crop.php
-    
+phpIncludes:
+  - /geoapi/shomgt/updt/gdalinfo.inc.php

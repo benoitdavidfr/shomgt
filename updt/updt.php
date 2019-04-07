@@ -65,7 +65,7 @@ foreach ($argv as $incoming) {
   closedir($dir);
 
   echo "echo cd ",__DIR__,"\n"; echo "cd ",__DIR__,"\n";
-  echo "echo 'php genpng.php $incoming | sh'\n"; echo "php genpng.php $argv[1] | sh\n";
+  echo "echo 'php genpng.php $incoming | sh'\n"; echo "php genpng.php $incoming | sh\n";
 }
 
 // génère le nouveau shomgt.yaml et le met dans ws

@@ -177,8 +177,8 @@ class GeoTiff {
   title: static function drawOutline($image, string $layer, EBox $wombox, int $width, int $height) - dessine sur l'image les silhouettes des GéoTiff de la couche $layername dans le rectangle $wombox
   doc: |
     Test Monde entier:
-    http://localhost/geoapi/shomgt/ws/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=-20037508,-15538711,20037508,15538711&CRS=EPSG:3857&WIDTH=948&HEIGHT=735&LAYERS=gt50k&STYLES=&FORMAT=image/png&TRANSPARENT=TRUE
-  http://localhost/geoapi/shomgt/ws/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=-7977949.091245136224,1814613.089056419674,8231889.115369650535,9972436.364056419581&CRS=EPSG:3857&WIDTH=1532&HEIGHT=771&LAYERS=gt50k&STYLES=&FORMAT=image/png&TRANSPARENT=TRUE
+     http://localhost/geoapi/shomgt/ws/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=-20037508,-15538711,20037508,15538711&CRS=EPSG:3857&WIDTH=948&HEIGHT=735&LAYERS=gt50k&STYLES=&FORMAT=image/png&TRANSPARENT=TRUE
+     http://localhost/geoapi/shomgt/ws/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=-7977949.091245136224,1814613.089056419674,8231889.115369650535,9972436.364056419581&CRS=EPSG:3857&WIDTH=1532&HEIGHT=771&LAYERS=gt50k&STYLES=&FORMAT=image/png&TRANSPARENT=TRUE
   */
   static function drawOutline($image, string $layername, EBox $wombox, int $width, int $height) {
     $color = imagecolorallocate($image, 255, 0, 0);

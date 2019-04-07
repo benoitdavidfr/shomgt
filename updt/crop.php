@@ -2,7 +2,6 @@
 /*PhpDoc:
 name: crop.php
 title: crop.php - génère un script shell pour fabriquer un GéoTiff rogné
-includes: [maplib.inc.php, shomgt.yaml]
 doc: |
   S'utilise en fournissant en paramètre le chemin d'un fichier tif dans un répertoire d'une carte
   exemple$ php crop.php ~/html/shomgeotiff/incoming/all/7154/7154_1_gtw.tif  | sh

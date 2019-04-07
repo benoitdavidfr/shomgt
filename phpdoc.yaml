@@ -42,15 +42,20 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
-    - revoir la génération de shomgt.yaml en utilisant l'extension des métadonnées à la place des coord du GAN
-      - cela a l'avantage de rendre le module updt indépendant du module cat
-    - permettre de changer l'ordre d'affichage des GéoTiffs
-    - gérer dans la mise à jour des cartes la suppression des cartes périmées
+    - remettre les num de carte dans la carte Leaflet
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  30/3-3/4/2019:
+    modif de updt pour générer automatiquement shomgt.yaml à partir:
+      - des livraisons
+      - du catalogue à jour
+      - gancorrections.yaml qui corrige les infos incorrectes du GAN
+      - updt.yaml qui précise
+        - l'ordre à respecter entre GT
+        - les morceaux de cartes à effacer
   15-17/3/2018:
-    refonte de cat
+    refonte du catalogue (cat)
   11-14/3/2018:
     transfert des plugins LL dans https://github.com/benoitdavidfr/leaflet
     création d'un répertoire docs contenant les GéoJSON du catalogue des cartes et une carte d'affichage

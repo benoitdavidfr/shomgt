@@ -1,4 +1,10 @@
 <?php
+/*PhpDoc:
+name: gdalinfo.inc.php
+title: gdalinfo.inc.php - la fonction gdalinfo() extrait d'un fichier gdalinfo les infos pertinentes et les structure
+classes:
+doc: |
+*/
 
 // traduit en degré décimal la coordonnée géographique fournie par gdalinfo
 function todecdeg($val): float {

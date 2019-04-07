@@ -2,7 +2,7 @@
 /*PhpDoc:
 name: wms.php
 title: wms.php - service WMS de shomgt avec authentification
-includes: [ wmsserver.inc.php, geotiff.inc.php, accesscntrl.inc.php, '../lib/coordsys.inc.php', '../lib/gebox.inc.php', shomgt.yaml ]
+includes: [ wmsserver.inc.php, geotiff.inc.php, accesscntrl.inc.php, '../lib/coordsys.inc.php', '../lib/gebox.inc.php' ]
 classes:
 doc: |
   Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()

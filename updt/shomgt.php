@@ -5,6 +5,10 @@ title: shomgt.php - génération du catalogue shomgt.yaml des GéoTiff de la liv
 doc: |
   Lecture des infos et extraction des coordonnées géographiques des coins
   génération du fichier Yaml des paramètres
+  Traitement particulier pour le planisphère 0101:
+    - un enregistrement existe 010bis est défini dans shomgt.default.yaml
+    - dans current il doit y avoir un lien de 0101bis vers 0101
+    - le répertoire 0101bis n'est pas pris en compte pour générer shomgt.yaml
   a priori buggé sur 2 points:
    - ne prend pas en compte les cartes à cheval sur l'anti-méridien
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
@@ -88,7 +92,7 @@ $current = opendir($currentpath)
   or die("Erreur d'ouverture du répertoire $currentpath");
 $dmax = 0;
 while (($mapname = readdir($current)) !== false) {
-  if (!is_dir("$currentpath/$mapname") || in_array($mapname, ['.','..','0101','0101bis'])) 
+  if (!is_dir("$currentpath/$mapname") || in_array($mapname, ['.','..','0101bis'])) 
     continue;
   $mapdir = opendir("$currentpath/$mapname")
     or die("Erreur d'ouverture du répertoire $currentpath/$mapname");

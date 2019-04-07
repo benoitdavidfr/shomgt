@@ -1,5 +1,9 @@
 <?php
-// génération
+/*PhpDoc:
+name: catdata.php
+title: catdata.php - génération des fichiers JSON du catalogue, génère du sh
+doc: |
+*/
 
 // liste des scaleDenomnator, sous la forme [label => valeur], définissant n intervalles
 $sds = [

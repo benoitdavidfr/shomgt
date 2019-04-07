@@ -2,7 +2,6 @@
 /*PhpDoc:
 name:  log.inc.php
 title: log.inc.php - enregistrement d'un log
-includes: [ mysqlprms.inc.php ]
 functions:
 doc: |
   fonction d'enregistrement d'un log
