@@ -64,7 +64,6 @@ doc: |
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
   
   ToDoList:
-    - gérer "0101 - Planisphère terrestre"
     - vérifier les GéoTiff à cheval sur l'anti-méridien
   
 phpScripts:
