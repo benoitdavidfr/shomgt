@@ -20,7 +20,7 @@ foreach (array_keys($sds) as $no => $sdmin) {
 $readme = "<!-- Ce fichier est généré par catdata.php -->\n\n";
 $readme .= "## Catalogue des cartes GéoTiff du Shom\n\n";
 
-$readme .= "- [carte du catalogue des cartes](https://benoitdavidfr.github.io/shomgt/map.html)\n\n";
+$readme .= "- [carte du catalogue des cartes](https://benoitdavidfr.github.io/shomgt/catmap.html)\n\n";
 
 foreach (array_keys($sds) as $no => $sdmin) {
   if ($no == 0)

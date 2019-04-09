@@ -2,7 +2,7 @@
 
 ## Catalogue des cartes GéoTiff du Shom
 
-- [carte du catalogue des cartes](https://benoitdavidfr.github.io/shomgt/map.html)
+- [carte du catalogue des cartes](https://benoitdavidfr.github.io/shomgt/catmap.html)
 
 - [cartes dont l'échelle < 1/10M](cat10M.geojson)
 - [cartes aux échelles comprises entre 1/6.5M et 1/10M](cat6.5M.geojson)
