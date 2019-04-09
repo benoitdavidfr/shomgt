@@ -4,7 +4,7 @@ name: gdalinfo.inc.php
 title: gdalinfo.inc.php - la fonction gdalinfo() extrait d'un fichier gdalinfo les infos pertinentes et les structure
 functions:
 doc: |
-journal:
+journal: |
   9/4/2019:
     traitement du cas particulier de FR0101
 */
@@ -28,15 +28,15 @@ function todecdeg($val): float {
 
 /*PhpDoc: functions
 name: gdalinfo
-title: function gdalinfo(string $filepath): array - extrait du fichier gdalinfo ['gbox'=> {gbox}, 'width'=> {width}, 'height'=> {height} ]
+title: "function gdalinfo(string $filepath): array - extrait du fichier gdalinfo ['gbox'=> {gbox}, 'width'=> {width}, 'height'=> {height} ]"
 doc: |
   Si ces coordonnées sont absentes alors retourne [], le GéoTiff n'est pas géolocalisé
   De manière générale -180 <= west < east <= 180
   Traite 2 cas particuliers:
-    - si le rectangle est à cheval sur l'anti-méridien alors rajout de 360° à esat pour que -180 <= west < east <= 540
-    - cas du planisphère qui est à cheval sur l'anti-méridien et pour lequel west < esat
-      dans ce dernier cas ajout de 360° à east
-      ce dernier cas est détecté en regardant si la longitude du centre est comprise entre les extrêmes 
+    - si le rectangle est à cheval sur l'anti-méridien alors rajout de 360° à east pour que -180 <= west < east <= 540
+    - cas du planisphère qui est à cheval sur l'anti-méridien mais pour lequel west < east
+      dans ce dernier cas aussi ajout de 360° à east
+      ce dernier cas est détecté en regardant si la longitude du centre est bien comprise entre les extrêmes 
 */
 function gdalinfo(string $filepath): array {
   if (!($info = @file_get_contents($filepath)))
