@@ -4,6 +4,16 @@ description: |
   L'algorithme de correction utilise d'une part le fait que la liste des boxes corresponde aux mêmes cartouches
   et, d'autre part, effectue la correction du bboxDM si ce champ existe pour le cartouche.
 corrections:
+  FR0101:
+    title: Planisphère des fuseaux horaires
+    scaleDenominator: '40.000.000'
+    originalBboxDM:
+      SW: "79°00,00'S - 130°00,00'E"
+      NE: "80°00,00'N - 100°00,00'E"
+    bboxDM:
+      SW: "79°00,00'S - 100°00,00'E"
+      NE: "80°00,00'N - 490°00,00'E"
+    issued: Édition n° 4 - 2016
   FR6643:
     title: Iles et récifs du canal de Mozambique
     lineage: |

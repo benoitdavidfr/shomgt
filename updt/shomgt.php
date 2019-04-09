@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  9/4/2019:
+    traitement du cas particulier de FR0101 par modif de gdainfo.inc.php
   3/4/2019:
     gestion des contraintes d'ordre des GT défini dans updt.yaml
   1/4/2019:
@@ -92,7 +94,7 @@ $current = opendir($currentpath)
   or die("Erreur d'ouverture du répertoire $currentpath");
 $dmax = 0;
 while (($mapname = readdir($current)) !== false) {
-  if (!is_dir("$currentpath/$mapname") || in_array($mapname, ['.','..','0101bis'])) 
+  if (!is_dir("$currentpath/$mapname") || in_array($mapname, ['.','..'])) 
     continue;
   $mapdir = opendir("$currentpath/$mapname")
     or die("Erreur d'ouverture du répertoire $currentpath/$mapname");

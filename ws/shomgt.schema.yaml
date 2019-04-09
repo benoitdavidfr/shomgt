@@ -24,7 +24,7 @@ definitions:
         maximum: 360
         description: |
           limite Est en degrés décimaux > -180 & < 180 & > west
-          Pour les GéoTiff à cheval sur l'anti-méridien, west peut être supérieur à 180
+          Pour les GéoTiff à cheval sur l'anti-méridien, east peut être supérieur à 180
       north:
         type: number
         minimum: -90

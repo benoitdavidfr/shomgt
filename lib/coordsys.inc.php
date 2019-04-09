@@ -492,7 +492,7 @@ echo "<html><head><meta charset='UTF-8'><title>coordsys</title></head><body><pre
 //echo "x",UTM::zone([-179,0]),"x\n";
 
 if (1) {
-  echo "Example du rapport USGS pp 269-270 utilisant l'Ellipsoide de Clarke\n";
+  echo "Example du rapport USGS pp 269-270 utilisant l'Ellipsoide de Clarke 1866\n";
   Ellipsoid::set('Clarke1866');
   $pt = [-73.5, 40.5];
   echo "phi=",radians2degresSexa($pt[1]/180*PI(),'N'),", lambda=", radians2degresSexa($pt[0]/180*PI(),'E'),"\n";

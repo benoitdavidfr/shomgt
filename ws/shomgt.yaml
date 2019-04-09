@@ -15,24 +15,11 @@ gt20M:
     south: -80.989458
     west: 87.719058
     north: 82.683419
-    east: 148.861197
-    left: 400 # nbre de pixels de la bordure gauche
-    bottom: 377 # nbre de pixels de la bordure basse
-    right: 400 # nbre de pixels de la bordure droite
-    top: 590 # nbre de pixels de la bordure haute
-  0101bis/0101_pal300:
-    title: 0101 - Planisphère terrestre (axé sur 65° W) (bis)
-    scaleden: 21648237
-    width: 13819
-    height: 9922
-    south: -80.989458
-    west: 87.719058
-    north: 82.683419
     east: 508.861197
-    left: 406 # nbre de pixels de la bordure gauche
-    bottom: 384 # nbre de pixels de la bordure basse
-    right: 626 # nbre de pixels de la bordure droite
-    top: 594 # nbre de pixels de la bordure haute
+    left: 403 # nbre de pixels de la bordure gauche
+    bottom: 377 # nbre de pixels de la bordure basse
+    right: 619 # nbre de pixels de la bordure droite
+    top: 590 # nbre de pixels de la bordure haute
 
 gt10M:
   5417/5417_pal300:
