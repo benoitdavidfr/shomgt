@@ -19,6 +19,8 @@ doc: |
   Test:
     http://localhost/geoapi/gt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
+  10/4/2019:
+    ajout tuiles des numéros de carte
   7-8/3/2019:
     correction des différents bugs
     ajout d'une tuile d'erreur
@@ -73,8 +75,46 @@ $layers = [
     'title'=>"Cartes SHOM AEM",
     'abstract'=> "Cartes Shom Action de l'Etat en Mer (AEM)",
   ],
+  // étiquettes des numéros
+  'num20M'=> [
+    'title'=>"Nos des cartes 1/20.000.000",
+  ],
+  'num10M'=> [
+    'title'=>"Nos des cartes 1/10.000.000",
+  ],
+  'num4M'=> [
+    'title'=>"Nos des cartes 1/4.000.000",
+  ],
+  'num2M'=> [
+    'title'=>"Nos des cartes 1/2.000.000",
+  ],
+  'num1M'=> [
+    'title'=>"Nos des cartes 1/1.000.000",
+  ],
+  'num500k'=> [
+    'title'=>"Nos des cartes 1/550.000",
+  ],
+  'num250k'=> [
+    'title'=>"Nos des cartes 1/250.000",
+  ],
+  'num100k'=> [
+    'title'=>"Nos des cartes 1/100.000",
+  ],
+  'num50k'=> [
+    'title'=>"Nos des cartes 1/50.000",
+  ],
+  'num25k'=> [
+    'title'=>"Nos des cartes 1/25.000",
+  ],
+  'num12k'=> [
+    'title'=>"Nos des cartes 1/12.000",
+  ],  
+  'numaem'=> [
+    'title'=>"Nos des cartes SHOM AEM",
+    'abstract'=> "Numéros des cartes Shom Action de l'Etat en Mer (AEM)",
+  ],
 ];
-
+    
 $request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
   : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
 $url = "$request_scheme://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";

@@ -7,9 +7,25 @@ doc: |
       produits dans le répertoire de stockage des GéoTiffs
     - une mise à jour du catalogue des GéoTiffs shomgt.yaml stocké dans ../ws/
   
-  La livraison Shom doit être stockée dans un répertoire de livraison stocké dans ~/html/shomgeotiff/incoming/{date}/
+  La livraison Shom doit être stockée dans un répertoire de livraison dans {shomgt}/../../shomgeotiff/incoming/{date}/
   où {date} est la date de livraison sous la forme YYMMDD.
-  le répertoire de stockage des cartes est ~/html/shomgeotiff/current/ dans lequel chaque carte correspond
+  En outre chaque livraison devrait comporter un fichier index.yaml contenant notamment un champ 'toDelete'
+  qui contient un dictionnaire des cartes à supprimer à l'occasion de cette livraison.
+  Ce dictionnaire est indexé par l'identifiant de la carte à détruire.
+  Il n'est pas nécessaire de mentionner les cartes à remplacer.
+  exemple:
+    toDelete: # cartes à supprimer de shomgt
+      FR0982: Ile Saint-Pierre, Port de Saint-Pierre, Port de Miquelon (1/20.000)
+      FR6725: Estuaire de la Tamise - Partie Sud (1/50000)
+      FR6774: Puerto de Bilbao (1/12500) - 2018
+      FR6786: De Biscarrosse à San Sebastian
+      FR6851: Ports d'Ajaccio et de Propriano (1/10.000)
+      FR5438:
+        title: Océan Pacifique (1/27.000.000)
+        edition: Édition n° 3 - 1943
+        comment: n'apporte rien par rapport au planisphère et s'intègre mal du fait de son style
+  
+  Le répertoire de stockage des cartes est {shomgt}/../../shomgeotiff/current/ dans lequel chaque carte correspond
   à un répertoire portant comme nom le numéro de la carte {mapno}, ex: 7121
   Chaque répertoire de carte provient du dézippage du 7z de livraison.
   Il contient en outre pour chaque GéoTiff nommé {gtname}:
@@ -23,7 +39,7 @@ doc: |
   Les fichiers de MD XML dont le nom est de la forme CARTO_GEOTIFF_{gtname}.xml sont utilisés par le module
   catalogue pour connaitre la date de mise à jour des GéoTiff utilisés.
   
-  Le nom {gtname} du GéoTiff est défini par le Shom.
+  L'id {gtname} du GéoTiff est défini par le Shom dans la livraison.
   Il est de la forme :
     - {mapno}_pal300 pour la zone gégraphique principale de la carte numéro {mapno}, ex: 7121_pal300
     - {mapno}_{gtid}_gtw pour chaque zone gégraphique secondaire de la carte numéro {mapno} identifiée par {gtid}
@@ -33,7 +49,8 @@ doc: |
         
   Algorithme:
     - pour chaque livraison
-      - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans {shomgt}/../../shomgeotiff/tmp/
+      - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans
+        {shomgt}/../../shomgeotiff/tmp/
       - pour chaque carte et chaque GéoTiff:
         - le fichier info est généré à partir du format GéoTIFF par gdal_info
         - le GéoTiff est converti en PNG par gdal puis supprimé
@@ -51,8 +68,9 @@ doc: |
       - générer pour chaque GéoTiff un fichier .info avec gdalinfo
       - convertir chaque GéoTiff en PNG avec gdal_translate
       - découper chaque GéoTiff en dalles 1024 X 1024 avec tile.php
+      - génèrer un catalogue Yaml des GéoTiff et l'enregistre dans le fichier ../ws/shomgt.yaml
     - tile.php découpe un fichiers PNG en dalles 1024 X 1024 et effectue un effacement de la partie définie dans updt.yaml
-    - gtshom.php génère un catalogue Yaml des nouvelles cartes et l'enregistre dans le fichier shomgt.yaml
+    - shomgt.php génère un catalogue Yaml des GéoTiff à enregistrer dans le fichier shomgt.yaml
     
   En pratique:
     - En préalable à la mise à jour: actualiser le catalogue.

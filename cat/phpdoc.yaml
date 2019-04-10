@@ -18,14 +18,14 @@ doc: |
         avec 2 niveaux d'index:
           - d'une part l'id de la carte et,
           - d'autre part, la date de mise à jour de l'info sous la forme YYYY-MM-DD.
-      - les cartes sont structurés par la classe MapCat (définie dans mapcat.inc.php)
+      - les cartes sont structurées par la classe MapCat (définie dans mapcat.inc.php)
         qui permet d'accéder par différentes méthodes au catalogue.
       - le catalogue est exposé en JSON et en GeoJSON
     - le script index.php :
-      - expose en JSON les cartes stockées dans mapcat.pser soit uniquement les plus récents (action=showGan),
+      - expose en JSON les cartes stockées dans mapcat.pser soit uniquement les plus récentes (action=showGan),
         soit avec l'historique complet (action=showGanHistory)
     - le script map.php affiche le catalogue sous la forme d'une carte
-    - le script geojson.php affiche le catalogue sous la forme d'un flux GeoJSON, il est utilisé par la carte
+    - le script geojson.php fournit le flux GéoJSON du catalogue, il est utilisé par la carte
     - le script mapcat.php permet de consulter le catalogue
       - par défaut il liste les cartes en HTML
       - accès à la description d'une carte

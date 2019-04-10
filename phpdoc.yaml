@@ -1,7 +1,7 @@
 title: shomgt - services de consultation des cartes raster GéoTIFF du SHOM V2
 path: /geoapi/shomgt
 doc: |
-  Ce projet est une réécriture de shomgt1 dans l'objectif d'un hébergement par le MTES.
+  Ce projet est une réécriture de shomgt1 dans l'objectif d'une diffusion du code sur Github.
   L'objectif est d'exposer sous la forme de web-services les cartes GéoTIFF du Shom couvrant la métropole et les DROM.
   Du point de vue terminologique, on distingue les concepts de carte et de GéoTIFF.
     - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralament
@@ -16,25 +16,30 @@ doc: |
   
   Les cartes du Shom sont décrites dans un catalogue (cat) construit à partir des infos du Shom,
   Les GéoTIFF sont décrits dans le fichier shomgt.yaml dans lequel, à chaque GéoTIFF, sont associés:
-    1) le rectangle englobant en cooord. géo. WGS84 de l'image globale du GéoTIFF issu du géoréférencement du fichier
-       GéoTIFF
-    2) la largeur et la hauteur en nbre de pixels du GéoTIFF issu du fichier PNG
-    3) la largeur de chacune des 4 bordures
-    4) le nom du fichier PNG correspondant
-  Les GéoTIFF sont initialement en TIFF, ils doivent être convertis en PNG (avec gdal).
+    1) le nom du fichier correspondant
+    2) le rectangle englobant en cooord. géo. WGS84 de l'image globale du GéoTIFF,
+    3) la largeur et la hauteur en nbre de pixels du GéoTIFF,
+    4) le titre, l'édition et l'échelle de la carte,
+    5) la largeur de chacune des 4 bordures
+  Les infos 1, 2 et 3 sont issues du fichier GéoTIFF et de son géoréférencement ;
+  les infos 4 sont issues du catalogue mentionné précédemment ;
+  les infos 5 sont déduites du rappochement entre le rectangle (1) et le catalogue.
+  
+  Les GéoTIFF sont initialement en TIFF, ils sont convertis en PNG (avec gdal).
   Les GéoTIFF sont volumineux et leur chargement en mémoire prend du temps et des ressources machine.
   Ils sont découpés en dalles 1024X1024 stockées dans un répertoire associé au GéoTIFF.
   
   Ce projet est découpé en 4 modules:
-    - les web-services de consultation (ws)
+    - les web-services de consultation (ws) à partir des données structurées de manière adéquate
     - les scripts de mise à jour des GéoTiff à partir d'une livraison du Shom (updt)
     - la gestion d'un catalogue des cartes pertinentes du Shom (cat) afin
       - de connaitre la liste des cartes à actualiser
       - de disposer de leurs caractéristiques utiles au module précédent
     - un ensemble d'éléments partagés entre modules (lib), notamment un package de gestion de la géométrie.
   De plus:
-    - le répertoire pub met à disposition notamment les plug-ins et CSS pour Leaflet,
+    - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/
     - le répertoire docker contient la configuration docker
+    - le répertoire tilecache contint un cache des tuiles fréquemment utilisées.
   
   Taille occupée:
     - la totalité des archives de cartes fait environ 3 Go
@@ -42,11 +47,13 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
-    - remettre les num de carte dans la carte Leaflet
+    - vérifier que ttes les cartes à détruire le sont bien
     - exposer une description OpenApi des web-services du projet
       
 journal: |
-  30/3-3/4/2019:
+  10/4/2019:
+    - ajout num de carte dans la carte Leaflet
+  30/3-9/4/2019:
     modif de updt pour générer automatiquement shomgt.yaml à partir:
       - des livraisons
       - du catalogue à jour

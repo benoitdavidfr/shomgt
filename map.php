@@ -2,6 +2,10 @@
 /*PhpDoc:
 name: map.php
 title: map.php - carte de test des web-services
+doc: |
+journal: |
+  10/4/2019:
+    - ajout des numéros de carte Shom
 */
 $request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
   : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
@@ -95,17 +99,23 @@ var overlays = {
   $sds = ['10M', '4M', '2M', '1M', '500k', '250k', '100k', '50k', '25k', '12k'];
   foreach ($sds as $sd) {
     echo "// 1/$sd\n";
-    echo "    \"Catalogue 1/$sd\" : new L.UGeoJSONLayer({\n",
-         "       endpoint: shomgturl+'ws/geojson.php?lyr=gt$sd',\n",
-         "       minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature\n",
-         "    }),\n";
+    echo "    \"Catalogue 1/$sd\" : L.layerGroup([\n",
+         "       new L.UGeoJSONLayer({\n",
+         "         endpoint: shomgturl+'ws/geojson.php?lyr=gt$sd',\n",
+         "         minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature\n",
+         "       }),\n",
+         "       new L.TileLayer(\n",
+         "         shomgturl+'ws/tile.php/num$sd/{z}/{x}/{y}.png',\n",
+         "         {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}\n",
+         "       ),\n",
+         "    ]),\n";
     echo "    \"GéoTIFF 1/$sd\" : new L.TileLayer(\n",
          "       shomgturl+'ws/tile.php/gt$sd/{z}/{x}/{y}.png',\n",
          "       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false,'attribution':attrshom}\n",
          "    ),\n";
   }
 ?>
-
+ 
 // gtaem
   "Cartes AEM" : new L.TileLayer(
     shomgturl+'ws/tile.php/gtaem/{z}/{x}/{y}.png',

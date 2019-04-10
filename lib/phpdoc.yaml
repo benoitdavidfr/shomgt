@@ -1,7 +1,7 @@
 title: lib - éléments partagés
 path: /geoapi/shomgt/lib
 doc: |
-  Package géométrique utilisant des coordonnées géographiques ou euclidiennes.
+  Divers packages utilisés par les autres modules.
 phpScripts:
 phpIncludes:
   - /geoapi/shomgt/lib/gebox.inc.php

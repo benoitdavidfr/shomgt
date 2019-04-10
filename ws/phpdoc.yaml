@@ -1,7 +1,11 @@
 title: ws - services de consultation des cartes raster GéoTIFF du SHOM
 path: /geoapi/shomgt/ws
 doc: |
-  Implémentation du service de tuiles
+  Implémentation des services sur les cartes:
+    - service de tuiles tile.php
+    - service WMS wms.php
+    - geojson des GéoTiff geojson.php
+    - service de téléchargement dl.php
   
   Redéfinition des couches et les zooms correspondants:
        0-5 20M

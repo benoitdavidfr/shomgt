@@ -21,6 +21,8 @@ doc: |
     15-18 12k
 
 journal: |
+  10/4/2019:
+    - ajout tuiles des numéros de carte
   30/3/2019:
     - ajout du dessin des silhouettes des GéoTiff d'une couche
   14-15/3/2019:
@@ -158,15 +160,26 @@ class GeoTiff {
       throw new Exception("erreur de imagefilledrectangle() ligne ".__LINE__);
     if (!imagealphablending($image, true))
       throw new Exception("erreur de imagealphablending() ligne ".__LINE__);
-    // dessin d'un texte indiquant l'absence de carte, sera écrasé s'il en existe une
-    $text_color = imagecolorallocate($image, 233, 14, 91);
-    if (!imagestring($image, 4, 50, 100,  "Pas de carte SHOM", $text_color))
-      throw new Exception("erreur de imagestring() ligne ".__LINE__);
-    foreach ($layers as $layer)
-      if (isset(self::$gts[$layer]))
-        foreach (self::$gts[$layer] as $gt)
-          $gt->imagecopytiles($image, $wombox); // plus complexe mais plus économe en mémoire
-          //$gt->imagecopy($image, $wombox); // plus simple mais trop gourmand en mémoire
+    if (strncmp($lyrname, 'gt', 2) == 0) {
+      // dessin d'un texte indiquant l'absence de carte, sera écrasé s'il en existe une
+      $text_color = imagecolorallocate($image, 233, 14, 91);
+      if (!imagestring($image, 4, 50, 100,  "Pas de carte SHOM", $text_color))
+        throw new Exception("erreur de imagestring() ligne ".__LINE__);
+      foreach ($layers as $layer)
+        if (isset(self::$gts[$layer]))
+          foreach (self::$gts[$layer] as $gt)
+            $gt->imagecopytiles($image, $wombox); // plus complexe mais plus économe en mémoire
+            //$gt->imagecopy($image, $wombox); // plus simple mais trop gourmand en mémoire
+    }
+    elseif (strncmp($lyrname, 'num', 3) == 0) { // couche d'étiquettes du numéro de chaque carte
+      $lyrname = str_replace('num', 'gt', $lyrname);
+      if (isset(self::$gts[$lyrname]))
+        foreach (self::$gts[$lyrname] as $gt)
+          $gt->drawLabel($image, $wombox, $width, $height);
+    }
+    else
+      throw new Exception("Couche $lyrname inconnue");
+    
     if (!imagesavealpha($image, true))
       throw new Exception("erreur de imagesavealpha() ligne ".__LINE__);
     return $image;
@@ -272,6 +285,15 @@ class GeoTiff {
   
   function resx() { return $this->wombox->dx() / $this->width; } // resolution en X
   function resy() { return $this->wombox->dy() / $this->height; } // resolution en Y
+  
+  // numéro de carte à afficher dans le catalogue
+  function num() {
+    if (preg_match('!^(\d+)/\d+_pal300$!', $this->name, $matches))
+      return $matches[1];
+    if (preg_match('!^(\d+)/\d+_([^_]+)_gtw$!', $this->name, $matches))
+      return "$matches[1]/$matches[2]";
+    return $this->name;
+  }
   
   /*PhpDoc: methods
   name: imagecopytiles
@@ -435,6 +457,30 @@ class GeoTiff {
     // bord Sud
     if (!imagefilledrectangle($image, $x1+1, $y2, $x2-1, $height-1, $color))
       throw new Exception("Erreur imagerectangle() ligne ".__LINE__);
+  }
+  
+  /*PhpDoc: methods
+  name: drawLabel
+  title: "function drawLabel($image, EBox $bbox, int $width, int $height): bool - dessine dans l'image GD le numéro de la carte"
+  */
+  function drawLabel($image, EBox $bbox, int $width, int $height): bool {
+    //echo "title= ",$this->title,"<br>\n";
+    if (!($int = $this->wboxnb->intersects($bbox))) {
+      return false;
+    }
+    $x = round(($this->wboxnb->west() - $bbox->west()) / $bbox->dx() * $width);
+    $y = round(- ($this->wboxnb->north() - $bbox->north()) / $bbox->dy() * $height);
+    //echo "x=$x, y=$y<br>\n"; die();
+    $font = 3;
+    $bg_color = imagecolorallocate($image, 255, 255, 0);
+    $dx = strlen($this->num()) * imagefontwidth($font);
+    $dy = imagefontheight($font);
+    imagefilledrectangle($image, $x+2, $y, $x+$dx, $y+$dy, $bg_color);
+    $text_color = imagecolorallocate($image, 255, 0, 0);
+    // bool imagestring ( resource $image , int $font , int $x , int $y , string $string , int $color )
+    imagestring($image, $font, $x+2, $y, $this->num(), $text_color);
+    //die();
+    return true;
   }
   
   function geojsonf(string $lyrname, string $gtname, ?EBox $wombox): array {
