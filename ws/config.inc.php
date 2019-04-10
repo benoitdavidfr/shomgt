@@ -27,7 +27,7 @@ else {
         '172.17.0.1', // accès entre machines docker
       ],
     
-      // liste des login/mdp autorisées
+      // liste des login/mdp autorisés
       'loginPwds' => [
         'demo:demo',
       ],

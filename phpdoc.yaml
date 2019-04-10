@@ -39,7 +39,7 @@ doc: |
   De plus:
     - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/
     - le répertoire docker contient la configuration docker
-    - le répertoire tilecache contint un cache des tuiles fréquemment utilisées.
+    - le répertoire tilecache contient un cache des tuiles fréquemment utilisées.
   
   Taille occupée:
     - la totalité des archives de cartes fait environ 3 Go
@@ -48,6 +48,7 @@ doc: |
   
   ToDoList:
     - vérifier que ttes les cartes à détruire le sont bien
+    - réfléchir à l'interface OpenApi
     - exposer une description OpenApi des web-services du projet
       
 journal: |
@@ -80,5 +81,3 @@ phpScripts:
   - /geoapi/shomgt/index.php
   - /geoapi/shomgt/map.php
   - /geoapi/shomgt/tile.php
-  - /geoapi/shomgt/geojson.php
-  - /geoapi/shomgt/dl.php
