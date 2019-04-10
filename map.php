@@ -62,24 +62,24 @@ map.on('click', function(e) { c.setCoordinates(e); });
 var baseLayers = {
 // PYR
   "Pyramide GéoTIFF" : new L.TileLayer(
-    shomgturl+'ws/tile.php/gtpyr/{z}/{x}/{y}.png',
+    shomgturl+'tile.php/gtpyr/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
   ),
 // 1/20M
   "Planisphère Shom 1/20M" : new L.TileLayer(
-    shomgturl+'ws/tile.php/gt20M/{z}/{x}/{y}.png',
+    shomgturl+'tile.php/gt20M/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }
   ),
   "Cartes IGN Express" : new L.TileLayer(
-    'https://wxs.ign.fr/2hl0xk4s8pz482s81o4nrilt/geoportail/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrixSet=PM&height=256&width=256&tilematrix={z}&tilecol={x}&tilerow={y}&layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD&format=image/jpeg&style=normal',
+    'http://igngp.geoapi.fr/tile.php/scan-express/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":6,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "Cartes IGN classiques" : new L.TileLayer(
-    'https://wxs.ign.fr/2hl0xk4s8pz482s81o4nrilt/geoportail/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrixSet=PM&height=256&width=256&tilematrix={z}&tilecol={x}&tilerow={y}&layer=GEOGRAPHICALGRIDSYSTEMS.MAPS&format=image/jpeg&style=normal',
+    'http://igngp.geoapi.fr/tile.php/cartes-classiques/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "Plan IGN" : new L.TileLayer(
-    'https://wxs.ign.fr/2hl0xk4s8pz482s81o4nrilt/geoportail/wmts?service=WMTS&version=1.0.0&request=GetTile&tilematrixSet=PM&height=256&width=256&tilematrix={z}&tilecol={x}&tilerow={y}&layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGN&format=image/jpeg&style=normal',
+    'http://igngp.geoapi.fr/tile.php/plan-ign/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "Fond blanc" : new L.TileLayer(
@@ -105,12 +105,12 @@ var overlays = {
          "         minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature\n",
          "       }),\n",
          "       new L.TileLayer(\n",
-         "         shomgturl+'ws/tile.php/num$sd/{z}/{x}/{y}.png',\n",
+         "         shomgturl+'tile.php/num$sd/{z}/{x}/{y}.png',\n",
          "         {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}\n",
          "       ),\n",
          "    ]),\n";
     echo "    \"GéoTIFF 1/$sd\" : new L.TileLayer(\n",
-         "       shomgturl+'ws/tile.php/gt$sd/{z}/{x}/{y}.png',\n",
+         "       shomgturl+'tile.php/gt$sd/{z}/{x}/{y}.png',\n",
          "       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false,'attribution':attrshom}\n",
          "    ),\n";
   }
@@ -118,7 +118,7 @@ var overlays = {
  
 // gtaem
   "Cartes AEM" : new L.TileLayer(
-    shomgturl+'ws/tile.php/gtaem/{z}/{x}/{y}.png',
+    shomgturl+'tile.php/gtaem/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
   ),
   "Catalogue AEM" : new L.UGeoJSONLayer({

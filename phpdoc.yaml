@@ -79,3 +79,6 @@ submodules:
 phpScripts:
   - /geoapi/shomgt/index.php
   - /geoapi/shomgt/map.php
+  - /geoapi/shomgt/tile.php
+  - /geoapi/shomgt/geojson.php
+  - /geoapi/shomgt/dl.php

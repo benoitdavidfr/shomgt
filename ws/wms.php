@@ -61,6 +61,7 @@ try {
 // notamment si les paramètres MySQL sont corrects mais que la base MySql correspondante n'existe pas
 catch (Exception $e) {
   WmsServer::exception(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
+  //throw new Exception($e->getMessage());
 }
 
 
@@ -80,7 +81,7 @@ class WmsShomGt extends WmsServer {
     die(str_replace(
         '{OnlineResource}',
         "$request_scheme://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?",
-        file_get_contents('wmscapabilities.xml')
+        file_get_contents(__DIR__.'/wmscapabilities.xml')
     ));
   }
 

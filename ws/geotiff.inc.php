@@ -62,6 +62,7 @@ class GeoTiff {
   // initialise l'ensemble des GéoTiff à partir du catalogue shomgt.yaml ou, s'il existe, du fichier shomgt.pser
   // $yamlpath est le chemin du catalogue shomgt.yaml des GéoTiff
   static function init(string $yamlpath, int $verbose=0) {
+    //echo "yamlpath=$yamlpath<br>\n"; //die();
     self::$verbose = $verbose;
     $path = dirname($yamlpath).'/'.basename($yamlpath, '.yaml'); // le chemin ss l'extension
     if (!file_exists($path.'.pser') || (filemtime($path.'.pser') < filemtime($yamlpath))) {
@@ -393,7 +394,7 @@ class GeoTiff {
       echo "GeoTiff::imagecopy(image, bbox=$bbox)@$this<br>\n";
       echo "Le GeoTiff $this->name intersecte bbox: $int<br>\n";
     }
-    $path = self::$path.$this->name.'.png'; // le chemin du GéoTiff stocké en png
+    $path = __DIR__.'/'.self::$path.$this->name.'.png'; // le chemin du GéoTiff stocké en png
     if (!($gtimg = @imagecreatefrompng($path)))
       throw new Exception("Erreur ouverture du GeoTiff $path impossible");
     $width = imagesx($image);
