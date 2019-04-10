@@ -1635,7 +1635,7 @@
             "SW": "39°02,54'N - 009°00,28'E",
             "NE": "39°13,56'N - 009°11,10'E"
         },
-        "references": "Fac similé carte IT n° 299 publiée en 1982 (édition novembre 2015)."
+        "references": "Fac similé carte IT n° 299 publiée en 1982 (édition mai 2018)"
     },
     "geometry": {
         "type": "Polygon",
@@ -4483,7 +4483,7 @@
         "num": "7516",
         "title": "Abords et port de Livorno",
         "issued": "Édition n°&nbsp;4 - 2015",
-        "references": "Fac similé carte IT n° 62 publiée en 2008 (édition 2014), IT 120 publiée en 1995 (édition 2011)",
+        "references": "Fac similé cartes IT n° 62 publiée en 2008 (édition mars 2018) et IT n°120 publiée en 1995 (édition avril 2011)",
         "boxes": [
             {
                 "title": "A - Abords de Livorno",
@@ -4892,13 +4892,12 @@
     "properties": {
         "num": "7582",
         "title": "Estuaire du Gabon",
-        "issued": "Publication 2013",
+        "issued": "Édition n°&nbsp;2 - 2019",
         "scaleDenominator": "40000",
         "bboxDM": {
             "SW": "00°15,00'N - 009°10,80'E",
             "NE": "00°31,20'N - 009°34,50'E"
         },
-        "replaces": "(remplace 6369, 6378)",
         "boxes": [
             "A - Port d'Owendo",
             "B - Port de Libreville"
@@ -5136,7 +5135,7 @@
         "num": "7617",
         "title": "Montserrat et Barbuda",
         "issued": "Édition n°&nbsp;3 - 2015",
-        "references": "Fac similé Carte GB n°254 publiée en 1986 (édition juin 2004).",
+        "references": "Fac similé Carte GB n°254 publiée en 1986 (édition octobre 2018)",
         "boxes": [
             {
                 "title": "A - Montserrat",

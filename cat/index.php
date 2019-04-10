@@ -155,7 +155,7 @@ if ($_GET['action']=='shomgtObsolete') {
     $ganEdition = $gan ? $gan['issued'] : '';
     if ($ganEdition == 'notValid')
       $ganYear = '';
-    elseif (preg_match('!^(Édition n° \d -|Publication) (\d+)$!', $ganEdition, $matches))
+    elseif (preg_match('!^(Édition n° \d+ -|Publication) (\d+)$!', $ganEdition, $matches))
       $ganYear = $matches[2];
     else
       die("</table>\nNo match on ganEdition $ganEdition");

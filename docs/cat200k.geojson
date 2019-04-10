@@ -1068,9 +1068,9 @@
             "SW": "30°44,05'N - 030°58,00'E",
             "NE": "32°30,00'N - 034°12,30'E"
         },
-        "references": "Fac similé carte GB n°2573 publiée en 1982 (édition mars 2017).",
+        "references": "Fac similé carte GB n°2573 publiée en 1982 (édition septembre 2018)",
         "boxes": [
-            "Al 'Arīsh Harbour"
+            "A - Al 'Arīsh Harbour"
         ]
     },
     "geometry": {
@@ -1885,7 +1885,7 @@
     "properties": {
         "num": "7550",
         "title": "Du Détroit de Gibraltar à Kenitra",
-        "issued": "Édition n°&nbsp;2 - 2016",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "324000",
         "bboxDM": {
             "SW": "34°04,00'N - 009°09,00'W",

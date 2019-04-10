@@ -772,11 +772,11 @@
     "type": "Feature",
     "properties": {
         "num": "5978",
-        "title": "Mer du Corail - Îles et récifs Épars",
-        "issued": "Édition n°&nbsp;2 - 1986",
+        "title": "Mer de Corail - Îles et récifs Épars",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "boxes": [
             {
-                "title": "B - Îles Chesterfield - Mouillage de l'île Longue",
+                "title": "A - Îles Chesterfield - Mouillage de l'île Longue",
                 "scaleDenominator": "20000",
                 "bboxDM": {
                     "SW": "19°53,10'S - 158°17,33'E",
@@ -784,7 +784,7 @@
                 }
             },
             {
-                "title": "C - Récifs et îles Chesterfield",
+                "title": "B - Récifs et îles Chesterfield",
                 "scaleDenominator": "150000",
                 "bboxDM": {
                     "SW": "20°00,00'S - 158°07,97'E",
@@ -792,19 +792,19 @@
                 }
             },
             {
-                "title": "D - Atoll de Huon",
+                "title": "C - Récifs d'Entrecasteaux - Atoll de Huon",
                 "scaleDenominator": "150000",
                 "bboxDM": {
-                    "SW": "18°15,50'S - 162°45,96'E",
-                    "NE": "17°52,94'S - 163°00,00'E"
+                    "SW": "18°15,19'S - 162°45,94'E",
+                    "NE": "17°52,52'S - 162°59,98'E"
                 }
             },
             {
-                "title": "E- Mouillage de l'île Huon",
+                "title": "D- Mouillage de l'île Huon",
                 "scaleDenominator": "20000",
                 "bboxDM": {
-                    "SW": "18°03,50'S - 162°56,13'E",
-                    "NE": "18°01,70'S - 162°58,00'E"
+                    "SW": "18°03,17'S - 162°56,11'E",
+                    "NE": "18°01,37'S - 162°58,04'E"
                 }
             }
         ]
@@ -863,48 +863,48 @@
             [
                 [
                     [
-                        162.766,
-                        -18.258333333333333
+                        162.76566666666668,
+                        -18.253166666666665
                     ],
                     [
-                        163,
-                        -18.258333333333333
+                        162.99966666666666,
+                        -18.253166666666665
                     ],
                     [
-                        163,
-                        -17.88233333333333
+                        162.99966666666666,
+                        -17.875333333333334
                     ],
                     [
-                        162.766,
-                        -17.88233333333333
+                        162.76566666666668,
+                        -17.875333333333334
                     ],
                     [
-                        162.766,
-                        -18.258333333333333
+                        162.76566666666668,
+                        -18.253166666666665
                     ]
                 ]
             ],
             [
                 [
                     [
-                        162.9355,
-                        -18.058333333333334
+                        162.93516666666667,
+                        -18.052833333333332
                     ],
                     [
-                        162.96666666666667,
-                        -18.058333333333334
+                        162.96733333333333,
+                        -18.052833333333332
                     ],
                     [
-                        162.96666666666667,
-                        -18.028333333333332
+                        162.96733333333333,
+                        -18.022833333333335
                     ],
                     [
-                        162.9355,
-                        -18.028333333333332
+                        162.93516666666667,
+                        -18.022833333333335
                     ],
                     [
-                        162.9355,
-                        -18.058333333333334
+                        162.93516666666667,
+                        -18.052833333333332
                     ]
                 ]
             ]
@@ -2972,7 +2972,7 @@
     "type": "Feature",
     "properties": {
         "num": "7003",
-        "title": "Le Cap d'Agde, Saint-Cyprien et Banyuls-sur-Mer",
+        "title": "Le Cap d'Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan",
         "issued": "Édition n°&nbsp;4 - 2017",
         "boxes": [
             {
@@ -2997,6 +2997,14 @@
                 "bboxDM": {
                     "SW": "42°28,64'N - 003°07,03'E",
                     "NE": "42°29,34'N - 003°08,92'E"
+                }
+            },
+            {
+                "title": "D - Gruissan",
+                "scaleDenominator": "15000",
+                "bboxDM": {
+                    "SW": "43°04,61'N - 003°04,81'E",
+                    "NE": "43°07,58'N - 003°13,18'E"
                 }
             }
         ]
@@ -3073,6 +3081,30 @@
                     [
                         3.117166666666667,
                         42.477333333333334
+                    ]
+                ]
+            ],
+            [
+                [
+                    [
+                        3.0801666666666665,
+                        43.07683333333333
+                    ],
+                    [
+                        3.2196666666666665,
+                        43.07683333333333
+                    ],
+                    [
+                        3.2196666666666665,
+                        43.126333333333335
+                    ],
+                    [
+                        3.0801666666666665,
+                        43.126333333333335
+                    ],
+                    [
+                        3.0801666666666665,
+                        43.07683333333333
                     ]
                 ]
             ]
@@ -8290,7 +8322,7 @@
     "properties": {
         "num": "7587",
         "title": "Port de Lomé - Rade de Kpémé - Port de Cotonou",
-        "issued": "Édition n°&nbsp;2 - 2015",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "boxes": [
             {
                 "title": "A - Togo - Port de Lomé",
@@ -9463,8 +9495,7 @@
     "properties": {
         "num": "7773",
         "title": "Îles de Capraia et Gorgona",
-        "issued": "Publication 2013",
-        "replaces": "(remplace 1461)",
+        "issued": "Édition n°&nbsp;2 - 2019",
         "references": "Fac similé Carte IT n°116 publiée en 1980 (édition septembre 2018)",
         "boxes": [
             {
