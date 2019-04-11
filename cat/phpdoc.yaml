@@ -30,17 +30,14 @@ doc: |
       - par défaut il liste les cartes en HTML
       - accès à la description d'une carte
       - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
-  
-  A FAIRE:
-    - détecter les cartes qui disparaissent du catalogue et doivent être invalidées
-    
+
 journal: |
   15-17/3/2019:
     refonte importante
     prises en compte de corrections du GAN définies dans gancorrections.yaml
     Ces corrections permettent de visualiser les petites iles du canal du Mozambique
     Le fichier shomgt.yaml peut être généré à partir des GAN
-    Il manque encore la possibilité de gérer l'ordre des cartes.
+    Il manque encore la possibilité de gérer l'ordre des cartes. FAIT
     
 phpScripts:
   - /geoapi/shomgt/cat/index.php

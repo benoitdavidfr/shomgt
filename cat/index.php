@@ -2,6 +2,9 @@
 /*PhpDoc:
 name: index.php
 title: index.php - traitements divers
+journal: |
+  10/4/2019:
+    ajout liste les cartes ShomGt absentes du catalogue Shom
 */
 use Symfony\Component\Yaml\Yaml;
 require_once 'lib.inc.php';
@@ -14,9 +17,10 @@ if (!isset($_GET['action'])) {
   echo "<li><a href='map.php'>Carte du catalogue par tranche d'échelles</a>\n";
   echo "<li><a href='?action=stats'>Statistiques du catalogue</a>\n";
   echo "<li><a href='?action=shomgtObsolete'>Cartes Shomgt à actualiser</a>\n";
+  echo "<li><a href='?action=shomgtObsolete2'>Cartes Shomgt absentes du catalogue a priori à remplacer</a>\n";
   echo "<li><a href='?action=shomgtMissing'>Cartes manquantes dans Shomgt</a>\n";
   echo "<li><a href='geojson.php'>Liste des cartes Shom comme FeatureCollection GeoJSON</a>\n";
-  echo "<li><a href='?action=shomgtTable'>Liste des cartes ShomGt sous la forme d'une table</a>\n";
+  //echo "<li><a href='?action=shomgtTable'>Liste des cartes ShomGt sous la forme d'une table</a>\n";
   echo "<li><a href='mapcat.php'>Liste des cartes Shom</a>\n";
   echo "<li><a href='?action=mapPerScale'>Nbre de cartes Shom par échelle</a>\n";
   echo "</ul>\n";
@@ -174,6 +178,31 @@ if ($_GET['action']=='shomgtObsolete') {
   die("</table>\nFIN OK<br>\n");
 }
 
+// liste les cartes ShomGt absentes du catalogue Shom
+if ($_GET['action']=='shomgtObsolete2') {
+  $shomgt = Yaml::parseFile(__DIR__.'/../ws/shomgt.yaml', Yaml::PARSE_DATETIME);
+  $nbre = 0;
+  $mapcat = MapCat::allMostRecentAsArray();
+  $updated = isset($mapcat['modified']) ? $mapcat['modified'] : $mapcat['created'];
+  echo "Catalogue actualisé le $updated<br>\n";
+  $gans = $mapcat['maps'];
+
+  foreach ($shomgt as $key => $val) {
+    if ((substr($key,0,2)=='gt') && $shomgt[$key]) {
+      foreach ($shomgt[$key] as $name => $map) {
+        if (!preg_match('!^([0-9]+)/[0-9]+_pal300$!', $name, $matches))
+          continue;
+        $mapnum = $matches[1];
+        if (!isset($gans["FR$mapnum"])) {
+          echo "carte $mapnum PAS dans gans<br>\n";
+        }
+      }
+    }
+  }
+  
+  die("FIN OK<br>\n");
+}
+
 // fabrication de la liste des id des cartes de shomgt comme clés de la forme "FR{num}"
 function shomgtMapNums(): array {
   $shomgt = []; // liste des id des cartes de shomgt 
@@ -316,7 +345,7 @@ if ($_GET['action']=='shomgtMissingGJ') {
   die();
 }
 
-if ($_GET['action']=='shomgtTable') {
+/*if ($_GET['action']=='shomgtTable') {
   echo "<!DOCTYPE HTML><html><head><title>catalogue</title><meta charset='UTF-8'></head><body>\n";
   $maps = shomgtMapNums();
   ksort($maps);
@@ -324,7 +353,7 @@ if ($_GET['action']=='shomgtTable') {
   foreach (array_keys($maps) as $num)
     echo "$num<br>\n";
   die();
-}
+}*/
   
 if ($_GET['action']=='mapPerScale') {
   echo "<h2>Nbre de cartes Shom par échelle</h2>\n";

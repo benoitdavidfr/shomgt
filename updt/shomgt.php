@@ -14,6 +14,9 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  11/4/2019:
+    Traitement du cas particulier 6835/6835_pal300 pour lequel le cadre intersecte l'antiméridien mais pas le contenu
+    de la carte
   9/4/2019:
     traitement du cas particulier de FR0101 par modif de gdainfo.inc.php
   3/4/2019:
@@ -121,7 +124,15 @@ while (($mapname = readdir($current)) !== false) {
     else
       $title = "$shomgtgan[num] - $shomgtgan[title]";
     // Calcul des 2 boites en WorldMercator pour effectuer l'interpolation
-    $gdalbox = $gtbbox->proj('WorldMercator');
+    // Cas particulier 6835/6835_pal300 pour lequel le caddre intersecte l'antiméridien mais pas le contenu de la carte
+    if ($gtbbox->west() > $shomgtgan['gbox']->east()) {
+      //echo "***** Cas particulier $fbname *****\n";
+      $gtbbox2 = new GBox([[$gtbbox->west()-360, $gtbbox->south()], [$gtbbox->east()-360, $gtbbox->north()]]);
+      $gdalbox = $gtbbox2->proj('WorldMercator');
+    }
+    else {
+      $gdalbox = $gtbbox->proj('WorldMercator');
+    }
     $ganbox = $shomgtgan['gbox']->proj('WorldMercator');
     $left = ceil(($ganbox->west() - $gdalbox->west()) / $gdalbox->dx() * $width);
     if (($left <= 0) || ($left > $width/2))

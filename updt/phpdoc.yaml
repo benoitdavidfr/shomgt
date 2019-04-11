@@ -80,10 +80,7 @@ doc: |
       - lancer en ligne de commande le script updt.php en le pipant avec un sh ;
         il enchaine différentes commandes de dezippage, de transformation en PNG et de découpage
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
-  
-  ToDoList:
-    - vérifier les GéoTiff à cheval sur l'anti-méridien
-  
+
 phpScripts:
   - /geoapi/shomgt/updt/updt.php
   - /geoapi/shomgt/updt/tile.php

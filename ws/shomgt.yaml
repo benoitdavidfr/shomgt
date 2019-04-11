@@ -102,9 +102,9 @@ gt10M:
     west: 177.469422
     north: 74.064294
     east: 252.930481
-    left: 400 # nbre de pixels de la bordure gauche
+    left: 1243 # nbre de pixels de la bordure gauche
     bottom: 1037 # nbre de pixels de la bordure basse
-    right: 400 # nbre de pixels de la bordure droite
+    right: 1240 # nbre de pixels de la bordure droite
     top: 1141 # nbre de pixels de la bordure haute
   6884/6884_pal300:
     title: 6884 - Océan Indien - Partie Nord

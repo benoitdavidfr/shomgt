@@ -47,8 +47,13 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
+    - carte finale / carte de test
+    - cas particulier 6835/6835_pal300
+    - cartes AEM
+    - page de login
+    - éditorial
     - vérifier que ttes les cartes à détruire le sont bien
-    - réfléchir à l'interface OpenApi
+    - réfléchir à l'interface OpenApi (pas d'urgence)
     - exposer une description OpenApi des web-services du projet
       
 journal: |
