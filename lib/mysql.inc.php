@@ -80,7 +80,7 @@ class MySqlResult implements Iterator {
 if (basename(__FILE__)<>basename($_SERVER['PHP_SELF'])) return;
 
 
-MySql::open(require(__DIR__.'/mysqlparams.inc.php'));
+//MySql::open(require(__DIR__.'/mysqlparams.inc.php'));
 $sql = "select id_rte500, nom_comm, insee_comm, population, superficie, statut, id_nd_rte, ST_AsText(geom) geom "
       ."from route500.noeud_commune where nom_comm like 'BEAUN%'";
 $sql = "describe route500.noeud_commune";

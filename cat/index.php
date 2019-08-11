@@ -5,6 +5,12 @@ title: index.php - traitements divers
 journal: |
   10/4/2019:
     ajout liste les cartes ShomGt absentes du catalogue Shom
+includes:
+  - lib.inc.php
+  - ../vendor/autoload.php
+  - mapcat.inc.php
+  - ../lib/gegeom.inc.php
+  - map.inc.php
 */
 use Symfony\Component\Yaml\Yaml;
 require_once 'lib.inc.php';
@@ -27,8 +33,8 @@ if (!isset($_GET['action'])) {
   die();
 }
 
-require_once __DIR__.'/../../../vendor/autoload.php';
-require_once 'mapcat.inc.php';
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/mapcat.inc.php';
 
 // affichage en JSON le contenu du catalogue
 if ($_GET['action']=='showMapCat') {
@@ -282,7 +288,7 @@ if ($_GET['action']=='shomgtMissing') {
 
 // Affichage de la carte Leaflet pour visualiser l'emprise de la carte fid, utilisé par shomgtMissing
 if ($_GET['action']=='shomgtMissingMap') {
-  require_once __DIR__.'/Map.inc.php';
+  require_once __DIR__.'/map.inc.php';
   $map = new Map(
     [
       'title'=> "carte Shom GT $_GET[fid]",

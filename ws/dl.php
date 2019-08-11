@@ -19,9 +19,10 @@ doc: |
 journal: |
   30/3/2019
     création
+includes: [geotiff.inc.php]
 */
 //ini_set('memory_limit', '12800M');
-require_once __DIR__.'/../ws/geotiff.inc.php';
+require_once __DIR__.'/geotiff.inc.php';
 
 // Liste des GéoTiff du catalogue en JSON
 if (!isset($_SERVER['PATH_INFO']) || !$_SERVER['PATH_INFO']) {

@@ -50,8 +50,14 @@ journal: |
      il existe encore des erreurs, ex: "6643-C - Ile Europa" (corrigé)
   9-10/3/2019:
     création
+includes:
+  - ../vendor/autoload.php
+  - ../lib/gebox.inc.php
+  - ../lib/coordsys.inc.php
+  - gdalinfo.inc.php
+  - ../cat/mapcat.inc.php
 */
-require_once __DIR__.'/../../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 require __DIR__.'/gdalinfo.inc.php';

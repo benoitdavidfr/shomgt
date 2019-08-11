@@ -12,6 +12,7 @@ journal: |
     adaption à ShomGt V2
   10/7/2017
     création
+includes: [../ws/geotiff.inc.php]
 */
 require_once __DIR__.'/../ws/geotiff.inc.php';
 

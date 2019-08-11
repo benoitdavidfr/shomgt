@@ -9,6 +9,11 @@ doc: |
   L'appel sans paramètre fmt génère une page HTML appellant le même script avec le paramètre fmt=img
   dans une balise <img> en taille réduite et dans une balise <a_href> en taille réelle.
   Ainsi en cliquant sur l'image réduite, on obtient l'image en taille réelle
+includes:
+  - ../lib/gebox.inc.php
+  - ../lib/coordsys.inc.php
+  - ../ws/geotiff.inc.php
+  - ../cat/mapcat.inc.php
 */
 ini_set('memory_limit', '12800M');
   

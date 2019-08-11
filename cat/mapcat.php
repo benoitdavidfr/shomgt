@@ -8,9 +8,10 @@ doc: |
     - ss paramètre fmt fournit en JSON l'enregistrement de la carte dans le catalogue
     - avec fmt=map affiche la carte de la carte
     - avec fmt=geojson générère le Feature GeoJSON correspondant à la carte
+includes: [../vendor/autoload.php, mapcat.inc.php, map.inc.php ]
 */
 
-require_once __DIR__.'/../../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/mapcat.inc.php';
 
 // Liste des cartes du catalogue en HTML
@@ -51,7 +52,7 @@ elseif (!isset($_GET['fmt'])) {
 
 // affichage de la carte
 elseif ($_GET['fmt'] == 'map')  {
-  require_once __DIR__.'/Map.inc.php';
+  require_once __DIR__.'/map.inc.php';
   
   $scriptUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
   $dirname = dirname($scriptUrl);

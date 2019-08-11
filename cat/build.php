@@ -11,9 +11,10 @@ journal: |
     fork dans gt
   11/12/2018
     scission de index.php
+includes: [lib.inc.php, mapcat.inc.php]
 */
 use Symfony\Component\Yaml\Yaml;
-require_once 'lib.inc.php';
+require_once __DIR__.'/lib.inc.php';
 
 // initialisation de $action
 if (php_sapi_name() == 'cli') { // en CLI 
@@ -62,7 +63,7 @@ if ($action == 'harvestGan') {
   die("FIN OK<br>\n");
 }
 
-require_once 'mapcat.inc.php';
+require_once __DIR__.'/mapcat.inc.php';
 
 // analyse des pages GAN et affiche le résultat
 if ($action == 'displayGan') {

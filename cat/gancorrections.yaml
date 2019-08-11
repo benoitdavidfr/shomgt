@@ -6,6 +6,7 @@ description: |
 corrections:
   FR0101:
     title: Planisphère des fuseaux horaires
+    lineage: correction de FR0101
     scaleDenominator: '40.000.000'
     originalBboxDM:
       SW: "79°00,00'S - 130°00,00'E"

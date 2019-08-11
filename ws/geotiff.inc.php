@@ -29,8 +29,9 @@ journal: |
     - ajout de fonctionnalités pour afficher le cadre de la carte
   8-11/3/2019:
     - création
+includes: [../vendor/autoload.php, ../lib/gebox.inc.php, ../lib/coordsys.inc.php, ../lib/gegeom.inc.php]
 */
-require_once __DIR__.'/../../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 use Symfony\Component\Yaml\Yaml;
@@ -543,7 +544,7 @@ class GeoTiff {
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe GeoTiff
   //ini_set('memory_limit', '1280M');
-  require __DIR__.'/gegeom.inc.php';
+  require __DIR__.'/../lib/gegeom.inc.php';
   $verbose = !isset($_GET['noverbose']);
   //$tileid = 'gt20M/7/63/44';
   //$tileid = 'gt20M/6/37/23';

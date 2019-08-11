@@ -47,7 +47,7 @@ Outre le répertoire correspondant au code contenu dans ce projet Git (noté {sh
 les répertoires suivants doivent être présents sur le serveur pour que le code s'exécute correctement:
 
   - {shomgt}/../../shomgeotiff - stockage des fichiers TIFF et PNG des cartes géré par le modfule de mise à jour,
-  - {shomgt}/../../vendor - code installé par composer
+  - {shomgt}/vendor - code installé par composer
 
 Le code utilise :
 

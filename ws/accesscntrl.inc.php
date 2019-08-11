@@ -2,7 +2,7 @@
 /*PhpDoc:
 name: accesscntrl.inc.php
 title: accesscntrl.inc.php - contrôle d'accès
-includes: [ log.inc.php ]
+includes: [ log.inc.php, config.inc.php ]
 doc: |
   Le contrôle d'accès utilise 3 modes de contrôle distincts:
     1) vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser

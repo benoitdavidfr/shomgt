@@ -23,8 +23,9 @@ journal: |
     transfert des nouvelles cartes dans current et fabication du nouveau shomgt.yaml
   10/3/2019:
     création
+includes: [../vendor/autoload.php]
 */
-require_once __DIR__.'/../../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 use Symfony\Component\Yaml\Yaml;
 
 header('Content-type: text/plain; charset="utf8"');

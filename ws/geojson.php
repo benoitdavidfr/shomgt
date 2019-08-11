@@ -7,6 +7,7 @@ doc: |
 journal: |
   10/3/2019
     création
+includes: [../lib/gegeom.inc.php, geotiff.inc.php]
 */
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/geotiff.inc.php';

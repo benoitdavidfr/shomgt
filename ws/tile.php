@@ -26,6 +26,7 @@ journal: |
     ajout d'une tuile d'erreur
   6/3/2019:
     création
+includes: [geotiff.inc.php, cache.inc.php, errortile.inc.php, ../lib/gegeom.inc.php]
 */
 
 require_once __DIR__.'/geotiff.inc.php';

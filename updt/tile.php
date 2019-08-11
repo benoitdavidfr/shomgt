@@ -6,11 +6,12 @@ doc: |
   script à appeler en ligne de commande
   doit être appelé avec le nom du fichier PNG en paramètre
   efface les parties listées dans updt.yaml
+includes: [../vendor/autoload.php, ../lib/gebox.inc.php, ../lib/coordsys.inc.php, gdalinfo.inc.php]
 */
-require_once __DIR__.'/../../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
-require __DIR__.'/gdalinfo.inc.php';
+require_once __DIR__.'/gdalinfo.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 header('Content-type: text/plain; charset="utf8"');

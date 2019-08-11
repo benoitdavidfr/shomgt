@@ -14,6 +14,8 @@ journal: |
   - ajout de nombreuses fonctionnalités
   7/3/2019:
   - création
+includes: [coordsys.inc.php, zoom.inc.php, gebox.inc.php]
+forks: [ /geovect/gegeom ]
 */}
 
 require_once __DIR__.'/coordsys.inc.php';

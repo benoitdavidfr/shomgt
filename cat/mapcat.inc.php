@@ -19,6 +19,7 @@ journal: |
     gestion du pser
   21/11/2018:
     modif de l'analyse des gan pour traiter la carte FR7003
+includes: [../lib/gebox.inc.php]
 */
 require_once __DIR__.'/../lib/gebox.inc.php';
 
@@ -257,12 +258,12 @@ class MapCat {
     foreach ($this->boxes as $ibox => $box) {
       if (($ibox == 0) && isset($corr['bboxDM'])) {
         $bboxDM = $corr['bboxDM'];
-        echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
+        //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
         $this->boxes[0]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
       }
       elseif (isset($corr['boxes'][$ibox-1]['bboxDM'])) {
         $bboxDM = $corr['boxes'][$ibox-1]['bboxDM'];
-        echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
+        //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
         $this->boxes[$ibox]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
       } 
     }
