@@ -414,8 +414,8 @@
         "issued": "Édition n°&nbsp;5 - 2015",
         "scaleDenominator": "1000000",
         "bboxDM": {
-            "SW": "42°29,93'N - 013°26,58'W",
-            "NE": "48°55,74'N - 000°00,08'W"
+            "SW": "42°30,00'N - 013°26,50'W",
+            "NE": "48°55,83'N - 000°00,00'E"
         },
         "references": "Fac similé ES 4A"
     },
@@ -424,24 +424,24 @@
         "coordinates": [
             [
                 [
-                    -13.443,
-                    42.49883333333333
+                    -13.441666666666666,
+                    42.5
                 ],
                 [
-                    -0.0013333333333333333,
-                    42.49883333333333
+                    0,
+                    42.5
                 ],
                 [
-                    -0.0013333333333333333,
-                    48.929
+                    0,
+                    48.9305
                 ],
                 [
-                    -13.443,
-                    48.929
+                    -13.441666666666666,
+                    48.9305
                 ],
                 [
-                    -13.443,
-                    42.49883333333333
+                    -13.441666666666666,
+                    42.5
                 ]
             ]
         ]
@@ -456,7 +456,7 @@
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "33°30,00'N - 014°00,00'W",
-            "NE": "43°30,00'N - 005°15,00'W"
+            "NE": "43°30,00'N - 005°00,00'W"
         },
         "references": "Fac similé Carte PT n° 21101 publiée en 1980 (édition avril 2002)."
     },
@@ -469,11 +469,11 @@
                     33.5
                 ],
                 [
-                    -5.25,
+                    -5,
                     33.5
                 ],
                 [
-                    -5.25,
+                    -5,
                     43.5
                 ],
                 [
@@ -533,7 +533,7 @@
     "type": "Feature",
     "properties": {
         "num": "7270",
-        "title": "De Casablanca (Dâr el Beïda) au Cap Jubi - Archipel de Madère (Arquipelago da Madeira) et Iles Canaries (Islas Canarias)",
+        "title": "De Casablanca (Dâr el Beïda) au Cap Jubi - Archipel de Madère (Arquipelago da Madeira) et Iles Canaries (Islas Canarias) (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2006",
         "scaleDenominator": "1000000",
         "bboxDM": {
@@ -1347,6 +1347,49 @@
                 [
                     32.25,
                     23
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7883",
+        "title": "Du Cap Tarfaya (Cap Juby) à Râs Timiris (Cap Timiris) - Islas Canarias",
+        "issued": "Publication 2019",
+        "scaleDenominator": "1100000",
+        "bboxDM": {
+            "SW": "18°35,00'N - 021°00,00'W",
+            "NE": "29°34,00'N - 012°45,00'W"
+        },
+        "replaces": "(remplace 6083)",
+        "note": "Nota&nbsp;: Porter la mention hors-cadre \"Voir carte adjacente 7883 (INT1083)\" (au nord) sur la carte 6113. Remplacer la mention hors-cadre \"Voir carte adjacente 6083\" (au sud-ouest) par \"Voir carte adjacente 7883 (INT1083)\" sur la carte 7270 (INT1082). Porter le cadre de la carte 7883 et la mention \"7883 (INT 1083)\" sur la carte 6624 (INT 104). Rayer le cadre de la carte 6083 et la mention \"6083\" sur la carte 6624 (INT 104).",
+        "references": "Fac similé carte ES n° 5B publiée en 1998 (édition novembre 2003)"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -21,
+                    18.583333333333332
+                ],
+                [
+                    -12.75,
+                    18.583333333333332
+                ],
+                [
+                    -12.75,
+                    29.566666666666666
+                ],
+                [
+                    -21,
+                    29.566666666666666
+                ],
+                [
+                    -21,
+                    18.583333333333332
                 ]
             ]
         ]

@@ -163,14 +163,13 @@
     "type": "Feature",
     "properties": {
         "num": "6688",
-        "title": "Îles de la Société, de Manuae à Tahiti",
-        "issued": "Édition n°&nbsp;2 - 2018",
+        "title": "Iles de la Société, de Manuae à Tahiti",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "592000",
         "bboxDM": {
             "SW": "18°40,00'S - 154°52,00'W",
             "NE": "14°39,50'S - 148°45,50'W"
-        },
-        "note": "Nota&nbsp;: Mise aux normes internationales"
+        }
     },
     "geometry": {
         "type": "Polygon",
@@ -205,7 +204,7 @@
     "properties": {
         "num": "6689",
         "title": "Îles Tuamotu (Partie Ouest)",
-        "issued": "Édition n°&nbsp;2 - 2018",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "595000",
         "bboxDM": {
             "SW": "18°17,44'S - 150°00,00'W",
@@ -244,8 +243,8 @@
     "type": "Feature",
     "properties": {
         "num": "6690",
-        "title": "Îles Tuamotu (partie centrale) de Makemo à Tatakoto",
-        "issued": "Édition n°&nbsp;2 - 2018",
+        "title": "Îles Tuamotu (partie centrale) - De Makemo à Tatakoto",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "592000",
         "bboxDM": {
             "SW": "18°42,00'S - 144°15,00'W",
@@ -285,7 +284,7 @@
     "properties": {
         "num": "6691",
         "title": "Îles Tuamotu (partie Est) de Hao à Fangataufa",
-        "issued": "Édition n°&nbsp;2 - 2018",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "578000",
         "bboxDM": {
             "SW": "23°25,00'S - 142°00,00'W",
@@ -325,11 +324,11 @@
     "properties": {
         "num": "6692",
         "title": "Des Îles Tuamotu aux Îles Gambier",
-        "issued": "Édition n°&nbsp;2 - 2018",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "574000",
         "bboxDM": {
             "SW": "24°20,00'S - 139°15,00'W",
-            "NE": "20°28,00'S - 133°08,50'W"
+            "NE": "20°28,00'S - 133°08,30'W"
         }
     },
     "geometry": {
@@ -341,11 +340,11 @@
                     -24.333333333333332
                 ],
                 [
-                    -133.14166666666668,
+                    -133.13833333333332,
                     -24.333333333333332
                 ],
                 [
-                    -133.14166666666668,
+                    -133.13833333333332,
                     -20.466666666666665
                 ],
                 [
@@ -368,8 +367,8 @@
         "issued": "Édition n°&nbsp;4 - 2003",
         "scaleDenominator": "560000",
         "bboxDM": {
-            "SW": "48°00,00'N - 006°43,65'W",
-            "NE": "51°14,80'N - 001°52,00'E"
+            "SW": "48°00,00'N - 006°43,70'W",
+            "NE": "51°14,90'N - 001°52,00'E"
         },
         "references": "Fac similé carte GB n°2675 publiée en 1978 (edition décembre 1991)."
     },
@@ -378,7 +377,7 @@
         "coordinates": [
             [
                 [
-                    -6.7275,
+                    -6.7283333333333335,
                     48
                 ],
                 [
@@ -387,14 +386,14 @@
                 ],
                 [
                     1.8666666666666667,
-                    51.24666666666667
+                    51.248333333333335
                 ],
                 [
-                    -6.7275,
-                    51.24666666666667
+                    -6.7283333333333335,
+                    51.248333333333335
                 ],
                 [
-                    -6.7275,
+                    -6.7283333333333335,
                     48
                 ]
             ]
@@ -454,8 +453,8 @@
         "issued": "Édition n°&nbsp;2 - 2006",
         "scaleDenominator": "500000",
         "bboxDM": {
-            "SW": "38°49,93'N - 001°36,93'E",
-            "NE": "43°53,94'N - 006°12,93'E"
+            "SW": "38°50,00'N - 001°37,00'E",
+            "NE": "43°54,00'N - 006°13,00'E"
         }
     },
     "geometry": {
@@ -463,24 +462,24 @@
         "coordinates": [
             [
                 [
-                    1.6155,
-                    38.832166666666666
+                    1.6166666666666667,
+                    38.833333333333336
                 ],
                 [
-                    6.2155,
-                    38.832166666666666
+                    6.216666666666667,
+                    38.833333333333336
                 ],
                 [
-                    6.2155,
-                    43.899
+                    6.216666666666667,
+                    43.9
                 ],
                 [
-                    1.6155,
-                    43.899
+                    1.6166666666666667,
+                    43.9
                 ],
                 [
-                    1.6155,
-                    38.832166666666666
+                    1.6166666666666667,
+                    38.833333333333336
                 ]
             ]
         ]
@@ -531,7 +530,7 @@
     "type": "Feature",
     "properties": {
         "num": "7210",
-        "title": "Atterrages de l'entrée de La Manche",
+        "title": "Atterrages de l'entrée de La Manche - Mer Celtique",
         "issued": "Édition n°&nbsp;5 - 2018",
         "scaleDenominator": "500000",
         "bboxDM": {
@@ -614,14 +613,13 @@
     "type": "Feature",
     "properties": {
         "num": "7357",
-        "title": "Iles Marquises (Fenua Enata)",
-        "issued": "Publication 2000",
+        "title": "Îles Marquises (Fenua Enata)",
+        "issued": "Édition n°&nbsp;2 - 2019",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "11°48,00'S - 141°18,00'W",
             "NE": "06°50,00'S - 137°53,00'W"
-        },
-        "replaces": "(remplace 6198)"
+        }
     },
     "geometry": {
         "type": "Polygon",

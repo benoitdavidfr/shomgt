@@ -171,7 +171,7 @@
         "scaleDenominator": "2250000",
         "bboxDM": {
             "SW": "32°45,00'N - 006°44,00'W",
-            "NE": "45°52,22'N - 019°40,48'E"
+            "NE": "45°52,20'N - 019°40,50'E"
         },
         "references": "Fac similé carte IT n°340 (édition 1983)."
     },
@@ -184,16 +184,16 @@
                     32.75
                 ],
                 [
-                    19.674666666666667,
+                    19.675,
                     32.75
                 ],
                 [
-                    19.674666666666667,
-                    45.870333333333335
+                    19.675,
+                    45.87
                 ],
                 [
                     -6.733333333333333,
-                    45.870333333333335
+                    45.87
                 ],
                 [
                     -6.733333333333333,
@@ -453,8 +453,8 @@
     "type": "Feature",
     "properties": {
         "num": "7347",
-        "title": "De l'Archipel des Tuamotu aux Iles Australes",
-        "issued": "Publication 1995",
+        "title": "Des Îles Tuamotu aux Îles Australes",
+        "issued": "Édition n°&nbsp;2 - 2019",
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "29°04,00'S - 149°40,00'W",
@@ -533,14 +533,13 @@
     "type": "Feature",
     "properties": {
         "num": "7369",
-        "title": "Des Southern Cook Islands aux Iles de la Société et Australes",
-        "issued": "Publication 1995",
+        "title": "Des Southern Cook Islands aux Îes de la Société et Australes",
+        "issued": "Édition n°&nbsp;2 - 2019",
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "24°24,00'S - 163°30,00'W",
             "NE": "14°00,00'S - 147°26,00'W"
-        },
-        "replaces": "(remplace 6035)"
+        }
     },
     "geometry": {
         "type": "Polygon",
@@ -616,13 +615,12 @@
     "properties": {
         "num": "7371",
         "title": "De Tahiti aux Iles Marquises",
-        "issued": "Publication 1996",
+        "issued": "Édition n°&nbsp;2 - 2019",
         "scaleDenominator": "1580000",
         "bboxDM": {
             "SW": "18°06,00'S - 153°00,00'W",
             "NE": "07°22,00'S - 136°56,00'W"
-        },
-        "replaces": "(remplace 6597)"
+        }
     },
     "geometry": {
         "type": "Polygon",
