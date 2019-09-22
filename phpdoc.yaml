@@ -58,9 +58,7 @@ doc: |
 journal: |
   22/9/2019:
     - intégration de la maj du 18/9/2019
-    - 2 cartes ne semblent pas intégrées
-      - 7471 - D'Anguilla à Saint-Barthélemy (1:60000) - St Martin + St Barthélémy
-      - 7491 - De Nosy Bé à la Baie d'Antsiranana - Récif du Geyser - Iles Glorieuses (1:350000) - Mayotte, Glorieuses
+    - correction d'un bug dans updt
   10/4/2019:
     - ajout num de carte dans la carte Leaflet
   30/3-9/4/2019:

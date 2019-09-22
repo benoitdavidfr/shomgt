@@ -81,6 +81,9 @@ doc: |
         il enchaine différentes commandes de dezippage, de transformation en PNG et de découpage
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
 
+journal: |
+  22/9/2019:
+    - correction d'un bug dans shomgt.php
 phpScripts:
   - /geoapi/shomgt/updt/updt.php
   - /geoapi/shomgt/updt/tile.php
