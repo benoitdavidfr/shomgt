@@ -5,6 +5,8 @@ title: lib.inc.php - fonctions utilisées par index.php, gan.php ou geojson.php
 doc: |
   diverses commandes
 journal: |
+  15/9/2019
+    modif de wfsdl() pour que l'id de la carte soit correct
   8/3/2019
     fork dans gt
   11/12/2018
@@ -67,8 +69,13 @@ function wfsdl(): array {
       $count = 100;
       for ($startindex = 0; $startindex < $numberMatched; $startindex += $count) {
         $fc = $shomwfs->getFeatureAsArray($typename, [], -1, '', $count, $startindex);
-        foreach ($fc['features'] as $feature)
-          $wfs['FR'.$feature['properties']['carte_id']] = $feature;
+        foreach ($fc['features'] as $feature) {
+          if (!preg_match('!^([^ ]*)!', $feature['properties']['name'], $matches))
+            throw new Exception("Ereur: no match on ".$feature['properties']['name']);
+          $id = 'FR'.$matches[1];
+          $wfs[$id] = $feature;
+          //echo "id=$id\n";
+        }
       }
     }
     //echo '<pre>',json_encode($maps, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);

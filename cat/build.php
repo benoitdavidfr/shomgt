@@ -47,6 +47,7 @@ else { // en non CLI
 
 // lecture de la fiche GAN pour un id de carte (de la forme "FR{num}") et enregistrement dans le répertoire adhoc
 function harvestGan(string $id) {
+  echo "id:$id\n";
   $url = "http://www.shom.fr/qr/gan/$id";
   if (($html = file_get_contents($url)) === FALSE)
     die("Erreur de lecture de $url");

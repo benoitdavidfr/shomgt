@@ -2376,6 +2376,67 @@
                         }
                     }
                 ]
+            },
+            "2019-08-11": {
+                "num": "6033",
+                "groupTitle": "Océan Pacifique Sud - Polynésie française",
+                "title": "Archipel de la Société - Îles sous-le-Vent",
+                "scaleDenominator": "174.000",
+                "bboxDM": {
+                    "SW": "17°06,47'S - 152°25,15'W",
+                    "NE": "16°03,97'S - 150°50,15'W"
+                },
+                "spatial": {
+                    "southlimit": -17.107833333333332,
+                    "westlimit": -152.41916666666665,
+                    "northlimit": -16.066166666666668,
+                    "eastlimit": -150.83583333333334
+                },
+                "issued": "Édition n° 4 - 2014",
+                "boxes": [
+                    {
+                        "title": "Manuae (Scilly)",
+                        "scaleDenominator": "174.000",
+                        "bboxDM": {
+                            "SW": "16°38,97'S - 154°48,16'W",
+                            "NE": "16°23,97'S - 154°33,16'W"
+                        },
+                        "spatial": {
+                            "southlimit": -16.6495,
+                            "westlimit": -154.80266666666665,
+                            "northlimit": -16.3995,
+                            "eastlimit": -154.55266666666665
+                        }
+                    },
+                    {
+                        "title": "Maupihaa (Mopelia)",
+                        "scaleDenominator": "174.000",
+                        "bboxDM": {
+                            "SW": "16°53,97'S - 154°02,16'W",
+                            "NE": "16°42,97'S - 153°53,16'W"
+                        },
+                        "spatial": {
+                            "southlimit": -16.8995,
+                            "westlimit": -154.036,
+                            "northlimit": -16.716166666666666,
+                            "eastlimit": -153.886
+                        }
+                    },
+                    {
+                        "title": "Motu One (Bellingshausen)",
+                        "scaleDenominator": "174.000",
+                        "bboxDM": {
+                            "SW": "15°51,97'S - 154°35,16'W",
+                            "NE": "15°44,97'S - 154°28,16'W"
+                        },
+                        "spatial": {
+                            "southlimit": -15.866166666666667,
+                            "westlimit": -154.586,
+                            "northlimit": -15.7495,
+                            "eastlimit": -154.46933333333334
+                        }
+                    }
+                ]
             }
         },
         "FR6054": {
@@ -3827,6 +3888,23 @@
                     "eastlimit": -134.78416666666666
                 },
                 "issued": "Édition n° 2 - 1992"
+            },
+            "2019-08-11": {
+                "num": "6461",
+                "groupTitle": "Polynésie Française",
+                "title": "Îles Gambier",
+                "scaleDenominator": "60.000",
+                "bboxDM": {
+                    "SW": "23°26,00'S - 135°10,35'W",
+                    "NE": "22°54,40'S - 134°47,05'W"
+                },
+                "spatial": {
+                    "southlimit": -23.433333333333334,
+                    "westlimit": -135.1725,
+                    "northlimit": -22.906666666666666,
+                    "eastlimit": -134.78416666666666
+                },
+                "issued": "Édition n° 2 - 1992"
             }
         },
         "FR6462": {
@@ -3834,6 +3912,23 @@
                 "num": "6462",
                 "groupTitle": "Polynésie Française",
                 "title": "Iles Gambier, partie Sud",
+                "scaleDenominator": "30.000",
+                "bboxDM": {
+                    "SW": "23°18,50'S - 135°07,25'W",
+                    "NE": "23°07,71'S - 134°50,13'W"
+                },
+                "spatial": {
+                    "southlimit": -23.308333333333334,
+                    "westlimit": -135.12083333333334,
+                    "northlimit": -23.1285,
+                    "eastlimit": -134.8355
+                },
+                "issued": "Édition n° 3 - 2017"
+            },
+            "2019-08-11": {
+                "num": "6462",
+                "groupTitle": "Polynésie Française",
+                "title": "Îles Gambier, partie Sud",
                 "scaleDenominator": "30.000",
                 "bboxDM": {
                     "SW": "23°18,50'S - 135°07,25'W",
@@ -15325,7 +15420,7 @@
                     "northlimit": 48.9305,
                     "eastlimit": 0
                 },
-                "issued": "Édition n° 5 - 2015",
+                "issued": "Édition n° 6 - 2019",
                 "references": "Fac similé ES 4A"
             }
         },
@@ -18197,6 +18292,53 @@
                         }
                     }
                 ]
+            },
+            "2019-08-11": {
+                "num": "7322",
+                "groupTitle": "Côte Ouest de Nouvelle Calédonie",
+                "title": "De la Passe de Poya à la Passe de Muéo",
+                "scaleDenominator": "25.000",
+                "bboxDM": {
+                    "SW": "21°28,49'S - 164°54,20'E",
+                    "NE": "21°18,34'S - 165°10,10'E"
+                },
+                "spatial": {
+                    "southlimit": -21.474833333333333,
+                    "westlimit": 164.90333333333334,
+                    "northlimit": -21.305666666666667,
+                    "eastlimit": 165.16833333333332
+                },
+                "issued": "Édition n° 3 - 2019",
+                "boxes": [
+                    {
+                        "title": "A - Passe de Muéo",
+                        "scaleDenominator": "10.000",
+                        "bboxDM": {
+                            "SW": "21°24,16'S - 164°56,50'E",
+                            "NE": "21°23,48'S - 164°58,57'E"
+                        },
+                        "spatial": {
+                            "southlimit": -21.402666666666665,
+                            "westlimit": 164.94166666666666,
+                            "northlimit": -21.391333333333332,
+                            "eastlimit": 164.97616666666667
+                        }
+                    },
+                    {
+                        "title": "B - Port de Muéo",
+                        "scaleDenominator": "10.000",
+                        "bboxDM": {
+                            "SW": "21°21,03'S - 164°58,49'E",
+                            "NE": "21°19,63'S - 164°59,86'E"
+                        },
+                        "spatial": {
+                            "southlimit": -21.3505,
+                            "westlimit": 164.97483333333332,
+                            "northlimit": -21.327166666666667,
+                            "eastlimit": 164.99766666666667
+                        }
+                    }
+                ]
             }
         },
         "FR7323": {
@@ -19883,7 +20025,7 @@
             "2019-08-11": {
                 "num": "7371",
                 "groupTitle": "Océan Pacifique Sud",
-                "title": "De Tahiti aux Iles Marquises",
+                "title": "De Tahiti aux Îles Marquises",
                 "scaleDenominator": "1.580.000",
                 "bboxDM": {
                     "SW": "18°06,00'S - 153°00,00'W",
@@ -24012,6 +24154,25 @@
                 "groupTitle": "Océan Indien",
                 "title": "Approches Nord - Est de Madagascar",
                 "scaleDenominator": "1.058.500",
+                "bboxDM": {
+                    "SW": "21°35,00'S - 048°35,00'E",
+                    "NE": "11°05,00'S - 056°00,00'E"
+                },
+                "spatial": {
+                    "southlimit": -21.583333333333332,
+                    "westlimit": 48.583333333333336,
+                    "northlimit": -11.083333333333334,
+                    "eastlimit": 56
+                },
+                "issued": "Publication 2018",
+                "replaces": "(remplace 4174.CA)",
+                "note": "Nota&nbsp;: Remplacer la mention hors-cadre (coin Sud-Est) \"Voir carte adjacente 4174 See adjoining chart 4174\" par \"Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)\" sur la carte 7486. Porter la mention hors-cadre \"Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)\" sur la carte 7488 (à l'Ouest). Remplacer la mention hors-cadre (au Nord) \"Voir carte adjacente 4174 See adjoining chart 4174\" par \"Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)\" sur la carte 7489. Rayer le cadre de la carte 4174 et la mention \"4174\" sur la carte 6672. Porter le cadre de la carte 7487 et la mention \"7487 (INT7062)\" sur la carte 6672. Rayer le cadre de la carte 4174 et la mention \"4174\" sur la carte 6673. Porter le cadre de la carte 7487 et la mention \"7487 (INT7062)\" sur la carte 6673."
+            },
+            "2019-08-11": {
+                "num": "7487",
+                "groupTitle": "Océan Indien",
+                "title": "Approches Nord - Est de Madagascar",
+                "scaleDenominator": "1.058.000",
                 "bboxDM": {
                     "SW": "21°35,00'S - 048°35,00'E",
                     "NE": "11°05,00'S - 056°00,00'E"
@@ -30961,6 +31122,41 @@
                 "boxes": [
                     {
                         "title": "Port de San Pedro",
+                        "scaleDenominator": "20.000",
+                        "bboxDM": {
+                            "SW": "04°41,47'N - 006°37,95'W",
+                            "NE": "04°45,52'N - 006°34,32'W"
+                        },
+                        "spatial": {
+                            "southlimit": 4.691166666666667,
+                            "westlimit": -6.6325,
+                            "northlimit": 4.758666666666667,
+                            "eastlimit": -6.572
+                        }
+                    }
+                ]
+            },
+            "2019-08-11": {
+                "num": "7577",
+                "groupTitle": "Côte de Côte d'Ivoire",
+                "title": "De Grand Béréby à Sassandra - Port de San Pedro",
+                "scaleDenominator": "100.000",
+                "bboxDM": {
+                    "SW": "04°24,40'N - 007°00,40'W",
+                    "NE": "05°05,00'N - 006°01,00'W"
+                },
+                "spatial": {
+                    "southlimit": 4.406666666666666,
+                    "westlimit": -7.006666666666667,
+                    "northlimit": 5.083333333333333,
+                    "eastlimit": -6.016666666666667
+                },
+                "issued": "Publication 2018",
+                "replaces": "(remplace 6596)",
+                "note": "Nota&nbsp;: Porter le cadre de la carte 7577 et la légende 7577 sur la carte 7384. Porter le cadre de la carte 7577 et la légende 7577 sur la carte 7385. Remplacer le renvoi hors cadre \"Voir carte adjacente 6596\" par \"Voir carte adjacente 7577\" sur la carte 6075 (au Nord Est).",
+                "boxes": [
+                    {
+                        "title": "A - Port de San Pedro",
                         "scaleDenominator": "20.000",
                         "bboxDM": {
                             "SW": "04°41,47'N - 006°37,95'W",

@@ -1,3 +1,8 @@
+# Erreur No match on 7330/7330_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(7330/7330_2016, gtbbox)
+# Erreur No match on 7344/7344_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(7344/7344_2016, gtbbox)
+# Erreur No match on 7360/7360_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(7360/7360_2016, gtbbox)
+# Erreur No match on 8101/8101 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(8101/8101, gtbbox)
+# Erreur No match on 8502/8502_2010 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(8502/8502_2010, gtbbox)
 name: shomgt.yaml
 title: paramètres des cartes GéoTIFF du Shom (V3)
 description: 
@@ -389,7 +394,7 @@ gt4M:
     right: 1122 # nbre de pixels de la bordure droite
     top: 1268 # nbre de pixels de la bordure haute
   7081/7081_pal300:
-    title: 7081 - Mer Méditerranée et Mer Noire
+    title: 7081 - Mer Méditerranée et mer Noire (Spéciale P)
     edition: Publication 1986
     scaleden: 4200000
     width: 13819
@@ -400,8 +405,8 @@ gt4M:
     east: 47.073408
     left: 1122 # nbre de pixels de la bordure gauche
     bottom: 1217 # nbre de pixels de la bordure basse
-    right: 1123 # nbre de pixels de la bordure droite
-    top: 1265 # nbre de pixels de la bordure haute
+    right: 1131 # nbre de pixels de la bordure droite
+    top: 1264 # nbre de pixels de la bordure haute
   7604/7604_pal300:
     title: 7604 - De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam
     edition: Édition n°&nbsp;3 - 2017
@@ -471,7 +476,7 @@ gt2M:
     north: 53.027681
     east: 2.314550
     left: 1123 # nbre de pixels de la bordure gauche
-    bottom: 1066 # nbre de pixels de la bordure basse
+    bottom: 1073 # nbre de pixels de la bordure basse
     right: 1123 # nbre de pixels de la bordure droite
     top: 1416 # nbre de pixels de la bordure haute
   6898/6898_pal300:
@@ -517,33 +522,47 @@ gt2M:
     right: 425 # nbre de pixels de la bordure droite
     top: 561 # nbre de pixels de la bordure haute
   7347/7347_pal300:
-    title: 7347 - De l'Archipel des Tuamotu aux Iles Australes
-    edition: Publication 1995
+    title: 7347 - Des Îles Tuamotu aux Îles Australes
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 1500000
     width: 9922
     height: 13819
-    south: -29.483458
+    south: -29.483186
     west: -150.328694
-    north: -13.532964
+    north: -13.532661
     east: -138.037794
     left: 535 # nbre de pixels de la bordure gauche
     bottom: 384 # nbre de pixels de la bordure basse
     right: 535 # nbre de pixels de la bordure droite
     top: 469 # nbre de pixels de la bordure haute
-  7369/7369_pal300:
-    title: 7369 - Des Southern Cook Islands aux Iles de la Société et Australes
+  7368/7368_pal300:
+    title: 7368 - De l'Ile Malden aux Iles de la Société
     edition: Publication 1995
+    scaleden: 1600000
+    width: 9922
+    height: 13819
+    south: -18.811636
+    west: -162.528475
+    north: -1.929533
+    east: -150.237575
+    left: 535 # nbre de pixels de la bordure gauche
+    bottom: 377 # nbre de pixels de la bordure basse
+    right: 535 # nbre de pixels de la bordure droite
+    top: 458 # nbre de pixels de la bordure haute
+  7369/7369_pal300:
+    title: 7369 - Des Southern Cook Islands aux Îes de la Société et Australes
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 1500000
     width: 13819
     height: 9922
-    south: -24.984489
+    south: -24.997756
     west: -164.026147
-    north: -13.329714
+    north: -13.343967
     east: -146.907831
     left: 425 # nbre de pixels de la bordure gauche
-    bottom: 517 # nbre de pixels de la bordure basse
+    bottom: 529 # nbre de pixels de la bordure basse
     right: 425 # nbre de pixels de la bordure droite
-    top: 554 # nbre de pixels de la bordure haute
+    top: 542 # nbre de pixels de la bordure haute
   7370/7370_pal300:
     title: 7370 - De Mururoa à Ducie Island
     edition: Publication 1995
@@ -559,19 +578,19 @@ gt2M:
     right: 451 # nbre de pixels de la bordure droite
     top: 568 # nbre de pixels de la bordure haute
   7371/7371_pal300:
-    title: 7371 - De Tahiti aux Iles Marquises
-    edition: Publication 1996
+    title: 7371 - De Tahiti aux Îles Marquises
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 1580000
     width: 13819
     height: 9922
-    south: -18.720956
+    south: -18.711808
     west: -153.525714
-    north: -6.678156
+    north: -6.668556
     east: -136.406717
     left: 425 # nbre de pixels de la bordure gauche
-    bottom: 526 # nbre de pixels de la bordure basse
+    bottom: 518 # nbre de pixels de la bordure basse
     right: 426 # nbre de pixels de la bordure droite
-    top: 557 # nbre de pixels de la bordure haute
+    top: 565 # nbre de pixels de la bordure haute
   7591/7591_pal300:
     title: 7591 - De Cape Goodenough à Cape Adare
     edition: Publication 2006
@@ -632,18 +651,18 @@ gt1M:
     top: 808 # nbre de pixels de la bordure haute
   7211/7211_pal300:
     title: 7211 - Golfe de Gascogne - De Brest à Cabo Finisterre
-    edition: Édition n°&nbsp;5 - 2015
+    edition: Édition n°&nbsp;6 - 2019
     scaleden: 1000000
     width: 13819
     height: 9922
-    south: 41.965575
+    south: 41.946131
     west: -14.144939
-    north: 49.418878
+    north: 49.401881
     east: 0.700133
-    left: 654 # nbre de pixels de la bordure gauche
-    bottom: 668 # nbre de pixels de la bordure basse
-    right: 653 # nbre de pixels de la bordure droite
-    top: 696 # nbre de pixels de la bordure haute
+    left: 655 # nbre de pixels de la bordure gauche
+    bottom: 694 # nbre de pixels de la bordure basse
+    right: 652 # nbre de pixels de la bordure droite
+    top: 670 # nbre de pixels de la bordure haute
   7212/7212_pal300:
     title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
     edition: Édition n°&nbsp;2 - 2007
@@ -656,7 +675,7 @@ gt1M:
     east: -4.777650
     left: 487 # nbre de pixels de la bordure gauche
     bottom: 371 # nbre de pixels de la bordure basse
-    right: 484 # nbre de pixels de la bordure droite
+    right: 228 # nbre de pixels de la bordure droite
     top: 391 # nbre de pixels de la bordure haute
   7268/7268_pal300:
     title: 7268 - Nouvelle-Calédonie
@@ -731,7 +750,7 @@ gt1M:
   7487/7487_pal300:
     title: 7487 - Approches Nord - Est de Madagascar
     edition: Publication 2018
-    scaleden: 1058500
+    scaleden: 1058000
     width: 9922
     height: 13819
     south: -21.875919
@@ -815,8 +834,8 @@ gt1M:
 
 gt500k:
   6688/6688_pal300:
-    title: 6688 - Îles de la Société, de Manuae à Tahiti
-    edition: Édition n°&nbsp;2 - 2018
+    title: 6688 - Iles de la Société, de Manuae à Tahiti
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 592000
     width: 13819
     height: 9922
@@ -830,7 +849,7 @@ gt500k:
     top: 646 # nbre de pixels de la bordure haute
   6689/6689_pal300:
     title: 6689 - Îles Tuamotu (Partie Ouest)
-    edition: Édition n°&nbsp;2 - 2018
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 595000
     width: 13819
     height: 9922
@@ -842,9 +861,23 @@ gt500k:
     bottom: 315 # nbre de pixels de la bordure basse
     right: 408 # nbre de pixels de la bordure droite
     top: 636 # nbre de pixels de la bordure haute
+  6690/6690_pal300:
+    title: 6690 - Îles Tuamotu (partie centrale) - De Makemo à Tatakoto
+    edition: Édition n°&nbsp;3 - 2019
+    scaleden: 592000
+    width: 13819
+    height: 9922
+    south: -18.904981
+    west: -144.448097
+    north: -14.407506
+    east: -137.948050
+    left: 422 # nbre de pixels de la bordure gauche
+    bottom: 458 # nbre de pixels de la bordure basse
+    right: 412 # nbre de pixels de la bordure droite
+    top: 621 # nbre de pixels de la bordure haute
   6691/6691_pal300:
     title: 6691 - Îles Tuamotu (partie Est) de Hao à Fangataufa
-    edition: Édition n°&nbsp;2 - 2018
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 578000
     width: 9922
     height: 13819
@@ -856,20 +889,34 @@ gt500k:
     bottom: 379 # nbre de pixels de la bordure basse
     right: 497 # nbre de pixels de la bordure droite
     top: 456 # nbre de pixels de la bordure haute
-  6990/6990_pal300:
-    title: 6990 - De la Pointe de Penmarc'h à la Gironde
-    edition: Édition n°&nbsp;4 - 2015
-    scaleden: 350000
+  6692/6692_pal300:
+    title: 6692 - Des Îles Tuamotu aux Îles Gambier
+    edition: Édition n°&nbsp;3 - 2019
+    scaleden: 574000
     width: 13819
     height: 9922
-    south: 45.358250
-    west: -6.163772
-    north: 48.033392
-    east: -0.747064
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 414 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 417 # nbre de pixels de la bordure haute
+    south: -24.533978
+    west: -139.448475
+    north: -20.194525
+    east: -132.948428
+    left: 422 # nbre de pixels de la bordure gauche
+    bottom: 466 # nbre de pixels de la bordure basse
+    right: 404 # nbre de pixels de la bordure droite
+    top: 614 # nbre de pixels de la bordure haute
+  6990/6990_pal300:
+    title: 6990 - De la Pointe de Penmarc'h à la Gironde
+    edition: Édition n°&nbsp;5 - 2019
+    scaleden: 355000
+    width: 13819
+    height: 9922
+    south: 45.349131
+    west: -6.163869
+    north: 48.024714
+    east: -0.747161
+    left: 419 # nbre de pixels de la bordure gauche
+    bottom: 577 # nbre de pixels de la bordure basse
+    right: 412 # nbre de pixels de la bordure droite
+    top: 506 # nbre de pixels de la bordure haute
   6991/6991_pal300:
     title: 6991 - De la Gironde à Cabo Peñas
     edition: Édition n°&nbsp;4 - 2015
@@ -880,10 +927,10 @@ gt500k:
     west: -6.047294
     north: 45.869850
     east: -0.630586
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 509 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 563 # nbre de pixels de la bordure haute
+    left: 419 # nbre de pixels de la bordure gauche
+    bottom: 513 # nbre de pixels de la bordure basse
+    right: 411 # nbre de pixels de la bordure droite
+    top: 559 # nbre de pixels de la bordure haute
   7040/7040_pal300:
     title: 7040 - La Manche
     edition: Édition n°&nbsp;4 - 2003
@@ -894,10 +941,10 @@ gt500k:
     west: -7.000667
     north: 51.744256
     east: 2.140469
-    left: 413 # nbre de pixels de la bordure gauche
+    left: 412 # nbre de pixels de la bordure gauche
     bottom: 1158 # nbre de pixels de la bordure basse
     right: 414 # nbre de pixels de la bordure droite
-    top: 1206 # nbre de pixels de la bordure haute
+    top: 1202 # nbre de pixels de la bordure haute
   7049/7049_pal300:
     title: 7049 - Des îles Loyauté à l'île Hunter
     edition: Édition n°&nbsp;2 - 2010
@@ -936,27 +983,13 @@ gt500k:
     west: 1.315061
     north: 44.077122
     east: 6.465994
-    left: 579 # nbre de pixels de la bordure gauche
-    bottom: 378 # nbre de pixels de la bordure basse
-    right: 483 # nbre de pixels de la bordure droite
-    top: 476 # nbre de pixels de la bordure haute
-  7204/7204_pal300:
-    title: 7204 - De Marseille à l'île d'Elbe (Isola d'Elba) et aux Bouches de Bonifacio
-    edition: Publication 1989
-    scaleden: 500000
-    width: 13819
-    height: 9922
-    south: 40.897647
-    west: 4.537750
-    north: 44.689269
-    east: 11.711783
-    left: 409 # nbre de pixels de la bordure gauche
-    bottom: 515 # nbre de pixels de la bordure basse
-    right: 408 # nbre de pixels de la bordure droite
-    top: 556 # nbre de pixels de la bordure haute
+    left: 581 # nbre de pixels de la bordure gauche
+    bottom: 381 # nbre de pixels de la bordure basse
+    right: 481 # nbre de pixels de la bordure droite
+    top: 473 # nbre de pixels de la bordure haute
   7311/7311_pal300:
-    title: 7311 - La Manche (Partie Ouest) - De Isles of Scilly et de l'Ile d'Ouessant aux Casquets
-    edition: Édition n°&nbsp;3 - 2009
+    title: 7311 - La Manche (partie Ouest) - De Isles of Scilly et de l'Ile d'Ouessant aux Casquets
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 375000
     width: 13819
     height: 9922
@@ -964,12 +997,12 @@ gt500k:
     west: -7.102936
     north: 50.955986
     east: -0.983572
-    left: 418 # nbre de pixels de la bordure gauche
-    bottom: 513 # nbre de pixels de la bordure basse
-    right: 417 # nbre de pixels de la bordure droite
-    top: 560 # nbre de pixels de la bordure haute
+    left: 421 # nbre de pixels de la bordure gauche
+    bottom: 517 # nbre de pixels de la bordure basse
+    right: 414 # nbre de pixels de la bordure droite
+    top: 557 # nbre de pixels de la bordure haute
   7210/7210_pal300:
-    title: 7210 - Atterrages de l'entrée de La Manche
+    title: 7210 - Atterrages de l'entrée de La Manche - Mer Celtique
     edition: Édition n°&nbsp;5 - 2018
     scaleden: 500000
     width: 13819
@@ -983,19 +1016,19 @@ gt500k:
     right: 400 # nbre de pixels de la bordure droite
     top: 1586 # nbre de pixels de la bordure haute
   7312/7312_pal300:
-    title: 7312 - La Manche (Partie Est)
-    edition: Édition n°&nbsp;2 - 2009
-    scaleden: 372400
+    title: 7312 - La Manche (partie Est) - Des Casquets au Pas de Calais
+    edition: Édition n°&nbsp;3 - 2019
+    scaleden: 375000
     width: 13819
     height: 9922
     south: 48.935769
     west: -3.186028
     north: 51.746478
     east: 2.933333
-    left: 418 # nbre de pixels de la bordure gauche
-    bottom: 504 # nbre de pixels de la bordure basse
-    right: 418 # nbre de pixels de la bordure droite
-    top: 566 # nbre de pixels de la bordure haute
+    left: 421 # nbre de pixels de la bordure gauche
+    bottom: 507 # nbre de pixels de la bordure basse
+    right: 415 # nbre de pixels de la bordure droite
+    top: 563 # nbre de pixels de la bordure haute
   7349/7349_pal300:
     title: 7349 - De la Réunion à Maurice (Mauritius) - Ile Tromelin
     edition: Publication 1996
@@ -1011,19 +1044,19 @@ gt500k:
     right: 427 # nbre de pixels de la bordure droite
     top: 583 # nbre de pixels de la bordure haute
   7357/7357_pal300:
-    title: 7357 - Iles Marquises (Fenua Enata)
-    edition: Publication 2000
+    title: 7357 - Îles Marquises (Fenua Enata)
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 500000
     width: 9922
     height: 13819
-    south: -11.943439
+    south: -11.940022
     west: -141.525211
-    north: -6.655972
+    north: -6.652506
     east: -137.701903
     left: 585 # nbre de pixels de la bordure gauche
-    bottom: 378 # nbre de pixels de la bordure basse
+    bottom: 369 # nbre de pixels de la bordure basse
     right: 471 # nbre de pixels de la bordure droite
-    top: 461 # nbre de pixels de la bordure haute
+    top: 470 # nbre de pixels de la bordure haute
   7374/7374_pal300:
     title: 7374 - Côte de la Guyane française
     edition: Édition n°&nbsp;2 - 2017
@@ -1052,6 +1085,20 @@ gt500k:
     bottom: 496 # nbre de pixels de la bordure basse
     right: 418 # nbre de pixels de la bordure droite
     top: 583 # nbre de pixels de la bordure haute
+  7491/7491_pal300:
+    title: 7491 - De Nosy Bé à la Baie d'Antsiranana - Récif du Geyser - Iles Glorieuses
+    edition: Publication 1998
+    scaleden: 350000
+    width: 13819
+    height: 9922
+    south: -13.752556
+    west: 46.251381
+    north: -11.099256
+    east: 50.011647
+    left: 485 # nbre de pixels de la bordure gauche
+    bottom: 511 # nbre de pixels de la bordure basse
+    right: 350 # nbre de pixels de la bordure droite
+    top: 562 # nbre de pixels de la bordure haute
   7507/7507_pal300:
     title: 7507 - Du Golfe du Lion aux Bouches de Bonifacio
     edition: Publication 1996
@@ -1066,6 +1113,20 @@ gt500k:
     bottom: 507 # nbre de pixels de la bordure basse
     right: 409 # nbre de pixels de la bordure droite
     top: 548 # nbre de pixels de la bordure haute
+  7204/7204_pal300:
+    title: 7204 - De Marseille à l'île d'Elbe (Isola d'Elba) et aux Bouches de Bonifacio
+    edition: Publication 1989
+    scaleden: 500000
+    width: 13819
+    height: 9922
+    south: 40.897647
+    west: 4.537750
+    north: 44.689269
+    east: 11.711783
+    left: 409 # nbre de pixels de la bordure gauche
+    bottom: 515 # nbre de pixels de la bordure basse
+    right: 408 # nbre de pixels de la bordure droite
+    top: 556 # nbre de pixels de la bordure haute
   7592/7592_pal300:
     title: 7592 - Du Glacier Dibble au Glacier Mertz
     edition: Publication 2004
@@ -1139,7 +1200,7 @@ gt250k:
     right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
   6033/6033_pal300:
-    title: 6033 - Archipel de la Société - Iles Sous-le-Vent
+    title: 6033 - Archipel de la Société - Îles sous-le-Vent
     edition: Édition n°&nbsp;4 - 2014
     scaleden: 174000
     width: 13819
@@ -1152,6 +1213,20 @@ gt250k:
     bottom: 1012 # nbre de pixels de la bordure basse
     right: 1175 # nbre de pixels de la bordure droite
     top: 1085 # nbre de pixels de la bordure haute
+  6420/6420_pal300:
+    title: 6420 - De Mataiva à Rangiroa et Makatea
+    edition: Édition n°&nbsp;2 - 2009
+    scaleden: 175000
+    width: 13819
+    height: 9922
+    south: -16.015744
+    west: -148.907442
+    north: -14.684125
+    east: -146.996131
+    left: 1156 # nbre de pixels de la bordure gauche
+    bottom: 888 # nbre de pixels de la bordure basse
+    right: 1156 # nbre de pixels de la bordure droite
+    top: 1086 # nbre de pixels de la bordure haute
   6498/6498_pal300:
     title: 6498 - Îles Crozet
     edition: Édition n°&nbsp;3 - 2017
@@ -1204,24 +1279,24 @@ gt250k:
     west: 4.721497
     north: 44.111781
     east: 8.308722
-    left: 427 # nbre de pixels de la bordure gauche
-    bottom: 548 # nbre de pixels de la bordure basse
-    right: 423 # nbre de pixels de la bordure droite
-    top: 603 # nbre de pixels de la bordure haute
+    left: 431 # nbre de pixels de la bordure gauche
+    bottom: 553 # nbre de pixels de la bordure basse
+    right: 419 # nbre de pixels de la bordure droite
+    top: 598 # nbre de pixels de la bordure haute
   6955/6955_pal300:
-    title: 6955 - Approches des Iles de Tahiti et de Moorea - Iles de Maiao et de Tetiaroa
-    edition: Édition n°&nbsp;3 - 2014
+    title: 6955 - Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 173000
     width: 13819
     height: 9922
-    south: -18.151364
-    west: -150.807681
-    north: -16.834200
-    east: -148.895903
-    left: 416 # nbre de pixels de la bordure gauche
-    bottom: 575 # nbre de pixels de la bordure basse
-    right: 417 # nbre de pixels de la bordure droite
-    top: 785 # nbre de pixels de la bordure haute
+    south: -18.151431
+    west: -150.807822
+    north: -16.834267
+    east: -148.896042
+    left: 417 # nbre de pixels de la bordure gauche
+    bottom: 576 # nbre de pixels de la bordure basse
+    right: 416 # nbre de pixels de la bordure droite
+    top: 784 # nbre de pixels de la bordure haute
   7008/7008_pal300:
     title: 7008 - Du Cabo de San Sebastian à Fos-sur-Mer
     edition: Édition n°&nbsp;2 - 2005
@@ -1246,10 +1321,10 @@ gt250k:
     west: 7.715111
     north: 43.395375
     east: 10.290728
-    left: 484 # nbre de pixels de la bordure gauche
-    bottom: 429 # nbre de pixels de la bordure basse
-    right: 611 # nbre de pixels de la bordure droite
-    top: 421 # nbre de pixels de la bordure haute
+    left: 488 # nbre de pixels de la bordure gauche
+    bottom: 434 # nbre de pixels de la bordure basse
+    right: 607 # nbre de pixels de la bordure droite
+    top: 416 # nbre de pixels de la bordure haute
   7035/7035_pal300:
     title: 7035 - La Réunion
     edition: Édition n°&nbsp;2 - 1998
@@ -1265,7 +1340,7 @@ gt250k:
     right: 418 # nbre de pixels de la bordure droite
     top: 561 # nbre de pixels de la bordure haute
   7067/7067_pal300:
-    title: 7067 - De la Chaussée de Sein à Belle-Île
+    title: 7067 - De la Chaussée de Sein à Belle-Ile
     edition: Édition n°&nbsp;4 - 2015
     scaleden: 161000
     width: 13819
@@ -1274,42 +1349,14 @@ gt250k:
     west: -5.243139
     north: 48.151333
     east: -2.743119
-    left: 416 # nbre de pixels de la bordure gauche
-    bottom: 509 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 570 # nbre de pixels de la bordure haute
-  7068/7068_pal300:
-    title: 7068 - De la presqu'île de Quiberon aux Sables-d'Olonne
-    edition: Édition n°&nbsp;3 - 2018
-    scaleden: 162000
-    width: 13819
-    height: 9922
-    south: 46.435636
-    west: -3.925031
-    north: 47.662453
-    east: -1.425014
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 369 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 566 # nbre de pixels de la bordure haute
-  7069/7069_pal300:
-    title: 7069 - De l'île d'Yeu à la Pointe de la Coubre - Plateau de Rochebonne
-    edition: Édition n°&nbsp;3 - 2018
-    scaleden: 164800
-    width: 13819
-    height: 9922
-    south: 45.621464
-    west: -3.425086
-    north: 46.866789
-    east: -0.925067
-    left: 416 # nbre de pixels de la bordure gauche
-    bottom: 514 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 565 # nbre de pixels de la bordure haute
+    left: 423 # nbre de pixels de la bordure gauche
+    bottom: 517 # nbre de pixels de la bordure basse
+    right: 407 # nbre de pixels de la bordure droite
+    top: 562 # nbre de pixels de la bordure haute
   7070/7070_pal300:
-    title: 7070 - Du Pertuis de Maumusson à Mimizan-Plage
+    title: 7070 - De l'île d'Oléron au Bassin d'Arcachon
     edition: Édition n°&nbsp;3 - 2018
-    scaleden: 168000
+    scaleden: 167000
     width: 9922
     height: 13819
     south: 44.100806
@@ -1317,25 +1364,25 @@ gt250k:
     north: 45.874711
     east: -0.902439
     left: 539 # nbre de pixels de la bordure gauche
-    bottom: 378 # nbre de pixels de la bordure basse
+    bottom: 2610 # nbre de pixels de la bordure basse
     right: 540 # nbre de pixels de la bordure droite
-    top: 460 # nbre de pixels de la bordure haute
+    top: 400 # nbre de pixels de la bordure haute
   7076/7076_pal300:
     title: 7076 - De Saint-Nazaire à Saint-Malo
-    edition: Édition n°&nbsp;2 - 2015
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 345000
     width: 13819
     height: 9922
-    south: 46.857814
+    south: 46.846450
     west: -6.754189
-    north: 49.459172
+    north: 49.448378
     east: -1.337483
     left: 415 # nbre de pixels de la bordure gauche
-    bottom: 530 # nbre de pixels de la bordure basse
+    bottom: 572 # nbre de pixels de la bordure basse
     right: 415 # nbre de pixels de la bordure droite
-    top: 557 # nbre de pixels de la bordure haute
+    top: 515 # nbre de pixels de la bordure haute
   7229/7229_pal300:
-    title: 7229 - De Nice à Piombino
+    title: 7229 - De Nice à Piombino (Spéciale P)
     edition: Publication 1989
     scaleden: 250000
     width: 13819
@@ -1347,7 +1394,49 @@ gt250k:
     left: 427 # nbre de pixels de la bordure gauche
     bottom: 542 # nbre de pixels de la bordure basse
     right: 425 # nbre de pixels de la bordure droite
-    top: 606 # nbre de pixels de la bordure haute
+    top: 605 # nbre de pixels de la bordure haute
+  7260/7260_pal300:
+    title: 7260 - De Apataki à Fakarava
+    edition: Publication 2005
+    scaleden: 175000
+    width: 13819
+    height: 9922
+    south: -16.502647
+    west: -146.410703
+    north: -15.174242
+    east: -144.499406
+    left: 415 # nbre de pixels de la bordure gauche
+    bottom: 520 # nbre de pixels de la bordure basse
+    right: 415 # nbre de pixels de la bordure droite
+    top: 565 # nbre de pixels de la bordure haute
+  7261/7261_pal300:
+    title: 7261 - De Fakarava à Makemo
+    edition: Publication 1993
+    scaleden: 175000
+    width: 13819
+    height: 9922
+    south: -17.564331
+    west: -145.803875
+    north: -16.243250
+    east: -143.892575
+    left: 414 # nbre de pixels de la bordure gauche
+    bottom: 338 # nbre de pixels de la bordure basse
+    right: 413 # nbre de pixels de la bordure droite
+    top: 434 # nbre de pixels de la bordure haute
+  7262/7262_pal300:
+    title: 7262 - De Makemo à Marutea Nord
+    edition: Publication 2006
+    scaleden: 174000
+    width: 9922
+    height: 13819
+    south: -17.976267
+    west: -144.171006
+    north: -16.137883
+    east: -142.798700
+    left: 586 # nbre de pixels de la bordure gauche
+    bottom: 375 # nbre de pixels de la bordure basse
+    right: 492 # nbre de pixels de la bordure droite
+    top: 465 # nbre de pixels de la bordure haute
   7291/7291_pal300:
     title: 7291 - De Piombino à Fiumicino et côte Est de Corse
     edition: Édition n°&nbsp;2 - 2018
@@ -1519,32 +1608,32 @@ gt250k:
 
 gt100k:
   5978/5978_2_gtw:
-    title: 5978-C - Récifs et îles Chesterfield
-    edition: Édition n°&nbsp;2 - 1986
+    title: 5978-B - Récifs et îles Chesterfield
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 150000
     width: 3242
     height: 5621
-    south: -20.012169
-    west: 158.120292
-    north: -19.367311
-    east: 158.512981
-    left: 104 # nbre de pixels de la bordure gauche
+    south: -20.012164
+    west: 158.120047
+    north: -19.367306
+    east: 158.512733
+    left: 106 # nbre de pixels de la bordure gauche
     bottom: 107 # nbre de pixels de la bordure basse
-    right: 108 # nbre de pixels de la bordure droite
+    right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
   5978/5978_3_gtw:
-    title: 5978-D - Atoll de Huon
-    edition: Édition n°&nbsp;2 - 1986
+    title: 5978-C - Récifs d'Entrecasteaux - Atoll de Huon
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 150000
     width: 2162
-    height: 3488
-    south: -18.270525
-    west: 162.753464
-    north: -17.870297
-    east: 163.012831
-    left: 105 # nbre de pixels de la bordure gauche
+    height: 3504
+    south: -18.265414
+    west: 162.753003
+    north: -17.863336
+    east: 163.012372
+    left: 106 # nbre de pixels de la bordure gauche
     bottom: 107 # nbre de pixels de la bordure basse
-    right: 107 # nbre de pixels de la bordure droite
+    right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
   6118/6118_pal300:
     title: 6118 - Iles Saint-Pierre et Miquelon
@@ -1560,6 +1649,20 @@ gt100k:
     bottom: 1116 # nbre de pixels de la bordure basse
     right: 936 # nbre de pixels de la bordure droite
     top: 1215 # nbre de pixels de la bordure haute
+  6279/6279_2_gtw:
+    title: 6279 - Maria
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 80000
+    width: 1736
+    height: 1575
+    south: -21.863011
+    west: -154.767675
+    north: -21.766686
+    east: -154.653978
+    left: 105 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 105 # nbre de pixels de la bordure droite
+    top: 104 # nbre de pixels de la bordure haute
   6497/6497_pal300:
     title: 6497 - Île de la Possession, Île de l'Est
     edition: Édition n°&nbsp;5 - 2018
@@ -1617,19 +1720,19 @@ gt100k:
     right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
   6680/6680_pal300:
-    title: 6680 - De l'Ile d'Ouessant à l'Ile de Batz
+    title: 6680 - De l'île d'Ouessant à l'île de Batz
     edition: Édition n°&nbsp;3 - 2003
-    scaleden: 156700
+    scaleden: 150000
     width: 13819
     height: 9922
     south: 48.297764
     west: -6.376808
     north: 49.481367
     east: -3.876792
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 508 # nbre de pixels de la bordure basse
-    right: 413 # nbre de pixels de la bordure droite
-    top: 558 # nbre de pixels de la bordure haute
+    left: 425 # nbre de pixels de la bordure gauche
+    bottom: 516 # nbre de pixels de la bordure basse
+    right: 405 # nbre de pixels de la bordure droite
+    top: 549 # nbre de pixels de la bordure haute
   6713/6713_pal300:
     title: 6713 - Côte Nord-Est de la Corse
     edition: Édition n°&nbsp;5 - 2016
@@ -1645,7 +1748,7 @@ gt100k:
     right: 490 # nbre de pixels de la bordure droite
     top: 472 # nbre de pixels de la bordure haute
   6735/6735_pal300:
-    title: 6735 - Pas de Calais
+    title: 6735 - Pas de Calais - De Boulogne-sur-Mer à Zeebrugge, estuaire de la Tamise (Thames)
     edition: Édition n°&nbsp;7 - 2012
     scaleden: 150000
     width: 13819
@@ -1654,10 +1757,10 @@ gt100k:
     west: 0.840492
     north: 51.752383
     east: 3.340511
-    left: 414 # nbre de pixels de la bordure gauche
-    bottom: 505 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 563 # nbre de pixels de la bordure haute
+    left: 422 # nbre de pixels de la bordure gauche
+    bottom: 513 # nbre de pixels de la bordure basse
+    right: 409 # nbre de pixels de la bordure droite
+    top: 556 # nbre de pixels de la bordure haute
   6821/6821_pal300:
     title: 6821 - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
     edition: Édition n°&nbsp;2 - 2009
@@ -1673,7 +1776,7 @@ gt100k:
     right: 489 # nbre de pixels de la bordure droite
     top: 462 # nbre de pixels de la bordure haute
   6824/6824_pal300:
-    title: 6824 - La Manche - Du Cap d'Antifer au Cap Gris-Nez - De Newhaven à Dover
+    title: 6824 - Du Cap d'Antifer au Cap Gris-Nez - De Newhaven à Dover
     edition: Édition n°&nbsp;4 - 2006
     scaleden: 150000
     width: 9922
@@ -1683,23 +1786,23 @@ gt100k:
     north: 51.225792
     east: 1.696828
     left: 543 # nbre de pixels de la bordure gauche
-    bottom: 371 # nbre de pixels de la bordure basse
-    right: 543 # nbre de pixels de la bordure droite
-    top: 469 # nbre de pixels de la bordure haute
+    bottom: 378 # nbre de pixels de la bordure basse
+    right: 536 # nbre de pixels de la bordure droite
+    top: 462 # nbre de pixels de la bordure haute
   6857/6857_pal300:
     title: 6857 - Du Cap de la Hague à Fécamp - Baie de Seine
     edition: Édition n°&nbsp;4 - 2012
-    scaleden: 154200
+    scaleden: 150000
     width: 13819
     height: 9922
     south: 49.118331
     west: -2.032961
     north: 50.282508
     east: 0.467058
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 512 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 575 # nbre de pixels de la bordure haute
+    left: 422 # nbre de pixels de la bordure gauche
+    bottom: 520 # nbre de pixels de la bordure basse
+    right: 408 # nbre de pixels de la bordure droite
+    top: 568 # nbre de pixels de la bordure haute
   6876/6876_1_gtw:
     title: 6876-A - Iles Wallis
     edition: Édition n°&nbsp;3 - 2012
@@ -1715,33 +1818,33 @@ gt100k:
     right: 106 # nbre de pixels de la bordure droite
     top: 104 # nbre de pixels de la bordure haute
   6930/6930_pal300:
-    title: 6930 - Des Roches de Portsall au Plateau des Roches Douvres
+    title: 6930 - Des roches de Portsall au plateau des Roches Douvres
     edition: Édition n°&nbsp;2 - 2009
-    scaleden: 156300
+    scaleden: 150000
     width: 13819
     height: 9922
     south: 48.437686
     west: -4.909817
     north: 49.617989
     east: -2.409797
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 510 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 559 # nbre de pixels de la bordure haute
+    left: 423 # nbre de pixels de la bordure gauche
+    bottom: 518 # nbre de pixels de la bordure basse
+    right: 407 # nbre de pixels de la bordure droite
+    top: 550 # nbre de pixels de la bordure haute
   6940/6940_pal300:
-    title: 6940 - De Start Point à The Needles - Dispositif de Séparation du Trafic au large des Casquets
+    title: 6940 - De Start Point à the Needles
     edition: Édition n°&nbsp;5 - 2011
-    scaleden: 152500
+    scaleden: 150000
     width: 13819
     height: 9922
     south: 49.658664
     west: -3.958308
     north: 50.809967
     east: -1.458208
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 469 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 596 # nbre de pixels de la bordure haute
+    left: 1613 # nbre de pixels de la bordure gauche
+    bottom: 2159 # nbre de pixels de la bordure basse
+    right: 633 # nbre de pixels de la bordure droite
+    top: 87 # nbre de pixels de la bordure haute
   6941/6941_pal300:
     title: 6941 - De Lizard Point à Dartmouth
     edition: Édition n°&nbsp;6 - 2018
@@ -1752,12 +1855,12 @@ gt100k:
     west: -5.306325
     north: 50.481583
     east: -2.806222
-    left: 444 # nbre de pixels de la bordure gauche
-    bottom: 506 # nbre de pixels de la bordure basse
-    right: 384 # nbre de pixels de la bordure droite
-    top: 558 # nbre de pixels de la bordure haute
+    left: 450 # nbre de pixels de la bordure gauche
+    bottom: 501 # nbre de pixels de la bordure basse
+    right: 376 # nbre de pixels de la bordure droite
+    top: 562 # nbre de pixels de la bordure haute
   6966/6966_pal300:
-    title: 6966 - Des Héaux-de-Bréhat au Cap Lévi
+    title: 6966 - Des Héaux de Bréhat au Cap Lévi
     edition: Édition n°&nbsp;4 - 2015
     scaleden: 155000
     width: 9922
@@ -1766,26 +1869,26 @@ gt100k:
     west: -3.188267
     north: 50.089944
     east: -1.393261
-    left: 413 # nbre de pixels de la bordure gauche
-    bottom: 400 # nbre de pixels de la bordure basse
-    right: 390 # nbre de pixels de la bordure droite
-    top: 458 # nbre de pixels de la bordure haute
+    left: 562 # nbre de pixels de la bordure gauche
+    bottom: 381 # nbre de pixels de la bordure basse
+    right: 517 # nbre de pixels de la bordure droite
+    top: 773 # nbre de pixels de la bordure haute
   6968/6968_pal300:
     title: 6968 - De Anvil Point à Beachy Head
     edition: Édition n°&nbsp;4 - 2016
-    scaleden: 151900
+    scaleden: 150000
     width: 13819
     height: 9922
     south: 49.844481
     west: -2.071047
     north: 50.991319
     east: 0.429053
-    left: 477 # nbre de pixels de la bordure gauche
-    bottom: 465 # nbre de pixels de la bordure basse
-    right: 349 # nbre de pixels de la bordure droite
-    top: 600 # nbre de pixels de la bordure haute
+    left: 485 # nbre de pixels de la bordure gauche
+    bottom: 1639 # nbre de pixels de la bordure basse
+    right: 341 # nbre de pixels de la bordure droite
+    top: 604 # nbre de pixels de la bordure haute
   7052/7052_pal300:
-    title: 7052 - De Nouméa à l'île des Pins - Le grand lagon Sud
+    title: 7052 - De Nouméa à l'île des Pins - Le grand lagon Sud (Spéciale P)
     edition: Édition n°&nbsp;2 - 2009
     scaleden: 150000
     width: 13819
@@ -1794,38 +1897,80 @@ gt100k:
     west: 166.310711
     north: -22.153089
     east: 168.019342
-    left: 426 # nbre de pixels de la bordure gauche
-    bottom: 501 # nbre de pixels de la bordure basse
-    right: 427 # nbre de pixels de la bordure droite
-    top: 586 # nbre de pixels de la bordure haute
+    left: 399 # nbre de pixels de la bordure gauche
+    bottom: 477 # nbre de pixels de la bordure basse
+    right: 453 # nbre de pixels de la bordure droite
+    top: 611 # nbre de pixels de la bordure haute
   7066/7066_pal300:
-    title: 7066 - De l'Île Vierge à la Pointe de Penmarc'h
-    edition: Édition n°&nbsp;4 - 2015
-    scaleden: 158800
+    title: 7066 - De l'île Vierge à la Pointe de Penmarc'h - Abords de Brest
+    edition: Édition n°&nbsp;5 - 2019
+    scaleden: 150000
     width: 13819
     height: 9922
-    south: 47.604511
-    west: -6.622622
-    north: 48.804342
-    east: -4.122603
-    left: 302 # nbre de pixels de la bordure gauche
-    bottom: 501 # nbre de pixels de la bordure basse
-    right: 529 # nbre de pixels de la bordure droite
-    top: 575 # nbre de pixels de la bordure haute
+    south: 47.607019
+    west: -6.618053
+    north: 48.806792
+    east: -4.118033
+    left: 285 # nbre de pixels de la bordure gauche
+    bottom: 488 # nbre de pixels de la bordure basse
+    right: 546 # nbre de pixels de la bordure droite
+    top: 587 # nbre de pixels de la bordure haute
+  7068/7068_pal300:
+    title: 7068 - De la presqu'île de Quiberon aux Sables-d'Olonne
+    edition: Édition n°&nbsp;3 - 2018
+    scaleden: 150000
+    width: 13819
+    height: 9922
+    south: 46.435636
+    west: -3.925031
+    north: 47.662453
+    east: -1.425014
+    left: 415 # nbre de pixels de la bordure gauche
+    bottom: 515 # nbre de pixels de la bordure basse
+    right: 415 # nbre de pixels de la bordure droite
+    top: 566 # nbre de pixels de la bordure haute
+  7069/7069_pal300:
+    title: 7069 - De l'île d'Yeu à la Pointe de la Coubre - Plateau de Rochebonne
+    edition: Édition n°&nbsp;3 - 2018
+    scaleden: 150000
+    width: 13819
+    height: 9922
+    south: 45.621464
+    west: -3.425086
+    north: 46.866789
+    east: -0.925067
+    left: 416 # nbre de pixels de la bordure gauche
+    bottom: 514 # nbre de pixels de la bordure basse
+    right: 415 # nbre de pixels de la bordure droite
+    top: 565 # nbre de pixels de la bordure haute
   7218/7218_pal300:
     title: 7218 - Atolls d'Ouvéa et de Beautemps-Beaupré
-    edition: Édition n°&nbsp;3 - 2010
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 75000
     width: 13819
     height: 9922
-    south: -20.808750
-    west: 166.057069
-    north: -20.239650
-    east: 166.898444
+    south: -20.808550
+    west: 166.057022
+    north: -20.239450
+    east: 166.898397
     left: 435 # nbre de pixels de la bordure gauche
-    bottom: 442 # nbre de pixels de la bordure basse
-    right: 394 # nbre de pixels de la bordure droite
-    top: 523 # nbre de pixels de la bordure haute
+    bottom: 438 # nbre de pixels de la bordure basse
+    right: 393 # nbre de pixels de la bordure droite
+    top: 526 # nbre de pixels de la bordure haute
+  7248/7248_1_gtw:
+    title: 7248-A - Apataki
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 80000
+    width: 6447
+    height: 7582
+    south: -15.664825
+    west: -146.526444
+    north: -15.200731
+    east: -146.119611
+    left: 105 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 107 # nbre de pixels de la bordure droite
+    top: 106 # nbre de pixels de la bordure haute
   7259/7259_1_gtw:
     title: 7259 - Ile Maré
     edition: Publication 1995
@@ -1840,8 +1985,22 @@ gt100k:
     bottom: 107 # nbre de pixels de la bordure basse
     right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
+  7281/7281_pal300:
+    title: 7281 - Hao
+    edition: Édition n°&nbsp;2 - 2015
+    scaleden: 75000
+    width: 13819
+    height: 9922
+    south: -18.512422
+    west: -141.304856
+    north: -17.943186
+    east: -140.475197
+    left: 415 # nbre de pixels de la bordure gauche
+    bottom: 508 # nbre de pixels de la bordure basse
+    right: 414 # nbre de pixels de la bordure droite
+    top: 583 # nbre de pixels de la bordure haute
   7323/7323_pal300:
-    title: 7323 - Pas de Calais
+    title: 7323 - Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover
     edition: Édition n°&nbsp;6 - 2018
     scaleden: 74300
     width: 13819
@@ -1850,10 +2009,24 @@ gt100k:
     west: 0.798364
     north: 51.224711
     east: 2.035169
-    left: 414 # nbre de pixels de la bordure gauche
-    bottom: 516 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 550 # nbre de pixels de la bordure haute
+    left: 950 # nbre de pixels de la bordure gauche
+    bottom: 873 # nbre de pixels de la bordure basse
+    right: 1298 # nbre de pixels de la bordure droite
+    top: 1388 # nbre de pixels de la bordure haute
+  7329/7329_1_gtw:
+    title: 7329 - Kauehi
+    edition: Édition n°&nbsp;2 - 2003
+    scaleden: 75000
+    width: 9043
+    height: 6577
+    south: -16.056125
+    west: -145.422928
+    north: -15.678708
+    east: -144.886789
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 105 # nbre de pixels de la bordure droite
+    top: 104 # nbre de pixels de la bordure haute
   7337/7337_pal300:
     title: 7337 - Baie de l'Oyapok
     edition: Publication 1996
@@ -1869,7 +2042,7 @@ gt100k:
     right: 812 # nbre de pixels de la bordure droite
     top: 1784 # nbre de pixels de la bordure haute
   7345/7345_pal300:
-    title: 7345 - Guadeloupe - De Montserrat à Marie-Galante
+    title: 7345 - Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)
     edition: Édition n°&nbsp;3 - 2010
     scaleden: 149000
     width: 13819
@@ -1878,10 +2051,10 @@ gt100k:
     west: -62.253347
     north: 16.781197
     east: -60.617747
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 503 # nbre de pixels de la bordure basse
-    right: 418 # nbre de pixels de la bordure droite
-    top: 588 # nbre de pixels de la bordure haute
+    left: 451 # nbre de pixels de la bordure gauche
+    bottom: 525 # nbre de pixels de la bordure basse
+    right: 386 # nbre de pixels de la bordure droite
+    top: 566 # nbre de pixels de la bordure haute
   7350/7350_pal300:
     title: 7350 - Récif du Geyser - Banc de la Zélée
     edition: Édition n°&nbsp;2 - 2008
@@ -1994,6 +2167,34 @@ gt100k:
     bottom: 489 # nbre de pixels de la bordure basse
     right: 414 # nbre de pixels de la bordure droite
     top: 601 # nbre de pixels de la bordure haute
+  7372/7372_1_gtw:
+    title: 7372 - Fakarava
+    edition: Édition n°&nbsp;3 - 2004
+    scaleden: 80000
+    width: 9022
+    height: 9741
+    south: -16.589828
+    west: -145.873358
+    north: -15.993606
+    east: -145.301589
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 107 # nbre de pixels de la bordure droite
+    top: 105 # nbre de pixels de la bordure haute
+  7373/7373_pal300:
+    title: 7373 - Rangiroa
+    edition: Édition n°&nbsp;2 - 2002
+    scaleden: 80000
+    width: 13819
+    height: 9922
+    south: -15.419289
+    west: -148.011225
+    north: -14.811919
+    east: -147.140453
+    left: 417 # nbre de pixels de la bordure gauche
+    bottom: 501 # nbre de pixels de la bordure basse
+    right: 417 # nbre de pixels de la bordure droite
+    top: 573 # nbre de pixels de la bordure haute
   7381/7381_pal300:
     title: 7381 - De Kourou à Cayenne
     edition: Édition n°&nbsp;2 - 2013
@@ -2018,10 +2219,10 @@ gt100k:
     west: 0.907950
     north: 50.792667
     east: 1.795931
-    left: 530 # nbre de pixels de la bordure gauche
-    bottom: 382 # nbre de pixels de la bordure basse
-    right: 529 # nbre de pixels de la bordure droite
-    top: 444 # nbre de pixels de la bordure haute
+    left: 545 # nbre de pixels de la bordure gauche
+    bottom: 397 # nbre de pixels de la bordure basse
+    right: 514 # nbre de pixels de la bordure droite
+    top: 429 # nbre de pixels de la bordure haute
   7417/7417_pal300:
     title: 7417 - Abords de Fécamp et de Dieppe - Du Cap d'Antifer à Dieppe
     edition: Édition n°&nbsp;2 - 2006
@@ -2032,12 +2233,12 @@ gt100k:
     west: 0.123544
     north: 50.223300
     east: 1.360289
-    left: 412 # nbre de pixels de la bordure gauche
-    bottom: 499 # nbre de pixels de la bordure basse
-    right: 410 # nbre de pixels de la bordure droite
-    top: 566 # nbre de pixels de la bordure haute
+    left: 426 # nbre de pixels de la bordure gauche
+    bottom: 514 # nbre de pixels de la bordure basse
+    right: 395 # nbre de pixels de la bordure droite
+    top: 551 # nbre de pixels de la bordure haute
   7424/7424_pal300:
-    title: 7424 - Pas de Calais
+    title: 7424 - Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 73900
     width: 13819
@@ -2046,10 +2247,66 @@ gt100k:
     west: 1.248378
     north: 51.449469
     east: 2.485200
-    left: 413 # nbre de pixels de la bordure gauche
+    left: 410 # nbre de pixels de la bordure gauche
     bottom: 450 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 605 # nbre de pixels de la bordure haute
+    right: 412 # nbre de pixels de la bordure droite
+    top: 617 # nbre de pixels de la bordure haute
+  7453/7453_pal300:
+    title: 7453 - Makemo
+    edition: Publication 1996
+    scaleden: 75000
+    width: 13819
+    height: 9922
+    south: -16.820825
+    west: -144.096864
+    north: -16.251489
+    east: -143.274792
+    left: 424 # nbre de pixels de la bordure gauche
+    bottom: 509 # nbre de pixels de la bordure basse
+    right: 424 # nbre de pixels de la bordure droite
+    top: 584 # nbre de pixels de la bordure haute
+  7456/7456_pal300:
+    title: 7456 - Toau - De Niau à Fakarava
+    edition: Publication 2002
+    scaleden: 75000
+    width: 13819
+    height: 9922
+    south: -16.252161
+    west: -146.474872
+    north: -15.682794
+    east: -145.655158
+    left: 420 # nbre de pixels de la bordure gauche
+    bottom: 504 # nbre de pixels de la bordure basse
+    right: 419 # nbre de pixels de la bordure droite
+    top: 590 # nbre de pixels de la bordure haute
+  7457/7457_pal300:
+    title: 7457 - Raroia et Takume
+    edition: Publication 2003
+    scaleden: 75000
+    width: 9922
+    height: 13819
+    south: -16.379775
+    west: -142.623628
+    north: -15.586786
+    east: -142.035028
+    left: 511 # nbre de pixels de la bordure gauche
+    bottom: 375 # nbre de pixels de la bordure basse
+    right: 393 # nbre de pixels de la bordure droite
+    top: 462 # nbre de pixels de la bordure haute
+  7459/7459_1_gtw:
+    title: 7459 - Tikehau
+    edition: Publication 2019
+    scaleden: 75000
+    width: 9022
+    height: 6542
+    south: -15.206100
+    west: -148.456236
+    north: -14.830664
+    east: -147.923514
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 105 # nbre de pixels de la bordure droite
+    top: 105 # nbre de pixels de la bordure haute
   7470/7470_pal300:
     title: 7470 - D'Anguilla à Nevis
     edition: Édition n°&nbsp;2 - 2017
@@ -2094,6 +2351,34 @@ gt100k:
     top: 583 # nbre de pixels de la bordure haute
 
 gt50k:
+  6424/6424_2_gtw:
+    title: 6424 - Île Tubuai
+    edition: Édition n°&nbsp;2 - 2001
+    scaleden: 40000
+    width: 8042
+    height: 5935
+    south: -23.462692
+    west: -149.613136
+    north: -23.281214
+    east: -149.346767
+    left: 105 # nbre de pixels de la bordure gauche
+    bottom: 105 # nbre de pixels de la bordure basse
+    right: 108 # nbre de pixels de la bordure droite
+    top: 108 # nbre de pixels de la bordure haute
+  6461/6461_pal300:
+    title: 6461 - Îles Gambier
+    edition: Édition n°&nbsp;2 - 1992
+    scaleden: 60000
+    width: 9922
+    height: 13819
+    south: -23.487717
+    west: -135.225542
+    north: -22.853783
+    east: -134.733242
+    left: 1070 # nbre de pixels de la bordure gauche
+    bottom: 1189 # nbre de pixels de la bordure basse
+    right: 1027 # nbre de pixels de la bordure droite
+    top: 1151 # nbre de pixels de la bordure haute
   6498/6498_1_gtw:
     title: 6498-A - Île aux Cochons - Côte Est, Mouillage de la Meurthe
     edition: Édition n°&nbsp;3 - 2017
@@ -2146,7 +2431,7 @@ gt50k:
     west: 1.716486
     north: 51.251069
     east: 2.436847
-    left: 388 # nbre de pixels de la bordure gauche
+    left: 420 # nbre de pixels de la bordure gauche
     bottom: 496 # nbre de pixels de la bordure basse
     right: 388 # nbre de pixels de la bordure droite
     top: 543 # nbre de pixels de la bordure haute
@@ -2166,18 +2451,18 @@ gt50k:
     top: 548 # nbre de pixels de la bordure haute
   6687/6687_pal300:
     title: 6687 - Abords de Nouméa - Passes de Boulari et de Dumbéa
-    edition: Édition n°&nbsp;5 - 2012
+    edition: Édition n°&nbsp;6 - 2019
     scaleden: 59600
     width: 9922
     height: 13819
-    south: -22.667128
-    west: 166.176944
-    north: -22.037308
-    east: 166.663092
-    left: 539 # nbre de pixels de la bordure gauche
-    bottom: 366 # nbre de pixels de la bordure basse
-    right: 540 # nbre de pixels de la bordure droite
-    top: 472 # nbre de pixels de la bordure haute
+    south: -22.667561
+    west: 166.175375
+    north: -22.037742
+    east: 166.661522
+    left: 503 # nbre de pixels de la bordure gauche
+    bottom: 313 # nbre de pixels de la bordure basse
+    right: 576 # nbre de pixels de la bordure droite
+    top: 524 # nbre de pixels de la bordure haute
   6693/6693_pal300:
     title: 6693 - De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône
     edition: Édition n°&nbsp;4 - 2018
@@ -2193,7 +2478,7 @@ gt50k:
     right: 404 # nbre de pixels de la bordure droite
     top: 556 # nbre de pixels de la bordure haute
   6738/6738_pal300:
-    title: 6738 - La Martinique - Partie Sud
+    title: 6738 - La Martinique - Partie Sud (Spéciale P)
     edition: Édition n°&nbsp;2 - 2009
     scaleden: 60000
     width: 13819
@@ -2202,24 +2487,24 @@ gt50k:
     west: -61.311103
     north: 14.711433
     east: -60.659894
-    left: 420 # nbre de pixels de la bordure gauche
-    bottom: 489 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 577 # nbre de pixels de la bordure haute
+    left: 342 # nbre de pixels de la bordure gauche
+    bottom: 453 # nbre de pixels de la bordure basse
+    right: 498 # nbre de pixels de la bordure droite
+    top: 613 # nbre de pixels de la bordure haute
   6767/6767_pal300:
     title: 6767 - De Fos-sur-Mer à Marseille
     edition: Édition n°&nbsp;4 - 2017
-    scaleden: 50000
+    scaleden: 49900
     width: 13819
     height: 9922
     south: 43.108211
     west: 4.733736
     north: 43.485972
     east: 5.454067
-    left: 418 # nbre de pixels de la bordure gauche
-    bottom: 501 # nbre de pixels de la bordure basse
-    right: 421 # nbre de pixels de la bordure droite
-    top: 579 # nbre de pixels de la bordure haute
+    left: 440 # nbre de pixels de la bordure gauche
+    bottom: 527 # nbre de pixels de la bordure basse
+    right: 398 # nbre de pixels de la bordure droite
+    top: 553 # nbre de pixels de la bordure haute
   6820/6820_pal300:
     title: 6820 - Mouillages de l'île Lifou - Baie du Santal
     edition: Édition n°&nbsp;3 - 2015
@@ -2244,10 +2529,10 @@ gt50k:
     west: 9.340644
     north: 43.173886
     east: 9.857861
-    left: 576 # nbre de pixels de la bordure gauche
-    bottom: 554 # nbre de pixels de la bordure basse
-    right: 490 # nbre de pixels de la bordure droite
-    top: 653 # nbre de pixels de la bordure haute
+    left: 596 # nbre de pixels de la bordure gauche
+    bottom: 580 # nbre de pixels de la bordure basse
+    right: 471 # nbre de pixels de la bordure droite
+    top: 626 # nbre de pixels de la bordure haute
   6823/6823_pal300:
     title: 6823 - Abords Sud de Bastia
     edition: Édition n°&nbsp;3 - 2016
@@ -2258,12 +2543,12 @@ gt50k:
     west: 9.340664
     north: 42.750542
     east: 9.857881
-    left: 576 # nbre de pixels de la bordure gauche
-    bottom: 387 # nbre de pixels de la bordure basse
-    right: 491 # nbre de pixels de la bordure droite
-    top: 474 # nbre de pixels de la bordure haute
+    left: 595 # nbre de pixels de la bordure gauche
+    bottom: 413 # nbre de pixels de la bordure basse
+    right: 471 # nbre de pixels de la bordure droite
+    top: 448 # nbre de pixels de la bordure haute
   6827/6827_pal300:
-    title: 6827 - Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio
+    title: 6827 - Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 59500
     width: 9922
@@ -2272,40 +2557,40 @@ gt50k:
     west: 166.541108
     north: -22.225528
     east: 167.027256
-    left: 556 # nbre de pixels de la bordure gauche
-    bottom: 393 # nbre de pixels de la bordure basse
-    right: 557 # nbre de pixels de la bordure droite
-    top: 500 # nbre de pixels de la bordure haute
+    left: 454 # nbre de pixels de la bordure gauche
+    bottom: 319 # nbre de pixels de la bordure basse
+    right: 625 # nbre de pixels de la bordure droite
+    top: 537 # nbre de pixels de la bordure haute
   6843/6843_pal300:
     title: 6843 - Du Cabo Creus à Port-Barcarès
     edition: Édition n°&nbsp;3 - 2016
-    scaleden: 50500
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 42.287564
     west: 2.931100
     north: 42.820125
     east: 3.448294
-    left: 533 # nbre de pixels de la bordure gauche
-    bottom: 382 # nbre de pixels de la bordure basse
-    right: 534 # nbre de pixels de la bordure droite
-    top: 464 # nbre de pixels de la bordure haute
+    left: 555 # nbre de pixels de la bordure gauche
+    bottom: 408 # nbre de pixels de la bordure basse
+    right: 511 # nbre de pixels de la bordure droite
+    top: 438 # nbre de pixels de la bordure haute
   6844/6844_pal300:
     title: 6844 - De Port-Barcarès à l'embouchure de l'Aude
     edition: Édition n°&nbsp;3 - 2018
-    scaleden: 50200
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 42.712303
     west: 2.917731
     north: 43.241214
     east: 3.434925
-    left: 533 # nbre de pixels de la bordure gauche
-    bottom: 392 # nbre de pixels de la bordure basse
-    right: 533 # nbre de pixels de la bordure droite
-    top: 452 # nbre de pixels de la bordure haute
+    left: 556 # nbre de pixels de la bordure gauche
+    bottom: 418 # nbre de pixels de la bordure basse
+    right: 511 # nbre de pixels de la bordure droite
+    top: 426 # nbre de pixels de la bordure haute
   6855/6855_pal300:
-    title: 6855 - Du Phare d'Alistro à Solenzara
+    title: 6855 - Du phare d'Alistro à Solenzara
     edition: Édition n°&nbsp;3 - 2015
     scaleden: 51000
     width: 9922
@@ -2314,66 +2599,52 @@ gt50k:
     west: 9.290039
     north: 42.303208
     east: 9.807256
-    left: 588 # nbre de pixels de la bordure gauche
-    bottom: 414 # nbre de pixels de la bordure basse
-    right: 479 # nbre de pixels de la bordure droite
-    top: 454 # nbre de pixels de la bordure haute
+    left: 607 # nbre de pixels de la bordure gauche
+    bottom: 440 # nbre de pixels de la bordure basse
+    right: 459 # nbre de pixels de la bordure droite
+    top: 428 # nbre de pixels de la bordure haute
   6929/6929_pal300:
-    title: 6929 - Abords de Porto-Vecchio
+    title: 6929 - Abords de Porto-Vecchio - De l'anse de Favone aux îles Lavezzi
     edition: Édition n°&nbsp;4 - 2017
-    scaleden: 51300
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 41.317197
     west: 9.152350
     north: 41.858011
     east: 9.669564
-    left: 576 # nbre de pixels de la bordure gauche
-    bottom: 386 # nbre de pixels de la bordure basse
-    right: 491 # nbre de pixels de la bordure droite
-    top: 446 # nbre de pixels de la bordure haute
+    left: 595 # nbre de pixels de la bordure gauche
+    bottom: 411 # nbre de pixels de la bordure basse
+    right: 472 # nbre de pixels de la bordure droite
+    top: 420 # nbre de pixels de la bordure haute
   6933/6933_pal300:
-    title: 6933 - De l'Île Ouen à l'Île des Pins
+    title: 6933 - De l'île Ouen à l'île des Pins - Passe de la Sarcelle (Spéciale P)
     edition: Édition n°&nbsp;4 - 2017
-    scaleden: 59500
+    scaleden: 60000
     width: 13819
     height: 9922
     south: -22.742517
     west: 166.807328
     north: -22.290864
     east: 167.484394
-    left: 429 # nbre de pixels de la bordure gauche
-    bottom: 522 # nbre de pixels de la bordure basse
-    right: 430 # nbre de pixels de la bordure droite
-    top: 577 # nbre de pixels de la bordure haute
+    left: 361 # nbre de pixels de la bordure gauche
+    bottom: 459 # nbre de pixels de la bordure basse
+    right: 498 # nbre de pixels de la bordure droite
+    top: 640 # nbre de pixels de la bordure haute
   6942/6942_pal300:
-    title: 6942 - De Punta d'Orchina au Cap Muro
+    title: 6942 - De Punta d'Orchina au Cap Muro - Abords d'Ajaccio
     edition: Édition n°&nbsp;3 - 2016
-    scaleden: 51000
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 41.667425
     west: 8.323978
     north: 42.205286
     east: 8.841194
-    left: 576 # nbre de pixels de la bordure gauche
-    bottom: 382 # nbre de pixels de la bordure basse
-    right: 490 # nbre de pixels de la bordure droite
-    top: 464 # nbre de pixels de la bordure haute
-  6948/6948_pal300:
-    title: 6948 - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes
-    edition: Édition n°&nbsp;2 - 2010
-    scaleden: 60000
-    width: 9922
-    height: 13819
-    south: 15.657944
-    west: -61.755069
-    north: 16.292911
-    east: -61.283783
-    left: 588 # nbre de pixels de la bordure gauche
-    bottom: 389 # nbre de pixels de la bordure basse
-    right: 493 # nbre de pixels de la bordure droite
-    top: 445 # nbre de pixels de la bordure haute
+    left: 596 # nbre de pixels de la bordure gauche
+    bottom: 408 # nbre de pixels de la bordure basse
+    right: 471 # nbre de pixels de la bordure droite
+    top: 438 # nbre de pixels de la bordure haute
   6949/6949_pal300:
     title: 6949 - Abords de Thio
     edition: Édition n°&nbsp;2 - 2010
@@ -2389,7 +2660,7 @@ gt50k:
     right: 429 # nbre de pixels de la bordure droite
     top: 581 # nbre de pixels de la bordure haute
   6969/6969_pal300:
-    title: 6969 - Du Cap Corse à la Punta di l'Acciolu
+    title: 6969 - Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent
     edition: Édition n°&nbsp;3 - 2016
     scaleden: 50300
     width: 9922
@@ -2398,10 +2669,10 @@ gt50k:
     west: 8.985831
     north: 43.173917
     east: 9.503047
-    left: 573 # nbre de pixels de la bordure gauche
-    bottom: 553 # nbre de pixels de la bordure basse
-    right: 494 # nbre de pixels de la bordure droite
-    top: 653 # nbre de pixels de la bordure haute
+    left: 592 # nbre de pixels de la bordure gauche
+    bottom: 579 # nbre de pixels de la bordure basse
+    right: 475 # nbre de pixels de la bordure droite
+    top: 627 # nbre de pixels de la bordure haute
   6970/6970_pal300:
     title: 6970 - De Punta di l'Acciolu à Capo Cavallo
     edition: Édition n°&nbsp;3 - 2015
@@ -2412,10 +2683,10 @@ gt50k:
     west: 8.418744
     north: 42.869625
     east: 9.139106
-    left: 421 # nbre de pixels de la bordure gauche
-    bottom: 502 # nbre de pixels de la bordure basse
-    right: 418 # nbre de pixels de la bordure droite
-    top: 582 # nbre de pixels de la bordure haute
+    left: 440 # nbre de pixels de la bordure gauche
+    bottom: 528 # nbre de pixels de la bordure basse
+    right: 399 # nbre de pixels de la bordure droite
+    top: 556 # nbre de pixels de la bordure haute
   6985/6985_pal300:
     title: 6985 - De Paagoumène à Ouaco
     edition: Édition n°&nbsp;3 - 2011
@@ -2475,19 +2746,19 @@ gt50k:
   7024/7024_pal300:
     title: 7024 - Bouches de Bonifacio
     edition: Édition n°&nbsp;5 - 2012
-    scaleden: 51500
+    scaleden: 50000
     width: 13819
     height: 9922
     south: 41.111572
     west: 8.860492
     north: 41.501575
     east: 9.580853
-    left: 419 # nbre de pixels de la bordure gauche
-    bottom: 383 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 576 # nbre de pixels de la bordure haute
+    left: 439 # nbre de pixels de la bordure gauche
+    bottom: 553 # nbre de pixels de la bordure basse
+    right: 401 # nbre de pixels de la bordure droite
+    top: 551 # nbre de pixels de la bordure haute
   7031/7031_pal300:
-    title: 7031 - De l'Île de Penfret au Plateau des Birvideaux - Abords de Lorient
+    title: 7031 - De l'île de Penfret au plateau des Birvideaux - Abords de Lorient
     edition: Édition n°&nbsp;4 - 2017
     scaleden: 50000
     width: 13819
@@ -2496,12 +2767,12 @@ gt50k:
     west: -4.025383
     north: 47.839444
     east: -3.249106
-    left: 429 # nbre de pixels de la bordure gauche
-    bottom: 513 # nbre de pixels de la bordure basse
-    right: 426 # nbre de pixels de la bordure droite
-    top: 585 # nbre de pixels de la bordure haute
+    left: 452 # nbre de pixels de la bordure gauche
+    bottom: 539 # nbre de pixels de la bordure basse
+    right: 402 # nbre de pixels de la bordure droite
+    top: 559 # nbre de pixels de la bordure haute
   7032/7032_pal300:
-    title: 7032 - De l'Île de Groix à Belle-Ile - Abords de Lorient
+    title: 7032 - De l'île de Groix à Belle-Ile - Abords de Lorient
     edition: Édition n°&nbsp;4 - 2017
     scaleden: 50000
     width: 9922
@@ -2510,12 +2781,12 @@ gt50k:
     west: -3.551722
     north: 47.760461
     east: -2.994356
-    left: 541 # nbre de pixels de la bordure gauche
-    bottom: 383 # nbre de pixels de la bordure basse
-    right: 540 # nbre de pixels de la bordure droite
-    top: 479 # nbre de pixels de la bordure haute
+    left: 565 # nbre de pixels de la bordure gauche
+    bottom: 409 # nbre de pixels de la bordure basse
+    right: 516 # nbre de pixels de la bordure droite
+    top: 453 # nbre de pixels de la bordure haute
   7033/7033_pal300:
-    title: 7033 - De Quiberon au Croisic
+    title: 7033 - De Quiberon au Croisic (Spéciale P)
     edition: Édition n°&nbsp;3 - 2002
     scaleden: 50000
     width: 13819
@@ -2524,10 +2795,10 @@ gt50k:
     west: -3.208056
     north: 47.616081
     east: -2.431775
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 371 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 582 # nbre de pixels de la bordure haute
+    left: 737 # nbre de pixels de la bordure gauche
+    bottom: 536 # nbre de pixels de la bordure basse
+    right: 117 # nbre de pixels de la bordure droite
+    top: 555 # nbre de pixels de la bordure haute
   7037/7037_pal300:
     title: 7037 - De Dover à North Foreland
     edition: Édition n°&nbsp;10 - 2016
@@ -2543,19 +2814,19 @@ gt50k:
     right: 101 # nbre de pixels de la bordure droite
     top: 77 # nbre de pixels de la bordure haute
   7041/7041_pal300:
-    title: 7041 - La Martinique - Partie Nord
+    title: 7041 - La Martinique - Partie Nord (Spéciale P)
     edition: Édition n°&nbsp;2 - 2009
-    scaleden: 59900
+    scaleden: 60000
     width: 13819
     height: 9922
     south: 14.548658
     west: -61.316089
     north: 15.003608
     east: -60.664883
-    left: 420 # nbre de pixels de la bordure gauche
-    bottom: 502 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 589 # nbre de pixels de la bordure haute
+    left: 342 # nbre de pixels de la bordure gauche
+    bottom: 465 # nbre de pixels de la bordure basse
+    right: 498 # nbre de pixels de la bordure droite
+    top: 625 # nbre de pixels de la bordure haute
   7049/7049_1_gtw:
     title: 7049-A - Île Walpole
     edition: Édition n°&nbsp;2 - 2010
@@ -2573,17 +2844,17 @@ gt50k:
   7050/7050_pal300:
     title: 7050 - De Calvi à Cargèse
     edition: Édition n°&nbsp;3 - 2015
-    scaleden: 50700
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 42.107208
     west: 8.298794
     north: 42.641333
     east: 8.816011
-    left: 580 # nbre de pixels de la bordure gauche
-    bottom: 390 # nbre de pixels de la bordure basse
-    right: 487 # nbre de pixels de la bordure droite
-    top: 451 # nbre de pixels de la bordure haute
+    left: 599 # nbre de pixels de la bordure gauche
+    bottom: 416 # nbre de pixels de la bordure basse
+    right: 468 # nbre de pixels de la bordure droite
+    top: 425 # nbre de pixels de la bordure haute
   7051/7051_pal300:
     title: 7051 - Du Cap Colnett à Touho - Abords de Hienghène
     edition: Édition n°&nbsp;3 - 2013
@@ -2615,33 +2886,33 @@ gt50k:
   7053/7053_pal300:
     title: 7053 - De Sète à la Pointe de l'Espiguette
     edition: Édition n°&nbsp;3 - 2018
-    scaleden: 49800
+    scaleden: 50000
     width: 13819
     height: 9922
     south: 43.223814
     west: 3.627017
     north: 43.600853
     east: 4.347347
-    left: 419 # nbre de pixels de la bordure gauche
-    bottom: 530 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 577 # nbre de pixels de la bordure haute
+    left: 441 # nbre de pixels de la bordure gauche
+    bottom: 556 # nbre de pixels de la bordure basse
+    right: 397 # nbre de pixels de la bordure droite
+    top: 551 # nbre de pixels de la bordure haute
   7054/7054_pal300:
     title: 7054 - De l'embouchure de l'Aude à Sète
     edition: Édition n°&nbsp;3 - 2017
-    scaleden: 49900
+    scaleden: 50000
     width: 13819
     height: 9922
     south: 43.109717
     west: 3.200350
     north: 43.487467
     east: 3.920681
-    left: 419 # nbre de pixels de la bordure gauche
-    bottom: 505 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 575 # nbre de pixels de la bordure haute
+    left: 441 # nbre de pixels de la bordure gauche
+    bottom: 532 # nbre de pixels de la bordure basse
+    right: 397 # nbre de pixels de la bordure droite
+    top: 548 # nbre de pixels de la bordure haute
   7120/7120_pal300:
-    title: 7120 - Abords de Cherbourg
+    title: 7120 - Abords de Cherbourg - Du Cap de La Hague à la Pointe de Barfleur
     edition: Édition n°&nbsp;2 - 2008
     scaleden: 47800
     width: 13819
@@ -2650,10 +2921,10 @@ gt50k:
     west: -1.979536
     north: 49.948328
     east: -1.203256
-    left: 414 # nbre de pixels de la bordure gauche
-    bottom: 503 # nbre de pixels de la bordure basse
-    right: 411 # nbre de pixels de la bordure droite
-    top: 575 # nbre de pixels de la bordure haute
+    left: 437 # nbre de pixels de la bordure gauche
+    bottom: 530 # nbre de pixels de la bordure basse
+    right: 388 # nbre de pixels de la bordure droite
+    top: 552 # nbre de pixels de la bordure haute
   7146/7146_pal300:
     title: 7146 - De la Pointe de Penmarc'h à la Pointe de Trévignon
     edition: Édition n°&nbsp;3 - 2009
@@ -2664,40 +2935,40 @@ gt50k:
     west: -4.542033
     north: 47.937675
     east: -3.765756
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 497 # nbre de pixels de la bordure basse
-    right: 426 # nbre de pixels de la bordure droite
-    top: 583 # nbre de pixels de la bordure haute
+    left: 452 # nbre de pixels de la bordure gauche
+    bottom: 524 # nbre de pixels de la bordure basse
+    right: 402 # nbre de pixels de la bordure droite
+    top: 557 # nbre de pixels de la bordure haute
   7147/7147_pal300:
-    title: 7147 - De la Chaussée de Sein à la Pointe de Penmarc'h
+    title: 7147 - De la chaussée de Sein à la Pointe de Penmarc'h - Baie d'Audierne (Spéciale P)
     edition: Édition n°&nbsp;2 - 2008
-    scaleden: 49600
+    scaleden: 50000
     width: 13819
     height: 9922
     south: 47.723278
     west: -5.027706
     north: 48.098003
     east: -4.251425
-    left: 500 # nbre de pixels de la bordure gauche
-    bottom: 503 # nbre de pixels de la bordure basse
-    right: 355 # nbre de pixels de la bordure droite
-    top: 594 # nbre de pixels de la bordure haute
+    left: 523 # nbre de pixels de la bordure gauche
+    bottom: 530 # nbre de pixels de la bordure basse
+    right: 331 # nbre de pixels de la bordure droite
+    top: 567 # nbre de pixels de la bordure haute
   7148/7148_pal300:
     title: 7148 - Du Goulet de Brest à la Chaussée de Sein
     edition: Édition n°&nbsp;3 - 2008
-    scaleden: 49300
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 47.924636
     west: -5.055589
     north: 48.443756
     east: -4.498222
-    left: 533 # nbre de pixels de la bordure gauche
-    bottom: 381 # nbre de pixels de la bordure basse
-    right: 534 # nbre de pixels de la bordure droite
-    top: 449 # nbre de pixels de la bordure haute
+    left: 545 # nbre de pixels de la bordure gauche
+    bottom: 407 # nbre de pixels de la bordure basse
+    right: 507 # nbre de pixels de la bordure droite
+    top: 413 # nbre de pixels de la bordure haute
   7149/7149_pal300:
-    title: 7149 - Du Goulet de Brest à Portsall
+    title: 7149 - Du Goulet de Brest à Portsall - Ile d'Ouessant
     edition: Édition n°&nbsp;4 - 2015
     scaleden: 49100
     width: 13819
@@ -2706,12 +2977,12 @@ gt50k:
     west: -5.285389
     north: 48.616347
     east: -4.509111
-    left: 426 # nbre de pixels de la bordure gauche
-    bottom: 496 # nbre de pixels de la bordure basse
-    right: 429 # nbre de pixels de la bordure droite
-    top: 600 # nbre de pixels de la bordure haute
+    left: 452 # nbre de pixels de la bordure gauche
+    bottom: 522 # nbre de pixels de la bordure basse
+    right: 402 # nbre de pixels de la bordure droite
+    top: 574 # nbre de pixels de la bordure haute
   7150/7150_pal300:
-    title: 7150 - De Portsall à l'Anse de Kernic
+    title: 7150 - De Portsall à l'anse de Kernic
     edition: Édition n°&nbsp;2 - 2008
     scaleden: 50000
     width: 13819
@@ -2720,12 +2991,12 @@ gt50k:
     west: -4.947917
     north: 48.849878
     east: -4.171636
-    left: 411 # nbre de pixels de la bordure gauche
-    bottom: 491 # nbre de pixels de la bordure basse
-    right: 413 # nbre de pixels de la bordure droite
-    top: 564 # nbre de pixels de la bordure haute
+    left: 438 # nbre de pixels de la bordure gauche
+    bottom: 518 # nbre de pixels de la bordure basse
+    right: 387 # nbre de pixels de la bordure droite
+    top: 537 # nbre de pixels de la bordure haute
   7151/7151_pal300:
-    title: 7151 - De l'anse de Kernic à l'île Grande
+    title: 7151 - De l'anse de Kernic à l'Ile Grande
     edition: Édition n°&nbsp;3 - 2008
     scaleden: 48700
     width: 13819
@@ -2734,12 +3005,12 @@ gt50k:
     west: -4.274567
     north: 48.980261
     east: -3.498286
-    left: 414 # nbre de pixels de la bordure gauche
-    bottom: 501 # nbre de pixels de la bordure basse
-    right: 411 # nbre de pixels de la bordure droite
-    top: 575 # nbre de pixels de la bordure haute
+    left: 438 # nbre de pixels de la bordure gauche
+    bottom: 528 # nbre de pixels de la bordure basse
+    right: 387 # nbre de pixels de la bordure droite
+    top: 548 # nbre de pixels de la bordure haute
   7152/7152_pal300:
-    title: 7152 - De l'Île Grande à l'Île de Bréhat
+    title: 7152 - De l'Ile Grande à l'Ile de Bréhat
     edition: Édition n°&nbsp;3 - 2017
     scaleden: 48700
     width: 13819
@@ -2748,12 +3019,12 @@ gt50k:
     west: -3.672039
     north: 49.064944
     east: -2.895758
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 493 # nbre de pixels de la bordure basse
-    right: 426 # nbre de pixels de la bordure droite
-    top: 568 # nbre de pixels de la bordure haute
+    left: 452 # nbre de pixels de la bordure gauche
+    bottom: 520 # nbre de pixels de la bordure basse
+    right: 402 # nbre de pixels de la bordure droite
+    top: 541 # nbre de pixels de la bordure haute
   7153/7153_pal300:
-    title: 7153 - De l'Île de Bréhat au Plateau des Roches Douvres
+    title: 7153 - De l'île de Bréhat au Plateau des Roches Douvres
     edition: Édition n°&nbsp;3 - 2018
     scaleden: 48600
     width: 13819
@@ -2762,12 +3033,12 @@ gt50k:
     west: -3.233547
     north: 49.158744
     east: -2.457267
-    left: 455 # nbre de pixels de la bordure gauche
-    bottom: 508 # nbre de pixels de la bordure basse
-    right: 399 # nbre de pixels de la bordure droite
-    top: 582 # nbre de pixels de la bordure haute
+    left: 479 # nbre de pixels de la bordure gauche
+    bottom: 535 # nbre de pixels de la bordure basse
+    right: 376 # nbre de pixels de la bordure droite
+    top: 554 # nbre de pixels de la bordure haute
   7154/7154_pal300:
-    title: 7154 - De l'île de Bréhat au Cap Fréhel
+    title: 7154 - De l'île de Bréhat au Cap Fréhel - Baie de Saint-Brieuc
     edition: Édition n°&nbsp;2 - 2008
     scaleden: 48800
     width: 13819
@@ -2776,12 +3047,12 @@ gt50k:
     west: -3.070383
     north: 48.877392
     east: -2.294103
-    left: 429 # nbre de pixels de la bordure gauche
-    bottom: 508 # nbre de pixels de la bordure basse
-    right: 426 # nbre de pixels de la bordure droite
-    top: 587 # nbre de pixels de la bordure haute
+    left: 452 # nbre de pixels de la bordure gauche
+    bottom: 535 # nbre de pixels de la bordure basse
+    right: 402 # nbre de pixels de la bordure droite
+    top: 560 # nbre de pixels de la bordure haute
   7155/7155_pal300:
-    title: 7155 - Du Cap Fréhel à la Pointe du Grouin
+    title: 7155 - Du Cap Fréhel à la Pointe du Grouin - Approches de Saint-Malo
     edition: Édition n°&nbsp;3 - 2017
     scaleden: 48800
     width: 13819
@@ -2790,12 +3061,12 @@ gt50k:
     west: -2.474511
     north: 48.915631
     east: -1.698231
-    left: 413 # nbre de pixels de la bordure gauche
-    bottom: 503 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 585 # nbre de pixels de la bordure haute
+    left: 437 # nbre de pixels de la bordure gauche
+    bottom: 530 # nbre de pixels de la bordure basse
+    right: 388 # nbre de pixels de la bordure droite
+    top: 558 # nbre de pixels de la bordure haute
   7156/7156_pal300:
-    title: 7156 - De la Pointe du Grouin à la Pointe d'Agon
+    title: 7156 - De la Pointe du Grouin à la Pointe d'Agon - Baie du Mont-Saint-Michel - Iles Chausey
     edition: Édition n°&nbsp;3 - 2018
     scaleden: 48800
     width: 9922
@@ -2804,12 +3075,12 @@ gt50k:
     west: -2.037933
     north: 49.049753
     east: -1.480569
-    left: 575 # nbre de pixels de la bordure gauche
-    bottom: 370 # nbre de pixels de la bordure basse
-    right: 489 # nbre de pixels de la bordure droite
-    top: 459 # nbre de pixels de la bordure haute
+    left: 599 # nbre de pixels de la bordure gauche
+    bottom: 397 # nbre de pixels de la bordure basse
+    right: 465 # nbre de pixels de la bordure droite
+    top: 432 # nbre de pixels de la bordure haute
   7157/7157_pal300:
-    title: 7157 - De la Pointe d'Agon au Cap de Carteret
+    title: 7157 - De la Pointe d'Agon au Cap de Carteret - Passage de la Déroute
     edition: Édition n°&nbsp;3 - 2014
     scaleden: 48400
     width: 9922
@@ -2818,24 +3089,24 @@ gt50k:
     west: -2.101322
     north: 49.449933
     east: -1.543956
-    left: 594 # nbre de pixels de la bordure gauche
-    bottom: 392 # nbre de pixels de la bordure basse
-    right: 488 # nbre de pixels de la bordure droite
-    top: 481 # nbre de pixels de la bordure haute
+    left: 617 # nbre de pixels de la bordure gauche
+    bottom: 419 # nbre de pixels de la bordure basse
+    right: 464 # nbre de pixels de la bordure droite
+    top: 454 # nbre de pixels de la bordure haute
   7158/7158_pal300:
-    title: 7158 - Du Cap de Carteret au Cap de la Hague - Raz Blanchard
+    title: 7158 - Du Cap de Carteret au Cap de La Hague - Raz Blanchard
     edition: Édition n°&nbsp;2 - 2008
-    scaleden: 48000
+    scaleden: 50000
     width: 9922
     height: 13819
     south: 49.348519
     west: -2.333047
     north: 49.853050
     east: -1.775681
-    left: 624 # nbre de pixels de la bordure gauche
-    bottom: 377 # nbre de pixels de la bordure basse
-    right: 457 # nbre de pixels de la bordure droite
-    top: 754 # nbre de pixels de la bordure haute
+    left: 648 # nbre de pixels de la bordure gauche
+    bottom: 404 # nbre de pixels de la bordure basse
+    right: 433 # nbre de pixels de la bordure droite
+    top: 727 # nbre de pixels de la bordure haute
   7159/7159_pal300:
     title: 7159 - De Guernsey, Herm et Sark à Alderney - Bancs des Casquets
     edition: Édition n°&nbsp;2 - 2008
@@ -2846,24 +3117,24 @@ gt50k:
     west: -2.754375
     north: 49.834878
     east: -2.197008
-    left: 452 # nbre de pixels de la bordure gauche
-    bottom: 378 # nbre de pixels de la bordure basse
-    right: 493 # nbre de pixels de la bordure droite
-    top: 483 # nbre de pixels de la bordure haute
+    left: 612 # nbre de pixels de la bordure gauche
+    bottom: 405 # nbre de pixels de la bordure basse
+    right: 469 # nbre de pixels de la bordure droite
+    top: 456 # nbre de pixels de la bordure haute
   7160/7160_pal300:
     title: 7160 - De Jersey à Guernsey
     edition: Édition n°&nbsp;3 - 2014
-    scaleden: 48300
+    scaleden: 50000
     width: 13819
     height: 9922
     south: 49.082397
     west: -2.724833
     north: 49.447156
     east: -1.948553
-    left: 419 # nbre de pixels de la bordure gauche
-    bottom: 496 # nbre de pixels de la bordure basse
-    right: 436 # nbre de pixels de la bordure droite
-    top: 587 # nbre de pixels de la bordure haute
+    left: 443 # nbre de pixels de la bordure gauche
+    bottom: 523 # nbre de pixels de la bordure basse
+    right: 412 # nbre de pixels de la bordure droite
+    top: 560 # nbre de pixels de la bordure haute
   7161/7161_pal300:
     title: 7161 - Des îles Chausey à Jersey - Plateau des Minquiers
     edition: Édition n°&nbsp;3 - 2014
@@ -2874,26 +3145,26 @@ gt50k:
     west: -2.550331
     north: 49.207214
     east: -1.774050
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 495 # nbre de pixels de la bordure basse
-    right: 427 # nbre de pixels de la bordure droite
-    top: 586 # nbre de pixels de la bordure haute
+    left: 451 # nbre de pixels de la bordure gauche
+    bottom: 522 # nbre de pixels de la bordure basse
+    right: 403 # nbre de pixels de la bordure droite
+    top: 559 # nbre de pixels de la bordure haute
   7162/7162_pal300:
     title: 7162 - Du Cap Muro au Cap de Feno
     edition: Édition n°&nbsp;3 - 2018
-    scaleden: 51300
+    scaleden: 50000
     width: 13819
     height: 9922
     south: 41.375842
     west: 8.433831
     north: 41.764253
     east: 9.154192
-    left: 419 # nbre de pixels de la bordure gauche
-    bottom: 505 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 562 # nbre de pixels de la bordure haute
+    left: 439 # nbre de pixels de la bordure gauche
+    bottom: 531 # nbre de pixels de la bordure basse
+    right: 401 # nbre de pixels de la bordure droite
+    top: 536 # nbre de pixels de la bordure haute
   7167/7167_pal300:
-    title: 7167 - De la Baie de Saint-Vincent à la Coupée Mara
+    title: 7167 - De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)
     edition: Édition n°&nbsp;2 - 2010
     scaleden: 60000
     width: 13819
@@ -2902,10 +3173,10 @@ gt50k:
     west: 165.505544
     north: -21.675961
     east: 166.182633
-    left: 432 # nbre de pixels de la bordure gauche
-    bottom: 489 # nbre de pixels de la bordure basse
-    right: 428 # nbre de pixels de la bordure droite
-    top: 573 # nbre de pixels de la bordure haute
+    left: 364 # nbre de pixels de la bordure gauche
+    bottom: 431 # nbre de pixels de la bordure basse
+    right: 496 # nbre de pixels de la bordure droite
+    top: 635 # nbre de pixels de la bordure haute
   7168/7168_pal300:
     title: 7168 - De la Baie de Bourail à la Passe de la Poya
     edition: Édition n°&nbsp;2 - 2010
@@ -2930,10 +3201,10 @@ gt50k:
     west: -5.285419
     north: 48.384181
     east: -4.509139
-    left: 426 # nbre de pixels de la bordure gauche
-    bottom: 508 # nbre de pixels de la bordure basse
-    right: 428 # nbre de pixels de la bordure droite
-    top: 584 # nbre de pixels de la bordure haute
+    left: 453 # nbre de pixels de la bordure gauche
+    bottom: 534 # nbre de pixels de la bordure basse
+    right: 402 # nbre de pixels de la bordure droite
+    top: 558 # nbre de pixels de la bordure haute
   7183/7183_pal300:
     title: 7183 - La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât
     edition: Édition n°&nbsp;4 - 2016
@@ -2949,7 +3220,7 @@ gt50k:
     right: 429 # nbre de pixels de la bordure droite
     top: 572 # nbre de pixels de la bordure haute
   7208/7208_pal300:
-    title: 7208 - De Marie-Galante à la Désirade
+    title: 7208 - De Marie-Galante à la Désirade (Spéciale P)
     edition: Édition n°&nbsp;2 - 2010
     scaleden: 60000
     width: 9922
@@ -2958,52 +3229,52 @@ gt50k:
     west: -61.415061
     north: 16.422128
     east: -60.943775
-    left: 588 # nbre de pixels de la bordure gauche
-    bottom: 397 # nbre de pixels de la bordure basse
-    right: 493 # nbre de pixels de la bordure droite
-    top: 465 # nbre de pixels de la bordure haute
+    left: 668 # nbre de pixels de la bordure gauche
+    bottom: 452 # nbre de pixels de la bordure basse
+    right: 412 # nbre de pixels de la bordure droite
+    top: 410 # nbre de pixels de la bordure haute
   7214/7214_pal300:
     title: 7214 - De Dunkerque à Oostende
-    edition: Édition n°&nbsp;7 - 2017
+    edition: Édition n°&nbsp;8 - 2019
     scaleden: 60000
     width: 13819
     height: 9922
-    south: 51.025350
+    south: 51.025753
     west: 2.051675
-    north: 51.479197
+    north: 51.479597
     east: 3.058950
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 395 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 550 # nbre de pixels de la bordure haute
+    left: 435 # nbre de pixels de la bordure gauche
+    bottom: 528 # nbre de pixels de la bordure basse
+    right: 398 # nbre de pixels de la bordure droite
+    top: 541 # nbre de pixels de la bordure haute
   7218/7218_2_gtw:
     title: 7218-B - Mouillages de Fayaoué et de Mouly
-    edition: Édition n°&nbsp;3 - 2010
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 37500
     width: 4779
-    height: 3900
-    south: -20.727203
-    west: 166.417867
-    north: -20.615467
-    east: 166.563350
-    left: 103 # nbre de pixels de la bordure gauche
-    bottom: 107 # nbre de pixels de la bordure basse
-    right: 105 # nbre de pixels de la bordure droite
+    height: 3899
+    south: -20.727189
+    west: 166.417842
+    north: -20.615481
+    east: 166.563328
+    left: 104 # nbre de pixels de la bordure gauche
+    bottom: 106 # nbre de pixels de la bordure basse
+    right: 104 # nbre de pixels de la bordure droite
     top: 106 # nbre de pixels de la bordure haute
   7218/7218_4_gtw:
     title: 7218-D - Mouillage de Beautemps-Beaupré
-    edition: Édition n°&nbsp;3 - 2010
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 37500
     width: 1854
-    height: 1912
-    south: -20.419842
-    west: 166.113553
-    north: -20.364958
-    east: 166.169994
+    height: 1913
+    south: -20.419856
+    west: 166.113558
+    north: -20.364944
+    east: 166.170000
     left: 108 # nbre de pixels de la bordure gauche
-    bottom: 105 # nbre de pixels de la bordure basse
-    right: 104 # nbre de pixels de la bordure droite
-    top: 106 # nbre de pixels de la bordure haute
+    bottom: 106 # nbre de pixels de la bordure basse
+    right: 105 # nbre de pixels de la bordure droite
+    top: 107 # nbre de pixels de la bordure haute
   7222/7222_pal300:
     title: 7222 - La Réunion - Partie Est - De la Pointe de la Rivière du Mât à la Pointe Marcellin
     edition: Publication 1996
@@ -3032,20 +3303,48 @@ gt50k:
     bottom: 370 # nbre de pixels de la bordure basse
     right: 396 # nbre de pixels de la bordure droite
     top: 479 # nbre de pixels de la bordure haute
+  7248/7248_4_gtw:
+    title: 7248-D - Lagon Ouest - De la Passe Tehere à la Passe Pakaka
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 40000
+    width: 2514
+    height: 9169
+    south: -15.578256
+    west: -146.454811
+    north: -15.297639
+    east: -146.375486
+    left: 105 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 107 # nbre de pixels de la bordure droite
+    top: 105 # nbre de pixels de la bordure haute
   7273/7273_pal300:
-    title: 7273 - De Nouméa à la Baie de Saint-Vincent
+    title: 7273 - De Nouméa à la Baie de Saint-Vincent (Spéciale P)
     edition: Édition n°&nbsp;3 - 2018
-    scaleden: 59700
+    scaleden: 60000
     width: 13819
     height: 9922
     south: -22.424758
     west: 165.878956
     north: -21.972044
     east: 166.556042
-    left: 430 # nbre de pixels de la bordure gauche
-    bottom: 496 # nbre de pixels de la bordure basse
-    right: 430 # nbre de pixels de la bordure droite
-    top: 587 # nbre de pixels de la bordure haute
+    left: 362 # nbre de pixels de la bordure gauche
+    bottom: 434 # nbre de pixels de la bordure basse
+    right: 498 # nbre de pixels de la bordure droite
+    top: 649 # nbre de pixels de la bordure haute
+  7293/7293_pal300:
+    title: 7293 - Manihi
+    edition: Édition n°&nbsp;2 - 2007
+    scaleden: 50000
+    width: 9922
+    height: 6910
+    south: -14.546089
+    west: -146.137756
+    north: -14.281997
+    east: -145.748683
+    left: 538 # nbre de pixels de la bordure gauche
+    bottom: 378 # nbre de pixels de la bordure basse
+    right: 417 # nbre de pixels de la bordure droite
+    top: 476 # nbre de pixels de la bordure haute
   7302/7302_pal300:
     title: 7302 - De la Pointe des Châteaux à l'Ilet à Kahouanne
     edition: Édition n°&nbsp;2 - 2010
@@ -3056,10 +3355,10 @@ gt50k:
     west: -61.807103
     north: 16.673125
     east: -61.150714
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 491 # nbre de pixels de la bordure basse
-    right: 417 # nbre de pixels de la bordure droite
-    top: 575 # nbre de pixels de la bordure haute
+    left: 501 # nbre de pixels de la bordure gauche
+    bottom: 546 # nbre de pixels de la bordure basse
+    right: 336 # nbre de pixels de la bordure droite
+    top: 520 # nbre de pixels de la bordure haute
   7313/7313_pal300:
     title: 7313 - De la passe de Koné à Ouaco
     edition: Édition n°&nbsp;2 - 2012
@@ -3074,6 +3373,20 @@ gt50k:
     bottom: 500 # nbre de pixels de la bordure basse
     right: 430 # nbre de pixels de la bordure droite
     top: 587 # nbre de pixels de la bordure haute
+  7314/7314_1_gtw:
+    title: 7314 - Ahe
+    edition: Édition n°&nbsp;2 - 2008
+    scaleden: 50000
+    width: 5495
+    height: 6235
+    south: -14.615756
+    west: -146.417994
+    north: -14.377197
+    east: -146.202194
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 106 # nbre de pixels de la bordure droite
+    top: 104 # nbre de pixels de la bordure haute
   7318/7318_pal300:
     title: 7318 - De Poum à l'Île Pam
     edition: Édition n°&nbsp;4 - 2014
@@ -3130,6 +3443,34 @@ gt50k:
     bottom: 500 # nbre de pixels de la bordure basse
     right: 429 # nbre de pixels de la bordure droite
     top: 578 # nbre de pixels de la bordure haute
+  7329/7329_2_gtw:
+    title: 7329-A - De la Passe Arikitamiro au Mouillage de Tearavero
+    edition: Édition n°&nbsp;2 - 2003
+    scaleden: 35000
+    width: 4536
+    height: 6602
+    south: -15.986172
+    west: -145.215922
+    north: -15.809378
+    east: -145.090403
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 106 # nbre de pixels de la bordure droite
+    top: 105 # nbre de pixels de la bordure haute
+  7346/7346_pal300:
+    title: 7346 - Iles du Roi Georges. Takaroa et Takapoto
+    edition: Édition n°&nbsp;2 - 2006
+    scaleden: 60000
+    width: 13819
+    height: 9922
+    south: -14.772669
+    west: -145.369861
+    north: -14.317119
+    east: -144.718492
+    left: 422 # nbre de pixels de la bordure gauche
+    bottom: 495 # nbre de pixels de la bordure basse
+    right: 421 # nbre de pixels de la bordure droite
+    top: 571 # nbre de pixels de la bordure haute
   7358/7358_1_gtw:
     title: 7358-A - Baie Greenland
     edition: Édition n°&nbsp;3 - 2017
@@ -3238,10 +3579,10 @@ gt50k:
     west: -2.630333
     north: 47.166100
     east: -1.854053
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 503 # nbre de pixels de la bordure basse
-    right: 427 # nbre de pixels de la bordure droite
-    top: 577 # nbre de pixels de la bordure haute
+    left: 451 # nbre de pixels de la bordure gauche
+    bottom: 529 # nbre de pixels de la bordure basse
+    right: 403 # nbre de pixels de la bordure droite
+    top: 551 # nbre de pixels de la bordure haute
   7395/7395_pal300:
     title: 7395 - Du Croisic à Noirmoutier - Estuaire de la Loire
     edition: Édition n°&nbsp;3 - 2016
@@ -3252,10 +3593,10 @@ gt50k:
     west: -2.861131
     north: 47.359078
     east: -2.084853
-    left: 412 # nbre de pixels de la bordure gauche
-    bottom: 521 # nbre de pixels de la bordure basse
-    right: 413 # nbre de pixels de la bordure droite
-    top: 570 # nbre de pixels de la bordure haute
+    left: 436 # nbre de pixels de la bordure gauche
+    bottom: 547 # nbre de pixels de la bordure basse
+    right: 389 # nbre de pixels de la bordure droite
+    top: 544 # nbre de pixels de la bordure haute
   7402/7402_pal300:
     title: 7402 - De Saint-Jean-de-Monts aux Sables-d'Olonne
     edition: Édition n°&nbsp;2 - 2002
@@ -3266,10 +3607,10 @@ gt50k:
     west: -2.503667
     north: 46.838961
     east: -1.727386
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 487 # nbre de pixels de la bordure basse
-    right: 427 # nbre de pixels de la bordure droite
-    top: 605 # nbre de pixels de la bordure haute
+    left: 451 # nbre de pixels de la bordure gauche
+    bottom: 513 # nbre de pixels de la bordure basse
+    right: 403 # nbre de pixels de la bordure droite
+    top: 579 # nbre de pixels de la bordure haute
   7403/7403_pal300:
     title: 7403 - Des Sables d'Olonne à l'Île de Ré
     edition: Édition n°&nbsp;2 - 2002
@@ -3280,24 +3621,24 @@ gt50k:
     west: -2.108669
     north: 46.564875
     east: -1.332389
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 511 # nbre de pixels de la bordure basse
-    right: 427 # nbre de pixels de la bordure droite
-    top: 582 # nbre de pixels de la bordure haute
+    left: 452 # nbre de pixels de la bordure gauche
+    bottom: 537 # nbre de pixels de la bordure basse
+    right: 403 # nbre de pixels de la bordure droite
+    top: 556 # nbre de pixels de la bordure haute
   7404/7404_pal300:
     title: 7404 - De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d'Antioche
     edition: Édition n°&nbsp;3 - 2014
-    scaleden: 50000
+    scaleden: 51200
     width: 13819
     height: 9922
     south: 45.985425
     west: -1.791958
     north: 46.372594
     east: -1.015678
-    left: 427 # nbre de pixels de la bordure gauche
-    bottom: 517 # nbre de pixels de la bordure basse
-    right: 428 # nbre de pixels de la bordure droite
-    top: 564 # nbre de pixels de la bordure haute
+    left: 451 # nbre de pixels de la bordure gauche
+    bottom: 543 # nbre de pixels de la bordure basse
+    right: 404 # nbre de pixels de la bordure droite
+    top: 539 # nbre de pixels de la bordure haute
   7405/7405_pal300:
     title: 7405 - De La Rochelle à la Pointe de La Coubre - Ile d'Oléron
     edition: Édition n°&nbsp;2 - 2017
@@ -3308,10 +3649,10 @@ gt50k:
     west: -1.581578
     north: 46.200033
     east: -1.024211
-    left: 598 # nbre de pixels de la bordure gauche
-    bottom: 398 # nbre de pixels de la bordure basse
-    right: 483 # nbre de pixels de la bordure droite
-    top: 497 # nbre de pixels de la bordure haute
+    left: 592 # nbre de pixels de la bordure gauche
+    bottom: 381 # nbre de pixels de la bordure basse
+    right: 489 # nbre de pixels de la bordure droite
+    top: 514 # nbre de pixels de la bordure haute
   7406/7406_pal300:
     title: 7406 - De Marseille à Toulon
     edition: Édition n°&nbsp;4 - 2017
@@ -3322,12 +3663,12 @@ gt50k:
     west: 5.267919
     north: 43.321267
     east: 5.988250
-    left: 402 # nbre de pixels de la bordure gauche
-    bottom: 519 # nbre de pixels de la bordure basse
-    right: 402 # nbre de pixels de la bordure droite
-    top: 542 # nbre de pixels de la bordure haute
+    left: 424 # nbre de pixels de la bordure gauche
+    bottom: 545 # nbre de pixels de la bordure basse
+    right: 383 # nbre de pixels de la bordure droite
+    top: 515 # nbre de pixels de la bordure haute
   7407/7407_pal300:
-    title: 7407 - De Toulon à Cavalaire-sur-Mer - Îles d'Hyères
+    title: 7407 - De Toulon à Cavalaire-sur-Mer - Iles d'Hyères
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 50200
     width: 13819
@@ -3336,10 +3677,10 @@ gt50k:
     west: 5.838753
     north: 43.228533
     east: 6.559083
-    left: 357 # nbre de pixels de la bordure gauche
-    bottom: 518 # nbre de pixels de la bordure basse
-    right: 354 # nbre de pixels de la bordure droite
-    top: 557 # nbre de pixels de la bordure haute
+    left: 376 # nbre de pixels de la bordure gauche
+    bottom: 544 # nbre de pixels de la bordure basse
+    right: 335 # nbre de pixels de la bordure droite
+    top: 530 # nbre de pixels de la bordure haute
   7408/7408_pal300:
     title: 7408 - De Cavalaire-sur-Mer à la Rade d'Agay
     edition: Édition n°&nbsp;4 - 2018
@@ -3350,10 +3691,10 @@ gt50k:
     west: 6.456856
     north: 43.510867
     east: 6.974053
-    left: 585 # nbre de pixels de la bordure gauche
-    bottom: 385 # nbre de pixels de la bordure basse
-    right: 481 # nbre de pixels de la bordure droite
-    top: 445 # nbre de pixels de la bordure haute
+    left: 604 # nbre de pixels de la bordure gauche
+    bottom: 411 # nbre de pixels de la bordure basse
+    right: 462 # nbre de pixels de la bordure droite
+    top: 419 # nbre de pixels de la bordure haute
   7409/7409_pal300:
     title: 7409 - De la Rade d'Agay à Monaco
     edition: Édition n°&nbsp;3 - 2010
@@ -3364,10 +3705,10 @@ gt50k:
     west: 6.823778
     north: 43.747436
     east: 7.544108
-    left: 420 # nbre de pixels de la bordure gauche
-    bottom: 465 # nbre de pixels de la bordure basse
-    right: 418 # nbre de pixels de la bordure droite
-    top: 532 # nbre de pixels de la bordure haute
+    left: 440 # nbre de pixels de la bordure gauche
+    bottom: 492 # nbre de pixels de la bordure basse
+    right: 399 # nbre de pixels de la bordure droite
+    top: 506 # nbre de pixels de la bordure haute
   7418/7418_pal300:
     title: 7418 - Abords du Havre et d'Antifer - Embouchure de la Seine - De Ouistreham au Cap d'Antifer
     edition: Édition n°&nbsp;3 - 2017
@@ -3378,7 +3719,7 @@ gt50k:
     west: -0.384033
     north: 49.864011
     east: 0.312436
-    left: 509 # nbre de pixels de la bordure gauche
+    left: 533 # nbre de pixels de la bordure gauche
     bottom: 373 # nbre de pixels de la bordure basse
     right: 510 # nbre de pixels de la bordure droite
     top: 456 # nbre de pixels de la bordure haute
@@ -3420,10 +3761,10 @@ gt50k:
     west: -0.946189
     north: 49.594750
     east: -0.169908
-    left: 295 # nbre de pixels de la bordure gauche
-    bottom: 487 # nbre de pixels de la bordure basse
-    right: 293 # nbre de pixels de la bordure droite
-    top: 564 # nbre de pixels de la bordure haute
+    left: 318 # nbre de pixels de la bordure gauche
+    bottom: 515 # nbre de pixels de la bordure basse
+    right: 269 # nbre de pixels de la bordure droite
+    top: 541 # nbre de pixels de la bordure haute
   7422/7422_pal300:
     title: 7422 - De la Pointe de Barfleur à La Pointe de La Percée - Iles Saint-Marcouf
     edition: Édition n°&nbsp;2 - 2006
@@ -3434,24 +3775,24 @@ gt50k:
     west: -1.370572
     north: 49.810097
     east: -0.813206
-    left: 491 # nbre de pixels de la bordure gauche
-    bottom: 379 # nbre de pixels de la bordure basse
-    right: 383 # nbre de pixels de la bordure droite
-    top: 439 # nbre de pixels de la bordure haute
+    left: 515 # nbre de pixels de la bordure gauche
+    bottom: 406 # nbre de pixels de la bordure basse
+    right: 359 # nbre de pixels de la bordure droite
+    top: 416 # nbre de pixels de la bordure haute
   7426/7426_pal300:
     title: 7426 - De la Pointe de la Coubre à la Pointe de la Négade - Embouchure de La Gironde
-    edition: Édition n°&nbsp;4 - 2017
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 51800
     width: 13819
     height: 9922
-    south: 45.380208
-    west: -1.503972
-    north: 45.771631
+    south: 45.380183
+    west: -1.503975
+    north: 45.771606
     east: -0.727694
     left: 398 # nbre de pixels de la bordure gauche
     bottom: 501 # nbre de pixels de la bordure basse
     right: 398 # nbre de pixels de la bordure droite
-    top: 551 # nbre de pixels de la bordure haute
+    top: 550 # nbre de pixels de la bordure haute
   7427/7427_3_gtw:
     title: 7427 - 3 -
     edition: Édition n°&nbsp;2 - 2016
@@ -3536,6 +3877,48 @@ gt50k:
     bottom: 516 # nbre de pixels de la bordure basse
     right: 419 # nbre de pixels de la bordure droite
     top: 590 # nbre de pixels de la bordure haute
+  7454/7454_pal300:
+    title: 7454 - Faaite
+    edition: Publication 1998
+    scaleden: 50000
+    width: 9922
+    height: 6910
+    south: -16.879356
+    west: -145.463750
+    north: -16.615036
+    east: -145.069836
+    left: 599 # nbre de pixels de la bordure gauche
+    bottom: 376 # nbre de pixels de la bordure basse
+    right: 340 # nbre de pixels de la bordure droite
+    top: 479 # nbre de pixels de la bordure haute
+  7458/7458_1_gtw:
+    title: 7458 - Aratika
+    edition: Édition n°&nbsp;2 - 2011
+    scaleden: 50000
+    width: 9022
+    height: 6604
+    south: -15.670733
+    west: -145.685217
+    north: -15.418081
+    east: -145.329183
+    left: 107 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 106 # nbre de pixels de la bordure droite
+    top: 103 # nbre de pixels de la bordure haute
+  7471/7471_pal300:
+    title: 7471 - D'Anguilla à Saint-Barthélemy
+    edition: Édition n°&nbsp;3 - 2017
+    scaleden: 60000
+    width: 13819
+    height: 9922
+    south: 17.793294
+    west: -63.287300
+    north: 18.248686
+    east: -62.624364
+    left: 431 # nbre de pixels de la bordure gauche
+    bottom: 509 # nbre de pixels de la bordure basse
+    right: 431 # nbre de pixels de la bordure droite
+    top: 590 # nbre de pixels de la bordure haute
   7482/7482_pal300:
     title: 7482 - De l'Ilet à Kahouanne aux Saintes
     edition: Publication 2009
@@ -3550,6 +3933,20 @@ gt50k:
     bottom: 386 # nbre de pixels de la bordure basse
     right: 446 # nbre de pixels de la bordure droite
     top: 476 # nbre de pixels de la bordure haute
+  6948/6948_pal300:
+    title: 6948 - Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 60000
+    width: 9922
+    height: 13819
+    south: 15.657944
+    west: -61.755069
+    north: 16.292911
+    east: -61.283783
+    left: 669 # nbre de pixels de la bordure gauche
+    bottom: 444 # nbre de pixels de la bordure basse
+    right: 412 # nbre de pixels de la bordure droite
+    top: 391 # nbre de pixels de la bordure haute
   7492/7492_pal300:
     title: 7492 - Île de Mayotte - Partie Nord - De la Passe des Îles Choazil à Dzaoudzi
     edition: Édition n°&nbsp;4 - 2014
@@ -3616,7 +4013,7 @@ gt50k:
     west: -63.352650
     north: 18.384800
     east: -62.864289
-    left: 83 # nbre de pixels de la bordure gauche
+    left: 79 # nbre de pixels de la bordure gauche
     bottom: 73 # nbre de pixels de la bordure basse
     right: 81 # nbre de pixels de la bordure droite
     top: 74 # nbre de pixels de la bordure haute
@@ -3735,33 +4132,33 @@ gt25k:
     right: 79 # nbre de pixels de la bordure droite
     top: 84 # nbre de pixels de la bordure haute
   5978/5978_1_gtw:
-    title: 5978-B - Îles Chesterfield - Mouillage de l'île Longue
-    edition: Édition n°&nbsp;2 - 1986
+    title: 5978-A - Îles Chesterfield - Mouillage de l'île Longue
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 20000
     width: 2660
     height: 2672
-    south: -19.886261
-    west: 158.287683
-    north: -19.845303
-    east: 158.330781
-    left: 71 # nbre de pixels de la bordure gauche
+    south: -19.886267
+    west: 158.287514
+    north: -19.845308
+    east: 158.330614
+    left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
-    right: 90 # nbre de pixels de la bordure droite
-    top: 79 # nbre de pixels de la bordure haute
+    right: 80 # nbre de pixels de la bordure droite
+    top: 78 # nbre de pixels de la bordure haute
   5978/5978_4_gtw:
-    title: 5978 - E- Mouillage de l'île Huon
-    edition: Édition n°&nbsp;2 - 1986
+    title: 5978-D - Mouillage de l'île Huon
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 20000
-    width: 2114
-    height: 2117
-    south: -18.059594
-    west: 162.934278
-    north: -18.027156
-    east: 162.968142
+    width: 2161
+    height: 2118
+    south: -18.054100
+    west: 162.933944
+    north: -18.021644
+    east: 162.968558
     left: 77 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
-    right: 93 # nbre de pixels de la bordure droite
-    top: 77 # nbre de pixels de la bordure haute
+    right: 77 # nbre de pixels de la bordure droite
+    top: 78 # nbre de pixels de la bordure haute
   6165/6165_pal300:
     title: 6165 - Rurutu
     edition: Édition n°&nbsp;3 - 2010
@@ -3790,6 +4187,20 @@ gt25k:
     bottom: 110 # nbre de pixels de la bordure basse
     right: 103 # nbre de pixels de la bordure droite
     top: 103 # nbre de pixels de la bordure haute
+  6279/6279_3_gtw:
+    title: 6279 - Rimatara
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 30000
+    width: 5422
+    height: 4060
+    south: -22.689436
+    west: -152.886972
+    north: -22.596269
+    east: -152.752933
+    left: 107 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 104 # nbre de pixels de la bordure droite
+    top: 105 # nbre de pixels de la bordure haute
   6282/6282_pal300:
     title: 6282 - Passes entre les Iles Raiatea et Tahaa
     edition: Édition n°&nbsp;4 - 2005
@@ -3861,7 +4272,7 @@ gt25k:
     right: 995 # nbre de pixels de la bordure droite
     top: 1241 # nbre de pixels de la bordure haute
   6462/6462_pal300:
-    title: 6462 - Iles Gambier, partie Sud
+    title: 6462 - Îles Gambier, partie Sud
     edition: Édition n°&nbsp;3 - 2017
     scaleden: 30000
     width: 13819
@@ -3932,18 +4343,18 @@ gt25k:
     top: 1093 # nbre de pixels de la bordure haute
   6589/6589_pal300:
     title: 6589 - Baie de Canala
-    edition: Édition n°&nbsp;2 - 2010
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 20000
     width: 9922
     height: 13819
-    south: -21.547706
-    west: 165.892136
-    north: -21.336383
-    east: 166.054200
-    left: 1094 # nbre de pixels de la bordure gauche
-    bottom: 1115 # nbre de pixels de la bordure basse
-    right: 992 # nbre de pixels de la bordure droite
-    top: 1206 # nbre de pixels de la bordure haute
+    south: -21.547558
+    west: 165.892181
+    north: -21.336236
+    east: 166.054244
+    left: 1091 # nbre de pixels de la bordure gauche
+    bottom: 1106 # nbre de pixels de la bordure basse
+    right: 995 # nbre de pixels de la bordure droite
+    top: 1216 # nbre de pixels de la bordure haute
   6605/6605_pal300:
     title: 6605 - De la Pointe Vénus à Mahaena
     edition: Édition n°&nbsp;2 - 2009
@@ -4015,7 +4426,7 @@ gt25k:
     right: 1031 # nbre de pixels de la bordure droite
     top: 1086 # nbre de pixels de la bordure haute
   6684/6684_pal300:
-    title: 6684 - Golfe et Port de Fos
+    title: 6684 - Golfe et port de Fos
     edition: Édition n°&nbsp;7 - 2017
     scaleden: 25000
     width: 13819
@@ -4024,10 +4435,10 @@ gt25k:
     west: 4.716472
     north: 43.463675
     east: 5.077428
-    left: 410 # nbre de pixels de la bordure gauche
-    bottom: 493 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 544 # nbre de pixels de la bordure haute
+    left: 455 # nbre de pixels de la bordure gauche
+    bottom: 545 # nbre de pixels de la bordure basse
+    right: 361 # nbre de pixels de la bordure droite
+    top: 491 # nbre de pixels de la bordure haute
   6740/6740_pal300:
     title: 6740 - De Maraa à Faaa
     edition: Édition n°&nbsp;3 - 2009
@@ -4099,7 +4510,7 @@ gt25k:
     right: 1166 # nbre de pixels de la bordure droite
     top: 1087 # nbre de pixels de la bordure haute
   6838/6838_pal300:
-    title: 6838 - Abords de Saint-Raphaël
+    title: 6838 - Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d'Anthéor
     edition: Édition n°&nbsp;4 - 2017
     scaleden: 20000
     width: 9922
@@ -4108,10 +4519,10 @@ gt25k:
     west: 6.699044
     north: 43.445264
     east: 6.906481
-    left: 525 # nbre de pixels de la bordure gauche
-    bottom: 378 # nbre de pixels de la bordure basse
-    right: 422 # nbre de pixels de la bordure droite
-    top: 477 # nbre de pixels de la bordure haute
+    left: 572 # nbre de pixels de la bordure gauche
+    bottom: 443 # nbre de pixels de la bordure basse
+    right: 374 # nbre de pixels de la bordure droite
+    top: 412 # nbre de pixels de la bordure haute
   6839/6839_pal300:
     title: 6839 - Etang de Thau
     edition: Édition n°&nbsp;2 - 2006
@@ -4122,10 +4533,10 @@ gt25k:
     west: 3.514436
     north: 43.513717
     east: 3.731092
-    left: 300 # nbre de pixels de la bordure gauche
-    bottom: 530 # nbre de pixels de la bordure basse
-    right: 551 # nbre de pixels de la bordure droite
-    top: 426 # nbre de pixels de la bordure haute
+    left: 337 # nbre de pixels de la bordure gauche
+    bottom: 573 # nbre de pixels de la bordure basse
+    right: 514 # nbre de pixels de la bordure droite
+    top: 382 # nbre de pixels de la bordure haute
   6876/6876_pal300:
     title: 6876 - Iles Wallis - Accès à Mata Utu et Halalo
     edition: Édition n°&nbsp;3 - 2012
@@ -4150,10 +4561,10 @@ gt25k:
     west: -2.762606
     north: 49.536639
     east: -2.406153
-    left: 90 # nbre de pixels de la bordure gauche
-    bottom: 70 # nbre de pixels de la bordure basse
-    right: 87 # nbre de pixels de la bordure droite
-    top: 78 # nbre de pixels de la bordure haute
+    left: 400 # nbre de pixels de la bordure gauche
+    bottom: 122 # nbre de pixels de la bordure basse
+    right: 1217 # nbre de pixels de la bordure droite
+    top: 174 # nbre de pixels de la bordure haute
   6904/6904_pal300:
     title: 6904 - Guernsey Est, Herm et Sark
     edition: Édition n°&nbsp;3 - 2016
@@ -4169,7 +4580,7 @@ gt25k:
     right: 87 # nbre de pixels de la bordure droite
     top: 80 # nbre de pixels de la bordure haute
   6907/6907_pal300:
-    title: 6907 - Étang de Berre
+    title: 6907 - Etang de Berre
     edition: Édition n°&nbsp;3 - 2016
     scaleden: 25000
     width: 13819
@@ -4178,12 +4589,12 @@ gt25k:
     west: 4.945856
     north: 43.570797
     east: 5.306706
-    left: 434 # nbre de pixels de la bordure gauche
-    bottom: 493 # nbre de pixels de la bordure basse
-    right: 398 # nbre de pixels de la bordure droite
-    top: 578 # nbre de pixels de la bordure haute
+    left: 478 # nbre de pixels de la bordure gauche
+    bottom: 546 # nbre de pixels de la bordure basse
+    right: 353 # nbre de pixels de la bordure droite
+    top: 525 # nbre de pixels de la bordure haute
   6934/6934_pal300:
-    title: 6934 - Alderney (Aurigny) et Les Casquets
+    title: 6934 - Alderney (Aurigny) et les Casquets
     edition: Édition n°&nbsp;2 - 2005
     scaleden: 25000
     width: 13846
@@ -4192,10 +4603,10 @@ gt25k:
     west: -2.478322
     north: 49.806758
     east: -2.071969
-    left: 1147 # nbre de pixels de la bordure gauche
-    bottom: 1202 # nbre de pixels de la bordure basse
-    right: 1137 # nbre de pixels de la bordure droite
-    top: 1286 # nbre de pixels de la bordure haute
+    left: 1193 # nbre de pixels de la bordure gauche
+    bottom: 1254 # nbre de pixels de la bordure basse
+    right: 1098 # nbre de pixels de la bordure droite
+    top: 1251 # nbre de pixels de la bordure haute
   6937/6937_pal300:
     title: 6937 - Jersey - Côte Nord
     edition: Édition n°&nbsp;2 - 2005
@@ -4206,12 +4617,12 @@ gt25k:
     west: -2.338028
     north: 49.386686
     east: -1.935167
-    left: 1141 # nbre de pixels de la bordure gauche
-    bottom: 1206 # nbre de pixels de la bordure basse
-    right: 1140 # nbre de pixels de la bordure droite
-    top: 1282 # nbre de pixels de la bordure haute
+    left: 1193 # nbre de pixels de la bordure gauche
+    bottom: 1259 # nbre de pixels de la bordure basse
+    right: 1089 # nbre de pixels de la bordure droite
+    top: 1230 # nbre de pixels de la bordure haute
   6938/6938_pal300:
-    title: 6938 - Abords de Saint Helier
+    title: 6938 - Abords de Saint Hélier
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 25000
     width: 13845
@@ -4220,24 +4631,24 @@ gt25k:
     west: -2.393225
     north: 49.268822
     east: -1.991322
-    left: 1145 # nbre de pixels de la bordure gauche
-    bottom: 1208 # nbre de pixels de la bordure basse
-    right: 1143 # nbre de pixels de la bordure droite
-    top: 1289 # nbre de pixels de la bordure haute
+    left: 1197 # nbre de pixels de la bordure gauche
+    bottom: 1261 # nbre de pixels de la bordure basse
+    right: 1092 # nbre de pixels de la bordure droite
+    top: 1245 # nbre de pixels de la bordure haute
   6939/6939_pal300:
     title: 6939 - Jersey - Côte Est
-    edition: Édition n°&nbsp;5 - 2017
+    edition: Édition n°&nbsp;6 - 2019
     scaleden: 25000
     width: 6923
     height: 9924
-    south: 49.090597
-    west: -2.067914
-    north: 49.279475
-    east: -1.866906
-    left: 457 # nbre de pixels de la bordure gauche
-    bottom: 1228 # nbre de pixels de la bordure basse
-    right: 871 # nbre de pixels de la bordure droite
-    top: 1254 # nbre de pixels de la bordure haute
+    south: 49.091547
+    west: -2.067889
+    north: 49.280425
+    east: -1.866875
+    left: 674 # nbre de pixels de la bordure gauche
+    bottom: 1231 # nbre de pixels de la bordure basse
+    right: 826 # nbre de pixels de la bordure droite
+    top: 1251 # nbre de pixels de la bordure haute
   6948/6948_1_gtw:
     title: 6948 - Marie-Galante - Baie de Saint-Louis
     edition: Édition n°&nbsp;2 - 2010
@@ -4393,7 +4804,7 @@ gt25k:
     right: 82 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
   7057/7057_pal300:
-    title: 7057 - Port de Dunkerque
+    title: 7057 - Dunkerque
     edition: Édition n°&nbsp;4 - 2015
     scaleden: 20000
     width: 13819
@@ -4500,10 +4911,10 @@ gt25k:
     west: -60.958503
     north: 14.705500
     east: -60.802544
-    left: 510 # nbre de pixels de la bordure gauche
-    bottom: 376 # nbre de pixels de la bordure basse
-    right: 422 # nbre de pixels de la bordure droite
-    top: 469 # nbre de pixels de la bordure haute
+    left: 276 # nbre de pixels de la bordure gauche
+    bottom: 267 # nbre de pixels de la bordure basse
+    right: 655 # nbre de pixels de la bordure droite
+    top: 578 # nbre de pixels de la bordure haute
   7090/7090_pal300:
     title: 7090 - De la Pointe de Barfleur à Saint-Vaast-la-Hougue
     edition: Édition n°&nbsp;3 - 2018
@@ -4514,10 +4925,10 @@ gt25k:
     west: -1.354586
     north: 49.731031
     east: -1.122097
-    left: 637 # nbre de pixels de la bordure gauche
-    bottom: 371 # nbre de pixels de la bordure basse
-    right: 430 # nbre de pixels de la bordure droite
-    top: 463 # nbre de pixels de la bordure haute
+    left: 694 # nbre de pixels de la bordure gauche
+    bottom: 436 # nbre de pixels de la bordure basse
+    right: 373 # nbre de pixels de la bordure droite
+    top: 398 # nbre de pixels de la bordure haute
   7091/7091_pal300:
     title: 7091 - Abords de Toulon
     edition: Édition n°&nbsp;6 - 2018
@@ -4528,12 +4939,12 @@ gt25k:
     west: 5.827589
     north: 43.176447
     east: 6.186908
-    left: 439 # nbre de pixels de la bordure gauche
-    bottom: 524 # nbre de pixels de la bordure basse
-    right: 433 # nbre de pixels de la bordure droite
-    top: 567 # nbre de pixels de la bordure haute
+    left: 478 # nbre de pixels de la bordure gauche
+    bottom: 576 # nbre de pixels de la bordure basse
+    right: 394 # nbre de pixels de la bordure droite
+    top: 514 # nbre de pixels de la bordure haute
   7092/7092_pal300:
-    title: 7092 - De la Pointe de Nacqueville au Cap Lévi
+    title: 7092 - De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg
     edition: Édition n°&nbsp;4 - 2015
     scaleden: 20000
     width: 13819
@@ -4542,12 +4953,12 @@ gt25k:
     west: -1.761097
     north: 49.766161
     east: -1.436853
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 484 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 581 # nbre de pixels de la bordure haute
+    left: 473 # nbre de pixels de la bordure gauche
+    bottom: 550 # nbre de pixels de la bordure basse
+    right: 355 # nbre de pixels de la bordure droite
+    top: 516 # nbre de pixels de la bordure haute
   7094/7094_pal300:
-    title: 7094 - Du Phare du Four à l'Île Vierge - Port de l'Aber-Wrac'h
+    title: 7094 - Du phare du Four à l'Ile Vierge - Port de l'Aber-Wrac'h
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 25000
     width: 13819
@@ -4556,10 +4967,10 @@ gt25k:
     west: -4.876983
     north: 48.690275
     east: -4.481203
-    left: 413 # nbre de pixels de la bordure gauche
-    bottom: 511 # nbre de pixels de la bordure basse
-    right: 418 # nbre de pixels de la bordure droite
-    top: 560 # nbre de pixels de la bordure haute
+    left: 465 # nbre de pixels de la bordure gauche
+    bottom: 564 # nbre de pixels de la bordure basse
+    right: 366 # nbre de pixels de la bordure droite
+    top: 507 # nbre de pixels de la bordure haute
   7095/7095_2_gtw:
     title: 7095 - Baie de Morlaix - De l'île de Batz à la Pointe de Primel
     edition: Édition n°&nbsp;5 - 2018
@@ -4570,10 +4981,10 @@ gt25k:
     west: -4.061131
     north: 48.771803
     east: -3.813875
-    left: 79 # nbre de pixels de la bordure gauche
-    bottom: 82 # nbre de pixels de la bordure basse
-    right: 78 # nbre de pixels de la bordure droite
-    top: 86 # nbre de pixels de la bordure haute
+    left: 144 # nbre de pixels de la bordure gauche
+    bottom: 147 # nbre de pixels de la bordure basse
+    right: 20 # nbre de pixels de la bordure droite
+    top: 20 # nbre de pixels de la bordure haute
   7097/7097_1_gtw:
     title: 7097-A - Baie de Bourail
     edition: Édition n°&nbsp;2 - 2010
@@ -4640,26 +5051,26 @@ gt25k:
     west: -4.685669
     north: 48.281033
     east: -4.213817
-    left: 420 # nbre de pixels de la bordure gauche
-    bottom: 493 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 565 # nbre de pixels de la bordure haute
+    left: 459 # nbre de pixels de la bordure gauche
+    bottom: 536 # nbre de pixels de la bordure basse
+    right: 377 # nbre de pixels de la bordure droite
+    top: 521 # nbre de pixels de la bordure haute
   7122/7122_pal300:
     title: 7122 - De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four
-    edition: Édition n°&nbsp;4 - 2017
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 25000
     width: 9922
     height: 13819
-    south: 48.291689
-    west: -4.984992
-    north: 48.555117
-    east: -4.700819
-    left: 588 # nbre de pixels de la bordure gauche
-    bottom: 383 # nbre de pixels de la bordure basse
-    right: 478 # nbre de pixels de la bordure droite
-    top: 445 # nbre de pixels de la bordure haute
+    south: 48.291881
+    west: -4.984589
+    north: 48.555308
+    east: -4.700419
+    left: 626 # nbre de pixels de la bordure gauche
+    bottom: 425 # nbre de pixels de la bordure basse
+    right: 440 # nbre de pixels de la bordure droite
+    top: 402 # nbre de pixels de la bordure haute
   7123/7123_pal300:
-    title: 7123 - Île Molène - Île d'Ouessant - Passage du Fromveur
+    title: 7123 - Ile Molène - Ile d'Ouessant - Passage du Fromveur
     edition: Édition n°&nbsp;5 - 2017
     scaleden: 20000
     width: 13819
@@ -4668,10 +5079,10 @@ gt25k:
     west: -5.194200
     north: 48.507872
     east: -4.877994
-    left: 410 # nbre de pixels de la bordure gauche
-    bottom: 485 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 584 # nbre de pixels de la bordure haute
+    left: 475 # nbre de pixels de la bordure gauche
+    bottom: 550 # nbre de pixels de la bordure basse
+    right: 350 # nbre de pixels de la bordure droite
+    top: 518 # nbre de pixels de la bordure haute
   7124/7124_1_gtw:
     title: 7124-A - Le Léguer (Rivière de Lannion)
     edition: Édition n°&nbsp;3 - 2008
@@ -4696,12 +5107,12 @@ gt25k:
     west: -3.844272
     north: 48.809081
     east: -3.526367
-    left: 418 # nbre de pixels de la bordure gauche
-    bottom: 498 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 576 # nbre de pixels de la bordure haute
+    left: 476 # nbre de pixels de la bordure gauche
+    bottom: 563 # nbre de pixels de la bordure basse
+    right: 354 # nbre de pixels de la bordure droite
+    top: 510 # nbre de pixels de la bordure haute
   7125/7125_pal300:
-    title: 7125 - Abords de Perros-Guirec - Les Sept Îles
+    title: 7125 - Abords de Perros-Guirec - Les Sept Iles - De l'Ile Grande à l'Ile Balanec
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 20000
     width: 13819
@@ -4710,12 +5121,12 @@ gt25k:
     west: -3.584122
     north: 48.923417
     east: -3.265189
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 495 # nbre de pixels de la bordure basse
-    right: 411 # nbre de pixels de la bordure droite
-    top: 576 # nbre de pixels de la bordure haute
+    left: 475 # nbre de pixels de la bordure gauche
+    bottom: 561 # nbre de pixels de la bordure basse
+    right: 353 # nbre de pixels de la bordure droite
+    top: 510 # nbre de pixels de la bordure haute
   7126/7126_pal300:
-    title: 7126 - De l'Île Balanec aux Héaux-de-Bréhat - Cours du Jaudy
+    title: 7126 - De l'île Balanec aux Héaux-de-Bréhat - Cours du Jaudy
     edition: Édition n°&nbsp;5 - 2012
     scaleden: 20000
     width: 9922
@@ -4724,12 +5135,12 @@ gt25k:
     west: -3.299247
     north: 48.946989
     east: -3.070406
-    left: 589 # nbre de pixels de la bordure gauche
-    bottom: 375 # nbre de pixels de la bordure basse
-    right: 474 # nbre de pixels de la bordure droite
-    top: 461 # nbre de pixels de la bordure haute
+    left: 647 # nbre de pixels de la bordure gauche
+    bottom: 441 # nbre de pixels de la bordure basse
+    right: 416 # nbre de pixels de la bordure droite
+    top: 395 # nbre de pixels de la bordure haute
   7127/7127_pal300:
-    title: 7127 - Abords de l'Île de Bréhat - Anse de Paimpol - Entrée du Trieux
+    title: 7127 - Abords de l'île Bréhat, anse de Paimpol - Entrée du Trieux
     edition: Édition n°&nbsp;4 - 2014
     scaleden: 20000
     width: 9922
@@ -4738,12 +5149,12 @@ gt25k:
     west: -3.107428
     north: 48.917725
     east: -2.878681
-    left: 554 # nbre de pixels de la bordure gauche
-    bottom: 373 # nbre de pixels de la bordure basse
-    right: 549 # nbre de pixels de la bordure droite
-    top: 465 # nbre de pixels de la bordure haute
+    left: 612 # nbre de pixels de la bordure gauche
+    bottom: 439 # nbre de pixels de la bordure basse
+    right: 491 # nbre de pixels de la bordure droite
+    top: 399 # nbre de pixels de la bordure haute
   7128/7128_pal300:
-    title: 7128 - Baie de Saint-Brieuc (Partie Ouest) - De la Pointe de la Tour à l'Anse d'Yffiniac
+    title: 7128 - Baie de Saint-Brieuc (partie Ouest) - De la Pointe de la Tour à l'Anse d'Yffiniac
     edition: Édition n°&nbsp;3 - 2016
     scaleden: 25000
     width: 9922
@@ -4752,10 +5163,10 @@ gt25k:
     west: -2.944667
     north: 48.777992
     east: -2.659689
-    left: 523 # nbre de pixels de la bordure gauche
-    bottom: 368 # nbre de pixels de la bordure basse
-    right: 522 # nbre de pixels de la bordure droite
-    top: 457 # nbre de pixels de la bordure haute
+    left: 569 # nbre de pixels de la bordure gauche
+    bottom: 421 # nbre de pixels de la bordure basse
+    right: 476 # nbre de pixels de la bordure droite
+    top: 404 # nbre de pixels de la bordure haute
   7129/7129_pal300:
     title: 7129 - Du Cap Fréhel à Saint-Briac-sur-Mer
     edition: Édition n°&nbsp;3 - 2017
@@ -4766,12 +5177,12 @@ gt25k:
     west: -2.346844
     north: 48.753722
     east: -2.118833
-    left: 567 # nbre de pixels de la bordure gauche
-    bottom: 374 # nbre de pixels de la bordure basse
-    right: 494 # nbre de pixels de la bordure droite
-    top: 454 # nbre de pixels de la bordure haute
+    left: 632 # nbre de pixels de la bordure gauche
+    bottom: 440 # nbre de pixels de la bordure basse
+    right: 436 # nbre de pixels de la bordure droite
+    top: 388 # nbre de pixels de la bordure haute
   7131/7131_pal300:
-    title: 7131 - Du Havre de Rothéneuf à Cancale
+    title: 7131 - Du Hâvre de Rothéneuf à Cancale
     edition: Édition n°&nbsp;3 - 2016
     scaleden: 20000
     width: 9922
@@ -4780,10 +5191,10 @@ gt25k:
     west: -2.006694
     north: 48.759869
     east: -1.778461
-    left: 523 # nbre de pixels de la bordure gauche
-    bottom: 394 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 496 # nbre de pixels de la bordure haute
+    left: 581 # nbre de pixels de la bordure gauche
+    bottom: 460 # nbre de pixels de la bordure basse
+    right: 357 # nbre de pixels de la bordure droite
+    top: 430 # nbre de pixels de la bordure haute
   7133/7133_1_gtw:
     title: 7133-C - Abords de Carteret et Portbail
     edition: Édition n°&nbsp;2 - 2009
@@ -4800,13 +5211,13 @@ gt25k:
     top: 85 # nbre de pixels de la bordure haute
   7137/7137_1_gtw:
     title: 7137-C - Rivière de Noyalo
-    edition: Publication 2008
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 20000
     width: 1066
-    height: 2396
-    south: 47.584417
+    height: 2397
+    south: 47.584408
     west: -2.706833
-    north: 47.620889
+    north: 47.620894
     east: -2.682842
     left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
@@ -4814,27 +5225,27 @@ gt25k:
     top: 81 # nbre de pixels de la bordure haute
   7137/7137_2_gtw:
     title: 7137-A - Rivière d'Auray - Port de Saint-Goustan
-    edition: Publication 2008
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 20000
     width: 2264
-    height: 2354
-    south: 47.632086
+    height: 2355
+    south: 47.632078
     west: -2.983839
-    north: 47.667883
+    north: 47.667892
     east: -2.932886
     left: 82 # nbre de pixels de la bordure gauche
-    bottom: 82 # nbre de pixels de la bordure basse
+    bottom: 83 # nbre de pixels de la bordure basse
     right: 80 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
   7137/7137_3_gtw:
     title: 7137-B - Port de Vannes
-    edition: Publication 2008
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 20000
     width: 667
     height: 1675
-    south: 47.630408
+    south: 47.630417
     west: -2.766842
-    north: 47.655883
+    north: 47.655892
     east: -2.751831
     left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
@@ -4842,20 +5253,20 @@ gt25k:
     top: 81 # nbre de pixels de la bordure haute
   7137/7137_pal300:
     title: 7137 - Golfe du Morbihan
-    edition: Publication 2008
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 20000
     width: 13819
     height: 9922
-    south: 47.497825
+    south: 47.498397
     west: -2.999008
-    north: 47.648936
+    north: 47.649508
     east: -2.688000
     left: 416 # nbre de pixels de la bordure gauche
-    bottom: 493 # nbre de pixels de la bordure basse
+    bottom: 455 # nbre de pixels de la bordure basse
     right: 415 # nbre de pixels de la bordure droite
-    top: 577 # nbre de pixels de la bordure haute
+    top: 615 # nbre de pixels de la bordure haute
   7139/7139_pal300:
-    title: 7139 - De la Pointe du Talut à la Pointe de Gâvres - Île de Groix
+    title: 7139 - De la Pointe du Talut à la Pointe de Gâvres - Ile de Groix
     edition: Édition n°&nbsp;3 - 2016
     scaleden: 20000
     width: 13819
@@ -4864,10 +5275,10 @@ gt25k:
     west: -3.594122
     north: 47.731947
     east: -3.282669
-    left: 420 # nbre de pixels de la bordure gauche
-    bottom: 491 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 578 # nbre de pixels de la bordure haute
+    left: 479 # nbre de pixels de la bordure gauche
+    bottom: 556 # nbre de pixels de la bordure basse
+    right: 355 # nbre de pixels de la bordure droite
+    top: 512 # nbre de pixels de la bordure haute
   7141/7141_pal300:
     title: 7141 - Baie de Quiberon
     edition: Édition n°&nbsp;2 - 2006
@@ -4878,10 +5289,10 @@ gt25k:
     west: -3.158467
     north: 47.602183
     east: -2.935492
-    left: 585 # nbre de pixels de la bordure gauche
-    bottom: 368 # nbre de pixels de la bordure basse
-    right: 483 # nbre de pixels de la bordure droite
-    top: 396 # nbre de pixels de la bordure haute
+    left: 644 # nbre de pixels de la bordure gauche
+    bottom: 434 # nbre de pixels de la bordure basse
+    right: 424 # nbre de pixels de la bordure droite
+    top: 331 # nbre de pixels de la bordure haute
   7142/7142_pal300:
     title: 7142 - Belle-Ile
     edition: Édition n°&nbsp;2 - 2005
@@ -4892,10 +5303,10 @@ gt25k:
     west: -3.346239
     north: 47.426458
     east: -2.961669
-    left: 416 # nbre de pixels de la bordure gauche
-    bottom: 498 # nbre de pixels de la bordure basse
-    right: 282 # nbre de pixels de la bordure droite
-    top: 572 # nbre de pixels de la bordure haute
+    left: 464 # nbre de pixels de la bordure gauche
+    bottom: 551 # nbre de pixels de la bordure basse
+    right: 366 # nbre de pixels de la bordure droite
+    top: 519 # nbre de pixels de la bordure haute
   7143/7143_pal300:
     title: 7143 - Abords des Iles de Houat et de Hoëdic
     edition: Édition n°&nbsp;2 - 2003
@@ -4906,10 +5317,10 @@ gt25k:
     west: -3.088347
     north: 47.441842
     east: -2.778561
-    left: 313 # nbre de pixels de la bordure gauche
-    bottom: 434 # nbre de pixels de la bordure basse
-    right: 310 # nbre de pixels de la bordure droite
-    top: 406 # nbre de pixels de la bordure haute
+    left: 373 # nbre de pixels de la bordure gauche
+    bottom: 499 # nbre de pixels de la bordure basse
+    right: 251 # nbre de pixels de la bordure droite
+    top: 341 # nbre de pixels de la bordure haute
   7145/7145_pal300:
     title: 7145 - De La Turballe à Pornichet
     edition: Édition n°&nbsp;2 - 2005
@@ -4976,24 +5387,24 @@ gt25k:
     west: 7.101942
     north: 43.737842
     east: 7.359931
-    left: 592 # nbre de pixels de la bordure gauche
-    bottom: 384 # nbre de pixels de la bordure basse
+    left: 631 # nbre de pixels de la bordure gauche
+    bottom: 436 # nbre de pixels de la bordure basse
     right: 485 # nbre de pixels de la bordure droite
     top: 469 # nbre de pixels de la bordure haute
   7214/7214_1_gtw:
     title: 7214-A - Nieuwpoort
-    edition: Édition n°&nbsp;7 - 2017
+    edition: Édition n°&nbsp;8 - 2019
     scaleden: 20000
     width: 2015
-    height: 1744
-    south: 51.132069
+    height: 1745
+    south: 51.132064
     west: 2.711692
-    north: 51.158722
+    north: 51.158733
     east: 2.760650
     left: 82 # nbre de pixels de la bordure gauche
-    bottom: 83 # nbre de pixels de la bordure basse
+    bottom: 84 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
-    top: 80 # nbre de pixels de la bordure haute
+    top: 81 # nbre de pixels de la bordure haute
   7232/7232_pal300:
     title: 7232 - Du Nez de Jobourg à la Pointe de Nacqueville
     edition: Publication 2013
@@ -5130,10 +5541,10 @@ gt25k:
     west: 6.558528
     north: 43.351494
     east: 6.765394
-    left: 583 # nbre de pixels de la bordure gauche
-    bottom: 391 # nbre de pixels de la bordure basse
-    right: 483 # nbre de pixels de la bordure droite
-    top: 438 # nbre de pixels de la bordure haute
+    left: 631 # nbre de pixels de la bordure gauche
+    bottom: 456 # nbre de pixels de la bordure basse
+    right: 435 # nbre de pixels de la bordure droite
+    top: 373 # nbre de pixels de la bordure haute
   7280/7280_pal300:
     title: 7280 - Golfe d'Ajaccio
     edition: Édition n°&nbsp;2 - 2009
@@ -5144,10 +5555,24 @@ gt25k:
     west: 8.565092
     north: 41.963250
     east: 8.817903
-    left: 579 # nbre de pixels de la bordure gauche
-    bottom: 389 # nbre de pixels de la bordure basse
-    right: 487 # nbre de pixels de la bordure droite
-    top: 443 # nbre de pixels de la bordure haute
+    left: 618 # nbre de pixels de la bordure gauche
+    bottom: 442 # nbre de pixels de la bordure basse
+    right: 448 # nbre de pixels de la bordure droite
+    top: 390 # nbre de pixels de la bordure haute
+  7281/7281_1_gtw:
+    title: 7281-A - De la Passe Kaki aux mouillages d'Otepa
+    edition: Édition n°&nbsp;2 - 2015
+    scaleden: 30000
+    width: 5372
+    height: 4520
+    south: -18.160222
+    west: -141.010297
+    north: -18.056494
+    east: -140.881378
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7282/7282_pal300:
     title: 7282 - Rade d'Hyères
     edition: Édition n°&nbsp;5 - 2018
@@ -5158,10 +5583,10 @@ gt25k:
     west: 6.111064
     north: 43.152267
     east: 6.470100
-    left: 434 # nbre de pixels de la bordure gauche
-    bottom: 477 # nbre de pixels de la bordure basse
-    right: 428 # nbre de pixels de la bordure droite
-    top: 610 # nbre de pixels de la bordure haute
+    left: 473 # nbre de pixels de la bordure gauche
+    bottom: 530 # nbre de pixels de la bordure basse
+    right: 389 # nbre de pixels de la bordure droite
+    top: 558 # nbre de pixels de la bordure haute
   7305/7305_pal300:
     title: 7305 - De la Passe d'Aiurua à la Passe Havae
     edition: Édition n°&nbsp;2 - 2010
@@ -5186,10 +5611,10 @@ gt25k:
     west: -2.699761
     north: 48.732597
     east: -2.302850
-    left: 416 # nbre de pixels de la bordure gauche
-    bottom: 496 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 567 # nbre de pixels de la bordure haute
+    left: 462 # nbre de pixels de la bordure gauche
+    bottom: 548 # nbre de pixels de la bordure basse
+    right: 365 # nbre de pixels de la bordure droite
+    top: 514 # nbre de pixels de la bordure haute
   7316/7316_pal300:
     title: 7316 - Golfe de Sagone
     edition: Édition n°&nbsp;2 - 2008
@@ -5200,10 +5625,10 @@ gt25k:
     west: 8.511028
     north: 42.192750
     east: 8.764747
-    left: 579 # nbre de pixels de la bordure gauche
-    bottom: 389 # nbre de pixels de la bordure basse
-    right: 486 # nbre de pixels de la bordure droite
-    top: 443 # nbre de pixels de la bordure haute
+    left: 619 # nbre de pixels de la bordure gauche
+    bottom: 441 # nbre de pixels de la bordure basse
+    right: 447 # nbre de pixels de la bordure droite
+    top: 391 # nbre de pixels de la bordure haute
   7319/7319_1_gtw:
     title: 7319-A - Baie de Pam
     edition: Édition n°&nbsp;2 - 2014
@@ -5276,20 +5701,20 @@ gt25k:
     top: 76 # nbre de pixels de la bordure haute
   7322/7322_pal300:
     title: 7322 - De la Passe de Poya à la Passe de Muéo
-    edition: Édition n°&nbsp;2 - 2011
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 25000
     width: 13819
     height: 9922
-    south: -21.484411
+    south: -21.484433
     west: 164.894800
-    north: -21.294739
+    north: -21.294758
     east: 165.176864
     left: 419 # nbre de pixels de la bordure gauche
-    bottom: 502 # nbre de pixels de la bordure basse
+    bottom: 503 # nbre de pixels de la bordure basse
     right: 418 # nbre de pixels de la bordure droite
-    top: 572 # nbre de pixels de la bordure haute
+    top: 571 # nbre de pixels de la bordure haute
   7324/7324_pal300:
-    title: 7324 - Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis
+    title: 7324 - Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis (Spéciale P)
     edition: Édition n°&nbsp;3 - 2017
     scaleden: 20000
     width: 9922
@@ -5298,10 +5723,10 @@ gt25k:
     west: -61.643103
     north: 16.446219
     east: -61.485867
-    left: 585 # nbre de pixels de la bordure gauche
-    bottom: 375 # nbre de pixels de la bordure basse
-    right: 493 # nbre de pixels de la bordure droite
-    top: 462 # nbre de pixels de la bordure haute
+    left: 827 # nbre de pixels de la bordure gauche
+    bottom: 538 # nbre de pixels de la bordure basse
+    right: 240 # nbre de pixels de la bordure droite
+    top: 298 # nbre de pixels de la bordure haute
   7349/7349_1_gtw:
     title: 7349-A - Ile Tromelin
     edition: Publication 1996
@@ -5372,6 +5797,34 @@ gt25k:
     bottom: 83 # nbre de pixels de la bordure basse
     right: 81 # nbre de pixels de la bordure droite
     top: 78 # nbre de pixels de la bordure haute
+  7372/7372_2_gtw:
+    title: 7372-A - De la Passe Garuae au Mouillage de Rotoava
+    edition: Édition n°&nbsp;3 - 2004
+    scaleden: 25000
+    width: 6145
+    height: 3414
+    south: -16.110433
+    west: -145.731622
+    north: -16.045131
+    east: -145.610053
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 84 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7373/7373_1_gtw:
+    title: 7373-A - De la Passe d'Avatoru à la Passe de Tiputa
+    edition: Édition n°&nbsp;2 - 2002
+    scaleden: 30000
+    width: 4447
+    height: 2897
+    south: -14.994447
+    west: -147.723336
+    north: -14.927947
+    east: -147.618331
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 106 # nbre de pixels de la bordure droite
+    top: 104 # nbre de pixels de la bordure haute
   7376/7376_2_gtw:
     title: 7376-A - Fleuve Maroni - De l'embouchure aux Iles Arouaba
     edition: Publication 2003
@@ -5410,12 +5863,12 @@ gt25k:
     west: 5.027719
     north: 43.373253
     east: 5.388058
-    left: 414 # nbre de pixels de la bordure gauche
-    bottom: 513 # nbre de pixels de la bordure basse
-    right: 418 # nbre de pixels de la bordure droite
-    top: 557 # nbre de pixels de la bordure haute
+    left: 459 # nbre de pixels de la bordure gauche
+    bottom: 565 # nbre de pixels de la bordure basse
+    right: 373 # nbre de pixels de la bordure droite
+    top: 504 # nbre de pixels de la bordure haute
   7393/7393_pal300:
-    title: 7393 - Du port de La Pointe Rouge à Cassis
+    title: 7393 - Du port de La Pointe Rouge à Cassis - Calanques de Cassis
     edition: Édition n°&nbsp;3 - 2016
     scaleden: 20000
     width: 13819
@@ -5424,10 +5877,10 @@ gt25k:
     west: 5.295522
     north: 43.260953
     east: 5.583353
-    left: 376 # nbre de pixels de la bordure gauche
-    bottom: 499 # nbre de pixels de la bordure basse
-    right: 378 # nbre de pixels de la bordure droite
-    top: 567 # nbre de pixels de la bordure haute
+    left: 424 # nbre de pixels de la bordure gauche
+    bottom: 564 # nbre de pixels de la bordure basse
+    right: 322 # nbre de pixels de la bordure droite
+    top: 501 # nbre de pixels de la bordure haute
   7396/7396_1_gtw:
     title: 7396-C - De l'Ile de Bois à Nantes
     edition: Édition n°&nbsp;2 - 2006
@@ -5442,6 +5895,20 @@ gt25k:
     bottom: 83 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
+  7396/7396_2_gtw:
+    title: 7396-B - De Paimboeuf à l'Ile de Bois
+    edition: Édition n°&nbsp;2 - 2006
+    scaleden: 20000
+    width: 9495
+    height: 3811
+    south: 47.266392
+    west: -2.184394
+    north: 47.309925
+    east: -2.024989
+    left: 400 # nbre de pixels de la bordure gauche
+    bottom: 400 # nbre de pixels de la bordure basse
+    right: 400 # nbre de pixels de la bordure droite
+    top: 52 # nbre de pixels de la bordure haute
   7396/7396_4_gtw:
     title: 7396-B - De Paimboeuf à l'Ile de Bois
     edition: Édition n°&nbsp;2 - 2006
@@ -5480,10 +5947,10 @@ gt25k:
     west: -4.568347
     north: 48.424583
     east: -4.213328
-    left: 410 # nbre de pixels de la bordure gauche
-    bottom: 497 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 571 # nbre de pixels de la bordure haute
+    left: 468 # nbre de pixels de la bordure gauche
+    bottom: 556 # nbre de pixels de la bordure basse
+    right: 358 # nbre de pixels de la bordure droite
+    top: 512 # nbre de pixels de la bordure haute
   7401/7401_pal300:
     title: 7401 - Accès à la Rade de Brest
     edition: Édition n°&nbsp;4 - 2018
@@ -5494,10 +5961,10 @@ gt25k:
     west: -4.792511
     north: 48.405231
     east: -4.437492
-    left: 410 # nbre de pixels de la bordure gauche
-    bottom: 512 # nbre de pixels de la bordure basse
-    right: 416 # nbre de pixels de la bordure droite
-    top: 560 # nbre de pixels de la bordure haute
+    left: 468 # nbre de pixels de la bordure gauche
+    bottom: 570 # nbre de pixels de la bordure basse
+    right: 358 # nbre de pixels de la bordure droite
+    top: 501 # nbre de pixels de la bordure haute
   7410/7410_pal300:
     title: 7410 - Ile d'Yeu
     edition: Édition n°&nbsp;2 - 2002
@@ -5508,10 +5975,10 @@ gt25k:
     west: -2.477233
     north: 46.799172
     east: -2.171150
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 500 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 571 # nbre de pixels de la bordure haute
+    left: 478 # nbre de pixels de la bordure gauche
+    bottom: 566 # nbre de pixels de la bordure basse
+    right: 355 # nbre de pixels de la bordure droite
+    top: 505 # nbre de pixels de la bordure haute
   7414/7414_pal300:
     title: 7414 - De l'Ile d'Aix au Pertuis de Maumusson - Coureau d'Oléron
     edition: Édition n°&nbsp;3 - 2014
@@ -5522,10 +5989,10 @@ gt25k:
     west: -1.329267
     north: 46.021567
     east: -1.058697
-    left: 536 # nbre de pixels de la bordure gauche
-    bottom: 380 # nbre de pixels de la bordure basse
-    right: 464 # nbre de pixels de la bordure droite
-    top: 451 # nbre de pixels de la bordure haute
+    left: 585 # nbre de pixels de la bordure gauche
+    bottom: 433 # nbre de pixels de la bordure basse
+    right: 415 # nbre de pixels de la bordure droite
+    top: 399 # nbre de pixels de la bordure haute
   7415/7415_3_gtw:
     title: 7415 - Embouchure de la Charente
     edition: Édition n°&nbsp;2 - 2017
@@ -5556,7 +6023,7 @@ gt25k:
     top: 85 # nbre de pixels de la bordure haute
   7420/7420_4_gtw:
     title: 7420-E - Port de Caen
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 17500
     width: 4502
     height: 5149
@@ -5570,7 +6037,7 @@ gt25k:
     top: 87 # nbre de pixels de la bordure haute
   7420/7420_5_gtw:
     title: 7420-D - Rade de Caen - Port de Ouistreham
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 17500
     width: 6360
     height: 9144
@@ -5592,10 +6059,10 @@ gt25k:
     west: -4.949183
     north: 48.123500
     east: -4.635336
-    left: 412 # nbre de pixels de la bordure gauche
-    bottom: 499 # nbre de pixels de la bordure basse
-    right: 411 # nbre de pixels de la bordure droite
-    top: 570 # nbre de pixels de la bordure haute
+    left: 478 # nbre de pixels de la bordure gauche
+    bottom: 564 # nbre de pixels de la bordure basse
+    right: 353 # nbre de pixels de la bordure droite
+    top: 505 # nbre de pixels de la bordure haute
   7425/7425_pal300:
     title: 7425 - Embouchure de la Gironde
     edition: Édition n°&nbsp;6 - 2017
@@ -5666,6 +6133,48 @@ gt25k:
     bottom: 466 # nbre de pixels de la bordure basse
     right: 414 # nbre de pixels de la bordure droite
     top: 604 # nbre de pixels de la bordure haute
+  7456/7456_1_gtw:
+    title: 7456-B - De la Passe Otugi aux mouillages Nord et Sud
+    edition: Publication 2002
+    scaleden: 25000
+    width: 3535
+    height: 4946
+    south: -15.952572
+    west: -145.944269
+    north: -15.857964
+    east: -145.874394
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7458/7458_2_gtw:
+    title: 7458-A - De la Passe Tamaketa à la Passe Fainukea
+    edition: Édition n°&nbsp;2 - 2011
+    scaleden: 25000
+    width: 9021
+    height: 4050
+    south: -15.528239
+    west: -145.601603
+    north: -15.450769
+    east: -145.423650
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 86 # nbre de pixels de la bordure droite
+    top: 82 # nbre de pixels de la bordure haute
+  7459/7459_2_gtw:
+    title: 7459-A - De la passe de Tuheiava au mouillage de Tuherahera
+    edition: Publication 2019
+    scaleden: 30000
+    width: 4652
+    height: 6497
+    south: -15.127439
+    west: -148.294164
+    north: -14.978297
+    east: -148.184272
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 107 # nbre de pixels de la bordure basse
+    right: 109 # nbre de pixels de la bordure droite
+    top: 104 # nbre de pixels de la bordure haute
   7461/7461_pal300:
     title: 7461 - De Taapuna à la Pointe Vénus
     edition: Publication 2009
@@ -5682,18 +6191,18 @@ gt25k:
     top: 549 # nbre de pixels de la bordure haute
   7466/7466_pal300:
     title: 7466 - Bora-Bora
-    edition: Publication 2016
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 20000
     width: 9922
     height: 13819
-    south: -16.612747
-    west: -151.822306
-    north: -16.401294
-    east: -151.664931
-    left: 535 # nbre de pixels de la bordure gauche
-    bottom: 376 # nbre de pixels de la bordure basse
-    right: 530 # nbre de pixels de la bordure droite
-    top: 449 # nbre de pixels de la bordure haute
+    south: -16.612764
+    west: -151.822267
+    north: -16.401311
+    east: -151.664892
+    left: 532 # nbre de pixels de la bordure gauche
+    bottom: 377 # nbre de pixels de la bordure basse
+    right: 533 # nbre de pixels de la bordure droite
+    top: 448 # nbre de pixels de la bordure haute
   7481/7481_pal300:
     title: 7481 - Approches de Kourou - Îles du Salut
     edition: Édition n°&nbsp;3 - 2007
@@ -5948,34 +6457,48 @@ gt12k:
     bottom: 90 # nbre de pixels de la bordure basse
     right: 74 # nbre de pixels de la bordure droite
     top: 75 # nbre de pixels de la bordure haute
+  6279/6279_1_gtw:
+    title: 6279 - Mouillages au Nord de Rimatara
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 10000
+    width: 5422
+    height: 3867
+    south: -22.652622
+    west: -152.826708
+    north: -22.623042
+    east: -152.782028
+    left: 86 # nbre de pixels de la bordure gauche
+    bottom: 82 # nbre de pixels de la bordure basse
+    right: 78 # nbre de pixels de la bordure droite
+    top: 82 # nbre de pixels de la bordure haute
   6280/6280_pal300:
     title: 6280 - Partie Nord de Raiatea - Port d'Uturoa
-    edition: Édition n°&nbsp;4 - 2005
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 12000
     width: 13819
     height: 9922
-    south: -16.776472
-    west: -151.528628
-    north: -16.685281
-    east: -151.396822
-    left: 1167 # nbre de pixels de la bordure gauche
-    bottom: 1031 # nbre de pixels de la bordure basse
-    right: 1172 # nbre de pixels de la bordure droite
-    top: 1076 # nbre de pixels de la bordure haute
+    south: -16.776308
+    west: -151.525014
+    north: -16.685117
+    east: -151.393208
+    left: 788 # nbre de pixels de la bordure gauche
+    bottom: 1014 # nbre de pixels de la bordure basse
+    right: 1551 # nbre de pixels de la bordure droite
+    top: 1094 # nbre de pixels de la bordure haute
   6281/6281_pal300:
     title: 6281 - Partie Sud de Tahaa
-    edition: Édition n°&nbsp;3 - 2005
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 12000
     width: 13819
     height: 9922
-    south: -16.721017
-    west: -151.563578
-    north: -16.629867
-    east: -151.431867
-    left: 1163 # nbre de pixels de la bordure gauche
-    bottom: 1000 # nbre de pixels de la bordure basse
-    right: 1169 # nbre de pixels de la bordure droite
-    top: 1085 # nbre de pixels de la bordure haute
+    south: -16.719108
+    west: -151.561183
+    north: -16.627956
+    east: -151.429472
+    left: 912 # nbre de pixels de la bordure gauche
+    bottom: 793 # nbre de pixels de la bordure basse
+    right: 1420 # nbre de pixels de la bordure droite
+    top: 1293 # nbre de pixels de la bordure haute
   6320/6320_1_gtw:
     title: 6320 - Port de Temao
     edition: Édition n°&nbsp;2 - 2010
@@ -6004,6 +6527,20 @@ gt12k:
     bottom: 1137 # nbre de pixels de la bordure basse
     right: 1022 # nbre de pixels de la bordure droite
     top: 1215 # nbre de pixels de la bordure haute
+  6424/6424_1_gtw:
+    title: 6424-A - Passes et mouillages de Tubuai
+    edition: Édition n°&nbsp;2 - 2001
+    scaleden: 12500
+    width: 7994
+    height: 5631
+    south: -23.376622
+    west: -149.527147
+    north: -23.322819
+    east: -149.444422
+    left: 79 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 89 # nbre de pixels de la bordure droite
+    top: 89 # nbre de pixels de la bordure haute
   6434/6434_1_gtw:
     title: 6434-A - Passe Avamoa
     edition: Édition n°&nbsp;4 - 2005
@@ -6196,10 +6733,10 @@ gt12k:
     west: -0.019558
     north: 49.526803
     east: 0.222567
-    left: 413 # nbre de pixels de la bordure gauche
-    bottom: 481 # nbre de pixels de la bordure basse
-    right: 413 # nbre de pixels de la bordure droite
-    top: 582 # nbre de pixels de la bordure haute
+    left: 498 # nbre de pixels de la bordure gauche
+    bottom: 568 # nbre de pixels de la bordure basse
+    right: 337 # nbre de pixels de la bordure droite
+    top: 509 # nbre de pixels de la bordure haute
   6717/6717_1_gtw:
     title: 6717-A - Port Phaeton (Teauaa)
     edition: Édition n°&nbsp;3 - 2017
@@ -6238,10 +6775,10 @@ gt12k:
     west: -2.370103
     north: 47.298461
     east: -2.138275
-    left: 424 # nbre de pixels de la bordure gauche
-    bottom: 516 # nbre de pixels de la bordure basse
-    right: 421 # nbre de pixels de la bordure droite
-    top: 567 # nbre de pixels de la bordure haute
+    left: 503 # nbre de pixels de la bordure gauche
+    bottom: 603 # nbre de pixels de la bordure basse
+    right: 342 # nbre de pixels de la bordure droite
+    top: 479 # nbre de pixels de la bordure haute
   6838/6838_1_gtw:
     title: 6838-C - Port Santa-Lucia - Saint-Raphaël
     edition: Édition n°&nbsp;4 - 2017
@@ -6397,7 +6934,7 @@ gt12k:
     right: 89 # nbre de pixels de la bordure droite
     top: 83 # nbre de pixels de la bordure haute
   6892/6892_pal300:
-    title: 6892 - Baie de Fort-de-France
+    title: 6892 - Baie de Fort-de-France (Spéciale P)
     edition: Édition n°&nbsp;4 - 2018
     scaleden: 15000
     width: 13819
@@ -6406,10 +6943,10 @@ gt12k:
     west: -61.139247
     north: 14.624747
     east: -60.976397
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 506 # nbre de pixels de la bordure basse
-    right: 419 # nbre de pixels de la bordure droite
-    top: 559 # nbre de pixels de la bordure haute
+    left: 106 # nbre de pixels de la bordure gauche
+    bottom: 361 # nbre de pixels de la bordure basse
+    right: 731 # nbre de pixels de la bordure droite
+    top: 705 # nbre de pixels de la bordure haute
   6903/6903_A_gtw:
     title: 6903-A - Beaucette Marina
     edition: Édition n°&nbsp;4 - 2016
@@ -6462,10 +6999,10 @@ gt12k:
     west: 9.264389
     north: 41.646367
     east: 9.415531
-    left: 522 # nbre de pixels de la bordure gauche
-    bottom: 376 # nbre de pixels de la bordure basse
-    right: 429 # nbre de pixels de la bordure droite
-    top: 470 # nbre de pixels de la bordure haute
+    left: 588 # nbre de pixels de la bordure gauche
+    bottom: 464 # nbre de pixels de la bordure basse
+    right: 364 # nbre de pixels de la bordure droite
+    top: 383 # nbre de pixels de la bordure haute
   6980/6980_1_gtw:
     title: 6980-A - Abords de l'Île-Rousse
     edition: Édition n°&nbsp;4 - 2018
@@ -6509,47 +7046,61 @@ gt12k:
     right: 81 # nbre de pixels de la bordure droite
     top: 80 # nbre de pixels de la bordure haute
   7003/7003_1_gtw:
-    title: 7003-A - Le Cap d'Agde - Embouchure de l'Hérault
-    edition: Édition n°&nbsp;4 - 2017
+    title: 7003 - Le Cap d'Agde - Embouchure de l'Hérault
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 15000
     width: 9110
     height: 6141
     south: 43.251333
-    west: 3.424253
-    north: 43.321531
-    east: 3.566803
-    left: 80 # nbre de pixels de la bordure gauche
-    bottom: 88 # nbre de pixels de la bordure basse
-    right: 84 # nbre de pixels de la bordure droite
-    top: 76 # nbre de pixels de la bordure haute
+    west: 3.424247
+    north: 43.321533
+    east: 3.566800
+    left: 155 # nbre de pixels de la bordure gauche
+    bottom: 175 # nbre de pixels de la bordure basse
+    right: 9 # nbre de pixels de la bordure droite
+    top: 400 # nbre de pixels de la bordure haute
   7003/7003_2_gtw:
     title: 7003-B - Saint-Cyprien
-    edition: Édition n°&nbsp;4 - 2017
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 10000
     width: 4183
     height: 4047
-    south: 42.595361
-    west: 3.031353
-    north: 42.626208
-    east: 3.074517
-    left: 79 # nbre de pixels de la bordure gauche
+    south: 42.595367
+    west: 3.031350
+    north: 42.626211
+    east: 3.074511
+    left: 80 # nbre de pixels de la bordure gauche
     bottom: 84 # nbre de pixels de la bordure basse
-    right: 83 # nbre de pixels de la bordure droite
+    right: 82 # nbre de pixels de la bordure droite
     top: 72 # nbre de pixels de la bordure haute
   7003/7003_3_gtw:
     title: 7003-C - Banyuls-sur-Mer
-    edition: Édition n°&nbsp;4 - 2017
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 10000
     width: 3213
-    height: 1697
-    south: 42.476628
+    height: 1654
+    south: 42.476956
     west: 3.116344
-    north: 42.489561
-    east: 3.149428
+    north: 42.489564
+    east: 3.149431
     left: 80 # nbre de pixels de la bordure gauche
-    bottom: 93 # nbre de pixels de la bordure basse
-    right: 74 # nbre de pixels de la bordure droite
+    bottom: 50 # nbre de pixels de la bordure basse
+    right: 75 # nbre de pixels de la bordure droite
     top: 74 # nbre de pixels de la bordure haute
+  7003/7003_4_gtw:
+    title: 7003-D - Gruissan
+    edition: Édition n°&nbsp;5 - 2019
+    scaleden: 15000
+    width: 9110
+    height: 4490
+    south: 43.075892
+    west: 3.078900
+    north: 43.127222
+    east: 3.221022
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 87 # nbre de pixels de la bordure droite
+    top: 78 # nbre de pixels de la bordure haute
   7004/7004_1_gtw:
     title: 7004-C - Saintes-Maries-de-la-Mer
     edition: Édition n°&nbsp;2 - 2005
@@ -6593,7 +7144,7 @@ gt12k:
     right: 84 # nbre de pixels de la bordure droite
     top: 78 # nbre de pixels de la bordure haute
   7004/7004_pal300:
-    title: 7004 - Golfe d'Aigues-Mortes, Ports de Palavas-les-Flots, Carnon-Plage et de Saintes-Maries-de-la-Mer
+    title: 7004 - Golfe d'Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer
     edition: Édition n°&nbsp;2 - 2005
     scaleden: 15000
     width: 9922
@@ -6602,10 +7153,10 @@ gt12k:
     west: 4.043411
     north: 43.579489
     east: 4.199294
-    left: 579 # nbre de pixels de la bordure gauche
-    bottom: 422 # nbre de pixels de la bordure basse
-    right: 391 # nbre de pixels de la bordure droite
-    top: 773 # nbre de pixels de la bordure haute
+    left: 653 # nbre de pixels de la bordure gauche
+    bottom: 509 # nbre de pixels de la bordure basse
+    right: 316 # nbre de pixels de la bordure droite
+    top: 685 # nbre de pixels de la bordure haute
   7037/7037_A_gtw:
     title: 7037-A - Ramsgate
     edition: Édition n°&nbsp;10 - 2016
@@ -6636,20 +7187,20 @@ gt12k:
     top: 75 # nbre de pixels de la bordure haute
   7086/7086_pal300:
     title: 7086 - Rade de Cherbourg
-    edition: Édition n°&nbsp;9 - 2016
+    edition: Édition n°&nbsp;10 - 2019
     scaleden: 7500
     width: 13819
     height: 9922
-    south: 49.629583
+    south: 49.629622
     west: -1.685931
-    north: 49.686231
-    east: -1.564400
+    north: 49.686269
+    east: -1.564403
     left: 428 # nbre de pixels de la bordure gauche
-    bottom: 511 # nbre de pixels de la bordure basse
-    right: 429 # nbre de pixels de la bordure droite
-    top: 596 # nbre de pixels de la bordure haute
+    bottom: 504 # nbre de pixels de la bordure basse
+    right: 428 # nbre de pixels de la bordure droite
+    top: 603 # nbre de pixels de la bordure haute
   7087/7087_pal300:
-    title: 7087 - Havre de la Trinité et Baie du Galion
+    title: 7087 - La Martinique - Havre de la Trinité et Baie du Galion (Spéciale P)
     edition: Édition n°&nbsp;2 - 2008
     scaleden: 15000
     width: 6910
@@ -6658,10 +7209,10 @@ gt12k:
     west: -60.987678
     north: 14.814219
     east: -60.906175
-    left: 411 # nbre de pixels de la bordure gauche
-    bottom: 421 # nbre de pixels de la bordure basse
-    right: 381 # nbre de pixels de la bordure droite
-    top: 513 # nbre de pixels de la bordure haute
+    left: 400 # nbre de pixels de la bordure gauche
+    bottom: 276 # nbre de pixels de la bordure basse
+    right: 890 # nbre de pixels de la bordure droite
+    top: 659 # nbre de pixels de la bordure haute
   7088/7088_1_gtw:
     title: 7088-A - Baie du François
     edition: Édition n°&nbsp;2 - 2008
@@ -6770,10 +7321,10 @@ gt12k:
     west: 5.871225
     north: 43.131542
     east: 6.014939
-    left: 428 # nbre de pixels de la bordure gauche
-    bottom: 513 # nbre de pixels de la bordure basse
-    right: 411 # nbre de pixels de la bordure droite
-    top: 553 # nbre de pixels de la bordure haute
+    left: 524 # nbre de pixels de la bordure gauche
+    bottom: 645 # nbre de pixels de la bordure basse
+    right: 315 # nbre de pixels de la bordure droite
+    top: 422 # nbre de pixels de la bordure haute
   7094/7094_1_gtw:
     title: 7094-A - Aber Wrac'h
     edition: Édition n°&nbsp;4 - 2018
@@ -6859,7 +7410,7 @@ gt12k:
     right: 75 # nbre de pixels de la bordure droite
     top: 79 # nbre de pixels de la bordure haute
   7100/7100_pal300:
-    title: 7100 - Abords de Pointe-à-Pitre
+    title: 7100 - Guadeloupe - Abords de Pointe-à-Pitre (Spéciale P)
     edition: Édition n°&nbsp;4 - 2017
     scaleden: 15000
     width: 9922
@@ -6868,10 +7419,10 @@ gt12k:
     west: -61.601892
     north: 16.262533
     east: -61.484058
-    left: 595 # nbre de pixels de la bordure gauche
-    bottom: 383 # nbre de pixels de la bordure basse
-    right: 473 # nbre de pixels de la bordure droite
-    top: 454 # nbre de pixels de la bordure haute
+    left: 918 # nbre de pixels de la bordure gauche
+    bottom: 601 # nbre de pixels de la bordure basse
+    right: 150 # nbre de pixels de la bordure droite
+    top: 236 # nbre de pixels de la bordure haute
   7101/7101_pal300:
     title: 7101 - Les Saintes
     edition: Édition n°&nbsp;3 - 2018
@@ -6882,10 +7433,10 @@ gt12k:
     west: -61.667781
     north: 15.898319
     east: -61.550136
-    left: 474 # nbre de pixels de la bordure gauche
-    bottom: 377 # nbre de pixels de la bordure basse
-    right: 467 # nbre de pixels de la bordure droite
-    top: 464 # nbre de pixels de la bordure haute
+    left: 797 # nbre de pixels de la bordure gauche
+    bottom: 595 # nbre de pixels de la bordure basse
+    right: 144 # nbre de pixels de la bordure droite
+    top: 246 # nbre de pixels de la bordure haute
   7102/7102_1_gtw:
     title: 7102-A - Le Moule
     edition: Édition n°&nbsp;3 - 2018
@@ -7014,7 +7565,7 @@ gt12k:
     top: 82 # nbre de pixels de la bordure haute
   7122/7122_1_gtw:
     title: 7122-A - Port du Conquet
-    edition: Édition n°&nbsp;4 - 2017
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 10000
     width: 1987
     height: 2090
@@ -7176,10 +7727,10 @@ gt12k:
     west: -2.201258
     north: 48.721228
     east: -1.963014
-    left: 422 # nbre de pixels de la bordure gauche
-    bottom: 503 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 561 # nbre de pixels de la bordure haute
+    left: 499 # nbre de pixels de la bordure gauche
+    bottom: 591 # nbre de pixels de la bordure basse
+    right: 338 # nbre de pixels de la bordure droite
+    top: 473 # nbre de pixels de la bordure haute
   7131/7131_1_gtw:
     title: 7131-A - Port de Cancale
     edition: Édition n°&nbsp;3 - 2016
@@ -7288,10 +7839,10 @@ gt12k:
     west: -1.911711
     north: 48.930378
     east: -1.672511
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 518 # nbre de pixels de la bordure basse
-    right: 414 # nbre de pixels de la bordure droite
-    top: 560 # nbre de pixels de la bordure haute
+    left: 494 # nbre de pixels de la bordure gauche
+    bottom: 605 # nbre de pixels de la bordure basse
+    right: 337 # nbre de pixels de la bordure droite
+    top: 472 # nbre de pixels de la bordure haute
   7135/7135_pal300:
     title: 7135 - De la Pointe de Saint-Jacques à Damgan
     edition: Publication 2002
@@ -7408,30 +7959,30 @@ gt12k:
     title: 7140-A - Le Blavet - De Lanester à Hennebont
     edition: Édition n°&nbsp;4 - 2019
     scaleden: 12500
-    width: 4177
-    height: 7868
-    south: 47.733217
-    west: -3.329208
-    north: 47.808108
-    east: -3.270233
+    width: 4176
+    height: 7867
+    south: 47.733219
+    west: -3.329203
+    north: 47.808103
+    east: -3.270242
     left: 86 # nbre de pixels de la bordure gauche
-    bottom: 83 # nbre de pixels de la bordure basse
+    bottom: 82 # nbre de pixels de la bordure basse
     right: 78 # nbre de pixels de la bordure droite
-    top: 82 # nbre de pixels de la bordure haute
+    top: 81 # nbre de pixels de la bordure haute
   7140/7140_pal300:
-    title: 7140 - Passes et Rade de Lorient
+    title: 7140 - Passes et rade de Lorient
     edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 9922
     height: 13819
-    south: 47.671094
-    west: -3.427458
-    north: 47.776322
-    east: -3.315489
-    left: 543 # nbre de pixels de la bordure gauche
-    bottom: 382 # nbre de pixels de la bordure basse
-    right: 533 # nbre de pixels de la bordure droite
-    top: 459 # nbre de pixels de la bordure haute
+    south: 47.671119
+    west: -3.427453
+    north: 47.776347
+    east: -3.315483
+    left: 661 # nbre de pixels de la bordure gauche
+    bottom: 510 # nbre de pixels de la bordure basse
+    right: 416 # nbre de pixels de la bordure droite
+    top: 331 # nbre de pixels de la bordure haute
   7142/7142_1_gtw:
     title: 7142-B - Le Palais
     edition: Édition n°&nbsp;2 - 2005
@@ -7806,10 +8357,10 @@ gt12k:
     west: 6.922950
     north: 43.585497
     east: 7.140100
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 491 # nbre de pixels de la bordure basse
-    right: 410 # nbre de pixels de la bordure droite
-    top: 569 # nbre de pixels de la bordure haute
+    left: 481 # nbre de pixels de la bordure gauche
+    bottom: 578 # nbre de pixels de la bordure basse
+    right: 346 # nbre de pixels de la bordure droite
+    top: 482 # nbre de pixels de la bordure haute
   7207/7207_1_gtw:
     title: 7207-B - Fécamp
     edition: Édition n°&nbsp;2 - 2006
@@ -7825,7 +8376,7 @@ gt12k:
     right: 81 # nbre de pixels de la bordure droite
     top: 73 # nbre de pixels de la bordure haute
   7207/7207_2_gtw:
-    title: 7207-A - Le Tréport
+    title: 7207-B - Fécamp
     edition: Édition n°&nbsp;2 - 2006
     scaleden: 12500
     width: 9021
@@ -7834,10 +8385,10 @@ gt12k:
     west: 1.279864
     north: 50.106939
     east: 1.413206
-    left: 77 # nbre de pixels de la bordure gauche
-    bottom: 89 # nbre de pixels de la bordure basse
-    right: 82 # nbre de pixels de la bordure droite
-    top: 82 # nbre de pixels de la bordure haute
+    left: 400 # nbre de pixels de la bordure gauche
+    bottom: 400 # nbre de pixels de la bordure basse
+    right: 400 # nbre de pixels de la bordure droite
+    top: 400 # nbre de pixels de la bordure haute
   7213/7213_1_gtw:
     title: 7213-A - De la Passe 'Onoiau au Village
     edition: Édition n°&nbsp;2 - 2009
@@ -7868,13 +8419,13 @@ gt12k:
     top: 82 # nbre de pixels de la bordure haute
   7214/7214_2_gtw:
     title: 7214-B - Oostende
-    edition: Édition n°&nbsp;7 - 2017
+    edition: Édition n°&nbsp;8 - 2019
     scaleden: 15000
     width: 1800
     height: 1984
-    south: 51.221886
+    south: 51.221894
     west: 2.910508
-    north: 51.244583
+    north: 51.244592
     east: 2.943308
     left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
@@ -7882,32 +8433,32 @@ gt12k:
     top: 81 # nbre de pixels de la bordure haute
   7218/7218_1_gtw:
     title: 7218-A - Passe du Coëtlogon
-    edition: Édition n°&nbsp;3 - 2010
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 15000
     width: 4170
     height: 3079
-    south: -20.724414
-    west: 166.377792
-    north: -20.689106
-    east: 166.428614
+    south: -20.724408
+    west: 166.377794
+    north: -20.689100
+    east: 166.428617
     left: 86 # nbre de pixels de la bordure gauche
     bottom: 80 # nbre de pixels de la bordure basse
     right: 78 # nbre de pixels de la bordure droite
-    top: 78 # nbre de pixels de la bordure haute
+    top: 79 # nbre de pixels de la bordure haute
   7218/7218_3_gtw:
     title: 7218-C - Abords du wharf de Hwaadrila
-    edition: Édition n°&nbsp;3 - 2010
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 1876
     height: 1912
-    south: -20.554094
-    west: 166.549722
-    north: -20.539472
-    east: 166.564953
-    left: 76 # nbre de pixels de la bordure gauche
+    south: -20.554089
+    west: 166.549725
+    north: -20.539469
+    east: 166.564956
+    left: 75 # nbre de pixels de la bordure gauche
     bottom: 78 # nbre de pixels de la bordure basse
     right: 77 # nbre de pixels de la bordure droite
-    top: 91 # nbre de pixels de la bordure haute
+    top: 92 # nbre de pixels de la bordure haute
   7232/7232_1_gtw:
     title: 7232-A - Abords d'Omonville-La-Rogue
     edition: Publication 2013
@@ -7950,6 +8501,34 @@ gt12k:
     bottom: 376 # nbre de pixels de la bordure basse
     right: 535 # nbre de pixels de la bordure droite
     top: 458 # nbre de pixels de la bordure haute
+  7248/7248_2_gtw:
+    title: 7248-B - Passe Tehere (Aimonu) - Mouillage de Roto Ava
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 10000
+    width: 6446
+    height: 2930
+    south: -15.323797
+    west: -146.415483
+    north: -15.301378
+    east: -146.364667
+    left: 83 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 85 # nbre de pixels de la bordure droite
+    top: 82 # nbre de pixels de la bordure haute
+  7248/7248_3_gtw:
+    title: 7248-C - Passe Pakaka (Haniuru) - Quai de Niutahi
+    edition: Édition n°&nbsp;2 - 2010
+    scaleden: 10000
+    width: 6446
+    height: 2298
+    south: -15.575636
+    west: -146.428617
+    north: -15.558053
+    east: -146.377736
+    left: 79 # nbre de pixels de la bordure gauche
+    bottom: 84 # nbre de pixels de la bordure basse
+    right: 76 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7249/7249_1_gtw:
     title: 7249-B - Ports de Bénodet et de Sainte-Marine
     edition: Édition n°&nbsp;2 - 2016
@@ -8104,6 +8683,48 @@ gt12k:
     bottom: 86 # nbre de pixels de la bordure basse
     right: 75 # nbre de pixels de la bordure droite
     top: 78 # nbre de pixels de la bordure haute
+  7281/7281_2_gtw:
+    title: 7281-B - Passe Kaki
+    edition: Édition n°&nbsp;2 - 2015
+    scaleden: 10000
+    width: 2247
+    height: 3104
+    south: -18.089797
+    west: -141.007319
+    north: -18.066053
+    east: -140.989347
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7281/7281_3_gtw:
+    title: 7281-C - Zone portuaire Nord
+    edition: Édition n°&nbsp;2 - 2015
+    scaleden: 10000
+    width: 2247
+    height: 1906
+    south: -18.074797
+    west: -140.973986
+    north: -18.060217
+    east: -140.956017
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7281/7281_4_gtw:
+    title: 7281-D - Mouillages d'Otepa
+    edition: Édition n°&nbsp;2 - 2015
+    scaleden: 10000
+    width: 5372
+    height: 3758
+    south: -18.108964
+    west: -140.943986
+    north: -18.080217
+    east: -140.901017
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7282/7282_1_gtw:
     title: 7282-A - Port d'Hyères (Port Saint-Pierre)
     edition: Édition n°&nbsp;5 - 2018
@@ -8132,6 +8753,20 @@ gt12k:
     bottom: 88 # nbre de pixels de la bordure basse
     right: 72 # nbre de pixels de la bordure droite
     top: 76 # nbre de pixels de la bordure haute
+  7293/7293_1_gtw:
+    title: 7293-A - Passe Tairapa
+    edition: Édition n°&nbsp;2 - 2007
+    scaleden: 5000
+    width: 3559
+    height: 3212
+    south: -14.462814
+    west: -146.066153
+    north: -14.450525
+    east: -146.052178
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 83 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7310/7310_1_gtw:
     title: 7310-A - Port de Dahouët
     edition: Édition n°&nbsp;3 - 2017
@@ -8160,6 +8795,34 @@ gt12k:
     bottom: 76 # nbre de pixels de la bordure basse
     right: 77 # nbre de pixels de la bordure droite
     top: 88 # nbre de pixels de la bordure haute
+  7314/7314_2_gtw:
+    title: 7314-A - Passe Tiareroa
+    edition: Édition n°&nbsp;2 - 2008
+    scaleden: 10000
+    width: 3659
+    height: 3024
+    south: -14.475856
+    west: -146.364442
+    north: -14.452717
+    east: -146.335706
+    left: 78 # nbre de pixels de la bordure gauche
+    bottom: 91 # nbre de pixels de la bordure basse
+    right: 80 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7314/7314_3_gtw:
+    title: 7314-B - Mouillage de Tenukupara
+    edition: Édition n°&nbsp;2 - 2008
+    scaleden: 10000
+    width: 3659
+    height: 3210
+    south: -14.543614
+    west: -146.374444
+    north: -14.519053
+    east: -146.345706
+    left: 78 # nbre de pixels de la bordure gauche
+    bottom: 81 # nbre de pixels de la bordure basse
+    right: 80 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7317/7317_pal300:
     title: 7317 - Port de Dieppe
     edition: Édition n°&nbsp;3 - 2006
@@ -8170,38 +8833,38 @@ gt12k:
     west: 1.000881
     north: 49.976136
     east: 1.147133
-    left: 472 # nbre de pixels de la bordure gauche
-    bottom: 396 # nbre de pixels de la bordure basse
-    right: 473 # nbre de pixels de la bordure droite
-    top: 453 # nbre de pixels de la bordure haute
+    left: 563 # nbre de pixels de la bordure gauche
+    bottom: 483 # nbre de pixels de la bordure basse
+    right: 383 # nbre de pixels de la bordure droite
+    top: 365 # nbre de pixels de la bordure haute
   7322/7322_1_gtw:
     title: 7322-B - Port de Muéo
-    edition: Édition n°&nbsp;2 - 2011
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 10000
     width: 2961
-    height: 3214
+    height: 3215
     south: -21.351131
     west: 164.974167
-    north: -21.326556
+    north: -21.326547
     east: 164.998333
     left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
-    top: 80 # nbre de pixels de la bordure haute
+    top: 82 # nbre de pixels de la bordure haute
   7322/7322_2_gtw:
     title: 7322-A - Passe de Muéo
-    edition: Édition n°&nbsp;2 - 2011
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 10000
     width: 4388
-    height: 1645
+    height: 1646
     south: -21.403300
     west: 164.941003
-    north: -21.390719
+    north: -21.390714
     east: 164.976831
     left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
-    top: 81 # nbre de pixels de la bordure haute
+    top: 82 # nbre de pixels de la bordure haute
   7328/7328_1_gtw:
     title: 7328-A - Port de Saint-Pierre
     edition: Édition n°&nbsp;2 - 2012
@@ -8216,6 +8879,34 @@ gt12k:
     bottom: 83 # nbre de pixels de la bordure basse
     right: 81 # nbre de pixels de la bordure droite
     top: 82 # nbre de pixels de la bordure haute
+  7329/7329_3_gtw:
+    title: 7329-B - Passe Arikitamiro
+    edition: Édition n°&nbsp;2 - 2003
+    scaleden: 5000
+    width: 2270
+    height: 2649
+    south: -15.954483
+    west: -145.181822
+    north: -15.944347
+    east: -145.172844
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 84 # nbre de pixels de la bordure haute
+  7329/7329_4_gtw:
+    title: 7329-C - Mouillage de Tearavero
+    edition: Édition n°&nbsp;2 - 2003
+    scaleden: 10000
+    width: 4506
+    height: 3953
+    south: -15.846294
+    west: -145.139808
+    north: -15.816050
+    east: -145.104194
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 81 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7341/7341_pal300:
     title: 7341 - Abords de Granville
     edition: Édition n°&nbsp;3 - 2018
@@ -8226,10 +8917,24 @@ gt12k:
     west: -1.722264
     north: 48.865089
     east: -1.550661
-    left: 565 # nbre de pixels de la bordure gauche
-    bottom: 466 # nbre de pixels de la bordure basse
-    right: 377 # nbre de pixels de la bordure droite
-    top: 680 # nbre de pixels de la bordure haute
+    left: 642 # nbre de pixels de la bordure gauche
+    bottom: 554 # nbre de pixels de la bordure basse
+    right: 300 # nbre de pixels de la bordure droite
+    top: 592 # nbre de pixels de la bordure haute
+  7346/7346_1_gtw:
+    title: 7346-A - Takaroa - Passe Teauonae
+    edition: Édition n°&nbsp;2 - 2006
+    scaleden: 10000
+    width: 3347
+    height: 2428
+    south: -14.481794
+    west: -145.047311
+    north: -14.463214
+    east: -145.021025
+    left: 83 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7352/7352_2_gtw:
     title: 7352-A - Baie Haahopu
     edition: Publication 1995
@@ -8636,6 +9341,62 @@ gt12k:
     bottom: 83 # nbre de pixels de la bordure basse
     right: 81 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
+  7372/7372_3_gtw:
+    title: 7372-B - Mouillage de Rotoava
+    edition: Édition n°&nbsp;3 - 2004
+    scaleden: 10000
+    width: 2876
+    height: 2123
+    south: -16.065631
+    west: -145.638778
+    north: -16.049386
+    east: -145.616022
+    left: 78 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7372/7372_4_gtw:
+    title: 7372-C - Passe Tumakohua
+    edition: Édition n°&nbsp;3 - 2004
+    scaleden: 10000
+    width: 2876
+    height: 3649
+    south: -16.525633
+    west: -145.472164
+    north: -16.497717
+    east: -145.449356
+    left: 84 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7373/7373_2_gtw:
+    title: 7373-B - Passe d'Avatoru
+    edition: Édition n°&nbsp;2 - 2002
+    scaleden: 10000
+    width: 2493
+    height: 3648
+    south: -14.957633
+    west: -147.718142
+    north: -14.929719
+    east: -147.698522
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7373/7373_3_gtw:
+    title: 7373-C - Passe de Tiputa
+    edition: Édition n°&nbsp;2 - 2002
+    scaleden: 10000
+    width: 2281
+    height: 3648
+    south: -14.988467
+    west: -147.639811
+    north: -14.960553
+    east: -147.621856
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
   7377/7377_pal300:
     title: 7377 - Ports du Larivot et de Cayenne
     edition: Édition n°&nbsp;4 - 2018
@@ -8652,18 +9413,18 @@ gt12k:
     top: 472 # nbre de pixels de la bordure haute
   7378/7378_pal300:
     title: 7378 - Accès au Dégrad des Cannes
-    edition: Édition n°&nbsp;5 - 2017
+    edition: Édition n°&nbsp;6 - 2019
     scaleden: 15000
     width: 13819
     height: 9922
-    south: 4.834511
-    west: -52.299783
-    north: 4.948461
-    east: -52.141556
+    south: 4.834283
+    west: -52.299781
+    north: 4.948236
+    east: -52.141553
     left: 418 # nbre de pixels de la bordure gauche
-    bottom: 478 # nbre de pixels de la bordure basse
+    bottom: 498 # nbre de pixels de la bordure basse
     right: 418 # nbre de pixels de la bordure droite
-    top: 592 # nbre de pixels de la bordure haute
+    top: 573 # nbre de pixels de la bordure haute
   7390/7390_pal300:
     title: 7390 - Port de Marseille
     edition: Édition n°&nbsp;6 - 2018
@@ -8674,12 +9435,12 @@ gt12k:
     west: 5.277678
     north: 43.378108
     east: 5.381244
-    left: 542 # nbre de pixels de la bordure gauche
-    bottom: 376 # nbre de pixels de la bordure basse
-    right: 551 # nbre de pixels de la bordure droite
-    top: 453 # nbre de pixels de la bordure haute
+    left: 638 # nbre de pixels de la bordure gauche
+    bottom: 507 # nbre de pixels de la bordure basse
+    right: 439 # nbre de pixels de la bordure droite
+    top: 321 # nbre de pixels de la bordure haute
   7391/7391_pal300:
-    title: 7391 - Abords Sud de Marseille - Des Îles du Frioul à l'Île de Jarre
+    title: 7391 - Abords Sud de Marseille - Des Iles du Frioul à l'Ile de Jarre
     edition: Édition n°&nbsp;6 - 2017
     scaleden: 12500
     width: 9922
@@ -8688,10 +9449,10 @@ gt12k:
     west: 5.260761
     north: 43.316911
     east: 5.390064
-    left: 556 # nbre de pixels de la bordure gauche
-    bottom: 391 # nbre de pixels de la bordure basse
-    right: 479 # nbre de pixels de la bordure droite
-    top: 482 # nbre de pixels de la bordure haute
+    left: 645 # nbre de pixels de la bordure gauche
+    bottom: 496 # nbre de pixels de la bordure basse
+    right: 389 # nbre de pixels de la bordure droite
+    top: 376 # nbre de pixels de la bordure haute
   7392/7392_1_gtw:
     title: 7392-A - Port de Carry-le-Rouet
     edition: Édition n°&nbsp;4 - 2016
@@ -8776,20 +9537,6 @@ gt12k:
     bottom: 83 # nbre de pixels de la bordure basse
     right: 81 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
-  7396/7396_2_gtw:
-    title: 7396-A - De la Pointe de Mindin à Paimboeuf
-    edition: Édition n°&nbsp;2 - 2006
-    scaleden: 15000
-    width: 9495
-    height: 3811
-    south: 47.266392
-    west: -2.184394
-    north: 47.309925
-    east: -2.024989
-    left: 84 # nbre de pixels de la bordure gauche
-    bottom: 83 # nbre de pixels de la bordure basse
-    right: 81 # nbre de pixels de la bordure droite
-    top: 82 # nbre de pixels de la bordure haute
   7396/7396_3_gtw:
     title: 7396-D - Port de Nantes
     edition: Édition n°&nbsp;2 - 2006
@@ -8805,7 +9552,7 @@ gt12k:
     right: 81 # nbre de pixels de la bordure droite
     top: 82 # nbre de pixels de la bordure haute
   7397/7397_pal300:
-    title: 7397 - Rade de Brest (partie Sud) - Anse du Fret - Anse du Poulmic
+    title: 7397 - Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic
     edition: Édition n°&nbsp;5 - 2017
     scaleden: 10000
     width: 13819
@@ -8814,12 +9561,12 @@ gt12k:
     west: -4.523619
     north: 48.346233
     east: -4.365875
-    left: 420 # nbre de pixels de la bordure gauche
-    bottom: 502 # nbre de pixels de la bordure basse
-    right: 420 # nbre de pixels de la bordure droite
-    top: 579 # nbre de pixels de la bordure haute
+    left: 537 # nbre de pixels de la bordure gauche
+    bottom: 633 # nbre de pixels de la bordure basse
+    right: 289 # nbre de pixels de la bordure droite
+    top: 425 # nbre de pixels de la bordure haute
   7398/7398_pal300:
-    title: 7398 - Rade de Brest (partie Ouest) - Baie de Roscanvel - Anse du Fret
+    title: 7398 - Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret
     edition: Édition n°&nbsp;5 - 2017
     scaleden: 10000
     width: 9922
@@ -8828,10 +9575,10 @@ gt12k:
     west: -4.560753
     north: 48.379247
     east: -4.447492
-    left: 344 # nbre de pixels de la bordure gauche
-    bottom: 387 # nbre de pixels de la bordure basse
-    right: 352 # nbre de pixels de la bordure droite
-    top: 471 # nbre de pixels de la bordure haute
+    left: 461 # nbre de pixels de la bordure gauche
+    bottom: 519 # nbre de pixels de la bordure basse
+    right: 220 # nbre de pixels de la bordure droite
+    top: 340 # nbre de pixels de la bordure haute
   7399/7399_pal300:
     title: 7399 - Port de Brest
     edition: Édition n°&nbsp;3 - 2016
@@ -8842,10 +9589,10 @@ gt12k:
     west: -4.537975
     north: 48.401436
     east: -4.419536
-    left: 406 # nbre de pixels de la bordure gauche
-    bottom: 506 # nbre de pixels de la bordure basse
-    right: 424 # nbre de pixels de la bordure droite
-    top: 573 # nbre de pixels de la bordure haute
+    left: 581 # nbre de pixels de la bordure gauche
+    bottom: 681 # nbre de pixels de la bordure basse
+    right: 249 # nbre de pixels de la bordure droite
+    top: 398 # nbre de pixels de la bordure haute
   7400/7400_1_gtw:
     title: 7400-A - Traverse de l'Hôpital
     edition: Édition n°&nbsp;3 - 2018
@@ -9010,10 +9757,10 @@ gt12k:
     west: -1.882594
     north: 46.516722
     east: -1.730239
-    left: 417 # nbre de pixels de la bordure gauche
-    bottom: 505 # nbre de pixels de la bordure basse
-    right: 417 # nbre de pixels de la bordure droite
-    top: 577 # nbre de pixels de la bordure haute
+    left: 538 # nbre de pixels de la bordure gauche
+    bottom: 637 # nbre de pixels de la bordure basse
+    right: 296 # nbre de pixels de la bordure droite
+    top: 446 # nbre de pixels de la bordure haute
   7412/7412_pal300:
     title: 7412 - Ile de Ré - Du Fier d'Ars à la Flotte
     edition: Édition n°&nbsp;2 - 2003
@@ -9024,10 +9771,10 @@ gt12k:
     west: -1.523161
     north: 46.291669
     east: -1.295642
-    left: 415 # nbre de pixels de la bordure gauche
-    bottom: 498 # nbre de pixels de la bordure basse
-    right: 417 # nbre de pixels de la bordure droite
-    top: 570 # nbre de pixels de la bordure haute
+    left: 496 # nbre de pixels de la bordure gauche
+    bottom: 585 # nbre de pixels de la bordure basse
+    right: 336 # nbre de pixels de la bordure droite
+    top: 483 # nbre de pixels de la bordure haute
   7413/7413_pal300:
     title: 7413 - Abords de La Rochelle
     edition: Édition n°&nbsp;3 - 2016
@@ -9038,10 +9785,10 @@ gt12k:
     west: -1.328269
     north: 46.185547
     east: -1.101192
-    left: 412 # nbre de pixels de la bordure gauche
-    bottom: 494 # nbre de pixels de la bordure basse
-    right: 415 # nbre de pixels de la bordure droite
-    top: 574 # nbre de pixels de la bordure haute
+    left: 494 # nbre de pixels de la bordure gauche
+    bottom: 582 # nbre de pixels de la bordure basse
+    right: 334 # nbre de pixels de la bordure droite
+    top: 487 # nbre de pixels de la bordure haute
   7414/7414_1_gtw:
     title: 7414-A - Port de Boyardville
     edition: Édition n°&nbsp;3 - 2014
@@ -9114,7 +9861,7 @@ gt12k:
     top: 81 # nbre de pixels de la bordure haute
   7420/7420_1_gtw:
     title: 7420-A - Port de Grandcamp-Maisy
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 3561
     height: 2856
@@ -9128,7 +9875,7 @@ gt12k:
     top: 91 # nbre de pixels de la bordure haute
   7420/7420_2_gtw:
     title: 7420-B - Port de Port-en-Bessin
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 3357
     height: 2622
@@ -9142,7 +9889,7 @@ gt12k:
     top: 76 # nbre de pixels de la bordure haute
   7420/7420_3_gtw:
     title: 7420-C - Port de Courseulles-sur-Mer
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 2809
     height: 3498
@@ -9156,7 +9903,7 @@ gt12k:
     top: 76 # nbre de pixels de la bordure haute
   7420/7420_6_gtw:
     title: 7420-F - Port de Dives-sur-Mer - Port Guillaume
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 2239
     height: 3272
@@ -9170,7 +9917,7 @@ gt12k:
     top: 92 # nbre de pixels de la bordure haute
   7420/7420_7_gtw:
     title: 7420-H - Port de Honfleur
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 3561
     height: 2790
@@ -9184,7 +9931,7 @@ gt12k:
     top: 71 # nbre de pixels de la bordure haute
   7420/7420_8_gtw:
     title: 7420-G - Port de Deauville - Trouville
-    edition: Édition n°&nbsp;3 - 2017
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 10000
     width: 3357
     height: 3250
@@ -9240,15 +9987,15 @@ gt12k:
     top: 81 # nbre de pixels de la bordure haute
   7426/7426_1_gtw:
     title: 7426-A - Port de Meschers
-    edition: Édition n°&nbsp;4 - 2017
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 10000
     width: 3099
     height: 3029
-    south: 45.538208
-    west: -0.955544
-    north: 45.561283
-    east: -0.921944
-    left: 81 # nbre de pixels de la bordure gauche
+    south: 45.538203
+    west: -0.955547
+    north: 45.561278
+    east: -0.921947
+    left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
@@ -9434,6 +10181,132 @@ gt12k:
     bottom: 518 # nbre de pixels de la bordure basse
     right: 419 # nbre de pixels de la bordure droite
     top: 568 # nbre de pixels de la bordure haute
+  7453/7453_1_gtw:
+    title: 7453-A - Passe Tapuhiria
+    edition: Publication 1996
+    scaleden: 10000
+    width: 3505
+    height: 2821
+    south: -16.460633
+    west: -143.972311
+    north: -16.439050
+    east: -143.944522
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7453/7453_2_gtw:
+    title: 7453-B - Passe Arikitamiro
+    edition: Publication 1996
+    scaleden: 10000
+    width: 3502
+    height: 3322
+    south: -16.639797
+    west: -143.578978
+    north: -16.614381
+    east: -143.551186
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7454/7454_1_gtw:
+    title: 7454-A - Passe Teporioha
+    edition: Publication 1998
+    scaleden: 7500
+    width: 2319
+    height: 2399
+    south: -16.709639
+    west: -145.360489
+    north: -16.695875
+    east: -145.346681
+    left: 83 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 80 # nbre de pixels de la bordure haute
+  7456/7456_2_gtw:
+    title: 7456-A - Anse Amyot
+    edition: Publication 2002
+    scaleden: 5000
+    width: 2567
+    height: 2080
+    south: -15.807150
+    west: -146.158322
+    north: -15.799194
+    east: -146.148178
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 80 # nbre de pixels de la bordure haute
+  7457/7457_1_gtw:
+    title: 7457-A - Raroia - De la Passe Ngarue au Mouillage de Ngarumaoa
+    edition: Publication 2003
+    scaleden: 12500
+    width: 4713
+    height: 4171
+    south: -16.050786
+    west: -142.476633
+    north: -16.010894
+    east: -142.430025
+    left: 81 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7458/7458_3_gtw:
+    title: 7458-C - Passe Tamaketa
+    edition: Édition n°&nbsp;2 - 2011
+    scaleden: 10000
+    width: 2525
+    height: 2525
+    south: -15.495631
+    west: -145.585944
+    north: -15.476311
+    east: -145.566022
+    left: 78 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 91 # nbre de pixels de la bordure haute
+  7458/7458_4_gtw:
+    title: 7458-B - Passe Fainukea
+    edition: Édition n°&nbsp;2 - 2011
+    scaleden: 5000
+    width: 4569
+    height: 2525
+    south: -15.508983
+    west: -145.460036
+    north: -15.499322
+    east: -145.442011
+    left: 94 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 91 # nbre de pixels de la bordure haute
+  7459/7459_3_gtw:
+    title: 7459-B - Passe Tuheiava
+    edition: Publication 2019
+    scaleden: 5000
+    width: 4370
+    height: 3261
+    south: -15.018653
+    west: -148.283653
+    north: -15.006175
+    east: -148.266453
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 84 # nbre de pixels de la bordure basse
+    right: 97 # nbre de pixels de la bordure droite
+    top: 85 # nbre de pixels de la bordure haute
+  7459/7459_4_gtw:
+    title: 7459-C - Mouillage de Tuherahera
+    edition: Publication 2019
+    scaleden: 10000
+    width: 4370
+    height: 3236
+    south: -15.119633
+    west: -148.255639
+    north: -15.094872
+    east: -148.221219
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 78 # nbre de pixels de la bordure droite
+    top: 83 # nbre de pixels de la bordure haute
   7460/7460_1_gtw:
     title: 7460 - 1
     edition: Édition n°&nbsp;4 - 2015
@@ -9464,14 +10337,14 @@ gt12k:
     top: 84 # nbre de pixels de la bordure haute
   7466/7466_1_gtw:
     title: 7466-A - Passe Teavanui
-    edition: Publication 2016
+    edition: Édition n°&nbsp;2 - 2019
     scaleden: 6500
-    width: 1876
+    width: 1875
     height: 2273
     south: -16.499744
-    west: -151.783589
+    west: -151.783586
     north: -16.488431
-    east: -151.773911
+    east: -151.773914
     left: 82 # nbre de pixels de la bordure gauche
     bottom: 83 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
@@ -9548,18 +10421,18 @@ gt12k:
     top: 81 # nbre de pixels de la bordure haute
   7480/7480_pal300:
     title: 7480 - Accès au fleuve Kourou - Port de Pariacabo
-    edition: Édition n°&nbsp;2 - 2007
+    edition: Édition n°&nbsp;3 - 2019
     scaleden: 10000
     width: 9922
     height: 6910
-    south: 5.138650
-    west: -52.677900
-    north: 5.191578
-    east: -52.602100
-    left: 533 # nbre de pixels de la bordure gauche
-    bottom: 351 # nbre de pixels de la bordure basse
-    right: 402 # nbre de pixels de la bordure droite
-    top: 489 # nbre de pixels de la bordure haute
+    south: 5.138486
+    west: -52.677761
+    north: 5.191411
+    east: -52.601961
+    left: 515 # nbre de pixels de la bordure gauche
+    bottom: 372 # nbre de pixels de la bordure basse
+    right: 420 # nbre de pixels de la bordure droite
+    top: 468 # nbre de pixels de la bordure haute
   7481/7481_1_gtw:
     title: 7481-A - Îles du Salut
     edition: Édition n°&nbsp;3 - 2007
@@ -9672,6 +10545,48 @@ gt12k:
     bottom: 83 # nbre de pixels de la bordure basse
     right: 82 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
+  7606/7606_1_gtw:
+    title: 7606-A - Port de Saint-Guénolé
+    edition: Publication 2019
+    scaleden: 7500
+    width: 6033
+    height: 4510
+    south: 47.794200
+    west: -4.418122
+    north: 47.819958
+    east: -4.366978
+    left: 74 # nbre de pixels de la bordure gauche
+    bottom: 82 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 81 # nbre de pixels de la bordure haute
+  7606/7606_2_gtw:
+    title: 7606-B - Port du Guilvinec-Léchiagat
+    edition: Publication 2019
+    scaleden: 10000
+    width: 7122
+    height: 6835
+    south: 47.751708
+    west: -4.348253
+    north: 47.803756
+    east: -4.267794
+    left: 82 # nbre de pixels de la bordure gauche
+    bottom: 83 # nbre de pixels de la bordure basse
+    right: 78 # nbre de pixels de la bordure droite
+    top: 78 # nbre de pixels de la bordure haute
+  7606/7606_3_gtw:
+    title: 7606-C - Port de Lesconil
+    edition: Publication 2019
+    scaleden: 10000
+    width: 6033
+    height: 4511
+    south: 47.769122
+    west: -4.229575
+    north: 47.803472
+    east: -4.161408
+    left: 81 # nbre de pixels de la bordure gauche
+    bottom: 94 # nbre de pixels de la bordure basse
+    right: 82 # nbre de pixels de la bordure droite
+    top: 84 # nbre de pixels de la bordure haute
   7616/7616_B_gtw:
     title: 7616-B - Woodbridge Bay et Roseau Roads
     edition: Publication 1998

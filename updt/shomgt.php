@@ -14,6 +14,9 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  22/9/2019:
+    Correction d'un bug sur le changement d'ordre des GT
+    Création d'un fichier ontop.inc.php pour y inclure du code de test de la classe OnTop
   11/4/2019:
     Traitement du cas particulier 6835/6835_pal300 pour lequel le cadre intersecte l'antiméridien mais pas le contenu
     de la carte
@@ -23,7 +26,7 @@ journal: |
     gestion des contraintes d'ordre des GT défini dans updt.yaml
   1/4/2019:
     Les GéoTiff pris en compte sont ceux dans current
-    Suppression de l'option merge'
+    Suppression de l'option merge
   30/3/2019:
     REFLEXIONS
     Ce script pourrait être revu selon les orientations suivantes:
@@ -55,13 +58,15 @@ includes:
   - ../lib/gebox.inc.php
   - ../lib/coordsys.inc.php
   - gdalinfo.inc.php
+  - ontop.inc.php
   - ../cat/mapcat.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
-require __DIR__.'/gdalinfo.inc.php';
-require __DIR__.'/../cat/mapcat.inc.php';
+require_once __DIR__.'/gdalinfo.inc.php';
+require_once __DIR__.'/ontop.inc.php';
+require_once __DIR__.'/../cat/mapcat.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 // classe définissant l'intervalle d'échelles de chaque couche de GéoTiff
@@ -107,12 +112,21 @@ while (($mapname = readdir($current)) !== false) {
     continue;
   $mapdir = opendir("$currentpath/$mapname")
     or die("Erreur d'ouverture du répertoire $currentpath/$mapname");
+  if (0) { // code de test pour trouver pourquoi 7471 n'est pas traité (22/9/2019)
+    if ($mapname <> '7471') {
+      echo "$currentpath/$mapname skipped\n";
+      continue;
+    }
+    echo "ouverture de $currentpath/$mapname\n";
+  }
   while (($file = readdir($mapdir)) !== false) {
     if (!preg_match('!^(.*)\.info$!', $file, $matches))
       continue;
     $fbname = $matches[1];
-    if (!($gdalinfo = gdalinfo("$currentpath/$mapname/$fbname.info")))
+    if (!($gdalinfo = gdalinfo("$currentpath/$mapname/$fbname.info"))) {
+      // cas où la carte n'est pas géolocalisée car qu'elle ne comporte pas d'espace pricipal
       continue;
+    }
     $gtbbox = $gdalinfo['gbox'];
     $width = $gdalinfo['width'];
     $height = $gdalinfo['height'];
@@ -169,64 +183,6 @@ while (($mapname = readdir($current)) !== false) {
     ];
   }
 }
-
-
-// chgt d'ordre des GT dans les couches pour respecter les contraintes définies dans updt.yaml
-class OnTop {
-  static $onTop; // couples (gt1, gt2) où gt1 est au dessus de gt2, cad gt1 doit être après gt2 dans la liste
-  
-  static function init(string $yamlpath) {
-    $updt = Yaml::parseFile($yamlpath);
-    self::$onTop = $updt['onTop'];
-  }
-  
-  static function num(array $array, string $key): int {
-    foreach ($array as $num => $value)
-      if ($value == $key)
-        return $num;
-    return -1;
-  }
-  
-  // change l'ordre du tableau $gtnames en mettant l'élément topNum juste après bellowNum
-  static function chgOrder(array $gtnames, int $topNum, int $bellowNum): array {
-    // recopie des élts avant topnum
-    if ($topNum == 0)
-      $result = [];
-    else
-      $result = array_slice($gtnames, 0, $topNum);
-    if ($bellowNum > $topNum + 1)
-      $result = array_merge($result, array_slice($gtnames, $topNum, $bellowNum - $topNum - 1));
-    $result[] = $gtnames[$bellowNum];
-    $result[] = $gtnames[$topNum];
-    if ($bellowNum < count($gtnames))
-      $result = array_merge($result, array_slice($gtnames, $bellowNum +1));
-    //echo "result="; print_r($result);
-    return $result;
-  }
-  
-  // L'algorithme consiste pour chaque couple (top, bellow) à mettre top juste après bellow
-  static function assess(string $lyrname, array $layer): array {
-    //echo "layer="; print_r($layer);
-    $gtnames = array_keys($layer);
-    //echo "layer $lyrname, gtnames="; print_r($gtnames);
-    foreach (self::$onTop as $top => $bellow) {
-      if (!isset($layer[$top]) || !isset($layer[$bellow]))
-        continue;
-      $topNum = self::num($gtnames, $top);
-      $bellowNum = self::num($gtnames, $bellow);
-      //echo "top=$top doit être après bellow=$bellow\n";
-      //echo "topNum=$topNum, bellowNum=$bellowNum\n";
-      if ($bellowNum > $topNum)
-        $gtnames = self::chgOrder($gtnames, $topNum, $bellowNum);
-      //echo "layer $lyrname, gtnames="; print_r($gtnames);
-    }
-    // fabrication d'une nouvelle layer respectant le nouvel ordre des gtnames
-    $newLayer = [];
-    foreach ($gtnames as $gtname)
-      $newLayer[$gtname] = $layer[$gtname];
-    return $newLayer;
-  }
-};
 
 OnTop::init(__DIR__.'/updt.yaml');
 foreach ($shomgt as $lyrname => $layer) {
