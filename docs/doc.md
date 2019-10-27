@@ -12,12 +12,12 @@ car elles comportent autour de chaque carte son cadre empêchant ainsi de juxtap
 et de superposer des objets à cheval sur différentes cartes.
 Cette difficulté est illustrée par l'image ci-dessous montant la juxtaposition de 3 cartes:
 
-<p><img src="/geoapi/shomgt/docs/figure-s1.png" alt='sans shomgt' width=1404 height=960 border='4' /></p>
+<p><img src="https://github.com/benoitdavidfr/shomgt/blob/master/docs/figure-s1.png" alt='sans shomgt' width=1404 height=960 border='4' /></p>
 
 L'objectif de *shomgt* est de faciliter l'utilisation de ces cartes, notamment en extrayant la partie utile
 de chaque image pour visualiser sans couture le contenu des cartes, illustré par la l'image ci-dessous:
 
-<p><img src="/geoapi/shomgt/docs/figure-s2.png" alt='avec shomgt' width=1404 height=960 border='4' /></p>
+<p><img src="https://github.com/benoitdavidfr/shomgt/blob/master/docs/figure-s2.png" alt='avec shomgt' width=1404 height=960 border='4' /></p>
 
 Pour satisfaire à cet objectif, *shomgt* récupère les cartes publiées par le Shom
 pour les exposer par 2 web-services utilisables dans les SIG et les applications Web.  
