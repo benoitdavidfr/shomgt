@@ -54,7 +54,6 @@ journal: |
   9-10/3/2019:
     création
 includes:
-  - ../vendor/autoload.php
   - ../lib/gebox.inc.php
   - ../lib/coordsys.inc.php
   - gdalinfo.inc.php

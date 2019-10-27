@@ -93,3 +93,4 @@ phpScripts:
   - /geoapi/shomgt/updt/crop.php
 phpIncludes:
   - /geoapi/shomgt/updt/gdalinfo.inc.php
+  - /geoapi/shomgt/updt/ontop.inc.php

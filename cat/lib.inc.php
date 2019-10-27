@@ -11,7 +11,7 @@ journal: |
     fork dans gt
   11/12/2018
     scission de index.php et récupération de bboxgeom.inc.php
-includes: [../vendor/autoload.php, wfsserver.inc.php, wfsjson.inc.php]
+includes: [wfsserver.inc.php, wfsjson.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/wfsserver.inc.php';

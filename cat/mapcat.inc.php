@@ -484,7 +484,7 @@ class MapCat {
     if (!self::$all)
       self::load();
     $all = [
-      'title'=> "Ensemble des descriptifs les plus récents de chaque cartes Shom",
+      'title'=> "Ensemble des descriptifs les plus récents de chaque carte Shom",
       'created'=> self::$created,
     ];
     if (self::$modified <> self::$created)

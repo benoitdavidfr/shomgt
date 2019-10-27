@@ -7,7 +7,6 @@ journal: |
     ajout liste les cartes ShomGt absentes du catalogue Shom
 includes:
   - lib.inc.php
-  - ../vendor/autoload.php
   - mapcat.inc.php
   - ../lib/gegeom.inc.php
   - map.inc.php

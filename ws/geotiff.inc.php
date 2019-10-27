@@ -29,7 +29,7 @@ journal: |
     - ajout de fonctionnalités pour afficher le cadre de la carte
   8-11/3/2019:
     - création
-includes: [../vendor/autoload.php, ../lib/gebox.inc.php, ../lib/coordsys.inc.php, ../lib/gegeom.inc.php]
+includes: [../lib/gebox.inc.php, ../lib/coordsys.inc.php, ../lib/gegeom.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';

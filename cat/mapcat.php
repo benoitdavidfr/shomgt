@@ -8,7 +8,7 @@ doc: |
     - ss paramètre fmt fournit en JSON l'enregistrement de la carte dans le catalogue
     - avec fmt=map affiche la carte de la carte
     - avec fmt=geojson générère le Feature GeoJSON correspondant à la carte
-includes: [../vendor/autoload.php, mapcat.inc.php, map.inc.php ]
+includes: [ mapcat.inc.php, map.inc.php ]
 */
 
 require_once __DIR__.'/../vendor/autoload.php';
