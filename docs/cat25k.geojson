@@ -1206,7 +1206,7 @@
     "type": "Feature",
     "properties": {
         "num": "6462",
-        "title": "Iles Gambier, partie Sud",
+        "title": "Îles Gambier, partie Sud",
         "issued": "Édition n°&nbsp;3 - 2017",
         "scaleDenominator": "30000",
         "bboxDM": {
@@ -2172,7 +2172,7 @@
             "SW": "51°05,23'N - 001°17,90'E",
             "NE": "51°27,48'N - 001°38,45'E"
         },
-        "references": "Fac similé Carte GB n°1828 publiée en 1982 (édition janvier 2016).",
+        "references": "Fac similé Carte GB n°1828 publiée en 1982 (édition mai 2019)",
         "boxes": [
             "A - Ramsgate"
         ]
@@ -5672,10 +5672,10 @@
         "issued": "Publication 2009",
         "scaleDenominator": "50000",
         "bboxDM": {
-            "SW": "41°58,00'N - 003°04,00'E",
-            "NE": "42°26,50'N - 003°30,90'E"
+            "SW": "41°58,00'N - 003°02,75'E",
+            "NE": "42°26,50'N - 003°30,00'E"
         },
-        "references": "Fac similé carte ES n°493 publiée en 1996 (édition février 2007)",
+        "references": "Fac similé carte ES n°493 publiée en 1996 (édition février 2019)",
         "boxes": [
             "A - Port de Llançà"
         ]
@@ -5685,23 +5685,23 @@
         "coordinates": [
             [
                 [
-                    3.066666666666667,
+                    3.0458333333333334,
                     41.96666666666667
                 ],
                 [
-                    3.515,
+                    3.5,
                     41.96666666666667
                 ],
                 [
-                    3.515,
+                    3.5,
                     42.44166666666667
                 ],
                 [
-                    3.066666666666667,
+                    3.0458333333333334,
                     42.44166666666667
                 ],
                 [
-                    3.066666666666667,
+                    3.0458333333333334,
                     41.96666666666667
                 ]
             ]

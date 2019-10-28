@@ -88,46 +88,6 @@
 {
     "type": "Feature",
     "properties": {
-        "num": "6569",
-        "title": "Mer d'Alboran",
-        "issued": "Édition n°&nbsp;2 - 2006",
-        "scaleDenominator": "202000",
-        "bboxDM": {
-            "SW": "35°50,86'N - 004°23,76'W",
-            "NE": "37°04,00'N - 002°10,00'W"
-        }
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [
-                    -4.396,
-                    35.84766666666667
-                ],
-                [
-                    -2.1666666666666665,
-                    35.84766666666667
-                ],
-                [
-                    -2.1666666666666665,
-                    37.06666666666667
-                ],
-                [
-                    -4.396,
-                    37.06666666666667
-                ],
-                [
-                    -4.396,
-                    35.84766666666667
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
         "num": "6570",
         "title": "Mer d'Alboran",
         "issued": "Publication 1968",

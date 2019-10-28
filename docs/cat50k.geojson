@@ -1368,7 +1368,7 @@
     "type": "Feature",
     "properties": {
         "num": "6461",
-        "title": "Iles Gambier",
+        "title": "Îles Gambier",
         "issued": "Édition n°&nbsp;2 - 1992",
         "scaleDenominator": "60000",
         "bboxDM": {
@@ -5812,6 +5812,150 @@
 {
     "type": "Feature",
     "properties": {
+        "num": "7459",
+        "title": "Tikehau",
+        "issued": "Publication 2019",
+        "note": "Nota&nbsp;: Porter la mention hors-cadre \"Voir carte adjacente 7459\" sur la carte 7373 (à l'ouest). Porter le cadre de la carte 7459 et la mention \"7459\" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention \"7455 D\" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.",
+        "boxes": [
+            {
+                "title": "Tikehau",
+                "scaleDenominator": "75000",
+                "bboxDM": {
+                    "SW": "15°12,00'S - 148°27,00'W",
+                    "NE": "14°50,20'S - 147°55,78'W"
+                }
+            },
+            {
+                "title": "A - De la passe de Tuheiava au mouillage de Tuherahera",
+                "scaleDenominator": "30000",
+                "bboxDM": {
+                    "SW": "15°07,50'S - 148°17,50'W",
+                    "NE": "14°58,84'S - 148°11,21'W"
+                }
+            },
+            {
+                "title": "B - Passe Tuheiava",
+                "scaleDenominator": "5000",
+                "bboxDM": {
+                    "SW": "15°01,10'S - 148°17,00'W",
+                    "NE": "15°00,39'S - 148°16,01'W"
+                }
+            },
+            {
+                "title": "C - Mouillage de Tuherahera",
+                "scaleDenominator": "10000",
+                "bboxDM": {
+                    "SW": "15°07,14'S - 148°15,30'W",
+                    "NE": "15°05,73'S - 148°13,31'W"
+                }
+            }
+        ]
+    },
+    "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+            [
+                [
+                    [
+                        -148.45,
+                        -15.2
+                    ],
+                    [
+                        -147.92966666666666,
+                        -15.2
+                    ],
+                    [
+                        -147.92966666666666,
+                        -14.836666666666666
+                    ],
+                    [
+                        -148.45,
+                        -14.836666666666666
+                    ],
+                    [
+                        -148.45,
+                        -15.2
+                    ]
+                ]
+            ],
+            [
+                [
+                    [
+                        -148.29166666666666,
+                        -15.125
+                    ],
+                    [
+                        -148.18683333333334,
+                        -15.125
+                    ],
+                    [
+                        -148.18683333333334,
+                        -14.980666666666666
+                    ],
+                    [
+                        -148.29166666666666,
+                        -14.980666666666666
+                    ],
+                    [
+                        -148.29166666666666,
+                        -15.125
+                    ]
+                ]
+            ],
+            [
+                [
+                    [
+                        -148.28333333333333,
+                        -15.018333333333333
+                    ],
+                    [
+                        -148.26683333333332,
+                        -15.018333333333333
+                    ],
+                    [
+                        -148.26683333333332,
+                        -15.0065
+                    ],
+                    [
+                        -148.28333333333333,
+                        -15.0065
+                    ],
+                    [
+                        -148.28333333333333,
+                        -15.018333333333333
+                    ]
+                ]
+            ],
+            [
+                [
+                    [
+                        -148.255,
+                        -15.119
+                    ],
+                    [
+                        -148.22183333333334,
+                        -15.119
+                    ],
+                    [
+                        -148.22183333333334,
+                        -15.0955
+                    ],
+                    [
+                        -148.255,
+                        -15.0955
+                    ],
+                    [
+                        -148.255,
+                        -15.119
+                    ]
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
         "num": "7471",
         "title": "D'Anguilla à Saint-Barthélemy",
         "issued": "Édition n°&nbsp;3 - 2017",
@@ -6188,6 +6332,51 @@
                 [
                     -4.823333333333333,
                     4.673333333333334
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7577",
+        "title": "De Grand Béréby à Sassandra - Port de San Pedro",
+        "issued": "Publication 2018",
+        "scaleDenominator": "100000",
+        "bboxDM": {
+            "SW": "04°24,40'N - 007°00,40'W",
+            "NE": "05°05,00'N - 006°01,00'W"
+        },
+        "replaces": "(remplace 6596)",
+        "note": "Nota&nbsp;: Porter le cadre de la carte 7577 et la légende 7577 sur la carte 7384. Porter le cadre de la carte 7577 et la légende 7577 sur la carte 7385. Remplacer le renvoi hors cadre \"Voir carte adjacente 6596\" par \"Voir carte adjacente 7577\" sur la carte 6075 (au Nord Est).",
+        "boxes": [
+            "A - Port de San Pedro"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -7.006666666666667,
+                    4.406666666666666
+                ],
+                [
+                    -6.016666666666667,
+                    4.406666666666666
+                ],
+                [
+                    -6.016666666666667,
+                    5.083333333333333
+                ],
+                [
+                    -7.006666666666667,
+                    5.083333333333333
+                ],
+                [
+                    -7.006666666666667,
+                    4.406666666666666
                 ]
             ]
         ]
@@ -7305,195 +7494,6 @@
                 [
                     1.0666666666666667,
                     38.523833333333336
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
-        "num": "7459",
-        "title": "Tikehau",
-        "issued": "Publication 2019",
-        "note": "Nota&nbsp;: Porter la mention hors-cadre \"Voir carte adjacente 7459\" sur la carte 7373 (à l'ouest). Porter le cadre de la carte 7459 et la mention \"7459\" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention \"7455 D\" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.",
-        "boxes": [
-            {
-                "title": "Tikehau",
-                "scaleDenominator": "75000",
-                "bboxDM": {
-                    "SW": "15°12,00'S - 148°27,00'W",
-                    "NE": "14°50,20'S - 147°55,78'W"
-                }
-            },
-            {
-                "title": "A - De la passe de Tuheiava au mouillage de Tuherahera",
-                "scaleDenominator": "30000",
-                "bboxDM": {
-                    "SW": "15°07,50'S - 148°17,50'W",
-                    "NE": "14°58,84'S - 148°11,21'W"
-                }
-            },
-            {
-                "title": "B - Passe Tuheiava",
-                "scaleDenominator": "5000",
-                "bboxDM": {
-                    "SW": "15°01,10'S - 148°17,00'W",
-                    "NE": "15°00,39'S - 148°16,01'W"
-                }
-            },
-            {
-                "title": "C - Mouillage de Tuherahera",
-                "scaleDenominator": "10000",
-                "bboxDM": {
-                    "SW": "15°07,14'S - 148°15,30'W",
-                    "NE": "15°05,73'S - 148°13,31'W"
-                }
-            }
-        ]
-    },
-    "geometry": {
-        "type": "MultiPolygon",
-        "coordinates": [
-            [
-                [
-                    [
-                        -148.45,
-                        -15.2
-                    ],
-                    [
-                        -147.92966666666666,
-                        -15.2
-                    ],
-                    [
-                        -147.92966666666666,
-                        -14.836666666666666
-                    ],
-                    [
-                        -148.45,
-                        -14.836666666666666
-                    ],
-                    [
-                        -148.45,
-                        -15.2
-                    ]
-                ]
-            ],
-            [
-                [
-                    [
-                        -148.29166666666666,
-                        -15.125
-                    ],
-                    [
-                        -148.18683333333334,
-                        -15.125
-                    ],
-                    [
-                        -148.18683333333334,
-                        -14.980666666666666
-                    ],
-                    [
-                        -148.29166666666666,
-                        -14.980666666666666
-                    ],
-                    [
-                        -148.29166666666666,
-                        -15.125
-                    ]
-                ]
-            ],
-            [
-                [
-                    [
-                        -148.28333333333333,
-                        -15.018333333333333
-                    ],
-                    [
-                        -148.26683333333332,
-                        -15.018333333333333
-                    ],
-                    [
-                        -148.26683333333332,
-                        -15.0065
-                    ],
-                    [
-                        -148.28333333333333,
-                        -15.0065
-                    ],
-                    [
-                        -148.28333333333333,
-                        -15.018333333333333
-                    ]
-                ]
-            ],
-            [
-                [
-                    [
-                        -148.255,
-                        -15.119
-                    ],
-                    [
-                        -148.22183333333334,
-                        -15.119
-                    ],
-                    [
-                        -148.22183333333334,
-                        -15.0955
-                    ],
-                    [
-                        -148.255,
-                        -15.0955
-                    ],
-                    [
-                        -148.255,
-                        -15.119
-                    ]
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
-        "num": "7577",
-        "title": "De Grand Béréby à Sassandra - Port de San Pedro",
-        "issued": "Publication 2018",
-        "scaleDenominator": "100000",
-        "bboxDM": {
-            "SW": "04°24,40'N - 007°00,40'W",
-            "NE": "05°05,00'N - 006°01,00'W"
-        },
-        "replaces": "(remplace 6596)",
-        "note": "Nota&nbsp;: Porter le cadre de la carte 7577 et la légende 7577 sur la carte 7384. Porter le cadre de la carte 7577 et la légende 7577 sur la carte 7385. Remplacer le renvoi hors cadre \"Voir carte adjacente 6596\" par \"Voir carte adjacente 7577\" sur la carte 6075 (au Nord Est).",
-        "boxes": [
-            "Port de San Pedro"
-        ]
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [
-                    -7.006666666666667,
-                    4.406666666666666
-                ],
-                [
-                    -6.016666666666667,
-                    4.406666666666666
-                ],
-                [
-                    -6.016666666666667,
-                    5.083333333333333
-                ],
-                [
-                    -7.006666666666667,
-                    5.083333333333333
-                ],
-                [
-                    -7.006666666666667,
-                    4.406666666666666
                 ]
             ]
         ]

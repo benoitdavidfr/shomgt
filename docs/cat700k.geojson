@@ -2,46 +2,6 @@
 {
     "type": "Feature",
     "properties": {
-        "num": "6083",
-        "title": "Du Cap Juby au Cap Blanc",
-        "issued": "Édition n°&nbsp;3 - 2006",
-        "scaleDenominator": "845000",
-        "bboxDM": {
-            "SW": "20°38,20'N - 018°17,80'W",
-            "NE": "28°19,90'N - 012°40,00'W"
-        }
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [
-                    -18.296666666666667,
-                    20.636666666666667
-                ],
-                [
-                    -12.666666666666666,
-                    20.636666666666667
-                ],
-                [
-                    -12.666666666666666,
-                    28.331666666666667
-                ],
-                [
-                    -18.296666666666667,
-                    28.331666666666667
-                ],
-                [
-                    -18.296666666666667,
-                    20.636666666666667
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
         "num": "6113",
         "title": "Du Cap Blanc au Cap Vert",
         "issued": "Édition n°&nbsp;2 - 2018",
@@ -411,7 +371,7 @@
     "properties": {
         "num": "7211",
         "title": "Golfe de Gascogne - De Brest à Cabo Finisterre",
-        "issued": "Édition n°&nbsp;5 - 2015",
+        "issued": "Édition n°&nbsp;6 - 2019",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "42°30,00'N - 013°26,50'W",
@@ -456,7 +416,7 @@
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "33°30,00'N - 014°00,00'W",
-            "NE": "43°30,00'N - 005°00,00'W"
+            "NE": "43°30,00'N - 005°15,00'W"
         },
         "references": "Fac similé Carte PT n° 21101 publiée en 1980 (édition avril 2002)."
     },
@@ -469,11 +429,11 @@
                     33.5
                 ],
                 [
-                    -5,
+                    -5.25,
                     33.5
                 ],
                 [
-                    -5,
+                    -5.25,
                     43.5
                 ],
                 [
@@ -945,7 +905,7 @@
         "num": "7487",
         "title": "Approches Nord - Est de Madagascar",
         "issued": "Publication 2018",
-        "scaleDenominator": "1058500",
+        "scaleDenominator": "1058000",
         "bboxDM": {
             "SW": "21°35,00'S - 048°35,00'E",
             "NE": "11°05,00'S - 056°00,00'E"

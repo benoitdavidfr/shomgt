@@ -6234,7 +6234,7 @@
     "properties": {
         "num": "7322",
         "title": "De la Passe de Poya à la Passe de Muéo",
-        "issued": "Édition n°&nbsp;2 - 2011",
+        "issued": "Édition n°&nbsp;3 - 2019",
         "scaleDenominator": "25000",
         "bboxDM": {
             "SW": "21°28,49'S - 164°54,20'E",
@@ -9524,6 +9524,50 @@
 {
     "type": "Feature",
     "properties": {
+        "num": "7712",
+        "title": "Abords de Tan-Tan",
+        "issued": "Publication 2019",
+        "scaleDenominator": "20000",
+        "bboxDM": {
+            "SW": "28°24,00'N - 011°24,70'W",
+            "NE": "28°34,53'N - 011°16,58'W"
+        },
+        "note": "Nota&nbsp;: cette carte est le résultat d’une coproduction avec la Division Hydrographie, Océanographie et Cartographie de la Marine Royale du Maroc.",
+        "boxes": [
+            "A - Port de Tan-Tan"
+        ]
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -11.411666666666667,
+                    28.4
+                ],
+                [
+                    -11.276333333333334,
+                    28.4
+                ],
+                [
+                    -11.276333333333334,
+                    28.5755
+                ],
+                [
+                    -11.411666666666667,
+                    28.5755
+                ],
+                [
+                    -11.411666666666667,
+                    28.4
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
         "num": "7773",
         "title": "Îles de Capraia et Gorgona",
         "issued": "Édition n°&nbsp;2 - 2019",
@@ -9637,50 +9681,6 @@
                 [
                     -4.3445,
                     50.22666666666667
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
-        "num": "7712",
-        "title": "Abords de Tan-Tan",
-        "issued": "Publication 2019",
-        "scaleDenominator": "20000",
-        "bboxDM": {
-            "SW": "28°24,00'N - 011°24,70'W",
-            "NE": "28°34,53'N - 011°16,58'W"
-        },
-        "note": "Nota&nbsp;: cette carte est le résultat d’une coproduction avec la Division Hydrographie, Océanographie et Cartographie de la Marine Royale du Maroc.",
-        "boxes": [
-            "A - Port de Tan-Tan"
-        ]
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [
-                    -11.411666666666667,
-                    28.4
-                ],
-                [
-                    -11.276333333333334,
-                    28.4
-                ],
-                [
-                    -11.276333333333334,
-                    28.5755
-                ],
-                [
-                    -11.411666666666667,
-                    28.5755
-                ],
-                [
-                    -11.411666666666667,
-                    28.4
                 ]
             ]
         ]

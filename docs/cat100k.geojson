@@ -242,49 +242,6 @@
 {
     "type": "Feature",
     "properties": {
-        "num": "5264",
-        "title": "De la Pointe d'Andemby à la Pointe d'Angadoka",
-        "issued": "Édition n°&nbsp;2 - 1908",
-        "scaleDenominator": "100300",
-        "bboxDM": {
-            "SW": "13°50,50'S - 047°57,23'E",
-            "NE": "12°58,17'S - 048°33,40'E"
-        },
-        "boxes": [
-            "Rivière Antsahampana"
-        ]
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [
-                    47.953833333333336,
-                    -13.841666666666667
-                ],
-                [
-                    48.556666666666665,
-                    -13.841666666666667
-                ],
-                [
-                    48.556666666666665,
-                    -12.9695
-                ],
-                [
-                    47.953833333333336,
-                    -12.9695
-                ],
-                [
-                    47.953833333333336,
-                    -13.841666666666667
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
         "num": "5476",
         "title": "De la Baie du Courrier à la Baie du Rodo",
         "issued": "Édition n°&nbsp;2 - 1956",
@@ -447,7 +404,7 @@
     "type": "Feature",
     "properties": {
         "num": "6033",
-        "title": "Archipel de la Société - Iles Sous-le-Vent",
+        "title": "Archipel de la Société - Îles sous-le-Vent",
         "issued": "Édition n°&nbsp;4 - 2014",
         "scaleDenominator": "174000",
         "bboxDM": {
