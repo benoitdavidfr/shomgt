@@ -10,7 +10,7 @@ doc: |
   ou euclidiennes.
   Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
   qui permet de construire les primitives géométriques.
-  Une position est stocké comme un array de 2 ou 3 nombres.
+  Une position est stockée comme un array de 2 ou 3 nombres.
   On gère aussi une liste de positions comme array de positions et une liste de listes de positions
   comme array d'array de positions.
 journal: |
@@ -23,19 +23,20 @@ journal: |
 // teste si une variable correspond à une position
 function is_pos($pos): bool { return is_array($pos) && isset($pos[0]) && is_numeric($pos[0]); }
 
-// teste si une variable correspond à une liste de positions en contenant au moins une
+// teste si une variable correspond à une liste d'au moins une position
 function is_Lpos($lpos): bool { return is_array($lpos) && isset($lpos[0]) && is_pos($lpos[0]); }
 
 // teste si une variable correspond à une liste de listes de positions en contenant au moins une
 // peut contenir des listes vides avant de contenir une liste non vide de positions
 function is_LLpos($llpos): bool {
-  if (!is_array($llpos)) // si ce n'set pas un array alors ne c'est pas une liste
+  if (!is_array($llpos)) // si ce n'est pas un array alors ne c'est pas une liste
     return false;
-  foreach ($llpos as $lpos)
+  foreach ($llpos as $lpos) {
     if (is_Lpos($lpos)) // si un élément de la liste est une liste de positions alors ok
       return true;
     elseif ($lpos) // sinon si un des éléments est une liste non vide alors KO
       return false;
+  }
   return false; // sinon KO
 }
 

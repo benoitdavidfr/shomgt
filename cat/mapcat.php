@@ -8,6 +8,9 @@ doc: |
     - ss paramètre fmt fournit en JSON l'enregistrement de la carte dans le catalogue
     - avec fmt=map affiche la carte de la carte
     - avec fmt=geojson générère le Feature GeoJSON correspondant à la carte
+journal: |
+  28/10/2019:
+    suppression de la gestion de l'historique
 includes: [ mapcat.inc.php, map.inc.php ]
 */
 
@@ -19,9 +22,10 @@ if (!isset($_SERVER['PATH_INFO']) || !$_SERVER['PATH_INFO']) {
   echo "<!DOCTYPE HTML><html><head><title>catalogue</title><meta charset='UTF-8'></head><body>\n";
   //echo "<pre>_SERVER="; print_r($_SERVER); echo "</pre>\n"; // PATH_INFO
   echo "<h2>Catalogue des cartes Shom</h2>\n";
-  $mapcat = MapCat::allMostRecentAsArray();
+  $mapcat = MapCat::allAsArray();
+  $modified = date(DATE_ATOM, MapCat::modified());
   //echo "<pre>mapcat="; print_r($mapcat); echo "</pre>\n"; // PATH_INFO
-  echo "Catalogue actualisé le $mapcat[modified]<br>\n";
+  echo "Catalogue actualisé le $modified<br>\n";
   $maps = $mapcat['maps'];
   ksort($maps);
   echo "<table border=1><th>no/uri</th><th>title/map</th><th>scaleDen</th>\n";
@@ -41,13 +45,11 @@ if (!isset($_SERVER['PATH_INFO']) || !$_SERVER['PATH_INFO']) {
 elseif (!isset($_GET['fmt'])) {
   //echo "<pre>_SERVER="; print_r($_SERVER); echo "</pre>\n"; // PATH_INFO
   $mapnum = substr($_SERVER['PATH_INFO'], 1);
-  $maphisto = MapCat::getHistory($mapnum);
-  //echo "<pre>maphisto="; print_r($maphisto); echo "</pre>\n";
-  foreach ($maphisto as $modified => $map) {
-    $maphisto[$modified] = $map->asArray();
-  }
+  $map = MapCat::getMap($mapnum);
+  if (!$map)
+    die("Carte $mapnum absente");
   header('Content-type: application/json; charset="utf-8"');
-  echo json_encode($maphisto, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE),"\n";
+  echo json_encode($map->asArray(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE),"\n";
 }
 
 // affichage de la carte
@@ -99,7 +101,7 @@ elseif ($_GET['fmt'] == 'map')  {
     ],
     'geodata/map');
   // la geométrie du feature correspondant à la carte dans le catalogue
-  $geom = MapCat::getMostRecent($mapnum)->mapGeojson()['geometry'];
+  $geom = MapCat::getMap($mapnum)->geojson()['geometry'];
   // les coordonnées du premier (ou seul) polygone
   $polCoord = ($geom['type']=='Polygon') ? $geom['coordinates'] : $geom['coordinates'][0];
   // le centre du premier polygone, je pourrais chercher un centre plus adapté !
@@ -113,7 +115,7 @@ elseif ($_GET['fmt'] == 'map')  {
 // Feature GeoJSON de la carte
 elseif ($_GET['fmt'] == 'geojson') {
   $mapnum = substr($_SERVER['PATH_INFO'], 1);
-  echo json_encode(MapCat::getMostRecent($mapnum)->mapGeojson());
+  echo json_encode(MapCat::getMap($mapnum)->geojson());
 }
 
 else {

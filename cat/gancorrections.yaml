@@ -6,7 +6,7 @@ description: |
 corrections:
   FR0101:
     title: Planisphère des fuseaux horaires
-    lineage: correction de FR0101
+    lineage: correction de FR0101 pour que le bord Est est une longitude supérieure au bord West
     scaleDenominator: '40.000.000'
     originalBboxDM:
       SW: "79°00,00'S - 130°00,00'E"
@@ -101,4 +101,13 @@ corrections:
     bboxDM:
         SW: "41°13,93'N - 002°54,93'E"
         NE: "43°39,94'N - 005°12,9'E"
+  FR7212:
+    title: De Cabo Finisterre à Casablanca (Dâr el Beïda)
+    lineage: Correction du bord Est de la carte à partir de l'information sur la carte
+    originalBboxDM:
+        SW: "33°30,00'N - 014°00,00'W"
+        NE: "43°30,00'N - 005°00,00'W"
+    bboxDM:
+        SW: "33°30,00'N - 014°00,00'W"
+        NE: "43°30,00'N - 005°15,00'W"
 EOF:

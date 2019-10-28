@@ -6,6 +6,8 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  28/10/2019:
+    suppression de la gestion de l'historique
   1/4/2019:
     correction pattern MapBBox
   15-17/3/2019:
@@ -55,6 +57,7 @@ class MapBBox {
     $this->ne = $this->analCoord($ne);
   }
   
+  // représentation externe inspirée de l'encodage DCMI-Box en conservant la forme d'origine en degrés et minutes
   function __toString(): string {
     $sw = $this->sw;
     $ne = $this->ne;
@@ -77,7 +80,7 @@ class MapBBox {
     ];
   }
   
-  // export des coordonnées en DD à la DCI-Box
+  // export des coordonnées en DD à la DCMI-Box
   function spatial(): array {
     return [
       'southlimit'=> $this->sw['latDD'], 'westlimit'=> $this->sw['lonDD'],
@@ -85,7 +88,7 @@ class MapBBox {
     ];
   }
   
-  // export des coordonnées comme GBox
+  // export des coordonnées comme GBox pour laquelle w < e
   function gbox(): GBox {
     if ($this->sw['lonDD'] > $this->ne['lonDD']) // cas MapBBox à cheval sur anti-méridien 
       return new GBox([
@@ -105,20 +108,15 @@ name: MapCat
 title: classe MapCat - Gestion de la description des cartes du Shom issue des GAN
 doc: |
   Chaque objet de la classe MapCat décrit une carte du Shom.
-  Un objet est initailisé par __construct() à partir du source Html du GAN correspondant.
-  La variable statique $all est un dictionnaire sur le no de la carte précédé de FR contenant un dictionnaire de MapCat
-  indexé sur les dates de mise à jour au format Y-m-d.
+  Un objet est initialisé par __construct() à partir du source Html du GAN correspondant.
+  La variable statique $all est un dictionnaire sur le no de la carte précédé de FR.
 
-  Le fichier pser contient l'historique des cartes.
-  Dans le second cas, le champ content contient un array des historiques des GANs indexé sur leur id ;
-  chaque historique est un array d'objets ShomGtGan indexé sur la date de mise à jour sous la forme YYYY-MM-DD.
+  Le fichier pser contient le catalogue des cartes ainsi que la date d'actualisation.
 */
 class MapCat {
   const PSER_PATH = __DIR__.'/mapcat.pser'; // chemin du fichier pser stockant le catalogue
-  static $created; // date de création du catalogue au format Y-m-d
-  static $modified; // date de dernière modification du catalogue au format Y-m-d
-  static $all = []; // dictionnaire des MapCat [{FRnum} => [{modified} => MapCat]]
-  static $gancorrections=[]; // recopie du champ corrections du fichier gancorrections.yaml
+  static $all = []; // dictionnaire des MapCat [FR{num} => MapCat]
+  static $modified = null; // date d'actualisation du catalogue comme timestamp Unix
   
   private $num; // no de la carte
   private $edition; // edition de la carte
@@ -242,18 +240,19 @@ class MapCat {
         'bbox'=> new MapBBox($titre[1], $titre[2])
       ];
     }
-    $this->correction();
+    $this->applyCorrection();
   }
   
-  // corrige les ereurs du GAN en fonction du fichier gancorrections.yaml
-  function correction() {
-    if (!self::$gancorrections) {
+  // applique les corrections définies dans le fichier gancorrections.yaml qui corrige les ereurs du GAN
+  function applyCorrection() {
+    static $gancorrections = null;
+    if (!$gancorrections) {
       $yaml = Yaml::parseFile(__DIR__.'/gancorrections.yaml');
-      self::$gancorrections = $yaml['corrections'];
+      $gancorrections = $yaml['corrections'];
     }
     $frnum = 'FR'.$this->num;
-    if (!isset(self::$gancorrections[$frnum])) return;
-    $corr = self::$gancorrections[$frnum];
+    if (!isset($gancorrections[$frnum])) return;
+    $corr = $gancorrections[$frnum];
     //print_r($corr);
     foreach ($this->boxes as $ibox => $box) {
       if (($ibox == 0) && isset($corr['bboxDM'])) {
@@ -344,7 +343,7 @@ class MapCat {
   }
   
   // Fabrique le Feature GeoJSON correspondant à la carte
-  function mapGeojson() {
+  function geojson() {
     // S'il existe un espace principal alors le Feature correspond à cet espace
     if (isset($this->boxes[0]['bbox'])) {
       $properties = [
@@ -403,37 +402,22 @@ class MapCat {
     }
   }
   
-  // ajoute un descriptif au dictionnaire, renvoie vrai ssi l'ajout est effectif
-  static function add(string $num, string $html, int $modified): bool {
-    $modified = date('Y-m-d', $modified);
-    $newMap = new self($num, $html);
-    if (!isset(self::$all["FR$num"]))
-      self::$all["FR$num"] = [$modified => $newMap];
-    else {
-      $history = self::$all["FR$num"];
-      $mostRecent = array_values($history)[count($history)-1];
-      if ($newMap->cmp($mostRecent) == 0)
-        return false;
-      self::$all["FR$num"][$modified] = new self($num, $html);
-    }
-    if (!self::$created)
-      self::$created = $modified;
-    self::$modified = $modified;
-    return true;
+  // ajoute une carte au catalogue
+  static function add(string $num, string $html, int $modified): void {
+    self::$all["FR$num"] = new self($num, $html);
+    if (!self::$modified)
+      self::$modified = $modified;
   }
   
-  // nbre de descriptifs dans le catalogue
+  // nbre de cartes dans le catalogue
   static function count(): int { return count(self::$all); }
   
   // enregistre l'ensemble du catalogue dans le fichier pser, génère un fichier mapcat.json
   static function store(): void {
-    file_put_contents(self::PSER_PATH,
-      serialize([
-        'created'=> self::$created,
-        'modified'=> self::$modified,
-        'infos'=> self::$all,
-      ])
-    );
+    file_put_contents(self::PSER_PATH, serialize([
+      'modified'=> self::$modified,
+      'all'=> self::$all,
+    ]));
     file_put_contents(__DIR__.'/mapcat.json',
       json_encode(
         self::allAsArray(),
@@ -442,18 +426,31 @@ class MapCat {
     );
   }
   
-  // initialise la classe à partir du fichier pser
+  // initialise les champs statiques de la classe à partir du fichier pser
   static function load(): void {
-    if (!is_file(self::PSER_PATH))
+    if (!is_file(self::PSER_PATH)) {
+      self::$all = [];
       return;
+    }
     $content = unserialize(file_get_contents(self::PSER_PATH));
-    self::$created = $content['created'];
+    self::$all = $content['all'];
     self::$modified = $content['modified'];
-    self::$all = $content['infos'];
   }
   
+  static function modified(): int {
+    if (!self::$all)
+      self::load();
+    return self::$modified;
+  }
   
-  // renvoi le dict des cartes indexé sur leur id puis la date sous la forme d'un array pur
+  // renvoie le contenu du catalogue comme [ {frnum} => Mapcat ]
+  static function all(): array {
+    if (!self::$all)
+      self::load();
+    return self::$all;
+  }
+  
+  // renvoi le dict des cartes indexé sur leur id sous la forme d'un array pur
   static function allAsArray(): array {
     if (!self::$all)
       self::load();
@@ -469,78 +466,28 @@ class MapCat {
       ],
       //'$schema'=> 'mapinfo.schema.yaml',
       '$schema'=> '/var/www/html/geoapi/shomgt/cat/mapcat',
+      'modified'=> date(DATE_ATOM, self::$modified),
+      'maps'=> [],
     ];
-    $all['created'] = self::$created;
-    if (self::$modified <> self::$created)
-      $all['modified'] = self::$modified;
-    foreach (self::$all as $id => $history)
-      foreach ($history as $modified => $map)
-        $all['maps'][$id][$modified] = $map->asArray();
-    return $all;
-  }
-  
-  // renvoie l'ensemble des descriptifs les plus récents de chaque carte comme array pur
-  static function allMostRecentAsArray(): array {
-    if (!self::$all)
-      self::load();
-    $all = [
-      'title'=> "Ensemble des descriptifs les plus récents de chaque carte Shom",
-      'created'=> self::$created,
-    ];
-    if (self::$modified <> self::$created)
-      $all['modified'] = self::$modified;
-    foreach (self::$all as $id => $history) {
-      $map = array_values($history)[count($history)-1];
+    foreach (self::$all as $id => $map)
       $all['maps'][$id] = $map->asArray();
-    }
-    return $all;
-  }
-
-  // renvoie le contenu du catalogue comme [ {frnum} => [ {modified} => Mapcat ]]
-  static function getAll(): array {
-    if (!self::$all)
-      self::load();
-    return self::$all;
-  }
-
-  // renvoie l'historique sous la forme [ {modified} => Mapcat ] de la carte définie par son id. sous la forme FR{num}
-  static function getHistory(string $frnum): array {
-    if (!self::$all)
-      self::load();
-    if (!isset(self::$all[$frnum]))
-      return [];
-    return self::$all[$frnum];
-  }
-
-  // renvoie le descriptif le plus récent de la carte identifié par l'identifiant sous la forme FR{num}
-  static function getMostRecent(string $frnum): ?self {
-    if (!self::$all)
-      self::load();
-    if (!isset(self::$all[$frnum]))
-      return null;
-    $map = self::$all[$frnum];
-    return array_values($map)[count($map)-1];
-  }
-
-  // renvoie les descriptifs les plus récents de toutes les cartes comme [{id} => MapCat]
-  static function getAllMostRecent(): array {
-    if (!self::$all)
-      self::load();
-    $all = [];
-    foreach (self::$all as $id => $history) {
-      $all[$id] = array_values($history)[count($history)-1];
-    }
     return $all;
   }
   
+  // renvoie une carte du catalogue comme [ {frnum} => Mapcat ]
+  static function getMap(string $frnum): ?MapCat {
+    if (!self::$all)
+      self::load();
+    return self::$all[$frnum] ?? null;
+  }
+
   // renvoie un FeatureCollection GeoJSON correspondant au catalogue
-  static function geojson(): array {
+  static function geojsonFColl(): array {
     if (!self::$all)
       self::load();
     $features = [];
-    foreach (self::$all as $id => $history) {
-      $map = array_values($history)[count($history)-1];
-      $features[] = $map->mapGeojson();
+    foreach (self::$all as $id => $map) {
+      $features[] = $map->geojson();
     }
     return [
       'type'=> 'FeatureCollection',
@@ -548,7 +495,7 @@ class MapCat {
     ];
   }
   
-  /* retourne le cartouche correspondant au GeoTiff dans le catalogue sous la forme:
+  /* retourne le cartouche correspondant au GBox dans le catalogue sous la forme:
     'num': numéro de la carte
     'title': titre
     'issued': edition
@@ -556,7 +503,7 @@ class MapCat {
     'gbox': GBox
     'bboxDM': bboxDM
   */
-  function getGTFromGBox(GBox $bbox): array {
+  private function getGTFromGBox(GBox $bbox): array {
     if (count($this->boxes) == 1)
       throw new Eception("Erreur, aucun cartouche dans la carte ".$this->num);
       
@@ -611,11 +558,11 @@ class MapCat {
     if ($name == '5825/5825_1_gtw') {
       // carte "Ilot Clipperton" avec un cartouche et sans espace principal, traitée différemment entre GAN et GéoTiff
       $num = '5825'; // no de la carte
-      $sid = -1;
+      $sid = '';
     }
     elseif (preg_match('!^(\d\d\d\d)/\d\d\d\d_pal300$!', $name, $matches)) {
       $num = $matches[1]; // no de la carte
-      $sid = -1;
+      $sid = '';
     }
     elseif (preg_match('!^(\d\d\d\d)/\d\d\d\d_(\d+|[A-Z])_gtw$!', $name, $matches)) {
       $num = $matches[1]; // no de la carte
@@ -623,11 +570,11 @@ class MapCat {
     }
     else
       throw new Exception("No match on $name in ".__FILE__." line ".__LINE__);
-    $map = self::getMostRecent("FR$num");
+    $map = self::$all["FR$num"] ?? null;
     if (!$map)
       throw new Exception("Erreur: carte $num absente du catalogue");
     //echo "map="; print_r($map);
-    if ($sid == -1) {
+    if ($sid === '') {
       return [
         'num'=> $num,
         'title'=> $map->boxes[0]['title'],

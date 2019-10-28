@@ -32,6 +32,8 @@ doc: |
       - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
 
 journal: |
+  26/10/2019:
+    - simplification du catalogue par suppression de l'historique inutile
   15-17/3/2019:
     refonte importante
     prises en compte de corrections du GAN définies dans gancorrections.yaml

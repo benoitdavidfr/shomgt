@@ -7,6 +7,8 @@ doc: |
   Les cartouches ne sont fournis ni dans les propriétés ni dans le géométrie
   sauf lorsque la carte ne comporte pas d'espace principale auquel cas ils le sont
 journal: |
+  28/10/2019:
+    suppression de la gestion de l'historique
   16/12/2018
     prise en compte évols mapcat.inc.php
   12/12/2018
@@ -28,7 +30,7 @@ else {
 }
 
 try {
-  $maps = MapCat::getAllMostRecent();
+  $maps = MapCat::all();
 }
 catch(Exception $e) {
   echo $e->getMessage();
@@ -56,7 +58,7 @@ foreach ($maps as $id => $map) {
     
   if ($nbre++ <> 0)
     echo ",\n";
-  echo json_encode($map->mapGeojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+  echo json_encode($map->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
 
 }
 echo "\n]}\n";

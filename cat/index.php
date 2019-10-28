@@ -3,6 +3,8 @@
 name: index.php
 title: index.php - traitements divers
 journal: |
+  28/10/2019:
+    suppression de la gestion de l'historique
   10/4/2019:
     ajout liste les cartes ShomGt absentes du catalogue Shom
 includes:
@@ -17,8 +19,7 @@ require_once 'lib.inc.php';
 if (!isset($_GET['action'])) {
   echo "<!DOCTYPE HTML><html><head><title>catalogue</title><meta charset='UTF-8'></head><body>\n";
   echo "<b>catalogue des cartes Shom - Actions proposées:</b><ul>\n";
-  echo "<li><a href='?action=showMapCat'>Liste des cartes dans leur version actuelle</a>\n";
-  echo "<li><a href='?action=showMapCatHistory'>Liste de l'historique des cartes</a>\n";
+  echo "<li><a href='?action=showMapCat'>Contenu du catalogue des cartes en JSON</a>\n";
   echo "<li><a href='map.php'>Carte du catalogue par tranche d'échelles</a>\n";
   echo "<li><a href='?action=stats'>Statistiques du catalogue</a>\n";
   echo "<li><a href='?action=shomgtObsolete'>Cartes Shomgt à actualiser</a>\n";
@@ -41,22 +42,6 @@ if ($_GET['action']=='showMapCat') {
     MapCat::load();
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode(
-            MapCat::allMostRecentAsArray(),
-            JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
-    die("\n");
-  }
-  catch(Exception $e) {
-    echo $e->getMessage();
-  }
-  die();
-}
-
-// affichage du document des GAN en JSON
-if ($_GET['action']=='showMapCatHistory') {
-  try {
-    MapCat::load();
-    header('Content-type: application/json; charset="utf-8"');
-    echo json_encode(
             MapCat::allAsArray(),
             JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
     die("\n");
@@ -69,7 +54,7 @@ if ($_GET['action']=='showMapCatHistory') {
 
 if ($_GET['action']=='stats') {
   echo "<!DOCTYPE HTML><html><head><title>catalogue</title><meta charset='UTF-8'></head><body>\n";
-  echo count(MapCat::getAll())," cartes dans le catalogue<br>\n";
+  echo count(MapCat::all())," cartes dans le catalogue<br>\n";
 
   $maps = [];
   $nbgeotiffs = -1; // pour prendre en compte 0101bis/0101_pal300
@@ -115,9 +100,9 @@ if ($_GET['action']=='shomgtObsolete') {
   ];
   echo "<h2>Liste des cartes de shomgt à actualiser</h2>\n";
   try {
-    $mapcat = MapCat::allMostRecentAsArray();
-    $updated = isset($mapcat['modified']) ? $mapcat['modified'] : $mapcat['created'];
-    echo "Catalogue actualisé le $updated<br>\n";
+    $mapcat = MapCat::allAsArray();
+    $modified = date(DATE_ATOM, MapCat::modified());
+    echo "Catalogue actualisé le $modified<br>\n";
     $gans = $mapcat['maps'];
   }
   catch(Exception $e) {
@@ -187,9 +172,9 @@ if ($_GET['action']=='shomgtObsolete') {
 if ($_GET['action']=='shomgtObsolete2') {
   $shomgt = Yaml::parseFile(__DIR__.'/../ws/shomgt.yaml', Yaml::PARSE_DATETIME);
   $nbre = 0;
-  $mapcat = MapCat::allMostRecentAsArray();
-  $updated = isset($mapcat['modified']) ? $mapcat['modified'] : $mapcat['created'];
-  echo "Catalogue actualisé le $updated<br>\n";
+  $mapcat = MapCat::allAsArray();
+  $modified = date(DATE_ATOM, MapCat::modified());
+  echo "Catalogue actualisé le $modified<br>\n";
   $gans = $mapcat['maps'];
 
   foreach ($shomgt as $key => $val) {
@@ -204,7 +189,6 @@ if ($_GET['action']=='shomgtObsolete2') {
       }
     }
   }
-  
   die("FIN OK<br>\n");
 }
 
@@ -363,7 +347,7 @@ if ($_GET['action']=='shomgtMissingGJ') {
 if ($_GET['action']=='mapPerScale') {
   echo "<h2>Nbre de cartes Shom par échelle</h2>\n";
   $scaleDs = [];
-  foreach (MapCat::allMostRecentAsArray()['maps'] as $map) {
+  foreach (MapCat::allAsArray()['maps'] as $map) {
     $scaleD = isset($map['scaleDenominator']) ? $map['scaleDenominator'] : $map['boxes'][0]['scaleDenominator'];
     $scaleD = str_replace('.','',$scaleD);
     if (!isset($scaleDs[$scaleD]))

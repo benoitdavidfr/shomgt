@@ -5,6 +5,8 @@ title: build.php - cmdes produisant mapcat.pser à partir du WFS du Shom et des 
 doc: |
   Il reste à gérer l'invalidation d'une carte
 journal: |
+  28/10/2019:
+    suppression de la gestion de l'historique
   16/3/2019:
     refonte importante
   8/3/2019:
@@ -59,6 +61,12 @@ function harvestGan(string $id) {
 if ($action == 'harvestGan') {
   if (!is_dir(__DIR__.'/gan') && !mkdir(__DIR__.'/gan'))
     die("Erreur de création du répertoire gan\n");
+  $dh = opendir('gan');
+  while (($file = readdir($dh)) !== false) {
+    if (in_array($file, ['.','..','.DS_Store']))
+      continue;
+    unlink(__DIR__."/gan/$file");
+  }
   foreach (array_keys(wfsdl()) as $id)
     harvestGan($id);
   die("FIN OK<br>\n");
@@ -84,7 +92,7 @@ if ($action == 'displayGan') {
     $num = $matches[1];
     $mapinfo = new MapCat($num, $html);
     echo ($no++ ? ",\n" : ''),
-         "\"FR$num\" : ",
+         "  \"FR$num\" : ",
          json_encode(
             $mapinfo->asArray(),
             JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
@@ -129,9 +137,7 @@ if ($action == 'verifGan') {
 
 // enregistrement de mapinfo.pser
 if ($action == 'store') {
-  MapCat::load();
   $modified = filemtime('gan');
-  $nbmodif = 0;
   $dh = opendir('gan');
   while (($file = readdir($dh)) !== false) {
     if (in_array($file, ['.','..','.DS_Store']))
@@ -142,21 +148,14 @@ if ($action == 'store') {
     if (!preg_match('!^FR([^.]*)\.html$!', $file, $matches))
       throw new Exception("No match on file name $file");
     $num = $matches[1];
-    if (MapCat::add($num, $html, $modified))
-      $nbmodif++;
+    MapCat::add($num, $html, $modified);
   }
-  if ($nbmodif) {
-    MapCat::store();
-    echo MapCat::count()," cartes dans le pser dont $nbmodif modifiées<br>\n";
-  }
-  else {
-    MapCat::store();
-    echo MapCat::count()," cartes dans le pser dont aucune modifiée<br>\n";
-  }
+  MapCat::store();
+  echo MapCat::count()," cartes dans le pser<br>\n";
   die("FIN OK<br>\n");
 }
 
-// affiche de mapinfo.pser
+// affiche de mapcat.pser
 if ($action == 'display') {
   MapCat::load();
   header('Content-type: application/json; charset="utf-8"');

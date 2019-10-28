@@ -35,7 +35,7 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
   <!-- plug-in d'appel des GeoJSON en AJAX -->
   <script src='https://benoitdavidfr.github.io/leaflet/leaflet-ajax.js'></script>
   <!-- Include the edgebuffer plugin -->
-    <script src="https://benoitdavidfr.github.io/leaflet/leaflet.edgebuffer.js"></script>
+  <script src="https://benoitdavidfr.github.io/leaflet/leaflet.edgebuffer.js"></script>
 </head>
 <body>
   <div id='map' style='height: 100%; width: 100%'></div>

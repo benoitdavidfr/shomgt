@@ -137,11 +137,38 @@ notamment la couche souhaitée et une boite en coordonnées géographiques.
 Cette image est construite pour les couches de cartes en superposant les intersections de la boite demandée
 avec les parties utiles (sans les cadres) des géotiff de la couche demandée lorsque l'intersection est non vide.
 
-## 3. Restructuration des données
+## 3. Amélioration des données
+Pour mettre en oeuvre les 2 web-services différentes améliorations des données du Shom ont été nécessaires.
 
-### 3.2. Corrections du flux WFS
+### 3.1. Description de la ZEE française
+J'ai saisi les limites de la ZEE française afin de pouvoir tester si une carte décrit ou non une zone française.
+
+### 3.2. Ajout d'une carte au flux WFS
+La carte "6497 - Île de la Possession, Île de l'Est" décrit une partie des Iles Crozet.
+Elle est absente du flux WFS alors qu'elle est présente dans le GAN.
+Contacté sur ce point, le Shom indique le 4/12/2018 que la carte 6497 n'est pas disponible en version numérique,
+mais existe bien en version papier.
+Or, je dispose bien d'une version numérique de cette carte.
+En conséquence, j'ai ajouté cette carte au flux WFS.
 
 ### 3.3. Corrections du GAN
+J'ai constaté plusieurs erreurs dans le GAN qui impactaient la mise en des web-services.
+Je gère donc un fichier de corrections du GAN.
 
-### 3.4. Ordre des cartes
+### 3.4. Cartes exclues du portefeuille
+Certaines cartes n'ont pas suffisamment d'intérêt et sont exclues du portefeuille.
+Une liste de ces cartes est tenue à jour.  
+Voici la liste fin octobre 2019 et la raison de leur exclusion:
+
+  - 0101Q - Planisphère des fuseaux horaires (axé sur 65° W) (1:40000000) - carte des fuseaux horaires inutile
+  - 5438 - Océan Pacifique - Océan Pacifique (1:27000000) - carte ancienne, apporte peu par rapport au planisphère
+  - 6963 - De San Rossore au Canale de Piombino - Isole d'Elba, Capraia et Gorgona (1:100000) - intersecte pas assez la Corse
+  - 7678 - Îles Anjouan et Mohéli (1:156000) - la faible intersection avec la France est couverte par FR7677 à la même échelle
+  - 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier (1:50000) - carte inutile
+
+
+### 3.5. Ordre des cartes
+Lorsque plusieurs cartes dans une même couche s'intersectent,
+l'ordre d'affichage de ces cartes impacte le résultat fourni.
+Ainsi, il peut être utile d'imposer une certain ordre d'affichage entre 2 cartes d'une même couche.
 
