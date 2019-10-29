@@ -1,8 +1,8 @@
-# Erreur No match on 7330/7330_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(7330/7330_2016, gtbbox)
-# Erreur No match on 7344/7344_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(7344/7344_2016, gtbbox)
-# Erreur No match on 7360/7360_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(7360/7360_2016, gtbbox)
-# Erreur No match on 8101/8101 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(8101/8101, gtbbox)
-# Erreur No match on 8502/8502_2010 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 625 sur MapCat::getCatInfoFromGtName(8502/8502_2010, gtbbox)
+# Erreur No match on 7330/7330_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(7330/7330_2016, gtbbox)
+# Erreur No match on 7344/7344_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(7344/7344_2016, gtbbox)
+# Erreur No match on 7360/7360_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(7360/7360_2016, gtbbox)
+# Erreur No match on 8101/8101 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(8101/8101, gtbbox)
+# Erreur No match on 8502/8502_2010 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(8502/8502_2010, gtbbox)
 name: shomgt.yaml
 title: paramètres des cartes GéoTIFF du Shom (V3)
 description: 
@@ -675,7 +675,7 @@ gt1M:
     east: -4.777650
     left: 487 # nbre de pixels de la bordure gauche
     bottom: 371 # nbre de pixels de la bordure basse
-    right: 228 # nbre de pixels de la bordure droite
+    right: 484 # nbre de pixels de la bordure droite
     top: 391 # nbre de pixels de la bordure haute
   7268/7268_pal300:
     title: 7268 - Nouvelle-Calédonie
@@ -4027,9 +4027,9 @@ gt50k:
     west: 3.033922
     north: 42.468719
     east: 3.542894
-    left: 639 # nbre de pixels de la bordure gauche
+    left: 233 # nbre de pixels de la bordure gauche
     bottom: 653 # nbre de pixels de la bordure basse
-    right: 544 # nbre de pixels de la bordure droite
+    right: 837 # nbre de pixels de la bordure droite
     top: 713 # nbre de pixels de la bordure haute
   7755/7755_pal300:
     title: 7755 - De Ponérihouen au Cap Dumoulin
@@ -9581,7 +9581,7 @@ gt12k:
     top: 340 # nbre de pixels de la bordure haute
   7399/7399_pal300:
     title: 7399 - Port de Brest
-    edition: Édition n°&nbsp;3 - 2016
+    edition: Édition n°&nbsp;4 - 2019
     scaleden: 7500
     width: 13819
     height: 9922

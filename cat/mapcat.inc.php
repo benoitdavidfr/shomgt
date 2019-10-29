@@ -6,6 +6,8 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  29/10/2019:
+    ajout des cartes AEM et MancheGrid
   28/10/2019:
     suppression de la gestion de l'historique
   1/4/2019:
@@ -142,6 +144,7 @@ class MapCat {
     if (preg_match('!<p class="erreur">([^<]*)</p>!', $html, $matches)) {
       if (preg_match('!^La carte FR[^ ]* n&rsquo;est pas en vigueur\.$!', $matches[1])) {
         $this->edition = 'notValid';
+        $this->applyCorrection();
         return;
       }
       throw new Exception("Erreur: \"$matches[1]\"");
@@ -246,27 +249,56 @@ class MapCat {
   // applique les corrections définies dans le fichier gancorrections.yaml qui corrige les ereurs du GAN
   function applyCorrection() {
     static $gancorrections = null;
+    static $ganajouts = null;
     if (!$gancorrections) {
       $yaml = Yaml::parseFile(__DIR__.'/gancorrections.yaml');
       $gancorrections = $yaml['corrections'];
+      $ganajouts = $yaml['ajouts'];
     }
     $frnum = 'FR'.$this->num;
-    if (!isset($gancorrections[$frnum])) return;
-    $corr = $gancorrections[$frnum];
-    //print_r($corr);
-    foreach ($this->boxes as $ibox => $box) {
-      if (($ibox == 0) && isset($corr['bboxDM'])) {
-        $bboxDM = $corr['bboxDM'];
-        //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
-        $this->boxes[0]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
+    if (isset($gancorrections[$frnum])) {
+      $corr = $gancorrections[$frnum];
+      //print_r($corr);
+      foreach ($this->boxes as $ibox => $box) {
+        if (($ibox == 0) && isset($corr['bboxDM'])) {
+          $bboxDM = $corr['bboxDM'];
+          //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
+          $this->boxes[0]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
+        }
+        elseif (isset($corr['boxes'][$ibox-1]['bboxDM'])) {
+          $bboxDM = $corr['boxes'][$ibox-1]['bboxDM'];
+          //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
+          $this->boxes[$ibox]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
+        } 
       }
-      elseif (isset($corr['boxes'][$ibox-1]['bboxDM'])) {
-        $bboxDM = $corr['boxes'][$ibox-1]['bboxDM'];
-        //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
-        $this->boxes[$ibox]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
-      } 
+      $this->corrections = $corr['lineage'];
     }
-    $this->corrections = $corr['lineage'];
+    elseif (isset($ganajouts[$frnum])) {
+      $ajout = $ganajouts[$frnum];
+      $this->edition = $ajout['issued'];
+      $this->corrections = $ajout['lineage'];
+      $this->boxes[0]['title'] = $ajout['title'];
+      $this->boxes[0]['scaleD'] = str_replace('.', '', $ajout['scaleDenominator']);
+      $this->boxes[0]['bbox'] = new MapBBox($ajout['bboxDM']['SW'], $ajout['bboxDM']['NE']);
+      /*
+      FR8502:
+        title: 8502 - Action de l'Etat en Mer en ZMSOI
+        lineage: Ajout de la carte 8502 (AEM ZMSOI) absente du GAN
+        scaleDenominator: '7.904.971'
+        bboxDM:
+          SW: "60°00,00'S - 030°00,00'E"
+          NE: "05°00,00'N - 090°00,00'E"
+        issued: Publication 2010
+      FR8101:
+        title: 8101 - MANCHEGRID - Carte générale
+        lineage: Ajout de la carte 8101 (MANCHEGRID - Carte générale) absente du GAN
+        scaleDenominator: '880.000'
+        bboxDM:
+          SW: "48°30,00'N - 006°30,00'W"
+          NE: "51°35,00'N - 002°30,00'E"
+        issued: Publication 2010
+      */
+    }
   }
   
   // formattage de l'échelle en rajoutant un point comme séparateur de milliers
@@ -570,7 +602,7 @@ class MapCat {
     }
     else
       throw new Exception("No match on $name in ".__FILE__." line ".__LINE__);
-    $map = self::$all["FR$num"] ?? null;
+    $map = self::all()["FR$num"] ?? null;
     if (!$map)
       throw new Exception("Erreur: carte $num absente du catalogue");
     //echo "map="; print_r($map);

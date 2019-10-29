@@ -5,6 +5,8 @@ title: build.php - cmdes produisant mapcat.pser à partir du WFS du Shom et des 
 doc: |
   Il reste à gérer l'invalidation d'une carte
 journal: |
+  29/10/2019:
+    ajout des cartes AEM et MancheGrid
   28/10/2019:
     suppression de la gestion de l'historique
   16/3/2019:
@@ -112,6 +114,8 @@ if ($action == 'verifGan') {
     'FR7003.html' => "proto absence de carte principale, uniquement des cartouches",
     'FR4232.html' => "proto absence de carte principale, uniquement des cartouches",
     'FR6643.html' => "correction des BBox",
+    'FR6497.html' => "carte ajoutée dans le WFS et présente dans le GAN",
+    'FR8502.html' => "carte ajoutée dans le WFS et absente du GAN",
   ];
   $dh = opendir('gan');
   while (($file = readdir($dh)) !== false) {

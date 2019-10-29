@@ -31,6 +31,7 @@ En outre Shomgt :
 
 Seules les cartes décrivant le territoire français, y compris la Polynésie, la Nouvelle Calédonie,
 les TAAF et l'île de Clipperton, sont prises en compte.
+Toutefois, quelques cartes à petite échelle (< 1/4M) sont sélectionnées afin de faciliter les déplacements dans la carte.
 
 ## 2. Données Shom utilisées
 ### 2.1. Les cartes
@@ -43,8 +44,6 @@ d'un fichier au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF)
 auquel est associé un fichier de métadonnées ISO 19115/19139 contenant notamment l'édition de la carte.
 Certaines cartes ne contiennent pas d'image principale mais uniquement des images secondaires ;
 par exemple la carte 7102 représente différents ports de Guadeloupe proches les uns des autres.
-Tous les fichiers GéoTIFF sont founis en projection World Mercator dans le système géodésique WGS84.
-Par contre les coordonnées sont toujours indiquées des coordonnées géographiques dans le système géodésique WGS84.
 
 Chaque carte est identifiée par un numéro, généralement à 4 chiffres (par exemple 6991),
 parfois précédé de FR pour indiquer qu'il s'agit du numéro du Shom,
@@ -110,7 +109,14 @@ Les écarts entre la liste des cartes en vigueur et la liste des cartes stockée
 de détecter des cartes périmées à supprimer et les cartes nouvelles à ajouter.
 Enfin, la boite définissant la partie utile de chaque image permet d'effacer le cadre de chaque image.
 
-## 3. Web-services exposés
+### 2.3. Systèmes de coordonnées utilisés
+Tous les fichiers GéoTIFF sont fournis en projection World Mercator dans le système géodésique WGS84.
+Le géoréférencement du fichier TIFF fournit les coordonnées à la fois en World Mercator et en WGS84
+en degrés, minutes et secondes décimales avec N, S, E ou W.
+Le GAN fournit uniquement les coordonnées en WGS84 en degrés, minutes décimales avec N, S, E ou W.
+
+
+## 3. Web-services exposés par shomgt
 *Shomgt* expose principalement un service WMS destiné à l'utilisation des cartes dans un SIG
 et un service de tuiles destiné à l'utilisation des cartes dans une application Web.
 Pour cela les cartes sont réparties en couches qui agrègent des cartes approximativement à la même échelle.
@@ -158,14 +164,13 @@ Je gère donc un fichier de corrections du GAN.
 ### 3.4. Cartes exclues du portefeuille
 Certaines cartes n'ont pas suffisamment d'intérêt et sont exclues du portefeuille.
 Une liste de ces cartes est tenue à jour.  
-Voici la liste fin octobre 2019 et la raison de leur exclusion:
+Voici cette liste fin octobre 2019 et la raison de leur exclusion:
 
   - 0101Q - Planisphère des fuseaux horaires (axé sur 65° W) (1:40000000) - carte des fuseaux horaires inutile
   - 5438 - Océan Pacifique - Océan Pacifique (1:27000000) - carte ancienne, apporte peu par rapport au planisphère
   - 6963 - De San Rossore au Canale de Piombino - Isole d'Elba, Capraia et Gorgona (1:100000) - intersecte pas assez la Corse
   - 7678 - Îles Anjouan et Mohéli (1:156000) - la faible intersection avec la France est couverte par FR7677 à la même échelle
   - 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier (1:50000) - carte inutile
-
 
 ### 3.5. Ordre des cartes
 Lorsque plusieurs cartes dans une même couche s'intersectent,

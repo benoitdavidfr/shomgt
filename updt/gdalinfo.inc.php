@@ -33,7 +33,7 @@ doc: |
   Si ces coordonnées sont absentes alors retourne [], le GéoTiff n'est pas géolocalisé
   De manière générale -180 <= west < east <= 180
   Traite 2 cas particuliers:
-    - si le rectangle est à cheval sur l'anti-méridien alors rajout de 360° à east pour que -180 <= west < east <= 540
+    - si le rectangle est à cheval sur l'anti-méridien alors rajoute 360° à east pour que -180 <= west < east <= 540
     - cas du planisphère qui est à cheval sur l'anti-méridien mais pour lequel west < east
       dans ce dernier cas aussi ajout de 360° à east
       ce dernier cas est détecté en regardant si la longitude du centre est bien comprise entre les extrêmes 

@@ -84,10 +84,35 @@ function wfsdl(): array {
     // La carte 6497 est absente du WFS mais présente dans le GAN, cela semble une erreur
     // Le 4/12/2018 le Shom indique que la carte 6497 n'est pas dispo en version numérique,
     // mais existe bien en version papier
-    $wfs['FR6497'] = buildMapForWfs(6497, "6497 - Ile de la Possession, île de l'Est", 75000, 
-                [51.346828, -46.673142, 52.488178, -46.106097]); // LonLatDd issu de shomgt.yaml West Sud Est North
-    echo "Ajout de la carte 6497<br>\n";
-  
+    $wfs['FR6497'] = buildMapForWfs(
+                       6497, "6497 - Ile de la Possession, île de l'Est", 75000, 
+                       [51.346828, -46.673142, 52.488178, -46.106097]); // LonLatDd issu de shomgt.yaml West Sud Est North
+    echo "Ajout de la carte 6497 - Ile de la Possession, île de l'Est<br>\n";
+    $wfs['FR7330'] = buildMapForWfs(
+                       7330,
+                       "7330 - De Cherbourg à Hendaye - Action de l'Etat en Mer en zone maritime Atlantique",
+                       1070000, 
+                       [-11.025828, 41.060522, 0.524947, 52.278119]); // LonLatDd issu de shomgt.yaml West Sud Est North
+    echo "Ajout de la carte 7330 - Action de l'Etat en Mer en zone maritime Atlantique<br>\n";
+    $wfs['FR7344'] = buildMapForWfs(
+                       7344,
+                       "7344 - De Brest à la frontière belge - Action de l'Etat en Mer en zone Manche et Mer du Nord",
+                       655000, 
+                       [-7.311689, 47.229586, 3.324964, 52.175769]); // LonLatDd issu de shomgt.yaml West Sud Est North
+    echo "Ajout de la carte 7344 - Action de l'Etat en Mer en zone Manche et Mer du Nord<br>\n";
+    $wfs['FR7360'] = buildMapForWfs(
+                       7360, "7360 - De Cerbère à Menton - Action de l'Etat en Mer en zone Méditerranée", 700000, 
+                       [1.204069, 39.651736, 11.137350, 44.940681]); // LonLatDd issu de shomgt.yaml West Sud Est North
+    echo "Ajout de la carte 7360 - Action de l'Etat en Mer en zone Méditerranée<br>\n";
+    $wfs['FR8502'] = buildMapForWfs(
+                       8502, "8502 - Action de l'Etat en Mer en ZMSOI", 7904971, 
+                       [26.015222, -64.087619, 94.000544, 12.155178]); // LonLatDd issu de shomgt.yaml West Sud Est North
+    echo "Ajout de la carte 8502 - Action de l'Etat en Mer en ZMSOI<br>\n";
+    $wfs['FR8101'] = buildMapForWfs(
+                       8101, "8101 - MANCHEGRID - Carte générale", 880000, 
+                       [-6.641753, 48.144300, 2.853589, 52.449447]); // LonLatDd issu de shomgt.yaml West Sud Est North
+    echo "Ajout de la carte 8101 - MANCHEGRID - Carte générale<br>\n";
+    
     ksort($wfs);
     //echo "<pre>wfs="; print_r($wfs);
     file_put_contents(__DIR__.'/wfsdl.pser', serialize($wfs));

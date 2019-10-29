@@ -21,7 +21,7 @@ journal: |
     Traitement du cas particulier 6835/6835_pal300 pour lequel le cadre intersecte l'antiméridien mais pas le contenu
     de la carte
   9/4/2019:
-    traitement du cas particulier de FR0101 par modif de gdainfo.inc.php
+    traitement du cas particulier de FR0101 par modif de gdalinfo.inc.php
   3/4/2019:
     gestion des contraintes d'ordre des GT défini dans updt.yaml
   1/4/2019:
@@ -66,6 +66,7 @@ require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 require_once __DIR__.'/ontop.inc.php';
 require_once __DIR__.'/../cat/mapcat.inc.php';
+
 use Symfony\Component\Yaml\Yaml;
 
 // classe définissant l'intervalle d'échelles de chaque couche de GéoTiff
