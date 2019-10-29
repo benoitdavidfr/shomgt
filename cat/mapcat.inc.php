@@ -487,7 +487,7 @@ class MapCat {
     if (!self::$all)
       self::load();
     $all = [
-      'title'=> "Catalogue historisé des cartes Shom",
+      'title'=> "Catalogue des cartes Shom",
       'identifier'=> 'https://benoitdavidfr.github.io/shomgt/mapcat',
       'source'=> [
         'http://services.data.shom.fr/INSPIRE/wfs?SERVICE=WFS&TYPENAMES=CARTES_MARINES_GRILLE:grille_geotiff_30', // cartes echelle > 1/30K
@@ -599,6 +599,11 @@ class MapCat {
     elseif (preg_match('!^(\d\d\d\d)/\d\d\d\d_(\d+|[A-Z])_gtw$!', $name, $matches)) {
       $num = $matches[1]; // no de la carte
       $sid = $matches[2]; // id de l'espace secondaire dans GéoTiff
+    }
+    // Le nom des cartes AEM et MancheGrid est structuré différemment
+    elseif (preg_match('!^(\d\d\d\d)/\d\d\d\d(_\d\d\d\d)?!', $name, $matches)) {
+      $num = $matches[1]; // no de la carte
+      $sid = '';
     }
     else
       throw new Exception("No match on $name in ".__FILE__." line ".__LINE__);

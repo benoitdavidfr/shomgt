@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  29/10/2019:
+    ajout des cartes AEM et MancheGrid
   22/9/2019:
     Correction d'un bug sur le changement d'ordre des GT
     Création d'un fichier ontop.inc.php pour y inclure du code de test de la classe OnTop
@@ -138,7 +140,12 @@ while (($mapname = readdir($current)) !== false) {
       continue;
     }
     //echo "<pre>shomgtgan="; print_r($shomgtgan); echo "</pre>\n";
-    $lyrName = LayerScaleDen::getLyrName(str_replace('.','',$shomgtgan['scaleDenominator']));
+    if (in_array($mapname, ['7330','7344','7360','8502']))
+      $lyrName = 'gtaem';
+    elseif (in_array($mapname, ['8101']))
+      $lyrName = 'gtMancheGrid';
+    else
+      $lyrName = LayerScaleDen::getLyrName(str_replace('.','',$shomgtgan['scaleDenominator']));
     if (preg_match('!^. - !', $shomgtgan['title']))
       $title = "$shomgtgan[num]-$shomgtgan[title]";
     else

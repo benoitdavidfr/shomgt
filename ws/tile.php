@@ -76,6 +76,10 @@ $layers = [
     'title'=>"Cartes SHOM AEM",
     'abstract'=> "Cartes Shom Action de l'Etat en Mer (AEM)",
   ],
+  'gtMancheGrid'=> [
+    'title'=>"Cartes SHOM MancheGrid",
+    'abstract'=> "Cartes Shom MancheGrid",
+  ],
   // étiquettes des numéros
   'num20M'=> [
     'title'=>"Nos des cartes 1/20.000.000",
@@ -113,6 +117,10 @@ $layers = [
   'numaem'=> [
     'title'=>"Nos des cartes SHOM AEM",
     'abstract'=> "Numéros des cartes Shom Action de l'Etat en Mer (AEM)",
+  ],
+  'numMancheGrid'=> [
+    'title'=>"Nos des cartes MancheGrid",
+    'abstract'=> "Numéros des cartes Shom MancheGrid",
   ],
 ];
     

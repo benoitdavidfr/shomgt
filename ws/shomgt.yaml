@@ -1,8 +1,3 @@
-# Erreur No match on 7330/7330_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(7330/7330_2016, gtbbox)
-# Erreur No match on 7344/7344_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(7344/7344_2016, gtbbox)
-# Erreur No match on 7360/7360_2016 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(7360/7360_2016, gtbbox)
-# Erreur No match on 8101/8101 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(8101/8101, gtbbox)
-# Erreur No match on 8502/8502_2010 in /var/www/html/geoapi/shomgt/cat/mapcat.inc.php line 572 sur MapCat::getCatInfoFromGtName(8502/8502_2010, gtbbox)
 name: shomgt.yaml
 title: paramètres des cartes GéoTIFF du Shom (V3)
 description: 
@@ -4805,7 +4800,7 @@ gt25k:
     top: 81 # nbre de pixels de la bordure haute
   7057/7057_pal300:
     title: 7057 - Dunkerque
-    edition: Édition n°&nbsp;4 - 2015
+    edition: Édition n°&nbsp;5 - 2019
     scaleden: 20000
     width: 13819
     height: 9922
@@ -10714,7 +10709,7 @@ gt12k:
     right: 82 # nbre de pixels de la bordure droite
     top: 81 # nbre de pixels de la bordure haute
   7665/7665_1_gtw:
-    title: 7665-A - Port de Llançà
+    title: 7665-A - Mouillage de Cadaqués
     edition: Publication 2009
     scaleden: 10000
     width: 1170
@@ -10723,10 +10718,10 @@ gt12k:
     west: 3.155831
     north: 42.378111
     east: 3.167831
-    left: 82 # nbre de pixels de la bordure gauche
-    bottom: 83 # nbre de pixels de la bordure basse
-    right: 81 # nbre de pixels de la bordure droite
-    top: 81 # nbre de pixels de la bordure haute
+    left: 400 # nbre de pixels de la bordure gauche
+    bottom: 400 # nbre de pixels de la bordure basse
+    right: 400 # nbre de pixels de la bordure droite
+    top: 400 # nbre de pixels de la bordure haute
   7755/7755_1_gtw:
     title: 7755-A - Baie de Poro
     edition: Publication 2016
@@ -10771,5 +10766,75 @@ gt12k:
     top: 81 # nbre de pixels de la bordure haute
 
 gtaem:
+  7330/7330_2016:
+    title: 7330 - De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique
+    edition: Édition n°&nbsp;6 - 2016
+    scaleden: 1070000
+    width: 12994
+    height: 18428
+    south: 41.060522
+    west: -11.025828
+    north: 52.278119
+    east: 0.524947
+    left: 592 # nbre de pixels de la bordure gauche
+    bottom: 606 # nbre de pixels de la bordure basse
+    right: 591 # nbre de pixels de la bordure droite
+    top: 509 # nbre de pixels de la bordure haute
+  7344/7344_2016:
+    title: 7344 - De Brest à la frontière belge - Action de l'Etat en Mer - Zone Manche et Mer du Nord
+    edition: Édition n°&nbsp;6 - 2016
+    scaleden: 655000
+    width: 18428
+    height: 13228
+    south: 47.229586
+    west: -7.311689
+    north: 52.175769
+    east: 3.324964
+    left: 541 # nbre de pixels de la bordure gauche
+    bottom: 690 # nbre de pixels de la bordure basse
+    right: 563 # nbre de pixels de la bordure droite
+    top: 729 # nbre de pixels de la bordure haute
+  7360/7360_2016:
+    title: 7360 - De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée
+    edition: Édition n°&nbsp;6 - 2016
+    scaleden: 700000
+    width: 18428
+    height: 13229
+    south: 39.651736
+    west: 1.204069
+    north: 44.940681
+    east: 11.137350
+    left: 550 # nbre de pixels de la bordure gauche
+    bottom: 718 # nbre de pixels de la bordure basse
+    right: 565 # nbre de pixels de la bordure droite
+    top: 715 # nbre de pixels de la bordure haute
+  8502/8502_2010:
+    title: 8502 - Action de l'Etat en Mer en ZMSOI
+    edition: Publication 2010
+    scaleden: 7904971
+    width: 13383
+    height: 18900
+    south: -64.087619
+    west: 26.015222
+    north: 12.155178
+    east: 94.000544
+    left: 785 # nbre de pixels de la bordure gauche
+    bottom: 1717 # nbre de pixels de la bordure basse
+    right: 788 # nbre de pixels de la bordure droite
+    top: 1417 # nbre de pixels de la bordure haute
 
 gtMancheGrid:
+  8101/8101:
+    title: 8101 - MANCHEGRID - Carte générale
+    edition: Publication 2010
+    scaleden: 880000
+    width: 11813
+    height: 8369
+    south: 48.144300
+    west: -6.641753
+    north: 52.449447
+    east: 2.853589
+    left: 177 # nbre de pixels de la bordure gauche
+    bottom: 664 # nbre de pixels de la bordure basse
+    right: 440 # nbre de pixels de la bordure droite
+    top: 1747 # nbre de pixels de la bordure haute

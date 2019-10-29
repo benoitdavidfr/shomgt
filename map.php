@@ -117,14 +117,36 @@ var overlays = {
 ?>
  
 // gtaem
+  "Catalogue AEM" :  L.layerGroup([
+    new L.UGeoJSONLayer({
+      endpoint: shomgturl+'ws/geojson.php?lyr=gtaem',
+      once: true, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
+    }),
+    new L.TileLayer(
+      shomgturl+'tile.php/numaem/{z}/{x}/{y}.png',
+      {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}
+    )
+  ]),
   "Cartes AEM" : new L.TileLayer(
     shomgturl+'tile.php/gtaem/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
   ),
-  "Catalogue AEM" : new L.UGeoJSONLayer({
-    endpoint: shomgturl+'ws/geojson.php?sd=$sd',
-    once: true, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
-  }),
+  
+// gtMancheGrid
+  "Catalogue MancheGrid" :  L.layerGroup([
+    new L.UGeoJSONLayer({
+      endpoint: shomgturl+'ws/geojson.php?lyr=gtMancheGrid',
+      once: true, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
+    }),
+    new L.TileLayer(
+      shomgturl+'tile.php/numMancheGrid/{z}/{x}/{y}.png',
+      {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}
+    )
+  ]),
+  "Cartes MancheGrid" : new L.TileLayer(
+    shomgturl+'tile.php/gtMancheGrid/{z}/{x}/{y}.png',
+    {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
+  ),
 
 // affichage de l'antimeridien
   "antimeridien" : L.geoJSON(
