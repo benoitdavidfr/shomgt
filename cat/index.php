@@ -119,11 +119,11 @@ if ($_GET['action']=='shomgtObsolete') {
       foreach ($shomgt[$key] as $name => $map) {
         if (in_array($name, [
           '0101bis/0101_pal300',
-          '7330/7330_2016_Mercator_WGS84',
+          '7330/7330_2016',
           '7344/7344_2016',
-          '7360/7360_3016_Mercator_WGS84',
-          '8502/8502_ReuniZMSOI_Mercator_wgs84',
-          '8101/Manche-grid_8101XG_MC_WGS84',
+          '7360/7360_2016',
+          '8502/8502_2010',
+          '8101/8101',
         ]))
           continue;
         if (preg_match('!^([0-9]+)/[0-9]+_(pal300|(\d+|[A-Z])_gtw)$!', $name, $matches))

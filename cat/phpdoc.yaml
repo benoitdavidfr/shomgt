@@ -2,7 +2,7 @@ title: cat - catalogue des cartes raster GéoTIFF du SHOM
 path: /geoapi/shomgt/cat
 doc: |
   Ce module gère un catalogue des cartes pertinentes du Shom afin:
-    - de connaitre celles qu'il est nécessaire de commander au Shom (ajout ou actualisation)
+    - de connaitre celles qu'il est nécessaire de commander au Shom (ajout ou actualisation) et celles qu'il faut supprimer
     - d'exposer les caractéristiques des cartes utilisées par le module de mise à jour des cartes
     
   Le catalogue doit être régulièrement actualisé, il est construit à partir de 2 sources du Shom:
@@ -12,18 +12,14 @@ doc: |
   
   Mise en oeuvre:
     - le script build.php permet de lire le flux WFS et les GANs correspondants
-      - il fabrique un fichier mapcat.pser qui est un catalogue historisé des cartes.
-        Il contient l'historique des GANs construit à partir des différents clichés pris.
-        Il est structuré comme un dictionnaire dont le champ maps contient un dictionnaire des historiques des cartes
-        avec 2 niveaux d'index:
-          - d'une part l'id de la carte et,
-          - d'autre part, la date de mise à jour de l'info sous la forme YYYY-MM-DD.
+      - il fabrique un fichier mapcat.pser qui est un catalogue des cartes.
+        Il contient un cliché des GANs construit à une date donnée.
+        Le champ maps est un dictionnaire des cartes indexé sur l'id de la carte.
       - les cartes sont structurées par la classe MapCat (définie dans mapcat.inc.php)
-        qui permet d'accéder par différentes méthodes au catalogue.
+        qui permet d'accéder par différentes méthodes du catalogue.
       - le catalogue est exposé en JSON et en GeoJSON
     - le script index.php :
-      - expose en JSON les cartes stockées dans mapcat.pser soit uniquement les plus récentes (action=showGan),
-        soit avec l'historique complet (action=showGanHistory)
+      - expose en JSON les cartes stockées dans mapcat.pser (action=showGan),
     - le script map.php affiche le catalogue sous la forme d'une carte
     - le script geojson.php fournit le flux GéoJSON du catalogue, il est utilisé par la carte
     - le script mapcat.php permet de consulter le catalogue
@@ -33,7 +29,7 @@ doc: |
 
 journal: |
   29/10/2019:
-    ajout des cartes AEM et MancheGrid
+    - ajout des cartes AEM et MancheGrid
   26/10/2019:
     - simplification du catalogue par suppression de l'historique inutile
   15-17/3/2019:
