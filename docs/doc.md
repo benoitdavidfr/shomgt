@@ -5,7 +5,7 @@ De nombreux utilisateurs ont besoin,
 notamment pour localiser en mer différents objets (projets d'aménagement, études, procédures administratives,
 incidents, ...),
 d'intégrer dans leur SIG (comme QGis) ou dans leur application Web
-(construite par exemple avec OpenLayers)
+(construite par exemple avec Leaflet)
 des [cartes marines numériques au format GéoTIFF publiées par le Shom](https://diffusion.shom.fr/pro/navigation/cartes-marines/cartes-marines-geotiff.html).
 Toutefois, les images géoréférencées fournies par le Shom ne peuvent pas être directement affichées dans une application
 car elles comportent autour de chaque carte son cadre empêchant ainsi de juxtaposer les cartes
@@ -27,7 +27,7 @@ En outre Shomgt :
   - permet le téléchargement des cartes telles que fournies par le Shom, et sous d'autres formes
     (PNG ou GéoTIFF rogné, c'est à dire sans cadre),
   - met à disposition des infos collectées sur les cartes, notamment sous la forme d'un catalogue de cartes,
-  - propose des cartes OpenLayers pour consulter les cartes Shom et le catalogue des cartes.
+  - propose des cartes Leaflet pour consulter les cartes Shom et le catalogue des cartes.
 
 Seules les cartes décrivant le territoire français, y compris la Polynésie, la Nouvelle Calédonie,
 les TAAF et l'île de Clipperton, sont prises en compte.
