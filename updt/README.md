@@ -50,8 +50,8 @@ avec la date de mise à jour définie par le GAN.
 L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier un GéoTiff dans le module ws.
 
 ### Données complémentaires
-- l'ordre des géotiffs dans le catalogue des géotiffs impacte le contenu de la couche ;
-  cet ordre peut être imposé dans le fichier `updt.yaml`;
+- l'ordre des géotiffs dans leur catalogue impacte l'image de la couche ;
+  il peut être imposé dans le fichier `updt.yaml`;
 - chaque couche est constituée des géotiffs dont l'échelle appartient à intervalle défini pour la couche
   dans `shomgt.php`.
 
