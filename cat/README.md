@@ -14,9 +14,9 @@ Le catalogue doit être régulièrement actualisé, il est construit à partir d
 Les GAN définissent, pour chaque géotiff, le rectangle délimitant sa partie utile
 qui est utilisé par le module de mise à jour.
 Certains GAN sont erronés et des corrections sont définies dans le fichier `gancorrections.yaml`
-ainsi que des ajouts pour les GAN manquants.
+qui contient aussi des ajouts pour les GAN manquants.
 
-De même, certains cartes sont absentes du flux WFS et sont complétées dans `lib.inc.php`.
+De même, certains cartes absentes du flux WFS sont complétées dans `lib.inc.php`.
 
 Le module utilise une définition de la ZEE française stockée en SHP dans `franceshp` et en GeoJSON dans `france.geojson`.
 Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
