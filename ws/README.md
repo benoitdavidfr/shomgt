@@ -5,7 +5,7 @@ Implémentation des services sur les cartes:
   - geojson des GéoTiff geojson.php
   - service de téléchargement dl.php
 
-Redéfinition des couches et les zooms correspondants:
+Définition des couches et des niveaux de zoom correspondants pour la couche gtpyr de tile.php:
 
   - 0-5 20M
   - 6  10M
