@@ -1,5 +1,5 @@
 ## Mise à jour des cartes SHOM pour les services de consultation
-Ce module permet d'intégrer une livraison Shom de cartes sous la forme d'une archive .7z par carte
+Ce module permet d'intégrer une livraison Shom de cartes chacune sous la forme d'une archive .7z
 en effectuant :
 
   - une conversion des archives dans le format utilisé par les web-services et une installation des fichiers
