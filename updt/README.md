@@ -7,7 +7,7 @@ et effectue :
   - une mise à jour du catalogue des GéoTiffs `shomgt.yaml` stocké dans `../ws/`
 
 La livraison Shom doit être stockée dans un répertoire de livraison dans `{shomgt}/../../shomgeotiff/incoming/{date}/`
-où {date} est la date de livraison sous la forme YYMMDD.  
+où {date} est la date de livraison sous la forme `YYMMDD`.  
 En outre chaque livraison devrait comporter un fichier `index.yaml` contenant notamment un champ 'toDelete'
 qui contient un dictionnaire des cartes à supprimer à l'occasion de cette livraison.  
 Ce dictionnaire est indexé par l'identifiant de la carte à détruire.
@@ -30,14 +30,14 @@ Le répertoire de stockage des cartes est `{shomgt}/../../shomgeotiff/current/` 
 Chaque répertoire de carte provient du dézippage du 7z de livraison.  
 Il contient en outre pour chaque GéoTiff nommé {gtname}:
 
-  - un fichier {gtname}.info produit par gdalinfo à partir du fichier au format GéoTiff
+  - un fichier {gtname}.info produit par gdalinfo à partir du fichier au format GéoTIFF
+  - un fichier `CARTO_GEOTIFF_{gtname}.xml` qui contient les métadonnées ISO 19115/139 du fichier GéoTiff,
   - un répertoire {gtname} qui contient les dalles PNG correspondant à un découpage 1024 X 1024 du GéoTiff
     ces dalles sont découpées de gauche à droite et du haut vers le bas
     elles sont nommées par {x}-{y}.png où {x} est le numéro de colonne et {y} le numéro de ligne
 
-Les seuls fichiers utilisés par ws sont les dalles PNG.
-Les fichiers de MD XML dont le nom est de la forme CARTO_GEOTIFF_{gtname}.xml sont utilisés par le module
-catalogue pour connaitre la date de mise à jour des GéoTiff utilisés.
+Seuls les dalles PNG sont utilisés par ws.
+Les fichiers de MD XML sont utilisés par le module catalogue pour connaitre la date de mise à jour des GéoTiff exposés.
 
 L'id {gtname} du GéoTiff est défini par le Shom dans la livraison.
 Il est de la forme :
@@ -46,7 +46,7 @@ Il est de la forme :
   - {mapno}_{gtid}_gtw pour chaque zone gégraphique secondaire de la carte numéro {mapno} identifiée par {gtid}
     {gtid} est soit un numéro à partir de 1, soit une lettre à partir de A, ex: 7354_13_gtw
 
-L'identifiant {mapno}/{gtname} est utilisé dans shomgt.yaml pour identifier un GéoTiff notamment dans le module ws.
+L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier un GéoTiff notamment dans le module ws.
       
 Algorithme:
 
@@ -80,8 +80,8 @@ En pratique:
   - En préalable à la mise à jour: actualiser le catalogue.
   - La mise à jour nécessite les étapes suivantes:
     - copier les fichier 7z de carte dans un répertoire de livraison et nommer ce répertoire par la date
-      sous la forme YYYYMMDD
-    - lancer en ligne de commande le script updt.php en le pipant avec un sh ;
+      sous la forme `YYYYMMDD`
+    - lancer en ligne de commande le script updt.php avec les noms de livarison en paramètres et en le pipant avec un sh ;
       il enchaine différentes commandes de dezippage, de transformation en PNG et de découpage
-      seuls les PNG découpés sont conservés à la fin pour économiser l'espace
+      seuls les PNG découpés sont conservés à la fin pour économiser l'espace.
 
