@@ -2,7 +2,7 @@
 
 L'objectif de ce projet est d'exposer sous la forme de web-services les
 [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
-couvrant la métropole et les DROM pour permettre au [MTES](http://www.ecologique-solidaire.gouv.fr)
+couvrant la métropole et l'outre-mer français pour permettre au [MTES](http://www.ecologique-solidaire.gouv.fr)
 et au [MCTRCT](http://www.cohesion-territoires.gouv.fr/)
 d'assurer leurs missions de service public.
 
@@ -10,7 +10,7 @@ Pour utiliser ces web-services, des cartes Shom doivent être au préalable comm
 puis intégrées au moyen des scripts de mise à jour.
 La fourniture de ces cartes est gratuite pour les services et les EPA de l'Etat conformément à
 [l'article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
-Commandes par mail à diffusion-support@shom.fr.
+Commandes à faire par mail à diffusion-support@shom.fr.
 
 Ce projet propose les services suivants :
 
@@ -58,6 +58,8 @@ Le code utilise :
   
 Des indications plus précises sur les versions des logiciels sont disponibles
 dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomgt/blob/master/docker/Dockerfile).
+
+Une [documentation fonctionnelle est disponible ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/doc.md).
 
 Une [documentation complémentaire est disponible
 dans le fichier phpdoc.yaml](https://github.com/benoitdavidfr/shomgt/blob/master/phpdoc.yaml).

@@ -124,7 +124,7 @@ Pour cela les cartes sont réparties en couches qui agrègent des cartes approxi
 ## 3.1. Définition des couches
 On distingue les 5 types de couches suivants :
 
-  - 10 couches correspondant à la répartition en fonction de leur échelle des géotiff ne correspondant pas
+  - 11 couches correspondant à la répartition en fonction de leur échelle des géotiff ne correspondant pas
     aux 6 cartes spécifiques mentionnées ci-dessus.
     Les dénominateurs des échelles retenus pour ces couches sont les suivants,
     avec entre parenthèses le ou les niveaux de zoom correspondants:
@@ -134,7 +134,7 @@ On distingue les 5 types de couches suivants :
   - la couche **gtpyr** sélectionne une des 11 couches ci-dessus en fonction du niveau de zoom défini par l'appel,
   - la couche **gtaem** contient les cartes Action de l'Etat en Mer (AEM)
   - la couche **gtMancheGrid** contient la carte MancheGrid,
-  - de plus à chacune des 14 couches définies ci-dessus est associée une couche des
+  - de plus à chacune des 15 couches définies ci-dessus est associée une couche des
     silhouettes des cartes et leur numéro, permettant de repérer une carte par son numéro.
 
 ## 3.2. Mise en oeuvre des web-services
