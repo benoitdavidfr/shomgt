@@ -1,4 +1,4 @@
-## Mise à jour des cartes SHOM pour les services de consultation
+## Module de mise à jour des cartes SHOM pour les services de consultation
 Ce module permet d'intégrer une livraison Shom de cartes, chacune sous la forme d'une archive .7z,
 en effectuant :
 
@@ -6,7 +6,8 @@ en effectuant :
     produits dans le répertoire de stockage des GéoTiffs
   - une mise à jour du catalogue des GéoTiffs `shomgt.yaml` stocké dans `../ws/`
 
-Les cartes Shom doivent être stockées dans un répertoire de livraison dans `{shomgt}/../../shomgeotiff/incoming/{date}/`
+Les cartes Shom doivent être stockées initialement dans un répertoire de livraison
+dans `{shomgt}/../../shomgeotiff/incoming/{date}/`
 où `{date}` est la date de livraison sous la forme `YYMMDD`.  
 En outre chaque livraison devrait comporter un fichier `index.yaml` contenant notamment un champ 'toDelete'
 qui contient un dictionnaire des cartes à supprimer à l'occasion de cette livraison.  
