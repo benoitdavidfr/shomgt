@@ -18,7 +18,8 @@ qui contient aussi des ajouts pour les GAN manquants.
 
 De même, certains cartes absentes du flux WFS sont complétées dans `lib.inc.php`.
 
-Le module utilise une définition de la ZEE française stockée en SHP dans `franceshp` et en GeoJSON dans `france.geojson`.
+Le module utilise une définition simplifiée de la ZEE française stockée en SHP dans `franceshp`
+et en GeoJSON dans `france.geojson`.
 Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
 
 Mise en oeuvre:
