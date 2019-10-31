@@ -120,6 +120,7 @@ class WmsShomGt extends WmsServer {
     $originalLayer = null;
     if ($layers[0]<>'gtpyr') {
       $numscaledens = [
+        'gt5k' =>     5,
         'gt12k' =>   12,
         'gt25k' =>   25,
         'gt50k' =>   50,

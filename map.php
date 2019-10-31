@@ -96,7 +96,7 @@ var overlays = {
   
 <?php
   // liste des scaleDenomnator
-  $sds = ['10M', '4M', '2M', '1M', '500k', '250k', '100k', '50k', '25k', '12k'];
+  $sds = ['10M', '4M', '2M', '1M', '500k', '250k', '100k', '50k', '25k', '12k', '5k'];
   foreach ($sds as $sd) {
     echo "// 1/$sd\n";
     echo "    \"Catalogue 1/$sd\" : L.layerGroup([\n",

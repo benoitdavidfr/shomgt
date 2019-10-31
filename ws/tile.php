@@ -69,6 +69,9 @@ $layers = [
   'gt12k'=> [
     'title'=>"Cartes SHOM GeoTIFF 1/12.000",
   ], 
+  'gt5k'=> [
+    'title'=>"Cartes SHOM GeoTIFF 1/5.000",
+  ], 
   'gtpyr'=> [
     'title'=>"Pyramide des cartes SHOM GeoTIFF",
   ],
@@ -113,6 +116,9 @@ $layers = [
   ],
   'num12k'=> [
     'title'=>"Nos des cartes 1/12.000",
+  ],  
+  'num5k'=> [
+    'title'=>"Nos des cartes 1/5.000",
   ],  
   'numaem'=> [
     'title'=>"Nos des cartes SHOM AEM",

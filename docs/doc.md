@@ -128,7 +128,7 @@ On distingue les 5 types de couches suivants :
     aux 6 cartes spécifiques mentionnées ci-dessus.
     Les dénominateurs des échelles retenus pour ces couches sont les suivants,
     avec entre parenthèses le ou les niveaux de zoom correspondants:
-    12k (15-18), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6).  
+    5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6).  
     Le nom de chacune de ses couches est composé de **gt** suivi du dénominateur d'échelle.
   - la couche **gt20M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
   - la couche **gtpyr** sélectionne une des 11 couches ci-dessus en fonction du niveau de zoom défini par l'appel,

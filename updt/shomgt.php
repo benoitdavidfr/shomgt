@@ -76,11 +76,12 @@ class LayerScaleDen {
   // liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d'échelle des GéoTiff
   // contenus dans la couche
   static $layersScaleDenMax = [
-    '12k'=> 1.7e4,
-    '25k'=> 3.5e4,
-    '50k'=> 7e4,
-    '100k'=> 1.6e5,
-    '250k'=> 3.5e5,
+    '5k'=> 1.1e4,
+    '12k'=> 2.2e4,
+    '25k'=> 4.5e4,
+    '50k'=> 9e4,
+    '100k'=> 1.8e5,
+    '250k'=> 3.8e5,
     '500k'=> 7e5,
     '1M'=> 1.4e6,
     '2M'=> 3e6,

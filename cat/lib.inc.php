@@ -52,7 +52,7 @@ function wfsdl(): array {
   if (is_file(__DIR__.'/wfsdl.pser') && (time() - filemtime(__DIR__.'/wfsdl.pser') < 12*60*60))
     return unserialize(file_get_contents(__DIR__.'/wfsdl.pser'));
   
-  try {
+  //try {
     $typenames = [
       'CARTES_MARINES_GRILLE:grille_geotiff_30', // cartes echelle > 1/30K
       'CARTES_MARINES_GRILLE:grille_geotiff_30_300', // cartes aux échelles entre 1/30K et 1/300K
@@ -117,13 +117,13 @@ function wfsdl(): array {
     //echo "<pre>wfs="; print_r($wfs);
     file_put_contents(__DIR__.'/wfsdl.pser', serialize($wfs));
     return $wfs;
-  }
+    /*}
   catch (Exception $e) {
     if (is_file(__DIR__.'/wfsdl.pser'))
       return unserialize(file_get_contents(__DIR__.'/wfsdl.pser'));
     else
       throw new Exception("Ereur: impossible de créer wfsdl.pser");
-  }
+  }*/
 }
 
 // formattage de l'échelle en rajoutant un point comme séparateur de milliers

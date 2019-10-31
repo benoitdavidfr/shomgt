@@ -18,7 +18,8 @@ doc: |
      12  100k
      13   50k
      14   25k
-    15-18 12k
+     15   12k
+    16-18 5k
 
 journal: |
   10/4/2019:
@@ -133,6 +134,8 @@ class GeoTiff {
         $layers[] = 'gt25k';
       if ($zoom >= 15)
         $layers[] = 'gt12k';
+      if ($zoom >= 16)
+        $layers[] = 'gt5k';
       if ($zoom >= 10) {
         // Si un GéoTiff couvre complètement la boite demandée, il est inutile d'effectuer les échelles plus petites
         $lyrs3 = [];

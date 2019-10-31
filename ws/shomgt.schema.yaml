@@ -40,6 +40,7 @@ definitions:
 
 description: |
   Le fichier shomgt.yaml décrit les GéoTIFF regroupés en couches correspondant approximativement aux échelles suivantes:
+    - gt5k : les cartes approx. au 1/5k
     - gt12k : les cartes approx. au 1/12k
     - gt25k : les cartes approx. au 1/25k
     - gt50k : les cartes approx. au 1/50k 

@@ -101,6 +101,18 @@ corrections:
     bboxDM:
         SW: "41°13,93'N - 002°54,93'E"
         NE: "43°39,94'N - 005°12,9'E"
+  FR7021:
+    title: Océan Pacifique Nord - Partie Sud-Ouest
+    lineage: Correction du bord Sud
+    scaleDenominator: '10.000.000'
+    originalBboxDM:
+      SW: "14°40,55'S — 117°30,00'E"
+      NE: "40°00,00'N — 175°00,29'W"
+    bboxDM:
+      SW: "13°00,00'S — 117°30,00'E"
+      NE: "40°00,00'N — 154°20,00'W"
+    issued: Édition n° 2 - 1991
+    facsimile: Fac similé Carte JP n°4052 publiée en 1983.
   FR7212:
     title: De Cabo Finisterre à Casablanca (Dâr el Beïda)
     lineage: Correction du bord Est de la carte à partir de l'information sur la carte
