@@ -2,7 +2,7 @@
 
 Ce modules gère un catalogue des cartes GéoTIFF du Shom afin :
 
-  - de connaitre celles à commander au Shom (ajout ou actualisation) et celles à supprimer car périmées,
+  - de connaitre celles à commander au Shom (ajout ou actualisation) et celles périmées à supprimer,
   - d'exposer les caractéristiques des cartes utilisées par le module de mise à jour des cartes.
     
 Le catalogue doit être régulièrement actualisé, il est construit à partir de 2 sources du Shom:
@@ -11,12 +11,14 @@ Le catalogue doit être régulièrement actualisé, il est construit à partir d
   - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent des informations actualisées chaque semaine
     sur chaque carte en vigueur.
 
-Le module utilise une définition de la ZEE française stockée en SHP dans `franceshp` et en GeoJSON dans `france.geojson`.
-Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
-
 Les GAN définissent le rectangle délimitant la partie utile de chaque géotiff utilisé par le module de mise à jour.
 Certains GAN sont erronés et des corrections sont définies dans le fichier `gancorrections.yaml`
 ainsi que des ajouts pour les GAN manquants.
+
+De même, certains cartes sont absentes du flux WFS et sont complétées dans `lib.inc.php`.
+
+Le module utilise une définition de la ZEE française stockée en SHP dans `franceshp` et en GeoJSON dans `france.geojson`.
+Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
 
 Mise en oeuvre:
 
