@@ -1,5 +1,5 @@
 ## Mise à jour des cartes SHOM pour les services de consultation
-Ce projet part d'une livraison Shom de cartes sous la forme d'un archive .7z par carte
+Ce projet part d'une livraison Shom de cartes sous la forme d'une archive .7z par carte
 et effectue :
 
   - une conversion des archives dans le format utilisé par les web-services et une installation des fichiers
@@ -7,7 +7,7 @@ et effectue :
   - une mise à jour du catalogue des GéoTiffs `shomgt.yaml` stocké dans `../ws/`
 
 La livraison Shom doit être stockée dans un répertoire de livraison dans `{shomgt}/../../shomgeotiff/incoming/{date}/`
-où {date} est la date de livraison sous la forme `YYMMDD`.  
+où `{date}` est la date de livraison sous la forme `YYMMDD`.  
 En outre chaque livraison devrait comporter un fichier `index.yaml` contenant notamment un champ 'toDelete'
 qui contient un dictionnaire des cartes à supprimer à l'occasion de cette livraison.  
 Ce dictionnaire est indexé par l'identifiant de la carte à détruire.
@@ -28,11 +28,11 @@ Il n'est pas nécessaire de mentionner les cartes à remplacer.
 Le répertoire de stockage des cartes est `{shomgt}/../../shomgeotiff/current/` dans lequel chaque carte correspond
 à un répertoire portant comme nom le numéro de la carte {mapno}, ex: 7121  
 Chaque répertoire de carte provient du dézippage du 7z de livraison.  
-Il contient en outre pour chaque GéoTiff nommé {gtname}:
+Il contient pour chaque GéoTiff nommé {gtname}:
 
   - un fichier {gtname}.info produit par gdalinfo à partir du fichier au format GéoTIFF
-  - un fichier `CARTO_GEOTIFF_{gtname}.xml` qui contient les métadonnées ISO 19115/139 du fichier GéoTiff,
-  - un répertoire {gtname} qui contient les dalles PNG correspondant à un découpage 1024 X 1024 du GéoTiff
+  - un fichier `CARTO_GEOTIFF_{gtname}.xml` contenant les métadonnées ISO 19115/139 du fichier GéoTiff,
+  - un répertoire {gtname} contenant les dalles PNG correspondant à un découpage 1024 X 1024 du GéoTiff
     ces dalles sont découpées de gauche à droite et du haut vers le bas
     elles sont nommées par {x}-{y}.png où {x} est le numéro de colonne et {y} le numéro de ligne
 
