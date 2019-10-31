@@ -36,7 +36,7 @@ Il contient en outre pour chaque GéoTiff nommé {gtname}:
     ces dalles sont découpées de gauche à droite et du haut vers le bas
     elles sont nommées par {x}-{y}.png où {x} est le numéro de colonne et {y} le numéro de ligne
 
-Seuls les dalles PNG sont utilisés par ws.
+Seules les dalles PNG sont utilisés par ws.
 Les fichiers de MD XML sont utilisés par le module catalogue pour connaitre la date de mise à jour des GéoTiff exposés.
 
 L'id {gtname} du GéoTiff est défini par le Shom dans la livraison.
@@ -47,35 +47,39 @@ Il est de la forme :
     {gtid} est soit un numéro à partir de 1, soit une lettre à partir de A, ex: 7354_13_gtw
 
 L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier un GéoTiff notamment dans le module ws.
-      
-Algorithme:
+
+### Données complémentaires
+- l'ordre des géotiffs dans le catalogue des géotiffs impacte leur agrégation en couche ; cet ordre peut être imposé dans le fichier `updt.yaml`;
+- `shomgt.php`  contient la définition de chaque couche par un intervalle d'échelles.
+
+### Algorithme
 
   - pour chaque livraison
     - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans
-      {shomgt}/../../shomgeotiff/tmp/
+      `{shomgt}/../../shomgeotiff/tmp/`
     - pour chaque carte et chaque GéoTiff:
       - le fichier info est généré à partir du format GéoTIFF par gdal_info
       - le GéoTiff est converti en PNG par gdal puis supprimé
       - le PNG est découpé en dalles 1024 X 1024 puis supprimé
-    - transfert des cartes de {shomgt}/../../shomgeotiff/tmp/ dans {shomgt}/../../shomgeotiff/current/
-    - les cartes à supprimer le sont
-  - génération du catalogue Yaml et écriture dans ../ws/shomgt.yaml
-  - suppression du cache {shomgt}/tilecache 
+    - transfert des cartes de `{shomgt}/../../shomgeotiff/tmp/` dans `{shomgt}/../../shomgeotiff/current/`
+    - les cartes à supprimer le sont,
+  - génération du catalogue Yaml des GéoTiff et écriture dans `../ws/shomgt.yaml`
+  - suppression du cache `{shomgt}/tilecache` 
 
-Mise en oeuvre:
+### Mise en oeuvre
 
   - tous les scripts doivent être appelés en ligne de commande
-  - updt.php est appelé avec en paramètre les noms des livraisons et génère les cmdes sh pour:
+  - `updt.php` est appelé avec en paramètre les noms des livraisons et génère les cmdes sh pour:
     - dézipper les 7z des livraisons,
     - déplacer les répertoires dézippés dans le répertoire tmp
     - générer pour chaque GéoTiff un fichier .info avec gdalinfo
     - convertir chaque GéoTiff en PNG avec gdal_translate
     - découper chaque GéoTiff en dalles 1024 X 1024 avec tile.php
     - génèrer un catalogue Yaml des GéoTiff et l'enregistre dans le fichier ../ws/shomgt.yaml
-  - tile.php découpe un fichiers PNG en dalles 1024 X 1024 et effectue un effacement de la partie définie dans updt.yaml
-  - shomgt.php génère un catalogue Yaml des GéoTiff à enregistrer dans le fichier shomgt.yaml
+  - `tile.php` découpe un fichiers PNG en dalles 1024 X 1024 et effectue un effacement de la partie définie dans updt.yaml
+  - `shomgt.php` génère un catalogue Yaml des GéoTiff à enregistrer dans le fichier `../ws/shomgt.yaml`.
   
-En pratique:
+### En pratique
 
   - En préalable à la mise à jour: actualiser le catalogue.
   - La mise à jour nécessite les étapes suivantes:
