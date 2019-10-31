@@ -1,5 +1,5 @@
 ## Mise à jour des cartes SHOM pour les services de consultation
-Ce projet part d'une livraison Shom de cartes sous la forme d'archives .7z par carte
+Ce projet part d'une livraison Shom de cartes sous la forme d'un archive .7z par carte
 et effectue :
 
   - une conversion des archives dans le format utilisé par les web-services et une installation des fichiers
@@ -8,22 +8,22 @@ et effectue :
 
 La livraison Shom doit être stockée dans un répertoire de livraison dans `{shomgt}/../../shomgeotiff/incoming/{date}/`
 où {date} est la date de livraison sous la forme YYMMDD.  
-En outre chaque livraison devrait comporter un fichier index.yaml contenant notamment un champ 'toDelete'
+En outre chaque livraison devrait comporter un fichier `index.yaml` contenant notamment un champ 'toDelete'
 qui contient un dictionnaire des cartes à supprimer à l'occasion de cette livraison.  
 Ce dictionnaire est indexé par l'identifiant de la carte à détruire.
 Il n'est pas nécessaire de mentionner les cartes à remplacer.
 
-  exemple:
-    toDelete: # cartes à supprimer de shomgt
-      FR0982: Ile Saint-Pierre, Port de Saint-Pierre, Port de Miquelon (1/20.000)
-      FR6725: Estuaire de la Tamise - Partie Sud (1/50000)
-      FR6774: Puerto de Bilbao (1/12500) - 2018
-      FR6786: De Biscarrosse à San Sebastian
-      FR6851: Ports d'Ajaccio et de Propriano (1/10.000)
-      FR5438:
-        title: Océan Pacifique (1/27.000.000)
-        edition: Édition n° 3 - 1943
-        comment: n'apporte rien par rapport au planisphère et s'intègre mal du fait de son style
+    exemple:
+      toDelete: # cartes à supprimer de shomgt
+        FR0982: Ile Saint-Pierre, Port de Saint-Pierre, Port de Miquelon (1/20.000)
+        FR6725: Estuaire de la Tamise - Partie Sud (1/50000)
+        FR6774: Puerto de Bilbao (1/12500) - 2018
+        FR6786: De Biscarrosse à San Sebastian
+        FR6851: Ports d'Ajaccio et de Propriano (1/10.000)
+        FR5438:
+          title: Océan Pacifique (1/27.000.000)
+          edition: Édition n° 3 - 1943
+          comment: n'apporte rien par rapport au planisphère et s'intègre mal du fait de son style
 
 Le répertoire de stockage des cartes est `{shomgt}/../../shomgeotiff/current/` dans lequel chaque carte correspond
 à un répertoire portant comme nom le numéro de la carte {mapno}, ex: 7121  
