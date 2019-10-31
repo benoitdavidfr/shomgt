@@ -52,8 +52,8 @@ L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier
 ### Données complémentaires
 - l'ordre des géotiffs dans le catalogue des géotiffs impacte le contenu de la couche ;
   cet ordre peut être imposé dans le fichier `updt.yaml`;
-- chaque couche est constituée de géotiffs dont l'échelle appartient à intervalle défini pour la couche ;
-  `shomgt.php` contient la définition de chaque couche par un intervalle d'échelles.
+- chaque couche est constituée des géotiffs dont l'échelle appartient à intervalle défini pour la couche
+  dans `shomgt.php`.
 
 ### Algorithme
 
