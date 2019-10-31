@@ -9,7 +9,7 @@
         "http://www.shom.fr/qr/gan/{frnum}"
     ],
     "$schema": "/var/www/html/geoapi/shomgt/cat/mapcat",
-    "modified": "2019-10-28T11:47:56+00:00",
+    "modified": "2019-10-29T12:07:44+00:00",
     "maps": {
         "FR0101": {
             "num": "0101",
@@ -27,7 +27,7 @@
                 "eastlimit": 490
             },
             "issued": "Édition n° 4 - 2016",
-            "corrections": "correction de FR0101 pour que le bord Est est une longitude supérieure au bord West"
+            "corrections": "correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l'extension en longitude soit supérieure à 360°"
         },
         "FR0101Q": {
             "num": "0101Q",
@@ -7244,7 +7244,7 @@
                 "northlimit": 51.1175,
                 "eastlimit": 2.3986666666666667
             },
-            "issued": "Édition n° 4 - 2015"
+            "issued": "Édition n° 5 - 2019"
         },
         "FR7066": {
             "num": "7066",
@@ -12585,6 +12585,23 @@
                 }
             ]
         },
+        "FR7330": {
+            "num": "7330",
+            "groupTitle": "Océan Atlantique Nord",
+            "title": "De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique",
+            "scaleDenominator": "1.070.000",
+            "bboxDM": {
+                "SW": "41°28,00'N - 010°30,00'W",
+                "NE": "52°00,00'N - 000°00,00'E"
+            },
+            "spatial": {
+                "southlimit": 41.46666666666667,
+                "westlimit": -10.5,
+                "northlimit": 52,
+                "eastlimit": 0
+            },
+            "issued": "Édition n° 6 - 2016"
+        },
         "FR7331": {
             "num": "7331",
             "groupTitle": "Mer Méditerranée",
@@ -12879,6 +12896,23 @@
             },
             "issued": "Édition n° 3 - 2018"
         },
+        "FR7344": {
+            "num": "7344",
+            "groupTitle": "Manche - Mer du Nord",
+            "title": "De Brest à la frontière belge - Action de l'Etat en Mer - Zone Manche et Mer du Nord",
+            "scaleDenominator": "655.000",
+            "bboxDM": {
+                "SW": "47°30,00'N - 007°00,00'W",
+                "NE": "51°55,00'N - 003°00,00'E"
+            },
+            "spatial": {
+                "southlimit": 47.5,
+                "westlimit": -7,
+                "northlimit": 51.916666666666664,
+                "eastlimit": 3
+            },
+            "issued": "Édition n° 6 - 2016"
+        },
         "FR7345": {
             "num": "7345",
             "groupTitle": "Petites Antilles",
@@ -12961,7 +12995,7 @@
                 "northlimit": 34.041666666666664,
                 "eastlimit": 35.666666666666664
             },
-            "issued": "Édition n° 4 - 2016",
+            "issued": "Édition n° 5 - 2019",
             "boxes": [
                 {
                     "title": "A - Abords et Port de Beyrouth (Beiroût)",
@@ -13711,6 +13745,23 @@
                     }
                 }
             ]
+        },
+        "FR7360": {
+            "num": "7360",
+            "groupTitle": "Mer Méditerranée",
+            "title": "De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée",
+            "scaleDenominator": "700.000",
+            "bboxDM": {
+                "SW": "39°57,00'N - 001°30,00'E",
+                "NE": "44°40,00'N - 010°50,00'E"
+            },
+            "spatial": {
+                "southlimit": 39.95,
+                "westlimit": 1.5,
+                "northlimit": 44.666666666666664,
+                "eastlimit": 10.833333333333334
+            },
+            "issued": "Édition n° 6 - 2016"
         },
         "FR7362": {
             "num": "7362",
@@ -20362,17 +20413,17 @@
             "references": "Fac similé carte ES n°493 publiée en 1996 (édition février 2019)",
             "boxes": [
                 {
-                    "title": "A - Port de Llançà",
+                    "title": "A - Mouillage de Cadaqués",
                     "scaleDenominator": "10.000",
                     "bboxDM": {
-                        "SW": "42°22,23'N - 003°09,40'E",
-                        "NE": "42°22,65'N - 003°10,02'E"
+                        "SW": "42°16,18'N - 003°16,45'E",
+                        "NE": "42°18,50'N - 003°18,70'E"
                     },
                     "spatial": {
-                        "southlimit": 42.3705,
-                        "westlimit": 3.1566666666666667,
-                        "northlimit": 42.3775,
-                        "eastlimit": 3.167
+                        "southlimit": 42.269666666666666,
+                        "westlimit": 3.274166666666667,
+                        "northlimit": 42.30833333333333,
+                        "eastlimit": 3.3116666666666665
                     }
                 }
             ]
@@ -22204,6 +22255,40 @@
             },
             "issued": "Publication 1997",
             "references": "Fac similé GB 5501"
+        },
+        "FR8101": {
+            "num": "8101",
+            "title": "MANCHEGRID - Carte générale",
+            "scaleDenominator": "880.000",
+            "bboxDM": {
+                "SW": "48°30,00'N - 006°30,00'W",
+                "NE": "51°35,00'N - 002°30,00'E"
+            },
+            "spatial": {
+                "southlimit": 48.5,
+                "westlimit": -6.5,
+                "northlimit": 51.583333333333336,
+                "eastlimit": 2.5
+            },
+            "issued": "Publication 2010",
+            "corrections": "Ajout de la carte 8101 (MANCHEGRID - Carte générale) absente du GAN"
+        },
+        "FR8502": {
+            "num": "8502",
+            "title": "Action de l'Etat en Mer en ZMSOI",
+            "scaleDenominator": "7.904.971",
+            "bboxDM": {
+                "SW": "60°00,00'S - 030°00,00'E",
+                "NE": "05°00,00'N - 090°00,00'E"
+            },
+            "spatial": {
+                "southlimit": -60,
+                "westlimit": 30,
+                "northlimit": 5,
+                "eastlimit": 90
+            },
+            "issued": "Publication 2010",
+            "corrections": "Ajout de la carte 8502 (AEM ZMSOI) absente du GAN"
         },
         "FR9999": {
             "num": "9999",

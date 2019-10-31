@@ -657,6 +657,46 @@
 {
     "type": "Feature",
     "properties": {
+        "num": "7330",
+        "title": "De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique",
+        "issued": "Édition n°&nbsp;6 - 2016",
+        "scaleDenominator": "1070000",
+        "bboxDM": {
+            "SW": "41°28,00'N - 010°30,00'W",
+            "NE": "52°00,00'N - 000°00,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -10.5,
+                    41.46666666666667
+                ],
+                [
+                    0,
+                    41.46666666666667
+                ],
+                [
+                    0,
+                    52
+                ],
+                [
+                    -10.5,
+                    52
+                ],
+                [
+                    -10.5,
+                    41.46666666666667
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
         "num": "7331",
         "title": "Du Cap Bon (Ras at Tib) au Golfe de Venise",
         "issued": "Édition n°&nbsp;2 - 2014",
@@ -1350,6 +1390,46 @@
                 [
                     -21,
                     18.583333333333332
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "8101",
+        "title": "MANCHEGRID - Carte générale",
+        "issued": "Publication 2010",
+        "scaleDenominator": "880000",
+        "bboxDM": {
+            "SW": "48°30,00'N - 006°30,00'W",
+            "NE": "51°35,00'N - 002°30,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -6.5,
+                    48.5
+                ],
+                [
+                    2.5,
+                    48.5
+                ],
+                [
+                    2.5,
+                    51.583333333333336
+                ],
+                [
+                    -6.5,
+                    51.583333333333336
+                ],
+                [
+                    -6.5,
+                    48.5
                 ]
             ]
         ]

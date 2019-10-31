@@ -3699,7 +3699,7 @@
     "properties": {
         "num": "7348",
         "title": "Approches de Beyrouth (Beiroût)",
-        "issued": "Édition n°&nbsp;4 - 2016",
+        "issued": "Édition n°&nbsp;5 - 2019",
         "scaleDenominator": "30000",
         "bboxDM": {
             "SW": "33°53,00'N - 035°25,40'E",
@@ -5677,7 +5677,7 @@
         },
         "references": "Fac similé carte ES n°493 publiée en 1996 (édition février 2019)",
         "boxes": [
-            "A - Port de Llançà"
+            "A - Mouillage de Cadaqués"
         ]
     },
     "geometry": {

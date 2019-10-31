@@ -612,6 +612,46 @@
 {
     "type": "Feature",
     "properties": {
+        "num": "7344",
+        "title": "De Brest à la frontière belge - Action de l'Etat en Mer - Zone Manche et Mer du Nord",
+        "issued": "Édition n°&nbsp;6 - 2016",
+        "scaleDenominator": "655000",
+        "bboxDM": {
+            "SW": "47°30,00'N - 007°00,00'W",
+            "NE": "51°55,00'N - 003°00,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -7,
+                    47.5
+                ],
+                [
+                    3,
+                    47.5
+                ],
+                [
+                    3,
+                    51.916666666666664
+                ],
+                [
+                    -7,
+                    51.916666666666664
+                ],
+                [
+                    -7,
+                    47.5
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
         "num": "7357",
         "title": "Îles Marquises (Fenua Enata)",
         "issued": "Édition n°&nbsp;2 - 2019",
@@ -644,6 +684,46 @@
                 [
                     -141.3,
                     -11.8
+                ]
+            ]
+        ]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "7360",
+        "title": "De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée",
+        "issued": "Édition n°&nbsp;6 - 2016",
+        "scaleDenominator": "700000",
+        "bboxDM": {
+            "SW": "39°57,00'N - 001°30,00'E",
+            "NE": "44°40,00'N - 010°50,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    1.5,
+                    39.95
+                ],
+                [
+                    10.833333333333334,
+                    39.95
+                ],
+                [
+                    10.833333333333334,
+                    44.666666666666664
+                ],
+                [
+                    1.5,
+                    44.666666666666664
+                ],
+                [
+                    1.5,
+                    39.95
                 ]
             ]
         ]

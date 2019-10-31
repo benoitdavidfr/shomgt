@@ -8,10 +8,10 @@ Ce module gère un catalogue des cartes GéoTIFF du Shom afin :
 Le catalogue doit être régulièrement actualisé, il est construit à partir de 2 sources du Shom:
 
   - le flux WFS de la liste des cartes Shom,
-  - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent des informations actualisées chaque semaine
-    sur chaque carte en vigueur.
+  - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent (sous la forme d'une page HTML)
+    des informations actualisées chaque semaine sur chaque carte en vigueur.
 
-Les GAN définissent, pour chaque géotiff, le rectangle délimitant sa partie utile
+Les GAN définissent notamment, pour chaque géotiff, le rectangle délimitant sa partie utile
 qui est utilisé par le module de mise à jour.
 Certains GAN sont erronés et des corrections sont définies dans le fichier `gancorrections.yaml`
 qui contient aussi des ajouts pour les GAN manquants.

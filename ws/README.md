@@ -1,2 +1,20 @@
 ## services de consultation des cartes raster GéoTIFF du SHOM
-[Voir doc ici](https://github.com/benoitdavidfr/shomgt/blob/master/ws/phpdoc.yaml).
+Implémentation des services sur les cartes:
+  - service de tuiles tile.php
+  - service WMS wms.php
+  - geojson des GéoTiff geojson.php
+  - service de téléchargement dl.php
+
+Redéfinition des couches et les zooms correspondants:
+     0-5 20M
+      6  10M
+      7   4M
+      8   2M
+      9   1M
+     10  500k
+     11  250k
+     12  100k
+     13   50k
+     14   25k
+    15-18 12k  
+

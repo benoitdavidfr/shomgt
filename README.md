@@ -22,7 +22,7 @@ Ce projet propose les services suivants :
   - un service GeoJSON exposant le catalogue des cartes du Shom
     [publié ici par tranches d'échelles](https://benoitdavidfr.github.io/shomgt/).
   
-Ce projet est découpé en 4 modules:
+Ce projet est décomposé en 4 modules:
 
   - les [web-services de consultation et de téléchargement des 
     GéoTiffs](https://github.com/benoitdavidfr/shomgt/tree/master/ws)

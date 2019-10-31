@@ -576,5 +576,45 @@
             ]
         ]
     }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "num": "8502",
+        "title": "Action de l'Etat en Mer en ZMSOI",
+        "issued": "Publication 2010",
+        "scaleDenominator": "7904971",
+        "bboxDM": {
+            "SW": "60°00,00'S - 030°00,00'E",
+            "NE": "05°00,00'N - 090°00,00'E"
+        }
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    30,
+                    -60
+                ],
+                [
+                    90,
+                    -60
+                ],
+                [
+                    90,
+                    5
+                ],
+                [
+                    30,
+                    5
+                ],
+                [
+                    30,
+                    -60
+                ]
+            ]
+        ]
+    }
 }
 ]}
