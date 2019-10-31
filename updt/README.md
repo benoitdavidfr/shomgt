@@ -1,4 +1,4 @@
-## mise à jour des cartes raster GéoTIFF du SHOM pour les services de consultation
+## Mise à jour des cartes SHOM pour les services de consultation
 Ce projet part d'une livraison Shom de cartes sous la forme d'archives .7z par carte
 et effectue :
 
