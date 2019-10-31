@@ -27,12 +27,12 @@ Mise en oeuvre:
   - le script `build.php`, à utiliser en ligne de commande, permet de construire le catalogue
     - la sous-commande `harvestGan` moissonne le flux WFS et les pages du GAN dans le répertoire `gan`,
     - la sous-commande `store` fabrique le fichier `mapcat.pser` qui stocke le catalogue des cartes en format interne.  
-  - le script index.php :
-    - expose en JSON les cartes stockées dans `mapcat.pser` (action=showGan),
-    - liste les cartes à actualiser (action=shomgtObsolete), celles à supprimer (action=shomgtObsolete2)
-      et les cartes manquantes (action=shomgtMissing)
-  - le script map.php affiche le catalogue sous la forme d'une carte Leaflet
-  - le script geojson.php fournit le flux GéoJSON du catalogue utilisé par la carte
+  - le script `index.php` exploite le catalogue :
+    - il expose en JSON les cartes stockées dans `mapcat.pser` (action=showGan),
+    - il liste les cartes à actualiser (action=shomgtObsolete), celles à supprimer (action=shomgtObsolete2)
+      et celles manquantes (action=shomgtMissing)
+  - le script map.php affiche le catalogue sous la forme d'une carte Leaflet,
+  - le script geojson.php fournit le flux GéoJSON du catalogue utilisé par la carte,
   - le script mapcat.php permet de consulter le catalogue
     - par défaut il liste les cartes sous la forme d'une table HTML,
     - avec en paramètre l'identifiant d'une carte il expose sa description JSON, ex: `mapcat.php/FR4219`,
