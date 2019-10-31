@@ -11,7 +11,8 @@ Le catalogue doit être régulièrement actualisé, il est construit à partir d
   - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent des informations actualisées chaque semaine
     sur chaque carte en vigueur.
 
-Les GAN définissent le rectangle délimitant la partie utile de chaque géotiff utilisé par le module de mise à jour.
+Les GAN définissent, pour chaque géotiff, le rectangle délimitant sa partie utile
+qui est utilisé par le module de mise à jour.
 Certains GAN sont erronés et des corrections sont définies dans le fichier `gancorrections.yaml`
 ainsi que des ajouts pour les GAN manquants.
 
