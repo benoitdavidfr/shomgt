@@ -14,7 +14,8 @@ Commandes à faire par mail à diffusion-support@shom.fr.
 
 Ce projet propose les services suivants :
 
-  - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) exposant les GéoTiffs
+  - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map)
+    et un service WMS exposant les GéoTiffs,
     regroupés par couche en fonction de leur échelle,
   - un service GeoJSON exposant les silhouettes des GéoTiffs,
   - un service de téléchargement des GéoTiffs dans différents formats avec des infos associées,
@@ -37,17 +38,20 @@ Ce projet est découpé en 4 modules:
 
 De plus:
 
-  - le répertoire [docs](https://github.com/benoitdavidfr/shomgt/tree/master/docs) contient
+  - le répertoire [`docs`](https://github.com/benoitdavidfr/shomgt/tree/master/docs) contient
     l'export GeoJSON du catalogue des cartes du Shom,
     qui peut ainsi être consulté sous la forme
     d'[une carte directement sur Github](https://benoitdavidfr.github.io/shomgt/catmap.html),
-  - le répertoire docker contient la configuration Docker d'un serveur d'hébergement des web-services.
+  - le répertoire `docker` contient la configuration Docker d'un serveur d'hébergement des web-services.
+  - le répertoire `tilecache` contient un cache des tuiles de la couche gtpyr.
 
 Outre le répertoire correspondant au code contenu dans ce projet Git (noté {shomgt}),
 les répertoires suivants doivent être présents sur le serveur pour que le code s'exécute correctement:
 
-  - {shomgt}/../../shomgeotiff - stockage des fichiers TIFF et PNG des cartes géré par le modfule de mise à jour,
-  - {shomgt}/vendor - code installé par composer
+  - `{shomgt}/../../shomgeotiff` - stockage des cartes Shom dans 2 sous-répertoires
+    - `current` contient un répertoire par carte exposé construit par le module de mise à jour,
+    - `ìncoming` contient un répertoire par livraison, chacun contenant les archives fournies par le Shom
+  - `{shomgt}/vendor` - code installé par composer
 
 Le code utilise :
 
@@ -59,7 +63,7 @@ Le code utilise :
 Des indications plus précises sur les versions des logiciels sont disponibles
 dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomgt/blob/master/docker/Dockerfile).
 
-Une [documentation fonctionnelle est disponible ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/doc.md).
+Une [documentation fonctionnelle plus détaillée est disponible
+ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/doc.md).
 
-Une [documentation complémentaire est disponible
-dans le fichier phpdoc.yaml](https://github.com/benoitdavidfr/shomgt/blob/master/phpdoc.yaml).
+Une documentation technique complémentaire est disponible dans chacun des modules.
