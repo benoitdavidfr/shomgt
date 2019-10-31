@@ -6,15 +6,17 @@ Implémentation des services sur les cartes:
   - service de téléchargement dl.php
 
 Redéfinition des couches et les zooms correspondants:
-     0-5 20M
-      6  10M
-      7   4M
-      8   2M
-      9   1M
-     10  500k
-     11  250k
-     12  100k
-     13   50k
-     14   25k
-    15-18 12k  
+
+  - 0-5 20M
+  - 6  10M
+  - 7   4M
+  - 8   2M
+  - 9   1M
+  - 10  500k
+  - 11  250k
+  - 12  100k
+  - 13   50k
+  - 14   25k
+  - 15  12k  
+  - 16-18 5k  
 
