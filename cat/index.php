@@ -14,7 +14,7 @@ includes:
   - map.inc.php
 */
 use Symfony\Component\Yaml\Yaml;
-require_once 'lib.inc.php';
+require_once __DIR__.'/lib.inc.php';
 
 if (!isset($_GET['action'])) {
   echo "<!DOCTYPE HTML><html><head><title>catalogue</title><meta charset='UTF-8'></head><body>\n";

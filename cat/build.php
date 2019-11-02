@@ -19,6 +19,7 @@ includes: [lib.inc.php, mapcat.inc.php]
 */
 use Symfony\Component\Yaml\Yaml;
 require_once __DIR__.'/lib.inc.php';
+require_once __DIR__.'/../ws/accesscntrl.inc.php';
 
 // initialisation de $action
 if (php_sapi_name() == 'cli') { // en CLI 
@@ -34,6 +35,11 @@ if (php_sapi_name() == 'cli') { // en CLI
     $action = $argv[1];
 }
 else { // en non CLI 
+  if (!Access::cntrl()) {
+    header('HTTP/1.1 403 Forbidden');
+    header('Content-type: text/plain; charset="utf-8"');
+    die("Accès interdit");
+  }
   if (!isset($_GET['action'])) {
     echo "shomCatBuild - Actions proposées:<ul>\n";
     echo "<li><a href='?action=harvestGan'>moissonne les pages GAN du Shom dans le répertoire adhoc</a>\n";

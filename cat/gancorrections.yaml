@@ -3,6 +3,7 @@ description: |
   Ce document contient des corrections et des ajouts à effectuer sur les enregistrements du GAN.
   L'algorithme de correction utilise d'une part le fait que la liste des boxes correspond aux mêmes cartouches
   et, d'autre part, effectue la correction du bboxDM si ce champ existe pour le cartouche.
+modified: 2019-11-02
 corrections:
   FR0101:
     title: Planisphère des fuseaux horaires
@@ -113,6 +114,17 @@ corrections:
       NE: "40°00,00'N — 154°20,00'W"
     issued: Édition n° 2 - 1991
     facsimile: Fac similé Carte JP n°4052 publiée en 1983.
+  FR7041:
+    title: La Martinique - Partie Nord (Spéciale P)
+    lineage: Correction du bord Sud
+    scaleDenominator: '60.000'
+    originalBboxDM:
+      SW: "14°34,20'N - 061°18,00'W"
+      NE: "14°58,50'N - 060°41,30'W"
+    bboxDM:
+      SW: "14°34,30'N - 061°18,00'W"
+      NE: "14°58,50'N - 060°41,30'W"
+    issued: Édition n° 2 - 2009
   FR7212:
     title: De Cabo Finisterre à Casablanca (Dâr el Beïda)
     lineage: Correction du bord Est de la carte à partir de l'information sur la carte
