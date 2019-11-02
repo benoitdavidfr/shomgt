@@ -5,6 +5,7 @@ title: tile.php - webservice au standard XYZ d'accès aux GéoTIFF du Shom et au
 doc: |
   Appelle ws/tile.php
   Utile pour la compatibilité avec la V1 et la simplicité de l'interface
+includes: [ ws/tile.php ]
 */
 
 require __DIR__.'/ws/tile.php';

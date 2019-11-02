@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  2/11/2019:
+    utilisation de l'édition de la carte définie dans le fichier de MD XML à la place de celle du GAN
   29/10/2019:
     ajout des cartes AEM et MancheGrid
   22/9/2019:
@@ -60,6 +62,7 @@ includes:
   - ../lib/coordsys.inc.php
   - gdalinfo.inc.php
   - ontop.inc.php
+  - shomgtedition.inc.php
   - ../cat/mapcat.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
@@ -67,6 +70,7 @@ require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 require_once __DIR__.'/ontop.inc.php';
+require_once __DIR__.'/shomgtedition.inc.php';
 require_once __DIR__.'/../cat/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -174,9 +178,10 @@ while (($mapname = readdir($current)) !== false) {
     $top = ceil(($gdalbox->north() - $ganbox->north())/ $gdalbox->dy() * $height);
     if (($top <= 0) || ($top > $height/2))
       $top = 400;
+    $shomgtedition = shomgtedition("$mapname/$fbname");
     $shomgt[$lyrName]["$mapname/$fbname"] = [
       'title'=> $title,
-      'edition'=> $shomgtgan['issued'],
+      'edition'=> $shomgtedition ? $shomgtedition : 'inconnue',
       'scaleden'=> $shomgtgan['scaleDenominator'],
       'width'=> $width,
       'height'=> $height,

@@ -56,6 +56,11 @@ doc: |
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  29/10-2/11/2019:
+    - améliorations de cat
+    - correction de l'édition de la carte dans updt
+    - ajout de la page d'accueil et de la carte Leaflet
+    - intégration d'un mécanisme de protection contre les utilisations abusives
   22/9/2019:
     - intégration de la maj du 18/9/2019
     - correction d'un bug dans updt
@@ -86,5 +91,9 @@ submodules:
   - /geoapi/shomgt/docs
 phpScripts:
   - /geoapi/shomgt/index.php
+  - /geoapi/shomgt/index2.php
   - /geoapi/shomgt/map.php
+  - /geoapi/shomgt/mapwcat.php
   - /geoapi/shomgt/tile.php
+  - /geoapi/shomgt/wms.php
+  - /geoapi/shomgt/login.php

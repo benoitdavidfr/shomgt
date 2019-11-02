@@ -82,6 +82,9 @@ doc: |
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
 
 journal: |
+  2/11/2019:
+    - correction de l'edition de la carte dans shomgt.php
+    - ajout du fichier shomgtedition.inc.php
   22/9/2019:
     - correction d'un bug dans shomgt.php
 phpScripts:
@@ -94,3 +97,4 @@ phpScripts:
 phpIncludes:
   - /geoapi/shomgt/updt/gdalinfo.inc.php
   - /geoapi/shomgt/updt/ontop.inc.php
+  - /geoapi/shomgt/updt/shomgtedition.inc.php

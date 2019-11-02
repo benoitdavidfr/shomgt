@@ -2,7 +2,6 @@
 /*PhpDoc:
 name: login.php
 title: login.php - page de login
-includes: [accesscntrl.inc.php]
 doc: |
   Gère le process de login et de logout
   Pour se loguer au site, il faut un compte défini dans accesscntrl.inc.php
@@ -24,6 +23,7 @@ journal: |
     login avec une URL
   10/6/2017:
     création
+includes: [ ws/accesscntrl.inc.php ]
 */
 require_once __DIR__.'/ws/accesscntrl.inc.php';
 

@@ -1,13 +1,14 @@
 <?php
 /*PhpDoc:
 name: mapwcat.php
-title: mapwcat.php - carte de test des web-services
+title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
-  1/11/2019:
-    - clone à partir de map.php
+  1-2/11/2019:
+    - adaptation à la nouvelle version
   10/4/2019:
     - ajout des numéros de carte Shom
+includes: [ ws/accesscntrl.inc.php ]
 */
 require_once __DIR__.'/ws/accesscntrl.inc.php';
 
@@ -44,7 +45,7 @@ $zoom = (isset($_GET['zoom']) ? $_GET['zoom'] : 6);
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
     crossorigin=""></script>
   <!-- Include the edgebuffer plugin -->
-    <script src="https://benoitdavidfr.github.io/leaflet/leaflet.edgebuffer.js"></script>
+  <script src="https://benoitdavidfr.github.io/leaflet/leaflet.edgebuffer.js"></script>
   <!-- Include the Control.Coordinates plugin -->
   <link rel='stylesheet' href='https://benoitdavidfr.github.io/leaflet/Control.Coordinates.css'>
   <script src='https://benoitdavidfr.github.io/leaflet/Control.Coordinates.js'></script>
@@ -66,39 +67,28 @@ var onEachFeature = function (feature, layer) {
   popupContent += '<u><i>'+'nom</i></u>: '+feature.properties.gtname+"\n";
   popupContent += '<u><i>'+'échelle</i></u>: 1/'+feature.properties.scaleden+"\n";
   popupContent += '<u><i>'+'édition</i></u>: '+feature.properties.edition+"</pre>\n";
-  //popupContent += '<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>';
-  //popupContent += "<a href='"+shomgturl+"updt/frame.php?gtname="+feature.properties.gtname+"' target='_blank'>frame</a>"
   gtname = feature.properties.gtname;
   num = gtname.substring(0,4);
-  popupContent += '<b>Téléchargements:</b><ul>';
-  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".png' target='_blank'>image PNG</a></li>";
+  popupContent += '<b>Liens:</b><ul>';
+  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".png' target='_blank'>image PNG du géotiff</a></li>";
   popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+num+".png' target='_blank'>mini image PNG de la carte</a></li>";
   popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+num+".7z' target='_blank'>archive Shom de la carte</a></li>";
   popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".crop.tif' target='_blank'>"
-    +"image GéoTiff rognée</a></li>";
+    +"image GéoTIFF rognée</a></li>";
   popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".json' target='_blank'>"
-    +"propriétés en JSON</a></li>";
+    +"propriétés du géotiff en JSON</a></li>";
+  popupContent += "<li><a href='https://www.shom.fr/qr/gan/FR"+num+"' target='GAN'>"
+    +"Groupe d’Avis aux Navigateurs (GAN) de la carte.</a></li>";  
   popupContent += '</ul>';
   layer.bindPopup(popupContent);
 }
 
-// affichage des caractéristiques de chaque carte
-function onEachFeaturexx (feature, layer) {
-  var popupContent = "<b>"+feature.properties.category+"</b>";
-  if (feature.properties && feature.properties.title)
-    popupContent += ": "+feature.properties.title;
-  popupContent += "<br>Télécharger l'<a href='gtdl.php/"
-                  +feature.properties.libid+"/"+feature.properties.name.substring(0,4)+'.7z'
-                  +"' target='_blank'>archive de la carte</a>\n";
-  //popupContent += "<br>Télécharger le <a href='gtdl.php/"+feature.properties.libid+"/"+feature.properties.name+'.tif'
-  //                +"' target='_blank'>GéoTIFF</a>\n";
-  popupContent += " ou le <a href='gtdl.php/"+feature.properties.libid+"/"+feature.properties.name+'.png'
-                  +"' target='_blank'>PNG</a>\n";
-  popupContent += " ou le <a href='gtdl.php/"+feature.properties.libid+"/"+feature.properties.name+'_crop.tif'
-                  +"' target='_blank'>GéoTIFF rogné</a>.<br>\n";
-  popupContent += "Afficher le <a href='https://www.shom.fr/qr/gan/FR"+feature.properties.name.substring(0,4)
-                  +"' target='_blank'>Groupe d’Avis aux Navigateurs (GAN) pour cette carte.</a>";  
-  layer.bindPopup(popupContent);
+// affichage des caractéristiques de chaque polygone de ZEE
+var onEachFeatureZee = function (feature, layer) {
+  layer.bindPopup(
+    '<b>ZEE</b><br>'
+    +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
+  );
 }
 
 var map = L.map('map').setView(<?php echo json_encode($center),",$zoom";?>);  // view pour la zone
@@ -141,7 +131,7 @@ map.addLayer(baseLayers["Pyramide GéoTIFF"]);
 
 var overlays = {
   "ZEE" : new L.GeoJSON.AJAX(shomgturl+'cat/france.geojson', {
-    style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature
+    style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),
   
 <?php

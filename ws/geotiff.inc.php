@@ -61,7 +61,7 @@ class GeoTiff {
   private $left, $right, $top, $bottom; // taille des bordures
   private $partiallyDeleted=0; // 1 si la carte est partiellement effacée, 0 sinon
   
-  // initialise l'ensemble des GéoTiff à partir du catalogue shomgt.yaml ou, s'il existe, du fichier shomgt.pser
+  // initialise l'ensemble des GéoTiff à partir, s'il existe, du fichier shomgt.pser, ou sinon de shomgt.yaml ou
   // $yamlpath est le chemin du catalogue shomgt.yaml des GéoTiff
   static function init(string $yamlpath, int $verbose=0) {
     //echo "yamlpath=$yamlpath<br>\n"; //die();
@@ -488,6 +488,10 @@ class GeoTiff {
     return true;
   }
   
+  /*PhpDoc: methods
+  name: geojsonf
+  title: "function geojsonf(string $lyrname, string $gtname, ?EBox $wombox): array - génère un array Php correspondant au GeoJSON du GéoTiff"
+  */
   function geojsonf(string $lyrname, string $gtname, ?EBox $wombox): array {
     if ($wombox && !$this->wboxnb->intersects($wombox))
       return [];

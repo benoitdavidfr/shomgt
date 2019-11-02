@@ -2,9 +2,11 @@
 /*PhpDoc:
 name: index2.php
 title: index2.php - texte de la réelle page d'accueil
-includes: [ accesscntrl.inc.php ]
+includes: [ ws/accesscntrl.inc.php ]
 doc: |
 journal: |
+  1-2/11/2019
+    adaptation à la nouvelle version
   2/7/2017
     améliorations
   19/6/2017
@@ -130,17 +132,6 @@ L'accès le plus simple aux cartes s'effectue à partir d'un intranet de l'Etat 
 Si ce type de contrôle ne convient pas, 2 autres contrôles d'accès sont aussi possibles:<ul>
 <li>au moyen d'un login et d'un mot de passe en mode Web (pour les API web) ou en mode HTTP (pour le service WMS),
 <li>en enregistrant le referer des cartes qui donnent accès aux images.
-</ul>
-
-<h3>Etat d'avancement du prototype</h3>
-Du point de vue des données, de nombreuses cartes sont exposées notamment celles concernant la métropole
-et l'outre-mer français.</p>
-
-Du point de vue des mécanismes d'accès :<ul>
-  <li>la carte permet de visualiser le contenu des cartes et de télécharger les GéoTIFF,
-  <li>les 3 API d'accès aux tuiles, d'accès au catalogue et de téléchargement des cartes GéoTIFF fonctionnent,
-  <li>le serveur WMS fonctionne avec QGis,
-  <li>le contrôle d'accès est opérationnel sur ces différnets mécanismes d'accès.
 </ul>
 
 Vos retours sont indispensables pour améliorer et stabiliser ces développements.<br>

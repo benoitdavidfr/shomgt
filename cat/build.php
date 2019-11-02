@@ -15,7 +15,7 @@ journal: |
     fork dans gt
   11/12/2018
     scission de index.php
-includes: [lib.inc.php, mapcat.inc.php]
+includes: [lib.inc.php, ../ws/accesscntrl.inc.php, mapcat.inc.php]
 */
 use Symfony\Component\Yaml\Yaml;
 require_once __DIR__.'/lib.inc.php';

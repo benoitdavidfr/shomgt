@@ -30,6 +30,7 @@ phpScripts:
   #- /geoapi/shomgt/ws/testtile.php
   - /geoapi/shomgt/ws/geojson.php
   - /geoapi/shomgt/ws/dl.php
+  - /geoapi/shomgt/ws/log.php
 phpIncludes:
   - /geoapi/shomgt/ws/geotiff.inc.php
   - /geoapi/shomgt/ws/cache.inc.php
@@ -39,6 +40,7 @@ phpIncludes:
   - /geoapi/shomgt/ws/log.inc.php
   - /geoapi/shomgt/ws/config.inc.php
   - /geoapi/shomgt/ws/secretconfig.inc.php
+  - /geoapi/shomgt/ws/protect.inc.php
 htmlFiles:
   #- shomgt.yaml
   #- /geoapi/shomgt/ws/wmscapabilities.xml

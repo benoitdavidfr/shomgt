@@ -2,7 +2,7 @@
 /*PhpDoc:
 name: index.php
 title: index.php - page d'accueil
-includes: [ accesscntrl.inc.php ]
+includes: [ ws/accesscntrl.inc.php ]
 doc: |
 journal: |
   1/11/2019
@@ -31,8 +31,7 @@ if (!Access::cntrl()) {
   ");
 }
 
-//echo "floor(rand(0,10))=",floor(rand(0,10)),"<br>\n";
-// liste de points de départ possibles
+// liste de points de départ possibles (latitude,longitude, zoom)
 $starts = [
   [ 'center'=>'43,6.2', 'zoom'=>11 ],  // Hyères
   [ 'center'=>'43,6', 'zoom'=>8 ], // Cote d'Azur
@@ -48,8 +47,13 @@ $starts = [
   [ 'center'=>'4.93,-52.30', 'zoom'=>9 ], // Guyane
   [ 'center'=>'-20.94,55.30', 'zoom'=>11 ], // Réunion
   [ 'center'=>'-12.78,45.25', 'zoom'=>12 ], // Mayotte
+  [ 'center'=>'-9.6928,-139.0', 'zoom'=>9 ], // Iles Marquise
+  [ 'center'=>'-23.133,-135.0', 'zoom'=>11 ], // Iles Gambier
+  [ 'center'=>'-14.2867,-178.1325', 'zoom'=>13 ], // Ile Futuna
 ];
 $start = $starts[floor(rand(0,count($starts)-1))];
+//$start = $starts[count($starts)-1];
+
 echo <<<EOT
 <frameset cols="50%,50%" >
   <frame src="index2.php" name="main">

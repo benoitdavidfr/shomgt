@@ -12,6 +12,7 @@ includes:
   - mapcat.inc.php
   - ../lib/gegeom.inc.php
   - map.inc.php
+  - ../updt/shomgtedition.inc.php
 */
 use Symfony\Component\Yaml\Yaml;
 require_once __DIR__.'/lib.inc.php';
@@ -34,6 +35,7 @@ if (!isset($_GET['action'])) {
 }
 
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../updt/shomgtedition.inc.php';
 require_once __DIR__.'/mapcat.inc.php';
 
 // affichage en JSON le contenu du catalogue
@@ -76,18 +78,6 @@ if ($_GET['action']=='stats') {
   $nbmaps = count($maps);
   echo "$nbmaps cartes dans Shomgt (dont 4 cartes AEM + 1 carte Manche-grid)<br>\n";
   echo "et $nbgeotiffs géoTiffs (cartouche ou zone principale)<br>\n";
-  die();
-}
-
-// récupère l'info d'édition de la carte de shomgt dans les métadonnées du GéoTIFF
-function shomgtedition(string $num, string $key): string {
-  $xml = file_get_contents("../../../shomgeotiff/current/$num/CARTO_GEOTIFF_${num}_${key}.xml");
-  $pattern = '!<gmd:edition>\s*<gco:CharacterString>([^<]*)</gco:CharacterString>\s*</gmd:edition>!';
-  if (preg_match($pattern, $xml, $matches))
-    return $matches[1];
-  
-  echo "<b>$num/CARTO_GEOTIFF_${num}_${key}.xml</b><br>",
-       str_replace(['<'],['{'],$xml);
   die();
 }
  
@@ -153,8 +143,8 @@ if ($_GET['action']=='shomgtObsolete') {
       $ganYear = $matches[2];
     else
       die("</table>\nNo match on ganEdition $ganEdition");
-    $shomgtEdition = shomgtedition($num, $key);
-    if (!preg_match('!^(Edition n°\s*\d+ -|Publication) (\d+) - !', $shomgtEdition, $matches))
+    $shomgtEdition = shomgtedition("$num/${num}_${key}");
+    if (!preg_match('!^(Edition n°\s*\d+ -|Publication) (\d+)!', $shomgtEdition, $matches))
       die("</table>\nNo match on shomgtEdition $shomgtEdition");
     $shomgtYear = $matches[2];
     //$b = ($ganYear == $shomgtYear) ? ['',''] : ['<b>','</b>'];
