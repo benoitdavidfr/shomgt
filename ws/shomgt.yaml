@@ -145,8 +145,8 @@ gt10M:
     north: 47.429531
     east: 215.219286
     left: 971 # nbre de pixels de la bordure gauche
-    bottom: 920 # nbre de pixels de la bordure basse
-    right: 3975 # nbre de pixels de la bordure droite
+    bottom: 1145 # nbre de pixels de la bordure basse
+    right: 1257 # nbre de pixels de la bordure droite
     top: 1350 # nbre de pixels de la bordure haute
   7023/7023_pal300:
     title: 7023 - Océan Pacifique Est - De San Francisco à Lima
@@ -1809,9 +1809,9 @@ gt100k:
     north: 45.874711
     east: -0.902439
     left: 539 # nbre de pixels de la bordure gauche
-    bottom: 2610 # nbre de pixels de la bordure basse
+    bottom: 378 # nbre de pixels de la bordure basse
     right: 540 # nbre de pixels de la bordure droite
-    top: 400 # nbre de pixels de la bordure haute
+    top: 460 # nbre de pixels de la bordure haute
   7260/7260_pal300:
     title: 7260 - De Apataki à Fakarava
     edition: Publication 2005
@@ -2441,7 +2441,7 @@ gt50k:
     north: 15.003608
     east: -60.664883
     left: 342 # nbre de pixels de la bordure gauche
-    bottom: 465 # nbre de pixels de la bordure basse
+    bottom: 502 # nbre de pixels de la bordure basse
     right: 498 # nbre de pixels de la bordure droite
     top: 625 # nbre de pixels de la bordure haute
   7050/7050_pal300:
@@ -2962,20 +2962,6 @@ gt50k:
     bottom: 378 # nbre de pixels de la bordure basse
     right: 417 # nbre de pixels de la bordure droite
     top: 476 # nbre de pixels de la bordure haute
-  7302/7302_pal300:
-    title: 7302 - De la Pointe des Châteaux à l'Ilet à Kahouanne
-    edition: Edition n° 2 - 2010
-    scaleden: 59900
-    width: 13819
-    height: 9922
-    south: 16.218319
-    west: -61.807103
-    north: 16.673125
-    east: -61.150714
-    left: 501 # nbre de pixels de la bordure gauche
-    bottom: 546 # nbre de pixels de la bordure basse
-    right: 336 # nbre de pixels de la bordure droite
-    top: 520 # nbre de pixels de la bordure haute
   7313/7313_pal300:
     title: 7313 - De la passe de Koné à Ouaco
     edition: Edition n° 2 - 2012
@@ -3756,10 +3742,24 @@ gt50k:
     west: -61.755069
     north: 16.292911
     east: -61.283783
-    left: 669 # nbre de pixels de la bordure gauche
-    bottom: 444 # nbre de pixels de la bordure basse
-    right: 412 # nbre de pixels de la bordure droite
-    top: 391 # nbre de pixels de la bordure haute
+    left: 598 # nbre de pixels de la bordure gauche
+    bottom: 371 # nbre de pixels de la bordure basse
+    right: 482 # nbre de pixels de la bordure droite
+    top: 464 # nbre de pixels de la bordure haute
+  7302/7302_pal300:
+    title: 7302 - De la Pointe des Châteaux à l'Ilet à Kahouanne
+    edition: Edition n° 2 - 2010
+    scaleden: 59900
+    width: 13819
+    height: 9922
+    south: 16.218319
+    west: -61.807103
+    north: 16.673125
+    east: -61.150714
+    left: 501 # nbre de pixels de la bordure gauche
+    bottom: 546 # nbre de pixels de la bordure basse
+    right: 336 # nbre de pixels de la bordure droite
+    top: 520 # nbre de pixels de la bordure haute
   7616/7616_pal300:
     title: 7616 - Dominica
     edition: Publication 1998

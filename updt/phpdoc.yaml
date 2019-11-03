@@ -82,6 +82,8 @@ doc: |
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
 
 journal: |
+  3/11/2019:
+    - la gestion des superposition ne fonctionne pas avec 3 cartes, ex Guadeloupe 7302 > 6948 > 7482
   2/11/2019:
     - correction de l'edition de la carte dans shomgt.php
     - ajout du fichier shomgtedition.inc.php

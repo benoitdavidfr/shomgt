@@ -1744,8 +1744,8 @@
         "issued": "Édition n°&nbsp;3 - 2018",
         "scaleDenominator": "167000",
         "bboxDM": {
-            "SW": "44°26,40'N - 002°36,00'W",
-            "NE": "46°03,60'N - 001°00,00'W"
+            "SW": "44°09,00'N - 002°36,00'W",
+            "NE": "45°49,00'N - 001°00,00'W"
         },
         "note": "Nota&nbsp;: Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre \"Voir carte adjacente 6786\" par \"Voir carte adjacente 7070 (INT 1804)\" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991."
     },
@@ -1755,23 +1755,23 @@
             [
                 [
                     -2.6,
-                    44.44
+                    44.15
                 ],
                 [
                     -1,
-                    44.44
+                    44.15
                 ],
                 [
                     -1,
-                    46.06
+                    45.81666666666667
                 ],
                 [
                     -2.6,
-                    46.06
+                    45.81666666666667
                 ],
                 [
                     -2.6,
-                    44.44
+                    44.15
                 ]
             ]
         ]

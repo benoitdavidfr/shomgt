@@ -8,8 +8,8 @@ onTop:
   7210/7210_pal300: 7311/7311_pal300
   7204/7204_pal300: 7507/7507_pal300
   7761/7761_pal300: 7762/7762_pal300
-  7302/7302_pal300: 6948/6848_pal300
-  6948/6948_pal300: 7482/7482_pal300
+  6948/6948_pal300: 7482/7482_pal300 # Attention doit être avant celui ou 6948 est au-dessous
+  7302/7302_pal300: 6948/6948_pal300 # Attention doit être après celui ou 6948 est au-dessus
 
 # Rectangle en coord géo. (lon,lat) à effacer dans le GéoTiff
 rectsToDelete:

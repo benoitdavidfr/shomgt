@@ -62,18 +62,17 @@ try {
       WmsServer::exception(401, "Erreur d'authentification pour \"$_SERVER[PHP_AUTH_USER]\"");
     }
   }
+  // Mécanisme de protection optionnel contre des requêtes abusives
+  // Le code de cette protection est gardé secret
+  if (is_file(__DIR__.'/protect.inc.php')) {
+    require_once __DIR__.'/protect.inc.php';
+  }
   write_log(true);
 }
 // notamment si les paramètres MySQL sont corrects mais que la base MySql correspondante n'existe pas
 catch (Exception $e) {
   WmsServer::exception(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
   //throw new Exception($e->getMessage());
-}
-
-// Mécanisme de protection optionnel contre des requêtes abusives
-// Le code de cette protection est gardé secret
-if (is_file(__DIR__.'/protect.inc.php')) {
-  require_once __DIR__.'/protect.inc.php';
 }
 
 /*PhpDoc: classes

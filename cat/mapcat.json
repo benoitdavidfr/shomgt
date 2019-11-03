@@ -1,5 +1,5 @@
 {
-    "title": "Catalogue historisé des cartes Shom",
+    "title": "Catalogue des cartes Shom",
     "identifier": "https://benoitdavidfr.github.io/shomgt/mapcat",
     "source": [
         "http://services.data.shom.fr/INSPIRE/wfs?SERVICE=WFS&TYPENAMES=CARTES_MARINES_GRILLE:grille_geotiff_30",
@@ -5869,17 +5869,18 @@
             "title": "Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)",
             "scaleDenominator": "60.000",
             "bboxDM": {
-                "SW": "15°40,70'N - 061°43,40'W",
-                "NE": "16°16,50'N - 061°18,20'W"
+                "SW": "15°40,50'N - 061°43,60'W",
+                "NE": "16°16,30'N - 061°18,40'W"
             },
             "spatial": {
-                "southlimit": 15.678333333333333,
-                "westlimit": -61.723333333333336,
-                "northlimit": 16.275,
-                "eastlimit": -61.303333333333335
+                "southlimit": 15.675,
+                "westlimit": -61.72666666666667,
+                "northlimit": 16.27166666666667,
+                "eastlimit": -61.306666666666665
             },
             "issued": "Édition n° 2 - 2010",
             "note": "Nota&nbsp;: Les modifications effectuées sur la carte n° 6948 au cours de l'édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.",
+            "corrections": "correction des 4 bords de la carte principale",
             "boxes": [
                 {
                     "title": "Marie-Galante - Baie de Saint-Louis",
@@ -6647,17 +6648,18 @@
             "title": "Océan Pacifique Nord - Partie Sud-Ouest",
             "scaleDenominator": "10.000.000",
             "bboxDM": {
-                "SW": "14°40,55'S - 117°30,00'E",
-                "NE": "40°00,00'N - 175°00,29'W"
+                "SW": "13°00,00'S - 117°30,00'E",
+                "NE": "40°00,00'N - 154°20,00'W"
             },
             "spatial": {
-                "southlimit": -14.675833333333333,
+                "southlimit": -13,
                 "westlimit": 117.5,
                 "northlimit": 40,
-                "eastlimit": -175.00483333333332
+                "eastlimit": -154.33333333333334
             },
             "issued": "Édition n° 2 - 1991",
-            "references": "Fac similé Carte JP n°4052 publiée en 1983."
+            "references": "Fac similé Carte JP n°4052 publiée en 1983.",
+            "corrections": "Correction du bord Sud"
         },
         "FR7023": {
             "num": "7023",
@@ -6951,16 +6953,17 @@
             "title": "La Martinique - Partie Nord (Spéciale P)",
             "scaleDenominator": "60.000",
             "bboxDM": {
-                "SW": "14°34,20'N - 061°18,00'W",
+                "SW": "14°34,30'N - 061°18,00'W",
                 "NE": "14°58,50'N - 060°41,30'W"
             },
             "spatial": {
-                "southlimit": 14.57,
+                "southlimit": 14.571666666666667,
                 "westlimit": -61.3,
                 "northlimit": 14.975,
                 "eastlimit": -60.68833333333333
             },
-            "issued": "Édition n° 2 - 2009"
+            "issued": "Édition n° 2 - 2009",
+            "corrections": "Correction du bord Sud"
         },
         "FR7042": {
             "num": "7042",
@@ -7320,17 +7323,18 @@
             "title": "De l'île d'Oléron au Bassin d'Arcachon",
             "scaleDenominator": "167.000",
             "bboxDM": {
-                "SW": "44°26,40'N - 002°36,00'W",
-                "NE": "46°03,60'N - 001°00,00'W"
+                "SW": "44°09,00'N - 002°36,00'W",
+                "NE": "45°49,00'N - 001°00,00'W"
             },
             "spatial": {
-                "southlimit": 44.44,
+                "southlimit": 44.15,
                 "westlimit": -2.6,
-                "northlimit": 46.06,
+                "northlimit": 45.81666666666667,
                 "eastlimit": -1
             },
             "issued": "Édition n° 3 - 2018",
-            "note": "Nota&nbsp;: Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre \"Voir carte adjacente 6786\" par \"Voir carte adjacente 7070 (INT 1804)\" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991."
+            "note": "Nota&nbsp;: Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre \"Voir carte adjacente 6786\" par \"Voir carte adjacente 7070 (INT 1804)\" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991.",
+            "corrections": "Titre faux ainsi que les bords Nord et Sud"
         },
         "FR7073": {
             "num": "7073",

@@ -93,9 +93,26 @@ corrections:
         bboxDM:
             SW: "11°37,82'S - 047°11,95'E"
             NE: "11°21,56'S - 047°30,95'E"
+  FR6948:
+    title: Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)
+    lineage: correction des 4 bords de la carte principale
+    scaleDenominator: '60.000'
+    originalBboxDM:
+      SW: "15°40,70'N - 061°43,40'W"
+      NE: "16°16,50'N - 061°18,20'W"
+    bboxDM:
+      SW: "15°40,50'N - 061°43,60'W"
+      NE: "16°16,30'N - 061°18,40'W"
+    issued: Édition n° 2 - 2010
+    boxes:
+      - title: Marie-Galante - Baie de Saint-Louis
+        scaleDenominator: "20.000"
+        bboxDM:
+          SW: "15°55,85'N - 061°21,19'W"
+          NE: "15°58,65'N - 061°18,73'W"
   FR7008:
     title: Du Cabo de San Sebastian à Fos-sur-Mer
-    lineage: Correction du bord Est de la carte à partir de l'information sur la carte
+    lineage: "Correction du bord Est de la carte à partir de l'information sur la carte"
     originalBboxDM:
         SW: "41°13,93'N - 002°54,93'E"
         NE: "43°39,94'N - 005°15,06'E"
@@ -125,6 +142,18 @@ corrections:
       SW: "14°34,30'N - 061°18,00'W"
       NE: "14°58,50'N - 060°41,30'W"
     issued: Édition n° 2 - 2009
+  FR7070:
+    title: Du pertuis de Maumusson à Mimizan-Plage
+    lineage: Titre faux ainsi que les bords Nord et Sud
+    originalTitle: De l'île d'Oléron au Bassin d'Arcachon
+    scaleDenominator: "168.000"
+    originalBboxDM:
+      SW: "44°26,40'N - 002°36,00'W"
+      NE: "46°03,60'N - 001°00,00'W"
+    bboxDM:
+      SW: "44°09,00'N - 002°36,00'W"
+      NE: "45°49,00'N - 001°00,00'W"
+    issued: "Édition n° 3 - 2018"
   FR7212:
     title: De Cabo Finisterre à Casablanca (Dâr el Beïda)
     lineage: Correction du bord Est de la carte à partir de l'information sur la carte
