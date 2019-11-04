@@ -37,8 +37,8 @@ if (!Access::cntrl()) {
 <h3>Nouveautés</h3>
 <ul>
   <li>1/11/2019 : nouvelle version de shomgt en test<ul>
-    <li>réécriture du code et publication
-      sur <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a> ;
+    <li>réécriture du code publié sur <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a> ;
+      en cas de besoin intensif des API, merci d'installer votre propre serveur !!!<br>
       ce nouveau code restructuré simplifie grandement la mise à jour des cartes périmées ;
       attention la liste des couches a été modifiée ;
     </li>
@@ -73,7 +73,7 @@ Un <a href='https://geoapi.fr/shomgt/wms.php?service=WMS&amp;request=GetCapabili
 service WMS est aussi proposé</a>
 pour intégrer les cartes dans les outils SIG.</p>
 
-Merci d'utiliser les API avec modération.
+<b>Merci d'utiliser les API avec modération.</b>
 Si vous en avez un besoin intensif, merci d'installer votre propre serveur à partir du code disponible
 sur <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a>
 puis de copier les cartes dont vous avez besoin.

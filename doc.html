@@ -15,72 +15,27 @@ journal: |
 <!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>shomgt doc</title></head>
 <h1>Documentation technique détaillée de l'accès aux cartes du Shom</h1>
 
-<h2 id='mapwcat'>La carte Leaflet pour visualiser et télécharger les cartes Shom</h2>
-La <a href='mapwcat.php'>carte Leaflet</a> permet de visualiser les différentes images GéoTiff composant les cartes du Shom.
-Le bouton en haut à droite permet de sélectionner des couches.
-En plus des couches exposées et définies ci-dessous, il est possible d'afficher des couches catalogues
-qui contiennent la silhouette des cartes de la couche.
-En cliquant sur une silhouette, on affiche :<ul>
-<li>le nom de la couche
-<li>le numéro, le titre, le nom informatique et l'échelle du géotiff
-<li>l'édition de la carte
-<li>5 liens pour télécharger respectivement l'image au format PNG,
-  une mini image de la carte au format PNG,
-  l'archive 7z d'origine de la carte,
-  un fichier GéoTIFF correspondant à la carte rognée c.a.d. sans son cadre
-  et les propriétés du géotiff en JSON.
+<div id='layers'>
+<h2>1. Restructuration des cartes du Shom en couches</h2>
+Les images GéoTiff constituant les cartes sont regroupées en fonction de leur échelle et agrégées
+dans les 12 couches suivantes :<ul>
+<li><a href='tile.php/gt20M'>gt20M : planisphère SHOM au 1/40.000.000 à l'équateur</a>
+<li><a href='tile.php/gt10M'>gt10M : images dont l'échelle est comprise entre 1/14.000.000 et 1/6.000.000</a>
+<li><a href='tile.php/gt4M'>gt4M : images dont l'échelle est comprise entre 1/6.000.000 et 1/3.000.000</a>
+<li><a href='tile.php/gt2M'>gt2M : images dont l'échelle est comprise entre 1/3.000.000 et 1/1.400.000</a>
+<li><a href='tile.php/gt1M'>gt1M : images dont l'échelle est comprise entre 1/1.400.000 et 1/700.000</a>
+<li><a href='tile.php/gt500k'>gt500k : images dont l'échelle est comprise entre 1/700.000 et 1/380.000</a>
+<li><a href='tile.php/gt250k'>gt250k : images dont l'échelle est comprise entre 1/380.000 et 1/180.000</a>
+<li><a href='tile.php/gt100k'>gt100k : images dont l'échelle est comprise entre 1/180.000 et 1/90.000</a>
+<li><a href='tile.php/gt50k'>gt50k : images dont l'échelle est compriseM entre 1/90.000 et 1/45.000</a>
+<li><a href='tile.php/gt25k'>gt25k : images dont l'échelle est comprise entre 1/45.000 et 1/22.000</a>
+<li><a href='tile.php/gt12k'>gt12k : images dont l'échelle est comprise entre 1/22.000 et 1/11.000</a>
+<li><a href='tile.php/gt5k'>gt5k : images dont l'échelle est comprise dont l'échelle est supérieure au 1/11.000</a>
 </ul>
-L'appel de la carte peut être paramétré avec :<ul>
-<li>le centre sous la forme center={lat},{lon}
-<li>le niveau de zoom sous la forme zoom={zoom}
-</ul>
-Exemples :<ul>
-  <li><a href='mapwcat.php?center=14.6,-61.1&amp;zoom=11'>Martinique</a>
-  <li><a href='mapwcat.php?center=16.2,-61.5&amp;zoom=10'>Guadeloupe</a>
-  <li><a href='mapwcat.php?center=18,-62.9&amp;zoom=12'>St Barthémy et St Martin</a>
-  <li><a href='mapwcat.php?center=5.2,-53.0&amp;zoom=9'>Guyane</a>
-  <li><a href='mapwcat.php?center=-21.1,55.5&amp;zoom=11'>La Réunion</a>
-  <li><a href='mapwcat.php?center=-12.78,45.15&amp;zoom=12'>Mayotte</a>
-  <li><a href='mapwcat.php?center=-13.8,-177.3&amp;zoom=9'>Wallis et Futuna</a>
-  <li><a href='mapwcat.php?center=-18.5,-143.6&amp;zoom=6'>Polynésie Française</a>
-  <li><a href='mapwcat.php?center=-21.1,165.2&amp;zoom=7'>Nouvelle Calédonie</a>
-</ul>
-
-<h2>Les API</h2>
-
-<h3 id='tile'>1) L'API d'accès aux tuiles des cartes</h3>
-L'API d'accès aux tuiles est disponible à l'URL: <code><a href='tile.php'>https://geoapi.fr/shomgt/tile.php</a></code><br>
-qui fournit une documentation des différentes couches exposées.</p>
-
-Chaque couche est accessible à l'URL : <code>https://geoapi.fr/shomgt/tile.php/{layer}</code><br>
-où {layer} est le nom de la couche.<br>
-Les tuiles sont accesibles à l'URL :<br>
-<code>https://geoapi.fr/shomgt/tile.php/{layer}/{z}/{x}/{y}.png</code><br>
-où {z} est le niveau de zoom, et {x} et {y} les nos de colonne et de ligne de la tuile.</p>
-
-<div id='layers'>Les couches exposées sont les suivantes:<ul>
-<li><a href='tile.php/gt20M'>Planisphère SHOM GeoTIFF au 1/40.000.000 à l'équateur</a>
-<li><a href='tile.php/gt10M'>Cartes SHOM GeoTIFF autour du 1/10.000.000</a>
-<li><a href='tile.php/gt4M'>Cartes SHOM GeoTIFF autour du 1/4.000.000</a>
-<li><a href='tile.php/gt2M'>Cartes SHOM GeoTIFF autour du 1/2.000.000</a>
-<li><a href='tile.php/gt1M'>Cartes SHOM GeoTIFF autour du 1/1.000.000</a>
-<li><a href='tile.php/gt500k'>Cartes SHOM GeoTIFF autour du 1/500.000</a>
-<li><a href='tile.php/gt250k'>Cartes SHOM GeoTIFF autour du 1/250.000</a>
-<li><a href='tile.php/gt100k'>Cartes SHOM GeoTIFF autour du 1/100.000</a>
-<li><a href='tile.php/gt50k'>Cartes SHOM GeoTIFF autour du 1/50.000</a>
-<li><a href='tile.php/gt25k'>Cartes SHOM GeoTIFF autour du 1/25.000</a>
-<li><a href='tile.php/gt12k'>Cartes SHOM GeoTIFF autour du 1/12.000</a>
-<li><a href='tile.php/gt5k'>Cartes SHOM GeoTIFF autour du 1/5.000</a>
-</ul>
-</div>
-
-Chaque couche peut être intégrée dans une carte Leaflet en utilisant son URL.
-Pour un exemple, regarder le code source de la <a href='mapwcat.php' target='_blank'>carte Leaflet ici</a>.
-</p>
 
 <div id='pyr'>
 Une couche supplémentaire, appelée <a href='tile.php/gtpyr'>Pyramide (gtpyr)</a>,
-permet de naviguer dans les différentes cartes sans avoir à changer de couche.
+permet de naviguer dans les différentes iamges sans avoir à changer de couche.
 Son contenu s'adapte au niveau de zoom demandé.
 A chaque niveau de zoom est associée une des couches ci-dessus ;
 la correspondance entre niveau de zoom (au sens Leaflet) et couche est la suivante :
@@ -101,16 +56,69 @@ la correspondance entre niveau de zoom (au sens Leaflet) et couche est la suivan
 <br>
 Si, pour un niveau donné, aucune carte n'existe alors les cartes à plus petites échelles sont affichées.<br>
 </div>
+</p>
+Enfin, les 2 couches spécifiques suivantes sont définies:<ul>
+  <li><a href='tile.php/gtaem'>gtaem : cartes de l'Action de l'Etat en mer</a>,
+  <li><a href='tile.php/gtMancheGrid'>gtMancheGrid : carte MancheGrid</a>.
+</ul>
+</div>
 
-<h3 id='geojson'>2) L'API d'accès au catalogue des cartes</h3>
-L'API d'accès est disponible à l'URL: <code><a href='ws/geojson.php'>https://geoapi.fr/shomgt/ws/geojson.php</a></code>
-qui fournit en GeoJSON la liste des images GéoTiff pour une couche donnée dont le nom est passé dans le paramètre lyr.
+<h2 id='mapwcat'>2. La carte Leaflet pour visualiser les couches et télécharger les cartes Shom</h2>
+Les couches ci-dessus peuvent être visualisées grâce à une <a href='mapwcat.php'>carte Leaflet</a>
+qui expose, en outre, des couches catalogues contenant pour chaque couche
+la silhouette des images de la couche permettant ainsi, en cliquant dessus, d'afficher :<ul>
+<li>le nom de la couche
+<li>le numéro, le titre, le nom informatique et l'échelle du géotiff
+<li>l'édition de la carte
+<li>6 liens pour accéder respectivement à 
+  l'image du géotiff au format PNG,
+  une mini image de la carte au format PNG,
+  l'archive 7z d'origine de la carte,
+  une image rognée, c.a.d. sans son cadre, au format GéoTIFF,
+  les propriétés du géotiff en JSON
+  et le Groupe d'avis aux navigateurs (GAN) pour la carte.
+</ul>
+L'appel de la carte peut être paramétré avec :<ul>
+<li>le centre sous la forme center={lat},{lon}
+<li>le niveau de zoom sous la forme zoom={zoom}
+</ul>
+Exemples :<ul>
+  <li><a href='mapwcat.php?center=14.6,-61.1&amp;zoom=11'>Martinique</a>
+  <li><a href='mapwcat.php?center=16.2,-61.5&amp;zoom=10'>Guadeloupe</a>
+  <li><a href='mapwcat.php?center=18,-62.9&amp;zoom=12'>St Barthémy et St Martin</a>
+  <li><a href='mapwcat.php?center=5.2,-53.0&amp;zoom=9'>Guyane</a>
+  <li><a href='mapwcat.php?center=-21.1,55.5&amp;zoom=11'>La Réunion</a>
+  <li><a href='mapwcat.php?center=-12.78,45.15&amp;zoom=12'>Mayotte</a>
+  <li><a href='mapwcat.php?center=-13.8,-177.3&amp;zoom=9'>Wallis et Futuna</a>
+  <li><a href='mapwcat.php?center=-18.5,-143.6&amp;zoom=6'>Polynésie Française</a>
+  <li><a href='mapwcat.php?center=-21.1,165.2&amp;zoom=7'>Nouvelle Calédonie</a>
+</ul>
+
+<h2>3. Les API</h2>
+
+<h3 id='tile'>3.1. L'API d'accès aux tuiles des cartes</h3>
+L'API d'accès aux tuiles est disponible à l'URL: <code><a href='tile.php'>https://geoapi.fr/shomgt/tile.php</a></code><br>
+qui fournit une documentation des différentes couches exposées.</p>
+
+Chaque couche est accessible à l'URL : <code>https://geoapi.fr/shomgt/tile.php/{layer}</code><br>
+où {layer} est le nom de la couche.<br>
+Les tuiles sont accessibles à l'URL :<br>
+<code>https://geoapi.fr/shomgt/tile.php/{layer}/{z}/{x}/{y}.png</code><br>
+où {z} est le niveau de zoom, et {x} et {y} les nos de colonne et de ligne de la tuile.</p>
+
+Chaque couche peut être intégrée dans une carte Leaflet en utilisant son URL.
+Pour un exemple, regarder le code source de la <a href='mapwcat.php' target='_blank'>carte Leaflet ici</a>.
+</p>
+
+<h3 id='geojson'>3.2. L'API d'accès au catalogue des images GéoTiff exposées</h3>
+L'URL: <code><a href='ws/geojson.php'>https://geoapi.fr/shomgt/ws/geojson.php</a></code>
+fournit en GeoJSON la liste des images GéoTiff pour une couche donnée dont le nom est passé dans le paramètre lyr.
 Ce flux GeoJSON peut être lu par exemple avec le plug-in
 <a href='https://github.com/BenjaminVadant/leaflet-ugeojson' target='_blank'>L.UGeoJSONLayer</a>.
 Pour un exemple, regarder le code source de la <a href='mapwcat.php' target='_blank'>carte Leaflet ici</a>.
 
 
-<h3 id='dl'>3) L'API de téléchargement des cartes</h3>
+<h3 id='dl'>3.3. L'API de téléchargement des cartes</h3>
 Disponible à l'URL
 <code><a href='ws/dl.php'>https://geoapi.fr/shomgt/ws/dl.php</a></code> ;
 sans paramètre, elle fournit un objet JSON dont le champ geotiffs contient un dictionnaire
@@ -129,7 +137,7 @@ des géotiffs indexé par leur nom avec pour chaque géotiff les propriétés su
 </ul>
 Cette API est utilisée pour télécharger les cartes à partir de la carte Leaflet.
 
-<h3 id='wms'>4) Le service WMS d'accès aux cartes</h3>
+<h3 id='wms'>3.4. Le service WMS d'accès aux cartes</h3>
 Un service WMS, exposé à l'adresse <a href='wms.php?SERVICE=WMS&amp;request=GetCapabilities' target='_blank'><code>https://geoapi.fr/shomgt/wms.php</code></a>,
 propose les différentes couches dans les 4 systèmes de coordonnées suivants :<ul>
 <li>Web Mercator (EPSG:3857)
@@ -141,7 +149,7 @@ propose les différentes couches dans les 4 systèmes de coordonnées suivants :
 Il est donc recommandé d'utiliser l'un des 2 premiers systèmes de coordonnées.
 
 
-<h2>Auteur</h2>
+<h2>4. Auteur</h2>
 Ce site est réalisé par Benoit DAVID, Chef de la MIG au MTES.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 1/11/2019<br>
+Mise à jour: 4/11/2019<br>

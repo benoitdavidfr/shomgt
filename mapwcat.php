@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  4/11/2019:
+    - ajout bindTooltip() dans onEachFeature()
   1-2/11/2019:
     - adaptation à la nouvelle version
   10/4/2019:
@@ -81,6 +83,7 @@ var onEachFeature = function (feature, layer) {
     +"Groupe d’Avis aux Navigateurs (GAN) de la carte.</a></li>";  
   popupContent += '</ul>';
   layer.bindPopup(popupContent);
+  layer.bindTooltip(feature.properties.title);
 }
 
 // affichage des caractéristiques de chaque polygone de ZEE
@@ -89,6 +92,7 @@ var onEachFeatureZee = function (feature, layer) {
     '<b>ZEE</b><br>'
     +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
   );
+  layer.bindTooltip(feature.properties.label);
 }
 
 var map = L.map('map').setView(<?php echo json_encode($center),",$zoom";?>);  // view pour la zone

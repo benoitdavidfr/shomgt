@@ -236,15 +236,15 @@ try {
 } catch (Exception $e) {
   sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
 }
-if (0) { // Mise en cache
-  $nbDaysInCache = 0.5;
-  $nbSecondsInCache = $nbDaysInCache*24*60*60;
-  //$nbSecondsInCache = 1;
-  header('Cache-Control: max-age='.$nbSecondsInCache); // mise en cache pour $nbDaysInCache jours
-  header('Expires: '.date('r', time() + $nbSecondsInCache)); // mise en cache pour $nbDaysInCache jours
-  header('Last-Modified: '.date('r'));
-}
 if (!$verbose) {
+  if (1) { // Mise en cache
+    $nbDaysInCache = 0.5;
+    $nbSecondsInCache = $nbDaysInCache*24*60*60;
+    //$nbSecondsInCache = 1;
+    header('Cache-Control: max-age='.$nbSecondsInCache); // mise en cache pour $nbDaysInCache jours
+    header('Expires: '.date('r', time() + $nbSecondsInCache)); // mise en cache pour $nbDaysInCache jours
+    header('Last-Modified: '.date('r'));
+  }
   header('Content-type: image/png');
   // envoi de l'image
   imagepng($image);

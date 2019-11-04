@@ -22,6 +22,8 @@ doc: |
     16-18 5k
 
 journal: |
+  4/11/2019:
+    - gestion num des cartes AEM et MAncheGrid
   10/4/2019:
     - ajout tuiles des numéros de carte
   30/3/2019:
@@ -293,10 +295,15 @@ class GeoTiff {
   
   // numéro de carte à afficher dans le catalogue
   function num() {
+    // zone principale
     if (preg_match('!^(\d+)/\d+_pal300$!', $this->name, $matches))
       return $matches[1];
+    // cartouche
     if (preg_match('!^(\d+)/\d+_([^_]+)_gtw$!', $this->name, $matches))
       return "$matches[1]/$matches[2]";
+    // AEM + MancheGrid
+    if (preg_match('!^(\d+)/\d+(_\d+)?$!', $this->name, $matches))
+      return $matches[1];
     return $this->name;
   }
   
