@@ -101,7 +101,7 @@ n'a pas acquis une licence d'utilsation de RasterMARINE.</p>
   <code><a href='https://geoapi.fr/shomgt/tile.php' target='_blank'>https://geoapi.fr/shomgt/tile.php</a></code>
   (<a href='doc.html#tile' target='doc'>Plus d'infos ici</a>)
   
-<li>Une API d'accès au catalogue des cartes simple à intégrer dans une carte Leaflet :
+<li>Une API d'accès au catalogue des images simple à intégrer dans une carte Leaflet :
   <code><a href='https://geoapi.fr/shomgt/ws/geojson.php' target='_blank'>https://geoapi.fr/shomgt/ws/geojson.php</a></code>
   (<a href='doc.html#geojson' target='doc'>Plus d'infos ici</a>)
 

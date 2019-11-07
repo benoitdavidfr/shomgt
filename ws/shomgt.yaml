@@ -1924,20 +1924,6 @@ gt100k:
     bottom: 523 # nbre de pixels de la bordure basse
     right: 416 # nbre de pixels de la bordure droite
     top: 575 # nbre de pixels de la bordure haute
-  7656/7656_pal300:
-    title: 7656 - De Santoña à Gijón
-    edition: Publication 2009
-    scaleden: 175000
-    width: 13819
-    height: 9922
-    south: 43.143528
-    west: -5.841328
-    north: 44.469017
-    east: -3.292078
-    left: 586 # nbre de pixels de la bordure gauche
-    bottom: 789 # nbre de pixels de la bordure basse
-    right: 586 # nbre de pixels de la bordure droite
-    top: 838 # nbre de pixels de la bordure haute
   7657/7657_pal300:
     title: 7657 - De Mimizan-Plage à Cabo de Ajo
     edition: Publication 2012

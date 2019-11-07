@@ -4,6 +4,7 @@ name: geojson.php
 title: geojson.php - génération des GéoTiff en GeoJSON
 doc: |
   lecture de shomgt.yaml et génération d'un geojson pour les GéoTiff de la couche indiquée
+  Les GéoTiff à cheval sur l'anti-méridien sont dédoublés pour apparaitre des 2 côtés de la carte
 journal: |
   10/3/2019
     création
@@ -27,6 +28,6 @@ try {
   die($e->getMessage());
 }
 if ($bbox)
-  $geojson['bsbox'] = $bbox->asArray();
+  $geojson['bbox'] = $bbox->asArray();
 header('Content-type: application/json; charset="utf8"');
 echo json_encode($geojson, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 

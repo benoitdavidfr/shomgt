@@ -30,7 +30,7 @@ dans les 12 couches suivantes :<ul>
 <li><a href='tile.php/gt50k'>gt50k : images dont l'échelle est compriseM entre 1/90.000 et 1/45.000</a>
 <li><a href='tile.php/gt25k'>gt25k : images dont l'échelle est comprise entre 1/45.000 et 1/22.000</a>
 <li><a href='tile.php/gt12k'>gt12k : images dont l'échelle est comprise entre 1/22.000 et 1/11.000</a>
-<li><a href='tile.php/gt5k'>gt5k : images dont l'échelle est comprise dont l'échelle est supérieure au 1/11.000</a>
+<li><a href='tile.php/gt5k'>gt5k : images dont l'échelle est supérieure au 1/11.000</a>
 </ul>
 
 <div id='pyr'>
@@ -97,7 +97,8 @@ Exemples :<ul>
 <h2>3. Les API</h2>
 
 <h3 id='tile'>3.1. L'API d'accès aux tuiles des cartes</h3>
-L'API d'accès aux tuiles est disponible à l'URL: <code><a href='tile.php'>https://geoapi.fr/shomgt/tile.php</a></code><br>
+L'API d'accès aux tuiles est disponible à l'URL:
+<code><a href='tile.php' target='_blank'>https://geoapi.fr/shomgt/tile.php</a></code><br>
 qui fournit une documentation des différentes couches exposées.</p>
 
 Chaque couche est accessible à l'URL : <code>https://geoapi.fr/shomgt/tile.php/{layer}</code><br>
@@ -111,7 +112,7 @@ Pour un exemple, regarder le code source de la <a href='mapwcat.php' target='_bl
 </p>
 
 <h3 id='geojson'>3.2. L'API d'accès au catalogue des images GéoTiff exposées</h3>
-L'URL: <code><a href='ws/geojson.php'>https://geoapi.fr/shomgt/ws/geojson.php</a></code>
+L'URL: <code><a href='ws/geojson.php' target='_blank'>https://geoapi.fr/shomgt/ws/geojson.php</a></code>
 fournit en GeoJSON la liste des images GéoTiff pour une couche donnée dont le nom est passé dans le paramètre lyr.
 Ce flux GeoJSON peut être lu par exemple avec le plug-in
 <a href='https://github.com/BenjaminVadant/leaflet-ugeojson' target='_blank'>L.UGeoJSONLayer</a>.
@@ -120,7 +121,7 @@ Pour un exemple, regarder le code source de la <a href='mapwcat.php' target='_bl
 
 <h3 id='dl'>3.3. L'API de téléchargement des cartes</h3>
 Disponible à l'URL
-<code><a href='ws/dl.php'>https://geoapi.fr/shomgt/ws/dl.php</a></code> ;
+<code><a href='ws/dl.php' target='_blank'>https://geoapi.fr/shomgt/ws/dl.php</a></code> ;
 sans paramètre, elle fournit un objet JSON dont le champ geotiffs contient un dictionnaire
 des géotiffs indexé par leur nom avec pour chaque géotiff les propriétés suivantes :<ul>
   <li>title : le titre du géotiff
@@ -147,7 +148,9 @@ propose les différentes couches dans les 4 systèmes de coordonnées suivants :
 </ul>
 <b>Attention, en EPSG:4326 et CRS:84 la carte est grossièrement déformée</b>.
 Il est donc recommandé d'utiliser l'un des 2 premiers systèmes de coordonnées.
-
+</p>
+A noter que l'API d'accès aux tuiles peut aussi être utilisée dans QGis et propose des meilleures performances
+que le service WMS.
 
 <h2>4. Auteur</h2>
 Ce site est réalisé par Benoit DAVID, Chef de la MIG au MTES.<br>

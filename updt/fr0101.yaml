@@ -1,0 +1,74 @@
+title: Gestion du planisphère Shom (carte FR 0101)
+gan:
+  "FR0101": {
+       "num": "0101",
+       "groupTitle": "Planisphère terrestre",
+       "title": "Planisphère des fuseaux horaires",
+       "scaleDenominator": "40.000.000",
+       "bboxDM": {
+           "SW": "79°00,00'S - 130°00,00'E",
+           "NE": "80°00,00'N - 100°00,00'E"
+       },
+       "spatial": {
+           "southlimit": -79,
+           "westlimit": 130,
+           "northlimit": 80,
+           "eastlimit": 100
+       },
+       "issued": "Édition n° 4 - 2016"
+  }
+doc: |
+  en pratique le planisphère s'étend en longitude de 100° E à 130° E
+  en passant par l'antimédien et 
+  soit 100°E -> 180°E + 180°W -> 130°E
+  soit une amplitude de 390°
+
+logiqueGéoTiff: |
+  GéoTiff permet de gérer des GéoTiff à cheval sur l'anti-méridien
+  en considrant que normalement -180° <= lonWest <= lonEast <= +180°
+  mais pour les GéoTiff à cheval sur l'anti-méridien: -180° <= lonWest < +180° < lonEast < +540°
+  Ainsi lorsque c'est le cas, à l'affichage, le GéoTiff est dupliqué en:
+    -180° <= lonWest < +180° < lonEast < +540°
+    -540° <= lonWest-360 < -180° < lonEast-360 < +180°
+  L'algorithme d'affichage ne tenant compte que de la partie entre -180° et 180°, il s'exécute correctement
+  
+casPlanisphère:
+  Imaginons de coder le planisphère:
+    west: 100
+    east: 490
+  Il sera dupliqué alors en:
+    - {west: 100, east: 490}  -> affichage 100 -> 180 soit 80° d'amplitude
+    - {west: -260, east: 130} -> affichage -180 -> 130 soit 310° d'amplitude
+
+gdalinfo: |
+  Corner Coordinates:
+  Upper Left  ( 9764840.901,17496610.029) ( 87d43' 8.61"E, 82d41' 0.31"N)
+  Lower Left  ( 9764840.901,-16164041.292) ( 87d43' 8.61"E, 80d59'22.05"S)
+  Upper Right (56646169.323,17496610.029) (148d51'40.31"E, 82d41' 0.31"N)
+  Lower Right (56646169.323,-16164041.292) (148d51'40.31"E, 80d59'22.05"S)
+  Center      (33205505.112,  666284.369) ( 61d42'35.54"W,  6d 0'52.01"N)
+gdalinfoConv:
+  W: 87d43' 8.61"E -> 87.719058333
+  E: 148d51'40.31"E -> 148.861197 + 360 -> 508.861197
+  C: 61d42'35.54"W -> -61.709872
+  
+algo:
+  - calul des bords
+  - calcul l'écart en coord. WorldMercator entre les coord. de l'intérieur et de l'extérieur du cadre
+  - les coord. de l'extérieur du cadre proviennent du gdalinfo
+  - les coord. de l'intérieur du cadre proviennent du GAN
+  
+conclusions:
+  - la description du GAN est fausse, les côtés W et E sont intervertis
+  - le planisphère peut être codé comme n'importe qu'elle carte et la carte spéciale 0101bis est inutile
+  - il a la particularité d'avoir une amplitude > 360°
+    - ainsi à la lecture du GAN, il est impossible d'interpréter qu'il a une telle amplitude
+    - solution - tester une correction du GAN avec West 100 / East 490
+  - de même à la lecture du gdalinfo, pour détecter ce cas il faut utiliser les coordonnées du centre
+    et constater que la longitude centrale n'est pas entre les extrêmes
+
+enPratique:
+  - modification de gancorrection
+  - modification du code de gdalinfo pour tenir compte de cas particulier
+  - ca marche !
+  

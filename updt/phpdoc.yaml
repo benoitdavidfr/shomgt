@@ -82,6 +82,8 @@ doc: |
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
 
 journal: |
+  6/11/2019:
+    - écriture des scripts cropall.php et cromap.php pour fabriquer les géotiffs rognés pour le SNUM
   3/11/2019:
     - la gestion des superposition ne fonctionne pas avec 3 cartes, ex Guadeloupe 7302 > 6948 > 7482
   2/11/2019:
@@ -96,6 +98,8 @@ phpScripts:
   - /geoapi/shomgt/updt/shomgt.php
   - /geoapi/shomgt/updt/frame.php
   - /geoapi/shomgt/updt/crop.php
+  - /geoapi/shomgt/updt/cropall.php
+  - /geoapi/shomgt/updt/cropmap.php
 phpIncludes:
   - /geoapi/shomgt/updt/gdalinfo.inc.php
   - /geoapi/shomgt/updt/ontop.inc.php

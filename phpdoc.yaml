@@ -47,11 +47,29 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
-    - vérifier que ttes les cartes à détruire le sont bien
     - réfléchir à l'interface OpenApi (pas d'urgence)
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  7/11/2019:
+    - suppression de la carte 7656
+  6/11/2019:
+    - le catalogue indique (https://geoapi.fr/shomgt/cat/?action=stats / http://localhost/geoapi/shomgt/cat/?action=stats)
+      - 434 cartes dont 4 AEM et 1 MancheGrid => 429 std
+      - 771 GéoTiffs cad 766 de cartes std
+    - j'ai dans all7z sur alwaysdata:
+      - 428 cartes std + 5 cartes spéciales, il manque 7656 (De Santoña à Gijón)
+      - 766 GéoTiff de cartes std
+    - ws/geojson.php expose 782 GéoTiffs dont 10 parties Est => 772 GéoTiffs
+    - Il faut détruire la carte 7656
+    - fabrication pour SNUM dans all7z des archives de cartes et des GéoTiffs rognés
+    - livraison au SNUM
+    - suppression du répertoire all7z sur alwaysdata
+  5/11/2019:
+    - pb à regarder avec la carte 7427
+      la carte est composée de 5 cartouches sans zone principale
+      2 cartouches correspondent à 2 ports
+      Les 3 autres correspondent à la Gironde, ils ne portent pas de titre
   29/10-2/11/2019:
     - améliorations de cat
     - correction de l'édition de la carte dans updt

@@ -6,8 +6,9 @@ description: |
 modified: 2019-11-02
 corrections:
   FR0101:
-    title: Planisphère des fuseaux horaires
-    lineage: correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l'extension en longitude soit supérieure à 360°
+    title: Planisphère terrestre
+    lineage: correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l'extension en longitude soit supérieure à 360°, correction aussi du titre
+    originalTitle: Planisphère des fuseaux horaires
     scaleDenominator: '40.000.000'
     originalBboxDM:
       SW: "79°00,00'S - 130°00,00'E"
@@ -163,6 +164,36 @@ corrections:
     bboxDM:
         SW: "33°30,00'N - 014°00,00'W"
         NE: "43°30,00'N - 005°15,00'W"
+  FR7427:
+    title: La Gironde - La Garonne et La Dordogne
+    lineage: Correction des titres des cartouches, pas de partie principale
+    isued: Édition n° 2 - 2016
+    boxes:
+      - title: 1 - La Gironde
+        scaleDenominator: '52.000'
+        bboxDM:
+          SW: "45°08,90'N — 000°55,00'W"
+          NE: "45°30,00'N — 000°39,40'W"
+      - title: 2 - XX
+        scaleDenominator: '52.300'
+        bboxDM:
+          SW: "44°50,18'N — 000°45,00'W"
+          NE: "45°11,40'N — 000°17,50'W"
+      - title: 3 - XXXX
+        scaleDenominator: '52.400'
+        bboxDM:
+          SW: "44°51,90'N — 000°22,40'W"
+          NE: "44°57,10'N — 000°13,60'W"
+      - title: A - Port de Pauillac
+        scaleDenominator: '20.000'
+        bboxDM:
+          SW: "45°10,24'N — 000°45,58'W"
+          NE: "45°14,24'N — 000°42,58'W"
+      - title: B - Port de Blaye
+        scaleDenominator: '20.000'
+        bboxDM:
+          SW: "45°03,44'N — 000°43,00'W"
+          NE: "45°08,44'N — 000°37,08'W"
 ajouts:
   FR8502:
     title: Action de l'Etat en Mer en ZMSOI
