@@ -1,8 +1,8 @@
 title: corrections du GAN
 description: |
   Ce document contient des corrections et des ajouts à effectuer sur les enregistrements du GAN.
-  L'algorithme de correction utilise d'une part le fait que la liste des boxes correspond aux mêmes cartouches
-  et, d'autre part, effectue la correction du bboxDM si ce champ existe pour le cartouche.
+  L'algorithme de correction utilise le fait que la liste des boxes correspond aux mêmes cartouches ;
+  il effectue la correction du bboxDM si ce champ existe pour le cartouche.
 modified: 2019-11-02
 corrections:
   FR0101:
@@ -169,31 +169,14 @@ corrections:
     lineage: Correction des titres des cartouches, pas de partie principale
     isued: Édition n° 2 - 2016
     boxes:
-      - title: 1 - La Gironde
-        scaleDenominator: '52.000'
-        bboxDM:
-          SW: "45°08,90'N — 000°55,00'W"
-          NE: "45°30,00'N — 000°39,40'W"
-      - title: 2 - XX
-        scaleDenominator: '52.300'
-        bboxDM:
-          SW: "44°50,18'N — 000°45,00'W"
-          NE: "45°11,40'N — 000°17,50'W"
-      - title: 3 - XXXX
-        scaleDenominator: '52.400'
-        bboxDM:
-          SW: "44°51,90'N — 000°22,40'W"
-          NE: "44°57,10'N — 000°13,60'W"
+      - title: 1 - La Gironde - La Garonne et La Dordogne (1/3)
+        originalTitle: 1 -
+      - title: 2 - La Gironde - La Garonne et La Dordogne (2/3)
+        originalTitle: 2 -
+      - title: 3 - La Gironde - La Garonne et La Dordogne (3/3)
+        originalTitle: 3 -
       - title: A - Port de Pauillac
-        scaleDenominator: '20.000'
-        bboxDM:
-          SW: "45°10,24'N — 000°45,58'W"
-          NE: "45°14,24'N — 000°42,58'W"
       - title: B - Port de Blaye
-        scaleDenominator: '20.000'
-        bboxDM:
-          SW: "45°03,44'N — 000°43,00'W"
-          NE: "45°08,44'N — 000°37,08'W"
 ajouts:
   FR8502:
     title: Action de l'Etat en Mer en ZMSOI

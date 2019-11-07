@@ -6,6 +6,8 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  7/11/2019:
+    ajout de la correction éventuel des titres
   29/10/2019:
     ajout des cartes AEM et MancheGrid
   28/10/2019:
@@ -261,15 +263,23 @@ class MapCat {
       //print_r($corr);
       foreach ($this->boxes as $ibox => $box) {
         if (($ibox == 0) && isset($corr['bboxDM'])) {
-          $bboxDM = $corr['bboxDM'];
+          if (isset($corr['originalTitle']) && isset($corr['title']))
+            $this->boxes[0]['title'] = $corr['title'];
           //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
+          $bboxDM = $corr['bboxDM'];
           $this->boxes[0]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
         }
-        elseif (isset($corr['boxes'][$ibox-1]['bboxDM'])) {
-          $bboxDM = $corr['boxes'][$ibox-1]['bboxDM'];
-          //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
-          $this->boxes[$ibox]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
-        } 
+        else {
+          if (isset($corr['boxes'][$ibox-1]['originalTitle']) && isset($corr['boxes'][$ibox-1]['title'])) {
+            //echo "correction du titre de $frnum-$ibox\n";
+            $this->boxes[$ibox]['title'] = $corr['boxes'][$ibox-1]['title'];
+          }
+          if (isset($corr['boxes'][$ibox-1]['bboxDM'])) {
+            $bboxDM = $corr['boxes'][$ibox-1]['bboxDM'];
+            //echo "correction $frnum.boxes[$ibox]: \"$bboxDM[SW]\", \"$bboxDM[NE]\"<br>\n";
+            $this->boxes[$ibox]['bbox'] = new MapBBox($bboxDM['SW'], $bboxDM['NE']);
+          } 
+        }
       }
       $this->corrections = $corr['lineage'];
     }

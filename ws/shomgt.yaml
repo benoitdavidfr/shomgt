@@ -7,7 +7,7 @@ $schema: shomgt.schema.yaml
 
 gt20M:
   0101/0101_pal300:
-    title: 0101 - Planisphère des fuseaux horaires
+    title: 0101 - Planisphère terrestre
     edition: Edition n°4 - 2016
     scaleden: 40000000
     width: 13819
@@ -1799,7 +1799,7 @@ gt100k:
     right: 415 # nbre de pixels de la bordure droite
     top: 565 # nbre de pixels de la bordure haute
   7070/7070_pal300:
-    title: 7070 - De l'île d'Oléron au Bassin d'Arcachon
+    title: 7070 - Du pertuis de Maumusson à Mimizan-Plage
     edition: Edition n° 3 - 2018
     scaleden: 167000
     width: 9922
@@ -3537,7 +3537,7 @@ gt50k:
     right: 398 # nbre de pixels de la bordure droite
     top: 550 # nbre de pixels de la bordure haute
   7427/7427_3_gtw:
-    title: 7427 - 3 -
+    title: 7427-3 - La Gironde - La Garonne et La Dordogne (3/3)
     edition: Edition n° 2 - 2016
     scaleden: 52400
     width: 2822
@@ -3551,7 +3551,7 @@ gt50k:
     right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
   7427/7427_4_gtw:
-    title: 7427 - 1 -
+    title: 7427-1 - La Gironde - La Garonne et La Dordogne (1/3)
     edition: Edition n° 2 - 2016
     scaleden: 52000
     width: 4840
@@ -3565,7 +3565,7 @@ gt50k:
     right: 106 # nbre de pixels de la bordure droite
     top: 105 # nbre de pixels de la bordure haute
   7427/7427_5_gtw:
-    title: 7427 - 2 -
+    title: 7427-2 - La Gironde - La Garonne et La Dordogne (2/3)
     edition: Edition n° 2 - 2016
     scaleden: 52300
     width: 8370

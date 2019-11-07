@@ -14,7 +14,7 @@
         "FR0101": {
             "num": "0101",
             "groupTitle": "Planisphère terrestre",
-            "title": "Planisphère des fuseaux horaires",
+            "title": "Planisphère terrestre",
             "scaleDenominator": "40.000.000",
             "bboxDM": {
                 "SW": "79°00,00'S - 100°00,00'E",
@@ -27,7 +27,7 @@
                 "eastlimit": 490
             },
             "issued": "Édition n° 4 - 2016",
-            "corrections": "correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l'extension en longitude soit supérieure à 360°"
+            "corrections": "correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l'extension en longitude soit supérieure à 360°, correction aussi du titre"
         },
         "FR0101Q": {
             "num": "0101Q",
@@ -7320,7 +7320,7 @@
         "FR7070": {
             "num": "7070",
             "groupTitle": "Côte Ouest de France",
-            "title": "De l'île d'Oléron au Bassin d'Arcachon",
+            "title": "Du pertuis de Maumusson à Mimizan-Plage",
             "scaleDenominator": "167.000",
             "bboxDM": {
                 "SW": "44°09,00'N - 002°36,00'W",
@@ -15538,9 +15538,10 @@
             "groupTitle": "Côte Ouest de France",
             "title": "La Gironde - La Garonne et La Dordogne",
             "issued": "Édition n° 2 - 2016",
+            "corrections": "Correction des titres des cartouches, pas de partie principale",
             "boxes": [
                 {
-                    "title": "1 -",
+                    "title": "1 - La Gironde - La Garonne et La Dordogne (1/3)",
                     "scaleDenominator": "52.000",
                     "bboxDM": {
                         "SW": "45°08,90'N - 000°55,00'W",
@@ -15554,7 +15555,7 @@
                     }
                 },
                 {
-                    "title": "2 -",
+                    "title": "2 - La Gironde - La Garonne et La Dordogne (2/3)",
                     "scaleDenominator": "52.300",
                     "bboxDM": {
                         "SW": "44°50,18'N - 000°45,00'W",
@@ -15568,7 +15569,7 @@
                     }
                 },
                 {
-                    "title": "3 -",
+                    "title": "3 - La Gironde - La Garonne et La Dordogne (3/3)",
                     "scaleDenominator": "52.400",
                     "bboxDM": {
                         "SW": "44°51,90'N - 000°22,40'W",
