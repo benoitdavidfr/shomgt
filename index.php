@@ -15,7 +15,7 @@ journal: |
 require_once __DIR__.'/ws/accesscntrl.inc.php';
 
 echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title></head>\n";
-if (!Access::cntrl()) {
+if (Access::cntrlFor('homePage') && !Access::cntrl()) {
   $adip = $_SERVER['REMOTE_ADDR'];
   header('HTTP/1.1 403 Forbidden');
   die("<body>Bonjour,</p>
