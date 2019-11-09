@@ -16,24 +16,24 @@ else {
     static $config = [
       // controle activé au non par fonctionnalité
       'cntrlFor'=> [
-        'wms'=> true, # activé pour WMS
+        'wms'=> false, # activé pour WMS
         'tile'=> false, # DESACTIVE pour l'accès par tuiles
-        'homePage'=> true, # activé pour la page d'accueil
-        'geoTiffCatalog'=> true, # activé pour le catalogue des GéoTiff
+        'homePage'=> false, # désactivé pour la page d'accueil
+        'geoTiffCatalog'=> false, # activé pour le catalogue des GéoTiff
       ],
     
-      // liste des adresses IP autorisées
+      // liste des adresses IP autorisées utiles lorsque le contrôle est activé
       'ipWhiteList'=> [
-        '127.0.0.1', // Accès local sur le Mac
+        '127.0.0.1', // Accès local
         '172.17.0.1', // accès entre machines docker
       ],
     
-      // liste des login/mdp autorisés
+      // liste des login/mdp autorisés utiles lorsque le contrôle est activé
       'loginPwds' => [
         'demo:demo',
       ],
     
-      # Paramétrage du serveur MySQL en fonction du serveur hébergeant l'application
+      # Paramétrage du serveur MySQL pour enregistrer les logs en fonction du serveur hébergeant l'application
       # mysql://{user}:{passwd}@{host}/{database}
       'mysqlParams'=> [
         'MODELE'=> 'mysql://{user}:{passwd}@{host}/{database}',

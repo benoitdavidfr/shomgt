@@ -58,7 +58,8 @@ Le code utilise :
   - Php 7.2
   - [le composant Yaml de Symfony](https://symfony.com/doc/current/components/yaml.html) qui peut être installé par
     `composer require symfony/yaml`
-  - les logiciels [gdal_translate et gdalinfo](https://www.gdal.org/) utilisés pour convertir les GéoTiff en PNG.
+  - les logiciels [gdal_translate et gdalinfo](https://www.gdal.org/) utilisés pour convertir les GéoTiff en PNG
+  - le logiciel 7z pour dézipper les archives
   
 Des indications plus précises sur les versions des logiciels sont disponibles
 dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomgt/blob/master/docker/Dockerfile).

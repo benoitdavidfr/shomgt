@@ -6,6 +6,8 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  8/11/2019:
+    renommage de MapCat::__construct() en MapCat::analyzeFromHtml() pour pouvoir construire un MapCat de différentes manières
   7/11/2019:
     ajout de la correction éventuel des titres
   29/10/2019:
@@ -141,7 +143,7 @@ class MapCat {
   */
   
   // analyse du html pour créer l'avis Gan d'une carte
-  function __construct(string $num, string $html) {
+  function analyzeFromHtml(string $num, string $html) {
     $this->num = $num;
     if (preg_match('!<p class="erreur">([^<]*)</p>!', $html, $matches)) {
       if (preg_match('!^La carte FR[^ ]* n&rsquo;est pas en vigueur\.$!', $matches[1])) {
@@ -360,6 +362,40 @@ class MapCat {
     return $export;
   }
   
+  // importe un objet depuis un enregistrement JSON tel que fabriqué par asArray
+  function analyzeFromJson(array $import): void {
+    $this->num = $import['num'];
+    if ($import['issued'] == 'notValid')
+      $this->edition = 'notValid';
+    $this->boxes = [];
+    if (isset($import['groupTitle']))
+      $this->boxes[0]['superTitle'] = $import['groupTitle'];
+    $this->boxes[0]['title'] = $import['title'];
+    if (isset($import['scaleDenominator']))
+      $this->boxes[0]['scaleD'] = str_replace('.','', $import['scaleDenominator']);
+    if (isset($import['bboxDM']))
+      $this->boxes[0]['bbox'] = new MapBBox($import['bboxDM']['SW'], $import['bboxDM']['NE']);
+    if (isset($import['issued']))
+      $this->edition = $import['issued'];
+    if (isset($import['replaces']))
+      $this->remplace = $import['replaces'];
+    if (isset($import['references']))
+      $this->facsimile = $import['references'];
+    if (isset($import['note']))
+      $this->note = $import['note'];
+    if (isset($import['corrections']))
+      $this->corrections = $import['corrections'];
+    if (isset($import['boxes'])) {
+      foreach ($import['boxes'] as $ibox => $box) {
+        $this->boxes[] = [
+          'title'=> $box['title'],
+          'scaleD'=> str_replace('.','', $box['scaleDenominator']),
+          'bbox' => new MapBBox($box['bboxDM']['SW'], $box['bboxDM']['NE']),
+        ];
+      }
+    }
+  }
+    
   function bbox(): ?MapBBox { return isset($this->boxes[0]['bbox']) ? $this->boxes[0]['bbox'] : null; }
   
   // renvoie la liste des cartouches avec notamment le GBox de chacun
@@ -444,28 +480,44 @@ class MapCat {
     }
   }
   
-  // ajoute une carte au catalogue
+  // ajoute une carte au catalogue à partir du HTML
   static function add(string $num, string $html, int $modified): void {
-    self::$all["FR$num"] = new self($num, $html);
+    self::$all["FR$num"] = new self();
+    self::$all["FR$num"]->analyzeFromHtml($num, $html);
     if (!self::$modified)
       self::$modified = $modified;
+  }
+  
+  // ajoute une carte au catalogue à partir du JSON
+  static function addFromJson(string $num, array $json, string $modified): void {
+    self::$all["FR$num"] = new self();
+    self::$all["FR$num"]->analyzeFromJson($json);
+    if (!self::$modified) {
+      // retranscrit la date comme timestamp Unix à partir du format string ISO
+      if (!preg_match('!^(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)\+00:00$!', $modified, $matches))
+        die("Erreur de match sur date ligne ".__LINE__."<br>\n");
+      //echo "matches="; print_r($matches);
+      self::$modified = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
+    }
   }
   
   // nbre de cartes dans le catalogue
   static function count(): int { return count(self::$all); }
   
   // enregistre l'ensemble du catalogue dans le fichier pser, génère un fichier mapcat.json
-  static function store(): void {
+  static function store(bool $writeJson=true): void {
     file_put_contents(self::PSER_PATH, serialize([
       'modified'=> self::$modified,
       'all'=> self::$all,
     ]));
-    file_put_contents(__DIR__.'/mapcat.json',
-      json_encode(
-        self::allAsArray(),
-        JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE
-      )
-    );
+    if ($writeJson) {
+      file_put_contents(__DIR__.'/mapcat.json',
+        json_encode(
+          self::allAsArray(),
+          JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE
+        )
+      );
+    }
   }
   
   // initialise les champs statiques de la classe à partir du fichier pser

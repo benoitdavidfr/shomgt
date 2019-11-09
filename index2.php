@@ -86,7 +86,7 @@ Parmi ces données, les
 <a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf' target='repertoire'>Images numériques géoréférencées des cartes marines</a>,
 aussi appelées cartes GéoTIFF, sont issues de la numérisation des cartes marines traditionnelles du Shom.<br>
 Le Shom propose aussi une API d'accès à ses cartes
-(<a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf' target='repertoire'>nommée RasterMARINE</a>)
+(<a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf' target='repertoire'>nommées RasterMARINE</a>)
 mais la considère comme des données privées dont l'utilisation reste donc payante.<br>
 
 L'objectif de ce site est de simplifier l'accès au contenu des cartes GéoTIFF du Shom
@@ -134,7 +134,7 @@ Si ce type de contrôle ne convient pas, 2 autres contrôles d'accès sont aussi
 <li>en enregistrant le referer des cartes qui donnent accès aux images.
 </ul>
 
-Vos retours sont indispensables pour améliorer et stabiliser ces développements.<br>
+Vos retours sont indispensables pour améliorer ces développements.<br>
 Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 
 <h3>Auteur</h3>

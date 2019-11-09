@@ -28,6 +28,8 @@ doc: |
       - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
 
 journal: |
+  8/11/2019:
+    - ajout de la possibilité de créer un catalogue en pser à partir de sa version GeoJSON
   29/10/2019:
     - ajout des cartes AEM et MancheGrid
   26/10/2019:

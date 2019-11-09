@@ -15,27 +15,26 @@ journal: |
 <!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>shomgt doc</title></head>
 <h1>Documentation technique détaillée de l'accès aux cartes du Shom</h1>
 
-<div id='layers'>
-<h2>1. Restructuration des cartes du Shom en couches</h2>
+<h2 id='layers'>1. Restructuration des cartes du Shom en couches</h2>
 Les images GéoTiff constituant les cartes sont regroupées en fonction de leur échelle et agrégées
 dans les 12 couches suivantes :<ul>
 <li><a href='tile.php/gt20M'>gt20M : planisphère SHOM au 1/40.000.000 à l'équateur</a>
-<li><a href='tile.php/gt10M'>gt10M : images dont l'échelle est comprise entre 1/14.000.000 et 1/6.000.000</a>
-<li><a href='tile.php/gt4M'>gt4M : images dont l'échelle est comprise entre 1/6.000.000 et 1/3.000.000</a>
-<li><a href='tile.php/gt2M'>gt2M : images dont l'échelle est comprise entre 1/3.000.000 et 1/1.400.000</a>
-<li><a href='tile.php/gt1M'>gt1M : images dont l'échelle est comprise entre 1/1.400.000 et 1/700.000</a>
-<li><a href='tile.php/gt500k'>gt500k : images dont l'échelle est comprise entre 1/700.000 et 1/380.000</a>
-<li><a href='tile.php/gt250k'>gt250k : images dont l'échelle est comprise entre 1/380.000 et 1/180.000</a>
-<li><a href='tile.php/gt100k'>gt100k : images dont l'échelle est comprise entre 1/180.000 et 1/90.000</a>
-<li><a href='tile.php/gt50k'>gt50k : images dont l'échelle est compriseM entre 1/90.000 et 1/45.000</a>
-<li><a href='tile.php/gt25k'>gt25k : images dont l'échelle est comprise entre 1/45.000 et 1/22.000</a>
-<li><a href='tile.php/gt12k'>gt12k : images dont l'échelle est comprise entre 1/22.000 et 1/11.000</a>
-<li><a href='tile.php/gt5k'>gt5k : images dont l'échelle est supérieure au 1/11.000</a>
+<li><a href='tile.php/gt10M'>gt10M : échelle comprise entre 1/14.000.000 et 1/6.000.000</a>
+<li><a href='tile.php/gt4M'>gt4M : échelle comprise entre 1/6.000.000 et 1/3.000.000</a>
+<li><a href='tile.php/gt2M'>gt2M : échelle comprise entre 1/3.000.000 et 1/1.400.000</a>
+<li><a href='tile.php/gt1M'>gt1M : échelle comprise entre 1/1.400.000 et 1/700.000</a>
+<li><a href='tile.php/gt500k'>gt500k : échelle comprise entre 1/700.000 et 1/380.000</a>
+<li><a href='tile.php/gt250k'>gt250k : échelle comprise entre 1/380.000 et 1/180.000</a>
+<li><a href='tile.php/gt100k'>gt100k : échelle comprise entre 1/180.000 et 1/90.000</a>
+<li><a href='tile.php/gt50k'>gt50k : échelle comprise entre 1/90.000 et 1/45.000</a>
+<li><a href='tile.php/gt25k'>gt25k : échelle comprise entre 1/45.000 et 1/22.000</a>
+<li><a href='tile.php/gt12k'>gt12k : échelle comprise entre 1/22.000 et 1/11.000</a>
+<li><a href='tile.php/gt5k'>gt5k : échelle supérieure au 1/11.000</a>
 </ul>
 
 <div id='pyr'>
 Une couche supplémentaire, appelée <a href='tile.php/gtpyr'>Pyramide (gtpyr)</a>,
-permet de naviguer dans les différentes iamges sans avoir à changer de couche.
+permet de naviguer dans les différentes images sans avoir à changer de couche.
 Son contenu s'adapte au niveau de zoom demandé.
 A chaque niveau de zoom est associée une des couches ci-dessus ;
 la correspondance entre niveau de zoom (au sens Leaflet) et couche est la suivante :
@@ -64,23 +63,24 @@ Enfin, les 2 couches spécifiques suivantes sont définies:<ul>
 </div>
 
 <h2 id='mapwcat'>2. La carte Leaflet pour visualiser les couches et télécharger les cartes Shom</h2>
-Les couches ci-dessus peuvent être visualisées grâce à une <a href='mapwcat.php'>carte Leaflet</a>
-qui expose, en outre, des couches catalogues contenant pour chaque couche
+Une <a href='mapwcat.php'>carte Leaflet</a> permet de visualiser les couches ci-dessus
+ainsi que des couches catalogues contenant pour chaque couche
 la silhouette des images de la couche permettant ainsi, en cliquant dessus, d'afficher :<ul>
 <li>le nom de la couche
 <li>le numéro, le titre, le nom informatique et l'échelle du géotiff
 <li>l'édition de la carte
-<li>6 liens pour accéder respectivement à 
-  l'image du géotiff au format PNG,
-  une mini image de la carte au format PNG,
-  l'archive 7z d'origine de la carte,
-  une image rognée, c.a.d. sans son cadre, au format GéoTIFF,
-  les propriétés du géotiff en JSON
-  et le Groupe d'avis aux navigateurs (GAN) pour la carte.
+<li>6 liens pour accéder respectivement à :<ul>
+  <li>l'image du géotiff au format PNG,
+  <li>une mini image de la carte au format PNG,
+  <li>l'archive 7z d'origine de la carte,
+  <li>une image rognée, c.a.d. sans son cadre, au format GéoTIFF,
+  <li>les propriétés du géotiff en JSON et
+  <li>le Groupe d'avis aux navigateurs (GAN) pour la carte.
+  </ul>
 </ul>
-L'appel de la carte peut être paramétré avec :<ul>
-<li>le centre sous la forme center={lat},{lon}
-<li>le niveau de zoom sous la forme zoom={zoom}
+L'appel de la carte Leaflet peut être paramétré avec :<ul>
+<li>le centre sous la forme <code>center={lat},{lon}</code>
+<li>le niveau de zoom sous la forme <code>zoom={zoom}</code>
 </ul>
 Exemples :<ul>
   <li><a href='mapwcat.php?center=14.6,-61.1&amp;zoom=11'>Martinique</a>
@@ -149,10 +149,10 @@ propose les différentes couches dans les 4 systèmes de coordonnées suivants :
 <b>Attention, en EPSG:4326 et CRS:84 la carte est grossièrement déformée</b>.
 Il est donc recommandé d'utiliser l'un des 2 premiers systèmes de coordonnées.
 </p>
-A noter que l'API d'accès aux tuiles peut aussi être utilisée dans QGis et propose des meilleures performances
+A noter que l'API d'accès aux tuiles peut aussi être utilisée dans QGis et propose de meilleures performances
 que le service WMS.
 
 <h2>4. Auteur</h2>
 Ce site est réalisé par Benoit DAVID, Chef de la MIG au MTES.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 4/11/2019<br>
+Mise à jour: 7/11/2019<br>

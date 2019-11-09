@@ -5,6 +5,8 @@ title: build.php - cmdes produisant mapcat.pser à partir du WFS du Shom et des 
 doc: |
   Il reste à gérer l'invalidation d'une carte
 journal: |
+  8/11/2019:
+    possibilité de construire un pser à partir du GeoJSON
   29/10/2019:
     ajout des cartes AEM et MancheGrid
   28/10/2019:
@@ -98,7 +100,8 @@ if ($action == 'displayGan') {
     if (!preg_match('!^FR([^.]*)\.html$!', $file, $matches))
       throw new Exception("No match on file name $file");
     $num = $matches[1];
-    $mapinfo = new MapCat($num, $html);
+    $mapinfo = new MapCat();
+    $mapinfo->analyzeFromHtml($num, $html);
     echo ($no++ ? ",\n" : ''),
          "  \"FR$num\" : ",
          json_encode(
@@ -134,7 +137,8 @@ if ($action == 'verifGan') {
     $html = file_get_contents("gan/$file");
     if (!preg_match('!^FR([^.]*)\.html$!', $file, $matches))
       throw new Exception("No match on file name $file");
-    $mapinfo = new MapCat($matches[1], $html);
+    $mapinfo = new MapCat;
+    $mapinfo->analyzeFromHtml($matches[1], $html);
     echo "<b>",$prototypes[$file]," (<a href='gan/$file'>gan</a>)</b><br>\n",
          '<pre>',
           json_encode(
@@ -162,6 +166,29 @@ if ($action == 'store') {
   }
   MapCat::store();
   echo MapCat::count()," cartes dans le pser<br>\n";
+  die("FIN OK<br>\n");
+}
+
+// Génère le fichier mapcat.pser à partir du fichier mapcat.json
+// A FAIRE
+if ($action == 'storeFromJSON') {
+  if (!is_file(__DIR__.'/mapcat.json'))
+    die("Erreur, pas de fichier JSON<br>\n");
+  $json = json_decode(file_get_contents(__DIR__.'/mapcat.json'), true);
+  foreach ($json['maps'] as $frnum => $map) {
+    MapCat::addFromJson(substr($frnum, 2), $map, $json['modified']);
+  }
+  // Je n'efface pas le JSON initial pour pouvoir le comparer avec celui issu du PSER produit
+  MapCat::store(false);
+  echo MapCat::count()," cartes dans le pser<br>\n";
+  
+  if (0) {
+    // Partie test de vérification en ressortant le JSON à partir du PSER pour le comparer au JSON ancien
+    MapCat::load();
+    echo json_encode(
+            MapCat::allAsArray(),
+            JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+  }
   die("FIN OK<br>\n");
 }
 

@@ -26,7 +26,8 @@ Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
 
 - le script `build.php`, à utiliser en ligne de commande, permet de construire le catalogue
   - la sous-commande `harvestGan` moissonne le flux WFS et les pages du GAN dans le répertoire `gan`,
-  - la sous-commande `store` fabrique le fichier `mapcat.pser` qui stocke le catalogue des cartes en format interne.  
+  - la sous-commande `store` fabrique les fichiers `mapcat.pser` qui stocke le catalogue des cartes
+    respectivement en format interne et en format JSON.  
 - le script `index.php` exploite le catalogue :
   - il expose en JSON les cartes stockées dans `mapcat.pser` (action=showGan),
   - il liste les cartes à actualiser (action=shomgtObsolete), celles à supprimer (action=shomgtObsolete2)
