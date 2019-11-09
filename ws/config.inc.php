@@ -16,15 +16,16 @@ else {
     static $config = [
       // controle activé au non par fonctionnalité
       'cntrlFor'=> [
-        'wms'=> false, # activé pour WMS
-        'tile'=> false, # DESACTIVE pour l'accès par tuiles
+        'wms'=> false, # désactivé pour WMS
+        'tile'=> false, # désactivé pour l'accès par tuiles
         'homePage'=> false, # désactivé pour la page d'accueil
-        'geoTiffCatalog'=> false, # activé pour le catalogue des GéoTiff
+        'mapwcat'=> false, # désactivé pour la carte leaflet
+        'geoTiffCatalog'=> false, # désactivé pour le catalogue des GéoTiff
       ],
     
       // liste des adresses IP autorisées utiles lorsque le contrôle est activé
       'ipWhiteList'=> [
-        '127.0.0.1', // Accès local
+        //'127.0.0.1', // Accès local
         '172.17.0.1', // accès entre machines docker
       ],
     
