@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  9/11/2019
+    amélioration du controle d'accès
   4/11/2019:
     - ajout bindTooltip() dans onEachFeature()
   1-2/11/2019:

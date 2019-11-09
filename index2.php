@@ -5,6 +5,8 @@ title: index2.php - texte de la réelle page d'accueil
 includes: [ ws/accesscntrl.inc.php ]
 doc: |
 journal: |
+  9/11/2019
+    amélioration du controle d'accès
   1-2/11/2019
     adaptation à la nouvelle version
   2/7/2017

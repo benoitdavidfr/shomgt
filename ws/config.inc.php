@@ -6,6 +6,9 @@ doc: |
   Le vrai fichier de config est secretconfig.inc.php qui contient des infos confidentielles
   S'il existe, c'est lui qui est utilisé
   Sinon ce fichier congtient une configuration par défaut
+journal:
+  9/11/2019
+    amélioration du controle d'accès
 includes: [secretconfig.inc.php]
 */
 if (is_file(__DIR__.'/secretconfig.inc.php'))
