@@ -11,6 +11,7 @@ les différents accès.
 Elle peut a priori aussi être utilisée pour installer *shomgt* sur un ordinateur individuel.
 
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
+Cependant elle est encore expérimentale.
 
 ## Pré-requis
 Un serveur Linux avec :
