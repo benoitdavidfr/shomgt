@@ -29,7 +29,7 @@ Sous Linux chez `user` *shomgt* sera installé dans un répertoire `/home/user/h
 De même chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom par livraison
 qui seront déposées au moyen d'un serveur ftp.
 
-Le container Docker sera fabriqué (build) puis exécuté (run) en faisant correspondre:
+Le code Php s'éxécute dans un container Docker qui sera fabriqué (build) puis exécuté (run) en faisant correspondre:
 
   - le répertoire `/var/www` sous Docker avec `/home/user/` sous Linux
   - le port IP 80 de Docker avec le port IP 80 de Linux
