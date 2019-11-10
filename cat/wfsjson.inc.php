@@ -16,6 +16,8 @@ doc: |
   Le document http://localhost/yamldoc/?doc=geodata/igngpwfs permet de tester la classe WfsServerJson.
   
 journal: |
+  10/11/2019:
+    - correction d'un bug
   4/11/2018:
     - réécriture de WfsServerJson::printAllFeatures() pour être plus stable
   3/11/2018:
@@ -68,7 +70,7 @@ class WfsServerJson extends WfsServer {
         //'OUTPUTFORMAT'=> rawurlencode('text/xml; subtype=gml/3.2'),
         'TYPENAME'=> $typeName,
       ]);
-      if (!is_dir(self::$capCache) && mkdir(self::$capCache))
+      if (!is_dir(self::$capCache) && !mkdir(self::$capCache))
         throw new Exception("Erreur de création du répertoire ".self::$capCache);
       file_put_contents($filepath, $featureType);
     }

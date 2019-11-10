@@ -6,7 +6,7 @@ includes: [ ws/accesscntrl.inc.php ]
 doc: |
 journal: |
   9/11/2019
-    controle des accès amélioré
+    amélioration du controle d'accès
   1/11/2019
     nlle version
   11/6/2017
