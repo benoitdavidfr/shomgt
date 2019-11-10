@@ -26,7 +26,7 @@ Ce code contient une définition Docker dans le répertoire `docker`.
 Ce code source sera installé chez un utilisateur Linux nommé `user` qui devra être créé
 ce qui créera le répertoire `/home/user`  
 Sous Linux chez `user` *shomgt* sera installé dans un répertoire `/home/user/html/shomgt`  
-De même chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom par livraison
+De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom par livraison
 qui seront déposées au moyen d'un serveur ftp.
 
 Le code Php s'éxécute dans un container Docker qui sera fabriqué (build) puis exécuté (run) en faisant correspondre:
