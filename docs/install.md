@@ -41,6 +41,9 @@ dans une structure utilisable par *shomgt*.
 A la fin de l'installation,
 *shomgt* sera disponible sur l'URL `http://{serveur}/shomgt` où `{serveur}` est le nom ou le numéro IP du serveur.
 
+## Remarques préliminaires
+- Dans les commandes ci-dessous, le caractère initial `#` ou `$` ne doit pas être tapé.
+
 ## Mise en oeuvre pas à pas
 
 Se loguer sur la machine Linux sous root et créer l'utilisateur user en répondant aux questions posées,
@@ -113,9 +116,6 @@ A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les 
 **Attention, en sortant du shell on arrête le container et donc le serveur Apache**.
 
 ## Points de vigilance
-
-- Dans les commandes ci-dessus, le caractère initial `#` ou `$` ne doit pas être tapé.
-
 - Le fait d'arrêter le serveur lorsque l'on sort du shell peut être considéré comme génant ;
   une mise à jour pourra être faite pour améliorer ce point.
   
