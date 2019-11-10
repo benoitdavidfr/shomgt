@@ -29,13 +29,13 @@ Sous Linux chez `user` *shomgt* sera installé dans un répertoire `/home/user/h
 De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom par livraison
 qui seront déposées au moyen d'un serveur ftp.
 
-Le code Php s'éxécute dans un container Docker qui sera fabriqué (build) puis exécuté (run) en faisant correspondre:
+Le code Php s'éxécute dans un conteneur Docker qui sera fabriqué (build) puis exécuté (run) en faisant correspondre:
 
   - le répertoire `/var/www` sous Docker avec `/home/user/` sous Linux
   - le port IP 80 de Docker avec le port IP 80 de Linux
   
-Apache sera démarré dans le container Docker.  
-Des commandes `bash` (ligne de commande Linux) seront exécutées dans le container pour reformatter les cartes Shom
+Apache sera démarré dans le conteneur Docker.  
+Des commandes `bash` (ligne de commande Linux) seront exécutées dans le conteneur pour reformatter les cartes Shom
 dans une structure utilisable par *shomgt*.
 
 A la fin de l'installation,
@@ -73,13 +73,13 @@ Logué sur la machine Linux sous user, créer un répertoire html et dans ce ré
     $ cd html
     $ git clone https://github.com/benoitdavidfr/shomgt
     
-Fabriquer le container Docker puis l'exécuter:
+Fabriquer le conteneur Docker puis l'exécuter:
 
     $ sudo docker build -t php-bash shomgt/docker
     $ sudo docker run -p 80:80 -it --rm --name php-bash -h dockerShomgt \
           --mount type=bind,source=/home/user,target=/var/www php-bash
           
-Le container est exécuté en interactif donc on se retrouve dans un shell dans le container.
+Le conteneur est exécuté en interactif donc on se retrouve dans un shell dans le conteneur.
 
 Réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
 
@@ -113,13 +113,13 @@ cela se fait en faisant suivre la commande php par `| sh`
     $ php updt.php livraison | sh
 
 A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
-**Attention, en sortant du shell on arrête le container et donc le serveur Apache**.
+**Attention, en sortant du shell on arrête le conteneur et donc le serveur Apache**.
 
 ## Points de vigilance
 - Le fait d'arrêter le serveur lorsque l'on sort du shell peut être considéré comme génant ;
   une mise à jour pourra être faite pour améliorer ce point.
   
-- Si le container est arrêté, il peut être relancé par la commande ci-dessous, le serveur Apache doit aussi être relancé:
+- Si le conteneur est arrêté, il peut être relancé par la commande ci-dessous, le serveur Apache doit aussi être relancé:
 
         $ sudo docker run -p 80:80 -it --rm --name php-bash -h dockerShomgt \
             --mount type=bind,source=/home/user,target=/var/www php-bash
