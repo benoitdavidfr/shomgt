@@ -13,12 +13,17 @@ Elle peut a priori aussi être utilisée pour installer *shomgt* sur un ordinate
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
 Cependant elle est encore expérimentale.
 
+Si vous mettez en oeuvre cette procédure, merci de me faire un retour.
+
 ## Pré-requis
 Un serveur Linux avec :
 
   - le logiciel Docker installé
   - un accès ssh au compte root du serveur
   - environ 100 Go de disque
+  
+Shomgt s'éxécutant dans un conteneur Docker, il est théoriquement possible d'effectuer l'installation
+sur toute machine supportant Docker mais cela n'a pas été testé.
 
 ## Principes
 Le code source sera installé par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`.  
@@ -42,23 +47,24 @@ A la fin de l'installation,
 *shomgt* sera disponible sur l'URL `http://{serveur}/shomgt` où `{serveur}` est le nom ou le numéro IP du serveur.
 
 ## Remarques préliminaires
-- Dans les commandes ci-dessous, les caractères initiaux `u#`, `u$`, `d#` ou `d$` ne doivent pas être tapés.
+- Dans les commandes ci-dessous, les caractères initiaux `#`, `$`, `docker#` ou `docker$` ne doivent pas être tapés.
   Ils rappellent l'environnement dans lequel on travaille: 
   
-  - `u#` pour root sous Unix
-  - `u$` pour user sous Unix
-   -`d#` pour root sous docker
-   -`d$` pour www-data sous docker
+  - `#` signifie que l'on travaille sur le serveur Linux comme utilisateur root
+  - `$` signifie que l'on travaille sur le serveur Linux comme utilisateur user
+  - `docker#` signifie que l'on travaille dans le conteneur Docker comme utilisateur root
+  - `docker$` signifie que l'on travaille dans le conteneur Docker comme utilisateur www-data
 
 ## Mise en oeuvre pas à pas
 
 Se loguer sur la machine Linux sous root et créer l'utilisateur user en répondant aux questions posées,
 puis autoriser cet utilisateur à exécuter `sudo`:
 
-    u# adduser user
-    u# adduser user sudo
+    # adduser user
+    # adduser user sudo
+    # exit
 
-Se déloguer de root et se loguer sur la machine Linux sous user,
+Se loguer sur la machine Linux sous user,
 créer un répertoire shomgeotiff et dedans les sous-répertoires indiqués :  
 
     $ mkdir shomgeotiff
@@ -98,22 +104,22 @@ Se mettre sous `www-data` pour reformatter les cartes Shom
 
 Aller dans le répertoire shomgt et y installer le composant Yaml de Symfony
 
-    $ cd html/shomgt
-    $ composer require symfony/yaml
+    docker$ cd html/shomgt
+    docker$ composer require symfony/yaml
 
 Aller dans le module de gestion du catalogue des cartes Shom
 pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Github.
 
-    $ cd cat
-    $ php build.php storeFromJSON
+    docker$ cd cat
+    docker$ php build.php storeFromJSON
     
 Aller dans le module de mise à jour des cartes et effectuer le refformattage des cartes précédemment stockées
 dans le répertoire livraison de /var/www/shomgeotiff/incoming.
 Attention la commande php génère du code sh et son résultat doit donc être éxécuté par sh ;
 cela se fait en faisant suivre la commande php par `| sh`
 
-    $ cd ../updt
-    $ php updt.php livraison | sh
+    docker$ cd ../updt
+    docker$ php updt.php livraison | sh
 
 A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
 
@@ -122,6 +128,7 @@ Pour arrêter le serveur *shomgt*, il faut arrêter le conteneur Docker appelé 
 
     $ sudo docker stop php72sgt
 
+# A REVOIR
 ## Points de vigilance
 - Le fait d'arrêter le serveur lorsque l'on sort du shell peut être considéré comme génant ;
   une mise à jour pourra être faite pour améliorer ce point.
