@@ -20,7 +20,7 @@ Un serveur Linux avec :
 
   - le logiciel Docker installé
   - un accès ssh au compte root du serveur
-  - environ 100 Go de disque
+  - environ 100 Go de disque (cet espace dépend du nombre de cartes, qqs Go peuvent être suffisants pour qqs cartes)
   
 Shomgt s'éxécutant dans un conteneur Docker, il est théoriquement possible d'effectuer l'installation
 sur toute machine supportant Docker mais cela n'a pas été testé.
