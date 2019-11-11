@@ -95,7 +95,7 @@ Se mettre sous `www-data` pour reformatter les cartes Shom
 
 Aller dans le répertoire shomgt et y installer le composant Yaml de Symfony
 
-    $ cd shomgt
+    $ cd html/shomgt
     $ composer require symfony/yaml
 
 Aller dans le module de gestion du catalogue des cartes Shom

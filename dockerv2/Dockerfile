@@ -1,4 +1,7 @@
 # Définition de l'image php-bash : utilisation de Php avec Apache
+# mise à jour 11/11/2019:
+#   - suppression mongodb
+#   - remplacement de la CMD bash par ["apachectl", "start"]
 # mise à jour 10/2/2018:
 #   - passage à mongodb-1.4.0
 #   - ajout de wget
@@ -62,6 +65,6 @@ EXPOSE 80
 
 COPY config/gitconfig /var/www/.gitconfig
 
-# execute bash
-CMD bash
+# start Apache
+CMD ["apachectl", "start"]
 
