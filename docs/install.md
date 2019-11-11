@@ -140,7 +140,8 @@ il faut sous Linux arrêter le conteneur Docker appelé `php72sgt`:
 
 Pour le relancer, relancer sous Linux le conteneur Docker appelé `php72sgt`:
 
-    $ sudo docker run -p 80:80 -d --name php72sgt -h docker --mount type=bind,source=/home/user,target=/var/www php72sgt
+    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
+          --mount type=bind,source=/home/user,target=/var/www php72sgt
 
 ## 6) Points de vigilance
 
