@@ -47,7 +47,7 @@ A l'issue de l'installation,
 
 ## 3) Remarque préliminaire
 Dans les commandes ci-dessous, les caractères initiaux `#`, `$`, `docker#` ou `docker$` ne doivent pas être tapés.
-Ils rappellent l'environnement dans lequel la commande est éxécutée: 
+Ils rappellent l'environnement dans lequel la commande doit être éxécutée: 
   
   - `#` indique que l'on est sur le serveur Linux comme utilisateur root
   - `$` indique que l'on est sur le serveur Linux comme utilisateur user
