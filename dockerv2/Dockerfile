@@ -1,4 +1,4 @@
-# Définition de l'image php72 : utilisation de Php avec Apache
+# Définition de l'image php72sgt : utilisation de Php avec Apache
 # L'image est utilisée par défaut en mode detach pour faire tourner Apache
 # Ele est aussi utilisée 
 # mise à jour 11/11/2019:
