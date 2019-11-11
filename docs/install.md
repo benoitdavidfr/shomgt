@@ -146,8 +146,8 @@ Pour le relancer, relancer sous Linux le conteneur Docker appelé `php72sgt`:
 ## 6) Points de vigilance
 
 - Les fichiers dans `/home/user` sous Linux et dans `/var/www` sous Docker sont les mêmes.  
-  Lorsque l'on travaille sous Linux, ils doivent appartenir à user
-  alors que lorsque l'on travaille sous Docker ils doivent appartenir à www-data.
+  Lorsque l'on travaille sous Linux, ils doivent appartenir à `user`
+  alors que lorsque l'on travaille sous Docker ils doivent appartenir à `www-data`.
   Il peut donc être nécessaire de changer leurs droits.  
   Sous Docker sous root pour affecter les droits à www-data taper la commande :
   
@@ -160,24 +160,25 @@ Pour le relancer, relancer sous Linux le conteneur Docker appelé `php72sgt`:
 ## 7) Ajout incrémental de cartes Shom
 Pour ajouter incrémentalement des cartes Shom :
 
-  - réaffecter les droits à user en tapant sous Linux sous user la commande :
+  - commencer par réaffecter les droits à `user` en tapant sous Linux sous `user` la commande :
   
         $ sudo chown -R user:user /home/user
   
-  - sous Linux et chez user créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
+  - puis sous Linux chez `user` créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
     et y déposer les cartes Shom à ajouter.
     `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes ;
-    il est conseillé d'utiliser des noms explicites, par exemple la date le livraison en format YYYYMMDD.
+    il est conseillé d'utiliser des noms explicites, par exemple la date le livraison en format YYYYMMDD,
+    par exemple `20191111`.
     
         $ mkdir ~/shomgeotiff/incoming/{nouvelle_livraison}
 
-  - puis aller sous Docker chez root et réaffecter les droits à www-data
+  - puis aller sous Docker chez `root` pour réaffecter les droits à `www-data`
 
         $ sudo docker exec -it --user=root php72sgt /bin/bash
         docker# chown -R www-data:www-data /var/www
         docker# exit
 
-  - puis aller sous Docker chez www-data et effectuer la mise à jour dans le module updt
+  - enfin aller sous Docker chez `www-data` et effectuer la mise à jour dans le module updt
 
         $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
         docker$ cd ~/html/shomgt/updt
@@ -186,7 +187,7 @@ Pour ajouter incrémentalement des cartes Shom :
     
 ## 8) Détection de cartes à actualiser
 
-Le module de gestion du catalogue permet de connaitre les cartes à actualiser.
+Le module de gestion du catalogue permet de connaître les cartes à actualiser.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
 et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
