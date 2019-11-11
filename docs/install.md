@@ -26,15 +26,15 @@ Shomgt s'éxécutant dans un conteneur Docker, il est théoriquement possible d'
 sur toute machine supportant Docker mais cela n'a pas été testé.
 
 ## 2) Principes
-Le code source sera installé par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`,
-par un utilisateur Linux nommé `user`, qui devra être créé, ce qui créera le répertoire `/home/user`.  
-Cette installation sera effectuée dans un répertoire `/home/user/html/shomgt`.  
+Le code source sera installé par un utilisateur Linux nommé `user`,
+qui devra auparavant être créé, ce qui créera le répertoire `/home/user`.  
+Cette installation sera effectuée dans le répertoire `/home/user/html/shomgt` 
+par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`.  
 De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom organisées par livraison
 qui pourront être déposées au moyen d'un serveur ftp.
 
-Le code source contient, dans le répertoire `docker`, la définition du conteneur Docker
-dans lequel s'éxécutera le code Php.
-Le conteneur Docker fait correspondre:
+Le code source contient la définition du conteneur Docker dans lequel s'éxécutera le code Php.
+Ce conteneur fait correspondre:
 
   - le répertoire `/home/user/` sous Linux avec `/var/www` sous Docker
   - le port IP 80 de Linux avec le port IP 80 de Docker
@@ -95,7 +95,7 @@ e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
 f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
-Cette possibilité est utilisée pour démarrer un bash dans le conteneur soit sous root, soit sous www-data.  
+Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous root, soit sous www-data.  
 Se mettre dans le conteneur Docker sous root pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
@@ -132,15 +132,14 @@ Le service *wms* est disponible à l'URL `http://{serveur}/shomgt/wms.php`
 
 ## 5) Arrêt/relance du serveur Shomgt
 Pour arrêter le serveur *shomgt*, c'est à dire le serveur Apache dans le conteneur,
-il faut arrêter le conteneur Docker appelé `php72sgt`:
+il faut sous Linux arrêter le conteneur Docker appelé `php72sgt`:
 
     $ sudo docker stop php72sgt
     $ sudo docker rm php72sgt
 
-Pour relancer le serveur *shomgt*, il faut relancer le conteneur Docker appelé `php72sgt`:
+Pour le relancer, relancer sous Linux le conteneur Docker appelé `php72sgt`:
 
-    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
-          --mount type=bind,source=/home/user,target=/var/www php72sgt
+    $ sudo docker run -p 80:80 -d --name php72sgt -h docker --mount type=bind,source=/home/user,target=/var/www php72sgt
 
 ## 6) Points de vigilance
 
@@ -157,7 +156,7 @@ Pour relancer le serveur *shomgt*, il faut relancer le conteneur Docker appelé 
         $ sudo chown -R user:user /home/user
 
 ## 7) Ajout incrémental de cartes Shom
-Il est possible d'ajouter incrémentalement des cartes Shom, pour cela :
+Pour ajouter incrémentalement des cartes Shom :
 
   - réaffecter les droits à user en tapant sous Linux sous user la commande :
   
@@ -169,6 +168,12 @@ Il est possible d'ajouter incrémentalement des cartes Shom, pour cela :
     il est conseillé d'utiliser des noms explicites, par exemple la date le livraison en format YYYYMMDD.
     
         $ mkdir ~/shomgeotiff/incoming/{nouvelle_livraison}
+
+  - puis aller sous Docker chez root et réaffecter les droits à www-data
+
+        $ sudo docker exec -it --user=root php72sgt /bin/bash
+        docker# chown -R www-data:www-data /var/www
+        docker# exit
 
   - puis aller sous Docker chez www-data et effectuer la mise à jour dans le module updt
 
