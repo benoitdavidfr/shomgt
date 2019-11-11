@@ -1,4 +1,9 @@
-# Définition de l'image php-bash : utilisation de Php avec Apache
+# Définition de l'image php72sgt : utilisation de Php avec Apache
+# L'image est utilisée par défaut en mode detach pour faire tourner Apache
+# Ele est aussi utilisée 
+# mise à jour 11/11/2019:
+#   - suppression mongodb
+#   - suppression de la CMD bash
 # mise à jour 10/2/2018:
 #   - passage à mongodb-1.4.0
 #   - ajout de wget
@@ -43,10 +48,6 @@ RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libgd-dev
 # mysqli
 RUN docker-php-ext-install mysqli
 
-# mongodb
-RUN pecl install mongodb-1.4.0
-RUN echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/mongodb.ini
-
 COPY config/php.ini /usr/local/etc/php/
 
 # Install composer and put binary into $PATH
@@ -65,7 +66,4 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/*
 EXPOSE 80
 
 COPY config/gitconfig /var/www/.gitconfig
-
-# execute bash
-CMD bash
 
