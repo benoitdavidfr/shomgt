@@ -191,7 +191,7 @@ Le module de gestion du catalogue permet d'identifier les cartes à actualiser.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
 et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
-Pour cela aller sous Docker chez www-data et aller dans le module cat
+Pour cela aller sous Docker chez `www-data` et aller dans le module `cat`
 
     $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
     docker$ cd ~/html/shomgt/cat
@@ -200,14 +200,14 @@ La première chose à faire est de moissonner les GAN, cette opération prend un
 
     docker$ php build.php harvestGan
     
-Une fois ce moissonnage effectué correctement, il convient de créer fichier du catalogue:
+Une fois ce moissonnage effectué correctement, il convient de créer le fichier du catalogue:
 
     docker$ php build.php store
  
 Ce catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
 et notamment les cartes à actualiser.  
 Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
-et de les intégrer dans *shomgt* au moyen de la procédure décrite ci-dessus section 7.
+puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus section 7.
 
 ## 9) Sécurisation de shomgt
 
