@@ -72,7 +72,7 @@ créer un répertoire shomgeotiff et dedans les sous-répertoires indiqués :
     $ mkdir shomgeotiff/incoming
     $ mkdir shomgeotiff/incoming/0
     
-c) Copier dans le répertoire `0` les cartes Shom chacune sous la forme d'une archive 7z livrée par le Shom.
+c) Copier dans le répertoire `0` les cartes Shom chacune sous la forme de l'archive 7z livrée par le Shom.
 Cette copie peut être effectuée par ftp en installant auparavant un serveur ftp sur la machine Linux.
 On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org/pure-ftp).
 
@@ -81,8 +81,8 @@ On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org
 
 d) Toujours logué sur la machine Linux sous user, créer un répertoire html et dans ce répertoire cloner le code Github:  
 
-    $ mkdir html
-    $ cd html
+    $ mkdir ~/html
+    $ cd ~/html
     $ git clone https://github.com/benoitdavidfr/shomgt
     
 e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
@@ -94,8 +94,10 @@ e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
 f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
-Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous root, soit sous www-data.  
-Se mettre dans le conteneur Docker sous root pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
+Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous lutilisateur `root`,
+soit sous l'utilisateur `www-data`.  
+Se mettre dans le conteneur Docker sous l'utilisateur `root`
+pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
