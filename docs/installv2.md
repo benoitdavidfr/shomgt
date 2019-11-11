@@ -58,7 +58,8 @@ A la fin de l'installation,
 ## Mise en oeuvre pas à pas
 
 Se loguer sur la machine Linux sous root et créer l'utilisateur user en répondant aux questions posées,
-puis autoriser cet utilisateur à exécuter `sudo`:
+puis autoriser cet utilisateur à exécuter `sudo`,
+enfin se déloguer:
 
     # adduser user
     # adduser user sudo
@@ -91,9 +92,9 @@ Fabriquer le conteneur Docker puis l'exécuter:
     $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
           --mount type=bind,source=/home/user,target=/var/www php72sgt
           
-Le conteneur est exécuté en tache de fond en exécutant Apache.
+Le conteneur s'exécute en tache de fond en lançant Apache.
 
-Réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
+Se mettre dans le conteneur Docker sous root pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
