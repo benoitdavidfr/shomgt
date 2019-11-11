@@ -4,7 +4,8 @@
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux en utilisant Docker ;
 cela permet notamment d'installer *shomgt* sur un serveur intranet
-afin de disposer des cartes Shom (au travers des web-services *wms* et *tile*) sans avoir besoin de connexion internet.
+afin de disposer des cartes Shom (au travers des web-services *wms* et *tile*)
+sans avoir besoin d'une connexion internet.
 
 Cette documentation peut aussi être utilisée pour installer *shomgt* sur un serveur sur internet en sécurisant
 les différents accès.
@@ -12,8 +13,7 @@ Elle peut a priori aussi être utilisée pour installer *shomgt* sur un ordinate
 
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
 Cependant elle est encore expérimentale.
-
-Si vous mettez en oeuvre cette procédure, merci de me faire un retour.
+Si vous mettez en oeuvre cette procédure, merci de m'en faire un retour.
 
 ## Pré-requis
 Un serveur Linux avec :
@@ -28,13 +28,13 @@ sur toute machine supportant Docker mais cela n'a pas été testé.
 ## Principes
 Le code source sera installé par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`.  
 Ce code contient une définition Docker dans le répertoire `docker`.  
-Ce code source sera installé chez un utilisateur Linux nommé `user` qui devra être créé
+Ce code source sera installé par un utilisateur Linux nommé `user` qui devra être créé
 ce qui créera le répertoire `/home/user`  
 Sous Linux chez `user` *shomgt* sera installé dans un répertoire `/home/user/html/shomgt`  
-De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom par livraison
-qui seront déposées au moyen d'un serveur ftp.
+De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom organisées par livraison
+qui pourront être déposées au moyen d'un serveur ftp.
 
-Le code Php s'éxécute dans un conteneur Docker qui sera fabriqué (build) puis exécuté (run) en faisant correspondre:
+Le code Php s'éxécute dans un conteneur Docker qui sera fabriqué (`build`) puis lancé (`run`) en faisant correspondre:
 
   - le répertoire `/var/www` sous Docker avec `/home/user/` sous Linux
   - le port IP 80 de Docker avec le port IP 80 de Linux
@@ -43,17 +43,17 @@ Apache sera démarré dans le conteneur Docker.
 Des commandes `bash` (ligne de commande Linux) seront exécutées dans le conteneur pour reformatter les cartes Shom
 dans une structure utilisable par *shomgt*.
 
-A la fin de l'installation,
+A l'issue de l'installation,
 *shomgt* sera disponible sur l'URL `http://{serveur}/shomgt` où `{serveur}` est le nom ou le numéro IP du serveur.
 
 ## Remarques préliminaires
 - Dans les commandes ci-dessous, les caractères initiaux `#`, `$`, `docker#` ou `docker$` ne doivent pas être tapés.
-  Ils rappellent l'environnement dans lequel on travaille: 
+  Ils rappellent l'environnement dans lequel la commande est éxécutée: 
   
-  - `#` signifie que l'on travaille sur le serveur Linux comme utilisateur root
-  - `$` signifie que l'on travaille sur le serveur Linux comme utilisateur user
-  - `docker#` signifie que l'on travaille dans le conteneur Docker comme utilisateur root
-  - `docker$` signifie que l'on travaille dans le conteneur Docker comme utilisateur www-data
+  - `#` indique que l'on travaille sur le serveur Linux comme utilisateur root
+  - `$` indique que l'on travaille sur le serveur Linux comme utilisateur user
+  - `docker#` indique que l'on travaille dans le conteneur Docker comme utilisateur root
+  - `docker$` indique que l'on travaille dans le conteneur Docker comme utilisateur www-data
 
 ## Mise en oeuvre pas à pas
 
@@ -80,22 +80,22 @@ On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org
     $ sudo apt-get install pure-ftpd
     $ sudo /etc/init.d/pure-ftpd restart
 
-Logué sur la machine Linux sous user, créer un répertoire html et dans ce répertoire cloner le code Github:  
+Tojours logué sur la machine Linux sous user, créer un répertoire html et dans ce répertoire cloner le code Github:  
 
     $ mkdir html
     $ cd html
     $ git clone https://github.com/benoitdavidfr/shomgt
     
-Fabriquer le conteneur Docker puis l'exécuter:
+Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
 
     $ sudo docker build -t php72sgt shomgt/docker
     $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
           --mount type=bind,source=/home/user,target=/var/www php72sgt
           
-Le conteneur s'exécute en tache de fond en lançant Apache.
+Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
-La commande docker exec permet de lancer des commandes dans le conteneur.
-On utilise cette possibilité pour démarrer un bash soit sous root soit sous www-data.  
+La commande `docker exec` permet de lancer des commandes dans le conteneur.
+On utilise cette possibilité pour démarrer un bash dans le conteneur soit sous root soit sous www-data.  
 Se mettre dans le conteneur Docker sous root pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
@@ -126,6 +126,8 @@ cela se fait en faisant suivre la commande php par `| sh`
     docker$ php updt.php 0 | sh
 
 A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
+**Vérifier cette installation au moyen de la carte Leaflet *mapwcat*
+disponible sur `http://{serveur}/shomgt/mapwcat.php`**
 
 ## Arrêt/relance du serveur Shomgt
 Pour arrêter le serveur *shomgt*, c'est à dire le serveur Apache dans le conteneur,
@@ -159,7 +161,7 @@ Il est possible d'ajouter incrémentalement des cartes Shom, pour cela :
   - sous Linux chez user créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
     et y déposer les cartes Shom à ajouter.
     `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes ;
-    Il est conseillé d'utiliser des noms plus explicites, par exemple la date le livraison en format YYYYMMDD.
+    il est conseillé d'utiliser des noms explicites, par exemple la date le livraison en format YYYYMMDD.
 
   - puis aller sous Docker chez www-data et aller dans le module updt
 
