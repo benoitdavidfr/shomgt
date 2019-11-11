@@ -26,34 +26,34 @@ Shomgt s'éxécutant dans un conteneur Docker, il est théoriquement possible d'
 sur toute machine supportant Docker mais cela n'a pas été testé.
 
 ## 2) Principes
-Le code source sera installé par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`.  
-Ce code contient une définition Docker dans le répertoire `docker`.  
-Ce code source sera installé par un utilisateur Linux nommé `user` qui devra être créé
-ce qui créera le répertoire `/home/user`  
-Sous Linux chez `user` *shomgt* sera installé dans un répertoire `/home/user/html/shomgt`  
+Le code source sera installé par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`,
+par un utilisateur Linux nommé `user`, qui devra être créé, ce qui créera le répertoire `/home/user`.  
+Cette installation sera effectuée dans un répertoire `/home/user/html/shomgt`.  
 De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom organisées par livraison
 qui pourront être déposées au moyen d'un serveur ftp.
 
-Le code Php s'éxécute dans un conteneur Docker qui sera fabriqué (`build`) puis lancé (`run`) en faisant correspondre:
+Le code source contient, dans le répertoire `docker`, la définition du conteneur Docker
+dans lequel s'éxécutera le code Php.
+Le conteneur Docker fait correspondre:
 
-  - le répertoire `/var/www` sous Docker avec `/home/user/` sous Linux
-  - le port IP 80 de Docker avec le port IP 80 de Linux
+  - le répertoire `/home/user/` sous Linux avec `/var/www` sous Docker
+  - le port IP 80 de Linux avec le port IP 80 de Docker
   
-Apache sera démarré dans le conteneur Docker.  
+Le serveur Apache sera démarré dans le conteneur Docker.  
 Des commandes `bash` (ligne de commande Linux) seront exécutées dans le conteneur pour reformatter les cartes Shom
 dans une structure utilisable par *shomgt*.
 
 A l'issue de l'installation,
 *shomgt* sera disponible sur l'URL `http://{serveur}/shomgt` où `{serveur}` est le nom ou le numéro IP du serveur.
 
-## 3) Remarques préliminaires
-- Dans les commandes ci-dessous, les caractères initiaux `#`, `$`, `docker#` ou `docker$` ne doivent pas être tapés.
-  Ils rappellent l'environnement dans lequel la commande est éxécutée: 
+## 3) Remarque préliminaire
+Dans les commandes ci-dessous, les caractères initiaux `#`, `$`, `docker#` ou `docker$` ne doivent pas être tapés.
+Ils rappellent l'environnement dans lequel la commande est éxécutée: 
   
-  - `#` indique que l'on travaille sur le serveur Linux comme utilisateur root
-  - `$` indique que l'on travaille sur le serveur Linux comme utilisateur user
-  - `docker#` indique que l'on travaille dans le conteneur Docker comme utilisateur root
-  - `docker$` indique que l'on travaille dans le conteneur Docker comme utilisateur www-data
+  - `#` indique que l'on est sur le serveur Linux comme utilisateur root
+  - `$` indique que l'on est sur le serveur Linux comme utilisateur user
+  - `docker#` indique que l'on est dans le conteneur Docker comme utilisateur root
+  - `docker$` indique que l'on est dans le conteneur Docker comme utilisateur www-data
 
 ## 4) Mise en oeuvre pas à pas
 
@@ -127,7 +127,8 @@ cela se fait en faisant suivre la commande php par `| sh`
 
 A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
 **Vérifier cette installation au moyen de la carte Leaflet *mapwcat*
-disponible sur `http://{serveur}/shomgt/mapwcat.php`**
+disponible sur `http://{serveur}/shomgt/mapwcat.php`**  
+Le service *wms* est disponible à l'URL `http://{serveur}/shomgt/wms.php`
 
 ## 5) Arrêt/relance du serveur Shomgt
 Pour arrêter le serveur *shomgt*, c'est à dire le serveur Apache dans le conteneur,
@@ -158,12 +159,18 @@ Pour relancer le serveur *shomgt*, il faut relancer le conteneur Docker appelé 
 ## 7) Ajout incrémental de cartes Shom
 Il est possible d'ajouter incrémentalement des cartes Shom, pour cela :
 
-  - sous Linux chez user créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
+  - réaffecter les droits à user en tapant sous Linux sous user la commande :
+  
+        $ sudo chown -R user:user /home/user
+  
+  - sous Linux et chez user créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
     et y déposer les cartes Shom à ajouter.
     `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes ;
     il est conseillé d'utiliser des noms explicites, par exemple la date le livraison en format YYYYMMDD.
+    
+        $ mkdir ~/shomgeotiff/incoming/{nouvelle_livraison}
 
-  - puis aller sous Docker chez www-data et aller dans le module updt
+  - puis aller sous Docker chez www-data et effectuer la mise à jour dans le module updt
 
         $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
         docker$ cd ~/html/shomgt/updt
@@ -181,7 +188,7 @@ Pour cela aller sous Docker chez www-data et aller dans le module cat
     $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
     docker$ cd ~/html/shomgt/cat
 
-La première chose à faire est de moissonner les GAN, cette opération prend un peu de temps.
+La première chose à faire est de moissonner les GAN, cette opération prend une quinzaine de minutes.
 
     docker$ php build.php harvestGan
     
@@ -192,5 +199,5 @@ Une fois ce moissonnage effectué correctement, il convient de créer fichier du
 Ce catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
 et notamment les cartes à actualiser.  
 Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
-et de les intégrer dans *shomgt* au moyen de la procédure décrite ci-dessus.
+et de les intégrer dans *shomgt* au moyen de la procédure décrite ci-dessus section 7.
 
