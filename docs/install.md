@@ -2,7 +2,7 @@
 
 *Benoit DAVID - 11/11/2019 (v2)*
 
-Cette documentation détaille comment installer *shomgt* sur un serveur Linux installé avec Docker ;
+Cette documentation détaille comment installer *shomgt* sur un serveur Linux utilisant Docker ;
 cela permet notamment d'installer *shomgt* sur un serveur intranet
 afin de disposer des cartes Shom (au travers des web-services *wms* et *tile*)
 sans avoir besoin d'une connexion internet.
