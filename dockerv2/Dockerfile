@@ -1,7 +1,9 @@
-# Définition de l'image php-bash : utilisation de Php avec Apache
+# Définition de l'image php72 : utilisation de Php avec Apache
+# L'image est utilisée par défaut en mode detach pour faire tourner Apache
+# Ele est aussi utilisée 
 # mise à jour 11/11/2019:
 #   - suppression mongodb
-#   - remplacement de la CMD bash par ["apachectl", "start"]
+#   - suppression de la CMD bash
 # mise à jour 10/2/2018:
 #   - passage à mongodb-1.4.0
 #   - ajout de wget
@@ -64,7 +66,4 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/*
 EXPOSE 80
 
 COPY config/gitconfig /var/www/.gitconfig
-
-# start Apache
-CMD ["apachectl", "start"]
 
