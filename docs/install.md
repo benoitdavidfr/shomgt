@@ -187,7 +187,7 @@ Pour ajouter incrémentalement des cartes Shom :
     
 ## 8) Détection de cartes à actualiser
 
-Le module de gestion du catalogue permet de connaître les cartes à actualiser.
+Le module de gestion du catalogue permet d'identifier les cartes à actualiser.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
 et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
