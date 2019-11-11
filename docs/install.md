@@ -118,7 +118,7 @@ pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Gi
     docker$ cd cat
     docker$ php build.php storeFromJSON
     
-j) Aller dans le module de mise à jour des cartes et effectuer le refformattage des cartes précédemment stockées
+j) Aller dans le module de mise à jour des cartes et effectuer le reformattage des cartes précédemment stockées
 dans le répertoire `/var/www/shomgeotiff/incoming/0`.
 Attention la commande php génère du code sh et son résultat doit donc être éxécuté par sh ;
 cela se fait en faisant suivre la commande php par `| sh`
