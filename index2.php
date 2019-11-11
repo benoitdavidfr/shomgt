@@ -6,7 +6,7 @@ includes: [ ws/accesscntrl.inc.php ]
 doc: |
 journal: |
   9/11/2019
-    amélioration du controle d'accès
+    amélioration du contrôle d'accès
   1-2/11/2019
     adaptation à la nouvelle version
   2/7/2017
@@ -38,6 +38,9 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Nouveautés</h3>
 <ul>
+  <li>11/11/2019 : publication d'une première version d'une
+    <a href='https://github.com/benoitdavidfr/shomgt/blob/master/docs/install.md' target='_blank'>documentation
+      d'installation d'un serveur shomgt</a></li>
   <li>1/11/2019 : nouvelle version de shomgt en test<ul>
     <li>réécriture du code publié sur <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a> ;
       en cas de besoin intensif des API, merci d'installer votre propre serveur !!!<br>

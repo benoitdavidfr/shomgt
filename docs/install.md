@@ -3,13 +3,12 @@
 *Benoit DAVID - 11/11/2019 (v2)*
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux utilisant Docker ;
-cela permet notamment d'installer *shomgt* sur un serveur intranet
-afin de disposer des cartes Shom (au travers des web-services *wms* et *tile*)
-sans avoir besoin d'une connexion internet.
+cela permet notamment de disposer des cartes Shom (au travers des web-services *wms* et *tile*)
+sans avoir besoin d'une connexion internet en installant *shomgt* sur un serveur intranet.
 
 Cette documentation peut aussi être utilisée pour installer *shomgt* sur un serveur sur internet en sécurisant
 les différents accès.
-Elle peut a priori aussi être utilisée pour installer *shomgt* sur un ordinateur individuel.
+Elle peut aussi être utilisée a priori pour installer *shomgt* sur un ordinateur individuel.
 
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
 Cependant elle est encore expérimentale.
@@ -206,3 +205,17 @@ et notamment les cartes à actualiser.
 Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
 et de les intégrer dans *shomgt* au moyen de la procédure décrite ci-dessus section 7.
 
+## 9) Sécurisation de shomgt
+
+Par défaut, aucun mécanisme de contrôle d'accès n'est mis en oeuvre
+ce qui correspond à une utilisation du serveur en intranet.  
+Pour limiter l'accès à shomgt, notamment en cas d'installation sur internet,
+il convient de créer un fichier `secretconfig.inc.php` dans le répertoire `ws`
+en prenant comme exemple le fichier `config.inc.php`.
+Une fois créé le fichier `secretconfig.inc.php` remplacera le fichier `config.inc.php`.
+
+## 10) Enregistrement des logs d'appels
+
+De même, par défaut, les logs d'appel sont désactivés.
+Pour les activer, il convient dans le fichier `secretconfig.inc.php` de configurer le serveur et la base MySQL
+dans lesquels sera créée la table de log.
