@@ -96,8 +96,8 @@ Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
 Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous l'utilisateur `root`,
 soit sous l'utilisateur `www-data`.  
-Se mettre dans le conteneur Docker sous l'utilisateur `root`
-pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
+Dans le conteneur Docker sous l'utilisateur `root`,
+réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`:
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
