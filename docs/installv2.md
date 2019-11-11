@@ -1,6 +1,6 @@
 # Installation de shomgt sur un serveur Linux
 
-*V2 - Benoit DAVID - 11/11/2019*
+*Benoit DAVID - 11/11/2019 (v2)*
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux en utilisant Docker ;
 cela permet notamment d'installer *shomgt* sur un serveur intranet
@@ -71,9 +71,9 @@ créer un répertoire shomgeotiff et dedans les sous-répertoires indiqués :
     $ mkdir shomgeotiff
     $ mkdir shomgeotiff/current
     $ mkdir shomgeotiff/incoming
-    $ mkdir shomgeotiff/incoming/livraison
+    $ mkdir shomgeotiff/incoming/0
     
-Copier dans le répertoire livraison les cartes Shom chacune sous la forme d'une archive 7z livrée par le Shom.
+Copier dans le répertoire `0` les cartes Shom chacune sous la forme d'une archive 7z livrée par le Shom.
 Cette copie peut être effectuée par ftp en installant auparavant un serveur ftp sur la machine Linux.
 On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org/pure-ftp).
 
@@ -94,18 +94,21 @@ Fabriquer le conteneur Docker puis l'exécuter:
           
 Le conteneur s'exécute en tache de fond en lançant Apache.
 
+La commande docker exec permet de lancer des commandes dans le conteneur.
+On utilise cette possibilité pour démarrer un bash soit sous root soit sous www-data.  
 Se mettre dans le conteneur Docker sous root pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
     docker# exit
 
-Se mettre sous `www-data` pour reformatter les cartes Shom
+Se mettre dans le conteneur Docker sous `www-data` pour reformatter les cartes Shom
+
     $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
 
 Aller dans le répertoire shomgt et y installer le composant Yaml de Symfony
 
-    docker$ cd html/shomgt
+    docker$ cd ~/html/shomgt
     docker$ composer require symfony/yaml
 
 Aller dans le module de gestion du catalogue des cartes Shom
@@ -115,30 +118,28 @@ pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Gi
     docker$ php build.php storeFromJSON
     
 Aller dans le module de mise à jour des cartes et effectuer le refformattage des cartes précédemment stockées
-dans le répertoire livraison de /var/www/shomgeotiff/incoming.
+dans le répertoire `/var/www/shomgeotiff/incoming/0`.
 Attention la commande php génère du code sh et son résultat doit donc être éxécuté par sh ;
 cela se fait en faisant suivre la commande php par `| sh`
 
     docker$ cd ../updt
-    docker$ php updt.php livraison | sh
+    docker$ php updt.php 0 | sh
 
 A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
 
-## Arrêt du serveur Shomgt
-Pour arrêter le serveur *shomgt*, il faut arrêter le conteneur Docker appelé `php72sgt`:
+## Arrêt/relancer le serveur Shomgt
+Pour arrêter le serveur *shomgt*, c'est à dire le serveur Apache dans le conteneur,
+il faut arrêter le conteneur Docker appelé `php72sgt`:
 
     $ sudo docker stop php72sgt
+    $ sudo docker rm php72sgt
 
-# A REVOIR
+Pour relancer le serveur *shomgt*, il faut relancer le conteneur Docker appelé `php72sgt`:
+
+    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
+          --mount type=bind,source=/home/user,target=/var/www php72sgt
+
 ## Points de vigilance
-- Le fait d'arrêter le serveur lorsque l'on sort du shell peut être considéré comme génant ;
-  une mise à jour pourra être faite pour améliorer ce point.
-  
-- Si le conteneur est arrêté, il peut être relancé par la commande ci-dessous, le serveur Apache doit aussi être relancé:
-
-        $ sudo docker run -p 80:80 -it --rm --name php-bash -h dockerShomgt \
-            --mount type=bind,source=/home/user,target=/var/www php-bash
-        # apachectl start
 
 - Les fichiers dans `/home/user` sous Linux et dans `/var/www` sous Docker sont les mêmes.  
   Lorsque l'on travaille sous Linux, ils doivent appartenir à user
@@ -146,24 +147,26 @@ Pour arrêter le serveur *shomgt*, il faut arrêter le conteneur Docker appelé 
   Il peut donc être nécessaire de changer leurs droits.  
   Sous Docker sous root pour affecter les droits à www-data taper la commande :
   
-        # chown -R www-data:www-data /var/www
+        docker# chown -R www-data:www-data /var/www
         
-  Sous Linux pour affecter les droits à user taper la commande :
+  Sous Linux sous user pour affecter les droits à user taper la commande :
   
         $ sudo chown -R user:user /home/user
 
 ## Ajout incrémental de cartes Shom
 Il est possible d'ajouter incrémentalement des cartes Shom, pour cela :
 
-  - sous Linux chez user créer un répertoire dans /home/user/shomgeotiff/incoming et y déposer les cartes Shom à ajouter 
+  - sous Linux chez user créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
+    et y déposer les cartes Shom à ajouter.
+    `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes ;
+    Il est conseillé d'utiliser des noms plus explicites, par exemple la date le livraison en format YYYYMMDD.
+
   - puis aller sous Docker chez www-data et aller dans le module updt
 
-        # su - www-data -s /bin/bash
-        $ cd ~/html/shomgt/updt
-        $ php updt.php {nouvelle_livraison} | sh
+        $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+        docker$ cd ~/html/shomgt/updt
+        docker$ php updt.php {nouvelle_livraison} | sh
         
-    où `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes.  
-    Il est conseillé d'utiliser des noms explicites, par exemple la date le livraison.
     
 ## Détection de cartes à actualiser
 
@@ -171,18 +174,21 @@ Le module de gestion du catalogue permet de connaitre les cartes à actualiser.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
 et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
-Pour cela aller sous Docker chez www-data et aller dans le module updt
+Pour cela aller sous Docker chez www-data et aller dans le module cat
 
-    # su - www-data -s /bin/bash
-    $ cd ~/html/shomgt/cat
+    $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+    docker$ cd ~/html/shomgt/cat
 
 La première chose à faire est de moissonner les GAN, cette opération prend un peu de temps.
 
-    $ php build.php harvestGan
+    docker$ php build.php harvestGan
     
 Une fois ce moissonnage effectué correctement, il convient de créer fichier du catalogue:
-    $ php build.php store
+
+    docker$ php build.php store
  
-Il est ensuite possible consulter le catalogue à l'URL `http://{serveur}/shomgt/cat`
-et notamment les cartes à actualiser.
+Ce catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
+et notamment les cartes à actualiser.  
+Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
+et de les intégrer dans *shomgt* au moyen de la procédure décrite ci-dessus.
 
