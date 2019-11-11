@@ -94,7 +94,7 @@ e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
 f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
-Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous lutilisateur `root`,
+Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous l'utilisateur `root`,
 soit sous l'utilisateur `www-data`.  
 Se mettre dans le conteneur Docker sous l'utilisateur `root`
 pour réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`
