@@ -127,7 +127,7 @@ cela se fait en faisant suivre la commande php par `| sh`
 
 A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
 
-## Arrêt/relancer le serveur Shomgt
+## Arrêt/relance du serveur Shomgt
 Pour arrêter le serveur *shomgt*, c'est à dire le serveur Apache dans le conteneur,
 il faut arrêter le conteneur Docker appelé `php72sgt`:
 
