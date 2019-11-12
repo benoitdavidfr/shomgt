@@ -220,8 +220,11 @@ il convient de modifier le fichier `config.inc.php` dans le répertoire `~/html/
   - dans le champ `ipWhiteList` les adresses IP autorisées,
   - dans le champ `loginPwds` les couples login/password autorisés.
   
-Il est aussi posible de définir cette configuration dans un fichier `secretconfig.inc.php`
+Afin d'éviter que le fichier `config.inc.php` ne soit effacé lors d'une mise à jour du code source,
+il est recommandé de définir cette configuration dans un fichier `secretconfig.inc.php`
 dans le répertoire `~/html/shomgt/ws` qui, s'il existe, sera utilisé à la place du fichier `config.inc.php`.
+Ce fichier `secretconfig.inc.php` doit définir la fonction config() de manière similaire
+au fichier `config.inc.php`.
 
 ## 10) Enregistrement des logs d'appels
 
