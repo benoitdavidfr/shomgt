@@ -26,21 +26,21 @@ else {
         'geoTiffCatalog'=> false, # désactivé pour le catalogue des GéoTiff
       ],
     
-      // liste des adresses IP autorisées utiles lorsque le contrôle est activé
+      // liste des adresses IP autorisées utilisée lorsque le contrôle est activé
       'ipWhiteList'=> [
         //'127.0.0.1', // Accès local
         '172.17.0.1', // accès entre machines docker
       ],
     
-      // liste des login/mdp autorisés utiles lorsque le contrôle est activé
+      // liste des login/mdp autorisés utilisée lorsque le contrôle est activé
       'loginPwds' => [
         'demo:demo',
       ],
     
       # Paramétrage du serveur MySQL pour enregistrer les logs en fonction du serveur hébergeant l'application
-      # mysql://{user}:{passwd}@{host}/{database}
+      # Le nom_du_serveur est défini par $_SERVER['HTTP_HOST']
       'mysqlParams'=> [
-        'MODELE'=> 'mysql://{user}:{passwd}@{host}/{database}',
+        'nom_du_serveur'=> 'mysql://{user}:{passwd}@{host}/{database}',
       ],
     ];
 

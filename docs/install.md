@@ -19,7 +19,7 @@ Un serveur Linux avec :
 
   - le logiciel Docker installé
   - un accès ssh au compte root du serveur
-  - environ 100 Go de disque (cet espace dépend du nombre de cartes, qqs Go peuvent être suffisants pour qqs cartes)
+  - au moins 20 Go de disque (cet espace dépend du nombre de cartes)
   
 Shomgt s'éxécutant dans un conteneur Docker, il est théoriquement possible d'effectuer l'installation
 sur toute machine supportant Docker mais cela n'a pas été testé.
@@ -126,7 +126,7 @@ cela se fait en faisant suivre la commande php par `| sh`
     docker$ cd ../updt
     docker$ php updt.php 0 | sh
 
-A ce stade, les cartes Shom installées sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
+A ce stade, les cartes Shom déposées précédemment sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
 **Vérifier cette installation au moyen de la carte Leaflet *mapwcat*
 disponible sur `http://{serveur}/shomgt/mapwcat.php`**  
 Le service *wms* est disponible à l'URL `http://{serveur}/shomgt/wms.php`
@@ -167,7 +167,7 @@ Pour ajouter incrémentalement des cartes Shom :
   - puis sous Linux chez `user` créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
     et y déposer les cartes Shom à ajouter.
     `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes ;
-    il est conseillé d'utiliser des noms explicites, par exemple la date le livraison en format YYYYMMDD,
+    il est conseillé d'utiliser des noms explicites, par exemple la date de livraison au format YYYYMMDD,
     par exemple `20191111`.
     
         $ mkdir ~/shomgeotiff/incoming/{nouvelle_livraison}
@@ -214,12 +214,19 @@ puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus 
 Par défaut, aucun mécanisme de contrôle d'accès n'est mis en oeuvre
 ce qui correspond à une utilisation du serveur en intranet.  
 Pour limiter l'accès à shomgt, notamment en cas d'installation sur internet,
-il convient de créer un fichier `secretconfig.inc.php` dans le répertoire `ws`
-en prenant comme exemple le fichier `config.inc.php`.
-Une fois créé le fichier `secretconfig.inc.php` remplacera le fichier `config.inc.php`.
+il convient de modifier le fichier `config.inc.php` dans le répertoire `~/html/shomgt/ws` en indiquant:
+
+  - dans le champ `cntrlFor` les fonctionnalités à contrôler,
+  - dans le champ `ipWhiteList` les adresses IP autorisées,
+  - dans le champ `loginPwds` les couples login/password autorisés.
+  
+Il est aussi posible de définir cette configuration dans un fichier `secretconfig.inc.php`
+dans le répertoire `~/html/shomgt/ws` qui, s'il existe, sera utilisé à la place du fichier `config.inc.php`.
 
 ## 10) Enregistrement des logs d'appels
 
 De même, par défaut, les logs d'appel sont désactivés.
-Pour les activer, il convient dans le fichier `secretconfig.inc.php` de configurer le serveur et la base MySQL
-dans lesquels sera créée la table de log.
+Pour les activer, il convient dans le fichier `config.inc.php` (ou `secretconfig.inc.php`) de définir
+dans le champ `mysqlParams` le serveur et la base MySQL dans lesquels sera créée la table de log.
+`mysqlParams` est un tableau indexé par le nom du serveur utilisé (sous Php `$_SERVER['HTTP_HOST']`).
+
