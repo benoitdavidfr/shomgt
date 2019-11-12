@@ -211,8 +211,8 @@ puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus 
 
 ## 9) Sécurisation de shomgt
 
-Par défaut, aucun mécanisme de contrôle d'accès n'est mis en oeuvre
-ce qui correspond à une utilisation du serveur en intranet.  
+Par défaut, aucun mécanisme de contrôle d'accès n'est mis en oeuvre,
+ce qui correspond à une installation du serveur en intranet.  
 Pour limiter l'accès à shomgt, notamment en cas d'installation sur internet,
 il convient de modifier le fichier `config.inc.php` dans le répertoire `~/html/shomgt/ws` en indiquant:
 
@@ -227,6 +227,7 @@ dans le répertoire `~/html/shomgt/ws` qui, s'il existe, sera utilisé à la pla
 
 De même, par défaut, les logs d'appel sont désactivés.
 Pour les activer, il convient dans le fichier `config.inc.php` (ou `secretconfig.inc.php`) de définir
-dans le champ `mysqlParams` le serveur et la base MySQL dans lesquels sera créée la table de log.
+dans le champ `mysqlParams` le serveur et la base MySQL dans lesquels sera créée la table de log
+ainsi que les login et mots de passe de connexion à MySQL.
 `mysqlParams` est un tableau indexé par le nom du serveur utilisé (sous Php `$_SERVER['HTTP_HOST']`).
 
