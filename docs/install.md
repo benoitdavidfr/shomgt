@@ -1,6 +1,6 @@
 # Installation de shomgt sur un serveur Linux
 
-*Benoit DAVID - 11/11/2019 (v2)*
+*Benoit DAVID - 13/11/2019 (v2)*
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux utilisant Docker ;
 cela permet notamment de disposer des cartes Shom (au travers des web-services *wms* et *tile*)
@@ -11,8 +11,8 @@ les différents accès.
 Elle peut aussi être utilisée a priori pour installer *shomgt* sur un ordinateur individuel.
 
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
-Cependant elle est encore expérimentale.
-Si vous mettez en oeuvre cette procédure, merci de m'en faire un retour.
+Elle a été aussi mise en oeuvre avec succès par la DIRM NAMO pour installer *shomgt* sur un serveur Ubuntu 18.04.3
+sur un ESX avec 'Docker' en package Debian.
 
 ## 1) Pré-requis
 Un serveur Linux avec :
@@ -90,7 +90,10 @@ e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
     $ sudo docker build -t php72sgt shomgt/docker
     $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
           --mount type=bind,source=/home/user,target=/var/www php72sgt
-          
+
+La création du conteneur va chercher des fichiers sur internet et peut nécessiter le paramétrage dans Docker
+du proxy. Pour cela voir la doc sur [https://docs.docker.com/config/daemon/systemd/#httphttps-proxy](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy).
+
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
 f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
