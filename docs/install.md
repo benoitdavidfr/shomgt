@@ -186,11 +186,11 @@ Pour ajouter incrémentalement des cartes Shom :
         $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
         docker$ cd ~/html/shomgt/updt
         docker$ php updt.php {nouvelle_livraison} | sh
-        
-    
+
 ## 8) Détection de cartes à actualiser
 
 Le module de gestion du catalogue permet d'identifier les cartes à actualiser.
+**Attention, ce module ne fonctionne pas si un proxy est nécessaire pour accéder à internet**.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
 et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
