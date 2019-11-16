@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  16/11/2019:
+    ajout du champ lastUpdaet déduit des MD XML
   2/11/2019:
     utilisation de l'édition de la carte définie dans le fichier de MD XML à la place de celle du GAN
   29/10/2019:
@@ -181,7 +183,8 @@ while (($mapname = readdir($current)) !== false) {
     $shomgtedition = shomgtedition("$mapname/$fbname");
     $shomgt[$lyrName]["$mapname/$fbname"] = [
       'title'=> $title,
-      'edition'=> $shomgtedition ? $shomgtedition : 'inconnue',
+      'edition'=> $shomgtedition ? $shomgtedition[0] : 'inconnue',
+      'lastUpdate'=> ($shomgtedition && isset($shomgtedition[1])) ? $shomgtedition[1] : 'inconnue',
       'scaleden'=> $shomgtgan['scaleDenominator'],
       'width'=> $width,
       'height'=> $height,
