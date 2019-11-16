@@ -14,6 +14,7 @@ definitions:
       title: {type: string, description: numéro et titre}
       scaleden: {type: number, description: dénominateur de l'échelle (optionnel)}
       edition: {type: string, description: édition de la carte (optionnel)}
+      lastUpdate: {type: number, description: nombre de corrections (optionnel)}
       width: {type: number, description: largeur en pixels}
       height: {type: number, description: hauteur en pixels}
       west: {type: number, minimum: -180, maximum: 180, description: limite West en degrés décimaux > -180 & < 180}

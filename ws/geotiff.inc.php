@@ -56,6 +56,7 @@ class GeoTiff {
   private $title; // titre
   private $scaleden; // dénominateur de l'échelle (optionnel)
   private $edition; // édition de la carte (optionnel)
+  private $lastUpdate; // nombre de corrections de la carte (optionnel)
   private $gbox; // EBox en WGS84 du GéoTiff, y.c. les bordures
   private $wombox; // EBox en WorldMercator du GéoTiff, y.c. les bordures
   private $wboxnb; // EBox en WorldMercator du GéoTiff sans les bordures
@@ -257,6 +258,7 @@ class GeoTiff {
     $this->title = isset($params['title']) ? $params['title'] : null;
     $this->scaleden = isset($params['scaleden']) ? $params['scaleden'] : null;
     $this->edition = isset($params['edition']) ? $params['edition'] : null;
+    $this->lastUpdate = isset($params['lastUpdate']) ? $params['lastUpdate'] : null;
     $this->width = $params['width'];
     $this->height = $params['height'];
     $this->left = $params['left'];
@@ -500,6 +502,7 @@ class GeoTiff {
   title: "function geojsonf(string $lyrname, string $gtname, ?EBox $wombox): array - génère un array Php correspondant au GeoJSON du GéoTiff"
   */
   function geojsonf(string $lyrname, string $gtname, ?EBox $wombox): array {
+    //print_r($this);
     if ($wombox && !$this->wboxnb->intersects($wombox))
       return [];
     return [
@@ -510,6 +513,7 @@ class GeoTiff {
         'title'=> $this->title,
         'scaleden'=> $this->scaleden,
         'edition'=> $this->edition,
+        'lastUpdate'=> $this->lastUpdate,
         'width'=> $this->width,
         'height'=> $this->height,
         'left'=> $this->left,
