@@ -144,14 +144,14 @@ if ($_GET['action']=='shomgtObsolete') {
     else
       die("</table>\nNo match on ganEdition $ganEdition");
     $shomgtEdition = shomgtedition("$num/${num}_${key}");
-    if (!preg_match('!^(Edition n°\s*\d+ -|Publication) (\d+)!', $shomgtEdition, $matches))
-      die("</table>\nNo match on shomgtEdition $shomgtEdition");
+    if (!preg_match('!^(Edition n°\s*\d+ -|Publication) (\d+)!', $shomgtEdition[0], $matches))
+      die("</table>\nNo match on shomgtEdition $shomgtEdition[0]");
     $shomgtYear = $matches[2];
     //$b = ($ganYear == $shomgtYear) ? ['',''] : ['<b>','</b>'];
-    if ($ganYear <> $shomgtYear)
+    if (($ganYear <> $shomgtYear) || ($gan['lastUpdate'] <> $shomgtEdition[1]))
       echo "<tr><td>$geotif[title]</td>",
-           "<td>$ganEdition</td>",
-           "<td>$shomgtEdition</td>",
+           "<td>$ganEdition - d. corr.: $gan[lastUpdate]</td>",
+           "<td>$shomgtEdition[0] - d. corr.: $shomgtEdition[1]</td>",
            "<td>",isset($shomgtObsoleteComment[$num]) ? $shomgtObsoleteComment[$num] : '',"</td>",
            "</tr>\n";
   }
