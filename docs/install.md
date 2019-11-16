@@ -1,6 +1,6 @@
 # Installation de shomgt sur un serveur Linux
 
-*Benoit DAVID - 13/11/2019 (v2)*
+*Benoit DAVID - 16/11/2019 (v2.1)*
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux utilisant Docker ;
 cela permet notamment de disposer des cartes Shom (au travers des web-services *wms* et *tile*)
@@ -12,7 +12,8 @@ Elle peut aussi être utilisée a priori pour installer *shomgt* sur un ordinate
 
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
 Elle a été aussi mise en oeuvre avec succès par la DIRM NAMO pour installer *shomgt* sur un serveur Ubuntu 18.04.3
-sur un ESX avec 'Docker' en package Debian.
+sur un ESX avec 'Docker' en package Debian et derrière un proxy,
+à l'exception de la détection de cartes à actualiser qui ne fonctionne pas actuellement derrière un proxy.
 
 ## 1) Pré-requis
 Un serveur Linux avec :
@@ -45,7 +46,7 @@ dans une structure utilisable par *shomgt*.
 A l'issue de l'installation,
 *shomgt* sera disponible sur l'URL `http://{serveur}/shomgt` où `{serveur}` est le nom ou le numéro IP du serveur.
 
-## 3) Remarque préliminaire
+## 3) Remarques préliminaires
 Dans les commandes ci-dessous, les caractères initiaux `#`, `$`, `docker#` ou `docker$` ne doivent pas être tapés.
 Ils rappellent l'environnement dans lequel la commande doit être éxécutée: 
   
@@ -53,6 +54,13 @@ Ils rappellent l'environnement dans lequel la commande doit être éxécutée:
   - `$` indique que l'on doit être sur le serveur Linux comme utilisateur user
   - `docker#` indique que l'on doit être dans le conteneur Docker comme utilisateur root
   - `docker$` indique que l'on doit être dans le conteneur Docker comme utilisateur www-data
+
+Lors de l'installation d'un serveur *shomgt* derrière un proxy, celui-ci doit être configuré dans 3 endroits:
+
+  - lors de l'installation du serveur Ubuntu,
+  - lors de l'utilisation de git,
+  - lors de la création du conteneur Docker.
+
 
 ## 4) Mise en oeuvre pas à pas
 
@@ -79,20 +87,26 @@ On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org
     $ sudo apt-get install pure-ftpd
     $ sudo /etc/init.d/pure-ftpd restart
 
+On peut aussi alternativement copier les cartes avec WinSCP.
+
+c') Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par git:
+
+    $ git config --global http.proxy http://monproxy.mondomaine:8080
+
 d) Toujours logué sur la machine Linux sous user, créer un répertoire html et dans ce répertoire cloner le code Github:  
 
     $ mkdir ~/html
     $ cd ~/html
     $ git clone https://github.com/benoitdavidfr/shomgt
     
+d') Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par docker ;
+pour cela voir la doc sur [https://docs.docker.com/config/daemon/systemd/#httphttps-proxy](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy).
+
 e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
 
     $ sudo docker build -t php72sgt shomgt/docker
     $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
           --mount type=bind,source=/home/user,target=/var/www php72sgt
-
-La création du conteneur va chercher des fichiers sur internet et peut nécessiter le paramétrage dans Docker
-du proxy. Pour cela voir la doc sur [https://docs.docker.com/config/daemon/systemd/#httphttps-proxy](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy).
 
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
@@ -189,8 +203,9 @@ Pour ajouter incrémentalement des cartes Shom :
 
 ## 8) Détection de cartes à actualiser
 
+**Attention, cette détection ne fonctionne pas si un proxy est nécessaire pour accéder à internet**.
+
 Le module de gestion du catalogue permet d'identifier les cartes à actualiser.
-**Attention, ce module ne fonctionne pas si un proxy est nécessaire pour accéder à internet**.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
 et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.

@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  15/11/2019
+    passage igngp.geoapi.fr en https pour résoudre bug
   9/11/2019
     amélioration du controle d'accès
   4/11/2019:
@@ -117,15 +119,15 @@ var baseLayers = {
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }
   ),
   "Cartes IGN Express" : new L.TileLayer(
-    'http://igngp.geoapi.fr/tile.php/scan-express/{z}/{x}/{y}.jpg',
+    'https://igngp.geoapi.fr/tile.php/scan-express/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":6,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "Cartes IGN classiques" : new L.TileLayer(
-    'http://igngp.geoapi.fr/tile.php/cartes-classiques/{z}/{x}/{y}.jpg',
+    'https://igngp.geoapi.fr/tile.php/cartes-classiques/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "Plan IGN" : new L.TileLayer(
-    'http://igngp.geoapi.fr/tile.php/plan-ign/{z}/{x}/{y}.jpg',
+    'https://igngp.geoapi.fr/tile.php/plan-ign/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "Fond blanc" : new L.TileLayer(
