@@ -397,6 +397,8 @@ class MapCat {
       $this->boxes[0]['bbox'] = new MapBBox($import['bboxDM']['SW'], $import['bboxDM']['NE']);
     if (isset($import['issued']))
       $this->edition = $import['issued'];
+    if (isset($import['lastUpdate']))
+      $this->lastUpdate = $import['lastUpdate'];
     if (isset($import['replaces']))
       $this->remplace = $import['replaces'];
     if (isset($import['references']))
