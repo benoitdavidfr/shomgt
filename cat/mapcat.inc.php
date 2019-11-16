@@ -6,8 +6,11 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  15/11/2019:
+    ajout du champ lastUpdate correspondant au nbre de corrections indiquées dans le GAN
   8/11/2019:
-    renommage de MapCat::__construct() en MapCat::analyzeFromHtml() pour pouvoir construire un MapCat de différentes manières
+    renommage de MapCat::__construct() en MapCat::analyzeFromHtml() pour pouvoir construire un MapCat
+    de différentes manières
   7/11/2019:
     ajout de la correction éventuel des titres
   29/10/2019:
@@ -126,6 +129,7 @@ class MapCat {
   
   private $num; // no de la carte
   private $edition; // edition de la carte
+  private $lastUpdate; // no de la dernière correction apportée à la carte
   private $remplace; // remplacement éventuel
   private $note; // note éventuelle sur l'édition
   private $facsimile; // fac-simile éventuel
@@ -144,6 +148,7 @@ class MapCat {
   
   // analyse du html pour créer l'avis Gan d'une carte
   function analyzeFromHtml(string $num, string $html) {
+    $html0 = $html;
     $this->num = $num;
     if (preg_match('!<p class="erreur">([^<]*)</p>!', $html, $matches)) {
       if (preg_match('!^La carte FR[^ ]* n&rsquo;est pas en vigueur\.$!', $matches[1])) {
@@ -247,6 +252,19 @@ class MapCat {
         'bbox'=> new MapBBox($titre[1], $titre[2])
       ];
     }
+    
+    // analyse des corrections
+    $html = $html0;
+    //echo $html;
+    $lastUpdate = 0;
+    $pattern = '!<a href="/ganl/htdocs/[^"]*">!';
+    while (preg_match($pattern, $html)) {
+      $lastUpdate++;
+      $html = preg_replace($pattern, '', $html, 1);
+    }
+    //echo "lastUpdate=$lastUpdate<br>\n";
+    $this->lastUpdate = $lastUpdate;
+    
     $this->applyCorrection();
   }
   
@@ -339,6 +357,8 @@ class MapCat {
       $export['spatial'] = $this->boxes[0]['bbox']->spatial();
     }
     $export['issued'] = str_replace('&nbsp;',' ',$this->edition);
+    if ($this->lastUpdate !== null)
+      $export['lastUpdate'] = $this->lastUpdate;
     if ($this->remplace)
       $export['replaces'] = $this->remplace;
     if ($this->facsimile)
@@ -428,6 +448,7 @@ class MapCat {
         'num'=> $this->num,
         'title'=> $this->boxes[0]['title'],
         'issued'=> $this->edition,
+        'lastUpdate'=> ($this->lastUpdate !== null) ? $this->lastUpdate : '',
         'scaleDenominator'=> $this->boxes[0]['scaleD'],
         'bboxDM'=> $this->boxes[0]['bbox']->asDM(),
         //'boxes'=> [],
