@@ -9,6 +9,7 @@ gt20M:
   0101/0101_pal300:
     title: 0101 - Planisphère terrestre
     edition: Edition n°4 - 2016
+    lastUpdate: 0
     scaleden: 40000000
     width: 13819
     height: 9922
@@ -25,6 +26,7 @@ gt10M:
   5417/5417_pal300:
     title: 5417 - Océan Atlantique Nord et mers boréales
     edition: Edition n° 5 - 1977
+    lastUpdate: 86
     scaleden: 6580000
     width: 13819
     height: 9922
@@ -39,6 +41,7 @@ gt10M:
   6808/6808_pal300:
     title: 6808 - Océan Atlantique Sud - Partie Est
     edition: Edition n° 3 - 2015
+    lastUpdate: 0
     scaleden: 10000000
     width: 9922
     height: 13819
@@ -53,6 +56,7 @@ gt10M:
   6809/6809_pal300:
     title: 6809 - Océan Indien - Partie Sud
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 8922000
     width: 13819
     height: 9922
@@ -67,6 +71,7 @@ gt10M:
   6815/6815_pal300:
     title: 6815 - Océan Atlantique Nord - Partie Est
     edition: Edition n° 4 - 2012
+    lastUpdate: 15
     scaleden: 10000000
     width: 9922
     height: 13819
@@ -81,6 +86,7 @@ gt10M:
   6835/6835_1_gtw:
     title: 6835 - Mer de Béring
     edition: Edition n° 2 - 1997
+    lastUpdate: 66
     scaleden: 7330000
     width: 2895
     height: 4140
@@ -95,6 +101,7 @@ gt10M:
   6835/6835_pal300:
     title: 6835 - Océan Pacifique Nord - Partie Est
     edition: Edition n° 2 - 1997
+    lastUpdate: 66
     scaleden: 7330000
     width: 9922
     height: 13819
@@ -109,6 +116,7 @@ gt10M:
   6884/6884_pal300:
     title: 6884 - Océan Indien - Partie Nord
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 10000000
     width: 13819
     height: 9922
@@ -123,6 +131,7 @@ gt10M:
   6964/6964_pal300:
     title: 6964 - De Panama au Cap Horn (Cabo de Hornos)
     edition: Edition n° 2 - 1994
+    lastUpdate: 58
     scaleden: 10000000
     width: 9922
     height: 13819
@@ -137,6 +146,7 @@ gt10M:
   7021/7021_pal300:
     title: 7021 - Océan Pacifique Nord - Partie Sud-Ouest
     edition: Edition n° 2 - 1991
+    lastUpdate: 212
     scaleden: 10000000
     width: 13819
     height: 9922
@@ -151,6 +161,7 @@ gt10M:
   7023/7023_pal300:
     title: 7023 - Océan Pacifique Est - De San Francisco à Lima
     edition: Publication 1984
+    lastUpdate: 101
     scaleden: 10000000
     width: 13819
     height: 9922
@@ -165,6 +176,7 @@ gt10M:
   7043/7043_pal300:
     title: 7043 - Océan Atlantique Nord - Partie Ouest
     edition: Edition n° 2 - 2016
+    lastUpdate: 5
     scaleden: 10000000
     width: 9922
     height: 13819
@@ -179,6 +191,7 @@ gt10M:
   7044/7044_pal300:
     title: 7044 - De la Terre de Feu au Vénézuéla
     edition: Edition n° 2 - 2017
+    lastUpdate: 1
     scaleden: 10000000
     width: 9922
     height: 13819
@@ -193,6 +206,7 @@ gt10M:
   7166/7166_pal300:
     title: 7166 - Océan Pacifique Sud - Partie Ouest
     edition: Publication 1988
+    lastUpdate: 175
     scaleden: 10000000
     width: 13819
     height: 9922
@@ -207,6 +221,7 @@ gt10M:
   7246/7246_pal300:
     title: 7246 - Polynésie française
     edition: Edition n° 2 - 2018
+    lastUpdate: 0
     scaleden: 6000000
     width: 13819
     height: 9922
@@ -221,6 +236,7 @@ gt10M:
   7271/7271_pal300:
     title: 7271 - Australasie et mers adjacentes
     edition: Publication 1990
+    lastUpdate: 212
     scaleden: 10000000
     width: 13819
     height: 9922
@@ -237,6 +253,7 @@ gt4M:
   6015/6015_pal300:
     title: 6015 - Des passages du Nord-Ouest à la Mer du Groenland
     edition: Edition n° 2 - 1993
+    lastUpdate: 32
     scaleden: 4660000
     width: 13819
     height: 9922
@@ -251,6 +268,7 @@ gt4M:
   6607/6607_pal300:
     title: 6607 - Polynésie Sud-Est
     edition: Edition n° 3 - 2004
+    lastUpdate: 16
     scaleden: 3500000
     width: 13819
     height: 9922
@@ -265,6 +283,7 @@ gt4M:
   6619/6619_pal300:
     title: 6619 - Côte Sud-Est de l'Amérique du Nord, Bahamas et Grandes Antilles
     edition: Edition n° 3 - 1988
+    lastUpdate: 172
     scaleden: 3500000
     width: 9922
     height: 13819
@@ -279,6 +298,7 @@ gt4M:
   6664/6664_pal300:
     title: 6664 - De Port Elisabeth à Mauritius
     edition: Edition n° 4 - 2011
+    lastUpdate: 4
     scaleden: 3500000
     width: 13819
     height: 9922
@@ -293,6 +313,7 @@ gt4M:
   6670/6670_pal300:
     title: 6670 - Mers de Tasman et du Corail - De l'Australie à la Nouvelle-Zélande et aux îles Fidji (Fiji)
     edition: Edition n° 5 - 2017
+    lastUpdate: 1
     scaleden: 3500000
     width: 13819
     height: 9922
@@ -307,6 +328,7 @@ gt4M:
   6671/6671_pal300:
     title: 6671 - Mers du Corail et des Salomon et mers adjacentes
     edition: Edition n° 4 - 2017
+    lastUpdate: 3
     scaleden: 3500000
     width: 13819
     height: 9922
@@ -321,6 +343,7 @@ gt4M:
   6672/6672_pal300:
     title: 6672 - De Maputo à Muqdisho - Madagascar
     edition: Edition n° 5 - 2015
+    lastUpdate: 3
     scaleden: 3500000
     width: 9922
     height: 13819
@@ -335,6 +358,7 @@ gt4M:
   6673/6673_pal300:
     title: 6673 - De Chagos Archipelago à Madagascar
     edition: Edition n° 4 - 2011
+    lastUpdate: 7
     scaleden: 3500000
     width: 13819
     height: 9922
@@ -349,6 +373,7 @@ gt4M:
   6814/6814_pal300:
     title: 6814 - Côte Nord-Est d'Amérique du Sud
     edition: Edition n° 2 - 1989
+    lastUpdate: 46
     scaleden: 3780000
     width: 13819
     height: 9922
@@ -363,6 +388,7 @@ gt4M:
   6817/6817_pal300:
     title: 6817 - De la Nouvelle-Zélande aux îles Fidji et Samoa
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 3500000
     width: 9922
     height: 13819
@@ -377,6 +403,7 @@ gt4M:
   6880/6880_pal300:
     title: 6880 - Des Îles Tonga aux Îles des Tuamotu
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 3500000
     width: 13819
     height: 9922
@@ -391,6 +418,7 @@ gt4M:
   7081/7081_pal300:
     title: 7081 - Mer Méditerranée et mer Noire (Spéciale P)
     edition: Publication 1986
+    lastUpdate: 133
     scaleden: 4200000
     width: 13819
     height: 9922
@@ -405,6 +433,7 @@ gt4M:
   7604/7604_pal300:
     title: 7604 - De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 4000000
     width: 13819
     height: 9922
@@ -421,6 +450,7 @@ gt2M:
   6608/6608_pal300:
     title: 6608 - Mer du Nord
     edition: Edition n° 6 - 2018
+    lastUpdate: 0
     scaleden: 1500000
     width: 9922
     height: 13819
@@ -435,6 +465,7 @@ gt2M:
   6618/6618_pal300:
     title: 6618 - Atterrages Ouest des Iles Britanniques
     edition: Edition n° 4 - 2016
+    lastUpdate: 1
     scaleden: 2180000
     width: 13819
     height: 9922
@@ -449,6 +480,7 @@ gt2M:
   6757/6757_pal300:
     title: 6757 - Du Détroit de Gibraltar au Canal de Sicile
     edition: Edition n° 2 - 1984
+    lastUpdate: 153
     scaleden: 2250000
     width: 13819
     height: 9922
@@ -463,6 +495,7 @@ gt2M:
   6623/6623_pal300:
     title: 6623 - De La Manche au Détroit de Gibraltar et à l'archipel des Açores
     edition: Edition n° 6 - 2018
+    lastUpdate: 1
     scaleden: 2770000
     width: 13819
     height: 9922
@@ -477,6 +510,7 @@ gt2M:
   6898/6898_pal300:
     title: 6898 - Mer des Antilles (Mer des Caraïbes)
     edition: Edition n° 4 - 2014
+    lastUpdate: 10
     scaleden: 2750000
     width: 13819
     height: 9922
@@ -491,6 +525,7 @@ gt2M:
   7016/7016_pal300:
     title: 7016 - Mer Méditerranée - Bassin oriental
     edition: Edition n° 2 - 1998
+    lastUpdate: 68
     scaleden: 2250000
     width: 13819
     height: 9922
@@ -505,6 +540,7 @@ gt2M:
   7321/7321_pal300:
     title: 7321 - Des Récifs Bampton à l'île Hunter - Nouvelle-Calédonie - Vanuatu
     edition: Edition n° 3 - 2017
+    lastUpdate: 2
     scaleden: 1500000
     width: 13819
     height: 9922
@@ -519,6 +555,7 @@ gt2M:
   7347/7347_pal300:
     title: 7347 - Des Îles Tuamotu aux Îles Australes
     edition: Edition n° 2 - 2019
+    lastUpdate: 0
     scaleden: 1500000
     width: 9922
     height: 13819
@@ -533,6 +570,7 @@ gt2M:
   7368/7368_pal300:
     title: 7368 - De l'Ile Malden aux Iles de la Société
     edition: Publication 1995
+    lastUpdate: 10
     scaleden: 1600000
     width: 9922
     height: 13819
@@ -547,6 +585,7 @@ gt2M:
   7369/7369_pal300:
     title: 7369 - Des Southern Cook Islands aux Îes de la Société et Australes
     edition: Edition n° 2 - 2019
+    lastUpdate: 0
     scaleden: 1500000
     width: 13819
     height: 9922
@@ -561,6 +600,7 @@ gt2M:
   7370/7370_pal300:
     title: 7370 - De Mururoa à Ducie Island
     edition: Publication 1995
+    lastUpdate: 12
     scaleden: 1500000
     width: 13819
     height: 9922
@@ -575,6 +615,7 @@ gt2M:
   7371/7371_pal300:
     title: 7371 - De Tahiti aux Îles Marquises
     edition: Edition n° 2 - 2019
+    lastUpdate: 0
     scaleden: 1580000
     width: 13819
     height: 9922
@@ -589,6 +630,7 @@ gt2M:
   7591/7591_pal300:
     title: 7591 - De Cape Goodenough à Cape Adare
     edition: Publication 2006
+    lastUpdate: 0
     scaleden: 2000000
     width: 13819
     height: 9922
@@ -603,6 +645,7 @@ gt2M:
   7751/7751_pal300:
     title: 7751 - Île Clipperton - Zone Economique Exclusive
     edition: Edition n° 2 - 2017
+    lastUpdate: 0
     scaleden: 1570000
     width: 13819
     height: 9922
@@ -619,6 +662,7 @@ gt1M:
   7014/7014_pal300:
     title: 7014 - Des îles Baléares à la Corse et à la Sardaigne
     edition: Edition n° 3 - 2013
+    lastUpdate: 22
     scaleden: 1000000
     width: 9922
     height: 13819
@@ -633,6 +677,7 @@ gt1M:
   7015/7015_pal300:
     title: 7015 - De Gibraltar aux Îles Baléares
     edition: Edition n° 2 - 1998
+    lastUpdate: 84
     scaleden: 1100000
     width: 9922
     height: 13819
@@ -647,6 +692,7 @@ gt1M:
   7211/7211_pal300:
     title: 7211 - Golfe de Gascogne - De Brest à Cabo Finisterre
     edition: Edition n° 6 - 2019
+    lastUpdate: 0
     scaleden: 1000000
     width: 13819
     height: 9922
@@ -661,6 +707,7 @@ gt1M:
   7212/7212_pal300:
     title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
     edition: Edition n° 2 - 2007
+    lastUpdate: 45
     scaleden: 1000000
     width: 9922
     height: 13819
@@ -675,6 +722,7 @@ gt1M:
   7268/7268_pal300:
     title: 7268 - Nouvelle-Calédonie
     edition: Publication 1993
+    lastUpdate: 24
     scaleden: 850000
     width: 13819
     height: 9922
@@ -689,6 +737,7 @@ gt1M:
   7283/7283_pal300:
     title: 7283 - Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna
     edition: Publication 1992
+    lastUpdate: 20
     scaleden: 1000000
     width: 13819
     height: 9922
@@ -703,6 +752,7 @@ gt1M:
   7292/7292_pal300:
     title: 7292 - De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)
     edition: Edition n° 3 - 2014
+    lastUpdate: 14
     scaleden: 1000000
     width: 9922
     height: 13819
@@ -717,6 +767,7 @@ gt1M:
   7475/7475_pal300:
     title: 7475 - De Puerto Rico à Trinidad
     edition: Edition n° 2 - 2010
+    lastUpdate: 46
     scaleden: 1030000
     width: 9922
     height: 13819
@@ -731,6 +782,7 @@ gt1M:
   7486/7486_pal300:
     title: 7486 - Canal du Mozambique - Partie Nord
     edition: Edition n° 3 - 2013
+    lastUpdate: 5
     scaleden: 1076000
     width: 13819
     height: 9922
@@ -745,6 +797,7 @@ gt1M:
   7487/7487_pal300:
     title: 7487 - Approches Nord - Est de Madagascar
     edition: Publication 2018
+    lastUpdate: 0
     scaleden: 1058000
     width: 9922
     height: 13819
@@ -759,6 +812,7 @@ gt1M:
   7488/7488_pal300:
     title: 7488 - De l'Île de La Réunion à l'Île Rodrigues et à l'Île Tromelin
     edition: Publication 2013
+    lastUpdate: 2
     scaleden: 1050000
     width: 13819
     height: 9922
@@ -773,6 +827,7 @@ gt1M:
   7489/7489_pal300:
     title: 7489 - Approches Sud-Est de Madagascar
     edition: Publication 2017
+    lastUpdate: 1
     scaleden: 1008000
     width: 13819
     height: 9922
@@ -787,6 +842,7 @@ gt1M:
   7625/7625_pal300:
     title: 7625 - De Trinidad à Cabo Orange
     edition: Edition n° 2 - 2018
+    lastUpdate: 7
     scaleden: 1010000
     width: 13819
     height: 9922
@@ -801,6 +857,7 @@ gt1M:
   7797/7797_pal300:
     title: 7797 - Canal du Mozambique - Partie centrale
     edition: Publication 2016
+    lastUpdate: 1
     scaleden: 1000000
     width: 13819
     height: 9922
@@ -815,6 +872,7 @@ gt1M:
   7798/7798_pal300:
     title: 7798 - Canal du Mozambique - Partie Sud
     edition: Publication 2016
+    lastUpdate: 0
     scaleden: 1008000
     width: 13819
     height: 9922
@@ -831,6 +889,7 @@ gt500k:
   6688/6688_pal300:
     title: 6688 - Iles de la Société, de Manuae à Tahiti
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 592000
     width: 13819
     height: 9922
@@ -845,6 +904,7 @@ gt500k:
   6689/6689_pal300:
     title: 6689 - Îles Tuamotu (Partie Ouest)
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 595000
     width: 13819
     height: 9922
@@ -859,6 +919,7 @@ gt500k:
   6690/6690_pal300:
     title: 6690 - Îles Tuamotu (partie centrale) - De Makemo à Tatakoto
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 592000
     width: 13819
     height: 9922
@@ -873,6 +934,7 @@ gt500k:
   6691/6691_pal300:
     title: 6691 - Îles Tuamotu (partie Est) de Hao à Fangataufa
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 578000
     width: 9922
     height: 13819
@@ -887,6 +949,7 @@ gt500k:
   6692/6692_pal300:
     title: 6692 - Des Îles Tuamotu aux Îles Gambier
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 574000
     width: 13819
     height: 9922
@@ -901,6 +964,7 @@ gt500k:
   7040/7040_pal300:
     title: 7040 - La Manche
     edition: Edition n° 4 - 2003
+    lastUpdate: 189
     scaleden: 560000
     width: 13819
     height: 9922
@@ -915,6 +979,7 @@ gt500k:
   7049/7049_pal300:
     title: 7049 - Des îles Loyauté à l'île Hunter
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 500000
     width: 13819
     height: 9922
@@ -929,6 +994,7 @@ gt500k:
   7203/7203_pal300:
     title: 7203 - Des îles Baléares (Islas Baleares) à Marseille
     edition: Edition n° 2 - 2006
+    lastUpdate: 72
     scaleden: 500000
     width: 9922
     height: 13819
@@ -943,6 +1009,7 @@ gt500k:
   7210/7210_pal300:
     title: 7210 - Atterrages de l'entrée de La Manche - Mer Celtique
     edition: Edition n° 5 - 2018
+    lastUpdate: 1
     scaleden: 500000
     width: 13819
     height: 9922
@@ -957,6 +1024,7 @@ gt500k:
   7357/7357_pal300:
     title: 7357 - Îles Marquises (Fenua Enata)
     edition: Edition n° 2 - 2019
+    lastUpdate: 0
     scaleden: 500000
     width: 9922
     height: 13819
@@ -971,6 +1039,7 @@ gt500k:
   7374/7374_pal300:
     title: 7374 - Côte de la Guyane française
     edition: Edition n° 2 - 2017
+    lastUpdate: 1
     scaleden: 500000
     width: 13819
     height: 9922
@@ -985,6 +1054,7 @@ gt500k:
   7507/7507_pal300:
     title: 7507 - Du Golfe du Lion aux Bouches de Bonifacio
     edition: Publication 1996
+    lastUpdate: 103
     scaleden: 500000
     width: 13819
     height: 9922
@@ -999,6 +1069,7 @@ gt500k:
   7204/7204_pal300:
     title: 7204 - De Marseille à l'île d'Elbe (Isola d'Elba) et aux Bouches de Bonifacio
     edition: Publication 1989
+    lastUpdate: 133
     scaleden: 500000
     width: 13819
     height: 9922
@@ -1013,6 +1084,7 @@ gt500k:
   7592/7592_pal300:
     title: 7592 - Du Glacier Dibble au Glacier Mertz
     edition: Publication 2004
+    lastUpdate: 0
     scaleden: 500000
     width: 13819
     height: 9922
@@ -1027,6 +1099,7 @@ gt500k:
   7661/7661_pal300:
     title: 7661 - De Cabo de la Nao à Barcelona et Islas Baleares
     edition: Edition n° 2 - 2018
+    lastUpdate: 3
     scaleden: 425000
     width: 13819
     height: 9922
@@ -1043,6 +1116,7 @@ gt250k:
   6498/6498_pal300:
     title: 6498 - Îles Crozet
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 250000
     width: 13819
     height: 9922
@@ -1057,6 +1131,7 @@ gt250k:
   6741/6741_pal300:
     title: 6741 - Îles Kerguelen
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 300000
     width: 13819
     height: 9922
@@ -1071,6 +1146,7 @@ gt250k:
   6768/6768_pal300:
     title: 6768 - Nouvelle-Calédonie (partie Sud) - Ile des Pins
     edition: Edition n° 3 - 2010
+    lastUpdate: 11
     scaleden: 300000
     width: 13819
     height: 9922
@@ -1085,6 +1161,7 @@ gt250k:
   6951/6951_pal300:
     title: 6951 - De Fos-sur-Mer à Capo Mele
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 250000
     width: 13819
     height: 9922
@@ -1099,6 +1176,7 @@ gt250k:
   6990/6990_pal300:
     title: 6990 - De la Pointe de Penmarc'h à la Gironde
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 355000
     width: 13819
     height: 9922
@@ -1113,6 +1191,7 @@ gt250k:
   6991/6991_pal300:
     title: 6991 - De la Gironde à Cabo Peñas
     edition: Edition n° 4 - 2015
+    lastUpdate: 5
     scaleden: 368000
     width: 13819
     height: 9922
@@ -1127,6 +1206,7 @@ gt250k:
   7008/7008_pal300:
     title: 7008 - Du Cabo de San Sebastian à Fos-sur-Mer
     edition: Edition n° 2 - 2005
+    lastUpdate: 57
     scaleden: 250000
     width: 9922
     height: 13819
@@ -1141,6 +1221,7 @@ gt250k:
   7025/7025_pal300:
     title: 7025 - Ile de Corse
     edition: Edition n° 3 - 2018
+    lastUpdate: 0
     scaleden: 250000
     width: 9922
     height: 13819
@@ -1155,6 +1236,7 @@ gt250k:
   7076/7076_pal300:
     title: 7076 - De Saint-Nazaire à Saint-Malo
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 345000
     width: 13819
     height: 9922
@@ -1169,6 +1251,7 @@ gt250k:
   7171/7171_pal300:
     title: 7171 - Approches des Îles Saint-Paul et Amsterdam
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 350000
     width: 6910
     height: 9922
@@ -1183,6 +1266,7 @@ gt250k:
   7229/7229_pal300:
     title: 7229 - De Nice à Piombino (Spéciale P)
     edition: Publication 1989
+    lastUpdate: 138
     scaleden: 250000
     width: 13819
     height: 9922
@@ -1197,6 +1281,7 @@ gt250k:
   7291/7291_pal300:
     title: 7291 - De Piombino à Fiumicino et côte Est de Corse
     edition: Edition n° 2 - 2018
+    lastUpdate: 5
     scaleden: 250000
     width: 13819
     height: 9922
@@ -1211,6 +1296,7 @@ gt250k:
   7311/7311_pal300:
     title: 7311 - La Manche (partie Ouest) - De Isles of Scilly et de l'Ile d'Ouessant aux Casquets
     edition: Edition n° 4 - 2019
+    lastUpdate: 4
     scaleden: 375000
     width: 13819
     height: 9922
@@ -1225,6 +1311,7 @@ gt250k:
   7312/7312_pal300:
     title: 7312 - La Manche (partie Est) - Des Casquets au Pas de Calais
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 375000
     width: 13819
     height: 9922
@@ -1239,6 +1326,7 @@ gt250k:
   7349/7349_pal300:
     title: 7349 - De la Réunion à Maurice (Mauritius) - Ile Tromelin
     edition: Publication 1996
+    lastUpdate: 22
     scaleden: 350000
     width: 13819
     height: 9922
@@ -1253,6 +1341,7 @@ gt250k:
   7484/7484_pal300:
     title: 7484 - De Paramaribo aux Iles du Salut
     edition: Edition n° 2 - 2017
+    lastUpdate: 1
     scaleden: 299000
     width: 13819
     height: 9922
@@ -1267,6 +1356,7 @@ gt250k:
   7485/7485_pal300:
     title: 7485 - Des Iles du Salut à Cabo Orange
     edition: Edition n° 2 - 2017
+    lastUpdate: 1
     scaleden: 300000
     width: 13819
     height: 9922
@@ -1281,6 +1371,7 @@ gt250k:
   7490/7490_pal300:
     title: 7490 - Archipel des Comores
     edition: Publication 2013
+    lastUpdate: 3
     scaleden: 350000
     width: 13819
     height: 9922
@@ -1295,6 +1386,7 @@ gt250k:
   7491/7491_pal300:
     title: 7491 - De Nosy Bé à la Baie d'Antsiranana - Récif du Geyser - Iles Glorieuses
     edition: Publication 1998
+    lastUpdate: 13
     scaleden: 350000
     width: 13819
     height: 9922
@@ -1309,6 +1401,7 @@ gt250k:
   7510/7510_pal300:
     title: 7510 - De Capo Bellavista aux Bouches de Bonifacio
     edition: Publication 1995
+    lastUpdate: 54
     scaleden: 250000
     width: 13819
     height: 9922
@@ -1323,6 +1416,7 @@ gt250k:
   7630/7630_pal300:
     title: 7630 - Petites Antilles - Partie Nord - De Anguilla à la Guadeloupe
     edition: Edition n° 4 - 2017
+    lastUpdate: 2
     scaleden: 300000
     width: 9922
     height: 13819
@@ -1337,6 +1431,7 @@ gt250k:
   7631/7631_pal300:
     title: 7631 - Petites Antilles - Partie centrale
     edition: Edition n° 2 - 2018
+    lastUpdate: 1
     scaleden: 304400
     width: 9922
     height: 13819
@@ -1351,6 +1446,7 @@ gt250k:
   7760/7760_pal300:
     title: 7760 - Nouvelle-Calédonie (partie Nord)
     edition: Publication 2018
+    lastUpdate: 0
     scaleden: 307000
     width: 9922
     height: 13819
@@ -1365,6 +1461,7 @@ gt250k:
   7762/7762_pal300:
     title: 7762 - Nouvelle-Calédonie (Partie Ouest)
     edition: Publication 2017
+    lastUpdate: 0
     scaleden: 300000
     width: 9922
     height: 13819
@@ -1379,6 +1476,7 @@ gt250k:
   7761/7761_pal300:
     title: 7761 - Nouvelle-Calédonie (Partie Nord-Est)
     edition: Publication 2018
+    lastUpdate: 1
     scaleden: 300000
     width: 13819
     height: 9922
@@ -1395,6 +1493,7 @@ gt100k:
   5978/5978_2_gtw:
     title: 5978-B - Récifs et îles Chesterfield
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 150000
     width: 3242
     height: 5621
@@ -1409,6 +1508,7 @@ gt100k:
   5978/5978_3_gtw:
     title: 5978-C - Récifs d'Entrecasteaux - Atoll de Huon
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 150000
     width: 2162
     height: 3504
@@ -1423,6 +1523,7 @@ gt100k:
   6033/6033_1_gtw:
     title: 6033 - Manuae (Scilly)
     edition: Edition n° 4 - 2014
+    lastUpdate: 2
     scaleden: 174000
     width: 2023
     height: 2089
@@ -1437,6 +1538,7 @@ gt100k:
   6033/6033_2_gtw:
     title: 6033 - Maupihaa (Mopelia)
     edition: Edition n° 4 - 2014
+    lastUpdate: 2
     scaleden: 174000
     width: 1297
     height: 1588
@@ -1451,6 +1553,7 @@ gt100k:
   6033/6033_3_gtw:
     title: 6033 - Motu One (Bellingshausen)
     edition: Edition n° 4 - 2014
+    lastUpdate: 2
     scaleden: 174000
     width: 1059
     height: 1087
@@ -1465,6 +1568,7 @@ gt100k:
   6033/6033_pal300:
     title: 6033 - Archipel de la Société - Îles sous-le-Vent
     edition: Edition n° 4 - 2014
+    lastUpdate: 2
     scaleden: 174000
     width: 13819
     height: 9922
@@ -1479,6 +1583,7 @@ gt100k:
   6420/6420_pal300:
     title: 6420 - De Mataiva à Rangiroa et Makatea
     edition: Edition n° 2 - 2009
+    lastUpdate: 4
     scaleden: 175000
     width: 13819
     height: 9922
@@ -1493,6 +1598,7 @@ gt100k:
   6604/6604_pal300:
     title: 6604 - De Mururoa à Fangataufa
     edition: Edition n° 3 - 2010
+    lastUpdate: 0
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1507,6 +1613,7 @@ gt100k:
   6643/6643_4_gtw:
     title: 6643-E - Iles Glorieuses
     edition: Edition n° 2 - 1991
+    lastUpdate: 15
     scaleden: 150000
     width: 2931
     height: 2572
@@ -1521,6 +1628,7 @@ gt100k:
   6643/6643_5_gtw:
     title: 6643-D - Iles Bassas da India
     edition: Edition n° 2 - 1991
+    lastUpdate: 15
     scaleden: 150000
     width: 2082
     height: 2572
@@ -1535,6 +1643,7 @@ gt100k:
   6680/6680_pal300:
     title: 6680 - De l'île d'Ouessant à l'île de Batz
     edition: Edition n° 3 - 2003
+    lastUpdate: 59
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1549,6 +1658,7 @@ gt100k:
   6713/6713_pal300:
     title: 6713 - Côte Nord-Est de la Corse
     edition: Edition n° 5 - 2016
+    lastUpdate: 3
     scaleden: 152000
     width: 9922
     height: 13819
@@ -1563,6 +1673,7 @@ gt100k:
   6735/6735_pal300:
     title: 6735 - Pas de Calais - De Boulogne-sur-Mer à Zeebrugge, estuaire de la Tamise (Thames)
     edition: Edition n° 7 - 2012
+    lastUpdate: 76
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1577,6 +1688,7 @@ gt100k:
   6821/6821_pal300:
     title: 6821 - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
     edition: Edition n° 2 - 2009
+    lastUpdate: 11
     scaleden: 152000
     width: 9922
     height: 13819
@@ -1591,6 +1703,7 @@ gt100k:
   6824/6824_pal300:
     title: 6824 - Du Cap d'Antifer au Cap Gris-Nez - De Newhaven à Dover
     edition: Edition n° 4 - 2006
+    lastUpdate: 128
     scaleden: 150000
     width: 9922
     height: 13819
@@ -1605,6 +1718,7 @@ gt100k:
   6857/6857_pal300:
     title: 6857 - Du Cap de la Hague à Fécamp - Baie de Seine
     edition: Edition n° 4 - 2012
+    lastUpdate: 39
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1619,6 +1733,7 @@ gt100k:
   6876/6876_1_gtw:
     title: 6876-A - Iles Wallis
     edition: Edition n° 3 - 2012
+    lastUpdate: 4
     scaleden: 100000
     width: 4851
     height: 5386
@@ -1633,6 +1748,7 @@ gt100k:
   6930/6930_pal300:
     title: 6930 - Des roches de Portsall au plateau des Roches Douvres
     edition: Edition n° 2 - 2009
+    lastUpdate: 56
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1647,6 +1763,7 @@ gt100k:
   6940/6940_pal300:
     title: 6940 - De Start Point à the Needles
     edition: Edition n° 5 - 2011
+    lastUpdate: 58
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1661,6 +1778,7 @@ gt100k:
   6941/6941_pal300:
     title: 6941 - De Lizard Point à Dartmouth
     edition: Edition n° 6 - 2018
+    lastUpdate: 3
     scaleden: 154000
     width: 13819
     height: 9922
@@ -1675,6 +1793,7 @@ gt100k:
   6955/6955_pal300:
     title: 6955 - Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 173000
     width: 13819
     height: 9922
@@ -1689,6 +1808,7 @@ gt100k:
   6966/6966_pal300:
     title: 6966 - Des Héaux de Bréhat au Cap Lévi
     edition: Edition n° 4 - 2015
+    lastUpdate: 17
     scaleden: 155000
     width: 9922
     height: 13819
@@ -1703,6 +1823,7 @@ gt100k:
   6968/6968_pal300:
     title: 6968 - De Anvil Point à Beachy Head
     edition: Edition n° 4 - 2016
+    lastUpdate: 8
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1717,6 +1838,7 @@ gt100k:
   7035/7035_pal300:
     title: 7035 - La Réunion
     edition: Edition n° 2 - 1998
+    lastUpdate: 37
     scaleden: 175000
     width: 13819
     height: 9922
@@ -1731,6 +1853,7 @@ gt100k:
   7052/7052_pal300:
     title: 7052 - De Nouméa à l'île des Pins - Le grand lagon Sud (Spéciale P)
     edition: Edition n° 2 - 2009
+    lastUpdate: 18
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1745,6 +1868,7 @@ gt100k:
   7066/7066_pal300:
     title: 7066 - De l'île Vierge à la Pointe de Penmarc'h - Abords de Brest
     edition: Edition n° 5 - 2019
+    lastUpdate: 1
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1759,6 +1883,7 @@ gt100k:
   7067/7067_pal300:
     title: 7067 - De la Chaussée de Sein à Belle-Ile
     edition: Edition n° 4 - 2015
+    lastUpdate: 10
     scaleden: 161000
     width: 13819
     height: 9922
@@ -1773,6 +1898,7 @@ gt100k:
   7068/7068_pal300:
     title: 7068 - De la presqu'île de Quiberon aux Sables-d'Olonne
     edition: Edition n° 3 - 2018
+    lastUpdate: 6
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1787,6 +1913,7 @@ gt100k:
   7069/7069_pal300:
     title: 7069 - De l'île d'Yeu à la Pointe de la Coubre - Plateau de Rochebonne
     edition: Edition n° 3 - 2018
+    lastUpdate: 3
     scaleden: 150000
     width: 13819
     height: 9922
@@ -1801,6 +1928,7 @@ gt100k:
   7070/7070_pal300:
     title: 7070 - Du pertuis de Maumusson à Mimizan-Plage
     edition: Edition n° 3 - 2018
+    lastUpdate: 6
     scaleden: 167000
     width: 9922
     height: 13819
@@ -1815,6 +1943,7 @@ gt100k:
   7260/7260_pal300:
     title: 7260 - De Apataki à Fakarava
     edition: Publication 2005
+    lastUpdate: 8
     scaleden: 175000
     width: 13819
     height: 9922
@@ -1829,6 +1958,7 @@ gt100k:
   7261/7261_pal300:
     title: 7261 - De Fakarava à Makemo
     edition: Publication 1993
+    lastUpdate: 10
     scaleden: 175000
     width: 13819
     height: 9922
@@ -1843,6 +1973,7 @@ gt100k:
   7262/7262_pal300:
     title: 7262 - De Makemo à Marutea Nord
     edition: Publication 2006
+    lastUpdate: 7
     scaleden: 174000
     width: 9922
     height: 13819
@@ -1857,6 +1988,7 @@ gt100k:
   7345/7345_pal300:
     title: 7345 - Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)
     edition: Edition n° 3 - 2010
+    lastUpdate: 17
     scaleden: 149000
     width: 13819
     height: 9922
@@ -1871,6 +2003,7 @@ gt100k:
   7350/7350_pal300:
     title: 7350 - Récif du Geyser - Banc de la Zélée
     edition: Edition n° 2 - 2008
+    lastUpdate: 1
     scaleden: 156000
     width: 13819
     height: 9922
@@ -1885,6 +2018,7 @@ gt100k:
   7381/7381_pal300:
     title: 7381 - De Kourou à Cayenne
     edition: Edition n° 2 - 2013
+    lastUpdate: 8
     scaleden: 100000
     width: 13819
     height: 9922
@@ -1899,6 +2033,7 @@ gt100k:
   7470/7470_pal300:
     title: 7470 - D'Anguilla à Nevis
     edition: Edition n° 2 - 2017
+    lastUpdate: 3
     scaleden: 148000
     width: 9922
     height: 13819
@@ -1913,6 +2048,7 @@ gt100k:
   7594/7594_pal300:
     title: 7594 - De la Pointe Ebba au Cap de la Découverte
     edition: Publication 2003
+    lastUpdate: 0
     scaleden: 100000
     width: 13819
     height: 9922
@@ -1927,6 +2063,7 @@ gt100k:
   7657/7657_pal300:
     title: 7657 - De Mimizan-Plage à Cabo de Ajo
     edition: Publication 2012
+    lastUpdate: 15
     scaleden: 175000
     width: 13819
     height: 9922
@@ -1941,6 +2078,7 @@ gt100k:
   7663/7663_pal300:
     title: 7663 - Du port de Barcelona au Cap Cerbère
     edition: Publication 2009
+    lastUpdate: 18
     scaleden: 175000
     width: 13819
     height: 9922
@@ -1955,6 +2093,7 @@ gt100k:
   7677/7677_pal300:
     title: 7677 - Île de Mayotte
     edition: Publication 2013
+    lastUpdate: 5
     scaleden: 156000
     width: 13819
     height: 9922
@@ -1971,6 +2110,7 @@ gt50k:
   6118/6118_pal300:
     title: 6118 - Iles Saint-Pierre et Miquelon
     edition: Edition n° 5 - 2017
+    lastUpdate: 3
     scaleden: 80000
     width: 9922
     height: 13819
@@ -1985,6 +2125,7 @@ gt50k:
   6279/6279_2_gtw:
     title: 6279 - Maria
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 80000
     width: 1736
     height: 1575
@@ -1999,6 +2140,7 @@ gt50k:
   6461/6461_pal300:
     title: 6461 - Îles Gambier
     edition: Edition n° 2 - 1992
+    lastUpdate: 16
     scaleden: 60000
     width: 9922
     height: 13819
@@ -2013,6 +2155,7 @@ gt50k:
   6497/6497_pal300:
     title: 6497 - Île de la Possession, Île de l'Est
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 75000
     width: 13819
     height: 9922
@@ -2027,6 +2170,7 @@ gt50k:
   6498/6498_1_gtw:
     title: 6498-A - Île aux Cochons - Côte Est, Mouillage de la Meurthe
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 50000
     width: 2342
     height: 2837
@@ -2041,6 +2185,7 @@ gt50k:
   6643/6643_1_gtw:
     title: 6643-A - Ile Juan de Nova
     edition: Edition n° 2 - 1991
+    lastUpdate: 15
     scaleden: 50000
     width: 7015
     height: 5453
@@ -2055,6 +2200,7 @@ gt50k:
   6643/6643_3_gtw:
     title: 6643-C - Ile Europa
     edition: Edition n° 2 - 1991
+    lastUpdate: 15
     scaleden: 50000
     width: 4671
     height: 3698
@@ -2069,6 +2215,7 @@ gt50k:
   6658/6658_pal300:
     title: 6658 - Île de Moorea - Côte Nord-Ouest de Tahiti
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2083,6 +2230,7 @@ gt50k:
   6687/6687_pal300:
     title: 6687 - Abords de Nouméa - Passes de Boulari et de Dumbéa
     edition: Edition n° 6 - 2019
+    lastUpdate: 0
     scaleden: 59600
     width: 9922
     height: 13819
@@ -2097,6 +2245,7 @@ gt50k:
   6693/6693_pal300:
     title: 6693 - De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 49900
     width: 13819
     height: 9922
@@ -2111,6 +2260,7 @@ gt50k:
   6738/6738_pal300:
     title: 6738 - La Martinique - Partie Sud (Spéciale P)
     edition: Edition n° 2 - 2009
+    lastUpdate: 27
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2125,6 +2275,7 @@ gt50k:
   6767/6767_pal300:
     title: 6767 - De Fos-sur-Mer à Marseille
     edition: Edition n° 4 - 2017
+    lastUpdate: 2
     scaleden: 49900
     width: 13819
     height: 9922
@@ -2139,6 +2290,7 @@ gt50k:
   6822/6822_pal300:
     title: 6822 - Abords Nord de Bastia
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 50300
     width: 9922
     height: 13819
@@ -2153,6 +2305,7 @@ gt50k:
   6823/6823_pal300:
     title: 6823 - Abords Sud de Bastia
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 50600
     width: 9922
     height: 13819
@@ -2167,6 +2320,7 @@ gt50k:
   6827/6827_pal300:
     title: 6827 - Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 59500
     width: 9922
     height: 13819
@@ -2181,6 +2335,7 @@ gt50k:
   6843/6843_pal300:
     title: 6843 - Du Cabo Creus à Port-Barcarès
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2195,6 +2350,7 @@ gt50k:
   6844/6844_pal300:
     title: 6844 - De Port-Barcarès à l'embouchure de l'Aude
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2209,6 +2365,7 @@ gt50k:
   6855/6855_pal300:
     title: 6855 - Du phare d'Alistro à Solenzara
     edition: Edition n° 3 - 2015
+    lastUpdate: 2
     scaleden: 51000
     width: 9922
     height: 13819
@@ -2223,6 +2380,7 @@ gt50k:
   6929/6929_pal300:
     title: 6929 - Abords de Porto-Vecchio - De l'anse de Favone aux îles Lavezzi
     edition: Edition n° 4 - 2017
+    lastUpdate: 4
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2237,6 +2395,7 @@ gt50k:
   6933/6933_pal300:
     title: 6933 - De l'île Ouen à l'île des Pins - Passe de la Sarcelle (Spéciale P)
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2251,6 +2410,7 @@ gt50k:
   6942/6942_pal300:
     title: 6942 - De Punta d'Orchina au Cap Muro - Abords d'Ajaccio
     edition: Edition n° 3 - 2016
+    lastUpdate: 3
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2265,6 +2425,7 @@ gt50k:
   6949/6949_pal300:
     title: 6949 - Abords de Thio
     edition: Edition n° 2 - 2010
+    lastUpdate: 13
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2279,6 +2440,7 @@ gt50k:
   6969/6969_pal300:
     title: 6969 - Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 50300
     width: 9922
     height: 13819
@@ -2293,6 +2455,7 @@ gt50k:
   6970/6970_pal300:
     title: 6970 - De Punta di l'Acciolu à Capo Cavallo
     edition: Edition n° 3 - 2015
+    lastUpdate: 3
     scaleden: 50500
     width: 13819
     height: 9922
@@ -2307,6 +2470,7 @@ gt50k:
   6985/6985_pal300:
     title: 6985 - De Paagoumène à Ouaco
     edition: Edition n° 3 - 2011
+    lastUpdate: 7
     scaleden: 60300
     width: 13819
     height: 9922
@@ -2321,6 +2485,7 @@ gt50k:
   6986/6986_pal300:
     title: 6986 - De Port-Ounia au Cap Ndoua
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 59700
     width: 9922
     height: 13819
@@ -2335,6 +2500,7 @@ gt50k:
   7011/7011_pal300:
     title: 7011 - De la presqu'île Neuméni à Port-Ounia
     edition: Edition n° 2 - 2010
+    lastUpdate: 5
     scaleden: 59800
     width: 13819
     height: 9922
@@ -2349,6 +2515,7 @@ gt50k:
   7024/7024_1_gtw:
     title: 7024-A - Golfo di Arzachena
     edition: Edition n° 5 - 2012
+    lastUpdate: 33
     scaleden: 51500
     width: 1042
     height: 1353
@@ -2363,6 +2530,7 @@ gt50k:
   7024/7024_pal300:
     title: 7024 - Bouches de Bonifacio
     edition: Edition n° 5 - 2012
+    lastUpdate: 33
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2377,6 +2545,7 @@ gt50k:
   7031/7031_pal300:
     title: 7031 - De l'île de Penfret au plateau des Birvideaux - Abords de Lorient
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2391,6 +2560,7 @@ gt50k:
   7032/7032_pal300:
     title: 7032 - De l'île de Groix à Belle-Ile - Abords de Lorient
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2405,6 +2575,7 @@ gt50k:
   7033/7033_pal300:
     title: 7033 - De Quiberon au Croisic (Spéciale P)
     edition: Edition n° 3 - 2002
+    lastUpdate: 77
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2419,6 +2590,7 @@ gt50k:
   7041/7041_pal300:
     title: 7041 - La Martinique - Partie Nord (Spéciale P)
     edition: Edition n° 2 - 2009
+    lastUpdate: 20
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2433,6 +2605,7 @@ gt50k:
   7050/7050_pal300:
     title: 7050 - De Calvi à Cargèse
     edition: Edition n° 3 - 2015
+    lastUpdate: 5
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2447,6 +2620,7 @@ gt50k:
   7051/7051_pal300:
     title: 7051 - Du Cap Colnett à Touho - Abords de Hienghène
     edition: Edition n° 3 - 2013
+    lastUpdate: 2
     scaleden: 60300
     width: 13819
     height: 9922
@@ -2461,6 +2635,7 @@ gt50k:
   7052/7052_1_gtw:
     title: 7052-A - Mouillage de Uapan
     edition: Edition n° 2 - 2009
+    lastUpdate: 18
     scaleden: 50000
     width: 2560
     height: 2174
@@ -2475,6 +2650,7 @@ gt50k:
   7053/7053_pal300:
     title: 7053 - De Sète à la Pointe de l'Espiguette
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2489,6 +2665,7 @@ gt50k:
   7054/7054_pal300:
     title: 7054 - De l'embouchure de l'Aude à Sète
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2503,6 +2680,7 @@ gt50k:
   7120/7120_pal300:
     title: 7120 - Abords de Cherbourg - Du Cap de La Hague à la Pointe de Barfleur
     edition: Edition n° 2 - 2008
+    lastUpdate: 40
     scaleden: 47800
     width: 13819
     height: 9922
@@ -2517,6 +2695,7 @@ gt50k:
   7146/7146_pal300:
     title: 7146 - De la Pointe de Penmarc'h à la Pointe de Trévignon
     edition: Edition n° 3 - 2009
+    lastUpdate: 49
     scaleden: 49700
     width: 13819
     height: 9922
@@ -2531,6 +2710,7 @@ gt50k:
   7147/7147_pal300:
     title: 7147 - De la chaussée de Sein à la Pointe de Penmarc'h - Baie d'Audierne (Spéciale P)
     edition: Edition n° 2 - 2008
+    lastUpdate: 38
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2545,6 +2725,7 @@ gt50k:
   7148/7148_pal300:
     title: 7148 - Du Goulet de Brest à la Chaussée de Sein
     edition: Edition n° 3 - 2008
+    lastUpdate: 48
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2559,6 +2740,7 @@ gt50k:
   7149/7149_pal300:
     title: 7149 - Du Goulet de Brest à Portsall - Ile d'Ouessant
     edition: Edition n° 4 - 2015
+    lastUpdate: 6
     scaleden: 49100
     width: 13819
     height: 9922
@@ -2573,6 +2755,7 @@ gt50k:
   7150/7150_pal300:
     title: 7150 - De Portsall à l'anse de Kernic
     edition: Edition n° 2 - 2008
+    lastUpdate: 11
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2587,6 +2770,7 @@ gt50k:
   7151/7151_pal300:
     title: 7151 - De l'anse de Kernic à l'Ile Grande
     edition: Edition n° 3 - 2008
+    lastUpdate: 34
     scaleden: 48700
     width: 13819
     height: 9922
@@ -2601,6 +2785,7 @@ gt50k:
   7152/7152_pal300:
     title: 7152 - De l'Ile Grande à l'Ile de Bréhat
     edition: Edition n° 3 - 2017
+    lastUpdate: 3
     scaleden: 48700
     width: 13819
     height: 9922
@@ -2615,6 +2800,7 @@ gt50k:
   7153/7153_pal300:
     title: 7153 - De l'île de Bréhat au Plateau des Roches Douvres
     edition: Edition n° 3 - 2018
+    lastUpdate: 0
     scaleden: 48600
     width: 13819
     height: 9922
@@ -2629,6 +2815,7 @@ gt50k:
   7154/7154_pal300:
     title: 7154 - De l'île de Bréhat au Cap Fréhel - Baie de Saint-Brieuc
     edition: Edition n° 2 - 2008
+    lastUpdate: 47
     scaleden: 48800
     width: 13819
     height: 9922
@@ -2643,6 +2830,7 @@ gt50k:
   7155/7155_pal300:
     title: 7155 - Du Cap Fréhel à la Pointe du Grouin - Approches de Saint-Malo
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 48800
     width: 13819
     height: 9922
@@ -2657,6 +2845,7 @@ gt50k:
   7156/7156_pal300:
     title: 7156 - De la Pointe du Grouin à la Pointe d'Agon - Baie du Mont-Saint-Michel - Iles Chausey
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 48800
     width: 9922
     height: 13819
@@ -2671,6 +2860,7 @@ gt50k:
   7157/7157_pal300:
     title: 7157 - De la Pointe d'Agon au Cap de Carteret - Passage de la Déroute
     edition: Edition n° 3 - 2014
+    lastUpdate: 9
     scaleden: 48400
     width: 9922
     height: 13819
@@ -2685,6 +2875,7 @@ gt50k:
   7158/7158_pal300:
     title: 7158 - Du Cap de Carteret au Cap de La Hague - Raz Blanchard
     edition: Edition n° 2 - 2008
+    lastUpdate: 42
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2699,6 +2890,7 @@ gt50k:
   7159/7159_pal300:
     title: 7159 - De Guernsey, Herm et Sark à Alderney - Bancs des Casquets
     edition: Edition n° 2 - 2008
+    lastUpdate: 5
     scaleden: 50000
     width: 9922
     height: 13819
@@ -2713,6 +2905,7 @@ gt50k:
   7160/7160_pal300:
     title: 7160 - De Jersey à Guernsey
     edition: Edition n° 3 - 2014
+    lastUpdate: 7
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2727,6 +2920,7 @@ gt50k:
   7161/7161_pal300:
     title: 7161 - Des îles Chausey à Jersey - Plateau des Minquiers
     edition: Edition n° 3 - 2014
+    lastUpdate: 8
     scaleden: 48500
     width: 13819
     height: 9922
@@ -2741,6 +2935,7 @@ gt50k:
   7162/7162_pal300:
     title: 7162 - Du Cap Muro au Cap de Feno
     edition: Edition n° 3 - 2018
+    lastUpdate: 4
     scaleden: 50000
     width: 13819
     height: 9922
@@ -2755,6 +2950,7 @@ gt50k:
   7167/7167_pal300:
     title: 7167 - De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)
     edition: Edition n° 2 - 2010
+    lastUpdate: 8
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2769,6 +2965,7 @@ gt50k:
   7168/7168_pal300:
     title: 7168 - De la Baie de Bourail à la Passe de la Poya
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2783,6 +2980,7 @@ gt50k:
   7172/7172_pal300:
     title: 7172 - De la Pointe de Saint-Mathieu à la Chaussée de Sein - Iroise
     edition: Edition n° 3 - 2008
+    lastUpdate: 39
     scaleden: 49300
     width: 13819
     height: 9922
@@ -2797,6 +2995,7 @@ gt50k:
   7183/7183_pal300:
     title: 7183 - La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât
     edition: Edition n° 4 - 2016
+    lastUpdate: 2
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2811,6 +3010,7 @@ gt50k:
   7208/7208_pal300:
     title: 7208 - De Marie-Galante à la Désirade (Spéciale P)
     edition: Edition n° 2 - 2010
+    lastUpdate: 11
     scaleden: 60000
     width: 9922
     height: 13819
@@ -2825,6 +3025,7 @@ gt50k:
   7214/7214_pal300:
     title: 7214 - De Dunkerque à Oostende
     edition: Edition n° 8 - 2019
+    lastUpdate: 2
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2839,6 +3040,7 @@ gt50k:
   7218/7218_pal300:
     title: 7218 - Atolls d'Ouvéa et de Beautemps-Beaupré
     edition: Edition n° 4 - 2019
+    lastUpdate: 1
     scaleden: 75000
     width: 13819
     height: 9922
@@ -2853,6 +3055,7 @@ gt50k:
   7222/7222_pal300:
     title: 7222 - La Réunion - Partie Est - De la Pointe de la Rivière du Mât à la Pointe Marcellin
     edition: Publication 1996
+    lastUpdate: 7
     scaleden: 60000
     width: 9922
     height: 13819
@@ -2867,6 +3070,7 @@ gt50k:
   7234/7234_pal300:
     title: 7234 - Iles Futuna et Alofi
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 60000
     width: 9922
     height: 6910
@@ -2881,6 +3085,7 @@ gt50k:
   7248/7248_1_gtw:
     title: 7248-A - Apataki
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 80000
     width: 6447
     height: 7582
@@ -2895,6 +3100,7 @@ gt50k:
   7259/7259_1_gtw:
     title: 7259 - Ile Maré
     edition: Publication 1995
+    lastUpdate: 16
     scaleden: 75000
     width: 9378
     height: 9069
@@ -2909,6 +3115,7 @@ gt50k:
   7273/7273_pal300:
     title: 7273 - De Nouméa à la Baie de Saint-Vincent (Spéciale P)
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 60000
     width: 13819
     height: 9922
@@ -2923,6 +3130,7 @@ gt50k:
   7281/7281_pal300:
     title: 7281 - Hao
     edition: Edition n° 2 - 2015
+    lastUpdate: 12
     scaleden: 75000
     width: 13819
     height: 9922
@@ -2937,6 +3145,7 @@ gt50k:
   7293/7293_pal300:
     title: 7293 - Manihi
     edition: Edition n° 2 - 2007
+    lastUpdate: 3
     scaleden: 50000
     width: 9922
     height: 6910
@@ -2951,6 +3160,7 @@ gt50k:
   7313/7313_pal300:
     title: 7313 - De la passe de Koné à Ouaco
     edition: Edition n° 2 - 2012
+    lastUpdate: 3
     scaleden: 60200
     width: 13819
     height: 9922
@@ -2965,6 +3175,7 @@ gt50k:
   7314/7314_1_gtw:
     title: 7314 - Ahe
     edition: Edition n° 2 - 2008
+    lastUpdate: 6
     scaleden: 50000
     width: 5495
     height: 6235
@@ -2979,6 +3190,7 @@ gt50k:
   7318/7318_pal300:
     title: 7318 - De Poum à l'Île Pam
     edition: Edition n° 4 - 2014
+    lastUpdate: 1
     scaleden: 60500
     width: 13819
     height: 9922
@@ -2993,6 +3205,7 @@ gt50k:
   7319/7319_pal300:
     title: 7319 - De l'Ile Pam au Cap Colnett
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 60400
     width: 13819
     height: 9922
@@ -3007,6 +3220,7 @@ gt50k:
   7320/7320_pal300:
     title: 7320 - De Koumac à Poum
     edition: Edition n° 3 - 2011
+    lastUpdate: 0
     scaleden: 60400
     width: 13819
     height: 9922
@@ -3021,6 +3235,7 @@ gt50k:
   7323/7323_pal300:
     title: 7323 - Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover
     edition: Edition n° 6 - 2018
+    lastUpdate: 1
     scaleden: 74300
     width: 13819
     height: 9922
@@ -3035,6 +3250,7 @@ gt50k:
   7328/7328_pal300:
     title: 7328 - La Réunion - Partie Sud - De la Pointe des Châteaux à la Pointe Marcellin
     edition: Edition n° 2 - 2012
+    lastUpdate: 6
     scaleden: 59900
     width: 13819
     height: 9922
@@ -3049,6 +3265,7 @@ gt50k:
   7329/7329_1_gtw:
     title: 7329 - Kauehi
     edition: Edition n° 2 - 2003
+    lastUpdate: 9
     scaleden: 75000
     width: 9043
     height: 6577
@@ -3063,6 +3280,7 @@ gt50k:
   7337/7337_pal300:
     title: 7337 - Baie de l'Oyapok
     edition: Publication 1996
+    lastUpdate: 5
     scaleden: 80000
     width: 9922
     height: 13819
@@ -3077,6 +3295,7 @@ gt50k:
   7346/7346_pal300:
     title: 7346 - Iles du Roi Georges. Takaroa et Takapoto
     edition: Edition n° 2 - 2006
+    lastUpdate: 5
     scaleden: 60000
     width: 13819
     height: 9922
@@ -3091,6 +3310,7 @@ gt50k:
   7352/7352_1_gtw:
     title: 7352 - Nuku-Hiva
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 70000
     width: 9058
     height: 6525
@@ -3105,6 +3325,7 @@ gt50k:
   7353/7353_11_gtw:
     title: 7353-H - Ua-Huka
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 70000
     width: 5521
     height: 5770
@@ -3119,6 +3340,7 @@ gt50k:
   7353/7353_5_gtw:
     title: 7353-A - Ua-Pou
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 70000
     width: 5678
     height: 6159
@@ -3133,6 +3355,7 @@ gt50k:
   7354/7354_15_gtw:
     title: 7354-O - Fatu-Hiva
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 70000
     width: 4710
     height: 6496
@@ -3147,6 +3370,7 @@ gt50k:
   7355/7355_1_gtw:
     title: 7355-B - Fatu Huku
     edition: Edition n° 2 - 2018
+    lastUpdate: 0
     scaleden: 70000
     width: 2053
     height: 2065
@@ -3161,6 +3385,7 @@ gt50k:
   7355/7355_pal300:
     title: 7355 - Hiva-Oa, Tahuata et Mohotani
     edition: Edition n° 2 - 2018
+    lastUpdate: 0
     scaleden: 70000
     width: 13819
     height: 9922
@@ -3175,6 +3400,7 @@ gt50k:
   7356/7356_pal300:
     title: 7356 - Eiao, Hatutaa et Motu One
     edition: Publication 2000
+    lastUpdate: 1
     scaleden: 70000
     width: 13819
     height: 9922
@@ -3189,6 +3415,7 @@ gt50k:
   7372/7372_1_gtw:
     title: 7372 - Fakarava
     edition: Edition n° 3 - 2004
+    lastUpdate: 13
     scaleden: 80000
     width: 9022
     height: 9741
@@ -3203,6 +3430,7 @@ gt50k:
   7373/7373_pal300:
     title: 7373 - Rangiroa
     edition: Edition n° 2 - 2002
+    lastUpdate: 28
     scaleden: 80000
     width: 13819
     height: 9922
@@ -3217,6 +3445,7 @@ gt50k:
   7375/7375_pal300:
     title: 7375 - De la Passe de Poya à la Passe de Koné
     edition: Edition n° 2 - 2012
+    lastUpdate: 3
     scaleden: 60000
     width: 13819
     height: 9922
@@ -3231,6 +3460,7 @@ gt50k:
   7376/7376_1_gtw:
     title: 7376 - Embouchure du fleuve Maroni
     edition: Publication 2003
+    lastUpdate: 19
     scaleden: 60000
     width: 4572
     height: 9022
@@ -3245,6 +3475,7 @@ gt50k:
   7379/7379_pal300:
     title: 7379 - Abords de Cayenne
     edition: Edition n° 2 - 2002
+    lastUpdate: 30
     scaleden: 50000
     width: 13819
     height: 9922
@@ -3259,6 +3490,7 @@ gt50k:
   7380/7380_pal300:
     title: 7380 - Abords de Kourou
     edition: Edition n° 2 - 2004
+    lastUpdate: 11
     scaleden: 50000
     width: 13819
     height: 9922
@@ -3273,6 +3505,7 @@ gt50k:
   7394/7394_pal300:
     title: 7394 - De la Pointe de Saint-Gildas au Goulet de Fromentine - Baie de Bourgneuf
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 50500
     width: 13819
     height: 9922
@@ -3287,6 +3520,7 @@ gt50k:
   7395/7395_pal300:
     title: 7395 - Du Croisic à Noirmoutier - Estuaire de la Loire
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 50300
     width: 13819
     height: 9922
@@ -3301,6 +3535,7 @@ gt50k:
   7402/7402_pal300:
     title: 7402 - De Saint-Jean-de-Monts aux Sables-d'Olonne
     edition: Edition n° 2 - 2002
+    lastUpdate: 21
     scaleden: 50800
     width: 13819
     height: 9922
@@ -3315,6 +3550,7 @@ gt50k:
   7403/7403_pal300:
     title: 7403 - Des Sables d'Olonne à l'Île de Ré
     edition: Edition n° 2 - 2002
+    lastUpdate: 29
     scaleden: 51000
     width: 13819
     height: 9922
@@ -3329,6 +3565,7 @@ gt50k:
   7404/7404_pal300:
     title: 7404 - De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d'Antioche
     edition: Edition n° 3 - 2014
+    lastUpdate: 10
     scaleden: 51200
     width: 13819
     height: 9922
@@ -3343,6 +3580,7 @@ gt50k:
   7405/7405_pal300:
     title: 7405 - De La Rochelle à la Pointe de La Coubre - Ile d'Oléron
     edition: Edition n° 2 - 2017
+    lastUpdate: 10
     scaleden: 51400
     width: 9922
     height: 13819
@@ -3357,6 +3595,7 @@ gt50k:
   7406/7406_pal300:
     title: 7406 - De Marseille à Toulon
     edition: Edition n° 4 - 2017
+    lastUpdate: 11
     scaleden: 50000
     width: 13819
     height: 9922
@@ -3371,6 +3610,7 @@ gt50k:
   7407/7407_pal300:
     title: 7407 - De Toulon à Cavalaire-sur-Mer - Iles d'Hyères
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 50200
     width: 13819
     height: 9922
@@ -3385,6 +3625,7 @@ gt50k:
   7408/7408_pal300:
     title: 7408 - De Cavalaire-sur-Mer à la Rade d'Agay
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 50000
     width: 9922
     height: 13819
@@ -3399,6 +3640,7 @@ gt50k:
   7409/7409_pal300:
     title: 7409 - De la Rade d'Agay à Monaco
     edition: Edition n° 3 - 2010
+    lastUpdate: 12
     scaleden: 49700
     width: 13819
     height: 9922
@@ -3413,6 +3655,7 @@ gt50k:
   7416/7416_pal300:
     title: 7416 - Abords Sud de Boulogne-sur-Mer - Du Tréport à Boulogne-sur-Mer
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 75000
     width: 9922
     height: 13819
@@ -3427,6 +3670,7 @@ gt50k:
   7417/7417_pal300:
     title: 7417 - Abords de Fécamp et de Dieppe - Du Cap d'Antifer à Dieppe
     edition: Edition n° 2 - 2006
+    lastUpdate: 47
     scaleden: 75900
     width: 13819
     height: 9922
@@ -3441,6 +3685,7 @@ gt50k:
   7418/7418_pal300:
     title: 7418 - Abords du Havre et d'Antifer - Embouchure de la Seine - De Ouistreham au Cap d'Antifer
     edition: Edition n° 3 - 2017
+    lastUpdate: 5
     scaleden: 60000
     width: 9922
     height: 13819
@@ -3455,6 +3700,7 @@ gt50k:
   7419/7419_2_gtw:
     title: 7419 - 2
     edition: Edition n° 3 - 2018
+    lastUpdate: 3
     scaleden: 60100
     width: 4960
     height: 2087
@@ -3469,6 +3715,7 @@ gt50k:
   7419/7419_3_gtw:
     title: 7419 - 3
     edition: Edition n° 3 - 2018
+    lastUpdate: 3
     scaleden: 60100
     width: 9258
     height: 4579
@@ -3483,6 +3730,7 @@ gt50k:
   7421/7421_pal300:
     title: 7421 - De la Pointe de La Percée à Ouistreham
     edition: Edition n° 2 - 2005
+    lastUpdate: 28
     scaleden: 48100
     width: 13819
     height: 9922
@@ -3497,6 +3745,7 @@ gt50k:
   7422/7422_pal300:
     title: 7422 - De la Pointe de Barfleur à La Pointe de La Percée - Iles Saint-Marcouf
     edition: Edition n° 2 - 2006
+    lastUpdate: 36
     scaleden: 48000
     width: 9922
     height: 13819
@@ -3511,6 +3760,7 @@ gt50k:
   7424/7424_pal300:
     title: 7424 - Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland
     edition: Edition n° 4 - 2018
+    lastUpdate: 4
     scaleden: 73900
     width: 13819
     height: 9922
@@ -3525,6 +3775,7 @@ gt50k:
   7426/7426_pal300:
     title: 7426 - De la Pointe de la Coubre à la Pointe de la Négade - Embouchure de La Gironde
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 51800
     width: 13819
     height: 9922
@@ -3539,6 +3790,7 @@ gt50k:
   7427/7427_3_gtw:
     title: 7427-3 - La Gironde - La Garonne et La Dordogne (3/3)
     edition: Edition n° 2 - 2016
+    lastUpdate: 2
     scaleden: 52400
     width: 2822
     height: 2382
@@ -3553,6 +3805,7 @@ gt50k:
   7427/7427_4_gtw:
     title: 7427-1 - La Gironde - La Garonne et La Dordogne (1/3)
     edition: Edition n° 2 - 2016
+    lastUpdate: 2
     scaleden: 52000
     width: 4840
     height: 9085
@@ -3567,6 +3820,7 @@ gt50k:
   7427/7427_5_gtw:
     title: 7427-2 - La Gironde - La Garonne et La Dordogne (2/3)
     edition: Edition n° 2 - 2016
+    lastUpdate: 2
     scaleden: 52300
     width: 8370
     height: 9085
@@ -3581,6 +3835,7 @@ gt50k:
   7440/7440_pal300:
     title: 7440 - De Vieux Boucau à la Baie de Fontarabie
     edition: Publication 2007
+    lastUpdate: 19
     scaleden: 50000
     width: 9922
     height: 13819
@@ -3595,6 +3850,7 @@ gt50k:
   7443/7443_pal300:
     title: 7443 - Du Cap Ferrat à Capo San Lorenzo
     edition: Edition n° 2 - 2014
+    lastUpdate: 10
     scaleden: 49600
     width: 13819
     height: 9922
@@ -3609,6 +3865,7 @@ gt50k:
   7453/7453_pal300:
     title: 7453 - Makemo
     edition: Publication 1996
+    lastUpdate: 10
     scaleden: 75000
     width: 13819
     height: 9922
@@ -3623,6 +3880,7 @@ gt50k:
   7454/7454_pal300:
     title: 7454 - Faaite
     edition: Publication 1998
+    lastUpdate: 8
     scaleden: 50000
     width: 9922
     height: 6910
@@ -3637,6 +3895,7 @@ gt50k:
   7456/7456_pal300:
     title: 7456 - Toau - De Niau à Fakarava
     edition: Publication 2002
+    lastUpdate: 6
     scaleden: 75000
     width: 13819
     height: 9922
@@ -3651,6 +3910,7 @@ gt50k:
   7457/7457_pal300:
     title: 7457 - Raroia et Takume
     edition: Publication 2003
+    lastUpdate: 8
     scaleden: 75000
     width: 9922
     height: 13819
@@ -3665,6 +3925,7 @@ gt50k:
   7458/7458_1_gtw:
     title: 7458 - Aratika
     edition: Edition n° 2 - 2011
+    lastUpdate: 2
     scaleden: 50000
     width: 9022
     height: 6604
@@ -3679,6 +3940,7 @@ gt50k:
   7459/7459_1_gtw:
     title: 7459 - Tikehau
     edition: Publication 2019
+    lastUpdate: 1
     scaleden: 75000
     width: 9022
     height: 6542
@@ -3693,6 +3955,7 @@ gt50k:
   7471/7471_pal300:
     title: 7471 - D'Anguilla à Saint-Barthélemy
     edition: Edition n° 3 - 2017
+    lastUpdate: 6
     scaleden: 60000
     width: 13819
     height: 9922
@@ -3707,6 +3970,7 @@ gt50k:
   7482/7482_pal300:
     title: 7482 - De l'Ilet à Kahouanne aux Saintes
     edition: Publication 2009
+    lastUpdate: 25
     scaleden: 60400
     width: 9922
     height: 13819
@@ -3721,6 +3985,7 @@ gt50k:
   6948/6948_pal300:
     title: 6948 - Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)
     edition: Edition n° 2 - 2010
+    lastUpdate: 25
     scaleden: 60000
     width: 9922
     height: 13819
@@ -3735,6 +4000,7 @@ gt50k:
   7302/7302_pal300:
     title: 7302 - De la Pointe des Châteaux à l'Ilet à Kahouanne
     edition: Edition n° 2 - 2010
+    lastUpdate: 15
     scaleden: 59900
     width: 13819
     height: 9922
@@ -3749,6 +4015,7 @@ gt50k:
   7616/7616_pal300:
     title: 7616 - Dominica
     edition: Publication 1998
+    lastUpdate: 6
     scaleden: 60000
     width: 8056
     height: 11942
@@ -3763,6 +4030,7 @@ gt50k:
   7620/7620_pal300:
     title: 7620 - Approches d'Anguilla
     edition: Edition n° 2 - 2018
+    lastUpdate: 1
     scaleden: 50000
     width: 12201
     height: 7824
@@ -3777,6 +4045,7 @@ gt50k:
   7665/7665_pal300:
     title: 7665 - Du Cap Negre au Cap Cerbère
     edition: Publication 2009
+    lastUpdate: 12
     scaleden: 50000
     width: 9922
     height: 13819
@@ -3791,6 +4060,7 @@ gt50k:
   7755/7755_pal300:
     title: 7755 - De Ponérihouen au Cap Dumoulin
     edition: Publication 2016
+    lastUpdate: 4
     scaleden: 60000
     width: 13819
     height: 9922
@@ -3805,6 +4075,7 @@ gt50k:
   7756/7756_pal300:
     title: 7756 - De Touho à Ponérihouen
     edition: Publication 2014
+    lastUpdate: 1
     scaleden: 60200
     width: 13819
     height: 9922
@@ -3821,6 +4092,7 @@ gt25k:
   4232/4232_1_gtw:
     title: 4232-B - Îles Morotiri (Bass)
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 30000
     width: 2479
     height: 2856
@@ -3835,6 +4107,7 @@ gt25k:
   4232/4232_4_gtw:
     title: 4232-A - Île de Rapa
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 30000
     width: 7916
     height: 5641
@@ -3849,6 +4122,7 @@ gt25k:
   6165/6165_pal300:
     title: 6165 - Rurutu
     edition: Edition n° 3 - 2010
+    lastUpdate: 2
     scaleden: 30000
     width: 6910
     height: 9922
@@ -3863,6 +4137,7 @@ gt25k:
   6207/6207_2_gtw:
     title: 6207 - Île Raivavae (Vavitu)
     edition: Edition n° 4 - 2010
+    lastUpdate: 2
     scaleden: 30000
     width: 7856
     height: 4931
@@ -3877,6 +4152,7 @@ gt25k:
   6279/6279_3_gtw:
     title: 6279 - Rimatara
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 30000
     width: 5422
     height: 4060
@@ -3891,6 +4167,7 @@ gt25k:
   6282/6282_pal300:
     title: 6282 - Passes entre les Iles Raiatea et Tahaa
     edition: Edition n° 4 - 2005
+    lastUpdate: 17
     scaleden: 30000
     width: 13819
     height: 9922
@@ -3905,6 +4182,7 @@ gt25k:
   6283/6283_pal300:
     title: 6283 - Ile Tahaa
     edition: Edition n° 4 - 2005
+    lastUpdate: 7
     scaleden: 30000
     width: 13819
     height: 9922
@@ -3919,6 +4197,7 @@ gt25k:
   6284/6284_pal300:
     title: 6284 - Partie Sud de Raiatea
     edition: Edition n° 5 - 2005
+    lastUpdate: 12
     scaleden: 30000
     width: 13819
     height: 9922
@@ -3933,6 +4212,7 @@ gt25k:
   6320/6320_pal300:
     title: 6320 - Makatea
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 30000
     width: 6910
     height: 9922
@@ -3947,6 +4227,7 @@ gt25k:
   6424/6424_2_gtw:
     title: 6424 - Île Tubuai
     edition: Edition n° 2 - 2001
+    lastUpdate: 14
     scaleden: 40000
     width: 8042
     height: 5935
@@ -3961,6 +4242,7 @@ gt25k:
   6434/6434_pal300:
     title: 6434 - Huahine
     edition: Edition n° 4 - 2005
+    lastUpdate: 15
     scaleden: 30000
     width: 9922
     height: 13819
@@ -3975,6 +4257,7 @@ gt25k:
   6462/6462_pal300:
     title: 6462 - Îles Gambier, partie Sud
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 30000
     width: 13819
     height: 9922
@@ -3989,6 +4272,7 @@ gt25k:
   6525/6525_pal300:
     title: 6525 - Abords de Port Phaeton
     edition: Edition n° 5 - 2017
+    lastUpdate: 0
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4003,6 +4287,7 @@ gt25k:
   6540/6540_pal300:
     title: 6540 - Baie de Saint-Vincent
     edition: Edition n° 4 - 2017
+    lastUpdate: 1
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4017,6 +4302,7 @@ gt25k:
   6605/6605_pal300:
     title: 6605 - De la Pointe Vénus à Mahaena
     edition: Edition n° 2 - 2009
+    lastUpdate: 3
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4031,6 +4317,7 @@ gt25k:
   6615/6615_pal300:
     title: 6615 - Îles de Port-Cros et du Levant (Îles d'Hyères)
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4045,6 +4332,7 @@ gt25k:
   6616/6616_pal300:
     title: 6616 - Du Cap Bénat au Cap Lardier - Rade de Bormes - Baie de Cavalaire
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4059,6 +4347,7 @@ gt25k:
   6651/6651_pal300:
     title: 6651 - De Calais à Dunkerque
     edition: Edition n° 8 - 2016
+    lastUpdate: 24
     scaleden: 43100
     width: 13819
     height: 9922
@@ -4073,6 +4362,7 @@ gt25k:
   6684/6684_pal300:
     title: 6684 - Golfe et port de Fos
     edition: Edition n° 7 - 2017
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4087,6 +4377,7 @@ gt25k:
   6740/6740_pal300:
     title: 6740 - De Maraa à Faaa
     edition: Edition n° 3 - 2009
+    lastUpdate: 3
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4101,6 +4392,7 @@ gt25k:
   6770/6770_pal300:
     title: 6770 - Abords Sud-Ouest de l'Île des Pins - Baies de Kuto et de Kanuméra
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4115,6 +4407,7 @@ gt25k:
   6820/6820_pal300:
     title: 6820 - Mouillages de l'île Lifou - Baie du Santal
     edition: Edition n° 3 - 2015
+    lastUpdate: 1
     scaleden: 35000
     width: 13819
     height: 9922
@@ -4129,6 +4422,7 @@ gt25k:
   6828/6828_pal300:
     title: 6828 - Côte Sud-Ouest de Tahiti - De Atehiti à Maraa
     edition: Edition n° 3 - 2009
+    lastUpdate: 9
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4143,6 +4437,7 @@ gt25k:
   6839/6839_pal300:
     title: 6839 - Etang de Thau
     edition: Edition n° 2 - 2006
+    lastUpdate: 25
     scaleden: 30000
     width: 6910
     height: 9922
@@ -4157,6 +4452,7 @@ gt25k:
   6903/6903_pal300:
     title: 6903 - Guernsey et Herm
     edition: Edition n° 4 - 2016
+    lastUpdate: 0
     scaleden: 25000
     width: 12208
     height: 7827
@@ -4171,6 +4467,7 @@ gt25k:
   6904/6904_pal300:
     title: 6904 - Guernsey Est, Herm et Sark
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 25000
     width: 11736
     height: 7681
@@ -4185,6 +4482,7 @@ gt25k:
   6907/6907_pal300:
     title: 6907 - Etang de Berre
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4199,6 +4497,7 @@ gt25k:
   6934/6934_pal300:
     title: 6934 - Alderney (Aurigny) et les Casquets
     edition: Edition n° 2 - 2005
+    lastUpdate: 6
     scaleden: 25000
     width: 13846
     height: 9931
@@ -4213,6 +4512,7 @@ gt25k:
   6937/6937_pal300:
     title: 6937 - Jersey - Côte Nord
     edition: Edition n° 2 - 2005
+    lastUpdate: 4
     scaleden: 25000
     width: 13845
     height: 9931
@@ -4227,6 +4527,7 @@ gt25k:
   6938/6938_pal300:
     title: 6938 - Abords de Saint Hélier
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 25000
     width: 13845
     height: 9931
@@ -4241,6 +4542,7 @@ gt25k:
   6939/6939_pal300:
     title: 6939 - Jersey - Côte Est
     edition: Edition n° 6 - 2019
+    lastUpdate: 0
     scaleden: 25000
     width: 6923
     height: 9924
@@ -4255,6 +4557,7 @@ gt25k:
   6956/6956_pal300:
     title: 6956 - De la Passe de Mahaena à la Baie de Taravao
     edition: Edition n° 3 - 2010
+    lastUpdate: 5
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4269,6 +4572,7 @@ gt25k:
   6957/6957_pal300:
     title: 6957 - De la Baie de Taravao à la Passe d'Aiurua
     edition: Edition n° 2 - 2006
+    lastUpdate: 3
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4283,6 +4587,7 @@ gt25k:
   7037/7037_pal300:
     title: 7037 - De Dover à North Foreland
     edition: Edition n° 10 - 2016
+    lastUpdate: 3
     scaleden: 37500
     width: 7733
     height: 13140
@@ -4297,6 +4602,7 @@ gt25k:
   7049/7049_1_gtw:
     title: 7049-A - Île Walpole
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 37000
     width: 1415
     height: 2082
@@ -4311,6 +4617,7 @@ gt25k:
   7049/7049_2_gtw:
     title: 7049-B - Île Matthew
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 25000
     width: 1542
     height: 2082
@@ -4325,6 +4632,7 @@ gt25k:
   7049/7049_3_gtw:
     title: 7049-C - Île Hunter
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 25000
     width: 1379
     height: 2082
@@ -4339,6 +4647,7 @@ gt25k:
   7073/7073_5_gtw:
     title: 7073-E - Baie de Port-Bouquet
     edition: Edition n° 2 - 2010
+    lastUpdate: 10
     scaleden: 25000
     width: 5338
     height: 3730
@@ -4353,6 +4662,7 @@ gt25k:
   7091/7091_pal300:
     title: 7091 - Abords de Toulon
     edition: Edition n° 6 - 2018
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4367,6 +4677,7 @@ gt25k:
   7094/7094_pal300:
     title: 7094 - Du phare du Four à l'Ile Vierge - Port de l'Aber-Wrac'h
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4381,6 +4692,7 @@ gt25k:
   7097/7097_2_gtw:
     title: 7097-B - Coupée Mara et Baie de Moindou
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 25000
     width: 4292
     height: 6232
@@ -4395,6 +4707,7 @@ gt25k:
   7098/7098_pal300:
     title: 7098 - Baies d'Ouaraï et Chambeyron - Passes d'Ouaraï et d'Isié
     edition: Edition n° 2 - 2007
+    lastUpdate: 2
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4409,6 +4722,7 @@ gt25k:
   7121/7121_pal300:
     title: 7121 - Baie de Douarnenez
     edition: Edition n° 3 - 2016
+    lastUpdate: 7
     scaleden: 30000
     width: 13819
     height: 9922
@@ -4423,6 +4737,7 @@ gt25k:
   7122/7122_pal300:
     title: 7122 - De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4437,6 +4752,7 @@ gt25k:
   7128/7128_pal300:
     title: 7128 - Baie de Saint-Brieuc (partie Ouest) - De la Pointe de la Tour à l'Anse d'Yffiniac
     edition: Edition n° 3 - 2016
+    lastUpdate: 3
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4451,6 +4767,7 @@ gt25k:
   7142/7142_pal300:
     title: 7142 - Belle-Ile
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4465,6 +4782,7 @@ gt25k:
   7145/7145_pal300:
     title: 7145 - De La Turballe à Pornichet
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4479,6 +4797,7 @@ gt25k:
   7170/7170_2_gtw:
     title: 7170-A - Île Saint-Paul
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 30000
     width: 5812
     height: 8726
@@ -4493,6 +4812,7 @@ gt25k:
   7170/7170_3_gtw:
     title: 7170-B - Île Amsterdam
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 30000
     width: 7268
     height: 8726
@@ -4507,6 +4827,7 @@ gt25k:
   7200/7200_pal300:
     title: 7200 - Du Cap d'Antibes au Cap Ferrat - Baie des Anges - Rade de Villefranche
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4521,6 +4842,7 @@ gt25k:
   7218/7218_2_gtw:
     title: 7218-B - Mouillages de Fayaoué et de Mouly
     edition: Edition n° 4 - 2019
+    lastUpdate: 1
     scaleden: 37500
     width: 4779
     height: 3899
@@ -4535,6 +4857,7 @@ gt25k:
   7218/7218_4_gtw:
     title: 7218-D - Mouillage de Beautemps-Beaupré
     edition: Edition n° 4 - 2019
+    lastUpdate: 1
     scaleden: 37500
     width: 1854
     height: 1913
@@ -4549,6 +4872,7 @@ gt25k:
   7248/7248_4_gtw:
     title: 7248-D - Lagon Ouest - De la Passe Tehere à la Passe Pakaka
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 40000
     width: 2514
     height: 9169
@@ -4563,6 +4887,7 @@ gt25k:
   7280/7280_pal300:
     title: 7280 - Golfe d'Ajaccio
     edition: Edition n° 2 - 2009
+    lastUpdate: 18
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4577,6 +4902,7 @@ gt25k:
   7281/7281_1_gtw:
     title: 7281-A - De la Passe Kaki aux mouillages d'Otepa
     edition: Edition n° 2 - 2015
+    lastUpdate: 12
     scaleden: 30000
     width: 5372
     height: 4520
@@ -4591,6 +4917,7 @@ gt25k:
   7282/7282_pal300:
     title: 7282 - Rade d'Hyères
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4605,6 +4932,7 @@ gt25k:
   7305/7305_pal300:
     title: 7305 - De la Passe d'Aiurua à la Passe Havae
     edition: Edition n° 2 - 2010
+    lastUpdate: 7
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4619,6 +4947,7 @@ gt25k:
   7310/7310_pal300:
     title: 7310 - Baie de Saint-Brieuc (partie Est) - De Dahouët au Cap Fréhel
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4633,6 +4962,7 @@ gt25k:
   7316/7316_pal300:
     title: 7316 - Golfe de Sagone
     edition: Edition n° 2 - 2008
+    lastUpdate: 4
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4647,6 +4977,7 @@ gt25k:
   7319/7319_2_gtw:
     title: 7319-B - Havre de Balade
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 25000
     width: 2573
     height: 3040
@@ -4661,6 +4992,7 @@ gt25k:
   7319/7319_3_gtw:
     title: 7319-C - Port de Pouébo et Baie de Tchevit
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 25000
     width: 2999
     height: 2778
@@ -4675,6 +5007,7 @@ gt25k:
   7320/7320_1_gtw:
     title: 7320-A - Mouillages de Poum
     edition: Edition n° 3 - 2011
+    lastUpdate: 0
     scaleden: 25000
     width: 3043
     height: 2373
@@ -4689,6 +5022,7 @@ gt25k:
   7322/7322_pal300:
     title: 7322 - De la Passe de Poya à la Passe de Muéo
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4703,6 +5037,7 @@ gt25k:
   7329/7329_2_gtw:
     title: 7329-A - De la Passe Arikitamiro au Mouillage de Tearavero
     edition: Edition n° 2 - 2003
+    lastUpdate: 9
     scaleden: 35000
     width: 4536
     height: 6602
@@ -4717,6 +5052,7 @@ gt25k:
   7349/7349_1_gtw:
     title: 7349-A - Ile Tromelin
     edition: Publication 1996
+    lastUpdate: 22
     scaleden: 30000
     width: 2060
     height: 3430
@@ -4731,6 +5067,7 @@ gt25k:
   7351/7351_pal300:
     title: 7351 - De la Passe de Goyeta à la Passe de Koné - Abords de Koné
     edition: Edition n° 2 - 2010
+    lastUpdate: 2
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4745,6 +5082,7 @@ gt25k:
   7354/7354_4_gtw:
     title: 7354-D - Hiva-Oa - Baie Taaoa
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 30000
     width: 4265
     height: 3332
@@ -4759,6 +5097,7 @@ gt25k:
   7358/7358_1_gtw:
     title: 7358-A - Baie Greenland
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 35800
     width: 3992
     height: 1928
@@ -4773,6 +5112,7 @@ gt25k:
   7358/7358_pal300:
     title: 7358 - Golfe du Morbihan - Partie Est
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 35800
     width: 13819
     height: 9922
@@ -4787,6 +5127,7 @@ gt25k:
   7359/7359_pal300:
     title: 7359 - Golfe du Morbihan - Partie Ouest
     edition: Edition n° 2 - 2017
+    lastUpdate: 0
     scaleden: 35800
     width: 9922
     height: 13819
@@ -4801,6 +5142,7 @@ gt25k:
   7372/7372_2_gtw:
     title: 7372-A - De la Passe Garuae au Mouillage de Rotoava
     edition: Edition n° 3 - 2004
+    lastUpdate: 13
     scaleden: 25000
     width: 6145
     height: 3414
@@ -4815,6 +5157,7 @@ gt25k:
   7373/7373_1_gtw:
     title: 7373-A - De la Passe d'Avatoru à la Passe de Tiputa
     edition: Edition n° 2 - 2002
+    lastUpdate: 28
     scaleden: 30000
     width: 4447
     height: 2897
@@ -4829,6 +5172,7 @@ gt25k:
   7376/7376_2_gtw:
     title: 7376-A - Fleuve Maroni - De l'embouchure aux Iles Arouaba
     edition: Publication 2003
+    lastUpdate: 19
     scaleden: 25000
     width: 5217
     height: 9021
@@ -4843,6 +5187,7 @@ gt25k:
   7376/7376_3_gtw:
     title: 7376-B - Fleuve Maroni - Des Iles Arouaba à Saint-Laurent-du-Maroni
     edition: Publication 2003
+    lastUpdate: 19
     scaleden: 25000
     width: 4107
     height: 9021
@@ -4857,6 +5202,7 @@ gt25k:
   7392/7392_pal300:
     title: 7392 - Du Cap Couronne au Cap Croisette - Golfe de Marseille
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4871,6 +5217,7 @@ gt25k:
   7400/7400_2_gtw:
     title: 7400-B - Rivière du Faou
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 22500
     width: 2304
     height: 940
@@ -4885,6 +5232,7 @@ gt25k:
   7400/7400_pal300:
     title: 7400 - Rade de Brest
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 22500
     width: 13819
     height: 9922
@@ -4899,6 +5247,7 @@ gt25k:
   7401/7401_pal300:
     title: 7401 - Accès à la Rade de Brest
     edition: Edition n° 4 - 2018
+    lastUpdate: 5
     scaleden: 22500
     width: 13819
     height: 9922
@@ -4913,6 +5262,7 @@ gt25k:
   7414/7414_pal300:
     title: 7414 - De l'Ile d'Aix au Pertuis de Maumusson - Coureau d'Oléron
     edition: Edition n° 3 - 2014
+    lastUpdate: 10
     scaleden: 25000
     width: 9922
     height: 13819
@@ -4927,6 +5277,7 @@ gt25k:
   7419/7419_1_gtw:
     title: 7419 - 1
     edition: Edition n° 3 - 2018
+    lastUpdate: 3
     scaleden: 30000
     width: 10437
     height: 4396
@@ -4941,6 +5292,7 @@ gt25k:
   7425/7425_pal300:
     title: 7425 - Embouchure de la Gironde
     edition: Edition n° 6 - 2017
+    lastUpdate: 3
     scaleden: 25000
     width: 13819
     height: 9922
@@ -4955,6 +5307,7 @@ gt25k:
   7428/7428_pal300:
     title: 7428 - Bassin d'Arcachon
     edition: Publication 2012
+    lastUpdate: 10
     scaleden: 35000
     width: 9922
     height: 13819
@@ -4969,6 +5322,7 @@ gt25k:
   7456/7456_1_gtw:
     title: 7456-B - De la Passe Otugi aux mouillages Nord et Sud
     edition: Publication 2002
+    lastUpdate: 6
     scaleden: 25000
     width: 3535
     height: 4946
@@ -4983,6 +5337,7 @@ gt25k:
   7458/7458_2_gtw:
     title: 7458-A - De la Passe Tamaketa à la Passe Fainukea
     edition: Edition n° 2 - 2011
+    lastUpdate: 2
     scaleden: 25000
     width: 9021
     height: 4050
@@ -4997,6 +5352,7 @@ gt25k:
   7459/7459_2_gtw:
     title: 7459-A - De la passe de Tuheiava au mouillage de Tuherahera
     edition: Publication 2019
+    lastUpdate: 1
     scaleden: 30000
     width: 4652
     height: 6497
@@ -5011,6 +5367,7 @@ gt25k:
   7461/7461_pal300:
     title: 7461 - De Taapuna à la Pointe Vénus
     edition: Publication 2009
+    lastUpdate: 15
     scaleden: 25000
     width: 13819
     height: 9922
@@ -5025,6 +5382,7 @@ gt25k:
   7481/7481_pal300:
     title: 7481 - Approches de Kourou - Îles du Salut
     edition: Edition n° 3 - 2007
+    lastUpdate: 15
     scaleden: 25000
     width: 9922
     height: 13819
@@ -5039,6 +5397,7 @@ gt25k:
   7492/7492_pal300:
     title: 7492 - Île de Mayotte - Partie Nord - De la Passe des Îles Choazil à Dzaoudzi
     edition: Edition n° 4 - 2014
+    lastUpdate: 6
     scaleden: 35000
     width: 13819
     height: 9922
@@ -5053,6 +5412,7 @@ gt25k:
   7493/7493_pal300:
     title: 7493 - Île de Mayotte - Partie Est - De Dzaoudzi à la Pointe Saziley
     edition: Edition n° 4 - 2015
+    lastUpdate: 4
     scaleden: 35000
     width: 9922
     height: 13819
@@ -5067,6 +5427,7 @@ gt25k:
   7494/7494_pal300:
     title: 7494 - Île de Mayotte - Partie Ouest, De Chissioua Mbouini à la Baie d'Acoua
     edition: Edition n° 3 - 2014
+    lastUpdate: 4
     scaleden: 35000
     width: 9922
     height: 13819
@@ -5081,6 +5442,7 @@ gt25k:
   7594/7594_2_gtw:
     title: 7594-B - Archipel Max Douguet
     edition: Publication 2003
+    lastUpdate: 0
     scaleden: 30000
     width: 3306
     height: 2870
@@ -5095,6 +5457,7 @@ gt25k:
   7616/7616_A_gtw:
     title: 7616-A - Prince Rupert Bay et Douglas Bay
     edition: Publication 1998
+    lastUpdate: 6
     scaleden: 30000
     width: 1565
     height: 3411
@@ -5109,6 +5472,7 @@ gt25k:
   7639/7639_1_gtw:
     title: 7639-A - Abords de l'Île Saint-Pierre
     edition: Publication 2018
+    lastUpdate: 1
     scaleden: 25000
     width: 6685
     height: 9014
@@ -5123,6 +5487,7 @@ gt25k:
   7644/7644_pal300:
     title: 7644 - Accès au Port de Nouméa
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 25000
     width: 13819
     height: 9922
@@ -5137,6 +5502,7 @@ gt25k:
   7645/7645_pal300:
     title: 7645 - Canal de La Havannah et Canal Woodin
     edition: Edition n° 5 - 2016
+    lastUpdate: 1
     scaleden: 31000
     width: 13819
     height: 9922
@@ -5151,6 +5517,7 @@ gt25k:
   7758/7758_1_gtw:
     title: 7758-A - Récifs d'Entrecasteaux - Île de la Surprise
     edition: Edition n° 3 - 2018
+    lastUpdate: 0
     scaleden: 40000
     width: 2134
     height: 1300
@@ -5165,6 +5532,7 @@ gt25k:
   7758/7758_pal300:
     title: 7758 - Îles Belep
     edition: Edition n° 3 - 2018
+    lastUpdate: 0
     scaleden: 40000
     width: 9922
     height: 13819
@@ -5181,6 +5549,7 @@ gt12k:
   3127/3127_pal300:
     title: 3127 - Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort
     edition: Edition n° 3 - 2009
+    lastUpdate: 3
     scaleden: 12500
     width: 6910
     height: 9922
@@ -5195,6 +5564,7 @@ gt12k:
   4233/4233_1_gtw:
     title: 4233 - Du Chêne Vert à l'écluse du Châtelier
     edition: Edition n° 6 - 2016
+    lastUpdate: 2
     scaleden: 15000
     width: 2865
     height: 2990
@@ -5209,6 +5579,7 @@ gt12k:
   4233/4233_pal300:
     title: 4233 - La Rance - De Saint-Malo à l'écluse du Châtelier
     edition: Edition n° 6 - 2016
+    lastUpdate: 2
     scaleden: 15000
     width: 9922
     height: 13819
@@ -5223,6 +5594,7 @@ gt12k:
   5825/5825_1_gtw:
     title: 5825 - Ilot Clipperton
     edition: Edition n° 2 - 2010
+    lastUpdate: 2
     scaleden: 20000
     width: 4565
     height: 5388
@@ -5237,6 +5609,7 @@ gt12k:
   5978/5978_1_gtw:
     title: 5978-A - Îles Chesterfield - Mouillage de l'île Longue
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 20000
     width: 2660
     height: 2672
@@ -5251,6 +5624,7 @@ gt12k:
   5978/5978_4_gtw:
     title: 5978-D - Mouillage de l'île Huon
     edition: Edition n° 3 - 2019
+    lastUpdate: 1
     scaleden: 20000
     width: 2161
     height: 2118
@@ -5265,6 +5639,7 @@ gt12k:
   6280/6280_pal300:
     title: 6280 - Partie Nord de Raiatea - Port d'Uturoa
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 12000
     width: 13819
     height: 9922
@@ -5279,6 +5654,7 @@ gt12k:
   6281/6281_pal300:
     title: 6281 - Partie Sud de Tahaa
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 12000
     width: 13819
     height: 9922
@@ -5293,6 +5669,7 @@ gt12k:
   6424/6424_1_gtw:
     title: 6424-A - Passes et mouillages de Tubuai
     edition: Edition n° 2 - 2001
+    lastUpdate: 14
     scaleden: 12500
     width: 7994
     height: 5631
@@ -5307,6 +5684,7 @@ gt12k:
   6463/6463_pal300:
     title: 6463 - Île Mangareva - Passe de l'Ouest
     edition: Edition n° 4 - 2011
+    lastUpdate: 1
     scaleden: 15000
     width: 13819
     height: 9922
@@ -5321,6 +5699,7 @@ gt12k:
   6464/6464_pal300:
     title: 6464 - Iles Mangareva, Rikitea, Totegegie
     edition: Edition n° 4 - 2012
+    lastUpdate: 1
     scaleden: 15000
     width: 13819
     height: 9922
@@ -5335,6 +5714,7 @@ gt12k:
   6553/6553_pal300:
     title: 6553 - Baie de Kouaoua
     edition: Edition n° 2 - 2010
+    lastUpdate: 5
     scaleden: 20000
     width: 6910
     height: 9922
@@ -5349,6 +5729,7 @@ gt12k:
   6554/6554_pal300:
     title: 6554 - Baie Chasseloup - Anse Vavouto
     edition: Edition n° 3 - 2012
+    lastUpdate: 4
     scaleden: 20000
     width: 13819
     height: 9922
@@ -5363,6 +5744,7 @@ gt12k:
   6589/6589_pal300:
     title: 6589 - Baie de Canala
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 20000
     width: 9922
     height: 13819
@@ -5377,6 +5759,7 @@ gt12k:
   6610/6610_pal300:
     title: 6610 - De Bandol au Cap Sicié, Rade du Brusc
     edition: Edition n° 5 - 2017
+    lastUpdate: 0
     scaleden: 20000
     width: 9922
     height: 13819
@@ -5391,6 +5774,7 @@ gt12k:
   6612/6612_pal300:
     title: 6612 - De Cassis à Bandol - Baie de La Ciotat
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 20000
     width: 13819
     height: 9922
@@ -5405,6 +5789,7 @@ gt12k:
   6643/6643_2_gtw:
     title: 6643-B - Mouillage Nord d'Europa
     edition: Edition n° 2 - 1991
+    lastUpdate: 15
     scaleden: 15000
     width: 4623
     height: 4280
@@ -5419,6 +5804,7 @@ gt12k:
   6645/6645_pal300:
     title: 6645 - Pointe de Penmarc'h - Abords de Saint-Guénolé et de Kérity
     edition: Edition n° 2 - 2009
+    lastUpdate: 16
     scaleden: 15000
     width: 9922
     height: 6910
@@ -5433,6 +5819,7 @@ gt12k:
   6646/6646_pal300:
     title: 6646 - Abords et Ports du Guilvinec et de Lesconil
     edition: Edition n° 2 - 2008
+    lastUpdate: 9
     scaleden: 15000
     width: 9922
     height: 6910
@@ -5447,6 +5834,7 @@ gt12k:
   6657/6657_pal300:
     title: 6657 - Baies de Cook et d'Opunohu
     edition: Edition n° 4 - 2017
+    lastUpdate: 1
     scaleden: 12500
     width: 9922
     height: 6910
@@ -5461,6 +5849,7 @@ gt12k:
   6658/6658_1_gtw:
     title: 6658-A - Baie de Vaiare
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 15000
     width: 2755
     height: 2487
@@ -5475,6 +5864,7 @@ gt12k:
   6683/6683_pal300:
     title: 6683 - Port du Havre - Entrée du chenal de Rouen
     edition: Edition n° 9 - 2017
+    lastUpdate: 3
     scaleden: 15000
     width: 13819
     height: 9922
@@ -5489,6 +5879,7 @@ gt12k:
   6797/6797_pal300:
     title: 6797 - Embouchure de la Loire - Port de Saint-Nazaire
     edition: Edition n° 5 - 2005
+    lastUpdate: 18
     scaleden: 15000
     width: 13819
     height: 9922
@@ -5503,6 +5894,7 @@ gt12k:
   6820/6820_1_gtw:
     title: 6820-B - Baie de Châteaubriand
     edition: Edition n° 3 - 2015
+    lastUpdate: 1
     scaleden: 20000
     width: 4465
     height: 3542
@@ -5517,6 +5909,7 @@ gt12k:
   6820/6820_2_gtw:
     title: 6820-A - Baie de Doking
     edition: Edition n° 3 - 2015
+    lastUpdate: 1
     scaleden: 20000
     width: 4778
     height: 2713
@@ -5531,6 +5924,7 @@ gt12k:
   6838/6838_pal300:
     title: 6838 - Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d'Anthéor
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 20000
     width: 9922
     height: 6910
@@ -5545,6 +5939,7 @@ gt12k:
   6839/6839_1_gtw:
     title: 6839-A - Canal de Pisse - Saumes
     edition: Edition n° 2 - 2006
+    lastUpdate: 25
     scaleden: 15000
     width: 2718
     height: 2788
@@ -5559,6 +5954,7 @@ gt12k:
   6850/6850_2_gtw:
     title: 6850-A - Golfe de Saint-Florent
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 15000
     width: 6314
     height: 4521
@@ -5573,6 +5969,7 @@ gt12k:
   6876/6876_pal300:
     title: 6876 - Iles Wallis - Accès à Mata Utu et Halalo
     edition: Edition n° 3 - 2012
+    lastUpdate: 4
     scaleden: 20000
     width: 9922
     height: 13819
@@ -5587,6 +5984,7 @@ gt12k:
   6892/6892_pal300:
     title: 6892 - Baie de Fort-de-France (Spéciale P)
     edition: Edition n° 4 - 2018
+    lastUpdate: 1
     scaleden: 15000
     width: 13819
     height: 9922
@@ -5601,6 +5999,7 @@ gt12k:
   6903/6903_A_gtw:
     title: 6903-A - Beaucette Marina
     edition: Edition n° 4 - 2016
+    lastUpdate: 0
     scaleden: 15000
     width: 1570
     height: 1059
@@ -5615,6 +6014,7 @@ gt12k:
   6904/6904_A_gtw:
     title: 6904-A - Beaucette Marina
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 15000
     width: 1570
     height: 1058
@@ -5629,6 +6029,7 @@ gt12k:
   6907/6907_1_gtw:
     title: 6907-A - Canal de Caronte
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 12500
     width: 6619
     height: 2021
@@ -5643,6 +6044,7 @@ gt12k:
   6911/6911_pal300:
     title: 6911 - Golfe de Porto-Vecchio
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 15000
     width: 9922
     height: 6910
@@ -5657,6 +6059,7 @@ gt12k:
   6948/6948_1_gtw:
     title: 6948 - Marie-Galante - Baie de Saint-Louis
     edition: Edition n° 2 - 2010
+    lastUpdate: 25
     scaleden: 20000
     width: 2756
     height: 3213
@@ -5671,6 +6074,7 @@ gt12k:
   6980/6980_1_gtw:
     title: 6980-A - Abords de l'Île-Rousse
     edition: Edition n° 4 - 2018
+    lastUpdate: 2
     scaleden: 15000
     width: 3590
     height: 4072
@@ -5685,6 +6089,7 @@ gt12k:
   6980/6980_2_gtw:
     title: 6980-B - Abords de la Marine de Sant'Ambrogio - Port Eugène Ceccaldi
     edition: Edition n° 4 - 2018
+    lastUpdate: 2
     scaleden: 15000
     width: 2652
     height: 4072
@@ -5699,6 +6104,7 @@ gt12k:
   6980/6980_3_gtw:
     title: 6980-C - Abords de Calvi - De Punta Spano à La Revellata
     edition: Edition n° 4 - 2018
+    lastUpdate: 2
     scaleden: 15000
     width: 6237
     height: 4680
@@ -5713,6 +6119,7 @@ gt12k:
   6985/6985_1_gtw:
     title: 6985-B - Mouillage de Théoudié
     edition: Edition n° 3 - 2011
+    lastUpdate: 7
     scaleden: 20000
     width: 3699
     height: 2887
@@ -5727,6 +6134,7 @@ gt12k:
   6985/6985_2_gtw:
     title: 6985-A - Mouillage de Karembé
     edition: Edition n° 3 - 2011
+    lastUpdate: 7
     scaleden: 20000
     width: 3344
     height: 3579
@@ -5741,6 +6149,7 @@ gt12k:
   6986/6986_1_gtw:
     title: 6986 - Baie de Yaté
     edition: Edition n° 3 - 2017
+    lastUpdate: 0
     scaleden: 20000
     width: 2407
     height: 1521
@@ -5755,6 +6164,7 @@ gt12k:
   7003/7003_1_gtw:
     title: 7003 - Le Cap d'Agde - Embouchure de l'Hérault
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 15000
     width: 9110
     height: 6141
@@ -5769,6 +6179,7 @@ gt12k:
   7003/7003_4_gtw:
     title: 7003-D - Gruissan
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 15000
     width: 9110
     height: 4490
@@ -5783,6 +6194,7 @@ gt12k:
   7004/7004_1_gtw:
     title: 7004-C - Saintes-Maries-de-la-Mer
     edition: Edition n° 2 - 2005
+    lastUpdate: 16
     scaleden: 15000
     width: 2097
     height: 1504
@@ -5797,6 +6209,7 @@ gt12k:
   7004/7004_2_gtw:
     title: 7004-B - Carnon-Plage
     edition: Edition n° 2 - 2005
+    lastUpdate: 16
     scaleden: 15000
     width: 2391
     height: 1680
@@ -5811,6 +6224,7 @@ gt12k:
   7004/7004_3_gtw:
     title: 7004-A - Palavas-les-Flots
     edition: Edition n° 2 - 2005
+    lastUpdate: 16
     scaleden: 15000
     width: 2391
     height: 1738
@@ -5825,6 +6239,7 @@ gt12k:
   7004/7004_pal300:
     title: 7004 - Golfe d'Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer
     edition: Edition n° 2 - 2005
+    lastUpdate: 16
     scaleden: 15000
     width: 9922
     height: 6910
@@ -5839,6 +6254,7 @@ gt12k:
   7011/7011_1_gtw:
     title: 7011 - Port-Ounia
     edition: Edition n° 2 - 2010
+    lastUpdate: 5
     scaleden: 20000
     width: 2744
     height: 2887
@@ -5853,6 +6269,7 @@ gt12k:
   7030/7030_1_gtw:
     title: 7030-A - Cours de la Garonne (suite de la carte)
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 20000
     width: 2801
     height: 8853
@@ -5867,6 +6284,7 @@ gt12k:
   7030/7030_pal300:
     title: 7030 - Cours de la Garonne - Du Bec d'Ambès à Bordeaux
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 20000
     width: 6910
     height: 9922
@@ -5881,6 +6299,7 @@ gt12k:
   7051/7051_1_gtw:
     title: 7051-A - Baie de Hienghène
     edition: Edition n° 3 - 2013
+    lastUpdate: 2
     scaleden: 15000
     width: 2692
     height: 2415
@@ -5895,6 +6314,7 @@ gt12k:
   7057/7057_pal300:
     title: 7057 - Dunkerque
     edition: Edition n° 4 - 2015
+    lastUpdate: 9
     scaleden: 20000
     width: 13819
     height: 9922
@@ -5909,6 +6329,7 @@ gt12k:
   7073/7073_1_gtw:
     title: 7073-C - Baie de Kouakoué
     edition: Edition n° 2 - 2010
+    lastUpdate: 10
     scaleden: 20000
     width: 3825
     height: 3265
@@ -5923,6 +6344,7 @@ gt12k:
   7073/7073_2_gtw:
     title: 7073-B - Port de Thio
     edition: Edition n° 2 - 2010
+    lastUpdate: 10
     scaleden: 20000
     width: 3825
     height: 3030
@@ -5937,6 +6359,7 @@ gt12k:
   7073/7073_3_gtw:
     title: 7073-A - Baie de Nakéty et Anse de Lavaissière
     edition: Edition n° 2 - 2010
+    lastUpdate: 10
     scaleden: 20000
     width: 3947
     height: 5482
@@ -5951,6 +6374,7 @@ gt12k:
   7073/7073_4_gtw:
     title: 7073-D - Port-Combui et Passages de Maméré
     edition: Edition n° 2 - 2010
+    lastUpdate: 10
     scaleden: 20000
     width: 5215
     height: 7002
@@ -5965,6 +6389,7 @@ gt12k:
   7073/7073_6_gtw:
     title: 7073-F - Baie de Ouinné
     edition: Edition n° 2 - 2010
+    lastUpdate: 10
     scaleden: 20000
     width: 5338
     height: 2565
@@ -5979,6 +6404,7 @@ gt12k:
   7087/7087_pal300:
     title: 7087 - La Martinique - Havre de la Trinité et Baie du Galion (Spéciale P)
     edition: Edition n° 2 - 2008
+    lastUpdate: 5
     scaleden: 15000
     width: 6910
     height: 9922
@@ -5993,6 +6419,7 @@ gt12k:
   7088/7088_pal300:
     title: 7088 - Havre du Robert et Baie du François
     edition: Edition n° 2 - 2008
+    lastUpdate: 4
     scaleden: 20000
     width: 9922
     height: 6910
@@ -6007,6 +6434,7 @@ gt12k:
   7089/7089_1_gtw:
     title: 7089-B - Case-Pilote
     edition: Edition n° 2 - 2010
+    lastUpdate: 15
     scaleden: 15000
     width: 2142
     height: 1366
@@ -6021,6 +6449,7 @@ gt12k:
   7089/7089_2_gtw:
     title: 7089-C - Cul-de-Sac du Marin
     edition: Edition n° 2 - 2010
+    lastUpdate: 15
     scaleden: 15000
     width: 5354
     height: 4867
@@ -6035,6 +6464,7 @@ gt12k:
   7089/7089_3_gtw:
     title: 7089-A - Saint-Pierre
     edition: Edition n° 2 - 2010
+    lastUpdate: 15
     scaleden: 15000
     width: 1824
     height: 2731
@@ -6049,6 +6479,7 @@ gt12k:
   7089/7089_4_gtw:
     title: 7089-D - Baie du Vauclin
     edition: Edition n° 2 - 2010
+    lastUpdate: 15
     scaleden: 15000
     width: 3797
     height: 6234
@@ -6063,6 +6494,7 @@ gt12k:
   7090/7090_pal300:
     title: 7090 - De la Pointe de Barfleur à Saint-Vaast-la-Hougue
     edition: Edition n° 3 - 2018
+    lastUpdate: 4
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6077,6 +6509,7 @@ gt12k:
   7092/7092_pal300:
     title: 7092 - De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg
     edition: Edition n° 4 - 2015
+    lastUpdate: 2
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6091,6 +6524,7 @@ gt12k:
   7094/7094_1_gtw:
     title: 7094-A - Aber Wrac'h
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 15000
     width: 3706
     height: 2045
@@ -6105,6 +6539,7 @@ gt12k:
   7095/7095_2_gtw:
     title: 7095 - Baie de Morlaix - De l'île de Batz à la Pointe de Primel
     edition: Edition n° 5 - 2018
+    lastUpdate: 3
     scaleden: 20000
     width: 10748
     height: 9022
@@ -6119,6 +6554,7 @@ gt12k:
   7095/7095_3_gtw:
     title: 7095-B - Rivière de Morlaix
     edition: Edition n° 5 - 2018
+    lastUpdate: 3
     scaleden: 15000
     width: 2407
     height: 6439
@@ -6133,6 +6569,7 @@ gt12k:
   7097/7097_1_gtw:
     title: 7097-A - Baie de Bourail
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 20000
     width: 4851
     height: 4883
@@ -6147,6 +6584,7 @@ gt12k:
   7100/7100_1_gtw:
     title: 7100-A - Mouillages de Sainte-Marie
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 15000
     width: 2549
     height: 2776
@@ -6161,6 +6599,7 @@ gt12k:
   7100/7100_pal300:
     title: 7100 - Guadeloupe - Abords de Pointe-à-Pitre (Spéciale P)
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 15000
     width: 9922
     height: 13819
@@ -6175,6 +6614,7 @@ gt12k:
   7101/7101_pal300:
     title: 7101 - Les Saintes
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 15000
     width: 9922
     height: 6910
@@ -6189,6 +6629,7 @@ gt12k:
   7107/7107_1_gtw:
     title: 7107-A - Rivière de Crac'h
     edition: Publication 2008
+    lastUpdate: 11
     scaleden: 20000
     width: 940
     height: 2297
@@ -6203,6 +6644,7 @@ gt12k:
   7123/7123_pal300:
     title: 7123 - Ile Molène - Ile d'Ouessant - Passage du Fromveur
     edition: Edition n° 5 - 2017
+    lastUpdate: 0
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6217,6 +6659,7 @@ gt12k:
   7124/7124_1_gtw:
     title: 7124-A - Le Léguer (Rivière de Lannion)
     edition: Edition n° 3 - 2008
+    lastUpdate: 16
     scaleden: 20000
     width: 3604
     height: 1816
@@ -6231,6 +6674,7 @@ gt12k:
   7124/7124_pal300:
     title: 7124 - Baie de Lannion - De la Pointe de Primel à l'île Grande
     edition: Edition n° 3 - 2008
+    lastUpdate: 16
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6245,6 +6689,7 @@ gt12k:
   7125/7125_pal300:
     title: 7125 - Abords de Perros-Guirec - Les Sept Iles - De l'Ile Grande à l'Ile Balanec
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6259,6 +6704,7 @@ gt12k:
   7126/7126_pal300:
     title: 7126 - De l'île Balanec aux Héaux-de-Bréhat - Cours du Jaudy
     edition: Edition n° 5 - 2012
+    lastUpdate: 19
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6273,6 +6719,7 @@ gt12k:
   7127/7127_pal300:
     title: 7127 - Abords de l'île Bréhat, anse de Paimpol - Entrée du Trieux
     edition: Edition n° 4 - 2014
+    lastUpdate: 10
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6287,6 +6734,7 @@ gt12k:
   7129/7129_pal300:
     title: 7129 - Du Cap Fréhel à Saint-Briac-sur-Mer
     edition: Edition n° 3 - 2017
+    lastUpdate: 2
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6301,6 +6749,7 @@ gt12k:
   7130/7130_pal300:
     title: 7130 - Abords de Saint-Malo - De l'île des Hébihens à la Pointe de la Varde
     edition: Edition n° 4 - 2018
+    lastUpdate: 2
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6315,6 +6764,7 @@ gt12k:
   7131/7131_pal300:
     title: 7131 - Du Hâvre de Rothéneuf à Cancale
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 20000
     width: 9922
     height: 6910
@@ -6329,6 +6779,7 @@ gt12k:
   7133/7133_1_gtw:
     title: 7133-C - Abords de Carteret et Portbail
     edition: Edition n° 2 - 2009
+    lastUpdate: 13
     scaleden: 20000
     width: 6152
     height: 7826
@@ -6343,6 +6794,7 @@ gt12k:
   7133/7133_2_gtw:
     title: 7133-F - Havre de Regnéville
     edition: Edition n° 2 - 2009
+    lastUpdate: 13
     scaleden: 15000
     width: 2990
     height: 5243
@@ -6357,6 +6809,7 @@ gt12k:
   7133/7133_6_gtw:
     title: 7133-B - Abords de Diélette
     edition: Edition n° 2 - 2009
+    lastUpdate: 13
     scaleden: 15000
     width: 4437
     height: 5447
@@ -6371,6 +6824,7 @@ gt12k:
   7134/7134_pal300:
     title: 7134 - Iles Chausey
     edition: Edition n° 4 - 2017
+    lastUpdate: 2
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6385,6 +6839,7 @@ gt12k:
   7135/7135_pal300:
     title: 7135 - De la Pointe de Saint-Jacques à Damgan
     edition: Publication 2002
+    lastUpdate: 10
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6399,6 +6854,7 @@ gt12k:
   7136/7136_pal300:
     title: 7136 - De la Baie de Pont-Mahé à Piriac-sur-Mer
     edition: Publication 2001
+    lastUpdate: 16
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6413,6 +6869,7 @@ gt12k:
   7137/7137_1_gtw:
     title: 7137-C - Rivière de Noyalo
     edition: Edition n° 2 - 2019
+    lastUpdate: 1
     scaleden: 20000
     width: 1066
     height: 2397
@@ -6427,6 +6884,7 @@ gt12k:
   7137/7137_2_gtw:
     title: 7137-A - Rivière d'Auray - Port de Saint-Goustan
     edition: Edition n° 2 - 2019
+    lastUpdate: 1
     scaleden: 20000
     width: 2264
     height: 2355
@@ -6441,6 +6899,7 @@ gt12k:
   7137/7137_3_gtw:
     title: 7137-B - Port de Vannes
     edition: Edition n° 2 - 2019
+    lastUpdate: 1
     scaleden: 20000
     width: 667
     height: 1675
@@ -6455,6 +6914,7 @@ gt12k:
   7137/7137_pal300:
     title: 7137 - Golfe du Morbihan
     edition: Edition n° 2 - 2019
+    lastUpdate: 1
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6469,6 +6929,7 @@ gt12k:
   7139/7139_pal300:
     title: 7139 - De la Pointe du Talut à la Pointe de Gâvres - Ile de Groix
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6483,6 +6944,7 @@ gt12k:
   7140/7140_1_gtw:
     title: 7140-A - Le Blavet - De Lanester à Hennebont
     edition: Edition n° 4 - 2019
+    lastUpdate: 2
     scaleden: 12500
     width: 4176
     height: 7867
@@ -6497,6 +6959,7 @@ gt12k:
   7141/7141_pal300:
     title: 7141 - Baie de Quiberon
     edition: Edition n° 2 - 2006
+    lastUpdate: 24
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6511,6 +6974,7 @@ gt12k:
   7143/7143_pal300:
     title: 7143 - Abords des Iles de Houat et de Hoëdic
     edition: Edition n° 2 - 2003
+    lastUpdate: 16
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6525,6 +6989,7 @@ gt12k:
   7144/7144_1_gtw:
     title: 7144-A - Cours de la Vilaine - Du barrage d'Arzal à la Roche-Bernard - suite de la carte à la même échelle
     edition: Edition n° 2 - 2017
+    lastUpdate: 0
     scaleden: 15000
     width: 5306
     height: 3228
@@ -6539,6 +7004,7 @@ gt12k:
   7144/7144_pal300:
     title: 7144 - Embouchure de la Vilaine - De Damgan à La Roche-Bernard
     edition: Edition n° 2 - 2017
+    lastUpdate: 0
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6553,6 +7019,7 @@ gt12k:
   7147/7147_1_gtw:
     title: 7147-A - Port d'Audierne
     edition: Edition n° 2 - 2008
+    lastUpdate: 38
     scaleden: 12500
     width: 3336
     height: 3928
@@ -6567,6 +7034,7 @@ gt12k:
   7168/7168_1_gtw:
     title: 7168-A - Coupée du Cap Goulvain
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 20000
     width: 3426
     height: 3563
@@ -6581,6 +7049,7 @@ gt12k:
   7170/7170_1_gtw:
     title: 7170-C - Mouillage de l'île Saint-Paul
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 15000
     width: 2789
     height: 2101
@@ -6595,6 +7064,7 @@ gt12k:
   7205/7205_pal300:
     title: 7205 - Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6609,6 +7079,7 @@ gt12k:
   7207/7207_1_gtw:
     title: 7207-B - Fécamp
     edition: Edition n° 2 - 2006
+    lastUpdate: 10
     scaleden: 12500
     width: 9021
     height: 6206
@@ -6623,6 +7094,7 @@ gt12k:
   7207/7207_2_gtw:
     title: 7207-B - Fécamp
     edition: Edition n° 2 - 2006
+    lastUpdate: 10
     scaleden: 12500
     width: 9021
     height: 6950
@@ -6637,6 +7109,7 @@ gt12k:
   7214/7214_1_gtw:
     title: 7214-A - Nieuwpoort
     edition: Edition n° 8 - 2019
+    lastUpdate: 2
     scaleden: 20000
     width: 2015
     height: 1745
@@ -6651,6 +7124,7 @@ gt12k:
   7214/7214_2_gtw:
     title: 7214-B - Oostende
     edition: Edition n° 8 - 2019
+    lastUpdate: 2
     scaleden: 15000
     width: 1800
     height: 1984
@@ -6665,6 +7139,7 @@ gt12k:
   7218/7218_1_gtw:
     title: 7218-A - Passe du Coëtlogon
     edition: Edition n° 4 - 2019
+    lastUpdate: 1
     scaleden: 15000
     width: 4170
     height: 3079
@@ -6679,6 +7154,7 @@ gt12k:
   7232/7232_pal300:
     title: 7232 - Du Nez de Jobourg à la Pointe de Nacqueville
     edition: Publication 2013
+    lastUpdate: 8
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6693,6 +7169,7 @@ gt12k:
   7234/7234_2_gtw:
     title: 7234-B - Chenal Vasia
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 20000
     width: 1958
     height: 1958
@@ -6707,6 +7184,7 @@ gt12k:
   7249/7249_2_gtw:
     title: 7249-A - Cours de l'Odet
     edition: Edition n° 2 - 2016
+    lastUpdate: 4
     scaleden: 20000
     width: 6404
     height: 9021
@@ -6721,6 +7199,7 @@ gt12k:
   7251/7251_pal300:
     title: 7251 - De Loctudy à Concarneau
     edition: Publication 2016
+    lastUpdate: 3
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6735,6 +7214,7 @@ gt12k:
   7252/7252_pal300:
     title: 7252 - Îles de Glénan
     edition: Publication 2016
+    lastUpdate: 1
     scaleden: 20000
     width: 13819
     height: 9922
@@ -6749,6 +7229,7 @@ gt12k:
   7258/7258_pal300:
     title: 7258 - Abords de Calais
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6763,6 +7244,7 @@ gt12k:
   7259/7259_3_gtw:
     title: 7259-D - Baie du Nord (Baie de Waeko)
     edition: Publication 1995
+    lastUpdate: 16
     scaleden: 20000
     width: 2668
     height: 2256
@@ -6777,6 +7259,7 @@ gt12k:
   7259/7259_4_gtw:
     title: 7259-C - Baie de Tadine
     edition: Publication 1995
+    lastUpdate: 16
     scaleden: 20000
     width: 3825
     height: 4688
@@ -6791,6 +7274,7 @@ gt12k:
   7259/7259_5_gtw:
     title: 7259-A - Baie de l'Allier (Baie de Puan) - Mouillage de La Roche
     edition: Publication 1995
+    lastUpdate: 16
     scaleden: 20000
     width: 2651
     height: 2125
@@ -6805,6 +7289,7 @@ gt12k:
   7259/7259_6_gtw:
     title: 7259-B - Baie de Niri (Baie de Wabao)
     edition: Publication 1995
+    lastUpdate: 16
     scaleden: 20000
     width: 2668
     height: 2125
@@ -6819,6 +7304,7 @@ gt12k:
   7267/7267_pal300:
     title: 7267 - Abords de Saint-Tropez
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6833,6 +7319,7 @@ gt12k:
   7317/7317_pal300:
     title: 7317 - Port de Dieppe
     edition: Edition n° 3 - 2006
+    lastUpdate: 7
     scaleden: 12500
     width: 9922
     height: 6910
@@ -6847,6 +7334,7 @@ gt12k:
   7319/7319_1_gtw:
     title: 7319-A - Baie de Pam
     edition: Edition n° 2 - 2014
+    lastUpdate: 1
     scaleden: 20000
     width: 2117
     height: 3432
@@ -6861,6 +7349,7 @@ gt12k:
   7320/7320_2_gtw:
     title: 7320-B - Abords de Paagoumène
     edition: Edition n° 3 - 2011
+    lastUpdate: 0
     scaleden: 20000
     width: 3233
     height: 3432
@@ -6875,6 +7364,7 @@ gt12k:
   7324/7324_pal300:
     title: 7324 - Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis (Spéciale P)
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 20000
     width: 9922
     height: 13819
@@ -6889,6 +7379,7 @@ gt12k:
   7341/7341_pal300:
     title: 7341 - Abords de Granville
     edition: Edition n° 3 - 2018
+    lastUpdate: 0
     scaleden: 15000
     width: 9922
     height: 6910
@@ -6903,6 +7394,7 @@ gt12k:
   7352/7352_3_gtw:
     title: 7352-B - Baies d'Aakapa, d'Hatiheu et d'Anaho
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 20000
     width: 5882
     height: 2547
@@ -6917,6 +7409,7 @@ gt12k:
   7352/7352_5_gtw:
     title: 7352-D - Baie du Contrôleur
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 20000
     width: 3541
     height: 4104
@@ -6931,6 +7424,7 @@ gt12k:
   7352/7352_6_gtw:
     title: 7352-E - Baie de Taioa
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 15000
     width: 2341
     height: 4108
@@ -6945,6 +7439,7 @@ gt12k:
   7353/7353_8_gtw:
     title: 7353-I - Ua-Huka - Baie Haavei
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 15000
     width: 1967
     height: 2927
@@ -6959,6 +7454,7 @@ gt12k:
   7378/7378_pal300:
     title: 7378 - Accès au Dégrad des Cannes
     edition: Edition n° 6 - 2019
+    lastUpdate: 1
     scaleden: 15000
     width: 13819
     height: 9922
@@ -6973,6 +7469,7 @@ gt12k:
   7391/7391_pal300:
     title: 7391 - Abords Sud de Marseille - Des Iles du Frioul à l'Ile de Jarre
     edition: Edition n° 6 - 2017
+    lastUpdate: 4
     scaleden: 12500
     width: 9922
     height: 13819
@@ -6987,6 +7484,7 @@ gt12k:
   7393/7393_pal300:
     title: 7393 - Du port de La Pointe Rouge à Cassis - Calanques de Cassis
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 20000
     width: 13819
     height: 9922
@@ -7001,6 +7499,7 @@ gt12k:
   7394/7394_1_gtw:
     title: 7394-C - Noirmoutier-en-l'Île
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 15000
     width: 3876
     height: 1943
@@ -7015,6 +7514,7 @@ gt12k:
   7394/7394_2_gtw:
     title: 7394-B - L'Herbaudière
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 15000
     width: 1709
     height: 2162
@@ -7029,6 +7529,7 @@ gt12k:
   7394/7394_3_gtw:
     title: 7394-A - Pornic
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 15000
     width: 1557
     height: 1374
@@ -7043,6 +7544,7 @@ gt12k:
   7396/7396_1_gtw:
     title: 7396-C - De l'Ile de Bois à Nantes
     edition: Edition n° 2 - 2006
+    lastUpdate: 19
     scaleden: 20000
     width: 10819
     height: 2186
@@ -7057,6 +7559,7 @@ gt12k:
   7396/7396_2_gtw:
     title: 7396-B - De Paimboeuf à l'Ile de Bois
     edition: Edition n° 2 - 2006
+    lastUpdate: 19
     scaleden: 20000
     width: 9495
     height: 3811
@@ -7071,6 +7574,7 @@ gt12k:
   7396/7396_3_gtw:
     title: 7396-D - Port de Nantes
     edition: Edition n° 2 - 2006
+    lastUpdate: 19
     scaleden: 15000
     width: 3046
     height: 2352
@@ -7085,6 +7589,7 @@ gt12k:
   7396/7396_4_gtw:
     title: 7396-B - De Paimboeuf à l'Ile de Bois
     edition: Edition n° 2 - 2006
+    lastUpdate: 19
     scaleden: 20000
     width: 13129
     height: 6839
@@ -7099,6 +7604,7 @@ gt12k:
   7400/7400_1_gtw:
     title: 7400-A - Traverse de l'Hôpital
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 12500
     width: 2582
     height: 2387
@@ -7113,6 +7619,7 @@ gt12k:
   7410/7410_pal300:
     title: 7410 - Ile d'Yeu
     edition: Edition n° 2 - 2002
+    lastUpdate: 13
     scaleden: 20000
     width: 13819
     height: 9922
@@ -7127,6 +7634,7 @@ gt12k:
   7412/7412_pal300:
     title: 7412 - Ile de Ré - Du Fier d'Ars à la Flotte
     edition: Edition n° 2 - 2003
+    lastUpdate: 19
     scaleden: 15000
     width: 13819
     height: 9922
@@ -7141,6 +7649,7 @@ gt12k:
   7413/7413_pal300:
     title: 7413 - Abords de La Rochelle
     edition: Edition n° 3 - 2016
+    lastUpdate: 3
     scaleden: 15000
     width: 13819
     height: 9922
@@ -7155,6 +7664,7 @@ gt12k:
   7415/7415_1_gtw:
     title: 7415-B - Cours de la Charente (suite du cartouche A)
     edition: Edition n° 2 - 2017
+    lastUpdate: 3
     scaleden: 15000
     width: 4640
     height: 2205
@@ -7169,6 +7679,7 @@ gt12k:
   7415/7415_2_gtw:
     title: 7415-A - Cours de la Charente - De Port-des-Barques à Tonnay-Charente
     edition: Edition n° 2 - 2017
+    lastUpdate: 3
     scaleden: 15000
     width: 9016
     height: 6290
@@ -7183,6 +7694,7 @@ gt12k:
   7415/7415_3_gtw:
     title: 7415 - Embouchure de la Charente
     edition: Edition n° 2 - 2017
+    lastUpdate: 3
     scaleden: 20000
     width: 9016
     height: 6728
@@ -7197,6 +7709,7 @@ gt12k:
   7419/7419_4_gtw:
     title: 7419-B - Port de Rouen
     edition: Edition n° 3 - 2018
+    lastUpdate: 3
     scaleden: 15000
     width: 4221
     height: 3230
@@ -7211,6 +7724,7 @@ gt12k:
   7419/7419_5_gtw:
     title: 7419-A - Port de Rouen
     edition: Edition n° 3 - 2018
+    lastUpdate: 3
     scaleden: 15000
     width: 4221
     height: 7517
@@ -7225,6 +7739,7 @@ gt12k:
   7420/7420_4_gtw:
     title: 7420-E - Port de Caen
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 17500
     width: 4502
     height: 5149
@@ -7239,6 +7754,7 @@ gt12k:
   7420/7420_5_gtw:
     title: 7420-D - Rade de Caen - Port de Ouistreham
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 17500
     width: 6360
     height: 9144
@@ -7253,6 +7769,7 @@ gt12k:
   7423/7423_pal300:
     title: 7423 - Raz de Sein
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 20000
     width: 13819
     height: 9922
@@ -7267,6 +7784,7 @@ gt12k:
   7425/7425_1_gtw:
     title: 7425-B - Port du Verdon
     edition: Edition n° 6 - 2017
+    lastUpdate: 3
     scaleden: 12500
     width: 2746
     height: 4626
@@ -7281,6 +7799,7 @@ gt12k:
   7427/7427_1_gtw:
     title: 7427-A - Port de Pauillac
     edition: Edition n° 2 - 2016
+    lastUpdate: 2
     scaleden: 20000
     width: 2483
     height: 4539
@@ -7295,6 +7814,7 @@ gt12k:
   7427/7427_2_gtw:
     title: 7427-B - Port de Blaye
     edition: Edition n° 2 - 2016
+    lastUpdate: 2
     scaleden: 20000
     width: 4749
     height: 5632
@@ -7309,6 +7829,7 @@ gt12k:
   7428/7428_1_gtw:
     title: 7428 - Port d'Arcachon
     edition: Publication 2012
+    lastUpdate: 10
     scaleden: 15000
     width: 5576
     height: 4246
@@ -7323,6 +7844,7 @@ gt12k:
   7431/7431_1_gtw:
     title: 7431-A - Baie de Fontarabie
     edition: Publication 2007
+    lastUpdate: 8
     scaleden: 12500
     width: 6578
     height: 9021
@@ -7337,6 +7859,7 @@ gt12k:
   7434/7434_1_gtw:
     title: 7434-A - Port de Sète
     edition: Edition n° 2 - 2015
+    lastUpdate: 6
     scaleden: 15000
     width: 9145
     height: 6195
@@ -7351,6 +7874,7 @@ gt12k:
   7436/7436_3_gtw:
     title: 7436-C - Approches et Port de Bastia
     edition: Publication 2017
+    lastUpdate: 7
     scaleden: 15000
     width: 6229
     height: 9005
@@ -7365,6 +7889,7 @@ gt12k:
   7442/7442_pal300:
     title: 7442 - De Villefranche-sur-Mer à Menton
     edition: Edition n° 2 - 2017
+    lastUpdate: 12
     scaleden: 20000
     width: 13819
     height: 9922
@@ -7379,6 +7904,7 @@ gt12k:
   7444/7444_pal300:
     title: 7444 - Du Cap Lévi à Barfleur
     edition: Publication 2016
+    lastUpdate: 0
     scaleden: 20000
     width: 13819
     height: 9922
@@ -7393,6 +7919,7 @@ gt12k:
   7457/7457_1_gtw:
     title: 7457-A - Raroia - De la Passe Ngarue au Mouillage de Ngarumaoa
     edition: Publication 2003
+    lastUpdate: 8
     scaleden: 12500
     width: 4713
     height: 4171
@@ -7407,6 +7934,7 @@ gt12k:
   7466/7466_pal300:
     title: 7466 - Bora-Bora
     edition: Edition n° 2 - 2019
+    lastUpdate: 0
     scaleden: 20000
     width: 9922
     height: 13819
@@ -7421,6 +7949,7 @@ gt12k:
   7472/7472_1_gtw:
     title: 7472-D - Sint Maarten - Groot Baai - Philipsburg
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 15000
     width: 2804
     height: 3577
@@ -7435,6 +7964,7 @@ gt12k:
   7472/7472_2_gtw:
     title: 7472-E - Saint-Barthélemy - Port de Gustavia
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 15000
     width: 3430
     height: 3577
@@ -7449,6 +7979,7 @@ gt12k:
   7472/7472_3_gtw:
     title: 7472-B - Saint-Martin - Baie de Grand-Case et Anse Marcel
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 15000
     width: 3011
     height: 2216
@@ -7463,6 +7994,7 @@ gt12k:
   7472/7472_4_gtw:
     title: 7472-A - Saint-Martin - Baie de Marigot
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 15000
     width: 6234
     height: 3359
@@ -7477,6 +8009,7 @@ gt12k:
   7481/7481_1_gtw:
     title: 7481-A - Îles du Salut
     edition: Edition n° 3 - 2007
+    lastUpdate: 15
     scaleden: 15000
     width: 2869
     height: 2631
@@ -7491,6 +8024,7 @@ gt12k:
   7482/7482_2_gtw:
     title: 7482-B - Anse de Malendure
     edition: Publication 2009
+    lastUpdate: 25
     scaleden: 15000
     width: 2267
     height: 1688
@@ -7505,6 +8039,7 @@ gt12k:
   7493/7493_1_gtw:
     title: 7493-A - Mouillages de Dzaoudzi
     edition: Edition n° 4 - 2015
+    lastUpdate: 4
     scaleden: 15000
     width: 4581
     height: 3357
@@ -7519,6 +8054,7 @@ gt12k:
   7593/7593_pal300:
     title: 7593 - De l'Ile Hélène au Rocher du Débarquement - Archipel de Pointe Géologie
     edition: Publication 2003
+    lastUpdate: 2
     scaleden: 20000
     width: 13819
     height: 9922
@@ -7533,6 +8069,7 @@ gt12k:
   7616/7616_B_gtw:
     title: 7616-B - Woodbridge Bay et Roseau Roads
     edition: Publication 1998
+    lastUpdate: 6
     scaleden: 12500
     width: 2629
     height: 3786
@@ -7547,6 +8084,7 @@ gt12k:
   7620/7620_A_gtw:
     title: 7620-A - Sombrero Island
     edition: Edition n° 2 - 2018
+    lastUpdate: 1
     scaleden: 15000
     width: 1914
     height: 2269
@@ -7561,6 +8099,7 @@ gt12k:
   7622/7622_B_gtw:
     title: 7622-B - Vieux Fort
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 20000
     width: 4041
     height: 4985
@@ -7575,6 +8114,7 @@ gt12k:
   7640/7640_2_gtw:
     title: 7640-A - Abords Nord-Est de l'Île Miquelon
     edition: Publication 2018
+    lastUpdate: 1
     scaleden: 20000
     width: 9019
     height: 8805
@@ -7589,6 +8129,7 @@ gt12k:
   7640/7640_3_gtw:
     title: 7640-C - Mouillages de l'Anse du Gouvernement
     edition: Publication 2018
+    lastUpdate: 1
     scaleden: 20000
     width: 6327
     height: 4166
@@ -7603,6 +8144,7 @@ gt12k:
   7755/7755_1_gtw:
     title: 7755-A - Baie de Poro
     edition: Publication 2016
+    lastUpdate: 4
     scaleden: 15000
     width: 3812
     height: 3912
@@ -7617,6 +8159,7 @@ gt12k:
   7755/7755_2_gtw:
     title: 7755-B - Baie Ugué
     edition: Publication 2016
+    lastUpdate: 4
     scaleden: 15000
     width: 3598
     height: 1863
@@ -7631,6 +8174,7 @@ gt12k:
   7756/7756_1_gtw:
     title: 7756-A - Accès à Touho
     edition: Publication 2014
+    lastUpdate: 1
     scaleden: 15000
     width: 3456
     height: 2488
@@ -7647,6 +8191,7 @@ gt5k:
   4232/4232_2_gtw:
     title: 4232-C - Île de Rapa - Baie d'Ha'urei (Ahurei)
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 5685
     height: 2848
@@ -7661,6 +8206,7 @@ gt5k:
   4232/4232_3_gtw:
     title: 4232-D - Île de Rapa - Baie Anarua
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 2231
     height: 1689
@@ -7675,6 +8221,7 @@ gt5k:
   6165/6165_1_gtw:
     title: 6165-A - Baie d'Avera
     edition: Edition n° 3 - 2010
+    lastUpdate: 2
     scaleden: 10000
     width: 2251
     height: 4046
@@ -7689,6 +8236,7 @@ gt5k:
   6165/6165_2_gtw:
     title: 6165-B - Baie de Moerai
     edition: Edition n° 3 - 2010
+    lastUpdate: 2
     scaleden: 10000
     width: 3109
     height: 2259
@@ -7703,6 +8251,7 @@ gt5k:
   6207/6207_1_gtw:
     title: 6207 - Passe Nord de l'île Raivavae
     edition: Edition n° 4 - 2010
+    lastUpdate: 2
     scaleden: 10000
     width: 7854
     height: 6370
@@ -7717,6 +8266,7 @@ gt5k:
   6279/6279_1_gtw:
     title: 6279 - Mouillages au Nord de Rimatara
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 10000
     width: 5422
     height: 3867
@@ -7731,6 +8281,7 @@ gt5k:
   6320/6320_1_gtw:
     title: 6320 - Port de Temao
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 10000
     width: 2061
     height: 2015
@@ -7745,6 +8296,7 @@ gt5k:
   6418/6418_pal300:
     title: 6418 - Ile Mangareva - Rade de Rikitea
     edition: Edition n° 5 - 2010
+    lastUpdate: 2
     scaleden: 5000
     width: 9922
     height: 13819
@@ -7759,6 +8311,7 @@ gt5k:
   6434/6434_1_gtw:
     title: 6434-A - Passe Avamoa
     edition: Edition n° 4 - 2005
+    lastUpdate: 15
     scaleden: 10000
     width: 2471
     height: 2777
@@ -7773,6 +8326,7 @@ gt5k:
   6434/6434_2_gtw:
     title: 6434-B - Passe Farerea
     edition: Edition n° 4 - 2005
+    lastUpdate: 15
     scaleden: 10000
     width: 2472
     height: 1688
@@ -7787,6 +8341,7 @@ gt5k:
   6497/6497_1_gtw:
     title: 6497-A - Île de la Possession - Baie du Marin - Port Alfred
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 3189
     height: 2352
@@ -7801,6 +8356,7 @@ gt5k:
   6612/6612_1_gtw:
     title: 6612-A - Port de La Ciotat
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 7500
     width: 2511
     height: 3080
@@ -7815,6 +8371,7 @@ gt5k:
   6616/6616_1_gtw:
     title: 6616-A - Bormes-les-Mimosas
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 7500
     width: 2085
     height: 1913
@@ -7829,6 +8386,7 @@ gt5k:
   6616/6616_2_gtw:
     title: 6616-B - Cavalaire-sur-Mer
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 7500
     width: 1977
     height: 1913
@@ -7843,6 +8401,7 @@ gt5k:
   6717/6717_1_gtw:
     title: 6717-A - Port Phaeton (Teauaa)
     edition: Edition n° 3 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 4526
     height: 6236
@@ -7857,6 +8416,7 @@ gt5k:
   6717/6717_2_gtw:
     title: 6717-B - Tapuaeraha
     edition: Edition n° 3 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 4530
     height: 6236
@@ -7871,6 +8431,7 @@ gt5k:
   6838/6838_1_gtw:
     title: 6838-C - Port Santa-Lucia - Saint-Raphaël
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 7500
     width: 2055
     height: 2292
@@ -7885,6 +8446,7 @@ gt5k:
   6838/6838_2_gtw:
     title: 6838-B - Vieux Port - Saint-Raphaël
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 7500
     width: 1332
     height: 1417
@@ -7899,6 +8461,7 @@ gt5k:
   6838/6838_3_gtw:
     title: 6838-A - Port-Fréjus
     edition: Edition n° 4 - 2017
+    lastUpdate: 0
     scaleden: 7500
     width: 1417
     height: 1388
@@ -7913,6 +8476,7 @@ gt5k:
   6839/6839_2_gtw:
     title: 6839-B - Port de Marseillan
     edition: Edition n° 2 - 2006
+    lastUpdate: 25
     scaleden: 7500
     width: 1653
     height: 1767
@@ -7927,6 +8491,7 @@ gt5k:
   6839/6839_3_gtw:
     title: 6839-C - Port de Mèze
     edition: Edition n° 2 - 2006
+    lastUpdate: 25
     scaleden: 7500
     width: 2288
     height: 1913
@@ -7941,6 +8506,7 @@ gt5k:
   6839/6839_4_gtw:
     title: 6839-D - Port de Balaruc-les-Usines
     edition: Edition n° 2 - 2006
+    lastUpdate: 25
     scaleden: 7500
     width: 1225
     height: 1912
@@ -7955,6 +8521,7 @@ gt5k:
   6839/6839_5_gtw:
     title: 6839-E - Port de Bouzigues
     edition: Edition n° 2 - 2006
+    lastUpdate: 25
     scaleden: 7500
     width: 1013
     height: 1329
@@ -7969,6 +8536,7 @@ gt5k:
   6850/6850_1_gtw:
     title: 6850-B - Baie de Centuri
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 10000
     width: 3157
     height: 4429
@@ -7983,6 +8551,7 @@ gt5k:
   6850/6850_3_gtw:
     title: 6850-C - Baies de Macinaggio et de Tamarone
     edition: Edition n° 3 - 2018
+    lastUpdate: 2
     scaleden: 10000
     width: 3157
     height: 4430
@@ -7997,6 +8566,7 @@ gt5k:
   7003/7003_2_gtw:
     title: 7003-B - Saint-Cyprien
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 4183
     height: 4047
@@ -8011,6 +8581,7 @@ gt5k:
   7003/7003_3_gtw:
     title: 7003-C - Banyuls-sur-Mer
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 3213
     height: 1654
@@ -8025,6 +8596,7 @@ gt5k:
   7037/7037_A_gtw:
     title: 7037-A - Ramsgate
     edition: Edition n° 10 - 2016
+    lastUpdate: 3
     scaleden: 5000
     width: 3151
     height: 2836
@@ -8039,6 +8611,7 @@ gt5k:
   7086/7086_pal300:
     title: 7086 - Rade de Cherbourg
     edition: Edition n° 10 - 2019
+    lastUpdate: 1
     scaleden: 7500
     width: 13819
     height: 9922
@@ -8053,6 +8626,7 @@ gt5k:
   7088/7088_1_gtw:
     title: 7088-A - Baie du François
     edition: Edition n° 2 - 2008
+    lastUpdate: 4
     scaleden: 8000
     width: 2575
     height: 2968
@@ -8067,6 +8641,7 @@ gt5k:
   7090/7090_1_gtw:
     title: 7090-A - Port de Barfleur
     edition: Edition n° 3 - 2018
+    lastUpdate: 4
     scaleden: 7500
     width: 2154
     height: 2063
@@ -8081,6 +8656,7 @@ gt5k:
   7090/7090_2_gtw:
     title: 7090-A - Port de Barfleur
     edition: Edition n° 3 - 2018
+    lastUpdate: 4
     scaleden: 7500
     width: 2155
     height: 2060
@@ -8095,6 +8671,7 @@ gt5k:
   7093/7093_pal300:
     title: 7093 - Rade de Toulon
     edition: Edition n° 7 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 13819
     height: 9922
@@ -8109,6 +8686,7 @@ gt5k:
   7095/7095_1_gtw:
     title: 7095-A - Ports de Roscoff
     edition: Edition n° 5 - 2018
+    lastUpdate: 3
     scaleden: 10000
     width: 3842
     height: 3556
@@ -8123,6 +8701,7 @@ gt5k:
   7096/7096_1_gtw:
     title: 7096-B - Port de Bonifacio
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 5000
     width: 6234
     height: 3348
@@ -8137,6 +8716,7 @@ gt5k:
   7096/7096_2_gtw:
     title: 7096-A - Baie de Figari
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 10000
     width: 6234
     height: 5516
@@ -8151,6 +8731,7 @@ gt5k:
   7102/7102_1_gtw:
     title: 7102-A - Le Moule
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 2519
     height: 2973
@@ -8165,6 +8746,7 @@ gt5k:
   7102/7102_2_gtw:
     title: 7102-B - Petit Havre
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 3236
     height: 2973
@@ -8179,6 +8761,7 @@ gt5k:
   7102/7102_3_gtw:
     title: 7102-C - Sainte-Anne et Anse Accul
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 3408
     height: 2973
@@ -8193,6 +8776,7 @@ gt5k:
   7102/7102_4_gtw:
     title: 7102-D - Saint-François
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 4225
     height: 2973
@@ -8207,6 +8791,7 @@ gt5k:
   7102/7102_5_gtw:
     title: 7102-E - Grande Anse
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 2498
     height: 2973
@@ -8221,6 +8806,7 @@ gt5k:
   7102/7102_6_gtw:
     title: 7102-F - Grand-Bourg
     edition: Edition n° 3 - 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 2440
     height: 2973
@@ -8235,6 +8821,7 @@ gt5k:
   7107/7107_pal300:
     title: 7107 - Port de La Trinité-Sur-Mer, Port du Crouesty
     edition: Publication 2008
+    lastUpdate: 11
     scaleden: 10000
     width: 13819
     height: 9922
@@ -8249,6 +8836,7 @@ gt5k:
   7121/7121_1_gtw:
     title: 7121-A - Port de Morgat
     edition: Edition n° 3 - 2016
+    lastUpdate: 7
     scaleden: 10000
     width: 2137
     height: 2027
@@ -8263,6 +8851,7 @@ gt5k:
   7121/7121_2_gtw:
     title: 7121-B - Port de Douarnenez
     edition: Edition n° 3 - 2016
+    lastUpdate: 7
     scaleden: 10000
     width: 3609
     height: 3994
@@ -8277,6 +8866,7 @@ gt5k:
   7122/7122_1_gtw:
     title: 7122-A - Port du Conquet
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 1987
     height: 2090
@@ -8291,6 +8881,7 @@ gt5k:
   7124/7124_2_gtw:
     title: 7124-B - Port de Lannion (Le Léguer)
     edition: Edition n° 3 - 2008
+    lastUpdate: 16
     scaleden: 7500
     width: 1816
     height: 1816
@@ -8305,6 +8896,7 @@ gt5k:
   7124/7124_3_gtw:
     title: 7124-C - Port de Trébeurden
     edition: Edition n° 3 - 2008
+    lastUpdate: 16
     scaleden: 7500
     width: 1456
     height: 1418
@@ -8319,6 +8911,7 @@ gt5k:
   7125/7125_1_gtw:
     title: 7125-C - Port de Perros-Guirec
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 2159
     height: 2053
@@ -8333,6 +8926,7 @@ gt5k:
   7125/7125_2_gtw:
     title: 7125-B - Port de Ploumanac'h
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 1955
     height: 2053
@@ -8347,6 +8941,7 @@ gt5k:
   7125/7125_3_gtw:
     title: 7125-A - Mouillages de Trégastel
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 1955
     height: 1695
@@ -8361,6 +8956,7 @@ gt5k:
   7126/7126_1_gtw:
     title: 7126-A - Port de Tréguier
     edition: Edition n° 5 - 2012
+    lastUpdate: 19
     scaleden: 7500
     width: 4823
     height: 6050
@@ -8375,6 +8971,7 @@ gt5k:
   7127/7127_1_gtw:
     title: 7127-A - Port de Lézardrieux - Le Trieux
     edition: Edition n° 4 - 2014
+    lastUpdate: 10
     scaleden: 10000
     width: 2521
     height: 3775
@@ -8389,6 +8986,7 @@ gt5k:
   7127/7127_2_gtw:
     title: 7127-B - Port de Paimpol
     edition: Edition n° 4 - 2014
+    lastUpdate: 10
     scaleden: 10000
     width: 2637
     height: 1936
@@ -8403,6 +9001,7 @@ gt5k:
   7128/7128_1_gtw:
     title: 7128-B - Port de Binic
     edition: Edition n° 3 - 2016
+    lastUpdate: 3
     scaleden: 7500
     width: 3163
     height: 2439
@@ -8417,6 +9016,7 @@ gt5k:
   7128/7128_2_gtw:
     title: 7128-A - Port de Saint-Quay-Portrieux
     edition: Edition n° 3 - 2016
+    lastUpdate: 3
     scaleden: 7500
     width: 2774
     height: 2702
@@ -8431,6 +9031,7 @@ gt5k:
   7131/7131_1_gtw:
     title: 7131-A - Port de Cancale
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 7500
     width: 1980
     height: 1651
@@ -8445,6 +9046,7 @@ gt5k:
   7133/7133_3_gtw:
     title: 7133-E - Portbail
     edition: Edition n° 2 - 2009
+    lastUpdate: 13
     scaleden: 10000
     width: 2990
     height: 2583
@@ -8459,6 +9061,7 @@ gt5k:
   7133/7133_4_gtw:
     title: 7133-D - Carteret
     edition: Edition n° 2 - 2009
+    lastUpdate: 13
     scaleden: 10000
     width: 2093
     height: 2583
@@ -8473,6 +9076,7 @@ gt5k:
   7133/7133_5_gtw:
     title: 7133-A - Abords de Goury
     edition: Edition n° 2 - 2009
+    lastUpdate: 13
     scaleden: 10000
     width: 4705
     height: 4542
@@ -8487,6 +9091,7 @@ gt5k:
   7134/7134_1_gtw:
     title: 7134-A - Sound de Chausey
     edition: Edition n° 4 - 2017
+    lastUpdate: 2
     scaleden: 5000
     width: 3947
     height: 2877
@@ -8501,6 +9106,7 @@ gt5k:
   7138/7138_1_gtw:
     title: 7138-D - Embouchure de la Laïta
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 10000
     width: 2687
     height: 5065
@@ -8515,6 +9121,7 @@ gt5k:
   7138/7138_2_gtw:
     title: 7138-C - Port de Doëlan
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 2687
     height: 3957
@@ -8529,6 +9136,7 @@ gt5k:
   7138/7138_3_gtw:
     title: 7138-B - Ports de Brigneau et de Merrien
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 4705
     height: 3692
@@ -8543,6 +9151,7 @@ gt5k:
   7138/7138_4_gtw:
     title: 7138-A - Embouchures de l'Aven et du Belon
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 10000
     width: 4705
     height: 5330
@@ -8557,6 +9166,7 @@ gt5k:
   7138/7138_5_gtw:
     title: 7138-E - Rivière d'Étel
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 10000
     width: 5784
     height: 9021
@@ -8571,6 +9181,7 @@ gt5k:
   7139/7139_1_gtw:
     title: 7139-A - Port Tudy
     edition: Edition n° 3 - 2016
+    lastUpdate: 2
     scaleden: 5000
     width: 2530
     height: 2134
@@ -8585,6 +9196,7 @@ gt5k:
   7140/7140_pal300:
     title: 7140 - Passes et rade de Lorient
     edition: Edition n° 4 - 2019
+    lastUpdate: 2
     scaleden: 10000
     width: 9922
     height: 13819
@@ -8599,6 +9211,7 @@ gt5k:
   7142/7142_1_gtw:
     title: 7142-B - Le Palais
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 7500
     width: 2348
     height: 1344
@@ -8613,6 +9226,7 @@ gt5k:
   7142/7142_2_gtw:
     title: 7142-A - Sauzon
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 7500
     width: 1580
     height: 3234
@@ -8627,6 +9241,7 @@ gt5k:
   7145/7145_1_gtw:
     title: 7145-A - Port de La Turballe
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 10000
     width: 2247
     height: 1477
@@ -8641,6 +9256,7 @@ gt5k:
   7145/7145_2_gtw:
     title: 7145-B - Port du Croisic
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 10000
     width: 2247
     height: 3117
@@ -8655,6 +9271,7 @@ gt5k:
   7145/7145_3_gtw:
     title: 7145-C - Port de La Baule-Le Pouliguen
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 10000
     width: 2025
     height: 2789
@@ -8669,6 +9286,7 @@ gt5k:
   7145/7145_4_gtw:
     title: 7145-D - Port de Pornichet
     edition: Edition n° 2 - 2005
+    lastUpdate: 24
     scaleden: 10000
     width: 1951
     height: 2789
@@ -8683,6 +9301,7 @@ gt5k:
   7154/7154_1_gtw:
     title: 7154 - Port de Saint-Brieuc Le Légué
     edition: Edition n° 2 - 2008
+    lastUpdate: 47
     scaleden: 10000
     width: 4306
     height: 3075
@@ -8697,6 +9316,7 @@ gt5k:
   7162/7162_1_gtw:
     title: 7162-A - Mouillage de Porto Pollo
     edition: Edition n° 3 - 2018
+    lastUpdate: 4
     scaleden: 10000
     width: 2784
     height: 3224
@@ -8711,6 +9331,7 @@ gt5k:
   7162/7162_2_gtw:
     title: 7162-B - Mouillage de Campomoro
     edition: Edition n° 3 - 2018
+    lastUpdate: 4
     scaleden: 10000
     width: 2784
     height: 2896
@@ -8725,6 +9346,7 @@ gt5k:
   7183/7183_1_gtw:
     title: 7183-A - Port de Saint-Gilles les Bains
     edition: Edition n° 4 - 2016
+    lastUpdate: 2
     scaleden: 10000
     width: 2927
     height: 2868
@@ -8739,6 +9361,7 @@ gt5k:
   7183/7183_2_gtw:
     title: 7183-B - Port Réunion (Pointe des Galets) - Port Ouest
     edition: Edition n° 4 - 2016
+    lastUpdate: 2
     scaleden: 10000
     width: 2928
     height: 2868
@@ -8753,6 +9376,7 @@ gt5k:
   7183/7183_3_gtw:
     title: 7183-C - Port Réunion (Pointe des Galets) - Port Est
     edition: Edition n° 4 - 2016
+    lastUpdate: 2
     scaleden: 10000
     width: 2927
     height: 2868
@@ -8767,6 +9391,7 @@ gt5k:
   7200/7200_1_gtw:
     title: 7200-A - Antibes - Port Vauban
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 7500
     width: 2494
     height: 2349
@@ -8781,6 +9406,7 @@ gt5k:
   7200/7200_2_gtw:
     title: 7200-C - Port de Saint-Laurent-du-Var
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 7500
     width: 1858
     height: 1623
@@ -8795,6 +9421,7 @@ gt5k:
   7200/7200_3_gtw:
     title: 7200-B - Marina Baie des Anges
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 7500
     width: 1435
     height: 1768
@@ -8809,6 +9436,7 @@ gt5k:
   7200/7200_4_gtw:
     title: 7200-D - Port de Nice et Rade de Villefranche
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 10000
     width: 4988
     height: 4713
@@ -8823,6 +9451,7 @@ gt5k:
   7205/7205_1_gtw:
     title: 7205-C - Port de Cannes
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 1754
     height: 1621
@@ -8837,6 +9466,7 @@ gt5k:
   7205/7205_2_gtw:
     title: 7205-F - Ports de Juan les Pins
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 2073
     height: 1621
@@ -8851,6 +9481,7 @@ gt5k:
   7205/7205_3_gtw:
     title: 7205-E - Ports de Golfe Juan
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 1987
     height: 1621
@@ -8865,6 +9496,7 @@ gt5k:
   7205/7205_4_gtw:
     title: 7205-B - Port de Cannes-Marina
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 1754
     height: 1242
@@ -8879,6 +9511,7 @@ gt5k:
   7205/7205_5_gtw:
     title: 7205-D - Port Pierre Canto
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 1224
     height: 2350
@@ -8893,6 +9526,7 @@ gt5k:
   7205/7205_6_gtw:
     title: 7205-A - Port de Mandelieu-La Napoule
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 7500
     width: 2072
     height: 4099
@@ -8907,6 +9541,7 @@ gt5k:
   7213/7213_1_gtw:
     title: 7213-A - De la Passe 'Onoiau au Village
     edition: Edition n° 2 - 2009
+    lastUpdate: 9
     scaleden: 10000
     width: 5823
     height: 6234
@@ -8921,6 +9556,7 @@ gt5k:
   7213/7213_2_gtw:
     title: 7213-A - De la Passe 'Onoiau au Village
     edition: Edition n° 2 - 2009
+    lastUpdate: 9
     scaleden: 10000
     width: 3328
     height: 6234
@@ -8935,6 +9571,7 @@ gt5k:
   7218/7218_3_gtw:
     title: 7218-C - Abords du wharf de Hwaadrila
     edition: Edition n° 4 - 2019
+    lastUpdate: 1
     scaleden: 10000
     width: 1876
     height: 1912
@@ -8949,6 +9586,7 @@ gt5k:
   7232/7232_1_gtw:
     title: 7232-A - Abords d'Omonville-La-Rogue
     edition: Publication 2013
+    lastUpdate: 8
     scaleden: 7500
     width: 3059
     height: 2440
@@ -8963,6 +9601,7 @@ gt5k:
   7234/7234_1_gtw:
     title: 7234-A - Ava Leava (Anse de Sigave)
     edition: Edition n° 2 - 2010
+    lastUpdate: 0
     scaleden: 10000
     width: 1958
     height: 1906
@@ -8977,6 +9616,7 @@ gt5k:
   7247/7247_pal300:
     title: 7247 - Port de Boulogne-sur-Mer
     edition: Edition n° 3 - 2011
+    lastUpdate: 2
     scaleden: 10000
     width: 9922
     height: 13819
@@ -8991,6 +9631,7 @@ gt5k:
   7248/7248_2_gtw:
     title: 7248-B - Passe Tehere (Aimonu) - Mouillage de Roto Ava
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 10000
     width: 6446
     height: 2930
@@ -9005,6 +9646,7 @@ gt5k:
   7248/7248_3_gtw:
     title: 7248-C - Passe Pakaka (Haniuru) - Quai de Niutahi
     edition: Edition n° 2 - 2010
+    lastUpdate: 3
     scaleden: 10000
     width: 6446
     height: 2298
@@ -9019,6 +9661,7 @@ gt5k:
   7249/7249_1_gtw:
     title: 7249-B - Ports de Bénodet et de Sainte-Marine
     edition: Edition n° 2 - 2016
+    lastUpdate: 4
     scaleden: 7500
     width: 2525
     height: 3286
@@ -9033,6 +9676,7 @@ gt5k:
   7249/7249_3_gtw:
     title: 7249-D - Mouillages des Îles de Glénan
     edition: Edition n° 2 - 2016
+    lastUpdate: 4
     scaleden: 10000
     width: 3458
     height: 4510
@@ -9047,6 +9691,7 @@ gt5k:
   7249/7249_4_gtw:
     title: 7249-C - Port de Loctudy
     edition: Edition n° 2 - 2016
+    lastUpdate: 4
     scaleden: 10000
     width: 3458
     height: 4511
@@ -9061,6 +9706,7 @@ gt5k:
   7249/7249_5_gtw:
     title: 7249-E - Port-La-Forêt
     edition: Edition n° 2 - 2016
+    lastUpdate: 4
     scaleden: 10000
     width: 3293
     height: 4511
@@ -9075,6 +9721,7 @@ gt5k:
   7249/7249_6_gtw:
     title: 7249-F - Port de Concarneau
     edition: Edition n° 2 - 2016
+    lastUpdate: 4
     scaleden: 10000
     width: 3293
     height: 4510
@@ -9089,6 +9736,7 @@ gt5k:
   7258/7258_1_gtw:
     title: 7258-A - Port de Calais
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 7500
     width: 3943
     height: 3375
@@ -9103,6 +9751,7 @@ gt5k:
   7259/7259_2_gtw:
     title: 7259-E - Port de Tadine
     edition: Publication 1995
+    lastUpdate: 16
     scaleden: 5000
     width: 2650
     height: 2256
@@ -9117,6 +9766,7 @@ gt5k:
   7267/7267_1_gtw:
     title: 7267-C - Saint-Tropez
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 10000
     width: 2081
     height: 2022
@@ -9131,6 +9781,7 @@ gt5k:
   7267/7267_2_gtw:
     title: 7267-B - Sainte-Maxime
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 10000
     width: 1840
     height: 1464
@@ -9145,6 +9796,7 @@ gt5k:
   7267/7267_3_gtw:
     title: 7267-A - Port-Grimaud et Marines de Cogolin
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 10000
     width: 2241
     height: 2022
@@ -9159,6 +9811,7 @@ gt5k:
   7281/7281_2_gtw:
     title: 7281-B - Passe Kaki
     edition: Edition n° 2 - 2015
+    lastUpdate: 12
     scaleden: 10000
     width: 2247
     height: 3104
@@ -9173,6 +9826,7 @@ gt5k:
   7281/7281_3_gtw:
     title: 7281-C - Zone portuaire Nord
     edition: Edition n° 2 - 2015
+    lastUpdate: 12
     scaleden: 10000
     width: 2247
     height: 1906
@@ -9187,6 +9841,7 @@ gt5k:
   7281/7281_4_gtw:
     title: 7281-D - Mouillages d'Otepa
     edition: Edition n° 2 - 2015
+    lastUpdate: 12
     scaleden: 10000
     width: 5372
     height: 3758
@@ -9201,6 +9856,7 @@ gt5k:
   7282/7282_1_gtw:
     title: 7282-A - Port d'Hyères (Port Saint-Pierre)
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 7500
     width: 1446
     height: 2291
@@ -9215,6 +9871,7 @@ gt5k:
   7282/7282_2_gtw:
     title: 7282-B - Port de Miramar
     edition: Edition n° 5 - 2018
+    lastUpdate: 0
     scaleden: 7500
     width: 1829
     height: 1650
@@ -9229,6 +9886,7 @@ gt5k:
   7293/7293_1_gtw:
     title: 7293-A - Passe Tairapa
     edition: Edition n° 2 - 2007
+    lastUpdate: 3
     scaleden: 5000
     width: 3559
     height: 3212
@@ -9243,6 +9901,7 @@ gt5k:
   7310/7310_1_gtw:
     title: 7310-A - Port de Dahouët
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 7500
     width: 2835
     height: 2119
@@ -9257,6 +9916,7 @@ gt5k:
   7310/7310_2_gtw:
     title: 7310-B - Port d'Erquy
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 7500
     width: 3549
     height: 3257
@@ -9271,6 +9931,7 @@ gt5k:
   7314/7314_2_gtw:
     title: 7314-A - Passe Tiareroa
     edition: Edition n° 2 - 2008
+    lastUpdate: 6
     scaleden: 10000
     width: 3659
     height: 3024
@@ -9285,6 +9946,7 @@ gt5k:
   7314/7314_3_gtw:
     title: 7314-B - Mouillage de Tenukupara
     edition: Edition n° 2 - 2008
+    lastUpdate: 6
     scaleden: 10000
     width: 3659
     height: 3210
@@ -9299,6 +9961,7 @@ gt5k:
   7322/7322_1_gtw:
     title: 7322-B - Port de Muéo
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 2961
     height: 3215
@@ -9313,6 +9976,7 @@ gt5k:
   7322/7322_2_gtw:
     title: 7322-A - Passe de Muéo
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 4388
     height: 1646
@@ -9327,6 +9991,7 @@ gt5k:
   7328/7328_1_gtw:
     title: 7328-A - Port de Saint-Pierre
     edition: Edition n° 2 - 2012
+    lastUpdate: 6
     scaleden: 10000
     width: 3021
     height: 2888
@@ -9341,6 +10006,7 @@ gt5k:
   7329/7329_3_gtw:
     title: 7329-B - Passe Arikitamiro
     edition: Edition n° 2 - 2003
+    lastUpdate: 9
     scaleden: 5000
     width: 2270
     height: 2649
@@ -9355,6 +10021,7 @@ gt5k:
   7329/7329_4_gtw:
     title: 7329-C - Mouillage de Tearavero
     edition: Edition n° 2 - 2003
+    lastUpdate: 9
     scaleden: 10000
     width: 4506
     height: 3953
@@ -9369,6 +10036,7 @@ gt5k:
   7346/7346_1_gtw:
     title: 7346-A - Takaroa - Passe Teauonae
     edition: Edition n° 2 - 2006
+    lastUpdate: 5
     scaleden: 10000
     width: 3347
     height: 2428
@@ -9383,6 +10051,7 @@ gt5k:
   7352/7352_2_gtw:
     title: 7352-A - Baie Haahopu
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1580
     height: 1944
@@ -9397,6 +10066,7 @@ gt5k:
   7352/7352_4_gtw:
     title: 7352-C - Baie de Taiohae
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 3175
     height: 4711
@@ -9411,6 +10081,7 @@ gt5k:
   7353/7353_10_gtw:
     title: 7353-K - Ua-Huka - Baie d'Hane
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1919
     height: 2927
@@ -9425,6 +10096,7 @@ gt5k:
   7353/7353_1_gtw:
     title: 7353-G - Ua-Pou - Baie d'Hakatao
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1722
     height: 1899
@@ -9439,6 +10111,7 @@ gt5k:
   7353/7353_2_gtw:
     title: 7353-F - Ua-Pou - Baie d'Hakamaii
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1722
     height: 2006
@@ -9453,6 +10126,7 @@ gt5k:
   7353/7353_3_gtw:
     title: 7353-E - Ua-Pou - Baie de Vaiehu
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1722
     height: 2997
@@ -9467,6 +10141,7 @@ gt5k:
   7353/7353_4_gtw:
     title: 7353-B - Ua-Pou - Baie d'Haakuti
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1722
     height: 1793
@@ -9481,6 +10156,7 @@ gt5k:
   7353/7353_6_gtw:
     title: 7353-C - Ua-Pou - Baie d'Hakahetau
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 2431
     height: 2537
@@ -9495,6 +10171,7 @@ gt5k:
   7353/7353_7_gtw:
     title: 7353-D - Ua-Pou - Baie d'Hakahau
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 5000
     width: 3245
     height: 2537
@@ -9509,6 +10186,7 @@ gt5k:
   7353/7353_9_gtw:
     title: 7353-J - Ua-Huka - Baie de Vaipaee (Baie Invisible)
     edition: Publication 1995
+    lastUpdate: 11
     scaleden: 10000
     width: 1635
     height: 2927
@@ -9523,6 +10201,7 @@ gt5k:
   7354/7354_10_gtw:
     title: 7354-J - Tahuata - Baie Motopu
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2254
     height: 2307
@@ -9537,6 +10216,7 @@ gt5k:
   7354/7354_11_gtw:
     title: 7354-K - Tahuata - Baie Vaitahu
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2059
     height: 1704
@@ -9551,6 +10231,7 @@ gt5k:
   7354/7354_12_gtw:
     title: 7354-L - Tahuata - Baie Hanatetena
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2254
     height: 2094
@@ -9565,6 +10246,7 @@ gt5k:
   7354/7354_13_gtw:
     title: 7354-M - Tahuata - Baie Hapatoni
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2059
     height: 2484
@@ -9579,6 +10261,7 @@ gt5k:
   7354/7354_14_gtw:
     title: 7354-N - Tahuata - Baie Hanateio
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2254
     height: 2094
@@ -9593,6 +10276,7 @@ gt5k:
   7354/7354_1_gtw:
     title: 7354-A - Hiva-Oa - Baie Hanamenu
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2236
     height: 3281
@@ -9607,6 +10291,7 @@ gt5k:
   7354/7354_2_gtw:
     title: 7354-B - Hiva-Oa - Baie Hanaiapa
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2077
     height: 3281
@@ -9621,6 +10306,7 @@ gt5k:
   7354/7354_3_gtw:
     title: 7354-C - Hiva-Oa - Baie Puamau
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 3015
     height: 3281
@@ -9635,6 +10321,7 @@ gt5k:
   7354/7354_5_gtw:
     title: 7354-E - Hiva-Oa - Baie Hanatekuua
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2154
     height: 1386
@@ -9649,6 +10336,7 @@ gt5k:
   7354/7354_6_gtw:
     title: 7354-F - Hiva-Oa - Baie Tahauku
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2154
     height: 1993
@@ -9663,6 +10351,7 @@ gt5k:
   7354/7354_7_gtw:
     title: 7354-G - Fatu-Hiva - Baie Hanavavae
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2555
     height: 1994
@@ -9677,6 +10366,7 @@ gt5k:
   7354/7354_8_gtw:
     title: 7354-H - Fatu-Hiva - Baie d'Omoa
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2555
     height: 1385
@@ -9691,6 +10381,7 @@ gt5k:
   7354/7354_9_gtw:
     title: 7354-I - Tahuata - Baies du Nord-Ouest
     edition: Edition n° 2 - 2017
+    lastUpdate: 2
     scaleden: 10000
     width: 2059
     height: 2307
@@ -9705,6 +10396,7 @@ gt5k:
   7355/7355_2_gtw:
     title: 7355-A - Mohotani - Baie de Puioono
     edition: Edition n° 2 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 1415
     height: 1060
@@ -9719,6 +10411,7 @@ gt5k:
   7356/7356_1_gtw:
     title: 7356-A - Eiao - Baie de Vaituha
     edition: Publication 2000
+    lastUpdate: 1
     scaleden: 10000
     width: 2984
     height: 2123
@@ -9733,6 +10426,7 @@ gt5k:
   7359/7359_1_gtw:
     title: 7359-A - Pointe Molloy
     edition: Edition n° 2 - 2017
+    lastUpdate: 0
     scaleden: 10000
     width: 3002
     height: 3576
@@ -9747,6 +10441,7 @@ gt5k:
   7359/7359_2_gtw:
     title: 7359-B - Port-aux-Français
     edition: Edition n° 2 - 2017
+    lastUpdate: 0
     scaleden: 10000
     width: 3450
     height: 2876
@@ -9761,6 +10456,7 @@ gt5k:
   7372/7372_3_gtw:
     title: 7372-B - Mouillage de Rotoava
     edition: Edition n° 3 - 2004
+    lastUpdate: 13
     scaleden: 10000
     width: 2876
     height: 2123
@@ -9775,6 +10471,7 @@ gt5k:
   7372/7372_4_gtw:
     title: 7372-C - Passe Tumakohua
     edition: Edition n° 3 - 2004
+    lastUpdate: 13
     scaleden: 10000
     width: 2876
     height: 3649
@@ -9789,6 +10486,7 @@ gt5k:
   7373/7373_2_gtw:
     title: 7373-B - Passe d'Avatoru
     edition: Edition n° 2 - 2002
+    lastUpdate: 28
     scaleden: 10000
     width: 2493
     height: 3648
@@ -9803,6 +10501,7 @@ gt5k:
   7373/7373_3_gtw:
     title: 7373-C - Passe de Tiputa
     edition: Edition n° 2 - 2002
+    lastUpdate: 28
     scaleden: 10000
     width: 2281
     height: 3648
@@ -9817,6 +10516,7 @@ gt5k:
   7377/7377_pal300:
     title: 7377 - Ports du Larivot et de Cayenne
     edition: Edition n° 4 - 2018
+    lastUpdate: 0
     scaleden: 10000
     width: 9922
     height: 13819
@@ -9831,6 +10531,7 @@ gt5k:
   7390/7390_pal300:
     title: 7390 - Port de Marseille
     edition: Edition n° 6 - 2018
+    lastUpdate: 6
     scaleden: 10000
     width: 9922
     height: 13819
@@ -9845,6 +10546,7 @@ gt5k:
   7392/7392_1_gtw:
     title: 7392-A - Port de Carry-le-Rouet
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 5000
     width: 1760
     height: 2350
@@ -9859,6 +10561,7 @@ gt5k:
   7392/7392_2_gtw:
     title: 7392-B - Port de Sausset-les-Pins
     edition: Edition n° 4 - 2016
+    lastUpdate: 3
     scaleden: 5000
     width: 1759
     height: 1694
@@ -9873,6 +10576,7 @@ gt5k:
   7393/7393_1_gtw:
     title: 7393-A - Port de Cassis
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 5000
     width: 1986
     height: 2306
@@ -9887,6 +10591,7 @@ gt5k:
   7397/7397_pal300:
     title: 7397 - Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic
     edition: Edition n° 5 - 2017
+    lastUpdate: 3
     scaleden: 10000
     width: 13819
     height: 9922
@@ -9901,6 +10606,7 @@ gt5k:
   7398/7398_pal300:
     title: 7398 - Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret
     edition: Edition n° 5 - 2017
+    lastUpdate: 5
     scaleden: 10000
     width: 9922
     height: 13819
@@ -9915,6 +10621,7 @@ gt5k:
   7399/7399_pal300:
     title: 7399 - Port de Brest
     edition: Edition n° 3 - 2016
+    lastUpdate: 4
     scaleden: 7500
     width: 13819
     height: 9922
@@ -9929,6 +10636,7 @@ gt5k:
   7401/7401_1_gtw:
     title: 7401-A - Port de Camaret-sur-Mer
     edition: Edition n° 4 - 2018
+    lastUpdate: 5
     scaleden: 10000
     width: 2574
     height: 2243
@@ -9943,6 +10651,7 @@ gt5k:
   7402/7402_1_gtw:
     title: 7402-A - Port de Saint-Gilles-Croix-de-Vie
     edition: Edition n° 2 - 2002
+    lastUpdate: 21
     scaleden: 10000
     width: 3476
     height: 2461
@@ -9957,6 +10666,7 @@ gt5k:
   7403/7403_1_gtw:
     title: 7403-C - Port de la Tranche-sur-Mer
     edition: Edition n° 2 - 2002
+    lastUpdate: 29
     scaleden: 10000
     width: 2285
     height: 2351
@@ -9971,6 +10681,7 @@ gt5k:
   7403/7403_2_gtw:
     title: 7403-A - Port de Bourgenay
     edition: Edition n° 2 - 2002
+    lastUpdate: 29
     scaleden: 10000
     width: 2130
     height: 2351
@@ -9985,6 +10696,7 @@ gt5k:
   7403/7403_3_gtw:
     title: 7403-B - Port de Jard-sur-Mer
     edition: Edition n° 2 - 2002
+    lastUpdate: 29
     scaleden: 10000
     width: 2131
     height: 2329
@@ -9999,6 +10711,7 @@ gt5k:
   7404/7404_1_gtw:
     title: 7404-A - Port de Châtelaillon
     edition: Edition n° 3 - 2014
+    lastUpdate: 10
     scaleden: 10000
     width: 2448
     height: 2023
@@ -10013,6 +10726,7 @@ gt5k:
   7405/7405_1_gtw:
     title: 7405-A - Port de Saint-Denis-d'Oléron
     edition: Edition n° 2 - 2017
+    lastUpdate: 10
     scaleden: 10000
     width: 1687
     height: 1257
@@ -10027,6 +10741,7 @@ gt5k:
   7405/7405_2_gtw:
     title: 7405-C - Port de La Cotinière
     edition: Edition n° 2 - 2017
+    lastUpdate: 10
     scaleden: 10000
     width: 1080
     height: 1913
@@ -10041,6 +10756,7 @@ gt5k:
   7405/7405_3_gtw:
     title: 7405-B - Port du Douhet
     edition: Edition n° 2 - 2017
+    lastUpdate: 10
     scaleden: 10000
     width: 1080
     height: 1367
@@ -10055,6 +10771,7 @@ gt5k:
   7410/7410_1_gtw:
     title: 7410-A - Port-Joinville
     edition: Edition n° 2 - 2002
+    lastUpdate: 13
     scaleden: 10000
     width: 2270
     height: 2133
@@ -10069,6 +10786,7 @@ gt5k:
   7411/7411_pal300:
     title: 7411 - Port des Sables-d'Olonne
     edition: Edition n° 2 - 2003
+    lastUpdate: 9
     scaleden: 10000
     width: 13819
     height: 9922
@@ -10083,6 +10801,7 @@ gt5k:
   7414/7414_1_gtw:
     title: 7414-A - Port de Boyardville
     edition: Edition n° 3 - 2014
+    lastUpdate: 10
     scaleden: 10000
     width: 2192
     height: 2286
@@ -10097,6 +10816,7 @@ gt5k:
   7420/7420_1_gtw:
     title: 7420-A - Port de Grandcamp-Maisy
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 3561
     height: 2856
@@ -10111,6 +10831,7 @@ gt5k:
   7420/7420_2_gtw:
     title: 7420-B - Port de Port-en-Bessin
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 3357
     height: 2622
@@ -10125,6 +10846,7 @@ gt5k:
   7420/7420_3_gtw:
     title: 7420-C - Port de Courseulles-sur-Mer
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 2809
     height: 3498
@@ -10139,6 +10861,7 @@ gt5k:
   7420/7420_6_gtw:
     title: 7420-F - Port de Dives-sur-Mer - Port Guillaume
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 2239
     height: 3272
@@ -10153,6 +10876,7 @@ gt5k:
   7420/7420_7_gtw:
     title: 7420-H - Port de Honfleur
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 3561
     height: 2790
@@ -10167,6 +10891,7 @@ gt5k:
   7420/7420_8_gtw:
     title: 7420-G - Port de Deauville - Trouville
     edition: Edition n° 4 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 3357
     height: 3250
@@ -10181,6 +10906,7 @@ gt5k:
   7423/7423_1_gtw:
     title: 7423-A - Port de Sein
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 10000
     width: 1704
     height: 2352
@@ -10195,6 +10921,7 @@ gt5k:
   7425/7425_2_gtw:
     title: 7425-A - Port de Royan
     edition: Edition n° 6 - 2017
+    lastUpdate: 3
     scaleden: 10000
     width: 2159
     height: 2570
@@ -10209,6 +10936,7 @@ gt5k:
   7426/7426_1_gtw:
     title: 7426-A - Port de Meschers
     edition: Edition n° 5 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 3099
     height: 3029
@@ -10223,6 +10951,7 @@ gt5k:
   7430/7430_1_gtw:
     title: 7430-A - Cours de l'Adour
     edition: Publication 2007
+    lastUpdate: 10
     scaleden: 10000
     width: 2868
     height: 2787
@@ -10237,6 +10966,7 @@ gt5k:
   7430/7430_pal300:
     title: 7430 - Abords et Port de Bayonne - Cours de l'Adour
     edition: Publication 2007
+    lastUpdate: 10
     scaleden: 10000
     width: 13819
     height: 9922
@@ -10251,6 +10981,7 @@ gt5k:
   7431/7431_2_gtw:
     title: 7431-B - Baie de Saint-Jean-de-Luz
     edition: Publication 2007
+    lastUpdate: 8
     scaleden: 7500
     width: 6541
     height: 9021
@@ -10265,6 +10996,7 @@ gt5k:
   7434/7434_2_gtw:
     title: 7434-C - Ports de Port-Vendres et Collioure
     edition: Edition n° 2 - 2015
+    lastUpdate: 6
     scaleden: 10000
     width: 9145
     height: 4208
@@ -10279,6 +11011,7 @@ gt5k:
   7434/7434_3_gtw:
     title: 7434-B - Port de Port-la-Nouvelle
     edition: Edition n° 2 - 2015
+    lastUpdate: 6
     scaleden: 10000
     width: 7095
     height: 2875
@@ -10293,6 +11026,7 @@ gt5k:
   7436/7436_1_gtw:
     title: 7436-A - Port d'Ajaccio
     edition: Publication 2017
+    lastUpdate: 7
     scaleden: 7500
     width: 6232
     height: 4830
@@ -10307,6 +11041,7 @@ gt5k:
   7436/7436_2_gtw:
     title: 7436-B - Port de Propriano
     edition: Publication 2017
+    lastUpdate: 7
     scaleden: 10000
     width: 6233
     height: 4175
@@ -10321,6 +11056,7 @@ gt5k:
   7440/7440_1_gtw:
     title: 7440-A - Port de Capbreton
     edition: Publication 2007
+    lastUpdate: 19
     scaleden: 10000
     width: 3577
     height: 3006
@@ -10335,6 +11071,7 @@ gt5k:
   7441/7441_pal300:
     title: 7441 - Abords et Ports de Monaco
     edition: Edition n° 2 - 2018
+    lastUpdate: 1
     scaleden: 7500
     width: 13819
     height: 9922
@@ -10349,6 +11086,7 @@ gt5k:
   7453/7453_1_gtw:
     title: 7453-A - Passe Tapuhiria
     edition: Publication 1996
+    lastUpdate: 10
     scaleden: 10000
     width: 3505
     height: 2821
@@ -10363,6 +11101,7 @@ gt5k:
   7453/7453_2_gtw:
     title: 7453-B - Passe Arikitamiro
     edition: Publication 1996
+    lastUpdate: 10
     scaleden: 10000
     width: 3502
     height: 3322
@@ -10377,6 +11116,7 @@ gt5k:
   7454/7454_1_gtw:
     title: 7454-A - Passe Teporioha
     edition: Publication 1998
+    lastUpdate: 8
     scaleden: 7500
     width: 2319
     height: 2399
@@ -10391,6 +11131,7 @@ gt5k:
   7456/7456_2_gtw:
     title: 7456-A - Anse Amyot
     edition: Publication 2002
+    lastUpdate: 6
     scaleden: 5000
     width: 2567
     height: 2080
@@ -10405,6 +11146,7 @@ gt5k:
   7458/7458_3_gtw:
     title: 7458-C - Passe Tamaketa
     edition: Edition n° 2 - 2011
+    lastUpdate: 2
     scaleden: 10000
     width: 2525
     height: 2525
@@ -10419,6 +11161,7 @@ gt5k:
   7458/7458_4_gtw:
     title: 7458-B - Passe Fainukea
     edition: Edition n° 2 - 2011
+    lastUpdate: 2
     scaleden: 5000
     width: 4569
     height: 2525
@@ -10433,6 +11176,7 @@ gt5k:
   7459/7459_3_gtw:
     title: 7459-B - Passe Tuheiava
     edition: Publication 2019
+    lastUpdate: 1
     scaleden: 5000
     width: 4370
     height: 3261
@@ -10447,6 +11191,7 @@ gt5k:
   7459/7459_4_gtw:
     title: 7459-C - Mouillage de Tuherahera
     edition: Publication 2019
+    lastUpdate: 1
     scaleden: 10000
     width: 4370
     height: 3236
@@ -10461,6 +11206,7 @@ gt5k:
   7460/7460_1_gtw:
     title: 7460 - 1
     edition: Edition n° 4 - 2015
+    lastUpdate: 12
     scaleden: 10000
     width: 6328
     height: 9032
@@ -10475,6 +11221,7 @@ gt5k:
   7460/7460_2_gtw:
     title: 7460-2 - Port de Papeete
     edition: Edition n° 4 - 2015
+    lastUpdate: 12
     scaleden: 10000
     width: 10195
     height: 9032
@@ -10489,6 +11236,7 @@ gt5k:
   7466/7466_1_gtw:
     title: 7466-A - Passe Teavanui
     edition: Edition n° 2 - 2019
+    lastUpdate: 0
     scaleden: 6500
     width: 1875
     height: 2273
@@ -10503,6 +11251,7 @@ gt5k:
   7472/7472_5_gtw:
     title: 7472-C - Saint-Martin (Sint Maarten) - (Étang aux huitres) - Oyster pond
     edition: Edition n° 3 - 2017
+    lastUpdate: 1
     scaleden: 10000
     width: 2122
     height: 1361
@@ -10517,6 +11266,7 @@ gt5k:
   7480/7480_pal300:
     title: 7480 - Accès au fleuve Kourou - Port de Pariacabo
     edition: Edition n° 3 - 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 9922
     height: 6910
@@ -10531,6 +11281,7 @@ gt5k:
   7482/7482_1_gtw:
     title: 7482-A - Anse Deshaies
     edition: Publication 2009
+    lastUpdate: 25
     scaleden: 10000
     width: 2267
     height: 2015
@@ -10545,6 +11296,7 @@ gt5k:
   7482/7482_3_gtw:
     title: 7482-C - Anse à la Barque
     edition: Publication 2009
+    lastUpdate: 25
     scaleden: 10000
     width: 1953
     height: 1470
@@ -10559,6 +11311,7 @@ gt5k:
   7492/7492_1_gtw:
     title: 7492-A - Baie de Longoni
     edition: Edition n° 4 - 2014
+    lastUpdate: 6
     scaleden: 10000
     width: 4182
     height: 3648
@@ -10573,6 +11326,7 @@ gt5k:
   7593/7593_1_gtw:
     title: 7593-A - Archipel de Pointe Géologie
     edition: Publication 2003
+    lastUpdate: 2
     scaleden: 7500
     width: 3471
     height: 3354
@@ -10587,6 +11341,7 @@ gt5k:
   7594/7594_1_gtw:
     title: 7594-A - Archipel Max Douguet - Port-Martin
     edition: Publication 2003
+    lastUpdate: 0
     scaleden: 10000
     width: 2500
     height: 3302
@@ -10601,6 +11356,7 @@ gt5k:
   7606/7606_1_gtw:
     title: 7606-A - Port de Saint-Guénolé
     edition: Publication 2019
+    lastUpdate: 0
     scaleden: 7500
     width: 6033
     height: 4510
@@ -10615,6 +11371,7 @@ gt5k:
   7606/7606_2_gtw:
     title: 7606-B - Port du Guilvinec-Léchiagat
     edition: Publication 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 7122
     height: 6835
@@ -10629,6 +11386,7 @@ gt5k:
   7606/7606_3_gtw:
     title: 7606-C - Port de Lesconil
     edition: Publication 2019
+    lastUpdate: 0
     scaleden: 10000
     width: 6033
     height: 4511
@@ -10643,6 +11401,7 @@ gt5k:
   7622/7622_A_gtw:
     title: 7622-A - Port Castries
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 5000
     width: 7820
     height: 6682
@@ -10657,6 +11416,7 @@ gt5k:
   7622/7622_C_gtw:
     title: 7622-C - Grand Cul de Sac Bay
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 10000
     width: 3788
     height: 2741
@@ -10671,6 +11431,7 @@ gt5k:
   7622/7622_D_gtw:
     title: 7622-D - Marigot Harbour
     edition: Edition n° 3 - 2016
+    lastUpdate: 0
     scaleden: 5000
     width: 3789
     height: 2253
@@ -10685,6 +11446,7 @@ gt5k:
   7639/7639_2_gtw:
     title: 7639-B - Port de Saint-Pierre
     edition: Publication 2018
+    lastUpdate: 1
     scaleden: 7500
     width: 6462
     height: 9014
@@ -10699,6 +11461,7 @@ gt5k:
   7640/7640_1_gtw:
     title: 7640-B - Port de Miquelon
     edition: Publication 2018
+    lastUpdate: 1
     scaleden: 10000
     width: 3979
     height: 3578
@@ -10713,6 +11476,7 @@ gt5k:
   7643/7643_pal300:
     title: 7643 - Port de Nouméa
     edition: Edition n° 3 - 2016
+    lastUpdate: 1
     scaleden: 10000
     width: 9922
     height: 13819
@@ -10727,6 +11491,7 @@ gt5k:
   7645/7645_1_gtw:
     title: 7645-A - Port de Prony
     edition: Edition n° 5 - 2016
+    lastUpdate: 1
     scaleden: 10000
     width: 2900
     height: 3389
@@ -10741,6 +11506,7 @@ gt5k:
   7665/7665_1_gtw:
     title: 7665-A - Mouillage de Cadaqués
     edition: Publication 2009
+    lastUpdate: 12
     scaleden: 10000
     width: 1170
     height: 1083
@@ -10757,6 +11523,7 @@ gtaem:
   7330/7330_2016:
     title: 7330 - De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique
     edition: inconnue
+    lastUpdate: inconnue
     scaleden: 1070000
     width: 12994
     height: 18428
@@ -10771,6 +11538,7 @@ gtaem:
   7344/7344_2016:
     title: 7344 - De Brest à la frontière belge - Action de l'Etat en Mer - Zone Manche et Mer du Nord
     edition: inconnue
+    lastUpdate: inconnue
     scaleden: 655000
     width: 18428
     height: 13228
@@ -10785,6 +11553,7 @@ gtaem:
   7360/7360_2016:
     title: 7360 - De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée
     edition: inconnue
+    lastUpdate: inconnue
     scaleden: 700000
     width: 18428
     height: 13229
@@ -10799,6 +11568,7 @@ gtaem:
   8502/8502_2010:
     title: 8502 - Action de l'Etat en Mer en ZMSOI
     edition: inconnue
+    lastUpdate: inconnue
     scaleden: 7904971
     width: 13383
     height: 18900
@@ -10815,6 +11585,7 @@ gtMancheGrid:
   8101/8101:
     title: 8101 - MANCHEGRID - Carte générale
     edition: inconnue
+    lastUpdate: inconnue
     scaleden: 880000
     width: 11813
     height: 8369

@@ -231,6 +231,7 @@ foreach ($shomgt as $key => $value) {
       echo  "  $gtname:\n",
             "    title: $gt[title]\n",
             (isset($gt['edition']) ? "    edition: $gt[edition]\n" : ''),
+            (isset($gt['lastUpdate']) ? "    lastUpdate: $gt[lastUpdate]\n" : ''),
             (isset($gt['scaleden']) ? sprintf("    scaleden: %d\n",str_replace('.','',$gt['scaleden'])) : ''),
             sprintf("    width: %d\n",$gt['width']),
             sprintf("    height: %d\n",$gt['height']),
