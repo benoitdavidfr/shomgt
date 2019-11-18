@@ -38,6 +38,13 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Nouveautés</h3>
 <ul>
+  <li>16/11/2019 : <b>Attention</b>, les mises à jour effectuées jusqu'à ce jour ont été fondées sur l'édition de la carte
+    et non sur les corrections effectuées sur chaque carte ;
+    ainsi ces corrections ne sont pas prises en compte sur shomgt.
+    A la suite d'une alerte d'une DDTM,
+    une évolution de cette démarche est en cours pour actualiser les cartes comportant des corrections.</li>
+  <li>14/11/2019 : mise en oeuvre par la DIRM NAMO avec succès du processus d'installation
+    et prise en compte de son retour d'expérience</li>
   <li>11/11/2019 : publication d'une première version d'une
     <a href='https://github.com/benoitdavidfr/shomgt/blob/master/docs/install.md' target='_blank'>documentation
       d'installation d'un serveur shomgt</a></li>

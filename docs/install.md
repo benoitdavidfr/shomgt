@@ -21,6 +21,7 @@ Un serveur Linux avec :
   - le logiciel Docker installé
   - un accès ssh au compte root du serveur
   - au moins 20 Go de disque (cet espace dépend du nombre de cartes)
+  - savoir si le serveur est installé derrière un proxy et dans ce cas connaitre son URL
   
 Shomgt s'éxécutant dans un conteneur Docker, il est théoriquement possible d'effectuer l'installation
 sur toute machine supportant Docker mais cela n'a pas été testé.
@@ -55,16 +56,17 @@ Ils rappellent l'environnement dans lequel la commande doit être éxécutée:
   - `docker#` indique que l'on doit être dans le conteneur Docker comme utilisateur root
   - `docker$` indique que l'on doit être dans le conteneur Docker comme utilisateur www-data
 
-Lors de l'installation d'un serveur *shomgt* derrière un proxy, celui-ci doit être configuré dans 3 endroits:
+Lors de l'installation d'un serveur *shomgt* derrière un proxy, celui-ci doit être configuré dans 4 endroits:
 
   - lors de l'installation du serveur Ubuntu,
   - lors de l'utilisation de git,
-  - lors de la création du conteneur Docker.
+  - lors de la création du conteneur Docker,
+  - lors de l'actualisation du fichier mapcat.json par exemple avec wget.
 
 
 ## 4) Mise en oeuvre pas à pas
 
-a) Se loguer sur la machine Linux sous root et créer l'utilisateur user en répondant aux questions posées,
+a) Se loguer sur la machine Linux sous `root` et créer l'utilisateur `user` en répondant aux questions posées,
 puis autoriser cet utilisateur à exécuter `sudo`,
 enfin se déloguer:
 
@@ -203,7 +205,8 @@ Pour ajouter incrémentalement des cartes Shom :
 
 ## 8) Détection de cartes à actualiser
 
-**Attention, cette détection ne fonctionne pas si un proxy est nécessaire pour accéder à internet**.
+**Attention, cette procédure ne fonctionne pas si un proxy est nécessaire pour accéder à internet**,
+dans ce cas appliquer la procédure décrite à la section 8bis.
 
 Le module de gestion du catalogue permet d'identifier les cartes à actualiser.
 Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
@@ -223,6 +226,43 @@ Une fois ce moissonnage effectué correctement, il convient de créer le fichier
     docker$ php build.php store
  
 Ce catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
+et notamment les cartes à actualiser.  
+Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
+puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus section 7.
+
+## 8bis) Détection de cartes à actualiser derrière un proxy
+Si un proxy est nécessaire pour accéder à internet alors la procédure de la section 8 ne fonctionne pas et
+il est recommandé d'appliquer la procédure décrite dans cette section.
+Le principe est de télécharger
+le fichier [http://geoapi.fr/shomgt/cat/mapcat.json](http://geoapi.fr/shomgt/cat/mapcat.json)
+et de le copier dans le répertoire `~/html/shomgt/cat/` puis de le prendre en compte dans *shomgt*.
+
+Ci-dessous la procédure pas à pas :
+
+  - commencer par réaffecter les droits à `user` en tapant sous Linux sous `user` la commande :
+  
+        $ sudo chown -R user:user /home/user
+  
+  - aller chercher le fichier `http://geoapi.fr/shomgt/cat/mapcat.json` par exemple avec wget
+    en paramétrant correctement le proxy
+  
+        $ cd ~/html/shomgt/cat
+        $ wget http://geoapi.fr/shomgt/cat/mapcat.json -e use_proxy=yes -e http_proxy=http://monproxy.mondomaine:8080
+
+  - puis aller sous Docker chez `root` pour réaffecter les droits à `www-data`
+
+        $ sudo docker exec -it --user=root php72sgt /bin/bash
+        docker# chown -R www-data:www-data /var/www
+        docker# exit
+
+  - puis aller sous Docker chez `www-data` et aller dans le module `cat`
+    pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Github
+
+        $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+        docker$ cd ~/html/shomgt/cat
+        docker$ php build.php storeFromJSON
+    
+Le catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
 et notamment les cartes à actualiser.  
 Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
 puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus section 7.
