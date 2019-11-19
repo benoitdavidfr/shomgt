@@ -51,6 +51,14 @@ doc: |
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  16-19/11/2019:
+    - modification de la méthode d'identification des cartes à actualiser pour prendre en compte les corrections
+    - l'ancienne méthode s'appuyait sur l'édition de la carte, la nouvelle prend aussi en compte les corrections
+    - ajout
+      - au catalogue des cartes du numéro de la dernière correction issu du GAN et
+      - dans shomgt.yaml de la dernière correction issue des métadonnées ISO
+    - l'identification des cartes à actualiser confronte ces 2 valeurs
+    - la méthode d'extraction de la dernière correction a été modifiée le 19/11/2019 car elle n'était pas correcte
   7/11/2019:
     - suppression de la carte 7656
   6/11/2019:

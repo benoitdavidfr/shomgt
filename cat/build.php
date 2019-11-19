@@ -5,6 +5,8 @@ title: build.php - cmdes produisant mapcat.pser à partir du WFS du Shom et des 
 doc: |
   Il reste à gérer l'invalidation d'une carte
 journal: |
+  19/11/2019:
+    correction de l'URL générique des GAN suite à erreur rencontée ; il ne s'agit plus a priori de l'URL du QR Code
   8-9/11/2019:
     possibilité de construire un pser à partir du GeoJSON
   29/10/2019:
@@ -62,11 +64,16 @@ else { // en non CLI
 // lecture de la fiche GAN pour un id de carte (de la forme "FR{num}") et enregistrement dans le répertoire adhoc
 function harvestGan(string $id) {
   echo "id:$id\n";
-  $url = "http://www.shom.fr/qr/gan/$id";
-  if (($html = file_get_contents($url)) === FALSE)
-    die("Erreur de lecture de $url");
-  file_put_contents("gan/$id.html", $html);
-  echo "gan/$id.html téléchargé<br>\n";
+  //$url = "http://www.shom.fr/qr/gan/$id";
+  $url = "https://gan.shom.fr/qr/gan/$id"; // correction de l'URL le 19/11/2019 suite à erreur rencontrée. Il ne s'agit plus a priori de l'URL du QR Code
+  if (($html = @file_get_contents($url)) === FALSE) {
+    //die("Erreur de lecture de $url");
+    echo "<b>Erreur de lecture de $url</b><br>\n";
+  }
+  else {
+    file_put_contents("gan/$id.html", $html);
+    echo "gan/$id.html téléchargé<br>\n";
+  }
 }
 
 // moissonnage des GANs des cartes exposées par le flux WFS

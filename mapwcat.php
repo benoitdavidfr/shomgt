@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  19/11/2019:
+    correction de URL générique du GAN suite à erreur constatée, a priori cette nouvelle URL n'est plus celle du QR Code !
   15/11/2019
     passage igngp.geoapi.fr en https pour résoudre bug
   9/11/2019
@@ -84,7 +86,7 @@ var onEachFeature = function (feature, layer) {
     +"image GéoTIFF rognée</a></li>";
   popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".json' target='_blank'>"
     +"propriétés du géotiff en JSON</a></li>";
-  popupContent += "<li><a href='https://www.shom.fr/qr/gan/FR"+num+"' target='GAN'>"
+  popupContent += "<li><a href='https://gan.shom.fr/qr/gan/FR"+num+"' target='GAN'>"
     +"Groupe d’Avis aux Navigateurs (GAN) de la carte.</a></li>";  
   popupContent += '</ul>';
   layer.bindPopup(popupContent);

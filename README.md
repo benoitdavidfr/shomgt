@@ -1,6 +1,6 @@
 ## ShomGT - services de consultation des cartes raster GéoTIFF du Shom
 
-L'objectif de ce projet est d'exposer sous la forme de web-services les
+L'objectif de ce projet est d'exposer sous la forme de web-services le contenu des
 [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
 couvrant la métropole et l'outre-mer français pour permettre au [MTES](http://www.ecologique-solidaire.gouv.fr)
 et au [MCTRCT](http://www.cohesion-territoires.gouv.fr/)
@@ -59,7 +59,7 @@ Le code utilise :
   - [le composant Yaml de Symfony](https://symfony.com/doc/current/components/yaml.html) qui peut être installé par
     `composer require symfony/yaml`
   - les logiciels [gdal_translate et gdalinfo](https://www.gdal.org/) utilisés pour convertir les GéoTiff en PNG
-  - le logiciel 7z pour dézipper les archives
+  - le logiciel 7z utilisé pour dézipper les archives
   
 Des indications plus précises sur les versions des logiciels sont disponibles
 dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomgt/blob/master/docker/Dockerfile).

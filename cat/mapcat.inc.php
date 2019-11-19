@@ -6,6 +6,11 @@ classes:
 doc: |
   Le catalogue est issu du service WFS du Shom et des GAN
 journal: |
+  19/11/2019:
+    - mauvaise analyse du GAN https://gan.shom.fr/qr/gan/FR6767
+      - 17 corrections détectées pour 15 notées dans le GAN et sur la carte
+    - idem 6797
+    - modification de la méthode de détection du nombre de corrections
   15/11/2019:
     ajout du champ lastUpdate correspondant au nbre de corrections indiquées dans le GAN
   8/11/2019:
@@ -147,8 +152,8 @@ class MapCat {
   */
   
   // analyse du html pour créer l'avis Gan d'une carte
-  function analyzeFromHtml(string $num, string $html) {
-    $html0 = $html;
+  function analyzeFromHtml(string $num, string $html0) {
+    $html = $html0;
     $this->num = $num;
     if (preg_match('!<p class="erreur">([^<]*)</p>!', $html, $matches)) {
       if (preg_match('!^La carte FR[^ ]* n&rsquo;est pas en vigueur\.$!', $matches[1])) {
@@ -257,9 +262,15 @@ class MapCat {
     $html = $html0;
     //echo $html;
     $lastUpdate = 0;
-    $pattern = '!<a href="/ganl/htdocs/[^"]*">!';
+    /*$pattern = '!<a href="/ganl/htdocs/[^"]*">!';
     while (preg_match($pattern, $html)) {
       $lastUpdate++;
+      $html = preg_replace($pattern, '', $html, 1);
+    }*/
+    // modification de la méthode de détection du nombre de corrections - 19/11/2019
+    $pattern = '!</B> \((\d+)\)!';
+    while (preg_match($pattern, $html, $matches)) {
+      $lastUpdate = $matches[1];
       $html = preg_replace($pattern, '', $html, 1);
     }
     //echo "lastUpdate=$lastUpdate<br>\n";
@@ -579,7 +590,7 @@ class MapCat {
         'http://services.data.shom.fr/INSPIRE/wfs?SERVICE=WFS&TYPENAMES=CARTES_MARINES_GRILLE:grille_geotiff_30_300', // cartes aux échelles entre 1/30K et 1/300K
         'http://services.data.shom.fr/INSPIRE/wfs?SERVICE=WFS&TYPENAMES=CARTES_MARINES_GRILLE:grille_geotiff_300_800', // cartes aux échelles entre 1/300K et 1/800K
         'http://services.data.shom.fr/INSPIRE/wfs?SERVICE=WFSTYPENAMES=CARTES_MARINES_GRILLE:grille_geotiff_800', // carte échelle < 1/800K
-        'http://www.shom.fr/qr/gan/{frnum}'
+        'https://gan.shom.fr/qr/gan/{frnum}'
       ],
       //'$schema'=> 'mapinfo.schema.yaml',
       '$schema'=> '/var/www/html/geoapi/shomgt/cat/mapcat',
