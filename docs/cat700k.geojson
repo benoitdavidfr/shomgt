@@ -5,6 +5,7 @@
         "num": "6113",
         "title": "Du Cap Blanc au Cap Vert",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "881700",
         "bboxDM": {
             "SW": "14°30,00'N - 020°20,00'W",
@@ -45,6 +46,7 @@
         "num": "6771",
         "title": "De l'Ecosse (Scotland) à l'Islande (Island)",
         "issued": "Édition n°&nbsp;2 - 2007",
+        "lastUpdate": "16",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "55°00,00'N - 016°40,00'W",
@@ -85,6 +87,7 @@
         "num": "6987",
         "title": "Partie Ouest du Golfe d'Aden - Bab el Mandeb",
         "issued": "Édition n°&nbsp;6 - 2017",
+        "lastUpdate": "3",
         "scaleDenominator": "724000",
         "bboxDM": {
             "SW": "10°20,00'N - 041°48,00'E",
@@ -128,6 +131,7 @@
         "num": "7014",
         "title": "Des îles Baléares à la Corse et à la Sardaigne",
         "issued": "Édition n°&nbsp;3 - 2013",
+        "lastUpdate": "45",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "35°30,00'N - 002°00,00'E",
@@ -168,6 +172,7 @@
         "num": "7015",
         "title": "De Gibraltar aux Îles Baléares",
         "issued": "Édition n°&nbsp;2 - 1998",
+        "lastUpdate": "104",
         "scaleDenominator": "1100000",
         "bboxDM": {
             "SW": "33°40,00'N - 005°22,00'W",
@@ -209,6 +214,7 @@
         "num": "7185",
         "title": "De Cabo Roxo à Monrovia",
         "issued": "Publication 1992",
+        "lastUpdate": "38",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "06°08,00'N - 020°35,00'W",
@@ -250,6 +256,7 @@
         "num": "7186",
         "title": "De Monrovia à Sassandra",
         "issued": "Publication 1991",
+        "lastUpdate": "17",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "00°10,00'N - 015°40,00'W",
@@ -291,6 +298,7 @@
         "num": "7187",
         "title": "De Sassandra à Lagos",
         "issued": "Édition n°&nbsp;2 - 2009",
+        "lastUpdate": "36",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "00°10,00'N - 006°10,00'W",
@@ -331,6 +339,7 @@
         "num": "7188",
         "title": "De Lagos à Gamba",
         "issued": "Publication 1990",
+        "lastUpdate": "170",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "03°00,00'S - 003°20,00'E",
@@ -372,6 +381,7 @@
         "num": "7211",
         "title": "Golfe de Gascogne - De Brest à Cabo Finisterre",
         "issued": "Édition n°&nbsp;6 - 2019",
+        "lastUpdate": "2",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "42°30,00'N - 013°26,50'W",
@@ -413,6 +423,7 @@
         "num": "7212",
         "title": "De Cabo Finisterre à Casablanca (Dâr el Beïda)",
         "issued": "Édition n°&nbsp;2 - 2007",
+        "lastUpdate": "52",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "33°30,00'N - 014°00,00'W",
@@ -454,6 +465,7 @@
         "num": "7268",
         "title": "Nouvelle-Calédonie",
         "issued": "Publication 1993",
+        "lastUpdate": "29",
         "scaleDenominator": "850000",
         "bboxDM": {
             "SW": "23°28,30'S - 160°07,90'E",
@@ -495,6 +507,7 @@
         "num": "7270",
         "title": "De Casablanca (Dâr el Beïda) au Cap Jubi - Archipel de Madère (Arquipelago da Madeira) et Iles Canaries (Islas Canarias) (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2006",
+        "lastUpdate": "45",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "27°30,00'N - 018°30,00'W",
@@ -536,6 +549,7 @@
         "num": "7283",
         "title": "Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna",
         "issued": "Publication 1992",
+        "lastUpdate": "20",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "16°30,00'S - 177°00,00'E",
@@ -577,6 +591,7 @@
         "num": "7292",
         "title": "De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "25",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "34°40,00'N - 008°00,00'E",
@@ -618,6 +633,7 @@
         "num": "7327",
         "title": "Archipel des Açores",
         "issued": "Publication 1996",
+        "lastUpdate": "38",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "35°00,00'N - 034°00,00'W",
@@ -660,6 +676,7 @@
         "num": "7330",
         "title": "De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique",
         "issued": "Édition n°&nbsp;6 - 2016",
+        "lastUpdate": 0,
         "scaleDenominator": "1070000",
         "bboxDM": {
             "SW": "41°28,00'N - 010°30,00'W",
@@ -700,6 +717,7 @@
         "num": "7331",
         "title": "Du Cap Bon (Ras at Tib) au Golfe de Venise",
         "issued": "Édition n°&nbsp;2 - 2014",
+        "lastUpdate": "24",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "36°15,00'N - 011°00,00'E",
@@ -741,6 +759,7 @@
         "num": "7473",
         "title": "De Florida à Cuba - Bahamas Islands",
         "issued": "Publication 1997",
+        "lastUpdate": "51",
         "scaleDenominator": "970000",
         "bboxDM": {
             "SW": "21°03,00'N - 083°00,00'W",
@@ -782,6 +801,7 @@
         "num": "7474",
         "title": "De Cuba à Puerto Rico",
         "issued": "Publication 1996",
+        "lastUpdate": "35",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "16°50,00'N - 075°40,00'W",
@@ -823,6 +843,7 @@
         "num": "7475",
         "title": "De Puerto Rico à Trinidad",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "68",
         "scaleDenominator": "1030000",
         "bboxDM": {
             "SW": "09°30,00'N - 066°30,00'W",
@@ -864,6 +885,7 @@
         "num": "7476",
         "title": "Mer des Caraïbes - Partie centrale",
         "issued": "Publication 1996",
+        "lastUpdate": "78",
         "scaleDenominator": "1030000",
         "bboxDM": {
             "SW": "10°25,00'N - 075°40,00'W",
@@ -905,6 +927,7 @@
         "num": "7486",
         "title": "Canal du Mozambique - Partie Nord",
         "issued": "Édition n°&nbsp;3 - 2013",
+        "lastUpdate": "6",
         "scaleDenominator": "1076000",
         "bboxDM": {
             "SW": "16°20,00'S - 040°12,00'E",
@@ -945,6 +968,7 @@
         "num": "7487",
         "title": "Approches Nord - Est de Madagascar",
         "issued": "Publication 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "1058000",
         "bboxDM": {
             "SW": "21°35,00'S - 048°35,00'E",
@@ -987,6 +1011,7 @@
         "num": "7488",
         "title": "De l'Île de La Réunion à l'Île Rodrigues et à l'Île Tromelin",
         "issued": "Publication 2013",
+        "lastUpdate": "3",
         "scaleDenominator": "1050000",
         "bboxDM": {
             "SW": "21°45,00'S - 054°07,00'E",
@@ -1027,6 +1052,7 @@
         "num": "7489",
         "title": "Approches Sud-Est de Madagascar",
         "issued": "Publication 2017",
+        "lastUpdate": "2",
         "scaleDenominator": "1008000",
         "bboxDM": {
             "SW": "27°22,00'S - 044°40,00'E",
@@ -1069,6 +1095,7 @@
         "num": "7625",
         "title": "De Trinidad à Cabo Orange",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "16",
         "scaleDenominator": "1010000",
         "bboxDM": {
             "SW": "03°55,00'N - 061°05,00'W",
@@ -1109,6 +1136,7 @@
         "num": "7791",
         "title": "De Gamba à Luanda",
         "issued": "Publication 2012",
+        "lastUpdate": "20",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "09°10,00'S - 004°05,00'E",
@@ -1151,6 +1179,7 @@
         "num": "7797",
         "title": "Canal du Mozambique - Partie centrale",
         "issued": "Publication 2016",
+        "lastUpdate": "1",
         "scaleDenominator": "1000000",
         "bboxDM": {
             "SW": "21°30,00'S - 033°56,00'E",
@@ -1193,6 +1222,7 @@
         "num": "7798",
         "title": "Canal du Mozambique - Partie Sud",
         "issued": "Publication 2016",
+        "lastUpdate": "1",
         "scaleDenominator": "1008000",
         "bboxDM": {
             "SW": "27°22,00'S - 034°21,00'E",
@@ -1234,6 +1264,7 @@
         "num": "7801",
         "title": "De Masamirit à Bab el Mandeb",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "750000",
         "bboxDM": {
             "SW": "12°30,00'N - 038°38,00'E",
@@ -1275,6 +1306,7 @@
         "num": "7802",
         "title": "De Berenice (Barnīs) à Masamirit",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "2",
         "scaleDenominator": "750000",
         "bboxDM": {
             "SW": "17°10,00'N - 035°20,00'E",
@@ -1316,6 +1348,7 @@
         "num": "7803",
         "title": "De Suez (As Suways) à Berenice (Barnīs)",
         "issued": "Publication 2014",
+        "lastUpdate": "5",
         "scaleDenominator": "750000",
         "bboxDM": {
             "SW": "23°00,00'N - 032°15,00'E",
@@ -1358,6 +1391,7 @@
         "num": "7883",
         "title": "Du Cap Tarfaya (Cap Juby) à Râs Timiris (Cap Timiris) - Islas Canarias",
         "issued": "Publication 2019",
+        "lastUpdate": "2",
         "scaleDenominator": "1100000",
         "bboxDM": {
             "SW": "18°35,00'N - 021°00,00'W",
@@ -1401,6 +1435,7 @@
         "num": "8101",
         "title": "MANCHEGRID - Carte générale",
         "issued": "Publication 2010",
+        "lastUpdate": "",
         "scaleDenominator": "880000",
         "bboxDM": {
             "SW": "48°30,00'N - 006°30,00'W",

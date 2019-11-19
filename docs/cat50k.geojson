@@ -5,6 +5,7 @@
         "num": "3023",
         "title": "De Djidjelli à Collo",
         "issued": "Édition n°&nbsp;3 - 1955",
+        "lastUpdate": "40",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "36°45,97'N - 005°38,30'E",
@@ -45,6 +46,7 @@
         "num": "3024",
         "title": "Du Cap Toukoush au Cap Rose",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "9",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "36°47,13'N - 007°13,17'E",
@@ -85,6 +87,7 @@
         "num": "3029",
         "title": "Du Cap Sigli à Djidjelli",
         "issued": "Édition n°&nbsp;4 - 1957",
+        "lastUpdate": "55",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "36°34,17'N - 004°45,42'E",
@@ -125,6 +128,7 @@
         "num": "3043",
         "title": "D'Alger à Dellys",
         "issued": "Édition n°&nbsp;2 - 1925",
+        "lastUpdate": "144",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "36°36,61'N - 002°56,22'E",
@@ -165,6 +169,7 @@
         "num": "3234",
         "title": "De la Pointe Kef el Assfer au Cap Ténès",
         "issued": "Édition n°&nbsp;2 - 1936",
+        "lastUpdate": "27",
         "scaleDenominator": "99500",
         "bboxDM": {
             "SW": "36°10,55'N - 000°22,17'E",
@@ -205,6 +210,7 @@
         "num": "4129",
         "title": "Du Cap Serrat au Cap Blanc",
         "issued": "Édition n°&nbsp;5 - 1955",
+        "lastUpdate": "14",
         "scaleDenominator": "61600",
         "bboxDM": {
             "SW": "37°08,28'N - 009°11,43'E",
@@ -245,6 +251,7 @@
         "num": "4191",
         "title": "De Ras-al-Fortas à Kelibia",
         "issued": "Édition n°&nbsp;5 - 1941",
+        "lastUpdate": "79",
         "scaleDenominator": "61700",
         "bboxDM": {
             "SW": "36°49,20'N - 010°35,95'E",
@@ -285,6 +292,7 @@
         "num": "4198",
         "title": "Du Ras Enghela au Cap Farina",
         "issued": "Édition n°&nbsp;9 - 2010",
+        "lastUpdate": "23",
         "scaleDenominator": "61100",
         "bboxDM": {
             "SW": "37°04,27'N - 009°39,23'E",
@@ -326,6 +334,7 @@
         "num": "4208",
         "title": "De Ksar Menara à Sousse",
         "issued": "Édition n°&nbsp;2 - 1957",
+        "lastUpdate": "34",
         "scaleDenominator": "63500",
         "bboxDM": {
             "SW": "35°49,33'N - 010°17,73'E",
@@ -366,6 +375,7 @@
         "num": "4219",
         "title": "Du Cap Roux au Cap Serrat",
         "issued": "Édition n°&nbsp;3 - 1939",
+        "lastUpdate": "33",
         "scaleDenominator": "61700",
         "bboxDM": {
             "SW": "36°53,97'N - 008°35,25'E",
@@ -406,6 +416,7 @@
         "num": "4221",
         "title": "De Kelibia à Ras Mamour",
         "issued": "Édition n°&nbsp;4 - 1944",
+        "lastUpdate": "38",
         "scaleDenominator": "62100",
         "bboxDM": {
             "SW": "36°24,25'N - 010°45,73'E",
@@ -446,6 +457,7 @@
         "num": "4222",
         "title": "Du Cap Kamart au Ras-al-Fortas",
         "issued": "Édition n°&nbsp;4 - 1958",
+        "lastUpdate": "56",
         "scaleDenominator": "61900",
         "bboxDM": {
             "SW": "36°35,92'N - 010°06,85'E",
@@ -486,6 +498,7 @@
         "num": "4225",
         "title": "De Kurba à la Sebkha Djiriba (Golfe d'Hammamet)",
         "issued": "Édition n°&nbsp;2 - 1889",
+        "lastUpdate": "40",
         "scaleDenominator": "62300",
         "bboxDM": {
             "SW": "36°13,62'N - 010°17,77'E",
@@ -526,6 +539,7 @@
         "num": "4226",
         "title": "Du Ras Marsa au Ras Dimas",
         "issued": "Publication 1887",
+        "lastUpdate": "139",
         "scaleDenominator": "62800",
         "bboxDM": {
             "SW": "35°34,54'N - 010°31,75'E",
@@ -566,6 +580,7 @@
         "num": "4227",
         "title": "Du Ras Dimas au Ras Kapudia",
         "issued": "Édition n°&nbsp;2 - 1956",
+        "lastUpdate": "45",
         "scaleDenominator": "63300",
         "bboxDM": {
             "SW": "35°10,92'N - 010°53,32'E",
@@ -606,6 +621,7 @@
         "num": "4228",
         "title": "De Sfax à Maharès",
         "issued": "Édition n°&nbsp;3 - 1939",
+        "lastUpdate": "80",
         "scaleDenominator": "63600",
         "bboxDM": {
             "SW": "34°27,08'N - 010°25,27'E",
@@ -646,6 +662,7 @@
         "num": "4236",
         "title": "Du Ras Kapudia à Sidi Makluf",
         "issued": "Édition n°&nbsp;4 - 1955",
+        "lastUpdate": "36",
         "scaleDenominator": "63500",
         "bboxDM": {
             "SW": "34°54,12'N - 010°53,98'E",
@@ -686,6 +703,7 @@
         "num": "4237",
         "title": "De Sidi Makluf à Sfax",
         "issued": "Édition n°&nbsp;4 - 1945",
+        "lastUpdate": "77",
         "scaleDenominator": "63500",
         "bboxDM": {
             "SW": "34°36,47'N - 010°43,57'E",
@@ -726,6 +744,7 @@
         "num": "4239",
         "title": "De Maharès à la Skhirra",
         "issued": "Édition n°&nbsp;2 - 1961",
+        "lastUpdate": "25",
         "scaleDenominator": "63900",
         "bboxDM": {
             "SW": "34°10,46'N - 010°01,37'E",
@@ -766,6 +785,7 @@
         "num": "4240",
         "title": "De la Skhirra à Gabès",
         "issued": "Édition n°&nbsp;2 - 1962",
+        "lastUpdate": "30",
         "scaleDenominator": "64100",
         "bboxDM": {
             "SW": "33°45,00'N - 009°50,90'E",
@@ -806,6 +826,7 @@
         "num": "4242",
         "title": "De Gabès au Bordj Djilidj",
         "issued": "Édition n°&nbsp;2 - 1939",
+        "lastUpdate": "51",
         "scaleDenominator": "64300",
         "bboxDM": {
             "SW": "33°35,88'N - 010°05,07'E",
@@ -846,6 +867,7 @@
         "num": "4244",
         "title": "Du Bordj Djilidj à Sidi Garus",
         "issued": "Édition n°&nbsp;2 - 1939",
+        "lastUpdate": "49",
         "scaleDenominator": "64200",
         "bboxDM": {
             "SW": "33°44,77'N - 010°34,82'E",
@@ -886,6 +908,7 @@
         "num": "4245",
         "title": "De Sidi Garus à Zarzis",
         "issued": "Édition n°&nbsp;2 - 1939",
+        "lastUpdate": "56",
         "scaleDenominator": "64400",
         "bboxDM": {
             "SW": "33°27,73'N - 010°38,12'E",
@@ -926,6 +949,7 @@
         "num": "4247",
         "title": "De Zarzis au Ras Ashdir",
         "issued": "Édition n°&nbsp;2 - 1939",
+        "lastUpdate": "46",
         "scaleDenominator": "64600",
         "bboxDM": {
             "SW": "33°09,37'N - 011°02,62'E",
@@ -966,6 +990,7 @@
         "num": "4250",
         "title": "Du Cap Farina au Cap Carthage",
         "issued": "Édition n°&nbsp;2 - 1960",
+        "lastUpdate": "48",
         "scaleDenominator": "61800",
         "bboxDM": {
             "SW": "36°51,65'N - 009°56,07'E",
@@ -1006,6 +1031,7 @@
         "num": "5951",
         "title": "Du Cap Ferrat à la Pointe Kef el Asfer",
         "issued": "Édition n°&nbsp;2 - 2015",
+        "lastUpdate": "10",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "35°45,00'N - 000°34,17'W",
@@ -1046,6 +1072,7 @@
         "num": "5976",
         "title": "Du Cap Andavaka à Sainte-Luce",
         "issued": "Édition n°&nbsp;2 - 1958",
+        "lastUpdate": "12",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "25°17,20'S - 046°29,00'E",
@@ -1090,6 +1117,7 @@
         "num": "6118",
         "title": "Iles Saint-Pierre et Miquelon",
         "issued": "Édition n°&nbsp;5 - 2017",
+        "lastUpdate": "5",
         "scaleDenominator": "80000",
         "bboxDM": {
             "SW": "46°35,00'N - 056°38,95'W",
@@ -1130,6 +1158,7 @@
         "num": "6169",
         "title": "Abords de Safi",
         "issued": "Édition n°&nbsp;2 - 1963",
+        "lastUpdate": "25",
         "scaleDenominator": "50600",
         "bboxDM": {
             "SW": "32°08,00'N - 009°31,30'W",
@@ -1170,6 +1199,7 @@
         "num": "6178",
         "title": "Du Cap Ghir à Agadir",
         "issued": "Édition n°&nbsp;2 - 1961",
+        "lastUpdate": "46",
         "scaleDenominator": "51600",
         "bboxDM": {
             "SW": "30°20,00'N - 010°03,00'W",
@@ -1210,6 +1240,7 @@
         "num": "6206",
         "title": "Du Cap Hadid au Cap Sim",
         "issued": "Publication 1959",
+        "lastUpdate": "10",
         "scaleDenominator": "51100",
         "bboxDM": {
             "SW": "31°19,00'N - 010°00,30'W",
@@ -1250,6 +1281,7 @@
         "num": "6233",
         "title": "Abords de Morondava",
         "issued": "Publication 1962",
+        "lastUpdate": "4",
         "scaleDenominator": "50200",
         "bboxDM": {
             "SW": "20°26,00'S - 043°54,20'E",
@@ -1290,6 +1322,7 @@
         "num": "6309",
         "title": "Baie d'Antongil, abords de Maroantsetra",
         "issued": "Publication 1961",
+        "lastUpdate": "8",
         "scaleDenominator": "50200",
         "bboxDM": {
             "SW": "15°42,29'S - 049°34,00'E",
@@ -1330,6 +1363,7 @@
         "num": "6437",
         "title": "Abords Nord d'Andevoranto",
         "issued": "Publication 1963",
+        "lastUpdate": "1",
         "scaleDenominator": "50600",
         "bboxDM": {
             "SW": "18°59,00'S - 049°05,00'E",
@@ -1370,6 +1404,7 @@
         "num": "6461",
         "title": "Îles Gambier",
         "issued": "Édition n°&nbsp;2 - 1992",
+        "lastUpdate": "17",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "23°26,00'S - 135°10,35'W",
@@ -1410,6 +1445,7 @@
         "num": "6497",
         "title": "Île de la Possession, Île de l'Est",
         "issued": "Édition n°&nbsp;5 - 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "46°37,08'S - 051°26,63'E",
@@ -1453,6 +1489,7 @@
         "num": "6687",
         "title": "Abords de Nouméa - Passes de Boulari et de Dumbéa",
         "issued": "Édition n°&nbsp;6 - 2019",
+        "lastUpdate": "3",
         "scaleDenominator": "59600",
         "bboxDM": {
             "SW": "22°39,20'S - 166°12,00'E",
@@ -1493,6 +1530,7 @@
         "num": "6711",
         "title": "Golfe de Napoli",
         "issued": "Édition n°&nbsp;3 - 2018",
+        "lastUpdate": "12",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "40°27,94'N - 013°47,78'E",
@@ -1534,6 +1572,7 @@
         "num": "6738",
         "title": "La Martinique - Partie Sud (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2009",
+        "lastUpdate": "37",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "14°16,60'N - 061°17,70'W",
@@ -1574,6 +1613,7 @@
         "num": "6822",
         "title": "Abords Nord de Bastia",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "9",
         "scaleDenominator": "50300",
         "bboxDM": {
             "SW": "42°40,00'N - 009°22,30'E",
@@ -1614,6 +1654,7 @@
         "num": "6823",
         "title": "Abords Sud de Bastia",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "9",
         "scaleDenominator": "50600",
         "bboxDM": {
             "SW": "42°14,00'N - 009°22,30'E",
@@ -1654,6 +1695,7 @@
         "num": "6827",
         "title": "Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "2",
         "scaleDenominator": "59500",
         "bboxDM": {
             "SW": "22°50,40'S - 166°33,80'E",
@@ -1694,6 +1736,7 @@
         "num": "6855",
         "title": "Du phare d'Alistro à Solenzara",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "8",
         "scaleDenominator": "51000",
         "bboxDM": {
             "SW": "41°47,00'N - 009°19,30'E",
@@ -1734,6 +1777,7 @@
         "num": "6933",
         "title": "De l'île Ouen à l'île des Pins - Passe de la Sarcelle (Spéciale P)",
         "issued": "Édition n°&nbsp;4 - 2017",
+        "lastUpdate": "3",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "22°43,30'S - 166°49,50'E",
@@ -1774,6 +1818,7 @@
         "num": "6948",
         "title": "Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "31",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "15°40,50'N - 061°43,60'W",
@@ -1818,6 +1863,7 @@
         "num": "6949",
         "title": "Abords de Thio",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "15",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "21°41,93'S - 165°52,20'E",
@@ -1859,6 +1905,7 @@
         "num": "6963",
         "title": "De San Rossore au Canal de Piombino - Isole d'Elba, Capraia et Gorgona",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "29",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "42°46,96'N - 009°43,02'E",
@@ -1900,6 +1947,7 @@
         "num": "6969",
         "title": "Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "7",
         "scaleDenominator": "50300",
         "bboxDM": {
             "SW": "42°40,00'N - 009°01,00'E",
@@ -1940,6 +1988,7 @@
         "num": "6970",
         "title": "De Punta di l'Acciolu à Capo Cavallo",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "6",
         "scaleDenominator": "50500",
         "bboxDM": {
             "SW": "42°30,50'N - 008°26,50'E",
@@ -1980,6 +2029,7 @@
         "num": "6985",
         "title": "De Paagoumène à Ouaco",
         "issued": "Édition n°&nbsp;3 - 2011",
+        "lastUpdate": "11",
         "scaleDenominator": "60300",
         "bboxDM": {
             "SW": "20°52,34'S - 163°53,69'E",
@@ -2024,6 +2074,7 @@
         "num": "6986",
         "title": "De Port-Ounia au Cap Ndoua",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "5",
         "scaleDenominator": "59700",
         "bboxDM": {
             "SW": "22°23,63'S - 166°49,50'E",
@@ -2067,6 +2118,7 @@
         "num": "7011",
         "title": "De la presqu'île Neuméni à Port-Ounia",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "7",
         "scaleDenominator": "59800",
         "bboxDM": {
             "SW": "22°02,03'S - 166°16,60'E",
@@ -2111,6 +2163,7 @@
         "num": "7018",
         "title": "De Portofino à Gombo (Spéciale P)",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "21",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "43°42,95'N - 009°05,00'E",
@@ -2152,6 +2205,7 @@
         "num": "7019",
         "title": "De Imperia à Portofino (Spéciale P)",
         "issued": "Édition n°&nbsp;4 - 2014",
+        "lastUpdate": "31",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "43°52,00'N - 007°57,00'E",
@@ -2196,6 +2250,7 @@
         "num": "7041",
         "title": "La Martinique - Partie Nord (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2009",
+        "lastUpdate": "29",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "14°34,30'N - 061°18,00'W",
@@ -2236,6 +2291,7 @@
         "num": "7042",
         "title": "Détroit de Gibraltar (Spéciale P)",
         "issued": "Édition n°&nbsp;4 - 2015",
+        "lastUpdate": "27",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "35°40,00'N - 006°20,00'W",
@@ -2277,6 +2333,7 @@
         "num": "7051",
         "title": "Du Cap Colnett à Touho - Abords de Hienghène",
         "issued": "Édition n°&nbsp;3 - 2013",
+        "lastUpdate": "5",
         "scaleDenominator": "60300",
         "bboxDM": {
             "SW": "20°48,13'S - 164°38,69'E",
@@ -2320,6 +2377,7 @@
         "num": "7167",
         "title": "De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "9",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "22°06,60'S - 165°31,40'E",
@@ -2360,6 +2418,7 @@
         "num": "7168",
         "title": "De la Baie de Bourail à la Passe de la Poya",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "8",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "21°50,54'S - 164°57,10'E",
@@ -2403,6 +2462,7 @@
         "num": "7175",
         "title": "De l'île d'Elbe à Promontorio Argentario",
         "issued": "Édition n°&nbsp;2 - 2013",
+        "lastUpdate": "30",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "42°19,16'N - 009°55,00'E",
@@ -2444,6 +2504,7 @@
         "num": "7183",
         "title": "La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât",
         "issued": "Édition n°&nbsp;4 - 2016",
+        "lastUpdate": "13",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "21°11,70'S - 055°06,60'E",
@@ -2489,6 +2550,7 @@
         "num": "7192",
         "title": "De Promontorio Argentario à Capo Linaro",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "16",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "41°54,04'N - 010°40,99'E",
@@ -2530,6 +2592,7 @@
         "num": "7202",
         "title": "De Capo Linaro à Anzio",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "7",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "41°23,60'N - 011°24,40'E",
@@ -2571,6 +2634,7 @@
         "num": "7208",
         "title": "De Marie-Galante à la Désirade (Spéciale P)",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "15",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "15°48,50'N - 061°23,00'W",
@@ -2611,6 +2675,7 @@
         "num": "7214",
         "title": "De Dunkerque à Oostende",
         "issued": "Édition n°&nbsp;8 - 2019",
+        "lastUpdate": "4",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "51°03,00'N - 002°05,00'E",
@@ -2656,6 +2721,7 @@
         "num": "7218",
         "title": "Atolls d'Ouvéa et de Beautemps-Beaupré",
         "issued": "Édition n°&nbsp;4 - 2019",
+        "lastUpdate": "1",
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "20°47,01'S - 166°05,01'E",
@@ -2702,6 +2768,7 @@
         "num": "7222",
         "title": "La Réunion - Partie Est - De la Pointe de la Rivière du Mât à la Pointe Marcellin",
         "issued": "Publication 1996",
+        "lastUpdate": "8",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "21°27,50'S - 055°39,00'E",
@@ -2743,6 +2810,7 @@
         "num": "7234",
         "title": "Iles Futuna et Alofi",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "3",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "14°26,70'S - 178°15,49'W",
@@ -2931,6 +2999,7 @@
         "num": "7254",
         "title": "Golfe d'Athènes",
         "issued": "Publication 1993",
+        "lastUpdate": "85",
         "scaleDenominator": "85000",
         "bboxDM": {
             "SW": "37°29,00'N - 022°59,00'E",
@@ -3186,6 +3255,7 @@
         "num": "7273",
         "title": "De Nouméa à la Baie de Saint-Vincent (Spéciale P)",
         "issued": "Édition n°&nbsp;3 - 2018",
+        "lastUpdate": "5",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "22°24,30'S - 165°53,80'E",
@@ -3226,6 +3296,7 @@
         "num": "7281",
         "title": "Hao",
         "issued": "Édition n°&nbsp;2 - 2015",
+        "lastUpdate": "12",
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "18°29,00'S - 141°16,80'W",
@@ -3272,6 +3343,7 @@
         "num": "7284",
         "title": "De Argolikós Kólpos à Níos Póros",
         "issued": "Publication 1994",
+        "lastUpdate": "35",
         "scaleDenominator": "85000",
         "bboxDM": {
             "SW": "37°02,00'N - 022°41,60'E",
@@ -3316,6 +3388,7 @@
         "num": "7302",
         "title": "De la Pointe des Châteaux à l'Ilet à Kahouanne",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "19",
         "scaleDenominator": "59900",
         "bboxDM": {
             "SW": "16°14,60'N - 061°47,00'W",
@@ -3356,6 +3429,7 @@
         "num": "7313",
         "title": "De la passe de Koné à Ouaco",
         "issued": "Édition n°&nbsp;2 - 2012",
+        "lastUpdate": "5",
         "scaleDenominator": "60200",
         "bboxDM": {
             "SW": "21°09,00'S - 164°15,00'E",
@@ -3396,6 +3470,7 @@
         "num": "7318",
         "title": "De Poum à l'Île Pam",
         "issued": "Édition n°&nbsp;4 - 2014",
+        "lastUpdate": "3",
         "scaleDenominator": "60500",
         "bboxDM": {
             "SW": "20°16,04'S - 163°39,59'E",
@@ -3436,6 +3511,7 @@
         "num": "7319",
         "title": "De l'Ile Pam au Cap Colnett",
         "issued": "Édition n°&nbsp;2 - 2014",
+        "lastUpdate": "4",
         "scaleDenominator": "60400",
         "bboxDM": {
             "SW": "20°30,00'S - 164°09,20'E",
@@ -3481,6 +3557,7 @@
         "num": "7320",
         "title": "De Koumac à Poum",
         "issued": "Édition n°&nbsp;3 - 2011",
+        "lastUpdate": "1",
         "scaleDenominator": "60400",
         "bboxDM": {
             "SW": "20°34,34'S - 163°39,09'E",
@@ -3525,6 +3602,7 @@
         "num": "7323",
         "title": "Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover",
         "issued": "Édition n°&nbsp;6 - 2018",
+        "lastUpdate": "8",
         "scaleDenominator": "74300",
         "bboxDM": {
             "SW": "50°42,80'N - 000°53,00'E",
@@ -3566,6 +3644,7 @@
         "num": "7328",
         "title": "La Réunion - Partie Sud - De la Pointe des Châteaux à la Pointe Marcellin",
         "issued": "Édition n°&nbsp;2 - 2012",
+        "lastUpdate": "8",
         "scaleDenominator": "59900",
         "bboxDM": {
             "SW": "21°30,80'S - 055°06,60'E",
@@ -3752,6 +3831,7 @@
         "num": "7332",
         "title": "De Isola San Pietro à Cagliari",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "9",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "38°42,34'N - 007°56,98'E",
@@ -3793,6 +3873,7 @@
         "num": "7337",
         "title": "Baie de l'Oyapok",
         "issued": "Publication 1996",
+        "lastUpdate": "9",
         "scaleDenominator": "80000",
         "bboxDM": {
             "SW": "04°12,00'N - 051°55,00'W",
@@ -3834,6 +3915,7 @@
         "num": "7346",
         "title": "Iles du Roi Georges. Takaroa et Takapoto",
         "issued": "Édition n°&nbsp;2 - 2006",
+        "lastUpdate": "5",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "14°45,00'S - 145°21,00'W",
@@ -4453,6 +4535,7 @@
         "num": "7355",
         "title": "Hiva-Oa, Tahuata et Mohotani",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "2",
         "scaleDenominator": "70000",
         "bboxDM": {
             "SW": "10°05,00'S - 139°16,00'W",
@@ -4497,6 +4580,7 @@
         "num": "7356",
         "title": "Eiao, Hatutaa et Motu One",
         "issued": "Publication 2000",
+        "lastUpdate": "1",
         "scaleDenominator": "70000",
         "bboxDM": {
             "SW": "08°11,00'S - 141°00,00'W",
@@ -4540,6 +4624,7 @@
         "num": "7362",
         "title": "De Capo Circeo à Ischia - Isole Pontine",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "11",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "40°39,94'N - 012°49,95'E",
@@ -4581,6 +4666,7 @@
         "num": "7366",
         "title": "De Anzio à Capo Circeo - Isole Pontine",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "22",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "40°44,20'N - 012°20,30'E",
@@ -4765,6 +4851,7 @@
         "num": "7373",
         "title": "Rangiroa",
         "issued": "Édition n°&nbsp;2 - 2002",
+        "lastUpdate": "28",
         "scaleDenominator": "80000",
         "bboxDM": {
             "SW": "15°23,32'S - 147°59,10'W",
@@ -4810,6 +4897,7 @@
         "num": "7375",
         "title": "De la Passe de Poya à la Passe de Koné",
         "issued": "Édition n°&nbsp;2 - 2012",
+        "lastUpdate": "8",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "21°29,84'S - 164°31,10'E",
@@ -4962,6 +5050,7 @@
         "num": "7381",
         "title": "De Kourou à Cayenne",
         "issued": "Édition n°&nbsp;2 - 2013",
+        "lastUpdate": "16",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "04°47,60'N - 052°50,00'W",
@@ -5003,6 +5092,7 @@
         "num": "7394",
         "title": "De la Pointe de Saint-Gildas au Goulet de Fromentine - Baie de Bourgneuf",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "15",
         "scaleDenominator": "50500",
         "bboxDM": {
             "SW": "46°48,30'N - 002°36,30'W",
@@ -5048,6 +5138,7 @@
         "num": "7395",
         "title": "Du Croisic à Noirmoutier - Estuaire de la Loire",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "22",
         "scaleDenominator": "50300",
         "bboxDM": {
             "SW": "47°00,00'N - 002°50,20'W",
@@ -5088,6 +5179,7 @@
         "num": "7402",
         "title": "De Saint-Jean-de-Monts aux Sables-d'Olonne",
         "issued": "Édition n°&nbsp;2 - 2002",
+        "lastUpdate": "27",
         "scaleDenominator": "50800",
         "bboxDM": {
             "SW": "46°28,50'N - 002°28,70'W",
@@ -5131,6 +5223,7 @@
         "num": "7403",
         "title": "Des Sables d'Olonne à l'Île de Ré",
         "issued": "Édition n°&nbsp;2 - 2002",
+        "lastUpdate": "33",
         "scaleDenominator": "51000",
         "bboxDM": {
             "SW": "46°12,00'N - 002°05,00'W",
@@ -5176,6 +5269,7 @@
         "num": "7404",
         "title": "De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d'Antioche",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "19",
         "scaleDenominator": "51200",
         "bboxDM": {
             "SW": "46°00,40'N - 001°46,00'W",
@@ -5219,6 +5313,7 @@
         "num": "7405",
         "title": "De La Rochelle à la Pointe de La Coubre - Ile d'Oléron",
         "issued": "Édition n°&nbsp;2 - 2017",
+        "lastUpdate": "17",
         "scaleDenominator": "51400",
         "bboxDM": {
             "SW": "45°40,40'N - 001°32,90'W",
@@ -5264,6 +5359,7 @@
         "num": "7407",
         "title": "De Toulon à Cavalaire-sur-Mer - Iles d'Hyères",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "2",
         "scaleDenominator": "50200",
         "bboxDM": {
             "SW": "42°52,20'N - 005°51,50'E",
@@ -5304,6 +5400,7 @@
         "num": "7416",
         "title": "Abords Sud de Boulogne-sur-Mer - Du Tréport à Boulogne-sur-Mer",
         "issued": "Édition n°&nbsp;4 - 2016",
+        "lastUpdate": "12",
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "50°01,50'N - 000°57,40'E",
@@ -5344,6 +5441,7 @@
         "num": "7417",
         "title": "Abords de Fécamp et de Dieppe - Du Cap d'Antifer à Dieppe",
         "issued": "Édition n°&nbsp;2 - 2006",
+        "lastUpdate": "60",
         "scaleDenominator": "75900",
         "bboxDM": {
             "SW": "49°40,80'N - 000°09,70'E",
@@ -5384,6 +5482,7 @@
         "num": "7418",
         "title": "Abords du Havre et d'Antifer - Embouchure de la Seine - De Ouistreham au Cap d'Antifer",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "9",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "49°15,00'N - 000°20,80'W",
@@ -5424,6 +5523,7 @@
         "num": "7424",
         "title": "Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "21",
         "scaleDenominator": "73900",
         "bboxDM": {
             "SW": "50°55,00'N - 001°17,10'E",
@@ -5465,6 +5565,7 @@
         "num": "7426",
         "title": "De la Pointe de la Coubre à la Pointe de la Négade - Embouchure de La Gironde",
         "issued": "Édition n°&nbsp;5 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "51800",
         "bboxDM": {
             "SW": "45°24,00'N - 001°28,90'W",
@@ -5510,7 +5611,7 @@
         "issued": "Édition n°&nbsp;2 - 2016",
         "boxes": [
             {
-                "title": "1 -",
+                "title": "1 - La Gironde - La Garonne et La Dordogne (1/3)",
                 "scaleDenominator": "52000",
                 "bboxDM": {
                     "SW": "45°08,90'N - 000°55,00'W",
@@ -5518,7 +5619,7 @@
                 }
             },
             {
-                "title": "2 -",
+                "title": "2 - La Gironde - La Garonne et La Dordogne (2/3)",
                 "scaleDenominator": "52300",
                 "bboxDM": {
                     "SW": "44°50,18'N - 000°45,00'W",
@@ -5526,7 +5627,7 @@
                 }
             },
             {
-                "title": "3 -",
+                "title": "3 - La Gironde - La Garonne et La Dordogne (3/3)",
                 "scaleDenominator": "52400",
                 "bboxDM": {
                     "SW": "44°51,90'N - 000°22,40'W",
@@ -5683,6 +5784,7 @@
         "num": "7453",
         "title": "Makemo",
         "issued": "Publication 1996",
+        "lastUpdate": "10",
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "16°47,50'S - 144°04,30'W",
@@ -5727,6 +5829,7 @@
         "num": "7456",
         "title": "Toau - De Niau à Fakarava",
         "issued": "Publication 2002",
+        "lastUpdate": "6",
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "16°13,40'S - 146°27,00'W",
@@ -5771,6 +5874,7 @@
         "num": "7457",
         "title": "Raroia et Takume",
         "issued": "Publication 2003",
+        "lastUpdate": "8",
         "scaleDenominator": "75000",
         "bboxDM": {
             "SW": "16°21,50'S - 142°35,60'W",
@@ -5959,6 +6063,7 @@
         "num": "7471",
         "title": "D'Anguilla à Saint-Barthélemy",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "8",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "17°49,00'N - 063°16,00'W",
@@ -5999,6 +6104,7 @@
         "num": "7482",
         "title": "De l'Ilet à Kahouanne aux Saintes",
         "issued": "Publication 2009",
+        "lastUpdate": "32",
         "scaleDenominator": "60400",
         "bboxDM": {
             "SW": "15°48,30'N - 062°00,00'W",
@@ -6045,6 +6151,7 @@
         "num": "7511",
         "title": "Abords de Rijeka - Riječki Zaljev",
         "issued": "Publication 1996",
+        "lastUpdate": "55",
         "scaleDenominator": "55000",
         "bboxDM": {
             "SW": "45°00,40'N - 014°08,00'E",
@@ -6171,6 +6278,7 @@
         "num": "7548",
         "title": "De Capo Milazzo à Roccella Ionica Détroit de Messina (Stretto di Messina)",
         "issued": "Publication 2009",
+        "lastUpdate": "60",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "37°43,30'N - 015°11,80'E",
@@ -6213,6 +6321,7 @@
         "num": "7568",
         "title": "Approches de Nouakchott",
         "issued": "Édition n°&nbsp;2 - 2016",
+        "lastUpdate": "5",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "17°41,00'N - 016°39,40'W",
@@ -6256,6 +6365,7 @@
         "num": "7573",
         "title": "De Conakry à la Rivière Mellacorée",
         "issued": "Publication 2005",
+        "lastUpdate": "8",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "08°56,40'N - 014°11,00'W",
@@ -6297,6 +6407,7 @@
         "num": "7575",
         "title": "Approches d'Abidjan",
         "issued": "Publication 1997",
+        "lastUpdate": "33",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "04°40,40'N - 004°49,40'W",
@@ -6343,6 +6454,7 @@
         "num": "7577",
         "title": "De Grand Béréby à Sassandra - Port de San Pedro",
         "issued": "Publication 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "04°24,40'N - 007°00,40'W",
@@ -6388,6 +6500,7 @@
         "num": "7578",
         "title": "Approches de l'estuaire du Cameroun et de Malabo",
         "issued": "Publication 2005",
+        "lastUpdate": "28",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "03°26,00'N - 008°42,60'E",
@@ -6429,6 +6542,7 @@
         "num": "7583",
         "title": "De la Pointe Ékouata au Cap Lopez",
         "issued": "Publication 2006",
+        "lastUpdate": "19",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "00°52,60'S - 008°22,80'E",
@@ -6470,6 +6584,7 @@
         "num": "7594",
         "title": "De la Pointe Ebba au Cap de la Découverte",
         "issued": "Publication 2003",
+        "lastUpdate": 0,
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "66°58,00'S - 139°16,00'E",
@@ -6515,6 +6630,7 @@
         "num": "7596",
         "title": "De la Peninsula del Grove à Cabo Silleiro",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "23",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "42°06,20'N - 009°27,30'W",
@@ -6893,6 +7009,7 @@
         "num": "7613",
         "title": "Saint Vincent et Bequia",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "12°54,00'N - 061°21,20'W",
@@ -6938,6 +7055,7 @@
         "num": "7614",
         "title": "Saint Lucia",
         "issued": "Publication 1998",
+        "lastUpdate": "8",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "13°38,10'N - 061°10,50'W",
@@ -6980,6 +7098,7 @@
         "num": "7615",
         "title": "Barbados",
         "issued": "Édition n°&nbsp;2 - 2013",
+        "lastUpdate": "5",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "12°43,85'N - 059°50,00'W",
@@ -7021,6 +7140,7 @@
         "num": "7616",
         "title": "Dominica",
         "issued": "Publication 1998",
+        "lastUpdate": "11",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "15°09,00'N - 061°34,07'W",
@@ -7067,6 +7187,7 @@
         "num": "7618",
         "title": "Antigua",
         "issued": "Édition n°&nbsp;2 - 2016",
+        "lastUpdate": "5",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "16°54,30'N - 062°09,00'W",
@@ -7111,6 +7232,7 @@
         "num": "7627",
         "title": "Grenada",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "1",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "11°55,00'N - 062°02,79'W",
@@ -7157,6 +7279,7 @@
         "num": "7676",
         "title": "Approches de Malta et Għawdex (Gozo)",
         "issued": "Édition n°&nbsp;2 - 2017",
+        "lastUpdate": "4",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "35°38,93'N - 013°52,96'E",
@@ -7198,6 +7321,7 @@
         "num": "7696",
         "title": "Šibenik - Split",
         "issued": "Publication 2016",
+        "lastUpdate": "19",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "43°17,20'N - 015°17,50'E",
@@ -7243,6 +7367,7 @@
         "num": "7698",
         "title": "De Dubrovnik à Budva",
         "issued": "Édition n°&nbsp;2 - 2014",
+        "lastUpdate": "15",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "42°10,00'N - 017°50,00'E",
@@ -7287,6 +7412,7 @@
         "num": "7755",
         "title": "De Ponérihouen au Cap Dumoulin",
         "issued": "Publication 2016",
+        "lastUpdate": "9",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "21°25,50'S - 165°24,00'E",
@@ -7333,6 +7459,7 @@
         "num": "7756",
         "title": "De Touho à Ponérihouen",
         "issued": "Publication 2014",
+        "lastUpdate": "3",
         "scaleDenominator": "60200",
         "bboxDM": {
             "SW": "21°06,90'S - 165°04,60'E",
@@ -7377,6 +7504,7 @@
         "num": "7778",
         "title": "De Capo Cozzo à Capo Milazzo et Stromboli",
         "issued": "Édition n°&nbsp;2 - 2017",
+        "lastUpdate": "5",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "38°03,09'N - 015°10,91'E",
@@ -7418,6 +7546,7 @@
         "num": "7779",
         "title": "De Capo Passero à Capo Santa Croce",
         "issued": "Publication 2014",
+        "lastUpdate": "14",
         "scaleDenominator": "100000",
         "bboxDM": {
             "SW": "36°21,00'N - 014°54,00'E",
@@ -7460,6 +7589,7 @@
         "num": "7783",
         "title": "Isla de Ibiza - Partie Sud et Isla de Formentera",
         "issued": "Publication 2015",
+        "lastUpdate": "12",
         "scaleDenominator": "60000",
         "bboxDM": {
             "SW": "38°31,43'N - 001°04,00'E",

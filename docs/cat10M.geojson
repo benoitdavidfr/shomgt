@@ -3,8 +3,9 @@
     "type": "Feature",
     "properties": {
         "num": "0101",
-        "title": "Planisphère des fuseaux horaires",
+        "title": "Planisphère terrestre",
         "issued": "Édition n°&nbsp;4 - 2016",
+        "lastUpdate": 0,
         "scaleDenominator": "40000000",
         "bboxDM": {
             "SW": "79°00,00'S - 100°00,00'E",
@@ -42,49 +43,10 @@
 {
     "type": "Feature",
     "properties": {
-        "num": "0101Q",
-        "title": "Planisphère des fuseaux horaires",
-        "issued": "Édition n°&nbsp;4 - 2016",
-        "scaleDenominator": "40000000",
-        "bboxDM": {
-            "SW": "79°00,00'S - 130°00,00'E",
-            "NE": "80°00,00'N - 100°00,00'E"
-        }
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [
-                    130,
-                    -79
-                ],
-                [
-                    460,
-                    -79
-                ],
-                [
-                    460,
-                    80
-                ],
-                [
-                    130,
-                    80
-                ],
-                [
-                    130,
-                    -79
-                ]
-            ]
-        ]
-    }
-},
-{
-    "type": "Feature",
-    "properties": {
         "num": "5438",
         "title": "Océan Pacifique",
         "issued": "Édition n°&nbsp;3 - 1943",
+        "lastUpdate": 0,
         "scaleDenominator": "27000000",
         "bboxDM": {
             "SW": "57°30,00'S - 078°25,00'E",

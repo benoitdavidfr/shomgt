@@ -5,6 +5,7 @@
         "num": "5796",
         "title": "Du Cap Nord au Cap Tchéliouskine",
         "issued": "Édition n°&nbsp;2 - 1949",
+        "lastUpdate": "95",
         "scaleDenominator": "2513000",
         "bboxDM": {
             "SW": "67°21,19'N - 025°00,00'E",
@@ -45,6 +46,7 @@
         "num": "6014",
         "title": "Mers de Norvège et du Groenland",
         "issued": "Publication 1953",
+        "lastUpdate": "101",
         "scaleDenominator": "2744000",
         "bboxDM": {
             "SW": "62°31,00'N - 030°30,00'W",
@@ -85,6 +87,7 @@
         "num": "6015",
         "title": "Des passages du Nord-Ouest à la Mer du Groenland",
         "issued": "Édition n°&nbsp;2 - 1993",
+        "lastUpdate": "41",
         "scaleDenominator": "4660000",
         "bboxDM": {
             "SW": "47°09,00'N - 098°00,00'W",
@@ -125,6 +128,7 @@
         "num": "6607",
         "title": "Polynésie Sud-Est",
         "issued": "Édition n°&nbsp;3 - 2004",
+        "lastUpdate": "17",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "28°15,00'S - 153°30,00'W",
@@ -165,6 +169,7 @@
         "num": "6619",
         "title": "Côte Sud-Est de l'Amérique du Nord, Bahamas et Grandes Antilles",
         "issued": "Édition n°&nbsp;3 - 1988",
+        "lastUpdate": "190",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "17°00,00'N - 082°00,00'W",
@@ -206,6 +211,7 @@
         "num": "6623",
         "title": "De La Manche au Détroit de Gibraltar et à l'archipel des Açores",
         "issued": "Édition n°&nbsp;6 - 2018",
+        "lastUpdate": "2",
         "scaleDenominator": "2770000",
         "bboxDM": {
             "SW": "34°50,00'N - 034°15,00'W",
@@ -246,6 +252,7 @@
         "num": "6624",
         "title": "De Lisbonne (Lisboa) à Freetown",
         "issued": "Édition n°&nbsp;5 - 2006",
+        "lastUpdate": "30",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "08°20,00'N - 026°40,00'W",
@@ -286,6 +293,7 @@
         "num": "6664",
         "title": "De Port Elisabeth à Mauritius",
         "issued": "Édition n°&nbsp;4 - 2011",
+        "lastUpdate": "5",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "38°13,62'S - 025°20,00'E",
@@ -327,6 +335,7 @@
         "num": "6670",
         "title": "Mers de Tasman et du Corail - De l'Australie à la Nouvelle-Zélande et aux îles Fidji (Fiji)",
         "issued": "Édition n°&nbsp;5 - 2017",
+        "lastUpdate": "2",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "35°17,40'S - 146°40,00'E",
@@ -368,6 +377,7 @@
         "num": "6671",
         "title": "Mers du Corail et des Salomon et mers adjacentes",
         "issued": "Édition n°&nbsp;4 - 2017",
+        "lastUpdate": "4",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "20°59,06'S - 146°40,00'E",
@@ -409,6 +419,7 @@
         "num": "6672",
         "title": "De Maputo à Muqdisho - Madagascar",
         "issued": "Édition n°&nbsp;5 - 2015",
+        "lastUpdate": "5",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "27°00,00'S - 032°00,00'E",
@@ -450,6 +461,7 @@
         "num": "6673",
         "title": "De Chagos Archipelago à Madagascar",
         "issued": "Édition n°&nbsp;4 - 2011",
+        "lastUpdate": "10",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "24°18,14'S - 044°27,00'E",
@@ -491,6 +503,7 @@
         "num": "6674",
         "title": "Du Golfe d'Aden aux Maldives et aux Seychelles",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": 0,
         "scaleDenominator": "3800000",
         "bboxDM": {
             "SW": "07°30,00'S - 044°27,00'E",
@@ -532,6 +545,7 @@
         "num": "6727",
         "title": "Mer de Norvège et mers adjacentes",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "3",
         "scaleDenominator": "4080000",
         "bboxDM": {
             "SW": "53°45,00'N - 045°00,00'W",
@@ -573,6 +587,7 @@
         "num": "6734",
         "title": "Mer d'Arabie",
         "issued": "Édition n°&nbsp;2 - 1997",
+        "lastUpdate": "72",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "10°20,00'N - 043°10,00'E",
@@ -614,6 +629,7 @@
         "num": "6758",
         "title": "De Freetown à Luanda",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "7",
         "scaleDenominator": "3800000",
         "bboxDM": {
             "SW": "09°42,46'S - 019°20,00'W",
@@ -655,6 +671,7 @@
         "num": "6761",
         "title": "Golfe du Mexique",
         "issued": "Édition n°&nbsp;2 - 1986",
+        "lastUpdate": "235",
         "scaleDenominator": "2750000",
         "bboxDM": {
             "SW": "15°00,00'N - 098°20,00'W",
@@ -696,6 +713,7 @@
         "num": "6807",
         "title": "Côte Est d'Amérique du Sud",
         "issued": "Édition n°&nbsp;2 - 1998",
+        "lastUpdate": "21",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "24°00,00'S - 047°00,00'W",
@@ -737,6 +755,7 @@
         "num": "6813",
         "title": "De Récife à Dakar",
         "issued": "Publication 1979",
+        "lastUpdate": "63",
         "scaleDenominator": "3790000",
         "bboxDM": {
             "SW": "15°00,00'S - 037°00,00'W",
@@ -778,6 +797,7 @@
         "num": "6814",
         "title": "Côte Nord-Est d'Amérique du Sud",
         "issued": "Édition n°&nbsp;2 - 1989",
+        "lastUpdate": "55",
         "scaleDenominator": "3780000",
         "bboxDM": {
             "SW": "08°00,00'S - 062°00,00'W",
@@ -819,6 +839,7 @@
         "num": "6817",
         "title": "De la Nouvelle-Zélande aux îles Fidji et Samoa",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "1",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "37°55,40'S - 171°34,30'E",
@@ -860,6 +881,7 @@
         "num": "6880",
         "title": "Des Îles Tonga aux Îles des Tuamotu",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "1",
         "scaleDenominator": "3500000",
         "bboxDM": {
             "SW": "27°54,39'S - 175°20,00'W",
@@ -901,6 +923,7 @@
         "num": "6898",
         "title": "Mer des Antilles (Mer des Caraïbes)",
         "issued": "Édition n°&nbsp;4 - 2014",
+        "lastUpdate": "27",
         "scaleDenominator": "2750000",
         "bboxDM": {
             "SW": "07°20,00'N - 084°51,24'W",
@@ -942,6 +965,7 @@
         "num": "7081",
         "title": "Mer Méditerranée et mer Noire (Spéciale P)",
         "issued": "Publication 1986",
+        "lastUpdate": "135",
         "scaleDenominator": "4200000",
         "bboxDM": {
             "SW": "25°00,00'N - 007°00,00'W",
@@ -984,6 +1008,7 @@
         "num": "7246",
         "title": "Polynésie française",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "1",
         "scaleDenominator": "6000000",
         "bboxDM": {
             "SW": "31°20,00'S - 166°40,00'W",
@@ -1025,6 +1050,7 @@
         "num": "7604",
         "title": "De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": 0,
         "scaleDenominator": "4000000",
         "bboxDM": {
             "SW": "56°55,00'S - 034°15,00'E",

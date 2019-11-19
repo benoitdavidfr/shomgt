@@ -5,6 +5,7 @@
         "num": "3405",
         "title": "D'Alger à la frontière de Tunisie",
         "issued": "Édition n°&nbsp;5 - 1935",
+        "lastUpdate": "187",
         "scaleDenominator": "584000",
         "bboxDM": {
             "SW": "36°08,30'N - 002°52,16'E",
@@ -45,6 +46,7 @@
         "num": "3976",
         "title": "Mer Adriatique - Partie Sud",
         "issued": "Édition n°&nbsp;7 - 2017",
+        "lastUpdate": "8",
         "scaleDenominator": "514200",
         "bboxDM": {
             "SW": "39°22,80'N - 015°41,40'E",
@@ -85,6 +87,7 @@
         "num": "5957",
         "title": "Du rio Cacheu aux îles de Los",
         "issued": "Édition n°&nbsp;2 - 1955",
+        "lastUpdate": "157",
         "scaleDenominator": "547000",
         "bboxDM": {
             "SW": "09°03,00'N - 017°53,00'W",
@@ -125,6 +128,7 @@
         "num": "6606",
         "title": "Canal de Sicile",
         "issued": "Édition n°&nbsp;2 - 2014",
+        "lastUpdate": "32",
         "scaleDenominator": "673600",
         "bboxDM": {
             "SW": "35°10,00'N - 008°35,00'E",
@@ -165,6 +169,7 @@
         "num": "6688",
         "title": "Iles de la Société, de Manuae à Tahiti",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "592000",
         "bboxDM": {
             "SW": "18°40,00'S - 154°52,00'W",
@@ -205,6 +210,7 @@
         "num": "6689",
         "title": "Îles Tuamotu (Partie Ouest)",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": "1",
         "scaleDenominator": "595000",
         "bboxDM": {
             "SW": "18°17,44'S - 150°00,00'W",
@@ -245,6 +251,7 @@
         "num": "6690",
         "title": "Îles Tuamotu (partie centrale) - De Makemo à Tatakoto",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "592000",
         "bboxDM": {
             "SW": "18°42,00'S - 144°15,00'W",
@@ -285,6 +292,7 @@
         "num": "6691",
         "title": "Îles Tuamotu (partie Est) de Hao à Fangataufa",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": "1",
         "scaleDenominator": "578000",
         "bboxDM": {
             "SW": "23°25,00'S - 142°00,00'W",
@@ -325,6 +333,7 @@
         "num": "6692",
         "title": "Des Îles Tuamotu aux Îles Gambier",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": "1",
         "scaleDenominator": "574000",
         "bboxDM": {
             "SW": "24°20,00'S - 139°15,00'W",
@@ -365,6 +374,7 @@
         "num": "7040",
         "title": "La Manche",
         "issued": "Édition n°&nbsp;4 - 2003",
+        "lastUpdate": "216",
         "scaleDenominator": "560000",
         "bboxDM": {
             "SW": "48°00,00'N - 006°43,70'W",
@@ -406,6 +416,7 @@
         "num": "7049",
         "title": "Des îles Loyauté à l'île Hunter",
         "issued": "Édition n°&nbsp;2 - 2010",
+        "lastUpdate": "2",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "24°00,00'S - 167°45,00'E",
@@ -451,6 +462,7 @@
         "num": "7203",
         "title": "Des îles Baléares (Islas Baleares) à Marseille",
         "issued": "Édition n°&nbsp;2 - 2006",
+        "lastUpdate": "84",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "38°50,00'N - 001°37,00'E",
@@ -491,6 +503,7 @@
         "num": "7204",
         "title": "De Marseille à l'île d'Elbe (Isola d'Elba) et aux Bouches de Bonifacio",
         "issued": "Publication 1989",
+        "lastUpdate": "141",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "41°06,00'N - 004°45,00'E",
@@ -532,6 +545,7 @@
         "num": "7210",
         "title": "Atterrages de l'entrée de La Manche - Mer Celtique",
         "issued": "Édition n°&nbsp;5 - 2018",
+        "lastUpdate": "3",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "48°20,00'N - 013°27,65'W",
@@ -573,6 +587,7 @@
         "num": "7265",
         "title": "Mer Egée - Partie Sud",
         "issued": "Publication 1994",
+        "lastUpdate": "111",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "34°45,00'N - 022°28,00'E",
@@ -615,6 +630,7 @@
         "num": "7344",
         "title": "De Brest à la frontière belge - Action de l'Etat en Mer - Zone Manche et Mer du Nord",
         "issued": "Édition n°&nbsp;6 - 2016",
+        "lastUpdate": 0,
         "scaleDenominator": "655000",
         "bboxDM": {
             "SW": "47°30,00'N - 007°00,00'W",
@@ -655,6 +671,7 @@
         "num": "7357",
         "title": "Îles Marquises (Fenua Enata)",
         "issued": "Édition n°&nbsp;2 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "11°48,00'S - 141°18,00'W",
@@ -695,6 +712,7 @@
         "num": "7360",
         "title": "De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée",
         "issued": "Édition n°&nbsp;6 - 2016",
+        "lastUpdate": 0,
         "scaleDenominator": "700000",
         "bboxDM": {
             "SW": "39°57,00'N - 001°30,00'E",
@@ -735,6 +753,7 @@
         "num": "7374",
         "title": "Côte de la Guyane française",
         "issued": "Édition n°&nbsp;2 - 2017",
+        "lastUpdate": "9",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "04°10,00'N - 055°28,00'W",
@@ -775,6 +794,7 @@
         "num": "7507",
         "title": "Du Golfe du Lion aux Bouches de Bonifacio",
         "issued": "Publication 1996",
+        "lastUpdate": "114",
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "40°35,00'N - 003°00,00'E",
@@ -816,6 +836,7 @@
         "num": "7592",
         "title": "Du Glacier Dibble au Glacier Mertz",
         "issued": "Publication 2004",
+        "lastUpdate": 0,
         "scaleDenominator": "500000",
         "bboxDM": {
             "SW": "67°25,00'S - 134°00,00'E",
@@ -857,6 +878,7 @@
         "num": "7661",
         "title": "De Cabo de la Nao à Barcelona et Islas Baleares",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "11",
         "scaleDenominator": "425000",
         "bboxDM": {
             "SW": "38°36,90'N - 000°30,00'W",

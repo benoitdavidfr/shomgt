@@ -5,6 +5,7 @@
         "num": "6013",
         "title": "Les passages du Nord-Ouest",
         "issued": "Publication 1950",
+        "lastUpdate": 0,
         "scaleDenominator": "1825400",
         "bboxDM": {
             "SW": "73°00,00'N - 107°00,00'W",
@@ -45,6 +46,7 @@
         "num": "6608",
         "title": "Mer du Nord",
         "issued": "Édition n°&nbsp;6 - 2018",
+        "lastUpdate": "5",
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "48°10,00'N - 004°20,00'W",
@@ -86,6 +88,7 @@
         "num": "6618",
         "title": "Atterrages Ouest des Iles Britanniques",
         "issued": "Édition n°&nbsp;4 - 2016",
+        "lastUpdate": "9",
         "scaleDenominator": "2180000",
         "bboxDM": {
             "SW": "48°15,00'N - 034°15,00'W",
@@ -127,6 +130,7 @@
         "num": "6733",
         "title": "Mer Rouge",
         "issued": "Édition n°&nbsp;4 - 2015",
+        "lastUpdate": "1",
         "scaleDenominator": "2250000",
         "bboxDM": {
             "SW": "10°20,00'N - 032°00,00'E",
@@ -168,6 +172,7 @@
         "num": "6757",
         "title": "Du Détroit de Gibraltar au Canal de Sicile",
         "issued": "Édition n°&nbsp;2 - 1984",
+        "lastUpdate": "157",
         "scaleDenominator": "2250000",
         "bboxDM": {
             "SW": "32°45,00'N - 006°44,00'W",
@@ -209,6 +214,7 @@
         "num": "7016",
         "title": "Mer Méditerranée - Bassin oriental",
         "issued": "Édition n°&nbsp;2 - 1998",
+        "lastUpdate": "68",
         "scaleDenominator": "2250000",
         "bboxDM": {
             "SW": "30°05,00'N - 009°55,00'E",
@@ -250,6 +256,7 @@
         "num": "7243",
         "title": "Mer Noire",
         "issued": "Édition n°&nbsp;3 - 2018",
+        "lastUpdate": "1",
         "scaleDenominator": "1200000",
         "bboxDM": {
             "SW": "40°00,00'N - 026°15,00'E",
@@ -291,6 +298,7 @@
         "num": "7299",
         "title": "Du Cap Bon (Ras At Tib) à Ra's At Tīn",
         "issued": "Édition n°&nbsp;3 - 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "1175000",
         "bboxDM": {
             "SW": "30°13,00'N - 010°00,00'E",
@@ -332,6 +340,7 @@
         "num": "7306",
         "title": "De Ra's at Tīn à Iskenderun et à Būr Sa'īd (Port-Saïd)",
         "issued": "Publication 1992",
+        "lastUpdate": "101",
         "scaleDenominator": "1175000",
         "bboxDM": {
             "SW": "30°30,00'N - 022°27,00'E",
@@ -374,6 +383,7 @@
         "num": "7321",
         "title": "Des Récifs Bampton à l'île Hunter - Nouvelle-Calédonie - Vanuatu",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "3",
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "26°16,00'S - 157°00,00'E",
@@ -414,6 +424,7 @@
         "num": "7338",
         "title": "Du Détroit de Messina (Stretto di Messina) à la Mer de Marmara (Marmara Denizi) - Mer Ionienne et Mer Egée",
         "issued": "Publication 1993",
+        "lastUpdate": "100",
         "scaleDenominator": "1180000",
         "bboxDM": {
             "SW": "34°20,82'N - 014°58,12'E",
@@ -455,6 +466,7 @@
         "num": "7347",
         "title": "Des Îles Tuamotu aux Îles Australes",
         "issued": "Édition n°&nbsp;2 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "29°04,00'S - 149°40,00'W",
@@ -495,6 +507,7 @@
         "num": "7368",
         "title": "De l'Ile Malden aux Iles de la Société",
         "issued": "Publication 1995",
+        "lastUpdate": "10",
         "scaleDenominator": "1600000",
         "bboxDM": {
             "SW": "18°22,00'S - 161°52,00'W",
@@ -535,6 +548,7 @@
         "num": "7369",
         "title": "Des Southern Cook Islands aux Îes de la Société et Australes",
         "issued": "Édition n°&nbsp;2 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "24°24,00'S - 163°30,00'W",
@@ -575,6 +589,7 @@
         "num": "7370",
         "title": "De Mururoa à Ducie Island",
         "issued": "Publication 1995",
+        "lastUpdate": "13",
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "26°30,00'S - 140°00,00'W",
@@ -616,6 +631,7 @@
         "num": "7371",
         "title": "De Tahiti aux Îles Marquises",
         "issued": "Édition n°&nbsp;2 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "1580000",
         "bboxDM": {
             "SW": "18°06,00'S - 153°00,00'W",
@@ -656,6 +672,7 @@
         "num": "7591",
         "title": "De Cape Goodenough à Cape Adare",
         "issued": "Publication 2006",
+        "lastUpdate": 0,
         "scaleDenominator": "2000000",
         "bboxDM": {
             "SW": "71°30,00'S - 122°30,00'E",
@@ -697,6 +714,7 @@
         "num": "7751",
         "title": "Île Clipperton - Zone Economique Exclusive",
         "issued": "Édition n°&nbsp;2 - 2017",
+        "lastUpdate": 0,
         "scaleDenominator": "1570000",
         "bboxDM": {
             "SW": "05°00,00'N - 117°06,00'W",
@@ -737,6 +755,7 @@
         "num": "7800",
         "title": "Golfe d'Aden et approches",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": 0,
         "scaleDenominator": "1500000",
         "bboxDM": {
             "SW": "09°20,00'N - 041°20,00'E",

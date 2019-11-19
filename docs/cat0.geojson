@@ -5,6 +5,7 @@
         "num": "3127",
         "title": "Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort",
         "issued": "Édition n°&nbsp;3 - 2009",
+        "lastUpdate": "3",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "15°56,57'N - 061°44,97'W",
@@ -45,6 +46,7 @@
         "num": "5281",
         "title": "Port de Bizerte et goulet du lac",
         "issued": "Édition n°&nbsp;10 - 1954",
+        "lastUpdate": "60",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "37°13,36'N - 009°47,71'E",
@@ -85,6 +87,7 @@
         "num": "5617",
         "title": "Port d'Alger",
         "issued": "Édition n°&nbsp;6 - 2016",
+        "lastUpdate": "5",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "36°44,08'N - 003°01,73'E",
@@ -128,6 +131,7 @@
         "num": "5640",
         "title": "Port de Dellys",
         "issued": "Publication 1933",
+        "lastUpdate": "22",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "36°53,81'N - 003°52,74'E",
@@ -168,6 +172,7 @@
         "num": "5669",
         "title": "Port d'Annaba (Bône)",
         "issued": "Édition n°&nbsp;3 - 2012",
+        "lastUpdate": "5",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "36°52,95'N - 007°44,41'E",
@@ -208,6 +213,7 @@
         "num": "5678",
         "title": "Port d'Arzew",
         "issued": "Édition n°&nbsp;4 - 1992",
+        "lastUpdate": "20",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°49,35'N - 000°18,83'W",
@@ -248,6 +254,7 @@
         "num": "5696",
         "title": "Port de Mostaganem",
         "issued": "Édition n°&nbsp;4 - 2017",
+        "lastUpdate": 0,
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°54,37'N - 000°02,80'E",
@@ -367,6 +374,7 @@
         "num": "5700",
         "title": "Port du Pirée et Baie de Phalère - Port Héraclée",
         "issued": "Édition n°&nbsp;7 - 2013",
+        "lastUpdate": "5",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "37°54,28'N - 023°35,80'E",
@@ -551,6 +559,7 @@
         "num": "5763",
         "title": "Ports d'Oran et de Mers-el-Kébir",
         "issued": "Édition n°&nbsp;3 - 1958",
+        "lastUpdate": "16",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°41,60'N - 000°42,72'W",
@@ -591,6 +600,7 @@
         "num": "5873",
         "title": "Port de Nemours",
         "issued": "Édition n°&nbsp;2 - 1939",
+        "lastUpdate": "38",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°05,42'N - 001°53,45'W",
@@ -631,6 +641,7 @@
         "num": "5876",
         "title": "Ile Rachgoun",
         "issued": "Publication 1938",
+        "lastUpdate": "15",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°16,67'N - 001°29,45'W",
@@ -674,6 +685,7 @@
         "num": "5886",
         "title": "Iles Habibas",
         "issued": "Publication 1939",
+        "lastUpdate": "6",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°42,23'N - 001°10,25'W",
@@ -717,6 +729,7 @@
         "num": "5942",
         "title": "Iles et récifs de Cani",
         "issued": "Édition n°&nbsp;2 - 1946",
+        "lastUpdate": "11",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "37°19,50'N - 010°06,00'E",
@@ -757,6 +770,7 @@
         "num": "5955",
         "title": "Rade et port d'Agadir",
         "issued": "Édition n°&nbsp;8 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "30°24,16'N - 009°39,69'W",
@@ -940,6 +954,7 @@
         "num": "6063",
         "title": "Rade de Tuléar",
         "issued": "Édition n°&nbsp;2 - 1953",
+        "lastUpdate": "34",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "23°23,80'S - 043°36,00'E",
@@ -980,6 +995,7 @@
         "num": "6064",
         "title": "Mouillage de Soalary",
         "issued": "Publication 1951",
+        "lastUpdate": "3",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "23°36,30'S - 043°42,30'E",
@@ -1020,6 +1036,7 @@
         "num": "6070",
         "title": "Port de Sidi-Abdallah",
         "issued": "Publication 1952",
+        "lastUpdate": "23",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "37°08,15'N - 009°47,00'E",
@@ -1060,6 +1077,7 @@
         "num": "6103",
         "title": "Rade de Safi",
         "issued": "Édition n°&nbsp;2 - 1969",
+        "lastUpdate": "17",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "32°16,75'N - 009°17,05'W",
@@ -1100,6 +1118,7 @@
         "num": "6119",
         "title": "Rade de Mazagan",
         "issued": "Publication 1954",
+        "lastUpdate": "15",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "33°14,50'N - 008°31,50'W",
@@ -1140,6 +1159,7 @@
         "num": "6204",
         "title": "Rade d'Essaouira (Mogador)",
         "issued": "Publication 1958",
+        "lastUpdate": "9",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "31°28,85'N - 009°48,50'W",
@@ -1291,6 +1311,7 @@
         "num": "6280",
         "title": "Partie Nord de Raiatea - Port d'Uturoa",
         "issued": "Édition n°&nbsp;5 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "12000",
         "bboxDM": {
             "SW": "16°46,02'S - 151°31,05'W",
@@ -1331,6 +1352,7 @@
         "num": "6281",
         "title": "Partie Sud de Tahaa",
         "issued": "Édition n°&nbsp;4 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "12000",
         "bboxDM": {
             "SW": "16°42,71'S - 151°33,15'W",
@@ -1371,6 +1393,7 @@
         "num": "6288",
         "title": "Rio Nunez - Abords de Port Kamsar",
         "issued": "Édition n°&nbsp;2 - 1990",
+        "lastUpdate": "9",
         "scaleDenominator": "12000",
         "bboxDM": {
             "SW": "10°35,65'N - 014°39,70'W",
@@ -1411,6 +1434,7 @@
         "num": "6418",
         "title": "Ile Mangareva - Rade de Rikitea",
         "issued": "Édition n°&nbsp;5 - 2010",
+        "lastUpdate": "6",
         "scaleDenominator": "5000",
         "bboxDM": {
             "SW": "23°08,82'S - 134°58,50'W",
@@ -1451,6 +1475,7 @@
         "num": "6657",
         "title": "Baies de Cook et d'Opunohu",
         "issued": "Édition n°&nbsp;4 - 2017",
+        "lastUpdate": "1",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "17°31,22'S - 149°52,71'W",
@@ -1570,6 +1595,7 @@
         "num": "6774",
         "title": "Puerto de Bilbao",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "4",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "43°18,43'N - 003°07,08'W",
@@ -1614,6 +1640,7 @@
         "num": "6775",
         "title": "Puerto de Palma de Mallorca",
         "issued": "Édition n°&nbsp;3 - 2014",
+        "lastUpdate": "11",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "39°30,63'N - 002°35,15'E",
@@ -1655,6 +1682,7 @@
         "num": "6833",
         "title": "Port de Portsmouth",
         "issued": "Édition n°&nbsp;10 - 2019",
+        "lastUpdate": "1",
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "50°46,93'N - 001°09,43'W",
@@ -1810,6 +1838,7 @@
         "num": "6865",
         "title": "Port de Dartmouth",
         "issued": "Édition n°&nbsp;6 - 2016",
+        "lastUpdate": "6",
         "scaleDenominator": "6200",
         "bboxDM": {
             "SW": "50°19,17'N - 003°35,22'W",
@@ -1856,6 +1885,7 @@
         "num": "6972",
         "title": "Rade et Port d'Augusta",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "13",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "37°09,05'N - 015°10,85'E",
@@ -1897,6 +1927,7 @@
         "num": "7046",
         "title": "Puerto de Barcelona",
         "issued": "Édition n°&nbsp;8 - 2017",
+        "lastUpdate": "10",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "41°16,20'N - 002°07,90'E",
@@ -1938,6 +1969,7 @@
         "num": "7047",
         "title": "Puerto de Tarragona",
         "issued": "Édition n°&nbsp;3 - 2012",
+        "lastUpdate": "16",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "41°01,48'N - 001°10,10'E",
@@ -1979,6 +2011,7 @@
         "num": "7086",
         "title": "Rade de Cherbourg",
         "issued": "Édition n°&nbsp;10 - 2019",
+        "lastUpdate": "2",
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "49°37,95'N - 001°40,93'W",
@@ -2019,6 +2052,7 @@
         "num": "7093",
         "title": "Rade de Toulon",
         "issued": "Édition n°&nbsp;7 - 2018",
+        "lastUpdate": "7",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "43°03,65'N - 005°52,60'E",
@@ -2345,6 +2379,7 @@
         "num": "7104",
         "title": "Port de Cork - Avant-port et approches",
         "issued": "Édition n°&nbsp;5 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "51°44,83'N - 008°20,44'W",
@@ -2466,6 +2501,7 @@
         "num": "7107",
         "title": "Port de La Trinité-Sur-Mer, Port du Crouesty",
         "issued": "Publication 2008",
+        "lastUpdate": "11",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "47°31,52'N - 003°01,80'W",
@@ -2891,6 +2927,7 @@
         "num": "7140",
         "title": "Passes et rade de Lorient",
         "issued": "Édition n°&nbsp;4 - 2019",
+        "lastUpdate": "2",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "47°40,50'N - 003°25,20'W",
@@ -2934,6 +2971,7 @@
         "num": "7176",
         "title": "Rade de Portoferraio",
         "issued": "Édition n°&nbsp;2 - 2016",
+        "lastUpdate": 0,
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "42°47,76'N - 010°18,73'E",
@@ -3054,6 +3092,7 @@
         "num": "7226",
         "title": "Venezia - Porto Marghera",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": "2",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "45°24,85'N - 012°12,33'E",
@@ -3095,6 +3134,7 @@
         "num": "7227",
         "title": "Venise - Porto di Lido",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "7",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "45°23,50'N - 012°20,26'E",
@@ -3136,6 +3176,7 @@
         "num": "7247",
         "title": "Port de Boulogne-sur-Mer",
         "issued": "Édition n°&nbsp;3 - 2011",
+        "lastUpdate": "3",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "50°41,75'N - 001°30,75'E",
@@ -3176,6 +3217,7 @@
         "num": "7290",
         "title": "Port de Genova - Partie Est",
         "issued": "Édition n°&nbsp;4 - 2017",
+        "lastUpdate": "4",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "44°21,18'N - 008°51,61'E",
@@ -3217,6 +3259,7 @@
         "num": "7294",
         "title": "Puerto de Malaga",
         "issued": "Édition n°&nbsp;3 - 2007",
+        "lastUpdate": "12",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "36°39,45'N - 004°27,45'W",
@@ -3258,6 +3301,7 @@
         "num": "7317",
         "title": "Port de Dieppe",
         "issued": "Édition n°&nbsp;3 - 2006",
+        "lastUpdate": "9",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "49°54,90'N - 001°00,55'E",
@@ -4097,6 +4141,7 @@
         "num": "7377",
         "title": "Ports du Larivot et de Cayenne",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "2",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "04°53,78'N - 052°22,90'W",
@@ -4137,6 +4182,7 @@
         "num": "7390",
         "title": "Port de Marseille",
         "issued": "Édition n°&nbsp;6 - 2018",
+        "lastUpdate": "9",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "43°16,60'N - 005°17,06'E",
@@ -4177,6 +4223,7 @@
         "num": "7391",
         "title": "Abords Sud de Marseille - Des Iles du Frioul à l'Ile de Jarre",
         "issued": "Édition n°&nbsp;6 - 2017",
+        "lastUpdate": "5",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "43°11,40'N - 005°16,15'E",
@@ -4217,6 +4264,7 @@
         "num": "7397",
         "title": "Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic",
         "issued": "Édition n°&nbsp;5 - 2017",
+        "lastUpdate": "6",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "48°16,53'N - 004°31,05'W",
@@ -4257,6 +4305,7 @@
         "num": "7398",
         "title": "Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret",
         "issued": "Édition n°&nbsp;5 - 2017",
+        "lastUpdate": "8",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "48°16,68'N - 004°33,33'W",
@@ -4297,6 +4346,7 @@
         "num": "7399",
         "title": "Port de Brest",
         "issued": "Édition n°&nbsp;4 - 2019",
+        "lastUpdate": "1",
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "48°20,92'N - 004°31,98'W",
@@ -4337,6 +4387,7 @@
         "num": "7411",
         "title": "Port des Sables-d'Olonne",
         "issued": "Édition n°&nbsp;2 - 2003",
+        "lastUpdate": "10",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "46°26,76'N - 001°52,60'W",
@@ -4648,6 +4699,7 @@
         "num": "7429",
         "title": "Puerto de Santa Cruz de Tenerife",
         "issued": "Édition n°&nbsp;2 - 2015",
+        "lastUpdate": "2",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "28°25,70'N - 016°16,40'W",
@@ -4692,6 +4744,7 @@
         "num": "7430",
         "title": "Abords et Port de Bayonne - Cours de l'Adour",
         "issued": "Publication 2007",
+        "lastUpdate": "11",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "43°28,90'N - 001°37,23'W",
@@ -4929,6 +4982,7 @@
         "num": "7441",
         "title": "Abords et Ports de Monaco",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "6",
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "43°42,64'N - 007°23,54'E",
@@ -5048,6 +5102,7 @@
         "num": "7480",
         "title": "Accès au fleuve Kourou - Port de Pariacabo",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "05°08,48'N - 052°40,43'W",
@@ -5088,6 +5143,7 @@
         "num": "7500",
         "title": "Port de Napoli",
         "issued": "Édition n°&nbsp;4 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "40°46,84'N - 014°12,79'E",
@@ -5129,6 +5185,7 @@
         "num": "7503",
         "title": "Baie et Port de Ceuta",
         "issued": "Édition n°&nbsp;4 - 2017",
+        "lastUpdate": "6",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "35°52,20'N - 005°22,15'W",
@@ -5170,6 +5227,7 @@
         "num": "7504",
         "title": "Puerto de Almeria",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": 0,
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "36°46,60'N - 002°32,30'W",
@@ -5211,6 +5269,7 @@
         "num": "7506",
         "title": "Port de Genova - Partie Ouest",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": "3",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "44°22,61'N - 008°43,47'E",
@@ -5252,6 +5311,7 @@
         "num": "7526",
         "title": "Approches et Port de Kérkyra (Corfou)",
         "issued": "Édition n°&nbsp;2 - 2018",
+        "lastUpdate": "1",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "39°36,21'N - 019°50,00'E",
@@ -5296,6 +5356,7 @@
         "num": "7534",
         "title": "Rade de La Spezia",
         "issued": "Édition n°&nbsp;3 - 2015",
+        "lastUpdate": "20",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "44°01,04'N - 009°48,28'E",
@@ -5337,6 +5398,7 @@
         "num": "7535",
         "title": "Port de La Spezia",
         "issued": "Édition n°&nbsp;2 - 2016",
+        "lastUpdate": "14",
         "scaleDenominator": "5000",
         "bboxDM": {
             "SW": "44°04,87'N - 009°48,30'E",
@@ -5378,6 +5440,7 @@
         "num": "7546",
         "title": "Port de Djibouti",
         "issued": "Édition n°&nbsp;3 - 2019",
+        "lastUpdate": 0,
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "11°35,15'N - 043°03,49'E",
@@ -5418,6 +5481,7 @@
         "num": "7560",
         "title": "Puerto de Las Palmas",
         "issued": "Édition n°&nbsp;5 - 2016",
+        "lastUpdate": "5",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "28°04,90'N - 015°27,60'W",
@@ -5459,6 +5523,7 @@
         "num": "7570",
         "title": "Rade et Port de Dakar",
         "issued": "Édition n°&nbsp;4 - 2015",
+        "lastUpdate": "3",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "14°38,61'N - 017°26,68'W",
@@ -5499,6 +5564,7 @@
         "num": "7576",
         "title": "Port d'Abidjan",
         "issued": "Édition n°&nbsp;2 - 2016",
+        "lastUpdate": "4",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "05°14,00'N - 004°03,00'W",
@@ -5909,6 +5975,7 @@
         "num": "7642",
         "title": "Puertos de Cartagena et Escombreras",
         "issued": "Édition n°&nbsp;4 - 2018",
+        "lastUpdate": "1",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "37°32,30'N - 001°03,05'W",
@@ -5950,6 +6017,7 @@
         "num": "7643",
         "title": "Port de Nouméa",
         "issued": "Édition n°&nbsp;3 - 2016",
+        "lastUpdate": "12",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "22°19,15'S - 166°22,80'E",
@@ -6070,6 +6138,7 @@
         "num": "7674",
         "title": "Ports de Valletta",
         "issued": "Publication 2013",
+        "lastUpdate": "12",
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "35°52,54'N - 014°29,20'E",
@@ -6273,6 +6342,7 @@
         "num": "7697",
         "title": "Dubrovnik",
         "issued": "Édition n°&nbsp;2 - 2015",
+        "lastUpdate": "9",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "42°36,70'N - 018°01,10'E",
@@ -6319,6 +6389,7 @@
         "num": "7700",
         "title": "Abords du Port de Casablanca",
         "issued": "Publication 2016",
+        "lastUpdate": "4",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "33°35,80'N - 007°40,11'W",
@@ -6362,6 +6433,7 @@
         "num": "7705",
         "title": "Abords de Mohammedia",
         "issued": "Publication 2015",
+        "lastUpdate": "6",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "33°41,50'N - 007°24,90'W",
@@ -6403,6 +6475,7 @@
         "num": "7707",
         "title": "Ports de Tanger Med et de Ksar-es-Srhir",
         "issued": "Publication 2017",
+        "lastUpdate": "3",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "35°50,20'N - 005°35,00'W",
@@ -6444,6 +6517,7 @@
         "num": "7790",
         "title": "Port de Civitavecchia",
         "issued": "Édition n°&nbsp;2 - 2015",
+        "lastUpdate": "9",
         "scaleDenominator": "10000",
         "bboxDM": {
             "SW": "42°04,92'N - 011°42,92'E",
@@ -6485,6 +6559,7 @@
         "num": "7792",
         "title": "Plymouth Sound",
         "issued": "Édition n°&nbsp;3 - 2017",
+        "lastUpdate": 0,
         "scaleDenominator": "7500",
         "bboxDM": {
             "SW": "50°19,67'N - 004°12,30'W",
@@ -6529,6 +6604,7 @@
         "num": "7794",
         "title": "De Falmouth à Truro",
         "issued": "Édition n°&nbsp;3 - 2018",
+        "lastUpdate": "6",
         "scaleDenominator": "12500",
         "bboxDM": {
             "SW": "50°07,54'N - 005°06,16'W",
