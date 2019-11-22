@@ -36,26 +36,31 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 ?>
 <!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title></head>
 <h2>Accès aux cartes du Shom</h2>
-<h3>Nouveautés</h3>
+<h3>Actualité</h3>
 <ul>
-  <li>16/11/2019 : <b>Attention</b>, les mises à jour effectuées jusqu'à ce jour ont été fondées sur l'édition de la carte
+  <li>21/11/2019 : la mise à jour des cartes est en cours mais, en raison d'une difficulté au Shom,
+    seule une partie des cartes a été traitée ;
+    les cartes mises à jour sont celles de métropole dont le numéro est inférieur ou égal à 7393.<br>
+    La <a href='cat/?action=shomgtObsolete' target='_blank'>liste des cartes à actualiser</a> indique pour chaque carte à actualiser
+    son édition et le numéro de la dernière correction, d'une part, dans le GAN à la date d'actualisation indiquée et,
+    d'autre part, la même information pour la carte dans shomgt.
+    Cette fonctionnalité récente est encore en béta.
+  </li>
+  <li>16/11/2019 : <b>Attention</b>, les mises à jour des cartes effectuées jusqu'à ce jour ont été fondées sur l'édition de la carte
     et non sur les corrections effectuées sur chaque carte ;
     ainsi ces corrections ne sont pas prises en compte sur shomgt.
     A la suite d'une alerte d'une DDTM,
     une évolution de cette démarche est en cours pour actualiser les cartes comportant des corrections.</li>
-  <li>14/11/2019 : mise en oeuvre par la DIRM NAMO avec succès du processus d'installation
-    et prise en compte de son retour d'expérience</li>
-  <li>11/11/2019 : publication d'une première version d'une
+  <li>14/11/2019 : une
     <a href='https://github.com/benoitdavidfr/shomgt/blob/master/docs/install.md' target='_blank'>documentation
-      d'installation d'un serveur shomgt</a></li>
-  <li>1/11/2019 : nouvelle version de shomgt en test<ul>
-    <li>réécriture du code publié sur <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a> ;
+      d'installation d'un serveur shomgt</a> a été publiée et a été mise en oeuvre avec succès par la DIRM NAMO</li>
+  <li>1/11/2019 : nouvelle version de shomgt ; 
+      réécriture du code et publication sur <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a> ;
       en cas de besoin intensif des API, merci d'installer votre propre serveur !!!<br>
       ce nouveau code restructuré simplifie grandement la mise à jour des cartes périmées ;
-      attention la liste des couches a été modifiée ;
-    </li>
-    <li>ajout de nouvelles cartes et mise à jour des cartes périmées.</li>
-  </ul></li>
+      attention la liste des couches a été modifiée ;<br>
+      ajout de nouvelles cartes et mise à jour des cartes périmées.</li>
+  </li>
   <li>19/12/2018 : remplacement du téléchargement du tiff des cartes par celui de l'archive 7z fournie par le Shom,
     permettant ainsi d'obtenir le fichier de métadonnées de la carte
   <li>8/12/2018 : mise à jour des cartes</a>
@@ -152,4 +157,4 @@ Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 <h3>Auteur</h3>
 Ce site est réalisé par Benoit DAVID, Chef de la MIG au MTES.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 1/11/2019<br>
+Mise à jour: 21/11/2019<br>

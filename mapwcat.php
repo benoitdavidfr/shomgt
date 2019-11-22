@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  21/11/2019:
+    ajout OSM!
   19/11/2019:
     correction de URL générique du GAN suite à erreur constatée, a priori cette nouvelle URL n'est plus celle du QR Code !
   15/11/2019
@@ -44,23 +46,19 @@ $zoom = (isset($_GET['zoom']) ? $_GET['zoom'] : 6);
   <!-- meta nécessaire pour le mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <!-- styles nécessaires pour le mobile -->
-  <link rel='stylesheet' href='https://benoitdavidfr.github.io/leaflet/llmap.css'>
+  <link rel='stylesheet' href='leaflet/llmap.css'>
   <!-- styles et src de Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-    crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-    crossorigin=""></script>
+  <link rel="stylesheet" href='leaflet/leaflet.css'/>
+  <script src='leaflet/leaflet.js'></script>
   <!-- Include the edgebuffer plugin -->
-  <script src="https://benoitdavidfr.github.io/leaflet/leaflet.edgebuffer.js"></script>
+  <script src="leaflet/leaflet.edgebuffer.js"></script>
   <!-- Include the Control.Coordinates plugin -->
-  <link rel='stylesheet' href='https://benoitdavidfr.github.io/leaflet/Control.Coordinates.css'>
-  <script src='https://benoitdavidfr.github.io/leaflet/Control.Coordinates.js'></script>
+  <link rel='stylesheet' href='leaflet/Control.Coordinates.css'>
+  <script src='leaflet/Control.Coordinates.js'></script>
   <!-- Include the uGeoJSON plugin -->
-  <script src="https://benoitdavidfr.github.io/leaflet/leaflet.uGeoJSON.js"></script>
+  <script src="leaflet/leaflet.uGeoJSON.js"></script>
   <!-- plug-in d'appel des GeoJSON en AJAX -->
-  <script src='https://benoitdavidfr.github.io/leaflet/leaflet-ajax.js'></script>
+  <script src='leaflet/leaflet-ajax.js'></script>
 </head>
 <body>
   <div id="map" style="height: 100%; width: 100%"></div>
@@ -121,17 +119,13 @@ var baseLayers = {
     shomgturl+'tile.php/gt20M/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }
   ),
-  "Cartes IGN Express" : new L.TileLayer(
-    'https://igngp.geoapi.fr/tile.php/scan-express/{z}/{x}/{y}.jpg',
-    {"format":"image/jpeg","minZoom":6,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
-  ),
-  "Cartes IGN classiques" : new L.TileLayer(
-    'https://igngp.geoapi.fr/tile.php/cartes-classiques/{z}/{x}/{y}.jpg',
-    {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
-  ),
   "Plan IGN" : new L.TileLayer(
     'https://igngp.geoapi.fr/tile.php/plan-ign/{z}/{x}/{y}.jpg',
     {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
+  ),
+  "OSM" : new L.TileLayer(
+    'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    {"attribution":"&copy; <a href='https://www.openstreetmap.org/copyright' target='_blank'>les contributeurs d’OpenStreetMap</a>"}
   ),
   "Fond blanc" : new L.TileLayer(
     'https://visu.gexplor.fr/utilityserver.php/whiteimg/{z}/{x}/{y}.jpg',

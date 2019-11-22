@@ -2,28 +2,32 @@ title: shomgt - services de consultation des cartes raster GéoTIFF du SHOM V2
 path: /geoapi/shomgt
 doc: |
   Ce projet est une réécriture de shomgt1 dans l'objectif d'une diffusion du code sur Github.
-  L'objectif est d'exposer sous la forme de web-services les cartes GéoTIFF du Shom couvrant la métropole et les DROM.
+  Il est diffusé sur https://github.com/benoitdavidfr/shomgt
+  L'objectif est d'exposer sous la forme de web-services les cartes GéoTIFF du Shom couvrant les zones sous juridiction française.
   Du point de vue terminologique, on distingue les concepts de carte et de GéoTIFF.
-    - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralament
-      à 4 chiffres ; elle décrit généralement un espace géographique (dit principal) et comprend souvent des
-      cartouches, chacun décrivant un espace géographique dit secondaire,
+    - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralament à 4 chiffres ;
+      elle décrit généralement un espace géographique (dit principal) et comprend souvent des cartouches,
+      chacun décrivant un espace géographique dit secondaire,
     - j'appelle GéoTIFF l'image d'un fichier GéoTIFF qui peut être dans différents formats
   En général une carte correspond à un GéoTIFF principal (correspondant à l'espace principal)
   et éventuellement des GéoTIFF secondaires, chacun correspondant à un cartouche.
   Quelques cartes correspondent uniquement à un ensemble de cartouches et ne correspondent à aucun espace principal.
   
   La carte est l'unité de livraison par le Shom et de mise à jour.
+  Le GéoTIFF est l'unité pour l'affichage.
   
-  Les cartes du Shom sont décrites dans un catalogue (cat) construit à partir des infos du Shom,
-  Les GéoTIFF sont décrits dans le fichier shomgt.yaml dans lequel, à chaque GéoTIFF, sont associés:
+  Les cartes du Shom sont décrites dans un catalogue (cat) construit à partir des infos GAN du Shom,
+  Les GéoTIFF sont décrits dans le fichier ws/shomgt.yaml dans lequel, à chaque GéoTIFF, sont associés:
     1) le nom du fichier correspondant
     2) le rectangle englobant en cooord. géo. WGS84 de l'image globale du GéoTIFF,
     3) la largeur et la hauteur en nbre de pixels du GéoTIFF,
-    4) le titre, l'édition et l'échelle de la carte,
-    5) la largeur de chacune des 4 bordures
+    4) le titre et l'échelle de la carte,
+    5) l'édition de la carte aini que le num. de la dernière correction apportée à la carte,
+    6) la largeur de chacune des 4 bordures
   Les infos 1, 2 et 3 sont issues du fichier GéoTIFF et de son géoréférencement ;
   les infos 4 sont issues du catalogue mentionné précédemment ;
-  les infos 5 sont déduites du rappochement entre le rectangle (1) et le catalogue.
+  les infos 5 sont issues des métadonnées ISO livrées avec les GéoTIFF ;
+  les infos 6 sont déduites du rappochement entre le rectangle (1) et le catalogue.
   
   Les GéoTIFF sont initialement en TIFF, ils sont convertis en PNG (avec gdal).
   Les GéoTIFF sont volumineux et leur chargement en mémoire prend du temps et des ressources machine.
@@ -37,7 +41,7 @@ doc: |
       - de disposer de leurs caractéristiques utiles au module précédent
     - un ensemble d'éléments partagés entre modules (lib), notamment un package de gestion de la géométrie.
   De plus:
-    - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/
+    - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/, il publie notamment le catalogue des cartes Shom,
     - le répertoire docker contient la configuration docker
     - le répertoire tilecache contient un cache des tuiles fréquemment utilisées.
   
@@ -47,18 +51,23 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
+    - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
+    - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
+      lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
+    - la mise à jour du catalogue de cartes devrait pouvoir fonctionner derrière un proxy, ce qui n'est pas le cas,'
     - réfléchir à l'interface OpenApi (pas d'urgence)
     - exposer une description OpenApi des web-services du projet
       
 journal: |
   16-19/11/2019:
     - modification de la méthode d'identification des cartes à actualiser pour prendre en compte les corrections
-    - l'ancienne méthode s'appuyait sur l'édition de la carte, la nouvelle prend aussi en compte les corrections
+    - l'ancienne méthode n'actualisait une carte que si son édition changeait sans tenir compte des corrections
     - ajout
       - au catalogue des cartes du numéro de la dernière correction issu du GAN et
       - dans shomgt.yaml de la dernière correction issue des métadonnées ISO
     - l'identification des cartes à actualiser confronte ces 2 valeurs
     - la méthode d'extraction de la dernière correction a été modifiée le 19/11/2019 car elle n'était pas correcte
+    - commande au Shom des cartes à actualiser, environ 350 cartes sur 433
   7/11/2019:
     - suppression de la carte 7656
   6/11/2019:

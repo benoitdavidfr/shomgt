@@ -2,9 +2,12 @@
 
 L'objectif de ce projet est d'exposer sous la forme de web-services le contenu des
 [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
-couvrant la métropole et l'outre-mer français pour permettre au [MTES](http://www.ecologique-solidaire.gouv.fr)
+couvrant les zones sous juridiction française pour permettre au [MTES](http://www.ecologique-solidaire.gouv.fr)
 et au [MCTRCT](http://www.cohesion-territoires.gouv.fr/)
 d'assurer leurs missions de service public.
+
+La principale plus-value est de permettre de consulter le contenu des cartes en supprimant leur cadre
+afin de passer d'une carte à l'autre sans couture.
 
 Pour utiliser ces web-services, des cartes Shom doivent être au préalable commandées au Shom
 puis intégrées au moyen des scripts de mise à jour.

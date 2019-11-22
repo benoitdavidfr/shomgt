@@ -44,15 +44,16 @@ Il est de la forme :
   - {mapno}_{gtid}_gtw pour chaque zone gégraphique secondaire de la carte numéro {mapno} identifiée par {gtid}
     {gtid} est soit un numéro à partir de 1, soit une lettre à partir de A, ex: 7354_13_gtw
 
-Seules les dalles PNG sont utilisés par les web-services de tuiles et WMS.
-Les fichiers de MD XML sont utilisés par le module catalogue pour comparer la date de mise à jour des GéoTiff exposés
-avec la date de mise à jour définie par le GAN.
+Seules les dalles PNG sont utilisées par les web-services de tuiles et WMS.
+Les fichiers de MD XML sont utilisés par le module catalogue pour comparer la version des GéoTiff exposés
+avec celle définie par le GAN.
+Cette version est définie par l'édition de la carte ainsi que le nombre de corrections apportées à la carte.
 
 L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier un GéoTiff dans le module ws.
 
 ### Données complémentaires
-- chaque couche est constituée des géotiffs dont l'échelle appartient à intervalle défini pour chacune
-  dans `shomgt.php` ;
+- les géotiffs sont répartis en couches en fonction de leur échelle,
+  ainsi chaque couche est définie par un intervalle d'échelles défini dans `shomgt.php` ;
 - le contenu de chaque couche est impacté par l'ordre des géotiffs dans leur catalogue
   qui peut être imposé dans le fichier `updt.yaml`.
 
@@ -66,7 +67,7 @@ L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier
       - le GéoTiff est converti en PNG par gdal puis supprimé
       - le PNG est découpé en dalles 1024 X 1024 puis supprimé
     - transfert des cartes de `{shomgt}/../../shomgeotiff/tmp/` dans `{shomgt}/../../shomgeotiff/current/`
-    - les cartes à supprimer le sont,
+    - les cartes périmées sont supprimées,
   - génération du catalogue Yaml des GéoTiff et écriture dans `../ws/shomgt.yaml`
   - suppression du cache `{shomgt}/tilecache` 
 
@@ -81,7 +82,7 @@ L'identifiant `{mapno}/{gtname}` est utilisé dans `shomgt.yaml` pour identifier
     - découper chaque GéoTiff en dalles 1024 X 1024 avec tile.php
     - génèrer un catalogue Yaml des GéoTiff et l'enregistre dans le fichier ../ws/shomgt.yaml
   - `tile.php` découpe un fichiers PNG en dalles 1024 X 1024 et effectue un effacement de la partie définie dans updt.yaml
-  - `shomgt.php` génère un catalogue Yaml des GéoTiff à enregistrer dans le fichier `../ws/shomgt.yaml`.
+  - `shomgt.php` génère un catalogue Yaml des géotiffs à enregistrer dans le fichier `../ws/shomgt.yaml`.
   
 ### En pratique
 
