@@ -51,6 +51,8 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
+    - lors d'un git pull il y a une erreur sur ws/shomgt.yaml qui est à la fois sur Github et reconstruit par l'install
+      - probablement l'enlever du Github'
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
