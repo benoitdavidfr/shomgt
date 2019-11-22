@@ -69,7 +69,7 @@ Des indications plus précises sur les versions des logiciels sont disponibles
 dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomgt/blob/master/docker/Dockerfile).
 
 Une [documentation fonctionnelle plus détaillée est disponible
-ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/doc.md).
+ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/docfonctionnelle.md).
 
 Une [documentation technique détaillée pour installer un serveur *shomgt* est disponible
 ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/install.md).
