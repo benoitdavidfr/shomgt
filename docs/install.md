@@ -119,7 +119,7 @@ f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
 Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous l'utilisateur `root`,
 soit sous l'utilisateur `www-data`.  
 Dans le conteneur Docker sous l'utilisateur `root`,
-réaffecter récursivement le répertoire `/var/www` à `www-data:www-data`:
+réaffecter récursivement la propriété du répertoire `/var/www` à `www-data:www-data`:
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
@@ -171,11 +171,11 @@ Pour le relancer, relancer sous Linux le conteneur Docker appelé `php72sgt`:
   Lorsque l'on travaille sous Linux, ils doivent appartenir à `user`
   alors que lorsque l'on travaille sous Docker ils doivent appartenir à `www-data`.
   Il peut donc être nécessaire de changer leurs droits.  
-  Sous Docker sous root pour affecter les droits à www-data taper la commande :
+  Sous Docker sous root pour affecter la propriété à www-data taper la commande :
   
         docker# chown -R www-data:www-data /var/www
         
-  Sous Linux sous user pour affecter les droits à user taper la commande :
+  Sous Linux sous user pour affecter la propriété à user taper la commande :
   
         $ sudo chown -R user:user /home/user
 
@@ -279,7 +279,7 @@ a) arrêter le serveur Shomgt :
     $ sudo docker stop php72sgt
     $ sudo docker rm php72sgt
 
-b) réaffecter les droits sur les fichiers à `user` :
+b) réaffecter la propriété des fichiers à `user` :
   
     $ sudo chown -R user:user /home/user
 
@@ -288,13 +288,20 @@ c) se placer dans le répertoire `shomgt` et effectuer un `git pull` qui synchro
     $ cd ~/html/shomgt
     $ git pull https://github.com/benoitdavidfr/shomgt
 
-d) réaffecter les droits sur les fichiers à `www-data` :
+d) si le `git pull` échoue en raison de 2 fichiers `cat/mapcat.json` et `ws/shomgt.yaml` impossible à fusionner (merge)
+alors les effacer puis effectuer à nouveau le `git pull` :
+
+    $ rm cat/mapcat.json
+    $ rm ws/shomgt.yaml
+    $ git pull https://github.com/benoitdavidfr/shomgt
+
+e) réaffecter la propriété des fichiers à `www-data` :
 
     $ sudo docker exec -it --user=root php72sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
     docker# exit
 
-e) relancer le serveur Shomgt:
+f) relancer le serveur Shomgt:
 
     $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
           --mount type=bind,source=/home/user,target=/var/www php72sgt
