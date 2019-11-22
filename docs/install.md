@@ -1,6 +1,9 @@
 # Installation de shomgt sur un serveur Linux
 
-*Benoit DAVID - 16/11/2019 (v2.1)*
+*Benoit DAVID - 22/11/2019 (v2.2)*
+
+### Evolutions récentes
+- 22/11/2019 : ajout d'une section sur la mise à jour du logiciel
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux utilisant Docker ;
 cela permet notamment de disposer des cartes Shom
@@ -8,7 +11,7 @@ sans avoir besoin d'une connexion internet en installant *shomgt* sur un serveur
 
 Cette documentation peut aussi être utilisée pour installer *shomgt* sur un serveur sur internet en sécurisant
 les différents accès.
-Elle peut aussi être utilisée a priori pour installer *shomgt* sur un ordinateur individuel.
+Elle peut aussi enfin a priori être utilisée pour installer *shomgt* sur un ordinateur individuel.
 
 L'installation a été testée sur une [VPS OVH](https://www.ovh.com/fr/vps/) sous l'OS `Docker on Ubuntu 16.04 (32 bits)`.
 Elle a été aussi mise en oeuvre avec succès par la DIRM NAMO pour installer *shomgt* sur un serveur Ubuntu 18.04.3
@@ -267,28 +270,57 @@ et notamment les cartes à actualiser.
 Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
 puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus section 7.
 
-## 9) Sécurisation de shomgt
+## 9) Mise à jour du logiciel shomgt
+
+Shomgt peut être mis à jour à partir du code sur Github. Pour cela:
+
+a) arrêter le serveur Shomgt :
+
+    $ sudo docker stop php72sgt
+    $ sudo docker rm php72sgt
+
+b) réaffecter les droits sur les fichiers à `user` :
+  
+    $ sudo chown -R user:user /home/user
+
+c) se placer dans le répertoire `shomgt` et effectuer un `git pull` qui synchronise les fichiers avec Github :
+
+    $ cd ~/html/shomgt
+    $ git pull https://github.com/benoitdavidfr/shomgt
+
+d) réaffecter les droits sur les fichiers à `www-data` :
+
+    $ sudo docker exec -it --user=root php72sgt /bin/bash
+    docker# chown -R www-data:www-data /var/www
+    docker# exit
+
+e) relancer le serveur Shomgt:
+
+    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
+          --mount type=bind,source=/home/user,target=/var/www php72sgt
+
+## 10) Sécurisation de shomgt
 
 Par défaut, aucun mécanisme de contrôle d'accès n'est mis en oeuvre,
 ce qui correspond à une installation du serveur en intranet.  
 Pour limiter l'accès à shomgt, notamment en cas d'installation sur internet,
-il convient de modifier le fichier `config.inc.php` dans le répertoire `~/html/shomgt/ws` en indiquant:
+il convient de créer un fichier `secretconfig.inc.php` dans le répertoire `~/html/shomgt/ws`
+en copiant la fonction config() du fichier `config.inc.php` et en indiquant:
 
   - dans le champ `cntrlFor` les fonctionnalités à contrôler,
   - dans le champ `ipWhiteList` les adresses IP autorisées,
   - dans le champ `loginPwds` les couples login/password autorisés.
-  
-Afin d'éviter que le fichier `config.inc.php` ne soit effacé lors d'une mise à jour du code source,
-il est recommandé de définir cette configuration dans un fichier `secretconfig.inc.php`
-dans le répertoire `~/html/shomgt/ws` qui, s'il existe, sera utilisé à la place du fichier `config.inc.php`.
-Ce fichier `secretconfig.inc.php` doit définir la fonction config() de manière similaire
-au fichier `config.inc.php`.
 
-## 10) Enregistrement des logs d'appels
+Une fois ce fichier `secretconfig.inc.php` défini, cette fonction config() remplacera celle définie dans le fichier `config.inc.php`.
+
+## 11) Enregistrement des logs d'appels
 
 De même, par défaut, les logs d'appel sont désactivés.
-Pour les activer, il convient dans le fichier `config.inc.php` (ou `secretconfig.inc.php`) de définir
-dans le champ `mysqlParams` le serveur et la base MySQL dans lesquels sera créée la table de log
-ainsi que les login et mots de passe de connexion à MySQL.
-`mysqlParams` est un tableau indexé par le nom du serveur utilisé (sous Php `$_SERVER['HTTP_HOST']`).
+Pour les activer, il convient :
+
+  - de créer une base MySql sur un serveur dans laquelle une table de log sera automatiquement créée,
+  - de référencer cette base dans le fichier `config.inc.php` (ou `secretconfig.inc.php` s'il est créé)
+    en indiquant dans le champ `mysqlParams` le serveur et la base MySQL dans lesquels sera créée la table de log
+    ainsi que les login et mots de passe de connexion à MySQL.  
+    `mysqlParams` est un tableau indexé par le nom du serveur utilisé (sous Php `$_SERVER['HTTP_HOST']`).
 

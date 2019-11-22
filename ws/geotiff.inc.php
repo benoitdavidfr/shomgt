@@ -22,8 +22,10 @@ doc: |
     16-18 5k
 
 journal: |
+  22/11/2019:
+    - gestion du cas où shomgt.pser existe alors que shomgt.yaml a été supprimé
   4/11/2019:
-    - gestion num des cartes AEM et MAncheGrid
+    - gestion num des cartes AEM et MancheGrid
   10/4/2019:
     - ajout tuiles des numéros de carte
   30/3/2019:
@@ -70,7 +72,9 @@ class GeoTiff {
     //echo "yamlpath=$yamlpath<br>\n"; //die();
     self::$verbose = $verbose;
     $path = dirname($yamlpath).'/'.basename($yamlpath, '.yaml'); // le chemin ss l'extension
-    if (!file_exists($path.'.pser') || (filemtime($path.'.pser') < filemtime($yamlpath))) {
+    if (!file_exists($path.'.pser') && !file_exists($path.'.yaml'))
+      throw new Exception("Erreur dans GeoTiff::init() : les fichiers shomgt.yaml et shomgt.pser n'existent ni l'un ni l'autre");
+    if (!file_exists($path.'.pser') || (file_exists($path.'.yaml') && (filemtime($path.'.pser') < filemtime($yamlpath)))) {
       $yaml = Yaml::parseFile($yamlpath);
       self::$path = $yaml['path'];
       foreach ($yaml as $lyrname => $gts) {

@@ -51,8 +51,6 @@ doc: |
     - la décompression des cartes de all pèse environ 2,4 Go
   
   ToDoList:
-    - lors d'un git pull il y a une erreur sur ws/shomgt.yaml qui est à la fois sur Github et reconstruit par l'install
-      - probablement l'enlever du Github'
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
@@ -65,6 +63,8 @@ journal: |
     - modification de mapwcat.php afin que la carte Leaflet fonctionne sur un poste non connecté à internet
       (demande Dominique Bon du CROSS Corsen)
     - téléchargement dans le répertoire leaflet du code nécessaire à la carte Leaflet et intégration dans le Github
+    - suppresion du git du fichier ws/shomgt.yaml qui génère lors d'un git pull une erreur car une version plus récente
+      est générée localement
   16-19/11/2019:
     - modification de la méthode d'identification des cartes à actualiser pour prendre en compte les corrections
     - l'ancienne méthode n'actualisait une carte que si son édition changeait sans tenir compte des corrections
