@@ -4,6 +4,9 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  22/11/2019:
+    - modification du code afin que la carte Leaflet fonctionne sur un poste non connecté à internet (demande Dominique Bon du CROSS Corsen)
+    - téléchargement dans le répertoire leaflet du code nécessaire à la carte Leaflet et intégration dans le Github
   21/11/2019:
     ajout OSM!
   19/11/2019:
