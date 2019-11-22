@@ -535,6 +535,7 @@ class GeoTiff {
       'title'=> $this->title,
       'scaleden'=> $this->scaleden,
       'edition'=> $this->edition,
+      'lastUpdate'=> $this->lastUpdate,
       'west'=> $this->gbox->west(),
       'south'=> $this->gbox->south(),
       'east'=> $this->gbox->east(),

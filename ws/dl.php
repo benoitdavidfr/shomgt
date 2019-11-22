@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: dl.php
-title: dl.php - téléchargement d'une image png ou tiff ,éventuellement rognée, à partir de l'archive de la carte
+title: dl.php - téléchargement d'une image png ou tiff, éventuellement rognée, à partir de l'archive de la carte
 doc: |
   Ss paramètre génère un document JSON listant les GéoTiff du portefeuille avec des liens vers les différents formats
   Le paramètre est fourni en PATH_INFO, plusieurs sont possibles:
