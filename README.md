@@ -71,7 +71,7 @@ dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomg
 Une [documentation fonctionnelle plus détaillée est disponible
 ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/doc.md).
 
-Une [documentation technique détaillée sur l'installation d'un serveur *shomgt* est disponible
+Une [documentation technique détaillée pour installer un serveur *shomgt* est disponible
 ici](https://github.com/benoitdavidfr/shomgt/tree/master/docs/install.md).
 
 Une documentation technique complémentaire est disponible dans chacun des modules.
