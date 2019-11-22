@@ -42,9 +42,10 @@ Ce projet est décomposé en 4 modules:
 De plus:
 
   - le répertoire [`docs`](https://github.com/benoitdavidfr/shomgt/tree/master/docs) contient
-    l'export GeoJSON du catalogue des cartes du Shom,
-    qui peut ainsi être consulté sous la forme
+    l'export GeoJSON du catalogue des cartes du Shom, qui peut ainsi être consulté sous la forme
     d'[une carte directement sur Github](https://benoitdavidfr.github.io/shomgt/catmap.html),
+  - le répertoire `leaflet` contient des fichiers utilisés par la carte Leaflet permettant une visualisation de cette carte
+    sans accès à internet,
   - le répertoire `docker` contient la configuration Docker d'un serveur d'hébergement des web-services.
   - le répertoire `tilecache` contient un cache des tuiles de la couche gtpyr.
 
