@@ -54,7 +54,8 @@ doc: |
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
-    - la mise à jour du catalogue de cartes devrait pouvoir fonctionner derrière un proxy, ce qui n'est pas le cas,'
+      Par ailleurs, des fichiers modifiés par l'utilisateur sont dans le Github ce qui génère une erreur lors d'un git_pull
+    - la mise à jour du catalogue de cartes devrait pouvoir fonctionner derrière un proxy, ce qui n'est pas le cas
     - réfléchir à l'interface OpenApi (pas d'urgence)
     - exposer une description OpenApi des web-services du projet
       

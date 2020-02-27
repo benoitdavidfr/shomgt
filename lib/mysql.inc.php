@@ -8,7 +8,10 @@ doc: |
   La méthode statique MySql::open() prend en paramètre les paramètres MySql
   sous la forme mysql://{user}:{passwd}@{host}/{database}
   Voir utilisation en fin de fichier
+  Sur localhost si la base utilisée n'exiset pas alors elle est créée.
 journal: |
+  23/11/2019:
+    sur localhost si la base à ouvrir n'existe pas alors elle est créée. Cela simplifie le redémérrage d'un serveur docker vide
   3/8/2018 15:00
     ajout MySql::server()
   3/8/2018
@@ -28,8 +31,21 @@ class MySql {
     self::$server = $matches[3];
     // La ligne ci-dessous ne s'affiche pas correctement si le serveur est arrêté !!!
     //    throw new Exception("Connexion MySQL impossible pour $server_name : ".mysqli_connect_error());
-    if (mysqli_connect_error())
-      throw new Exception("Erreur: dans MySql::open() connexion MySQL impossible sur $mysqlParams");
+    if (mysqli_connect_error()) {
+      if ($_SERVER['HTTP_HOST'] <> 'localhost')
+        throw new Exception("Erreur: dans MySql::open() connexion MySQL impossible sur $mysqlParams");
+      // Sur localhost j'essaie de créer la base
+      self::$mysqli = @new mysqli($matches[3], $matches[1], $matches[2], 'sys');
+      if (mysqli_connect_error())
+        throw new Exception("Erreur: dans MySql::open() connexion MySQL impossible sur $mysqlParams");
+      $sql = 'CREATE DATABASE IF NOT EXISTS `shomgt` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
+      if (!($result = self::$mysqli->query($sql))) {
+        //echo "sql:$sql\n";
+        throw new Exception("Req. \"$sql\" invalide: ".self::$mysqli->error);
+      }
+      if (!self::$mysqli->select_db($matches[4]))
+        throw new Exception("select_db($matches[4]) invalide: ".self::$mysqli->error);
+    }
     if (!self::$mysqli->set_charset ('utf8'))
       throw new Exception("Erreur: dans MySql::open() mysqli->set_charset() impossible : ".self::$mysqli->error);
   }

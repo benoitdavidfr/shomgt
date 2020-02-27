@@ -1,5 +1,9 @@
 ## Module gestion du catalogue des cartes Shom
 
+### Mise à jour 27/2/2020
+Il semble que l'exposition du GAN ait été modifié par le Shom et qu'il soit nécessaire de modifier une partie de ce code.
+
+### Introduction
 Ce module gère un catalogue des cartes GéoTIFF du Shom afin :
 
   - de connaitre celles à commander au Shom (ajout ou actualisation) et celles périmées à supprimer,

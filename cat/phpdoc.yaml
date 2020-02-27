@@ -28,6 +28,10 @@ doc: |
       - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
 
 journal: |
+  26/2/2020:
+    - la mise à jour ne fonctionne pas
+    - il semble que le Shom ait changé l'exposition du GAN
+    - il est nécessaire de modifier le code pour prendre cette modification en compte
   8/11/2019:
     - ajout de la possibilité de créer un catalogue en pser à partir de sa version GeoJSON
   29/10/2019:
