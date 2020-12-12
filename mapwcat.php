@@ -94,7 +94,7 @@ var onEachFeature = function (feature, layer) {
     +"propriétés du géotiff en JSON</a></li>";
   ganWeek = feature.properties.ganWeek;
   popupContent += "<li><a href='https://www.shom.fr/qr/gan/FR"+num+"/"+ganWeek+"' target='GAN'>"
-    +"Groupe d’Avis aux Navigateurs (GAN) de la carte.</a></li>";  
+    +"Corrections de la carte publiées par le Shom (GAN) et non prises en compte.</a></li>";  
   popupContent += '</ul>';
   layer.bindPopup(popupContent);
   layer.bindTooltip(feature.properties.title);
