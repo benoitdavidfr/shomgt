@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: shomgtedition.inc.php
-title: shomgtedition.inc.php - traitements divers
+title: shomgtedition.inc.php - récupère l'édition de la carte à partir des MD XML des cartes
 journal: |
   16/11/2019:
     retourne aussi la dernière correction

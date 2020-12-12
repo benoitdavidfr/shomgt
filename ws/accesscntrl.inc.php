@@ -9,14 +9,16 @@ doc: |
       les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
     2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
     3) authentification HTTP Basic, utilisé pour le service WMS.
-  Pour la varification du cookie, la page login.php permet de stocker dans le cookie le login/mdp
-  Toute la logique de controle d'accès est regroupée dans la classe Access qui:
+  Pour la vérification du cookie, la page login.php permet de stocker dans le cookie le login/mdp
+  Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
     - exploite le fichier de config
     - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
     - expose la méthode cntrl() pour réaliser le contrôle 
 journal: |
+  23/5/2020:
+    ajout du contrôle sur préfixe IPv6
   30/3/2019:
-    dadaptation pour ShomGt v2
+    adaptation pour ShomGt v2
   16/12/2018:
     détection d'une forte utilisation du service WMS par referer=http://10.56.204.34/seamis-sig/ & ip= 185.24.184.194
     réactivation du contrôle d'accès sur le WMS
@@ -54,10 +56,17 @@ class Access {
     return isset(config('cntrlFor')[$what]) ? config('cntrlFor')[$what] : true;
   }
   
-  // liste des adresses IP autorisées
-  private static function ipInWhiteList() { return in_array($_SERVER['REMOTE_ADDR'], config('ipWhiteList')); }
+  // teste si la l'adresse IP dans la liste blanche
+  private static function ipInWhiteList(): bool {
+    if (in_array($_SERVER['REMOTE_ADDR'], config('ipV4WhiteList')))
+      return true;
+    foreach (config('ipV6PrefixWhiteList') as $ipV6Prefix)
+      if (substr($_SERVER['REMOTE_ADDR'], 0, strlen($ipV6Prefix)) == $ipV6Prefix)
+        return true;
+    return false;
+  }
   
-  private static function loginPwdInCookie() {
+  private static function loginPwdInCookie(): bool {
     return isset($_COOKIE[SELF::COOKIENAME]) && in_array($_COOKIE[SELF::COOKIENAME], config('loginPwds'));
   }
   

@@ -5,8 +5,10 @@ title: config.inc.php - fichier de config par défaut
 doc: |
   Le vrai fichier de config est secretconfig.inc.php qui contient des infos confidentielles
   S'il existe, c'est lui qui est utilisé
-  Sinon ce fichier congtient une configuration par défaut
+  Sinon ce fichier contient une configuration par défaut
 journal:
+  23/5/2020:
+    ajout du contrôle IPv6
   9/11/2019
     amélioration du controle d'accès
 includes: [secretconfig.inc.php]
@@ -26,10 +28,14 @@ else {
         'geoTiffCatalog'=> false, # désactivé pour le catalogue des GéoTiff
       ],
     
-      // liste des adresses IP autorisées utilisée lorsque le contrôle est activé
-      'ipWhiteList'=> [
+      // liste des adresses IP V4 autorisées utilisée lorsque le contrôle est activé
+      'ipV4WhiteList'=> [
         //'127.0.0.1', // Accès local
         '172.17.0.1', // accès entre machines docker
+      ],
+    
+      // liste des prefixes d'adresses IP V6 autorisées utilisée lorsque le contrôle est activé
+      'ipV6PrefixWhiteList'=> [
       ],
     
       // liste des login/mdp autorisés utilisée lorsque le contrôle est activé

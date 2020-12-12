@@ -13,10 +13,9 @@ includes: [../lib/gegeom.inc.php, geotiff.inc.php]
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/geotiff.inc.php';
 
-$lyrname = isset($_GET['lyr']) ? $_GET['lyr'] : null;
+$lyrname = $_GET['lyr'] ?? null;
 //die("lyrname=$lyrname");
-$bbox = isset($_GET['bbox']) ? $_GET['bbox'] : (isset($_POST['bbox']) ? $_POST['bbox'] : null);
-if ($bbox) {
+if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
   $bbox = new GBox($bbox); // en coord. géo.
   $wombox = $bbox->proj('WorldMercator');
 }

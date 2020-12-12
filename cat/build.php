@@ -6,7 +6,8 @@ doc: |
   Il reste à gérer l'invalidation d'une carte
 journal: |
   19/11/2019:
-    correction de l'URL générique des GAN suite à erreur rencontée ; il ne s'agit plus a priori de l'URL du QR Code
+    correction de l'URL générique des GAN suite à erreur rencontrée
+    cette correction basique doit être améliorée
   8-9/11/2019:
     possibilité de construire un pser à partir du GeoJSON
   29/10/2019:
@@ -65,7 +66,8 @@ else { // en non CLI
 function harvestGan(string $id) {
   echo "id:$id\n";
   //$url = "http://www.shom.fr/qr/gan/$id";
-  $url = "https://gan.shom.fr/qr/gan/$id"; // correction de l'URL le 19/11/2019 suite à erreur rencontrée. Il ne s'agit plus a priori de l'URL du QR Code
+  //$url = "https://gan.shom.fr/qr/gan/$id"; // correction de l'URL le 19/11/2019 suite à erreur rencontrée. Il ne s'agit plus a priori de l'URL du QR Code
+  $url = "https://www.shom.fr/qr/gan/$id/1937"; // ajout https et num premier n° de GAN à consulter
   if (($html = @file_get_contents($url)) === FALSE) {
     //die("Erreur de lecture de $url");
     echo "<b>Erreur de lecture de $url</b><br>\n";

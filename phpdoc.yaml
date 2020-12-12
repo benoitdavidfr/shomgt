@@ -50,6 +50,8 @@ doc: |
     - une livraison particulière nommée all contient tt les cartes à conserver, elle pèse environ 2 Go supp.
     - la décompression des cartes de all pèse environ 2,4 Go
   
+  synchro: http://localhost/synchro.php?remote=http://prod.geoapi.fr&dir=geoapi/shomgt
+  
   ToDoList:
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
@@ -60,6 +62,23 @@ doc: |
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  12/12/2020:
+    - ajout dans shomgt.yaml du champ mdDate, qui est la date de mise à jour des métadonnées ISO 19139
+      - cette date est la meilleure approximation dont je dispose de la date de dernière révision de la carte
+    - modification du lien vers le GAN dans la carte en tenant compte de mdDate
+      - ainsi ce lien permet d'afficher les corrections non prises en compte dans la carte affichée
+  10/12/2020:
+    - mise à jour en urgence des 2 cartes 7442 et 7200 à la demande de la DDTM06
+    - le script updt.php ne fonctionne pas en Php8, il semble que cela vient du module Yaml de Symfony
+    - j'ai upgradé Yaml en faisant 'composer require symfony/yaml' dans le répertoire shomgt ce qui a corrigé le bug
+    - sur Alwaysdata, pb de version de Composer
+      - je suis passé en Php 7.2 pour effectuer l'upgrade de Yaml
+      - l'upgrade de Composer (composer self-update) génère une erreur
+        [RuntimeException] 
+        SHA384 is not supported by your openssl extension, could not verify the phar file integrity 
+      - j'ai supprimé ~/.composer
+      - j'ai réinstallé composer
+      - visiblement j'utilise maintenant /usr/bin/composer dans la version 'Composer version 1.10.17 2020-10-30 22:31:58'
   22/11/2019:
     - modification de mapwcat.php afin que la carte Leaflet fonctionne sur un poste non connecté à internet
       (demande Dominique Bon du CROSS Corsen)

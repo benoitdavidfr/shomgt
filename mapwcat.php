@@ -4,8 +4,12 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  12/12/2020:
+    - correction du lien du GAN dans les cartes
+    - ajout du champ mdDate qui est la date des métadonnées ISO 19139
   22/11/2019:
-    - modification du code afin que la carte Leaflet fonctionne sur un poste non connecté à internet (demande Dominique Bon du CROSS Corsen)
+    - modification du code afin que la carte Leaflet fonctionne sur un poste non connecté à internet
+      (demande Dominique Bon du CROSS Corsen)
     - téléchargement dans le répertoire leaflet du code nécessaire à la carte Leaflet et intégration dans le Github
   21/11/2019:
     ajout OSM!
@@ -76,7 +80,8 @@ var onEachFeature = function (feature, layer) {
   popupContent += '<u><i>'+'nom</i></u>: '+feature.properties.gtname+"\n";
   popupContent += '<u><i>'+'échelle</i></u>: 1/'+feature.properties.scaleden+"\n";
   popupContent += '<u><i>'+'édition</i></u>: '+feature.properties.edition+"\n";
-  popupContent += '<u><i>'+'dernière correction</i></u>: '+feature.properties.lastUpdate+"</pre>\n";
+  popupContent += '<u><i>'+'dernière correction</i></u>: '+feature.properties.lastUpdate+"\n";
+  popupContent += '<u><i>'+'mdDate</i></u>: '+feature.properties.mdDate+"</pre>\n";
   gtname = feature.properties.gtname;
   num = gtname.substring(0,4);
   popupContent += '<b>Liens:</b><ul>';
@@ -87,7 +92,8 @@ var onEachFeature = function (feature, layer) {
     +"image GéoTIFF rognée</a></li>";
   popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".json' target='_blank'>"
     +"propriétés du géotiff en JSON</a></li>";
-  popupContent += "<li><a href='https://gan.shom.fr/qr/gan/FR"+num+"' target='GAN'>"
+  ganWeek = feature.properties.ganWeek;
+  popupContent += "<li><a href='https://www.shom.fr/qr/gan/FR"+num+"/"+ganWeek+"' target='GAN'>"
     +"Groupe d’Avis aux Navigateurs (GAN) de la carte.</a></li>";  
   popupContent += '</ul>';
   layer.bindPopup(popupContent);
@@ -123,7 +129,7 @@ var baseLayers = {
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }
   ),
   "Plan IGN" : new L.TileLayer(
-    'https://igngp.geoapi.fr/tile.php/plan-ign/{z}/{x}/{y}.jpg',
+    'https://igngp.geoapi.fr/tile.php/plan-ignv2/{z}/{x}/{y}.png',
     {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
   ),
   "OSM" : new L.TileLayer(

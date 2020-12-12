@@ -14,8 +14,10 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  11/12/2020:
+    ajout du champ mdDate déduit des MD XML, utilisation de mdiso19139() à la place de shomgtedition() pour analyser les MD
   16/11/2019:
-    ajout du champ lastUpdaet déduit des MD XML
+    ajout du champ lastUpdate déduit des MD XML
   2/11/2019:
     utilisation de l'édition de la carte définie dans le fichier de MD XML à la place de celle du GAN
   29/10/2019:
@@ -72,7 +74,7 @@ require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 require_once __DIR__.'/ontop.inc.php';
-require_once __DIR__.'/shomgtedition.inc.php';
+require_once __DIR__.'/mdiso19139.inc.php';
 require_once __DIR__.'/../cat/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -180,11 +182,12 @@ while (($mapname = readdir($current)) !== false) {
     $top = ceil(($gdalbox->north() - $ganbox->north())/ $gdalbox->dy() * $height);
     if (($top <= 0) || ($top > $height/2))
       $top = 400;
-    $shomgtedition = shomgtedition("$mapname/$fbname");
+    $mdiso19139 = mdiso19139("$mapname/$fbname");
     $shomgt[$lyrName]["$mapname/$fbname"] = [
       'title'=> $title,
-      'edition'=> $shomgtedition ? $shomgtedition[0] : 'inconnue',
-      'lastUpdate'=> ($shomgtedition && isset($shomgtedition[1])) ? $shomgtedition[1] : 'inconnue',
+      'edition'=> $mdiso19139['édition'] ?? 'inconnue',
+      'lastUpdate'=> $mdiso19139['dernièreCorrection'] ?? 'inconnue',
+      'mdDate'=> $mdiso19139['mdDate'] ?? 'inconnue',
       'scaleden'=> $shomgtgan['scaleDenominator'],
       'width'=> $width,
       'height'=> $height,
@@ -229,9 +232,10 @@ foreach ($shomgt as $key => $value) {
       continue;
     foreach ($value as $gtname => $gt) {
       echo  "  $gtname:\n",
-            "    title: $gt[title]\n",
+            "    title: '",str_replace("'","''", $gt['title']),"'\n",
             (isset($gt['edition']) ? "    edition: $gt[edition]\n" : ''),
             (isset($gt['lastUpdate']) ? "    lastUpdate: $gt[lastUpdate]\n" : ''),
+            (isset($gt['mdDate']) ? "    mdDate: '$gt[mdDate]'\n" : ''),
             (isset($gt['scaleden']) ? sprintf("    scaleden: %d\n",str_replace('.','',$gt['scaleden'])) : ''),
             sprintf("    width: %d\n",$gt['width']),
             sprintf("    height: %d\n",$gt['height']),

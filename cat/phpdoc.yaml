@@ -28,6 +28,12 @@ doc: |
       - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
 
 journal: |
+  19/11/2020:
+    - les URL GAN doivent être de la forme https://www.shom.fr/qr/gan/FR7440/1721
+      où FR7440 est l'identifiant de la carte et 1721 est le no de semaine (semaine 21 de 2017)
+      à partir de laquelle les avis sont demandés
+    - la possibilité d'interroger les GAN depuis l'origine de la carte semble avoir été supprimée
+    - le code ne prend pas encore en compte correctement cette fonctionnalité
   26/2/2020:
     - la mise à jour ne fonctionne pas
     - il semble que le Shom ait changé l'exposition du GAN
@@ -39,11 +45,11 @@ journal: |
   26/10/2019:
     - simplification du catalogue par suppression de l'historique inutile
   15-17/3/2019:
-    refonte importante
-    prises en compte de corrections du GAN définies dans gancorrections.yaml
-    Ces corrections permettent de visualiser les petites iles du canal du Mozambique
-    Le fichier shomgt.yaml peut être généré à partir des GAN
-    Il manque encore la possibilité de gérer l'ordre des cartes. FAIT
+    - refonte importante
+    - prises en compte de corrections du GAN définies dans gancorrections.yaml
+    - Ces corrections permettent de visualiser les petites iles du canal du Mozambique
+    - Le fichier shomgt.yaml peut être généré à partir des GAN
+    - Il manque encore la possibilité de gérer l'ordre des cartes. FAIT
     
 phpScripts:
   - /geoapi/shomgt/cat/index.php

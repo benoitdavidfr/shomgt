@@ -22,6 +22,10 @@ doc: |
     16-18 5k
 
 journal: |
+  12/12/2020:
+    - ajout sur chaque GeoTiff du champ mdDate, qui est la date de mise à jour des MD ISO,
+      que j'utilise comme proxy de la date de dernière révision de la carte
+    - génération en GeoJSON du chmap mdDate et du champ ganWeek qui la semaine GAN déduite de mdDate
   22/11/2019:
     - gestion du cas où shomgt.pser existe alors que shomgt.yaml a été supprimé
   4/11/2019:
@@ -59,6 +63,7 @@ class GeoTiff {
   private $scaleden; // dénominateur de l'échelle (optionnel)
   private $edition; // édition de la carte (optionnel)
   private $lastUpdate; // nombre de corrections de la carte (optionnel)
+  private $mdDate; // date de modification des métadonnées ISO 19139
   private $gbox; // EBox en WGS84 du GéoTiff, y.c. les bordures
   private $wombox; // EBox en WorldMercator du GéoTiff, y.c. les bordures
   private $wboxnb; // EBox en WorldMercator du GéoTiff sans les bordures
@@ -76,6 +81,7 @@ class GeoTiff {
       throw new Exception("Erreur dans GeoTiff::init() : les fichiers shomgt.yaml et shomgt.pser n'existent ni l'un ni l'autre");
     if (!file_exists($path.'.pser') || (file_exists($path.'.yaml') && (filemtime($path.'.pser') < filemtime($yamlpath)))) {
       $yaml = Yaml::parseFile($yamlpath);
+      //echo "<pre>"; print_r($yaml);
       self::$path = $yaml['path'];
       foreach ($yaml as $lyrname => $gts) {
         if ((strncmp($lyrname, 'gt', 2)==0) && $gts) {
@@ -101,6 +107,7 @@ class GeoTiff {
     else { // le phpser existe et est plus récent que le Yaml alors initialisation à partir du phpser
       list(self::$path, self::$gts) = unserialize(file_get_contents($path.'.pser'));
     }
+    //echo "<pre>"; print_r(self::$gts);
   }
     
   /*PhpDoc: methods
@@ -259,10 +266,11 @@ class GeoTiff {
   // peut aussi utiliser des paramètres générés par imagecopytiles()
   function __construct(string $name, array $params) {
     $this->name = $name;
-    $this->title = isset($params['title']) ? $params['title'] : null;
-    $this->scaleden = isset($params['scaleden']) ? $params['scaleden'] : null;
-    $this->edition = isset($params['edition']) ? $params['edition'] : null;
-    $this->lastUpdate = isset($params['lastUpdate']) ? $params['lastUpdate'] : null;
+    $this->title = $params['title'] ?? null;
+    $this->scaleden = $params['scaleden'] ?? null;
+    $this->edition = $params['edition'] ?? null;
+    $this->lastUpdate = $params['lastUpdate'] ?? null;
+    $this->mdDate = $params['mdDate'] ?? null;
     $this->width = $params['width'];
     $this->height = $params['height'];
     $this->left = $params['left'];
@@ -501,6 +509,15 @@ class GeoTiff {
     return true;
   }
   
+  function ganWeek(): string {
+    $ganWeek = '1715'; // par défaut, c'est a peu près la date des premières livraisons
+    if ($this->mdDate) { // Si la date de mise à jour des MD est remplie alors je prends pour ganweek cette semaine
+      $time = strtotime($this->mdDate);
+      $ganWeek = substr(date('o', $time), 2) . date('W', $time);
+    }
+    return $ganWeek;
+  }
+  
   /*PhpDoc: methods
   name: geojsonf
   title: "function geojsonf(string $lyrname, string $gtname, ?EBox $wombox): array - génère un array Php correspondant au GeoJSON du GéoTiff"
@@ -518,6 +535,8 @@ class GeoTiff {
         'scaleden'=> $this->scaleden,
         'edition'=> $this->edition,
         'lastUpdate'=> $this->lastUpdate,
+        'mdDate'=> $this->mdDate,
+        'ganWeek'=> $this->ganWeek(),
         'width'=> $this->width,
         'height'=> $this->height,
         'left'=> $this->left,
@@ -540,6 +559,8 @@ class GeoTiff {
       'scaleden'=> $this->scaleden,
       'edition'=> $this->edition,
       'lastUpdate'=> $this->lastUpdate,
+      'mdDate'=> $this->mdDate,
+      'ganWeek'=> $this->ganWeek(),
       'west'=> $this->gbox->west(),
       'south'=> $this->gbox->south(),
       'east'=> $this->gbox->east(),
