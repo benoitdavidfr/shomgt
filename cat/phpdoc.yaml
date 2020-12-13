@@ -7,8 +7,7 @@ doc: |
     
   Le catalogue doit être régulièrement actualisé, il est construit à partir de 2 sources du Shom:
     - le flux WFS de la liste des cartes Shom
-    - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent des informations actualisées chaque semaine
-      sur chaque carte non périmée
+    - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent chaque semaine des corrections sur les cartes
   
   Mise en oeuvre:
     - le script build.php permet de lire le flux WFS et les GANs correspondants
@@ -28,12 +27,18 @@ doc: |
       - affichage de la carte Leaflet centrée et zoomée sur la carte Shom
 
 journal: |
+  12/12/2020:
+    - l'impossibilité d'interroger les GAN sans fournir de date d'origine remet en cause la logique de construction du catalogue
+    - dans la version actuelle je reconstruis le catalogue à chaque moisson à partir du flux WFS et des GAN
+    - il vaut peut être mieux considérer que j'ai un catalogue fiabilisé dans ../ws/shomgt.yaml et que je cherche à détecter
+      - si de nouvelles corrections ont été publiées
+      - éventuellement la péremption de certaines cartes et l'ajout de nouvelle carte
   19/11/2020:
     - les URL GAN doivent être de la forme https://www.shom.fr/qr/gan/FR7440/1721
       où FR7440 est l'identifiant de la carte et 1721 est le no de semaine (semaine 21 de 2017)
       à partir de laquelle les avis sont demandés
     - la possibilité d'interroger les GAN depuis l'origine de la carte semble avoir été supprimée
-    - le code ne prend pas encore en compte correctement cette fonctionnalité
+    - le code ne prend pas encore en compte correctement cette évolution
   26/2/2020:
     - la mise à jour ne fonctionne pas
     - il semble que le Shom ait changé l'exposition du GAN

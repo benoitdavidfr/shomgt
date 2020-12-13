@@ -1,0 +1,622 @@
+title: définition du schéma du catalogue des cartes Shom, illustré par des cas-types, ainsi que des écarts aux sources du Shom
+description: |
+  Ce document définit le schéma du catalogue, l'illustre par des cas-types et définit des écarts voulus par rapport aux sources du Shom.
+  Ce schéma décrit le catalogue des cartes stocké en Yaml et en pser ainsi que celui exposé en JSON.
+$id: http://geoapi.fr/shomgt/cat2/mapcatex
+$schema:
+  title: schema JSON du catalogue des cartes Shom
+  $id: http://geoapi.fr/shomgt/cat2/mapcatex#$schema
+  modified: '2020-12-13T13:00+01:00'
+  description: |
+    Ce schéma décrit le catalogue des cartes et les écarts voulus par rapport aux sources du Shom.
+    On distingue le concept de carte de celui de GéoTIFF.
+      - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralement à 4 chiffres 
+        précédé par les lettres 'FR' ;
+        des corrections, numérotées en séquence à partir de 1, peuvent lui être appliquées définissant ainsi des versions
+        successives de la carte.
+        Une carte décrit généralement un espace géographique dit principal et comprend souvent des cartouches,
+        chacun décrivant un espace géographique dit secondaire,
+      - on appelle GéoTIFF l'image d'un fichier GéoTIFF qui peut être dans différents formats
+    Une carte correspond à un GéoTIFF principal, correspondant à l'espace principal, lorsqu'il existe,
+    et éventuellement des GéoTIFF secondaires, correspondants chacun à un cartouche.
+    Quelques cartes comportent uniquement un ensemble de cartouches et ne comportent aucun espace principal.
+  $schema: http://json-schema.org/schema#
+  definitions:
+    dateIso8601:
+      description: date au format ISO 8601 limité aux cas les plus fréquents
+      type: string
+      pattern: '^\d\d\d\d-\d\d-\d\d(T\d\d:\d\d(:\d\d(\.\d+)?)?)?([+-]\d\d:\d\d|Z)?$'
+      examples:
+        - '2020-01-10'
+        - '2020-01-10T16:33'
+        - '2020-01-10T16:33:34.56'
+        - '2020-01-10T16:33:34.56+01:00'
+        - '2020-01-10T16:33:34.56Z'
+        - '2020-01-10T16:33+01:00'
+        - '2020-01-10+01:00'
+      counterexamples:
+        - '2020-01-10T16'
+    scaleDenominator:
+      description: dénominateur de l'échelle avec . comme séparateur des milliers
+      type: string
+      pattern: '^\d{1,3}(\.\d{3})*$'
+      examples:
+        - '5'
+        - '500'
+        - '1.500'
+        - '23.600'
+        - '123.800'
+        - '1.123.600'
+        - '12.123.600'
+        - '123.123.600'
+      counterexamples:
+        - '1500'
+        - '15.00'
+    latLonDM:
+      description: couple (latitude, longitude) en degrés minutes
+      pattern: "^\\d+°(\\d+(,\\d+)?)?'(N|S) - \\d+°(\\d+(,\\d+)?)?'(E|W)$"
+      examples:
+        - "44°09,00'N - 002°36,00'W"
+        - "45°49,00'N - 001°00,00'W"
+    bboxDM:
+      description: boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
+      type: object
+      required: [SW, NE]
+      additionalProperties: false
+      properties:
+        SW:
+          description: latitude et longitude du coin SW en degrés minutes
+          $ref: '#/definitions/latLonDM'
+        NE:
+          description: latitude et longitude du coin NE en degrés minutes
+          $ref: '#/definitions/latLonDM'
+    latitudeDM:
+      description: latitude en degrés minutes
+      pattern: "^\\d+°(\\d+(,\\d+)?)?'(N|S)$"
+      examples:
+        - "44°09,00'N"
+    longitudeDM:
+      description: longitude en degrés minutes
+      pattern: "^\\d+°(\\d+(,\\d+)?)?'(E|W)$"
+      examples:
+        - "001°00,00'W"
+    dcmi-box:
+      description: boite englobante au format DCMI-Box en degrés, minutes en WGS84
+      type: object
+      required: [southlimit, westlimit, northlimit, eastlimit]
+      additionalProperties: false
+      properties:
+        southlimit:
+          description: latitude minimum
+          $ref: '#/definitions/latitudeDM'
+        westlimit:
+          description: longitude minimum
+          $ref: '#/definitions/longitudeDM'
+        northlimit:
+          description: latitude maximum
+          $ref: '#/definitions/latitudeDM'
+        eastlimit:
+          description: longitude maximum
+          $ref: '#/definitions/longitudeDM'
+  type: object
+  required: [ title, $id, $schema, modified, maps ]
+  additionalProperties: false
+  properties:
+    title: { description: 'titre du document', type: string }
+    description: { description: 'commentaire sur le document', type: string }
+    $id: { description: 'identifiant du document', type: string , format: uri }
+    $schema: { description: 'schema JSON du document', $ref: http://json-schema.org/schema# }
+    created: { description: 'date de création initiale du document', $ref: '#/definitions/dateIso8601' }
+    modified: { description: 'date de dernière modification du document', $ref: '#/definitions/dateIso8601' }
+    maps:
+      description: dictionnaire des cartes indexées sur leur numéro précédé de 'FR'
+      type: object
+      additionalProperties: false
+      patternProperties:
+        ^FR\d\d\d\d:
+          description: |
+            Description d'une carte.
+            Une carte ne comportant pas d'espace principal ne comporte pas les champs scaleDenominator et bboxDM
+            et comporte alors obligatoirement des cartouches.
+            Les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
+            sont identifiées par la propriété mapsFrenchAreas ;
+            elles devraient renseigner les propriétés modified et lastUpdate.
+          type: object
+          additionalProperties: false
+          required: [title, edition]
+          properties:
+            castype:
+              description: propriété uniquement utilisé pour décrire les cas-types
+              type: string
+            groupTitle:
+              description: sur-titre optionnel identifiant un ensemble de cartes
+              type: string
+              example:
+                - Océan Pacifique Sud
+            title:
+              description: titre de la carte
+              type: string
+              example:
+                - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
+            edition:
+              description: édition de la carte indiquée par le Shom
+              type: string
+              examples:
+                - Édition n° 3 - 2018
+                - Publication 2017
+            mapsFrenchAreas:
+              description: |
+                identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
+                Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfasant ce critère sont exclues ;
+                elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
+                Cette propriété est présente ssi la carte intersecte la ZEE française.
+                Sa valeur est false ssi c'est une des exceptions.
+              type: boolean
+            modified:
+              description: |
+                date de la dernière correction, ou si aucune correction date initiale ; si inconnue date des MD.
+                Ce champ devrait être présent pour les cartes d'intérêt.
+              $ref: '#/definitions/dateIso8601'
+            lastUpdate:
+              description: |
+                no de la dernière correction de la carte, 0 si aucune correction.
+                Ce champ devrait être présent pour les cartes d'intérêt.
+              type: integer
+              minimum: 0
+            scaleDenominator:
+              description: |
+                dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
+                absent ssi la carte ne comporte pas d'espace principal
+              $ref: '#/definitions/scaleDenominator'
+            bboxDM:
+              description: |
+                boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
+                ces coordonnées sont celles indiquées sur la carte dans les coins SW et NE.
+                Champ absent ssi la carte ne comporte pas d'espace principal
+              $ref: '#/definitions/bboxDM'
+            spatial:
+              description: la même boite encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+              $ref: '#/definitions/dcmi-box'
+            replaces:
+              description: carte remplacée par la carte courante, optionnel
+              type: string
+            references:
+              description: ssi la carte est un fac-similé alors référence de la carte étrangère reproduite
+              type: string
+            note:
+              description: commentaire associé à la carte
+              type: string
+            hasPart:
+              description: liste éventuelle de cartouches
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required: [title, scaleDenominator, bboxDM]
+                properties:
+                  title:
+                    description: titre du cartouche
+                    type: string
+                  scaleDenominator:
+                    description: dénominateur de l'échelle avec un . comme séparateur des milliers
+                    $ref: '#/definitions/scaleDenominator'
+                  bboxDM:
+                    description: boite englobante du cartouche en degrés, minutes en WGS84
+                    $ref: '#/definitions/bboxDM'
+                  spatial:
+                    description: la même boite encodée en DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+                    $ref: '#/definitions/dcmi-box'
+    cartesAjoutéesAuServiceWfs:
+      description: liste quelques cartes ajoutées au service WFS du Shom, indexées sur leur numéro précédé de 'FR'
+      type: object
+      additionalProperties: false
+      patternProperties:
+        ^FR\d\d\d\d:
+          description: description de la carte
+          type: object
+          additionalProperties: false
+          required: [title, scaleDenominator, outerBBoxLonLatDd]
+          properties:
+            title: { description: 'titre de la carte préfixé par son numéro', type: string }
+            scaleDenominator:
+              description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
+              $ref: '#/definitions/scaleDenominator'
+            outerBBoxLonLatDd:
+              description: boite englobante extérieure en LonLat, en degrés décimaux et en WGS84, [lonMin, latMin, lonMax, latMax]
+              type: array
+              items:
+                type: number
+                minimum: -180
+                maximum: 180
+            note: { description: 'commentaire', type: string }
+    modificationsDuGAN:
+      description: Définit des modifications à effectuer sur les enregistrements du GAN.
+      type: object
+      additionalProperties: false
+      patternProperties:
+        ^FR\d\d\d\d:
+          description: Description de la modification d'une carte.
+          type: object
+          additionalProperties: false
+          required: [title, reasonForModification]
+          properties:
+            title: { description: titre correct de la carte, type: string}
+            reasonForModification: { description: motif de la modification, type: string }
+            originalTitle: { description: titre original de la carte à corriger, type: string }
+            edition: { description: édition de la carte indiquée par le Shom, type: string }
+            references: { description: référence à la carte étrangère reproduite par le Shom, type: string }
+            scaleDenominator:
+              description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
+              $ref: '#/definitions/scaleDenominator'
+            originalBboxDM:
+              description: boite englobante à corriger de l'espace principal de la carte en degrés, minutes en WGS84,
+              $ref: '#/definitions/bboxDM'
+            bboxDM:
+              description: boite englobante corrigée de l'espace principal de la carte en degrés, minutes en WGS84,
+              $ref: '#/definitions/bboxDM'
+            hasPart:
+              description: |
+                liste des cartouches, nécessaire si des modifications doivent être apportées à ces cartouches.
+                L'ordre des cartouches doit être le même que dans les données d'origine.
+              type: array
+              items:
+                type: object
+                required: [title]
+                properties:
+                  title: { description: titre du cartouche correct, type: string }
+                  originalTitle: { description: titre du cartouche à corriger, type: string }
+                  reasonForModification: { description: motif de la modification de ce cartouche, type: string }
+                  scaleDenominator:
+                    description: dénominateur de l'échelle avec un . comme séparateur des milliers
+                    $ref: '#/definitions/scaleDenominator'
+                  originalBboxDM:
+                    description: boite englobante à corriger du cartouche en degrés, minutes en WGS84
+                    $ref: '#/definitions/bboxDM'
+                  bboxDM:
+                    description: boite englobante corrigée du cartouche en degrés, minutes en WGS84
+                    $ref: '#/definitions/bboxDM'
+    cartesAjoutéesAuGan:
+      description: |
+        Liste les cartes absente du GAN.
+      type: object
+      additionalProperties: false
+      patternProperties:
+        ^FR\d\d\d\d:
+          description: description de la carte
+          type: object
+          additionalProperties: false
+          required: [title, reasonForModification, bboxDM, edition]
+          properties:
+            title: { description: titre de la carte, type: string }
+            reasonForModification: { description: motif de la modification, type: string }
+            edition: { description: édition de la carte indiquée par le Shom, type: string }
+            scaleDenominator:
+              description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
+              $ref: '#/definitions/scaleDenominator'
+            bboxDM:
+              description: boite englobante corrigée de l'espace principal de la carte en degrés, minutes en WGS84,
+              $ref: '#/definitions/bboxDM'
+    cartesAyantUnIntérêtInsuffisant:
+      description: |
+        Liste les cartes dont l'intérêt est insuffisant pour décrire les espaces sur lesquels la France exerce ses droits.
+      type: object
+      additionalProperties: false
+      patternProperties:
+        ^FR\d\d\d\d:
+          description: description de la carte
+          type: object
+          additionalProperties: false
+          required: [title, scaleDenominator, reason]
+          properties:
+            title: { description: 'titre de la carte préfixé par son numéro', type: string }
+            scaleDenominator:
+              description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
+              $ref: '#/definitions/scaleDenominator'
+            reason: { description: motif de l'insuffisance, type: string }
+    eof:
+      description: propriété marquant la fin du fichier
+      type: 'null'
+created:  '2020-12-13T17:00+01:00'
+modified: '2020-12-13T17:00+01:00'
+maps:
+  FR7070:
+    castype: cas basique sans cartouche avec corrections
+    title: Du pertuis de Maumusson à Mimizan-Plage
+    edition: Édition n° 3 - 2018 # appellation de la carte initiale
+    modified: 2020-01-01+01:00 # date de la dernière correction ou si inconnue date des MD
+    lastUpdate: 11 # no de la dernière correction
+    scaleDenominator: '167.000' # avec séparateur des milliers pour la lisibilité
+    bboxDM: # coordonnées effectives de la carte en degrés minutes tel qu'utilisé par le Shom
+      SW: "44°09,00'N - 002°36,00'W"
+      NE: '45°49,00''N - 001°00,00''W'
+  FR6821:
+    castype: second cas basique
+    title: Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
+    edition: Édition n° 2 - 2009
+    modified: 2020-01-01+01:00
+    lastUpdate: 14
+    scaleDenominator: '152.000'
+    bboxDM:
+      SW: 41°43,94'N - 008°01,74'E
+      NE: 43°14,34'N - 009°24,94'E
+  FR7425:
+    castype: carte basique avec cartouches
+    title: Embouchure de la Gironde
+    edition: Édition n° 6 - 2017
+    modified: 2020-01-01+01:00
+    lastUpdate: 6
+    scaleDenominator: '25.000'
+    bboxDM:
+      SW: 45°31,82'N - 001°21,23'W
+      NE: 45°41,94'N - 001°00,00'W
+    hasPart:
+      - title: A - Port de Royan
+        scaleDenominator: '10.000'
+        bboxDM:
+          SW: 45°36,44'N - 001°02,38'W
+          NE: 45°37,54'N - 001°01,08'W
+      - title: B - Port du Verdon
+        scaleDenominator: '12.500'
+        bboxDM:
+          SW: 45°31,89'N - 001°03,98'W
+          NE: 45°34,44'N - 001°01,88'W
+    
+  FR7436:
+    castype: carte constituée uniquement de cartouches
+    title: Approches et Port de Bastia - Ports d'Ajaccio et de Propriano
+    edition: Publication 2017
+    modified: 2020-01-01+01:00
+    lastUpdate: 6
+    replaces: remplace 6851.CA, 6856.CA
+    hasPart:
+      - title: A - Port d'Ajaccio
+        scaleDenominator: '7.500'
+        bboxDM:
+          SW: 41°54,49'N - 008°43,69'E
+          NE: 41°56,09'N - 008°46,48'E
+      - title: B - Port de Propriano
+        scaleDenominator: '10.000'
+        bboxDM:
+          SW: 41°40,04'N - 008°51,57'E
+          NE: 41°41,88'N - 008°55,27'E
+      - title: C - Approches et Port de Bastia
+        scaleDenominator: '15.000'
+        bboxDM:
+          SW: 42°37,67'N - 009°24,84'E
+          NE: 42°43,74'N - 009°30,48'E
+cartesAjoutéesAuServiceWfs:
+  FR6497:
+    title: 6497 - Ile de la Possession, île de l'Est
+    scaleDenominator: '75.000'
+    outerBBoxLonLatDd: [51.346828, -46.673142, 52.488178, -46.106097]
+    note: |
+      La carte 6497 est absente du WFS mais présente dans le GAN, cela semble une erreur.
+      Cependant, intérrogé sur ce sujet, le Shom, le 4/12/2018, justifie que la carte 6497 n'est pas disponible en version numérique,
+      mais existe bien en version papier.
+  FR7330:
+    title: 7330 - De Cherbourg à Hendaye - Action de l'Etat en Mer en zone maritime Atlantique
+    scaleDenominator: '1.070.000'
+    outerBBoxLonLatDd: [-11.025828, 41.060522, 0.524947, 52.278119]
+  FR7344:
+    title: 7344 - De Brest à la frontière belge - Action de l'Etat en Mer en zone Manche et Mer du Nord
+    scaleDenominator: '655.000'
+    outerBBoxLonLatDd: [-7.311689, 47.229586, 3.324964, 52.175769]
+  FR7360:
+    title: 7360 - De Cerbère à Menton - Action de l'Etat en Mer en zone Méditerranée
+    scaleDenominator: '700.000'
+    outerBBoxLonLatDd: [1.204069, 39.651736, 11.137350, 44.940681]
+  FR8502:
+    title: 8502 - Action de l'Etat en Mer en ZMSOI
+    scaleDenominator: '7.904.971'
+    outerBBoxLonLatDd: [26.015222, -64.087619, 94.000544, 12.155178]
+  FR8101:
+    title: 8101 - MANCHEGRID - Carte générale
+    scaleDenominator: '880.000'
+    outerBBoxLonLatDd: [-6.641753, 48.144300, 2.853589, 52.449447]
+modificationsDuGAN:
+  FR0101:
+    title: Planisphère terrestre
+    reasonForModification: correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l'extension en longitude soit supérieure à 360°, correction aussi du titre
+    originalTitle: Planisphère des fuseaux horaires
+    edition: Édition n° 4 - 2016
+    scaleDenominator: '40.000.000'
+    originalBboxDM:
+      SW: 79°00,00'S - 130°00,00'E
+      NE: 80°00,00'N - 100°00,00'E
+    bboxDM:
+      SW: 79°00,00'S - 100°00,00'E
+      NE: 80°00,00'N - 490°00,00'E
+  FR6643:
+    title: Iles et récifs du canal de Mozambique
+    reasonForModification: |
+      Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.
+      Les corrections indiquées sur la carte ne semblent pas correctes.
+      Je les ai corrigées en cherchant la correspondance des cartes à grande échelle avec celles à petites échelles.
+    hasPart:
+      - title: A - Ile Juan de Nova
+        reasonForModification: |
+          Ce cartouche n'est pas en WGS84 mais en MHM 1953.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 0,1' vers le Sud et 0,3' vers l'Ouest.
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique je corrige de -0,1' en latitude et +0,3' en longitude.
+        scaleDenominator: '50.000'
+        originalBboxDM:
+            SW: 17°06,50'S - 042°36,00'E
+            NE: 16°54,47'S - 042°52,23'E
+        bboxDM:
+            SW: 17°06,40'S - 042°36,30'E
+            NE: 16°54,37'S - 042°52,53'E
+      - title: "B - Mouillage Nord d'Europa"
+        reasonForModification: |
+          Ce cartouche n'est pas en WGS84 mais en MHM 1954.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 1,4' vers le Nord et 0,3' vers l'Ouest.
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique je corrige de +1,4' en latitude et +0,3' en longitude.
+        scaleDenominator: '15.000'
+        originalBboxDM:
+            SW: 22°20,00'S - 040°18,50'E
+            NE: 22°17,17'S - 040°21,80'E
+        bboxDM:
+            SW: 22°21,40'S - 040°18,80'E
+            NE: 22°18,57'S - 040°22,10'E
+      - title: C - Ile Europa
+        reasonForModification: correction identique à celle du cartouche B
+        scaleDenominator: '50.000'
+        originalBboxDM:
+          SW: 22°24,00'S - 040°16,00'E
+          NE: 22°16,00'S - 040°27,00'E
+        bboxDM:
+          SW: 22°25,40'S - 040°16,30'E
+          NE: 22°17,40'S - 040°27,30'E
+      - title: D - Iles Bassas da India
+        reasonForModification: |
+          Ce cartouche n'est pas en WGS84 mais dans un système géodésique local.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 1,1' vers le Nord et de 1,6' vers l'Est
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique la boite est corrigée de +1,1' en latitude et -1,6' en longitude.
+        scaleDenominator: '150.000'
+        originalBboxDM:
+            SW: 21°35,00'S - 039°35,00'E
+            NE: 21°18,76'S - 039°48,75'E
+        bboxDM:
+            SW: 21°36,10'S - 039°33,40'E
+            NE: 21°19,86'S - 039°47,15'E
+      - title: E - Iles Glorieuses
+        reasonForModification: |
+          Ce cartouche n'est pas en WGS84 mais en MHG 1977.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 0,32' vers le Nord et de 0,05' vers l'Est
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique la boite est corrigée de +0,32' en latitude et -0,05' en longitude.
+        scaleDenominator: '150.000'
+        originalBboxDM:
+            SW: '11°37,50''S - 047°12,00''E'
+            NE: '11°21,24''S - 047°31,00''E'
+        bboxDM:
+            SW: "11°37,82'S - 047°11,95'E"
+            NE: "11°21,56'S - 047°30,95'E"
+  FR6948:
+    title: Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)
+    reasonForModification: correction des 4 bords de la carte principale
+    edition: Édition n° 2 - 2010
+    scaleDenominator: '60.000'
+    originalBboxDM:
+      SW: "15°40,70'N - 061°43,40'W"
+      NE: "16°16,50'N - 061°18,20'W"
+    bboxDM:
+      SW: "15°40,50'N - 061°43,60'W"
+      NE: "16°16,30'N - 061°18,40'W"
+    hasPart:
+      - title: Marie-Galante - Baie de Saint-Louis
+        scaleDenominator: '20.000'
+        bboxDM:
+          SW: 15°55,85'N - 061°21,19'W
+          NE: 15°58,65'N - 061°18,73'W
+  FR7008:
+    title: Du Cabo de San Sebastian à Fos-sur-Mer
+    reasonForModification: Correction du bord Est de la carte à partir de l'information sur la carte
+    originalBboxDM:
+        SW: 41°13,93'N - 002°54,93'E
+        NE: 43°39,94'N - 005°15,06'E
+    bboxDM:
+        SW: 41°13,93'N - 002°54,93'E
+        NE: 43°39,94'N - 005°12,90'E
+  FR7021:
+    title: Océan Pacifique Nord - Partie Sud-Ouest
+    reasonForModification: Correction du bord Sud
+    edition: Édition n° 2 - 1991
+    references: Fac similé Carte JP n°4052 publiée en 1983.
+    scaleDenominator: '10.000.000'
+    originalBboxDM:
+      SW: 14°40,55'S - 117°30,00'E
+      NE: 40°00,00'N - 175°00,29'W
+    bboxDM:
+      SW: 13°00,00'S - 117°30,00'E
+      NE: 40°00,00'N - 154°20,00'W
+  FR7041:
+    title: La Martinique - Partie Nord (Spéciale P)
+    reasonForModification: Correction du bord Sud
+    scaleDenominator: '60.000'
+    originalBboxDM:
+      SW: 14°34,20'N - 061°18,00'W
+      NE: 14°58,50'N - 060°41,30'W
+    bboxDM:
+      SW: 14°34,30'N - 061°18,00'W
+      NE: 14°58,50'N - 060°41,30'W
+    edition: Édition n° 2 - 2009
+  FR7070:
+    title: Du pertuis de Maumusson à Mimizan-Plage
+    reasonForModification: Titre faux ainsi que les bords Nord et Sud
+    originalTitle: De l'île d'Oléron au Bassin d'Arcachon
+    scaleDenominator: '168.000'
+    originalBboxDM:
+      SW: 44°26,40'N - 002°36,00'W
+      NE: 46°03,60'N - 001°00,00'W
+    bboxDM:
+      SW: 44°09,00'N - 002°36,00'W
+      NE: 45°49,00'N - 001°00,00'W
+    edition: Édition n° 3 - 201
+  FR7212:
+    title: De Cabo Finisterre à Casablanca (Dâr el Beïda)
+    reasonForModification: Correction du bord Est de la carte à partir de l'information sur la carte
+    originalBboxDM:
+        SW: 33°30,00'N - 014°00,00'W
+        NE: 43°30,00'N - 005°00,00'W
+    bboxDM:
+        SW: 33°30,00'N - 014°00,00'W
+        NE: 43°30,00'N - 005°15,00'W
+  FR7427:
+    title: La Gironde - La Garonne et La Dordogne
+    reasonForModification: Correction des titres des cartouches, pas de partie principale
+    edition: Édition n° 2 - 2016
+    hasPart:
+      - title: 1 - La Gironde - La Garonne et La Dordogne (1/3)
+        originalTitle: 1 -
+      - title: 2 - La Gironde - La Garonne et La Dordogne (2/3)
+        originalTitle: 2 -
+      - title: 3 - La Gironde - La Garonne et La Dordogne (3/3)
+        originalTitle: 3 -
+      - title: A - Port de Pauillac
+      - title: B - Port de Blaye
+cartesAjoutéesAuGan:
+  FR8502:
+    title: Action de l'Etat en Mer en ZMSOI
+    reasonForModification: Ajout de la carte 8502 (AEM ZMSOI) absente du GAN
+    edition: Publication 2010
+    scaleDenominator: '7.904.971'
+    bboxDM:
+      SW: 60°00,00'S - 030°00,00'E
+      NE: 05°00,00'N - 090°00,00'E
+  FR8101:
+    title: MANCHEGRID - Carte générale
+    reasonForModification: Ajout de la carte 8101 (MANCHEGRID - Carte générale) absente du GAN
+    edition: Publication 2010
+    scaleDenominator: '880.000'
+    bboxDM:
+      SW: 48°30,00'N - 006°30,00'W
+      NE: 51°35,00'N - 002°30,00'E
+cartesAyantUnIntérêtInsuffisant:
+  FR0101Q:
+     title: 0101Q - Planisphère des fuseaux horaires (axé sur 65° W)
+     scaleDenominator: '40.000.000'
+     reason: carte des fuseaux horaires inutile
+  FR5438:
+    title: 5438 - Océan Pacifique - Océan Pacifique
+    scaleDenominator: '27.000.000'
+    reason: carte ancienne, apport insuffisant par rapport au planisphère
+  FR6963:
+    title: 6963 - De San Rossore au Canale de Piombino - Isole d'Elba, Capraia et Gorgona
+    scaleDenominator: '100.000'
+    reason: n'intersecte pas assez la Corse
+  FR7678:
+    title: 7678 - Îles Anjouan et Mohéli
+    scaleDenominator: '156.000'
+    reason: la faible intersection avec la France est couverte par FR7677 à la même échelle
+  FR9999:
+    title: 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier
+    scaleDenominator: '50.000'
+    reason: carte inutile de par son objet
+eof:

@@ -26,7 +26,7 @@ doc: |
         comment: n'apporte rien par rapport au planisphère et s'intègre mal du fait de son style
   
   Le répertoire de stockage des cartes est {shomgt}/../../shomgeotiff/current/ dans lequel chaque carte correspond
-  à un répertoire portant comme nom le numéro de la carte {mapno}, ex: 7121
+  à un répertoire nommé par le numéro de la carte {mapno}, ex: 7121
   Chaque répertoire de carte provient du dézippage du 7z de livraison.
   Il contient en outre pour chaque GéoTiff nommé {gtname}:
     - un fichier {gtname}.info produit par gdalinfo à partir du fichier au format GéoTiff
@@ -45,8 +45,8 @@ doc: |
     - {mapno}_{gtid}_gtw pour chaque zone gégraphique secondaire de la carte numéro {mapno} identifiée par {gtid}
       {gtid} est soit un numéro à partir de 1, soit une lettre à partir de A, ex: 7354_13_gtw
 
-  L'identifiant {mapno}/{gtname} est utilisé dans shomgt.yaml pour identifier un GéoTiff notamment dans le module ws.
-        
+  L'identifiant {mapno}/{gtname} est utilisé dans shomgt.yaml pour identifier chaque GéoTiff notamment dans le module ws.
+  
   Algorithme:
     - pour chaque livraison
       - les fichiers 7z de cartes sont dézippés et le répertoire résultant est déplacé dans
@@ -55,7 +55,7 @@ doc: |
         - le fichier info est généré à partir du format GéoTIFF par gdal_info
         - le GéoTiff est converti en PNG par gdal puis supprimé
         - le PNG est découpé en dalles 1024 X 1024 puis supprimé
-      - transfert des cartes de {shomgt}/../../shomgeotiff/tmp/ dans {shomgt}/../../shomgeotiff/current/
+      - les cartes sont transférées de {shomgt}/../../shomgeotiff/tmp/ dans {shomgt}/../../shomgeotiff/current/
       - les cartes à supprimer le sont
     - génération du catalogue Yaml et écriture dans ../ws/shomgt.yaml
     - suppression du cache {shomgt}/tilecache 
@@ -83,7 +83,7 @@ doc: |
 
 journal: |
   6/11/2019:
-    - écriture des scripts cropall.php et cromap.php pour fabriquer les géotiffs rognés pour le SNUM
+    - écriture des scripts cropall.php et cropmap.php pour fabriquer les géotiffs rognés pour le SNUM
   3/11/2019:
     - la gestion des superposition ne fonctionne pas avec 3 cartes, ex Guadeloupe 7302 > 6948 > 7482
   2/11/2019:

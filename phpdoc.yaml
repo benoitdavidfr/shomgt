@@ -68,6 +68,7 @@ journal: |
       - cette date est la meilleure approximation dont je dispose de la date de dernière révision de la carte
     - modification du lien vers le GAN dans la carte en tenant compte de mdDate
       - ainsi ce lien permet d'afficher les corrections non prises en compte dans la carte affichée
+    - mise à jour de leaflet en 1.7.1
   10/12/2020:
     - mise à jour en urgence des 2 cartes 7442 et 7200 à la demande de la DDTM06
     - le script updt.php ne fonctionne pas en Php8, il semble que cela vient du module Yaml de Symfony

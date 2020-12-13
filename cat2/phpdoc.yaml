@@ -1,0 +1,204 @@
+title: cat2 - catalogue des cartes raster GéoTIFF du SHOM v2
+path: /geoapi/shomgt/cat2
+doc: |
+  Ce module remplace le module cat v1 mis en cause par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
+  Dans la v1 je reconstruisais le catalogue à chaque moisson.
+  Je change ce principe et je pars du principe que je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,
+  avec son schéma dans ../cat/mapcat.schema.yaml). à contrôler !
+  J'ai différents outils de visu de ce catalogue, notamment la possibilité d'en faire une carte.
+  Je sais aussi sélectionner les cartes pertinentes, cad celles qui décrivent la ZEE FR.
+  
+  L'ojectif de ce module est:
+    1) de tenir à jour ce catalogue mapcat par confrontation au WFS et aux GAN
+      - pour cela le principe est
+        - de détecter les écarts et de les corriger dans mapcat à la main en Yaml
+        - d'assurer avec Git une gestion des versions successives du catalogue
+    2) de confronter ce catalogue au catalogue des GéoTiffs (../ws/shomgt.yaml) pour détecter:
+    - les nouvelles corrections de cartes publiées par le Shom à prendre en compte dans les GéoTiffs
+    - les GéoTiffs périmés (à voir)
+    - les GéoTiffs à ajouter au catalogue shomgt.yaml (à voir)
+    
+  Il faut aussi adapter l'utilisation notamment par ../updt des infos exposées par ce module
+
+  Le catalogue des cartes contient des infos absentes du catalogue des GéoTiffs, notamment le nom de certaines cartes, ex 7436
+  
+  Le catalogue des cartes pourrait/devrait être géré/publié en DCAT.
+  
+  J'ai 2 catalogues différents:
+    - le catalogue des cartes recense les cartes Raster Marine du Shom, plus qqs GéoTiffs comme les AEM et MancheGrid
+      - il peut y avoir des cas particuliers comme la carte 6497 est absente du WFS mais présente dans le GAN, ce qui semble une erreur
+        Le 4/12/2018 le Shom indique que la carte 6497 n'est pas dispo en version numérique, mais existe bien en version papier
+        '6497 - Île de la Possession, Île de l''Est'
+    - le catalogue des GéoTiffs recense les GéoTiffs les plus récents obtenus du Shom
+      - une carte est souvent composée de plusieurs GéoTiffs
+    - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
+  
+  
+  Infos dans shomgt.yaml
+    par_géoTiff:
+      id:
+        type: string
+        pattern: '^\d\d\d\d/\d\d\d\d_(pal300|[\dA-Z]+_gtw)'
+      title: {type: string, description: numéro et titre}
+      scaleden: {type: number, description: dénominateur de l'échelle (optionnel)}
+      edition: {type: string, description: édition de la carte (optionnel)}
+      lastUpdate: {type: number, description: nombre de corrections (optionnel)}
+      mdDate: {type: string, description: date de mise à jour des métadonnées ISO 19139 (optionnel)}
+      width: {type: number, description: largeur en pixels}
+      height: {type: number, description: hauteur en pixels}
+      west: {type: number, minimum: -180, maximum: 180, description: limite West en degrés décimaux > -180 & < 180}
+      south: {type: number, minimum: -90, maximum: 90, description: limite Sud en degrés décimaux > -90 & < 90}
+      east:
+        type: number
+        minimum: -180
+        maximum: 360
+        description: |
+          limite Est en degrés décimaux > -180 & < 180 & > west
+          Pour les GéoTiff à cheval sur l'anti-méridien, east peut être supérieur à 180
+      north:
+        type: number
+        minimum: -90
+        maximum: 90
+        description: limite Nord en degrés décimaux > -90 & < 90 & > south
+      left: {type: number, description: nbre de pixels à couper à gauche}
+      top: {type: number, description: nbre de pixels à couper en haut}
+      right: {type: number, description: "nbre de pixels à couper à droite, si négatif width+right"}
+      bottom: {type: number, description: "nbre de pixels à couper en bas, si négatif height+bottom"}
+      partiallyDeleted:
+        type: boolean
+        description: true pour indiquer que le GéoTIFF est partiellement effacé, absent sinon
+      
+  Infos_dans_cat:
+    private $num; // no de la carte
+    private $edition; // edition de la carte
+    private $lastUpdate; // no de la dernière correction apportée à la carte
+    private $remplace; // remplacement éventuel
+    private $note; // note éventuelle sur l'édition
+    private $facsimile; // fac-simile éventuel
+    private $corrections; // corrections apportées par rapport au GAN
+    private $boxes=[]; /* liste des espaces carto, le premier étant le principal, les autres les cartouches éventuels
+    Pour le premier box les champs suivants sont définis:
+      - superTitle évent. non défini
+      - title toujours défini
+      - scaleD défini uniquement si l'espace principal existe
+      - bbox: MapBBox défini uniquement si l'espace principal existe
+    Pour les autres box les champs suivants sont définis:
+      - title
+      - scaleD
+      - bbox: MapBBox
+  
+  exemples:
+    7436:
+      shomt:
+        7436/7436_1_gtw:
+          title: '7436-A - Port d''Ajaccio'
+          edition: Publication 2017
+          lastUpdate: 9
+          mdDate: '2020-01-01+01:00'
+          scaleden: 7500
+          width: 6232
+          height: 4830
+          south: 41.907719
+          west: 8.727550
+          north: 41.935333
+          east: 8.775256
+          left: 81 # nbre de pixels de la bordure gauche
+          bottom: 79 # nbre de pixels de la bordure basse
+          right: 77 # nbre de pixels de la bordure droite
+          top: 88 # nbre de pixels de la bordure haute
+        7436/7436_2_gtw:
+          title: '7436-B - Port de Propriano'
+          edition: Publication 2017
+          lastUpdate: 9
+          mdDate: '2020-01-01+01:00'
+          scaleden: 10000
+          width: 6233
+          height: 4175
+          south: 41.666719
+          west: 8.858614
+          north: 41.698544
+          east: 8.921997
+          left: 88 # nbre de pixels de la bordure gauche
+          bottom: 81 # nbre de pixels de la bordure basse
+          right: 82 # nbre de pixels de la bordure droite
+          top: 72 # nbre de pixels de la bordure haute
+        7436/7436_3_gtw:
+          title: '7436-C - Approches et Port de Bastia'
+          edition: Publication 2017
+          lastUpdate: 9
+          mdDate: '2020-01-01+01:00'
+          scaleden: 15000
+          width: 6229
+          height: 9005
+          south: 42.626953
+          west: 9.412756
+          north: 42.729903
+          east: 9.509269
+          left: 81 # nbre de pixels de la bordure gauche
+          bottom: 77 # nbre de pixels de la bordure basse
+          right: 82 # nbre de pixels de la bordure droite
+          top: 80 # nbre de pixels de la bordure haute
+      cat:
+        "FR7436": {
+            "num": "7436",
+            "groupTitle": "Côtes Ouest et Est de Corse",
+            "title": "Approches et Port de Bastia - Ports d'Ajaccio et de Propriano",
+            "issued": "Publication 2017",
+            "lastUpdate": "9",
+            "replaces": "(remplace 6851.CA, 6856.CA)",
+            "note": "Nota&nbsp;: Remplacer numéro de cadre de carte 6851 par 7436 sur les cartes 6942, 7162 et 7280 pour les ports d'Ajaccio et de Propriano. Remplacer numéro de cadre de carte 6856 par 7436 sur les cartes 6822 et 6823 pour le port de Bastia.",
+            "boxes": [
+                {
+                    "title": "A - Port d'Ajaccio",
+                    "scaleDenominator": "7.500",
+                    "bboxDM": {
+                        "SW": "41°54,49'N - 008°43,69'E",
+                        "NE": "41°56,09'N - 008°46,48'E"
+                    },
+                    "spatial": {
+                        "southlimit": 41.908166666666666,
+                        "westlimit": 8.728166666666667,
+                        "northlimit": 41.93483333333333,
+                        "eastlimit": 8.774666666666667
+                    }
+                },
+                {
+                    "title": "B - Port de Propriano",
+                    "scaleDenominator": "10.000",
+                    "bboxDM": {
+                        "SW": "41°40,04'N - 008°51,57'E",
+                        "NE": "41°41,88'N - 008°55,27'E"
+                    },
+                    "spatial": {
+                        "southlimit": 41.66733333333333,
+                        "westlimit": 8.8595,
+                        "northlimit": 41.698,
+                        "eastlimit": 8.921166666666666
+                    }
+                },
+                {
+                    "title": "C - Approches et Port de Bastia",
+                    "scaleDenominator": "15.000",
+                    "bboxDM": {
+                        "SW": "42°37,67'N - 009°24,84'E",
+                        "NE": "42°43,74'N - 009°30,48'E"
+                    },
+                    "spatial": {
+                        "southlimit": 42.627833333333335,
+                        "westlimit": 9.414,
+                        "northlimit": 42.729,
+                        "eastlimit": 9.508
+                    }
+                }
+            ]
+        },
+        
+    
+
+journal: |
+  12/12/2020:
+    - création en remplacement du module cat
+    
+phpScripts:
+  - /geoapi/shomgt/refresh/index.php
+phpIncludes:

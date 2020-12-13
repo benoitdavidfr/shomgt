@@ -38,7 +38,7 @@ definitions:
       bottom: {type: number, description: "nbre de pixels à couper en bas, si négatif height+bottom"}
       partiallyDeleted:
         type: boolean
-        description: true pour indiquer que le GéoTIFF est partiellement effacée, absent sinon
+        description: true pour indiquer que le GéoTIFF est partiellement effacé, absent sinon
 
 description: |
   Le fichier shomgt.yaml décrit les GéoTIFF regroupés en couches correspondant approximativement aux échelles suivantes:
