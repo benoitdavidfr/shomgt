@@ -6,12 +6,16 @@ classes:
 doc: |
   
 journal: |
+  14/12/2020:
+    - correction bug sur BBoxDM à cheval sur l'anti-méridien
+    - réalisation d'une carte de vérification du catalogue
   13/12/2020:
     - passage en V2
 includes: [../lib/gegeom.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
+require_once __DIR__.'/../updt/mdiso19139.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -19,6 +23,7 @@ use Symfony\Component\Yaml\Yaml;
 name: BBoxDM
 title: class BBoxDM - Gestion des BBox des cartes et des cartouches
 doc: |
+  Attention, certains BBoxDM sont à cheval sur l'anti-méridien, ie $eastlimit < $westlimit
 */
 class BBoxDM {
   const PATTERN = "!^(\\d+)°((\\d+)(,(\\d+))?)?'(N|S) - (\\d+)°((\\d+)(,(\\d+))?)?'(E|W)$!";
@@ -38,7 +43,7 @@ class BBoxDM {
     $this->westlimit = ($matches[12]=='W' ? -1 : +1) * ($matches[7] + "$matches[9].$matches[11]"/60);
     //echo "westlimit=$this->westlimit\n";
     $this->sw = $bboxDM['SW'];
-    if (!preg_match(self::PATTERN, $bboxDM['NE']))
+    if (!preg_match(self::PATTERN, $bboxDM['NE'], $matches))
       throw new Exception("Erreur d'initialisation de BBoxDM sur NE = '$bboxDM[NE]'");
     //print_r($matches);
     $this->northlimit = ($matches[6]=='S' ? -1 : +1) * ($matches[1] + "$matches[3].$matches[5]"/60);
@@ -66,15 +71,37 @@ class BBoxDM {
     ];
   }
   
-  function asGBox(): GBox {
-    return new GBox([[$this->eastlimit, $this->southlimit],[$this->westlimit, $this->northlimit]]);
+  function straddlingTheAntimeridian(): bool { return $this->eastlimit < $this->westlimit; }
+    
+  // PB pour les BBoxDM à cheval sur l'anti-méridien !! un GBox ne peut l'être !!!
+  // Retourne 2 GBox si BBoxDM à cheval sur l'anti-méridien, sinon 1
+  function asGBoxes(): array {
+    if (!$this->straddlingTheAntimeridian()) {
+      return [ new GBox([[$this->eastlimit, $this->southlimit],[$this->westlimit, $this->northlimit]]) ];
+    }
+    else {
+      return [
+         new GBox([[-180, $this->southlimit],[$this->eastlimit, $this->northlimit]]),
+         new GBox([[$this->westlimit, $this->southlimit],[180, $this->northlimit]]),
+      ];
+    }
   }
-  
-  function asPolygon(): Polygon { // retourne un Polygon
-    return Geometry::fromGeoJSON(['type'=> 'Polygon', 'coordinates'=> $this->asGBox()->polygon()]);
+    
+  function asGeometry(): Geometry { // retourne un MultiPolygon si le bbox est à ceheval sur l'anti-méridien, un Polygon sinon
+    $gboxes = $this->asGBoxes();
+    if (count($gboxes) == 1) {
+      return Geometry::fromGeoJSON(['type'=> 'Polygon', 'coordinates'=> $gboxes[0]->polygon()]);
+    }
+    else {
+      return Geometry::fromGeoJSON([
+        'type'=> 'MultiPolygon',
+        'coordinates'=> [$gboxes[0]->polygon(), $gboxes[1]->polygon(), ],
+      ]);
+    }
   }
 };
 
+// Gestion d'un cartouche
 class MapPart {
   protected $title; // titre du cartouche
   protected $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
@@ -95,7 +122,18 @@ class MapPart {
       ;
   }
   
-  function polygonCoords(): array { return $this->bbox->asGBox()->polygon(); }
+  function multiPolygonCoords(): array {
+    $gboxes = $this->bbox->asGBoxes();
+    if (count($gboxes) == 1) {
+      return [ $this->bbox->asGBoxes()[0]->polygon()];
+    }
+    else {
+      return array_merge(
+        [$this->bbox->asGBoxes()[0]->polygon()],
+        [$this->bbox->asGBoxes()[1]->polygon()],
+      );
+    }
+  }
 };
 
 /*PhpDoc: classes
@@ -132,7 +170,26 @@ class MapCat {
   protected $note; // commentaire associé à la carte
   protected $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
 
-  private function mapsFrenchAreas(string $mapid) { // calcule si la carte intersecte la ZEE
+  private function geometry(): Geometry {
+    if ($this->bbox) {
+      return $this->bbox->asGeometry();
+    }
+    else {
+      $multiPolygonCoords = [];
+      foreach ($this->hasPart as $part) {
+        $multiPolygonCoords = array_merge($multiPolygonCoords, $part->multiPolygonCoords());
+        return Geometry::fromGeoJSON(['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords]);
+      }
+    }
+  }
+  
+  private function mapsFrenchAreas(string $mapid): bool { // calcule si la carte est d'intérêt
+    $ret = $this->mapsFrenchAreas2($mapid);
+    if ($mapid == 'FR6977')
+      echo "mapsFrenchAreas($mapid) = ", $ret ? "true\n" : "false\n";
+    return $ret;
+  }
+  private function mapsFrenchAreas2(string $mapid): bool { // calcule si la carte est d'intérêt
     static $zee_france = null;
     static $interetInsuffisant = null;
     
@@ -148,21 +205,14 @@ class MapCat {
     }
     if (!$interetInsuffisant) {
       $interetInsuffisant = Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAyantUnIntérêtInsuffisant'];
+      //print_r($interetInsuffisant);
     }
     if (isset($interetInsuffisant[$mapid]))
       return false;
+    if (str_replace('.','',$this->scaleDenominator) > 10e6) // je conserve les très petites échelles
+      return true;
     //echo "bbox=",$this->bbox,"\n";
-    if ($this->bbox) {
-      $geom = $this->bbox->asPolygon();
-    }
-    else {
-      $multiPolygonCoords = [];
-      foreach ($this->hasPart as $part) {
-        $multiPolygonCoords[] = $part->polygonCoords();
-        $geom = Geometry::fromGeoJSON(['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords]);
-      }
-    }
-    return $zee_france->inters($geom);
+    return $zee_france->inters($this->geometry());
   }
   
   function __construct(string $mapid, array $map) {
@@ -184,7 +234,7 @@ class MapCat {
     $this->mapsFrenchAreas = $map['mapsFrenchAreas'] ?? self::mapsFrenchAreas($mapid);
     if (!$this->mapsFrenchAreas)
       $this->lastUpdate = null;
-    echo "mapsFrenchAreas: ",$this->mapsFrenchAreas ? "true\n" : "false\n";
+    //echo "mapsFrenchAreas: ",$this->mapsFrenchAreas ? "true\n" : "false\n";
   }
   
   static function importFromV1() {
@@ -201,6 +251,45 @@ class MapCat {
     self::$catDescription = "Import du fichier V1 le $created";
     self::$catCreated = $created;
     self::$catModified = $created;
+  }
+  
+  // ajout du champ modified aux cartes d'intérêt après importation V1
+  // par lecture des MD ISO d'un des GéoTiff correspondant à chaque carte
+  static function addModified() {
+    foreach (self::$maps as $mapid => $map) {
+      if (!$map->mapsFrenchAreas)
+        continue;
+      if (in_array($mapid, ['FR7330','FR7344','FR7360','FR8101','FR8502'])) // pas de MDISO pour ces cartes
+        continue;
+      $num = $map->num;
+      if ($map->bbox) {
+        $gtname = "$num/CARTO_GEOTIFF_${num}_pal300";
+        $mdfilename = realpath(__DIR__."/../../../shomgeotiff/current/$gtname.xml");
+        if (!is_file($mdfilename)) {
+          echo "Erreur fichier $mdfilename absent pour $num\n";
+          echo Yaml::dump([$mapid => MapCat::$maps[$mapid]->asArray()], 5, 2);
+          //die();
+        }
+      }
+      else {
+        //echo "carte $mapid\n";
+        $gtname = "$num/CARTO_GEOTIFF_${num}_1_gtw";
+        $mdfilename = realpath(__DIR__."/../../../shomgeotiff/current/$gtname.xml");
+        if (!is_file($mdfilename)) {
+          echo "Erreur fichier $mdfilename absent pour $num\n";
+          echo Yaml::dump([$mapid => MapCat::$maps[$mapid]], 5, 2);
+          //die();
+        }
+      }
+      $gtname = str_replace('CARTO_GEOTIFF_', '', $gtname);
+      if (!($mdiso19139 = mdiso19139($gtname))) {
+        echo Yaml::dump([$mapid => $mdiso19139], 5, 2);
+      }
+      else {
+        $map->modified = $mdiso19139['mdDate'];
+        $map->lastUpdate = intval($mdiso19139['dernièreCorrection']);
+      }
+    }
   }
   
   static function storeAsPser() {
@@ -276,6 +365,15 @@ class MapCat {
       + ($this->hasPart ? ['hasPart'=> array_map(function(MapPart $mapPart) { return $mapPart->asArray(); }, $this->hasPart)] : [])
       ;
   }
+
+  function geojson(): array {
+    return [
+      'type'=> 'Feature',
+      'id'=> 'FR'.$this->num,
+      'properties'=> $this->asArray(),
+      'geometry'=> $this->geometry()->asArray(),
+    ];
+  }
 };
 
 
@@ -297,6 +395,7 @@ if (php_sapi_name() <> 'cli') {
 
 if ($action == 'importFromV1') {
   MapCat::importFromV1();
+  MapCat::addModified();
   MapCat::storeAsYaml();
   MapCat::storeAsPser();
   die();

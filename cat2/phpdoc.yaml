@@ -6,8 +6,14 @@ doc: |
   Je change ce principe et je pars du principe que je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,
   avec son schéma dans ../cat/mapcat.schema.yaml). à contrôler !
   J'ai différents outils de visu de ce catalogue, notamment la possibilité d'en faire une carte.
-  Je sais aussi sélectionner les cartes pertinentes, cad celles qui décrivent la ZEE FR.
+  Je sais aussi sélectionner les cartes d'intérêt, cad celles qui décrivent la ZEE FR.
   
+  Ma doctrine de mise à jour est de :
+    - mettre à jour finement les cartes d'intérêt, cad mettre à jour dès qu'une correction est disponible,
+      avec un cycle de qqs mois entre 1 an et 3 mois,
+    - mettre à jour plus grossièrement les infos du catalogue sur les cartes qui ne sont pas d'intérêt,
+      cad détecter les cartes périmées, détecter l'apparition de nouvelles cartes et mettre à jour l'édition de la carte.
+    
   L'ojectif de ce module est:
     1) de tenir à jour ce catalogue mapcat par confrontation au WFS et aux GAN
       - pour cela le principe est
@@ -34,10 +40,16 @@ doc: |
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
 
 journal: |
-  13/12/2020:
-    - création en remplacement du module cat
+  14/12/2020:
+    - correction bug dans mapcat.inc.php
+    - réalisation d'une carte de vérification du catalogue
+   13/12/2020:
+    - création en remplacement du module cat v1
     
 phpScripts:
+  - /geoapi/shomgt/cat2/index.php
+  - /geoapi/shomgt/cat2/map.php
+  - /geoapi/shomgt/cat2/geojson.php
 phpIncludes:
   - /geoapi/shomgt/cat2/mapcat.inc.php
 htmlFiles:

@@ -113,7 +113,7 @@ abstract class Geometry {
   // génère la réprésentation string GeoJSON
   function __toString(): string { return json_encode($this->asArray()); }
   
-  // génère la représentation Php du GoJSON
+  // génère la représentation Php du GeoJSON
   function asArray(): array { return ['type'=>get_class($this), 'coordinates'=> $this->coords]; }
   
   // Retourne la liste des primitives contenues dans l'objet sous la forme d'objets
