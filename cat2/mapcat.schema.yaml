@@ -136,8 +136,9 @@ properties:
               identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
               Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfasant ce critère sont exclues ;
               elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
-              Cette propriété est présente ssi la carte intersecte la ZEE française.
-              Sa valeur est false ssi c'est une des exceptions.
+              Sa valeur est true si la carte intersecte la ZEE française et n'est pas une exception,
+              false si la carte n'intersecte pas la ZEE française ou est une exception,
+              non définie (propriété absente) si cette la proprité est inconnue.
             type: boolean
           modified:
             description: |

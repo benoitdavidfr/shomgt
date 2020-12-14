@@ -851,8 +851,8 @@ class MultiPolygon extends Geometry {
       return false;
     }
     elseif (get_class($geom) == 'MultiPolygon') {
-      foreach($this->geom as $pol0) {
-        foreach ($geom as $pol1) {
+      foreach($this->geoms() as $pol0) {
+        foreach ($geom->geoms() as $pol1) {
           if ($pol0->inters($pol1)) // intersection entre 2 polygones
             return true;
         }

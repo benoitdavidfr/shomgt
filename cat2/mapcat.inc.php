@@ -8,10 +8,10 @@ doc: |
 journal: |
   13/12/2020:
     - passage en V2
-includes: [../lib/gebox.inc.php]
+includes: [../lib/gegeom.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/../lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -48,6 +48,8 @@ class BBoxDM {
     $this->ne = $bboxDM['NE'];
   }
   
+  function __toString(): string { return "{SW: $this->sw, NE: $this->ne}"; }
+  
   function asArray(): array {
     return [
       'SW'=> $this->sw,
@@ -55,13 +57,21 @@ class BBoxDM {
     ];
   }
   
-  function asDcmiBox() {
+  function asDcmiBox(): array {
     return [
       'southlimit'=> $this->southlimit,
       'westlimit'=> $this->westlimit,
       'northlimit'=> $this->northlimit,
       'eastlimit'=> $this->eastlimit,
     ];
+  }
+  
+  function asGBox(): GBox {
+    return new GBox([[$this->eastlimit, $this->southlimit],[$this->westlimit, $this->northlimit]]);
+  }
+  
+  function asPolygon(): Polygon { // retourne un Polygon
+    return Geometry::fromGeoJSON(['type'=> 'Polygon', 'coordinates'=> $this->asGBox()->polygon()]);
   }
 };
 
@@ -84,6 +94,8 @@ class MapPart {
       + ['spatial'=> $this->bbox->asDcmiBox()]
       ;
   }
+  
+  function polygonCoords(): array { return $this->bbox->asGBox()->polygon(); }
 };
 
 /*PhpDoc: classes
@@ -120,14 +132,44 @@ class MapCat {
   protected $note; // commentaire associé à la carte
   protected $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
 
-  private function mapsFrenchAreas() { return null; }
+  private function mapsFrenchAreas(string $mapid) { // calcule si la carte intersecte la ZEE
+    static $zee_france = null;
+    static $interetInsuffisant = null;
+    
+    if (!$zee_france) {
+      $france = json_decode(file_get_contents(__DIR__.'/france.geojson'), true);
+      //echo Yaml::dump(['$france'=> $france], 5, 2);
+      $zee_france = ['type'=> 'MultiPolygon', 'coordinates'=> []];
+      foreach ($france['features'] as $feature) {
+        $zee_france['coordinates'][] = $feature['geometry']['coordinates'];
+      }
+      $zee_france = Geometry::fromGeoJSON($zee_france);
+      //echo "zee_france = $zee_france\n";
+    }
+    if (!$interetInsuffisant) {
+      $interetInsuffisant = Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAyantUnIntérêtInsuffisant'];
+    }
+    if (isset($interetInsuffisant[$mapid]))
+      return false;
+    //echo "bbox=",$this->bbox,"\n";
+    if ($this->bbox) {
+      $geom = $this->bbox->asPolygon();
+    }
+    else {
+      $multiPolygonCoords = [];
+      foreach ($this->hasPart as $part) {
+        $multiPolygonCoords[] = $part->polygonCoords();
+        $geom = Geometry::fromGeoJSON(['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords]);
+      }
+    }
+    return $zee_france->inters($geom);
+  }
   
   function __construct(string $mapid, array $map) {
     $this->num = substr($mapid, 2);
     $this->groupTitle = $map['groupTitle'] ?? null;
     $this->title = $map['title'];
     $this->edition = $map['edition'] ?? $map['issued'] ?? null;
-    $this->mapsFrenchAreas = self::mapsFrenchAreas();
     $this->modified = $map['modified'] ?? null;
     $this->lastUpdate = isset($map['lastUpdate']) ? intval($map['lastUpdate']) : null;
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
@@ -138,6 +180,11 @@ class MapCat {
     foreach ($map['hasPart'] ?? $map['boxes'] ?? [] as $mapPart) {
       $this->hasPart[] = new MapPart($mapPart);
     }
+    // si non défini alors il est calculé
+    $this->mapsFrenchAreas = $map['mapsFrenchAreas'] ?? self::mapsFrenchAreas($mapid);
+    if (!$this->mapsFrenchAreas)
+      $this->lastUpdate = null;
+    echo "mapsFrenchAreas: ",$this->mapsFrenchAreas ? "true\n" : "false\n";
   }
   
   static function importFromV1() {
@@ -215,9 +262,9 @@ class MapCat {
         ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
       + ($this->title ? ['title'=> $this->title] : [])
       + ($this->edition ? ['edition'=> $this->edition] : [])
-      + ($this->mapsFrenchAreas ? ['mapsFrenchAreas'=> $this->mapsFrenchAreas] : [])
+      + (($this->mapsFrenchAreas !== null) ? ['mapsFrenchAreas'=> $this->mapsFrenchAreas] : [])
       + ($this->modified ? ['modified'=> $this->modified] : [])
-      + ($this->lastUpdate ? ['lastUpdate'=> $this->lastUpdate] : [])
+      + ($this->lastUpdate !== null ? ['lastUpdate'=> $this->lastUpdate] : [])
       + ($this->scaleDenominator ? ['scaleDenominator'=> $this->scaleDenominator] : [])
       + ($this->bbox ? [
         'bboxDM'=> $this->bbox->asArray(),
@@ -230,6 +277,10 @@ class MapCat {
       ;
   }
 };
+
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire de la classe MapCat
+
 
 if (php_sapi_name() <> 'cli') {
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
