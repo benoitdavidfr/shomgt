@@ -1,15 +1,15 @@
 title: cat2 - catalogue des cartes raster GéoTIFF du SHOM v2
 path: /geoapi/shomgt/cat2
 doc: |
-  Ce module remplace le module cat v1 mis en cause par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
+  Ce module remplace le module cat v1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
   Dans la v1 je reconstruisais le catalogue à chaque moisson.
-  Je change ce principe et je pars du principe que je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,
+  Ce principe change dans cette version car je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,
   avec son schéma dans ../cat/mapcat.schema.yaml). à contrôler !
   J'ai différents outils de visu de ce catalogue, notamment la possibilité d'en faire une carte.
   Je sais aussi sélectionner les cartes d'intérêt, cad celles qui décrivent la ZEE FR.
   
   Ma doctrine de mise à jour est de :
-    - mettre à jour finement les cartes d'intérêt, cad mettre à jour dès qu'une correction est disponible,
+    - mettre à jour finement les cartes d'intérêt, cad les mettre à jour dès qu'une correction est disponible,
       avec un cycle de qqs mois entre 1 an et 3 mois,
     - mettre à jour plus grossièrement les infos du catalogue sur les cartes qui ne sont pas d'intérêt,
       cad détecter les cartes périmées, détecter l'apparition de nouvelles cartes et mettre à jour l'édition de la carte.

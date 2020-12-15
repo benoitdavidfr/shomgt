@@ -1,0 +1,20 @@
+title: Serveur WFS Inspire du Shom
+creator: Shom
+abstract: |
+  Le serveur WFS du Shom expose différentes couches.
+    
+  URL de test:
+    
+    - [getCapabilities](id.php/geodata/shomwfs/getCapabilities),
+      [capabilities](id.php/geodata/shomwfs/capabilities)
+    - [query](id.php/geodata/shomwfs/query?request=GetCapabilities)
+    - [liste des couches](id.php/geodata/shomwfs/ft)
+    - [description de la couche DAM_CLASS_ZONES_MAR_WFS:classed_polygone_3857
+      ](id.php/geodata/shomwfs/ft/DAM_CLASS_ZONES_MAR_WFS:classed_polygone_3857)
+    - [nom du champ géométrique de la couche DAM_CLASS_ZONES_MAR_WFS:classed_polygone_3857
+      ](id.php/geodata/shomwfs/ft/DAM_CLASS_ZONES_MAR_WFS:classed_polygone_3857/geomPropertyName)
+    - [getFeature pour DAM_CLASS_ZONES_MAR_WFS:classed_polygone_3857 et bbox=-10,48.0,3.7,48.6
+      ](id.php/geodata/shomwfs/ft/DAM_CLASS_ZONES_MAR_WFS:classed_polygone_3857/getFeature?bbox=-10,48.0,3.7,48.6)
+  
+$schema: http://ydclasses.georef.eu/WfsServerJson/schema
+wfsUrl: http://services.data.shom.fr/INSPIRE/wfs

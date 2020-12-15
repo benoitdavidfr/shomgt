@@ -86,7 +86,11 @@ required: [ title, $id, $schema, modified, maps ]
 additionalProperties: false
 properties:
   title: { description: 'titre du document', type: string }
-  description: { description: 'commentaire sur le document', type: string }
+  description:
+    description: 'commentaires sur le document structurés comme une liste de string'
+    type: array
+    items:
+      type: string
   $id: { description: 'identifiant du document', type: string , format: uri }
   $schema:
     description: 'schema JSON du document'
@@ -102,28 +106,47 @@ properties:
     patternProperties:
       ^FR\d\d\d\d:
         description: |
-          Description d'une carte.
-          Une carte ne comportant pas d'espace principal ne comporte pas les champs scaleDenominator et bboxDM
-          et comporte alors obligatoirement des cartouches.
-          Les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
-          sont identifiées par la propriété mapsFrenchAreas ;
-          elles devraient renseigner les propriétés modified et lastUpdate.
+          Description d'une carte. 3 types de descriptions cohabitent.
+           - Les nouvelles cartes qui entrent au catalogue peuvent être moins bien connues, par ex. uniquement au travers du flux WFS.
+             Dans ce cas seules les propriétés suivantes peuvent être renseignées:
+               - title
+               - scaleDenominator
+               - bboxLonLatFromWfs
+          
+          Après accès au GAN ou à la carte elle même, on peut renseigner le bboxDM et on peut effacer le bboxLonLatFromWfs.
+          On a encore 2 types de cartes:
+            - Une carte comportant un espace principal doit renseigner les champs scaleDenominator et bboxDM,
+            - une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
+          
+          De plus, les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
+          sont identifiées par la propriété mapsFrenchAreas et devraient renseigner les propriétés modified et lastUpdate.
+          
+          Enfin, il est possible de conserver les cartes qui ne sont plus en vigueur jusqu'à une réutilisation éventuelle
+          de l'identifiant.
         type: object
         additionalProperties: false
-        required: [title, edition]
+        required: [title]
         properties:
           castype:
-            description: propriété uniquement utilisé pour décrire les cas-types
+            description: uniquement utilisé pour décrire les cas-types
             type: string
+          obsolete:
+            description: |
+              si défini, signifie que la carte n'est plus en vigueur, sinon qu'elle l'est.
+              Peut contenir la source de l'information, ou une date à laquelle elle a été constatée ou un commentaire quelconque.
+            type: string
+            examples:
+              - absent du WFS du Shom le 14/12/2020
+              - le 14/12/2020 le GAN indique que la carte n'est plus en vigueur
           groupTitle:
             description: sur-titre optionnel identifiant un ensemble de cartes
             type: string
-            example:
+            examples:
               - Océan Pacifique Sud
           title:
             description: titre de la carte
             type: string
-            example:
+            examples:
               - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
           edition:
             description: édition de la carte indiquée par le Shom
@@ -131,6 +154,31 @@ properties:
             examples:
               - Édition n° 3 - 2018
               - Publication 2017
+          scaleDenominator:
+            description: |
+              dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
+              Champ absent ssi la carte ne comporte pas d'espace principal
+            $ref: '#/definitions/scaleDenominator'
+          bboxDM:
+            description: |
+              boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
+              ces coordonnées sont celles indiquées sur la carte dans les coins SW et NE et sont aussi indiquées dans le GAN.
+              Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
+            $ref: '#/definitions/bboxDM'
+          spatial:
+            description: la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+            $ref: '#/definitions/dcmi-box'
+          bboxLonLatFromWfs:
+            description: |
+              boite englobante qui peut être moins précise que bboxDM si cette dernière est inconnue.
+              En degrés décimaux dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON.
+            type: array
+            minItems: 4
+            maxItems: 4
+            items:
+              type: number
+              minimum: -180
+              maximum: 180
           mapsFrenchAreas:
             description: |
               identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
@@ -151,32 +199,22 @@ properties:
               Ce champ devrait être présent pour les cartes d'intérêt.
             type: integer
             minimum: 0
-          scaleDenominator:
-            description: |
-              dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
-              absent ssi la carte ne comporte pas d'espace principal
-            $ref: '#/definitions/scaleDenominator'
-          bboxDM:
-            description: |
-              boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
-              ces coordonnées sont celles indiquées sur la carte dans les coins SW et NE.
-              Champ absent ssi la carte ne comporte pas d'espace principal
-            $ref: '#/definitions/bboxDM'
-          spatial:
-            description: la même boite encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
-            $ref: '#/definitions/dcmi-box'
           replaces:
             description: carte remplacée par la carte courante, optionnel
             type: string
           references:
             description: ssi la carte est un fac-similé alors référence de la carte étrangère reproduite
             type: string
-          note:
-            description: commentaire associé à la carte
+          noteShom:
+            description: commentaire associé à la carte par le Shom
+            type: string
+          noteCatalog:
+            description: commentaire associé à la carte dans la gestion du catalogue
             type: string
           hasPart:
             description: liste éventuelle de cartouches
             type: array
+            minItems: 1
             items:
               type: object
               additionalProperties: false

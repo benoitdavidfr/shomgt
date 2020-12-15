@@ -820,7 +820,7 @@ class MultiPolygon extends Geometry {
   function bbox(): GBox {
     $bbox = new GBox;
     foreach ($this->coords as $llpos)
-      $bbox->union(GBox::bboxOfLLPos($llpos));
+      $bbox->union(new GBox($llpos));
     return $bbox;
   }
   

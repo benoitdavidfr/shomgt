@@ -1,7 +1,7 @@
-title: spécification du catalogue des cartes Shom
+title: spécification du catalogue des cartes Shom en complément du schéma JSON
 description: |
-  Ce document spécifie le catalogue des cartes au travers d'une part de son schéma JSON illustré par quelques cas types
-  et, d'autre part, des écarts voulus par rapport aux sources du Shom.
+  Ce document spécifie le catalogue des cartes en complément du schéma JSON au travers des écarts voulus par rapport aux sources
+  du Shom. De plus, il illustre le schéma par quelques cas types.
   On distingue le concept de carte de celui de GéoTIFF.
     - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralement à 4 chiffres 
       précédé par les lettres 'FR' ;
@@ -13,21 +13,31 @@ description: |
     Une carte correspond à un GéoTIFF principal, correspondant à l'espace principal, lorsqu'il existe,
     et éventuellement des GéoTIFF secondaires, correspondants chacun à un cartouche.
     Quelques cartes comportent uniquement un ensemble de cartouches et ne comportent aucun espace principal.
-    
+  
+  Pour renseigner ce catalogue, on exploite principalement le service WFS du Shom et le GAN.
+  
   Les écarts par rapport aux sources du Shom sont définis par:
     - une liste de cartes ajoutées au service WFS du Shom
     - une liste de cartes dont les propriétés sont modifiées par rapport à celles des GAN
     - une liste de cartes ajoutées aux GAN
+  
   Au sein des cartes, une sélection est faite des cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels
   la France exerce ses droits, sur lesquelles un suivi plus fin des évolutions est réalisé.
-  Ces cartes d'intérêt sont celles intersectant la ZEE française avec quelques exlusions définies en extension.
+  Ces cartes d'intérêt sont celles intersectant la ZEE française avec quelques exclusions définies dans ce document.
+  
   Le schéma décrit le catalogue des cartes stocké en Yaml et en pser et exposé en JSON.
-  Il décrit aussi comment sont définis les écarts.
-$id: http://geoapi.fr/shomgt/cat2/mapcatex
+  Il décrit aussi la définition des écarts et des exclusions.
+$id: http://geoapi.fr/shomgt/cat2/mapcatspec
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created:  '2020-12-13T17:00+01:00'
-modified: '2020-12-13T17:00+01:00'
+modified: '2020-12-14T23:45+01:00'
 maps:
+  FR7250:
+    castype: cas d'une carte connue uniquement au travers du Wfs
+    title: 'De la pointe de la Torche à Loctudy'
+    scaleDenominator: '20.000'
+    bboxLonLatFromWfs: [-4.418335, 47.71, -4.1245, 47.845]
+    note: nouvelle carte détectée le 12/2020
   FR7070:
     castype: cas basique sans cartouche avec corrections
     title: Du pertuis de Maumusson à Mimizan-Plage
@@ -95,7 +105,7 @@ maps:
           NE: 42°43,74'N - 009°30,48'E
 cartesAjoutéesAuServiceWfs:
   FR6497:
-    title: 6497 - Ile de la Possession, île de l'Est
+    title: Ile de la Possession, île de l'Est
     scaleDenominator: '75.000'
     outerBBoxLonLatDd: [51.346828, -46.673142, 52.488178, -46.106097]
     note: |
@@ -103,23 +113,23 @@ cartesAjoutéesAuServiceWfs:
       Cependant, intérrogé sur ce sujet, le Shom, le 4/12/2018, justifie que la carte 6497 n'est pas disponible en version numérique,
       mais existe bien en version papier.
   FR7330:
-    title: 7330 - De Cherbourg à Hendaye - Action de l'Etat en Mer en zone maritime Atlantique
+    title: De Cherbourg à Hendaye - Action de l'Etat en Mer en zone maritime Atlantique
     scaleDenominator: '1.070.000'
     outerBBoxLonLatDd: [-11.025828, 41.060522, 0.524947, 52.278119]
   FR7344:
-    title: 7344 - De Brest à la frontière belge - Action de l'Etat en Mer en zone Manche et Mer du Nord
+    title: De Brest à la frontière belge - Action de l'Etat en Mer en zone Manche et Mer du Nord
     scaleDenominator: '655.000'
     outerBBoxLonLatDd: [-7.311689, 47.229586, 3.324964, 52.175769]
   FR7360:
-    title: 7360 - De Cerbère à Menton - Action de l'Etat en Mer en zone Méditerranée
+    title: De Cerbère à Menton - Action de l'Etat en Mer en zone Méditerranée
     scaleDenominator: '700.000'
     outerBBoxLonLatDd: [1.204069, 39.651736, 11.137350, 44.940681]
   FR8502:
-    title: 8502 - Action de l'Etat en Mer en ZMSOI
+    title: Action de l'Etat en Mer en ZMSOI
     scaleDenominator: '7.904.971'
     outerBBoxLonLatDd: [26.015222, -64.087619, 94.000544, 12.155178]
   FR8101:
-    title: 8101 - MANCHEGRID - Carte générale
+    title: MANCHEGRID - Carte générale
     scaleDenominator: '880.000'
     outerBBoxLonLatDd: [-6.641753, 48.144300, 2.853589, 52.449447]
 modificationsDuGAN:

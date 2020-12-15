@@ -19,20 +19,90 @@ require_once __DIR__.'/../updt/mdiso19139.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+date_default_timezone_set('Europe/Paris');
+
+/*PhpDoc: classes
+name: BBoxDd
+title: class BBoxDd - Gestion des BBox imprécises des cartes en LonLat en degrés décimaux
+doc: |
+  Je gère 2 types de BBox:
+    - celles définies précisément par des mesures en degrés et minutes décimales correspondant à l'ext. du cadre interne de la carte
+    - celles imprécises qui peuvent être correspondre soit au cadre interne soit à l'extension de la carte y compris le cadre externe
+*/
+class BBoxDd {
+  protected $westlimit;
+  protected $southlimit;
+  protected $eastlimit;
+  protected $northlimit;
+  
+  function __construct(array $limits) { // dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON
+    if (count($limits) <> 4)
+      throw new Exception("Erreur dans BBoxDD::__construct() : count <> 4");
+    if (!is_numeric($limits[0]))
+      throw new Exception("Erreur dans BBoxDD::__construct() : !is_number(limits[0])");
+    $this->westlimit  = $limits[0];
+    $this->southlimit = $limits[1];
+    $this->eastlimit  = $limits[2];
+    $this->northlimit = $limits[3];
+  }
+  
+  function __toString(): string {
+    return json_encode($this->asDcmiBox(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+  }
+  
+  function asArray(): array { return [ $this->westlimit, $this->southlimit, $this->eastlimit, $this->northlimit ]; }
+
+  function asDcmiBox(): array {
+    return [
+      'southlimit'=> $this->southlimit,
+      'westlimit'=> $this->westlimit,
+      'northlimit'=> $this->northlimit,
+      'eastlimit'=> $this->eastlimit,
+    ];
+  }
+  
+  function straddlingTheAntimeridian(): bool { return $this->eastlimit < $this->westlimit; }
+    
+  // PB pour les BBoxDM à cheval sur l'anti-méridien !! un GBox ne peut l'être !!!
+  // si BBox à cheval sur l'anti-méridien alors Retourne 2 GBox, sinon 1
+  function asGBoxes(): array {
+    if (!$this->straddlingTheAntimeridian()) {
+      return [ new GBox([[$this->eastlimit, $this->southlimit],[$this->westlimit, $this->northlimit]]) ];
+    }
+    else {
+      return [
+         new GBox([[-180, $this->southlimit],[$this->eastlimit, $this->northlimit]]),
+         new GBox([[$this->westlimit, $this->southlimit],[180, $this->northlimit]]),
+      ];
+    }
+  }
+    
+  function asGeometry(): Geometry { // retourne un MultiPolygon si le bbox est à cheval sur l'anti-méridien, un Polygon sinon
+    $gboxes = $this->asGBoxes();
+    if (count($gboxes) == 1) {
+      return Geometry::fromGeoJSON(['type'=> 'Polygon', 'coordinates'=> $gboxes[0]->polygon()]);
+    }
+    else {
+      return Geometry::fromGeoJSON([
+        'type'=> 'MultiPolygon',
+        'coordinates'=> [$gboxes[0]->polygon(), $gboxes[1]->polygon(), ],
+      ]);
+    }
+  }
+};
+
 /*PhpDoc: classes
 name: BBoxDM
-title: class BBoxDM - Gestion des BBox des cartes et des cartouches
+title: class BBoxDM - Gestion des BBox des cartes et des cartouches en degrés et minutes décimales
 doc: |
-  Attention, certains BBoxDM sont à cheval sur l'anti-méridien, ie $eastlimit < $westlimit
+  Il s'agit des BBox définies précisément par des mesures en degrés et minutes décimales correspondant à l'ext. du cadre interne
+  de la carte
+  Attention, certains sont à cheval sur l'anti-méridien, ie $westlimit > $eastlimit
 */
-class BBoxDM {
+class BBoxDM extends BBoxDd {
   const PATTERN = "!^(\\d+)°((\\d+)(,(\\d+))?)?'(N|S) - (\\d+)°((\\d+)(,(\\d+))?)?'(E|W)$!";
   protected $sw;
   protected $ne;
-  protected $southlimit;
-  protected $westlimit;
-  protected $northlimit;
-  protected $eastlimit;
   
   function __construct(array $bboxDM) {
     if (!preg_match(self::PATTERN, $bboxDM['SW'], $matches))
@@ -60,44 +130,6 @@ class BBoxDM {
       'SW'=> $this->sw,
       'NE'=> $this->ne,
     ];
-  }
-  
-  function asDcmiBox(): array {
-    return [
-      'southlimit'=> $this->southlimit,
-      'westlimit'=> $this->westlimit,
-      'northlimit'=> $this->northlimit,
-      'eastlimit'=> $this->eastlimit,
-    ];
-  }
-  
-  function straddlingTheAntimeridian(): bool { return $this->eastlimit < $this->westlimit; }
-    
-  // PB pour les BBoxDM à cheval sur l'anti-méridien !! un GBox ne peut l'être !!!
-  // Retourne 2 GBox si BBoxDM à cheval sur l'anti-méridien, sinon 1
-  function asGBoxes(): array {
-    if (!$this->straddlingTheAntimeridian()) {
-      return [ new GBox([[$this->eastlimit, $this->southlimit],[$this->westlimit, $this->northlimit]]) ];
-    }
-    else {
-      return [
-         new GBox([[-180, $this->southlimit],[$this->eastlimit, $this->northlimit]]),
-         new GBox([[$this->westlimit, $this->southlimit],[180, $this->northlimit]]),
-      ];
-    }
-  }
-    
-  function asGeometry(): Geometry { // retourne un MultiPolygon si le bbox est à ceheval sur l'anti-méridien, un Polygon sinon
-    $gboxes = $this->asGBoxes();
-    if (count($gboxes) == 1) {
-      return Geometry::fromGeoJSON(['type'=> 'Polygon', 'coordinates'=> $gboxes[0]->polygon()]);
-    }
-    else {
-      return Geometry::fromGeoJSON([
-        'type'=> 'MultiPolygon',
-        'coordinates'=> [$gboxes[0]->polygon(), $gboxes[1]->polygon(), ],
-      ]);
-    }
   }
 };
 
@@ -138,24 +170,33 @@ class MapPart {
 
 /*PhpDoc: classes
 name: MapCat
-title: classe MapCat - Gestion de la description des cartes du Shom
+title: classe MapCat - Gestion du catalogue des cartes du Shom
 doc: |
   Chaque objet de la classe MapCat décrit une carte du Shom.
-  La variable statique $all est un dictionnaire sur le no de la carte précédé de FR.
-  Le fichier mapcat.pser contient le catalogue des cartes ainsi que la date d'actualisation.
+  La propriété statique $maps est un dictionnaire des cartes sur leur id.
+
+  Les fichiers mapcat.yaml et mapcat.pser contiennent le catalogue des cartes y c. la date et l'heure d'actualisation.
+  Le fichier mapcat.pser est dérivé du fichier mapcat.yaml pour accélérer sa lecture.
+  
+  Après un traitement modifiant le contenu du catalogue, il est nécessaire de réécrire les fichier yaml ainsi que le fichier pser.
+  La propriété statique $catUpdated trace les mise à jour, elle vaut toujours false après le chargement des données ;
+  si elle vaut true cela signfie que les données doivent être enregistrées.
 
   Il existe des cartes sans espace principal (exemple 7436 - Approches et Port de Bastia - Ports d'Ajaccio et de Propriano)
   uniquement constituées de cartouches.
 */
 class MapCat {
   const PATH = __DIR__.'/mapcat'; // chemin des fichiers stockant le catalogue en pser ou en yaml, ajouter l'extension au path
-  static $maps = []; // dictionnaire des MapCat [FR{num} => MapCat]
+  static $catUpdated = false; // true ssi le catalogue a été modifié, propriété non enregistrée en pser ou en Yaml
+
   static $catTitle = null; // titre du catalogue
-  static $catDescription = null; // titre du catalogue
+  static $catDescription = null; // description du catalogue
   static $catCreated = null; // date et heure de création du catalogue au format ISO 8601
   static $catModified = null; // date et heure d'actualisation du catalogue au format ISO 8601
+  static $maps = []; // dictionnaire des MapCat [FR{num} => MapCat]
   
   protected $num; // no de la carte
+  protected $obsolete; // si non null signifie que la carte est obsolète
   protected $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
   protected $title; // titre de la carte
   protected $edition; // edition de la carte
@@ -164,10 +205,11 @@ class MapCat {
   protected $lastUpdate; // no de la dernière correction apportée à la carte ou 0 ou null
   protected $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
                                 // null ssi la carte ne comporte pas d'espace principal
-  protected $bbox; // boite englobante de l'espace principal de la carte comme BBoxDM, null ssi pas d'espace principal
+  protected $bbox; // boite englobante de l'espace principal de la carte comme BBoxDM|BBoxDd, null ssi pas d'espace principal
   protected $replaces; // facsimilé éventuel
-  protected $references; // ssi la carte est un fac-similé alors référence de la carte étrangère reproduite
-  protected $note; // commentaire associé à la carte
+  protected $references; // ssi la carte est un fac-similé alors référence de la carte généralement étrangère reproduite
+  protected $noteShom; // commentaire associé à la carte par le Shom
+  protected $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
   protected $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
 
   private function geometry(): Geometry {
@@ -185,8 +227,8 @@ class MapCat {
   
   private function mapsFrenchAreas(string $mapid): bool { // calcule si la carte est d'intérêt
     $ret = $this->mapsFrenchAreas2($mapid);
-    if ($mapid == 'FR6977')
-      echo "mapsFrenchAreas($mapid) = ", $ret ? "true\n" : "false\n";
+    //if ($mapid == 'FR6977')
+      //echo "mapsFrenchAreas($mapid) = ", $ret ? "true\n" : "false\n";
     return $ret;
   }
   private function mapsFrenchAreas2(string $mapid): bool { // calcule si la carte est d'intérêt
@@ -223,34 +265,46 @@ class MapCat {
     $this->modified = $map['modified'] ?? null;
     $this->lastUpdate = isset($map['lastUpdate']) ? intval($map['lastUpdate']) : null;
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
-    $this->bbox = isset($map['bboxDM']) ? new BBoxDM($map['bboxDM']) : null;
+    $this->bbox = isset($map['bboxDM']) ?
+        new BBoxDM($map['bboxDM']) :
+        (isset($map['bboxLonLatFromWfs']) ? new BBoxDd($map['bboxLonLatFromWfs']) : null);
     $this->replaces = $map['replaces'] ?? null;
     $this->references = $map['references'] ?? null;
-    $this->note = $map['note'] ?? null;
+    $this->noteShom = $map['noteShom'] ?? $map['note'] ?? null;
+    $this->noteCatalog = $map['noteCatalog'] ?? null;
     foreach ($map['hasPart'] ?? $map['boxes'] ?? [] as $mapPart) {
       $this->hasPart[] = new MapPart($mapPart);
     }
-    // si non défini alors il est calculé
-    $this->mapsFrenchAreas = $map['mapsFrenchAreas'] ?? self::mapsFrenchAreas($mapid);
+   
+    if (isset($map['mapsFrenchAreas']))
+      $this->mapsFrenchAreas = $map['mapsFrenchAreas'];
+    else { // si non défini alors il est calculé et 
+      $this->mapsFrenchAreas = self::mapsFrenchAreas($mapid);
+      self::$catUpdated = true;
+    }
     if (!$this->mapsFrenchAreas)
       $this->lastUpdate = null;
-    //echo "mapsFrenchAreas: ",$this->mapsFrenchAreas ? "true\n" : "false\n";
   }
   
   static function importFromV1() {
-    echo "importFromV1()\n";
+    echo "import du catalogue V1\n";
     $catv1 = json_decode(file_get_contents(__DIR__.'/../cat/mapcat.json'), true);
-    self::$catTitle = $catv1['title'];
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
       self::$maps[$mapid] = new self($mapid, $map);
       //print_r(self::$all[$mapid]);
     }
+    ksort(self::$maps);
     self::$catTitle = $catv1['title'];
     $created = date(DATE_ATOM);
-    self::$catDescription = "Import du fichier V1 le $created";
+    self::$catDescription = ["Import du fichier V1 le $created"];
     self::$catCreated = $created;
     self::$catModified = $created;
+
+    MapCat::addModified();
+    MapCat::storeAsYaml();
+    MapCat::storeAsPser();
+    echo "enregistrement du catalogue en pser et en Yaml\n";
   }
   
   // ajout du champ modified aux cartes d'intérêt après importation V1
@@ -314,9 +368,7 @@ class MapCat {
     ];
   }
   
-  static function storeAsYaml() {
-    file_put_contents(self::PATH.'.yaml', Yaml::dump(self::allAsArray(), 5, 2));
-  }
+  static function storeAsYaml() { file_put_contents(self::PATH.'.yaml', Yaml::dump(self::allAsArray(), 5, 2)); }
   
   static function init() {
     if (!file_exists(self::PATH.'.pser') && !file_exists(self::PATH.'.yaml'))
@@ -324,7 +376,7 @@ class MapCat {
     if (!file_exists(self::PATH.'.pser')
      || (file_exists(self::PATH.'.yaml') && (filemtime(self::PATH.'.pser') < filemtime(self::PATH.'.yaml')))) {
       $yaml = Yaml::parseFile(self::PATH.'.yaml');
-      echo "<pre>"; print_r($yaml);
+      //echo "<pre>"; print_r($yaml);
       self::$catTitle = $yaml['title'];
       self::$catDescription = $yaml['description'];
       self::$catCreated = $yaml['created'];
@@ -343,25 +395,34 @@ class MapCat {
       self::$catModified = $pser['modified'];
       self::$maps = $pser['maps'];
     }
-    
+  }
+  
+  static function close() { // s'il y a eu des modifications, réenregistre le document en yaml et en pser
+    if (self::$catUpdated) {
+      ksort(self::$maps);
+      self::$catModified = date(DATE_ATOM);
+      MapCat::storeAsYaml();
+      MapCat::storeAsPser();
+    }
   }
   
   function asArray(): array {
     return
-        ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
+        ($this->obsolete ? ['obsolete'=> $this->obsolete] : [])
+      + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
       + ($this->title ? ['title'=> $this->title] : [])
       + ($this->edition ? ['edition'=> $this->edition] : [])
       + (($this->mapsFrenchAreas !== null) ? ['mapsFrenchAreas'=> $this->mapsFrenchAreas] : [])
       + ($this->modified ? ['modified'=> $this->modified] : [])
       + ($this->lastUpdate !== null ? ['lastUpdate'=> $this->lastUpdate] : [])
       + ($this->scaleDenominator ? ['scaleDenominator'=> $this->scaleDenominator] : [])
-      + ($this->bbox ? [
-        'bboxDM'=> $this->bbox->asArray(),
-        'spatial'=> $this->bbox->asDcmiBox(),
-        ] : [])
+      + ($this->bbox && (get_class($this->bbox)=='BBoxDM') ?
+          [ 'bboxDM'=> $this->bbox->asArray(), 'spatial'=> $this->bbox->asDcmiBox() ] : [])
+      + ($this->bbox && (get_class($this->bbox)=='BBoxDd') ? [ 'bboxLonLatFromWfs'=> $this->bbox->asArray() ] : [])
       + ($this->replaces ? ['replaces'=> $this->replaces] : [])
       + ($this->references ? ['references'=> $this->references] : [])
-      + ($this->note ? ['note'=> $this->note] : [])
+      + ($this->noteShom ? ['noteShom'=> $this->noteShom] : [])
+      + ($this->noteCatalog ? ['note'=> $this->noteCatalog] : [])
       + ($this->hasPart ? ['hasPart'=> array_map(function(MapPart $mapPart) { return $mapPart->asArray(); }, $this->hasPart)] : [])
       ;
   }
@@ -374,6 +435,13 @@ class MapCat {
       'geometry'=> $this->geometry()->asArray(),
     ];
   }
+  
+  function obsolete(): ?string { return $this->obsolete; }
+  
+  function setObsolete(string $comment) {
+    $this->obsolete = $comment;
+    self::$catUpdated = true;
+  }
 };
 
 
@@ -384,8 +452,8 @@ if (php_sapi_name() <> 'cli') {
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
   if (!isset($_GET['action'])) {
     echo "</pre>mapcat.inc.php - Actions proposées:<ul>\n";
-    echo "<li><a href='?action=importFromV1'>importe le catalogue V1 et l'enregistre en pser</a>\n";
-    echo "<li><a href='?action=yaml'>Lit le catalogue et génère un Yaml</a>\n";
+    echo "<li><a href='?action=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a>\n";
+    echo "<li><a href='?action=yaml'>Affiche le catalogue en Yaml</a>\n";
     echo "</ul>\n";
     die();
   }
@@ -395,9 +463,6 @@ if (php_sapi_name() <> 'cli') {
 
 if ($action == 'importFromV1') {
   MapCat::importFromV1();
-  MapCat::addModified();
-  MapCat::storeAsYaml();
-  MapCat::storeAsPser();
   die();
 }
 
