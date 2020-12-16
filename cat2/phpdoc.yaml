@@ -8,22 +8,35 @@ doc: |
   J'ai différents outils de visu de ce catalogue, notamment la possibilité d'en faire une carte.
   Je sais aussi sélectionner les cartes d'intérêt, cad celles qui décrivent la ZEE FR.
   
-  Ma doctrine de mise à jour est de :
-    - mettre à jour finement les cartes d'intérêt, cad les mettre à jour dès qu'une correction est disponible,
-      avec un cycle de qqs mois entre 1 an et 3 mois,
-    - mettre à jour plus grossièrement les infos du catalogue sur les cartes qui ne sont pas d'intérêt,
-      cad détecter les cartes périmées, détecter l'apparition de nouvelles cartes et mettre à jour l'édition de la carte.
+  Ma doctrine de mise à jour des cartes et en conséquence de gestion du catalogue est la suivante :
+    - je cherche à mettre à jour finement les cartes d'intérêt, cad dès qu'une correction est disponible, avec un cycle de qqs mois,
+      entre 1 an et 3 mois,
+    - pour cela je gère un catalogue mapcat de ces cartes avec notamment pour chacune le no et la date de sa dernière correction
+    - j'utilise le flux WFS pour détecter les nouvelles cartes et les cartes obsolètes ; pour cela j'identifie dans le flux WFS
+      les cartes d'intérêt (par intersection avec la ZEE) que je confronte avec les cartes du catalogue. Je contrôle cette opération
+      visuellement au travers d'une carte de toutes les cartes d'intérêt ou non,
+    - j'utilise par ailleurs le GAN d'une part pour détecter les nouvelles corrections et, d'autre part, pour récupérer les coordonnées
+      précises du cadre intérieur de chaque zone de la carte, qui sont utilisées par le module updt.
     
   L'ojectif de ce module est:
     1) de tenir à jour ce catalogue mapcat par confrontation au WFS et aux GAN
       - pour cela le principe est
-        - de détecter les écarts et de les corriger dans mapcat.yaml à la main en Yaml (NON je peux avoir beaucoup de corrections)
+        - de détecter les écarts et de les corriger dans mapcat.yaml
         - d'assurer avec Git une gestion des versions successives du catalogue
     2) de confronter ce catalogue au catalogue des GéoTiffs (../ws/shomgt.yaml) pour détecter:
     - les nouvelles corrections de cartes publiées par le Shom à prendre en compte dans les GéoTiffs
     - les GéoTiffs périmés (à voir)
     - les GéoTiffs à ajouter au catalogue shomgt.yaml (à voir)
     
+  Du point de vue architecture informatique:
+    - le catalogue est stocké dans une structure de données de type Yaml spécifiée par un schéma JSON. Afin de gérer les erreurs
+      détectées dans les sources de données du Shom (WFS et GAN), des écarts avec ces sources sont définis.
+    - le catalogue est stocké en pser avec une version en Yaml.
+    - les scripts Php lisent le pser et le réécrivent en cas de modification.
+    - à chaque modification le fichier Yaml est réécrit
+    - le fichier Yaml peut, à la demande, être utilisé pour réécrire le pser
+    - le fichier Yaml est régulièrement historisé dans Git
+  
   Il faut aussi adapter l'utilisation notamment par ../updt des infos exposées par ce module
 
   Le catalogue des cartes contient des infos absentes du catalogue des GéoTiffs, notamment le nom de certaines cartes, ex 7436
@@ -31,15 +44,17 @@ doc: |
   Le catalogue des cartes pourrait/devrait être géré/publié en DCAT.
   
   J'ai 2 catalogues différents:
-    - le catalogue des cartes recense les cartes Raster Marine du Shom, plus qqs GéoTiffs comme les AEM et MancheGrid
-      - il peut y avoir des cas particuliers comme la carte 6497 est absente du WFS mais présente dans le GAN, ce qui semble une erreur
-        Le 4/12/2018 le Shom indique que la carte 6497 n'est pas dispo en version numérique, mais existe bien en version papier
-        '6497 - Île de la Possession, Île de l''Est'
-    - le catalogue des GéoTiffs recense les GéoTiffs les plus récents obtenus du Shom
+    - le catalogue des cartes recense les cartes Raster Marine du Shom d'intérêt, plus qqs cartes comme les AEM et MancheGrid
+      - il peut y avoir des cas particuliers comme la carte '6497 - Île de la Possession, Île de l''Est' absente du WFS mais présente
+        dans le GAN, ce qui semble une erreur. Cependant, le 4/12/2018 le Shom indique que la carte 6497 n'est pas dispo en version
+        numérique, mais existe bien en version papier
+    - le catalogue des GéoTiffs (shomgt.yaml) recense les GéoTiffs les plus récents obtenus du Shom
       - une carte est souvent composée de plusieurs GéoTiffs
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
 
 journal: |
+  15/12/2020:
+    - changement de doctrine et d'architecture
   14/12/2020:
     - correction bug dans mapcat.inc.php
     - réalisation d'une carte de vérification du catalogue

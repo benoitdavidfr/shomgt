@@ -26,32 +26,34 @@ if (php_sapi_name()=='cli') {
   $sdmax = ($argc > 2) ? $argv[2] : null;
 }
 else {
-  $sdmin = isset($_GET['sdmin']) && $_GET['sdmin'] ? $_GET['sdmin'] : null;
-  $sdmax = isset($_GET['sdmax']) && $_GET['sdmax'] ? $_GET['sdmax'] : 3.5e7;
+  $sdmin = $_GET['sdmin'] ?? null;
+  $sdmax = $_GET['sdmax'] ?? null;
+  $mapid = $_GET['id'] ?? null;
 }
 
 //echo "<pre>doc="; print_r($doc); die();
 
-//header('Content-type: application/json; charset="utf8"');
-header('Content-type: text/plain; charset="utf8"');
+header('Content-type: application/json; charset="utf8"');
+//header('Content-type: text/plain; charset="utf8"');
 $nbre = 0;
 
 echo '{"type":"FeatureCollection","features":[',"\n";
 MapCat::init();
-foreach (MapCat::$maps as $id => $map) {
-  $mapp = $map->asArray();
-  //echo json_encode([$id=> $mapp], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
-  $scaleD = isset($mapp['scaleDenominator']) ? $mapp['scaleDenominator'] : $mapp['hasPart'][0]['scaleDenominator'];
-  $scaleD = (int)str_replace('.', '', $scaleD);
-    
-  //echo "num=$gan[num], scaleD=$scaleD<br>\n";
-  if ($sdmax && ($scaleD > $sdmax))
-    continue;
-  if ($sdmin && ($scaleD <= $sdmin))
-    continue;
-    
-  if ($nbre++ <> 0)
-    echo ",\n";
-  echo json_encode($map->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+if ($mapid) {
+  echo json_encode(MapCat::$maps[$mapid]->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
 }
+else {
+  foreach (MapCat::$maps as $id => $map) {
+    $scaleD = $map->scaleDenAsInt();
+    if ($sdmax && ($scaleD > $sdmax))
+      continue;
+    if ($sdmin && ($scaleD <= $sdmin))
+      continue;
+    
+    if ($nbre++ <> 0)
+      echo ",\n";
+    echo json_encode($map->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+  }
+}
+
 echo "\n]}\n";
