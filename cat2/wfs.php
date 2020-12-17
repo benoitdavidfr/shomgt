@@ -163,7 +163,9 @@ class Wfs {
     
       foreach (Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAjoutéesAuServiceWfs'] as $mapid => $map) {
         //echo "Ajout carte $mapid $map[title]\n";
-        $bbox = $map['outerBBoxLonLatDd'];
+        if (isset($wfs[$mapid]))
+          echo "Attention, la carte $mapid est remplacée par une carte ajoutée\n";
+        $bbox = $map['bboxLonLatDd'];
         $wfs[$mapid] = new Feature(
           id: $mapid,
           bbox: new GjBox($bbox),
@@ -258,13 +260,21 @@ else {
   $id = $_GET['id'] ?? null;
 }
 
-header('Content-type: application/json; charset="utf8"');
-//header('Content-type: text/plain; charset="utf8"');
 
 if ($id) {
-  echo json_encode(Wfs::items()[$id], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+  if ($item = (Wfs::items()[$id] ?? null)) {
+    header('Content-type: application/json; charset="utf8"');
+    //header('Content-type: text/plain; charset="utf8"');
+    echo json_encode($item->asArray(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+  }
+  else {
+    header('Content-type: text/plain; charset="utf8"');
+    echo "objet $id absent\n";
+  }
 }
 else {
+  header('Content-type: application/json; charset="utf8"');
+  //header('Content-type: text/plain; charset="utf8"');
   $nbre = 0;
   echo '{"type":"FeatureCollection","features":[',"\n";
   foreach (Wfs::items() as $id => $item) {

@@ -11,10 +11,10 @@ doc: |
   Ma doctrine de mise à jour des cartes et en conséquence de gestion du catalogue est la suivante :
     - je cherche à mettre à jour finement les cartes d'intérêt, cad dès qu'une correction est disponible, avec un cycle de qqs mois,
       entre 1 an et 3 mois,
-    - pour cela je gère un catalogue mapcat de ces cartes avec notamment pour chacune le no et la date de sa dernière correction
-    - j'utilise le flux WFS pour détecter les nouvelles cartes et les cartes obsolètes ; pour cela j'identifie dans le flux WFS
-      les cartes d'intérêt (par intersection avec la ZEE) que je confronte avec les cartes du catalogue. Je contrôle cette opération
-      visuellement au travers d'une carte de toutes les cartes d'intérêt ou non,
+    - pour cela je gère un catalogue mapcat de ces cartes avec notamment pour chacune le no et la date de sa dernière correction,
+    - j'utilise le flux WFS du Shom pour détecter les nouvelles cartes et les cartes obsolètes ; pour cela j'identifie dans ce flux
+      WFS les cartes d'intérêt (par intersection avec la ZEE) que je confronte avec les cartes du catalogue. Je contrôle cette
+      opération visuellement au travers d'une carte de toutes les cartes d'intérêt ou non,
     - j'utilise par ailleurs le GAN d'une part pour détecter les nouvelles corrections et, d'autre part, pour récupérer les coordonnées
       précises du cadre intérieur de chaque zone de la carte, qui sont utilisées par le module updt.
     
@@ -30,12 +30,12 @@ doc: |
     
   Du point de vue architecture informatique:
     - le catalogue est stocké dans une structure de données de type Yaml spécifiée par un schéma JSON. Afin de gérer les erreurs
-      détectées dans les sources de données du Shom (WFS et GAN), des écarts avec ces sources sont définis.
-    - le catalogue est stocké en pser avec une version en Yaml.
-    - les scripts Php lisent le pser et le réécrivent en cas de modification.
-    - à chaque modification le fichier Yaml est réécrit
-    - le fichier Yaml peut, à la demande, être utilisé pour réécrire le pser
-    - le fichier Yaml est régulièrement historisé dans Git
+      détectées dans les sources de données du Shom (WFS et GAN), des écarts avec ces sources sont définis,
+    - le catalogue est stocké en pser avec une version en Yaml,
+    - les scripts Php lisent le pser et le réécrivent en cas de modification,
+    - à chaque modification le fichier Yaml est réécrit,
+    - le fichier Yaml peut, à la demande, être utilisé pour écraser le pser,
+    - le fichier Yaml est régulièrement historisé dans Git.
   
   Il faut aussi adapter l'utilisation notamment par ../updt des infos exposées par ce module
 
