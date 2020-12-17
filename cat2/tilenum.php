@@ -18,6 +18,8 @@ doc: |
       https://geoapi.fr/shomgt/cat2/tilenum.php/{layer}/{z}/{x}/{y}.png
   Test:
     http://localhost/geoapi/shomgt/cat2/tilenum.php/cat1e6-1e7/17/63957/45506.png
+
+  Nécessite la définition de méthodes maketile() sur les classes MapCat et Wfs
 journal: |
   16/12/2020:
     création

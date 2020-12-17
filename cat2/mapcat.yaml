@@ -1,10 +1,10 @@
 title: 'Catalogue des cartes Shom'
 description:
-  - 'Import du fichier V1 le 2020-12-17T14:23:02+01:00'
+  - 'Import du fichier V1 le 2020-12-17T16:19:16+01:00'
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
-created: '2020-12-17T14:23:02+01:00'
-modified: '2020-12-17T14:23:02+01:00'
+created: '2020-12-17T16:19:16+01:00'
+modified: '2020-12-17T16:19:16+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -18,10 +18,10 @@ maps:
       SW: '79°00,00''S - 100°00,00''E'
       NE: '80°00,00''N - 490°00,00''E'
     spatial:
-      southlimit: !!float -79
-      westlimit: !!float 100
-      northlimit: !!float 80
-      eastlimit: !!float 490
+      southlimit: -79
+      westlimit: 100
+      northlimit: 80
+      eastlimit: 490
   FR3127:
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
@@ -100,7 +100,7 @@ maps:
       SW: '43°00,00''N - 062°20,00''W'
       NE: '77°10,00''N - 051°50,00''E'
     spatial:
-      southlimit: !!float 43
+      southlimit: 43
       westlimit: -62.333333333333
       northlimit: 77.166666666667
       eastlimit: 51.833333333333
@@ -137,7 +137,7 @@ maps:
         title: 'B - Récifs et îles Chesterfield'
         scaleDenominator: '150.000'
         bboxDM: { SW: '20°00,00''S - 158°07,97''E', NE: '19°22,76''S - 158°30,00''E' }
-        spatial: { southlimit: !!float -20, westlimit: 158.13283333333, northlimit: -19.379333333333, eastlimit: 158.5 }
+        spatial: { southlimit: -20, westlimit: 158.13283333333, northlimit: -19.379333333333, eastlimit: 158.5 }
       -
         title: 'C - Récifs d''Entrecasteaux - Atoll de Huon'
         scaleDenominator: '150.000'
@@ -161,7 +161,7 @@ maps:
       NE: '74°35,48''N - 012°19,50''W'
     spatial:
       southlimit: 47.15
-      westlimit: !!float -98
+      westlimit: -98
       northlimit: 74.591333333333
       eastlimit: -12.325
   FR6033:
@@ -697,7 +697,7 @@ maps:
       southlimit: -28.25
       westlimit: -153.5
       northlimit: -7.5
-      eastlimit: !!float -120
+      eastlimit: -120
   FR6608:
     title: 'Mer du Nord'
     edition: 'Édition n° 6 - 2018'
@@ -824,9 +824,9 @@ maps:
       SW: '17°00,00''N - 082°00,00''W'
       NE: '45°00,00''N - 060°30,00''W'
     spatial:
-      southlimit: !!float 17
-      westlimit: !!float -82
-      northlimit: !!float 45
+      southlimit: 17
+      westlimit: -82
+      northlimit: 45
       eastlimit: -60.5
     references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
   FR6623:
@@ -995,8 +995,8 @@ maps:
     spatial:
       southlimit: -35.29
       westlimit: 146.66666666667
-      northlimit: !!float -16
-      eastlimit: !!float 180
+      northlimit: -16
+      eastlimit: 180
     references: 'Fac similé carte AUS n° 4602 publiée en 1973 (édition septembre 2004).'
   FR6671:
     groupTitle: 'Océan Pacifique Sud'
@@ -1013,7 +1013,7 @@ maps:
       southlimit: -20.984333333333
       westlimit: 146.66666666667
       northlimit: 0.1
-      eastlimit: !!float 180
+      eastlimit: 180
     references: 'Fac similé carte AUS n°4604 publiée en 1973 (édition juin 2008).'
   FR6672:
     groupTitle: 'Océan Indien - Partie Ouest'
@@ -1027,8 +1027,8 @@ maps:
       SW: '27°00,00''S - 032°00,00''E'
       NE: '05°28,85''N - 053°25,74''E'
     spatial:
-      southlimit: !!float -27
-      westlimit: !!float 32
+      southlimit: -27
+      westlimit: 32
       northlimit: 5.4808333333333
       eastlimit: 53.429
     references: 'Fac similé carte GB n°4701 publiée en 1972 (édition août 2014).'
@@ -1142,7 +1142,7 @@ maps:
       NE: '14°13,00''S - 143°53,50''W'
     spatial:
       southlimit: -18.290666666667
-      westlimit: !!float -150
+      westlimit: -150
       northlimit: -14.216666666667
       eastlimit: -143.89166666667
   FR6690:
@@ -1174,7 +1174,7 @@ maps:
       NE: '17°40,00''S - 137°50,00''W'
     spatial:
       southlimit: -23.416666666667
-      westlimit: !!float -142
+      westlimit: -142
       northlimit: -17.666666666667
       eastlimit: -137.83333333333
   FR6692:
@@ -1419,10 +1419,10 @@ maps:
       SW: '08°00,00''S - 062°00,00''W'
       NE: '15°00,00''N - 028°00,00''W'
     spatial:
-      southlimit: !!float -8
-      westlimit: !!float -62
-      northlimit: !!float 15
-      eastlimit: !!float -28
+      southlimit: -8
+      westlimit: -62
+      northlimit: 15
+      eastlimit: -28
     references: 'Fac similé carte BR n°10 publiée en 1975.'
   FR6815:
     groupTitle: 'Océan Atlantique Nord'
@@ -1456,7 +1456,7 @@ maps:
       southlimit: -37.923333333333
       westlimit: 171.57166666667
       northlimit: -7.5
-      eastlimit: !!float -167
+      eastlimit: -167
     references: 'Fac similé carte NZ n° 14605 publiée en 1976 (édition juillet 2007).'
   FR6820:
     groupTitle: 'Îles Loyauté'
@@ -1779,7 +1779,7 @@ maps:
       southlimit: -27.9065
       westlimit: -175.33333333333
       northlimit: -7.5
-      eastlimit: !!float -142
+      eastlimit: -142
     references: 'Fac similé carte NZ n°14606 publiée en 1977 (édition avril 1992).'
   FR6884:
     title: 'Océan Indien - Partie Nord'
@@ -2134,7 +2134,7 @@ maps:
     spatial:
       southlimit: 42.333333333333
       westlimit: 4.8333333333333
-      northlimit: !!float 44
+      northlimit: 44
       eastlimit: 8.2
   FR6955:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
@@ -2197,10 +2197,10 @@ maps:
       SW: '60°00,00''S - 120°00,00''W'
       NE: '13°00,00''N - 063°00,00''W'
     spatial:
-      southlimit: !!float -60
-      westlimit: !!float -120
-      northlimit: !!float 13
-      eastlimit: !!float -63
+      southlimit: -60
+      westlimit: -120
+      northlimit: 13
+      eastlimit: -63
     references: 'Fac similé carte CL n°500 publiée en 1978.'
   FR6966:
     groupTitle: 'Côte Nord de France'
@@ -2216,7 +2216,7 @@ maps:
     spatial:
       southlimit: 48.5
       westlimit: -3.0866666666667
-      northlimit: !!float 50
+      northlimit: 50
       eastlimit: -1.4866666666667
   FR6968:
     groupTitle: 'Côte Sud d''Angleterre'
@@ -2352,7 +2352,7 @@ maps:
       NE: '47°53,50''N - 000°54,50''W'
     spatial:
       southlimit: 45.508333333333
-      westlimit: !!float -6
+      westlimit: -6
       northlimit: 47.891666666667
       eastlimit: -0.90833333333333
   FR6991:
@@ -2484,7 +2484,7 @@ maps:
       NE: '45°23,00''N - 010°12,00''E'
     spatial:
       southlimit: 35.5
-      westlimit: !!float 2
+      westlimit: 2
       northlimit: 45.383333333333
       eastlimit: 10.2
   FR7015:
@@ -2533,9 +2533,9 @@ maps:
       SW: '13°00,00''S - 117°30,00''E'
       NE: '40°00,00''N - 154°20,00''W'
     spatial:
-      southlimit: !!float -13
+      southlimit: -13
       westlimit: 117.5
-      northlimit: !!float 40
+      northlimit: 40
       eastlimit: -154.33333333333
     references: 'Fac similé Carte JP n°4052 publiée en 1983.'
   FR7023:
@@ -2550,10 +2550,10 @@ maps:
       SW: '13°00,00''S - 164°00,00''W'
       NE: '40°00,00''N - 076°00,00''W'
     spatial:
-      southlimit: !!float -13
-      westlimit: !!float -164
-      northlimit: !!float 40
-      eastlimit: !!float -76
+      southlimit: -13
+      westlimit: -164
+      northlimit: 40
+      eastlimit: -76
     references: 'Fac similé carte US n°51 publiée en 1982.'
   FR7024:
     groupTitle: 'Mer Méditerranée'
@@ -2628,7 +2628,7 @@ maps:
       NE: '47°49,10''N - 003°16,30''W'
     spatial:
       southlimit: 47.483333333333
-      westlimit: !!float -4
+      westlimit: -4
       northlimit: 47.818333333333
       eastlimit: -3.2716666666667
   FR7032:
@@ -2690,7 +2690,7 @@ maps:
       SW: '48°00,00''N - 006°43,70''W'
       NE: '51°14,90''N - 001°52,00''E'
     spatial:
-      southlimit: !!float 48
+      southlimit: 48
       westlimit: -6.7283333333333
       northlimit: 51.248333333333
       eastlimit: 1.8666666666667
@@ -2722,10 +2722,10 @@ maps:
       SW: '10°00,00''S - 085°00,00''W'
       NE: '62°00,00''N - 030°00,00''W'
     spatial:
-      southlimit: !!float -10
-      westlimit: !!float -85
-      northlimit: !!float 62
-      eastlimit: !!float -30
+      southlimit: -10
+      westlimit: -85
+      northlimit: 62
+      eastlimit: -30
     references: 'Fac similé US 13'
   FR7044:
     groupTitle: 'Océan Atlantique Sud'
@@ -2739,10 +2739,10 @@ maps:
       SW: '60°00,00''S - 070°00,00''W'
       NE: '10°00,00''N - 012°00,00''W'
     spatial:
-      southlimit: !!float -60
-      westlimit: !!float -70
-      northlimit: !!float 10
-      eastlimit: !!float -12
+      southlimit: -60
+      westlimit: -70
+      northlimit: 10
+      eastlimit: -12
     references: 'Fac similé carte BR n°19001 publiée en1979.'
   FR7049:
     groupTitle: 'Océan Pacifique Sud'
@@ -2756,7 +2756,7 @@ maps:
       SW: '24°00,00''S - 167°45,00''E'
       NE: '20°37,00''S - 173°05,00''E'
     spatial:
-      southlimit: !!float -24
+      southlimit: -24
       westlimit: 167.75
       northlimit: -20.616666666667
       eastlimit: 173.08333333333
@@ -2912,7 +2912,7 @@ maps:
       SW: '47°00,00''N - 005°10,00''W'
       NE: '48°05,00''N - 002°49,00''W'
     spatial:
-      southlimit: !!float 47
+      southlimit: 47
       westlimit: -5.1666666666667
       northlimit: 48.083333333333
       eastlimit: -2.8166666666667
@@ -2947,7 +2947,7 @@ maps:
       southlimit: 45.686666666667
       westlimit: -3.35
       northlimit: 46.796666666667
-      eastlimit: !!float -1
+      eastlimit: -1
   FR7070:
     groupTitle: 'Côte Ouest de France'
     title: 'Du pertuis de Maumusson à Mimizan-Plage'
@@ -2963,7 +2963,7 @@ maps:
       southlimit: 44.15
       westlimit: -2.6
       northlimit: 45.816666666667
-      eastlimit: !!float -1
+      eastlimit: -1
     noteShom: 'Nota&nbsp;: Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre "Voir carte adjacente 6786" par "Voir carte adjacente 7070 (INT 1804)" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991.'
   FR7073:
     groupTitle: Nouvelle-Calédonie
@@ -3016,7 +3016,7 @@ maps:
       SW: '47°00,00''N - 006°35,50''W'
       NE: '49°19,00''N - 001°30,00''W'
     spatial:
-      southlimit: !!float 47
+      southlimit: 47
       westlimit: -6.5916666666667
       northlimit: 49.316666666667
       eastlimit: -1.5
@@ -3032,8 +3032,8 @@ maps:
       SW: '25°00,00''N - 007°00,00''W'
       NE: '49°50,33''N - 042°15,50''E'
     spatial:
-      southlimit: !!float 25
-      westlimit: !!float -7
+      southlimit: 25
+      westlimit: -7
       northlimit: 49.838833333333
       eastlimit: 42.258333333333
     replaces: '(remplace 5705)'
@@ -4799,8 +4799,8 @@ maps:
     spatial:
       southlimit: -31.333333333333
       westlimit: -166.66666666667
-      northlimit: !!float -4
-      eastlimit: !!float -124
+      northlimit: -4
+      eastlimit: -124
     noteShom: 'Nota&nbsp;: Mise aux normes internationales et mise en place des déclinaisons magnétiques (isogones)'
   FR7247:
     groupTitle: 'Côte Nord de France'
@@ -5091,8 +5091,8 @@ maps:
       SW: '51°00,00''S - 104°00,00''E'
       NE: '02°36,26''S - 167°57,92''W'
     spatial:
-      southlimit: !!float -51
-      westlimit: !!float 104
+      southlimit: -51
+      westlimit: 104
       northlimit: -2.6043333333333
       eastlimit: -167.96533333333
     replaces: '(remplace 5356)'
@@ -5206,7 +5206,7 @@ maps:
       NE: '09°40,56''S - 172°47,00''W'
     spatial:
       southlimit: -16.5
-      westlimit: !!float 177
+      westlimit: 177
       northlimit: -9.676
       eastlimit: -172.78333333333
     replaces: '(remplace 6067)'
@@ -5240,7 +5240,7 @@ maps:
       NE: '44°28,81''N - 016°19,19''E'
     spatial:
       southlimit: 34.666666666667
-      westlimit: !!float 8
+      westlimit: 8
       northlimit: 44.480166666667
       eastlimit: 16.319833333333
     references: 'Fac similé Carte IT n°434 publiée en 1990.'
@@ -5352,7 +5352,7 @@ maps:
       NE: '51°35,50''N - 002°45,00''E'
     spatial:
       southlimit: 49.083333333333
-      westlimit: !!float -3
+      westlimit: -3
       northlimit: 51.591666666667
       eastlimit: 2.75
   FR7313:
@@ -5514,8 +5514,8 @@ maps:
       NE: '16°00,00''S - 173°04,00''E'
     spatial:
       southlimit: -26.266666666667
-      westlimit: !!float 157
-      northlimit: !!float -16
+      westlimit: 157
+      northlimit: -16
       eastlimit: 173.06666666667
   FR7322:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
@@ -5640,7 +5640,7 @@ maps:
     spatial:
       southlimit: 41.466666666667
       westlimit: -10.5
-      northlimit: !!float 52
+      northlimit: 52
       eastlimit: !!float 0
   FR7337:
     groupTitle: 'Côtes de Guyane et du Brésil'
@@ -5687,9 +5687,9 @@ maps:
       NE: '51°55,00''N - 003°00,00''E'
     spatial:
       southlimit: 47.5
-      westlimit: !!float -7
+      westlimit: -7
       northlimit: 51.916666666667
-      eastlimit: !!float 3
+      eastlimit: 3
   FR7345:
     groupTitle: 'Petites Antilles'
     title: 'Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)'
@@ -6025,7 +6025,7 @@ maps:
       NE: '07°42,60''S - 140°18,10''W'
     spatial:
       southlimit: -8.1833333333333
-      westlimit: !!float -141
+      westlimit: -141
       northlimit: -7.71
       eastlimit: -140.30166666667
     hasPart:
@@ -6144,7 +6144,7 @@ maps:
     spatial:
       southlimit: -24.4
       westlimit: -163.5
-      northlimit: !!float -14
+      northlimit: -14
       eastlimit: -147.43333333333
   FR7370:
     groupTitle: 'Océan Pacifique Sud'
@@ -6159,9 +6159,9 @@ maps:
       NE: '16°16,00''S - 124°00,00''W'
     spatial:
       southlimit: -26.5
-      westlimit: !!float -140
+      westlimit: -140
       northlimit: -16.266666666667
-      eastlimit: !!float -124
+      eastlimit: -124
     replaces: '(remplace 6000)'
   FR7371:
     groupTitle: 'Océan Pacifique Sud'
@@ -6176,7 +6176,7 @@ maps:
       NE: '07°22,00''S - 136°56,00''W'
     spatial:
       southlimit: -18.1
-      westlimit: !!float -153
+      westlimit: -153
       northlimit: -7.3666666666667
       eastlimit: -136.93333333333
   FR7372:
@@ -6191,7 +6191,7 @@ maps:
         title: Fakarava
         scaleDenominator: '80.000'
         bboxDM: { SW: '16°35,00''S - 145°52,00''W', NE: '16°00,00''S - 145°18,50''W' }
-        spatial: { southlimit: -16.583333333333, westlimit: -145.86666666667, northlimit: !!float -16, eastlimit: -145.30833333333 }
+        spatial: { southlimit: -16.583333333333, westlimit: -145.86666666667, northlimit: -16, eastlimit: -145.30833333333 }
       -
         title: 'A - De la Passe Garuae au Mouillage de Rotoava'
         scaleDenominator: '25.000'
@@ -6501,7 +6501,7 @@ maps:
       SW: '47°00,00''N - 002°50,20''W'
       NE: '47°20,30''N - 002°06,40''W'
     spatial:
-      southlimit: !!float 47
+      southlimit: 47
       westlimit: -2.8366666666667
       northlimit: 47.338333333333
       eastlimit: -2.1066666666667
@@ -6782,7 +6782,7 @@ maps:
       SW: '43°00,00''N - 006°29,30''E'
       NE: '43°29,70''N - 006°57,00''E'
     spatial:
-      southlimit: !!float 43
+      southlimit: 43
       westlimit: 6.4883333333333
       northlimit: 43.495
       eastlimit: 6.95
@@ -7132,7 +7132,7 @@ maps:
       southlimit: 45.530333333333
       westlimit: -1.3538333333333
       northlimit: 45.699
-      eastlimit: !!float -1
+      eastlimit: -1
     hasPart:
       -
         title: 'A - Port de Royan'
@@ -7746,7 +7746,7 @@ maps:
       NE: '16°24,00''N - 061°34,60''W'
     spatial:
       southlimit: 15.805
-      westlimit: !!float -62
+      westlimit: -62
       northlimit: 16.4
       eastlimit: -61.576666666667
     replaces: '(remplace 3418)'
@@ -7829,7 +7829,7 @@ maps:
       southlimit: -21.583333333333
       westlimit: 48.583333333333
       northlimit: -11.083333333333
-      eastlimit: !!float 56
+      eastlimit: 56
     replaces: '(remplace 4174.CA)'
     noteShom: 'Nota&nbsp;: Remplacer la mention hors-cadre (coin Sud-Est) "Voir carte adjacente 4174 See adjoining chart 4174" par "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7486. Porter la mention hors-cadre "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7488 (à l''Ouest). Remplacer la mention hors-cadre (au Nord) "Voir carte adjacente 4174 See adjoining chart 4174" par "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7489. Rayer le cadre de la carte 4174 et la mention "4174" sur la carte 6672. Porter le cadre de la carte 7487 et la mention "7487 (INT7062)" sur la carte 6672. Rayer le cadre de la carte 4174 et la mention "4174" sur la carte 6673. Porter le cadre de la carte 7487 et la mention "7487 (INT7062)" sur la carte 6673.'
   FR7488:
@@ -7847,7 +7847,7 @@ maps:
       southlimit: -21.75
       westlimit: 54.116666666667
       northlimit: -14.666666666667
-      eastlimit: !!float 65
+      eastlimit: 65
   FR7489:
     groupTitle: 'Océan Indien'
     title: 'Approches Sud-Est de Madagascar'
@@ -7974,8 +7974,8 @@ maps:
       NE: '44°00,00''N - 009°45,00''E'
     spatial:
       southlimit: 40.583333333333
-      westlimit: !!float 3
-      northlimit: !!float 44
+      westlimit: 3
+      northlimit: 44
       eastlimit: 9.75
     replaces: '(remplace 6632,6632P)'
   FR7510:
@@ -8025,7 +8025,7 @@ maps:
       NE: '64°02,00''S - 146°06,00''E'
     spatial:
       southlimit: -67.416666666667
-      westlimit: !!float 134
+      westlimit: 134
       northlimit: -64.033333333333
       eastlimit: 146.1
     replaces: '(remplace 6101.CA)'
@@ -8094,8 +8094,8 @@ maps:
     spatial:
       southlimit: -56.916666666667
       westlimit: 34.25
-      northlimit: !!float -30
-      eastlimit: !!float 90
+      northlimit: -30
+      eastlimit: 90
   FR7606:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
@@ -8404,7 +8404,7 @@ maps:
       SW: '05°00,00''N - 117°06,00''W'
       NE: '15°40,00''N - 101°18,00''W'
     spatial:
-      southlimit: !!float 5
+      southlimit: 5
       westlimit: -117.1
       northlimit: 15.666666666667
       eastlimit: -101.3
@@ -8512,7 +8512,7 @@ maps:
       SW: '21°00,00''S - 163°59,10''E'
       NE: '18°56,10''S - 167°11,58''E'
     spatial:
-      southlimit: !!float -21
+      southlimit: -21
       westlimit: 163.985
       northlimit: -18.935
       eastlimit: 167.193
@@ -8592,7 +8592,7 @@ maps:
       SW: '60°00,00''S - 030°00,00''E'
       NE: '05°00,00''N - 090°00,00''E'
     spatial:
-      southlimit: !!float -60
-      westlimit: !!float 30
-      northlimit: !!float 5
-      eastlimit: !!float 90
+      southlimit: -60
+      westlimit: 30
+      northlimit: 5
+      eastlimit: 90

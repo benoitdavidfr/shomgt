@@ -4,6 +4,8 @@ name: mapcat.inc.php
 title: cat2 / mapcat.inc.php - Gestion du catalogue des cartes du Shom v2
 classes:
 doc: |
+  La classe MapCat est conforme au schéma http://geoapi.fr/shomgt/cat2/mapcat.schema
+
   Je gère 2 types de BBox:
     - celles définies précisément par des mesures en degrés et minutes décimales correspondant à l'ext. du cadre interne de la carte
     - celles imprécises qui peuvent correspondre soit au cadre interne soit à l'extension de la carte y compris le cadre externe
@@ -128,10 +130,10 @@ doc: |
   La propriété statique $maps est un dictionnaire des cartes sur leur id.
 
   Les fichiers mapcat.yaml et mapcat.pser contiennent le catalogue des cartes y c. la date et l'heure d'actualisation.
-  Le fichier mapcat.pser est dérivé du fichier mapcat.yaml pour accélérer sa lecture.
+  Le fichier mapcat.pser accélère la lecture.
   
   Après un traitement modifiant le contenu du catalogue, il est nécessaire de réécrire les fichier yaml ainsi que le fichier pser.
-  La propriété statique $catUpdated trace les mise à jour, elle vaut toujours false après le chargement des données ;
+  La propriété statique $catUpdated trace les mises à jour, elle vaut toujours false après le chargement des données ;
   si elle vaut true cela signfie que les données doivent être enregistrées.
 
   Il existe des cartes sans espace principal (exemple 7436 - Approches et Port de Bastia - Ports d'Ajaccio et de Propriano)
@@ -142,8 +144,8 @@ class MapCat {
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
 
-  static bool $verbose = false;
-  static bool $catUpdated = false; // true ssi le catalogue a été modifié, propriété non enregistrée en pser ou en Yaml
+  static bool $verbose = false; // flag controlant certains affichages de debuggage, propriété enregistrée ni en pser ni en Yaml
+  static bool $catUpdated = false; // true ssi le catalogue a été modifié, propriété enregistrée ni en pser ni en Yaml
 
   static ?string $catTitle = null; // titre du catalogue
   static array $catDescription = []; // description du catalogue, liste de string
@@ -156,23 +158,25 @@ class MapCat {
   protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title; // titre de la carte
   protected ?string $edition; // edition de la carte
-  protected bool $mapsFrenchAreas; // identifie les cartes dites d'intérêt, true ou false
-  protected ?string $modified; // date de la dernière correction apportée à la carte ou null
+  protected bool $mapsFrenchAreas; // identifie les cartes dites d'intérêt
+  protected ?string $modified; // date de la dernière correction apportée à la carte ou null s'il n'y en n'a pas eu ou si non connue
   protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 s'il n'y en n'a pas eu, ou null si inconnu
   protected ?string $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
                                 // null ssi la carte ne comporte pas d'espace principal
   protected ?GjBox $bbox; // bbox de l'espace principal de la carte comme BBoxDM|GjBox, null ssi pas d'espace principal
-  protected ?string $replaces; // facsimilé éventuel
+  protected ?string $replaces; // indication éventuelle de la carte remplacée
   protected ?string $references; // ssi la carte est un fac-similé alors référence de la carte généralement étrangère reproduite
-  protected ?string $noteShom; // commentaire associé à la carte par le Shom
+  protected ?string $noteShom; // commentaire associé par le Shom à la carte
   protected ?string $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
   protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
   
   function mapsFrenchAreas(): ?bool { return $this->mapsFrenchAreas; }
+  // s'il n'y a pas d'espace principal, je prends arbitrairement l'échelle du premier cartouche
   function scaleDenominator(): string { return $this->scaleDenominator ?? $this->hasPart[0]->scaleDenominator(); }
+  // Génération du dénom. d'échelle comme entier
   function scaleDenAsInt(): int { return (int)str_replace('.', '', $this->scaleDenominator()); }
   
-  function __construct(string $mapid, array $map) { // $map peut être soit une structure V2 ou V1
+  function __construct(string $mapid, array $map) { // $map peut être une structure V2 ou V1
     $this->num = substr($mapid, 2);
     $this->obsolete = null;
     $this->groupTitle = $map['groupTitle'] ?? null;
@@ -194,16 +198,14 @@ class MapCat {
    
     if (isset($map['mapsFrenchAreas']))
       $this->mapsFrenchAreas = $map['mapsFrenchAreas'];
-    else { // si non défini alors il est calculé le catalogue est marqué pour mise à jour
-      $sd = $this->bbox ? $this->scaleDenominator : $this->hasPart[0]->scaleDenominator();
-      $this->mapsFrenchAreas = France::interet($mapid, $sd, $this->geometry());
+    else { // si non défini alors il est calculé et le catalogue est marqué pour mise à jour
+      $this->mapsFrenchAreas = France::interet($mapid, $this->scaleDenominator(), $this->geometry());
       self::$catUpdated = true;
     }
-    if (!$this->mapsFrenchAreas)
-      $this->lastUpdate = null;
   }
 
-  function geometry(): Geometry { // retourne la géométrie comme Polygone s'il existe un espace principal, sinon comme Multi
+  // retourne la géométrie de l'espace principal comme Polygone s'il existe, sinon des cartouches comme Multi-Polygone
+  function geometry(): Geometry {
     if ($this->bbox) {
       return $this->bbox->asGeometry();
     }
@@ -215,7 +217,7 @@ class MapCat {
     }
   }
   
-  // EBox en WebMercator du bbox
+  // EBox en WebMercator du bbox, génère une erreur s'il n'y a pas d'espace principal
   function wembox(): EBox {
     if ($this->bbox) {
       $gboxes = $this->bbox->asGBoxes();
@@ -286,7 +288,7 @@ class MapCat {
     }
   }
   
-  static function storeAsPser() {
+  static function storeAsPser() { // enregistre le catalogue comme pser 
     file_put_contents(self::PATH_PSER, serialize([
       'title'=> self::$catTitle,
       'description'=> self::$catDescription,
@@ -296,7 +298,7 @@ class MapCat {
     ]));
   }
   
-  static function allAsArray(): array {
+  static function allAsArray(): array { // génère le catalogue comme array Php
     return [
       'title'=> self::$catTitle,
       'description'=> self::$catDescription,
@@ -308,9 +310,11 @@ class MapCat {
     ];
   }
   
-  static function storeAsYaml() { file_put_contents(self::PATH_YAML, Yaml::dump(self::allAsArray(), 5, 2)); }
+  static function storeAsYaml() { // enregistre le catalogue en Yaml
+    file_put_contents(self::PATH_YAML, Yaml::dump(self::allAsArray(), 5, 2));
+  }
   
-  static function init() {
+  static function init() { // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
     if (!file_exists(self::PATH_PSER) && !file_exists(self::PATH_YAML))
       throw new Exception("Erreur dans MapCat::init() : les fichiers mapcat.yaml et mapcat.pser n'existent ni l'un ni l'autre");
     elseif (!file_exists(self::PATH_PSER)
@@ -329,7 +333,7 @@ class MapCat {
     }
   }
   
-  static function loadYaml() { // chargement du Yaml pour écraser le pser
+  static function loadYaml() { // chargement du Yaml pour écraser le pser, génère une erreur si le pser est plus récent que le Yaml
     if (!file_exists(self::PATH_YAML))
       throw new Exception("Erreur dans MapCat::loadYaml() : le fichier mapcat.yaml n'existe pas");
     if (file_exists(self::PATH_PSER) && (filemtime(self::PATH_PSER) > filemtime(self::PATH_PSER)))
@@ -357,7 +361,7 @@ class MapCat {
     }
   }
   
-  function asArray(): array {
+  function asArray(): array { // génère la carte comme array
     return
         ($this->obsolete ? ['obsolete'=> $this->obsolete] : [])
       + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
@@ -378,7 +382,7 @@ class MapCat {
       ;
   }
 
-  function geojson(): array {
+  function geojson(): array { // génère une carte comme Feature GeoJSON
     return [
       'type'=> 'Feature',
       'id'=> 'FR'.$this->num,
@@ -387,14 +391,14 @@ class MapCat {
     ];
   }
   
-  function obsolete(): ?string { return $this->obsolete; }
+  function obsolete(): ?string { return $this->obsolete; } // consulte la propriété
   
-  function setObsolete(string $comment) {
+  function setObsolete(string $comment) { // modifie la propriété
     $this->obsolete = $comment;
     self::$catUpdated = true;
   }
   
-  // fabrication d'une tuile des étiquettes
+  // fabrique une tuile de la couche des étiquettes pour la carte Leaflet
   static function maketile(int $sdmin, ?int $sdmax, EBox $wembox, array $options=[]) {
     if (self::$verbose)
       echo "MapCat::maketile(lyrname=$sdmin-$sdmax, wembox=$wembox, options=",json_encode($options),")<br>\n";

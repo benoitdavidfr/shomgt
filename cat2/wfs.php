@@ -2,10 +2,14 @@
 /*PhpDoc:
 name: wfs.php
 title: cat2/wfs.php - utilisation du WFS du Shom
+classes:
 doc: |
   Définit:
-    1) la classe Wfs et la méthode statique Wfs::dl() qui moissonne le WFS du Shom et retourne un array de Feature
-    2) comme script la restitution des élts du WFS comme FaetureCollection avec un filtre sur sd
+    1) la classe Wfs avec notamment
+      a) la méthode statique Wfs::dl() qui moissonne le WFS du Shom et retourne un array de Feature
+      b) la méthode statique maketile() utilisée pour générer la couche d'étiquettes pour la carte Leaflet
+    2) la classe Feature, objets retournés par Wfs
+    3) comme script la restitution des élts du WFS comme FaetureCollection avec un filtre sur sd
 journal: |
   17/12/2020:
     export de la définition de GjBox
@@ -21,8 +25,8 @@ require_once __DIR__.'/gjbox.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-// formatte un entier positif en ajoutant les séparateurs de milliers
-function ajouteSepMilliers(int $val): string {
+
+function ajouteSepMilliers(int $val): string { // formatte un entier positif en lui ajoutant les séparateurs de milliers 
   if ($val < 1e3)
     return $val;
   else
@@ -35,6 +39,13 @@ if (0) { // Test unitaire
 }
 
 
+/*PhpDoc: classes
+name: class Feature
+title: class Feature - imlémente un Feature GeoJSON, utilisé dans le retour du WFS
+methods:
+doc: |
+  Seule la géométrie est obligatoire
+*/
 class Feature {
   public ?string $id;
   public ?GjBox $bbox;
@@ -52,13 +63,15 @@ class Feature {
   
   function asArray(): array {
     return
-      ['id'=> $this->id]
+      (($this->id !== null) ? ['id'=> $this->id] : [])
     + ($this->bbox ? ['bbox'=> $this->bbox->asArray()] : [])
-    + ['properties'=> $this->properties]
+    + ($this->properties ? ['properties'=> $this->properties] : [])
     + ['geometry'=> $this->geometry->asArray()]
     ;
   }
   
+  // calcule une boite en coord. WebMercator
+  // si le feature est à cheval sur l'antiméridien alors retourne le bbox à l'West de l'anti-méridien
   function wembox(): EBox {
     if (!$this->bbox)
       $this->bbox = GjBox::ofGeometry($this->geometry);
@@ -70,7 +83,7 @@ class Feature {
   name: drawLabel
   title: "function drawLabel($image, EBox $bbox, int $width, int $height): bool - dessine dans l'image GD le numéro de la carte"
   doc: |
-    $bbox est un EBox en WebMercator
+    $bbox est un EBox en WebMercator délimitant la tuile définie par l'image
   */
   function drawLabel($image, EBox $bbox, int $width, int $height): bool {
     //echo "title= ",$this->title,"<br>\n";
@@ -98,8 +111,14 @@ class Feature {
 class Wfs {
   static $verbose = false;
   
-  // lecture du wfs Shom des fantomes des cartes GeoTiff
-  // retourne un ensemble de features chacun identifié par un id de la forme "FR{num}"
+  /*PhpDoc: classes
+  name: methods
+  title: "static function dl(): array - lecture du wfs Shom des fantomes des cartes GeoTiff"
+  doc: |
+    retourne un ensemble de features chacun identifié par un id de la forme "FR{num}"
+    bufferise le résultat dans un fichier pser dont l'ancienneté est limitée à 12 heures
+    ajoute les cartes manquantes
+  */
   static function dl(): array {
     //printf("time-filemtime=%.2f heures<br>\n",(time()-filemtime(__DIR__.'/wfsdl.pser'))/60/60);
     // Le fichier wfsdl.pser est automatiquement mis à jour toutes les 12 heures
@@ -179,7 +198,10 @@ class Wfs {
     }*/
   }
 
-  // ajoute à chaque feature la propriété mapsFrenchAreas et défini les bbox qui ne le sont pas
+  /*PhpDoc: classes
+  name: methods
+  title: "static function items(): array - // enrichit chaque feature avec la propriété mapsFrenchAreas et définit les bbox qui ne le sont pas"
+  */
   static function items(): array {
     $items = self::dl();
     foreach ($items as $id => &$item) {
@@ -190,7 +212,7 @@ class Wfs {
     return $items;
   }
   
-  // fabrication d'une tuile des étiquettes
+  // fabrication d'une tuile des étiquettes pour l'affichage de la carte Leaflet
   static function maketile(int $sdmin, ?int $sdmax, EBox $wembox, array $options=[]) {
     if (self::$verbose)
       echo "Wfs::maketile(lyrname=$sdmin-$sdmax, wembox=$wembox, options=",json_encode($options),")<br>\n";
@@ -224,6 +246,7 @@ class Wfs {
 
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
 // si id est défini alors affiche le feature id, sinon affiche les features avec un filtre sur sdmin et sdmax
+// L'affichage des faetures est utilise par la carte Leaflet
 
 if (php_sapi_name()=='cli') {
   $sdmin = ($argc > 1) ? $argv[1] : null;

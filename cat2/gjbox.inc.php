@@ -4,12 +4,13 @@ name: gjbox.inc.php
 title: cat2/gjbox.inc.php - Bbox à la GeoJSON
 classes:
 doc: |
-  Le standard GéoJSON spécifie qu'une bbox est définie par [west, south, east, north] avec -180 <= west <= 180 et -180 <= east <= 180
+  La classe GjBox gère un bbox selon les conventions du standard GéoJSON qui spécifie qu'une bbox est définie
+  par [west, south, east, north] avec -180 <= west <= 180 et -180 <= east <= 180
   Si le bbox est à cheval sur l'anti-méridien alors west > east sinon west <= east
+  La classe GBox ne gère pas l'anti-méridien de cette manière et son utilisation génère de faux Bbox.
+  
   Il existe une bbox particulière indéfinie codée par (!$ws && !$en)
   La Terre entière est codée [-180, -90, 180, 90]
-
-  La classe GBox ne gère pas l'anti-méridien de cette manière.
 journal: |
   17/12/2020:
     création
@@ -24,6 +25,7 @@ methods:
 doc: |
 */
 class GjBox {
+  static $epsilon = 1e-8; // pour arrondir éventuellement en entier pour la sortie Yaml
   protected array $ws=[]; // position WS ou [] ssi bbox indéfinie
   protected array $en=[]; // position EN ou [] ssi bbox indéfinie
   
@@ -32,9 +34,10 @@ class GjBox {
   title: function __construct($p=null) - créée une bbox
   doc: |
     Sans paramètre créée une bbox indéterminée,
-    sinon le paramètre est soit un array de 2 ou 3 nombres interprété comme une position,
+    avec, le paramètre est
+      soit un array de 2 ou 3 nombres interprété comme une position,
       soit une string contenant de 2 ou 3 nombres, interprétée comme une position,
-      soit un array de 4 ou 6 nombres, soit une string contenant 4 ou 6 nombres, interprétés comme 2 pos.
+      soit un array de 4 ou 6 nombres, soit une string contenant 4 ou 6 nombres, interprétés comme les 2 pos WS et EN.
       soit un array d'array, interprété comme une liste de positions qui ne doivent pas être à cheval sur l'anti-méridien,
   */
   function __construct($p=null) {
@@ -117,12 +120,22 @@ class GjBox {
   function asArray(): array { return !$this->ws ? [] : [$this->ws[0], $this->ws[1], $this->en[0], $this->en[1]]; }
   function __toString(): string { return json_encode($this->asArray()); }
   
+  private static function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier, simplifie le Yaml
+    if ($v == 0)
+      return $v;
+    $r = round($v);
+    if (abs(($v-$r)/$v) < self::$epsilon)
+      return (int)$r;
+    else
+      return $v;
+  }
+  
   function asDcmiBox(): array { // utilise les conventions DCMI Bpx pour améliorer l'interopérabilité
     return [
-      'southlimit'=> $this->ws[1],
-      'westlimit'=> $this->ws[0],
-      'northlimit'=> $this->en[1],
-      'eastlimit'=> $this->en[0],
+      'southlimit'=> self::roundToIntIfPossible($this->ws[1]),
+      'westlimit'=> self::roundToIntIfPossible($this->ws[0]),
+      'northlimit'=> self::roundToIntIfPossible($this->en[1]),
+      'eastlimit'=> self::roundToIntIfPossible($this->en[0]),
     ];
   }
   
@@ -268,8 +281,8 @@ class GjBox {
     }
     else {
       return [
-         new GBox([$this->ws[0], $this->ws[1], $this->en[0]+360, $this->en[1]]),
-         new GBox([$this->ws[0]-360, $this->ws[1], $this->en[0], $this->en[1]]),
+         new GBox([$this->ws[0], $this->ws[1], $this->en[0]+360, $this->en[1]]), // west de l'anti-méridien
+         new GBox([$this->ws[0]-360, $this->ws[1], $this->en[0], $this->en[1]]), // east de l'énti-méridien
       ];
     }
   }
@@ -287,8 +300,7 @@ class GjBox {
     }
   }
   
-  // calcule le GjBox d'une géométrie, à améliorer
-  static function ofGeometry(Geometry $geom): self {
+  static function ofGeometry(Geometry $geom): self { // calcule le GjBox d'une géométrie, à AMELIORER
     switch ($geom->type()) {
       case 'Point': return new self($geom->coords());
       case 'MultiPoint': {
