@@ -4,8 +4,16 @@ name: mapcat.inc.php
 title: cat2 / mapcat.inc.php - Gestion du catalogue des cartes du Shom v2
 classes:
 doc: |
-  
+  Je gère 2 types de BBox:
+    - celles définies précisément par des mesures en degrés et minutes décimales correspondant à l'ext. du cadre interne de la carte
+    - celles imprécises qui peuvent correspondre soit au cadre interne soit à l'extension de la carte y compris le cadre externe
+  La classe GjBox gère les Bbox imprécises et est super-classe de celle des données précises.
+
+  Un bbox à cheval sur l'anti-méridien n'est pas géré de la même facon que dans la classe GBox
+  Ici, il est géré comme spécifié par GeoJSON, cad avec $westlimit > $eastlimit
 journal: |
+  17/12/2020:
+    - remplacement de BBoxDd par GjBox 
   15/12/2020:
     - changement d'architecture, passage en Php8
   14/12/2020:
@@ -18,6 +26,7 @@ includes: [../lib/gegeom.inc.php]
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../updt/mdiso19139.inc.php';
+require_once __DIR__.'/gjbox.inc.php';
 require_once __DIR__.'/france.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -25,85 +34,15 @@ use Symfony\Component\Yaml\Yaml;
 date_default_timezone_set('Europe/Paris');
 
 /*PhpDoc: classes
-name: BBoxDd
-title: class BBoxDd - Gestion des BBox imprécises des cartes, en LonLat en degrés décimaux
-doc: |
-  Je gère 2 types de BBox:
-    - celles définies précisément par des mesures en degrés et minutes décimales correspondant à l'ext. du cadre interne de la carte
-    - celles imprécises qui peuvent correspondre soit au cadre interne soit à l'extension de la carte y compris le cadre externe
-  La classe BBoxDd gère les Bbox imprécises et est classe mère de celle des données précises.
-*/
-class BBoxDd {
-  protected float $westlimit;
-  protected float $southlimit;
-  protected float $eastlimit;
-  protected float $northlimit;
-  
-  function __construct(array $limits) { // dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON
-    if (count($limits) <> 4)
-      throw new Exception("Erreur dans BBoxDD::__construct() : count <> 4");
-    if (!is_numeric($limits[0]))
-      throw new Exception("Erreur dans BBoxDD::__construct() : !is_number(limits[0])");
-    $this->westlimit  = $limits[0];
-    $this->southlimit = $limits[1];
-    $this->eastlimit  = $limits[2];
-    $this->northlimit = $limits[3];
-  }
-  
-  function __toString(): string {
-    return json_encode($this->asDcmiBox(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-  }
-  
-  function asArray(): array { return [ $this->westlimit, $this->southlimit, $this->eastlimit, $this->northlimit ]; }
-
-  function asDcmiBox(): array {
-    return [
-      'southlimit'=> $this->southlimit,
-      'westlimit'=> $this->westlimit,
-      'northlimit'=> $this->northlimit,
-      'eastlimit'=> $this->eastlimit,
-    ];
-  }
-  
-  function straddlingTheAntimeridian(): bool { return $this->eastlimit < $this->westlimit; }
-    
-  // PB pour les BBoxDM à cheval sur l'anti-méridien !! un GBox ne peut l'être !!!
-  // si BBox à cheval sur l'anti-méridien alors Retourne 2 GBox, sinon 1
-  function asGBoxes(): array {
-    if (!$this->straddlingTheAntimeridian()) {
-      return [ new GBox([[$this->eastlimit, $this->southlimit],[$this->westlimit, $this->northlimit]]) ];
-    }
-    else {
-      return [
-         new GBox([[$this->westlimit, $this->southlimit],[180, $this->northlimit]]),
-         new GBox([[-180, $this->southlimit],[$this->eastlimit, $this->northlimit]]),
-      ];
-    }
-  }
-    
-  function asGeometry(): Geometry { // retourne un MultiPolygon si le bbox est à cheval sur l'anti-méridien, un Polygon sinon
-    $gboxes = $this->asGBoxes();
-    if (count($gboxes) == 1) {
-      return Geometry::fromGeoJSON(['type'=> 'Polygon', 'coordinates'=> $gboxes[0]->polygon()]);
-    }
-    else {
-      return Geometry::fromGeoJSON([
-        'type'=> 'MultiPolygon',
-        'coordinates'=> [$gboxes[0]->polygon(), $gboxes[1]->polygon(), ],
-      ]);
-    }
-  }
-};
-
-/*PhpDoc: classes
 name: BBoxDM
-title: class BBoxDM - Gestion des BBox des cartes et des cartouches en degrés et minutes décimales
+title: class BBoxDM extends GjBox - Gestion des BBox des cartes et des cartouches en degrés et minutes décimales
 doc: |
-  Il s'agit des BBox définies précisément par des mesures en degrés et minutes décimales correspondant à l'extension du cadre interne
-  de la carte
-  Attention, certains sont à cheval sur l'anti-méridien, ie $westlimit > $eastlimit
+  Il s'agit des BBox définies précisément par des mesures en degrés et minutes décimales correspondant à l'extension du cadre
+  interne de la carte
+  Je garde la définition en minutes décimales et j'ajoute la possibilité d'initaliser les données en minutes et de les restituer.
+  Attention, certains BBox sont à cheval sur l'anti-méridien, ie $westlimit > $eastlimit
 */
-class BBoxDM extends BBoxDd {
+class BBoxDM extends GjBox {
   const PATTERN = "!^(\\d+)°((\\d+)(,(\\d+))?)?'(N|S) - (\\d+)°((\\d+)(,(\\d+))?)?'(E|W)$!";
   protected string $sw;
   protected string $ne;
@@ -112,17 +51,17 @@ class BBoxDM extends BBoxDd {
     if (!preg_match(self::PATTERN, $bboxDM['SW'], $matches))
       throw new Exception("Erreur d'initialisation de BBoxDM sur SW = '$bboxDM[SW]'");
     //print_r($matches);
-    $this->southlimit = ($matches[6]=='S' ? -1 : +1) * ($matches[1] + "$matches[3].$matches[5]"/60);
+    $this->ws[1] = ($matches[6]=='S' ? -1 : +1) * ($matches[1] + "$matches[3].$matches[5]"/60);
     //echo "southlimit=$this->southlimit\n";
-    $this->westlimit = ($matches[12]=='W' ? -1 : +1) * ($matches[7] + "$matches[9].$matches[11]"/60);
+    $this->ws[0] = ($matches[12]=='W' ? -1 : +1) * ($matches[7] + "$matches[9].$matches[11]"/60);
     //echo "westlimit=$this->westlimit\n";
     $this->sw = $bboxDM['SW'];
     if (!preg_match(self::PATTERN, $bboxDM['NE'], $matches))
       throw new Exception("Erreur d'initialisation de BBoxDM sur NE = '$bboxDM[NE]'");
     //print_r($matches);
-    $this->northlimit = ($matches[6]=='S' ? -1 : +1) * ($matches[1] + "$matches[3].$matches[5]"/60);
+    $this->en[1] = ($matches[6]=='S' ? -1 : +1) * ($matches[1] + "$matches[3].$matches[5]"/60);
     //echo "northlimit=$this->northlimit\n";
-    $this->eastlimit = ($matches[12]=='W' ? -1 : +1) * ($matches[7] + "$matches[9].$matches[11]"/60);
+    $this->en[0] = ($matches[12]=='W' ? -1 : +1) * ($matches[7] + "$matches[9].$matches[11]"/60);
     //echo "eastlimit=$this->eastlimit\n";
     $this->ne = $bboxDM['NE'];
   }
@@ -222,7 +161,7 @@ class MapCat {
   protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 s'il n'y en n'a pas eu, ou null si inconnu
   protected ?string $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
                                 // null ssi la carte ne comporte pas d'espace principal
-  protected ?BBoxDd $bbox; // boite englobante de l'espace principal de la carte comme BBoxDM|BBoxDd, null ssi pas d'espace principal
+  protected ?GjBox $bbox; // bbox de l'espace principal de la carte comme BBoxDM|GjBox, null ssi pas d'espace principal
   protected ?string $replaces; // facsimilé éventuel
   protected ?string $references; // ssi la carte est un fac-similé alors référence de la carte généralement étrangère reproduite
   protected ?string $noteShom; // commentaire associé à la carte par le Shom
@@ -244,7 +183,7 @@ class MapCat {
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
     $this->bbox = isset($map['bboxDM']) ?
         new BBoxDM($map['bboxDM']) :
-        (isset($map['bboxLonLatFromWfs']) ? new BBoxDd($map['bboxLonLatFromWfs']) : null);
+        (isset($map['bboxLonLatFromWfs']) ? new GjBox($map['bboxLonLatFromWfs']) : null);
     $this->replaces = $map['replaces'] ?? null;
     $this->references = $map['references'] ?? null;
     $this->noteShom = $map['noteShom'] ?? $map['note'] ?? null;
@@ -430,7 +369,7 @@ class MapCat {
       + ($this->scaleDenominator ? ['scaleDenominator'=> $this->scaleDenominator] : [])
       + ($this->bbox && (get_class($this->bbox)=='BBoxDM') ?
           [ 'bboxDM'=> $this->bbox->asArray(), 'spatial'=> $this->bbox->asDcmiBox() ] : [])
-      + ($this->bbox && (get_class($this->bbox)=='BBoxDd') ? [ 'bboxLonLatFromWfs'=> $this->bbox->asArray() ] : [])
+      + ($this->bbox && (get_class($this->bbox)=='GjBox') ? [ 'bboxLonLatFromWfs'=> $this->bbox->asArray() ] : [])
       + ($this->replaces ? ['replaces'=> $this->replaces] : [])
       + ($this->references ? ['references'=> $this->references] : [])
       + ($this->noteShom ? ['noteShom'=> $this->noteShom] : [])

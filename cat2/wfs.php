@@ -7,6 +7,8 @@ doc: |
     1) la classe Wfs et la méthode statique Wfs::dl() qui moissonne le WFS du Shom et retourne un array de Feature
     2) comme script la restitution des élts du WFS comme FaetureCollection avec un filtre sur sd
 journal: |
+  17/12/2020:
+    export de la définition de GjBox
   16/12/2020:
     création
 */
@@ -15,6 +17,7 @@ require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/wfsserver.inc.php';
 require_once __DIR__.'/wfsjson.inc.php';
 require_once __DIR__.'/france.inc.php';
+require_once __DIR__.'/gjbox.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -31,13 +34,14 @@ if (0) { // Test unitaire
   die();
 }
 
+
 class Feature {
-  public string $id;
-  public array $bbox; // LonLat Dd
+  public ?string $id;
+  public ?GjBox $bbox;
   public array $properties;
-  public array $geometry;
+  public Geometry $geometry;
   
-  function __construct($id, $bbox, $properties, $geometry) {
+  function __construct(Geometry $geometry, ?string $id=null, array $properties=[], ?GjBox $bbox=null) {
     $this->id = $id;
     $this->bbox = $bbox;
     $this->properties = $properties;
@@ -47,19 +51,18 @@ class Feature {
   function geojson() { return ['type'=>'Feature'] + $this->asArray(); }
   
   function asArray(): array {
-    return [
-      'id'=> $this->id,
-      'bbox'=> $this->bbox,
-      'properties'=> $this->properties,
-      'geometry'=> $this->geometry,
-    ];
+    return
+      ['id'=> $this->id]
+    + ($this->bbox ? ['bbox'=> $this->bbox->asArray()] : [])
+    + ['properties'=> $this->properties]
+    + ['geometry'=> $this->geometry->asArray()]
+    ;
   }
   
-  function geometry(): Geometry { return Geometry::fromGeoJSON($this->geometry); }
-  
   function wembox(): EBox {
-    $bboxDd = new BBoxDd($this->bbox);
-    $gboxes = $bboxDd->asGBoxes();
+    if (!$this->bbox)
+      $this->bbox = GjBox::ofGeometry($this->geometry);
+    $gboxes = $this->bbox->asGBoxes();
     return $gboxes[0]->proj('WebMercator');
   }
   
@@ -121,38 +124,36 @@ class Wfs {
         for ($startindex = 0; $startindex < $numberMatched; $startindex += $count) {
           $fc = $shomwfs->getFeatureAsArray($typename, [], -1, '', $count, $startindex);
           foreach ($fc['features'] as $feature) {
-            $bbox = Geometry::fromGeoJSON($feature['geometry'])->bbox()->asArray();
             $num = $feature['properties']['carte_id'];
             $id = 'FR'.$num;
             $wfs[$id] = new Feature(
               id: $id,
-              bbox: array_merge($bbox['min'], $bbox['max']), 
               properties: [
                 'num'=> intval($num),
                 'title'=> substr($feature['properties']['name'], strpos($feature['properties']['name'], '-')+2),
                 'scaleDenominator'=> ajouteSepMilliers($feature['properties']['scale']),
               ],
-              geometry: $feature['geometry']
+              geometry: Geometry::fromGeoJSON($feature['geometry'])
             );
             //echo "id=$id\n";
           }
         }
       }
       //echo '<pre>',json_encode($maps, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-      echo count($wfs)," cartes téléchargées du WFS du Shom<br>\n";
+      //echo count($wfs)," cartes téléchargées du WFS du Shom<br>\n";
     
       foreach (Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAjoutéesAuServiceWfs'] as $mapid => $map) {
-        echo "Ajout carte $mapid $map[title]\n";
+        //echo "Ajout carte $mapid $map[title]\n";
         $bbox = $map['outerBBoxLonLatDd'];
         $wfs[$mapid] = new Feature(
           id: $mapid,
-          bbox: $bbox,
+          bbox: new GjBox($bbox),
           properties: [
             'num'=> intval(substr($mapid, 2)),
             'title'=> $map['title'],
             'scaleDenominator'=> $map['scaleDenominator'],
           ],
-          geometry: [
+          geometry: Geometry::fromGeoJSON([
             'type'=> 'Polygon',
             'coordinates'=> [[
               [$bbox[0], $bbox[1]], // SW
@@ -161,7 +162,7 @@ class Wfs {
               [$bbox[2], $bbox[1]], // SE
               [$bbox[0], $bbox[1]], // SW
             ]],
-          ]
+          ])
         );
       }
     
@@ -174,19 +175,22 @@ class Wfs {
       if (is_file(__DIR__.'/wfsdl.pser'))
         return unserialize(file_get_contents(__DIR__.'/wfsdl.pser'));
       else
-        throw new Exception("Ereur: impossible de créer wfsdl.pser");
+        throw new Exception("Erreur: impossible de créer wfsdl.pser");
     }*/
   }
 
-  // ajoute à chaque feature la propriété mapsFrenchAreas
+  // ajoute à chaque feature la propriété mapsFrenchAreas et défini les bbox qui ne le sont pas
   static function items(): array {
     $items = self::dl();
     foreach ($items as $id => &$item) {
-      $item->properties['mapsFrenchAreas'] = France::interet($id, $item->properties['scaleDenominator'], $item->geometry());
+      $item->properties['mapsFrenchAreas'] = France::interet($id, $item->properties['scaleDenominator'], $item->geometry);
+      if (!$item->bbox)
+        $item->bbox = GjBox::ofGeometry($item->geometry);
     }
     return $items;
   }
   
+  // fabrication d'une tuile des étiquettes
   static function maketile(int $sdmin, ?int $sdmax, EBox $wembox, array $options=[]) {
     if (self::$verbose)
       echo "Wfs::maketile(lyrname=$sdmin-$sdmax, wembox=$wembox, options=",json_encode($options),")<br>\n";
@@ -217,7 +221,9 @@ class Wfs {
   }
 };
 
-if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire de la classe MapCat
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+// si id est défini alors affiche le feature id, sinon affiche les features avec un filtre sur sdmin et sdmax
 
 if (php_sapi_name()=='cli') {
   $sdmin = ($argc > 1) ? $argv[1] : null;
@@ -226,26 +232,30 @@ if (php_sapi_name()=='cli') {
 else {
   $sdmin = $_GET['sdmin'] ?? null;
   $sdmax = $_GET['sdmax'] ?? null;
+  $id = $_GET['id'] ?? null;
 }
-
-//echo "<pre>doc="; print_r($doc); die();
 
 header('Content-type: application/json; charset="utf8"');
 //header('Content-type: text/plain; charset="utf8"');
-$nbre = 0;
 
-echo '{"type":"FeatureCollection","features":[',"\n";
-foreach (Wfs::items() as $id => $item) {
-  $scaleD = (int)str_replace('.', '', $item->properties['scaleDenominator']);
-  if ($sdmax && ($scaleD > $sdmax))
-    continue;
-  if ($sdmin && ($scaleD <= $sdmin))
-    continue;
+if ($id) {
+  echo json_encode(Wfs::items()[$id], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+}
+else {
+  $nbre = 0;
+  echo '{"type":"FeatureCollection","features":[',"\n";
+  foreach (Wfs::items() as $id => $item) {
+    $scaleD = (int)str_replace('.', '', $item->properties['scaleDenominator']);
+    if ($sdmax && ($scaleD > $sdmax))
+      continue;
+    if ($sdmin && ($scaleD <= $sdmin))
+      continue;
     
-  if ($nbre++ <> 0)
-    echo ",\n";
-  echo json_encode($item->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+    if ($nbre++ <> 0)
+      echo ",\n";
+    echo json_encode($item->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+  }
+  echo "\n]}\n";
 }
 
-echo "\n]}\n";
 

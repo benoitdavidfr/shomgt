@@ -1,10 +1,10 @@
 title: 'Catalogue des cartes Shom'
 description:
-  - 'Import du fichier V1 le 2020-12-16T15:46:03+01:00'
+  - 'Import du fichier V1 le 2020-12-17T14:23:02+01:00'
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
-created: '2020-12-16T15:46:03+01:00'
-modified: '2020-12-16T15:46:03+01:00'
+created: '2020-12-17T14:23:02+01:00'
+modified: '2020-12-17T14:23:02+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -3092,6 +3092,39 @@ maps:
         scaleDenominator: '8.000'
         bboxDM: { SW: '14°36,91''N - 060°53,97''W', NE: '14°37,94''N - 060°53,06''W' }
         spatial: { southlimit: 14.615166666667, westlimit: -60.8995, northlimit: 14.632333333333, eastlimit: -60.884333333333 }
+  FR7089:
+    groupTitle: 'La Martinique'
+    title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
+    edition: 'Édition n° 2 - 2010'
+    mapsFrenchAreas: true
+    modified: '2017-06-07+02:00'
+    lastUpdate: 15
+    hasPart:
+      -
+        title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '00°00,00''N - 000°00,00''E', NE: '00°00,00''N - 000°00,00''E' }
+        spatial: { southlimit: !!float 0, westlimit: !!float 0, northlimit: !!float 0, eastlimit: !!float 0 }
+      -
+        title: 'A - Saint-Pierre'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '14°43,33''N - 061°11,55''W', NE: '14°45,10''N - 061°10,38''W' }
+        spatial: { southlimit: 14.722166666667, westlimit: -61.1925, northlimit: 14.751666666667, eastlimit: -61.173 }
+      -
+        title: 'B - Case-Pilote'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '14°38,17''N - 061°09,48''W', NE: '14°39,00''N - 061°08,08''W' }
+        spatial: { southlimit: 14.636166666667, westlimit: -61.158, northlimit: 14.65, eastlimit: -61.134666666667 }
+      -
+        title: 'C - Cul-de-Sac du Marin'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '14°25,16''N - 060°55,32''W', NE: '14°28,40''N - 060°51,65''W' }
+        spatial: { southlimit: 14.419333333333, westlimit: -60.922, northlimit: 14.473333333333, eastlimit: -60.860833333333 }
+      -
+        title: 'D - Baie du Vauclin'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '14°30,66''N - 060°50,43''W', NE: '14°34,84''N - 060°47,86''W' }
+        spatial: { southlimit: 14.511, westlimit: -60.8405, northlimit: 14.580666666667, eastlimit: -60.797666666667 }
   FR7090:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
@@ -4512,6 +4545,24 @@ maps:
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°33,49''N - 007°06,54''E', NE: '43°33,99''N - 007°07,44''E' }
         spatial: { southlimit: 43.558166666667, westlimit: 7.109, northlimit: 43.5665, eastlimit: 7.124 }
+  FR7207:
+    groupTitle: 'Côte Nord de France'
+    title: 'Ports de Fécamp et du Tréport'
+    edition: 'Édition n° 2 - 2006'
+    mapsFrenchAreas: true
+    modified: '2019-07-19+02:00'
+    lastUpdate: 13
+    hasPart:
+      -
+        title: 'Ports de Fécamp et du Tréport'
+        scaleDenominator: '12.500'
+        bboxDM: { SW: '00°00,00''N - 000°00,00''E', NE: '00°00,00''N - 000°00,00''E' }
+        spatial: { southlimit: !!float 0, westlimit: !!float 0, northlimit: !!float 0, eastlimit: !!float 0 }
+      -
+        title: 'B - Fécamp'
+        scaleDenominator: '12.500'
+        bboxDM: { SW: '49°44,20''N - 000°15,81''E', NE: '49°47,65''N - 000°23,62''E' }
+        spatial: { southlimit: 49.736666666667, westlimit: 0.2635, northlimit: 49.794166666667, eastlimit: 0.39366666666667 }
   FR7208:
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade (Spéciale P)'
@@ -6454,6 +6505,34 @@ maps:
       westlimit: -2.8366666666667
       northlimit: 47.338333333333
       eastlimit: -2.1066666666667
+  FR7396:
+    groupTitle: 'Côte Ouest de France'
+    title: 'Cours de la Loire'
+    edition: 'Édition n° 2 - 2006'
+    mapsFrenchAreas: true
+    modified: '2020-01-01+01:00'
+    lastUpdate: 28
+    hasPart:
+      -
+        title: 'Cours de la Loire'
+        scaleDenominator: '20.000'
+        bboxDM: { SW: '00°00,00''N - 000°00,00''E', NE: '00°00,00''N - 000°00,00''E' }
+        spatial: { southlimit: !!float 0, westlimit: !!float 0, northlimit: !!float 0, eastlimit: !!float 0 }
+      -
+        title: 'B - De Paimboeuf à l''Ile de Bois'
+        scaleDenominator: '20.000'
+        bboxDM: { SW: '47°12,46''N - 002°05,18''W', NE: '47°18,56''N - 001°47,78''W' }
+        spatial: { southlimit: 47.207666666667, westlimit: -2.0863333333333, northlimit: 47.309333333333, eastlimit: -1.7963333333333 }
+      -
+        title: 'C - De l''Ile de Bois à Nantes'
+        scaleDenominator: '20.000'
+        bboxDM: { SW: '47°11,24''N - 001°48,78''W', NE: '47°13,09''N - 001°34,48''W' }
+        spatial: { southlimit: 47.187333333333, westlimit: -1.813, northlimit: 47.218166666667, eastlimit: -1.5746666666667 }
+      -
+        title: 'D - Port de Nantes'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '47°11,44''N - 001°35,28''W', NE: '47°12,94''N - 001°32,38''W' }
+        spatial: { southlimit: 47.190666666667, westlimit: -1.588, northlimit: 47.215666666667, eastlimit: -1.5396666666667 }
   FR7397:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic'

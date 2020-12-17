@@ -53,6 +53,8 @@ doc: |
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
 
 journal: |
+  17/12/2020:
+    - écriture d'une classe GjBox de boites gérées à la GeoJSON, remplacement de la classe BBdoxDd
   15/12/2020:
     - changement de doctrine et d'architecture
   14/12/2020:
