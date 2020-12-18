@@ -151,6 +151,7 @@ class Wfs {
                 'num'=> intval($num),
                 'title'=> substr($feature['properties']['name'], strpos($feature['properties']['name'], '-')+2),
                 'scaleDenominator'=> ajouteSepMilliers($feature['properties']['scale']),
+                //'properties'=> $feature['properties'],
               ],
               geometry: Geometry::fromGeoJSON($feature['geometry'])
             );
