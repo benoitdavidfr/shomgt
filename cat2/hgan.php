@@ -160,7 +160,7 @@ class Gan {
   protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
   protected string $harvestError=''; // erreur éventuelle du moissonnage
   
-  static function build() { // synhèse des GAN pour une moisson donnée enregistre en pser et en Yaml
+  static function build() { // construit la synhèse des GAN pour une moisson donnée
     self::$modified = date(DATE_ATOM, filemtime(self::GAN_DIR));
     $gans = [];
     foreach (Mapcat::maps() as $mapid => $map) {
@@ -189,7 +189,7 @@ class Gan {
     $this->harvestError = $record['harvestError'] ?? '';
   }
   
-  function postProcessTitle(array $record) {
+  private function postProcessTitle(array $record) {
     if (!$record) return;
     $title = array_shift($record);
     foreach ($record as $part)
@@ -214,17 +214,28 @@ class Gan {
     //echo '$this='; print_r($this);
   }
 
+  static function gans(?string $mapid): array { // retourne soit un array de tous les gans soit le gan demandé comme array
+    if (!self::$gans)
+      self::loadFromPser();
+    if (!$mapid)
+      return self::$gans;
+    elseif (isset(self::$gans[$mapid]))
+      return self::$gans[$mapid]->asArray();
+    else
+      return [];
+  }
+  
   static function allAsArray(): array {
-    $all = [];
-    foreach (self::$gans as $mapid => $gan)
-      $all[$mapid] = $gan->asArray();
+    $gans = [];
+    foreach (self::gans() as $mapid => $gan)
+      $gans[$mapid] = $gan->asArray();
     return [
       'title'=> "Synthèse du résultat du moissonnage des GAN des cartes du catalogue",
       'description'=> "Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)",
       '$id'=> 'https://geoapi.fr/shomgt/cat2/gans',
       '$schema'=> __DIR__.'/gans',
       'modified'=> self::$modified,
-      'gans'=> $all,
+      'gans'=> $gans,
       'eof'=> null,
     ];
   }
@@ -253,17 +264,23 @@ class Gan {
       'gans'=> self::$gans,
     ]));
   }
+  
+  static function loadFromPser() { // charge les données depuis le pser
+    $contents = unserialize(file_get_contents(self::PATH_PSER));
+    self::$modified = $contents['modified'];
+    self::$gans = $contents['gans'];
+  }
 };
 
 if (php_sapi_name() <> 'cli') {
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>hgan</title></head><body>\n";
   if (!isset($_GET['action'])) {
     echo "hgan.php - Actions proposées:<ul>\n";
-    echo "<li><a href='?action=list'>Lister les cartes avec lien vers Gan</a></li>\n";
     //echo "<li><a href='?action=harvest'>Moissonner les Gan</a></li>\n";
     //echo "<li><a href='?action=rename'>Renommer les fichiers</a></li>\n";
-    echo "<li><a href='?action=yamlpser'>Fabrique les fichiers gans.yaml et gans.pser</a></li>\n";
-    echo "<li><a href='?action=yaml'>Affiche le Yaml</a></li>\n";
+    echo "<li><a href='?action=yamlpser'>Fabrique les fichiers gans.yaml/pser à partir de la moisson</a></li>\n";
+    echo "<li><a href='?action=yaml'>Affiche le Yaml depuis la moisson</a></li>\n";
+    echo "<li><a href='?action=list'>Liste les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
     echo "</ul>\n";
     die();
   }
@@ -275,7 +292,7 @@ else {
   if ($argc == 1) {
     echo "usage: hgan.php {action}\n";
     echo "{action}\n";
-    echo "  - harvest - Moissonner les Gan\n";
+    echo "  - harvest - Moissonne les Gan\n";
     die();
   }
   else
@@ -287,7 +304,7 @@ $gandir = __DIR__.'/gan';
 if ($action == 'list') {
   $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
   echo "<table border=1>\n",
-       "<th>",implode('</th><th>', ['mapid','title','lastUpdate','gan','harvest','analyze']),"</th>\n";
+       "<th>",implode('</th><th>', ['mapid','title','FR','lastUpdt','gan','harvest','analyze']),"</th>\n";
   foreach (Mapcat::maps() as $mapid => $map) {
     $mapa = $map->asArray();
     $sStart = $map->obsolete() ? '<s>' : '';
@@ -299,18 +316,20 @@ if ($action == 'list') {
       $ganHref = "<a href='$url'>$ganWeek</a>";
     }
     $ganHHref = null; // href local
-    $ganAnalyze = null; // résultat de l'analyse
+    $ganAnalyze = Gan::gans($mapid); // résultat de l'analyse
+    $ganAnalyze = (isset($ganAnalyze['edition']) ? ['edition'=> $ganAnalyze['edition']] : [])
+      + (isset($ganAnalyze['corrections']) ? ['corrections'=> $ganAnalyze['corrections']] : []);
     if (file_exists("$gandir/$mapid-$ganWeek.html")) {
       $ganHHref = "<a href='gan/$mapid-$ganWeek.html'>$ganWeek</a>";
-      $ganAnalyze = analyzeGanHtml($mapid, $ganWeek);
     }
     elseif ($errors["$mapid-$ganWeek"] ?? null) {
       $ganHHref = 'error';
     }
     echo "<tr><td>$mapid</td><td>$sStart$mapa[title]$sEnd<br>$mapa[edition]</td>",
+          "<td>",implode(', ', $mapa['mapsFrance']) ?? 'indéfini',"</td>",
           "<td>",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
           "<td>",$ganHref ?? 'indéfini',"</td>",
-          "<td>",$ganHHref ?? 'indéfini',"</td>",
+          "<td>",$ganHHref ?? 'indéfini',"</td>\n",
           "<td><pre>",$ganAnalyze ? Yaml::dump($ganAnalyze) : '',"</pre></td>",
           "</tr>\n";
   }
