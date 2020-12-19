@@ -52,10 +52,14 @@ doc: |
     - le catalogue des cartes recense les cartes Raster Marine du Shom d'intérêt, plus qqs cartes comme les AEM et MancheGrid
       - il peut y avoir des cas particuliers comme la carte '6497 - Île de la Possession, Île de l''Est' absente du WFS mais présente
         dans le GAN, ce qui semble une erreur. Cependant, le 4/12/2018 le Shom indique que la carte 6497 n'est pas dispo en version
-        numérique, mais existe bien en version papier
+        numérique, mais existe bien en version papier. Depuis, l'erreur a été corrigée.
     - le catalogue des GéoTiffs (shomgt.yaml) recense les GéoTiffs les plus récents obtenus du Shom
       - une carte est souvent composée de plusieurs GéoTiffs
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
+    
+  A voir:
+    - définir le process itératif de mise à jour
+    - voir l'utilisation externe du catalogue, niattemnt dans ../updt
 journal: |
   18-19/12/2020:
     - dév hgan.php
