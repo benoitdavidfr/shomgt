@@ -179,15 +179,18 @@ properties:
               type: number
               minimum: -180
               maximum: 180
-          mapsFrenchAreas:
+          mapsFrance:
             description: |
               identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
-              Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfasant ce critère sont exclues ;
+              Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
               elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
-              Sa valeur est true si la carte intersecte la ZEE française et n'est pas une exception,
-              false si la carte n'intersecte pas la ZEE française ou est une exception,
-              non définie (propriété absente) si cette la proprité est inconnue.
-            type: boolean
+              La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
+              Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
+              ou [FR] si la carte est à très petite échelle.
+              Non définie (propriété absente) si cette propriété est inconnue.
+            type: array
+            items:
+              enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
           modified:
             description: |
               date de la dernière correction, ou si aucune correction date initiale ; si inconnue date des MD.

@@ -75,7 +75,7 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
     layer.bindTooltip(feature.id + ' - ' + feature.properties.title);
   }
   var styleOfMap = function (feature) {
-    if (feature.properties.mapsFrenchAreas) {
+    if (feature.properties.mapsFrance.length != 0) {
       return {color: 'green'};
     } else {
       return {color: 'red'};

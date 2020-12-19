@@ -203,12 +203,12 @@ class Wfs {
 
   /*PhpDoc: classes
   name: methods
-  title: "static function items(): array - // enrichit chaque feature avec la propriété mapsFrenchAreas et définit les bbox qui ne le sont pas"
+  title: "static function items(): array - enrichit chaque feature avec la propriété mapsFrance et définit les bbox qui ne le sont pas"
   */
   static function items(): array {
     $items = self::dl();
     foreach ($items as $id => &$item) {
-      $item->properties['mapsFrenchAreas'] = France::interet($id, $item->properties['scaleDenominator'], $item->geometry);
+      $item->properties['mapsFrance'] = France::interet($id, $item->properties['scaleDenominator'], $item->geometry);
       if (!$item->bbox)
         $item->bbox = GjBox::ofGeometry($item->geometry);
     }

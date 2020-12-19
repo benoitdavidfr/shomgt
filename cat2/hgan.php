@@ -1,9 +1,9 @@
 <?php
 /*PhpDoc:
 name: hgan.php
-title: cat2/hgan.php - identifier en interrogeant le GAN les cartes à mettre à jour
+title: cat2/hgan.php - identifier les cartes à mettre à jour en interrogeant le GAN
 doc: |
-  L'objectif est d'identifier en interrogeant le GAN les cartes à mettre à jour.
+  L'objectif est d'identifier les cartes à mettre à jour en interrogeant le GAN.
 
   Certains process se font en cli (moissonnage), d'autres en non-CLI (affichage).
 
@@ -37,7 +37,7 @@ function ganWeek(string $modified): string {
   return substr(date('o', $time), 2) . date('W', $time);
 }
 
-// analyse du html pour créer l'avis Gan d'une carte - fonction complètement réécrite / V1
+// analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte - fonction complètement réécrite / V1
 // retourne un array avec les champs title, edition et corrections
 // J'ai essayé de minimiser la dépendance au code Html !
 function analyzeGanHtml(string $mapid, string $ganWeek): array {

@@ -6,6 +6,8 @@ classes:
 doc: |
   
 journal: |
+  19/12/2020:
+    - modification de la valeur retournée par France::interet()
   16/12/2020:
     - création
 includes: [../lib/gegeom.inc.php]
@@ -16,38 +18,76 @@ require_once __DIR__.'/../lib/gegeom.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 class France {
-  const SEUIL_PETITES_ECHELLES = 1e7; // Les cartes dont le dén. d'éch. est supérieur sont d'intérêt
-  static $zee = null; // le MultiPolygone de la ZEE
-  static $interetInsuffisant = null; // dictionnaire des cartes d'intérêt insuffisant
+  const SEUIL_PETITE_ECHELLE = 1e7; // Les cartes dont le dén. d'éch. est supérieur sont d'intérêt
+  static array $zee = []; // dictionnaire [isoalpha2 -> Geometry]
+  static array $interetInsuffisant = []; // dictionnaire des cartes d'intérêt insuffisant
+  
+  static function init() { // initialise la Zee
+    $fc = json_decode(file_get_contents(__DIR__.'/france.geojson'), true);
+    //echo Yaml::dump(['france.geojson'=> $fc], 5, 2);
+    $zee = [];
+    foreach ($fc['features'] as $feature) {
+      $isoa2 = $feature['properties']['isoalpha2'];
+      if (!isset($zee[$isoa2])) {
+        $zee[$isoa2] = $feature['geometry'];
+      }
+      else {
+        $zee[$isoa2]['coordinates'] = array_merge($zee[$isoa2]['coordinates'], $feature['geometry']['coordinates']);
+      }
+    }
+    foreach ($zee as $isoa2 => $geometry)
+      self::$zee[$isoa2] = Geometry::fromGeoJSON($geometry);
+    self::$interetInsuffisant = Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAyantUnIntérêtInsuffisant'];
+  }
+  
+  static function zeeAsGeoJSON(): array { // génération de la ZEE comme FeatureCollection pour test
+    if (!self::$zee)
+      self::init();
+    $features = [];
+    foreach (self::$zee as $isoa2 => $geometry) {
+      $features[] = [
+        'type'=> 'Feature',
+        'properties'=> ['isoalpha2'=> $isoa2],
+        'geometry'=> $geometry->asArray(),
+      ];
+    }
+    return ['type'=>'FeatureCollection', 'features'=> $features];
+  }
   
   // calcule si la carte est d'intérêt, la géométrie qui doit être Polygon ou MultiPolygon
-  static function interet(string $mapid, string $scaleDenominator, Geometry $geometry): bool {
+  static function interet(string $mapid, string $scaleDenominator, Geometry $geometry): array {
     $ret = self::interet2($mapid, $scaleDenominator, $geometry);
     //if ($mapid == 'FR6977')
       //echo "mapsFrenchAreas($mapid) = ", $ret ? "true\n" : "false\n";
     return $ret;
   }
 
-  static function interet2(string $mapid, string $scaleDenominator, Geometry $geometry): bool { // calcule si la carte est d'intérêt
-    if (!self::$zee) {
-      $fc = json_decode(file_get_contents(__DIR__.'/france.geojson'), true);
-      //echo Yaml::dump(['$france'=> $france], 5, 2);
-      $mpCoords = [];
-      foreach ($fc['features'] as $feature) {
-        $mpCoords[] = $feature['geometry']['coordinates'];
-      }
-      self::$zee = Geometry::fromGeoJSON(['type'=> 'MultiPolygon', 'coordinates'=> $mpCoords]);
-      //echo "zee_france = $zee_france\n";
-    }
-    if (!self::$interetInsuffisant) {
-      self::$interetInsuffisant = Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAyantUnIntérêtInsuffisant'];
-      //print_r($interetInsuffisant);
-    }
+  // calcule si la carte est d'intérêt, retourne soit [] si ce n'est pas le cas,
+  // soit ['FR'] pour les cartes à très petite échelle, soit la liste des codes ISO alpha2 des zones intersectées
+  static function interet2(string $mapid, string $scaleDenominator, Geometry $geometry): array {
+    if (!self::$zee)
+      self::init();
     if (isset(self::$interetInsuffisant[$mapid]))
-      return false;
-    if (str_replace('.','',$scaleDenominator) > self::SEUIL_PETITES_ECHELLES) // je conserve les très petites échelles
-      return true;
+      return [];
+    if (str_replace('.','',$scaleDenominator) > self::SEUIL_PETITE_ECHELLE) // je conserve les très petites échelles
+      return ['FR'];
     //echo "bbox=",$this->bbox,"\n";
-    return self::$zee->inters($geometry);
+    $isoa2s = [];
+    foreach (self::$zee as $isoa2 => $zeeGeom)
+      if ($zeeGeom->inters($geometry))
+        $isoa2s[] = $isoa2;
+    return $isoa2s ? $isoa2s : [];
   }
 };
+
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+
+if (0) {
+  header('Content-type: text/plain; charset="utf8"');
+  echo Yaml::dump(France::zeeAsGeoJSON(), 5, 2);
+}
+elseif (1) {
+  header('Content-type: application/json; charset="utf8"');
+  echo json_encode(France::zeeAsGeoJSON(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+}

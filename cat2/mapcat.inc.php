@@ -158,7 +158,7 @@ class MapCat {
   protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title; // titre de la carte
   protected ?string $edition; // edition de la carte
-  protected bool $mapsFrenchAreas; // identifie les cartes dites d'intérêt
+  protected array $mapsFrance; // identifie les cartes dites d'intérêt et les zones couvertes
   protected ?string $modified; // date de la dernière correction apportée à la carte ou null s'il n'y en n'a pas eu ou si non connue
   protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 s'il n'y en n'a pas eu, ou null si inconnu
   protected ?string $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
@@ -196,10 +196,10 @@ class MapCat {
       $this->hasPart[] = new MapPart($mapPart);
     }
    
-    if (isset($map['mapsFrenchAreas']))
-      $this->mapsFrenchAreas = $map['mapsFrenchAreas'];
+    if (isset($map['mapsFrance']))
+      $this->mapsFrenchAreas = $map['mapsFrance'];
     else { // si non défini alors il est calculé et le catalogue est marqué pour mise à jour
-      $this->mapsFrenchAreas = France::interet($mapid, $this->scaleDenominator(), $this->geometry());
+      $this->mapsFrance = France::interet($mapid, $this->scaleDenominator(), $this->geometry());
       self::$catUpdated = true;
     }
   }
@@ -232,7 +232,7 @@ class MapCat {
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
       $map = new self($mapid, $map);
-      if ($map->mapsFrenchAreas)
+      if ($map->mapsFrance)
         self::$maps[$mapid] = $map;
       //print_r(self::$all[$mapid]);
     }
@@ -253,7 +253,7 @@ class MapCat {
   // par lecture des MD ISO d'un des GéoTiff correspondant à chaque carte
   static function addModified() {
     foreach (self::$maps as $mapid => $map) {
-      if (!$map->mapsFrenchAreas)
+      if (!$map->mapsFrance)
         continue;
       if (in_array($mapid, ['FR7330','FR7344','FR7360','FR8101','FR8502'])) // pas de MDISO pour ces cartes
         continue;
@@ -367,7 +367,7 @@ class MapCat {
       + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
       + ($this->title ? ['title'=> $this->title] : [])
       + ($this->edition ? ['edition'=> $this->edition] : [])
-      + ['mapsFrenchAreas'=> $this->mapsFrenchAreas]
+      + ['mapsFrance'=> $this->mapsFrance]
       + ($this->modified ? ['modified'=> $this->modified] : [])
       + ($this->lastUpdate !== null ? ['lastUpdate'=> $this->lastUpdate] : [])
       + ($this->scaleDenominator ? ['scaleDenominator'=> $this->scaleDenominator] : [])
