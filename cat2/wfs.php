@@ -15,6 +15,7 @@ journal: |
     export de la définition de GjBox
   16/12/2020:
     création
+includes: ['../lib/gegeom.inc.php', wfsserver.inc.php, wfsjson.inc.php, france.inc.php, gjbox.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';

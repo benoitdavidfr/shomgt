@@ -1,7 +1,7 @@
 <?php
 {/*PhpDoc:
 name:  pos.inc.php
-title: pos.inc.php - définitions position
+title: pos.inc.php - définition des classes statiques Pos, LPos, LLPos
 functions:
 classes:
 doc: |

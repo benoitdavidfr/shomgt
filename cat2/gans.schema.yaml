@@ -87,6 +87,18 @@ properties:
               boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
               Champ absent ssi la carte ne comporte pas d'espace principal.
             $ref: '#/definitions/bboxDM'
+          mapsFrance:
+            description: |
+              identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
+              Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
+              elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
+              La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
+              Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
+              ou [FR] si la carte est à très petite échelle.
+              Non définie (propriété absente) si cette propriété est inconnue.
+            type: array
+            items:
+              enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
           hasPart:
             description: liste éventuelle de cartouches
             type: array
@@ -124,6 +136,12 @@ properties:
                   pattern: '^\d\d\d\d-\d+$'
                   examples:
                     - 1905-252
+          age:
+            description: |
+              note reflétant la nécessité de mettre à jour la carte
+              calculée en fonction du chgt d'édition, du nbre de corrections et du territoire
+              -1 ssi erreur de moissonnage, 0 ssi pas de mise à jour nécessaire
+            type: number
   eof:
     description: propriété marquant la fin du fichier
     type: 'null'

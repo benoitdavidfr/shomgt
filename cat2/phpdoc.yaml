@@ -27,6 +27,10 @@ doc: |
     - les nouvelles corrections de cartes publiées par le Shom à prendre en compte dans les GéoTiffs
     - les GéoTiffs périmés (à voir)
     - les GéoTiffs à ajouter au catalogue shomgt.yaml (à voir)
+  
+  Du point de vue opérationnel:
+    - d'abord regarder les nouvelles cartes et les cartes obsolètes dans gestion.php
+    - puis regarder les cartes à mettre à jour dans hgan.php
     
   Du point de vue architecture informatique:
     - le catalogue est stocké dans une structure de données de type Yaml spécifiée par un schéma JSON. Afin de gérer les erreurs
@@ -53,6 +57,8 @@ doc: |
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
 
 journal: |
+  18-19/12/2020:
+    - dév hgan.php
   17/12/2020:
     - écriture d'une classe GjBox de boites gérées à la GeoJSON, remplacement de la classe BBdoxDd
   15/12/2020:
@@ -65,12 +71,22 @@ journal: |
     
 phpScripts:
   - /geoapi/shomgt/cat2/index.php
-  - /geoapi/shomgt/cat2/map.php
+  - /geoapi/shomgt/cat2/llmap.php
   - /geoapi/shomgt/cat2/geojson.php
+  - /geoapi/shomgt/cat2/gestion.php
+  - /geoapi/shomgt/cat2/hgan.php
+  - /geoapi/shomgt/cat2/tilenum.php
+  - /geoapi/shomgt/cat2/wfs.php
 phpIncludes:
   - /geoapi/shomgt/cat2/mapcat.inc.php
+  - /geoapi/shomgt/cat2/france.inc.php
+  - /geoapi/shomgt/cat2/gjbox.inc.php
+  - /geoapi/shomgt/cat2/pos.inc.php
+  - /geoapi/shomgt/cat2/wfsjson.inc.php
+  - /geoapi/shomgt/cat2/wfsserver.inc.php
 htmlFiles:
   - /geoapi/shomgt/cat2/mapcat.yaml
   - /geoapi/shomgt/cat2/mapcat.schema.yaml
   - /geoapi/shomgt/cat2/mapcatspec.yaml
-  
+  - /geoapi/shomgt/cat2/gans.yaml
+  - /geoapi/shomgt/cat2/gans.schema.yaml

@@ -12,6 +12,7 @@ doc: |
 journal: |
   14/12/2020:
     création
+includes: ['../lib/gegeom.inc.php', wfs.php, mapcat.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
@@ -42,7 +43,6 @@ if ($action == 'harvestWfs') {
 }
 
 if (in_array($action, ['compCat', 'obsolete'])) {
-  MapCat::init();
   $wfsItems = Wfs::items();
 
   /*if ($action == 'obsolete') {
@@ -50,22 +50,21 @@ if (in_array($action, ['compCat', 'obsolete'])) {
   }*/
   
   $nb = 0;
-  foreach ($wfsItems as $id => $wfsItem) {
-    if ($wfsItem->properties['mapsFrenchAreas'] && !isset(MapCat::$maps[$id])) $nb++;
-  }
+  foreach ($wfsItems as $id => $wfsItem)
+    if ($wfsItem->properties['mapsFrance'] && !MapCat::maps($id)) $nb++;
   echo "<h2>$nb nouvelles cartes dans le WFS et absentes de MapCat</h2>\n";
   foreach ($wfsItems as $id => $wfsItem) {
-    if ($wfsItem->properties['mapsFrenchAreas'] && !isset(MapCat::$maps[$id])) {
+    if ($wfsItem->properties['mapsFrance'] && !MapCat::maps($id)) {
       //echo Yaml::dump([$id => $map], 2, 2);
       echo Yaml::dump([$id => $wfsItem->asArray()], 2, 2);
     }
   }
   
   $nb = 0;
-  foreach (MapCat::$maps as $id => $map)
+  foreach (MapCat::maps() as $id => $map)
     if (!$map->obsolete() && !isset($wfsItems[$id])) $nb++;
   echo "<h2>$nb cartes de MapCat sont absentes du WFS et sont a priori obsolètes</h2>\n";
-  foreach (MapCat::$maps as $id => $map)
+  foreach (MapCat::maps() as $id => $map)
     if (!$map->obsolete() && !isset($wfsItems[$id]))
       //echo "<a href='?action=obsolete&amp;id=$id'>",Yaml::dump([$id => $map->asArray()], 2, 2),"</a>\n";
       echo "<table><tr>",
@@ -78,7 +77,7 @@ if (in_array($action, ['compCat', 'obsolete'])) {
           "</tr></table>\n";
   
   $mapCatIds = [];
-  foreach (MapCat::$maps as $id => $map)
+  foreach (MapCat::maps() as $id => $map)
     if (!$map->obsolete())
       $mapCatIds[] = $id;
 
@@ -86,7 +85,7 @@ if (in_array($action, ['compCat', 'obsolete'])) {
   $ids = array_intersect(array_keys($wfsItems), $mapCatIds);
   foreach ($ids as $id) {
     $wfsProp = $wfsItems[$id]->properties;
-    $mapcat = MapCat::$maps[$id]->asArray();
+    $mapcat = MapCat::maps($id);
     if ($wfsProp['title'] <> $mapcat['title'])
       echo "$id: <s>$mapcat[title]</s> <b>$wfsProp[title]</b>\n";
     if ($wfsProp['scaleDenominator'] <> ($mapcat['scaleDenominator'] ?? ''))

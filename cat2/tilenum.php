@@ -23,6 +23,7 @@ doc: |
 journal: |
   16/12/2020:
     création
+includes: [mapcat.inc.php, wfs.php]
 */
 require_once __DIR__.'/mapcat.inc.php';
 require_once __DIR__.'/wfs.php';

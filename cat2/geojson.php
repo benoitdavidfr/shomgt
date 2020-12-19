@@ -17,7 +17,7 @@ journal: |
     ajout appel cli
   11/12/2018
     reprise de shomgtcat.php
-includes: [mapcat.inc.php, lib.inc.php]
+includes: [mapcat.inc.php]
 */
 require_once __DIR__.'/mapcat.inc.php';
 

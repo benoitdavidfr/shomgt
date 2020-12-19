@@ -23,7 +23,7 @@ journal: |
     - réalisation d'une carte de vérification du catalogue
   13/12/2020:
     - passage en V2
-includes: [../lib/gegeom.inc.php]
+includes: [../lib/gegeom.inc.php, ../updt/mdiso19139.inc.php, gjbox.inc.php, france.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
@@ -149,6 +149,7 @@ class MapPart {
 /*PhpDoc: classes
 name: MapCat
 title: classe MapCat - Gestion du catalogue des cartes du Shom
+methods:
 doc: |
   Chaque objet de la classe MapCat décrit une carte du Shom.
   La propriété statique $maps est un dictionnaire des cartes sur leur id.
@@ -322,10 +323,15 @@ class MapCat {
     ]));
   }
   
-  static function maps(): array {
+  static function maps(?string $mapid=null): array {
     if (!self::$maps)
       self::init();
-    return self::$maps;
+    if (!$mapid)
+      return self::$maps;
+    elseif (isset(self::$maps[$mapid]))
+      return self::$maps[$mapid]->asArray();
+    else
+      return [];
   }
   
   static function allAsArray(): array { // génère le catalogue comme array Php

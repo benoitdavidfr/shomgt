@@ -14,6 +14,7 @@ doc: |
 journal: |
   17/12/2020:
     création
+includes: [../lib/gegeom.inc.php, pos.inc.php]
 */
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/pos.inc.php';
