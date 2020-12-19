@@ -3,6 +3,7 @@
 name: gan.inc.php
 title: cat2/gan.inc.php - gestion des gan
 doc: |
+  
 journal: |
   19/12/2020:
     - définition de la classe Gan, stockage en Yaml et en pser
@@ -187,6 +188,41 @@ class Gan {
     // calculée en fonction du chgt d'édition, du nbre de corrections et du territoire
     // -1 ssi erreur de moissonnage
     // 0 ssi pas de mise à jour nécessaire
+  
+  static function harvest() { // moissonage des GAN par carte dans le répertoire $gandir
+    $gandir = self::GAN_DIR;
+    if (!file_exists($gandir))
+      mkdir($gandir);
+    elseif (0) { // suppression des fichiers existants
+      if (!$dh = opendir($gandir))
+        die("Ouverture de $gandir impossible");
+      while (($filename = readdir($dh)) !== false) {
+        if (!in_array($filename, ['.','..']))
+          unlink("$gandir/$filename");
+      }
+    }
+    $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
+    //print_r($errors);
+    Mapcat::init();
+    foreach (Mapcat::$maps as $mapid => $map) {
+      $mapa = $map->asArray();
+      if (isset($mapa['modified']) && !$map->obsolete()) {
+        $ganWeek = ganWeek($mapa['modified']);
+        if (!file_exists("$gandir/$mapid-$ganWeek.html") && !isset($errors["$mapid-$ganWeek"])) {
+          $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
+          if (($contents = @file_get_contents($url)) === false) {
+            $message = "Erreur ".(http_error_code($http_response_header) ?? 'erreur http_error_code()')." de lecture de $url";
+            echo "$message\n";
+            file_put_contents("$gandir/errors.yaml", "$mapid-$ganWeek: $message\n", FILE_APPEND);
+          }
+          else {
+            file_put_contents("$gandir/$mapid-$ganWeek.html", $contents);
+            echo "Lecture $url ok\n";
+          }
+        }
+      }
+    }
+  }
   
   static function build() { // construit la synhèse des GAN pour une moisson donnée
     self::$modified = date(DATE_ATOM, filemtime(self::GAN_DIR));

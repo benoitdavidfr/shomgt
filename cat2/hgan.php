@@ -5,6 +5,11 @@ title: cat2/hgan.php - identifier les cartes à mettre à jour en interrogeant l
 doc: |
   L'objectif est d'identifier les cartes à mettre à jour en interrogeant le GAN.
 
+  La démarche est:
+    1) effectuer une moisson en CLI
+    2) fabriquee les fichiers gans.yaml/pser à partir de la moisson
+    3) afficher la liste les cartes à mettre à jour ordonnées par age décroissant
+
   Certains traitements se font en cli (moissonnage), d'autres en non-CLI (affichage).
 
   Erreur 500 semble signfier que la carte n'est pas gérée dans le GAN, il s'agit visiblement surtout de cartes outre-mer
@@ -155,37 +160,7 @@ function http_error_code($http_response_header): ?string { // extrait le code d'
 }
 
 if ($action == 'harvest') {
-  if (!file_exists($gandir))
-    mkdir($gandir);
-  elseif (0) { // suppression des fichiers existants
-    if (!$dh = opendir($gandir))
-      die("Ouverture de $gandir impossible");
-    while (($filename = readdir($dh)) !== false) {
-      if (!in_array($filename, ['.','..']))
-        unlink("$gandir/$filename");
-    }
-  }
-  $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
-  //print_r($errors);
-  Mapcat::init();
-  foreach (Mapcat::$maps as $mapid => $map) {
-    $mapa = $map->asArray();
-    if (isset($mapa['modified']) && !$map->obsolete()) {
-      $ganWeek = ganWeek($mapa['modified']);
-      if (!file_exists("$gandir/$mapid-$ganWeek.html") && !isset($errors["$mapid-$ganWeek"])) {
-        $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
-        if (($contents = @file_get_contents($url)) === false) {
-          $message = "Erreur ".(http_error_code($http_response_header) ?? 'erreur http_error_code()')." de lecture de $url";
-          echo "$message\n";
-          file_put_contents("$gandir/errors.yaml", "$mapid-$ganWeek: $message\n", FILE_APPEND);
-        }
-        else {
-          file_put_contents("$gandir/$mapid-$ganWeek.html", $contents);
-          echo "Lecture $url ok\n";
-        }
-      }
-    }
-  }
+  Gan::harvest();
   die();
 }
 

@@ -40,6 +40,7 @@ doc: |
     - à chaque modification le fichier Yaml est réécrit,
     - le fichier Yaml peut, à la demande, être utilisé pour écraser le pser,
     - le fichier Yaml est régulièrement historisé dans Git.
+    - le fichier des gans est aussi géré en pser et en Yaml
   
   Il faut aussi adapter l'utilisation notamment par ../updt des infos exposées par ce module
 
@@ -55,10 +56,10 @@ doc: |
     - le catalogue des GéoTiffs (shomgt.yaml) recense les GéoTiffs les plus récents obtenus du Shom
       - une carte est souvent composée de plusieurs GéoTiffs
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
-
 journal: |
   18-19/12/2020:
     - dév hgan.php
+    - passage d'une cmde sur la base gestion.php + hgan.php
   17/12/2020:
     - écriture d'une classe GjBox de boites gérées à la GeoJSON, remplacement de la classe BBdoxDd
   15/12/2020:
