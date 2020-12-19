@@ -79,6 +79,7 @@ phpScripts:
   - /geoapi/shomgt/cat2/wfs.php
 phpIncludes:
   - /geoapi/shomgt/cat2/mapcat.inc.php
+  - /geoapi/shomgt/cat2/gan.inc.php
   - /geoapi/shomgt/cat2/france.inc.php
   - /geoapi/shomgt/cat2/gjbox.inc.php
   - /geoapi/shomgt/cat2/pos.inc.php
