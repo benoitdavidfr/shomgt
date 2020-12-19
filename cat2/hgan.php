@@ -15,6 +15,9 @@ doc: |
     Exception Message: N/A
 
 journal: |
+  19/12/2020:
+    - définition de la classe Gan, stockage en Yaml et en pser
+    - utilisation du pser pour la liste
   18/12/2020:
     - création
     - 1ère étape - moissonner le GAN et afficher pour chaque carte les corrections mentionnées par le GAN
