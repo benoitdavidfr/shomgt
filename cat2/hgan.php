@@ -38,7 +38,7 @@ function ganWeek(string $modified): string {
 }
 
 // analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte - fonction complètement réécrite / V1
-// retourne un array avec les champs title, edition et corrections + errors en cas d'erreur d'analyse
+// retourne un array avec les champs title, edition et corrections + analyzeErrors en cas d'erreur d'analyse
 // J'ai essayé de minimiser la dépendance au code Html !
 function analyzeGanHtml(string $mapid, string $ganWeek): array {
   //if ($mapid <> 'FR6118') return [];
@@ -111,13 +111,13 @@ function analyzeGanHtml(string $mapid, string $ganWeek): array {
         $record['corrections'][$no]['semaineAvis'] = array_shift($semaineAvis);
       }
       else {
-        $record['errors'][] = "semaineAvis insuffisant pour $no";
+        $record['analyzeErrors'][] = "semaineAvis insuffisant pour $no";
         //echo "semaineAvis insuffisant pour $no\n";
       }
     }
   }
   if ($semaineAvis)
-    $record['errors'][] = "semaineAvis supplémentaires";
+    $record['analyzeErrors'][] = "semaineAvis supplémentaires";
   //echo "</pre></td></tr>";
   return $record;
 }
@@ -142,9 +142,12 @@ class GanPart {
   }
 };
 
-// un objet représente la synthèse des GAN pour une carte à la date de moisson des GAN / catalogue
+// synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
 class Gan {
   const GAN_DIR = __DIR__.'/gan';
+  const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
+  const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
+  const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
   static string $modified=''; // date de la moisson des GAN
   static array $gans=[]; // dictionnaire [$mapid => Gan]
   
@@ -154,7 +157,8 @@ class Gan {
   protected array $bbox=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
   protected array $hasPart=[]; // cartouches
   protected array $corrections=[];
-  protected array $errors=[];
+  protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
+  protected string $harvestError=''; // erreur éventuelle du moissonnage
   
   static function build() { // synhèse des GAN pour une moisson donnée enregistre en pser et en Yaml
     self::$modified = date(DATE_ATOM, filemtime(self::GAN_DIR));
@@ -167,13 +171,22 @@ class Gan {
       if (!file_exists(self::GAN_DIR."/$mapid-$ganWeek.html")) continue;
       self::$gans[$mapid] = new self(analyzeGanHtml($mapid, $ganWeek));
     }
+    $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
+    //print_r($errors);
+    foreach ($errors as $id => $errorMessage) {
+      $mapid = substr($id, 0, 6);
+      self::$gans[$mapid] = new self(['harvestError'=> $errorMessage]);
+    }
+    ksort(self::$gans);
   }
 
   function __construct(array $record) {
+    $this->oldTitle = $record['title'] ?? [];
     $this->postProcessTitle($record['title'] ?? []);
     $this->edition = $record['edition'] ?? null;
     $this->corrections = $record['corrections'] ?? [];
-    $this->errors = $record['errors'] ?? [];
+    $this->analyzeErrors = $record['analyzeErrors'] ?? [];
+    $this->harvestError = $record['harvestError'] ?? '';
   }
   
   function postProcessTitle(array $record) {
@@ -217,17 +230,28 @@ class Gan {
   }
   
   function asArray(): array {
-    if (!$this->title)
+    if ($this->harvestError)
+      return ['harvestError'=> $this->harvestError];
+    elseif (!$this->title)
       return [];
-    return
-      ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
-    + ['title'=> $this->title]
-    + ['edition'=> $this->edition]
-    + ($this->bbox ? ['bbox'=> $this->bbox] : [])
-    + ($this->hasPart ? ['hasPart'=> array_map(function (GanPart $part): array { return $part->asArray(); }, $this->hasPart)] : [])
-    + ($this->corrections ? ['corrections'=> $this->corrections] : [])
-    + ($this->errors ? ['errors'=> $this->errors] : [])
-    ;
+    else
+      return
+        [] // ['oldTitle'=> $this->oldTitle]
+      + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
+      + ['title'=> $this->title]
+      + ['edition'=> $this->edition]
+      + ($this->bbox ? ['bbox'=> $this->bbox] : [])
+      + ($this->hasPart ? ['hasPart'=> array_map(function (GanPart $part): array { return $part->asArray(); }, $this->hasPart)] : [])
+      + ($this->corrections ? ['corrections'=> $this->corrections] : [])
+      + ($this->analyzeErrors ? ['analyzeErrors'=> $this->analyzeErrors] : [])
+      ;
+  }
+  
+  static function storeAsPser() { // enregistre le catalogue comme pser 
+    file_put_contents(self::PATH_PSER, serialize([
+      'modified'=> self::$modified,
+      'gans'=> self::$gans,
+    ]));
   }
 };
 
@@ -238,7 +262,8 @@ if (php_sapi_name() <> 'cli') {
     echo "<li><a href='?action=list'>Lister les cartes avec lien vers Gan</a></li>\n";
     //echo "<li><a href='?action=harvest'>Moissonner les Gan</a></li>\n";
     //echo "<li><a href='?action=rename'>Renommer les fichiers</a></li>\n";
-    echo "<li><a href='?action=pser'>Fabrique le fichier gan.pser</a></li>\n";
+    echo "<li><a href='?action=yamlpser'>Fabrique les fichiers gans.yaml et gans.pser</a></li>\n";
+    echo "<li><a href='?action=yaml'>Affiche le Yaml</a></li>\n";
     echo "</ul>\n";
     die();
   }
@@ -260,11 +285,10 @@ else {
 $gandir = __DIR__.'/gan';
 
 if ($action == 'list') {
-  Mapcat::init();
   $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
   echo "<table border=1>\n",
        "<th>",implode('</th><th>', ['mapid','title','lastUpdate','gan','harvest','analyze']),"</th>\n";
-  foreach (Mapcat::$maps as $mapid => $map) {
+  foreach (Mapcat::maps() as $mapid => $map) {
     $mapa = $map->asArray();
     $sStart = $map->obsolete() ? '<s>' : '';
     $sEnd = $map->obsolete() ? '</s>' : '';
@@ -354,12 +378,17 @@ if ($action == 'harvest') {
   die();
 }*/
 
-if ($action == 'pser') {
+if ($action == 'yaml') {
   echo "<pre>\n";
   Gan::build();
   //print_r(Gan::$gans);
-  $yaml = Yaml::dump(Gan::allAsArray(), 4, 2);
-  file_put_contents(__DIR__.'/gans.yaml', $yaml);
-  echo $yaml;
+  echo Yaml::dump(Gan::allAsArray(), 4, 2);
   die();
+}
+
+if ($action == 'yamlpser') {
+  Gan::build();
+  file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
+  Gan::storeAsPser();
+  die("Enregistrement des fichiers Yaml et pser ok\n");
 }

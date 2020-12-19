@@ -4,6 +4,8 @@ $id: 'https://geoapi.fr/shomgt/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/cat2/gans
 modified: '2020-12-18T11:34:53+01:00'
 gans:
+  FR0101:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR0101/1715'
   FR3127: {  }
   FR4232:
     groupTitle: 'Océan Pacifique'
@@ -94,6 +96,10 @@ gans:
       - { title: 'Cartouche: Maria', bbox: { SW: '21°51,39''S — 154°45,65''W', NE: '21°46,38''S — 154°39,65''W' } }
     corrections:
       - { num: 4, semaineAvis: 1939-227 }
+  FR6280:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6280/1931'
+  FR6281:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6281/1931'
   FR6282:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-Le-Vent'
     title: 'Passes entre les Iles Raiatea et Tahaa'
@@ -188,6 +194,8 @@ gans:
       - { num: 18, semaineAvis: 2023-231 }
       - { num: 19, semaineAvis: 2026-230 }
       - { num: 20, semaineAvis: 2044-230 }
+  FR6462:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6462/1719'
   FR6463:
     groupTitle: 'Îles Gambier'
     title: 'Île Mangareva'
@@ -215,6 +223,8 @@ gans:
       - { num: 4, semaineAvis: 1944-233 }
       - { num: 5, semaineAvis: 2023-230 }
   FR6497: {  }
+  FR6498:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6498/1844'
   FR6525:
     groupTitle: 'Côte Sud de Tahiti'
     title: 'Abords de Port Phaeton'
@@ -432,6 +442,8 @@ gans:
       NE: '17°27,74''S — 149°47,34''W'
     corrections:
       - { num: 2, semaineAvis: 2018-226 }
+  FR6658:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6658/1846'
   FR6664:
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
@@ -520,6 +532,8 @@ gans:
       NE: '43°27,20''N — 005°04,00''E'
     corrections:
       - { num: 9, semaineAvis: 2025-83 }
+  FR6687:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6687/1930'
   FR6688: {  }
   FR6689: {  }
   FR6690: {  }
@@ -608,6 +622,8 @@ gans:
       - { num: 5, semaineAvis: 1923-230 }
       - { num: 6, semaineAvis: 2025-231 }
       - { num: 7, semaineAvis: 2045-230 }
+  FR6741:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6741/1901'
   FR6757:
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
@@ -775,6 +791,8 @@ gans:
       - { num: 149, semaineAvis: 2007-33 }
       - { num: 150, semaineAvis: 2024-33 }
       - { num: 151, semaineAvis: 2038-35 }
+  FR6827:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6827/1901'
   FR6828:
     groupTitle: 'Côte Sud-Ouest de Tahiti'
     title: 'De Atehiti à Maraa'
@@ -1019,6 +1037,8 @@ gans:
       - { num: 71, semaineAvis: 1951-27 }
       - { num: 72, semaineAvis: 2010-27 }
       - { num: 73, semaineAvis: 2018-25 }
+  FR6941:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6941/1946'
   FR6942:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta d''Orchina au Cap Muro'
@@ -1197,6 +1217,8 @@ gans:
       - { num: 11, semaineAvis: 1929-219 }
       - { num: 12, semaineAvis: 2017-221 }
       - { num: 13, semaineAvis: 2025-225 }
+  FR6986:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6986/1720'
   FR6990:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
@@ -1784,6 +1806,8 @@ gans:
       - { num: 7, semaineAvis: 2044-89 }
       - { num: 8, semaineAvis: 2046-92 }
       - { num: 9, semaineAvis: 2046-93 }
+  FR7092:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7092/1929'
   FR7093:
     groupTitle: 'Côte Sud de France'
     title: 'Rade de Toulon'
@@ -1925,6 +1949,8 @@ gans:
       - { num: 4, semaineAvis: 2026-46 }
       - { num: 5, semaineAvis: 2032-50 }
       - { num: 6, semaineAvis: 2032-51 }
+  FR7123:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7123/1945'
   FR7124:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Lannion'
@@ -2016,6 +2042,8 @@ gans:
       - { num: 9, semaineAvis: 2040-41 }
       - { num: 10, semaineAvis: 2045-40 }
       - { num: 11, semaineAvis: 2049-32 }
+  FR7131:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7131/1943'
   FR7133:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de la Côte Ouest du Cotentin'
@@ -2970,6 +2998,8 @@ gans:
       NE: 'NaN°00,00''S — 173°04,00''E'
     corrections:
       - { num: 3, semaineAvis: 1935-216 }
+  FR7322:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7322/1933'
   FR7323:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
@@ -3258,6 +3288,8 @@ gans:
       - { num: 6, semaineAvis: 1906-218 }
       - { num: 7, semaineAvis: 1942-218 }
       - { num: 8, semaineAvis: 1942-219 }
+  FR7376:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7376/1714'
   FR7377:
     groupTitle: 'Côte de Guyane'
     title: 'Ports du Larivot et de Cayenne'
@@ -3343,6 +3375,8 @@ gans:
       NE: '43°18,74''N — 005°23,03''E'
     corrections:
       - { num: 6, semaineAvis: 2008-92 }
+  FR7392:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7392/1935'
   FR7393: {  }
   FR7394:
     groupTitle: 'Côte Ouest de France'
@@ -3484,6 +3518,8 @@ gans:
       - { num: 26, semaineAvis: 2046-92 }
       - { num: 27, semaineAvis: 2046-93 }
       - { num: 28, semaineAvis: 2051-93 }
+  FR7407:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7407/1844'
   FR7408:
     groupTitle: 'Côte Sud de France'
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
@@ -3857,6 +3893,8 @@ gans:
       - { num: 18, semaineAvis: 2025-231 }
       - { num: 19, semaineAvis: 2031-230 }
       - { num: 20, semaineAvis: 2045-230 }
+  FR7466:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7466/1932'
   FR7470:
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Nevis'
@@ -3969,6 +4007,10 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1816-152 }
       - { num: 7, semaineAvis: 2007-195 }
+  FR7487:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7487/1901'
+  FR7488:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7488/1707'
   FR7489:
     groupTitle: 'Océan Indien'
     title: 'Approches Sud-Est de Madagascar'
@@ -3981,6 +4023,8 @@ gans:
       - { num: 3, semaineAvis: 1951-185 }
       - { num: 4, semaineAvis: 2031-184 }
       - { num: 5, semaineAvis: 2039-184 }
+  FR7490:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7490/1642'
   FR7491:
     groupTitle: 'Océan Indien - Canal du Mozambique - Côte Nord de Madagasikara (Madagascar)'
     title: 'De Nosy Bé à la Baie d''Antsiranana'
@@ -4064,6 +4108,8 @@ gans:
   FR7594: {  }
   FR7604: {  }
   FR7606: {  }
+  FR7616:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7616/1901'
   FR7620:
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
@@ -4177,6 +4223,8 @@ gans:
       - { num: 14, semaineAvis: 2042-220 }
       - { num: 15, semaineAvis: 2042-221 }
       - { num: 16, semaineAvis: 2045-222 }
+  FR7644:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7644/1724'
   FR7645:
     groupTitle: 'Côte Sud-Est de Nouvelle-Calédonie'
     title: 'Canal de La Havannah et Canal Woodin'
@@ -4224,6 +4272,10 @@ gans:
       - { num: 8, semaineAvis: 1744-151 }
       - { num: 9, semaineAvis: 1942-178 }
       - { num: 10, semaineAvis: 2002-179 }
+  FR7751:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7751/1725'
+  FR7755:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7755/1717'
   FR7756:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Touho à Ponérihouen'

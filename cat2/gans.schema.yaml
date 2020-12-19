@@ -63,6 +63,9 @@ properties:
         type: object
         additionalProperties: false
         properties:
+          harvestError:
+            description: indication d'une erreur de moisson, aucune autre propriété n'est renseignée
+            type: string
           groupTitle:
             description: sur-titre optionnel identifiant un ensemble de cartes
             type: string
