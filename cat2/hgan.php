@@ -5,7 +5,7 @@ title: cat2/hgan.php - identifier les cartes à mettre à jour en interrogeant l
 doc: |
   L'objectif est d'identifier les cartes à mettre à jour en interrogeant le GAN.
 
-  Certains process se font en cli (moissonnage), d'autres en non-CLI (affichage).
+  Certains traitements se font en cli (moissonnage), d'autres en non-CLI (affichage).
 
   Erreur 500 semble signfier que la carte n'est pas gérée dans le GAN, il s'agit visiblement surtout de cartes outre-mer
   Ex: https://gan.shom.fr/diffusion/qr/gan/6280/1931 - Partie Nord de Raiatea - Port d'Uturoa (1/12000)
@@ -38,11 +38,11 @@ function ganWeek(string $modified): string {
 }
 
 // analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte - fonction complètement réécrite / V1
-// retourne un array avec les champs title, edition et corrections
+// retourne un array avec les champs title, edition et corrections + errors en cas d'erreur d'analyse
 // J'ai essayé de minimiser la dépendance au code Html !
 function analyzeGanHtml(string $mapid, string $ganWeek): array {
   //if ($mapid <> 'FR6118') return [];
-  echo "<tr><td colspan=6><pre>";
+  //echo "<tr><td colspan=6><pre>";
   $record = [];
   $html = file_get_contents("gan/$mapid-$ganWeek.html");
   
@@ -69,10 +69,10 @@ function analyzeGanHtml(string $mapid, string $ganWeek): array {
   // modèle: <tr class="mapNumber-5417 externalId-1739-267-5417"><td width="60" align="left"><!-- COUPER ICI 25--><a href="INTERNET/2017/1739/calques/1739_FR5417.pdf" target="blank">5417</a> (87)
   while (preg_match($pattern, $html, $matches)) {
     if (!isset($record['corrections'])) {
-      $record['corrections'] = [['num'=> $matches[2], 'semaineAvis'=> $matches[1]]];
+      $record['corrections'] = [['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]]];
     }
     else {
-      $record['corrections'][] = ['num'=> $matches[2], 'semaineAvis'=> $matches[1]];
+      $record['corrections'][] = ['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]];
     }
     $html = preg_replace($pattern, '', $html, 1);
   }
@@ -84,10 +84,10 @@ function analyzeGanHtml(string $mapid, string $ganWeek): array {
   // modèle: <td><a href="INTRADEF/2020/2007/calques/2007_FR6608.pdf" target="_blank"><span class="correction_map_FR-strong">6608</span></a> (7)<br><span class="correction_map_FR-strong">INT 140</span></td>
   while (preg_match($pattern, $html, $matches)) {
     if (!isset($record['corrections'])) {
-      $record['corrections'] = [['num'=> $matches[3]]];
+      $record['corrections'] = [['num'=> intval($matches[3])]];
     }
     else {
-      $record['corrections'][] = ['num'=> $matches[3]];
+      $record['corrections'][] = ['num'=> intval($matches[3])];
     }
     $html = preg_replace($pattern, '', $html, 1);
   }
@@ -118,17 +118,127 @@ function analyzeGanHtml(string $mapid, string $ganWeek): array {
   }
   if ($semaineAvis)
     $record['errors'][] = "semaineAvis supplémentaires";
-  echo "</pre></td></tr>";
+  //echo "</pre></td></tr>";
   return $record;
 }
+
+class GanPart {
+  protected string $title;
+  protected array $bbox; // sous la forme ['SW'=> sw, 'NE'=> ne]
+  
+  function __construct(string $html) {
+    //echo "html=$html\n";
+    if (!preg_match('!^{div}\s*([^{]*){/div}{div}\s*([^{]*){/div}{div}\s*([^{]*){/div}\s*$!', $html, $matches))
+      throw new Exception("Erreur de construction de GanPart sur '$html'");
+    $this->title = trim($matches[1]);
+    $this->bbox = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
+  }
+  
+  function asArray(): array {
+    return [
+      'title'=> $this->title,
+      'bbox'=> $this->bbox,
+    ];
+  }
+};
+
+// un objet représente la synthèse des GAN pour une carte à la date de moisson des GAN / catalogue
+class Gan {
+  const GAN_DIR = __DIR__.'/gan';
+  static string $modified=''; // date de la moisson des GAN
+  static array $gans=[]; // dictionnaire [$mapid => Gan]
+  
+  protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
+  protected string $title='';
+  protected ?string $edition=null;
+  protected array $bbox=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
+  protected array $hasPart=[]; // cartouches
+  protected array $corrections=[];
+  protected array $errors=[];
+  
+  static function build() { // synhèse des GAN pour une moisson donnée enregistre en pser et en Yaml
+    self::$modified = date(DATE_ATOM, filemtime(self::GAN_DIR));
+    $gans = [];
+    foreach (Mapcat::maps() as $mapid => $map) {
+      if ($map->obsolete()) continue;
+      $mapa = $map->asArray();
+      if (!isset($mapa['modified'])) continue;
+      $ganWeek = ganWeek($mapa['modified']);
+      if (!file_exists(self::GAN_DIR."/$mapid-$ganWeek.html")) continue;
+      self::$gans[$mapid] = new self(analyzeGanHtml($mapid, $ganWeek));
+    }
+  }
+
+  function __construct(array $record) {
+    $this->postProcessTitle($record['title'] ?? []);
+    $this->edition = $record['edition'] ?? null;
+    $this->corrections = $record['corrections'] ?? [];
+    $this->errors = $record['errors'] ?? [];
+  }
+  
+  function postProcessTitle(array $record) {
+    if (!$record) return;
+    $title = array_shift($record);
+    foreach ($record as $part)
+      $this->hasPart[] = new GanPart($part);
+    if (!preg_match('!^([^{]*){div}([^{]*){/div}({div}([^{]*){/div})?({div}([^{]*){/div})?\s*$!', $title, $matches))
+      throw new Exception("Erreur d'analyse du titre '$title'");
+    //echo '$matches='; print_r($matches);
+    switch (count($matches)) {
+      case 3: { // sur-titre + titre sans bbox
+        $this->groupTitle = trim($matches[1]);
+        $this->title = trim($matches[2]);
+        break;
+      }
+      case 7: { // sur-titre + titre + bbox
+        $this->groupTitle = trim($matches[1]);
+        $this->title = trim($matches[2]);
+        $this->bbox = ['SW'=> trim($matches[4]), 'NE'=> trim($matches[6])];
+        break;
+      }
+      default: throw new Exception("Erreur d'analyse du titre '$title', count=".count($matches));
+    }
+    //echo '$this='; print_r($this);
+  }
+
+  static function allAsArray(): array {
+    $all = [];
+    foreach (self::$gans as $mapid => $gan)
+      $all[$mapid] = $gan->asArray();
+    return [
+      'title'=> "Synthèse du résultat du moissonnage des GAN des cartes du catalogue",
+      'description'=> "Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)",
+      '$id'=> 'https://geoapi.fr/shomgt/cat2/gans',
+      '$schema'=> __DIR__.'/gans',
+      'modified'=> self::$modified,
+      'gans'=> $all,
+      'eof'=> null,
+    ];
+  }
+  
+  function asArray(): array {
+    if (!$this->title)
+      return [];
+    return
+      ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
+    + ['title'=> $this->title]
+    + ['edition'=> $this->edition]
+    + ($this->bbox ? ['bbox'=> $this->bbox] : [])
+    + ($this->hasPart ? ['hasPart'=> array_map(function (GanPart $part): array { return $part->asArray(); }, $this->hasPart)] : [])
+    + ($this->corrections ? ['corrections'=> $this->corrections] : [])
+    + ($this->errors ? ['errors'=> $this->errors] : [])
+    ;
+  }
+};
 
 if (php_sapi_name() <> 'cli') {
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>hgan</title></head><body>\n";
   if (!isset($_GET['action'])) {
     echo "hgan.php - Actions proposées:<ul>\n";
-    echo "<li><a href='?action=list'>Lister les cartes avec lien vers Gan</a>\n";
-    //echo "<li><a href='?action=harvest'>Moissonner les Gan</a>\n";
-    //echo "<li><a href='?action=rename'>Renommer les fichiers</a>\n";
+    echo "<li><a href='?action=list'>Lister les cartes avec lien vers Gan</a></li>\n";
+    //echo "<li><a href='?action=harvest'>Moissonner les Gan</a></li>\n";
+    //echo "<li><a href='?action=rename'>Renommer les fichiers</a></li>\n";
+    echo "<li><a href='?action=pser'>Fabrique le fichier gan.pser</a></li>\n";
     echo "</ul>\n";
     die();
   }
@@ -243,3 +353,13 @@ if ($action == 'harvest') {
   }
   die();
 }*/
+
+if ($action == 'pser') {
+  echo "<pre>\n";
+  Gan::build();
+  //print_r(Gan::$gans);
+  $yaml = Yaml::dump(Gan::allAsArray(), 4, 2);
+  file_put_contents(__DIR__.'/gans.yaml', $yaml);
+  echo $yaml;
+  die();
+}

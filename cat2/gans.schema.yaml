@@ -1,0 +1,126 @@
+title: schema JSON de la synthèse des GANs sur les cartes du catalogue
+$id: http://geoapi.fr/shomgt/cat2/gans.schema
+modified: '2020-12-19T16:05+01:00'
+description: |
+  Ce schéma définit la structure de la synthèse des GANS sur les cartes du catalogue.
+$schema: http://json-schema.org/schema#
+definitions:
+  dateIso8601:
+    description: date au format ISO 8601 limité aux cas les plus fréquents
+    type: string
+    pattern: '^\d\d\d\d-\d\d-\d\d(T\d\d:\d\d(:\d\d(\.\d+)?)?)?([+-]\d\d:\d\d|Z)?$'
+    examples:
+      - '2020-01-10'
+      - '2020-01-10T16:33'
+      - '2020-01-10T16:33:34.56'
+      - '2020-01-10T16:33:34.56+01:00'
+      - '2020-01-10T16:33:34.56Z'
+      - '2020-01-10T16:33+01:00'
+      - '2020-01-10+01:00'
+    counterexamples:
+      - '2020-01-10T16'
+  latLonDM:
+    description: couple (latitude, longitude) en degrés minutes, structure fine non vérifiée
+    type: string
+    examples:
+      - "44°09,00'N - 002°36,00'W"
+      - "45°49,00'N - 001°00,00'W"
+  bboxDM:
+    description: boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
+    type: object
+    required: [SW, NE]
+    additionalProperties: false
+    properties:
+      SW:
+        description: latitude et longitude du coin SW en degrés minutes
+        $ref: '#/definitions/latLonDM'
+      NE:
+        description: latitude et longitude du coin NE en degrés minutes
+        $ref: '#/definitions/latLonDM'
+type: object
+required: [ title, $id, $schema, modified, gans ]
+additionalProperties: false
+properties:
+  title: { description: 'titre du document', type: string }
+  description: { description: 'commentaires sur le document', type: string }
+  $id: { description: 'identifiant du document', type: string , format: uri }
+  $schema:
+    description: 'schema JSON du document'
+    oneOf:
+      - $ref: http://json-schema.org/schema#
+      - type: string
+  modified: { description: 'date de la moisson des GANs', $ref: '#/definitions/dateIso8601' }
+  gans:
+    description: dictionnaire des infos des GANs indexées sur le numéro de la carte précédé de 'FR'
+    type: object
+    additionalProperties: false
+    patternProperties:
+      ^FR\d\d\d\d:
+        description: |
+          infos issues des GANs par carte, notamment les corrections depuis la date de dernière correction de la carte
+          définie dans le catalogue. Un objet vide signfie qu'il y a aucune correction depuis cette date.
+          Certaines corrections peuvent déjà être définies dans le catalogue.
+        type: object
+        additionalProperties: false
+        properties:
+          groupTitle:
+            description: sur-titre optionnel identifiant un ensemble de cartes
+            type: string
+            examples:
+              - Océan Pacifique Sud
+          title:
+            description: titre de la carte
+            type: string
+            examples:
+              - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
+          edition:
+            description: édition de la carte indiquée par le Shom
+            type: string
+            examples:
+              - Édition n° 3 - 2018
+              - Publication 2017
+          bbox:
+            description: |
+              boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
+              Champ absent ssi la carte ne comporte pas d'espace principal.
+            $ref: '#/definitions/bboxDM'
+          hasPart:
+            description: liste éventuelle de cartouches
+            type: array
+            minItems: 1
+            items:
+              type: object
+              additionalProperties: false
+              required: [title, bbox]
+              properties:
+                title:
+                  description: titre du cartouche
+                  type: string
+                bbox:
+                  description: boite englobante du cartouche en degrés, minutes en WGS84
+                  $ref: '#/definitions/bboxDM'
+          corrections:
+            description: liste des corrections définies dans les GAN
+            type: array
+            minItems: 1
+            items:
+              description: chaque correction
+              additionalProperties: false
+              type: object
+              required: [num, semaineAvis]
+              properties:
+                num:
+                  description: numéro de correction en séquence par carte et édition
+                  type: integer
+                  minimum: 0
+                semaineAvis:
+                  description: |
+                    numéro de semaine sur quatre chiffres et numéro d'avis pour cette semaine
+                    1905-252 signifie avis 252 du GAN de la semaine 05 de 2019
+                  type: string
+                  pattern: '^\d\d\d\d-\d+$'
+                  examples:
+                    - 1905-252
+  eof:
+    description: propriété marquant la fin du fichier
+    type: 'null'

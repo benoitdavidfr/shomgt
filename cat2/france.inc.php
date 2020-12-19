@@ -82,6 +82,7 @@ class France {
 
 
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+// Vérifie l'algo d'initialisation en affichant le ZEE en GeoJSON en Yaml ou en JSON
 
 if (0) {
   header('Content-type: text/plain; charset="utf8"');

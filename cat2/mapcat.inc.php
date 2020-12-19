@@ -45,7 +45,8 @@ doc: |
   Attention, certains BBox sont à cheval sur l'anti-méridien, ie $westlimit > $eastlimit
 */
 class BBoxDM extends GjBox {
-  const PATTERN = "!^(\\d+)°((\\d+)(,(\\d+))?)?'(N|S) - (\\d+)°((\\d+)(,(\\d+))?)?'(E|W)$!";
+  // Attention le tiret central peut être un tiret long interprété comme plusieurs caractères
+  const PATTERN = "!^(\\d+)°((\\d+)(,(\\d+))?)?'(N|S) [^ ]+ (\\d+)°((\\d+)(,(\\d+))?)?'(E|W)$!";
   protected string $sw;
   protected string $ne;
   
@@ -77,6 +78,29 @@ class BBoxDM extends GjBox {
     ];
   }
 };
+if (0) { // tests unitaires 
+  function dump(string $str) {
+    echo "$str\n";
+    for ($i=0; $i<strlen($str); $i++) {
+      $char = substr($str, $i, 1);
+      echo "  $char -> ",ord($char),"\n";
+    }
+  }
+  if (0) {
+    echo "<pre>";
+    $bbox = ['SW'=>"27°40,48'S — 144°27,04'W"];
+    echo "<table border=1><tr><td valign='top'><pre>",dump($bbox['SW']),"</pre></td>",
+      "<td valign='top'><pre>",dump(BBoxDM::PATTERN),"</pre></td></tr></table>\n";
+    $bboxDM = new BBoxDM($bbox);
+  }
+  elseif (1) {
+    echo "<pre>";
+    $bbox = ['SW'=>"NaN°00,00'S — 158°07,97'E"];
+    $bboxDM = new BBoxDM($bbox);
+  }
+  
+  die("Fin ligne ".__LINE__."\n");
+}
 
 // Gestion d'un cartouche
 class MapPart {
@@ -151,7 +175,7 @@ class MapCat {
   static array $catDescription = []; // description du catalogue, liste de string
   static ?string $catCreated = null; // date et heure de création du catalogue au format ISO 8601
   static ?string $catModified = null; // date et heure d'actualisation du catalogue au format ISO 8601
-  static array $maps = []; // dictionnaire des MapCat [FR{num} => MapCat]
+  static protected array $maps = []; // dictionnaire des MapCat [FR{num} => MapCat]
   
   protected string $num; // no de la carte
   protected ?string $obsolete; // si non null signifie que la carte est obsolète
@@ -170,7 +194,7 @@ class MapCat {
   protected ?string $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
   protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
   
-  function mapsFrenchAreas(): ?bool { return $this->mapsFrenchAreas; }
+  function mapsFrance(): ?bool { return $this->mapsFrance; }
   // s'il n'y a pas d'espace principal, je prends arbitrairement l'échelle du premier cartouche
   function scaleDenominator(): string { return $this->scaleDenominator ?? $this->hasPart[0]->scaleDenominator(); }
   // Génération du dénom. d'échelle comme entier
@@ -298,6 +322,12 @@ class MapCat {
     ]));
   }
   
+  static function maps(): array {
+    if (!self::$maps)
+      self::init();
+    return self::$maps;
+  }
+  
   static function allAsArray(): array { // génère le catalogue comme array Php
     return [
       'title'=> self::$catTitle,
@@ -314,7 +344,7 @@ class MapCat {
     file_put_contents(self::PATH_YAML, Yaml::dump(self::allAsArray(), 5, 2));
   }
   
-  static function init() { // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
+  private static function init() { // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
     if (!file_exists(self::PATH_PSER) && !file_exists(self::PATH_YAML))
       throw new Exception("Erreur dans MapCat::init() : les fichiers mapcat.yaml et mapcat.pser n'existent ni l'un ni l'autre");
     elseif (!file_exists(self::PATH_PSER)
