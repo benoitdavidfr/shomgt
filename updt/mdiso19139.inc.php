@@ -2,6 +2,7 @@
 /*PhpDoc:
 name: mdiso19139.inc.php
 title: mdiso19139.inc.php - récupère des infos à partir des MD ISO 1939 de la carte
+functions:
 journal: |
   11/12/2020:
     - renommage en mdiso19139.inc.php
@@ -10,10 +11,17 @@ journal: |
   2/11/2019:
     création
 */
-
-// récupère les infos d'édition et de la dernière correction de la carte de shomgt dans les métadonnées XML du GéoTIFF
-// $gtname est la clé du géotiff dans shomgt.yaml
-// retourne [] si le fichier est absent
+/*PhpDoc: functions
+name: mdiso19139
+title: "function mdiso19139(string $gtname): array - récupère des éléments des MD ISO19139 du GéoTIFF"
+doc: |
+  Prend en paramètre $gtname est la clé du géotiff dans shomgt.yaml
+  Retourne un array ayant comme propriétés
+    - mdDate - date de mise à jour des métadonnées
+    - édition - édition de la carte, ex: Edition n° 4 - 2015, Publication 1984
+    - dernièreCorrection - dernière correction indiquée dans les MD , un entier transmis comme string
+  retourne [] si le fichier est absent
+*/
 function mdiso19139(string $gtname): array {
   $mdname = str_replace('/', '/CARTO_GEOTIFF_', $gtname);
   $filepath = __DIR__."/../../../shomgeotiff/current/$mdname.xml";

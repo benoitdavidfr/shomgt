@@ -66,6 +66,8 @@ doc: |
     - mise à jour du catalogue sur github
     - documentation github
 journal: |
+  20/12/2020:
+    - ajout catapi.inc.php
   18-19/12/2020:
     - dév hgan.php
     - passage d'une cmde sur la base gestion.php + hgan.php
@@ -88,6 +90,7 @@ phpScripts:
   - /geoapi/shomgt/cat2/tilenum.php
   - /geoapi/shomgt/cat2/wfs.php
 phpIncludes:
+  - /geoapi/shomgt/cat2/catapi.inc.php
   - /geoapi/shomgt/cat2/mapcat.inc.php
   - /geoapi/shomgt/cat2/gan.inc.php
   - /geoapi/shomgt/cat2/france.inc.php

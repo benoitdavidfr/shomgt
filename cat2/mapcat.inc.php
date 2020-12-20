@@ -23,11 +23,11 @@ journal: |
     - réalisation d'une carte de vérification du catalogue
   13/12/2020:
     - passage en V2
-includes: [../lib/gegeom.inc.php, ../updt/mdiso19139.inc.php, gjbox.inc.php, france.inc.php]
+includes: [../lib/gegeom.inc.php, ../updt/updtapi.inc.php, gjbox.inc.php, france.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
-require_once __DIR__.'/../updt/mdiso19139.inc.php';
+require_once __DIR__.'/../updt/updtapi.inc.php';
 require_once __DIR__.'/gjbox.inc.php';
 require_once __DIR__.'/france.inc.php';
 
@@ -303,7 +303,7 @@ class MapCat {
         }
       }
       $gtname = str_replace('CARTO_GEOTIFF_', '', $gtname);
-      if (!($mdiso19139 = mdiso19139($gtname))) {
+      if (!($mdiso19139 = UpdtApi::mdiso19139($gtname))) {
         echo Yaml::dump([$mapid => $mdiso19139], 5, 2);
       }
       else {

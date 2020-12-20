@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: updt.php
-title: updt.php - installe une ou plusieurs livraisons dans portefeuille de shomgt
+title: updt.php - installe une ou plusieurs livraisons dans le portefeuille de shomgt
 doc: |
   script à appeler en ligne de commande
   doit être appelé avec en paramètre les noms des répertoires de livraison
@@ -41,7 +41,7 @@ if ($argc <= 1) {
   die("\n");
 }
 
-array_shift($argv); // le nom du script php
+array_shift($argv); // supprime le nom du script php pour garder la liste des noms des répertoires de livraison
 foreach ($argv as $incoming) {
   echo "# suppression de tmp s'il existe et recréation du répertoire\n";
   $tmppath = "$shomgeotiff/tmp";

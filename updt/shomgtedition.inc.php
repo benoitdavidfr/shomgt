@@ -3,11 +3,15 @@
 name: shomgtedition.inc.php
 title: shomgtedition.inc.php - récupère l'édition de la carte à partir des MD XML des cartes
 journal: |
+  20/12/2020:
+    script remplacé par mdiso19139.inc.php dans updt mais encore utilisé par catv1
   16/11/2019:
     retourne aussi la dernière correction
   2/11/2019:
     création
 */
+
+//throw new Exception("Ce script shomgtedition.inc.php est déclaré comme périmé car remplacé par mdiso19139.inc.php");
 
 // récupère les infos d'édition et de la dernière correction de la carte de shomgt dans les métadonnées XML du GéoTIFF
 // retourne [] si le fichier est absent

@@ -3,7 +3,7 @@
 name: genpng.php
 title: genpng.php - génération des PNG à partir des TIF dans le répertoite tmp
 doc: |
-  script appelé par dezip.php
+  script appelé par updt.php avec comme paramètre le nom du répertoire incoming
     - itère sur les répertoires de tmp
       - itère sur les fichiers .tif
         - génère le fichier .info
@@ -15,7 +15,6 @@ doc: |
       - supprime le PNG
     - suppression des cartes à supprimer
     - transfère les répertoires des nouvelles cartes dans current
-    - génère le nouveau shomgt.yaml et le met dans ../ws/
 journal: |
   2/4/2019:
     suppression des cartes à supprimer

@@ -101,6 +101,7 @@ phpScripts:
   - /geoapi/shomgt/updt/cropall.php
   - /geoapi/shomgt/updt/cropmap.php
 phpIncludes:
+  - /geoapi/shomgt/updt/updtapi.inc.php
   - /geoapi/shomgt/updt/gdalinfo.inc.php
   - /geoapi/shomgt/updt/ontop.inc.php
   - /geoapi/shomgt/updt/shomgtedition.inc.php

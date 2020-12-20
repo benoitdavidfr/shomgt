@@ -66,7 +66,7 @@ includes:
   - ../lib/coordsys.inc.php
   - gdalinfo.inc.php
   - ontop.inc.php
-  - shomgtedition.inc.php
+  - mdiso19139.inc.php
   - ../cat/mapcat.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
@@ -135,7 +135,7 @@ while (($mapname = readdir($current)) !== false) {
       continue;
     $fbname = $matches[1];
     if (!($gdalinfo = gdalinfo("$currentpath/$mapname/$fbname.info"))) {
-      // cas où la carte n'est pas géolocalisée car qu'elle ne comporte pas d'espace pricipal
+      // cas où la carte n'est pas géolocalisée car qu'elle ne comporte pas d'espace principal
       continue;
     }
     $gtbbox = $gdalinfo['gbox'];
@@ -160,7 +160,7 @@ while (($mapname = readdir($current)) !== false) {
     else
       $title = "$shomgtgan[num] - $shomgtgan[title]";
     // Calcul des 2 boites en WorldMercator pour effectuer l'interpolation
-    // Cas particulier 6835/6835_pal300 pour lequel le caddre intersecte l'antiméridien mais pas le contenu de la carte
+    // Cas particulier 6835/6835_pal300 pour lequel le cadre intersecte l'antiméridien mais pas le contenu de la carte
     if ($gtbbox->west() > $shomgtgan['gbox']->east()) {
       //echo "***** Cas particulier $fbname *****\n";
       $gtbbox2 = new GBox([[$gtbbox->west()-360, $gtbbox->south()], [$gtbbox->east()-360, $gtbbox->north()]]);
