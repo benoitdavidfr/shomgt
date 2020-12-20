@@ -59,7 +59,7 @@ les répertoires suivants doivent être présents sur le serveur pour que le cod
 
 Le code utilise :
 
-  - Php 7.2 à 8.0
+  - Php 8.0
   - [le composant Yaml de Symfony](https://symfony.com/doc/current/components/yaml.html) qui peut être installé par
     `composer require symfony/yaml`
   - les logiciels [gdal_translate et gdalinfo](https://www.gdal.org/) utilisés pour convertir les GéoTiff en PNG

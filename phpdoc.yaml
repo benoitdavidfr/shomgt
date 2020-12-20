@@ -27,11 +27,11 @@ doc: |
   Les infos 1, 2 et 3 sont issues du fichier GéoTIFF et de son géoréférencement ;
   les infos 4 sont issues du catalogue mentionné précédemment ;
   les infos 5 sont issues des métadonnées ISO livrées avec les GéoTIFF ;
-  les infos 6 sont déduites du rappochement entre le rectangle (1) et le catalogue.
+  les infos 6 sont déduites du rappochement entre le rectangle (2) et le catalogue.
   
   Les GéoTIFF sont initialement en TIFF, ils sont convertis en PNG (avec gdal).
-  Les GéoTIFF sont volumineux et leur chargement en mémoire prend du temps et des ressources machine.
-  Ils sont découpés en dalles 1024X1024 stockées dans un répertoire associé au GéoTIFF.
+  Les GéoTIFF sont volumineux (typiquement 10Mo pour 14k X 10k pixels) et leur chargement en mémoire prend du temps et des ressources
+  machine. Ils sont découpés en dalles 1024X1024 stockées dans un répertoire associé au GéoTIFF.
   
   Ce projet est découpé en 4 modules:
     - les web-services de consultation (ws) à partir des données structurées de manière adéquate
@@ -42,7 +42,9 @@ doc: |
     - un ensemble d'éléments partagés entre modules (lib), notamment un package de gestion de la géométrie.
   De plus:
     - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/, il publie notamment le catalogue des cartes Shom,
-    - le répertoire docker contient la configuration docker
+    - le répertoire leaflet contient le logiciel Leaflet
+    - le répertoire docker contient la configuration Docker d'un serveur d'hébergement des web-services
+    - le répertoire vendor contient le module Yaml de Syfony et est installé par composer (composer require symfony/yaml)
     - le répertoire tilecache contient un cache des tuiles fréquemment utilisées.
   
   Taille occupée:
@@ -53,7 +55,6 @@ doc: |
   synchro: http://localhost/synchro.php?remote=http://prod.geoapi.fr&dir=geoapi/shomgt
   
   ToDoList:
-    - passer le fichier Docker en Php 8.0
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
@@ -63,6 +64,8 @@ doc: |
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  20/12/2020:
+    - passage du Docker en Php8, adaptation de la doc
   13-19/12/2020:
     - dév. cat2 pour tenir compte de l'évolution par le Shom du GAN
   12/12/2020:

@@ -57,9 +57,14 @@ doc: |
       - une carte est souvent composée de plusieurs GéoTiffs
     - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
     
-  A voir:
+  A faire:
+    - voir quel contrôle d'accès mettre en place / a priori contrôler les mises à jour
     - définir le process itératif de mise à jour
-    - voir l'utilisation externe du catalogue, niattemnt dans ../updt
+      - mise à jour du catalogue après la mise à jour des cartes, notamment les champs modified et lastUpdate
+    - voir l'utilisation externe du catalogue, notamment dans ../updt
+    - documenter les dépendances entre modules
+    - mise à jour du catalogue sur github
+    - documentation github
 journal: |
   18-19/12/2020:
     - dév hgan.php

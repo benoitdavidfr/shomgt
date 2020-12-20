@@ -1,15 +1,14 @@
-# Définition de l'image php72sgt : utilisation de Php avec Apache
-# L'image est utilisée par défaut en mode detach pour faire tourner Apache
-# Ele est aussi utilisée 
-# mise à jour 11/11/2019:
-#   - suppression mongodb
-#   - suppression de la CMD bash
-# mise à jour 10/2/2018:
-#   - passage à mongodb-1.4.0
-#   - ajout de wget
+# Définition de l'image php8sgt : utilisation de Php avec Apache ou en cli
+# Inspiré de 'https://hub.docker.com/r/phpdocker/phpdocker/~/dockerfile/'
+# mise à jour 7/12/2020
+#  - passage à Php8
+#  - suppression XML
+#  - suppression install du zip et config GD
+# mise à jour 22/5/2020
+#  - ajout d'une ligne pour installer la bibliothèques PgSql dans Php
 
 # Use an official Php runtime as a parent image
-FROM php:7.2-apache
+FROM php:8.0-apache
 
 # Inspiré de 'https://hub.docker.com/r/phpdocker/phpdocker/~/dockerfile/'
         
@@ -26,9 +25,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 # Common
+# suppression && docker-php-ext-install zip
 RUN apt-get update \
-	&& apt-get install -y openssl autoconf pkg-config libssl-dev zlib1g-dev zip unzip p7zip-full git wget \
-  && docker-php-ext-install zip
+	&& apt-get install -y openssl autoconf pkg-config libssl-dev zlib1g-dev zip unzip p7zip-full git wget
 
 # PHP
 # intl
@@ -36,17 +35,20 @@ RUN apt-get install -y libicu-dev \
 	&& docker-php-ext-configure intl \
 	&& docker-php-ext-install intl
   
-# xml
-RUN apt-get install -y libxml2-dev libxslt-dev \
-	&& docker-php-ext-install dom xmlrpc xsl
+# suppression xml
+#RUN apt-get install -y libxml2-dev libxslt-dev && docker-php-ext-install dom xmlrpc xsl
     
 # images
+# modif docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libgd-dev \
-	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
 	&& docker-php-ext-install gd exif
-    
+
 # mysqli
 RUN docker-php-ext-install mysqli
+
+# pgsql - ajout 22/5/2020
+# RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pgsql pdo pdo_pgsql
 
 COPY config/php.ini /usr/local/etc/php/
 
@@ -67,3 +69,4 @@ EXPOSE 80
 
 COPY config/gitconfig /var/www/.gitconfig
 
+RUN chown www-data:www-data /var/www /var/www/.gitconfig

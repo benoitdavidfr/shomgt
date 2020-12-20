@@ -1,8 +1,9 @@
 # Installation de shomgt sur un serveur Linux
 
-*Benoit DAVID - 22/11/2019 (v2.2)*
+*Benoit DAVID - 20/12/2020 (v2.2.1)*
 
 ### Evolutions récentes
+- 20/12/2020 : passage à Php 8
 - 22/11/2019 : ajout d'une section sur la mise à jour du logiciel
 
 Cette documentation détaille comment installer *shomgt* sur un serveur Linux utilisant Docker ;
@@ -87,7 +88,7 @@ créer un répertoire shomgeotiff et dedans les sous-répertoires indiqués :
     
 c) Copier dans le répertoire `0` les cartes Shom chacune sous la forme de l'archive 7z livrée par le Shom.
 Cette copie peut être effectuée par ftp en installant auparavant un serveur ftp sur la machine Linux.
-On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org/pure-ftp).
+On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org/pure-ftp) ou un autre.
 
     $ sudo apt-get install pure-ftpd
     $ sudo /etc/init.d/pure-ftpd restart
@@ -107,11 +108,11 @@ d) Toujours logué sur la machine Linux sous user, créer un répertoire html et
 d') Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par docker ;
 pour cela voir la doc sur [https://docs.docker.com/config/daemon/systemd/#httphttps-proxy](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy).
 
-e) Fabriquer le conteneur Docker nommé `php72sgt` puis le lancer:
+e) Fabriquer le conteneur Docker nommé `php8sgt` puis le lancer:
 
-    $ sudo docker build -t php72sgt shomgt/docker
-    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
-          --mount type=bind,source=/home/user,target=/var/www php72sgt
+    $ sudo docker build -t php8sgt shomgt/docker
+    $ sudo docker run -p 80:80 -d --name php8sgt -h docker \
+          --mount type=bind,source=/home/user,target=/var/www php8sgt
 
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
@@ -121,13 +122,13 @@ soit sous l'utilisateur `www-data`.
 Dans le conteneur Docker sous l'utilisateur `root`,
 réaffecter récursivement la propriété du répertoire `/var/www` à `www-data:www-data`:
 
-    $ sudo docker exec -it --user=root php72sgt /bin/bash
+    $ sudo docker exec -it --user=root php8sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
     docker# exit
 
 g) Se mettre dans le conteneur Docker sous `www-data` pour reformatter les cartes Shom
 
-    $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+    $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
 
 h) Aller dans le répertoire shomgt et y installer le composant Yaml de Symfony
 
@@ -155,15 +156,15 @@ Le service *wms* est disponible à l'URL `http://{serveur}/shomgt/wms.php`
 
 ## 5) Arrêt/relance du serveur Shomgt
 Pour arrêter le serveur *shomgt*, c'est à dire le serveur Apache dans le conteneur,
-il faut sous Linux arrêter le conteneur Docker appelé `php72sgt`:
+il faut sous Linux arrêter le conteneur Docker appelé `php8sgt`:
 
-    $ sudo docker stop php72sgt
-    $ sudo docker rm php72sgt
+    $ sudo docker stop php8sgt
+    $ sudo docker rm php8sgt
 
-Pour le relancer, relancer sous Linux le conteneur Docker appelé `php72sgt`:
+Pour le relancer, relancer sous Linux le conteneur Docker appelé `php8sgt`:
 
-    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
-          --mount type=bind,source=/home/user,target=/var/www php72sgt
+    $ sudo docker run -p 80:80 -d --name php8sgt -h docker \
+          --mount type=bind,source=/home/user,target=/var/www php8sgt
 
 ## 6) Points de vigilance
 
@@ -196,13 +197,13 @@ Pour ajouter incrémentalement des cartes Shom :
 
   - puis aller sous Docker chez `root` pour réaffecter les droits à `www-data`
 
-        $ sudo docker exec -it --user=root php72sgt /bin/bash
+        $ sudo docker exec -it --user=root php8sgt /bin/bash
         docker# chown -R www-data:www-data /var/www
         docker# exit
 
   - enfin aller sous Docker chez `www-data` et effectuer la mise à jour dans le module updt
 
-        $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+        $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
         docker$ cd ~/html/shomgt/updt
         docker$ php updt.php {nouvelle_livraison} | sh
 
@@ -217,7 +218,7 @@ et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
 Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
 Pour cela aller sous Docker chez `www-data` et aller dans le module `cat`
 
-    $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+    $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
     docker$ cd ~/html/shomgt/cat
 
 La première chose à faire est de moissonner les GAN, cette opération prend une quinzaine de minutes.
@@ -254,14 +255,14 @@ Ci-dessous la procédure pas à pas :
 
   - puis aller sous Docker chez `root` pour réaffecter les droits à `www-data`
 
-        $ sudo docker exec -it --user=root php72sgt /bin/bash
+        $ sudo docker exec -it --user=root php8sgt /bin/bash
         docker# chown -R www-data:www-data /var/www
         docker# exit
 
   - puis aller sous Docker chez `www-data` et aller dans le module `cat`
     pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Github
 
-        $ sudo docker exec -it --user=www-data php72sgt /bin/bash 
+        $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
         docker$ cd ~/html/shomgt/cat
         docker$ php build.php storeFromJSON
     
@@ -276,8 +277,8 @@ Shomgt peut être mis à jour à partir du code sur Github. Pour cela:
 
 a) arrêter le serveur Shomgt :
 
-    $ sudo docker stop php72sgt
-    $ sudo docker rm php72sgt
+    $ sudo docker stop php8sgt
+    $ sudo docker rm php8sgt
 
 b) réaffecter la propriété des fichiers à `user` :
   
@@ -297,14 +298,14 @@ alors les effacer puis effectuer à nouveau le `git pull` :
 
 e) réaffecter la propriété des fichiers à `www-data` :
 
-    $ sudo docker exec -it --user=root php72sgt /bin/bash
+    $ sudo docker exec -it --user=root php8sgt /bin/bash
     docker# chown -R www-data:www-data /var/www
     docker# exit
 
 f) relancer le serveur Shomgt:
 
-    $ sudo docker run -p 80:80 -d --name php72sgt -h docker \
-          --mount type=bind,source=/home/user,target=/var/www php72sgt
+    $ sudo docker run -p 80:80 -d --name php8sgt -h docker \
+          --mount type=bind,source=/home/user,target=/var/www php8sgt
 
 ## 10) Sécurisation de shomgt
 

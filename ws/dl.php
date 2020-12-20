@@ -103,7 +103,7 @@ if ($_SERVER['PATH_INFO'] == '/html') {
   die("\n");
 }
 
-// retourne le chemin de l'archive 7z correspondant àa la carte $mapnum
+// retourne le chemin de l'archive 7z correspondant à la carte $mapnum
 function archive(string $mapnum): string {
   $dirpath = realpath(__DIR__.'/../../../shomgeotiff/incoming');
   if (!($dir = opendir($dirpath))) {

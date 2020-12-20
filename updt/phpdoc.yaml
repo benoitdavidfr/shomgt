@@ -104,3 +104,5 @@ phpIncludes:
   - /geoapi/shomgt/updt/gdalinfo.inc.php
   - /geoapi/shomgt/updt/ontop.inc.php
   - /geoapi/shomgt/updt/shomgtedition.inc.php
+  - /geoapi/shomgt/updt/mdiso19139.inc.php
+  
