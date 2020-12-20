@@ -1,6 +1,6 @@
 # Définition de l'image php8sgt : utilisation de Php avec Apache ou en cli
 # Inspiré de 'https://hub.docker.com/r/phpdocker/phpdocker/~/dockerfile/'
-# mise à jour 7/12/2020
+# mise à jour 20/12/2020
 #  - passage à Php8
 #  - suppression XML
 #  - suppression install du zip et config GD
@@ -46,9 +46,6 @@ RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libgd-dev
 
 # mysqli
 RUN docker-php-ext-install mysqli
-
-# pgsql - ajout 22/5/2020
-# RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pgsql pdo pdo_pgsql
 
 COPY config/php.ini /usr/local/etc/php/
 
