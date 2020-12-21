@@ -283,7 +283,7 @@ class GjBox {
     else {
       return [
          new GBox([$this->ws[0], $this->ws[1], $this->en[0]+360, $this->en[1]]), // west de l'anti-méridien
-         new GBox([$this->ws[0]-360, $this->ws[1], $this->en[0], $this->en[1]]), // east de l'énti-méridien
+         new GBox([$this->ws[0]-360, $this->ws[1], $this->en[0], $this->en[1]]), // east de l'anti-méridien
       ];
     }
   }

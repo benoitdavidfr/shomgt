@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: geojson.php
-title: geojson.php - génération GeoJSON du catalogue des cartes Shom
+title: geojson.php - génération GeoJSON du catalogue des cartes Shom ou d'une carte particulière
 doc: |
   génération d'un geojson à partir du fichier mapcat.pser en filtrant sur l'échelle de la carte
   Les cartouches ne sont fournis ni dans les propriétés ni dans le géométrie
@@ -38,12 +38,11 @@ header('Content-type: application/json; charset="utf8"');
 $nbre = 0;
 
 echo '{"type":"FeatureCollection","features":[',"\n";
-MapCat::init();
 if ($mapid) {
-  echo json_encode(MapCat::$maps[$mapid]->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+  echo json_encode(MapCat::maps()[$mapid]->geojson(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
 }
 else {
-  foreach (MapCat::$maps as $id => $map) {
+  foreach (MapCat::maps() as $id => $map) {
     $scaleD = $map->scaleDenAsInt();
     if ($sdmax && ($scaleD > $sdmax))
       continue;

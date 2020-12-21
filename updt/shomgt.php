@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  21/12/2020:
+    passage sur cat2
   11/12/2020:
     ajout du champ mdDate déduit des MD XML, utilisation de mdiso19139() à la place de shomgtedition() pour analyser les MD
   16/11/2019:
@@ -67,7 +69,7 @@ includes:
   - gdalinfo.inc.php
   - ontop.inc.php
   - mdiso19139.inc.php
-  - ../cat/mapcat.inc.php
+  - ../cat2/catapi.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
@@ -75,7 +77,7 @@ require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 require_once __DIR__.'/ontop.inc.php';
 require_once __DIR__.'/mdiso19139.inc.php';
-require_once __DIR__.'/../cat/mapcat.inc.php';
+require_once __DIR__.'/../cat2/catapi.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -142,10 +144,14 @@ while (($mapname = readdir($current)) !== false) {
     $width = $gdalinfo['width'];
     $height = $gdalinfo['height'];
     try {
-      $shomgtgan = MapCat::getCatInfoFromGtName("$mapname/$fbname", $gtbbox);
+      $shomgtgan = CatApi::getCatInfoFromGtName("$mapname/$fbname", $gtbbox);
+      if (!$shomgtgan) {
+        echo "# Erreur sur CatApi::getCatInfoFromGtName($mapname/$fbname, gtbbox)\n";
+        continue;
+      }
     }
     catch (Exception $e) {
-      echo "# Erreur ",$e->getMessage()," sur MapCat::getCatInfoFromGtName($mapname/$fbname, gtbbox)\n";
+      echo "# Erreur ",$e->getMessage()," sur CatApi::getCatInfoFromGtName($mapname/$fbname, gtbbox)\n";
       continue;
     }
     //echo "<pre>shomgtgan="; print_r($shomgtgan); echo "</pre>\n";

@@ -2,7 +2,7 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)'
 $id: 'https://geoapi.fr/shomgt/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/cat2/gans
-modified: '2020-12-18T11:34:53+01:00'
+modified: '2020-12-21T10:08:29+01:00'
 gans:
   FR6735:
     age: !!float 16
@@ -2041,6 +2041,29 @@ gans:
       - { num: 23, semaineAvis: 2045-230 }
       - { num: 24, semaineAvis: 2049-225 }
       - { num: 25, semaineAvis: 2051-230 }
+  FR7661:
+    age: 3.25
+    groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
+    title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
+    edition: 'Edition n°2 - 2018'
+    mapsFrance: {  }
+    bbox:
+      SW: '38°36,90''N — 000°30,00''W'
+      NE: '41°23,30''N — 004°50,00''E'
+    corrections:
+      - { num: 4, semaineAvis: 1904-77 }
+      - { num: 5, semaineAvis: 1906-78 }
+      - { num: 6, semaineAvis: 1908-77 }
+      - { num: 7, semaineAvis: 1908-78 }
+      - { num: 8, semaineAvis: 1923-77 }
+      - { num: 9, semaineAvis: 1928-77 }
+      - { num: 10, semaineAvis: 1937-76 }
+      - { num: 11, semaineAvis: 1937-79 }
+      - { num: 12, semaineAvis: 2005-144 }
+      - { num: 13, semaineAvis: 2009-77 }
+      - { num: 14, semaineAvis: 2030-77 }
+      - { num: 15, semaineAvis: 2042-80 }
+      - { num: 16, semaineAvis: 2048-77 }
   FR5417:
     age: !!float 3
     groupTitle: 'Océan Atlantique Nord et Mers Boréales'
@@ -2499,6 +2522,28 @@ gans:
       - { num: 2, semaineAvis: 2010-36 }
       - { num: 3, semaineAvis: 2029-37 }
       - { num: 4, semaineAvis: 2043-35 }
+  FR6835:
+    age: 2.75
+    title: 'Océan Pacifique Nord'
+    edition: 'Edition n°2 - 1997'
+    mapsFrance: {  }
+    bbox:
+      SW: 'NaN°00,00''S — 173°05,00''W'
+      NE: '71°30,00''N — 116°30,00''W'
+    hasPart:
+      - { title: 'Cartouche: Mer de Béring', bbox: { SW: 'NaN°00,00''S — 169°20,00''W', NE: 'NaN°00,00''S — 170°15,00''E' } }
+    corrections:
+      - { num: 67, semaineAvis: 1732-232 }
+      - { num: 68, semaineAvis: 1738-231 }
+      - { num: 69, semaineAvis: 1831-212 }
+      - { num: 70, semaineAvis: 1851-212 }
+      - { num: 71, semaineAvis: 1910-235 }
+      - { num: 72, semaineAvis: 1924-244 }
+      - { num: 73, semaineAvis: 1943-244 }
+      - { num: 74, semaineAvis: 2025-244 }
+      - { num: 75, semaineAvis: 2025-245 }
+      - { num: 76, semaineAvis: 2041-275 }
+      - { num: 77, semaineAvis: 2041-277 }
   FR6118:
     age: 2.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
@@ -2515,6 +2560,23 @@ gans:
       - { num: 6, semaineAvis: 2010-275 }
       - { num: 7, semaineAvis: 2017-275 }
       - { num: 8, semaineAvis: 2038-278 }
+  FR7023:
+    age: 2.5
+    groupTitle: 'Océan Pacifique Est'
+    title: 'Océan Pacifique Est'
+    edition: 'Publication 1985'
+    mapsFrance:
+      - PF
+      - CP
+    bbox:
+      SW: 'NaN°00,00''S — NaN°00,00''W'
+      NE: 'NaN°00,00''S — NaN°00,00''W'
+    corrections:
+      - { num: 102, semaineAvis: 1831-212 }
+      - { num: 103, semaineAvis: 1910-235 }
+      - { num: 104, semaineAvis: 1924-246 }
+      - { num: 105, semaineAvis: 1943-246 }
+      - { num: 106, semaineAvis: 2041-275 }
   FR7328:
     age: 2.5
     groupTitle: 'Océan Indien'
@@ -3468,23 +3530,6 @@ gans:
       - { num: 15, semaineAvis: 1847-204 }
       - { num: 16, semaineAvis: 2002-217 }
       - { num: 17, semaineAvis: 2018-222 }
-  FR7023:
-    age: 1.25
-    groupTitle: 'Océan Pacifique Est'
-    title: 'Océan Pacifique Est'
-    edition: 'Publication 1985'
-    mapsFrance:
-      - PF
-      - CP
-    bbox:
-      SW: 'NaN°00,00''S — NaN°00,00''W'
-      NE: 'NaN°00,00''S — NaN°00,00''W'
-    corrections:
-      - { num: 102, semaineAvis: 1831-212 }
-      - { num: 103, semaineAvis: 1910-235 }
-      - { num: 104, semaineAvis: 1924-246 }
-      - { num: 105, semaineAvis: 1943-246 }
-      - { num: 106, semaineAvis: 2041-275 }
   FR7168:
     age: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -3945,6 +3990,20 @@ gans:
       - { title: 'Cartouche: D - Port de Nice et Rade de Villefranche', bbox: { SW: '43°40,36''N — 007°16,64''E', NE: '43°42,44''N — 007°19,68''E' } }
     corrections:
       - { num: 20, semaineAvis: 2047-86 }
+  FR7212:
+    age: !!float 1
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'De Cabo Finisterre à Casablanca (Dâr el Beïda)'
+    edition: 'Edition n°2 - 2007'
+    mapsFrance: {  }
+    bbox:
+      SW: '33°30,00''N — NaN°00,00''W'
+      NE: '43°30,00''N — 005°15,00''W'
+    corrections:
+      - { num: 52, semaineAvis: 1945-145 }
+      - { num: 53, semaineAvis: 2006-72 }
+      - { num: 54, semaineAvis: 2011-73 }
+      - { num: 55, semaineAvis: 2038-72 }
   FR7213:
     age: !!float 1
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
@@ -4626,6 +4685,18 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1838-204 }
       - { num: 2, semaineAvis: 1842-204 }
+  FR6808:
+    age: 0.5
+    groupTitle: 'Océan Atlantique Sud'
+    title: 'Océan Atlantique Sud - Partie Est'
+    edition: 'Edition n°3 - 2015'
+    mapsFrance: {  }
+    bbox:
+      SW: '57°10,00''S — NaN°00,00''W'
+      NE: '18°08,89''N — 029°35,57''E'
+    corrections:
+      - { num: 5, semaineAvis: 2043-173 }
+      - { num: 6, semaineAvis: 2046-254 }
   FR6817:
     age: 0.5
     groupTitle: 'Océan Pacifique Sud'
@@ -5328,6 +5399,8 @@ gans:
     age: !!float 0
   FR7606:
     age: !!float 0
+  FR7622:
+    age: !!float 0
   FR7663:
     age: !!float 0
   FR7758:
@@ -5413,5 +5486,8 @@ gans:
     age: !!float -1
   FR7755:
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7755/1717'
+    age: !!float -1
+  FR7037:
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7037/1941'
     age: !!float -1
 eof: null

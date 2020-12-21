@@ -1,9 +1,11 @@
 <?php
 /*PhpDoc:
 name: llmap.php
-title: cat2/llmap.php - affichage de la carte LL du catalogue des cartes par tranches d'échelles
+title: cat2/llmap.php - affichage de la carte LL du catalogue des cartes par tranches d'échelles ou d'une carte
 doc: |
 journal: |
+  21/12/2020:
+    ajout possibilité d'afficher qu'une carte
   14/12/2020:
     passage en catv2
   9/3/2019:
@@ -83,9 +85,22 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
   }
   var overlays = {
     "ZEE" : new L.GeoJSON.AJAX(shomgtcaturl+'/france.geojson', {
-      style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature
+      style: {color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature
     }),
 <?php
+  // affiche une carte particulière en orange
+  if ($mapid = ($_GET['mapid'] ?? null)) {
+    echo "    \"$mapid\" : L.layerGroup([\n",
+         "        new L.GeoJSON.AJAX(shomgtcaturl+'/geojson.php?id=$mapid', {\n",
+         "          style: {color:'orange'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature\n",
+         "        }),\n",
+         "        new L.TileLayer(\n",
+         "          shomgtcaturl+'/tilenum.php/mapid$mapid/{z}/{x}/{y}.png',\n",
+         "          {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}\n",
+         "        )\n",
+         "    ]),\n";
+    $defaultOverlays = [$mapid];
+  }
   // liste des scaleDenomnator, sous la forme [label => valeur], définissant n intervalles
   $sds = [
     '10M'=>1e7, '6.5M'=>6.5e6, '2.5M'=>2.5e6, '1.1M'=>1.1e6, '700k'=>7e5, '500k'=>5e5, '375k'=>3.75e5, '200k'=>2e5,
@@ -116,6 +131,8 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
          "    ]),\n";
     $sdmax = $sdmin;
   }
+  if (!isset($defaultOverlays))
+    $defaultOverlays = ['700k < sd <= 1.1M'];
 ?>
 // affichage de l'antimeridien
     "antimeridien" : L.geoJSON(
@@ -127,7 +144,10 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
       },
       { style: { "color": "red", "weight": 2, "opacity": 0.65 } }),
   };
-  map.addLayer(overlays["700k < sd <= 1.1M"]);
+<?php
+  foreach ($defaultOverlays as $lyrId)
+    echo "  map.addLayer(overlays['$lyrId']);\n";
+?>
   map.addLayer(overlays["antimeridien"]);
 
   L.control.layers(baseLayers, overlays).addTo(map);

@@ -39,6 +39,9 @@ $layers = [
   'wfs{sdmin}-{sdmax}'=> [
     'title'=>"Nos des cartes du WFS dont le dénominateur d'échelle sd est {sdmin} <= {sd} < {sdmax}",
   ],
+  'mapid{mapid}'=> [
+    'title'=>"No de la carte {mapid}",
+  ],
 ];
     
 $request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
@@ -122,23 +125,25 @@ $x = (int)$matches[3];
 $y = (int)$matches[4];
 $fmt = $matches[5];
 
-if (!preg_match('!^(cat|wfs)([\de]+)(-([\de]+)?)?$!', $lyrname, $matches)) {
+if (preg_match('!^(mapid)(FR\d+)$!', $lyrname, $matches)) {
+  $class = 'MapCat';
+  $criteria = ['mapid'=> $matches[2]];
+}
+elseif (preg_match('!^(cat|wfs)([\de]+)(-([\de]+)?)?$!', $lyrname, $matches)) {
+  $class = ($matches[1]=='cat') ? 'MapCat' : 'Wfs';
+  $criteria = ['sdmin'=> $matches[2]];
+  if (isset($matches[4]))
+    $criteria += ['sdmax'=> $matches[4]];
+}
+else {
   header('HTTP/1.1 404 Not Found');
   header('Content-type: text/plain; charset="utf-8"');
   die("Erreur: couche $lyrname inexistante, voir la liste des couches sur $url\n");
 }
 
-$type = $matches[1];
-$sdmin = $matches[2];
-$sdmax = $matches[4] ?? null;
 
 try {
-  if ($type == 'cat') {
-    $image = MapCat::maketile($sdmin, $sdmax, Zoom::tileEBox($z, $x, $y), ['zoom'=>$z]);  
-  }
-  else {
-    $image = Wfs::maketile($sdmin, $sdmax, Zoom::tileEBox($z, $x, $y), ['zoom'=>$z]);  
-  }
+  $image = $class::maketile($criteria, Zoom::tileEBox($z, $x, $y), ['zoom'=>$z]);  
 } catch (Exception $e) {
   sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
 }

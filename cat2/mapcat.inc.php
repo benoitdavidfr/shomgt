@@ -115,14 +115,15 @@ class MapPart {
   }
   
   function scaleDenominator(): string { return $this->scaleDenominator; }
+  function bbox(): BBoxDM { return $this->bbox; }
   
   function asArray(): array {
-    return
-      ['title'=> $this->title]
-      + ['scaleDenominator'=> $this->scaleDenominator]
-      + ['bboxDM'=> $this->bbox->asArray()]
-      + ['spatial'=> $this->bbox->asDcmiBox()]
-      ;
+    return [
+      'title'=> $this->title,
+      'scaleDenominator'=> $this->scaleDenominator,
+      'bboxDM'=> $this->bbox->asArray(),
+      'spatial'=> $this->bbox->asDcmiBox(),
+    ];
   }
   
   function multiPolygonCoords(): array {
@@ -195,11 +196,16 @@ class MapCat {
   protected ?string $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
   protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
   
-  function mapsFrance(): ?bool { return $this->mapsFrance; }
   // s'il n'y a pas d'espace principal, je prends arbitrairement l'échelle du premier cartouche
   function scaleDenominator(): string { return $this->scaleDenominator ?? $this->hasPart[0]->scaleDenominator(); }
   // Génération du dénom. d'échelle comme entier
   function scaleDenAsInt(): int { return (int)str_replace('.', '', $this->scaleDenominator()); }
+  // retourne la propriété
+  function num(): string { return $this->num; }
+  function edition(): string { return $this->edition; }
+  function mapsFrance(): array { return $this->mapsFrance; }
+  function bbox(): ?GjBox { return $this->bbox; }
+  function hasPart(): array { return $this->hasPart; }
   
   function __construct(string $mapid, array $map) { // $map peut être une structure V2 ou V1
     $this->num = substr($mapid, 2);
@@ -249,6 +255,8 @@ class MapCat {
       $gbox = $gboxes[0];
       return $gbox->proj('WebMercator');
     }
+    else
+      throw new Exception("Erreur dans MapCat::wombox(), pas d'espace principal");
   }
   
   static function importFromV1() {
@@ -257,9 +265,12 @@ class MapCat {
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
       $map = new self($mapid, $map);
-      if ($map->mapsFrance)
+      if ($map->existsInShomgGt()) {
+        $map->addModifiedandLastUpdate();
         self::$maps[$mapid] = $map;
-      //print_r(self::$all[$mapid]);
+      }
+      elseif ($map->mapsFrance)
+        self::$maps[$mapid] = $map;
     }
     ksort(self::$maps);
     self::$catTitle = $catv1['title'];
@@ -268,49 +279,35 @@ class MapCat {
     self::$catCreated = $created;
     self::$catModified = $created;
 
-    MapCat::addModified();
     MapCat::storeAsYaml();
     MapCat::storeAsPser();
     echo "enregistrement du catalogue en pser et en Yaml\n";
   }
   
-  // ajout du champ modified aux cartes d'intérêt après importation V1
+  function existsInShomgGt(): string { // Teste si une carte existe dans le portefeuille ShomGt, retourne le chemin du répertoire dans current
+    $dirpath = __DIR__.'/../../../shomgeotiff/current/'.$this->num;
+    return file_exists($dirpath) ? $dirpath : '';
+  }
+  
+  // ajout des champ modified et lastUpdate aux cartes présentes dans ShomGt après importation V1
   // par lecture des MD ISO d'un des GéoTiff correspondant à chaque carte
-  static function addModified() {
-    foreach (self::$maps as $mapid => $map) {
-      if (!$map->mapsFrance)
-        continue;
-      if (in_array($mapid, ['FR7330','FR7344','FR7360','FR8101','FR8502'])) // pas de MDISO pour ces cartes
-        continue;
-      $num = $map->num;
-      if ($map->bbox) {
-        $gtname = "$num/CARTO_GEOTIFF_${num}_pal300";
-        $mdfilename = realpath(__DIR__."/../../../shomgeotiff/current/$gtname.xml");
-        if (!is_file($mdfilename)) {
-          echo "Erreur fichier $mdfilename absent pour $num\n";
-          echo Yaml::dump([$mapid => MapCat::$maps[$mapid]->asArray()], 5, 2);
-          //die();
-        }
+  private function addModifiedandLastUpdate(): bool {
+    if (in_array($this->num, [7330, 7344, 7360, 8101, 8502])) // 5 cartes présentes sans MDISO
+      return false;
+    $num = $this->num;
+    $gtname = $this->bbox ? "$num/${num}_pal300" : "$num/${num}_1_gtw";
+    if (!($mdiso19139 = UpdtApi::mdiso19139($gtname))) {
+      if (!$this->bbox) {
+        $gtname2 = "$num/${num}_A_gtw";
+        if (!($mdiso19139 = UpdtApi::mdiso19139($gtname2)))
+          throw new Exception("MD ISO absentes dans MapCat::addModified() pour gtname=$gtname et $gtname2");
       }
-      else {
-        //echo "carte $mapid\n";
-        $gtname = "$num/CARTO_GEOTIFF_${num}_1_gtw";
-        $mdfilename = realpath(__DIR__."/../../../shomgeotiff/current/$gtname.xml");
-        if (!is_file($mdfilename)) {
-          echo "Erreur fichier $mdfilename absent pour $num\n";
-          echo Yaml::dump([$mapid => MapCat::$maps[$mapid]], 5, 2);
-          //die();
-        }
-      }
-      $gtname = str_replace('CARTO_GEOTIFF_', '', $gtname);
-      if (!($mdiso19139 = UpdtApi::mdiso19139($gtname))) {
-        echo Yaml::dump([$mapid => $mdiso19139], 5, 2);
-      }
-      else {
-        $map->modified = $mdiso19139['mdDate'];
-        $map->lastUpdate = intval($mdiso19139['dernièreCorrection']);
-      }
+      else
+        throw new Exception("MD ISO absentes dans MapCat::addModified() pour gtname=$gtname");
     }
+    $this->modified = $mdiso19139['mdDate'];
+    $this->lastUpdate = intval($mdiso19139['dernièreCorrection']);
+    return true;
   }
   
   static function storeAsPser() { // enregistre le catalogue comme pser 
@@ -323,50 +320,8 @@ class MapCat {
     ]));
   }
   
-  static function maps(?string $mapid=null): array {
-    if (!self::$maps)
-      self::init();
-    if (!$mapid)
-      return self::$maps;
-    elseif (isset(self::$maps[$mapid]))
-      return self::$maps[$mapid]->asArray();
-    else
-      return [];
-  }
-  
-  static function allAsArray(): array { // génère le catalogue comme array Php
-    return [
-      'title'=> self::$catTitle,
-      'description'=> self::$catDescription,
-      '$id'=> 'http://geoapi.fr/shomgt/cat2/mapcat',
-      '$schema'=> __DIR__.'/mapcat',
-      'created'=> self::$catCreated,
-      'modified'=> self::$catModified,
-      'maps'=> array_map(function(MapCat $map) { return $map->asArray(); }, self::$maps),
-    ];
-  }
-  
   static function storeAsYaml() { // enregistre le catalogue en Yaml
     file_put_contents(self::PATH_YAML, Yaml::dump(self::allAsArray(), 5, 2));
-  }
-  
-  private static function init() { // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
-    if (!file_exists(self::PATH_PSER) && !file_exists(self::PATH_YAML))
-      throw new Exception("Erreur dans MapCat::init() : les fichiers mapcat.yaml et mapcat.pser n'existent ni l'un ni l'autre");
-    elseif (!file_exists(self::PATH_PSER)
-     || (file_exists(self::PATH_YAML) && (filemtime(self::PATH_PSER) < filemtime(self::PATH_YAML)))) {
-      echo "<b>Erreur: le fichier mapcat.yaml est plus récent que le pser ! ".
-         "Soit effaces le yaml, soit charges le pour écraser le pser !</b>\n";
-      die("Erreur dans MapCat::init()");
-    }
-    else { // le phpser existe et est plus récent que le Yaml alors initialisation à partir du phpser
-      $pser = unserialize(file_get_contents(self::PATH_PSER));
-      self::$catTitle = $pser['title'];
-      self::$catDescription = $pser['description'];
-      self::$catCreated = $pser['created'];
-      self::$catModified = $pser['modified'];
-      self::$maps = $pser['maps'];
-    }
   }
   
   static function loadYaml() { // chargement du Yaml pour écraser le pser, génère une erreur si le pser est plus récent que le Yaml
@@ -388,6 +343,25 @@ class MapCat {
     self::storeAsPser();
   }
   
+  private static function init() { // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
+    if (!file_exists(self::PATH_PSER) && !file_exists(self::PATH_YAML))
+      throw new Exception("Erreur dans MapCat::init() : les fichiers mapcat.yaml et mapcat.pser n'existent ni l'un ni l'autre");
+    elseif (!file_exists(self::PATH_PSER)
+     || (file_exists(self::PATH_YAML) && (filemtime(self::PATH_PSER) < filemtime(self::PATH_YAML)))) {
+      echo "<b>Erreur: le fichier mapcat.yaml est plus récent que le pser ! ".
+         "Soit effaces le yaml, soit charges le pour écraser le pser !</b>\n";
+      die("Erreur dans MapCat::init()");
+    }
+    else { // le phpser existe et est plus récent que le Yaml alors initialisation à partir du phpser
+      $pser = unserialize(file_get_contents(self::PATH_PSER));
+      self::$catTitle = $pser['title'];
+      self::$catDescription = $pser['description'];
+      self::$catCreated = $pser['created'];
+      self::$catModified = $pser['modified'];
+      self::$maps = $pser['maps'];
+    }
+  }
+  
   static function close() { // s'il y a eu des modifications, réenregistre le document en yaml puis en pser
     if (self::$catUpdated) {
       ksort(self::$maps);
@@ -395,6 +369,36 @@ class MapCat {
       MapCat::storeAsYaml();
       MapCat::storeAsPser();
     }
+  }
+  
+  static function maps(?string $mapid=null): array {
+    if (!self::$maps)
+      self::init();
+    if (!$mapid)
+      return self::$maps;
+    elseif (isset(self::$maps[$mapid]))
+      return self::$maps[$mapid]->asArray();
+    else
+      return [];
+  }
+  
+  static function mapById(string $mapid): ?MapCat {
+    if (!self::$maps)
+      self::init();
+    return self::$maps[$mapid] ?? null;
+  }
+  
+  static function allAsArray(): array { // génère le catalogue comme array Php
+    $maps = self::maps();
+    return [
+      'title'=> self::$catTitle,
+      'description'=> self::$catDescription,
+      '$id'=> 'http://geoapi.fr/shomgt/cat2/mapcat',
+      '$schema'=> __DIR__.'/mapcat',
+      'created'=> self::$catCreated,
+      'modified'=> self::$catModified,
+      'maps'=> array_map(function(MapCat $map) { return $map->asArray(); }, $maps),
+    ];
   }
   
   function asArray(): array { // génère la carte comme array
@@ -435,9 +439,12 @@ class MapCat {
   }
   
   // fabrique une tuile de la couche des étiquettes pour la carte Leaflet
-  static function maketile(int $sdmin, ?int $sdmax, EBox $wembox, array $options=[]) {
+  static function maketile(array $criteria, EBox $wembox, array $options=[]) {
     if (self::$verbose)
-      echo "MapCat::maketile(lyrname=$sdmin-$sdmax, wembox=$wembox, options=",json_encode($options),")<br>\n";
+      echo "MapCat::maketile(criteria=",json_encode($criteria),", wembox=$wembox, options=",json_encode($options),")<br>\n";
+    $sdmin = $criteria['sdmin'] ?? null;
+    $sdmax = $criteria['sdmax'] ?? null;
+    $mapid = $criteria['mapid'] ?? null;
     $width = $options['width'] ?? 256;
     $height = $options['height'] ?? 256;
     // fabrication de l'image
@@ -452,11 +459,16 @@ class MapCat {
     if (!imagealphablending($image, true))
       throw new Exception("erreur de imagealphablending() ligne ".__LINE__);
     
-    self::init();
-    foreach (self::$maps as $map) {
-      $sd = $map->scaleDenAsInt();
-      if (($sd > $sdmin) && (!$sdmax || ($sd <= $sdmax))) {
+    if ($mapid) {
+      if ($map = self::mapById($mapid))
         $map->drawLabel($image, $wembox, $width, $height);
+    }
+    else {
+      foreach (self::maps() as $map) {
+        $sd = $map->scaleDenAsInt();
+        if (($sd > $sdmin) && (!$sdmax || ($sd <= $sdmax))) {
+          $map->drawLabel($image, $wembox, $width, $height);
+        }
       }
     }
     
@@ -467,11 +479,11 @@ class MapCat {
   
   /*PhpDoc: methods
   name: drawLabel
-  title: "function drawLabel($image, EBox $bbox, int $width, int $height): bool - dessine dans l'image GD le numéro de la carte"
+  title: "private function drawLabel($image, EBox $bbox, int $width, int $height): bool - dessine dans l'image GD le numéro de la carte"
   doc: |
     $bbox est un EBox en WebMercator
   */
-  function drawLabel($image, EBox $tileBBox, int $width, int $height): bool {
+  private function drawLabel($image, EBox $tileBBox, int $width, int $height): bool {
     //echo "title= ",$this->title,"<br>\n";
     $wemboxes = [];
     if ($this->bbox) {
@@ -517,7 +529,7 @@ if (php_sapi_name() <> 'cli') {
     echo "</pre>mapcat.inc.php - Actions proposées:<ul>\n";
     echo "<li><a href='?action=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a>\n";
     echo "<li><a href='?action=yaml'>Affiche le catalogue en Yaml</a>\n";
-    echo "<li><a href='?action=FR7249'>Affiche FR7249</a>\n";
+    echo "<li><a href='?action=html'>Affiche le catalogue en Html</a>\n";
     echo "</ul>\n";
     die();
   }
@@ -531,16 +543,56 @@ if ($action == 'importFromV1') {
 }
 
 if ($action == 'yaml') {
-  MapCat::init();
   echo Yaml::dump(MapCat::allAsArray(), 5, 2);
   die();
 }
 
-if ($action == 'FR7249') {
-  MapCat::init();
-  $map = MapCat::$maps['FR7249'];
-  echo Yaml::dump($map->asArray(), 5, 2);
-  echo Yaml::dump(['geometry'=> $map->geometry()->asArray()], 5, 2);
+require_once __DIR__.'/../lib/zoom.inc.php';
+
+function llmapurl(string $mapid, MapCat $map) {
+  if ($gjbbox = $map->bbox()) {
+    $gbox = $gjbbox->asGboxes()[0];
+  }
+  else {
+    $gbox = new GBox;
+    foreach ($map->hasPart() as $part)
+      $gbox->union($part->bbox()->asGboxes()[0]);
+  }
+  $center = $gbox->center();
+  $zoom = Zoom::zoomForGBoxSize($gbox->size());
+  return sprintf('llmap.php?lat=%.2f&amp;lon=%.2f&amp;zoom=%d&amp;mapid=%s', $center[1], $center[0], $zoom, $mapid);
+}
+
+if ($action == 'html') {
+  echo "</pre><h2>Catalogue des cartes</h2>\n";
+  echo "<table border=1><th>",implode('</th><th>', ['id/yml','title/map','scaleDen','edition','mapsFrance']),"</th>\n";
+  foreach (MapCat::maps() as $mapid => $map) {
+    $mapa = $map->asArray();
+    $llmapurl = llmapurl($mapid, $map);
+    $br = (strlen($mapa['groupTitle'] ?? '') + strlen($mapa['title']) > 90) ? '<br>' : ' - ';
+    //echo "<tr><td colspan=5><pre>"; print_r($mapa); echo "</td></tr>\n";
+    echo "<tr><td><a href='?id=$mapid&amp;action=aMapYaml'>$mapid</a></td>",
+      "<td>",isset($mapa['groupTitle']) ? "$mapa[groupTitle]$br" : '',"<a href='$llmapurl'>$mapa[title]</a></td>",
+      //"<td>",strlen($mapa['groupTitle'] ?? '')+strlen($mapa['title']),"</td>",
+      "<td align='right'>",$mapa['scaleDenominator'] ?? '<i>'.$mapa['hasPart'][0]['scaleDenominator'].'</i>',"</td>",
+      "<td>$mapa[edition]</td>",
+      "<td>",implode(', ', $mapa['mapsFrance']),"</td>",
+      "</tr>\n";
+  }
+  echo "</table>\n";
+  die();
+}
+
+if ($action == 'aMapYaml') {
+  $map = MapCat::mapById($_GET['id']);
+  echo "id: $_GET[id]\n";
+  echo Yaml::dump($map->asArray(), 4, 2);
+  $request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
+    : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
+  $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname(dirname($_SERVER['SCRIPT_NAME']));
+  $num = substr($_GET['id'], 2);
+  $url = "$shomgturl/ws/dl.php/$num.png";
+  echo "<img src='$url'>";
   die();
 }
 

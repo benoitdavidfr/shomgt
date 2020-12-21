@@ -50,7 +50,7 @@ if (php_sapi_name() <> 'cli') {
   if (!isset($_GET['action'])) {
     echo "hgan.php - Actions proposées:<ul>\n";
     //echo "<li><a href='?action=harvest'>Moissonner les Gan</a></li>\n";
-    //echo "<li><a href='?action=rename'>Renommer les fichiers</a></li>\n";
+    echo "<li>La moisson des GAN doit être effectuée en CLI</li>\n";
     echo "<li><a href='?action=yamlpser'>Fabrique les fichiers gans.yaml/pser à partir de la moisson</a></li>\n";
     echo "<li><a href='?action=yaml'>Affiche le Yaml depuis la moisson</a></li>\n";
     echo "<li><a href='?action=list'>Liste les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
@@ -67,6 +67,8 @@ else {
     echo "usage: hgan.php {action}\n";
     echo "{action}\n";
     echo "  - harvest - Moissonne les Gan\n";
+    echo "  - yaml - Affiche le Yaml depuis la moisson\n";
+    echo "  - yamlpser - Fabrique les fichiers gans.yaml/pser à partir de la moisson\n";
     die();
   }
   else
@@ -165,7 +167,8 @@ if ($action == 'harvest') {
 }
 
 if ($action == 'yaml') {
-  echo "<pre>\n";
+  if (php_sapi_name() <> 'cli') 
+    echo "<pre>\n";
   Gan::build();
   //print_r(Gan::$gans);
   echo Yaml::dump(Gan::allAsArray(), 4, 2);

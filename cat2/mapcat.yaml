@@ -1,10 +1,10 @@
 title: 'Catalogue des cartes Shom'
 description:
-  - 'Import du fichier V1 le 2020-12-19T05:21:08+01:00'
+  - 'Import du fichier V1 le 2020-12-21T10:05:48+01:00'
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
-created: '2020-12-19T05:21:08+01:00'
-modified: '2020-12-19T05:21:08+01:00'
+created: '2020-12-21T10:05:48+01:00'
+modified: '2020-12-21T10:05:48+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -1475,6 +1475,23 @@ maps:
       westlimit: -2.3616666666667
       northlimit: 47.293
       eastlimit: -2.144
+  FR6808:
+    groupTitle: 'Océan Atlantique Sud'
+    title: 'Océan Atlantique Sud - Partie Est'
+    edition: 'Édition n° 3 - 2015'
+    mapsFrance: {  }
+    modified: '2019-10-02+02:00'
+    lastUpdate: 4
+    scaleDenominator: 10.000.000
+    bboxDM:
+      SW: '57°10,00''S - 027°00,00''W'
+      NE: '18°08,89''N - 029°35,57''E'
+    spatial:
+      southlimit: -57.166666666667
+      westlimit: -27
+      northlimit: 18.148166666667
+      eastlimit: 29.592833333333
+    references: 'Fac similé carte GB n°4021 publiée en 1975 (édition septembre 2015).'
   FR6809:
     groupTitle: 'Océan Indien'
     title: 'Océan Indien - Partie Sud'
@@ -1681,6 +1698,28 @@ maps:
       westlimit: -149.60616666667
       northlimit: -17.681
       eastlimit: -149.37716666667
+  FR6835:
+    title: 'Océan Pacifique Nord - Partie Est'
+    edition: 'Édition n° 2 - 1997'
+    mapsFrance: {  }
+    modified: '2016-10-19+02:00'
+    lastUpdate: 66
+    scaleDenominator: 7.330.000
+    bboxDM:
+      SW: '15°00,00''N - 173°05,00''W'
+      NE: '71°30,00''N - 116°30,00''W'
+    spatial:
+      southlimit: 15
+      westlimit: -173.08333333333
+      northlimit: 71.5
+      eastlimit: -116.5
+    references: 'Fac similé carte US n°50 publiée en 1977 (édition juillet 1994).'
+    hasPart:
+      -
+        title: 'Mer de Béring'
+        scaleDenominator: 7.330.000
+        bboxDM: { SW: '49°00,00''N - 170°15,00''E', NE: '65°00,00''N - 169°20,00''W' }
+        spatial: { southlimit: 49, westlimit: 170.25, northlimit: 65, eastlimit: -169.33333333333 }
   FR6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
@@ -2845,6 +2884,29 @@ maps:
       westlimit: 54.693333333333
       northlimit: -20.513333333333
       eastlimit: 56.543333333333
+  FR7037:
+    groupTitle: 'Côte Sud-Est d''Angleterre'
+    title: 'De Dover à North Foreland'
+    edition: 'Édition n° 10 - 2016'
+    mapsFrance: {  }
+    modified: '2019-10-09+02:00'
+    lastUpdate: 18
+    scaleDenominator: '37.500'
+    bboxDM:
+      SW: '51°05,23''N - 001°17,90''E'
+      NE: '51°27,48''N - 001°38,45''E'
+    spatial:
+      southlimit: 51.087166666667
+      westlimit: 1.2983333333333
+      northlimit: 51.458
+      eastlimit: 1.6408333333333
+    references: 'Fac similé Carte GB n°1828 publiée en 1982 (édition mai 2019)'
+    hasPart:
+      -
+        title: 'A - Ramsgate'
+        scaleDenominator: '5.000'
+        bboxDM: { SW: '51°19,42''N - 001°24,42''E', NE: '51°20,03''N - 001°25,52''E' }
+        spatial: { southlimit: 51.323666666667, westlimit: 1.407, northlimit: 51.333833333333, eastlimit: 1.4253333333333 }
   FR7040:
     title: 'La Manche'
     edition: 'Édition n° 4 - 2003'
@@ -4879,6 +4941,23 @@ maps:
       northlimit: 48.9305
       eastlimit: !!float 0
     references: 'Fac similé ES 4A'
+  FR7212:
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'De Cabo Finisterre à Casablanca (Dâr el Beïda)'
+    edition: 'Édition n° 2 - 2007'
+    mapsFrance: {  }
+    modified: '2019-11-06+01:00'
+    lastUpdate: 52
+    scaleDenominator: 1.000.000
+    bboxDM:
+      SW: '33°30,00''N - 014°00,00''W'
+      NE: '43°30,00''N - 005°15,00''W'
+    spatial:
+      southlimit: 33.5
+      westlimit: -14
+      northlimit: 43.5
+      eastlimit: -5.25
+    references: 'Fac similé Carte PT n° 21101 publiée en 1980 (édition avril 2002).'
   FR7213:
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
@@ -8615,6 +8694,35 @@ maps:
         scaleDenominator: '15.000'
         bboxDM: { SW: '18°34,40''N - 063°26,27''W', NE: '18°35,86''N - 063°24,99''W' }
         spatial: { southlimit: 18.573333333333, westlimit: -63.437833333333, northlimit: 18.597666666667, eastlimit: -63.4165 }
+  FR7622:
+    groupTitle: 'Petites Antilles'
+    title: 'Ports de Saint Lucia'
+    edition: 'Édition n° 3 - 2016'
+    mapsFrance: {  }
+    modified: '2016-11-23+01:00'
+    lastUpdate: 0
+    references: 'Fac similé carte GB n°499 publiée en 1990 (édition mai 2016).'
+    hasPart:
+      -
+        title: 'A - Port Castries'
+        scaleDenominator: '5.000'
+        bboxDM: { SW: '14°00,31''N - 061°00,86''W', NE: '14°01,81''N - 060°59,06''W' }
+        spatial: { southlimit: 14.005166666667, westlimit: -61.014333333333, northlimit: 14.030166666667, eastlimit: -60.984333333333 }
+      -
+        title: 'B - Vieux Fort'
+        scaleDenominator: '20.000'
+        bboxDM: { SW: '13°40,61''N - 060°59,22''W', NE: '13°45,06''N - 060°55,56''W' }
+        spatial: { southlimit: 13.676833333333, westlimit: -60.987, northlimit: 13.751, eastlimit: -60.926 }
+      -
+        title: 'C - Grand Cul de Sac Bay'
+        scaleDenominator: '10.000'
+        bboxDM: { SW: '13°58,60''N - 061°02,16''W', NE: '13°59,79''N - 061°00,44''W' }
+        spatial: { southlimit: 13.976666666667, westlimit: -61.036, northlimit: 13.9965, eastlimit: -61.007333333333 }
+      -
+        title: 'D - Marigot Harbour'
+        scaleDenominator: '5.000'
+        bboxDM: { SW: '13°57,76''N - 061°02,02''W', NE: '13°58,24''N - 061°01,17''W' }
+        spatial: { southlimit: 13.962666666667, westlimit: -61.033666666667, northlimit: 13.970666666667, eastlimit: -61.0195 }
   FR7625:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
@@ -8790,6 +8898,23 @@ maps:
       northlimit: 44.3
       eastlimit: -1.2666666666667
     references: 'Fac similé carte ES n°39A publiée en 2008.'
+  FR7661:
+    groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
+    title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
+    edition: 'Édition n° 2 - 2018'
+    mapsFrance: {  }
+    modified: '2019-01-02+01:00'
+    lastUpdate: 3
+    scaleDenominator: '425.000'
+    bboxDM:
+      SW: '38°36,90''N - 000°30,00''W'
+      NE: '41°23,30''N - 004°50,00''E'
+    spatial:
+      southlimit: 38.615
+      westlimit: -0.5
+      northlimit: 41.388333333333
+      eastlimit: 4.8333333333333
+    references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
   FR7663:
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'

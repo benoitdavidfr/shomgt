@@ -61,8 +61,7 @@ doc: |
     - voir quel contrôle d'accès mettre en place / a priori contrôler les mises à jour
     - définir le process itératif de mise à jour
       - mise à jour du catalogue après la mise à jour des cartes, notamment les champs modified et lastUpdate
-    - voir l'utilisation externe du catalogue, notamment dans ../updt
-    - documenter les dépendances entre modules
+    - finaliser catapi.inc.php
     - mise à jour du catalogue sur github
     - documentation github
 journal: |

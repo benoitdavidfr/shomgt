@@ -217,9 +217,12 @@ class Wfs {
   }
   
   // fabrication d'une tuile des étiquettes pour l'affichage de la carte Leaflet
-  static function maketile(int $sdmin, ?int $sdmax, EBox $wembox, array $options=[]) {
+  static function maketile(array $criteria, EBox $wembox, array $options=[]) {
     if (self::$verbose)
-      echo "Wfs::maketile(lyrname=$sdmin-$sdmax, wembox=$wembox, options=",json_encode($options),")<br>\n";
+      echo "Wfs::maketile(criteria=",json_encode($criteria),", wembox=$wembox, options=",json_encode($options),")<br>\n";
+    $sdmin = $criteria['sdmin'] ?? null;
+    $sdmax = $criteria['sdmax'] ?? null;
+    $mapid = $criteria['mapid'] ?? null;
     $width = $options['width'] ?? 256;
     $height = $options['height'] ?? 256;
     // fabrication de l'image

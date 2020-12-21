@@ -41,8 +41,9 @@ class Territoire { // définit la doctrine d'importance des différents territoi
   // ordre de priorité de mise à jour
   // FX en premier car c'est là où j'ai constaté des clients
   // DOM ensuite en raison de la présence des services déconcentrés de l'Etat
-  // TOM ensuite en raison la responsabilité de l'Etat
+  // TOM ensuite en raison de la responsabilité de l'Etat
   // COM enfin en raison de l'autonomie de ces collectivités
+  // aucun territoire couvert
   static function coeff(array $mapsFrance): float {
     $statuts=[]; // [statut => 1]
     foreach ($mapsFrance as $terr) {
@@ -51,8 +52,9 @@ class Territoire { // définit la doctrine d'importance des différents territoi
     if (isset($statuts[''])) return 1;
     if (isset($statuts['FX'])) return 1;
     if (isset($statuts['DOM'])) return 1/2;
-    if (isset($statuts['COM'])) return 1/4;
     if (isset($statuts['TOM'])) return 1/2;
+    if (isset($statuts['COM'])) return 1/4;
+    return 1/4; // aucun territoire couvert
   }
 };
 
@@ -203,8 +205,7 @@ class Gan {
     }
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     //print_r($errors);
-    Mapcat::init();
-    foreach (Mapcat::$maps as $mapid => $map) {
+    foreach (Mapcat::maps() as $mapid => $map) {
       $mapa = $map->asArray();
       if (isset($mapa['modified']) && !$map->obsolete()) {
         $ganWeek = ganWeek($mapa['modified']);
