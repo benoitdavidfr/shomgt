@@ -8,9 +8,9 @@ doc: |
 journal: |
   20/12/2020:
     créations
-includes: [mapcat.inc.php]
+includes: [mapcat.php]
 */
-require_once(__DIR__.'/mapcat.inc.php');
+require_once(__DIR__.'/mapcat.php');
 
 use Symfony\Component\Yaml\Yaml;
 

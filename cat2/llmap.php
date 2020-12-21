@@ -15,9 +15,9 @@ journal: |
   11/12/2018:
     nouvelle version repartant de shomgtcatmap.php
 */
-$lat0 = (isset($_GET['lat']) ? $_GET['lat'] : 46.5);
-$lon0 = (isset($_GET['lon']) ? $_GET['lon'] : 3);
-$zoom0 = (isset($_GET['zoom']) ? $_GET['zoom'] : 6);
+$lat0 = $_GET['lat'] ?? 46.5;
+$lon0 = $_GET['lon'] ?? 3;
+$zoom0 = $_GET['zoom'] ?? 6;
 //echo "<pre>_SERVER="; print_r($_SERVER); die();
 $request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
   : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
@@ -91,7 +91,7 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
   // affiche une carte particulière en orange
   if ($mapid = ($_GET['mapid'] ?? null)) {
     echo "    \"$mapid\" : L.layerGroup([\n",
-         "        new L.GeoJSON.AJAX(shomgtcaturl+'/geojson.php?id=$mapid', {\n",
+         "        new L.GeoJSON.AJAX(shomgtcaturl+'/mapcat.php/$mapid?f=geojson', {\n",
          "          style: {color:'orange'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature\n",
          "        }),\n",
          "        new L.TileLayer(\n",
@@ -112,7 +112,7 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
     $sdvmax = $sdmax ? $sds[$sdmax] : '';
     $sdvmin = $sds[$sdmin];
     echo "    \"$title\" : L.layerGroup([\n",
-         "        new L.GeoJSON.AJAX(shomgtcaturl+'/geojson.php?sdmax=$sdvmax&sdmin=$sdvmin', {\n",
+         "        new L.GeoJSON.AJAX(shomgtcaturl+'/mapcat.php?f=geojson&sdmax=$sdvmax&sdmin=$sdvmin', {\n",
          "          style: styleOfMap, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature\n",
          "        }),\n",
          "        new L.TileLayer(\n",

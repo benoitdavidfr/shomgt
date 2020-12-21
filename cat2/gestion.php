@@ -12,12 +12,12 @@ doc: |
 journal: |
   14/12/2020:
     création
-includes: ['../lib/gegeom.inc.php', wfs.php, mapcat.inc.php]
+includes: ['../lib/gegeom.inc.php', wfs.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/wfs.php';
-require_once __DIR__.'/mapcat.inc.php';
+require_once __DIR__.'/mapcat.php';
 
 use Symfony\Component\Yaml\Yaml;
 

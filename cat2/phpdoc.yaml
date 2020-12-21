@@ -82,16 +82,14 @@ journal: |
     
 phpScripts:
   - /geoapi/shomgt/cat2/index.php
+  - /geoapi/shomgt/cat2/mapcat.php
   - /geoapi/shomgt/cat2/llmap.php
-  - /geoapi/shomgt/cat2/geojson.php
   - /geoapi/shomgt/cat2/gestion.php
-  - /geoapi/shomgt/cat2/hgan.php
+  - /geoapi/shomgt/cat2/gan.php
   - /geoapi/shomgt/cat2/tilenum.php
   - /geoapi/shomgt/cat2/wfs.php
 phpIncludes:
   - /geoapi/shomgt/cat2/catapi.inc.php
-  - /geoapi/shomgt/cat2/mapcat.inc.php
-  - /geoapi/shomgt/cat2/gan.inc.php
   - /geoapi/shomgt/cat2/france.inc.php
   - /geoapi/shomgt/cat2/gjbox.inc.php
   - /geoapi/shomgt/cat2/pos.inc.php
