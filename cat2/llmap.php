@@ -84,13 +84,32 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
     }
   }
   var overlays = {
-    "ZEE" : new L.GeoJSON.AJAX(shomgtcaturl+'/france.geojson', {
+    "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgtcaturl+'/france.geojson', {
       style: {color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature
     }),
+    'limitesMartimes+ZEE' : L.layerGroup([
+      new L.GeoJSON.AJAX( // agreedmaritimeboundary
+        shomgtcaturl+'/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary/items?f=json',
+        {style: {color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature}
+      ),
+      new L.GeoJSON.AJAX( // nonagreedmaritimeboundary
+        shomgtcaturl+'/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary/items?f=json',
+        {style: {color: 'blue', dashArray: '3,6'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature}
+      ),
+      new L.GeoJSON.AJAX(
+        shomgtcaturl+'/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone/items?f=json',
+        {style: {color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature}
+      )
+    ]),
+    "PF continentale" : new L.GeoJSON.AJAX(
+      shomgtcaturl+'/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_continentalshelf/items?f=json',
+      {style: {color: 'RoyalBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature}
+    ),
+    
 <?php
   // affiche une carte particulière en orange
   if ($mapid = ($_GET['mapid'] ?? null)) {
-    echo "    \"$mapid\" : L.layerGroup([\n",
+    echo "    '$mapid' : L.layerGroup([\n",
          "        new L.GeoJSON.AJAX(shomgtcaturl+'/mapcat.php/$mapid?f=geojson', {\n",
          "          style: {color:'orange'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature\n",
          "        }),\n",

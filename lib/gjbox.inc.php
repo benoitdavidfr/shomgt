@@ -118,7 +118,7 @@ class GjBox {
     }
   }
   
-  function asArray(): array { return !$this->ws ? [] : [$this->ws[0], $this->ws[1], $this->en[0], $this->en[1]]; }
+  function asArray(): array { return $this->ws ? [$this->ws[0], $this->ws[1], $this->en[0], $this->en[1]] : []; }
   function __toString(): string { return json_encode($this->asArray()); }
   
   private static function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier, simplifie le Yaml
@@ -358,7 +358,7 @@ class GjBox {
 };
 
 
-if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Tests unitaires de la classe 
 
 
 echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gjbox</title></head><body>\n";

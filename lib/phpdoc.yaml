@@ -12,5 +12,6 @@ phpIncludes:
   - /geoapi/shomgt/lib/zoom.inc.php
   - /geoapi/shomgt/lib/gegeom.inc.php
   - /geoapi/shomgt/lib/coordsys.inc.php
+  - /geoapi/shomgt/lib/feature.inc.php
   - /geoapi/shomgt/lib/mysql.inc.php
 htmlFiles:

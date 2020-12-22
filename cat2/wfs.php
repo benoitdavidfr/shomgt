@@ -8,8 +8,7 @@ doc: |
     1) la classe Wfs avec notamment
       a) la méthode statique Wfs::dl() qui moissonne le WFS du Shom et retourne un array de Feature
       b) la méthode statique maketile() utilisée pour générer la couche d'étiquettes pour la carte Leaflet
-    2) la classe Feature, objets retournés par Wfs
-    3) comme script la restitution des élts du WFS comme FaetureCollection avec un filtre sur sd
+    2) le script d'affichage comme FeatureCollection des features du WFS avec un filtre sur sd utilisant les params sdmin et sdmax
 journal: |
   17/12/2020:
     export de la définition de GjBox
@@ -18,6 +17,7 @@ journal: |
 includes:
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
+  - ../lib/feature.inc.php
   - wfsserver.inc.php
   - wfsjson.inc.php
   - france.inc.php
@@ -25,6 +25,7 @@ includes:
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
+require_once __DIR__.'/../lib/feature.inc.php';
 require_once __DIR__.'/wfsserver.inc.php';
 require_once __DIR__.'/wfsjson.inc.php';
 require_once __DIR__.'/france.inc.php';
@@ -38,87 +39,30 @@ function ajouteSepMilliers(int $val): string { // formatte un entier positif en 
   else
     return sprintf('%s.%03d', ajouteSepMilliers($val/1e3), $val % 1e3);
 }
-if (0) { // Test unitaire
-  foreach ([12, 3456, 123456, 1234567, 12345678, 500000, 2e7, 1e10] as $val)
+if (0) { // Test unitaire de ajouteSepMilliers() 
+  echo "<pre>";
+  foreach ([12, 3456, 123456, 1234567, 12345678, 12999999.99, 500000, 2e7, 1e10] as $val)
     echo "$val -> ",ajouteSepMilliers($val),"\n";
   die();
 }
 
-
 /*PhpDoc: classes
-name: class Feature
-title: class Feature - imlémente un Feature GeoJSON, utilisé dans le retour du WFS
+name: Wfs
+title: "class Wfs"
 methods:
-doc: |
-  Seule la géométrie est obligatoire
 */
-class Feature {
-  public ?string $id;
-  public ?GjBox $bbox;
-  public array $properties;
-  public Geometry $geometry;
-  
-  function __construct(Geometry $geometry, ?string $id=null, array $properties=[], ?GjBox $bbox=null) {
-    $this->id = $id;
-    $this->bbox = $bbox;
-    $this->properties = $properties;
-    $this->geometry = $geometry;
-  }
-  
-  function geojson() { return ['type'=>'Feature'] + $this->asArray(); }
-  
-  function asArray(): array {
-    return
-      (($this->id !== null) ? ['id'=> $this->id] : [])
-    + ($this->bbox ? ['bbox'=> $this->bbox->asArray()] : [])
-    + ($this->properties ? ['properties'=> $this->properties] : [])
-    + ['geometry'=> $this->geometry->asArray()]
-    ;
-  }
-  
-  // calcule une boite en coord. WebMercator
-  // si le feature est à cheval sur l'antiméridien alors retourne le bbox à l'West de l'anti-méridien
-  function wembox(): EBox {
-    if (!$this->bbox)
-      $this->bbox = GjBox::ofGeometry($this->geometry);
-    $gboxes = $this->bbox->asGBoxes();
-    return $gboxes[0]->proj('WebMercator');
-  }
-  
-  /*PhpDoc: methods
-  name: drawLabel
-  title: "function drawLabel($image, EBox $bbox, int $width, int $height): bool - dessine dans l'image GD le numéro de la carte"
-  doc: |
-    $bbox est un EBox en WebMercator délimitant la tuile définie par l'image
-  */
-  function drawLabel($image, EBox $bbox, int $width, int $height): bool {
-    //echo "title= ",$this->title,"<br>\n";
-    $wembox = $this->wembox();
-    if (!$wembox->intersects($bbox)) {
-      return false;
-    }
-    $x = round(($wembox->west() - $bbox->west()) / $bbox->dx() * $width);
-    $y = round(- ($wembox->north() - $bbox->north()) / $bbox->dy() * $height);
-    //echo "x=$x, y=$y<br>\n"; die();
-    $font = 3;
-    $bg_color = imagecolorallocate($image, 255, 255, 0);
-    $num = $this->properties['num'];
-    $dx = strlen($num) * imagefontwidth($font);
-    $dy = imagefontheight($font);
-    imagefilledrectangle($image, $x+2, $y, $x+$dx, $y+$dy, $bg_color);
-    $text_color = imagecolorallocate($image, 255, 0, 0);
-    // bool imagestring ( resource $image , int $font , int $x , int $y , string $string , int $color )
-    imagestring($image, $font, $x+2, $y, $num, $text_color);
-    //die();
-    return true;
-  }
-};
-
 class Wfs {
   static $verbose = false;
+  // des types définis par le WFS du Shom
+  const TYPENAMES = [
+    'CARTES_MARINES_GRILLE:grille_geotiff_30', // cartes echelle > 1/30K
+    'CARTES_MARINES_GRILLE:grille_geotiff_30_300', // cartes aux échelles entre 1/30K et 1/300K
+    'CARTES_MARINES_GRILLE:grille_geotiff_300_800', // cartes aux échelles entre 1/300K et 1/800K
+    'CARTES_MARINES_GRILLE:grille_geotiff_800', // carte échelle < 1/800K
+  ];
   
-  /*PhpDoc: classes
-  name: methods
+  /*PhpDoc: methods
+  name: dl
   title: "static function dl(): array - lecture du wfs Shom des fantomes des cartes GeoTiff"
   doc: |
     retourne un ensemble de features chacun identifié par un id de la forme "FR{num}"
@@ -132,18 +76,11 @@ class Wfs {
       return unserialize(file_get_contents(__DIR__.'/wfsdl.pser'));
   
     //try {
-      $typenames = [
-        'CARTES_MARINES_GRILLE:grille_geotiff_30', // cartes echelle > 1/30K
-        'CARTES_MARINES_GRILLE:grille_geotiff_30_300', // cartes aux échelles entre 1/30K et 1/300K
-        'CARTES_MARINES_GRILLE:grille_geotiff_300_800', // cartes aux échelles entre 1/300K et 1/800K
-        'CARTES_MARINES_GRILLE:grille_geotiff_800', // carte échelle < 1/800K
-      ];
-
       $yaml = Yaml::parseFile(__DIR__.'/shomwfs.yaml');
       $shomwfs = new WfsServerJson($yaml, 'shomwfs');
 
       $wfs = [];
-      foreach ($typenames as $typename) {
+      foreach (self::TYPENAMES as $typename) {
         $numberMatched = $shomwfs->getNumberMatched($typename);
         $count = 100;
         for ($startindex = 0; $startindex < $numberMatched; $startindex += $count) {
@@ -256,7 +193,7 @@ class Wfs {
 };
 
 
-if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe MapCat
 // si id est défini alors affiche le feature id, sinon affiche les features avec un filtre sur sdmin et sdmax
 // L'affichage des faetures est utilise par la carte Leaflet
 
