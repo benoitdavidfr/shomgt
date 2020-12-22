@@ -422,15 +422,13 @@ class MapCat {
     self::storeAsPser();
   }
   
-  private static function init() { // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
+  // initialise en mémoire le catalogue, génère une erreur si le yaml est plus récent que le pser !
+  private static function init() {
     if (!file_exists(self::PATH_PSER) && !file_exists(self::PATH_YAML))
       throw new Exception("Erreur dans MapCat::init() : les fichiers mapcat.yaml et mapcat.pser n'existent ni l'un ni l'autre");
     elseif (!file_exists(self::PATH_PSER)
-     || (file_exists(self::PATH_YAML) && (filemtime(self::PATH_PSER) < filemtime(self::PATH_YAML)))) {
-      echo "<b>Erreur: le fichier mapcat.yaml est plus récent que le pser ! ".
-         "Soit effaces le yaml, soit charges le pour écraser le pser !</b>\n";
-      die("Erreur dans MapCat::init()");
-    }
+     || (file_exists(self::PATH_YAML) && (filemtime(self::PATH_PSER) < filemtime(self::PATH_YAML))))
+       throw new Exception("Erreur dans MapCat::init() : le fichier mapcat.yaml est plus récent que le pser");
     else { // le phpser existe et est plus récent que le Yaml alors initialisation à partir du phpser
       $pser = unserialize(file_get_contents(self::PATH_PSER));
       self::$catTitle = $pser['title'];
@@ -461,11 +459,7 @@ class MapCat {
       return [];
   }
   
-  static function mapById(string $mapid): ?MapCat {
-    if (!self::$maps)
-      self::init();
-    return self::$maps[$mapid] ?? null;
-  }
+  static function mapById(string $mapid): ?MapCat { return self::maps()[$mapid] ?? null; }
   
   static function allAsArray(): array { // génère le catalogue comme array Php
     $maps = self::maps();
@@ -673,13 +667,13 @@ if ($a == 'rewriteYaml') { // réécrit le Yaml à partir du pser, et récérit 
 if ($a) {
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
   echo "mapcat.php - Actions proposées:<ul>\n";
-  echo "<li><a href='?a=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a>\n";
-  echo "<li><a href='?a=synchroShomGt'>Prend en compte les modifications apportées au portefeuille ShomGt</a>\n";
-  echo "<li><a href='?f=yaml'>Affiche le catalogue en Yaml</a>\n";
-  echo "<li><a href='?a=loadYaml'>Recharge le catalogue à partir du Yaml</a>\n";
-  echo "<li><a href='?f=geojson'>Affiche le catalogue en GeoJSON</a>\n";
-  echo "<li><a href='?f=html'>Affiche le catalogue en Html</a>\n";
-  echo "<li><a href='?f=map'>Affiche le catalogue en carte</a>\n";
+  echo "<li><a href='?a=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a></li>\n";
+  echo "<li><a href='?a=synchroShomGt'>Prend en compte les modifications apportées au portefeuille ShomGt</a></li>\n";
+  echo "<li><a href='?a=loadYaml'>Recharge le catalogue à partir du Yaml</a></li>\n";
+  echo "<li>Affiche le catalogue <a href='?f=yaml'>en Yaml</a>, ";
+  echo "<a href='?f=geojson'>en GeoJSON</a>, ";
+  echo "<a href='?f=html'>en Html</a>, ";
+  echo "<a href='?f=map'>comme carte LL</a></li>\n";
   echo "</ul>\n";
   die();
 }
@@ -715,25 +709,32 @@ if ($f == 'html') { // affichage html
     echo "</tr></table>\n";
   }
   else { // tout le catalogue
-    echo "<h2>Catalogue des cartes</h2>\n";
-    echo "<a href='?f=map'>en carte LL</a>, <a href='?f=yaml'>Yaml</a>, <a href='?f=geojson'>GeoJSON</a>, ",
-      "<a href='?a=menu'>?</a><br>\n";
-    echo "<table border=1><th>",implode('</th><th>', ['id/yml','title/map','scaleDen','edition','mapsFrance']),"</th>\n";
-    foreach (MapCat::maps() as $mapid => $map) {
-      $mapa = $map->asArray();
-      $llp = llmapParams($map);
-      $llmapurl = sprintf('llmap.php?lat=%.2f&amp;lon=%.2f&amp;zoom=%d&amp;mapid=%s', $llp['lat'], $llp['lon'], $llp['zoom'], $mapid);
-      $br = (strlen($mapa['groupTitle'] ?? '') + strlen($mapa['title']) > 90) ? '<br>' : ' - ';
-      //echo "<tr><td colspan=5><pre>"; print_r($mapa); echo "</td></tr>\n";
-      echo "<tr><td><a href='$_SERVER[SCRIPT_NAME]/$mapid'>$mapid</a></td>",
-        "<td>",isset($mapa['groupTitle']) ? "$mapa[groupTitle]$br" : '',"<a href='$llmapurl'>$mapa[title]</a></td>",
-        //"<td>",strlen($mapa['groupTitle'] ?? '')+strlen($mapa['title']),"</td>",
-        "<td align='right'>",$mapa['scaleDenominator'] ?? '<i>'.$mapa['hasPart'][0]['scaleDenominator'].'</i>',"</td>",
-        "<td>$mapa[edition]</td>",
-        "<td>",implode(', ', $mapa['mapsFrance']),"</td>",
-        "</tr>\n";
+    try {
+      $maps = MapCat::maps();
+      echo "<h2>Catalogue des cartes</h2>\n";
+      echo "En <a href='?f=yaml'>Yaml</a>, en <a href='?f=geojson'>GeoJSON</a>, comme <a href='?f=map'>carte LL</a>, ",
+        "<a href='?a=menu'>autres actions</a>.<br>\n";
+      echo "<table border=1><th>",implode('</th><th>', ['id/yml','title/map','scaleDen','edition','mapsFrance']),"</th>\n";
+      foreach ($maps as $mapid => $map) {
+        $mapa = $map->asArray();
+        $llp = llmapParams($map);
+        $llmapurl = sprintf('llmap.php?lat=%.2f&amp;lon=%.2f&amp;zoom=%d&amp;mapid=%s', $llp['lat'], $llp['lon'], $llp['zoom'], $mapid);
+        $br = (strlen($mapa['groupTitle'] ?? '') + strlen($mapa['title']) > 90) ? '<br>' : ' - ';
+        //echo "<tr><td colspan=5><pre>"; print_r($mapa); echo "</td></tr>\n";
+        echo "<tr><td><a href='$_SERVER[SCRIPT_NAME]/$mapid'>$mapid</a></td>",
+          "<td>",isset($mapa['groupTitle']) ? "$mapa[groupTitle]$br" : '',"<a href='$llmapurl'>$mapa[title]</a></td>",
+          //"<td>",strlen($mapa['groupTitle'] ?? '')+strlen($mapa['title']),"</td>",
+          "<td align='right'>",$mapa['scaleDenominator'] ?? '<i>'.$mapa['hasPart'][0]['scaleDenominator'].'</i>',"</td>",
+          "<td>$mapa[edition]</td>",
+          "<td>",implode(', ', $mapa['mapsFrance']),"</td>",
+          "</tr>\n";
+      }
+      echo "</table>\n";
+    } catch (Exception $e) {
+      echo $e->getMessage(),"<br>\n";
+      echo "Soit <a href='?a=loadYaml'>charger le fichier Yaml pour écraser le pser</a>, ",
+           "soit l'<a href='rewriteYaml'>écraser à partir du fichier pser</a> !<br>\n";
     }
-    echo "</table>\n";
   }
   die();
 }

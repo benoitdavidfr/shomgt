@@ -5,7 +5,7 @@ description:
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-22T11:21:00+01:00'
-modified: '2020-12-22T13:08:32+01:00'
+modified: '2020-12-22T13:52:41+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
