@@ -15,7 +15,7 @@ doc: |
   Ici, il est géré comme spécifié par GeoJSON, cad avec $westlimit > $eastlimit
 
   A faire:
-    - Ajouter la resynchro avec les nouvelles cartes
+    - intégrer la vérification du schéma
 journal: |
   17/12/2020:
     - remplacement de BBoxDd par GjBox 
@@ -26,11 +26,12 @@ journal: |
     - réalisation d'une carte de vérification du catalogue
   13/12/2020:
     - passage en V2
-includes: [../lib/gegeom.inc.php, ../lib/zoom.inc.php, ../updt/updtapi.inc.php, gjbox.inc.php, france.inc.php]
+includes: [../lib/gegeom.inc.php, ../lib/zoom.inc.php, ../lib/schema/jsonschema.inc.php, ../updt/updtapi.inc.php, gjbox.inc.php, france.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';
+require_once __DIR__.'/../lib/schema/jsonschema.inc.php';
 require_once __DIR__.'/../updt/updtapi.inc.php';
 require_once __DIR__.'/gjbox.inc.php';
 require_once __DIR__.'/france.inc.php';
@@ -162,12 +163,13 @@ doc: |
   Les fichiers mapcat.yaml et mapcat.pser contiennent le catalogue des cartes y c. la date et l'heure d'actualisation.
   Le fichier mapcat.pser accélère la lecture.
   
-  Après un traitement modifiant le contenu du catalogue, il est nécessaire de réécrire les fichier yaml ainsi que le fichier pser.
+  Après un traitement modifiant le contenu du catalogue, il est nécessaire de réécrire les fichiers yaml et pser.
   La propriété statique $catUpdated trace les mises à jour, elle vaut toujours false après le chargement des données ;
   si elle vaut true cela signfie que les données doivent être enregistrées.
 
   Il existe des cartes sans espace principal (exemple 7436 - Approches et Port de Bastia - Ports d'Ajaccio et de Propriano)
   uniquement constituées de cartouches.
+  Ainsi, $bbox et $scaleDenominator peuvent être nuls à condition qu'il existe au moins un hasPart
 */
 class MapCat {
   const PATH = __DIR__.'/mapcat.'; // chemin des fichiers stockant le catalogue en pser ou en yaml, lui ajouter l'extension
@@ -200,10 +202,6 @@ class MapCat {
   protected ?string $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
   protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
   
-  // s'il n'y a pas d'espace principal, je prends arbitrairement l'échelle du premier cartouche
-  function scaleDenominator(): string { return $this->scaleDenominator ?? $this->hasPart[0]->scaleDenominator(); }
-  // Génération du dénom. d'échelle comme entier
-  function scaleDenAsInt(): int { return (int)str_replace('.', '', $this->scaleDenominator()); }
   // retourne la propriété
   function num(): string { return $this->num; }
   function edition(): string { return $this->edition; }
@@ -220,9 +218,8 @@ class MapCat {
     $this->modified = $map['modified'] ?? null;
     $this->lastUpdate = isset($map['lastUpdate']) ? intval($map['lastUpdate']) : null;
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
-    $this->bbox = isset($map['bboxDM']) ?
-        new BBoxDM($map['bboxDM']) :
-        (isset($map['bboxLonLatFromWfs']) ? new GjBox($map['bboxLonLatFromWfs']) : null);
+    $this->bbox = isset($map['bboxDM']) ? new BBoxDM($map['bboxDM'])
+      : (isset($map['bboxLonLatFromWfs']) ? new GjBox($map['bboxLonLatFromWfs']) : null);
     $this->replaces = $map['replaces'] ?? null;
     $this->references = $map['references'] ?? null;
     $this->noteShom = $map['noteShom'] ?? $map['note'] ?? null;
@@ -230,14 +227,32 @@ class MapCat {
     foreach ($map['hasPart'] ?? $map['boxes'] ?? [] as $mapPart) {
       $this->hasPart[] = new MapPart($mapPart);
     }
-   
+    
+    if ((!$this->bbox || !$this->scaleDenominator) && !$this->hasPart)
+      throw new Exception("Erreur dans la création de $mapid, (bbox ou scaleDenominator) et hasPart non définis");
     if (isset($map['mapsFrance']))
-      $this->mapsFrenchAreas = $map['mapsFrance'];
+      $this->mapsFrance = $map['mapsFrance'];
     else { // si non défini alors il est calculé et le catalogue est marqué pour mise à jour
       $this->mapsFrance = France::interet($mapid, $this->scaleDenominator(), $this->geometry());
       self::$catUpdated = true;
     }
   }
+
+  // s'il n'y a pas d'espace principal, le plus grand des dénominateurs d'échelle des cartouches
+  function scaleDenominator(): string {
+    if ($this->scaleDenominator)
+      return $this->scaleDenominator;
+    $maxsd = null;
+    foreach ($this->hasPart as $part) {
+      $psd = str_replace('.', '', $part->scaleDenominator());
+      if (!$maxsd || ($psd > str_replace('.', '', $maxsd))
+        $maxsd = $part->scaleDenominator();
+    }
+    return $maxsd;
+  }
+  
+  // Génération du dénom. d'échelle comme entier
+  function scaleDenAsInt(): int { return (int)str_replace('.', '', $this->scaleDenominator()); }
 
   // retourne la géométrie de l'espace principal comme Polygone s'il existe, sinon des cartouches comme Multi-Polygone
   function geometry(): Geometry {
@@ -270,7 +285,7 @@ class MapCat {
       //echo Yaml::dump([$mapid => $map]);
       $map = new self($mapid, $map);
       if ($map->existsInShomgGt()) {
-        $map->addModifiedandLastUpdate();
+        $map->updateModifiedAndLastUpdate();
         self::$maps[$mapid] = $map;
       }
       elseif ($map->mapsFrance)
@@ -288,14 +303,13 @@ class MapCat {
     echo "enregistrement du catalogue en pser et en Yaml\n";
   }
   
-  function existsInShomgGt(): string { // Teste si une carte existe dans le portefeuille ShomGt, retourne le chemin du répertoire dans current
+  function existsInShomgGt(): string { // Si une carte existe dans ShomGt alors retourne son répertoire dans current, sinon '' 
     $dirpath = __DIR__.'/../../../shomgeotiff/current/'.$this->num;
     return file_exists($dirpath) ? $dirpath : '';
   }
   
-  // ajout des champ modified et lastUpdate aux cartes présentes dans ShomGt après importation V1
-  // par lecture des MD ISO d'un des GéoTiff correspondant à chaque carte
-  private function addModifiedandLastUpdate(): bool {
+  // met à jour les champ modified et lastUpdate des cartes présentes dans ShomGt par lecture des MD ISO d'un des GéoTiff à la carte
+  private function updateModifiedAndLastUpdate(): bool {
     if (in_array($this->num, [7330, 7344, 7360, 8101, 8502])) // 5 cartes présentes sans MDISO
       return false;
     $num = $this->num;
@@ -335,15 +349,55 @@ class MapCat {
       throw new Exception("Erreur dans MapCat::loadYaml() : le fichier mapcat.pser est plus récent que le fichier Yaml ! "
         ."Soit effacer le pser pour charger le Yaml soit effacer le Yaml !");
     $yaml = Yaml::parseFile(self::PATH_YAML);
-    //echo "<pre>"; print_r($yaml);
-    self::$catTitle = $yaml['title'];
-    self::$catDescription = $yaml['description'];
-    self::$catCreated = $yaml['created'];
-    self::$catModified = $yaml['modified'];
-    self::$maps = [];
-    foreach ($yaml['maps'] as $mapid => $map) {
-      self::$maps[$mapid] = new self($mapid, $map);
+    
+    // vérification de la conformité du fichier chargé au schéma
+    $schema = new JsonSchema(Yaml::parseFile(__DIR__.'/mapcat.schema.yaml'));
+    $check = $schema->check($yaml);
+    if (!$check->ok()) {
+      echo '<pre>',Yaml::dump(['errors'=> $check->errors()]),"</pre>\n";
+      echo "<b>Le fichier n'a pas été enregistré, veuillez le modifier pour le rendre conforme au schéma !</b><br>\n";
+      return;
     }
+    if ($warnings = $check->warnings())
+      echo '<pre>',Yaml::dump(['warnings'=> $warnings]),"</pre>\n";
+
+    //echo "<pre>"; print_r($yaml);
+    try {
+      self::$catTitle = $yaml['title'];
+      self::$catDescription = $yaml['description'];
+      self::$catCreated = $yaml['created'];
+      self::$catModified = date(DATE_ATOM);
+      self::$maps = [];
+      foreach ($yaml['maps'] as $mapid => $map) {
+        self::$maps[$mapid] = new self($mapid, $map);
+      }
+      self::storeAsYaml();
+      self::storeAsPser();
+    } catch (Exception $e) {
+      echo '<b>',$e->getMessage();
+      echo "<br>Le fichier n'a pas été enregistré, veuillez le modifier pour corriger cette erreur !</b><br>\n";
+    }
+  }
+  
+  static function synchroShomGt() { // prend en compte les modifications dans les cartes ShomGt
+    foreach (self::maps() as $mapid => $map) {
+      if ($map->existsInShomgGt())
+        $map->updateModifiedAndLastUpdate();
+    }
+    
+    $dirpath = __DIR__.'/../../../shomgeotiff/current';
+    if (!$dh = opendir($dirpath))
+      die("Ouverture de $dirpath impossible");
+    while (($filename = readdir($dh)) !== false) {
+      if (in_array($filename, ['.','..','.DS_Store']))
+        continue;
+      if (!self::mapById("FR$filename"))
+        echo "Carte FR$filename présente dans ShomGt et pas dans le catalogue<br>\n";
+    }
+    closedir($dh);
+    
+    self::$catModified = date(DATE_ATOM);
+    self::storeAsYaml();
     self::storeAsPser();
   }
   
@@ -531,24 +585,40 @@ $id = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : ($_GET['
 $f = $_GET['f'] ?? 'html'; // format, html par défaut
 $a = $_GET['a'] ?? null; // action
 
-if (isset($_GET['help'])) {
-  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
-  echo "mapcat.php - Actions proposées:<ul>\n";
-  echo "<li><a href='?a=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a>\n";
-  echo "<li><a href='?f=yaml'>Affiche le catalogue en Yaml</a>\n";
-  echo "<li><a href='?a=loadYaml'>Affiche le catalogue en Yaml</a>\n";
-  echo "<li><a href='?f=geojson'>Affiche le catalogue en GeoJSON</a>\n";
-  echo "<li><a href='?f=html'>Affiche le catalogue en Html</a>\n";
-  echo "<li><a href='?f=map'>Affiche le catalogue en carte</a>\n";
-  echo "</ul>\n";
-  die();
-}
 
 if ($a == 'importFromV1') {
   if (php_sapi_name() <> 'cli')
     echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
   MapCat::importFromV1();
-  die("import");
+  echo "importFromV1 ok<br>\n";
+}
+
+if ($a == 'synchroShomGt') {
+  if (php_sapi_name() <> 'cli')
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
+  MapCat::synchroShomGt();
+  echo "synchroShomGt ok<br>\n";
+}
+
+if ($a == 'loadYaml') { // chargement du fichier yaml 
+  if (php_sapi_name() <> 'cli')
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
+  MapCat::loadYaml();
+  echo "loadYaml ok<br>\n";
+}
+
+if ($a) {
+  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
+  echo "mapcat.php - Actions proposées:<ul>\n";
+  echo "<li><a href='?a=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a>\n";
+  echo "<li><a href='?a=synchroShomGt'>Prend en compte les modifications apportées au portefeuille ShomGt</a>\n";
+  echo "<li><a href='?f=yaml'>Affiche le catalogue en Yaml</a>\n";
+  echo "<li><a href='?a=loadYaml'>Recharge le catalogue à partir du Yaml</a>\n";
+  echo "<li><a href='?f=geojson'>Affiche le catalogue en GeoJSON</a>\n";
+  echo "<li><a href='?f=html'>Affiche le catalogue en Html</a>\n";
+  echo "<li><a href='?f=map'>Affiche le catalogue en carte</a>\n";
+  echo "</ul>\n";
+  die();
 }
 
 
@@ -583,7 +653,8 @@ if ($f == 'html') { // affichage html
   }
   else { // tout le catalogue
     echo "<h2>Catalogue des cartes</h2>\n";
-    echo "<a href='?f=map'>en carte LL</a>, <a href='?f=yaml'>Yaml</a>, <a href='?f=geojson'>GeoJSON</a>, <a href='?help'>?</a><br>\n";
+    echo "<a href='?f=map'>en carte LL</a>, <a href='?f=yaml'>Yaml</a>, <a href='?f=geojson'>GeoJSON</a>, ",
+      "<a href='?a=menu'>?</a><br>\n";
     echo "<table border=1><th>",implode('</th><th>', ['id/yml','title/map','scaleDen','edition','mapsFrance']),"</th>\n";
     foreach (MapCat::maps() as $mapid => $map) {
       $mapa = $map->asArray();
@@ -606,7 +677,8 @@ if ($f == 'html') { // affichage html
 
 if ($f == 'yaml') { // affichage en yaml 
   if (php_sapi_name() <> 'cli')
-    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>",
+      "<a href='?a=menu'>retour</a><pre>\n";
   if ($id) { // une carte particulière
     echo "id: $id\n";
     echo Yaml::dump(MapCat::mapById($id)->asArray(), 4, 2);
@@ -614,13 +686,6 @@ if ($f == 'yaml') { // affichage en yaml
   else // tout le catalogue
     echo Yaml::dump(MapCat::allAsArray(), 5, 2);
   die();
-}
-
-if ($a == 'loadYaml') { // chargement du fichier yaml 
-  if (php_sapi_name() <> 'cli')
-    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
-  MapCat::loadYaml();
-  die("loadYaml\n");
 }
 
 if ($f == 'geojson') { // affichage en GeoJSON 

@@ -1,10 +1,12 @@
 title: 'Catalogue des cartes Shom'
 description:
   - 'Import du fichier V1 le 2020-12-21T10:05:48+01:00'
+  - 'second test'
+  - test
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-21T10:05:48+01:00'
-modified: '2020-12-21T10:05:48+01:00'
+modified: '2020-12-22T08:07:08+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'

@@ -2,9 +2,13 @@ title: lib - éléments partagés
 path: /geoapi/shomgt/lib
 doc: |
   Divers packages utilisés par les autres modules.
+submodules:
+  - /geoapi/shomgt/lib/schema
 phpScripts:
 phpIncludes:
+  - /geoapi/shomgt/lib/pos.inc.php
   - /geoapi/shomgt/lib/gebox.inc.php
+  - /geoapi/shomgt/lib/gjbox.inc.php
   - /geoapi/shomgt/lib/zoom.inc.php
   - /geoapi/shomgt/lib/gegeom.inc.php
   - /geoapi/shomgt/lib/coordsys.inc.php

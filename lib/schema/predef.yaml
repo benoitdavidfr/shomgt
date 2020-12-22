@@ -1,0 +1,70 @@
+title: listes des schémas prédéfinis et des motifs pour les schémas
+abstract: |
+  Ce document défini d'une part la liste des schémas prédéfinis et stockés localement
+  et d'autre part la liste des motifs d'URI de schéma remplacés par le validateur dans un pointeur JSON d'un schéma
+  par un chemin local.
+  Ces remplacements sont effectués par la méthode statique JsonSch::predef(string): string
+  qui peut être utilisée en dehors du contexte d'un schéma.
+modified: '2019-02-24'
+$schema:
+  $id: http://schema.georef.eu/predef.yaml#/$schema
+  $schema: http://json-schema.org/draft-07/schema#
+  type: object
+  properties:
+    title: { type: string, identifier: http://purl.org/dc/elements/1.1/title }
+    abstract: { type: string, identifier: http://purl.org/dc/elements/1.1/abstract }
+    modified: { type: string, format: date, identifier: http://purl.org/dc/terms/modified  }
+    $schema: { $ref: http://json-schema.org/schema# }
+    predefs:
+      description: liste des schémas prédéfinis identifiés par leur id
+      type: object
+      additionalProperties:
+        description: définition de chaque schéma prédéfini
+        type: object
+        additionalProperties: false
+        properties:
+          title:
+            description: titre du schéma
+            type: string
+          aliases:
+            description: autres identifiants
+            type: array
+            items:
+              type: string
+          localPath:
+            description: chemin local de stockage défini par rapport au validateur
+            type: string
+          source:
+            description: source du schéma
+            type: string
+    patterns:
+      description: liste de motifs/remplacements dans des url de schéma identifiés par le motif
+      type: object
+      additionalProperties:
+        description: définition de chaque motif/remplacement
+        type: object
+        additionalProperties: false
+        properties:
+          localPath:
+            description: chemin local de stockage défini par rapport au validateur
+            type: string
+predefs:
+  http://json-schema.org/schema#:
+    title: Core schema meta-schema
+    aliases:
+      - http://json-schema.org/draft-07/schema#
+    localPath: json-schema.schema.yaml
+    source: http://json-schema.org/draft-07/schema
+  http://geojson.org/schema/FeatureCollection.json:
+    title: GeoJSON FeatureCollection
+    localPath: geojson/featurecollection.schema.json
+    source: http://geojson.org/schema/FeatureCollection.json
+patterns:
+  ^http://schema.georef.eu: # correspond au répertoire de jsonschema.inc.php
+    localPath: ''
+  ^http://ydclasses.georef.eu/([^/]+)/schema$: # correspond au répertoire des documents de l'espace privé de YamlDoc
+    localPath: /../yamldoc/ydclasses/$1.sch.yaml
+  ^xxxhttp://id.georef.eu/(.+)$: # correspond au répertoire des documents de l'espace public de YamlDoc
+    localPath: /../yamldoc/pub/$1.yaml
+  ^xxxhttp://docs.georef.eu/(.+)$: # correspond au répertoire des documents de l'espace privé de YamlDoc
+    localPath: /../yamldoc/docs/$1.yaml

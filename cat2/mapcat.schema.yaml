@@ -119,7 +119,7 @@ properties:
             - une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
           
           De plus, les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
-          sont identifiées par la propriété mapsFrenchAreas et devraient renseigner les propriétés modified et lastUpdate.
+          sont identifiées par la propriété mapsFrance et devraient renseigner les propriétés modified et lastUpdate.
           
           Enfin, il est possible de conserver les cartes qui ne sont plus en vigueur jusqu'à une réutilisation éventuelle
           de l'identifiant.

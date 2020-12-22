@@ -54,7 +54,9 @@ class France {
     return ['type'=>'FeatureCollection', 'features'=> $features];
   }
   
-  // calcule si la carte est d'intérêt, la géométrie qui doit être Polygon ou MultiPolygon
+  // calcule si la carte est d'intérêt, la géométrie doit être Polygon ou MultiPolygon
+  // retourne soit [] si ce n'est pas le cas, soit ['FR'] pour les cartes à très petite échelle,
+  // soit la liste des codes ISO alpha2 des zones intersectées
   static function interet(string $mapid, string $scaleDenominator, Geometry $geometry): array {
     $ret = self::interet2($mapid, $scaleDenominator, $geometry);
     //if ($mapid == 'FR6977')
@@ -62,8 +64,6 @@ class France {
     return $ret;
   }
 
-  // calcule si la carte est d'intérêt, retourne soit [] si ce n'est pas le cas,
-  // soit ['FR'] pour les cartes à très petite échelle, soit la liste des codes ISO alpha2 des zones intersectées
   static function interet2(string $mapid, string $scaleDenominator, Geometry $geometry): array {
     if (!self::$zee)
       self::init();
@@ -81,7 +81,7 @@ class France {
 };
 
 
-if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return;
 // Vérifie l'algo d'initialisation en affichant le ZEE en GeoJSON en Yaml ou en JSON
 
 if (0) {
