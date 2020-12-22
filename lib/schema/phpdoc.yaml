@@ -1,7 +1,10 @@
-title: lib/schema - éléments partagés
+title: lib/schema - validation de la conformité d'une instance à un schéma JSON
 path: /geoapi/shomgt/lib/schema
 doc: |
-  Vérification de la conformité à un schéma.
+  Validation d'un document par rapport à un schéma JSON (https://json-schema.org/)
+journal: |
+  22/12/2020:
+    - clone du package initial
 phpScripts:
 phpIncludes:
   - /geoapi/shomgt/lib/schema/jsonschema.inc.php

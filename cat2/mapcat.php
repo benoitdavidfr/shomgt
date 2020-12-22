@@ -26,14 +26,20 @@ journal: |
     - réalisation d'une carte de vérification du catalogue
   13/12/2020:
     - passage en V2
-includes: [../lib/gegeom.inc.php, ../lib/zoom.inc.php, ../lib/schema/jsonschema.inc.php, ../updt/updtapi.inc.php, gjbox.inc.php, france.inc.php]
+includes:
+  - ../lib/gjbox.inc.php
+  - ../lib/gegeom.inc.php
+  - ../lib/zoom.inc.php
+  - ../lib/schema/jsonschema.inc.php
+  - ../updt/updtapi.inc.php
+  - france.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';
 require_once __DIR__.'/../lib/schema/jsonschema.inc.php';
 require_once __DIR__.'/../updt/updtapi.inc.php';
-require_once __DIR__.'/gjbox.inc.php';
 require_once __DIR__.'/france.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -158,14 +164,23 @@ title: classe MapCat - Gestion du catalogue des cartes du Shom
 methods:
 doc: |
   Chaque objet de la classe MapCat décrit une carte du Shom.
-  La propriété statique $maps est un dictionnaire des cartes sur leur id.
+  La classe définit le catalogue des cartes. La propriété statique $maps est un dictionnaire des cartes sur leur id.
 
   Les fichiers mapcat.yaml et mapcat.pser contiennent le catalogue des cartes y c. la date et l'heure d'actualisation.
-  Le fichier mapcat.pser accélère la lecture.
+  Le fichier mapcat.pser est utilisé pour accélérer la lecture du catalogue.
   
   Après un traitement modifiant le contenu du catalogue, il est nécessaire de réécrire les fichiers yaml et pser.
   La propriété statique $catUpdated trace les mises à jour, elle vaut toujours false après le chargement des données ;
   si elle vaut true cela signfie que les données doivent être enregistrées.
+
+  Le fichier Yaml peut être corrigé au moyen d'un traitement de texte.
+  Il doit alors d'une part respecter les contraintes définies et, d'autre part, être rechargé explicitement.
+  Ce rechargement est contrôlé de la manière suivante:
+   - pour détecter une mise à jour du fichier yaml, le fichier pser est normalement plus récent que le fichier Yaml,
+   - si ce n'est pas le cas le rechargement du pser génère une erreur et il est nécessaire soit de recharger le Yaml,
+     soit de l'écraser.
+   - si le rechargement du yaml est demandé alors que le pser est plus récent alors cela génère une erreur ;
+     il est alors nécessaire soit d'actualiser le fichier yaml, soit de l'effacer, soit de l'écraser à partir du Pser.
 
   Il existe des cartes sans espace principal (exemple 7436 - Approches et Port de Bastia - Ports d'Ajaccio et de Propriano)
   uniquement constituées de cartouches.
@@ -245,7 +260,7 @@ class MapCat {
     $maxsd = null;
     foreach ($this->hasPart as $part) {
       $psd = str_replace('.', '', $part->scaleDenominator());
-      if (!$maxsd || ($psd > str_replace('.', '', $maxsd))
+      if (!$maxsd || ($psd > str_replace('.', '', $maxsd)))
         $maxsd = $part->scaleDenominator();
     }
     return $maxsd;
@@ -278,8 +293,8 @@ class MapCat {
       throw new Exception("Erreur dans MapCat::wombox(), pas d'espace principal");
   }
   
-  static function importFromV1() {
-    echo "import du catalogue V1\n";
+  static function importFromV1() { // import du catalogue depuis la version 1 du catalogue
+    echo "import du catalogue V1<br>\n";
     $catv1 = json_decode(file_get_contents(__DIR__.'/../cat/mapcat.json'), true);
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
@@ -338,28 +353,31 @@ class MapCat {
     ]));
   }
   
-  static function storeAsYaml() { // enregistre le catalogue en Yaml
+  static function storeAsYaml(array $options=[]) { // enregistre le catalogue en Yaml
+    if (($options['force'] ?? null) && file_exists(self::PATH_YAML)) // efface le fichier Yaml existant
+      unlink(self::PATH_YAML);
     file_put_contents(self::PATH_YAML, Yaml::dump(self::allAsArray(), 5, 2));
   }
   
-  static function loadYaml() { // chargement du Yaml pour écraser le pser, génère une erreur si le pser est plus récent que le Yaml
+  // chargement du Yaml pour écraser le pser,
+  // Plusieurs erreurs peuvent être détectées:
+  //   - le fichier Yaml n'existe pas (yamlNotFound)
+  //   - le fichier pser est plus récent que le fichier Yaml (pserIsMoreRecent)
+  //   - le fichier Yaml n'est pas conforme au schéma (checkErrors)
+  //   - une erreur est intervenue dans la création d'une des cartes (errorInNew)
+  // Si aucune erreur et aucune alerte n'est détectée alors retourne un array vide, sinon l'array contient les erreurs ou alertes
+  static function loadYaml(): array {
     if (!file_exists(self::PATH_YAML))
-      throw new Exception("Erreur dans MapCat::loadYaml() : le fichier mapcat.yaml n'existe pas");
-    if (file_exists(self::PATH_PSER) && (filemtime(self::PATH_PSER) > filemtime(self::PATH_PSER)))
-      throw new Exception("Erreur dans MapCat::loadYaml() : le fichier mapcat.pser est plus récent que le fichier Yaml ! "
-        ."Soit effacer le pser pour charger le Yaml soit effacer le Yaml !");
+      return ['yamlNotFound'=> "Erreur dans MapCat::loadYaml(): le fichier mapcat.yaml n'existe pas"];
+    if (file_exists(self::PATH_PSER) && (filemtime(self::PATH_PSER) >= filemtime(self::PATH_YAML)))
+      return ['pserIsMoreRecent'=> "Erreur dans MapCat::loadYaml(): le fichier pser est plus récent que le fichier Yaml"];
     $yaml = Yaml::parseFile(self::PATH_YAML);
     
     // vérification de la conformité du fichier chargé au schéma
     $schema = new JsonSchema(Yaml::parseFile(__DIR__.'/mapcat.schema.yaml'));
     $check = $schema->check($yaml);
-    if (!$check->ok()) {
-      echo '<pre>',Yaml::dump(['errors'=> $check->errors()]),"</pre>\n";
-      echo "<b>Le fichier n'a pas été enregistré, veuillez le modifier pour le rendre conforme au schéma !</b><br>\n";
-      return;
-    }
-    if ($warnings = $check->warnings())
-      echo '<pre>',Yaml::dump(['warnings'=> $warnings]),"</pre>\n";
+    if (!$check->ok())
+      return ['checkErrors'=> $check->errors()];
 
     //echo "<pre>"; print_r($yaml);
     try {
@@ -374,9 +392,12 @@ class MapCat {
       self::storeAsYaml();
       self::storeAsPser();
     } catch (Exception $e) {
-      echo '<b>',$e->getMessage();
-      echo "<br>Le fichier n'a pas été enregistré, veuillez le modifier pour corriger cette erreur !</b><br>\n";
+      return ['errorInNew' => $e->getMessage()];
     }
+    if ($warnings = $check->warnings())
+      return ['checkWarnings'=> $warnings];
+    else
+      return [];
   }
   
   static function synchroShomGt() { // prend en compte les modifications dans les cartes ShomGt
@@ -585,26 +606,68 @@ $id = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : ($_GET['
 $f = $_GET['f'] ?? 'html'; // format, html par défaut
 $a = $_GET['a'] ?? null; // action
 
+if ($a && (php_sapi_name() <> 'cli'))
+  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
 
 if ($a == 'importFromV1') {
-  if (php_sapi_name() <> 'cli')
-    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
   MapCat::importFromV1();
   echo "importFromV1 ok<br>\n";
 }
 
 if ($a == 'synchroShomGt') {
-  if (php_sapi_name() <> 'cli')
-    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
   MapCat::synchroShomGt();
   echo "synchroShomGt ok<br>\n";
 }
 
-if ($a == 'loadYaml') { // chargement du fichier yaml 
-  if (php_sapi_name() <> 'cli')
-    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
-  MapCat::loadYaml();
-  echo "loadYaml ok<br>\n";
+if ($a == 'loadYaml') { // charge le fichier yaml 
+  if (!($result = MapCat::loadYaml())) {
+    echo "loadYaml ok<br>\n";
+  }
+  else {
+    switch ($code = array_keys($result)[0]) {
+      case 'yamlNotFound': {
+        echo "<b>Erreur, le fichier Yaml n'existe pas, ",
+          "<a href='?a=rewriteYaml'>le recréer à partir de la dernière version valide</a> !</b><br>\n";
+        break;
+      }
+      case 'pserIsMoreRecent': {
+        echo "<b>Erreur, le fichier pser est plus récent que le fichier Yaml !<br>\n",
+          "Soit modifier le fichier Yaml pour le charger, ",
+          "soit l'<a href='?a=rewriteYaml'>écraser à partir de la dernière version valide</a> !</b><br>\n";
+        break;
+      }
+      case 'checkErrors': {
+        echo "<b>Erreur, le fichier Yaml n'est pas conforme à son schéma</b><br>\n";
+        echo '<pre>',Yaml::dump($result),"</pre>\n";
+        echo "<b>Corriger le fichier Yaml ",
+             "ou l'<a href='?a=rewriteYaml'>écraser à partir de la dernière version valide</a>.</b><br>\n";
+        break;
+      }
+      case 'checkWarnings': {
+        echo "<b>Alerte de conformité du fichier Yaml par rapport à son schéma</b><br>\n";
+        echo Yaml::dump($result);
+        break;
+      }
+      case 'errorInNew': {
+        echo "<b>$result[errorInNew]</b><br>\n";
+        echo "<b>Corriger le fichier Yaml ",
+             "ou l'<a href='?a=rewriteYaml'>écraser à partir de la dernière version valide</a>.</b><br>\n";
+        break;
+      }
+      default: {
+        throw new Exception("cas imprévu en retour de MapCat::loadYaml(): $code");
+      }
+    }
+  }
+
+  /*else
+    echo "<a href='?a=rewriteYaml'>Ecraser le fichier Yaml à partir du pser</a><br>\n";*/
+}
+
+if ($a == 'rewriteYaml') { // réécrit le Yaml à partir du pser, et récérit le pser pour que le Yaml ne soit plus plus récent
+  MapCat::storeAsYaml(['force'=> true]);
+  MapCat::storeAsPser();
+  echo "rewriteYaml ok<br>\n";
 }
 
 if ($a) {

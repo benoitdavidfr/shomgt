@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: gjbox.inc.php
-title: cat2/gjbox.inc.php - Bbox à la GeoJSON
+title: gjbox.inc.php - Bbox à la GeoJSON pour les bbox à cheval sur l'anti-méridien
 classes:
 doc: |
   La classe GjBox gère un bbox selon les conventions du standard GéoJSON qui spécifie qu'une bbox est définie
@@ -14,9 +14,9 @@ doc: |
 journal: |
   17/12/2020:
     création
-includes: [../lib/gegeom.inc.php, pos.inc.php]
+includes: [gegeom.inc.php, pos.inc.php]
 */
-require_once __DIR__.'/../lib/gegeom.inc.php';
+require_once __DIR__.'/gegeom.inc.php';
 require_once __DIR__.'/pos.inc.php';
 
 /*PhpDoc: classes

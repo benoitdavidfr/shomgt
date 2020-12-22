@@ -36,7 +36,7 @@ journal: |
       - FR6284, FR6420, FR6823, FR7040, FR7135, FR7154, FR7436
     - des particularités (mise à jour ultérieure)
       - FR6713, FR6821, FR6930, FR7271
-includes: [mapcat.php, gan.inc.php]
+includes: [mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/mapcat.php';

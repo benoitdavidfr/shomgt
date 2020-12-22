@@ -64,10 +64,10 @@ doc: |
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  13-22/12/2020:
+    - dév. cat2 pour tenir compte de l'évolution par le Shom du GAN
   20/12/2020:
     - passage du Docker en Php8, adaptation de la doc
-  13-19/12/2020:
-    - dév. cat2 pour tenir compte de l'évolution par le Shom du GAN
   12/12/2020:
     - ajout dans shomgt.yaml du champ mdDate, qui est la date de mise à jour des métadonnées ISO 19139
       - cette date est la meilleure approximation dont je dispose de la date de dernière révision de la carte

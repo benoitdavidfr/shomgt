@@ -15,14 +15,19 @@ journal: |
     export de la définition de GjBox
   16/12/2020:
     création
-includes: ['../lib/gegeom.inc.php', wfsserver.inc.php, wfsjson.inc.php, france.inc.php, gjbox.inc.php]
+includes:
+  - ../lib/gjbox.inc.php
+  - ../lib/gegeom.inc.php
+  - wfsserver.inc.php
+  - wfsjson.inc.php
+  - france.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/wfsserver.inc.php';
 require_once __DIR__.'/wfsjson.inc.php';
 require_once __DIR__.'/france.inc.php';
-require_once __DIR__.'/gjbox.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
