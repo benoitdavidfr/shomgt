@@ -2,6 +2,8 @@
 /*PhpDoc:
 name: gan.php
 title: cat2/gan.php - gestion des gan
+class:
+functions:
 doc: |
   L'objectif est d'identifier les cartes à mettre à jour en interrogeant le GAN.
 
@@ -54,7 +56,11 @@ function http_error_code($http_response_header): ?string { // extrait le code d'
   return $http_error_code;
 }
 
-class Territoire { // définit la doctrine d'importance des différents territoires pour la mise à jour 
+/*PhpDoc: classes
+name: Territoire
+title: class Territoire - définit la doctrine d'importance des différents territoires pour la mise à jour
+*/
+class Territoire {
   // enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
   static $statuts = [ // définition des statuts
     'FR'=> '',
@@ -93,96 +99,10 @@ class Territoire { // définit la doctrine d'importance des différents territoi
   }
 };
 
-function ganWeek(string $modified): string {
-  $time = strtotime($modified);
-  return substr(date('o', $time), 2) . date('W', $time);
-}
-
-// analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte - fonction complètement réécrite / V1
-// retourne un array avec les champs title, edition et corrections + analyzeErrors en cas d'erreur d'analyse
-// J'ai essayé de minimiser la dépendance au code Html !
-function analyzeGanHtml(string $mapid, string $ganWeek): array {
-  //if ($mapid <> 'FR6118') return [];
-  //echo "<tr><td colspan=6><pre>";
-  $record = [];
-  $html = file_get_contents("gan/$mapid-$ganWeek.html");
-  
-  $html = preg_replace('!(<font [^>]*>|</font>|<b>|</b>)!', '', $html);
-
-  // lit la colonne title du tableau du haut qui contient titre, cartouches, édition, coordonnées
-  $pattern = '!<td class="column-title align-top">(([^<]*|<div|</div)*)</td>!';
-  while (preg_match($pattern, $html, $matches)) {
-    if (!isset($record['title'])) {
-      $record['title'] = [str_replace(['<','>'], ['{','}'], $matches[1])];
-    }
-    else {
-      $record['title'][] = str_replace(['<','>'], ['{','}'], $matches[1]);
-    }
-    $html = preg_replace($pattern, '', $html, 1);
-  }
-  if ($record['title'] ?? null)
-    $record['edition'] = array_pop($record['title']);
-  
-  // modèle de no de correction + semaineAvis
-  $pattern = '!<tr class="mapNumber-[^ ]+ externalId-(\d+-\d+)[^>]*>'
-    .'<td [^>]*>\s*<\!-- [^>]*>[^(]*\((\d+)\)!';
-  // modèle: <tr class="mapNumber-6643 externalId-1938-184-6643"><td width="60" align="left"> <!-- COUPER ICI 54-->6643 (16)</td><td colspan="6" width="538"><p align="left">Cartouche A </p></td></tr>
-  // modèle: <tr class="mapNumber-5417 externalId-1739-267-5417"><td width="60" align="left"><!-- COUPER ICI 25--><a href="INTERNET/2017/1739/calques/1739_FR5417.pdf" target="blank">5417</a> (87)
-  while (preg_match($pattern, $html, $matches)) {
-    if (!isset($record['corrections'])) {
-      $record['corrections'] = [['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]]];
-    }
-    else {
-      $record['corrections'][] = ['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]];
-    }
-    $html = preg_replace($pattern, '', $html, 1);
-  }
-  
-  // un autre modèle de no de correction
-  $pattern = '!<td>(<a href=[^>]*>)?<span class="correction_map_FR-strong">[^<]*</span>(</a>)?\s*\((\d+)\)(<br>|</td>)!';
-  // modèle: <td><span class="correction_map_FR-strong">4232</span> (1)</td>
-  // modèle: <td><a href="INTRADEF/2020/2012/calques/2012_FR4233.pdf" target="_blank"><span class="correction_map_FR-strong">4233</span></a> (5)</td>
-  // modèle: <td><a href="INTRADEF/2020/2007/calques/2007_FR6608.pdf" target="_blank"><span class="correction_map_FR-strong">6608</span></a> (7)<br><span class="correction_map_FR-strong">INT 140</span></td>
-  while (preg_match($pattern, $html, $matches)) {
-    if (!isset($record['corrections'])) {
-      $record['corrections'] = [['num'=> intval($matches[3])]];
-    }
-    else {
-      $record['corrections'][] = ['num'=> intval($matches[3])];
-    }
-    $html = preg_replace($pattern, '', $html, 1);
-  }
-  
-  // modèle de semaineAvis
-  $pattern = '!<table class="mapNumber-[^ ]+ externalId-(\d+-\d+)!';
-  //modèle: <table class="mapNumber-4233 externalId-2012-39-4233 correction_map_FR-avoidPageBreak">
-  $semaineAvis = [];
-  while (preg_match($pattern, $html, $matches)) {
-    $semaineAvis[] = $matches[1];
-    $html = preg_replace($pattern, '', $html, 1);
-  }
-  /*if ($semaineAvis) {
-    $record['semaineAvisInitiales'] = $semaineAvis;
-    $record['correctionsInitiales'] = $record['corrections'];
-  }*/
-  
-  foreach ($record['corrections'] ?? [] as $no => $correction) {
-    if (!isset($correction['semaineAvis'])) {
-      if ($semaineAvis) {
-        $record['corrections'][$no]['semaineAvis'] = array_shift($semaineAvis);
-      }
-      else {
-        $record['analyzeErrors'][] = "semaineAvis insuffisant pour $no";
-        //echo "semaineAvis insuffisant pour $no\n";
-      }
-    }
-  }
-  if ($semaineAvis)
-    $record['analyzeErrors'][] = "semaineAvis supplémentaires";
-  //echo "</pre></td></tr>";
-  return $record;
-}
-
+/*PhpDoc: classes
+name: GanPart
+title: class GanPart - description d'un cartouche dans la synthèse d'une carte
+*/
 class GanPart {
   protected string $title;
   protected array $bbox; // sous la forme ['SW'=> sw, 'NE'=> ne]
@@ -203,35 +123,57 @@ class GanPart {
   }
 };
 
-// synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
+/*PhpDoc: classes
+name: GanPart
+title: class Gan - synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
+methods:
+docs: |
+  Moisonne le GAN des cartes de MapCat non obsolètes et présentes dans ShomGt (et donc le champ modified est connu).
+  Analyse les fichiers Html moissonnés et en produit une synthèse.
+  Calcule pour chaque carte un indicateur, appelé age, reflétant la nécessité de mettre à jour la carte.
+  Affiche le résultat pour permettre le choix des cartes à mettre à jour.
+*/
 class Gan {
   const GAN_DIR = __DIR__.'/gan';
   const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
-  static string $modified=''; // date de la moisson des GAN
+  static string $valid=''; // date de la moisson des GAN
   static array $gans=[]; // dictionnaire [$mapid => Gan]
   
+  protected array $oldTitle;
   protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title='';
-  protected ?string $edition=null;
+  protected ?string $ganEdition=null; // edition issue du GAN
+  protected ?string $sgtEdition=null; // edition issue de ShomGt
+  protected ?string $modified; // importé de MapCat
   protected array $bbox=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  protected array $mapsFrance=[]; // provient de Mapcat
+  protected ?array $mapsFrance=[]; // importé de Mapcat
   protected array $hasPart=[]; // cartouches
-  protected array $corrections=[];
+  protected array $corrections=[]; // liste des corrections
   protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
   protected string $harvestError=''; // erreur éventuelle du moissonnage
-  protected ?float $age=null; // note reflétant la nécessité de mettre à jour la carte
-    // calculée en fonction du chgt d'édition, du nbre de corrections et du territoire
-    // -1 ssi erreur de moissonnage
-    // 0 ssi pas de mise à jour nécessaire
+  protected float $age; // indicateur reflétant la nécessité de mettre à jour la carte
+    // calculé en fonction du chgt d'édition, du nbre de corrections et du territoire
+    // -1 ssi erreur de moissonnage ; 0 ssi pas de mise à jour nécessaire
+
+  static function week(string $modified): string { // transforme une date en semaine sur 4 caractères comme utilisé par le GAN 
+    $time = strtotime($modified);
+    return substr(date('o', $time), 2) . date('W', $time);
+  }
   
-  static function harvest() { // moissonage des GAN par carte dans le répertoire $gandir
+  /*PhpDoc: methods
+  name: harvest
+  title: static function harvest(array $options=[]) - moissonne les GAN par carte dans le répertoire self::GAN_DIR
+  docs: |
+    Les cartes interrogées sont celles de MapCat ayant un champ modified et n'étant pas obsolètes.
+  */
+  static function harvest(array $options=[]) {
     $gandir = self::GAN_DIR;
-    if (!file_exists($gandir))
-      mkdir($gandir);
-    elseif (0) { // suppression des fichiers existants
-      if (!$dh = opendir($gandir))
+    if (!file_exists(self::GAN_DIR))
+      mkdir(self::GAN_DIR);
+    elseif ($options['clean'] ?? false) { // suppression des fichiers existants
+      if (!$dh = opendir(self::GAN_DIR))
         die("Ouverture de $gandir impossible");
       while (($filename = readdir($dh)) !== false) {
         if (!in_array($filename, ['.','..']))
@@ -243,7 +185,7 @@ class Gan {
     foreach (Mapcat::maps() as $mapid => $map) {
       $mapa = $map->asArray();
       if (isset($mapa['modified']) && !$map->obsolete()) {
-        $ganWeek = ganWeek($mapa['modified']);
+        $ganWeek = Gan::week($mapa['modified']);
         if (!file_exists("$gandir/$mapid-$ganWeek.html") && !isset($errors["$mapid-$ganWeek"])) {
           $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
           if (($contents = @file_get_contents($url)) === false) {
@@ -259,40 +201,152 @@ class Gan {
       }
     }
   }
-  
-  static function build() { // construit la synhèse des GAN pour une moisson donnée
-    self::$modified = date(DATE_ATOM, filemtime(self::GAN_DIR));
-    $gans = [];
-    foreach (Mapcat::maps() as $mapid => $map) {
-      if ($map->obsolete()) continue;
-      $mapa = $map->asArray();
-      if (!isset($mapa['modified'])) continue;
-      $ganWeek = ganWeek($mapa['modified']);
-      if (!file_exists(self::GAN_DIR."/$mapid-$ganWeek.html")) continue;
-      self::$gans[$mapid] = new self($mapid, analyzeGanHtml($mapid, $ganWeek));
+
+  /*PhpDoc: methods
+  name: analyzeHtml
+  title: "static function analyzeHtml(string $html): array - analyse du Html du GAN"
+  doc: |
+    analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte - fonction complètement réécrite / V1
+    retourne un array avec les champs title, edition et corrections + analyzeErrors en cas d'erreur d'analyse
+    J'ai essayé de minimiser la dépendance au code Html !
+  */
+  static function analyzeHtml(string $html): array {
+    //echo "<tr><td colspan=6><pre>";
+    $record = [];
+    $html = preg_replace('!(<font [^>]*>|</font>|<b>|</b>)!', '', $html);
+
+    // lit la colonne title du tableau du haut qui contient titre, cartouches, édition, coordonnées
+    $pattern = '!<td class="column-title align-top">(([^<]*|<div|</div)*)</td>!';
+    while (preg_match($pattern, $html, $matches)) {
+      if (!isset($record['title'])) {
+        $record['title'] = [str_replace(['<','>'], ['{','}'], $matches[1])];
+      }
+      else {
+        $record['title'][] = str_replace(['<','>'], ['{','}'], $matches[1]);
+      }
+      $html = preg_replace($pattern, '', $html, 1);
     }
+    if ($record['title'] ?? null)
+      $record['edition'] = array_pop($record['title']);
+  
+    // modèle de no de correction + semaineAvis
+    $pattern = '!<tr class="mapNumber-[^ ]+ externalId-(\d+-\d+)[^>]*>'
+      .'<td [^>]*>\s*<\!-- [^>]*>[^(]*\((\d+)\)!';
+    // modèle: <tr class="mapNumber-6643 externalId-1938-184-6643"><td width="60" align="left"> <!-- COUPER ICI 54-->6643 (16)</td><td colspan="6" width="538"><p align="left">Cartouche A </p></td></tr>
+    // modèle: <tr class="mapNumber-5417 externalId-1739-267-5417"><td width="60" align="left"><!-- COUPER ICI 25--><a href="INTERNET/2017/1739/calques/1739_FR5417.pdf" target="blank">5417</a> (87)
+    while (preg_match($pattern, $html, $matches)) {
+      if (!isset($record['corrections'])) {
+        $record['corrections'] = [['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]]];
+      }
+      else {
+        $record['corrections'][] = ['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]];
+      }
+      $html = preg_replace($pattern, '', $html, 1);
+    }
+  
+    // un autre modèle de no de correction
+    $pattern = '!<td>(<a href=[^>]*>)?<span class="correction_map_FR-strong">[^<]*</span>(</a>)?\s*\((\d+)\)(<br>|</td>)!';
+    // modèle: <td><span class="correction_map_FR-strong">4232</span> (1)</td>
+    // modèle: <td><a href="INTRADEF/2020/2012/calques/2012_FR4233.pdf" target="_blank"><span class="correction_map_FR-strong">4233</span></a> (5)</td>
+    // modèle: <td><a href="INTRADEF/2020/2007/calques/2007_FR6608.pdf" target="_blank"><span class="correction_map_FR-strong">6608</span></a> (7)<br><span class="correction_map_FR-strong">INT 140</span></td>
+    while (preg_match($pattern, $html, $matches)) {
+      if (!isset($record['corrections'])) {
+        $record['corrections'] = [['num'=> intval($matches[3])]];
+      }
+      else {
+        $record['corrections'][] = ['num'=> intval($matches[3])];
+      }
+      $html = preg_replace($pattern, '', $html, 1);
+    }
+  
+    // modèle de semaineAvis
+    $pattern = '!<table class="mapNumber-[^ ]+ externalId-(\d+-\d+)!';
+    //modèle: <table class="mapNumber-4233 externalId-2012-39-4233 correction_map_FR-avoidPageBreak">
+    $semaineAvis = [];
+    while (preg_match($pattern, $html, $matches)) {
+      $semaineAvis[] = $matches[1];
+      $html = preg_replace($pattern, '', $html, 1);
+    }
+    /*if ($semaineAvis) {
+      $record['semaineAvisInitiales'] = $semaineAvis;
+      $record['correctionsInitiales'] = $record['corrections'];
+    }*/
+  
+    foreach ($record['corrections'] ?? [] as $no => $correction) {
+      if (!isset($correction['semaineAvis'])) {
+        if ($semaineAvis) {
+          $record['corrections'][$no]['semaineAvis'] = array_shift($semaineAvis);
+        }
+        else {
+          $record['analyzeErrors'][] = "semaineAvis insuffisant pour $no";
+          //echo "semaineAvis insuffisant pour $no\n";
+        }
+      }
+    }
+    if ($semaineAvis)
+      $record['analyzeErrors'][] = "semaineAvis supplémentaires";
+    //echo "</pre></td></tr>";
+    return $record;
+  }
+  
+  /*PhpDoc: methods
+  name: build
+  title: static function build() - construit la synhèse des GAN de la moisson existante
+  */
+  static function build() {
+    $minvalid = null;
+    $maxvalid = null;
+
+    if (!$dh = opendir(self::GAN_DIR))
+      die("Ouverture de self::GAN_DIR impossible");
+    while (($filename = readdir($dh)) !== false) {
+      if (in_array($filename, ['.','..','.DS_Store','errors.yaml']))
+        continue;
+      $mapid = substr($filename, 0, 6);
+      $mapa = MapCat::maps($mapid);
+      $mtime = filemtime(self::GAN_DIR."/$filename");
+      if (!$minvalid || ($mtime < $minvalid))
+        $minvalid = $mtime;
+      if (!$maxvalid || ($mtime > $maxvalid))
+        $maxvalid = $mtime;
+      $html = file_get_contents(self::GAN_DIR."/$filename");
+      self::$gans[$mapid] = new self($mapid, self::analyzeHtml($html), $mapa);
+    }
+    closedir($dh);
+    self::$valid = date('Y-m-d', $minvalid).'/'.date('Y-m-d', $maxvalid);
+
     $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
       $mapid = substr($id, 0, 6);
-      self::$gans[$mapid] = new self($mapid, ['harvestError'=> $errorMessage]);
+      self::$gans[$mapid] = new self($mapid, ['harvestError'=> $errorMessage], MapCat::maps($mapid));
     }
-    // tri pour mettre en début de tableau les plus agés
+    // tri pour mettre en début de tableau les cartes les plus agées
     uasort(self::$gans, function(Gan $a, Gan $b) { return ($a->age == $b->age) ? 0 : (($a->age > $b->age) ? -1 : 1); });
   }
   
-  function __construct(string $mapid, array $record) {
-    $this->oldTitle = $record['title'] ?? [];
-    $this->postProcessTitle($record['title'] ?? []);
-    $this->edition = $record['edition'] ?? null;
-    $this->mapsFrance = Mapcat::maps($mapid)['mapsFrance'];
+  function __construct(string $mapid, array $record, array $mapa) {
+    //print_r($record);
+    // cas où soit le GAN ne renvoie aucune info signifiant qu'il n'y a pas de corrections, soit il renvoie une erreur
+    if (!$record || isset($record['harvestError'])) {
+      $this->groupTitle = $mapa['groupTitle'];
+      $this->title = $mapa['title'];
+    }
+    else { // cas où il existe des corrections
+      $this->oldTitle = $record['title'];
+      $this->postProcessTitle($record['title']);
+      $this->ganEdition = $record['edition'];
+    }
+    $this->sgtEdition = $mapa['edition'];
+    $this->modified = $mapa['modified'] ?? null;
+    $this->mapsFrance = $mapa['mapsFrance'] ?? null;
     $this->corrections = $record['corrections'] ?? [];
     $this->analyzeErrors = $record['analyzeErrors'] ?? [];
     $this->harvestError = $record['harvestError'] ?? '';
     $this->age = $this->calcAge();
   }
   
-  private function postProcessTitle(array $record) {
+  private function postProcessTitle(array $record) { // complète __construct()
     if (!$record) return;
     $title = array_shift($record);
     foreach ($record as $part)
@@ -317,7 +371,7 @@ class Gan {
     //echo '$this='; print_r($this);
   }
 
-  function calcAge(): float { // retourne -1 si erreur, 0 si carte à jour
+  function calcAge(): float { // calcule l'age utilisé dans __construct(), retourne -1 si erreur, 0 si carte à jour
     if ($this->harvestError)
       return -1;
     if (count($this->corrections)==0)
@@ -337,36 +391,37 @@ class Gan {
       return [];
   }
   
-  static function allAsArray(): array {
-    $gans = [];
-    foreach (self::gans() as $mapid => $gan)
-      $gans[$mapid] = $gan->asArray();
+  static function allAsArray(): array { // retourne l'ensemble de la classe comme array 
+    if (!self::$gans)
+      Gan::loadFromPser();
     return [
       'title'=> "Synthèse du résultat du moissonnage des GAN des cartes du catalogue",
       'description'=> "Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)",
       '$id'=> 'https://geoapi.fr/shomgt/cat2/gans',
       '$schema'=> __DIR__.'/gans',
-      'modified'=> self::$modified,
-      'gans'=> $gans,
+      'valid'=> self::$valid,
+      'gans'=> array_map(function(Gan $gan) { return $gan->asArray(); }, self::$gans),
       'eof'=> null,
     ];
   }
   
-  function asArray(): array {
-    if ($this->harvestError)
+  function asArray(): array { // retourne un objet comme array 
+    /*if ($this->harvestError)
       return ['harvestError'=> $this->harvestError, 'age'=> $this->calcAge()];
     elseif (!$this->title)
       return ['age'=> $this->calcAge()];
-    else
+    else*/
       return
-        ['age'=> $this->calcAge()]
+        ['age'=> roundToIntIfPossible($this->calcAge())]
       // ['oldTitle'=> $this->oldTitle]
       + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
       + ['title'=> $this->title]
-      + ['edition'=> $this->edition]
+      + ['sgtEdition'=> $this->sgtEdition]
+      + ['modified'=> $this->modified]
       + ['mapsFrance'=> $this->mapsFrance]
       + ($this->bbox ? ['bbox'=> $this->bbox] : [])
       + ($this->hasPart ? ['hasPart'=> array_map(function (GanPart $part): array { return $part->asArray(); }, $this->hasPart)] : [])
+      + ($this->ganEdition ? ['ganEdition'=> $this->ganEdition] : [])
       + ($this->corrections ? ['corrections'=> $this->corrections] : [])
       + ($this->analyzeErrors ? ['analyzeErrors'=> $this->analyzeErrors] : [])
       ;
@@ -374,18 +429,21 @@ class Gan {
   
   static function storeAsPser() { // enregistre le catalogue comme pser 
     file_put_contents(self::PATH_PSER, serialize([
-      'modified'=> self::$modified,
+      'valid'=> self::$valid,
       'gans'=> self::$gans,
     ]));
   }
   
-  static function loadFromPser() { // charge les données depuis le pser
+  static function loadFromPser() { // charge les données depuis le pser 
     $contents = unserialize(file_get_contents(self::PATH_PSER));
-    self::$modified = $contents['modified'];
+    self::$valid = $contents['valid'];
     self::$gans = $contents['gans'];
   }
 };
 
+//echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body><pre>\n";
+//echo Yaml::dump(Gan::allAsArray()); die();
+//Gan::loadFromPser(); print_r(Gan::$modified); die();
 
 if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe Gan
 
@@ -396,35 +454,36 @@ if (php_sapi_name() == 'cli') {
     echo "usage: gan.php {action}\n";
     echo "{action}\n";
     echo "  - harvest - Moissonne les Gan\n";
-    echo "  - yaml - Affiche le Yaml depuis la moisson\n";
-    echo "  - yamlpser - Fabrique les fichiers gans.yaml/pser à partir de la moisson\n";
+    echo "  - showHarvest - Affiche la moisson en Yaml\n";
+    echo "  - storeHarvest - Enregistre la moisson en Yaml/pser\n";
     die();
   }
   else
-    $action = $argv[1];
+    $a = $argv[1];
 }
 else { // non CLI
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body>\n";
-  $action = $_GET['a'] ?? 'updt'; // par défaut updt  
+  $a = $_GET['a'] ?? null; // si $a vat null alors action d'afficher dans le format $f
+  $f = $_GET['f'] ?? 'html';
 }
 
-if ($action == 'help') { // menu 
-  echo "gan.php - Actions proposées:<ul>\n";
+if ($a == 'menu') { // menu 
+  echo "gan.php - Menu:<ul>\n";
   echo "<li>La moisson des GAN doit être effectuée en CLI</li>\n";
-  echo "<li><a href='?a=yaml'>Affiche le Yaml depuis la moisson</a></li>\n";
-  echo "<li><a href='?a=yamlpser'>Fabrique les fichiers gans.yaml/pser à partir de la moisson</a></li>\n";
-  echo "<li><a href='?a=list'>Liste les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
-  echo "<li><a href='?a=updt'>Liste les cartes à mettre à jour ordonnées par age décroissant</a></li>\n";
+  echo "<li><a href='?a=showHarvest'>Affiche la moisson en Yaml</a></li>\n";
+  echo "<li><a href='?a=storeHarvest'>Enregistre la moisson en Yaml/pser</a></li>\n";
+  echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
+  echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour ordonnées par age décroissant</a></li>\n";
   echo "</ul>\n";
   die();
 }
 
-if ($action == 'harvest') { // moisson des GAN depuis le Shom 
+if ($a == 'harvest') { // moisson des GAN depuis le Shom 
   Gan::harvest();
   die();
 }
 
-if ($action == 'yaml') { // Affiche le Yaml depuis la moisson 
+if ($a == 'showHarvest') { // Affiche la moisson en Yaml 
   if (php_sapi_name() <> 'cli') 
     echo "<pre>\n";
   Gan::build();
@@ -433,7 +492,7 @@ if ($action == 'yaml') { // Affiche le Yaml depuis la moisson
   die();
 }
 
-if ($action == 'yamlpser') { // Fabrique les fichiers gans.yaml/pser à partir de la moisson 
+if ($a == 'storeHarvest') { // Enregistre la moisson en Yaml/pser 
   Gan::build();
   file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
   Gan::storeAsPser();
@@ -442,7 +501,7 @@ if ($action == 'yamlpser') { // Fabrique les fichiers gans.yaml/pser à partir d
 
 $gandir = __DIR__.'/gan';
 
-if ($action == 'list') {
+if ($a == 'listMaps') { // Affiche en Html les cartes avec synthèse moisson et lien vers Gan
   $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
   echo "<table border=1>\n",
        "<th>",implode('</th><th>', ['mapid','title','FR','lastUpdt','gan','harvest','analyze','age']),"</th>\n";
@@ -452,7 +511,7 @@ if ($action == 'list') {
     $sEnd = $map->obsolete() ? '</s>' : '';
     $ganHref = null; // href vers le Shom
     if (isset($mapa['modified']) && !$map->obsolete()) {
-      $ganWeek = ganWeek($mapa['modified']);
+      $ganWeek = Gan::week($mapa['modified']);
       $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
       $ganHref = "<a href='$url'>$ganWeek</a>";
     }
@@ -467,7 +526,7 @@ if ($action == 'list') {
     elseif ($errors["$mapid-$ganWeek"] ?? null) {
       $ganHHref = 'error';
     }
-    echo "<tr><td>$mapid</td><td>$sStart$mapa[title]$sEnd<br>$mapa[edition]</td>",
+    echo "<tr><td>$mapid</td><td>$sStart$mapa[title]$sEnd<br>",$mapa['edition'] ?? "édition indéfinie","</td>",
           "<td>",implode(', ', $mapa['mapsFrance']) ?? 'indéfini',"</td>",
           "<td>",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
           "<td>",$ganHref ?? 'indéfini',"</td>",
@@ -480,36 +539,33 @@ if ($action == 'list') {
   die();
 }
 
-if ($action == 'updt') {
-  echo "<h2>Cartes à mettre à jour ordonnées par age décroissant (<a href='?a=help'>?</a>)</h2>\n";
+if (!$a && ($f == 'html')) {
+  echo "<h2>Cartes à mettre à jour ordonnées par age décroissant (<a href='?a=menu'>?</a>)</h2>\n";
   echo "<table border=1>\n","<th>",
-    implode('</th><th>',['mapid','title','age','FR','lastUpdt','gan','harvest','liste des corr. du GAN depuis lastUpdt']),"</th>\n";
+    implode('</th><th>',['mapid','title','age','FR','lastUpdt','gan','liste des corr. du GAN depuis lastUpdt']),"</th>\n";
   foreach (Gan::gans() as $mapid => $gan) {
-    $ganArray = $gan->asArray();
+    $gana = $gan->asArray();
     $mapa = Mapcat::maps($mapid);
     $ganHref = null; // href vers le Shom
-    if (isset($mapa['modified'])) {
-      $ganWeek = ganWeek($mapa['modified']);
+    $ganLHref = null; // href local
+    if (isset($gana['modified'])) {
+      $ganWeek = Gan::week($gana['modified']);
       $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
       $ganHref = "<a href='$url'>$ganWeek</a>";
+      if (file_exists("$gandir/$mapid-$ganWeek.html"))
+        $ganLHref = "<a href='gan/$mapid-$ganWeek.html'>$ganWeek</a>";
+      elseif (isset($gana['harvestError']))
+        $ganLHref = 'error';
     }
-    $ganHHref = null; // href local
-    $age = $ganArray['age'] ?? null;
-    $ganArray = (isset($ganArray['edition']) ? ['edition'=> $ganArray['edition']] : [])
-      + (isset($ganArray['corrections']) ? ['corrections'=> $ganArray['corrections']] : []);
-    if (file_exists("$gandir/$mapid-$ganWeek.html")) {
-      $ganHHref = "<a href='gan/$mapid-$ganWeek.html'>$ganWeek</a>";
-    }
-    elseif ($ganArray['harvestError'] ?? null) {
-      $ganHHref = 'error';
-    }
-    echo "<tr><td>$mapid</td><td>$mapa[title]<br>$mapa[edition]</td>",
-            "<td>",$age ?? 'indéfini',"</td>",
-          "<td>",implode(', ', $mapa['mapsFrance']) ?? 'indéfini',"</td>",
+    $ganec = (isset($gana['ganEdition']) ? ['edition'=> $gana['ganEdition']] : [])
+      + (isset($gana['corrections']) ? ['corrections'=> $gana['corrections']] : []);
+    echo "<tr><td>$mapid</td><td>",$gana['title'] ?? 'indéfini',"<br>$gana[sgtEdition]</td>",
+          "<td>",$gana['age'] ?? 'indéfini',"</td>",
+          "<td>",implode(', ', $gana['mapsFrance']) ?? 'indéfini',"</td>",
           "<td>",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
           "<td>",$ganHref ?? 'indéfini',"</td>",
-          "<td>",$ganHHref ?? 'indéfini',"</td>\n",
-          "<td><pre>",$ganArray ? Yaml::dump($ganArray) : '',"</pre></td>",
+          //"<td>",$ganLHref ?? 'indéfini',"</td>\n",
+          "<td><pre>",$ganec ? Yaml::dump($ganec) : '',"</pre></td>",
           "</tr>\n";
   }
   echo "</table>\n";

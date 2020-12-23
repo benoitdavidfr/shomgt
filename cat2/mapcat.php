@@ -17,6 +17,8 @@ doc: |
   A faire:
     - intégrer la vérification du schéma
 journal: |
+  23/12/2020:
+    - utilisation du champ edition de ShomGt et pas celui de V1
   17/12/2020:
     - remplacement de BBoxDd par GjBox 
   15/12/2020:
@@ -229,7 +231,7 @@ class MapCat {
     $this->obsolete = null;
     $this->groupTitle = $map['groupTitle'] ?? null;
     $this->title = $map['title'];
-    $this->edition = $map['edition'] ?? $map['issued'] ?? null;
+    $this->edition = $map['edition'] ?? null; // je n'importe pas ce champ de la V1
     $this->modified = $map['modified'] ?? null;
     $this->lastUpdate = isset($map['lastUpdate']) ? intval($map['lastUpdate']) : null;
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
@@ -300,7 +302,7 @@ class MapCat {
       //echo Yaml::dump([$mapid => $map]);
       $map = new self($mapid, $map);
       if ($map->existsInShomgGt()) {
-        $map->updateModifiedAndLastUpdate();
+        $map->updateFromShomGt();
         self::$maps[$mapid] = $map;
       }
       elseif ($map->mapsFrance)
@@ -323,22 +325,19 @@ class MapCat {
     return file_exists($dirpath) ? $dirpath : '';
   }
   
-  // met à jour les champ modified et lastUpdate des cartes présentes dans ShomGt par lecture des MD ISO d'un des GéoTiff à la carte
-  private function updateModifiedAndLastUpdate(): bool {
+  // met à jour les champ modified, edition et lastUpdate présents dans ShomGt par lecture des MD ISO d'un des GéoTiff à la carte
+  private function updateFromShomGt(): bool {
     if (in_array($this->num, [7330, 7344, 7360, 8101, 8502])) // 5 cartes présentes sans MDISO
       return false;
     $num = $this->num;
-    $gtname = $this->bbox ? "$num/${num}_pal300" : "$num/${num}_1_gtw";
-    if (!($mdiso19139 = UpdtApi::mdiso19139($gtname))) {
-      if (!$this->bbox) {
-        $gtname2 = "$num/${num}_A_gtw";
-        if (!($mdiso19139 = UpdtApi::mdiso19139($gtname2)))
-          throw new Exception("MD ISO absentes dans MapCat::addModified() pour gtname=$gtname et $gtname2");
-      }
-      else
-        throw new Exception("MD ISO absentes dans MapCat::addModified() pour gtname=$gtname");
-    }
+    if ($this->bbox)
+      $mdiso19139 = UpdtApi::mdiso19139("$num/${num}_pal300");
+    elseif (!($mdiso19139 = UpdtApi::mdiso19139("$num/${num}_1_gtw")))
+      $mdiso19139 = UpdtApi::mdiso19139("$num/${num}_A_gtw");
+    if (!$mdiso19139)
+      throw new Exception("MD ISO absentes dans MapCat::updateFromShomGt() pour id='FR$num'");
     $this->modified = $mdiso19139['mdDate'];
+    $this->edition = $mdiso19139['édition'];
     $this->lastUpdate = intval($mdiso19139['dernièreCorrection']);
     return true;
   }
@@ -403,7 +402,7 @@ class MapCat {
   static function synchroShomGt() { // prend en compte les modifications dans les cartes ShomGt
     foreach (self::maps() as $mapid => $map) {
       if ($map->existsInShomgGt())
-        $map->updateModifiedAndLastUpdate();
+        $map->updateFromShomGt();
     }
     
     $dirpath = __DIR__.'/../../../shomgeotiff/current';
@@ -595,6 +594,9 @@ class MapCat {
 
 if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe MapCat
 
+
+//echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
+//echo Yaml::dump(MapCat::allAsArray()); die();
 
 $id = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : ($_GET['id'] ?? null); // id
 $f = $_GET['f'] ?? 'html'; // format, html par défaut

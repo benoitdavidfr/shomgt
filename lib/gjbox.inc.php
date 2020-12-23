@@ -26,7 +26,6 @@ methods:
 doc: |
 */
 class GjBox {
-  static $epsilon = 1e-8; // pour arrondir éventuellement en entier pour la sortie Yaml
   protected array $ws=[]; // position WS ou [] ssi bbox indéfinie
   protected array $en=[]; // position EN ou [] ssi bbox indéfinie
   
@@ -121,22 +120,12 @@ class GjBox {
   function asArray(): array { return $this->ws ? [$this->ws[0], $this->ws[1], $this->en[0], $this->en[1]] : []; }
   function __toString(): string { return json_encode($this->asArray()); }
   
-  private static function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier, simplifie le Yaml
-    if ($v == 0)
-      return $v;
-    $r = round($v);
-    if (abs(($v-$r)/$v) < self::$epsilon)
-      return (int)$r;
-    else
-      return $v;
-  }
-  
   function asDcmiBox(): array { // utilise les conventions DCMI Bpx pour améliorer l'interopérabilité
     return [
-      'southlimit'=> self::roundToIntIfPossible($this->ws[1]),
-      'westlimit'=> self::roundToIntIfPossible($this->ws[0]),
-      'northlimit'=> self::roundToIntIfPossible($this->en[1]),
-      'eastlimit'=> self::roundToIntIfPossible($this->en[0]),
+      'southlimit'=> roundToIntIfPossible($this->ws[1]),
+      'westlimit'=> roundToIntIfPossible($this->ws[0]),
+      'northlimit'=> roundToIntIfPossible($this->en[1]),
+      'eastlimit'=> roundToIntIfPossible($this->en[0]),
     ];
   }
   

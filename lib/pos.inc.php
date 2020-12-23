@@ -11,9 +11,29 @@ doc: |
   On gère aussi une liste de positions comme array de positions
   et une liste de listes de positions comme array d'array de positions.
 journal: |
+  23/12/2020:
+    - ajout roundToIntIfPossible()
   17/12/2020:
     - création
 */}
+
+  
+function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier un flottant pour simplifier le Yaml
+  static $epsilon = 1e-8; // pour arrondir éventuellement en entier pour la sortie Yaml
+  if ($v == 0)
+    return (int)$v;
+  $r = round($v);
+  if (abs(($v-$r)/$v) < $epsilon)
+    return (int)$r;
+  else
+    return $v;
+}
+if (0) { // Tests unitaires 
+  echo "<pre>\n";
+  var_dump(['15.00000001' => roundToIntIfPossible(15.00000001)]);
+  var_dump(['0' => roundToIntIfPossible(0)]);
+  die();
+}
 
 class Pos {
   // teste si une variable correspond à une position
