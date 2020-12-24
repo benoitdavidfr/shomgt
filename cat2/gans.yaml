@@ -2,417 +2,8 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)'
 $id: 'https://geoapi.fr/shomgt/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/cat2/gans
-valid: 2020-12-18/2020-12-21
+valid: 2020-12-18/2020-12-23
 gans:
-  FR6735:
-    age: 16
-    groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
-    title: 'Pas de Calais'
-    sgtEdition: 'Edition n° 7 - 2012'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '50°40,95''N — 000°54,92''W'
-      NE: '51°41,35''N — 003°15,92''E'
-    ganEdition: 'Edition n°7 - 2012'
-    corrections:
-      - { num: 119, semaineAvis: 1946-4 }
-      - { num: 120, semaineAvis: 1951-11 }
-      - { num: 121, semaineAvis: 1951-14 }
-      - { num: 122, semaineAvis: 2007-11 }
-      - { num: 123, semaineAvis: 2007-16 }
-      - { num: 125, semaineAvis: 2009-10 }
-      - { num: 125, semaineAvis: 2019-11 }
-      - { num: 126, semaineAvis: 2021-12 }
-      - { num: 127, semaineAvis: 2024-13 }
-      - { num: 128, semaineAvis: 2024-33 }
-      - { num: 129, semaineAvis: 2026-35 }
-      - { num: 130, semaineAvis: 2031-35 }
-      - { num: 131, semaineAvis: 2036-12 }
-      - { num: 132, semaineAvis: 2040-32 }
-      - { num: 133, semaineAvis: 2044-33 }
-      - { num: 134, semaineAvis: 2048-33 }
-  FR7076:
-    age: 16
-    groupTitle: 'Océan Atlantique - Côte Ouest de France'
-    title: 'De Saint-Nazaire à Saint-Malo'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: 'NaN°00,00''S — 006°35,50''W'
-      NE: '49°19,00''N — 001°30,00''W'
-    ganEdition: 'Edition n°3 - 2019'
-    corrections:
-      - { num: 5, semaineAvis: 1943-40 }
-      - { num: 6, semaineAvis: 1951-41 }
-      - { num: 7, semaineAvis: 2006-40 }
-      - { num: 8, semaineAvis: 2006-45 }
-      - { num: 9, semaineAvis: 2006-56 }
-      - { num: 10, semaineAvis: 2012-35 }
-      - { num: 11, semaineAvis: 2012-43 }
-      - { num: 12, semaineAvis: 2016-50 }
-      - { num: 13, semaineAvis: 2035-55 }
-      - { num: 14, semaineAvis: 2035-59 }
-      - { num: 15, semaineAvis: 2037-56 }
-      - { num: 16, semaineAvis: 2040-41 }
-      - { num: 17, semaineAvis: 2040-44 }
-      - { num: 18, semaineAvis: 2043-61 }
-      - { num: 19, semaineAvis: 2049-33 }
-      - { num: 20, semaineAvis: 2049-45 }
-  FR6966:
-    age: 14
-    groupTitle: 'Côte Nord de France'
-    title: 'Des Héaux-de-Bréhat au Cap Lévi'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '48°30,00''N — 003°06,82''W'
-      NE: '50°02,20''N — 001°27,82''W'
-    ganEdition: 'Edition n°4 - 2016'
-    corrections:
-      - { num: 44, semaineAvis: 1944-39 }
-      - { num: 45, semaineAvis: 2006-40 }
-      - { num: 46, semaineAvis: 2006-45 }
-      - { num: 47, semaineAvis: 2006-47 }
-      - { num: 48, semaineAvis: 2010-38 }
-      - { num: 49, semaineAvis: 2012-35 }
-      - { num: 50, semaineAvis: 2024-50 }
-      - { num: 51, semaineAvis: 2028-42 }
-      - { num: 52, semaineAvis: 2036-52 }
-      - { num: 53, semaineAvis: 2040-41 }
-      - { num: 54, semaineAvis: 2040-44 }
-      - { num: 55, semaineAvis: 2049-32 }
-      - { num: 56, semaineAvis: 2049-33 }
-      - { num: 57, semaineAvis: 2051-41 }
-  FR7661:
-    age: 13
-    groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
-    title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '38°36,90''N — 000°30,00''W'
-      NE: '41°23,30''N — 004°50,00''E'
-    ganEdition: 'Edition n°2 - 2018'
-    corrections:
-      - { num: 4, semaineAvis: 1904-77 }
-      - { num: 5, semaineAvis: 1906-78 }
-      - { num: 6, semaineAvis: 1908-77 }
-      - { num: 7, semaineAvis: 1908-78 }
-      - { num: 8, semaineAvis: 1923-77 }
-      - { num: 9, semaineAvis: 1928-77 }
-      - { num: 10, semaineAvis: 1937-76 }
-      - { num: 11, semaineAvis: 1937-79 }
-      - { num: 12, semaineAvis: 2005-144 }
-      - { num: 13, semaineAvis: 2009-77 }
-      - { num: 14, semaineAvis: 2030-77 }
-      - { num: 15, semaineAvis: 2042-80 }
-      - { num: 16, semaineAvis: 2048-77 }
-  FR7312:
-    age: 12
-    title: 'La Manche (Partie Est)'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-08-14+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '49°04,94''N — 003°00,08''W'
-      NE: '51°35,45''N — 002°44,92''E'
-    ganEdition: 'Edition n°3 - 2019'
-    corrections:
-      - { num: 2, semaineAvis: 1945-50 }
-      - { num: 3, semaineAvis: 1948-27 }
-      - { num: 4, semaineAvis: 1951-31 }
-      - { num: 5, semaineAvis: 2003-38 }
-      - { num: 6, semaineAvis: 2010-36 }
-      - { num: 7, semaineAvis: 2010-38 }
-      - { num: 8, semaineAvis: 2018-25 }
-      - { num: 9, semaineAvis: 2040-44 }
-      - { num: 10, semaineAvis: 2043-38 }
-      - { num: 11, semaineAvis: 2050-35 }
-      - { num: 12, semaineAvis: 2050-36 }
-      - { num: 13, semaineAvis: 2050-37 }
-  FR6990:
-    age: 12
-    groupTitle: 'Océan Atlantique - Côte Ouest de France'
-    title: 'De la Pointe de Penmarc''h à la Gironde'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '45°28,34''N — 006°00,08''W'
-      NE: '47°55,42''N — 000°54,58''W'
-    ganEdition: 'Edition n°5 - 2019'
-    corrections:
-      - { num: 2, semaineAvis: 1944-60 }
-      - { num: 3, semaineAvis: 1947-50 }
-      - { num: 4, semaineAvis: 1951-41 }
-      - { num: 5, semaineAvis: 2006-56 }
-      - { num: 6, semaineAvis: 2031-54 }
-      - { num: 7, semaineAvis: 2035-55 }
-      - { num: 8, semaineAvis: 2035-59 }
-      - { num: 9, semaineAvis: 2037-56 }
-      - { num: 10, semaineAvis: 2041-60 }
-      - { num: 11, semaineAvis: 2043-61 }
-      - { num: 12, semaineAvis: 2043-64 }
-      - { num: 13, semaineAvis: 2049-45 }
-  FR7214:
-    age: 11
-    groupTitle: 'Côte Nord de France - Côte de Belgique'
-    title: 'De Dunkerque à Oostende'
-    sgtEdition: 'Edition n° 8 - 2019'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '51°02,61''N — 002°04,92''E'
-      NE: '51°27,25''N — 003°01,72''E'
-    hasPart:
-      - { title: 'Cartouche: A - Nieuwpoort', bbox: { SW: '51°08,00''N — 002°42,82''E', NE: '51°09,45''N — 002°45,52''E' } }
-      - { title: 'Cartouche: B - Oostende', bbox: { SW: '51°13,37''N — 002°54,72''E', NE: '51°14,62''N — 002°56,51''E' } }
-    ganEdition: 'Edition n°8 - 2019'
-    corrections:
-      - { num: 5, semaineAvis: 1951-11 }
-      - { num: 6, semaineAvis: 1951-14 }
-      - { num: 7, semaineAvis: 2007-11 }
-      - { num: 8, semaineAvis: 2009-10 }
-      - { num: 9, semaineAvis: 2021-12 }
-      - { num: 10, semaineAvis: 2021-13 }
-      - { num: 11, semaineAvis: 2032-14 }
-      - { num: 12, semaineAvis: 2036-12 }
-      - { num: 13, semaineAvis: 2040-32 }
-      - { num: 14, semaineAvis: 2044-33 }
-      - { num: 15, semaineAvis: 2048-33 }
-  FR7311:
-    age: 11
-    title: 'La Manche (Partie Ouest)'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '48°14,94''N — 006°55,09''W'
-      NE: '50°47,95''N — 001°10,08''W'
-    ganEdition: 'Edition n°4 - 2019'
-    corrections:
-      - { num: 8, semaineAvis: 1945-50 }
-      - { num: 9, semaineAvis: 1948-27 }
-      - { num: 10, semaineAvis: 2006-45 }
-      - { num: 11, semaineAvis: 2010-38 }
-      - { num: 12, semaineAvis: 2012-35 }
-      - { num: 13, semaineAvis: 2016-50 }
-      - { num: 14, semaineAvis: 2018-25 }
-      - { num: 15, semaineAvis: 2040-41 }
-      - { num: 16, semaineAvis: 2040-44 }
-      - { num: 17, semaineAvis: 2043-38 }
-      - { num: 18, semaineAvis: 2049-25 }
-  FR7155:
-    age: 10
-    groupTitle: 'Côte Nord de France'
-    title: 'Du Cap Fréhel à la Pointe du Grouin'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '48°33,94''N — 002°27,08''W'
-      NE: '48°53,64''N — 001°43,28''W'
-    ganEdition: 'Edition n°3 - 2017'
-    corrections:
-      - { num: 13, semaineAvis: 2006-41 }
-      - { num: 14, semaineAvis: 2006-43 }
-      - { num: 15, semaineAvis: 2006-45 }
-      - { num: 16, semaineAvis: 2012-35 }
-      - { num: 17, semaineAvis: 2024-50 }
-      - { num: 18, semaineAvis: 2036-51 }
-      - { num: 19, semaineAvis: 2040-41 }
-      - { num: 20, semaineAvis: 2040-44 }
-      - { num: 21, semaineAvis: 2045-40 }
-      - { num: 22, semaineAvis: 2049-32 }
-  FR7475:
-    age: 10
-    groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
-    title: 'De Puerto Rico à Trinidad'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - MQ
-      - BL
-      - GP
-      - MF
-    bbox:
-      SW: '09°30,00''N — 066°30,00''W'
-      NE: '19°42,00''N — 059°21,00''W'
-    ganEdition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 46, semaineAvis: 1724-255 }
-      - { num: 47, semaineAvis: 1737-252 }
-      - { num: 48, semaineAvis: 1737-256 }
-      - { num: 49, semaineAvis: 1747-247 }
-      - { num: 50, semaineAvis: 1747-255 }
-      - { num: 51, semaineAvis: 1749-248 }
-      - { num: 52, semaineAvis: 1749-249 }
-      - { num: 53, semaineAvis: 1802-257 }
-      - { num: 54, semaineAvis: 1817-258 }
-      - { num: 55, semaineAvis: 1820-253 }
-      - { num: 56, semaineAvis: 1820-254 }
-      - { num: 57, semaineAvis: 1820-255 }
-      - { num: 58, semaineAvis: 1825-251 }
-      - { num: 59, semaineAvis: 1827-252 }
-      - { num: 60, semaineAvis: 1843-252 }
-      - { num: 61, semaineAvis: 1849-259 }
-      - { num: 62, semaineAvis: 1851-247 }
-      - { num: 63, semaineAvis: 1908-260 }
-      - { num: 64, semaineAvis: 1910-260 }
-      - { num: 65, semaineAvis: 1912-270 }
-  FR6898:
-    age: 10
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'Mer des Antilles (Mer des Caraïbes)'
-    sgtEdition: 'Edition n° 4 - 2014'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - MQ
-      - BL
-      - GP
-      - MF
-    bbox:
-      SW: '07°20,00''N — 084°51,24''W'
-      NE: '23°35,89''N — 058°40,00''W'
-    ganEdition: 'Edition n°4 - 2015'
-    corrections:
-      - { num: 10, semaineAvis: 1721-262 }
-      - { num: 11, semaineAvis: 1737-256 }
-      - { num: 12, semaineAvis: 1737-259 }
-      - { num: 13, semaineAvis: 1747-247 }
-      - { num: 14, semaineAvis: 1802-260 }
-      - { num: 15, semaineAvis: 1802-261 }
-      - { num: 16, semaineAvis: 1814-260 }
-      - { num: 17, semaineAvis: 1820-254 }
-      - { num: 18, semaineAvis: 1825-251 }
-      - { num: 19, semaineAvis: 1828-261 }
-      - { num: 20, semaineAvis: 1843-252 }
-      - { num: 21, semaineAvis: 1849-248 }
-      - { num: 22, semaineAvis: 1905-266 }
-      - { num: 23, semaineAvis: 1908-260 }
-      - { num: 24, semaineAvis: 1908-262 }
-      - { num: 25, semaineAvis: 1921-262 }
-      - { num: 26, semaineAvis: 1931-261 }
-      - { num: 27, semaineAvis: 1941-260 }
-      - { num: 28, semaineAvis: 2005-266 }
-      - { num: 29, semaineAvis: 2008-269 }
-  FR7067:
-    age: 10
-    groupTitle: 'Côte Ouest de France'
-    title: 'De la Chaussée de Sein à Belle-Île'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '46°59,94''N — 005°10,08''W'
-      NE: '48°04,94''N — 002°49,08''W'
-    ganEdition: 'Edition n°4 - 2015'
-    corrections:
-      - { num: 32, semaineAvis: 1931-48 }
-      - { num: 33, semaineAvis: 2006-56 }
-      - { num: 34, semaineAvis: 2012-43 }
-      - { num: 35, semaineAvis: 2012-46 }
-      - { num: 36, semaineAvis: 2035-55 }
-      - { num: 37, semaineAvis: 2035-58 }
-      - { num: 38, semaineAvis: 2035-59 }
-      - { num: 39, semaineAvis: 2037-56 }
-      - { num: 40, semaineAvis: 2044-54 }
-      - { num: 41, semaineAvis: 2049-45 }
-  FR6619:
-    age: 10
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
-    sgtEdition: 'Edition n° 3 - 1988'
-    modified: '2017-02-15+01:00'
-    mapsFrance:
-      - BL
-      - GP
-      - MF
-    bbox:
-      SW: 'NaN°00,00''S — NaN°00,00''W'
-      NE: 'NaN°00,00''S — 060°30,00''W'
-    ganEdition: 'Edition n°3 - 1988'
-    corrections:
-      - { num: 172, semaineAvis: 1707-267 }
-      - { num: 173, semaineAvis: 1737-256 }
-      - { num: 174, semaineAvis: 1737-269 }
-      - { num: 175, semaineAvis: 1750-266 }
-      - { num: 176, semaineAvis: 1802-261 }
-      - { num: 177, semaineAvis: 1804-262 }
-      - { num: 178, semaineAvis: 1807-263 }
-      - { num: 179, semaineAvis: 1827-265 }
-      - { num: 180, semaineAvis: 1829-265 }
-      - { num: 181, semaineAvis: 1837-265 }
-      - { num: 182, semaineAvis: 1908-262 }
-      - { num: 183, semaineAvis: 1913-277 }
-      - { num: 184, semaineAvis: 1913-279 }
-      - { num: 186, semaineAvis: 1923-264 }
-      - { num: 185, semaineAvis: 1923-267 }
-      - { num: 187, semaineAvis: 1931-263 }
-      - { num: 188, semaineAvis: 1931-266 }
-      - { num: 189, semaineAvis: 1941-260 }
-      - { num: 190, semaineAvis: 1943-275 }
-      - { num: 191, semaineAvis: 2008-269 }
-  FR7032:
-    age: 10
-    groupTitle: 'Côte Ouest de France'
-    title: 'De l''Île de Groix à Belle-Ile'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '47°14,94''N — 003°31,28''W'
-      NE: '47°44,54''N — 003°01,48''W'
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 9, semaineAvis: 1931-53 }
-      - { num: 10, semaineAvis: 1931-56 }
-      - { num: 11, semaineAvis: 1951-56 }
-      - { num: 12, semaineAvis: 2006-56 }
-      - { num: 13, semaineAvis: 2009-56 }
-      - { num: 14, semaineAvis: 2012-46 }
-      - { num: 15, semaineAvis: 2035-58 }
-      - { num: 16, semaineAvis: 2037-56 }
-      - { num: 17, semaineAvis: 2039-56 }
-      - { num: 18, semaineAvis: 2043-56 }
-  FR6857:
-    age: 10
-    groupTitle: 'Côte Nord de France'
-    title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
-    sgtEdition: 'Edition n° 4 - 2012'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
-    bbox:
-      SW: '49°10,74''N — 001°57,48''W'
-      NE: '50°12,95''N — 000°23,52''W'
-    ganEdition: 'Edition n°4 - 2012'
-    corrections:
-      - { num: 60, semaineAvis: 1951-31 }
-      - { num: 61, semaineAvis: 2003-38 }
-      - { num: 62, semaineAvis: 2007-33 }
-      - { num: 63, semaineAvis: 2010-36 }
-      - { num: 64, semaineAvis: 2036-44 }
-      - { num: 65, semaineAvis: 2038-35 }
-      - { num: 66, semaineAvis: 2043-38 }
-      - { num: 67, semaineAvis: 2050-35 }
-      - { num: 68, semaineAvis: 2050-36 }
-      - { num: 69, semaineAvis: 2050-37 }
   FR7152:
     age: 9
     groupTitle: 'Côte Nord de France'
@@ -2405,6 +1996,21 @@ gans:
       - { num: 4, semaineAvis: 2009-260 }
       - { num: 5, semaineAvis: 2015-260 }
       - { num: 6, semaineAvis: 2040-260 }
+  FR7312:
+    age: 3
+    title: 'La Manche (Partie Est)'
+    sgtEdition: 'Edition n° 3 - 2019'
+    modified: '2020-12-08+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '49°04,94''N — 003°00,08''W'
+      NE: '51°35,45''N — 002°44,92''E'
+    ganEdition: 'Edition n°3 - 2019'
+    corrections:
+      - { num: 11, semaineAvis: 2050-35 }
+      - { num: 12, semaineAvis: 2050-36 }
+      - { num: 13, semaineAvis: 2050-37 }
   FR7081:
     age: 3
     groupTitle: 'Mer Méditerranée et Mer Noire'
@@ -2543,6 +2149,22 @@ gans:
       - { num: 25, semaineAvis: 2019-60 }
       - { num: 26, semaineAvis: 2043-61 }
       - { num: 27, semaineAvis: 2049-45 }
+  FR6857:
+    age: 3
+    groupTitle: 'Côte Nord de France'
+    title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
+    sgtEdition: 'Edition n° 4 - 2012'
+    modified: '2020-12-08+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '49°10,74''N — 001°57,48''W'
+      NE: '50°12,95''N — 000°23,52''W'
+    ganEdition: 'Edition n°4 - 2012'
+    corrections:
+      - { num: 67, semaineAvis: 2050-35 }
+      - { num: 68, semaineAvis: 2050-36 }
+      - { num: 69, semaineAvis: 2050-37 }
   FR7403:
     age: 3
     groupTitle: 'Côte Ouest de France'
@@ -3462,6 +3084,21 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 1938-97 }
       - { num: 6, semaineAvis: 1948-93 }
+  FR7076:
+    age: 2
+    groupTitle: 'Océan Atlantique - Côte Ouest de France'
+    title: 'De Saint-Nazaire à Saint-Malo'
+    sgtEdition: 'Edition n° 3 - 2019'
+    modified: '2020-12-01+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: 'NaN°00,00''S — 006°35,50''W'
+      NE: '49°19,00''N — 001°30,00''W'
+    ganEdition: 'Edition n°3 - 2019'
+    corrections:
+      - { num: 19, semaineAvis: 2049-33 }
+      - { num: 20, semaineAvis: 2049-45 }
   FR7413:
     age: 2
     groupTitle: 'Côte Ouest de France'
@@ -4093,6 +3730,19 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1939-183 }
       - { num: 2, semaineAvis: 1951-185 }
+  FR7311:
+    age: 1
+    title: 'La Manche (Partie Ouest)'
+    sgtEdition: 'Edition n° 4 - 2019'
+    modified: '2020-12-01+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '48°14,94''N — 006°55,09''W'
+      NE: '50°47,95''N — 001°10,08''W'
+    ganEdition: 'Edition n°4 - 2019'
+    corrections:
+      - { num: 18, semaineAvis: 2049-25 }
   FR7094:
     age: 1
     groupTitle: 'Côte Nord de France'
@@ -4167,6 +3817,20 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 13, semaineAvis: 2024-33 }
+  FR7067:
+    age: 1
+    groupTitle: 'Côte Ouest de France'
+    title: 'De la Chaussée de Sein à Belle-Île'
+    sgtEdition: 'Edition n° 4 - 2015'
+    modified: '2020-12-01+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '46°59,94''N — 005°10,08''W'
+      NE: '48°04,94''N — 002°49,08''W'
+    ganEdition: 'Edition n°4 - 2015'
+    corrections:
+      - { num: 41, semaineAvis: 2049-45 }
   FR6823:
     age: 1
     groupTitle: 'Côte Est de Corse'
@@ -4214,6 +3878,20 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 7, semaineAvis: 2012-43 }
+  FR6990:
+    age: 1
+    groupTitle: 'Océan Atlantique - Côte Ouest de France'
+    title: 'De la Pointe de Penmarc''h à la Gironde'
+    sgtEdition: 'Edition n° 5 - 2019'
+    modified: '2020-12-01+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '45°28,34''N — 006°00,08''W'
+      NE: '47°55,42''N — 000°54,58''W'
+    ganEdition: 'Edition n°5 - 2019'
+    corrections:
+      - { num: 13, semaineAvis: 2049-45 }
   FR7247:
     age: 1
     groupTitle: 'Côte Nord de France'
@@ -4389,6 +4067,20 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 17, semaineAvis: 2019-60 }
+  FR6735:
+    age: 1
+    groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
+    title: 'Pas de Calais'
+    sgtEdition: 'Edition n° 7 - 2012'
+    modified: '2020-11-24+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '50°40,95''N — 000°54,92''W'
+      NE: '51°41,35''N — 003°15,92''E'
+    ganEdition: 'Edition n°7 - 2012'
+    corrections:
+      - { num: 134, semaineAvis: 2048-33 }
   FR7486:
     age: 1
     groupTitle: 'Océan Indien'
@@ -4419,6 +4111,23 @@ gans:
     ganEdition: 'Edition n°6 - 2018'
     corrections:
       - { num: 3, semaineAvis: 2038-72 }
+  FR7214:
+    age: 1
+    groupTitle: 'Côte Nord de France - Côte de Belgique'
+    title: 'De Dunkerque à Oostende'
+    sgtEdition: 'Edition n° 8 - 2019'
+    modified: '2020-11-24+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '51°02,61''N — 002°04,92''E'
+      NE: '51°27,25''N — 003°01,72''E'
+    hasPart:
+      - { title: 'Cartouche: A - Nieuwpoort', bbox: { SW: '51°08,00''N — 002°42,82''E', NE: '51°09,45''N — 002°45,52''E' } }
+      - { title: 'Cartouche: B - Oostende', bbox: { SW: '51°13,37''N — 002°54,72''E', NE: '51°14,62''N — 002°56,51''E' } }
+    ganEdition: 'Edition n°8 - 2019'
+    corrections:
+      - { num: 15, semaineAvis: 2048-33 }
   FR7015:
     age: 1
     groupTitle: 'Méditerranée Occidentale'
@@ -4552,6 +4261,20 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 10, semaineAvis: 2042-20 }
+  FR7032:
+    age: 1
+    groupTitle: 'Côte Ouest de France'
+    title: 'De l''Île de Groix à Belle-Ile'
+    sgtEdition: 'Edition n° 4 - 2017'
+    modified: '2020-10-21+02:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '47°14,94''N — 003°31,28''W'
+      NE: '47°44,54''N — 003°01,48''W'
+    ganEdition: 'Edition n°4 - 2017'
+    corrections:
+      - { num: 18, semaineAvis: 2043-56 }
   FR7232:
     age: 1
     groupTitle: 'Côte Nord de France'
@@ -4568,6 +4291,20 @@ gans:
     ganEdition: 'Publication 2013'
     corrections:
       - { num: 17, semaineAvis: 2051-41 }
+  FR6966:
+    age: 1
+    groupTitle: 'Côte Nord de France'
+    title: 'Des Héaux-de-Bréhat au Cap Lévi'
+    sgtEdition: 'Edition n° 4 - 2015'
+    modified: '2020-12-08+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '48°30,00''N — 003°06,82''W'
+      NE: '50°02,20''N — 001°27,82''W'
+    ganEdition: 'Edition n°4 - 2016'
+    corrections:
+      - { num: 57, semaineAvis: 2051-41 }
   FR7419:
     age: 1
     groupTitle: 'Côte Nord de France'
@@ -4695,22 +4432,6 @@ gans:
     ganEdition: 'Edition n°2 - 2016'
     corrections:
       - { num: 9, semaineAvis: 1932-56 }
-  FR7212:
-    age: 1
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'De Cabo Finisterre à Casablanca (Dâr el Beïda)'
-    sgtEdition: 'Edition n° 2 - 2007'
-    modified: '2019-11-06+01:00'
-    mapsFrance: {  }
-    bbox:
-      SW: '33°30,00''N — NaN°00,00''W'
-      NE: '43°30,00''N — 005°15,00''W'
-    ganEdition: 'Edition n°2 - 2007'
-    corrections:
-      - { num: 52, semaineAvis: 1945-145 }
-      - { num: 53, semaineAvis: 2006-72 }
-      - { num: 54, semaineAvis: 2011-73 }
-      - { num: 55, semaineAvis: 2038-72 }
   FR7162:
     age: 1
     groupTitle: 'Côte Ouest de Corse'
@@ -4791,6 +4512,20 @@ gans:
     ganEdition: 'Edition n°9 - 2017'
     corrections:
       - { num: 10, semaineAvis: 2024-36 }
+  FR7155:
+    age: 1
+    groupTitle: 'Côte Nord de France'
+    title: 'Du Cap Fréhel à la Pointe du Grouin'
+    sgtEdition: 'Edition n° 3 - 2017'
+    modified: '2020-12-01+01:00'
+    mapsFrance:
+      - FX
+    bbox:
+      SW: '48°33,94''N — 002°27,08''W'
+      NE: '48°53,64''N — 001°43,28''W'
+    ganEdition: 'Edition n°3 - 2017'
+    corrections:
+      - { num: 22, semaineAvis: 2049-32 }
   FR7222:
     age: 1
     groupTitle: 'Océan Indien'
@@ -5298,6 +5033,23 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2026-233 }
       - { num: 4, semaineAvis: 2044-230 }
+  FR6898:
+    age: 0.5
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'Mer des Antilles (Mer des Caraïbes)'
+    sgtEdition: 'Edition n° 4 - 2014'
+    modified: '2020-07-15+02:00'
+    mapsFrance:
+      - MQ
+      - BL
+      - GP
+      - MF
+    bbox:
+      SW: '07°20,00''N — 084°51,24''W'
+      NE: '23°35,89''N — 058°40,00''W'
+    ganEdition: 'Edition n°4 - 2015'
+    corrections:
+      - { num: 32, semaineAvis: 2051-262 }
   FR6770:
     age: 0.5
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
@@ -5502,6 +5254,22 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1728-205 }
       - { num: 3, semaineAvis: 1827-205 }
+  FR6619:
+    age: 0.5
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
+    sgtEdition: 'Edition n° 3 - 1988'
+    modified: '2020-11-04+01:00'
+    mapsFrance:
+      - BL
+      - GP
+      - MF
+    bbox:
+      SW: 'NaN°00,00''S — NaN°00,00''W'
+      NE: 'NaN°00,00''S — 060°30,00''W'
+    ganEdition: 'Edition n°3 - 1988'
+    corrections:
+      - { num: 197, semaineAvis: 2045-277 }
   FR6808:
     age: 0.5
     groupTitle: 'Océan Atlantique Sud'
@@ -6124,14 +5892,6 @@ gans:
     modified: '2020-01-01+01:00'
     mapsFrance:
       - FX
-  FR6645:
-    age: 0
-    groupTitle: 'Côte Ouest de France'
-    title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
   FR7604:
     age: 0
     groupTitle: 'Océan Indien (Partie Sud)'
@@ -6224,14 +5984,6 @@ gans:
     modified: '2016-12-21+01:00'
     mapsFrance:
       - PF
-  FR5825:
-    age: 0
-    groupTitle: 'Océan Pacifique'
-    title: 'Ilot Clipperton'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - CP
   FR7356:
     age: 0
     groupTitle: 'Iles Marquises (Fenua Enata)'
@@ -6364,14 +6116,6 @@ gans:
       SW: '41°57,94''N — 008°59,94''E'
       NE: '43°27,94''N — 010°23,14''E'
     ganEdition: 'Edition n°5 - 2016'
-  FR6646:
-    age: 0
-    groupTitle: 'Côte Ouest de France'
-    title: 'Abords et Ports du Guilvinec et de Lesconil'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
   FR7480:
     age: 0
     groupTitle: 'Côte de Guyane'
@@ -6420,6 +6164,17 @@ gans:
     modified: '2019-07-19+02:00'
     mapsFrance:
       - FX
+  FR7475:
+    age: 0
+    groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
+    title: 'De Puerto Rico à Trinidad'
+    sgtEdition: 'Edition n° 2 - 2010'
+    modified: '2020-10-21+02:00'
+    mapsFrance:
+      - MQ
+      - BL
+      - GP
+      - MF
   FR7457:
     age: 0
     groupTitle: 'Archipel des Tuamotu'
@@ -6444,13 +6199,6 @@ gans:
     modified: '2019-01-02+01:00'
     mapsFrance:
       - TF
-  FR7622:
-    age: 0
-    groupTitle: 'Petites Antilles'
-    title: 'Ports de Saint Lucia'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2016-11-23+01:00'
-    mapsFrance: {  }
   FR7485:
     age: 0
     groupTitle: 'Océan Atlantique - Côtes de Guyane Française et du Brésil'
@@ -6750,7 +6498,28 @@ gans:
     age: -1
     groupTitle: 'Côte Sud-Est d''Angleterre'
     title: 'De Dover à North Foreland'
-    sgtEdition: 'Edition n° 10 - 2016'
-    modified: '2019-10-09+02:00'
+    sgtEdition: null
+    modified: null
     mapsFrance: {  }
+  FR7250:
+    age: -1
+    title: 'De la pointe de la Torche à Loctudy'
+    sgtEdition: 'Publication 2020'
+    modified: '2020-07-01+02:00'
+    mapsFrance:
+      - FX
+  FR7750:
+    age: -1
+    title: 'Approches de l’Île Clipperton'
+    sgtEdition: 'Publication 2020'
+    modified: '2020-09-30+02:00'
+    mapsFrance:
+      - CP
+  FR7764:
+    age: -1
+    title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
+    sgtEdition: 'Publication 2020'
+    modified: '2020-06-24+02:00'
+    mapsFrance:
+      - NC
 eof: null

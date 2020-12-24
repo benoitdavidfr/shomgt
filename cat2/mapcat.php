@@ -13,9 +13,6 @@ doc: |
 
   Un bbox à cheval sur l'anti-méridien n'est pas géré de la même facon que dans la classe GBox
   Ici, il est géré comme spécifié par GeoJSON, cad avec $westlimit > $eastlimit
-
-  A faire:
-    - intégrer la vérification du schéma
 journal: |
   23/12/2020:
     - utilisation du champ edition de ShomGt et pas celui de V1
@@ -206,13 +203,13 @@ class MapCat {
   protected ?string $obsolete; // si non null signifie que la carte est obsolète
   protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title; // titre de la carte
-  protected ?string $edition; // edition de la carte
-  protected array $mapsFrance; // identifie les cartes dites d'intérêt et les zones couvertes
-  protected ?string $modified; // date de la dernière correction apportée à la carte ou null s'il n'y en n'a pas eu ou si non connue
-  protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 s'il n'y en n'a pas eu, ou null si inconnu
+  protected ?string $edition; // edition de la carte, source MD ISO
+  protected ?string $modified; // date de la dernière correction apportée à la carte ou null s'il n'y en n'a pas eu ou si non connue, source MD ISO
+  protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 s'il n'y en n'a pas eu, ou null si inconnu, source MD ISO
   protected ?string $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
                                 // null ssi la carte ne comporte pas d'espace principal
   protected ?GjBox $bbox; // bbox de l'espace principal de la carte comme BBoxDM|GjBox, null ssi pas d'espace principal
+  protected array $mapsFrance; // identifie les cartes dites d'intérêt et les zones couvertes
   protected ?string $replaces; // indication éventuelle de la carte remplacée
   protected ?string $references; // ssi la carte est un fac-similé alors référence de la carte généralement étrangère reproduite
   protected ?string $noteShom; // commentaire associé par le Shom à la carte
@@ -221,7 +218,6 @@ class MapCat {
   
   // retourne la propriété
   function num(): string { return $this->num; }
-  function edition(): string { return $this->edition; }
   function mapsFrance(): array { return $this->mapsFrance; }
   function bbox(): ?GjBox { return $this->bbox; }
   function hasPart(): array { return $this->hasPart; }
@@ -388,6 +384,7 @@ class MapCat {
       foreach ($yaml['maps'] as $mapid => $map) {
         self::$maps[$mapid] = new self($mapid, $map);
       }
+      ksort(self::$maps);
       self::storeAsYaml();
       self::storeAsPser();
     } catch (Exception $e) {
@@ -403,8 +400,14 @@ class MapCat {
     foreach (self::maps() as $mapid => $map) {
       if ($map->existsInShomgGt())
         $map->updateFromShomGt();
+      else {
+        $map->modified = null;
+        $map->edition = null;
+        $map->lastUpdate = null;
+      }
     }
     
+    // recherche les cartes de ShomGt absentes du catalogue
     $dirpath = __DIR__.'/../../../shomgeotiff/current';
     if (!$dh = opendir($dirpath))
       die("Ouverture de $dirpath impossible");
@@ -727,7 +730,7 @@ if ($f == 'html') { // affichage html
           "<td>",isset($mapa['groupTitle']) ? "$mapa[groupTitle]$br" : '',"<a href='$llmapurl'>$mapa[title]</a></td>",
           //"<td>",strlen($mapa['groupTitle'] ?? '')+strlen($mapa['title']),"</td>",
           "<td align='right'>",$mapa['scaleDenominator'] ?? '<i>'.$mapa['hasPart'][0]['scaleDenominator'].'</i>',"</td>",
-          "<td>$mapa[edition]</td>",
+          "<td>",$mapa['edition'] ?? 'non définie',"</td>",
           "<td>",implode(', ', $mapa['mapsFrance']),"</td>",
           "</tr>\n";
       }

@@ -303,7 +303,12 @@ class Gan {
       if (in_array($filename, ['.','..','.DS_Store','errors.yaml']))
         continue;
       $mapid = substr($filename, 0, 6);
+      $ganWeek = substr($filename, 7, 4);
       $mapa = MapCat::maps($mapid);
+      if (!isset($mapa['modified']) || ($ganWeek <> self::week($mapa['modified']))) {
+        echo "$filename périmé sauté\n";
+        continue;
+      }
       $mtime = filemtime(self::GAN_DIR."/$filename");
       if (!$minvalid || ($mtime < $minvalid))
         $minvalid = $mtime;
@@ -329,7 +334,7 @@ class Gan {
     //print_r($record);
     // cas où soit le GAN ne renvoie aucune info signifiant qu'il n'y a pas de corrections, soit il renvoie une erreur
     if (!$record || isset($record['harvestError'])) {
-      $this->groupTitle = $mapa['groupTitle'];
+      $this->groupTitle = $mapa['groupTitle'] ?? null;
       $this->title = $mapa['title'];
     }
     else { // cas où il existe des corrections
@@ -337,7 +342,7 @@ class Gan {
       $this->postProcessTitle($record['title']);
       $this->ganEdition = $record['edition'];
     }
-    $this->sgtEdition = $mapa['edition'];
+    $this->sgtEdition = $mapa['edition'] ?? null;
     $this->modified = $mapa['modified'] ?? null;
     $this->mapsFrance = $mapa['mapsFrance'] ?? null;
     $this->corrections = $record['corrections'] ?? [];
@@ -445,7 +450,9 @@ class Gan {
 //echo Yaml::dump(Gan::allAsArray()); die();
 //Gan::loadFromPser(); print_r(Gan::$modified); die();
 
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe Gan
+
+// Utilisation de la classe Gan
+if ((__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) && (($argv[0] ?? '') <> basename(__FILE__))) return;
 
 
 if (php_sapi_name() == 'cli') {

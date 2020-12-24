@@ -1,6 +1,8 @@
 title: cat2 - catalogue des cartes raster GéoTIFF du SHOM v2
 path: /geoapi/shomgt/cat2
 doc: |
+  Revoir la cohérence et la source de l'info, trop de bugs !!!
+
   Ce module remplace le module cat v1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
   Dans la v1 je reconstruisais le catalogue à chaque moisson.
   Ce principe change dans cette version car je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,
@@ -19,18 +21,28 @@ doc: |
       précises du cadre intérieur de chaque zone de la carte, qui sont utilisées par le module updt.
     
   L'ojectif de ce module est:
-    1) de tenir à jour ce catalogue mapcat par confrontation au WFS et aux GAN
-      - pour cela le principe est
-        - de détecter les écarts et de les corriger dans mapcat.yaml
-        - d'assurer avec Git une gestion des versions successives du catalogue
-    2) de confronter ce catalogue au catalogue des GéoTiffs (../ws/shomgt.yaml) pour détecter:
-    - les nouvelles corrections de cartes publiées par le Shom à prendre en compte dans les GéoTiffs
-    - les GéoTiffs périmés (à voir)
-    - les GéoTiffs à ajouter au catalogue shomgt.yaml (à voir)
+    1) de gérer le catalogue MapCat
+      - avec la description des cartes de ShomGt plus des autres cartes d'intérêt,
+      - avec les dates de mise à jour, l'édition et la dernière correction issues des MD ISO ShomGt,
+      - avec les titres et bbox internes issues du GAN, ou à défaut saisies sur les cartes,
+      - permettant une confrontation au WFS du Shom pour détecter les nouvelles cartes et celles de ShomGt obsolètes,
+    2) de consulter les GANs concernant chaque carte pour détecter les cartes à mettre à jour.
   
-  Du point de vue opérationnel:
-    - d'abord regarder les nouvelles cartes et les cartes obsolètes dans gestion.php
-    - puis regarder les cartes à mettre à jour dans hgan.php
+  Du point de vue opérationnel le process est:
+    0) on part d'un catalogue MapCat existant
+    1) synchroniser MapCat avec ShomGt pour mettre à jour la date de mise à jour, l'édition et la dernière correction des cartes reçues
+    2) identifier les cartes obsolètes et les cartes à rajouter par confrontation au WFS,
+    3) effectuer une moisson du GAN
+    4) identifier les cartes les plus "agées", cad nécessitant le plus une mise à jour
+    5) commander au Shom les cartes à rajouter et les cartes les plus agées
+    6) à réception des cartes, pour les nouvelles cartes, lire sur la carte les bbox internes et saisir l'info dans MapCat
+    7) marquer obsolètes les cartes qui le sont dans MapCat
+    8) mettre à jour ShomGt
+    9) itérer sur 1)
+  
+  Test 23/12 20:30
+    - il faut pouvoir modifier la moisson du GAN de manière incrémentale uniquement sur les cartes modifiées ou ajoutées
+    - une solution provisoire a été mise en place - la péréniser ?
     
   Du point de vue architecture informatique:
     - le catalogue est stocké dans une structure de données de type Yaml spécifiée par un schéma JSON. Afin de gérer les erreurs
@@ -42,8 +54,6 @@ doc: |
     - le fichier Yaml est régulièrement historisé dans Git.
     - le fichier des gans est aussi géré en pser et en Yaml
   
-  Il faut aussi adapter l'utilisation notamment par ../updt des infos exposées par ce module
-
   Le catalogue des cartes contient des infos absentes du catalogue des GéoTiffs, notamment le nom de certaines cartes, ex 7436
   
   Le catalogue des cartes pourrait/devrait être géré/publié en DCAT.

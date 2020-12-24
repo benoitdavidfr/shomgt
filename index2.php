@@ -38,7 +38,9 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Actualité</h3>
 <ul>
-  <li>26/02/2020 : toutes les cartes de métropole ont enfin été mises àjour</li>
+  <li>23/12/2020 : plusieurs cartes parmi les moins à jour ont été actualisées, certaines cartes ont été supprimées,
+    quelques cartes ont été ajoutées</li>
+  <li>26/02/2020 : toutes les cartes de métropole ont enfin été mises à jour</li>
   <li>21/11/2019 : la mise à jour des cartes est en cours mais, en raison d'une difficulté au Shom,
     seule une partie des cartes a été traitée ;
     les cartes mises à jour sont celles de métropole dont le numéro est inférieur ou égal à 7393.<br>

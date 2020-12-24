@@ -19,9 +19,10 @@ journal: |
 <li><a href='llmap.php'>Affiche le catalogue sous la forme d'une carte</a></li>
 <li><a href='gestion.php?action=compCat'>
   Détecte de nouvelles cartes ou des cartes périmées par confontation du catalogue au flux WFS</a></li>
-<li><a href='hgan.php'>Liste les cartes à mettre à jour ordonnées par age décroissant</a></li>
+<li><a href='gan.php'>Liste les cartes à mettre à jour ordonnées par age décroissant</a></li>
 </ul>
 <h3>Autres actions</h3><ul>
+  <li><a href='mapcat.php'>Gestion du catalogue</a></li>
   <li><a href='gestion.php'>Suivi du flux WFS</a></li>
-  <li><a href='hgan.php?a=help'>Suivi des GAN</a></li>
+  <li><a href='gan.php?a=menu'>Suivi des GAN</a></li>
 </ul>

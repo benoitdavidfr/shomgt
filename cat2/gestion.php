@@ -45,9 +45,9 @@ if ($action == 'harvestWfs') {
 if (in_array($action, ['compCat', 'obsolete'])) {
   $wfsItems = Wfs::items();
 
-  /*if ($action == 'obsolete') {
-    MapCat::$maps[$_GET['id']]->setObsolete("Carte absente du flux WFS le ".date('d/m/Y'));
-  }*/
+  if ($action == 'obsolete') {
+    MapCat::mapById($_GET['id'])->setObsolete("Carte absente du flux WFS le ".date('d/m/Y'));
+  }
   
   $nb = 0;
   foreach ($wfsItems as $id => $wfsItem)

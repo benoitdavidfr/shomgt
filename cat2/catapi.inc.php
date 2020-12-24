@@ -10,8 +10,12 @@ journal: |
     créations
 includes: [mapcat.php]
 */
-require_once(__DIR__.'/mapcat.php');
-
+if (file_exists(__DIR__.'/versionV2Active.yaml')) { // utilisation V2
+  require_once __DIR__.'/mapcat.php';
+}
+else { // utilisation V1
+  require_once __DIR__.'/../cat/mapcat.inc.php';
+}
 use Symfony\Component\Yaml\Yaml;
 
 /*PhpDoc: classes
@@ -32,21 +36,12 @@ class CatApi {
     'gbox': GBox
     'bboxDM': array avec 2 string en dégrés minutes, exemple ['SW'=> "16°42,71''S - 151°33,15''W", 'NE'=>"16°38,39''S - 151°26,58''W"]
     retourne [] si le fichier est absent
-
-    # Erreur sur CatApi::getCatInfoFromGtName(7037/7037_pal300, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7037/7037_A_gtw, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7661/7661_pal300, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(6835/6835_pal300, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(6835/6835_1_gtw, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7212/7212_pal300, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7622/7622_C_gtw, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7622/7622_B_gtw, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7622/7622_D_gtw, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(7622/7622_A_gtw, gtbbox)
-    # Erreur sur CatApi::getCatInfoFromGtName(6808/6808_pal300, gtbbox)
-
   */
   static function getCatInfoFromGtName(string $name, GBox $bbox=null): array {
+    if (!file_exists(__DIR__.'/versionV2Active.yaml')) { // utilisation V1
+      return MapCat::getCatInfoFromGtName($name, $bbox);
+    }
+    
     // Exceptions
     if ($name == '5825/5825_1_gtw') {
       // carte "Ilot Clipperton" avec un cartouche et sans espace principal, traitée différemment entre GAN et GéoTiff
@@ -76,7 +71,7 @@ class CatApi {
       return [
         'num'=> $num,
         'title'=> $mapa['title'],
-        'edition'=> $mapa['edition'],
+        //'edition'=> $mapa['edition'],
         'scaleDenominator'=> $mapa['scaleDenominator'],
         'gbox'=> $map->bbox()->asGBoxes()[0],
         'bboxDM'=> $mapa['bboxDM'],
@@ -104,7 +99,7 @@ class CatApi {
       return [
         'num'=> $map->num(),
         'title'=> $parta['title'],
-        'issued'=> $map->edition(),
+        //'issued'=> $map->edition(),
         'scaleDenominator'=> $parta['scaleDenominator'],
         'gbox'=> $part->bbox()->asGBoxes()[0],
         'bboxDM'=> $part->bbox()->asArray(),
@@ -126,7 +121,7 @@ class CatApi {
         $nearestPart = [
           'num'=> $map->num(),
           'title'=> $parta['title'],
-          'issued'=> $map->edition(),
+          //'issued'=> $map->edition(),
           'scaleDenominator'=> $parta['scaleDenominator'],
           'gbox'=> $partbbox->asGBoxes()[0],
           'bboxDM'=> $partbbox->asArray(),

@@ -64,6 +64,10 @@ doc: |
     - exposer une description OpenApi des web-services du projet
       
 journal: |
+  23/11/2020:
+    - réception des cartes du Shom
+    - test d'utilisation de cat2 non satisfaisant
+    - mise à jour des cartes sur Alwaysdata sans utiliser cat2
   13-22/12/2020:
     - dév. cat2 pour tenir compte de l'évolution par le Shom du GAN
   20/12/2020:
