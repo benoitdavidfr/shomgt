@@ -10,6 +10,7 @@ definitions:
         - d'autre part, les longitudes ne respectent pas l'intervalle de valeur
     type: object
     required: [ title, width, height, south, west, north, east, left, top, right, bottom ]
+    additionalProperties: false
     properties:
       title: {type: string, description: numéro et titre}
       scaleden: {type: number, description: dénominateur de l'échelle (optionnel)}
@@ -50,7 +51,7 @@ description: |
     - gt250k : les cartes approx. au 1/250k
     - gt500k, gt1M, gt2M, gt4M, gt10M, gt20M
   Il existe de plus 2 couches particulières:
-    - gtaem: regoupant les cartes de l'action de l'Etat en mer (AEM)
+    - gtaem: regroupant les cartes de l'action de l'Etat en mer (AEM)
     - gtMancheGrid : contenant la carte MancheGrid
 type: object
 required: [ name, title, description, lineage, path ]

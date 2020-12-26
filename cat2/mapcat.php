@@ -226,7 +226,7 @@ class MapCat {
     $this->num = substr($mapid, 2);
     $this->groupTitle = $map['groupTitle'] ?? null;
     $this->title = $map['title'];
-    $this->edition = $map['edition'] ?? null; // je n'importe pas ce champ de la V1
+    $this->edition = isset($options['importFromV1']) ? null : ($map['edition'] ?? null); // je n'importe pas ce champ de la V1
     $this->modified = $map['modified'] ?? null; // ce champ n'existe pas en V1
     $this->lastUpdate = isset($options['importFromV1']) ? null : ($map['lastUpdate'] ?? null); // je n'importe pas ce champ de la V1
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
@@ -234,9 +234,9 @@ class MapCat {
       : (isset($map['bboxLonLatFromWfs']) ? new GjBox($map['bboxLonLatFromWfs']) : null);
     $this->replaces = $map['replaces'] ?? null;
     $this->references = $map['references'] ?? null;
-    $this->noteShom = $map['noteShom'] ?? $map['note'] ?? null;
+    $this->noteShom = $map['noteShom'] ?? null;
     $this->noteCatalog = $map['noteCatalog'] ?? null;
-    foreach ($map['hasPart'] ?? $map['boxes'] ?? [] as $mapPart) {
+    foreach ($map['hasPart'] ?? [] as $mapPart) {
       $this->hasPart[] = new MapPart($mapPart);
     }
     
@@ -292,7 +292,7 @@ class MapCat {
   
   static function importFromV1() { // import du catalogue depuis la version 1 du catalogue
     echo "import du catalogue V1<br>\n";
-    $catv1 = json_decode(file_get_contents(__DIR__.'/../cat/mapcat.json'), true);
+    $catv1 = Yaml::parseFile(__DIR__.'/mapcatV1.yaml');
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
       $map = new self($mapid, $map, ['importFromV1'=> true]);
@@ -604,16 +604,6 @@ if ((__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) && (($argv[0
 // Utilisation de la classe MapCat
 
 
-//echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
-//echo Yaml::dump(MapCat::allAsArray()); die();
-
-$id = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : ($_GET['id'] ?? null); // id
-$f = $_GET['f'] ?? 'html'; // format, html par défaut
-$a = $_GET['a'] ?? null; // action
-
-if ($a && (php_sapi_name() <> 'cli'))
-  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
-
 if (php_sapi_name() == 'cli') {
   if ($argc == 1) {
     echo "usage: mapcat.php {action}\n";
@@ -625,6 +615,13 @@ if (php_sapi_name() == 'cli') {
   }
   else
     $a = $argv[1];
+}
+else { // sapi <> cli
+  $id = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : ($_GET['id'] ?? null); // id
+  $f = $_GET['f'] ?? 'html'; // format, html par défaut
+  $a = $_GET['a'] ?? null; // action
+  if ($a)
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
 }
 
 if ($a == 'importFromV1') {

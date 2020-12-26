@@ -22,10 +22,12 @@ doc: |
     16-18 5k
 
 journal: |
+  26/12/2020:
+    - ajout de types dans la définition de la classe GeoTiff
   12/12/2020:
     - ajout sur chaque GeoTiff du champ mdDate, qui est la date de mise à jour des MD ISO,
       que j'utilise comme proxy de la date de dernière révision de la carte
-    - génération en GeoJSON du chmap mdDate et du champ ganWeek qui la semaine GAN déduite de mdDate
+    - génération en GeoJSON du champ mdDate et du champ ganWeek qui donne la semaine GAN déduite de mdDate
   22/11/2019:
     - gestion du cas où shomgt.pser existe alors que shomgt.yaml a été supprimé
   4/11/2019:
@@ -54,22 +56,22 @@ doc: |
   initialisé à partir du fichier shomgt.yaml
 */
 class GeoTiff {
-  static $path; // chemin d'accès aux fichiers GéoTiff
-  static $gts=[]; // ensemble des GeoTiff organisé par couche [{lyrname}=> [ {gtname} => GeoTiff ]]
-  static $verbose = 0; // niveau de verbosité, 0==non verbeux, 1==verbeux
+  static string $path; // chemin d'accès aux fichiers GéoTiff
+  static array $gts=[]; // ensemble des GeoTiff organisé par couche [{lyrname}=> [ {gtname} => GeoTiff ]]
+  static int $verbose = 0; // niveau de verbosité, 0==non verbeux, 1==verbeux
   
-  private $name; // nom identifiant le GéoTiff correspondant au chemin du fichier associé
-  private $title; // titre
-  private $scaleden; // dénominateur de l'échelle (optionnel)
-  private $edition; // édition de la carte (optionnel)
-  private $lastUpdate; // nombre de corrections de la carte (optionnel)
-  private $mdDate; // date de modification des métadonnées ISO 19139
-  private $gbox; // EBox en WGS84 du GéoTiff, y.c. les bordures
-  private $wombox; // EBox en WorldMercator du GéoTiff, y.c. les bordures
-  private $wboxnb; // EBox en WorldMercator du GéoTiff sans les bordures
-  private $width, $height; // largeur et hauteur du GéoTiff y compris les bordures en nbre de pixels
-  private $left, $right, $top, $bottom; // taille des bordures
-  private $partiallyDeleted=0; // 1 si la carte est partiellement effacée, 0 sinon
+  private string $name; // nom identifiant le GéoTiff correspondant au chemin du fichier associé
+  private ?string $title; // titre
+  private ?int $scaleden; // dénominateur de l'échelle (optionnel)
+  private ?string $edition; // édition de la carte (optionnel)
+  private ?int $lastUpdate; // nombre de corrections de la carte (optionnel)
+  private ?string $mdDate; // date de modification des métadonnées ISO 19139
+  private GBox $gbox; // GBox en WGS84 du GéoTiff, y.c. les bordures
+  private EBox $wombox; // EBox en WorldMercator du GéoTiff, y.c. les bordures
+  private EBox $wboxnb; // EBox en WorldMercator du GéoTiff sans les bordures
+  private int $width, $height; // largeur et hauteur du GéoTiff y compris les bordures en nbre de pixels
+  private int $left, $right, $top, $bottom; // taille des bordures
+  private bool $partiallyDeleted=false; // true ssi la carte est partiellement effacée
   
   // initialise l'ensemble des GéoTiff à partir, s'il existe, du fichier shomgt.pser, ou sinon de shomgt.yaml ou
   // $yamlpath est le chemin du catalogue shomgt.yaml des GéoTiff
@@ -265,6 +267,7 @@ class GeoTiff {
   // initialise un GeoTiff à partir des infos du catalogue shomgt.yaml
   // peut aussi utiliser des paramètres générés par imagecopytiles()
   function __construct(string $name, array $params) {
+    //print_r($params);
     $this->name = $name;
     $this->title = $params['title'] ?? null;
     $this->scaleden = $params['scaleden'] ?? null;

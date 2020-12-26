@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  26/12/2020:
+    suppression de la sortie en Yaml des infos non connues
   21/12/2020:
     passage sur cat2
   11/12/2020:
@@ -189,11 +191,12 @@ while (($mapname = readdir($current)) !== false) {
     if (($top <= 0) || ($top > $height/2))
       $top = 400;
     $mdiso19139 = mdiso19139("$mapname/$fbname");
-    $shomgt[$lyrName]["$mapname/$fbname"] = [
-      'title'=> $title,
-      'edition'=> $mdiso19139['édition'] ?? 'inconnue',
-      'lastUpdate'=> $mdiso19139['dernièreCorrection'] ?? 'inconnue',
-      'mdDate'=> $mdiso19139['mdDate'] ?? 'inconnue',
+    $shomgt[$lyrName]["$mapname/$fbname"] =
+      ['title'=> $title]
+    + (isset($mdiso19139['édition']) ? ['edition'=> $mdiso19139['édition']] : [])
+    + (isset($mdiso19139['dernièreCorrection']) ? ['lastUpdate'=> $mdiso19139['dernièreCorrection']] : [])
+    + (isset($mdiso19139['mdDate']) ? ['lastUpdate'=> $mdiso19139['mdDate']] : [])
+    + [
       'scaleden'=> $shomgtgan['scaleDenominator'],
       'width'=> $width,
       'height'=> $height,

@@ -13,7 +13,7 @@ includes:
   - ../lib/gebox.inc.php
   - ../lib/coordsys.inc.php
   - ../ws/geotiff.inc.php
-  - ../cat/mapcat.inc.php
+  - ../cat2/catapi.inc.php
 */
 ini_set('memory_limit', '12800M');
   
@@ -78,10 +78,10 @@ if (isset($_GET['fmt']) && ($_GET['fmt']=='img')) {
 }
 
 // calcul des marges
-require_once __DIR__.'/../cat/mapcat.inc.php';
+require_once __DIR__.'/../cat2/catapi.inc.php';
 
 // infos issus du GAN
-$catinfo = MapCat::getCatInfoFromGtName($gtname, $gt->gbox());
+$catinfo = CatApi::getCatInfoFromGtName($gtname, $gt->gbox());
 $ganbox = $catinfo['gbox'];
 unset($catinfo['gbox']);
 echo "<pre>catinfo=",json_encode($catinfo, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE),"\n";

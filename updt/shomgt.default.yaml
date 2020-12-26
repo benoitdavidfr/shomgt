@@ -3,7 +3,8 @@ title: paramètres des cartes GéoTIFF du Shom (V3)
 description:
 lineage: 
 path: ../../../shomgeotiff/current/
-$schema: shomgt.schema.yaml
+$schema: /var/www/html/geoapi/shomgt/ws/shomgt
+
 
 gt20M:
 

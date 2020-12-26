@@ -1,10 +1,10 @@
-title: 'Catalogue des cartes Shom'
+title: 'Catalogue des cartes Shom V2.1'
 description:
-  - 'Import du fichier V1 le 2020-12-24T12:12:52+01:00'
+  - 'Import du fichier V1 le 2020-12-26T22:01:53+01:00'
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
-created: '2020-12-24T12:12:52+01:00'
-modified: '2020-12-26T15:03:04+01:00'
+created: '2020-12-26T22:01:53+01:00'
+modified: '2020-12-26T22:03:15+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -23,6 +23,7 @@ maps:
       westlimit: 100
       northlimit: 80
       eastlimit: 490
+    noteCatalog: 'correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l''extension en longitude soit supérieure à 360°, correction aussi du titre'
   FR3127:
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
@@ -110,6 +111,20 @@ maps:
       westlimit: -62.333333333333
       northlimit: 77.166666666667
       eastlimit: 51.833333333333
+  FR5825:
+    groupTitle: 'Océan Pacifique'
+    title: 'Ilot Clipperton'
+    mapsFrance:
+      - CP
+    scaleDenominator: '20.000'
+    bboxDM:
+      SW: '10°15,53''N - 109°15,27''W'
+      NE: '10°20,33''N - 109°11,18''W'
+    spatial:
+      southlimit: 10.258833333333
+      westlimit: -109.2545
+      northlimit: 10.338833333333
+      eastlimit: -109.18633333333
   FR5978:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
@@ -242,7 +257,7 @@ maps:
       - PF
     modified: '2017-07-05+02:00'
     lastUpdate: 2
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 6207 au cours de l''édition n° 4 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6207 au cours de l''édition n° 4 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
     hasPart:
       -
         title: 'Île Raivavae (Vavitu)'
@@ -380,7 +395,7 @@ maps:
       westlimit: -148.30733333333
       northlimit: -15.767833333333
       eastlimit: -148.1815
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 6320 au cours de l''édition n° 2 concernent principalement le changement de système géodésique et ponctuellement les profondeurs. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6320 au cours de l''édition n° 2 concernent principalement le changement de système géodésique et ponctuellement les profondeurs. Cette carte est désormais établie en WGS84.'
     hasPart:
       -
         title: 'Port de Temao'
@@ -633,7 +648,7 @@ maps:
       westlimit: 165.8
       northlimit: -21.301833333333
       eastlimit: 165.88666666667
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
   FR6554:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'Baie Chasseloup - Anse Vavouto'
@@ -884,6 +899,7 @@ maps:
       - TF
     modified: '2019-01-02+01:00'
     lastUpdate: 15
+    noteCatalog: "Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.\nLes noteCatalog indiquées sur la carte ne semblent pas correctes.\nJe les ai corrigées en cherchant la correspondance des cartes à grande échelle avec celles à petites échelles.\n"
     hasPart:
       -
         title: 'A - Ile Juan de Nova'
@@ -910,6 +926,34 @@ maps:
         scaleDenominator: '150.000'
         bboxDM: { SW: '11°37,82''S - 047°11,95''E', NE: '11°21,56''S - 047°30,95''E' }
         spatial: { southlimit: -11.630333333333, westlimit: 47.199166666667, northlimit: -11.359333333333, eastlimit: 47.515833333333 }
+  FR6645:
+    groupTitle: 'Côte Ouest de France'
+    title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
+    mapsFrance:
+      - FX
+    scaleDenominator: '15.000'
+    bboxDM:
+      SW: '47°45,66''N - 004°26,36''W'
+      NE: '47°49,30''N - 004°18,32''W'
+    spatial:
+      southlimit: 47.761
+      westlimit: -4.4393333333333
+      northlimit: 47.821666666667
+      eastlimit: -4.3053333333333
+  FR6646:
+    groupTitle: 'Côte Ouest de France'
+    title: 'Abords et Ports du Guilvinec et de Lesconil'
+    mapsFrance:
+      - FX
+    scaleDenominator: '15.000'
+    bboxDM:
+      SW: '47°45,12''N - 004°19,24''W'
+      NE: '47°48,76''N - 004°11,20''W'
+    spatial:
+      southlimit: 47.752
+      westlimit: -4.3206666666667
+      northlimit: 47.812666666667
+      eastlimit: -4.1866666666667
   FR6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
@@ -1285,7 +1329,7 @@ maps:
       westlimit: 0.91666666666667
       northlimit: 51.69
       eastlimit: 3.2666666666667
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n°6735 au cours de l''édition n°7 concernent principalement les informations relatives aux modifications des mesures d''organisation du trafic entrant en vigueur le 01 décembre 2012 à 0000 UTC. Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n°6735 au cours de l''édition n°7 concernent principalement les informations relatives aux modifications des mesures d''organisation du trafic entrant en vigueur le 01 décembre 2012 à 0000 UTC. Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).'
   FR6738:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Sud (Spéciale P)'
@@ -1389,7 +1433,7 @@ maps:
       westlimit: 165.00333333333
       northlimit: -21.538833333333
       eastlimit: 168.20333333333
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 6786 au cours de l''édition n° 3 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6786 au cours de l''édition n° 3 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
   FR6770:
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
     title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
@@ -2217,7 +2261,8 @@ maps:
       westlimit: -61.726666666667
       northlimit: 16.271666666667
       eastlimit: -61.306666666667
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 6948 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6948 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteCatalog: 'correction des 4 bords de la carte principale'
     hasPart:
       -
         title: 'Marie-Galante - Baie de Saint-Louis'
@@ -2241,7 +2286,7 @@ maps:
       westlimit: 165.87
       northlimit: -21.293833333333
       eastlimit: 166.505
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 6949 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6949 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
   FR6951:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Fos-sur-Mer à Capo Mele'
@@ -2293,7 +2338,7 @@ maps:
       westlimit: -149.35016666667
       northlimit: -17.537666666667
       eastlimit: -149.19416666667
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 6956 au cours de l''édition n° 3 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6956 au cours de l''édition n° 3 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
   FR6957:
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
     title: 'De la Baie de Taravao à la Passe d''Aiurua'
@@ -2515,7 +2560,7 @@ maps:
       - FX
     modified: '2019-10-23+02:00'
     lastUpdate: 1
-    noteShom: 'Nota&nbsp;: Ajout d''un cartouche: D - Gruissan'
+    noteShom: 'Nota : Ajout d''un cartouche: D - Gruissan'
     hasPart:
       -
         title: 'Le Cap d''Agde - Embouchure de l''Hérault'
@@ -2587,6 +2632,7 @@ maps:
       westlimit: 2.9155
       northlimit: 43.665666666667
       eastlimit: 5.215
+    noteCatalog: 'Correction du bord Est de la carte à partir de l''information sur la carte'
   FR7011:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De la presqu''île Neuméni à Port-Ounia'
@@ -2604,7 +2650,7 @@ maps:
       westlimit: 166.27666666667
       northlimit: -21.628833333333
       eastlimit: 166.91166666667
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 7011 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 7011 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
     hasPart:
       -
         title: Port-Ounia
@@ -2683,6 +2729,7 @@ maps:
       northlimit: 40
       eastlimit: -154.33333333333
     references: 'Fac similé Carte JP n°4052 publiée en 1983.'
+    noteCatalog: 'Correction du bord Sud'
   FR7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est - De San Francisco à Lima'
@@ -2809,13 +2856,14 @@ maps:
     lastUpdate: 86
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '47°15,50''N - 003°10,00''W'
-      NE: '47°35,70''N - 002°26,30''W'
+      SW: '47°15,4''N - 003°11,1''W'
+      NE: '47°35,6''N - 002°27,3''W'
     spatial:
-      southlimit: 47.258333333333
-      westlimit: -3.1666666666667
-      northlimit: 47.595
-      eastlimit: -2.4383333333333
+      southlimit: 47.256666666667
+      westlimit: -3.185
+      northlimit: 47.593333333333
+      eastlimit: -2.455
+    noteCatalog: 'correction de bboxDM à partir de la carte le 26/12/2020'
   FR7035:
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
@@ -2867,6 +2915,7 @@ maps:
       westlimit: -61.3
       northlimit: 14.975
       eastlimit: -60.688333333333
+    noteCatalog: 'Correction du bord Sud'
   FR7043:
     title: 'Océan Atlantique Nord - Partie Ouest'
     edition: 'Edition n° 2 - 2016'
@@ -3139,7 +3188,8 @@ maps:
       westlimit: -2.6
       northlimit: 45.816666666667
       eastlimit: -1
-    noteShom: 'Nota&nbsp;: Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre "Voir carte adjacente 6786" par "Voir carte adjacente 7070 (INT 1804)" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991.'
+    noteShom: 'Nota : Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre "Voir carte adjacente 6786" par "Voir carte adjacente 7070 (INT 1804)" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991.'
+    noteCatalog: 'Titre faux ainsi que les bords Nord et Sud'
   FR7073:
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
@@ -3148,7 +3198,7 @@ maps:
       - NC
     modified: '2017-05-24+02:00'
     lastUpdate: 10
-    noteShom: 'Nota&nbsp;: Nota: Les modifications effectuées sur la carte n° 7073 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Nota: Les modifications effectuées sur la carte n° 7073 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
     hasPart:
       -
         title: 'A - Baie de Nakéty et Anse de Lavaissière'
@@ -5034,7 +5084,7 @@ maps:
       westlimit: -178.25816666667
       northlimit: -14.166666666667
       eastlimit: -177.8365
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 7234 au cours de l''édition n° 2 concernent principalement le changement de système géodésique et l''exploitation de nouveaux levés. Cette carte est désormais établie en WGS84.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 7234 au cours de l''édition n° 2 concernent principalement le changement de système géodésique et l''exploitation de nouveaux levés. Cette carte est désormais établie en WGS84.'
     hasPart:
       -
         title: 'A - Ava Leava (Anse de Sigave)'
@@ -5063,7 +5113,7 @@ maps:
       westlimit: -166.66666666667
       northlimit: -4
       eastlimit: -124
-    noteShom: 'Nota&nbsp;: Mise aux normes internationales et mise en place des déclinaisons magnétiques (isogones)'
+    noteShom: 'Nota : Mise aux normes internationales et mise en place des déclinaisons magnétiques (isogones)'
   FR7247:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Boulogne-sur-Mer'
@@ -5183,7 +5233,7 @@ maps:
       northlimit: 47.900833333333
       eastlimit: -3.8866666666667
     replaces: '(remplace 6649.CA, 6649LSH, 6650.CA, 6650LSH)'
-    noteShom: 'Nota&nbsp;: Rayer les limites de carte et les légendes 6649 et 6650 sur les cartes 7031 et 7146; porter en magenta une limite de carte et sa légende 7251 sur les cartes 7031 et 7146; remplacer la légende Voir carte adjacente 6649 Adjoining chart 6649 par Voir carte adjacente 7251 Adjoining chart 7251 sur la carte 7249 - cartouche A (hors cadre)'
+    noteShom: 'Nota : Rayer les limites de carte et les légendes 6649 et 6650 sur les cartes 7031 et 7146; porter en magenta une limite de carte et sa légende 7251 sur les cartes 7031 et 7146; remplacer la légende Voir carte adjacente 6649 Adjoining chart 6649 par Voir carte adjacente 7251 Adjoining chart 7251 sur la carte 7249 - cartouche A (hors cadre)'
   FR7252:
     groupTitle: 'Côte Ouest de France'
     title: 'Îles de Glénan'
@@ -5202,7 +5252,7 @@ maps:
       northlimit: 47.793666666667
       eastlimit: -3.8498333333333
     replaces: '(remplace 6647.CA, 6647LSH,6648.CA,6648LSH)'
-    noteShom: 'Nota&nbsp;: Rayer les limites de carte et les légendes 6647, 6648 sur les cartes 7031 et 7146; porter en magenta une limite de carte et sa légende 7252 sur les cartes 7031 et 7146.'
+    noteShom: 'Nota : Rayer les limites de carte et les légendes 6647, 6648 sur les cartes 7031 et 7146; porter en magenta une limite de carte et sa légende 7252 sur les cartes 7031 et 7146.'
   FR7258:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Calais'
@@ -6721,7 +6771,7 @@ maps:
       westlimit: -52.833333333333
       northlimit: 5.4666666666667
       eastlimit: -51.843333333333
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 7381 au cours de l''édition n° 2 concernent principalement l''écriture des profondeurs (correction d''arrondis cartographique).'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 7381 au cours de l''édition n° 2 concernent principalement l''écriture des profondeurs (correction d''arrondis cartographique).'
   FR7390:
     groupTitle: 'Côte Sud de France'
     title: 'Port de Marseille'
@@ -7218,13 +7268,14 @@ maps:
     lastUpdate: 23
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '46°11,10''N - 001°30,90''W'
-      NE: '46°17,17''N - 001°18,07''W'
+      SW: '46°11,04''N - 001°30,98''W'
+      NE: '46°17,11''N - 001°18,15''W'
     spatial:
-      southlimit: 46.185
-      westlimit: -1.515
-      northlimit: 46.286166666667
-      eastlimit: -1.3011666666667
+      southlimit: 46.184
+      westlimit: -1.5163333333333
+      northlimit: 46.285166666667
+      eastlimit: -1.3025
+    noteCatalog: 'correction de bboxDM le 26/12/2020 à partir de la carte'
   FR7413:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords de La Rochelle'
@@ -7235,13 +7286,14 @@ maps:
     lastUpdate: 8
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '46°04,73''N - 001°19,21''W'
-      NE: '46°10,80''N - 001°06,40''W'
+      SW: '46°04,67''N - 001°19,29''W'
+      NE: '46°10,74''N - 001°06,48''W'
     spatial:
-      southlimit: 46.078833333333
-      westlimit: -1.3201666666667
-      northlimit: 46.18
-      eastlimit: -1.1066666666667
+      southlimit: 46.077833333333
+      westlimit: -1.3215
+      northlimit: 46.179
+      eastlimit: -1.108
+    noteCatalog: 'correction de bboxDM le 26/12/2020 à partir de la carte'
   FR7414:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Ile d''Aix au Pertuis de Maumusson - Coureau d''Oléron'
@@ -7557,6 +7609,7 @@ maps:
       - FX
     modified: '2020-01-20+01:00'
     lastUpdate: 9
+    noteCatalog: 'Correction des titres des cartouches, pas de partie principale'
     hasPart:
       -
         title: '1 - La Gironde - La Garonne et La Dordogne (1/3)'
@@ -7684,7 +7737,7 @@ maps:
     modified: '2020-01-01+01:00'
     lastUpdate: 9
     replaces: '(remplace 6851.CA, 6856.CA)'
-    noteShom: 'Nota&nbsp;: Remplacer numéro de cadre de carte 6851 par 7436 sur les cartes 6942, 7162 et 7280 pour les ports d''Ajaccio et de Propriano. Remplacer numéro de cadre de carte 6856 par 7436 sur les cartes 6822 et 6823 pour le port de Bastia.'
+    noteShom: 'Nota : Remplacer numéro de cadre de carte 6851 par 7436 sur les cartes 6942, 7162 et 7280 pour les ports d''Ajaccio et de Propriano. Remplacer numéro de cadre de carte 6856 par 7436 sur les cartes 6822 et 6823 pour le port de Bastia.'
     hasPart:
       -
         title: 'A - Port d''Ajaccio'
@@ -7934,7 +7987,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 1
-    noteShom: 'Nota&nbsp;: Porter la mention hors-cadre "Voir carte adjacente 7459" sur la carte 7373 (à l''ouest). Porter le cadre de la carte 7459 et la mention "7459" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention "7455 D" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.'
+    noteShom: 'Nota : Porter la mention hors-cadre "Voir carte adjacente 7459" sur la carte 7373 (à l''ouest). Porter le cadre de la carte 7459 et la mention "7459" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention "7455 D" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.'
     hasPart:
       -
         title: Tikehau
@@ -8107,7 +8160,7 @@ maps:
       westlimit: -66.5
       northlimit: 19.7
       eastlimit: -59.35
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 7475 au cours de l''édition n° 2 concernent principalement lamise à jour des délimitations maritimes.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 7475 au cours de l''édition n° 2 concernent principalement lamise à jour des délimitations maritimes.'
   FR7480:
     groupTitle: 'Côte de Guyane'
     title: 'Accès au fleuve Kourou - Port de Pariacabo'
@@ -8253,7 +8306,7 @@ maps:
       northlimit: -11.083333333333
       eastlimit: 56
     replaces: '(remplace 4174.CA)'
-    noteShom: 'Nota&nbsp;: Remplacer la mention hors-cadre (coin Sud-Est) "Voir carte adjacente 4174 See adjoining chart 4174" par "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7486. Porter la mention hors-cadre "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7488 (à l''Ouest). Remplacer la mention hors-cadre (au Nord) "Voir carte adjacente 4174 See adjoining chart 4174" par "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7489. Rayer le cadre de la carte 4174 et la mention "4174" sur la carte 6672. Porter le cadre de la carte 7487 et la mention "7487 (INT7062)" sur la carte 6672. Rayer le cadre de la carte 4174 et la mention "4174" sur la carte 6673. Porter le cadre de la carte 7487 et la mention "7487 (INT7062)" sur la carte 6673.'
+    noteShom: 'Nota : Remplacer la mention hors-cadre (coin Sud-Est) "Voir carte adjacente 4174 See adjoining chart 4174" par "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7486. Porter la mention hors-cadre "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7488 (à l''Ouest). Remplacer la mention hors-cadre (au Nord) "Voir carte adjacente 4174 See adjoining chart 4174" par "Voir carte adjacente 7487 (INT7062) See adjoining chart 7487 (INT7062)" sur la carte 7489. Rayer le cadre de la carte 4174 et la mention "4174" sur la carte 6672. Porter le cadre de la carte 7487 et la mention "7487 (INT7062)" sur la carte 6672. Rayer le cadre de la carte 4174 et la mention "4174" sur la carte 6673. Porter le cadre de la carte 7487 et la mention "7487 (INT7062)" sur la carte 6673.'
   FR7488:
     groupTitle: 'Océan Indien'
     title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
@@ -8290,7 +8343,7 @@ maps:
       northlimit: -20.55
       eastlimit: 55.55
     replaces: '(remplace 4177.CA)'
-    noteShom: 'Nota&nbsp;: Remplacer la mention hors-cadre "Voir carte adjacente 4177 Adjoining chart 4177" (bordure Est) par "Voir carte adjacente 7489 (INT7064) Adjoining chart 7489 (INT7064)" sur la carte 7798. Porter en magenta une limite de carte et sa légende 7489 (INT7064) sur les cartes 6664, 6672 et 6673. Rayer la limite de carte et sa légende 4177 sur les cartes 6664, 6672 et 6673.'
+    noteShom: 'Nota : Remplacer la mention hors-cadre "Voir carte adjacente 4177 Adjoining chart 4177" (bordure Est) par "Voir carte adjacente 7489 (INT7064) Adjoining chart 7489 (INT7064)" sur la carte 7798. Porter en magenta une limite de carte et sa légende 7489 (INT7064) sur les cartes 6664, 6672 et 6673. Rayer la limite de carte et sa légende 4177 sur les cartes 6664, 6672 et 6673.'
   FR7490:
     groupTitle: 'Océan Indien'
     title: 'Archipel des Comores'
@@ -8392,7 +8445,7 @@ maps:
       westlimit: 44.923333333333
       northlimit: -12.718333333333
       eastlimit: 45.1705
-    noteShom: 'Nota&nbsp;: Les modifications effectuées sur la carte n° 7494 au cours de l''édition n°3 concernent principalement la mise à jour de délimitations maritimes.'
+    noteShom: 'Nota : Les modifications effectuées sur la carte n° 7494 au cours de l''édition n°3 concernent principalement la mise à jour de délimitations maritimes.'
   FR7507:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
@@ -8675,7 +8728,7 @@ maps:
       - PM
     modified: '2018-10-31+01:00'
     lastUpdate: 1
-    noteShom: 'Nota&nbsp;: La carte 982 sera supprimée à la publication de la carte 7640. Porter le cadre du cartouche A et la légende "7639 A (INT 4636)" sur la carte 6118. Rayer le cadre de la carte 982 et la légende "982" sur la carte 6118.'
+    noteShom: 'Nota : La carte 982 sera supprimée à la publication de la carte 7640. Porter le cadre du cartouche A et la légende "7639 A (INT 4636)" sur la carte 6118. Rayer le cadre de la carte 982 et la légende "982" sur la carte 6118.'
     hasPart:
       -
         title: 'A - Abords de l''Île Saint-Pierre'
@@ -8696,7 +8749,7 @@ maps:
     modified: '2018-10-31+01:00'
     lastUpdate: 1
     replaces: '(remplace carte 982.CA)'
-    noteShom: 'Nota&nbsp;: Porter le cadre du cartouche A et la légende "7640 A (INT 4637)" sur la carte 6118. Porter le cadre du cartouche C et la légende "7640 C (INT 4637)" sur la carte 6118. Rayer la légende "VC 982" dans l''anse de Miquelon sur la carte 6118.'
+    noteShom: 'Nota : Porter le cadre du cartouche A et la légende "7640 A (INT 4637)" sur la carte 6118. Porter le cadre du cartouche C et la légende "7640 C (INT 4637)" sur la carte 6118. Rayer la légende "VC 982" dans l''anse de Miquelon sur la carte 6118.'
     hasPart:
       -
         title: 'A - Abords Nord-Est de l''Île Miquelon'
@@ -8921,7 +8974,7 @@ maps:
       northlimit: -21.018333333333
       eastlimit: 166.035
     replaces: '(remplace 3475.CA, 6528.CA, 6529.CA, 6537.CA)'
-    noteShom: 'Nota&nbsp;: Porter en magenta une limite de carte et sa légende 7755 sur la carte 6686. Rayer les limites de carte et les légendes 6537, 6529 sur la carte 6686. Remplacer la légende Voir carte adjacente 6537 Adjoining chart 6537 (position hors cadre) par Voir carte adjacente 7755 Adjoining chart 7755 (position hors cadre) sur la carte 7756. Remplacer la légende Voir carte adjacente 6529 (position hors cadre) par Voir carte adjacente 7755 (position hors cadre) sur la carte 6949.'
+    noteShom: 'Nota : Porter en magenta une limite de carte et sa légende 7755 sur la carte 6686. Rayer les limites de carte et les légendes 6537, 6529 sur la carte 6686. Remplacer la légende Voir carte adjacente 6537 Adjoining chart 6537 (position hors cadre) par Voir carte adjacente 7755 Adjoining chart 7755 (position hors cadre) sur la carte 7756. Remplacer la légende Voir carte adjacente 6529 (position hors cadre) par Voir carte adjacente 7755 (position hors cadre) sur la carte 6949.'
     hasPart:
       -
         title: 'A - Baie de Poro'
@@ -8998,7 +9051,7 @@ maps:
       northlimit: -17.61
       eastlimit: 164.72
     replaces: '(remplace 3972.CA)'
-    noteShom: 'Nota&nbsp;: Porter le cadre de la carte 7760 et la légende "7760 (INT 6840)" sur la carte 7268. Porter le renvoi hors cadre "Voir carte adjacente 7760 (INT 6840)" sur la carte 7761 (INT 6841) (au Nord Ouest). Porter le renvoi hors cadre "Voir carte adjacente 7760 (INT 6840)" sur la carte 7762 (INT 6842) (au Nord Ouest).'
+    noteShom: 'Nota : Porter le cadre de la carte 7760 et la légende "7760 (INT 6840)" sur la carte 7268. Porter le renvoi hors cadre "Voir carte adjacente 7760 (INT 6840)" sur la carte 7761 (INT 6841) (au Nord Ouest). Porter le renvoi hors cadre "Voir carte adjacente 7760 (INT 6840)" sur la carte 7762 (INT 6842) (au Nord Ouest).'
   FR7761:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
@@ -9016,7 +9069,7 @@ maps:
       westlimit: 163.985
       northlimit: -18.935
       eastlimit: 167.193
-    noteShom: 'Nota&nbsp;: La carte 2799.CA - Edition n°2 - 1956 a été supprimée lors de la publication de la carte 7762. Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841)" sur la carte 3972 (à l''Est). Porter le renvoi hors cadre "VC 7761 (INT 6841)" sur la carte 6686 (au Nord). Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841) Adjoining chart 7761 (INT 6841)" sur la carte 7762 (au Nord-Est). Porter le cadre de la carte 7761 et la légende "7761 (INT 6841)" sur la carte 7268.'
+    noteShom: 'Nota : La carte 2799.CA - Edition n°2 - 1956 a été supprimée lors de la publication de la carte 7762. Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841)" sur la carte 3972 (à l''Est). Porter le renvoi hors cadre "VC 7761 (INT 6841)" sur la carte 6686 (au Nord). Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841) Adjoining chart 7761 (INT 6841)" sur la carte 7762 (au Nord-Est). Porter le cadre de la carte 7761 et la légende "7761 (INT 6841)" sur la carte 7268.'
   FR7762:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Ouest)'
@@ -9035,7 +9088,7 @@ maps:
       northlimit: -19.941666666667
       eastlimit: 165.2
     replaces: '(remplace 1946.CA, 2799.CA)'
-    noteShom: 'Nota&nbsp;: Remplacer le renvoi hors cadre "Voir carte adjacente 2799" par "Voir carte adjacente 7762 (INT6842)" sur la carte 3972 (au Sud), rayer le renvoi hors cadre "Voir carte adjacente 1946" sur la carte 6768 (au Nord-Ouest), rayer le renvoi hors cadre "VC 2799" sur la carte 6686 (au Nord-Ouest), rayer les limites de cartes et légendes "1946" et "2799" sur la carte 7268, porter un renvoi hors cadre "Voir carte adjacente 7762 (INT6842)" sur la carte 6768 (à l''Ouest), porter un renvoi hors cadre "VC 7762 (INT6842)" sur la carte 6686 (à l''Ouest), porter le cadre de la carte et la légende "7762 (INT6842)" sur la carte 7268.'
+    noteShom: 'Nota : Remplacer le renvoi hors cadre "Voir carte adjacente 2799" par "Voir carte adjacente 7762 (INT6842)" sur la carte 3972 (au Sud), rayer le renvoi hors cadre "Voir carte adjacente 1946" sur la carte 6768 (au Nord-Ouest), rayer le renvoi hors cadre "VC 2799" sur la carte 6686 (au Nord-Ouest), rayer les limites de cartes et légendes "1946" et "2799" sur la carte 7268, porter un renvoi hors cadre "Voir carte adjacente 7762 (INT6842)" sur la carte 6768 (à l''Ouest), porter un renvoi hors cadre "VC 7762 (INT6842)" sur la carte 6686 (à l''Ouest), porter le cadre de la carte et la légende "7762 (INT6842)" sur la carte 7268.'
   FR7764:
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
     edition: 'Publication 2020'
@@ -9071,7 +9124,7 @@ maps:
       northlimit: -14.4
       eastlimit: 44.833333333333
     replaces: '(remplace 1442.CA)'
-    noteShom: 'Nota&nbsp;: Remplacer la légende Voir carte adjacente 1442 See adjoining chart 1442 par Voir carte adjacente 7797 (INT7054) Adjoining chart 7797 (INT7054) sur la carte 7486 (hors cadre). Porter en magenta une limite de carte et sa légende 7797 (INT7054) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
+    noteShom: 'Nota : Remplacer la légende Voir carte adjacente 1442 See adjoining chart 1442 par Voir carte adjacente 7797 (INT7054) Adjoining chart 7797 (INT7054) sur la carte 7486 (hors cadre). Porter en magenta une limite de carte et sa légende 7797 (INT7054) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
   FR7798:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Sud'
@@ -9089,7 +9142,7 @@ maps:
       westlimit: 34.35
       northlimit: -20.55
       eastlimit: 45.25
-    noteShom: 'Nota&nbsp;: Remplacer la légende Voir carte adjacente 1442 par Voir carte adjacente 7798 (INT7053) sur la carte 4177 (hors cadre). Porter en magenta une limite de carte et sa légende 7798 (INT7053) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
+    noteShom: 'Nota : Remplacer la légende Voir carte adjacente 1442 par Voir carte adjacente 7798 (INT7053) sur la carte 4177 (hors cadre). Porter en magenta une limite de carte et sa légende 7798 (INT7053) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
   FR8101:
     title: 'MANCHEGRID - Carte générale'
     mapsFrance:
@@ -9103,6 +9156,7 @@ maps:
       westlimit: -6.5
       northlimit: 51.583333333333
       eastlimit: 2.5
+    noteCatalog: 'Ajout de la carte 8101 (MANCHEGRID - Carte générale) absente du GAN'
   FR8502:
     title: 'Action de l''Etat en Mer en ZMSOI'
     mapsFrance:
@@ -9118,52 +9172,5 @@ maps:
       westlimit: 30
       northlimit: 5
       eastlimit: 90
-obsoleteMaps:
-  FR5825:
-    '2020-12-26T14:58:04+01:00':
-      groupTitle: 'Océan Pacifique'
-      title: 'Ilot Clipperton'
-      edition: 'Edition n° 2 - 2010'
-      mapsFrance:
-        - CP
-      modified: '2017-06-07+02:00'
-      lastUpdate: 2
-      scaleDenominator: '20.000'
-      bboxDM:
-        SW: '10°15,53''N - 109°15,27''W'
-        NE: '10°20,33''N - 109°11,18''W'
-      spatial:
-        southlimit: 10.258833333333
-        westlimit: -109.2545
-        northlimit: 10.338833333333
-        eastlimit: -109.18633333333
-  FR6645:
-    '2020-12-24T12:13:27+01:00':
-      groupTitle: 'Côte Ouest de France'
-      title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
-      mapsFrance:
-        - FX
-      scaleDenominator: '15.000'
-      bboxDM:
-        SW: '47°45,66''N - 004°26,36''W'
-        NE: '47°49,30''N - 004°18,32''W'
-      spatial:
-        southlimit: 47.761
-        westlimit: -4.4393333333333
-        northlimit: 47.821666666667
-        eastlimit: -4.3053333333333
-  FR6646:
-    '2020-12-24T12:13:28+01:00':
-      groupTitle: 'Côte Ouest de France'
-      title: 'Abords et Ports du Guilvinec et de Lesconil'
-      mapsFrance:
-        - FX
-      scaleDenominator: '15.000'
-      bboxDM:
-        SW: '47°45,12''N - 004°19,24''W'
-        NE: '47°48,76''N - 004°11,20''W'
-      spatial:
-        southlimit: 47.752
-        westlimit: -4.3206666666667
-        northlimit: 47.812666666667
-        eastlimit: -4.1866666666667
+    noteCatalog: 'Ajout de la carte 8502 (AEM ZMSOI) absente du GAN'
+obsoleteMaps: {  }
