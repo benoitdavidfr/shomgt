@@ -46,7 +46,7 @@ if (in_array($action, ['compCat', 'obsolete'])) {
   $wfsItems = Wfs::items();
 
   if ($action == 'obsolete') {
-    MapCat::mapById($_GET['id'])->setObsolete("Carte absente du flux WFS le ".date('d/m/Y'));
+    MapCat::mapById($_GET['id'])->makeObsolete();
   }
   
   $nb = 0;
@@ -62,10 +62,10 @@ if (in_array($action, ['compCat', 'obsolete'])) {
   
   $nb = 0;
   foreach (MapCat::maps() as $id => $map)
-    if (!$map->obsolete() && !isset($wfsItems[$id])) $nb++;
+    if (!isset($wfsItems[$id])) $nb++;
   echo "<h2>$nb cartes de MapCat sont absentes du WFS et sont a priori obsolètes</h2>\n";
   foreach (MapCat::maps() as $id => $map)
-    if (!$map->obsolete() && !isset($wfsItems[$id]))
+    if (!isset($wfsItems[$id]))
       //echo "<a href='?action=obsolete&amp;id=$id'>",Yaml::dump([$id => $map->asArray()], 2, 2),"</a>\n";
       echo "<table><tr>",
           "<td><form action=''>",
@@ -78,8 +78,7 @@ if (in_array($action, ['compCat', 'obsolete'])) {
   
   $mapCatIds = [];
   foreach (MapCat::maps() as $id => $map)
-    if (!$map->obsolete())
-      $mapCatIds[] = $id;
+    $mapCatIds[] = $id;
 
   echo "<h2>Ecarts entre MapCat (barré) et WFS (en gras)</h2>\n";
   $ids = array_intersect(array_keys($wfsItems), $mapCatIds);

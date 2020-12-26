@@ -9,7 +9,7 @@ doc: |
 
   La démarche est:
     1) effectuer une moisson en CLI
-    2) fabriquee les fichiers gans.yaml/pser à partir de la moisson
+    2) fabriquer les fichiers gans.yaml/pser à partir de la moisson
     3) afficher la liste les cartes à mettre à jour ordonnées par age décroissant
 
   Certains traitements se font en cli (moissonnage), d'autres en non-CLI (affichage).
@@ -21,6 +21,9 @@ doc: |
     status code: 404
     Exception Message: N/A
 journal: |
+  24/12/2020:
+    - suppression des champs redondants avec MapCat
+    - ajout champ valid dans chaque moisson
   19/12/2020:
     - définition de la classe Gan, stockage en Yaml et en pser
     - utilisation du pser pour la liste
@@ -138,21 +141,19 @@ class Gan {
   const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
-  static string $valid=''; // date de la moisson des GAN
+  static string $hvalid=''; // intervalles des dates de la moisson des GAN
   static array $gans=[]; // dictionnaire [$mapid => Gan]
   
-  protected array $oldTitle;
-  protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
-  protected string $title='';
+  protected string $mapid;
+  protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes, source GAN
+  protected string $title=''; // titre, source GAN ou MapCat
   protected ?string $ganEdition=null; // edition issue du GAN
-  protected ?string $sgtEdition=null; // edition issue de ShomGt
-  protected ?string $modified; // importé de MapCat
-  protected array $bbox=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  protected ?array $mapsFrance=[]; // importé de Mapcat
-  protected array $hasPart=[]; // cartouches
-  protected array $corrections=[]; // liste des corrections
-  protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
-  protected string $harvestError=''; // erreur éventuelle du moissonnage
+  protected array $bbox=[]; // sous la forme ['SW'=> sw, 'NE'=> ne], source GAN
+  protected array $hasPart=[]; // cartouches, source GAN
+  protected array $corrections=[]; // liste des corrections, source GAN
+  protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage, déduit du GAN
+  protected string $valid; // date de moissonnage du GAN en format ISO
+  protected string $harvestError=''; // erreur éventuelle du moissonnage, déduit du GAN
   protected float $age; // indicateur reflétant la nécessité de mettre à jour la carte
     // calculé en fonction du chgt d'édition, du nbre de corrections et du territoire
     // -1 ssi erreur de moissonnage ; 0 ssi pas de mise à jour nécessaire
@@ -184,7 +185,7 @@ class Gan {
     //print_r($errors);
     foreach (Mapcat::maps() as $mapid => $map) {
       $mapa = $map->asArray();
-      if (isset($mapa['modified']) && !$map->obsolete()) {
+      if (isset($mapa['modified'])) {
         $ganWeek = Gan::week($mapa['modified']);
         if (!file_exists("$gandir/$mapid-$ganWeek.html") && !isset($errors["$mapid-$ganWeek"])) {
           $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
@@ -306,7 +307,7 @@ class Gan {
       $ganWeek = substr($filename, 7, 4);
       $mapa = MapCat::maps($mapid);
       if (!isset($mapa['modified']) || ($ganWeek <> self::week($mapa['modified']))) {
-        echo "$filename périmé sauté\n";
+        //echo "$filename périmé sauté<br>\n";
         continue;
       }
       $mtime = filemtime(self::GAN_DIR."/$filename");
@@ -315,40 +316,45 @@ class Gan {
       if (!$maxvalid || ($mtime > $maxvalid))
         $maxvalid = $mtime;
       $html = file_get_contents(self::GAN_DIR."/$filename");
-      self::$gans[$mapid] = new self($mapid, self::analyzeHtml($html), $mapa);
+      self::$gans[$mapid] = new self($mapid, self::analyzeHtml($html), $mapa, $mtime);
     }
     closedir($dh);
-    self::$valid = date('Y-m-d', $minvalid).'/'.date('Y-m-d', $maxvalid);
+    self::$hvalid = date('Y-m-d', $minvalid).'/'.date('Y-m-d', $maxvalid);
 
     $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
       $mapid = substr($id, 0, 6);
-      self::$gans[$mapid] = new self($mapid, ['harvestError'=> $errorMessage], MapCat::maps($mapid));
+      if ($mapa = MapCat::maps($mapid))
+        self::$gans[$mapid] = new self($mapid, ['harvestError'=> $errorMessage], $mapa);
     }
     // tri pour mettre en début de tableau les cartes les plus agées
     uasort(self::$gans, function(Gan $a, Gan $b) { return ($a->age == $b->age) ? 0 : (($a->age > $b->age) ? -1 : 1); });
   }
   
-  function __construct(string $mapid, array $record, array $mapa) {
-    //print_r($record);
+  function __construct(string $mapid, array $record, array $mapa, int $mtime=null) {
+    //echo '$record='; print_r($record);
+    //echo '$mapa='; print_r($mapa);
+    $this->mapid = $mapid;
     // cas où soit le GAN ne renvoie aucune info signifiant qu'il n'y a pas de corrections, soit il renvoie une erreur
     if (!$record || isset($record['harvestError'])) {
       $this->groupTitle = $mapa['groupTitle'] ?? null;
       $this->title = $mapa['title'];
+      $this->ganEdition = null;
     }
     else { // cas où il existe des corrections
-      $this->oldTitle = $record['title'];
+      //$this->oldTitle = $record['title'];
       $this->postProcessTitle($record['title']);
       $this->ganEdition = $record['edition'];
     }
-    $this->sgtEdition = $mapa['edition'] ?? null;
-    $this->modified = $mapa['modified'] ?? null;
-    $this->mapsFrance = $mapa['mapsFrance'] ?? null;
+    //$this->sgtEdition = $mapa['edition'] ?? null;
+    //$this->modified = $mapa['modified'] ?? null;
+    //$this->mapsFrance = $mapa['mapsFrance'] ?? null;
     $this->corrections = $record['corrections'] ?? [];
     $this->analyzeErrors = $record['analyzeErrors'] ?? [];
     $this->harvestError = $record['harvestError'] ?? '';
-    $this->age = $this->calcAge();
+    $this->valid = $mtime ? date('Y-m-d', $mtime) : '';
+    $this->age = $this->calcAge($mapa['mapsFrance']);
   }
   
   private function postProcessTitle(array $record) { // complète __construct()
@@ -376,13 +382,13 @@ class Gan {
     //echo '$this='; print_r($this);
   }
 
-  function calcAge(): float { // calcule l'age utilisé dans __construct(), retourne -1 si erreur, 0 si carte à jour
+  function calcAge(array $mapsFrance): float { // calcule l'age utilisé dans __construct(), retourne -1 si erreur, 0 si carte à jour
     if ($this->harvestError)
       return -1;
     if (count($this->corrections)==0)
       return 0;
     else
-      return count($this->corrections) * Territoire::coeff($this->mapsFrance);
+      return count($this->corrections) * Territoire::coeff($mapsFrance);
   }
   
   static function gans(?string $mapid=null): array { // retourne soit un array de tous les gans soit le gan demandé comme array
@@ -404,7 +410,7 @@ class Gan {
       'description'=> "Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)",
       '$id'=> 'https://geoapi.fr/shomgt/cat2/gans',
       '$schema'=> __DIR__.'/gans',
-      'valid'=> self::$valid,
+      'valid'=> self::$hvalid,
       'gans'=> array_map(function(Gan $gan) { return $gan->asArray(); }, self::$gans),
       'eof'=> null,
     ];
@@ -417,31 +423,30 @@ class Gan {
       return ['age'=> $this->calcAge()];
     else*/
       return
-        ['age'=> roundToIntIfPossible($this->calcAge())]
+        ['age'=> roundToIntIfPossible($this->age)]
       // ['oldTitle'=> $this->oldTitle]
       + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
       + ['title'=> $this->title]
-      + ['sgtEdition'=> $this->sgtEdition]
-      + ['modified'=> $this->modified]
-      + ['mapsFrance'=> $this->mapsFrance]
       + ($this->bbox ? ['bbox'=> $this->bbox] : [])
       + ($this->hasPart ? ['hasPart'=> array_map(function (GanPart $part): array { return $part->asArray(); }, $this->hasPart)] : [])
       + ($this->ganEdition ? ['ganEdition'=> $this->ganEdition] : [])
       + ($this->corrections ? ['corrections'=> $this->corrections] : [])
       + ($this->analyzeErrors ? ['analyzeErrors'=> $this->analyzeErrors] : [])
+      + ($this->valid ? ['valid'=> $this->valid] : [])
+      + ($this->harvestError ? ['harvestError'=> $this->harvestError] : [])
       ;
   }
   
   static function storeAsPser() { // enregistre le catalogue comme pser 
     file_put_contents(self::PATH_PSER, serialize([
-      'valid'=> self::$valid,
+      'valid'=> self::$hvalid,
       'gans'=> self::$gans,
     ]));
   }
   
   static function loadFromPser() { // charge les données depuis le pser 
     $contents = unserialize(file_get_contents(self::PATH_PSER));
-    self::$valid = $contents['valid'];
+    self::$hvalid = $contents['valid'];
     self::$gans = $contents['gans'];
   }
 };
@@ -548,6 +553,8 @@ if ($a == 'listMaps') { // Affiche en Html les cartes avec synthèse moisson et 
 
 if (!$a && ($f == 'html')) {
   echo "<h2>Cartes à mettre à jour ordonnées par age décroissant (<a href='?a=menu'>?</a>)</h2>\n";
+  Gan::loadFromPser();
+  echo "dates des moissons: ",Gan::$hvalid,"<br>\n";
   echo "<table border=1>\n","<th>",
     implode('</th><th>',['mapid','title','age','FR','lastUpdt','gan','liste des corr. du GAN depuis lastUpdt']),"</th>\n";
   foreach (Gan::gans() as $mapid => $gan) {
@@ -555,8 +562,8 @@ if (!$a && ($f == 'html')) {
     $mapa = Mapcat::maps($mapid);
     $ganHref = null; // href vers le Shom
     $ganLHref = null; // href local
-    if (isset($gana['modified'])) {
-      $ganWeek = Gan::week($gana['modified']);
+    if (isset($mapa['modified'])) {
+      $ganWeek = Gan::week($mapa['modified']);
       $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
       $ganHref = "<a href='$url'>$ganWeek</a>";
       if (file_exists("$gandir/$mapid-$ganWeek.html"))
@@ -566,9 +573,9 @@ if (!$a && ($f == 'html')) {
     }
     $ganec = (isset($gana['ganEdition']) ? ['edition'=> $gana['ganEdition']] : [])
       + (isset($gana['corrections']) ? ['corrections'=> $gana['corrections']] : []);
-    echo "<tr><td>$mapid</td><td>",$gana['title'] ?? 'indéfini',"<br>$gana[sgtEdition]</td>",
+    echo "<tr><td>$mapid</td><td>",$mapa['title'] ?? 'indéfini',"<br>$mapa[edition]</td>",
           "<td>",$gana['age'] ?? 'indéfini',"</td>",
-          "<td>",implode(', ', $gana['mapsFrance']) ?? 'indéfini',"</td>",
+          "<td>",implode(', ', $mapa['mapsFrance']) ?? 'indéfini',"</td>",
           "<td>",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
           "<td>",$ganHref ?? 'indéfini',"</td>",
           //"<td>",$ganLHref ?? 'indéfini',"</td>\n",

@@ -1,8 +1,10 @@
 title: schema JSON du catalogue des cartes Shom
 $id: http://geoapi.fr/shomgt/cat2/mapcat.schema
-modified: '2020-12-13T13:00+01:00'
+modified: '2020-12-24T11:42+01:00'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
+  Journal:
+    24/12/2020: Gestion des cartes obsolètes dans un dictionnaire à part.
 $schema: http://json-schema.org/schema#
 definitions:
   dateIso8601:
@@ -81,6 +83,113 @@ definitions:
       eastlimit:
         description: longitude maximum
         $ref: '#/definitions/longitudeDM'
+  map:
+    description: Propriétés décrivant une carte
+    type: object
+    additionalProperties: false
+    required: [title]
+    properties:
+      castype:
+        description: uniquement utilisé pour décrire les cas-types
+        type: string
+      groupTitle:
+        description: sur-titre optionnel identifiant un ensemble de cartes
+        type: string
+        examples:
+          - Océan Pacifique Sud
+      title:
+        description: titre de la carte
+        type: string
+        examples:
+          - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
+      edition:
+        description: édition de la carte indiquée par le Shom
+        type: string
+        examples:
+          - Édition n° 3 - 2018
+          - Publication 2017
+      scaleDenominator:
+        description: |
+          dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
+          Champ absent ssi la carte ne comporte pas d'espace principal
+        $ref: '#/definitions/scaleDenominator'
+      bboxDM:
+        description: |
+          boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
+          ces coordonnées sont celles indiquées sur la carte dans les coins SW et NE et sont aussi indiquées dans le GAN.
+          Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
+        $ref: '#/definitions/bboxDM'
+      spatial:
+        description: la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+        $ref: '#/definitions/dcmi-box'
+      bboxLonLatFromWfs:
+        description: |
+          boite englobante qui peut être moins précise que bboxDM si cette dernière est inconnue.
+          En degrés décimaux dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON.
+        type: array
+        minItems: 4
+        maxItems: 4
+        items:
+          type: number
+          minimum: -180
+          maximum: 180
+      mapsFrance:
+        description: |
+          identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
+          Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
+          elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
+          La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
+          Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
+          ou [FR] si la carte est à très petite échelle.
+          Non définie (propriété absente) si cette propriété est inconnue.
+        type: array
+        items:
+          enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
+      modified:
+        description: |
+          date de la dernière correction, ou si aucune correction date initiale ; si inconnue date des MD.
+          Ce champ devrait être présent pour les cartes d'intérêt.
+        $ref: '#/definitions/dateIso8601'
+      lastUpdate:
+        description: |
+          no de la dernière correction de la carte, 0 si aucune correction.
+          Ce champ devrait être présent pour les cartes d'intérêt.
+        type: integer
+        minimum: 0
+      replaces:
+        description: carte remplacée par la carte courante, optionnel
+        type: string
+      references:
+        description: ssi la carte est un fac-similé alors référence de la carte étrangère reproduite
+        type: string
+      noteShom:
+        description: commentaire associé à la carte par le Shom
+        type: string
+      noteCatalog:
+        description: commentaire associé à la carte dans la gestion du catalogue
+        type: string
+      hasPart:
+        description: liste éventuelle de cartouches
+        type: array
+        minItems: 1
+        items:
+          type: object
+          additionalProperties: false
+          required: [title, scaleDenominator, bboxDM]
+          properties:
+            title:
+              description: titre du cartouche
+              type: string
+            scaleDenominator:
+              description: dénominateur de l'échelle avec un . comme séparateur des milliers
+              $ref: '#/definitions/scaleDenominator'
+            bboxDM:
+              description: boite englobante du cartouche en degrés, minutes en WGS84
+              $ref: '#/definitions/bboxDM'
+            spatial:
+              description: la même boite encodée en DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+              $ref: '#/definitions/dcmi-box'
+    
 type: object
 required: [ title, $id, $schema, modified, maps ]
 additionalProperties: false
@@ -100,7 +209,7 @@ properties:
   created: { description: 'date de création initiale du document', $ref: '#/definitions/dateIso8601' }
   modified: { description: 'date de dernière modification du document', $ref: '#/definitions/dateIso8601' }
   maps:
-    description: dictionnaire des cartes indexées sur leur numéro précédé de 'FR'
+    description: dictionnaire des cartes non obsolètes indexées sur leur numéro précédé de 'FR'
     type: object
     additionalProperties: false
     patternProperties:
@@ -123,118 +232,21 @@ properties:
           
           Enfin, il est possible de conserver les cartes qui ne sont plus en vigueur jusqu'à une réutilisation éventuelle
           de l'identifiant.
+        $ref: '#/definitions/map'
+  obsoleteMaps:
+    description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur suppression
+    type: object
+    additionalProperties: false
+    patternProperties:
+      ^FR\d\d\d\d:
+        description: pour chaque carte la liste des suppressions indexées par la date de suppression
         type: object
         additionalProperties: false
-        required: [title]
-        properties:
-          castype:
-            description: uniquement utilisé pour décrire les cas-types
-            type: string
-          obsolete:
-            description: |
-              si défini, signifie que la carte n'est plus en vigueur, sinon qu'elle l'est.
-              Peut contenir la source de l'information, ou une date à laquelle elle a été constatée ou un commentaire quelconque.
-            type: string
-            examples:
-              - absent du WFS du Shom le 14/12/2020
-              - le 14/12/2020 le GAN indique que la carte n'est plus en vigueur
-          groupTitle:
-            description: sur-titre optionnel identifiant un ensemble de cartes
-            type: string
-            examples:
-              - Océan Pacifique Sud
-          title:
-            description: titre de la carte
-            type: string
-            examples:
-              - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
-          edition:
-            description: édition de la carte indiquée par le Shom
-            type: string
-            examples:
-              - Édition n° 3 - 2018
-              - Publication 2017
-          scaleDenominator:
-            description: |
-              dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
-              Champ absent ssi la carte ne comporte pas d'espace principal
-            $ref: '#/definitions/scaleDenominator'
-          bboxDM:
-            description: |
-              boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
-              ces coordonnées sont celles indiquées sur la carte dans les coins SW et NE et sont aussi indiquées dans le GAN.
-              Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
-            $ref: '#/definitions/bboxDM'
-          spatial:
-            description: la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
-            $ref: '#/definitions/dcmi-box'
-          bboxLonLatFromWfs:
-            description: |
-              boite englobante qui peut être moins précise que bboxDM si cette dernière est inconnue.
-              En degrés décimaux dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON.
-            type: array
-            minItems: 4
-            maxItems: 4
-            items:
-              type: number
-              minimum: -180
-              maximum: 180
-          mapsFrance:
-            description: |
-              identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
-              Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
-              elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
-              La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
-              Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
-              ou [FR] si la carte est à très petite échelle.
-              Non définie (propriété absente) si cette propriété est inconnue.
-            type: array
-            items:
-              enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
-          modified:
-            description: |
-              date de la dernière correction, ou si aucune correction date initiale ; si inconnue date des MD.
-              Ce champ devrait être présent pour les cartes d'intérêt.
-            $ref: '#/definitions/dateIso8601'
-          lastUpdate:
-            description: |
-              no de la dernière correction de la carte, 0 si aucune correction.
-              Ce champ devrait être présent pour les cartes d'intérêt.
-            type: integer
-            minimum: 0
-          replaces:
-            description: carte remplacée par la carte courante, optionnel
-            type: string
-          references:
-            description: ssi la carte est un fac-similé alors référence de la carte étrangère reproduite
-            type: string
-          noteShom:
-            description: commentaire associé à la carte par le Shom
-            type: string
-          noteCatalog:
-            description: commentaire associé à la carte dans la gestion du catalogue
-            type: string
-          hasPart:
-            description: liste éventuelle de cartouches
-            type: array
-            minItems: 1
-            items:
-              type: object
-              additionalProperties: false
-              required: [title, scaleDenominator, bboxDM]
-              properties:
-                title:
-                  description: titre du cartouche
-                  type: string
-                scaleDenominator:
-                  description: dénominateur de l'échelle avec un . comme séparateur des milliers
-                  $ref: '#/definitions/scaleDenominator'
-                bboxDM:
-                  description: boite englobante du cartouche en degrés, minutes en WGS84
-                  $ref: '#/definitions/bboxDM'
-                spatial:
-                  description: la même boite encodée en DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
-                  $ref: '#/definitions/dcmi-box'
+        patternProperties:
+          ^\d\d\d\d-\d\d-\d\d:
+            description: propriétés de chaque carte
+            type: object
+            $ref: '#/definitions/map'
   cartesAjoutéesAuServiceWfs:
     description: liste quelques cartes ajoutées au service WFS du Shom, indexées sur leur numéro précédé de 'FR'
     type: object

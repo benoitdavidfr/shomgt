@@ -19,6 +19,12 @@ definitions:
       - '2020-01-10+01:00'
     counterexamples:
       - '2020-01-10T16'
+  dateIntervalIso8601:
+    description: intervalle de dates au format ISO 8601 limité à la date
+    type: string
+    pattern: '^\d\d\d\d-\d\d-\d\d/\d\d\d\d-\d\d-\d\d$'
+    examples:
+      - '2020-01-10/2020-01-15'
   latLonDM:
     description: couple (latitude, longitude) en degrés minutes, structure fine non vérifiée
     type: string
@@ -38,7 +44,7 @@ definitions:
         description: latitude et longitude du coin NE en degrés minutes
         $ref: '#/definitions/latLonDM'
 type: object
-required: [ title, $id, $schema, modified, gans ]
+required: [ title, $id, $schema, valid, gans ]
 additionalProperties: false
 properties:
   title: { description: 'titre du document', type: string }
@@ -49,7 +55,7 @@ properties:
     oneOf:
       - $ref: http://json-schema.org/schema#
       - type: string
-  modified: { description: 'date de la moisson des GANs', $ref: '#/definitions/dateIso8601' }
+  valid: { description: 'intervalle des dates de moisson des GANs', $ref: '#/definitions/dateIntervalIso8601' }
   gans:
     description: dictionnaire des infos des GANs indexées sur le numéro de la carte précédé de 'FR'
     type: object
@@ -63,6 +69,7 @@ properties:
         type: object
         additionalProperties: false
         properties:
+          valid: { description: 'dates de moisson des GANs', $ref: '#/definitions/dateIso8601' }
           harvestError:
             description: indication d'une erreur de moisson, aucune autre propriété n'est renseignée
             type: string
@@ -76,8 +83,8 @@ properties:
             type: string
             examples:
               - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
-          edition:
-            description: édition de la carte indiquée par le Shom
+          ganEdition:
+            description: édition de la carte issue du GAN
             type: string
             examples:
               - Édition n° 3 - 2018
@@ -87,18 +94,6 @@ properties:
               boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
               Champ absent ssi la carte ne comporte pas d'espace principal.
             $ref: '#/definitions/bboxDM'
-          mapsFrance:
-            description: |
-              identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
-              Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
-              elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
-              La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
-              Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
-              ou [FR] si la carte est à très petite échelle.
-              Non définie (propriété absente) si cette propriété est inconnue.
-            type: array
-            items:
-              enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
           hasPart:
             description: liste éventuelle de cartouches
             type: array

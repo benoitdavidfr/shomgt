@@ -43,7 +43,27 @@ doc: |
   Test 23/12 20:30
     - il faut pouvoir modifier la moisson du GAN de manière incrémentale uniquement sur les cartes modifiées ou ajoutées
     - une solution provisoire a été mise en place - la péréniser ?
+  
+  Définir une simulation, par exemple sur les cartes
+  carte modifiée:
+    FR7155:
+      '2017-05-24+02:00':
+        edition: 'Edition n° 3 - 2017 - Dernière correction : 0'
+        chemin: incoming/20170614/7155.7z
+      '2019-10-23+02:00':
+        edition: 'Edition n° 3 - 2017 - Dernière correction : 12'
+        chemin: incoming/20191119a/7155.7z
+      '2020-12-01+01:00':
+        edition: 'Edition n° 3 - 2017 - Dernière correction : 22'
+        chemin: incoming/20201223/7155.7z
+  carte ajoutée:
+    7750 - Approches de l’Île Clipperton
+  carte supprimée:
+    FR5825:
+      title: Ilot Clipperton
+      why: remplacée par FR7750
     
+  
   Du point de vue architecture informatique:
     - le catalogue est stocké dans une structure de données de type Yaml spécifiée par un schéma JSON. Afin de gérer les erreurs
       détectées dans les sources de données du Shom (WFS et GAN), des écarts avec ces sources sont définis,

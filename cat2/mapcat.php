@@ -197,24 +197,24 @@ class MapCat {
   static array $catDescription = []; // description du catalogue, liste de string
   static ?string $catCreated = null; // date et heure de création du catalogue au format ISO 8601
   static ?string $catModified = null; // date et heure d'actualisation du catalogue au format ISO 8601
-  static protected array $maps = []; // dictionnaire des MapCat [FR{num} => MapCat]
+  static protected array $maps = []; // dictionnaire des MapCat non obsolètes [FR{num} => MapCat]
+  static protected array $obsoleteMaps = []; // dictionnaire des MapCat obsolètes [FR{num} => [dateDeSupression => mapAsArray]]
   
   protected string $num; // no de la carte
-  protected ?string $obsolete; // si non null signifie que la carte est obsolète
-  protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
-  protected string $title; // titre de la carte
-  protected ?string $edition; // edition de la carte, source MD ISO
-  protected ?string $modified; // date de la dernière correction apportée à la carte ou null s'il n'y en n'a pas eu ou si non connue, source MD ISO
-  protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 s'il n'y en n'a pas eu, ou null si inconnu, source MD ISO
+  protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes (source GAN)
+  protected string $title; // titre de la carte (source GAN)
+  protected ?string $edition; // edition de la carte (source MD ISO)
+  protected ?string $modified; // date de la dern. corr. de la carte ou null s'il n'y en n'a pas eu ou si non connue, source MD ISO
+  protected ?int $lastUpdate; // no de la dernière correction apportée à la carte, 0 si aucune, ou null si inconnu, source MD ISO
   protected ?string $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
-                                // null ssi la carte ne comporte pas d'espace principal
-  protected ?GjBox $bbox; // bbox de l'espace principal de la carte comme BBoxDM|GjBox, null ssi pas d'espace principal
-  protected array $mapsFrance; // identifie les cartes dites d'intérêt et les zones couvertes
-  protected ?string $replaces; // indication éventuelle de la carte remplacée
-  protected ?string $references; // ssi la carte est un fac-similé alors référence de la carte généralement étrangère reproduite
-  protected ?string $noteShom; // commentaire associé par le Shom à la carte
+                                // null ssi la carte ne comporte pas d'espace principal (source GAN)
+  protected ?GjBox $bbox; // bbox de l'espace principal de la carte comme BBoxDM|GjBox, null ssi pas d'espace principal (source GAN|WFS)
+  protected array $mapsFrance; // identifie les cartes dites d'intérêt et les zones couvertes (calculé)
+  protected ?string $replaces; // indication éventuelle de la carte remplacée (source GAN)
+  protected ?string $references; // ssi la carte est un fac-similé alors référence de la carte gén. étrangère reproduite (source GAN)
+  protected ?string $noteShom; // commentaire associé par le Shom à la carte (source GAN)
   protected ?string $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
-  protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart
+  protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart (source GAN)
   
   // retourne la propriété
   function num(): string { return $this->num; }
@@ -222,14 +222,13 @@ class MapCat {
   function bbox(): ?GjBox { return $this->bbox; }
   function hasPart(): array { return $this->hasPart; }
   
-  function __construct(string $mapid, array $map) { // $map peut être une structure V2 ou V1
+  function __construct(string $mapid, array $map, array $options=[]) { // $map peut être une structure V2 ou V1
     $this->num = substr($mapid, 2);
-    $this->obsolete = null;
     $this->groupTitle = $map['groupTitle'] ?? null;
     $this->title = $map['title'];
     $this->edition = $map['edition'] ?? null; // je n'importe pas ce champ de la V1
-    $this->modified = $map['modified'] ?? null;
-    $this->lastUpdate = isset($map['lastUpdate']) ? intval($map['lastUpdate']) : null;
+    $this->modified = $map['modified'] ?? null; // ce champ n'existe pas en V1
+    $this->lastUpdate = isset($options['importFromV1']) ? null : ($map['lastUpdate'] ?? null); // je n'importe pas ce champ de la V1
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
     $this->bbox = isset($map['bboxDM']) ? new BBoxDM($map['bboxDM'])
       : (isset($map['bboxLonLatFromWfs']) ? new GjBox($map['bboxLonLatFromWfs']) : null);
@@ -296,7 +295,7 @@ class MapCat {
     $catv1 = json_decode(file_get_contents(__DIR__.'/../cat/mapcat.json'), true);
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
-      $map = new self($mapid, $map);
+      $map = new self($mapid, $map, ['importFromV1'=> true]);
       if ($map->existsInShomgGt()) {
         $map->updateFromShomGt();
         self::$maps[$mapid] = $map;
@@ -345,6 +344,7 @@ class MapCat {
       'created'=> self::$catCreated,
       'modified'=> self::$catModified,
       'maps'=> self::$maps,
+      'obsoleteMaps'=> self::$obsoleteMaps,
     ]));
   }
   
@@ -385,6 +385,8 @@ class MapCat {
         self::$maps[$mapid] = new self($mapid, $map);
       }
       ksort(self::$maps);
+      self::$obsoleteMaps = $yaml['obsoleteMaps'] ?? [];
+      ksort(self::$obsoleteMaps);
       self::storeAsYaml();
       self::storeAsPser();
     } catch (Exception $e) {
@@ -438,6 +440,7 @@ class MapCat {
       self::$catCreated = $pser['created'];
       self::$catModified = $pser['modified'];
       self::$maps = $pser['maps'];
+      self::$obsoleteMaps = $pser['obsoleteMaps'];
     }
   }
   
@@ -472,14 +475,14 @@ class MapCat {
       '$schema'=> __DIR__.'/mapcat',
       'created'=> self::$catCreated,
       'modified'=> self::$catModified,
-      'maps'=> array_map(function(MapCat $map) { return $map->asArray(); }, $maps),
+      'maps'=> array_map(function(MapCat $map) { return $map->asArray(); }, self::$maps),
+      'obsoleteMaps'=> self::$obsoleteMaps,
     ];
   }
   
   function asArray(): array { // génère la carte comme array
     return
-        ($this->obsolete ? ['obsolete'=> $this->obsolete] : [])
-      + ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
+        ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
       + ($this->title ? ['title'=> $this->title] : [])
       + ($this->edition ? ['edition'=> $this->edition] : [])
       + ['mapsFrance'=> $this->mapsFrance]
@@ -506,10 +509,12 @@ class MapCat {
     ];
   }
   
-  function obsolete(): ?string { return $this->obsolete; } // consulte la propriété
+  //function obsolete(): ?string { return $this->obsolete; } // consulte la propriété
   
-  function setObsolete(string $comment) { // modifie la propriété
-    $this->obsolete = $comment;
+  function makeObsolete() { // rend une carte obsolète
+    $mapid = 'FR'.$this->num;
+    self::$obsoleteMaps[$mapid][date(DATE_ATOM)] = $this->asArray();
+    unset(self::$maps[$mapid]);
     self::$catUpdated = true;
   }
   

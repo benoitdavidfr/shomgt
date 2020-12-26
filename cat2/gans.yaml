@@ -8,10 +8,6 @@ gans:
     age: 9
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île Grande à l''Île de Bréhat'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°42,94''N — 003°38,88''W'
       NE: '49°02,64''N — 002°55,18''W'
@@ -26,14 +22,11 @@ gans:
       - { num: 11, semaineAvis: 2040-52 }
       - { num: 12, semaineAvis: 2047-42 }
       - { num: 13, semaineAvis: 2049-36 }
+    valid: '2020-12-18'
   FR7068:
     age: 9
     groupTitle: 'Côte Ouest de France'
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°28,90''N — 003°51,00''W'
       NE: '47°35,60''N — 001°30,00''W'
@@ -48,14 +41,11 @@ gans:
       - { num: 24, semaineAvis: 2037-56 }
       - { num: 25, semaineAvis: 2043-61 }
       - { num: 26, semaineAvis: 2049-45 }
+    valid: '2020-12-18'
   FR6608:
     age: 8
     groupTitle: 'Mer du Nord'
     title: 'Mer du Nord'
-    sgtEdition: 'Edition n° 6 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°10,00''N — 004°20,00''W'
       NE: '62°50,00''N — 012°36,00''E'
@@ -69,14 +59,11 @@ gans:
       - { num: 6, semaineAvis: 1951-4 }
       - { num: 7, semaineAvis: 2007-8 }
       - { num: 8, semaineAvis: 2020-10 }
+    valid: '2020-12-18'
   FR7510:
     age: 8
     groupTitle: 'Côte Nord-Est de Sardaigne'
     title: 'De Capo Bellavista aux Bouches de Bonifacio'
-    sgtEdition: 'Publication 1995'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: ''
       NE: ''
@@ -90,14 +77,11 @@ gans:
       - { num: 60, semaineAvis: 2024-95 }
       - { num: 61, semaineAvis: 2030-98 }
       - { num: 62, semaineAvis: 2044-97 }
+    valid: '2020-12-18'
   FR7406:
     age: 8
     groupTitle: 'Côte Sud de France'
     title: 'De Marseille à Toulon'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°57,74''N — 005°17,33''E'
       NE: '43°18,04''N — 005°58,04''E'
@@ -111,14 +95,11 @@ gans:
       - { num: 26, semaineAvis: 2046-92 }
       - { num: 27, semaineAvis: 2046-93 }
       - { num: 28, semaineAvis: 2051-93 }
+    valid: '2020-12-18'
   FR7424:
     age: 8
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2020-02-05+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°55,00''N — 001°17,12''E'
       NE: '51°24,94''N — 002°26,89''E'
@@ -132,14 +113,11 @@ gans:
       - { num: 29, semaineAvis: 2040-32 }
       - { num: 30, semaineAvis: 2044-33 }
       - { num: 31, semaineAvis: 2048-33 }
+    valid: '2020-12-18'
   FR7323:
     age: 8
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
-    sgtEdition: 'Edition n° 6 - 2018'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°41,58''N — 000°50,12''W'
       NE: '51°11,63''N — 001°59,89''E'
@@ -153,14 +131,11 @@ gans:
       - { num: 14, semaineAvis: 2031-35 }
       - { num: 15, semaineAvis: 2044-33 }
       - { num: 16, semaineAvis: 2048-33 }
+    valid: '2020-12-18'
   FR7066:
     age: 8
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île Vierge à la Pointe de Penmarc''h'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°39,94''N — 006°34,09''W'
       NE: '48°44,14''N — 004°13,09''W'
@@ -174,14 +149,11 @@ gans:
       - { num: 7, semaineAvis: 2019-44 }
       - { num: 8, semaineAvis: 2044-54 }
       - { num: 9, semaineAvis: 2047-50 }
+    valid: '2020-12-18'
   FR6815:
     age: 8
     groupTitle: 'Océan Atlantique Nord'
     title: 'Océan Atlantique Nord'
-    sgtEdition: 'Edition n° 4 - 2012'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '08°30,00''S — 043°53,00''W'
       NE: '62°08,86''N — 012°42,50''E'
@@ -195,14 +167,11 @@ gans:
       - { num: 21, semaineAvis: 1907-10 }
       - { num: 22, semaineAvis: 1939-30 }
       - { num: 23, semaineAvis: 2043-173 }
+    valid: '2020-12-18'
   FR7205:
     age: 8
     groupTitle: 'Côte Sud de France'
     title: 'Golfe de La Napoule - Golfe Juan'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°28,66''N — 006°55,77''E'
       NE: '43°34,74''N — 007°08,02''E'
@@ -223,14 +192,11 @@ gans:
       - { num: 13, semaineAvis: 2039-89 }
       - { num: 14, semaineAvis: 2039-91 }
       - { num: 15, semaineAvis: 2047-86 }
+    valid: '2020-12-18'
   FR6844:
     age: 8
     groupTitle: 'Côte Sud de France'
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°43,64''N — 002°56,73''E'
       NE: '43°13,44''N — 003°24,43''E'
@@ -244,14 +210,11 @@ gans:
       - { num: 13, semaineAvis: 2030-84 }
       - { num: 14, semaineAvis: 2035-86 }
       - { num: 15, semaineAvis: 2046-90 }
+    valid: '2020-12-18'
   FR7151:
     age: 8
     groupTitle: 'Côte Nord de France'
     title: 'De l''anse de Kernic à l''île Grande'
-    sgtEdition: 'Edition n° 3 - 2008'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°37,84''N — 004°15,08''W'
       NE: '48°57,54''N — 003°31,28''W'
@@ -265,14 +228,11 @@ gans:
       - { num: 46, semaineAvis: 2036-53 }
       - { num: 47, semaineAvis: 2047-42 }
       - { num: 48, semaineAvis: 2050-40 }
+    valid: '2020-12-18'
   FR7033:
     age: 8
     groupTitle: 'Côte Ouest de France'
     title: 'De Quiberon au Croisic'
-    sgtEdition: 'Edition n° 3 - 2002'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°15,12''N — 003°11,08''W'
       NE: '47°35,64''N — 002°27,30''W'
@@ -286,19 +246,11 @@ gans:
       - { num: 91, semaineAvis: 2037-56 }
       - { num: 92, semaineAvis: 2043-56 }
       - { num: 93, semaineAvis: 2049-45 }
+    valid: '2020-12-18'
   FR7043:
     age: 7.5
     groupTitle: 'Océan Atlantique Nord - Partie Ouest'
     title: 'Océan Atlantique Nord'
-    sgtEdition: 'Edition n° 2 - 2016'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - PM
-      - MQ
-      - BL
-      - GF
-      - GP
-      - MF
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — NaN°00,00''W'
@@ -319,14 +271,11 @@ gans:
       - { num: 17, semaineAvis: 1943-275 }
       - { num: 18, semaineAvis: 2008-269 }
       - { num: 19, semaineAvis: 2038-276 }
+    valid: '2020-12-18'
   FR7183:
     age: 7.5
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - RE
     bbox:
       SW: '21°11,70''S — 055°06,60''E'
       NE: '20°47,40''S — 055°44,60''E'
@@ -351,14 +300,11 @@ gans:
       - { num: 15, semaineAvis: 2004-188 }
       - { num: 16, semaineAvis: 2010-186 }
       - { num: 17, semaineAvis: 2039-184 }
+    valid: '2020-12-18'
   FR6757:
     age: 7
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
-    sgtEdition: 'Edition n° 2 - 1984'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '32°45,00''N — 006°44,00''W'
       NE: '45°52,22''N — 019°40,48''E'
@@ -371,14 +317,11 @@ gans:
       - { num: 161, semaineAvis: 2026-145 }
       - { num: 162, semaineAvis: 2030-77 }
       - { num: 163, semaineAvis: 2039-144 }
+    valid: '2020-12-18'
   FR7282:
     age: 7
     groupTitle: 'Côte Sud de France'
     title: 'Rade d''Hyères'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°58,34''N — 006°07,34''E'
       NE: '43°08,44''N — 006°27,54''E'
@@ -394,14 +337,11 @@ gans:
       - { num: 5, semaineAvis: 2025-86 }
       - { num: 6, semaineAvis: 2025-89 }
       - { num: 7, semaineAvis: 2044-90 }
+    valid: '2020-12-18'
   FR7008:
     age: 7
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°13,93''N — 002°54,93''E'
       NE: '43°39,94''N — 005°15,06''E'
@@ -414,14 +354,11 @@ gans:
       - { num: 85, semaineAvis: 2030-84 }
       - { num: 86, semaineAvis: 2035-86 }
       - { num: 87, semaineAvis: 2046-90 }
+    valid: '2020-12-18'
   FR7625:
     age: 7
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '03°55,00''N — 061°05,00''W'
       NE: '10°47,00''N — 050°59,00''W'
@@ -441,14 +378,11 @@ gans:
       - { num: 19, semaineAvis: 2020-256 }
       - { num: 20, semaineAvis: 2029-261 }
       - { num: 21, semaineAvis: 2032-254 }
+    valid: '2020-12-18'
   FR7091:
     age: 7
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Toulon'
-    sgtEdition: 'Edition n° 6 - 2018'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°59,84''N — 005°50,34''E'
       NE: '43°09,94''N — 006°10,54''E'
@@ -461,14 +395,11 @@ gans:
       - { num: 7, semaineAvis: 2044-89 }
       - { num: 8, semaineAvis: 2046-92 }
       - { num: 9, semaineAvis: 2046-93 }
+    valid: '2020-12-18'
   FR6929:
     age: 7
     groupTitle: 'Côte Est de Corse'
     title: 'Abords de Porto-Vecchio'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°19,94''N — 009°10,94''E'
       NE: '41°50,44''N — 009°38,64''E'
@@ -481,14 +412,11 @@ gans:
       - { num: 12, semaineAvis: 2025-93 }
       - { num: 13, semaineAvis: 2046-97 }
       - { num: 14, semaineAvis: 2048-96 }
+    valid: '2020-12-18'
   FR6651:
     age: 7
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
-    sgtEdition: 'Edition n° 8 - 2016'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°56,50''N — 001°44,20''E'
       NE: '51°14,00''N — 002°25,00''E'
@@ -501,14 +429,11 @@ gans:
       - { num: 38, semaineAvis: 2040-32 }
       - { num: 39, semaineAvis: 2044-33 }
       - { num: 40, semaineAvis: 2048-33 }
+    valid: '2020-12-18'
   FR7292:
     age: 7
     groupTitle: 'Mer Méditerranée'
     title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '34°40,00''N — NaN°00,00''W'
       NE: '44°28,81''N — 016°19,19''E'
@@ -521,16 +446,11 @@ gans:
       - { num: 30, semaineAvis: 2039-144 }
       - { num: 31, semaineAvis: 2044-144 }
       - { num: 32, semaineAvis: 2051-108 }
+    valid: '2020-12-18'
   FR7630:
     age: 6.5
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie Nord'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - BL
-      - GP
-      - MF
     bbox:
       SW: '15°47,00''N — 063°27,00''W'
       NE: '18°46,00''N — 061°20,00''W'
@@ -549,15 +469,11 @@ gans:
       - { num: 13, semaineAvis: 2026-266 }
       - { num: 14, semaineAvis: 2030-264 }
       - { num: 15, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR6814:
     age: 6.5
     groupTitle: 'Océan Atlantique'
     title: 'Côte Nord-Est d''Amérique du Sud'
-    sgtEdition: 'Edition n° 2 - 1989'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - MQ
-      - GF
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — NaN°00,00''W'
@@ -576,14 +492,11 @@ gans:
       - { num: 56, semaineAvis: 1951-247 }
       - { num: 57, semaineAvis: 2020-255 }
       - { num: 58, semaineAvis: 2020-256 }
+    valid: '2020-12-18'
   FR7409:
     age: 6
     groupTitle: 'Côte Sud de France'
     title: 'De la Rade d''Agay à Monaco'
-    sgtEdition: 'Edition n° 3 - 2010'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°23,34''N — 006°50,74''E'
       NE: '43°43,64''N — 007°31,34''E'
@@ -595,14 +508,11 @@ gans:
       - { num: 38, semaineAvis: 2039-90 }
       - { num: 39, semaineAvis: 2039-91 }
       - { num: 40, semaineAvis: 2047-86 }
+    valid: '2020-12-18'
   FR7090:
     age: 6
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°31,58''N — 001°20,38''W'
       NE: '49°43,44''N — 001°07,93''W'
@@ -617,14 +527,11 @@ gans:
       - { num: 8, semaineAvis: 2024-40 }
       - { num: 9, semaineAvis: 2038-37 }
       - { num: 10, semaineAvis: 2043-38 }
+    valid: '2020-12-18'
   FR6968:
     age: 6
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°53,93''N — 001°59,09''W'
       NE: '50°55,37''N — 000°21,96''W'
@@ -636,14 +543,11 @@ gans:
       - { num: 29, semaineAvis: 2050-35 }
       - { num: 30, semaineAvis: 2050-36 }
       - { num: 31, semaineAvis: 2050-38 }
+    valid: '2020-12-18'
   FR7093:
     age: 6
     groupTitle: 'Côte Sud de France'
     title: 'Rade de Toulon'
-    sgtEdition: 'Edition n° 7 - 2018'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°03,59''N — 005°52,54''E'
       NE: '43°07,64''N — 006°00,64''E'
@@ -655,14 +559,11 @@ gans:
       - { num: 10, semaineAvis: 2044-88 }
       - { num: 11, semaineAvis: 2046-92 }
       - { num: 12, semaineAvis: 2046-93 }
+    valid: '2020-12-18'
   FR7229:
     age: 6
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Nice à Piombino'
-    sgtEdition: 'Publication 1989'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: ''
       NE: ''
@@ -674,14 +575,11 @@ gans:
       - { num: 149, semaineAvis: 2036-104 }
       - { num: 150, semaineAvis: 2040-100 }
       - { num: 151, semaineAvis: 2047-92 }
+    valid: '2020-12-18'
   FR7128:
     age: 6
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (Partie Ouest)'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°31,32''N — 002°55,78''W'
       NE: '48°46,16''N — 002°40,48''W'
@@ -696,14 +594,11 @@ gans:
       - { num: 12, semaineAvis: 2036-52 }
       - { num: 13, semaineAvis: 2040-45 }
       - { num: 14, semaineAvis: 2049-33 }
+    valid: '2020-12-18'
   FR7122:
     age: 6
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu au phare du Four'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°17,94''N — 004°58,09''W'
       NE: '48°32,80''N — 004°42,87''W'
@@ -717,14 +612,11 @@ gans:
       - { num: 4, semaineAvis: 2026-46 }
       - { num: 5, semaineAvis: 2032-50 }
       - { num: 6, semaineAvis: 2032-51 }
+    valid: '2020-12-18'
   FR7133:
     age: 6
     groupTitle: 'Côte Nord de France'
     title: 'Ports de la Côte Ouest du Cotentin'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Abords de Goury', bbox: { SW: '49°42,19''N — 001°58,90''W', NE: '49°44,19''N — 001°55,70''W' } }
       - { title: 'Cartouche: B - Abords de Diélette', bbox: { SW: '49°31,16''N — 001°54,78''W', NE: '49°34,78''N — 001°50,28''W' } }
@@ -740,14 +632,11 @@ gans:
       - { num: 24, semaineAvis: 2010-38 }
       - { num: 25, semaineAvis: 2037-48 }
       - { num: 26, semaineAvis: 2044-44 }
+    valid: '2020-12-18'
   FR7025:
     age: 6
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'Île de Corse'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '40°48,44''N — 007°50,44''E'
       NE: '43°18,94''N — 010°07,94''E'
@@ -759,14 +648,11 @@ gans:
       - { num: 11, semaineAvis: 2022-101 }
       - { num: 12, semaineAvis: 2030-98 }
       - { num: 13, semaineAvis: 2044-97 }
+    valid: '2020-12-18'
   FR7014:
     age: 6
     groupTitle: 'Méditerranée Occidentale'
     title: 'Des îles Baléares à la Corse et à la Sardaigne'
-    sgtEdition: 'Edition n° 3 - 2013'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '35°30,00''N — NaN°00,00''W'
       NE: '45°23,00''N — 010°12,00''E'
@@ -778,14 +664,11 @@ gans:
       - { num: 48, semaineAvis: 2005-148 }
       - { num: 49, semaineAvis: 2030-77 }
       - { num: 50, semaineAvis: 2039-144 }
+    valid: '2020-12-18'
   FR7054:
     age: 6
     groupTitle: 'Côte Sud de France'
     title: 'De l''embouchure de l''Aude à Sète'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°07,74''N — 003°13,33''E'
       NE: '43°27,94''N — 003°53,93''E'
@@ -797,14 +680,11 @@ gans:
       - { num: 8, semaineAvis: 2009-92 }
       - { num: 9, semaineAvis: 2017-85 }
       - { num: 10, semaineAvis: 2051-88 }
+    valid: '2020-12-18'
   FR7482:
     age: 5.5
     groupTitle: Guadeloupe
     title: 'De l''Ilet à Kahouanne aux Saintes'
-    sgtEdition: 'Publication 2009'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '15°48,30''N — NaN°00,00''W'
       NE: '16°24,00''N — 061°34,60''W'
@@ -825,14 +705,11 @@ gans:
       - { num: 32, semaineAvis: 1943-263 }
       - { num: 33, semaineAvis: 1951-257 }
       - { num: 34, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR7381:
     age: 5.5
     groupTitle: 'Côte de Guyane Française'
     title: 'De Kourou à Cayenne'
-    sgtEdition: 'Edition n° 2 - 2013'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '04°47,60''N — 052°50,00''W'
       NE: '05°28,00''N — 051°50,60''W'
@@ -849,14 +726,11 @@ gans:
       - { num: 16, semaineAvis: 1943-253 }
       - { num: 17, semaineAvis: 2024-250 }
       - { num: 18, semaineAvis: 2043-251 }
+    valid: '2020-12-18'
   FR6948:
     age: 5.5
     groupTitle: Guadeloupe
     title: 'De Pointe-à-Pitre à Marie-Galante'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '15°40,55''N — 061°43,63''W'
       NE: '16°16,35''N — 061°18,43''W'
@@ -875,14 +749,11 @@ gans:
       - { num: 33, semaineAvis: 2009-260 }
       - { num: 34, semaineAvis: 2027-260 }
       - { num: 35, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR6738:
     age: 5.5
     groupTitle: 'Petites Antilles'
     title: 'La Martinique'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - MQ
     bbox:
       SW: '14°16,70''N — 061°17,48''W'
       NE: '14°41,10''N — 060°40,78''W'
@@ -899,14 +770,11 @@ gans:
       - { num: 35, semaineAvis: 1908-261 }
       - { num: 36, semaineAvis: 1932-260 }
       - { num: 37, semaineAvis: 1942-260 }
+    valid: '2020-12-18'
   FR7400:
     age: 5
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°15,79''N — 004°33,47''W'
       NE: '48°24,89''N — 004°13,44''W'
@@ -920,14 +788,11 @@ gans:
       - { num: 12, semaineAvis: 2019-44 }
       - { num: 13, semaineAvis: 2031-40 }
       - { num: 14, semaineAvis: 2047-50 }
+    valid: '2020-12-18'
   FR7161:
     age: 5
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
     title: 'Des îles Chausey à Jersey'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°51,54''N — 002°31,58''W'
       NE: '49°11,14''N — 001°47,88''W'
@@ -938,14 +803,11 @@ gans:
       - { num: 15, semaineAvis: 2006-45 }
       - { num: 16, semaineAvis: 2036-52 }
       - { num: 17, semaineAvis: 2040-44 }
+    valid: '2020-12-18'
   FR7125:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Perros-Guirec - Les Sept Îles'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°46,79''N — 003°34,47''W'
       NE: '48°54,88''N — 003°16,48''W'
@@ -960,14 +822,11 @@ gans:
       - { num: 5, semaineAvis: 2038-48 }
       - { num: 6, semaineAvis: 2049-36 }
       - { num: 7, semaineAvis: 2049-37 }
+    valid: '2020-12-18'
   FR7130:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Saint-Malo'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°36,82''N — 002°11,64''W'
       NE: '48°42,89''N — 001°58,21''W'
@@ -978,14 +837,11 @@ gans:
       - { num: 9, semaineAvis: 2040-41 }
       - { num: 10, semaineAvis: 2045-40 }
       - { num: 11, semaineAvis: 2049-32 }
+    valid: '2020-12-18'
   FR7153:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île de Bréhat au Plateau des Roches Douvres'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°48,64''N — 003°12,48''W'
       NE: '49°08,24''N — 002°28,78''W'
@@ -996,14 +852,11 @@ gans:
       - { num: 4, semaineAvis: 2023-47 }
       - { num: 5, semaineAvis: 2040-44 }
       - { num: 6, semaineAvis: 2044-48 }
+    valid: '2020-12-18'
   FR7124:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Lannion'
-    sgtEdition: 'Edition n° 3 - 2008'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°39,94''N — 003°50,08''W'
       NE: '48°48,02''N — 003°32,15''W'
@@ -1018,14 +871,11 @@ gans:
       - { num: 20, semaineAvis: 2036-52 }
       - { num: 21, semaineAvis: 2044-52 }
       - { num: 22, semaineAvis: 2050-40 }
+    valid: '2020-12-18'
   FR6615:
     age: 5
     groupTitle: 'Côte Sud de France'
     title: 'Îles de Port-Cros et du Levant'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°53,54''N — 006°20,90''E'
       NE: '43°06,66''N — 006°33,08''E'
@@ -1036,14 +886,11 @@ gans:
       - { num: 3, semaineAvis: 2023-94 }
       - { num: 4, semaineAvis: 2025-86 }
       - { num: 5, semaineAvis: 2025-89 }
+    valid: '2020-12-18'
   FR7041:
     age: 5
     groupTitle: 'Petites Antilles'
     title: 'La Martinique'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - MQ
     bbox:
       SW: '14°34,30''N — 061°17,78''W'
       NE: '14°58,60''N — 060°41,08''W'
@@ -1059,14 +906,11 @@ gans:
       - { num: 27, semaineAvis: 1924-256 }
       - { num: 28, semaineAvis: 1932-260 }
       - { num: 29, semaineAvis: 1942-260 }
+    valid: '2020-12-18'
   FR6015:
     age: 5
     groupTitle: 'Canada - Groenland - Islande'
     title: 'Des passages du Nord-Ouest à la Mer du Groenland'
-    sgtEdition: 'Edition n° 2 - 1993'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - PM
     bbox:
       SW: '47°09,00''N — NaN°00,00''W'
       NE: '74°35,48''N — 012°19,50''W'
@@ -1082,14 +926,11 @@ gans:
       - { num: 40, semaineAvis: 1913-279 }
       - { num: 41, semaineAvis: 1913-280 }
       - { num: 42, semaineAvis: 2029-276 }
+    valid: '2020-12-18'
   FR7031:
     age: 5
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île de Penfret au Plateau des Birvideaux'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°28,94''N — 004°00,08''W'
       NE: '47°49,04''N — 003°16,38''W'
@@ -1100,14 +941,11 @@ gans:
       - { num: 12, semaineAvis: 2006-56 }
       - { num: 13, semaineAvis: 2035-59 }
       - { num: 14, semaineAvis: 2039-56 }
+    valid: '2020-12-18'
   FR7158:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de Carteret au Cap de la Hague'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°21,74''N — 002°17,88''W'
       NE: '49°49,54''N — 001°48,08''W'
@@ -1118,14 +956,11 @@ gans:
       - { num: 46, semaineAvis: 2028-42 }
       - { num: 47, semaineAvis: 2038-38 }
       - { num: 48, semaineAvis: 2051-41 }
+    valid: '2020-12-18'
   FR6951:
     age: 5
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Fos-sur-Mer à Capo Mele'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°19,94''N — 004°49,93''E'
       NE: '43°59,94''N — 008°11,94''E'
@@ -1136,14 +971,11 @@ gans:
       - { num: 8, semaineAvis: 2005-90 }
       - { num: 9, semaineAvis: 2008-92 }
       - { num: 10, semaineAvis: 2044-89 }
+    valid: '2020-12-18'
   FR7156:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe du Grouin à la Pointe d''Agon'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°33,04''N — 002°00,34''W'
       NE: '49°01,97''N — 001°30,48''W'
@@ -1154,14 +986,11 @@ gans:
       - { num: 6, semaineAvis: 2006-43 }
       - { num: 7, semaineAvis: 2012-35 }
       - { num: 8, semaineAvis: 2024-50 }
+    valid: '2020-12-18'
   FR7024:
     age: 5
     groupTitle: 'Mer Méditerranée'
     title: 'Bouches de Bonifacio'
-    sgtEdition: 'Edition n° 5 - 2012'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°07,60''N — 008°52,94''E'
       NE: '41°28,74''N — 009°33,54''E'
@@ -1174,14 +1003,11 @@ gans:
       - { num: 48, semaineAvis: 2011-94 }
       - { num: 49, semaineAvis: 2025-93 }
       - { num: 50, semaineAvis: 2050-97 }
+    valid: '2020-12-18'
   FR7421:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°14,94''N — 000°55,78''W'
       NE: '49°34,45''N — 000°11,18''W'
@@ -1192,14 +1018,11 @@ gans:
       - { num: 37, semaineAvis: 2032-40 }
       - { num: 38, semaineAvis: 2036-44 }
       - { num: 39, semaineAvis: 2045-36 }
+    valid: '2020-12-18'
   FR7141:
     age: 5
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Quiberon'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°23,84''N — 003°08,72''W'
       NE: '47°35,77''N — 002°56,78''W'
@@ -1210,14 +1033,11 @@ gans:
       - { num: 32, semaineAvis: 2035-58 }
       - { num: 33, semaineAvis: 2037-56 }
       - { num: 34, semaineAvis: 2043-56 }
+    valid: '2020-12-18'
   FR7121:
     age: 5
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Douarnenez'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°03,94''N — 004°40,28''W'
       NE: '48°16,09''N — 004°13,68''W'
@@ -1231,14 +1051,11 @@ gans:
       - { num: 15, semaineAvis: 2004-42 }
       - { num: 16, semaineAvis: 2015-60 }
       - { num: 17, semaineAvis: 2042-50 }
+    valid: '2020-12-18'
   FR6824:
     age: 5
     groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
     title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
-    sgtEdition: 'Edition n° 4 - 2006'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°40,35''N — NaN°00,00''W'
       NE: '51°10,35''N — 001°35,92''E'
@@ -1249,14 +1066,11 @@ gans:
       - { num: 149, semaineAvis: 2007-33 }
       - { num: 150, semaineAvis: 2024-33 }
       - { num: 151, semaineAvis: 2038-35 }
+    valid: '2020-12-18'
   FR7258:
     age: 5
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Calais'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°55,25''N — 001°40,92''E'
       NE: '51°01,32''N — 001°55,07''E'
@@ -1269,14 +1083,11 @@ gans:
       - { num: 3, semaineAvis: 2026-35 }
       - { num: 4, semaineAvis: 2031-35 }
       - { num: 5, semaineAvis: 2048-33 }
+    valid: '2020-12-18'
   FR7507:
     age: 5
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
-    sgtEdition: 'Publication 1996'
-    modified: '2020-01-29+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '40°35,00''N — NaN°00,00''W'
       NE: 'NaN°00,00''S — 009°45,00''E'
@@ -1287,14 +1098,11 @@ gans:
       - { num: 118, semaineAvis: 2030-98 }
       - { num: 119, semaineAvis: 2035-86 }
       - { num: 120, semaineAvis: 2049-82 }
+    valid: '2020-12-18'
   FR6610:
     age: 5
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié'
-    sgtEdition: 'Edition n° 5 - 2017'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°58,94''N — 005°42,38''E'
       NE: '43°09,44''N — 005°52,14''E'
@@ -1305,14 +1113,11 @@ gans:
       - { num: 9, semaineAvis: 2008-91 }
       - { num: 10, semaineAvis: 2023-94 }
       - { num: 11, semaineAvis: 2041-90 }
+    valid: '2020-12-18'
   FR7040:
     age: 5
     groupTitle: 'La Manche'
     title: 'La Manche'
-    sgtEdition: 'Edition n° 4 - 2003'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: 'NaN°00,00''S — 006°43,65''W'
       NE: '51°14,80''N — 001°52,00''E'
@@ -1323,14 +1128,11 @@ gans:
       - { num: 3, semaineAvis: 2049-25 }
       - { num: 4, semaineAvis: 2049-33 }
       - { num: 5, semaineAvis: 2051-36 }
+    valid: '2020-12-18'
   FR7035:
     age: 4.5
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
-    sgtEdition: 'Edition n° 2 - 1998'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - RE
     bbox:
       SW: '21°41,80''S — 054°41,60''E'
       NE: '20°30,80''S — 056°32,60''E'
@@ -1345,14 +1147,11 @@ gans:
       - { num: 44, semaineAvis: 2010-186 }
       - { num: 45, semaineAvis: 2031-184 }
       - { num: 46, semaineAvis: 2039-184 }
+    valid: '2020-12-18'
   FR7291:
     age: 4
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: ''
       NE: ''
@@ -1362,14 +1161,11 @@ gans:
       - { num: 15, semaineAvis: 1950-104 }
       - { num: 16, semaineAvis: 1950-107 }
       - { num: 17, semaineAvis: 2012-104 }
+    valid: '2020-12-18'
   FR7441:
     age: 4
     groupTitle: 'Principauté de Monaco - Côte Sud de France'
     title: 'Abords et Ports de Monaco'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2020-02-05+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°42,64''N — 007°23,54''E'
       NE: '43°45,67''N — 007°29,68''E'
@@ -1379,14 +1175,11 @@ gans:
       - { num: 8, semaineAvis: 2024-90 }
       - { num: 9, semaineAvis: 2039-91 }
       - { num: 10, semaineAvis: 2039-92 }
+    valid: '2020-12-18'
   FR7345:
     age: 4
     groupTitle: 'Petites Antilles'
     title: Guadeloupe
-    sgtEdition: 'Edition n° 3 - 2010'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '15°42,25''N — 062°12,24''W'
       NE: '16°42,85''N — 060°40,03''W'
@@ -1400,14 +1193,11 @@ gans:
       - { num: 22, semaineAvis: 1943-263 }
       - { num: 23, semaineAvis: 2009-260 }
       - { num: 24, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR7374:
     age: 4
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'Côte de la Guyane française'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '04°10,00''N — 055°28,00''W'
       NE: '07°33,00''N — 050°30,00''W'
@@ -1421,14 +1211,11 @@ gans:
       - { num: 7, semaineAvis: 1941-254 }
       - { num: 8, semaineAvis: 1941-255 }
       - { num: 9, semaineAvis: 1943-253 }
+    valid: '2020-12-18'
   FR7139:
     age: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Talut à la Pointe de Gâvres - Île de Groix'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°35,30''N — 003°35,08''W'
       NE: '47°43,39''N — 003°17,52''W'
@@ -1440,14 +1227,11 @@ gans:
       - { num: 9, semaineAvis: 1951-56 }
       - { num: 10, semaineAvis: 2006-56 }
       - { num: 11, semaineAvis: 2039-56 }
+    valid: '2020-12-18'
   FR6843:
     age: 4
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo Creus à Port-Barcarès'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-24+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°18,14''N — 002°57,53''E'
       NE: '42°48,14''N — 003°25,23''E'
@@ -1457,14 +1241,11 @@ gans:
       - { num: 8, semaineAvis: 1950-82 }
       - { num: 9, semaineAvis: 2032-79 }
       - { num: 10, semaineAvis: 2037-84 }
+    valid: '2020-12-18'
   FR7434:
     age: 4
     groupTitle: 'Côte Sud de France'
     title: 'Ports de Sète, Port-la-Nouvelle, Port-Vendres et Collioure'
-    sgtEdition: 'Edition n° 2 - 2015'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Port de Sète', bbox: { SW: '43°22,04''N — 003°39,33''E', NE: '43°26,17''N — 003°47,78''E' } }
       - { title: 'Cartouche: B - Port de Port-la-Nouvelle', bbox: { SW: '43°00,24''N — 003°02,18''E', NE: '43°01,48''N — 003°06,50''E' } }
@@ -1475,14 +1256,11 @@ gans:
       - { num: 19, semaineAvis: 2008-92 }
       - { num: 20, semaineAvis: 2030-84 }
       - { num: 21, semaineAvis: 2046-90 }
+    valid: '2020-12-18'
   FR7204:
     age: 4
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Marseille à l''île d''Elbe (Isola d''Elba) et aux Bouches de Bonifacio'
-    sgtEdition: 'Publication 1989'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°06,00''N — 004°45,00''E'
       NE: '44°29,00''N — 011°30,00''E'
@@ -1492,14 +1270,11 @@ gans:
       - { num: 142, semaineAvis: 1950-88 }
       - { num: 143, semaineAvis: 2005-88 }
       - { num: 144, semaineAvis: 2024-95 }
+    valid: '2020-12-18'
   FR7401:
     age: 4
     groupTitle: 'Côte Ouest de France'
     title: 'Accès à la Rade de Brest'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°14,64''N — 004°46,92''W'
       NE: '48°23,74''N — 004°26,89''W'
@@ -1511,14 +1286,11 @@ gans:
       - { num: 15, semaineAvis: 2010-44 }
       - { num: 16, semaineAvis: 2031-40 }
       - { num: 17, semaineAvis: 2047-50 }
+    valid: '2020-12-18'
   FR7070:
     age: 4
     groupTitle: 'Côte Ouest de France'
     title: 'Du Pertuis de Maumusson à Mimizan-Plage'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '44°09,00''N — 002°36,00''W'
       NE: '45°49,00''N — NaN°00,00''W'
@@ -1528,14 +1300,11 @@ gans:
       - { num: 12, semaineAvis: 2035-62 }
       - { num: 13, semaineAvis: 2035-63 }
       - { num: 14, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR6940:
     age: 4
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à The Needles'
-    sgtEdition: 'Edition n° 5 - 2011'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°42,82''N — 003°53,00''W'
       NE: '50°44,50''N — 001°32,00''W'
@@ -1545,14 +1314,11 @@ gans:
       - { num: 71, semaineAvis: 1951-27 }
       - { num: 72, semaineAvis: 2010-27 }
       - { num: 73, semaineAvis: 2018-25 }
+    valid: '2020-12-18'
   FR7016:
     age: 4
     groupTitle: 'Mer Méditerranée'
     title: 'Mer Méditerranée'
-    sgtEdition: 'Edition n° 2 - 1998'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '30°05,00''N — 009°55,00''E'
       NE: '43°39,25''N — 036°19,50''E'
@@ -1562,14 +1328,11 @@ gans:
       - { num: 70, semaineAvis: 2020-128 }
       - { num: 71, semaineAvis: 2024-95 }
       - { num: 72, semaineAvis: 2026-128 }
+    valid: '2020-12-18'
   FR7379:
     age: 4
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Cayenne'
-    sgtEdition: 'Edition n° 2 - 2002'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '04°49,00''N — 052°30,00''W'
       NE: '05°09,30''N — 052°00,30''W'
@@ -1583,14 +1346,11 @@ gans:
       - { num: 35, semaineAvis: 1930-255 }
       - { num: 36, semaineAvis: 1943-253 }
       - { num: 37, semaineAvis: 2002-253 }
+    valid: '2020-12-18'
   FR7053:
     age: 4
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°14,64''N — 003°38,93''E'
       NE: '43°34,74''N — 004°19,53''E'
@@ -1600,14 +1360,11 @@ gans:
       - { num: 6, semaineAvis: 2004-88 }
       - { num: 7, semaineAvis: 2008-92 }
       - { num: 8, semaineAvis: 2017-85 }
+    valid: '2020-12-18'
   FR6911:
     age: 4
     groupTitle: 'Côte Est de Corse'
     title: 'Golfe de Porto-Vecchio'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°34,30''N — 009°16,34''E'
       NE: '41°38,46''N — 009°24,54''E'
@@ -1617,14 +1374,11 @@ gans:
       - { num: 6, semaineAvis: 2040-94 }
       - { num: 7, semaineAvis: 2046-97 }
       - { num: 8, semaineAvis: 2048-96 }
+    valid: '2020-12-18'
   FR7404:
     age: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°00,34''N — 001°46,08''W'
       NE: '46°21,04''N — 001°02,38''W'
@@ -1636,14 +1390,11 @@ gans:
       - { num: 22, semaineAvis: 2011-60 }
       - { num: 23, semaineAvis: 2037-60 }
       - { num: 24, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR7414:
     age: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Ile d''Aix au Pertuis de Maumusson'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '45°45,94''N — 001°18,88''W'
       NE: '46°00,78''N — 001°04,28''W'
@@ -1655,14 +1406,11 @@ gans:
       - { num: 23, semaineAvis: 2038-60 }
       - { num: 24, semaineAvis: 2041-60 }
       - { num: 25, semaineAvis: 2050-60 }
+    valid: '2020-12-18'
   FR7203:
     age: 4
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Des Îles Baléares (Islas Baleares) à Marseille'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '38°49,93''N — 001°36,93''E'
       NE: '43°53,94''N — 006°12,93''E'
@@ -1672,14 +1420,11 @@ gans:
       - { num: 85, semaineAvis: 2005-88 }
       - { num: 86, semaineAvis: 2030-77 }
       - { num: 87, semaineAvis: 2035-86 }
+    valid: '2020-12-18'
   FR7302:
     age: 4
     groupTitle: Guadeloupe
     title: 'De la Pointe des Châteaux à l''Ilet à Kahouanne'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '16°14,45''N — 061°47,24''W'
       NE: '16°38,81''N — 061°10,23''W'
@@ -1693,14 +1438,11 @@ gans:
       - { num: 18, semaineAvis: 1903-265 }
       - { num: 19, semaineAvis: 1943-263 }
       - { num: 20, semaineAvis: 2019-256 }
+    valid: '2020-12-18'
   FR7443:
     age: 4
     groupTitle: 'Côtes de France et d''Italie - Principauté de Monaco'
     title: 'Du Cap Ferrat à Capo San Lorenzo'
-    sgtEdition: 'Edition n° 2 - 2014'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°33,00''N — 007°19,10''E'
       NE: '43°53,00''N — 007°59,70''E'
@@ -1710,14 +1452,11 @@ gans:
       - { num: 26, semaineAvis: 2024-90 }
       - { num: 27, semaineAvis: 2028-101 }
       - { num: 28, semaineAvis: 2039-91 }
+    valid: '2020-12-18'
   FR7157:
     age: 4
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe d''Agon au Cap de Carteret'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°57,34''N — 002°04,08''W'
       NE: '49°25,94''N — 001°34,28''W'
@@ -1727,14 +1466,11 @@ gans:
       - { num: 17, semaineAvis: 2010-38 }
       - { num: 18, semaineAvis: 2028-42 }
       - { num: 19, semaineAvis: 2037-48 }
+    valid: '2020-12-18'
   FR7643:
     age: 4
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Port de Nouméa'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2017-03-15+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°19,15''S — 166°22,80''E'
       NE: '22°13,18''S — 166°27,32''E'
@@ -1756,14 +1492,11 @@ gans:
       - { num: 14, semaineAvis: 2042-220 }
       - { num: 15, semaineAvis: 2042-221 }
       - { num: 16, semaineAvis: 2045-222 }
+    valid: '2020-12-18'
   FR7405:
     age: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De La Rochelle à la Pointe de La Coubre'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '45°40,44''N — 001°32,88''W'
       NE: '46°10,84''N — 001°03,08''W'
@@ -1777,14 +1510,11 @@ gans:
       - { num: 21, semaineAvis: 2041-60 }
       - { num: 22, semaineAvis: 2041-61 }
       - { num: 23, semaineAvis: 2050-60 }
+    valid: '2020-12-18'
   FR7127:
     age: 4
     groupTitle: 'Côte Nord de France'
     title: 'Abords de l''Île de Bréhat - Anse de Paimpol'
-    sgtEdition: 'Edition n° 4 - 2014'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°42,78''N — 003°05,68''W'
       NE: '48°54,64''N — 002°53,48''W'
@@ -1797,14 +1527,11 @@ gans:
       - { num: 17, semaineAvis: 2006-47 }
       - { num: 18, semaineAvis: 2023-47 }
       - { num: 19, semaineAvis: 2036-52 }
+    valid: '2020-12-18'
   FR6892:
     age: 3.5
     groupTitle: Martinique
     title: 'Baie de Fort-de-France'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - MQ
     bbox:
       SW: '14°31,00''N — 061°08,06''W'
       NE: '14°37,10''N — 060°58,88''W'
@@ -1817,14 +1544,11 @@ gans:
       - { num: 6, semaineAvis: 1946-260 }
       - { num: 7, semaineAvis: 2018-260 }
       - { num: 8, semaineAvis: 2021-260 }
+    valid: '2020-12-18'
   FR7349:
     age: 3.5
     groupTitle: 'Océan Indien'
     title: 'De la Réunion à Maurice (Mauritius) - Ile Tromelin'
-    sgtEdition: 'Publication 1996'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - RE
     bbox:
       SW: '21°45,00''S — 054°40,00''E'
       NE: '19°23,00''S — 058°21,00''E'
@@ -1839,14 +1563,11 @@ gans:
       - { num: 27, semaineAvis: 2031-184 }
       - { num: 28, semaineAvis: 2039-184 }
       - { num: 29, semaineAvis: 2039-185 }
+    valid: '2020-12-18'
   FR7460:
     age: 3.5
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De la Passe de Taapuna à la Passe d''Arue'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: 1', bbox: { SW: '17°36,53''S — 149°37,95''W', NE: '17°32,46''S — 149°35,00''W' } }
       - { title: 'Cartouche: 2 - Port de Papeete', bbox: { SW: '17°33,40''S — 149°36,20''W', NE: '17°29,33''S — 149°31,40''W' } }
@@ -1866,14 +1587,11 @@ gans:
       - { num: 23, semaineAvis: 2045-230 }
       - { num: 24, semaineAvis: 2049-225 }
       - { num: 25, semaineAvis: 2051-230 }
+    valid: '2020-12-18'
   FR7208:
     age: 3
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-03-29+02:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '15°48,35''N — 061°23,23''W'
       NE: '16°24,05''N — 060°58,03''W'
@@ -1885,14 +1603,11 @@ gans:
       - { num: 14, semaineAvis: 1903-265 }
       - { num: 15, semaineAvis: 1907-260 }
       - { num: 16, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR7397:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (partie Sud)'
-    sgtEdition: 'Edition n° 5 - 2017'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°16,47''N — 004°31,13''W'
       NE: '48°20,51''N — 004°22,24''W'
@@ -1901,14 +1616,11 @@ gans:
       - { num: 8, semaineAvis: 2008-48 }
       - { num: 9, semaineAvis: 2031-40 }
       - { num: 10, semaineAvis: 2047-50 }
+    valid: '2020-12-18'
   FR7211:
     age: 3
     groupTitle: 'Océan Atlantique Nord'
     title: 'Golfe de Gascogne'
-    sgtEdition: 'Edition n° 6 - 2019'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°29,93''N — 013°26,58''W'
       NE: '48°55,74''N — 000°00,08''W'
@@ -1917,14 +1629,11 @@ gans:
       - { num: 2, semaineAvis: 1945-70 }
       - { num: 3, semaineAvis: 2022-70 }
       - { num: 4, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR7044:
     age: 3
     groupTitle: 'Océan Atlantique Sud'
     title: 'De la Terre de Feu au Vénézuéla'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — NaN°00,00''W'
@@ -1936,16 +1645,11 @@ gans:
       - { num: 4, semaineAvis: 1939-248 }
       - { num: 5, semaineAvis: 2043-173 }
       - { num: 6, semaineAvis: 2046-254 }
+    valid: '2020-12-18'
   FR6673:
     age: 3
     groupTitle: 'Océan Indien'
     title: 'De Chagos Archipelago à Madagascar'
-    sgtEdition: 'Edition n° 4 - 2011'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - TF
-      - RE
-      - YT
     bbox:
       SW: '24°18,14''S — 044°27,00''E'
       NE: '03°30,00''S — 077°46,99''E'
@@ -1957,14 +1661,11 @@ gans:
       - { num: 11, semaineAvis: 1951-185 }
       - { num: 12, semaineAvis: 2012-182 }
       - { num: 13, semaineAvis: 2039-184 }
+    valid: '2020-12-18'
   FR7147:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à la Pointe de Penmarc''h'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°44,54''N — 004°59,98''W'
       NE: '48°04,54''N — 004°16,28''W'
@@ -1975,14 +1676,11 @@ gans:
       - { num: 46, semaineAvis: 1949-44 }
       - { num: 47, semaineAvis: 2012-43 }
       - { num: 48, semaineAvis: 2044-54 }
+    valid: '2020-12-18'
   FR7100:
     age: 3
     groupTitle: Guadeloupe
     title: 'Abords de Pointe-à-Pitre'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '16°06,50''N — 061°35,69''W'
       NE: '16°15,44''N — 061°29,38''W'
@@ -1996,13 +1694,10 @@ gans:
       - { num: 4, semaineAvis: 2009-260 }
       - { num: 5, semaineAvis: 2015-260 }
       - { num: 6, semaineAvis: 2040-260 }
+    valid: '2020-12-18'
   FR7312:
     age: 3
     title: 'La Manche (Partie Est)'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2020-12-08+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°04,94''N — 003°00,08''W'
       NE: '51°35,45''N — 002°44,92''E'
@@ -2011,14 +1706,11 @@ gans:
       - { num: 11, semaineAvis: 2050-35 }
       - { num: 12, semaineAvis: 2050-36 }
       - { num: 13, semaineAvis: 2050-37 }
+    valid: '2020-12-23'
   FR7081:
     age: 3
     groupTitle: 'Mer Méditerranée et Mer Noire'
     title: 'Mer Méditerranée et Mer Noire'
-    sgtEdition: 'Publication 1986'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: '49°50,18''N — 042°17,61''E'
@@ -2027,14 +1719,11 @@ gans:
       - { num: 136, semaineAvis: 2024-95 }
       - { num: 137, semaineAvis: 2030-77 }
       - { num: 138, semaineAvis: 2039-144 }
+    valid: '2020-12-18'
   FR7145:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De La Turballe à Pornichet'
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°12,54''N — 002°40,50''W'
       NE: '47°22,65''N — 002°18,69''W'
@@ -2048,14 +1737,11 @@ gans:
       - { num: 27, semaineAvis: 1941-50 }
       - { num: 28, semaineAvis: 1949-56 }
       - { num: 29, semaineAvis: 1951-58 }
+    valid: '2020-12-18'
   FR7146:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Pointe de Trévignon'
-    sgtEdition: 'Edition n° 3 - 2009'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°34,84''N — 004°31,08''W'
       NE: '47°54,94''N — 003°47,38''W'
@@ -2064,14 +1750,11 @@ gans:
       - { num: 61, semaineAvis: 2035-55 }
       - { num: 62, semaineAvis: 2035-59 }
       - { num: 63, semaineAvis: 2049-41 }
+    valid: '2020-12-18'
   FR7069:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '45°41,20''N — 003°21,00''W'
       NE: '46°47,80''N — NaN°00,00''W'
@@ -2080,14 +1763,11 @@ gans:
       - { num: 12, semaineAvis: 1944-60 }
       - { num: 13, semaineAvis: 2007-61 }
       - { num: 14, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR7148:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à la Chaussée de Sein'
-    sgtEdition: 'Edition n° 3 - 2008'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°56,34''N — 005°01,54''W'
       NE: '48°25,62''N — 004°31,69''W'
@@ -2096,14 +1776,11 @@ gans:
       - { num: 59, semaineAvis: 1949-40 }
       - { num: 60, semaineAvis: 1949-44 }
       - { num: 61, semaineAvis: 2012-43 }
+    valid: '2020-12-18'
   FR7267:
     age: 3
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Tropez'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°08,81''N — 006°34,24''E'
       NE: '43°20,69''N — 006°45,32''E'
@@ -2116,14 +1793,11 @@ gans:
       - { num: 2, semaineAvis: 2005-90 }
       - { num: 3, semaineAvis: 2025-91 }
       - { num: 4, semaineAvis: 2027-93 }
+    valid: '2020-12-18'
   FR6980:
     age: 3
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-09-11+02:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Abords de l''Île-Rousse', bbox: { SW: '42°37,48''N — 008°55,34''E', NE: '42°40,16''N — 008°58,52''E' } }
       - { title: 'Cartouche: B - Abords de la Marine de Sant''Ambrogio - Port Eugène Ceccaldi', bbox: { SW: '42°35,84''N — 008°48,83''E', NE: '42°38,52''N — 008°51,14''E' } }
@@ -2133,14 +1807,11 @@ gans:
       - { num: 4, semaineAvis: 1950-88 }
       - { num: 5, semaineAvis: 2019-96 }
       - { num: 6, semaineAvis: 2031-93 }
+    valid: '2020-12-18'
   FR7395:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Du Croisic à Noirmoutier'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°59,94''N — 002°50,28''W'
       NE: '47°20,24''N — 002°06,48''W'
@@ -2149,14 +1820,11 @@ gans:
       - { num: 25, semaineAvis: 2019-60 }
       - { num: 26, semaineAvis: 2043-61 }
       - { num: 27, semaineAvis: 2049-45 }
+    valid: '2020-12-18'
   FR6857:
     age: 3
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
-    sgtEdition: 'Edition n° 4 - 2012'
-    modified: '2020-12-08+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°10,74''N — 001°57,48''W'
       NE: '50°12,95''N — 000°23,52''W'
@@ -2165,14 +1833,11 @@ gans:
       - { num: 67, semaineAvis: 2050-35 }
       - { num: 68, semaineAvis: 2050-36 }
       - { num: 69, semaineAvis: 2050-37 }
+    valid: '2020-12-23'
   FR7403:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Des Sables d''Olonne à l''Ile de Ré'
-    sgtEdition: 'Edition n° 2 - 2002'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°11,94''N — 002°05,08''W'
       NE: '46°32,54''N — 001°21,38''W'
@@ -2185,14 +1850,11 @@ gans:
       - { num: 35, semaineAvis: 2009-62 }
       - { num: 36, semaineAvis: 2011-60 }
       - { num: 37, semaineAvis: 2037-60 }
+    valid: '2020-12-18'
   FR7399:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Port de Brest'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°20,86''N — 004°32,07''W'
       NE: '48°23,89''N — 004°25,39''W'
@@ -2201,14 +1863,11 @@ gans:
       - { num: 3, semaineAvis: 2008-48 }
       - { num: 4, semaineAvis: 2010-44 }
       - { num: 5, semaineAvis: 2023-55 }
+    valid: '2020-12-18'
   FR6970:
     age: 3
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
-    sgtEdition: 'Edition n° 3 - 2015'
-    modified: '2019-09-11+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°30,44''N — 008°26,44''E'
       NE: '42°50,84''N — 009°07,04''E'
@@ -2217,14 +1876,11 @@ gans:
       - { num: 7, semaineAvis: 1950-88 }
       - { num: 8, semaineAvis: 2019-96 }
       - { num: 9, semaineAvis: 2031-93 }
+    valid: '2020-12-18'
   FR7408:
     age: 3
     groupTitle: 'Côte Sud de France'
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2020-01-29+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°59,94''N — 006°29,24''E'
       NE: '43°29,64''N — 006°56,94''E'
@@ -2233,14 +1889,11 @@ gans:
       - { num: 4, semaineAvis: 2005-90 }
       - { num: 5, semaineAvis: 2025-91 }
       - { num: 6, semaineAvis: 2027-93 }
+    valid: '2020-12-18'
   FR7310:
     age: 3
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Est)'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°33,19''N — 002°41,27''W'
       NE: '48°43,31''N — 002°18,88''W'
@@ -2252,15 +1905,11 @@ gans:
       - { num: 4, semaineAvis: 2006-46 }
       - { num: 5, semaineAvis: 2036-52 }
       - { num: 6, semaineAvis: 2049-33 }
+    valid: '2020-12-18'
   FR5417:
     age: 3
     groupTitle: 'Océan Atlantique Nord et Mers Boréales'
     title: 'Océan Atlantique Nord et mers boréales'
-    sgtEdition: 'Edition n° 5 - 1977'
-    modified: '2017-05-10+02:00'
-    mapsFrance:
-      - FX
-      - PM
     bbox:
       SW: 'NaN°00,00''S — 062°20,00''W'
       NE: '77°10,00''N — 051°50,00''E'
@@ -2269,14 +1918,11 @@ gans:
       - { num: 87, semaineAvis: 1739-267 }
       - { num: 88, semaineAvis: 1739-269 }
       - { num: 89, semaineAvis: 1741-266 }
+    valid: '2020-12-18'
   FR7172:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu à la Chaussée de Sein - Iroise'
-    sgtEdition: 'Edition n° 3 - 2008'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°01,84''N — 005°15,69''W'
       NE: '48°21,74''N — 004°31,99''W'
@@ -2285,14 +1931,11 @@ gans:
       - { num: 54, semaineAvis: 1949-40 }
       - { num: 55, semaineAvis: 1949-44 }
       - { num: 56, semaineAvis: 2012-43 }
+    valid: '2020-12-18'
   FR7089:
     age: 3
     groupTitle: 'La Martinique'
     title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - MQ
     hasPart:
       - { title: 'Cartouche: A - Saint-Pierre', bbox: { SW: '14°43,33''N — 061°11,55''W', NE: '14°45,10''N — 061°10,38''W' } }
       - { title: 'Cartouche: B - Case-Pilote', bbox: { SW: '14°38,17''N — 061°09,48''W', NE: '14°39,00''N — 061°08,08''W' } }
@@ -2306,14 +1949,11 @@ gans:
       - { num: 19, semaineAvis: 1911-260 }
       - { num: 20, semaineAvis: 1932-260 }
       - { num: 21, semaineAvis: 2048-260 }
+    valid: '2020-12-18'
   FR6680:
     age: 3
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile d''Ouessant à l''Ile de Batz'
-    sgtEdition: 'Edition n° 3 - 2003'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°21,54''N — 006°18,09''W'
       NE: '49°24,94''N — 003°57,09''W'
@@ -2322,14 +1962,11 @@ gans:
       - { num: 75, semaineAvis: 1941-44 }
       - { num: 76, semaineAvis: 2016-50 }
       - { num: 77, semaineAvis: 2019-44 }
+    valid: '2020-12-18'
   FR7134:
     age: 3
     groupTitle: 'Côte Nord de France'
     title: 'Iles Chausey'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°49,38''N — 001°54,27''W'
       NE: '48°55,44''N — 001°40,78''W'
@@ -2340,14 +1977,11 @@ gans:
       - { num: 3, semaineAvis: 1929-40 }
       - { num: 4, semaineAvis: 2006-41 }
       - { num: 5, semaineAvis: 2040-37 }
+    valid: '2020-12-18'
   FR7420:
     age: 3
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Port de Grandcamp-Maisy', bbox: { SW: '49°23,19''N — 001°04,04''W', NE: '49°24,42''N — 001°01,66''W' } }
       - { title: 'Cartouche: B - Port de Port-en-Bessin', bbox: { SW: '49°20,62''N — 000°46,58''W', NE: '49°21,75''N — 000°44,35''W' } }
@@ -2362,14 +1996,11 @@ gans:
       - { num: 2, semaineAvis: 2010-36 }
       - { num: 3, semaineAvis: 2029-37 }
       - { num: 4, semaineAvis: 2043-35 }
+    valid: '2020-12-18'
   FR7140:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Passes et Rade de Lorient'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°40,44''N — 003°25,28''W'
       NE: '47°46,37''N — 003°19,29''W'
@@ -2380,14 +2011,11 @@ gans:
       - { num: 2, semaineAvis: 1931-53 }
       - { num: 3, semaineAvis: 2035-56 }
       - { num: 4, semaineAvis: 2038-56 }
+    valid: '2020-12-18'
   FR6991:
     age: 3
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°13,93''N — 005°53,08''W'
       NE: '45°42,94''N — 000°47,58''W'
@@ -2396,14 +2024,11 @@ gans:
       - { num: 23, semaineAvis: 1944-60 }
       - { num: 24, semaineAvis: 2035-62 }
       - { num: 25, semaineAvis: 2050-66 }
+    valid: '2020-12-18'
   FR7415:
     age: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Charente'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: Embouchure de la Charente', bbox: { SW: '45°56,74''N — 001°15,08''W', NE: '46°02,74''N — 001°03,47''W' } }
       - { title: 'Cartouche: A - Cours de la Charente - De Port-des-Barques à Tonnay-Charente', bbox: { SW: '45°54,74''N — 001°05,38''W', NE: '45°58,94''N — 000°56,68''W' } }
@@ -2413,12 +2038,10 @@ gans:
       - { num: 7, semaineAvis: 2012-56 }
       - { num: 8, semaineAvis: 2041-60 }
       - { num: 9, semaineAvis: 2050-60 }
+    valid: '2020-12-18'
   FR6835:
     age: 2.75
     title: 'Océan Pacifique Nord'
-    sgtEdition: 'Edition n° 2 - 1997'
-    modified: '2016-10-19+02:00'
-    mapsFrance: {  }
     bbox:
       SW: 'NaN°00,00''S — 173°05,00''W'
       NE: '71°30,00''N — 116°30,00''W'
@@ -2437,14 +2060,11 @@ gans:
       - { num: 75, semaineAvis: 2025-245 }
       - { num: 76, semaineAvis: 2041-275 }
       - { num: 77, semaineAvis: 2041-277 }
+    valid: '2020-12-21'
   FR7337:
     age: 2.5
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
-    sgtEdition: 'Publication 1996'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: ''
       NE: ''
@@ -2455,14 +2075,11 @@ gans:
       - { num: 8, semaineAvis: 1941-254 }
       - { num: 9, semaineAvis: 1941-255 }
       - { num: 10, semaineAvis: 2043-251 }
+    valid: '2020-12-18'
   FR7328:
     age: 2.5
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Sud'
-    sgtEdition: 'Edition n° 2 - 2012'
-    modified: '2017-02-15+01:00'
-    mapsFrance:
-      - RE
     bbox:
       SW: '21°30,80''S — 055°06,60''E'
       NE: '21°06,50''S — 055°44,60''E'
@@ -2475,15 +2092,11 @@ gans:
       - { num: 9, semaineAvis: 1951-188 }
       - { num: 10, semaineAvis: 2012-186 }
       - { num: 11, semaineAvis: 2039-184 }
+    valid: '2020-12-18'
   FR7023:
     age: 2.5
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est'
-    sgtEdition: 'Publication 1984'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - PF
-      - CP
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — NaN°00,00''W'
@@ -2494,14 +2107,11 @@ gans:
       - { num: 104, semaineAvis: 1924-246 }
       - { num: 105, semaineAvis: 1943-246 }
       - { num: 106, semaineAvis: 2041-275 }
+    valid: '2020-12-18'
   FR6118:
     age: 2.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Iles Saint-Pierre et Miquelon'
-    sgtEdition: 'Edition n° 5 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PM
     bbox:
       SW: '46°35,00''N — 056°38,95''W'
       NE: '47°17,00''N — 055°57,25''W'
@@ -2512,14 +2122,11 @@ gans:
       - { num: 6, semaineAvis: 2010-275 }
       - { num: 7, semaineAvis: 2017-275 }
       - { num: 8, semaineAvis: 2038-278 }
+    valid: '2020-12-18'
   FR7677:
     age: 2.5
     groupTitle: 'Océan Indien - Archipel des Comores'
     title: 'Île de Mayotte'
-    sgtEdition: 'Publication 2013'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - YT
     bbox:
       SW: '13°17,60''S — 044°10,40''E'
       NE: '12°14,20''S — 045°45,00''E'
@@ -2530,15 +2137,11 @@ gans:
       - { num: 8, semaineAvis: 1744-151 }
       - { num: 9, semaineAvis: 1942-178 }
       - { num: 10, semaineAvis: 2002-179 }
+    valid: '2020-12-18'
   FR7470:
     age: 2.25
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Nevis'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - BL
-      - MF
     bbox:
       SW: '16°55,00''N — 063°21,80''W'
       NE: '18°23,40''N — 062°19,00''W'
@@ -2553,14 +2156,11 @@ gans:
       - { num: 10, semaineAvis: 2009-263 }
       - { num: 11, semaineAvis: 2012-260 }
       - { num: 12, semaineAvis: 2026-266 }
+    valid: '2020-12-18'
   FR6942:
     age: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta d''Orchina au Cap Muro'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°40,94''N — 008°21,24''E'
       NE: '42°11,24''N — 008°48,94''E'
@@ -2568,14 +2168,11 @@ gans:
     corrections:
       - { num: 12, semaineAvis: 1945-93 }
       - { num: 13, semaineAvis: 2002-88 }
+    valid: '2020-12-18'
   FR7425:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Gironde'
-    sgtEdition: 'Edition n° 6 - 2017'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '45°31,82''N — 001°21,23''W'
       NE: '45°41,94''N — NaN°00,00''W'
@@ -2586,15 +2183,11 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 2032-62 }
       - { num: 8, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR6664:
     age: 2
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
-    sgtEdition: 'Edition n° 4 - 2011'
-    modified: '2017-01-25+01:00'
-    mapsFrance:
-      - TF
-      - RE
     bbox:
       SW: '38°13,62''S — 025°20,00''E'
       NE: '19°30,00''S — 058°39,99''E'
@@ -2604,14 +2197,11 @@ gans:
       - { num: 6, semaineAvis: 1951-185 }
       - { num: 7, semaineAvis: 2012-182 }
       - { num: 8, semaineAvis: 2039-184 }
+    valid: '2020-12-18'
   FR7154:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'De l''île de Bréhat au Cap Fréhel'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°31,64''N — 003°02,78''W'
       NE: '48°51,34''N — 002°19,08''W'
@@ -2621,14 +2211,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2046-38 }
       - { num: 2, semaineAvis: 2049-33 }
+    valid: '2020-12-18'
   FR7052:
     age: 2
     groupTitle: Nouvelle-Calédonie
     title: 'De Nouméa à l''Île des Pins'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2017-05-17+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '23°14,04''S — 166°21,80''E'
       NE: '22°13,23''S — 167°58,00''E'
@@ -2644,14 +2231,11 @@ gans:
       - { num: 23, semaineAvis: 1930-220 }
       - { num: 24, semaineAvis: 1930-222 }
       - { num: 25, semaineAvis: 2016-220 }
+    valid: '2020-12-18'
   FR6612:
     age: 2
     groupTitle: 'Côte Sud de France'
     title: 'De Cassis à Bandol'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°06,12''N — 005°29,93''E'
       NE: '43°13,28''N — 005°44,27''E'
@@ -2661,14 +2245,11 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2008-90 }
       - { num: 4, semaineAvis: 2051-93 }
+    valid: '2020-12-18'
   FR6969:
     age: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°39,94''N — 009°00,94''E'
       NE: '43°08,94''N — 009°28,64''E'
@@ -2676,14 +2257,11 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1950-88 }
       - { num: 9, semaineAvis: 2042-95 }
+    valid: '2020-12-18'
   FR6876:
     age: 2
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
-    sgtEdition: 'Edition n° 3 - 2012'
-    modified: '2016-12-07+01:00'
-    mapsFrance:
-      - WF
     bbox:
       SW: '13°25,57''S — 176°15,58''W'
       NE: '13°13,65''S — 176°07,28''W'
@@ -2699,14 +2277,11 @@ gans:
       - { num: 10, semaineAvis: 1843-207 }
       - { num: 11, semaineAvis: 1848-208 }
       - { num: 12, semaineAvis: 2046-227 }
+    valid: '2020-12-18'
   FR7418:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°15,00''N — 000°20,90''W'
       NE: '49°50,60''N — 000°16,60''W'
@@ -2714,14 +2289,11 @@ gans:
     corrections:
       - { num: 12, semaineAvis: 2010-36 }
       - { num: 13, semaineAvis: 2036-44 }
+    valid: '2020-12-18'
   FR7095:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Morlaix'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: Baie de Morlaix - De l''île de Batz à la Pointe de Primel', bbox: { SW: '48°38,14''N — 004°03,56''W', NE: '48°46,23''N — 003°48,94''W' } }
       - { title: 'Cartouche: A - Ports de Roscoff', bbox: { SW: '48°42,69''N — 003°59,21''W', NE: '48°44,24''N — 003°56,67''W' } }
@@ -2730,14 +2302,11 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 1949-40 }
       - { num: 6, semaineAvis: 2050-40 }
+    valid: '2020-12-18'
   FR7101:
     age: 2
     groupTitle: Guadeloupe
     title: 'Les Saintes'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '15°49,40''N — 061°39,73''W'
       NE: '15°53,58''N — 061°33,34''W'
@@ -2747,14 +2316,11 @@ gans:
       - { num: 3, semaineAvis: 1925-260 }
       - { num: 4, semaineAvis: 1951-257 }
       - { num: 5, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR7057:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dunkerque'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°58,95''N — 002°05,12''E'
       NE: '51°07,05''N — 002°23,92''E'
@@ -2762,14 +2328,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1948-40 }
       - { num: 2, semaineAvis: 2048-33 }
+    valid: '2020-12-18'
   FR7086:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'Rade de Cherbourg'
-    sgtEdition: 'Edition n° 10 - 2019'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°37,95''N — 001°40,93''W'
       NE: '49°40,97''N — 001°34,09''W'
@@ -2777,14 +2340,11 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1943-37 }
       - { num: 3, semaineAvis: 2029-40 }
+    valid: '2020-12-18'
   FR7268:
     age: 2
     groupTitle: 'Océan Pacifique Sud'
     title: Nouvelle-Calédonie
-    sgtEdition: 'Publication 1993'
-    modified: '2017-05-17+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '23°28,30''S — 160°07,90''E'
       NE: '17°43,00''S — 169°06,00''E'
@@ -2798,14 +2358,11 @@ gans:
       - { num: 28, semaineAvis: 1829-206 }
       - { num: 29, semaineAvis: 1935-216 }
       - { num: 30, semaineAvis: 2036-225 }
+    valid: '2020-12-18'
   FR6822:
     age: 2
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Nord de Bastia'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°39,94''N — 009°22,24''E'
       NE: '43°08,94''N — 009°49,94''E'
@@ -2813,15 +2370,11 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 1945-93 }
       - { num: 10, semaineAvis: 2025-93 }
+    valid: '2020-12-18'
   FR7631:
     age: 2
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie centrale'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - MQ
-      - GP
     bbox:
       SW: '13°40,00''N — 062°20,00''W'
       NE: '16°41,54''N — 060°13,00''W'
@@ -2831,14 +2384,11 @@ gans:
       - { num: 3, semaineAvis: 1908-260 }
       - { num: 4, semaineAvis: 1943-260 }
       - { num: 5, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR7436:
     age: 2
     groupTitle: 'Côtes Ouest et Est de Corse'
     title: 'Approches et Port de Bastia - Ports d''Ajaccio et de Propriano'
-    sgtEdition: 'Publication 2017'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Port d''Ajaccio', bbox: { SW: '41°54,49''N — 008°43,69''E', NE: '41°56,09''N — 008°46,48''E' } }
       - { title: 'Cartouche: B - Port de Propriano', bbox: { SW: '41°40,04''N — 008°51,57''E', NE: '41°41,88''N — 008°55,27''E' } }
@@ -2847,14 +2397,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2025-93 }
       - { num: 2, semaineAvis: 2044-92 }
+    valid: '2020-12-18'
   FR7422:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à La Pointe de La Percée'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°19,14''N — 001°20,58''W'
       NE: '49°47,65''N — 000°50,08''W'
@@ -2862,14 +2409,11 @@ gans:
     corrections:
       - { num: 53, semaineAvis: 2024-40 }
       - { num: 54, semaineAvis: 2043-38 }
+    valid: '2020-12-18'
   FR7252:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Îles de Glénan'
-    sgtEdition: 'Publication 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°39,52''N — 004°08,62''W'
       NE: '47°47,62''N — 003°50,99''W'
@@ -2877,14 +2421,11 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 2035-55 }
       - { num: 5, semaineAvis: 2035-59 }
+    valid: '2020-12-18'
   FR6693:
     age: 2
     groupTitle: 'Côte Sud de France'
     title: 'De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°08,64''N — 004°15,23''E'
       NE: '43°28,94''N — 004°55,93''E'
@@ -2892,14 +2433,11 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 1941-84 }
       - { num: 5, semaineAvis: 2025-83 }
+    valid: '2020-12-18'
   FR7489:
     age: 2
     groupTitle: 'Océan Indien'
     title: 'Approches Sud-Est de Madagascar'
-    sgtEdition: 'Publication 2017'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - RE
     bbox:
       SW: '27°22,00''S — 044°40,00''E'
       NE: '20°33,00''S — 055°33,00''E'
@@ -2909,16 +2447,11 @@ gans:
       - { num: 3, semaineAvis: 1951-185 }
       - { num: 4, semaineAvis: 2031-184 }
       - { num: 5, semaineAvis: 2039-184 }
+    valid: '2020-12-18'
   FR6672:
     age: 2
     groupTitle: 'Océan Indien - Partie Ouest'
     title: 'De Maputo à Muqdisho - Madagascar'
-    sgtEdition: 'Edition n° 5 - 2015'
-    modified: '2017-01-25+01:00'
-    mapsFrance:
-      - TF
-      - RE
-      - YT
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: '05°28,85''N — 053°25,74''E'
@@ -2928,14 +2461,11 @@ gans:
       - { num: 5, semaineAvis: 1942-178 }
       - { num: 6, semaineAvis: 1951-185 }
       - { num: 7, semaineAvis: 2041-183 }
+    valid: '2020-12-18'
   FR7088:
     age: 2
     groupTitle: 'La Martinique'
     title: 'Havre du Robert et Baie du François'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - MQ
     bbox:
       SW: '14°36,33''N — 060°57,03''W'
       NE: '14°41,90''N — 060°48,55''W'
@@ -2947,14 +2477,11 @@ gans:
       - { num: 6, semaineAvis: 1908-261 }
       - { num: 7, semaineAvis: 1942-260 }
       - { num: 8, semaineAvis: 2016-258 }
+    valid: '2020-12-18'
   FR6643:
     age: 2
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
-    sgtEdition: 'Edition n° 2 - 1991'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
     hasPart:
       - { title: 'Cartouche: A - Ile Juan de Nova', bbox: { SW: '', NE: '' } }
       - { title: 'Cartouche: B - Mouillage Nord d''Europa', bbox: { SW: '', NE: '' } }
@@ -2967,14 +2494,11 @@ gans:
       - { num: 17, semaineAvis: 1945-184 }
       - { num: 18, semaineAvis: 2037-188 }
       - { num: 19, semaineAvis: 2051-180 }
+    valid: '2020-12-18'
   FR7137:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Golfe du Morbihan'
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2019-10-02+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°30,32''N — 002°59,38''W'
       NE: '47°38,41''N — 002°41,84''W'
@@ -2986,14 +2510,11 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 1951-56 }
       - { num: 4, semaineAvis: 2005-50 }
+    valid: '2020-12-18'
   FR7003:
     age: 2
     groupTitle: 'Côte Sud de France'
     title: 'Le Cap d''Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Le Cap d''Agde - Embouchure de l''Hérault', bbox: { SW: '43°15,14''N — 003°25,53''E', NE: '43°19,24''N — 003°33,93''E' } }
       - { title: 'Cartouche: B - Saint-Cyprien', bbox: { SW: '42°35,76''N — 003°01,93''E', NE: '42°37,54''N — 003°04,42''E' } }
@@ -3003,14 +2524,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1943-85 }
       - { num: 2, semaineAvis: 2051-88 }
+    valid: '2020-12-18'
   FR7120:
     age: 2
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Cherbourg'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°36,34''N — 001°57,38''W'
       NE: '49°55,65''N — 001°13,58''W'
@@ -3018,14 +2536,11 @@ gans:
     corrections:
       - { num: 55, semaineAvis: 2024-40 }
       - { num: 56, semaineAvis: 2029-40 }
+    valid: '2020-12-18'
   FR7251:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'De Loctudy à Concarneau'
-    sgtEdition: 'Publication 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°45,96''N — 004°10,83''W'
       NE: '47°54,05''N — 003°53,20''W'
@@ -3033,14 +2548,11 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 2035-55 }
       - { num: 10, semaineAvis: 2049-41 }
+    valid: '2020-12-18'
   FR7050:
     age: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Calvi à Cargèse'
-    sgtEdition: 'Edition n° 3 - 2015'
-    modified: '2019-09-11+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°07,34''N — 008°19,74''E'
       NE: '42°37,44''N — 008°47,44''E'
@@ -3048,14 +2560,11 @@ gans:
     corrections:
       - { num: 12, semaineAvis: 2019-96 }
       - { num: 13, semaineAvis: 2031-93 }
+    valid: '2020-12-18'
   FR6839:
     age: 2
     groupTitle: 'Côte Sud de France'
     title: 'Étang de Thau'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°17,94''N — 003°31,43''E'
       NE: '43°30,24''N — 003°42,83''E'
@@ -3069,14 +2578,11 @@ gans:
     corrections:
       - { num: 32, semaineAvis: 1943-85 }
       - { num: 33, semaineAvis: 2008-92 }
+    valid: '2020-12-18'
   FR7096:
     age: 2
     groupTitle: 'Côte Sud de Corse'
     title: 'Baie de Figari - Port de Bonifacio'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Baie de Figari', bbox: { SW: '41°26,31''N — 009°01,34''E', NE: '41°28,76''N — 009°05,03''E' } }
       - { title: 'Cartouche: B - Port de Bonifacio', bbox: { SW: '41°22,83''N — 009°08,13''E', NE: '41°23,56''N — 009°09,97''E' } }
@@ -3084,14 +2590,11 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 1938-97 }
       - { num: 6, semaineAvis: 1948-93 }
+    valid: '2020-12-18'
   FR7076:
     age: 2
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De Saint-Nazaire à Saint-Malo'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2020-12-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: 'NaN°00,00''S — 006°35,50''W'
       NE: '49°19,00''N — 001°30,00''W'
@@ -3099,14 +2602,11 @@ gans:
     corrections:
       - { num: 19, semaineAvis: 2049-33 }
       - { num: 20, semaineAvis: 2049-45 }
+    valid: '2020-12-23'
   FR7413:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Abords de La Rochelle'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°04,67''N — 001°19,29''W'
       NE: '46°10,74''N — 001°06,48''W'
@@ -3114,14 +2614,11 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 2037-62 }
       - { num: 10, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR7144:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Vilaine'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°26,09''N — 002°35,41''W'
       NE: '47°32,16''N — 002°22,28''W'
@@ -3131,14 +2628,11 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1951-56 }
       - { num: 3, semaineAvis: 2044-56 }
+    valid: '2020-12-18'
   FR7280:
     age: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe d''Ajaccio'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°42,44''N — 008°34,79''E'
       NE: '41°57,29''N — 008°48,33''E'
@@ -3146,14 +2640,11 @@ gans:
     corrections:
       - { num: 25, semaineAvis: 1945-93 }
       - { num: 26, semaineAvis: 2002-88 }
+    valid: '2020-12-18'
   FR7143:
     age: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Abords des Iles de Houat et de Hoëdic'
-    sgtEdition: 'Edition n° 2 - 2003'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°17,84''N — 003°04,88''W'
       NE: '47°26,14''N — 002°47,13''W'
@@ -3161,14 +2652,11 @@ gans:
     corrections:
       - { num: 20, semaineAvis: 2012-46 }
       - { num: 21, semaineAvis: 2049-45 }
+    valid: '2020-12-18'
   FR6616:
     age: 2
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Bénat au Cap Lardier'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°02,67''N — 006°20,90''E'
       NE: '43°11,76''N — 006°39,03''E'
@@ -3179,14 +2667,11 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 2009-94 }
       - { num: 8, semaineAvis: 2025-89 }
+    valid: '2020-12-18'
   FR7492:
     age: 2
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Nord'
-    sgtEdition: 'Edition n° 4 - 2014'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - YT
     bbox:
       SW: '12°47,20''S — 044°56,70''E'
       NE: '12°33,00''S — 045°18,00''E'
@@ -3198,14 +2683,11 @@ gans:
       - { num: 7, semaineAvis: 1729-152 }
       - { num: 8, semaineAvis: 1744-151 }
       - { num: 9, semaineAvis: 2002-179 }
+    valid: '2020-12-18'
   FR6418:
     age: 1.75
     groupTitle: 'Iles Gambier'
     title: 'Ile Mangareva'
-    sgtEdition: 'Edition n° 5 - 2010'
-    modified: '2017-03-01+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '23°08,82''S — 134°58,50''W'
       NE: '23°06,19''S — 134°56,56''W'
@@ -3218,14 +2700,11 @@ gans:
       - { num: 6, semaineAvis: 1944-233 }
       - { num: 7, semaineAvis: 2023-230 }
       - { num: 8, semaineAvis: 2023-231 }
+    valid: '2020-12-18'
   FR6985:
     age: 1.75
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Paagoumène à Ouaco'
-    sgtEdition: 'Edition n° 3 - 2011'
-    modified: '2017-01-25+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°52,34''S — 163°53,69''E'
       NE: '20°27,83''S — 164°31,79''E'
@@ -3241,14 +2720,11 @@ gans:
       - { num: 11, semaineAvis: 1929-219 }
       - { num: 12, semaineAvis: 2017-221 }
       - { num: 13, semaineAvis: 2025-225 }
+    valid: '2020-12-18'
   FR7494:
     age: 1.5
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Ouest'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - YT
     bbox:
       SW: '13°04,00''S — 044°55,40''E'
       NE: '12°43,10''S — 045°10,23''E'
@@ -3257,14 +2733,11 @@ gans:
       - { num: 5, semaineAvis: 1736-151 }
       - { num: 6, semaineAvis: 1744-151 }
       - { num: 7, semaineAvis: 2002-179 }
+    valid: '2020-12-18'
   FR7461:
     age: 1.5
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De Taapuna à la Pointe Vénus'
-    sgtEdition: 'Publication 2009'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°37,20''S — 149°41,84''W'
       NE: '17°27,00''S — 149°26,30''W'
@@ -3276,14 +2749,11 @@ gans:
       - { num: 18, semaineAvis: 2025-231 }
       - { num: 19, semaineAvis: 2031-230 }
       - { num: 20, semaineAvis: 2045-230 }
+    valid: '2020-12-18'
   FR7378:
     age: 1.5
     groupTitle: 'Côte de Guyane'
     title: 'Accès au Dégrad des Cannes'
-    sgtEdition: 'Edition n° 6 - 2019'
-    modified: '2019-07-24+02:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '04°50,40''N — 052°17,70''W'
       NE: '04°56,50''N — 052°08,78''W'
@@ -3292,14 +2762,11 @@ gans:
       - { num: 1, semaineAvis: 1930-255 }
       - { num: 2, semaineAvis: 2002-253 }
       - { num: 3, semaineAvis: 2024-250 }
+    valid: '2020-12-18'
   FR7493:
     age: 1.5
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Est'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2017-02-15+01:00'
-    mapsFrance:
-      - YT
     bbox:
       SW: '13°04,50''S — 045°08,00''E'
       NE: '12°43,30''S — 045°22,60''E'
@@ -3310,14 +2777,11 @@ gans:
       - { num: 4, semaineAvis: 1707-152 }
       - { num: 5, semaineAvis: 1729-152 }
       - { num: 6, semaineAvis: 1942-178 }
+    valid: '2020-12-18'
   FR7087:
     age: 1.5
     groupTitle: 'La Martinique'
     title: 'Havre de la Trinité et Baie du Galion'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - MQ
     bbox:
       SW: '14°42,31''N — 060°58,97''W'
       NE: '14°48,50''N — 060°54,64''W'
@@ -3326,14 +2790,11 @@ gans:
       - { num: 6, semaineAvis: 1728-255 }
       - { num: 7, semaineAvis: 1743-256 }
       - { num: 8, semaineAvis: 1908-261 }
+    valid: '2020-12-18'
   FR7352:
     age: 1.5
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: Nuku-Hiva
-    sgtEdition: 'Publication 1995'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Nuku-Hiva', bbox: { SW: '09°02,50''S — 140°21,50''W', NE: '08°42,20''S — 139°52,90''W' } }
       - { title: 'Cartouche: A - Baie Haahopu', bbox: { SW: '08°49,90''S — 140°15,33''W', NE: '08°49,08''S — 140°14,68''W' } }
@@ -3349,14 +2810,11 @@ gans:
       - { num: 15, semaineAvis: 1919-231 }
       - { num: 16, semaineAvis: 1925-231 }
       - { num: 17, semaineAvis: 1938-231 }
+    valid: '2020-12-18'
   FR6768:
     age: 1.5
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Sud)'
-    sgtEdition: 'Edition n° 3 - 2010'
-    modified: '2017-05-17+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '23°33,84''S — 165°00,20''E'
       NE: '21°32,33''S — 168°12,20''E'
@@ -3368,14 +2826,11 @@ gans:
       - { num: 14, semaineAvis: 1848-204 }
       - { num: 15, semaineAvis: 1930-220 }
       - { num: 16, semaineAvis: 2018-222 }
+    valid: '2020-12-18'
   FR7354:
     age: 1.5
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Fatu-Hiva, Baies de Hiva-Oa et de Tahuata'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: A - Hiva-Oa - Baie Hanamenu', bbox: { SW: '09°46,19''S — 139°09,00''W', NE: '09°44,76''S — 139°08,04''W' } }
       - { title: 'Cartouche: B - Hiva-Oa - Baie Hanaiapa', bbox: { SW: '09°43,39''S — 139°01,44''W', NE: '09°41,96''S — 139°00,55''W' } }
@@ -3400,14 +2855,11 @@ gans:
       - { num: 6, semaineAvis: 1919-231 }
       - { num: 7, semaineAvis: 2035-230 }
       - { num: 8, semaineAvis: 2045-234 }
+    valid: '2020-12-18'
   FR7639:
     age: 1.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Abords et port de l''Île Saint-Pierre'
-    sgtEdition: 'Publication 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PM
     hasPart:
       - { title: 'Cartouche: A - Abords de l''Île Saint-Pierre', bbox: { SW: '46°42,85''N — 056°15,80''W', NE: '46°52,96''N — 056°04,95''W' } }
       - { title: 'Cartouche: B - Port de Saint-Pierre', bbox: { SW: '46°45,75''N — 056°10,68''W', NE: '46°48,78''N — 056°07,54''W' } }
@@ -3416,16 +2868,11 @@ gans:
       - { num: 2, semaineAvis: 1942-275 }
       - { num: 3, semaineAvis: 2010-275 }
       - { num: 4, semaineAvis: 2021-275 }
+    valid: '2020-12-18'
   FR6884:
     age: 1.5
     groupTitle: 'Océan Indien - Partie Nord'
     title: 'Océan Indien'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
-      - RE
-      - YT
     bbox:
       SW: '23°40,00''S — 033°20,00''E'
       NE: '30°56,97''N — 121°21,89''E'
@@ -3434,14 +2881,11 @@ gans:
       - { num: 1, semaineAvis: 1941-201 }
       - { num: 2, semaineAvis: 1941-207 }
       - { num: 3, semaineAvis: 1951-185 }
+    valid: '2020-12-18'
   FR6463:
     age: 1.5
     groupTitle: 'Îles Gambier'
     title: 'Île Mangareva'
-    sgtEdition: 'Edition n° 4 - 2011'
-    modified: '2017-03-01+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '23°09,07''S — 135°03,15''W'
       NE: '23°03,69''S — 134°54,60''W'
@@ -3453,16 +2897,11 @@ gans:
       - { num: 4, semaineAvis: 1944-233 }
       - { num: 5, semaineAvis: 2023-230 }
       - { num: 6, semaineAvis: 2023-231 }
+    valid: '2020-12-18'
   FR6809:
     age: 1.5
     groupTitle: 'Océan Indien'
     title: 'Océan Indien - Partie Sud'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - TF
-      - RE
-      - YT
     bbox:
       SW: '51°05,60''S — 024°50,00''E'
       NE: '02°45,25''S — 116°27,46''E'
@@ -3471,14 +2910,11 @@ gans:
       - { num: 1, semaineAvis: 1939-183 }
       - { num: 2, semaineAvis: 1941-207 }
       - { num: 3, semaineAvis: 1951-185 }
+    valid: '2020-12-18'
   FR7380:
     age: 1.5
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Kourou'
-    sgtEdition: 'Edition n° 2 - 2004'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '05°04,00''N — 052°51,00''W'
       NE: '05°24,30''N — 052°21,30''W'
@@ -3487,15 +2923,11 @@ gans:
       - { num: 12, semaineAvis: 1908-260 }
       - { num: 13, semaineAvis: 1912-250 }
       - { num: 14, semaineAvis: 1943-253 }
+    valid: '2020-12-18'
   FR7471:
     age: 1.5
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Saint-Barthélemy'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - BL
-      - MF
     bbox:
       SW: '17°49,00''N — 063°16,00''W'
       NE: '18°13,30''N — 062°38,70''W'
@@ -3507,14 +2939,11 @@ gans:
       - { num: 10, semaineAvis: 2008-262 }
       - { num: 11, semaineAvis: 2012-260 }
       - { num: 12, semaineAvis: 2043-264 }
+    valid: '2020-12-18'
   FR7353:
     age: 1.25
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Ua-Pou et Ua-Huka'
-    sgtEdition: 'Publication 1995'
-    modified: '2016-12-07+01:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: A - Ua-Pou', bbox: { SW: '09°34,50''S — 140°13,50''W', NE: '09°15,38''S — 139°55,80''W' } }
       - { title: 'Cartouche: B - Ua-Pou - Baie d''Haakuti', bbox: { SW: '09°22,83''S — 140°07,83''W', NE: '09°22,08''S — 140°07,11''W' } }
@@ -3534,14 +2963,11 @@ gans:
       - { num: 13, semaineAvis: 1932-229 }
       - { num: 14, semaineAvis: 2024-230 }
       - { num: 15, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR7375:
     age: 1.25
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Koné'
-    sgtEdition: 'Edition n° 2 - 2012'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°29,84''S — 164°31,10''E'
       NE: '21°05,43''S — 165°09,20''E'
@@ -3552,15 +2978,11 @@ gans:
       - { num: 6, semaineAvis: 1906-218 }
       - { num: 7, semaineAvis: 1942-218 }
       - { num: 8, semaineAvis: 1942-219 }
+    valid: '2020-12-18'
   FR6880:
     age: 1.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tonga aux Îles des Tuamotu'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - WF
-      - PF
     bbox:
       SW: '27°54,39''S — 175°20,00''W'
       NE: '07°30,00''S — NaN°00,00''W'
@@ -3571,14 +2993,11 @@ gans:
       - { num: 3, semaineAvis: 2011-215 }
       - { num: 4, semaineAvis: 2025-229 }
       - { num: 5, semaineAvis: 2046-230 }
+    valid: '2020-12-18'
   FR7168:
     age: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Bourail à la Passe de la Poya'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°50,54''S — 164°57,10''E'
       NE: '21°26,23''S — 165°35,20''E'
@@ -3591,14 +3010,11 @@ gans:
       - { num: 6, semaineAvis: 1818-204 }
       - { num: 7, semaineAvis: 1838-203 }
       - { num: 8, semaineAvis: 1942-218 }
+    valid: '2020-12-18'
   FR6949:
     age: 1.25
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Abords de Thio'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-04-12+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°41,93''S — 165°52,20''E'
       NE: '21°17,63''S — 166°30,30''E'
@@ -3609,14 +3025,11 @@ gans:
       - { num: 15, semaineAvis: 1847-204 }
       - { num: 16, semaineAvis: 2002-217 }
       - { num: 17, semaineAvis: 2018-222 }
+    valid: '2020-12-18'
   FR6282:
     age: 1.25
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-Le-Vent'
     title: 'Passes entre les Iles Raiatea et Tahaa'
-    sgtEdition: 'Edition n° 4 - 2005'
-    modified: '2017-02-01+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°48,76''S — 151°35,55''W'
       NE: '16°37,96''S — 151°19,15''W'
@@ -3627,14 +3040,11 @@ gans:
       - { num: 19, semaineAvis: 1843-210 }
       - { num: 20, semaineAvis: 1919-229 }
       - { num: 21, semaineAvis: 1935-226 }
+    valid: '2020-12-18'
   FR7313:
     age: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la passe de Koné à Ouaco'
-    sgtEdition: 'Edition n° 2 - 2012'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°09,00''S — 164°15,00''E'
       NE: '20°44,60''S — 164°53,10''E'
@@ -3645,15 +3055,11 @@ gans:
       - { num: 6, semaineAvis: 1947-216 }
       - { num: 7, semaineAvis: 2007-216 }
       - { num: 8, semaineAvis: 2025-225 }
+    valid: '2020-12-18'
   FR7472:
     age: 1.25
     groupTitle: 'Petites Antilles'
     title: 'Ports et mouillages de Saint-Martin (Sint Maarten) et de Saint-Barthélemy'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - BL
-      - MF
     hasPart:
       - { title: 'Cartouche: A - Saint-Martin - Baie de Marigot', bbox: { SW: '18°03,21''N — 063°09,03''W', NE: '18°05,42''N — 063°04,66''W' } }
       - { title: 'Cartouche: B - Saint-Martin - Baie de Grand-Case et Anse Marcel', bbox: { SW: '18°05,90''N — 063°04,22''W', NE: '18°07,31''N — 063°02,17''W' } }
@@ -3667,14 +3073,11 @@ gans:
       - { num: 4, semaineAvis: 2008-262 }
       - { num: 5, semaineAvis: 2012-260 }
       - { num: 6, semaineAvis: 2043-264 }
+    valid: '2020-12-18'
   FR7324:
     age: 1
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GP
     bbox:
       SW: '16°14,43''N — 061°38,04''W'
       NE: '16°26,35''N — 061°29,61''W'
@@ -3682,14 +3085,11 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2015-260 }
       - { num: 3, semaineAvis: 2019-256 }
+    valid: '2020-12-18'
   FR7428:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Bassin d''Arcachon'
-    sgtEdition: 'Publication 2012'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '44°27,30''N — 001°19,50''W'
       NE: '44°48,00''N — 000°59,70''W'
@@ -3698,14 +3098,11 @@ gans:
     ganEdition: 'Publication 2012'
     corrections:
       - { num: 16, semaineAvis: 2035-62 }
+    valid: '2020-12-18'
   FR7369:
     age: 1
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '24°24,00''S — 163°30,00''W'
       NE: 'NaN°00,00''S — 147°26,00''W'
@@ -3715,14 +3112,11 @@ gans:
       - { num: 2, semaineAvis: 2007-230 }
       - { num: 3, semaineAvis: 2025-229 }
       - { num: 4, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR7798:
     age: 1
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique'
-    sgtEdition: 'Publication 2016'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
     bbox:
       SW: '27°22,00''S — 034°21,00''E'
       NE: '20°33,00''S — 045°15,00''E'
@@ -3730,27 +3124,21 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1939-183 }
       - { num: 2, semaineAvis: 1951-185 }
+    valid: '2020-12-18'
   FR7311:
     age: 1
     title: 'La Manche (Partie Ouest)'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2020-12-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°14,94''N — 006°55,09''W'
       NE: '50°47,95''N — 001°10,08''W'
     ganEdition: 'Edition n°4 - 2019'
     corrections:
       - { num: 18, semaineAvis: 2049-25 }
+    valid: '2020-12-23'
   FR7094:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Phare du Four à l''Île Vierge'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°30,69''N — 004°51,91''W'
       NE: '48°40,78''N — 004°29,59''W'
@@ -3759,28 +3147,22 @@ gans:
     ganEdition: 'Edition n°4 - 2018'
     corrections:
       - { num: 2, semaineAvis: 2019-44 }
+    valid: '2020-12-18'
   FR7657:
     age: 1
     groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De Mimizan-Plage à Cabo de Ajo'
-    sgtEdition: 'Publication 2012'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°11,50''N — 003°36,00''W'
       NE: '44°18,00''N — 001°16,00''W'
     ganEdition: 'Publication 2012'
     corrections:
       - { num: 27, semaineAvis: 2050-66 }
+    valid: '2020-12-18'
   FR7440:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De Vieux Boucau à la Baie de Fontarabie'
-    sgtEdition: 'Publication 2007'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°22,20''N — 001°47,90''W'
       NE: '43°51,80''N — 001°20,10''W'
@@ -3789,70 +3171,55 @@ gans:
     ganEdition: 'Publication 2008'
     corrections:
       - { num: 27, semaineAvis: 2050-66 }
+    valid: '2020-12-18'
   FR6767:
     age: 1
     groupTitle: 'Côte Sud de France'
     title: 'De Fos-sur-Mer à Marseille'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°07,64''N — 004°45,33''E'
       NE: '43°27,84''N — 005°25,93''E'
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 16, semaineAvis: 2008-92 }
+    valid: '2020-12-18'
   FR7416:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Abords Sud de Boulogne-sur-Mer'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°01,45''N — 000°57,32''W'
       NE: '50°46,05''N — 001°44,92''E'
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 13, semaineAvis: 2024-33 }
+    valid: '2020-12-18'
   FR7067:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à Belle-Île'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2020-12-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°59,94''N — 005°10,08''W'
       NE: '48°04,94''N — 002°49,08''W'
     ganEdition: 'Edition n°4 - 2015'
     corrections:
       - { num: 41, semaineAvis: 2049-45 }
+    valid: '2020-12-23'
   FR6823:
     age: 1
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Sud de Bastia'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '42°13,94''N — 009°22,24''E'
       NE: '42°43,94''N — 009°49,94''E'
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 1, semaineAvis: 2025-93 }
+    valid: '2020-12-18'
   FR6464:
     age: 1
     groupTitle: 'Îles Gambier'
     title: 'Îles Mangareva'
-    sgtEdition: 'Edition n° 4 - 2012'
-    modified: '2017-07-05+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '23°08,87''S — 134°58,73''W'
       NE: '23°03,49''S — 134°50,10''W'
@@ -3862,14 +3229,11 @@ gans:
       - { num: 3, semaineAvis: 1908-233 }
       - { num: 4, semaineAvis: 1944-233 }
       - { num: 5, semaineAvis: 2023-230 }
+    valid: '2020-12-18'
   FR7423:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Raz de Sein'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°58,80''N — 004°56,39''W'
       NE: '48°06,89''N — 004°38,68''W'
@@ -3878,42 +3242,33 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 7, semaineAvis: 2012-43 }
+    valid: '2020-12-18'
   FR6990:
     age: 1
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2020-12-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '45°28,34''N — 006°00,08''W'
       NE: '47°55,42''N — 000°54,58''W'
     ganEdition: 'Edition n°5 - 2019'
     corrections:
       - { num: 13, semaineAvis: 2049-45 }
+    valid: '2020-12-23'
   FR7247:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Port de Boulogne-sur-Mer'
-    sgtEdition: 'Edition n° 3 - 2011'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°41,75''N — 001°30,75''E'
       NE: '50°47,68''N — 001°37,12''E'
     ganEdition: 'Edition n°3 - 2012'
     corrections:
       - { num: 4, semaineAvis: 2024-33 }
+    valid: '2020-12-18'
   FR7665:
     age: 1
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cap Negre au Cap Cerbère'
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°58,00''N — 003°02,75''E'
       NE: '42°26,50''N — 003°30,00''E'
@@ -3922,14 +3277,11 @@ gans:
     ganEdition: 'Edition n°2 - 2019'
     corrections:
       - { num: 1, semaineAvis: 2051-77 }
+    valid: '2020-12-18'
   FR6461:
     age: 1
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier'
-    sgtEdition: 'Edition n° 2 - 1992'
-    modified: '2019-08-21+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: ''
       NE: ''
@@ -3939,14 +3291,11 @@ gans:
       - { num: 18, semaineAvis: 2023-231 }
       - { num: 19, semaineAvis: 2026-230 }
       - { num: 20, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR4233:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
-    sgtEdition: 'Edition n° 6 - 2016'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°30,89''N — 002°03,53''W'
       NE: '48°38,56''N — 001°56,22''W'
@@ -3955,15 +3304,11 @@ gans:
     ganEdition: 'Edition n°6 - 2016'
     corrections:
       - { num: 5, semaineAvis: 2012-39 }
+    valid: '2020-12-18'
   FR7491:
     age: 1
     groupTitle: 'Océan Indien - Canal du Mozambique - Côte Nord de Madagasikara (Madagascar)'
     title: 'De Nosy Bé à la Baie d''Antsiranana'
-    sgtEdition: 'Publication 1998'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - TF
-      - YT
     bbox:
       SW: '13°37,00''S — 046°23,00''E'
       NE: '11°15,00''S — 049°55,00''E'
@@ -3971,14 +3316,11 @@ gans:
     corrections:
       - { num: 14, semaineAvis: 1938-184 }
       - { num: 15, semaineAvis: 1940-183 }
+    valid: '2020-12-18'
   FR7640:
     age: 1
     groupTitle: 'Abords Sud de Terre-Neuve - Miquelon'
     title: 'Port et mouillages de l''Île Miquelon'
-    sgtEdition: 'Publication 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PM
     hasPart:
       - { title: 'Cartouche: A - Abords Nord-Est de l''Île Miquelon', bbox: { SW: '47°01,30''N — 056°24,22''W', NE: '47°09,20''N — 056°12,38''W' } }
       - { title: 'Cartouche: B - Port de Miquelon', bbox: { SW: '47°05,55''N — 056°23,43''W', NE: '47°07,11''N — 056°20,88''W' } }
@@ -3987,28 +3329,22 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1942-275 }
       - { num: 3, semaineAvis: 2010-275 }
+    valid: '2020-12-18'
   FR6684:
     age: 1
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
-    sgtEdition: 'Edition n° 7 - 2017'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°17,04''N — 004°43,63''E'
       NE: '43°27,20''N — 005°04,00''E'
     ganEdition: 'Edition n°7 - 2017'
     corrections:
       - { num: 9, semaineAvis: 2025-83 }
+    valid: '2020-12-18'
   FR6964:
     age: 1
     groupTitle: 'Océan Pacifique - Côte Ouest d''Amérique du Sud'
     title: 'De Panama au Cap Horn (Cabo de Hornos)'
-    sgtEdition: 'Edition n° 2 - 1994'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - CP
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — NaN°00,00''W'
@@ -4016,14 +3352,11 @@ gans:
     corrections:
       - { num: 58, semaineAvis: 1724-235 }
       - { num: 59, semaineAvis: 1943-246 }
+    valid: '2020-12-18'
   FR7213:
     age: 1
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°30,55''S — 152°19,19''W'
       NE: '16°23,58''S — 152°12,46''W'
@@ -4035,28 +3368,22 @@ gans:
       - { num: 11, semaineAvis: 1850-211 }
       - { num: 12, semaineAvis: 1903-229 }
       - { num: 13, semaineAvis: 1927-230 }
+    valid: '2020-12-18'
   FR7160:
     age: 1
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Jersey à Guernsey'
-    sgtEdition: 'Edition n° 3 - 2014'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°06,04''N — 002°42,08''W'
       NE: '49°25,54''N — 001°58,38''W'
     ganEdition: 'Edition n°3 - 2014'
     corrections:
       - { num: 11, semaineAvis: 2036-52 }
+    valid: '2020-12-18'
   FR7394:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Gildas au Goulet de Fromentine'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '46°48,24''N — 002°36,38''W'
       NE: '47°08,64''N — 001°52,68''W'
@@ -4067,29 +3394,22 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 17, semaineAvis: 2019-60 }
+    valid: '2020-12-18'
   FR6735:
     age: 1
     groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
-    sgtEdition: 'Edition n° 7 - 2012'
-    modified: '2020-11-24+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '50°40,95''N — 000°54,92''W'
       NE: '51°41,35''N — 003°15,92''E'
     ganEdition: 'Edition n°7 - 2012'
     corrections:
       - { num: 134, semaineAvis: 2048-33 }
+    valid: '2020-12-23'
   FR7486:
     age: 1
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Nord'
-    sgtEdition: 'Edition n° 3 - 2013'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - TF
-      - YT
     bbox:
       SW: '16°20,00''S — 040°12,00''E'
       NE: '09°03,00''S — 051°18,00''E'
@@ -4097,28 +3417,22 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1816-152 }
       - { num: 7, semaineAvis: 2007-195 }
+    valid: '2020-12-18'
   FR6623:
     age: 1
     groupTitle: 'Océan Atlantique Nord'
     title: 'De La Manche au Détroit de Gibraltar et à l''archipel des Açores'
-    sgtEdition: 'Edition n° 6 - 2018'
-    modified: '2019-10-02+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '34°49,13''N — 034°15,00''W'
       NE: '50°30,00''N — 000°55,00''W'
     ganEdition: 'Edition n°6 - 2018'
     corrections:
       - { num: 3, semaineAvis: 2038-72 }
+    valid: '2020-12-18'
   FR7214:
     age: 1
     groupTitle: 'Côte Nord de France - Côte de Belgique'
     title: 'De Dunkerque à Oostende'
-    sgtEdition: 'Edition n° 8 - 2019'
-    modified: '2020-11-24+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '51°02,61''N — 002°04,92''E'
       NE: '51°27,25''N — 003°01,72''E'
@@ -4128,28 +3442,22 @@ gans:
     ganEdition: 'Edition n°8 - 2019'
     corrections:
       - { num: 15, semaineAvis: 2048-33 }
+    valid: '2020-12-23'
   FR7015:
     age: 1
     groupTitle: 'Méditerranée Occidentale'
     title: 'De Gibraltar aux Iles Baléares'
-    sgtEdition: 'Edition n° 2 - 1998'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '33°40,00''N — 005°22,00''W'
       NE: '43°50,00''N — 004°25,00''E'
     ganEdition: 'Edition n°2 - 1998'
     corrections:
       - { num: 104, semaineAvis: 1946-86 }
+    valid: '2020-12-18'
   FR7126:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île Balanec aux Héaux-de-Bréhat'
-    sgtEdition: 'Edition n° 5 - 2012'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°44,54''N — 003°17,14''W'
       NE: '48°56,40''N — 003°04,88''W'
@@ -4158,42 +3466,33 @@ gans:
     ganEdition: 'Edition n°5 - 2012'
     corrections:
       - { num: 22, semaineAvis: 2036-52 }
+    valid: '2020-12-18'
   FR7150:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'De Portsall à l''Anse de Kernic'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°29,94''N — 004°55,49''W'
       NE: '48°49,74''N — 004°11,69''W'
     ganEdition: 'Edition n°2 - 2008'
     corrections:
       - { num: 19, semaineAvis: 2022-42 }
+    valid: '2020-12-18'
   FR7444:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Lévi à Barfleur'
-    sgtEdition: 'Publication 2016'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°39,20''N — 001°30,00''W'
       NE: '49°47,28''N — 001°11,71''W'
     ganEdition: 'Publication 2016'
     corrections:
       - { num: 9, semaineAvis: 2024-40 }
+    valid: '2020-12-18'
   FR6903:
     age: 1
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Guernsey et Herm'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°23,34''N — 002°45,60''W'
       NE: '49°32,11''N — 002°24,52''W'
@@ -4202,28 +3501,22 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 4, semaineAvis: 1938-45 }
+    valid: '2020-12-18'
   FR7149:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à Portsall'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°15,84''N — 005°15,69''W'
       NE: '48°35,64''N — 004°31,99''W'
     ganEdition: 'Edition n°4 - 2015'
     corrections:
       - { num: 14, semaineAvis: 2004-40 }
+    valid: '2020-12-18'
   FR6956:
     age: 1
     groupTitle: 'Côte Est de Tahiti'
     title: 'De la Passe de Mahaena à la Baie de Taravao'
-    sgtEdition: 'Edition n° 3 - 2010'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°45,42''S — 149°21,01''W'
       NE: '17°32,26''S — 149°11,65''W'
@@ -4233,56 +3526,44 @@ gans:
       - { num: 6, semaineAvis: 1902-230 }
       - { num: 7, semaineAvis: 1919-231 }
       - { num: 8, semaineAvis: 2042-228 }
+    valid: '2020-12-18'
   FR6797:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Loire'
-    sgtEdition: 'Edition n° 5 - 2005'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°11,46''N — 002°21,78''W'
       NE: '47°17,52''N — 002°08,72''W'
     ganEdition: 'Edition n°5 - 2005'
     corrections:
       - { num: 25, semaineAvis: 2043-61 }
+    valid: '2020-12-18'
   FR6618:
     age: 1
     groupTitle: 'Océan Atlantique Nord'
     title: 'Atterrages Ouest des Iles Britanniques'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2019-10-02+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°15,00''N — 034°15,00''W'
       NE: '60°38,00''N — 000°55,00''W'
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 10, semaineAvis: 2042-20 }
+    valid: '2020-12-18'
   FR7032:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île de Groix à Belle-Ile'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2020-10-21+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°14,94''N — 003°31,28''W'
       NE: '47°44,54''N — 003°01,48''W'
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 18, semaineAvis: 2043-56 }
+    valid: '2020-12-23'
   FR7232:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Nez de Jobourg à la Pointe de Nacqueville'
-    sgtEdition: 'Publication 2013'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°38,00''N — 002°00,80''W'
       NE: '49°46,08''N — 001°42,51''W'
@@ -4291,28 +3572,22 @@ gans:
     ganEdition: 'Publication 2013'
     corrections:
       - { num: 17, semaineAvis: 2051-41 }
+    valid: '2020-12-18'
   FR6966:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Des Héaux-de-Bréhat au Cap Lévi'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2020-12-08+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°30,00''N — 003°06,82''W'
       NE: '50°02,20''N — 001°27,82''W'
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 57, semaineAvis: 2051-41 }
+    valid: '2020-12-23'
   FR7419:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: 1', bbox: { SW: '49°25,04''N — 000°08,58''W', NE: '49°30,84''N — 000°13,02''W' } }
       - { title: 'Cartouche: 2', bbox: { SW: '49°24,80''N — 000°10,00''W', NE: '49°29,95''N — 000°30,00''W' } }
@@ -4322,14 +3597,11 @@ gans:
     ganEdition: 'Edition n°3 - 2018'
     corrections:
       - { num: 5, semaineAvis: 2024-36 }
+    valid: '2020-12-18'
   FR7102:
     age: 1
     groupTitle: Guadeloupe
     title: 'Ports et mouillages de Grande-Terre, de Marie-Galante et de la Désirade'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-11-28+01:00'
-    mapsFrance:
-      - GP
     hasPart:
       - { title: 'Cartouche: A - Le Moule', bbox: { SW: '16°19,61''N — 061°21,27''W', NE: '16°20,90''N — 061°20,15''W' } }
       - { title: 'Cartouche: B - Petit Havre', bbox: { SW: '16°11,44''N — 061°26,66''W', NE: '16°12,73''N — 061°25,20''W' } }
@@ -4341,56 +3613,44 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1903-265 }
       - { num: 3, semaineAvis: 2042-267 }
+    valid: '2020-12-18'
   FR7135:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Jacques à Damgan'
-    sgtEdition: 'Publication 2002'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°25,68''N — 002°47,71''W'
       NE: '47°31,76''N — 002°34,58''W'
     ganEdition: 'Publication 2002'
     corrections:
       - { num: 1, semaineAvis: 2050-56 }
+    valid: '2020-12-18'
   FR7390:
     age: 1
     groupTitle: 'Côte Sud de France'
     title: 'Port de Marseille'
-    sgtEdition: 'Edition n° 6 - 2018'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°16,54''N — 005°17,00''E'
       NE: '43°22,48''N — 005°22,53''E'
     ganEdition: 'Edition n°6 - 2018'
     corrections:
       - { num: 10, semaineAvis: 2008-92 }
+    valid: '2020-12-18'
   FR7391:
     age: 1
     groupTitle: 'Côte Sud de France'
     title: 'Abords Sud de Marseille'
-    sgtEdition: 'Edition n° 6 - 2017'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°11,34''N — 005°16,08''E'
       NE: '43°18,74''N — 005°23,03''E'
     ganEdition: 'Edition n°6 - 2017'
     corrections:
       - { num: 6, semaineAvis: 2008-92 }
+    valid: '2020-12-18'
   FR6740:
     age: 1
     groupTitle: 'Côte Ouest de Tahiti'
     title: 'De Maraa à Faaa'
-    sgtEdition: 'Edition n° 3 - 2009'
-    modified: '2016-12-07+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°46,18''S — 149°40,51''W'
       NE: '17°33,02''S — 149°31,11''W'
@@ -4400,28 +3660,22 @@ gans:
       - { num: 5, semaineAvis: 1923-230 }
       - { num: 6, semaineAvis: 2025-231 }
       - { num: 7, semaineAvis: 2045-230 }
+    valid: '2020-12-18'
   FR7417:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2020-02-19+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°40,75''N — 000°09,62''W'
       NE: '50°11,45''N — 001°19,42''E'
     ganEdition: 'Edition n°2 - 2006'
     corrections:
       - { num: 62, semaineAvis: 2038-35 }
+    valid: '2020-12-18'
   FR7249:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et Mouillages en Finistère Sud'
-    sgtEdition: 'Edition n° 2 - 2016'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
     hasPart:
       - { title: 'Cartouche: A - Cours de l''Odet', bbox: { SW: '47°51,44''N — 004°11,30''W', NE: '47°59,52''N — 004°02,83''W' } }
       - { title: 'Cartouche: B - Ports de Bénodet et de Sainte-Marine', bbox: { SW: '47°52,09''N — 004°07,50''W', NE: '47°53,16''N — 004°06,30''W' } }
@@ -4432,14 +3686,11 @@ gans:
     ganEdition: 'Edition n°2 - 2016'
     corrections:
       - { num: 9, semaineAvis: 1932-56 }
+    valid: '2020-12-18'
   FR7162:
     age: 1
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Muro au Cap de Feno'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°23,74''N — 008°27,34''E'
       NE: '41°44,54''N — 009°07,94''E'
@@ -4449,14 +3700,11 @@ gans:
     ganEdition: 'Edition n°3 - 2018'
     corrections:
       - { num: 6, semaineAvis: 1945-93 }
+    valid: '2020-12-18'
   FR7030:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Garonne'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-10-30+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '44°55,94''N — 000°39,19''W'
       NE: '45°04,14''N — 000°31,38''W'
@@ -4465,14 +3713,11 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 7, semaineAvis: 1944-60 }
+    valid: '2020-12-18'
   FR7273:
     age: 1
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°24,13''S — 165°54,00''E'
       NE: '21°59,93''S — 166°32,10''E'
@@ -4482,14 +3727,11 @@ gans:
       - { num: 3, semaineAvis: 1940-220 }
       - { num: 4, semaineAvis: 1942-222 }
       - { num: 5, semaineAvis: 1946-220 }
+    valid: '2020-12-18'
   FR7426:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de la Coubre à la Pointe de la Négade'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '45°24,00''N — 001°28,90''W'
       NE: '45°45,00''N — 000°45,00''W'
@@ -4498,42 +3740,33 @@ gans:
     ganEdition: 'Edition n°5 - 2019'
     corrections:
       - { num: 1, semaineAvis: 2041-60 }
+    valid: '2020-12-18'
   FR6683:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Port du Havre'
-    sgtEdition: 'Edition n° 9 - 2017'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°25,14''N — 000°00,74''W'
       NE: '49°31,21''N — 000°12,92''W'
     ganEdition: 'Edition n°9 - 2017'
     corrections:
       - { num: 10, semaineAvis: 2024-36 }
+    valid: '2020-12-18'
   FR7155:
     age: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à la Pointe du Grouin'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2020-12-01+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°33,94''N — 002°27,08''W'
       NE: '48°53,64''N — 001°43,28''W'
     ganEdition: 'Edition n°3 - 2017'
     corrections:
       - { num: 22, semaineAvis: 2049-32 }
+    valid: '2020-12-23'
   FR7222:
     age: 1
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Est'
-    sgtEdition: 'Publication 1996'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - RE
     bbox:
       SW: '21°27,50''S — 055°39,00''E'
       NE: '20°51,80''S — 056°04,90''E'
@@ -4541,14 +3774,11 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1739-155 }
       - { num: 9, semaineAvis: 1951-188 }
+    valid: '2020-12-18'
   FR7430:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Abords et Port de Bayonne'
-    sgtEdition: 'Publication 2007'
-    modified: '2020-01-20+01:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°28,90''N — 001°37,23''W'
       NE: '43°32,95''N — 001°29,08''W'
@@ -4557,14 +3787,11 @@ gans:
     ganEdition: 'Publication 2008'
     corrections:
       - { num: 12, semaineAvis: 2050-66 }
+    valid: '2020-12-18'
   FR7200:
     age: 1
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap d''Antibes au Cap Ferrat'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2020-09-30+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '43°29,04''N — 007°07,04''E'
       NE: '43°43,74''N — 007°20,84''E'
@@ -4576,14 +3803,11 @@ gans:
     ganEdition: 'Edition n°3 - 2017'
     corrections:
       - { num: 20, semaineAvis: 2047-86 }
+    valid: '2020-12-18'
   FR6904:
     age: 1
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Guernsey Est, Herm et Sark'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-09-18+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '49°23,34''N — 002°36,08''W'
       NE: '49°31,94''N — 002°15,83''W'
@@ -4592,14 +3816,11 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 5, semaineAvis: 1938-45 }
+    valid: '2020-12-18'
   FR7377:
     age: 1
     groupTitle: 'Côte de Guyane'
     title: 'Ports du Larivot et de Cayenne'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - GF
     bbox:
       SW: '04°53,78''N — 052°22,90''W'
       NE: '04°59,74''N — 052°18,85''W'
@@ -4607,14 +3828,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1905-252 }
       - { num: 2, semaineAvis: 1912-250 }
+    valid: '2020-12-18'
   FR7142:
     age: 1
     groupTitle: 'Côte Ouest de France'
     title: Belle-Ile
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '47°14,89''N — 003°20,08''W'
       NE: '47°24,94''N — 002°58,17''W'
@@ -4624,14 +3842,11 @@ gans:
     ganEdition: 'Edition n°2 - 2006'
     corrections:
       - { num: 26, semaineAvis: 2012-46 }
+    valid: '2020-12-18'
   FR7645:
     age: 0.75
     groupTitle: 'Côte Sud-Est de Nouvelle-Calédonie'
     title: 'Canal de La Havannah et Canal Woodin'
-    sgtEdition: 'Edition n° 5 - 2016'
-    modified: '2017-03-29+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°29,20''S — 166°44,60''E'
       NE: '22°16,60''S — 167°04,50''E'
@@ -4642,14 +3857,11 @@ gans:
       - { num: 2, semaineAvis: 1814-205 }
       - { num: 3, semaineAvis: 1830-207 }
       - { num: 4, semaineAvis: 1930-222 }
+    valid: '2020-12-18'
   FR7051:
     age: 0.75
     groupTitle: 'Côte Nord-Est de Nouvelle-Calédonie'
     title: 'Du Cap Colnett à Touho'
-    sgtEdition: 'Edition n° 3 - 2013'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°48,13''S — 164°38,69''E'
       NE: '20°23,83''S — 165°16,70''E'
@@ -4660,14 +3872,11 @@ gans:
       - { num: 3, semaineAvis: 1825-207 }
       - { num: 4, semaineAvis: 1828-210 }
       - { num: 5, semaineAvis: 1838-205 }
+    valid: '2020-12-18'
   FR7319:
     age: 0.75
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De l''Ile Pam au Cap Colnett'
-    sgtEdition: 'Edition n° 2 - 2014'
-    modified: '2016-12-14+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°30,00''S — 164°09,20''E'
       NE: '20°05,50''S — 164°47,30''E'
@@ -4680,14 +3889,11 @@ gans:
       - { num: 2, semaineAvis: 1814-207 }
       - { num: 3, semaineAvis: 1818-206 }
       - { num: 4, semaineAvis: 1827-205 }
+    valid: '2020-12-18'
   FR6717:
     age: 0.75
     groupTitle: 'Île de Tahiti (Côte Sud) - Mouillages'
     title: 'Port Phaeton (Teauaa) - Tapuaeraha'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: A - Port Phaeton (Teauaa)', bbox: { SW: '17°46,45''S — 149°20,54''W', NE: '17°43,66''S — 149°18,45''W' } }
       - { title: 'Cartouche: B - Tapuaeraha', bbox: { SW: '17°49,06''S — 149°19,56''W', NE: '17°46,28''S — 149°17,47''W' } }
@@ -4696,14 +3902,11 @@ gans:
       - { num: 2, semaineAvis: 1725-207 }
       - { num: 3, semaineAvis: 1728-210 }
       - { num: 4, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR7368:
     age: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Ile Malden aux Iles de la Société'
-    sgtEdition: 'Publication 1995'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '18°22,00''S — 161°52,00''W'
       NE: '02°30,00''S — 150°54,00''W'
@@ -4712,14 +3915,11 @@ gans:
       - { num: 11, semaineAvis: 2007-230 }
       - { num: 12, semaineAvis: 2025-229 }
       - { num: 13, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR6554:
     age: 0.75
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'Baie Chasseloup'
-    sgtEdition: 'Edition n° 3 - 2012'
-    modified: '2017-07-05+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°01,33''S — 164°32,20''E'
       NE: '20°54,16''S — 164°43,43''E'
@@ -4728,14 +3928,11 @@ gans:
       - { num: 5, semaineAvis: 1942-215 }
       - { num: 6, semaineAvis: 1947-216 }
       - { num: 7, semaineAvis: 2007-216 }
+    valid: '2020-12-18'
   FR6607:
     age: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie Sud-Est'
-    sgtEdition: 'Edition n° 3 - 2004'
-    modified: '2016-12-15+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '28°15,00''S — 153°30,00''W'
       NE: '07°30,00''S — NaN°00,00''W'
@@ -4744,14 +3941,11 @@ gans:
       - { num: 17, semaineAvis: 1919-233 }
       - { num: 18, semaineAvis: 2002-232 }
       - { num: 19, semaineAvis: 2046-231 }
+    valid: '2020-12-18'
   FR6933:
     age: 0.75
     groupTitle: Nouvelle-Calédonie
     title: 'De l''Île Ouen à l''Île des Pins'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2017-05-10+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°43,13''S — 166°49,70''E'
       NE: '22°19,03''S — 167°27,80''E'
@@ -4760,15 +3954,11 @@ gans:
       - { num: 1, semaineAvis: 1830-207 }
       - { num: 2, semaineAvis: 1838-204 }
       - { num: 3, semaineAvis: 1930-222 }
+    valid: '2020-12-18'
   FR7021:
     age: 0.75
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord'
-    sgtEdition: 'Edition n° 2 - 1991'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - WF
-      - PF
     bbox:
       SW: '14°40,55''S — 175°00,29''W'
       NE: 'NaN°00,00''S — 117°30,00''E'
@@ -4777,14 +3967,11 @@ gans:
       - { num: 213, semaineAvis: 1910-235 }
       - { num: 214, semaineAvis: 1946-240 }
       - { num: 215, semaineAvis: 2025-244 }
+    valid: '2020-12-18'
   FR7281:
     age: 0.75
     groupTitle: 'Archipel des Tuamotu'
     title: Hao
-    sgtEdition: 'Edition n° 2 - 2015'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '18°29,00''S — 141°16,80''W'
       NE: '17°58,60''S — 140°30,00''W'
@@ -4798,14 +3985,11 @@ gans:
       - { num: 12, semaineAvis: 1931-232 }
       - { num: 13, semaineAvis: 2003-232 }
       - { num: 14, semaineAvis: 2043-230 }
+    valid: '2020-12-18'
   FR7234:
     age: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Îles Futuna et Alofi'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - WF
     bbox:
       SW: '14°26,70''S — 178°15,49''W'
       NE: '14°10,00''S — 177°50,19''W'
@@ -4817,14 +4001,11 @@ gans:
       - { num: 1, semaineAvis: 1824-206 }
       - { num: 2, semaineAvis: 1838-206 }
       - { num: 3, semaineAvis: 1930-217 }
+    valid: '2020-12-18'
   FR7049:
     age: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Loyauté à l''île Hunter'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: 'NaN°00,00''S — 167°45,00''E'
       NE: '20°37,00''S — 173°05,00''E'
@@ -4837,14 +4018,11 @@ gans:
       - { num: 1, semaineAvis: 1731-203 }
       - { num: 2, semaineAvis: 1751-204 }
       - { num: 3, semaineAvis: 2036-225 }
+    valid: '2020-12-18'
   FR6320:
     age: 0.75
     groupTitle: 'Iles Tuamotu'
     title: Makatea
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-28+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '15°56,97''S — 148°18,44''W'
       NE: '15°46,07''S — 148°10,89''W'
@@ -4855,14 +4033,11 @@ gans:
       - { num: 1, semaineAvis: 1745-209 }
       - { num: 2, semaineAvis: 1815-213 }
       - { num: 3, semaineAvis: 1837-208 }
+    valid: '2020-12-18'
   FR6671:
     age: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers du Corail et des Salomon'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°59,06''S — 146°40,00''E'
       NE: '00°06,00''S — NaN°00,00''W'
@@ -4871,14 +4046,11 @@ gans:
       - { num: 4, semaineAvis: 1935-216 }
       - { num: 5, semaineAvis: 2012-222 }
       - { num: 6, semaineAvis: 2036-225 }
+    valid: '2020-12-18'
   FR6957:
     age: 0.75
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
     title: 'De la Baie de Taravao à la Passe d''Aiurua'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2016-11-09+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°50,18''S — 149°17,01''W'
       NE: '17°41,22''S — 149°03,27''W'
@@ -4887,14 +4059,11 @@ gans:
       - { num: 4, semaineAvis: 1802-209 }
       - { num: 5, semaineAvis: 1907-220 }
       - { num: 6, semaineAvis: 2042-228 }
+    valid: '2020-12-18'
   FR6553:
     age: 0.5
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Kouaoua'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-07-05+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°25,34''S — 165°48,00''E'
       NE: '21°18,11''S — 165°53,20''E'
@@ -4902,14 +4071,11 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1942-224 }
       - { num: 7, semaineAvis: 2009-220 }
+    valid: '2020-12-18'
   FR7459:
     age: 0.5
     groupTitle: 'Îles Tuamotu'
     title: Tikehau
-    sgtEdition: 'Publication 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Tikehau', bbox: { SW: '15°12,00''S — 148°27,00''W', NE: '14°50,20''S — 147°55,78''W' } }
       - { title: 'Cartouche: A - De la passe de Tuheiava au mouillage de Tuherahera', bbox: { SW: '15°07,50''S — 148°17,50''W', NE: '14°58,84''S — 148°11,21''W' } }
@@ -4919,14 +4085,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1929-232 }
       - { num: 2, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR7305:
     age: 0.5
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
     title: 'De la Passe d''Aiurua à la Passe Havae'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2016-12-07+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°57,41''S — 149°17,04''W'
       NE: '17°48,51''S — 149°03,30''W'
@@ -4934,16 +4097,11 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1806-211 }
       - { num: 9, semaineAvis: 2018-228 }
+    valid: '2020-12-18'
   FR7166:
     age: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'Océan Pacifique Sud'
-    sgtEdition: 'Publication 1988'
-    modified: '2017-04-05+02:00'
-    mapsFrance:
-      - NC
-      - WF
-      - PF
     bbox:
       SW: '51°05,44''S — 108°28,11''W'
       NE: '02°45,00''S — 163°30,00''E'
@@ -4951,14 +4109,11 @@ gans:
     corrections:
       - { num: 175, semaineAvis: 1714-205 }
       - { num: 176, semaineAvis: 1845-200 }
+    valid: '2020-12-18'
   FR7756:
     age: 0.5
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Touho à Ponérihouen'
-    sgtEdition: 'Publication 2014'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '21°06,90''S — 165°04,60''E'
       NE: '20°42,50''S — 165°42,70''E'
@@ -4968,14 +4123,11 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1825-207 }
       - { num: 3, semaineAvis: 1925-221 }
+    valid: '2020-12-18'
   FR6525:
     age: 0.5
     groupTitle: 'Côte Sud de Tahiti'
     title: 'Abords de Port Phaeton'
-    sgtEdition: 'Edition n° 5 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°54,62''S — 149°24,21''W'
       NE: '17°41,42''S — 149°14,81''W'
@@ -4983,14 +4135,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2018-228 }
       - { num: 2, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR6828:
     age: 0.5
     groupTitle: 'Côte Sud-Ouest de Tahiti'
     title: 'De Atehiti à Maraa'
-    sgtEdition: 'Edition n° 3 - 2009'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°49,82''S — 149°36,37''W'
       NE: '17°40,86''S — 149°22,63''W'
@@ -4998,14 +4147,11 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 1724-206 }
       - { num: 10, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR7355:
     age: 0.5
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Hiva-Oa, Tahuata et Mohotani'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '10°05,00''S — 139°16,00''W'
       NE: '09°36,60''S — 138°34,00''W'
@@ -5016,14 +4162,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1907-230 }
       - { num: 2, semaineAvis: 1919-229 }
+    valid: '2020-12-18'
   FR7458:
     age: 0.5
     groupTitle: 'Iles Tuamotu'
     title: Aratika
-    sgtEdition: 'Edition n° 2 - 2011'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Aratika', bbox: { SW: '15°40,00''S — 145°40,86''W', NE: '15°25,32''S — 145°20,00''W' } }
       - { title: 'Cartouche: A - De la Passe Tamaketa à la Passe Fainukea', bbox: { SW: '15°31,60''S — 145°36,00''W', NE: '15°27,14''S — 145°25,52''W' } }
@@ -5033,31 +4176,22 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2026-233 }
       - { num: 4, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR6898:
     age: 0.5
     groupTitle: 'Océan Atlantique Nord'
     title: 'Mer des Antilles (Mer des Caraïbes)'
-    sgtEdition: 'Edition n° 4 - 2014'
-    modified: '2020-07-15+02:00'
-    mapsFrance:
-      - MQ
-      - BL
-      - GP
-      - MF
     bbox:
       SW: '07°20,00''N — 084°51,24''W'
       NE: '23°35,89''N — 058°40,00''W'
     ganEdition: 'Edition n°4 - 2015'
     corrections:
       - { num: 32, semaineAvis: 2051-262 }
+    valid: '2020-12-23'
   FR6770:
     age: 0.5
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
     title: 'Abords Sud-Ouest de l''Île des Pins'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2017-03-08+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°43,13''S — 167°16,80''E'
       NE: '22°36,18''S — 167°27,90''E'
@@ -5065,14 +4199,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1838-204 }
       - { num: 2, semaineAvis: 1842-204 }
+    valid: '2020-12-18'
   FR6605:
     age: 0.5
     groupTitle: 'Iles de la Société - Côte Nord-Est de Tahiti'
     title: 'De la Pointe Vénus à Mahaena'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°35,02''S — 149°30,01''W'
       NE: '17°26,04''S — 149°16,27''W'
@@ -5080,14 +4211,11 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 1925-225 }
       - { num: 5, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR6283:
     age: 0.5
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Ile Tahaa'
-    sgtEdition: 'Edition n° 4 - 2005'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°41,46''S — 151°37,15''W'
       NE: '16°30,66''S — 151°20,75''W'
@@ -5095,14 +4223,11 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1744-210 }
       - { num: 9, semaineAvis: 1843-210 }
+    valid: '2020-12-18'
   FR7314:
     age: 0.5
     groupTitle: IlesTuamotu
     title: Ahe
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Ahe', bbox: { SW: '14°36,70''S — 146°24,83''W', NE: '14°22,87''S — 146°12,38''W' } }
       - { title: 'Cartouche: A - Passe Tiareroa', bbox: { SW: '14°28,51''S — 146°21,83''W', NE: '14°27,20''S — 146°20,18''W' } }
@@ -5111,14 +4236,11 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 1947-233 }
       - { num: 8, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR7347:
     age: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tuamotu aux Îles Australes'
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '29°04,00''S — 149°40,00''W'
       NE: '14°06,00''S — 138°42,00''W'
@@ -5126,14 +4248,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2002-232 }
       - { num: 2, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR6670:
     age: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers de Tasman et du Corail'
-    sgtEdition: 'Edition n° 5 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '35°17,40''S — 146°40,00''E'
       NE: 'NaN°00,00''S — NaN°00,00''W'
@@ -5141,29 +4260,22 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1935-216 }
       - { num: 3, semaineAvis: 2036-225 }
+    valid: '2020-12-18'
   FR7797:
     age: 0.5
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique'
-    sgtEdition: 'Publication 2016'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
-      - YT
     bbox:
       SW: '21°30,00''S — 033°56,00''E'
       NE: '14°24,00''S — 044°50,00''E'
     ganEdition: 'Publication 2016'
     corrections:
       - { num: 2, semaineAvis: 2007-195 }
+    valid: '2020-12-18'
   FR7011:
     age: 0.5
     groupTitle: 'Nouvelle Calédonie'
     title: 'De la Presqu''île Neuméni à Port-Ounia'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°02,03''S — 166°16,60''E'
       NE: '21°37,73''S — 166°54,70''E'
@@ -5173,14 +4285,11 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1808-204 }
       - { num: 7, semaineAvis: 1932-218 }
+    valid: '2020-12-18'
   FR7620:
     age: 0.5
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - MF
     bbox:
       SW: '18°05,30''N — 063°20,96''W'
       NE: '18°22,92''N — 062°52,05''W'
@@ -5190,15 +4299,11 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1907-266 }
       - { num: 3, semaineAvis: 1926-266 }
+    valid: '2020-12-18'
   FR6817:
     age: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'De la Nouvelle-Zélande aux Iles Fidji et Samoa'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
-      - WF
     bbox:
       SW: '37°55,40''S — NaN°00,00''W'
       NE: '07°30,00''S — 171°34,30''E'
@@ -5206,29 +4311,22 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1845-200 }
       - { num: 2, semaineAvis: 2011-215 }
+    valid: '2020-12-18'
   FR7350:
     age: 0.5
     groupTitle: 'Canal du Mozambique'
     title: 'Récif du Geyser - Banc de la Zélée'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - TF
-      - YT
     bbox:
       SW: '12°53,00''S — 045°37,00''E'
       NE: '11°49,60''S — 047°11,80''E'
     ganEdition: 'Edition n°2 - 2008'
     corrections:
       - { num: 2, semaineAvis: 1938-184 }
+    valid: '2020-12-18'
   FR7320:
     age: 0.5
     groupTitle: 'Côte Nord-Ouest de Nouvelle-Calédonie'
     title: 'De Koumac à Poum'
-    sgtEdition: 'Edition n° 3 - 2011'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°34,34''S — 163°39,09''E'
       NE: '20°09,84''S — 164°17,19''E'
@@ -5239,14 +4337,11 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1827-205 }
       - { num: 2, semaineAvis: 2044-222 }
+    valid: '2020-12-18'
   FR7318:
     age: 0.5
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De Poum à l''Île Pam'
-    sgtEdition: 'Edition n° 4 - 2014'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°16,04''S — 163°39,59''E'
       NE: '19°51,43''S — 164°17,69''E'
@@ -5254,29 +4349,22 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1728-205 }
       - { num: 3, semaineAvis: 1827-205 }
+    valid: '2020-12-18'
   FR6619:
     age: 0.5
     groupTitle: 'Océan Atlantique Nord'
     title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
-    sgtEdition: 'Edition n° 3 - 1988'
-    modified: '2020-11-04+01:00'
-    mapsFrance:
-      - BL
-      - GP
-      - MF
     bbox:
       SW: 'NaN°00,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — 060°30,00''W'
     ganEdition: 'Edition n°3 - 1988'
     corrections:
       - { num: 197, semaineAvis: 2045-277 }
+    valid: '2020-12-23'
   FR6808:
     age: 0.5
     groupTitle: 'Océan Atlantique Sud'
     title: 'Océan Atlantique Sud - Partie Est'
-    sgtEdition: 'Edition n° 3 - 2015'
-    modified: '2019-10-02+02:00'
-    mapsFrance: {  }
     bbox:
       SW: '57°10,00''S — NaN°00,00''W'
       NE: '18°08,89''N — 029°35,57''E'
@@ -5284,14 +4372,11 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2043-173 }
       - { num: 6, semaineAvis: 2046-254 }
+    valid: '2020-12-21'
   FR6820:
     age: 0.5
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''Île Lifou - Baie du Santal'
-    sgtEdition: 'Edition n° 3 - 2015'
-    modified: '2017-02-01+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '20°57,84''S — 166°56,83''E'
       NE: '20°43,64''S — 167°19,03''E'
@@ -5302,42 +4387,33 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1741-204 }
       - { num: 3, semaineAvis: 1749-204 }
+    valid: '2020-12-18'
   FR6284:
     age: 0.25
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Partie Sud de Raiatea'
-    sgtEdition: 'Edition n° 5 - 2005'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°57,76''S — 151°33,15''W'
       NE: '16°46,96''S — 151°16,75''W'
     ganEdition: 'Edition n°5 - 2006'
     corrections:
       - { num: 1, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR6540:
     age: 0.25
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'Baie de Saint-Vincent'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°06,34''S — 165°59,70''E'
       NE: '21°53,14''S — 166°09,51''E'
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 2, semaineAvis: 1927-217 }
+    valid: '2020-12-18'
   FR7454:
     age: 0.25
     groupTitle: 'Iles Tuamotu'
     title: Faaite
-    sgtEdition: 'Publication 1998'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°51,90''S — 145°26,40''W'
       NE: '16°38,00''S — 145°05,00''W'
@@ -5346,14 +4422,11 @@ gans:
     ganEdition: 'Publication 1998'
     corrections:
       - { num: 9, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR6434:
     age: 0.25
     groupTitle: 'Archipel de la Société - Iles Sous-le-Vent'
     title: Huahine
-    sgtEdition: 'Edition n° 4 - 2005'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°53,37''S — 151°05,85''W'
       NE: '16°37,57''S — 150°54,65''W'
@@ -5363,14 +4436,11 @@ gans:
     ganEdition: 'Edition n°4 - 2005'
     corrections:
       - { num: 16, semaineAvis: 1813-210 }
+    valid: '2020-12-18'
   FR6279:
     age: 0.25
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Iles Rimatara et Maria'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Mouillages au Nord de Rimatara', bbox: { SW: '22°39,12''S — 152°49,56''W', NE: '22°37,42''S — 152°46,96''W' } }
       - { title: 'Cartouche: Rimatara', bbox: { SW: '22°41,22''S — 152°53,06''W', NE: '22°35,92''S — 152°45,33''W' } }
@@ -5378,42 +4448,33 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 4, semaineAvis: 1939-227 }
+    valid: '2020-12-18'
   FR7762:
     age: 0.25
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Ouest)'
-    sgtEdition: 'Publication 2017'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°53,00''S — 163°01,00''E'
       NE: '19°56,50''S — 165°12,00''E'
     ganEdition: 'Publication 2017'
     corrections:
       - { num: 1, semaineAvis: 1930-220 }
+    valid: '2020-12-18'
   FR7371:
     age: 0.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Tahiti aux Îles Marquises'
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2019-08-21+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '18°06,00''S — NaN°00,00''W'
       NE: '07°22,00''S — 136°56,00''W'
     ganEdition: 'Edition n°2 - 2019'
     corrections:
       - { num: 1, semaineAvis: 2037-228 }
+    valid: '2020-12-18'
   FR5978:
     age: 0.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - NC
     hasPart:
       - { title: 'Cartouche: A - Îles Chesterfield - Mouillage de l''île Longue', bbox: { SW: '19°53,10''S — 158°17,33''E', NE: '19°50,79''S — 158°19,76''E' } }
       - { title: 'Cartouche: B - Récifs et îles Chesterfield', bbox: { SW: 'NaN°00,00''S — 158°07,97''E', NE: '19°22,76''S — 158°30,00''E' } }
@@ -5422,14 +4483,11 @@ gans:
     ganEdition: 'Edition n°3 - 2019'
     corrections:
       - { num: 1, semaineAvis: 1935-216 }
+    valid: '2020-12-18'
   FR7259:
     age: 0.25
     groupTitle: 'Iles Loyauté'
     title: 'Ile Maré'
-    sgtEdition: 'Publication 1995'
-    modified: '2017-01-25+01:00'
-    mapsFrance:
-      - NC
     hasPart:
       - { title: 'Cartouche: Ile Maré', bbox: { SW: '21°46,48''S — 167°40,00''E', NE: '21°16,00''S — 168°13,71''E' } }
       - { title: 'Cartouche: A - Baie de l''Allier (Baie de Puan) - Mouillage de La Roche', bbox: { SW: '21°28,42''S — 168°00,56''E', NE: '21°26,62''S — 168°03,00''E' } }
@@ -5440,14 +4498,11 @@ gans:
     ganEdition: 'Publication 1995'
     corrections:
       - { num: 16, semaineAvis: 1704-205 }
+    valid: '2020-12-18'
   FR7453:
     age: 0.25
     groupTitle: 'Archipel des Tuamotu'
     title: Makemo
-    sgtEdition: 'Publication 1996'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '16°47,50''S — 144°04,30''W'
       NE: '16°17,10''S — 143°18,00''W'
@@ -5457,14 +4512,11 @@ gans:
     ganEdition: 'Publication 1996'
     corrections:
       - { num: 11, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR7372:
     age: 0.25
     groupTitle: 'Archipel des Tuamotu'
     title: Fakarava
-    sgtEdition: 'Edition n° 3 - 2004'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Fakarava', bbox: { SW: '16°35,00''S — 145°52,00''W', NE: 'NaN°00,00''S — 145°18,50''W' } }
       - { title: 'Cartouche: A - De la Passe Garuae au Mouillage de Rotoava', bbox: { SW: '16°06,53''S — 145°43,80''W', NE: '16°02,80''S — 145°36,70''W' } }
@@ -5473,28 +4525,22 @@ gans:
     ganEdition: 'Edition n°3 - 2004'
     corrections:
       - { num: 14, semaineAvis: 1941-230 }
+    valid: '2020-12-18'
   FR7097:
     age: 0.25
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Baie de Bourail - Coupée Mara et Baie de Moindou'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - NC
     hasPart:
       - { title: 'Cartouche: A - Baie de Bourail', bbox: { SW: '21°40,16''S — 165°24,90''E', NE: '21°35,83''S — 165°29,50''E' } }
       - { title: 'Cartouche: B - Coupée Mara et Baie de Moindou', bbox: { SW: '21°50,04''S — 165°36,30''E', NE: '21°43,08''S — 165°41,37''E' } }
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 1, semaineAvis: 1808-205 }
+    valid: '2020-12-18'
   FR7248:
     age: 0.25
     groupTitle: 'Iles Tuamotu'
     title: Apataki
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: A - Apataki', bbox: { SW: '15°39,50''S — 146°31,19''W', NE: '15°12,43''S — 146°07,58''W' } }
       - { title: 'Cartouche: B - Passe Tehere (Aimonu) - Mouillage de Roto Ava', bbox: { SW: '15°19,39''S — 146°24,89''W', NE: '15°18,12''S — 146°21,92''W' } }
@@ -5503,14 +4549,11 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 4, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR7329:
     age: 0.25
     groupTitle: 'Archipel des Tuamotu'
     title: Kauehi
-    sgtEdition: 'Edition n° 2 - 2003'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: Kauehi', bbox: { SW: '16°03,00''S — 145°25,00''W', NE: '15°41,08''S — 144°53,58''W' } }
       - { title: 'Cartouche: A - De la Passe Arikitamiro au Mouillage de Tearavero', bbox: { SW: '15°59,00''S — 145°12,78''W', NE: '15°48,73''S — 145°05,60''W' } }
@@ -5519,28 +4562,22 @@ gans:
     ganEdition: 'Edition n°2 - 2003'
     corrections:
       - { num: 9, semaineAvis: 1932-226 }
+    valid: '2020-12-18'
   FR6657:
     age: 0.25
     groupTitle: 'Océan Pacifique Sud - Îles de la Société - Île de Moorea'
     title: 'Baies de Cook et d''Opunohu'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '17°31,22''S — 149°52,71''W'
       NE: '17°27,74''S — 149°47,34''W'
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 2, semaineAvis: 2018-226 }
+    valid: '2020-12-18'
   FR7346:
     age: 0.25
     groupTitle: 'Iles Tuamotu - Iles du roi Georges'
     title: 'Takaroa et Takapoto'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '14°45,00''S — 145°21,00''W'
       NE: '14°20,60''S — 144°44,30''W'
@@ -5549,42 +4586,33 @@ gans:
     ganEdition: 'Edition n°2 - 2006'
     corrections:
       - { num: 6, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR7321:
     age: 0.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Récifs Bampton à l''île Hunter'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '26°16,00''S — NaN°00,00''W'
       NE: 'NaN°00,00''S — 173°04,00''E'
     ganEdition: 'Edition n°3 - 2017'
     corrections:
       - { num: 3, semaineAvis: 1935-216 }
+    valid: '2020-12-18'
   FR6420:
     age: 0.25
     groupTitle: 'Iles Tuamotu'
     title: 'De Mataiva à Rangiroa et Makatea'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
     bbox:
       SW: '15°53,82''S — 148°44,86''W'
       NE: '14°49,81''S — 147°09,36''W'
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 1, semaineAvis: 2044-230 }
+    valid: '2020-12-18'
   FR4232:
     age: 0.25
     groupTitle: 'Océan Pacifique'
     title: 'Îles Australes'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PF
     hasPart:
       - { title: 'Cartouche: A - Île de Rapa', bbox: { SW: '27°40,48''S — 144°27,04''W', NE: '27°32,96''S — 144°15,09''W' } }
       - { title: 'Cartouche: B - Îles Morotiri (Bass)', bbox: { SW: '27°55,56''S — 143°31,62''W', NE: '27°51,86''S — 143°28,04''W' } }
@@ -5593,933 +4621,584 @@ gans:
     ganEdition: 'Edition n°5 - 2018'
     corrections:
       - { num: 1, semaineAvis: 2043-225 }
+    valid: '2020-12-18'
   FR7167:
     age: 0.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
     bbox:
       SW: '22°06,44''S — 165°31,60''E'
       NE: '21°42,13''S — 166°09,70''E'
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 9, semaineAvis: 1927-217 }
+    valid: '2020-12-18'
   FR7098:
     age: 0
     groupTitle: 'Côte Sud-Ouest de Nouvelle Calédonie'
     title: 'Baies d''Ouaraï et Chambeyron - Passes d''Ouaraï et d''Isié'
-    sgtEdition: 'Edition n° 2 - 2007'
-    modified: '2017-06-07+02:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR7271:
     age: 0
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
-    sgtEdition: 'Publication 1990'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - NC
-      - WF
     bbox:
       SW: 'NaN°00,00''S — 167°57,92''W'
       NE: '02°36,26''S — NaN°00,00''W'
     ganEdition: 'Publication 1990'
+    valid: '2020-12-18'
   FR7073:
     age: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-05-24+02:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR6938:
     age: 0
     groupTitle: 'Îles Anglo-Normandes - Jersey'
     title: 'Abords de Saint Hélier'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6855:
     age: 0
     groupTitle: 'Côte Est de Corse'
     title: 'Du phare d''Alistro à Solenzara'
-    sgtEdition: 'Edition n° 3 - 2015'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7170:
     age: 0
     groupTitle: 'Océan Indien'
     title: 'Îles Saint-Paul et Amsterdam'
-    sgtEdition: 'Edition n° 2 - 2014'
-    modified: '2017-06-28+02:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7431:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Baies de Fontarabie et de Saint-Jean-de-Luz'
-    sgtEdition: 'Publication 2007'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7171:
     age: 0
     groupTitle: 'Océan Indien'
     title: 'Approches des Îles Saint-Paul et Amsterdam'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7410:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ile d''Yeu'
-    sgtEdition: 'Edition n° 2 - 2002'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7481:
     age: 0
     groupTitle: 'Côte de Guyane'
     title: 'Approches de Kourou - Îles du Salut'
-    sgtEdition: 'Edition n° 3 - 2007'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - GF
+    valid: '2020-12-18'
   FR7136:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'De la Baie de Pont-Mahé à Piriac-sur-Mer'
-    sgtEdition: 'Publication 2001'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7129:
     age: 0
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7357:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Îles Marquises (Fenua Enata)'
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7358:
     age: 0
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Est'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR6033:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
-    sgtEdition: 'Edition n° 4 - 2014'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7393:
     age: 0
     groupTitle: 'Côte Sud de France'
     title: 'Du port de La Pointe Rouge à Cassis - Calanques de Cassis'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7260:
     age: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Apataki à Fakarava'
-    sgtEdition: 'Publication 2005'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7402:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
-    sgtEdition: 'Edition n° 2 - 2002'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7427:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'La Gironde - La Garonne et La Dordogne'
-    sgtEdition: 'Edition n° 2 - 2016'
-    modified: '2020-01-20+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7398:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret'
-    sgtEdition: 'Edition n° 5 - 2017'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7341:
     age: 0
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Granville'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6424:
     age: 0
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Tubuai'
-    sgtEdition: 'Edition n° 2 - 2001'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6937:
     age: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Jersey - Côte Nord'
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2017-07-05+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6907:
     age: 0
     groupTitle: 'Côte Sud de France'
     title: 'Etang de Berre'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6934:
     age: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Alderney (Aurigny) et les Casquets'
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7411:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Port des Sables-d''Olonne'
-    sgtEdition: 'Edition n° 2 - 2003'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7261:
     age: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'De Fakarava à Makemo'
-    sgtEdition: 'Publication 1993'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7159:
     age: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-10-16+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6939:
     age: 0
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Jersey - Côte Est'
-    sgtEdition: 'Edition n° 6 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7591:
     age: 0
     groupTitle: 'Océan Indien - Océan Pacifique Sud - Antarctique'
     title: 'De Cape Goodenough à Cape Adare'
-    sgtEdition: 'Publication 2006'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7606:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
-    sgtEdition: 'Publication 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6207:
     age: 0
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Raivavae (Vavitu)'
-    sgtEdition: 'Edition n° 4 - 2010'
-    modified: '2017-07-05+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6692:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Des Îles Tuamotu aux Îles Gambier'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7359:
     age: 0
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Ouest'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7663:
     age: 0
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'
-    sgtEdition: 'Publication 2009'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7604:
     age: 0
     groupTitle: 'Océan Indien (Partie Sud)'
     title: 'De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7594:
     age: 0
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'De la Pointe Ebba au Cap de la Découverte'
-    sgtEdition: 'Publication 2003'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7293:
     age: 0
     groupTitle: 'Iles Tuamotu'
     title: Manihi
-    sgtEdition: 'Edition n° 2 - 2007'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6589:
     age: 0
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Canala'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR7593:
     age: 0
     groupTitle: 'Océan Antarctique - Terre Adélie'
     title: 'De l''Ile Hélène au Rocher du Débarquement - Archipel de Pointe Géologie'
-    sgtEdition: 'Publication 2003'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR6165:
     age: 0
     groupTitle: 'Polynésie française - Iles Australes'
     title: Rurutu
-    sgtEdition: 'Edition n° 3 - 2010'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6821:
     age: 0
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Ouest de Corse'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°43,94''N — 008°01,74''E'
       NE: '43°14,34''N — 009°24,94''E'
     ganEdition: 'Edition n°2 - 2009'
+    valid: '2020-12-18'
   FR7004:
     age: 0
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
-    sgtEdition: 'Edition n° 2 - 2005'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7412:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
-    sgtEdition: 'Edition n° 2 - 2003'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7262:
     age: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Makemo à Marutea Nord'
-    sgtEdition: 'Publication 2006'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6604:
     age: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
-    sgtEdition: 'Edition n° 3 - 2010'
-    modified: '2016-12-21+01:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7356:
     age: 0
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Eiao, Hatutaa et Motu One'
-    sgtEdition: 'Publication 2000'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7456:
     age: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'Toau - De Niau à Fakarava'
-    sgtEdition: 'Publication 2002'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7484:
     age: 0
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
     title: 'De Paramaribo aux Iles du Salut'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GF
+    valid: '2020-12-18'
   FR6838:
     age: 0
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
-    sgtEdition: 'Edition n° 4 - 2017'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7442:
     age: 0
     groupTitle: 'Côte Sud de France - Principauté de Monaco'
     title: 'De Villefranche-sur-Mer à Menton'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2020-09-30+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7283:
     age: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
-    sgtEdition: 'Publication 1992'
-    modified: '2016-12-07+01:00'
-    mapsFrance:
-      - WF
+    valid: '2020-12-18'
   FR7758:
     age: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Îles Belep'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR7138:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et mouillages en Bretagne Sud'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6691:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie Est) de Hao à Fangataufa'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7207:
     age: 0
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7592:
     age: 0
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'Du Glacier Dibble au Glacier Mertz'
-    sgtEdition: 'Publication 2004'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR6688:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Iles de la Société, de Manuae à Tahiti'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7316:
     age: 0
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe de Sagone'
-    sgtEdition: 'Edition n° 2 - 2008'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6850:
     age: 0
     groupTitle: 'Côte Nord de Corse'
     title: 'Saint-Florent, Centuri et Macinaggio'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7317:
     age: 0
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dieppe'
-    sgtEdition: 'Edition n° 3 - 2006'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6713:
     age: 0
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Nord-Est de la Corse'
-    sgtEdition: 'Edition n° 5 - 2016'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '41°57,94''N — 008°59,94''E'
       NE: '43°27,94''N — 010°23,14''E'
     ganEdition: 'Edition n°5 - 2016'
+    valid: '2020-12-18'
   FR7480:
     age: 0
     groupTitle: 'Côte de Guyane'
     title: 'Accès au fleuve Kourou - Port de Pariacabo'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-08-14+02:00'
-    mapsFrance:
-      - GF
+    valid: '2020-12-18'
   FR7760:
     age: 0
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Nord)'
-    sgtEdition: 'Publication 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR7370:
     age: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Mururoa à Ducie Island'
-    sgtEdition: 'Publication 1995'
-    modified: '2016-10-26+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7373:
     age: 0
     groupTitle: 'Archipel des Tuamotu'
     title: Rangiroa
-    sgtEdition: 'Edition n° 2 - 2002'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7210:
     age: 0
     groupTitle: 'Océan Atlantique'
     title: 'Atterrages de l''entrée de La Manche - Mer Celtique'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2019-10-09+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7107:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
-    sgtEdition: 'Publication 2008'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR7475:
     age: 0
     groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
     title: 'De Puerto Rico à Trinidad'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2020-10-21+02:00'
-    mapsFrance:
-      - MQ
-      - BL
-      - GP
-      - MF
+    valid: '2020-12-23'
   FR7457:
     age: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'Raroia et Takume'
-    sgtEdition: 'Publication 2003'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7218:
     age: 0
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR6497:
     age: 0
     groupTitle: 'Océan Indien - Archipel des Crozet - Groupe de l''Est'
     title: 'Île de la Possession, Île de l''Est'
-    sgtEdition: 'Edition n° 5 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
+    valid: '2020-12-18'
   FR7485:
     age: 0
     groupTitle: 'Océan Atlantique - Côtes de Guyane Française et du Brésil'
     title: 'Des Iles du Salut à Cabo Orange'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - GF
+    valid: '2020-12-18'
   FR7396:
     age: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
-    sgtEdition: 'Edition n° 2 - 2006'
-    modified: '2020-01-01+01:00'
-    mapsFrance:
-      - FX
+    valid: '2020-12-18'
   FR6690:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie centrale) - De Makemo à Tatakoto'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR7351:
     age: 0
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Goyeta à la Passe de Koné - Abords de Koné'
-    sgtEdition: 'Edition n° 2 - 2010'
-    modified: '2017-07-05+02:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR7246:
     age: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
-    sgtEdition: 'Edition n° 2 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6955:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR3127:
     age: 0
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
-    sgtEdition: 'Edition n° 3 - 2009'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - GP
+    valid: '2020-12-18'
   FR6689:
     age: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (Partie Ouest)'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - PF
+    valid: '2020-12-18'
   FR6930:
     age: 0
     groupTitle: 'Côte Nord de France'
     title: 'Des Roches de Portsall au Plateau des Roches Douvres'
-    sgtEdition: 'Edition n° 2 - 2009'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - FX
     bbox:
       SW: '48°29,94''N — 004°50,09''W'
       NE: '49°33,14''N — 002°29,08''W'
     ganEdition: 'Edition n°2 - 2009'
+    valid: '2020-12-18'
   FR7761:
     age: 0
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
-    sgtEdition: 'Publication 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - NC
+    valid: '2020-12-18'
   FR0101:
     age: -1
     groupTitle: 'Planisphère terrestre'
     title: 'Planisphère terrestre'
-    sgtEdition: 'Edition n°4 - 2016'
-    modified: '2017-04-12+02:00'
-    mapsFrance:
-      - FR
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR0101/1715'
   FR6280:
     age: -1
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-Le-Vent'
     title: 'Partie Nord de Raiatea - Port d''Uturoa'
-    sgtEdition: 'Edition n° 5 - 2019'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - PF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6280/1931'
   FR6281:
     age: -1
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-le-Vent'
     title: 'Partie Sud de Tahaa'
-    sgtEdition: 'Edition n° 4 - 2019'
-    modified: '2019-07-31+02:00'
-    mapsFrance:
-      - PF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6281/1931'
   FR6462:
     age: -1
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier, partie Sud'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2017-05-10+02:00'
-    mapsFrance:
-      - PF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6462/1719'
   FR6498:
     age: -1
     groupTitle: 'Océan Indien'
     title: 'Îles Crozet'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - TF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6498/1844'
   FR6658:
     age: -1
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Île de Moorea - Côte Nord-Ouest de Tahiti'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2018-11-14+01:00'
-    mapsFrance:
-      - PF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6658/1846'
   FR6687:
     age: -1
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Abords de Nouméa - Passes de Boulari et de Dumbéa'
-    sgtEdition: 'Edition n° 6 - 2019'
-    modified: '2019-07-24+02:00'
-    mapsFrance:
-      - NC
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6687/1930'
   FR6741:
     age: -1
     groupTitle: 'Océan Indien'
     title: 'Îles Kerguelen'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6741/1901'
   FR6827:
     age: -1
     groupTitle: 'Côte Sud de Nouvelle-Calédonie'
     title: 'Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)'
-    sgtEdition: 'Edition n° 4 - 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - NC
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6827/1901'
   FR6941:
     age: -1
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Lizard Point à Dartmouth'
-    sgtEdition: 'Edition n° 6 - 2018'
-    modified: '2019-11-13+01:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6941/1946'
   FR6986:
     age: -1
     groupTitle: 'Nouvelle Calédonie'
     title: 'De Port-Ounia au Cap Ndoua'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2017-05-17+02:00'
-    mapsFrance:
-      - NC
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6986/1720'
   FR7092:
     age: -1
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg'
-    sgtEdition: 'Edition n° 4 - 2015'
-    modified: '2019-07-19+02:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7092/1929'
   FR7123:
     age: -1
     groupTitle: 'Côte Ouest de France'
     title: 'Ile Molène - Ile d''Ouessant - Passage du Fromveur'
-    sgtEdition: 'Edition n° 6 - 2019'
-    modified: '2019-11-06+01:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7123/1945'
   FR7131:
     age: -1
     groupTitle: 'Côte Nord de France'
     title: 'Du Hâvre de Rothéneuf à Cancale'
-    sgtEdition: 'Edition n° 3 - 2016'
-    modified: '2019-10-23+02:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7131/1943'
   FR7322:
     age: -1
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Muéo'
-    sgtEdition: 'Edition n° 3 - 2019'
-    modified: '2019-08-14+02:00'
-    mapsFrance:
-      - NC
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7322/1933'
   FR7376:
     age: -1
     groupTitle: 'Côte de Guyane'
     title: 'Embouchure du fleuve Maroni'
-    sgtEdition: 'Publication 2003'
-    modified: '2017-04-05+02:00'
-    mapsFrance:
-      - GF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7376/1714'
   FR7392:
     age: -1
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Couronne au Cap Croisette - Golfe de Marseille'
-    sgtEdition: 'Edition n° 4 - 2016'
-    modified: '2019-08-28+02:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7392/1935'
   FR7407:
     age: -1
     groupTitle: 'Côte Sud de France'
     title: 'De Toulon à Cavalaire-sur-Mer - Iles d''Hyères'
-    sgtEdition: 'Edition n° 3 - 2018'
-    modified: '2018-10-31+01:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7407/1844'
   FR7466:
     age: -1
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
-    sgtEdition: 'Edition n° 2 - 2019'
-    modified: '2019-08-07+02:00'
-    mapsFrance:
-      - PF
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7466/1932'
   FR7487:
     age: -1
     groupTitle: 'Océan Indien'
     title: 'Approches Nord - Est de Madagascar'
-    sgtEdition: 'Publication 2018'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - TF
-      - RE
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7487/1901'
   FR7488:
     age: -1
     groupTitle: 'Océan Indien'
     title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
-    sgtEdition: 'Publication 2013'
-    modified: '2017-02-15+01:00'
-    mapsFrance:
-      - TF
-      - RE
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7488/1707'
   FR7490:
     age: -1
     groupTitle: 'Océan Indien'
     title: 'Archipel des Comores'
-    sgtEdition: 'Publication 2013'
-    modified: '2016-10-19+02:00'
-    mapsFrance:
-      - TF
-      - YT
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7490/1642'
   FR7616:
     age: -1
     groupTitle: 'Petites Antilles'
     title: Dominica
-    sgtEdition: 'Publication 1998'
-    modified: '2019-01-02+01:00'
-    mapsFrance:
-      - GP
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7616/1901'
   FR7644:
     age: -1
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Accès au Port de Nouméa'
-    sgtEdition: 'Edition n° 3 - 2017'
-    modified: '2017-06-14+02:00'
-    mapsFrance:
-      - NC
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7644/1724'
   FR7751:
     age: -1
     groupTitle: 'Océan Pacifique Nord'
     title: 'Île Clipperton - Zone Economique Exclusive'
-    sgtEdition: 'Edition n° 2 - 2017'
-    modified: '2017-06-21+02:00'
-    mapsFrance:
-      - CP
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7751/1725'
   FR7755:
     age: -1
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Ponérihouen au Cap Dumoulin'
-    sgtEdition: 'Publication 2016'
-    modified: '2017-04-26+02:00'
-    mapsFrance:
-      - NC
-  FR7037:
-    age: -1
-    groupTitle: 'Côte Sud-Est d''Angleterre'
-    title: 'De Dover à North Foreland'
-    sgtEdition: null
-    modified: null
-    mapsFrance: {  }
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7755/1717'
   FR7250:
     age: -1
     title: 'De la pointe de la Torche à Loctudy'
-    sgtEdition: 'Publication 2020'
-    modified: '2020-07-01+02:00'
-    mapsFrance:
-      - FX
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7250/2027'
   FR7750:
     age: -1
     title: 'Approches de l’Île Clipperton'
-    sgtEdition: 'Publication 2020'
-    modified: '2020-09-30+02:00'
-    mapsFrance:
-      - CP
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7750/2040'
   FR7764:
     age: -1
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
-    sgtEdition: 'Publication 2020'
-    modified: '2020-06-24+02:00'
-    mapsFrance:
-      - NC
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7764/2026'
 eof: null
