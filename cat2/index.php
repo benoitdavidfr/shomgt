@@ -62,8 +62,14 @@ Les étapes sont les suivantes :
 
 <li><a href='gestion.php?action=compCat'>identifier les cartes obsolètes et les cartes à rajouter par confrontation au WFS,</a></li>
 
-<li>moissonner le GAN (éventuellement de manière incrémentale) et charger la moisson ; pour cela effectuer en CLI :<pre>
-      php gan.php harvestAndStore</pre></li>
+<li>moissonner le GAN (a priori de manière incrémentale) et charger la moisson ; pour cela effectuer en CLI :<pre>
+      php gan.php harvestAndStore</pre>
+  <ul>
+    <li>alternativement, pour remoissonner complètement :<pre>
+      php gan.php fullHarvestAndStore</pre>
+    </li>
+  </ul>
+</li>
 <li><a href='gan.php?f=html'>identifier les cartes les plus "agées", cad celles nécessitant le plus une mise à jour</a></li>
 <li>choisir la liste des cartes à commander au Shom (cartes à ajouter et à remplacer)
   et celles à supprimer du portefeuille, notamment celles remplacées par de nouvelles cartes commandées,</li>

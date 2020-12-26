@@ -173,7 +173,7 @@ class Gan {
     $gandir = self::GAN_DIR;
     if (!file_exists(self::GAN_DIR))
       mkdir(self::GAN_DIR);
-    elseif ($options['clean'] ?? false) { // suppression des fichiers existants
+    elseif ($options['reinit'] ?? false) { // suppression des fichiers existants
       if (!$dh = opendir(self::GAN_DIR))
         die("Ouverture de $gandir impossible");
       while (($filename = readdir($dh)) !== false) {
@@ -321,6 +321,7 @@ class Gan {
       }
       closedir($dh);
     }*/
+    // Ce code permet de détecter les fichiers Html manquants nécessitant une moisson
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     foreach (Mapcat::maps() as $mapid => $map) {
@@ -329,7 +330,7 @@ class Gan {
         $ganWeek = Gan::week($mapa['modified']);
         if (isset($errors["$mapid-$ganWeek"])) { }
         elseif (!file_exists("$gandir/$mapid-$ganWeek.html")) {
-          echo "moisson $mapid-$ganWeek absente\n";
+          echo "moisson $mapid-$ganWeek absente à moissonner\n";
         }
         else {
           $mtime = filemtime("$gandir/$mapid-$ganWeek.html");
@@ -489,7 +490,8 @@ if ($cli) {
   if ($argc == 1) {
     echo "usage: gan.php {action}\n";
     echo "{action}\n";
-    echo "  - harvest - Moissonne les Gan\n";
+    echo "  - harvest - Moissonne les Gan de manière incrémentale\n";
+    echo "  - fullHarvest - Moissonne les Gan en réinitialisant au péalable\n";
     echo "  - showHarvest - Affiche la moisson en Yaml\n";
     echo "  - storeHarvest - Enregistre la moisson en Yaml/pser\n";
     die();
@@ -514,8 +516,13 @@ if ($a == 'menu') { // menu
   die();
 }
 
-if ($a == 'harvest') { // moisson des GAN depuis le Shom 
+if ($a == 'harvest') { // moisson des GAN depuis le Shom en repartant de 0 
   Gan::harvest();
+  die();
+}
+
+if ($a == 'fullHarvest') { // moisson des GAN depuis le Shom réinitialisant au péalable 
+  Gan::harvest(['reinit'=> true]);
   die();
 }
 
@@ -537,6 +544,14 @@ if ($a == 'storeHarvest') { // Enregistre la moisson en Yaml/pser
 
 if ($a == 'harvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
   Gan::harvest();
+  Gan::build();
+  file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
+  Gan::storeAsPser();
+  die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
+}
+
+if ($a == 'fullHarvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+  Gan::harvest(['reinit'=> true]);
   Gan::build();
   file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
   Gan::storeAsPser();
