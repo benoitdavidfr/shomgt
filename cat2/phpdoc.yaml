@@ -28,28 +28,11 @@ doc: |
       - permettant une confrontation au WFS du Shom pour détecter les nouvelles cartes et celles de ShomGt obsolètes,
     2) de consulter les GANs concernant chaque carte pour détecter les cartes à mettre à jour.
   
-  Du point de vue opérationnel le process est:
-    0) on part d'un catalogue MapCat existant
-    1) synchroniser MapCat avec ShomGt pour mettre à jour la date de mise à jour, l'édition et la dernière correction des cartes reçues
-    2) identifier les cartes obsolètes et les cartes à rajouter par confrontation au WFS,
-    3) effectuer une moisson du GAN
-    4) identifier les cartes les plus "agées", cad nécessitant le plus une mise à jour
-    5) commander au Shom les cartes à rajouter et les cartes les plus agées
-    6) à réception des cartes, pour les nouvelles cartes, lire sur la carte les bbox internes et saisir l'info dans MapCat
-    7) marquer obsolètes les cartes qui le sont dans MapCat
-    8) mettre à jour ShomGt
-    9) itérer sur 1)
+  Le processus de mise à jour des cartes est défini dans index.php?a=processus
   
-  Test 23/12 20:30
-    - il faut pouvoir modifier la moisson du GAN de manière incrémentale uniquement sur les cartes modifiées ou ajoutées
-    - une solution provisoire a été mise en place - la péréniser ?
-  
-  Définir une simulation, par exemple sur les cartes
+  Une simulation est définie sur les cartes
   carte modifiée:
     FR7155:
-      '2017-05-24+02:00':
-        edition: 'Edition n° 3 - 2017 - Dernière correction : 0'
-        chemin: incoming/20170614/7155.7z
       '2019-10-23+02:00':
         edition: 'Edition n° 3 - 2017 - Dernière correction : 12'
         chemin: incoming/20191119a/7155.7z
@@ -62,7 +45,9 @@ doc: |
     FR5825:
       title: Ilot Clipperton
       why: remplacée par FR7750
-    
+  2 pseudo-livraisons ont été créées:
+    - 20201226TEST-avant qui simule la livraison
+    - 20201226TEST-arriere qui annule cette livraison
   
   Du point de vue architecture informatique:
     - le catalogue est stocké dans une structure de données de type Yaml spécifiée par un schéma JSON. Afin de gérer les erreurs

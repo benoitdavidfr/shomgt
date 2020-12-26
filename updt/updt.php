@@ -31,13 +31,16 @@ if ($argc <= 1) {
   $dirpath = "$shomgeotiff/incoming";
   $dir = opendir($dirpath)
     or die("Erreur d'ouverture du répertoire $dirpath");
-  echo "Quelle livraison ?\n";
+  $filenames = [];
   while (($filename = readdir($dir)) !== false) {
     if (!in_array($filename, ['.','..','.DS_Store'])) {
-      echo " - $filename\n";
+      $filenames[] = $filename;
     }
   }
   closedir($dir);
+  sort($filenames);
+  echo "Quelle livraison ?\n";
+  echo ' - ',implode("\n - ", $filenames);
   die("\n");
 }
 

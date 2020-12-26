@@ -4,7 +4,7 @@ description:
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-24T12:12:52+01:00'
-modified: '2020-12-24T13:19:23+01:00'
+modified: '2020-12-26T15:03:04+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -9120,11 +9120,14 @@ maps:
       eastlimit: 90
 obsoleteMaps:
   FR5825:
-    '2020-12-24T12:13:24+01:00':
+    '2020-12-26T14:58:04+01:00':
       groupTitle: 'Océan Pacifique'
       title: 'Ilot Clipperton'
+      edition: 'Edition n° 2 - 2010'
       mapsFrance:
         - CP
+      modified: '2017-06-07+02:00'
+      lastUpdate: 2
       scaleDenominator: '20.000'
       bboxDM:
         SW: '10°15,53''N - 109°15,27''W'

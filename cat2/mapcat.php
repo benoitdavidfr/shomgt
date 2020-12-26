@@ -600,7 +600,8 @@ class MapCat {
 };
 
 
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe MapCat
+if ((__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) && (($argv[0] ?? '') <> basename(__FILE__))) return;
+// Utilisation de la classe MapCat
 
 
 //echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body><pre>\n";
@@ -612,6 +613,19 @@ $a = $_GET['a'] ?? null; // action
 
 if ($a && (php_sapi_name() <> 'cli'))
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
+
+if (php_sapi_name() == 'cli') {
+  if ($argc == 1) {
+    echo "usage: mapcat.php {action}\n";
+    echo "{action}\n";
+    echo "  - importFromV1 - Import de V1\n";
+    echo "  - synchroShomGt - Prend en compte les modifications apportées au portefeuille ShomGt\n";
+    echo "  - loadYaml - charge le fichier Yaml\n";
+    die();
+  }
+  else
+    $a = $argv[1];
+}
 
 if ($a == 'importFromV1') {
   MapCat::importFromV1();
@@ -675,16 +689,18 @@ if ($a == 'rewriteYaml') { // réécrit le Yaml à partir du pser, et récérit 
 }
 
 if ($a) {
-  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
-  echo "mapcat.php - Actions proposées:<ul>\n";
-  echo "<li><a href='?a=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a></li>\n";
-  echo "<li><a href='?a=synchroShomGt'>Prend en compte les modifications apportées au portefeuille ShomGt</a></li>\n";
-  echo "<li><a href='?a=loadYaml'>Recharge le catalogue à partir du Yaml</a></li>\n";
-  echo "<li>Affiche le catalogue <a href='?f=yaml'>en Yaml</a>, ";
-  echo "<a href='?f=geojson'>en GeoJSON</a>, ";
-  echo "<a href='?f=html'>en Html</a>, ";
-  echo "<a href='?f=map'>comme carte LL</a></li>\n";
-  echo "</ul>\n";
+  if (php_sapi_name() <> 'cli') {
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
+    echo "mapcat.php - Actions proposées:<ul>\n";
+    echo "<li><a href='?a=importFromV1'>Importe le catalogue V1 et l'enregistre en pser et en Yaml</a></li>\n";
+    echo "<li><a href='?a=synchroShomGt'>Prend en compte les modifications apportées au portefeuille ShomGt</a></li>\n";
+    echo "<li><a href='?a=loadYaml'>Recharge le catalogue à partir du Yaml</a></li>\n";
+    echo "<li>Affiche le catalogue <a href='?f=yaml'>en Yaml</a>, ";
+    echo "<a href='?f=geojson'>en GeoJSON</a>, ";
+    echo "<a href='?f=html'>en Html</a>, ";
+    echo "<a href='?f=map'>comme carte LL</a></li>\n";
+    echo "</ul>\n";
+  }
   die();
 }
 

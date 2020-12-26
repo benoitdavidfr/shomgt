@@ -1,0 +1,72 @@
+title: cmdes au shom
+cmdes:
+  2020-12-20/23:
+    title: 1ère cmde suite à cat2 - nlles cartes + cartes / age >= 10
+    appercu: |
+      Cartes marines numériques raster (image) - format GéoTIFF Cartes marines numériques raster (image) - format GéoTIFF
+      Achat à l'unité
+
+      Licence : Usage interne 
+      Quantité : 17 
+      Produits téléchargeables :
+        7250 - De la pointe de la Torche à Loctudy
+        7750 - Approches de l’Île Clipperton
+        7764 - Abords Nord-Ouest de l'Île des Pins - Baie de Gadji et mouillage de Uapan
+        6735 - Pas de Calais - De Boulogne-sur-Mer à Zeebrugge - Estuaire de la Tamise (Thames)
+        7076 - De Saint-Nazaire à Saint-Malo - Abords de Brest
+        6966 - Des Héaux-de-Bréhat au Cap Lévi
+        6990 - De la Pointe de Penmarc'h à la Gironde
+        7312 - La Manche (Partie Est) - Des Casquets au Pas de Calais
+        7214 - De Dunkerque à Oostende
+        7311 - La Manche (Partie Ouest) - De Isles of Scilly et de l'Île d'Ouessant aux Casquets
+        6619 - Côte Sud-Est de l'Amérique du Nord, Bahamas et Grandes Antilles
+        6857 - Du Cap de la Hague à Fécamp - Baie de Seine
+        6898 - Mer des Antilles (Mer des Caraïbes)
+        7032 - De l'Île de Groix à Belle-Ile - Abords de Lorient
+        7067 - De la Chaussée de Sein à Belle-Île
+        7155 - Du Cap Fréhel à la Pointe du Grouin - Approches de Saint-Malo
+        7475 - De Puerto Rico à Trinidad
+    nouvellesCartes:
+      FR7250:
+        title: De la pointe de la Torche à Loctudy
+        scaleDenominator: '20.000'
+        bboxDM:
+          SW: '47°42,60''N - 004°26,10''W'
+          NE: '47°50,70''N - 004°07,47''W'
+      FR7750:
+        title: Approches de l’Île Clipperton
+        scaleDenominator: '150.000'
+        bboxDM:
+          SW: 9°47,9'N - 109°42,0'W
+          NE: 10°47,0'N - 108°12,0'W
+        hasPart:
+          - title: Île Clipperton
+            scaleDenominator: '20.000'
+            bboxDM:
+              SW: 10°15,50'N - 109°15,33'W
+              NE: 10°20,40'N - 109°11,00'W
+      FR7764:
+        title: Abords Nord-Ouest de l'Île des Pins - Baie de Gadji et mouillage de Uapan
+        scaleDenominator: '25.000'
+        bboxDM:
+          SW: 22°36,55'S - 167°16,62'E
+          NE: 22°26,40'S - 167°32,66'E
+  2020-12-23b:
+    title: cartes à supprimer
+    cartes:
+      FR7661:
+        title: De Cabo de la Nao à Barcelona et Islas Baleares"
+        scaleDenominator: '425.000'
+        why: intersecte très peu FR, vieille
+      FR7212:
+        title: De Cabo Finisterre à Casablanca (Dâr el Beïda)
+        scaleDenominator: "1.000.000",
+        why: n'intersecte pas FR, pas utile
+      FR7037: 
+        title: De Dover à North Foreland
+        scaleDenominator: '37.500'
+        why: n'intersecte pas FR, pas utile
+      FR7622:
+        title: Ports de Saint Lucia
+        why: n'intersecte pas FR, pas utile
+eof:

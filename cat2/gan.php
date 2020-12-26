@@ -298,27 +298,50 @@ class Gan {
     $minvalid = null;
     $maxvalid = null;
 
-    if (!$dh = opendir(self::GAN_DIR))
-      die("Ouverture de self::GAN_DIR impossible");
-    while (($filename = readdir($dh)) !== false) {
-      if (in_array($filename, ['.','..','.DS_Store','errors.yaml']))
-        continue;
-      $mapid = substr($filename, 0, 6);
-      $ganWeek = substr($filename, 7, 4);
-      $mapa = MapCat::maps($mapid);
-      if (!isset($mapa['modified']) || ($ganWeek <> self::week($mapa['modified']))) {
-        //echo "$filename périmé sauté<br>\n";
-        continue;
+    /*if (0) { // Code remplacé
+      if (!$dh = opendir(self::GAN_DIR))
+        die("Ouverture de self::GAN_DIR impossible");
+      while (($filename = readdir($dh)) !== false) {
+        if (in_array($filename, ['.','..','.DS_Store','errors.yaml']))
+          continue;
+        $mapid = substr($filename, 0, 6);
+        $ganWeek = substr($filename, 7, 4);
+        $mapa = MapCat::maps($mapid);
+        if (!isset($mapa['modified']) || ($ganWeek <> self::week($mapa['modified']))) {
+          //echo "$filename périmé sauté<br>\n";
+          continue;
+        }
+        $mtime = filemtime(self::GAN_DIR."/$filename");
+        if (!$minvalid || ($mtime < $minvalid))
+          $minvalid = $mtime;
+        if (!$maxvalid || ($mtime > $maxvalid))
+          $maxvalid = $mtime;
+        $html = file_get_contents(self::GAN_DIR."/$filename");
+        self::$gans[$mapid] = new self($mapid, self::analyzeHtml($html), $mapa, $mtime);
       }
-      $mtime = filemtime(self::GAN_DIR."/$filename");
-      if (!$minvalid || ($mtime < $minvalid))
-        $minvalid = $mtime;
-      if (!$maxvalid || ($mtime > $maxvalid))
-        $maxvalid = $mtime;
-      $html = file_get_contents(self::GAN_DIR."/$filename");
-      self::$gans[$mapid] = new self($mapid, self::analyzeHtml($html), $mapa, $mtime);
+      closedir($dh);
+    }*/
+    $gandir = self::GAN_DIR;
+    $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
+    foreach (Mapcat::maps() as $mapid => $map) {
+      $mapa = $map->asArray();
+      if (isset($mapa['modified'])) {
+        $ganWeek = Gan::week($mapa['modified']);
+        if (isset($errors["$mapid-$ganWeek"])) { }
+        elseif (!file_exists("$gandir/$mapid-$ganWeek.html")) {
+          echo "moisson $mapid-$ganWeek absente\n";
+        }
+        else {
+          $mtime = filemtime("$gandir/$mapid-$ganWeek.html");
+          if (!$minvalid || ($mtime < $minvalid))
+            $minvalid = $mtime;
+          if (!$maxvalid || ($mtime > $maxvalid))
+            $maxvalid = $mtime;
+          $html = file_get_contents("$gandir/$mapid-$ganWeek.html");
+          self::$gans[$mapid] = new self($mapid, self::analyzeHtml($html), $mapa, $mtime);
+        }
+      }
     }
-    closedir($dh);
     self::$hvalid = date('Y-m-d', $minvalid).'/'.date('Y-m-d', $maxvalid);
 
     $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
@@ -460,7 +483,8 @@ class Gan {
 if ((__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) && (($argv[0] ?? '') <> basename(__FILE__))) return;
 
 
-if (php_sapi_name() == 'cli') {
+$cli = (php_sapi_name() == 'cli');
+if ($cli) {
   //echo "argc=$argc\n"; print_r($argv);
   if ($argc == 1) {
     echo "usage: gan.php {action}\n";
@@ -509,6 +533,14 @@ if ($a == 'storeHarvest') { // Enregistre la moisson en Yaml/pser
   file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
   Gan::storeAsPser();
   die("Enregistrement des fichiers Yaml et pser ok\n");
+}
+
+if ($a == 'harvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+  Gan::harvest();
+  Gan::build();
+  file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
+  Gan::storeAsPser();
+  die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
 }
 
 $gandir = __DIR__.'/gan';
