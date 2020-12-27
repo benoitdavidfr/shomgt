@@ -1,8 +1,6 @@
 title: cat2 - catalogue des cartes raster GéoTIFF du SHOM v2
 path: /geoapi/shomgt/cat2
 doc: |
-  Revoir la cohérence et la source de l'info, trop de bugs !!!
-
   Ce module remplace le module cat v1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
   Dans la v1 je reconstruisais le catalogue à chaque moisson.
   Ce principe change dans cette version car je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,

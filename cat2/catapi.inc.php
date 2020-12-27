@@ -10,12 +10,8 @@ journal: |
     créations
 includes: [mapcat.php]
 */
-if (file_exists(__DIR__.'/versionV2Active.yaml')) { // utilisation V2
-  require_once __DIR__.'/mapcat.php';
-}
-else { // utilisation V1
-  require_once __DIR__.'/../cat/mapcat.inc.php';
-}
+require_once __DIR__.'/mapcat.php';
+
 use Symfony\Component\Yaml\Yaml;
 
 /*PhpDoc: classes
@@ -38,10 +34,6 @@ class CatApi {
     retourne [] si le fichier est absent
   */
   static function getCatInfoFromGtName(string $name, GBox $bbox=null): array {
-    if (!file_exists(__DIR__.'/versionV2Active.yaml')) { // utilisation V1
-      return MapCat::getCatInfoFromGtName($name, $bbox);
-    }
-    
     // Exceptions
     if ($name == '5825/5825_1_gtw') {
       // carte "Ilot Clipperton" avec un cartouche et sans espace principal, traitée différemment entre GAN et GéoTiff
