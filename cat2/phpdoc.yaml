@@ -59,25 +59,15 @@ doc: |
   
   Le catalogue des cartes contient des infos absentes du catalogue des GéoTiffs, notamment le nom de certaines cartes, ex 7436
   
-  Le catalogue des cartes pourrait/devrait être géré/publié en DCAT.
-  
-  J'ai 2 catalogues différents:
+  J'ai 3 catalogues différents:
     - le catalogue des cartes recense les cartes Raster Marine du Shom d'intérêt, plus qqs cartes comme les AEM et MancheGrid
-      - il peut y avoir des cas particuliers comme la carte '6497 - Île de la Possession, Île de l''Est' absente du WFS mais présente
-        dans le GAN, ce qui semble une erreur. Cependant, le 4/12/2018 le Shom indique que la carte 6497 n'est pas dispo en version
-        numérique, mais existe bien en version papier. Depuis, l'erreur a été corrigée.
     - le catalogue des GéoTiffs (shomgt.yaml) recense les GéoTiffs les plus récents obtenus du Shom
       - une carte est souvent composée de plusieurs GéoTiffs
-    - je pourrais gérer un 3ème catalogue avec tous les GéoTiffs obtenus du Shom
+    - le catalogue avec tous les GéoTiffs obtenus du Shom -> histo.php
     
-  A faire:
-    - voir quel contrôle d'accès mettre en place / a priori contrôler les mises à jour
-    - définir le process itératif de mise à jour
-      - mise à jour du catalogue après la mise à jour des cartes, notamment les champs modified et lastUpdate
-    - finaliser catapi.inc.php
-    - mise à jour du catalogue sur github
-    - documentation github
 journal: |
+  21-27/12/2020:
+    - améliorations
   20/12/2020:
     - ajout catapi.inc.php
   18-19/12/2020:
@@ -90,7 +80,7 @@ journal: |
   14/12/2020:
     - correction bug dans mapcat.inc.php
     - réalisation d'une carte de vérification du catalogue
-   13/12/2020:
+  13/12/2020:
     - création en remplacement du module cat v1
     
 phpScripts:

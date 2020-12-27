@@ -4,7 +4,7 @@ description:
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2020-12-26T22:03:15+01:00'
+modified: '2020-12-27T07:58:18+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -111,20 +111,6 @@ maps:
       westlimit: -62.333333333333
       northlimit: 77.166666666667
       eastlimit: 51.833333333333
-  FR5825:
-    groupTitle: 'Océan Pacifique'
-    title: 'Ilot Clipperton'
-    mapsFrance:
-      - CP
-    scaleDenominator: '20.000'
-    bboxDM:
-      SW: '10°15,53''N - 109°15,27''W'
-      NE: '10°20,33''N - 109°11,18''W'
-    spatial:
-      southlimit: 10.258833333333
-      westlimit: -109.2545
-      northlimit: 10.338833333333
-      eastlimit: -109.18633333333
   FR5978:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
@@ -926,34 +912,6 @@ maps:
         scaleDenominator: '150.000'
         bboxDM: { SW: '11°37,82''S - 047°11,95''E', NE: '11°21,56''S - 047°30,95''E' }
         spatial: { southlimit: -11.630333333333, westlimit: 47.199166666667, northlimit: -11.359333333333, eastlimit: 47.515833333333 }
-  FR6645:
-    groupTitle: 'Côte Ouest de France'
-    title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
-    mapsFrance:
-      - FX
-    scaleDenominator: '15.000'
-    bboxDM:
-      SW: '47°45,66''N - 004°26,36''W'
-      NE: '47°49,30''N - 004°18,32''W'
-    spatial:
-      southlimit: 47.761
-      westlimit: -4.4393333333333
-      northlimit: 47.821666666667
-      eastlimit: -4.3053333333333
-  FR6646:
-    groupTitle: 'Côte Ouest de France'
-    title: 'Abords et Ports du Guilvinec et de Lesconil'
-    mapsFrance:
-      - FX
-    scaleDenominator: '15.000'
-    bboxDM:
-      SW: '47°45,12''N - 004°19,24''W'
-      NE: '47°48,76''N - 004°11,20''W'
-    spatial:
-      southlimit: 47.752
-      westlimit: -4.3206666666667
-      northlimit: 47.812666666667
-      eastlimit: -4.1866666666667
   FR6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
@@ -9173,4 +9131,49 @@ maps:
       northlimit: 5
       eastlimit: 90
     noteCatalog: 'Ajout de la carte 8502 (AEM ZMSOI) absente du GAN'
-obsoleteMaps: {  }
+obsoleteMaps:
+  FR5825:
+    '2020-12-27T07:58:03+01:00':
+      groupTitle: 'Océan Pacifique'
+      title: 'Ilot Clipperton'
+      mapsFrance:
+        - CP
+      scaleDenominator: '20.000'
+      bboxDM:
+        SW: '10°15,53''N - 109°15,27''W'
+        NE: '10°20,33''N - 109°11,18''W'
+      spatial:
+        southlimit: 10.258833333333
+        westlimit: -109.2545
+        northlimit: 10.338833333333
+        eastlimit: -109.18633333333
+  FR6645:
+    '2020-12-27T07:58:14+01:00':
+      groupTitle: 'Côte Ouest de France'
+      title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
+      mapsFrance:
+        - FX
+      scaleDenominator: '15.000'
+      bboxDM:
+        SW: '47°45,66''N - 004°26,36''W'
+        NE: '47°49,30''N - 004°18,32''W'
+      spatial:
+        southlimit: 47.761
+        westlimit: -4.4393333333333
+        northlimit: 47.821666666667
+        eastlimit: -4.3053333333333
+  FR6646:
+    '2020-12-27T07:58:18+01:00':
+      groupTitle: 'Côte Ouest de France'
+      title: 'Abords et Ports du Guilvinec et de Lesconil'
+      mapsFrance:
+        - FX
+      scaleDenominator: '15.000'
+      bboxDM:
+        SW: '47°45,12''N - 004°19,24''W'
+        NE: '47°48,76''N - 004°11,20''W'
+      spatial:
+        southlimit: 47.752
+        westlimit: -4.3206666666667
+        northlimit: 47.812666666667
+        eastlimit: -4.1866666666667

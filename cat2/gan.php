@@ -21,6 +21,8 @@ doc: |
     status code: 404
     Exception Message: N/A
 journal: |
+  27/12/2020:
+    - ajout du contrôle d'accès sur les actions
   24/12/2020:
     - suppression des champs redondants avec MapCat
     - ajout champ valid dans chaque moisson
@@ -500,9 +502,15 @@ if ($cli) {
     $a = $argv[1];
 }
 else { // non CLI
-  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body>\n";
   $a = $_GET['a'] ?? null; // si $a vat null alors action d'afficher dans le format $f
   $f = $_GET['f'] ?? 'html';
+  if ($a) {
+    if (!Access::roleAdmin()) {
+      header('HTTP/1.1 403 Forbidden');
+      die("Action interdite réservée aux administrateurs.");
+    }
+  }
+  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body>\n";
 }
 
 if ($a == 'menu') { // menu 

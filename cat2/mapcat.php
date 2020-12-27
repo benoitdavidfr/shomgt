@@ -14,6 +14,8 @@ doc: |
   Un bbox à cheval sur l'anti-méridien n'est pas géré de la même facon que dans la classe GBox
   Ici, il est géré comme spécifié par GeoJSON, cad avec $westlimit > $eastlimit
 journal: |
+  27/12/2020
+    - ajout du contrôle d'accès sur les actions
   23/12/2020:
     - utilisation du champ edition de ShomGt et pas celui de V1
   17/12/2020:
@@ -26,6 +28,7 @@ journal: |
   13/12/2020:
     - passage en V2
 includes:
+  - ../ws/accesscntrl.inc.php
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
   - ../lib/zoom.inc.php
@@ -34,6 +37,7 @@ includes:
   - france.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../ws/accesscntrl.inc.php';
 require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';
@@ -620,8 +624,13 @@ else { // sapi <> cli
   $id = isset($_SERVER['PATH_INFO']) ? substr($_SERVER['PATH_INFO'], 1) : ($_GET['id'] ?? null); // id
   $f = $_GET['f'] ?? 'html'; // format, html par défaut
   $a = $_GET['a'] ?? null; // action
-  if ($a)
+  if ($a) {
+    if (!Access::roleAdmin()) {
+      header('HTTP/1.1 403 Forbidden');
+      die("Action interdite réservée aux administrateurs.");
+    }
     echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
+  }
 }
 
 if ($a == 'importFromV1') {

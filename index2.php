@@ -44,10 +44,6 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
   <li>21/11/2019 : la mise à jour des cartes est en cours mais, en raison d'une difficulté au Shom,
     seule une partie des cartes a été traitée ;
     les cartes mises à jour sont celles de métropole dont le numéro est inférieur ou égal à 7393.<br>
-    La <a href='cat/?action=shomgtObsolete' target='_blank'>liste des cartes à actualiser</a> indique pour chaque carte à actualiser
-    son édition et le numéro de la dernière correction, d'une part, dans le GAN à la date d'actualisation indiquée et,
-    d'autre part, la même information pour la carte dans shomgt.
-    Cette fonctionnalité récente est encore en béta.
   </li>
   <li>16/11/2019 : <b>Attention</b>, les mises à jour des cartes effectuées jusqu'à ce jour ont été fondées sur l'édition de la carte
     et non sur les corrections effectuées sur chaque carte ;
@@ -132,8 +128,6 @@ n'a pas acquis une licence d'utilsation de RasterMARINE.</p>
 <li>Pour les utilisateurs de SIG (comme QGis), un service WMS d'accès au contenu des cartes Shom :
   <code><a href='https://geoapi.fr/shomgt/wms.php?SERVICE=WMS&REQUEST=GetCapabilities' target='_blank'>https://geoapi.fr/shomgt/wms.php</a></code>
   (<a href='doc.html#wms' target='doc'>Plus d'infos ici</a>)
-
-<li>Un <a href='cat/' target='_blank'>catalogue des cartes SHOM</a>, pas uniquement celles sélectionnées dans shomgt.
 </ol>
 
 
@@ -160,4 +154,4 @@ Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 <h3>Auteur</h3>
 Ce site est réalisé par Benoit DAVID, Chef de la MIG au MTES.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 26/2/2020<br>
+Mise à jour: 27/12/2020<br>

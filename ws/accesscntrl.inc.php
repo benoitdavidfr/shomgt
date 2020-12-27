@@ -15,6 +15,8 @@ doc: |
     - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
     - expose la méthode cntrl() pour réaliser le contrôle 
 journal: |
+  27/12/2020:
+    ajout test admins
   23/5/2020:
     ajout du contrôle sur préfixe IPv6
   30/3/2019:
@@ -102,6 +104,13 @@ class Access {
     }
     if (!$nolog) write_log(false);
     return false;
+  }
+  
+  // teste si le rôle admin est autorisé
+  static function roleAdmin(): bool {
+    $access = in_array($_COOKIE[SELF::COOKIENAME] ?? null, config('admins'));
+    write_log($access);
+    return $access;
   }
 };
 

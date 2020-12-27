@@ -7,6 +7,8 @@ doc: |
   S'il existe, c'est lui qui est utilisé
   Sinon ce fichier contient une configuration par défaut
 journal: |
+  27/12/2020:
+    ajout rubrique admins
   23/5/2020:
     ajout du contrôle IPv6
   9/11/2019
@@ -26,6 +28,7 @@ else {
         'homePage'=> false, # désactivé pour la page d'accueil
         'mapwcat'=> false, # désactivé pour la carte leaflet
         'geoTiffCatalog'=> false, # désactivé pour le catalogue des GéoTiff
+        'cat'=> true,
       ],
     
       // liste des adresses IP V4 autorisées utilisée lorsque le contrôle est activé
@@ -38,9 +41,16 @@ else {
       'ipV6PrefixWhiteList'=> [
       ],
     
-      // liste des login/mdp autorisés utilisée lorsque le contrôle est activé
+      // liste des login/mdp autorisés comme utilisateurs utilisée lorsque le contrôle est activé
       'loginPwds' => [
+        'user:user',
+        'admin:admin',
         'demo:demo',
+      ],
+    
+      // liste des login/mdp autorisés comme administrateurs
+      'admins'=> [
+        'admin:admin',
       ],
     
       # Paramétrage du serveur MySQL pour enregistrer les logs en fonction du serveur hébergeant l'application

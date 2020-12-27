@@ -10,7 +10,6 @@ doc: |
        et s'il est correct à créer un cookie avec cette information.
        Si le login est correctement réalisé alors l'utilisateur est renvoyé vers la page d'accueil du site
     2) login par appel d'un URL
-       ex: http://localhost/geoapi/shomgt/login.php?login=benoit.david@free.fr:grqjr*kslth17:54!
     3) lorsque le script est appelé alors que l'utilisateur est déjà logué:
       - on lui indique qu'il est logué
       - on lui propose de se déloguer
