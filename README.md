@@ -22,8 +22,7 @@ Ce projet propose les services suivants :
     regroupés par couche en fonction de leur échelle,
   - un service GeoJSON exposant les silhouettes des GéoTiffs,
   - un service de téléchargement des GéoTiffs dans différents formats avec des infos associées,
-  - un service GeoJSON exposant le catalogue des cartes du Shom
-    [publié ici par tranches d'échelles](https://benoitdavidfr.github.io/shomgt/).
+  - un service GeoJSON exposant un catalogue des cartes du Shom.
   
 Ce projet est décomposé en 4 modules:
 
@@ -31,19 +30,17 @@ Ce projet est décomposé en 4 modules:
     GéoTiffs](https://github.com/benoitdavidfr/shomgt/tree/master/ws)
   - les [scripts de mise à jour des GéoTiffs à partir d'une livraison du
     Shom](https://github.com/benoitdavidfr/shomgt/tree/master/updt)
-  - la [gestion d'un catalogue des cartes du Shom](https://github.com/benoitdavidfr/shomgt/tree/master/cat) afin
+  - la [gestion d'un catalogue des cartes du Shom](https://github.com/benoitdavidfr/shomgt/tree/master/cat2) afin
     - d'identifier les cartes des espaces sur lesquels la France exerce ses droits,
-      notamment sa [ZEE](https://github.com/benoitdavidfr/shomgt/tree/master/cat/france.geojson),
+      notamment sa [ZEE](https://github.com/benoitdavidfr/shomgt/tree/master/cat2/france.geojson),
     - d'identifier la liste des cartes à actualiser, à supprimer ou à ajouter,
     - de fournir au module précédent les caractéristiques des cartes,
-  - un [package de gestion de la géométrie partagé entre les
-    modules](https://github.com/benoitdavidfr/shomgt/tree/master/lib).
+  - un [ensemble d'éléments partagés entre modules (lib)](https://github.com/benoitdavidfr/shomgt/tree/master/lib),
+    notamment un package de gestion de la géométrie.
 
 De plus:
 
-  - le répertoire [`docs`](https://github.com/benoitdavidfr/shomgt/tree/master/docs) contient
-    l'export GeoJSON du catalogue des cartes du Shom, qui peut ainsi être consulté sous la forme
-    d'[une carte directement sur Github](https://benoitdavidfr.github.io/shomgt/catmap.html),
+  - le répertoire [`docs`](https://github.com/benoitdavidfr/shomgt/tree/master/docs) contient quelques documents,
   - le répertoire `leaflet` contient des fichiers utilisés par la carte Leaflet permettant une visualisation de cette carte
     sans accès à internet,
   - le répertoire `docker` contient la configuration Docker d'un serveur d'hébergement des web-services.

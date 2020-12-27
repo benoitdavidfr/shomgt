@@ -60,11 +60,10 @@ doc: |
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
       Par ailleurs, des fichiers modifiés par l'utilisateur sont dans le Github ce qui génère une erreur lors d'un git_pull
     - la mise à jour du catalogue de cartes devrait pouvoir fonctionner derrière un proxy, ce qui n'est pas le cas
-    - réfléchir à l'interface OpenApi (pas d'urgence)
-    - exposer une description OpenApi des web-services du projet
+    - exposer une description OpenApi des web-services du projet (pas d'urgence)
       
 journal: |
-  23/11/2020:
+  23/12/2020:
     - réception des cartes du Shom
     - test d'utilisation de cat2 non satisfaisant
     - mise à jour des cartes sur Alwaysdata sans utiliser cat2

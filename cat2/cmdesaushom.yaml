@@ -121,6 +121,62 @@ $schema:
     eof: { type: 'null' }
     
 cmdes:
+  2020-12-26:
+    title: 2ème cmde suite à cat2 - 23 cartes / age >= 7 (aucune carte nouvelle)
+    cartesACommander:
+      - 7068
+      - 7152
+      - 6608
+      - 6815
+      - 6844
+      - 7033
+      - 7066
+      - 7151
+      - 7205
+      - 7323
+      - 7406
+      - 7424
+      - 7510
+      - 7043
+      - 7183
+      - 6651
+      - 6757
+      - 6929
+      - 7008
+      - 7091
+      - 7282
+      - 7292
+      - 7625
+    apercu: |
+      Cartes marines numériques raster (image) - format GéoTIFF Cartes marines numériques raster (image) - format GéoTIFF
+      Achat à l'unité
+      Licence : Usage interne 
+      Quantité : 23 
+      Produits téléchargeables :
+
+          7068 - De la presqu'île de Quiberon aux Sables-d'Olonne
+          7152 - De l'Île Grande à l'Île de Bréhat
+          6608 - Mer du Nord
+          6815 - Océan Atlantique Nord - Partie Est
+          6844 - De Port-Barcarès à l'embouchure de l'Aude
+          7033 - De Quiberon au Croisic
+          7066 - De l'Île Vierge à la Pointe de Penmarc'h - Abords de Brest
+          7151 - De l'anse de Kernic à l'île Grande
+          7205 - Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes
+          7323 - Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover
+          7406 - De Marseille à Toulon
+          7424 - Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland
+          7510 - De Capo Bellavista aux Bouches de Bonifacio
+          7043 - Océan Atlantique Nord - Partie Ouest
+          7183 - La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât
+          6651 - De Calais à Dunkerque
+          6757 - Du Détroit de Gibraltar au Canal de Sicile
+          6929 - Abords de Porto-Vecchio - De l'anse de Favone aux Îles Lavezzi
+          7008 - Du Cabo de San Sebastian à Fos-sur-Mer
+          7091 - Abords de Toulon
+          7282 - Rade d'Hyères
+          7292 - De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)
+          7625 - De Trinidad à Cabo Orange
   2020-12-20/23:
     title: 1ère cmde suite à cat2 - nlles cartes + cartes / age >= 10
     apercu: |
