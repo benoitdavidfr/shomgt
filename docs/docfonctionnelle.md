@@ -92,7 +92,7 @@ Il existe en effet plus de 800 cartes au format GéoTIFF dont plus de la moitié
 ces dernières correspondent approximativement à un peu moins de 800 images géotiff.
 Pour identifier d'abord les cartes pertinentes puis régulièrement celles à actualiser,
 celles périmées à supprimer ainsi que les nouvelles à ajouter,
-il a été nécessaire de construire un catalogue de toutes les cartes au format GéoTIFF du Shom.
+il a été nécessaire de construire un catalogue des cartes du Shom au format GéoTIFF.
 
 Pour cela 2 sources de données sont utilisées:
 
@@ -103,11 +103,10 @@ Pour cela 2 sources de données sont utilisées:
     - la boite en coordonnées géographiques définissant la partie utile de la carte
       et de chacun de ses éventuels cartouches, c'est à dire la zone à l'intérieur du cadre.
 
-La confrontation de l'édition de la carte en vigueur à celle de la carte stockée dans shomgt permet de détecter
-les cartes à actualiser.
 Les écarts entre la liste des cartes en vigueur et la liste des cartes stockées dans shomgt permet
 de détecter des cartes périmées à supprimer et les cartes nouvelles à ajouter.
-Enfin, la boite définissant la partie utile de chaque image permet d'effacer le cadre de chaque image.
+La consultation des corrections apportées sur chaque carte et la comparaison avec celles prise en compte sur les cartes détenues
+permet de détecter les cartes à actualiser.
 
 ### 2.3. Systèmes de coordonnées utilisés
 Tous les fichiers GéoTIFF sont fournis en projection World Mercator dans le système géodésique WGS84.
@@ -131,11 +130,12 @@ On distingue les 5 types de couches suivants :
     5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6).  
     Le nom de chacune de ses couches est composé de **gt** suivi du dénominateur d'échelle.
   - la couche **gt20M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
-  - la couche **gtpyr** sélectionne une des 11 couches ci-dessus en fonction du niveau de zoom défini par l'appel,
+  - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 11 couches ci-dessus en fonction du niveau de zoom
+    défini par l'appel,
   - la couche **gtaem** contient les cartes Action de l'Etat en Mer (AEM)
   - la couche **gtMancheGrid** contient la carte MancheGrid,
-  - de plus à chacune des 15 couches définies ci-dessus est associée une couche des
-    silhouettes des cartes et leur numéro, permettant de repérer une carte par son numéro.
+  - de plus à chacune des 15 couches définies ci-dessus est associée une couche des de leur numéro,
+    permettant de repérer une carte par son numéro.
 
 ## 3.2. Mise en oeuvre des web-services
 Les 2 web-services (WMS et tuiles) retournent une image en fonction des paramètres fournis,
@@ -147,21 +147,13 @@ avec les parties utiles (sans les cadres) des géotiff de la couche demandée lo
 Pour mettre en oeuvre les 2 web-services différentes améliorations des données du Shom ont été nécessaires.
 
 ### 3.1. Description de la ZEE française
-J'ai saisi les limites de la ZEE française afin de pouvoir tester si une carte décrit ou non une zone française.
+Les limites de la ZEE française simlifiée ont été saisies afin de pouvoir tester si une carte décrit ou non une zone française.
 
-### 3.2. Ajout d'une carte au flux WFS
-La carte "6497 - Île de la Possession, Île de l'Est" décrit une partie des Iles Crozet.
-Elle est absente du flux WFS alors qu'elle est présente dans le GAN.
-Contacté sur ce point, le Shom indique le 4/12/2018 que la carte 6497 n'est pas disponible en version numérique,
-mais existe bien en version papier.
-Or, je dispose bien d'une version numérique de cette carte.
-En conséquence, j'ai ajouté cette carte au flux WFS.
-
-### 3.3. Corrections du GAN
+### 3.2. Corrections du GAN
 J'ai constaté plusieurs erreurs dans le GAN qui impactaient la mise en des web-services.
 Je gère donc un fichier de corrections du GAN.
 
-### 3.4. Cartes exclues du portefeuille
+### 3.3. Cartes exclues du portefeuille
 Certaines cartes n'ont pas suffisamment d'intérêt et sont exclues du portefeuille.
 Une liste de ces cartes est tenue à jour.  
 Voici cette liste fin octobre 2019 et la raison de leur exclusion:
@@ -172,7 +164,7 @@ Voici cette liste fin octobre 2019 et la raison de leur exclusion:
   - 7678 - Îles Anjouan et Mohéli (1:156000) - la faible intersection avec la France est couverte par FR7677 à la même échelle
   - 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier (1:50000) - carte inutile
 
-### 3.5. Ordre des cartes
+### 3.4. Ordre des cartes
 Lorsque plusieurs cartes dans une même couche s'intersectent,
 l'ordre d'affichage de ces cartes impacte le résultat fourni.
 Ainsi, il peut être utile d'imposer une certain ordre d'affichage entre 2 cartes d'une même couche.

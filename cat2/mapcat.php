@@ -28,7 +28,7 @@ journal: |
   13/12/2020:
     - passage en V2
 includes:
-  - ../ws/accesscntrl.inc.php
+  - ../lib/accesscntrl.inc.php
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
   - ../lib/zoom.inc.php
@@ -37,7 +37,7 @@ includes:
   - france.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../ws/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';

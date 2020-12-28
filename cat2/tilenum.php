@@ -23,10 +23,10 @@ doc: |
 journal: |
   16/12/2020:
     création
-includes: [mapcat.php, wfs.php]
+includes: [mapcat.php, shomgtwfs.php]
 */
 require_once __DIR__.'/mapcat.php';
-require_once __DIR__.'/wfs.php';
+require_once __DIR__.'/shomgtwfs.php';
 
 $verbose = false;
 
@@ -130,7 +130,7 @@ if (preg_match('!^(mapid)(FR\d+)$!', $lyrname, $matches)) {
   $criteria = ['mapid'=> $matches[2]];
 }
 elseif (preg_match('!^(cat|wfs)([\de]+)(-([\de]+)?)?$!', $lyrname, $matches)) {
-  $class = ($matches[1]=='cat') ? 'MapCat' : 'Wfs';
+  $class = ($matches[1]=='cat') ? 'MapCat' : 'ShomGtWfs';
   $criteria = ['sdmin'=> $matches[2]];
   if (isset($matches[4]))
     $criteria += ['sdmax'=> $matches[4]];

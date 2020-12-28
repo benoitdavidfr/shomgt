@@ -43,9 +43,10 @@ journal: |
       - FR6284, FR6420, FR6823, FR7040, FR7135, FR7154, FR7436
     - des particularités (mise à jour ultérieure)
       - FR6713, FR6821, FR6930, FR7271
-includes: [mapcat.php]
+includes: [../lib/config.inc.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/config.inc.php';
 require_once __DIR__.'/mapcat.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -60,6 +61,19 @@ function http_error_code($http_response_header): ?string { // extrait le code d'
   }
   return $http_error_code;
 }
+
+class Proxy { // fabrique un context si un proxy est défini, sinon renvoie null
+  static function context() {
+    if (!($proxy = config('proxy')))
+      return null;
+    return stream_context_create([
+      'http'=> [
+        'method'=> 'GET',
+        'proxy'=> str_replace('http://', 'tcp://', $proxy),
+      ]
+    ]);
+  }
+};
 
 /*PhpDoc: classes
 name: Territoire
@@ -191,7 +205,7 @@ class Gan {
         $ganWeek = Gan::week($mapa['modified']);
         if (!file_exists("$gandir/$mapid-$ganWeek.html") && !isset($errors["$mapid-$ganWeek"])) {
           $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
-          if (($contents = @file_get_contents($url)) === false) {
+          if (($contents = @file_get_contents($url, false, Proxy::context())) === false) {
             $message = "Erreur ".(http_error_code($http_response_header) ?? 'erreur http_error_code()')." de lecture de $url";
             echo "$message\n";
             file_put_contents("$gandir/errors.yaml", "$mapid-$ganWeek: $message\n", FILE_APPEND);

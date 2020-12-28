@@ -26,15 +26,15 @@ journal: |
     ajout d'une tuile d'erreur
   6/3/2019:
     création
-includes: [geotiff.inc.php, log.inc.php, config.inc.php, cache.inc.php, errortile.inc.php, ../lib/gegeom.inc.php]
+includes: [../lib/gegeom.inc.php, ../lib/log.inc.php, ../lib/config.inc.php, geotiff.inc.php, cache.inc.php, errortile.inc.php]
 */
 
+require_once __DIR__.'/../lib/gegeom.inc.php';
+require_once __DIR__.'/../lib/log.inc.php';
+require_once __DIR__.'/../lib/config.inc.php';
 require_once __DIR__.'/geotiff.inc.php';
-require_once __DIR__.'/log.inc.php';
-require_once __DIR__.'/config.inc.php';
 require_once __DIR__.'/cache.inc.php';
 require_once __DIR__.'/errortile.inc.php';
-require_once __DIR__.'/../lib/gegeom.inc.php';
 
 write_log(true);
 

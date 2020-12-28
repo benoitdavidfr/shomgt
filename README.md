@@ -54,6 +54,8 @@ les répertoires suivants doivent être présents sur le serveur pour que le cod
     - `ìncoming` contient un répertoire par livraison, chacun contenant les archives fournies par le Shom
   - `{shomgt}/vendor` - code installé par composer
 
+Le module de catalogue ne fonctionne pas actuellement derrière un proxy.
+
 Le code utilise :
 
   - Php 8.0
@@ -62,7 +64,7 @@ Le code utilise :
   - les logiciels [gdal_translate et gdalinfo](https://www.gdal.org/) utilisés pour convertir les GéoTiff en PNG
   - le logiciel 7z utilisé pour dézipper les archives
   
-Des indications plus précises sur les versions des logiciels sont disponibles
+Des spécification plus précises des versions des logiciels sont disponibles
 dans le [fichier de configuration Docker](https://github.com/benoitdavidfr/shomgt/blob/master/docker/Dockerfile).
 
 Une [documentation fonctionnelle plus détaillée est disponible

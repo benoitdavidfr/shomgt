@@ -25,9 +25,9 @@ journal: |
     - adaptation à la nouvelle version
   10/4/2019:
     - ajout des numéros de carte Shom
-includes: [ ws/accesscntrl.inc.php ]
+includes: [ lib/accesscntrl.inc.php ]
 */
-require_once __DIR__.'/ws/accesscntrl.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 //print_r($_GET); die("map.php");
 if (Access::cntrlFor('mapwcat') && !Access::cntrl()) {
@@ -144,7 +144,7 @@ var baseLayers = {
 map.addLayer(baseLayers["Pyramide GéoTIFF"]);
 
 var overlays = {
-  "ZEE" : new L.GeoJSON.AJAX(shomgturl+'cat/france.geojson', {
+  "ZEE" : new L.GeoJSON.AJAX(shomgturl+'cat2/france.geojson', {
     style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),
   

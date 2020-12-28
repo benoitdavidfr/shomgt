@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
-name: wfs.php
-title: cat2/wfs.php - utilisation du WFS du Shom
+name: shomgtwfs.php
+title: cat2/shomgtwfs.php - utilisation du WFS du Shom pour obtenir les fantomes des GéoTiff
 classes:
 doc: |
   Définit:
@@ -10,11 +10,14 @@ doc: |
       b) la méthode statique maketile() utilisée pour générer la couche d'étiquettes pour la carte Leaflet
     2) le script d'affichage comme FeatureCollection des features du WFS avec un filtre sur sd utilisant les params sdmin et sdmax
 journal: |
+  28/12/2020:
+    utilisation des classes WfsServerJson et FeaturesApi
   17/12/2020:
     export de la définition de GjBox
   16/12/2020:
     création
 includes:
+  - ../lib/config.inc.php
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
   - ../lib/feature.inc.php
@@ -23,11 +26,11 @@ includes:
   - france.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/config.inc.php';
 require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/feature.inc.php';
-require_once __DIR__.'/wfsserver.inc.php';
-require_once __DIR__.'/wfsjson.inc.php';
+require_once __DIR__.'/../lib/wfs/wfsserver.inc.php';
 require_once __DIR__.'/france.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -47,12 +50,11 @@ if (0) { // Test unitaire de ajouteSepMilliers()
 }
 
 /*PhpDoc: classes
-name: Wfs
-title: "class Wfs"
+name: ShomGtWfs
+title: "class ShomGtWfs"
 methods:
 */
-class Wfs {
-  static $verbose = false;
+class ShomGtWfs extends FeaturesApi {
   // des types définis par le WFS du Shom
   const TYPENAMES = [
     'CARTES_MARINES_GRILLE:grille_geotiff_30', // cartes echelle > 1/30K
@@ -60,31 +62,35 @@ class Wfs {
     'CARTES_MARINES_GRILLE:grille_geotiff_300_800', // cartes aux échelles entre 1/300K et 1/800K
     'CARTES_MARINES_GRILLE:grille_geotiff_800', // carte échelle < 1/800K
   ];
+  const PSER = __DIR__.'/shomgtwfsdl.pser';
+  const VERBOSE = false;
+  
+  function __construct() {
+    $wfsOptions = ($proxy = config('proxy')) ? ['proxy'=> str_replace('http://', 'tcp://', $proxy)] : [];
+    parent::__construct('https://services.data.shom.fr/INSPIRE/wfs', $wfsOptions);
+  }
   
   /*PhpDoc: methods
   name: dl
-  title: "static function dl(): array - lecture du wfs Shom des fantomes des cartes GeoTiff"
+  title: "function dl(): array - lecture des fantomes des cartes GeoTiff dans le WFS Shom"
   doc: |
     retourne un ensemble de features chacun identifié par un id de la forme "FR{num}"
     bufferise le résultat dans un fichier pser dont l'ancienneté est limitée à 12 heures
     ajoute les cartes manquantes
   */
-  static function dl(): array {
+  function dl(): array {
     //printf("time-filemtime=%.2f heures<br>\n",(time()-filemtime(__DIR__.'/wfsdl.pser'))/60/60);
     // Le fichier wfsdl.pser est automatiquement mis à jour toutes les 12 heures
-    if (is_file(__DIR__.'/wfsdl.pser') && (time() - filemtime(__DIR__.'/wfsdl.pser') < 12*60*60))
-      return unserialize(file_get_contents(__DIR__.'/wfsdl.pser'));
+    if (is_file(self::PSER) && (time() - filemtime(self::PSER) < 12*60*60))
+      return unserialize(file_get_contents(self::PSER));
   
     //try {
-      $yaml = Yaml::parseFile(__DIR__.'/shomwfs.yaml');
-      $shomwfs = new WfsServerJson($yaml, 'shomwfs');
-
       $wfs = [];
       foreach (self::TYPENAMES as $typename) {
-        $numberMatched = $shomwfs->getNumberMatched($typename);
+        $numberMatched = $this->getNumberMatched($typename);
         $count = 100;
         for ($startindex = 0; $startindex < $numberMatched; $startindex += $count) {
-          $fc = $shomwfs->getFeatureAsArray($typename, [], -1, '', $count, $startindex);
+          $fc = $this->getFeatureAsArray($typename, [], -1, '', $count, $startindex);
           foreach ($fc['features'] as $feature) {
             $num = $feature['properties']['carte_id'];
             $id = 'FR'.$num;
@@ -133,7 +139,7 @@ class Wfs {
     
       //echo Yaml::dump($wfs, 5, 2);
       ksort($wfs);
-      file_put_contents(__DIR__.'/wfsdl.pser', serialize($wfs));
+      file_put_contents(self::PSER, serialize($wfs));
       return $wfs;
       /*}
     catch (Exception $e) {
@@ -146,9 +152,9 @@ class Wfs {
 
   /*PhpDoc: classes
   name: methods
-  title: "static function items(): array - enrichit chaque feature avec la propriété mapsFrance et définit les bbox qui ne le sont pas"
+  title: "function igtItems(): array - enrichit chaque feature avec la propriété mapsFrance et définit les bbox qui ne le sont pas"
   */
-  static function items(): array {
+  function gtItems(): array {
     $items = self::dl();
     foreach ($items as $id => &$item) {
       $item->properties['mapsFrance'] = France::interet($id, $item->properties['scaleDenominator'], $item->geometry);
@@ -160,8 +166,8 @@ class Wfs {
   
   // fabrication d'une tuile des étiquettes pour l'affichage de la carte Leaflet
   static function maketile(array $criteria, EBox $wembox, array $options=[]) {
-    if (self::$verbose)
-      echo "Wfs::maketile(criteria=",json_encode($criteria),", wembox=$wembox, options=",json_encode($options),")<br>\n";
+    if (self::VERBOSE)
+      echo "ShomGtWfs::maketile(criteria=",json_encode($criteria),", wembox=$wembox, options=",json_encode($options),")<br>\n";
     $sdmin = $criteria['sdmin'] ?? null;
     $sdmax = $criteria['sdmax'] ?? null;
     $mapid = $criteria['mapid'] ?? null;
@@ -179,7 +185,8 @@ class Wfs {
     if (!imagealphablending($image, true))
       throw new Exception("erreur de imagealphablending() ligne ".__LINE__);
     
-    foreach (self::dl() as $item) {
+    $shomGtWfs = new self;
+    foreach ($shomGtWfs->dl() as $item) {
       $sd = str_replace('.', '', $item->properties['scaleDenominator']);
       if (($sd > $sdmin) && (!$sdmax || ($sd <= $sdmax))) {
         $item->drawLabel($image, $wembox, $width, $height);
@@ -207,9 +214,10 @@ else {
   $id = $_GET['id'] ?? null;
 }
 
+$shomGtWfs = new ShomGtWfs;
 
 if ($id) {
-  if ($item = (Wfs::items()[$id] ?? null)) {
+  if ($item = ($shomGtWfs->gtItems()[$id] ?? null)) {
     header('Content-type: application/json; charset="utf8"');
     //header('Content-type: text/plain; charset="utf8"');
     echo json_encode($item->asArray(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
@@ -220,11 +228,11 @@ if ($id) {
   }
 }
 else {
-  header('Content-type: application/json; charset="utf8"');
-  //header('Content-type: text/plain; charset="utf8"');
+  //header('Content-type: application/json; charset="utf8"');
+  header('Content-type: text/plain; charset="utf8"');
   $nbre = 0;
   echo '{"type":"FeatureCollection","features":[',"\n";
-  foreach (Wfs::items() as $id => $item) {
+  foreach ($shomGtWfs->gtItems() as $id => $item) {
     $scaleD = (int)str_replace('.', '', $item->properties['scaleDenominator']);
     if ($sdmax && ($scaleD > $sdmax))
       continue;

@@ -63,6 +63,8 @@ doc: |
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
       
 journal: |
+  28/12/2020:
+    - transfert dans lib de config.inc.php, secretconfig.inc.php, accesscntrl.inc.php et log.inc.php
   23/12/2020:
     - réception des cartes du Shom
     - test d'utilisation de cat2 non satisfaisant

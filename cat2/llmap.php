@@ -140,7 +140,7 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
          "        )\n",
          "    ]),\n";
     echo "    \"$titleWfs\" : L.layerGroup([\n",
-         "        new L.GeoJSON.AJAX(shomgtcaturl+'/wfs.php?sdmax=$sdvmax&sdmin=$sdvmin', {\n",
+         "        new L.GeoJSON.AJAX(shomgtcaturl+'/shomgtwfs.php?sdmax=$sdvmax&sdmin=$sdvmin', {\n",
          "          style: styleOfMap, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeature\n",
          "        }),\n",
          "        new L.TileLayer(\n",

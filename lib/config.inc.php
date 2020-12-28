@@ -19,7 +19,7 @@ if (is_file(__DIR__.'/secretconfig.inc.php'))
   require_once __DIR__.'/secretconfig.inc.php';
 else {
   // Accès à une des rubriques du fichier de config
-  function config(string $rubrique): array {
+  function config(string $rubrique): array|string {
     static $config = [
       // controle activé au non par fonctionnalité
       'cntrlFor'=> [
@@ -53,11 +53,14 @@ else {
         'admin:admin',
       ],
     
-      # Paramétrage du serveur MySQL pour enregistrer les logs en fonction du serveur hébergeant l'application
-      # Le nom_du_serveur est défini par $_SERVER['HTTP_HOST']
+      // Paramétrage du serveur MySQL pour enregistrer les logs en fonction du serveur hébergeant l'application
+      // Le nom_du_serveur est défini par $_SERVER['HTTP_HOST']
       'mysqlParams'=> [
         'nom_du_serveur'=> 'mysql://{user}:{passwd}@{host}/{database}',
       ],
+      
+      // Paramétrage d'un éventuel proxy
+      'proxy'=> 'http://172.17.0.8:3128',
     ];
 
     return isset($config[$rubrique]) ? $config[$rubrique] : [];
