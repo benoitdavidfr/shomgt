@@ -13,22 +13,26 @@ doc: |
   Une position est stockée comme un array de 2 ou 3 nombres.
   On gère aussi une liste de positions comme array de positions et une liste de listes de positions
   comme array d'array de positions.
+  La classe GBox soulève des difficultés pour les objets a proximité de l'anti-méridien, il vaut alors mieux utiliser la classe GjBox.
 journal: |
   9/3/2019:
   - scission de gegeom.inc.php
   7/3/2019:
   - création
+includes: [coordsys.inc.php, pos.inc.php, zoom.inc.php]
 */}
+require_once __DIR__.'/coordsys.inc.php';
+require_once __DIR__.'/pos.inc.php';
 
 // teste si une variable correspond à une position
-function is_pos($pos): bool { return is_array($pos) && isset($pos[0]) && is_numeric($pos[0]); }
+//function is_pos($pos): bool { return is_array($pos) && isset($pos[0]) && is_numeric($pos[0]); }
 
 // teste si une variable correspond à une liste d'au moins une position
-function is_Lpos($lpos): bool { return is_array($lpos) && isset($lpos[0]) && is_pos($lpos[0]); }
+//function is_Lpos($lpos): bool { return is_array($lpos) && isset($lpos[0]) && is_pos($lpos[0]); }
 
 // teste si une variable correspond à une liste de listes de positions en contenant au moins une
 // peut contenir des listes vides avant de contenir une liste non vide de positions
-function is_LLpos($llpos): bool {
+/*function is_LLpos($llpos): bool {
   if (!is_array($llpos)) // si ce n'est pas un array alors ne c'est pas une liste
     return false;
   foreach ($llpos as $lpos) {
@@ -38,7 +42,7 @@ function is_LLpos($llpos): bool {
       return false;
   }
   return false; // sinon KO
-}
+}*/
 
 {/*PhpDoc: classes
 name: BBox
@@ -92,7 +96,7 @@ abstract class BBox {
       else
        throw new Exception("Erreur de BBox::__construct(".json_encode($param).")");
     }
-    elseif (is_Lpos($param)) { // $param est une liste de positions en cont. au moins une 
+    elseif (Lpos::is($param)) { // $param est une liste de positions en cont. au moins une 
       foreach ($param as $pos)
         $this->bound($pos);
     }
@@ -241,15 +245,6 @@ abstract class BBox {
   function inters(BBox $b2): bool { return $this->intersects($b2) ? true : false; }
 };
 
-if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe BBox
-  if (!isset($_GET['test']))
-    echo "<a href='?test=BBox'>Test unitaire de la classe BBox</a><br>\n";
-  elseif ($_GET['test']=='BBox') {
-    echo "Test de BBox::intersects<br>\n";
-    BBox::intersectsTest();
-  }
-}
-
 {/*PhpDoc: classes
 name: GBox
 title: class GBox extends BBox - Gestion d'une BBox en coord. géo., chaque point codé comme [lon, lat]
@@ -333,18 +328,10 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=GBox'>Test unitaire de la classe GBox</a><br>\n";
   elseif ($_GET['test']=='GBox') {
+    echo "<b>Test de BBox::intersects</b><br>\n";
+    BBox::intersectsTest();
     echo "<b>Test de GBox::dist</b><br>\n";
     GBox::distTest();
-    echo "<b>Test de proj()</b><br>\n";
-    $gbox = new GBox([-2,48, -1,49]);
-    echo "$gbox ->proj(WebMercator) = ", $gbox->proj('WebMercator'),"<br>\n";
-    echo "$gbox ->proj(WorldMercator) = ", $gbox->proj('WorldMercator'),"<br>\n";
-    echo "$gbox ->proj(Lambert93) = ", $gbox->proj('Lambert93'),"<br>\n";
-    
-    echo "$gbox ->center() = ", json_encode($gbox->center()),"<br>\n";
-    echo "UTM::zone($gbox ->center()) = ", $zone = UTM::zone($gbox->center()),"<br>\n";
-    echo "$gbox ->proj(UTM-$zone) = ", $eboxutm = $gbox->proj("UTM-$zone"),"<br>\n";
-    echo "$eboxutm ->geo(UTM-$zone) = ", $eboxutm->geo("UTM-$zone"),"<br>\n";
   }
 }
 
@@ -421,6 +408,7 @@ class EBox extends BBox {
 };
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe EBox
+  require_once __DIR__.'/zoom.inc.php';
   if (!isset($_GET['test']))
     echo "<a href='?test=EBox'>Test unitaire de la classe EBox</a><br>\n";
   elseif ($_GET['test']=='EBox') {
@@ -429,6 +417,16 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "Test de EBox::geo<br>\n";
     $ebox = Zoom::tileEBox(9, 253, 176);
     echo "$ebox ->geo(WebMercator) = ", $ebox->geo('WebMercator'),"<br>\n";
+    echo "<b>Test de GBox::proj()</b><br>\n";
+    $gbox = new GBox([-2,48, -1,49]);
+    echo "$gbox ->proj(WebMercator) = ", $gbox->proj('WebMercator'),"<br>\n";
+    echo "$gbox ->proj(WorldMercator) = ", $gbox->proj('WorldMercator'),"<br>\n";
+    echo "$gbox ->proj(Lambert93) = ", $gbox->proj('Lambert93'),"<br>\n";
+    
+    echo "$gbox ->center() = ", json_encode($gbox->center()),"<br>\n";
+    echo "UTM::zone($gbox ->center()) = ", $zone = UTM::zone($gbox->center()),"<br>\n";
+    echo "$gbox ->proj(UTM-$zone) = ", $eboxutm = $gbox->proj("UTM-$zone"),"<br>\n";
+    echo "$eboxutm ->geo(UTM-$zone) = ", $eboxutm->geo("UTM-$zone"),"<br>\n";
   }
 }
 

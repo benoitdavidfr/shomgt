@@ -16,8 +16,11 @@ journal: |
     création
 includes: [gegeom.inc.php, pos.inc.php]
 */
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/gegeom.inc.php';
 require_once __DIR__.'/pos.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 /*PhpDoc: classes
 name: class GjBox
@@ -205,7 +208,7 @@ class GjBox {
   }
   
   static function test_bound() {
-    if (0) {
+    if (1) {
       echo "<b>scénario 1: bbox à Wallis, pt en NC</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -219,7 +222,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (0) {
+    if (1) {
       echo "<b>scénario 2: bbox en NC, pt à Wallis</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -232,7 +235,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (0) {
+    if (1) {
       echo "<b>Scénario 3: bbox initiale en métro</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -243,7 +246,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (0) {
+    if (1) {
       echo "<b>Scénario 4: bbox initiale en métro</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -334,6 +337,18 @@ class GjBox {
     }
   }
   
+  static function test_multiLSCoords() {
+    echo "<pre>";
+    $gjbox[0] = new GjBox([-152.826, -22.652, -152.78266666666667, -22.623666666666665]);
+    //echo Yaml::dump(['multiPolygonCoords'=> $gjbox[0]->multiPolygonCoords()], 4, 2);
+    echo Yaml::dump(['multiLSCoords'=> $gjbox[0]->multiLSCoords()], 3, 2);
+
+    $gjbox[1] = new GjBox([-152.88433333333333, -22.687, -152.7555, -22.598666666666666]);
+    echo Yaml::dump(['multiLSCoords'=> $gjbox[1]->multiLSCoords()], 3, 2);
+
+    echo Yaml::dump(['array_merge'=> array_merge($gjbox[0]->multiLSCoords(), $gjbox[1]->multiLSCoords())], 3, 2);
+  }
+  
   // EBox en WebMercator du bbox
   function wembox(): EBox {
     $gboxes = $this->asGBoxes();
@@ -401,20 +416,15 @@ class GjBox {
 if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Tests unitaires de la classe 
 
 
-require_once __DIR__.'/../vendor/autoload.php';
-use Symfony\Component\Yaml\Yaml;
+echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gjbox</title></head><body>\n";
 
-echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gjbox</title></head><body><pre>\n";
-
-$gjbox[0] = new GjBox([-152.826, -22.652, -152.78266666666667, -22.623666666666665]);
-//echo Yaml::dump(['multiPolygonCoords'=> $gjbox[0]->multiPolygonCoords()], 4, 2);
-echo Yaml::dump(['multiLSCoords'=> $gjbox[0]->multiLSCoords()], 3, 2);
-
-$gjbox[1] = new GjBox([-152.88433333333333, -22.687, -152.7555, -22.598666666666666]);
-echo Yaml::dump(['multiLSCoords'=> $gjbox[1]->multiLSCoords()], 3, 2);
-
-echo Yaml::dump(['array_merge'=> array_merge($gjbox[0]->multiLSCoords(), $gjbox[1]->multiLSCoords())], 3, 2);
-  
-//GjBox::test_new();
-//GjBox::test_bound();
-
+if (!isset($_GET['test'])) {
+  echo "<a href='?test=test_new'>test_new</a><br>\n";
+  echo "<a href='?test=test_bound'>test_bound</a><br>\n";
+  echo "<a href='?test=test_multiLSCoords'>test_multiLSCoords</a><br>\n";
+}
+else {
+  $test = $_GET['test'];
+  GjBox::$test();
+}
+die();
