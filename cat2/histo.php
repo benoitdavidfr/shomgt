@@ -1,10 +1,11 @@
 <?php
-// 
 /*PhpDoc:
 name: histo.php
-title: histo.php - listing de l'historique des cartes dans incoming
+title: cat2 / histo.php - listing de l'historique des cartes dans incoming
+functions:
 classes:
 doc: |
+includes: [../lib/SevenZipArchive.php]
 */
 
 require_once __DIR__.'/../vendor/autoload.php';

@@ -84,12 +84,13 @@ abstract class Geometry {
   
   // crée une géométrie à partir du json_decode() du GeoJSON
   static function fromGeoJSON(array $geom, array $style=[]): Geometry {
-    if (isset($geom['type']) && in_array($geom['type'], self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
-      return new $geom['type']($geom['coordinates']);
-    elseif (isset($geom['type']) && ($geom['type']=='GeometryCollection') && isset($geom['geometries'])) {
+    $type = $geom['type'] ?? null;
+    if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
+      return new $type($geom['coordinates']);
+    elseif (($type=='GeometryCollection') && isset($geom['geometries'])) {
       $geoms = [];
       foreach ($geom['geometries'] as $g)
-        $geoms[] = self::create($g);
+        $geoms[] = self::fromGeoJSON($g);
       return new GeometryCollection($geoms);
     }
     else

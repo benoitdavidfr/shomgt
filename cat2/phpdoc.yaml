@@ -92,6 +92,7 @@ phpScripts:
   - /geoapi/shomgt/cat2/tilenum.php
   - /geoapi/shomgt/cat2/shomgtwfs.php
   - /geoapi/shomgt/cat2/shomwfs.php
+  - /geoapi/shomgt/cat2/histo.php
 phpIncludes:
   - /geoapi/shomgt/cat2/catapi.inc.php
   - /geoapi/shomgt/cat2/france.inc.php

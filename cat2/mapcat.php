@@ -35,6 +35,7 @@ includes:
   - ../lib/schema/jsonschema.inc.php
   - ../updt/updtapi.inc.php
   - france.inc.php
+  - llmap.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
@@ -138,26 +139,6 @@ class MapPart {
       'bboxDM'=> $this->bbox->asArray(),
       'spatial'=> $this->bbox->asDcmiBox(),
     ];
-  }
-  
-  function multiPolygonCoords(): array {
-    $gboxes = $this->bbox->asGBoxes();
-    if (count($gboxes) == 1) {
-      return [ $this->bbox->asGBoxes()[0]->polygon() ];
-    }
-    else {
-      return [
-        $this->bbox->asGBoxes()[0]->polygon(),
-        $this->bbox->asGBoxes()[1]->polygon(),
-      ];
-    }
-  }
-
-  // EBox en WebMercator du bbox
-  function wembox(): EBox {
-    $gboxes = $this->bbox->asGBoxes();
-    $gbox = $gboxes[0];
-    return $gbox->proj('WebMercator');
   }
 };
 
@@ -273,18 +254,35 @@ class MapCat {
   // retourne la géométrie de l'espace principal comme Polygone s'il existe, sinon des cartouches comme Multi-Polygone
   function geometry(): Geometry {
     if ($this->bbox) {
-      return $this->bbox->asGeometry();
+      //return $this->bbox->asGeometry();
+      // Représentation par une GeometryCollection composée du polygone (ou MultiPolygon) et de la ligne WS-EN (ou MultiLineString)
+      return Geometry::fromGeoJSON([
+        'type'=> 'GeometryCollection',
+        'geometries'=> [
+          $this->bbox->asGeometry()->asArray(),
+          $this->bbox->asLineWSEN()->asArray(),
+        ],
+      ]);
     }
     else {
       $multiPolygonCoords = [];
-      foreach ($this->hasPart as $part)
-        $multiPolygonCoords = array_merge($multiPolygonCoords, $part->multiPolygonCoords());
-      return Geometry::fromGeoJSON(['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords]);
+      $multiLSCoords = [];
+      foreach ($this->hasPart as $part) {
+        $multiPolygonCoords = array_merge($multiPolygonCoords, $part->bbox()->multiPolygonCoords());
+        $multiLSCoords = array_merge($multiLSCoords, $part->bbox()->multiLSCoords());
+      }
+      return Geometry::fromGeoJSON([
+        'type'=> 'GeometryCollection',
+        'geometries'=> [
+          ['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords],
+          ['type'=> 'MultiLineString', 'coordinates'=> $multiLSCoords],
+        ]
+      ]);
     }
   }
   
   // EBox en WebMercator du bbox, génère une erreur s'il n'y a pas d'espace principal
-  function wembox(): EBox {
+  /*function wembox(): EBox {
     if ($this->bbox) {
       $gboxes = $this->bbox->asGBoxes();
       $gbox = $gboxes[0];
@@ -292,7 +290,7 @@ class MapCat {
     }
     else
       throw new Exception("Erreur dans MapCat::wombox(), pas d'espace principal");
-  }
+  }*/
   
   static function importFromV1() { // import du catalogue depuis la version 1 du catalogue
     echo "import du catalogue V1<br>\n";
@@ -563,21 +561,22 @@ class MapCat {
   
   /*PhpDoc: methods
   name: drawLabel
-  title: "private function drawLabel($image, EBox $bbox, int $width, int $height): bool - dessine dans l'image GD le numéro de la carte"
+  title: "private function drawLabel($image, EBox $tileBBox, int $width, int $height): bool - dessine dans l'image le num. de la carte"
   doc: |
-    $bbox est un EBox en WebMercator
+    $image est une image GD
+    $tileBBox est un EBox en WebMercator
   */
   private function drawLabel($image, EBox $tileBBox, int $width, int $height): bool {
     //echo "title= ",$this->title,"<br>\n";
     $wemboxes = [];
     if ($this->bbox) {
-      $wembox = $this->wembox();
+      $wembox = $this->bbox->wembox();
       if ($wembox->intersects($tileBBox))
         $wemboxes[$this->num] = $wembox;
     }
     else {
       foreach ($this->hasPart as $nopart => $part) {
-        $wembox = $part->wembox();
+        $wembox = $part->bbox()->wembox();
         if ($wembox->intersects($tileBBox)) {
           $wemboxes[$this->num."/$nopart"] = $wembox;
         }
@@ -818,7 +817,7 @@ if ($f == 'map') { // affichage de la carte LL
     $llp = llmapParams(MapCat::mapById($id));
     $_GET = ['lat'=> $llp['lat'], 'lon'=> $llp['lon'], 'zoom'=> $llp['zoom'], 'mapid'=> $id];
   }
-  require 'llmap.php';
+  require __DIR__.'/llmap.php';
   die();
 }
 

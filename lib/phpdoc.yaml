@@ -6,6 +6,7 @@ submodules:
   - /geoapi/shomgt/lib/schema
   - /geoapi/shomgt/lib/wfs
 phpScripts:
+  - /geoapi/shomgt/lib/SevenZipArchive.php
 phpIncludes:
   - /geoapi/shomgt/lib/pos.inc.php
   - /geoapi/shomgt/lib/gebox.inc.php

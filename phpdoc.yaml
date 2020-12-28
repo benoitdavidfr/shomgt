@@ -59,12 +59,14 @@ doc: |
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
       Par ailleurs, des fichiers modifiés par l'utilisateur sont dans le Github ce qui génère une erreur lors d'un git_pull
-    - la mise à jour du catalogue de cartes devrait pouvoir fonctionner derrière un proxy, ce qui n'est pas le cas
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
       
 journal: |
   28/12/2020:
+    - cmde cartes Shom
     - transfert dans lib de config.inc.php, secretconfig.inc.php, accesscntrl.inc.php et log.inc.php
+    - réécriture des serveurs WFS et transfert dans lib/wfs
+    - ajout de la possibilité de définir un proxy
   23/12/2020:
     - réception des cartes du Shom
     - test d'utilisation de cat2 non satisfaisant
@@ -167,3 +169,4 @@ phpScripts:
   - /geoapi/shomgt/tile.php
   - /geoapi/shomgt/wms.php
   - /geoapi/shomgt/login.php
+  - /geoapi/shomgt/test.php

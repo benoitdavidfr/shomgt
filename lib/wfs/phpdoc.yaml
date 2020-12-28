@@ -1,0 +1,9 @@
+title: lib/wfs - WFS
+path: /geoapi/shomgt/lib/wfs
+doc: |
+  WFS
+submodules:
+phpScripts:
+phpIncludes:
+  - /geoapi/shomgt/lib/wfs/wfsserver.inc.php
+htmlFiles:

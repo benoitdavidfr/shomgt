@@ -120,6 +120,9 @@ class GjBox {
   function asArray(): array { return $this->ws ? [$this->ws[0], $this->ws[1], $this->en[0], $this->en[1]] : []; }
   function __toString(): string { return json_encode($this->asArray()); }
   
+  function ws(): array { return $this->ws; }
+  function en(): array { return $this->en; }
+  
   function asDcmiBox(): array { // utilise les conventions DCMI Bpx pour améliorer l'interopérabilité
     return [
       'southlimit'=> roundToIntIfPossible($this->ws[1]),
@@ -290,6 +293,54 @@ class GjBox {
     }
   }
   
+  // ligne WS-EN comme Geometry, un LineString si le bbox n'est pas à cheval sur l'anti-méridien, un MultiLineString s'il l'est
+  function asLineWSEN(): Geometry {
+    if (!$this->straddlingTheAntimeridian()) {
+      return Geometry::fromGeoJSON(['type'=> 'LineString', 'coordinates'=> [$this->ws, $this->en]]);
+    }
+    else {
+      return Geometry::fromGeoJSON([
+        'type'=> 'MultiLineString',
+        'coordinates'=> [
+          [$this->ws, [$this->en[0]+360, $this->en[1]]],
+          [[$this->ws[0]-360, $this->ws[1]], $this->en],
+        ]
+      ]);
+    }
+  }
+  
+  function multiPolygonCoords(): array {
+    $gboxes = $this->asGBoxes();
+    if (count($gboxes) == 1) {
+      return [ $gboxes[0]->polygon() ];
+    }
+    else {
+      return [
+        $gboxes[0]->polygon(),
+        $gboxes[1]->polygon(),
+      ];
+    }
+  }
+
+  function multiLSCoords(): array {
+    if (!$this->straddlingTheAntimeridian()) {
+      return [[$this->ws, $this->en]];
+    }
+    else {
+      return [
+        [$this->ws, [$this->en[0]+360, $this->en[1]]],
+        [[$this->ws[0]-360, $this->ws[1]], $this->en],
+      ];
+    }
+  }
+  
+  // EBox en WebMercator du bbox
+  function wembox(): EBox {
+    $gboxes = $this->asGBoxes();
+    $gbox = $gboxes[0];
+    return $gbox->proj('WebMercator');
+  }
+  
   static function ofGeometry(Geometry $geom): self { // calcule le GjBox d'une géométrie, à AMELIORER
     switch ($geom->type()) {
       case 'Point': return new self($geom->coords());
@@ -350,7 +401,20 @@ class GjBox {
 if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Tests unitaires de la classe 
 
 
-echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gjbox</title></head><body>\n";
+require_once __DIR__.'/../vendor/autoload.php';
+use Symfony\Component\Yaml\Yaml;
 
+echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gjbox</title></head><body><pre>\n";
+
+$gjbox[0] = new GjBox([-152.826, -22.652, -152.78266666666667, -22.623666666666665]);
+//echo Yaml::dump(['multiPolygonCoords'=> $gjbox[0]->multiPolygonCoords()], 4, 2);
+echo Yaml::dump(['multiLSCoords'=> $gjbox[0]->multiLSCoords()], 3, 2);
+
+$gjbox[1] = new GjBox([-152.88433333333333, -22.687, -152.7555, -22.598666666666666]);
+echo Yaml::dump(['multiLSCoords'=> $gjbox[1]->multiLSCoords()], 3, 2);
+
+echo Yaml::dump(['array_merge'=> array_merge($gjbox[0]->multiLSCoords(), $gjbox[1]->multiLSCoords())], 3, 2);
+  
 //GjBox::test_new();
-GjBox::test_bound();
+//GjBox::test_bound();
+
