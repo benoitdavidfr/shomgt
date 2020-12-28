@@ -5,6 +5,10 @@ title: lib/wfsserver.inc.php - fonctionnalités communes au serveur WFS Gml et a
 functions:
 doc: |
   Code repris de YamlDoc
+  Définition de 3 classes:
+    - WfsServer - classe abstraite des fonctionnalités communes Gml et GeoJSON
+    - WfsGeoJson - serveur WFS retournat du GeoJSON comme ceux du Shom ou de l'IGN
+    - FeaturesApi - interface Feature API d'un serveur WfsGeoJson
 journal: |
   28/12/2020:
     - reprise de YamlDoc
@@ -142,7 +146,7 @@ abstract class WfsServer {
   abstract function printAllFeatures(string $typename, array $bbox=[], int $zoom=-1, string $where=''): void;
 };
 
-class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur WFS retournat du GeoJSON
+class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur WFS retournant du GeoJSON
 
   function describeFeatureType(string $typeName): array {
     $filepath = self::CAP_CACHE.'/wfs'.md5($this->serverUrl."/$typeName").'-ft.json';

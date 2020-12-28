@@ -2,7 +2,7 @@
 /*PhpDoc:
 name: index.php
 title: index.php - page d'accueil
-includes: [ ws/accesscntrl.inc.php ]
+includes: [ lib/accesscntrl.inc.php ]
 doc: |
 journal: |
   9/11/2019
@@ -14,7 +14,7 @@ journal: |
   9/6/2017
     création
 */
-require_once __DIR__.'/ws/accesscntrl.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title></head>\n";
 //echo "<pre>config[cntrlFor]="; print_r(config('cntrlFor')); echo "</pre>";

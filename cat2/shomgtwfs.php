@@ -21,8 +21,7 @@ includes:
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
   - ../lib/feature.inc.php
-  - wfsserver.inc.php
-  - wfsjson.inc.php
+  - ../lib/wfs/wfsserver.inc.php
   - france.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';

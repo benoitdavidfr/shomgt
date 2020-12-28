@@ -36,10 +36,6 @@ phpIncludes:
   - /geoapi/shomgt/ws/cache.inc.php
   - /geoapi/shomgt/ws/errortile.inc.php
   - /geoapi/shomgt/ws/wmsserver.inc.php
-  - /geoapi/shomgt/ws/accesscntrl.inc.php
-  - /geoapi/shomgt/ws/log.inc.php
-  - /geoapi/shomgt/ws/config.inc.php
-  - /geoapi/shomgt/ws/secretconfig.inc.php
   - /geoapi/shomgt/ws/protect.inc.php
 htmlFiles:
   #- shomgt.yaml

@@ -4,6 +4,7 @@ doc: |
   Divers packages utilisés par les autres modules.
 submodules:
   - /geoapi/shomgt/lib/schema
+  - /geoapi/shomgt/lib/wfs
 phpScripts:
 phpIncludes:
   - /geoapi/shomgt/lib/pos.inc.php
@@ -14,4 +15,8 @@ phpIncludes:
   - /geoapi/shomgt/lib/coordsys.inc.php
   - /geoapi/shomgt/lib/feature.inc.php
   - /geoapi/shomgt/lib/mysql.inc.php
+  - /geoapi/shomgt/lib/accesscntrl.inc.php
+  - /geoapi/shomgt/lib/log.inc.php
+  - /geoapi/shomgt/lib/config.inc.php
+  - /geoapi/shomgt/lib/secretconfig.inc.php
 htmlFiles:

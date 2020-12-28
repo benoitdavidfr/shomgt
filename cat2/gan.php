@@ -2,7 +2,7 @@
 /*PhpDoc:
 name: gan.php
 title: cat2/gan.php - gestion des gan
-class:
+classes:
 functions:
 doc: |
   L'objectif est d'identifier les cartes à mettre à jour en interrogeant le GAN.
@@ -143,10 +143,10 @@ class GanPart {
 };
 
 /*PhpDoc: classes
-name: GanPart
+name: Gan
 title: class Gan - synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
 methods:
-docs: |
+doc: |
   Moisonne le GAN des cartes de MapCat non obsolètes et présentes dans ShomGt (et donc le champ modified est connu).
   Analyse les fichiers Html moissonnés et en produit une synthèse.
   Calcule pour chaque carte un indicateur, appelé age, reflétant la nécessité de mettre à jour la carte.
@@ -182,7 +182,7 @@ class Gan {
   /*PhpDoc: methods
   name: harvest
   title: static function harvest(array $options=[]) - moissonne les GAN par carte dans le répertoire self::GAN_DIR
-  docs: |
+  doc: |
     Les cartes interrogées sont celles de MapCat ayant un champ modified et n'étant pas obsolètes.
   */
   static function harvest(array $options=[]) {

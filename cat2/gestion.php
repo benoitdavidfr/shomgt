@@ -12,11 +12,11 @@ doc: |
 journal: |
   14/12/2020:
     création
-includes: ['../lib/gegeom.inc.php', wfs.php, mapcat.php]
+includes: ['../lib/gegeom.inc.php', shomgtwfs.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
-require_once __DIR__.'/wfs.php';
+require_once __DIR__.'/shomgtwfs.php';
 require_once __DIR__.'/mapcat.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -37,13 +37,14 @@ if (php_sapi_name() <> 'cli') {
 
 if ($action == 'harvestWfs') {
   //print_r(Wfs::dl());
-  foreach (Wfs::dl() as $id => $feature)
+  foreach (ShomGtWfs::dl() as $id => $feature)
     echo Yaml::dump([$id => $feature->asArray()], 2, 2);
   die();
 }
 
 if (in_array($action, ['compCat', 'obsolete'])) {
-  $wfsItems = Wfs::items();
+  $shomGtWfs = new ShomGtWfs;
+  $wfsItems = $shomGtWfs->gtItems();
 
   if ($action == 'obsolete') {
     MapCat::mapById($_GET['id'])->makeObsolete();

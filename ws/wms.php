@@ -3,12 +3,12 @@
 name: wms.php
 title: wms.php - service WMS de shomgt avec authentification
 includes:
+  - ../lib/accesscntrl.inc.php
+  - ../lib/coordsys.inc.php
+  - ../lib/gebox.inc.php
   - wmsserver.inc.php
   - geotiff.inc.php
-  - accesscntrl.inc.php
   - protect.inc.php
-  - '../lib/coordsys.inc.php'
-  - '../lib/gebox.inc.php'
 classes:
 doc: |
   Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
@@ -39,11 +39,11 @@ journal: |
     Reprise du serveur de cadastre et évolutions
 */
 //die("OK ligne ".__LINE__." de ".__FILE__);
-require_once __DIR__.'/wmsserver.inc.php';
-require_once __DIR__.'/geotiff.inc.php';
-require_once __DIR__.'/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/wmsserver.inc.php';
+require_once __DIR__.'/geotiff.inc.php';
 
 // Mécanisme de contrôle d'accès sur l'IP et le login / mdp
 // Si le contrôle est activé et s'il est refusé alors demande d'authentification

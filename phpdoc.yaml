@@ -156,7 +156,7 @@ submodules:
   - /geoapi/shomgt/ws
   - /geoapi/shomgt/updt
   - /geoapi/shomgt/cat2
-  - /geoapi/shomgt/cat
+  #- /geoapi/shomgt/cat
   - /geoapi/shomgt/lib
   - /geoapi/shomgt/docs
 phpScripts:

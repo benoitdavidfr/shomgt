@@ -5,12 +5,11 @@ title: cat2/shomwfs.php - utilisation du WFS du Shom dans la carte llmap
 classes:
 doc: |
 includes:
-  - ../ws/config.inc.php
+  - ../lib/config.inc.php
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
   - ../lib/feature.inc.php
-  - wfsserver.inc.php
-  - wfsjson.inc.php
+  - ../lib/wfs/wfsserver.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/config.inc.php';

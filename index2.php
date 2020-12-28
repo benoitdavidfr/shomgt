@@ -2,7 +2,7 @@
 /*PhpDoc:
 name: index2.php
 title: index2.php - texte de la réelle page d'accueil
-includes: [ ws/accesscntrl.inc.php ]
+includes: [ lib/accesscntrl.inc.php ]
 doc: |
 journal: |
   9/11/2019
@@ -16,7 +16,7 @@ journal: |
   9/6/2017
     création
 */
-require_once __DIR__.'/ws/accesscntrl.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 if (Access::cntrlFor('homePage') && !Access::cntrl()) {
   $adip = $_SERVER['REMOTE_ADDR'];

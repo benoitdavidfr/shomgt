@@ -22,9 +22,9 @@ journal: |
     login avec une URL
   10/6/2017:
     création
-includes: [ ws/accesscntrl.inc.php ]
+includes: [ lib/accesscntrl.inc.php ]
 */
-require_once __DIR__.'/ws/accesscntrl.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 // le nom du cookie utilisé pour enregistrer le login/passwd
 $cookiename = 'shomusrpwd';
