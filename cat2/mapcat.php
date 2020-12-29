@@ -728,16 +728,19 @@ if ($f == 'html') { // affichage html
   if (php_sapi_name() <> 'cli')
     echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>mapcat</title></head><body>\n";
   if ($id) { // une carte
-    $map = MapCat::mapById($id);
-    echo "<table><tr>";
-    $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
-    $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname(dirname($_SERVER['SCRIPT_NAME']));
-    $num = substr($id, 2);
-    $imgurl = "$shomgturl/ws/dl.php/$num.png";
-    echo "<td><img src='$imgurl'></td>\n";
-    echo "<td valign='top'><pre>id: $id\n";
-    echo Yaml::dump($map->asArray(), 4, 2);
-    echo "</tr></table>\n";
+    if ($map = MapCat::mapById($id)) {
+      echo "<table><tr>";
+      $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
+      $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname(dirname($_SERVER['SCRIPT_NAME']));
+      $num = substr($id, 2);
+      $imgurl = "$shomgturl/ws/dl.php/$num.png";
+      echo "<td><img src='$imgurl'></td>\n";
+      echo "<td valign='top'><pre>id: $id\n";
+      echo Yaml::dump($map->asArray(), 4, 2);
+      echo "</tr></table>\n";
+    }
+    else
+      echo "'$id' ne correspond pas à l'id d'une carte de MapCat\n";
   }
   else { // tout le catalogue
     try {

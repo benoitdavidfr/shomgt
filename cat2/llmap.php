@@ -155,13 +155,23 @@ $shomgtcaturl = "$request_scheme://$_SERVER[HTTP_HOST]".dirname($_SERVER['SCRIPT
 ?>
 // affichage de l'antimeridien
     "antimeridien" : L.geoJSON(
-      { "type": "MultiPolygon",
-        "coordinates": [
-           [[[ 180.0,-90.0 ],[ 180.1,-90.0 ],[ 180.1,90.0],[ 180.0,90.0 ],[ 180.0,-90.0 ] ] ],
-           [[[-180.0,-90.0 ],[-180.1,-90.0 ],[-180.1,90.0],[-180.0,90.0 ],[-180.0,-90.0 ] ] ]
-        ]
+      { "type": "Feature",
+        "id": "",
+        "geometry": {
+          "type": "MultiPolygon",
+          "coordinates": [
+             [[[ 180.0,-90.0 ],[ 179.9,-90.0 ],[ 179.9,90.0],[ 180.0,90.0 ],[ 180.0,-90.0 ] ] ],
+             [[[-180.0,-90.0 ],[-179.9,-90.0 ],[-179.9,90.0],[-180.0,90.0 ],[-180.0,-90.0 ] ] ]
+          ]
+        },
+        "properties": {
+          "title": "Antiméridien"
+        }
       },
-      { style: { "color": "red", "weight": 2, "opacity": 0.65 } }),
+      { style: { "color": "red", "weight": 2, "opacity": 0.65 },
+        onEachFeature: onEachFeature
+      }
+    ),
   };
 <?php
   foreach ($defaultOverlays as $lyrId)

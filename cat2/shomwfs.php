@@ -25,9 +25,21 @@ http://localhost/geoapi/shomgt/cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_ma
 class ShomWfs extends FeaturesApi { // 
   // simplification des id sous la forme [{collId}=> ['search'=> {search}, 'replace' => {replace}]]
   const REPLACE_ID = [
+    'DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary' => [
+      'search'=> 'au_maritimeboundary_agreedmaritimeboundary.http://www.shom.fr/BDML/DELMAR/FR',
+      'replace' => 'au_maritimeboundary_agreedmaritimeboundary/FR',
+    ],
     'DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary' => [
       'search'=> 'au_maritimeboundary_nonagreedmaritimeboundary.http://www.shom.fr/BDML/DELMAR/FR',
-      'replace' => 'FR',
+      'replace' => 'au_maritimeboundary_nonagreedmaritimeboundary/FR',
+    ],
+    'DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone' => [
+      'search'=> 'au_maritimeboundary_economicexclusivezone.http://www.shom.fr/BDML/DELMAR/FR',
+      'replace' => 'au_maritimeboundary_economicexclusivezone/FR',
+    ],
+    'DELMAR_BDD_WFS:au_maritimeboundary_continentalshelf' => [
+      'search'=> 'au_maritimeboundary_continentalshelf.http://www.shom.fr/BDML/DELMAR/FR',
+      'replace' => 'au_maritimeboundary_continentalshelf/FR',
     ],
   ];
   
@@ -44,7 +56,12 @@ class ShomWfs extends FeaturesApi { //
         $items['features'][$no]['id'] = str_replace($replace['search'], $replace['replace'], $item['id']);
       }
     }
-    if ($collId == 'DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary') {
+    if (in_array($collId, [
+      'DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary',
+      'DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary',
+      'DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone',
+      'DELMAR_BDD_WFS:au_maritimeboundary_continentalshelf',
+      ])) {
       foreach ($items['features'] as $no => $item) {
         $props = $item['properties'];
         $title = $props['nature'];

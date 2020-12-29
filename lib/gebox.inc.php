@@ -100,7 +100,7 @@ abstract class BBox {
       foreach ($param as $pos)
         $this->bound($pos);
     }
-    elseif (is_LLpos($param)) { // $param est une liste de listes de positions en contenant au moins une
+    elseif (LLpos::is($param)) { // $param est une liste de listes de positions en contenant au moins une
       foreach ($param as $lpos)
         foreach ($lpos as $pos)
           $this->bound($pos);
