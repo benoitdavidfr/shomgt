@@ -68,6 +68,8 @@ doc: |
         - effectuer un php dwldAndUpdt qui télécharge les cartes manquantes et les installent
       
 journal: |
+  31/12/2020-1/1/2021:
+    - ajout du flux Atom de l'historique des cartes
   28/12/2020:
     - cmde cartes Shom
     - transfert dans lib de config.inc.php, secretconfig.inc.php, accesscntrl.inc.php et log.inc.php

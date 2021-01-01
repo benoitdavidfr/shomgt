@@ -64,8 +64,19 @@ doc: |
     - le catalogue des GéoTiffs (shomgt.yaml) recense les GéoTiffs les plus récents obtenus du Shom
       - une carte est souvent composée de plusieurs GéoTiffs
     - le catalogue avec tous les GéoTiffs obtenus du Shom -> histo.php
-    
+  
+  Dév. en cours du mode maitre/esclave.
+  Le maitre expose les cartes courantes et les cartes obsolètes sur un flux Atom.
+  L'esclave consulte régulièrement ce flux pour détecter les nouvelles cartes et les cartes à supprimer,
+  télécharge les cartes à ajouter et effectue les modifications.
+  Un esclave doit pouvoir s'installer beaucoup plus simplement.
+  Au 1/1/2021, il faut encore:
+    - écrire le processus client
+    - voir les infos à mettre en config
+    - revoir le process d'installation
 journal: |
+  31/12/2020-1/1/2021:
+    - ajout du flux Atom de l'historique des cartes
   21-27/12/2020:
     - améliorations
   20/12/2020:
@@ -93,6 +104,7 @@ phpScripts:
   - /geoapi/shomgt/cat2/shomgtwfs.php
   - /geoapi/shomgt/cat2/shomwfs.php
   - /geoapi/shomgt/cat2/histo.php
+  - /geoapi/shomgt/cat2/atomfeed.php
 phpIncludes:
   - /geoapi/shomgt/cat2/catapi.inc.php
   - /geoapi/shomgt/cat2/france.inc.php
