@@ -2,6 +2,20 @@ title: lib - éléments partagés
 path: /geoapi/shomgt/lib
 doc: |
   Divers packages utilisés par les autres modules.
+    - pos.inc.php définit les concepts de position (Pos), liste de positions (LPos) et liste de listes de positions (LLPos)
+    - coordsys.inc.php permet des changements simples de projection a priori sur l'ellipsoide IAG_GRS_1980
+    - gebox.inc.php implémente les concepts de BBox en coordonnées euclidiennes (EBox) et en coordonnées géographiques (GBox)
+    - gjbox.inc.php re-implémente le concept de GBox pour les objets à proximité de l'anti-méridien
+    - zoom.inc.php regroupe quelques fonctions de gestion des niveaux de zoom utilisés notamment par Leaflet
+    - gegeom gère des géométries GeoJSON en coordonnées géographiques ou euclidiennes
+    - feature gère des Feature GeoJSON
+    - wfs/wfserver.inc.php facilite l'utilisation d'un serveur WFS distant
+    - schema/jsonschema.inc.php implémente un validateur de conformité à un schéma JSON
+    - config.inc.php définit les paramètres de config du système ShomGt
+    - secretconfig.inc.php redéfinit ces mêmes paramètres qui doivent être gardés secrets
+    - accesscntrl.inc.php contrôle l'accès à ShomGt
+    - log.inc.php enregistre les logs dans MySql
+    - mysql.inc.php simlifie l'utilisation de MySql
 submodules:
   - /geoapi/shomgt/lib/schema
   - /geoapi/shomgt/lib/wfs
@@ -9,15 +23,15 @@ phpScripts:
   - /geoapi/shomgt/lib/SevenZipArchive.php
 phpIncludes:
   - /geoapi/shomgt/lib/pos.inc.php
+  - /geoapi/shomgt/lib/coordsys.inc.php
   - /geoapi/shomgt/lib/gebox.inc.php
   - /geoapi/shomgt/lib/gjbox.inc.php
   - /geoapi/shomgt/lib/zoom.inc.php
   - /geoapi/shomgt/lib/gegeom.inc.php
-  - /geoapi/shomgt/lib/coordsys.inc.php
   - /geoapi/shomgt/lib/feature.inc.php
-  - /geoapi/shomgt/lib/mysql.inc.php
-  - /geoapi/shomgt/lib/accesscntrl.inc.php
-  - /geoapi/shomgt/lib/log.inc.php
   - /geoapi/shomgt/lib/config.inc.php
   - /geoapi/shomgt/lib/secretconfig.inc.php
+  - /geoapi/shomgt/lib/accesscntrl.inc.php
+  - /geoapi/shomgt/lib/log.inc.php
+  - /geoapi/shomgt/lib/mysql.inc.php
 htmlFiles:

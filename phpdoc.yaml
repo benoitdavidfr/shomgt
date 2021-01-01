@@ -39,12 +39,12 @@ doc: |
     - la gestion d'un catalogue des cartes pertinentes du Shom (cat) afin
       - de connaitre la liste des cartes à actualiser
       - de disposer de leurs caractéristiques utiles au module précédent
-    - un ensemble d'éléments partagés entre modules (lib), notamment un package de gestion de la géométrie.
+    - un ensemble d'éléments partagés entre modules (lib).
   De plus:
-    - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/, il publie notamment le catalogue des cartes Shom,
+    - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/,
     - le répertoire leaflet contient le logiciel Leaflet
     - le répertoire docker contient la configuration Docker d'un serveur d'hébergement des web-services
-    - le répertoire vendor contient le module Yaml de Syfony et est installé par composer (composer require symfony/yaml)
+    - le répertoire vendor contient le module Yaml de Symfony installé par composer (composer require symfony/yaml)
     - le répertoire tilecache contient un cache des tuiles fréquemment utilisées.
   
   Taille occupée:
@@ -60,6 +60,12 @@ doc: |
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
       Par ailleurs, des fichiers modifiés par l'utilisateur sont dans le Github ce qui génère une erreur lors d'un git_pull
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
+    - améliorer le mécanisme de mise à jour en distinguant principalement 2 modes:
+      - un mode maitre qui ajoute à la situation actuelle
+        - un téléchargement Atom des cartes pour le mode esclave
+      - un mode esclave dans lequel la mise à jour consiste à:
+        - effectuer un git pull qui met à jour le catalogue
+        - effectuer un php dwldAndUpdt qui télécharge les cartes manquantes et les installent
       
 journal: |
   28/12/2020:

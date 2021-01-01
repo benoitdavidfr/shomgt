@@ -22,7 +22,13 @@ journal: |
 includes: [geotiff.inc.php]
 */
 //ini_set('memory_limit', '12800M');
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/geotiff.inc.php';
+
+if (!Access::cntrl()) {
+  header('HTTP/1.1 403 Forbidden');
+  die("Accès interdit");
+}
 
 // Liste des GéoTiff du catalogue en JSON
 if (!isset($_SERVER['PATH_INFO']) || !$_SERVER['PATH_INFO']) {
