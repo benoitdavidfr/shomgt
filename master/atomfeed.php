@@ -30,7 +30,10 @@ require_once __DIR__.'/../lib/genatom.inc.php';
 
 //use Symfony\Component\Yaml\Yaml;
 
-define('TEST', 'version test incoming/20170613');
+// définition de configs pour tester updtslave.php
+//define('TEST', 'version test incoming/20170613');
+define('TEST', '');
+
 // Définit le fuseau horaire par défaut à utiliser. Disponible depuis PHP 5.1
 date_default_timezone_set('UTC');
 

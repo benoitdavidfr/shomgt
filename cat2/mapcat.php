@@ -432,9 +432,10 @@ class MapCat {
   private static function init() {
     if (!file_exists(self::PATH_PSER) && !file_exists(self::PATH_YAML))
       throw new Exception("Erreur dans MapCat::init() : les fichiers mapcat.yaml et mapcat.pser n'existent ni l'un ni l'autre");
-    elseif (!file_exists(self::PATH_PSER)
-     || (file_exists(self::PATH_YAML) && (filemtime(self::PATH_PSER) < filemtime(self::PATH_YAML))))
-       throw new Exception("Erreur dans MapCat::init() : le fichier mapcat.yaml est plus récent que le pser");
+    elseif (!file_exists(self::PATH_PSER)) // le pser n'existe pas mais le yaml existe
+      self::loadYaml();
+    elseif (file_exists(self::PATH_YAML) && (filemtime(self::PATH_PSER) < filemtime(self::PATH_YAML)))
+      throw new Exception("Erreur dans MapCat::init() : le fichier mapcat.yaml est plus récent que le pser");
     else { // le phpser existe et est plus récent que le Yaml alors initialisation à partir du phpser
       $pser = unserialize(file_get_contents(self::PATH_PSER));
       self::$catTitle = $pser['title'];
