@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: histo.php
-title: cat2 / histo.php - listing de l'historique des cartes dans incoming
+title: master / histo.php - listing de l'historique des cartes dans incoming
 functions:
 classes:
 doc: |

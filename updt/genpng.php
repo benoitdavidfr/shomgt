@@ -3,7 +3,7 @@
 name: genpng.php
 title: genpng.php - génération des PNG à partir des TIF dans le répertoite tmp
 doc: |
-  script appelé par updt.php avec comme paramètre le nom du répertoire incoming
+  script appelé par updt.php sans paramètre
     - itère sur les répertoires de tmp
       - itère sur les fichiers .tif
         - génère le fichier .info
@@ -13,13 +13,14 @@ doc: |
     - itère sur les PNG créés
       - découpe le PNG en dalles
       - supprime le PNG
-    - suppression des cartes à supprimer
     - transfère les répertoires des nouvelles cartes dans current
 journal: |
+  2/1/2021:
+    - transfert de la suprresion de cartes de genpng.php dans updt.php
   2/4/2019:
     suppression des cartes à supprimer
   1/4/2019:
-    transfert des nouvelles cartes dans current et fabication du nouveau shomgt.yaml
+    transfert des nouvelles cartes dans current et fabrication du nouveau shomgt.yaml
   10/3/2019:
     création
 */
@@ -76,24 +77,6 @@ foreach ($pngFiles as $pngFile) {
   
   // suppression du .png non découpé pour économiser de la place
   echo "echo rm $pngFile\n"; echo "rm $pngFile\n";
-}
-
-// supprime les cartes à supprimer
-if (($argc > 1) && is_file("$shomgeotiff/incoming/$argv[1]/index.yaml")) {
-  echo "echo $shomgeotiff/incoming/$argv[1]/index.yaml existe\n";
-  $index = Yaml::parseFile("$shomgeotiff/incoming/$argv[1]/index.yaml");
-  if (isset($index['toDelete'])) {
-    foreach (array_keys($index['toDelete']) as $toDelete) {
-      if (substr($toDelete, 0, 2))
-        $toDelete = substr($toDelete, 2);
-      echo "echo \"Suppresion de la carte $toDelete\"\n";
-      if (is_dir("$shomgeotiff/current/$toDelete")) {
-        echo "echo rm -r $shomgeotiff/current/$toDelete\n"; echo "rm -r $shomgeotiff/current/$toDelete\n";
-      }
-      else
-        echo "echo \"La carte $toDelete n'existe pas dans current\"\n";
-    }
-  }
 }
 
 // transfert des nouveaux GéoTiff dans current en supprimant l'ancien s'il existe

@@ -1,0 +1,21 @@
+title: master - exposition master
+path: /geoapi/shomgt/master
+doc: |
+  Dév. en cours du mode maitre/esclave.
+  Le maitre expose les cartes courantes et les cartes obsolètes sur un flux Atom.
+  L'esclave consulte régulièrement ce flux pour détecter les nouvelles cartes et les cartes à supprimer,
+  télécharge les cartes à ajouter et effectue les modifications.
+  Un esclave doit pouvoir s'installer beaucoup plus simplement.
+  Au 1/1/2021, il faut encore:
+    - écrire le processus client
+    - voir les infos à mettre en config
+    - revoir le process d'installation
+journal: |
+  31/12/2020-1/1/2021:
+    - ajout du flux Atom de l'historique des cartes
+    
+phpScripts:
+  - /geoapi/shomgt/cat2/histo.php
+  - /geoapi/shomgt/cat2/atomfeed.php
+phpIncludes:
+htmlFiles:
