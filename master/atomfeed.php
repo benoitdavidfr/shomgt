@@ -23,16 +23,19 @@ journal: |
     - limitation aux cartes courantes, ajout des cartes effacées, création d'un pser
   31/12/2020:
     - création - version lisible avec Feedbro
-includes: [../lib/genatom.inc.php]
+includes: [../lib/accesscntrl.inc.php, ../lib/genatom.inc.php]
 */
-//require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../lib/genatom.inc.php';
 
-//use Symfony\Component\Yaml\Yaml;
+if (!Access::cntrl()) {
+  header('HTTP/1.1 403 Forbidden');
+  die("Accès interdit");
+}
 
 // définition de configs pour tester updtslave.php
-//define('TEST', 'version test incoming/20170613');
-define('TEST', '');
+define('TEST', 'version test incoming/20170613');
+//define('TEST', '');
 
 // Définit le fuseau horaire par défaut à utiliser. Disponible depuis PHP 5.1
 date_default_timezone_set('UTC');
@@ -111,13 +114,14 @@ if (!isset($_SERVER['PATH_INFO'])) { // le feed
         ];
       }
       else {
+        $path = str_replace('incoming/','',$map['path']);
         $entries[] = [
           'title'=> "Ajout $mapid, $map[edition], dernière correction $map[lastUpdate]",
           'uri'=> "$script_path/$mdDate/$mapid",
           'updated'=> $updated,
           'links'=> [
             [ 'href'=> "$script_path/entry/$mdDate/$mapid", 'rel'=> 'alternate', 'type'=>'text/html' ],
-            [ 'href'=> "$script_path/dwnld/$map[path]", 'rel'=> 'alternate', 'type'=>'application/x-7z-compressed' ],
+            [ 'href'=> "$script_path/dwnld/$path", 'rel'=> 'alternate', 'type'=>'application/x-7z-compressed' ],
           ],
           'categories'=> [],
         ];
@@ -160,7 +164,7 @@ elseif (preg_match('!^/entry/([^/]+)/([^/]+)$!', $_SERVER['PATH_INFO'], $matches
     echo "<tr><td><i>Date de suppression</i></td><td>$mdDate</td></tr>\n";
   echo "</table>\n";
 }
-elseif (preg_match('!^/dwnld/incoming/(.*)$!', $_SERVER['PATH_INFO'], $matches)) { // téléchargement
+elseif (preg_match('!^/dwnld/(.*)$!', $_SERVER['PATH_INFO'], $matches)) { // téléchargement
   $filepath = __DIR__."/../../../shomgeotiff/incoming/$matches[1]";
   header('Content-type: application/x-7z-compressed');
   readfile($filepath);

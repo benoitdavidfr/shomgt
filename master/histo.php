@@ -20,6 +20,11 @@ require_once __DIR__.'/../lib/SevenZipArchive.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+// noms de répertoires de incoming à exclure de l'historique
+define('EXCLUDED_DELIVNAMES',
+  ['.','..','.DS_Store', '201707cartesAEM','201911cartesAEM','cartesAEM','20201226TEST-arriere','20201226TEST-avant']
+);
+
 date_default_timezone_set('Europe/Paris');
 
 /*PhpDoc: classes
@@ -84,7 +89,7 @@ if (!($histo = @file_get_contents(__DIR__.'/histo.pser'))) {
   $histo = []; // [mapid => [mdDate => ['edition'=> edition, 'lastUpdate'=> lastUpdate, 'path'=> chemin] | "Suppression de la carte"]]
   foreach (new DirectoryIterator(SevenZipMap::INCOMING) as $delivFileInfo) { // $delivFileInfo correspond à une livraison
     $delivName = $delivFileInfo->getFilename();
-    if (in_array($delivName, ['.','..','.DS_Store', '201707cartesAEM','201911cartesAEM','20201226TEST-arriere','20201226TEST-avant']))
+    if (in_array($delivName, EXCLUDED_DELIVNAMES))
       continue;
     echo "$delivName<br>\n";
     foreach (new DirectoryIterator(SevenZipMap::INCOMING."/$delivName") as $mapzFileInfo) { // $mapzFileInfo -> une carte zippée

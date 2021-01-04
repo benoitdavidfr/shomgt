@@ -82,6 +82,8 @@ doc: |
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
 
 journal: |
+  3/1/2021:
+    - ajout mécanisme de mise à jour d'un esclave (en cours)
   6/11/2019:
     - écriture des scripts cropall.php et cropmap.php pour fabriquer les géotiffs rognés pour le SNUM
   3/11/2019:
@@ -100,6 +102,7 @@ phpScripts:
   - /geoapi/shomgt/updt/crop.php
   - /geoapi/shomgt/updt/cropall.php
   - /geoapi/shomgt/updt/cropmap.php
+  - /geoapi/shomgt/updt/salveupdt.php
 phpIncludes:
   - /geoapi/shomgt/updt/updtapi.inc.php
   - /geoapi/shomgt/updt/gdalinfo.inc.php

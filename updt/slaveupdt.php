@@ -1,23 +1,48 @@
 <?php
 /*PhpDoc:
-name: updtslave.php
-title: updtslave.php - installe dans le portefeuille de shomgt une livraison issue du maitre
+name: slaveupdt.php
+title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre
 doc: |
   script à appeler en ligne de commande
   si le catalogue du fil est plus récent que celui stocké, le télécharge
   puis télécharge les cartes zippées plus récentes que les éventuelles cartes existantes
   puis appelle updt.php
   et enfin efface les éventuelles cartes périmées
+
+  Voir pbs de proxy et d'authentification !
 journal: |
   3/1/2021:
-    création
+    - création
+    - première version minimum
+    - écrire la doc
+    - gérer un proxy
+    - PB - wget n'embarque pas le système d'autentification si nécessaire !
+    - 3 possibilités
+      - version uniq. si authentification non nécessaire !
+      - tester authent. avec wget
+      - utiliser un autre dwnloader
 */
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/mdiso19139.inc.php';
 
 header('Content-type: text/plain; charset="utf8"');
 
-$atomfeedUrl = "http://localhost/geoapi/shomgt/master/atomfeed.php";
+$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php';
+$proxy = 'tcp://172.17.0.8:3128';
+  
+class Proxy { // fabrique un context si un proxy est défini, sinon renvoie null
+  static function context() {
+    if (!($proxy = config('proxy')))
+      return null;
+    return stream_context_create([
+      'http'=> [
+        'method'=> 'GET',
+        'proxy'=> str_replace('http://', 'tcp://', $proxy),
+      ]
+    ]);
+  }
+};
+  
 
 // Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
@@ -28,8 +53,9 @@ class UpdtSlave {
   public array $todelete=[]; // [mapid => title]
   public array $todadd=[]; // [mapid => [href, updated]]
 
-  function __construct(string $url) {
-    $xml = file_get_contents($url);
+  function __construct(string $url, string $proxy) {
+    if (!($xml = @file_get_contents($url)))
+      die("echo 'Erreur ouverture de $url impossible'\n");
 
     //var_dump($xml);
     //echo "$xml\n"; die();
@@ -91,7 +117,6 @@ class UpdtSlave {
     $updated = substr($this->toadd[$mapid]['updated'], 0, 10); // la partie date
     return (!$mdDate || ($updated > $mdDate));
   }
-  
 };
 
 
@@ -103,15 +128,21 @@ class UpdtSlave {
   }
 }*/
 
-$updtSlave = new UpdtSlave($atomfeedUrl);
+$updtSlave = new UpdtSlave($atomfeedUrl, $proxy);
 //print_r($atomfeed);
 
-if (!file_exists(__DIR__.'/../cat2/mapcat.yaml')
-  || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime(__DIR__.'/../cat2/mapcat.yaml')))) {
+$mapcatpath = __DIR__.'/../cat2/mapcat.yaml';
+if (!file_exists($mapcatpath)
+  || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime($mapcatpath)))) {
   echo "echo 'Mise à jour du catalogue'\n";
+  $href = $updtSlave->catalog['href'];
+  echo "wget $href -O $mapcatpath\n"; 
 }
 
 $shomgeotiff = __DIR__.'/../../../shomgeotiff';
+if (!file_exists($shomgeotiff))
+  mkdir($shomgeotiff);
+$shomgeotiff = realpath($shomgeotiff);
 if (!file_exists("$shomgeotiff/incoming"))
   mkdir("$shomgeotiff/incoming");
 if (!file_exists("$shomgeotiff/incoming/slave"))
@@ -127,4 +158,15 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
   else {
     echo "echo 'La carte $mapid est à jour'\n";
   }
+}
+
+echo "php updt.php slave\n";
+
+echo "echo 'Suppression du répertoire $shomgeotiff/incoming/slave'\n";
+echo "rm -r $shomgeotiff/incoming/slave\n";
+
+foreach (array_keys($updtSlave->todelete) as $mapid) {
+  $mapnum = substr($mapid, 2);
+  echo "echo 'Suppression de la carte $mapid obsolète'\n";
+  echo "rm -r $shomgeotiff/current/$mapnum\n";
 }
