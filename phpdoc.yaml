@@ -33,12 +33,13 @@ doc: |
   Les GéoTIFF sont volumineux (typiquement 10Mo pour 14k X 10k pixels) et leur chargement en mémoire prend du temps et des ressources
   machine. Ils sont découpés en dalles 1024X1024 stockées dans un répertoire associé au GéoTIFF.
   
-  Ce projet est découpé en 4 modules:
+  Ce projet est découpé en 5 modules:
     - les web-services de consultation (ws) à partir des données structurées de manière adéquate
     - les scripts de mise à jour des GéoTiff à partir d'une livraison du Shom (updt)
     - la gestion d'un catalogue des cartes pertinentes du Shom (cat) afin
       - de connaitre la liste des cartes à actualiser
       - de disposer de leurs caractéristiques utiles au module précédent
+    - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave
     - un ensemble d'éléments partagés entre modules (lib).
   De plus:
     - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/,
@@ -46,6 +47,10 @@ doc: |
     - le répertoire docker contient la configuration Docker d'un serveur d'hébergement des web-services
     - le répertoire vendor contient le module Yaml de Symfony installé par composer (composer require symfony/yaml)
     - le répertoire tilecache contient un cache des tuiles fréquemment utilisées.
+  
+  La mise en place d'un nouveauu serveur a été simplifiée au moyen d'un mécanisme maitre/esclave.
+  Le maitre publie les données dont il dispose sous la forme d'un fil Atom.
+  Le serveur esclave consulte régulièrement ce fil pour se mettre à jour ; et cela de manière automatique.
   
   Taille occupée:
     - la totalité des archives de cartes fait environ 3 Go
