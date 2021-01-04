@@ -68,8 +68,9 @@ doc: |
         - effectuer un php dwldAndUpdt qui télécharge les cartes manquantes et les installent
       
 journal: |
-  3/1/2021:
-    - transfert du flux Atom de l'historique des cartes dans un nouveau module master car ils n'ont aucune adhérence avce cat2
+  3-4/1/2021:
+    - transfert du flux Atom de l'historique des cartes dans un nouveau module master car ils ont peu d'adhérence avec cat2
+    - écriture d'un client minimum
   31/12/2020-1/1/2021:
     - ajout du flux Atom de l'historique des cartes
   28/12/2020:
