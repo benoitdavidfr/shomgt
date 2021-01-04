@@ -1,38 +1,59 @@
 <?php
 /*PhpDoc:
 name: slaveupdt.php
-title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre
+title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre, ne foctionne que sur le RIE
 doc: |
   script à appeler en ligne de commande
-  si le catalogue du fil est plus récent que celui stocké, le télécharge
+  si le catalogue du fil est plus récent que celui stocké alors le télécharge
   puis télécharge les cartes zippées plus récentes que les éventuelles cartes existantes
-  puis appelle updt.php
+  puis appelle updt.php sur cette livraison
   et enfin efface les éventuelles cartes périmées
 
-  Voir pbs de proxy et d'authentification !
+  Fonctionne avec un éventuel proxy mais sans possibilité d'autentification dans un premier temps.
+  Correspond au cas d'usage potentiellement fréquent de mise en place d'un serveur à l'intérieur du RIE.
+  
+  Le proxy doit être défini comme variable globale Shell, exemple: export http_proxy="http://172.17.0.8:3128"
+
+  L'authentification par login/passwd n'est pas prévue à ce stade.
+
 journal: |
+  4/1/2021:
+    - gestion du proxy
   3/1/2021:
     - création
     - première version minimum
     - écrire la doc
-    - gérer un proxy
-    - PB - wget n'embarque pas le système d'autentification si nécessaire !
-    - 3 possibilités
-      - version uniq. si authentification non nécessaire !
-      - tester authent. avec wget
-      - utiliser un autre dwnloader
 */
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/mdiso19139.inc.php';
 
 header('Content-type: text/plain; charset="utf8"');
 
-$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php';
-$proxy = 'tcp://172.17.0.8:3128';
-  
-class Proxy { // fabrique un context si un proxy est défini, sinon renvoie null
-  static function context() {
-    if (!($proxy = config('proxy')))
+//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php';
+$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php';
+
+function unix_env(): array { // retourne les variables d'environnement du shell 
+  $env = [];
+  foreach (explode("\n", `env`) as $var) {
+    if ($pos = strpos($var, '='))
+      $env[substr($var, 0, $pos)] = substr($var, $pos+1);
+  }
+  return $env;
+}
+
+// Proxy éventuellement défini dans l'environnement shell
+function http_proxy(): string { return unix_env()['http_proxy'] ?? ''; }
+
+
+
+// classe regroupant les infos de mise à jour 
+class UpdtSlave {
+  public array $catalog=[]; // [href, updated]
+  public array $todelete=[]; // [mapid => title]
+  public array $toadd=[]; // [mapid => [href, updated]]
+
+  static function streamContext() { // fabrique un context si un proxy est défini, sinon renvoie null
+    if (!$proxy = http_proxy())
       return null;
     return stream_context_create([
       'http'=> [
@@ -41,30 +62,24 @@ class Proxy { // fabrique un context si un proxy est défini, sinon renvoie null
       ]
     ]);
   }
-};
-  
-
-// Définit le fuseau horaire par défaut à utiliser.
-date_default_timezone_set('UTC');
-
-// classe regroupant les infos de mise à jour 
-class UpdtSlave {
-  public array $catalog=[]; // [href, updated]
-  public array $todelete=[]; // [mapid => title]
-  public array $todadd=[]; // [mapid => [href, updated]]
-
-  function __construct(string $url, string $proxy) {
-    if (!($xml = @file_get_contents($url)))
+ 
+  function __construct(string $url) {
+    if (!($xml = @file_get_contents($url, false, self::streamContext())))
       die("echo 'Erreur ouverture de $url impossible'\n");
 
     //var_dump($xml);
     //echo "$xml\n"; die();
     $domObj = new xmlToArrayParser($xml);
     $atomfeed = $domObj->array;
+    //echo '$atomfeed='; print_r($atomfeed);
 
     if($domObj->parse_error)
       die($domObj->get_xml_error());
 
+    // S'il ya qu'une seule entrée je la met dans un tableau
+    if (isset($atomfeed['feed']['entry']['title']))
+      $atomfeed['feed']['entry'] = [ $atomfeed['feed']['entry'] ];
+    
     foreach ($atomfeed['feed']['entry'] as $entry) {
       if (isset($entry['link']['attrib'])) { // 1 seul lien => suppression
         //echo '$entry='; print_r($entry);
@@ -73,6 +88,7 @@ class UpdtSlave {
         //echo "$entry[title]\n";
       }
       else {
+        //print_r($entry);
         foreach ($entry['link'] as $link) {
           //print_r($link);
           if ($link['attrib']['type'] == 'text/vnd.yaml') {
@@ -119,7 +135,6 @@ class UpdtSlave {
   }
 };
 
-
 /*function dwnld(string $from, string $to): void {
   $hfrom = fopen($from, 'r');
   $hto = fopen($to, 'w');
@@ -128,15 +143,21 @@ class UpdtSlave {
   }
 }*/
 
-$updtSlave = new UpdtSlave($atomfeedUrl, $proxy);
+
+// Définit le fuseau horaire par défaut à utiliser.
+date_default_timezone_set('UTC');
+
+$updtSlave = new UpdtSlave($atomfeedUrl);
 //print_r($atomfeed);
 
+$http_proxy = http_proxy();
+$wget_proxy = $http_proxy ? " -e use_proxy=on -e http_proxy=$http_proxy" : '';
 $mapcatpath = __DIR__.'/../cat2/mapcat.yaml';
 if (!file_exists($mapcatpath)
   || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime($mapcatpath)))) {
   echo "echo 'Mise à jour du catalogue'\n";
   $href = $updtSlave->catalog['href'];
-  echo "wget $href -O $mapcatpath\n"; 
+  echo "wget $href -O $mapcatpath$wget_proxy\n"; 
 }
 
 $shomgeotiff = __DIR__.'/../../../shomgeotiff';
@@ -153,7 +174,7 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
   if ($updtSlave->updateMap($mapid)) {
     echo "echo 'Mise à jour de la carte $mapid'\n";
     $mapnum = substr($mapid, 2);
-    echo "wget $newMap[href] -O $shomgeotiff/incoming/slave/$mapnum.7z\n";
+    echo "wget $newMap[href] -O $shomgeotiff/incoming/slave/$mapnum.7z$wget_proxy\n";
   }
   else {
     echo "echo 'La carte $mapid est à jour'\n";
