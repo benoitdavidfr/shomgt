@@ -181,13 +181,15 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
   }
 }
 
-echo "php updt.php slave\n";
+echo "php updt.php slave | sh\n";
 
-echo "echo 'Suppression du répertoire $shomgeotiff/incoming/slave'\n";
-echo "rm -r $shomgeotiff/incoming/slave\n";
+echo "echo 'annulé - Suppression du répertoire $shomgeotiff/incoming/slave'\n";
+//echo "rm -r $shomgeotiff/incoming/slave\n";
 
 foreach (array_keys($updtSlave->todelete) as $mapid) {
   $mapnum = substr($mapid, 2);
-  echo "echo 'Suppression de la carte $mapid obsolète'\n";
-  echo "rm -r $shomgeotiff/current/$mapnum\n";
+  if (file_exists("$shomgeotiff/current/$mapnum")) {
+    echo "echo 'Suppression de la carte $mapid obsolète'\n";
+    echo "rm -r $shomgeotiff/current/$mapnum\n";
+  }
 }
