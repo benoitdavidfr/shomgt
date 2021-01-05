@@ -39,7 +39,7 @@ doc: |
     - la gestion d'un catalogue des cartes pertinentes du Shom (cat) afin
       - de connaitre la liste des cartes à actualiser
       - de disposer de leurs caractéristiques utiles au module précédent
-    - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave
+    - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master)
     - un ensemble d'éléments partagés entre modules (lib).
   De plus:
     - le répertoire docs est publié dans https://benoitdavidfr.github.io/shomgt/,

@@ -25,7 +25,7 @@ journal: |
     - écrire la doc
 */
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
-require_once __DIR__.'/mdiso19139.inc.php';
+require_once __DIR__.'/../lib/store.inc.php';
 
 header('Content-type: text/plain; charset="utf8"');
 
@@ -43,8 +43,6 @@ function unix_env(): array { // retourne les variables d'environnement du shell
 
 // Proxy éventuellement défini dans l'environnement shell
 function http_proxy(): string { return unix_env()['http_proxy'] ?? ''; }
-
-
 
 // classe regroupant les infos de mise à jour 
 class UpdtSlave {
@@ -112,37 +110,15 @@ class UpdtSlave {
     }
   }
   
-  // retrouve les MD ISO de la carte dans le portefeuille existant
-  static function mdiso19139ById(string $mapid): array {
-    $num = substr($mapid, 2);
-    if ($mdiso19139 = mdiso19139("$num/${num}_pal300"))
-      return $mdiso19139;
-    elseif ($mdiso19139 = mdiso19139("$num/${num}_1_gtw"))
-      return $mdiso19139;
-    elseif ($mdiso19139 = mdiso19139("$num/${num}_A_gtw"))
-      return $mdiso19139;
-    else
-      return [];
-  }
-  
   // indique si la carte doit être mise à jour
   function updateMap(string $mapid): bool {
-    $mdiso19139 = self::mdiso19139ById($mapid); // les MD ISO de current ou []
+    $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum(substr($mapid, 2)); // les MD ISO de current ou []
     //print_r($mdiso19139);
     $mdDate = $mdiso19139 ? substr($mdiso19139['mdDate'], 0, 10) : null; // la date des MD ou null
     $updated = substr($this->toadd[$mapid]['updated'], 0, 10); // la partie date
     return (!$mdDate || ($updated > $mdDate));
   }
 };
-
-/*function dwnld(string $from, string $to): void {
-  $hfrom = fopen($from, 'r');
-  $hto = fopen($to, 'w');
-  while ($buff = fread($hfrom, 1024)) {
-    fwrite($hto, $buff);
-  }
-}*/
-
 
 // Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
@@ -157,7 +133,10 @@ if (!file_exists($mapcatpath)
   || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime($mapcatpath)))) {
   echo "echo 'Mise à jour du catalogue'\n";
   $href = $updtSlave->catalog['href'];
-  echo "wget $href -O $mapcatpath$wget_proxy\n"; 
+  echo "wget $href -O $mapcatpath$wget_proxy\n";
+  // pour que le yaml soit bien pris en compte le pser doit être effacé
+  if (file_exists(__DIR__.'/../cat2/mapcat.pser'))
+    unlink(__DIR__.'/../cat2/mapcat.pser');
 }
 
 $shomgeotiff = __DIR__.'/../../../shomgeotiff';
@@ -183,8 +162,8 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
 
 echo "php updt.php slave | sh\n";
 
-echo "echo 'annulé - Suppression du répertoire $shomgeotiff/incoming/slave'\n";
-//echo "rm -r $shomgeotiff/incoming/slave\n";
+echo "echo 'Suppression du répertoire $shomgeotiff/incoming/slave'\n";
+echo "rm -r $shomgeotiff/incoming/slave\n";
 
 foreach (array_keys($updtSlave->todelete) as $mapid) {
   $mapnum = substr($mapid, 2);

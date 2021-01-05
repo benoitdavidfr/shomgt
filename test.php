@@ -43,6 +43,7 @@ journal: |
 </ul></li>
 
 <li><h3>lib</h2><ul>
+<li><a href='lib/store.inc.php'>store.inc.php</a></li>
 <li><a href='lib/coordsys.inc.php'>coordsys.inc.php</a></li>
 <li><a href='lib/pos.inc.php'>pos.inc.php</a></li>
 <li><a href='lib/gebox.inc.php'>gebox.inc.php</a></li>

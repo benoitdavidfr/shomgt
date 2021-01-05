@@ -33,7 +33,6 @@ includes:
   - ../lib/gegeom.inc.php
   - ../lib/zoom.inc.php
   - ../lib/schema/jsonschema.inc.php
-  - ../updt/updtapi.inc.php
   - france.inc.php
   - llmap.php
 */
@@ -43,7 +42,6 @@ require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';
 require_once __DIR__.'/../lib/schema/jsonschema.inc.php';
-require_once __DIR__.'/../updt/updtapi.inc.php';
 require_once __DIR__.'/france.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -298,7 +296,7 @@ class MapCat {
     foreach ($catv1['maps'] as $mapid => $map) {
       //echo Yaml::dump([$mapid => $map]);
       $map = new self($mapid, $map, ['importFromV1'=> true]);
-      if ($map->existsInShomgGt()) {
+      if (CurrentGeoTiff::mapExists($map->num())) {
         $map->updateFromShomGt();
         self::$maps[$mapid] = $map;
       }
@@ -317,22 +315,9 @@ class MapCat {
     echo "enregistrement du catalogue en pser et en Yaml\n";
   }
   
-  function existsInShomgGt(): string { // Si une carte existe dans ShomGt alors retourne son répertoire dans current, sinon '' 
-    $dirpath = __DIR__.'/../../../shomgeotiff/current/'.$this->num;
-    return file_exists($dirpath) ? $dirpath : '';
-  }
-  
   // met à jour les champ modified, edition et lastUpdate présents dans ShomGt par lecture des MD ISO d'un des GéoTiff à la carte
   private function updateFromShomGt(): bool {
-    if (in_array($this->num, [7330, 7344, 7360, 8101, 8502])) // 5 cartes présentes sans MDISO
-      return false;
-    $num = $this->num;
-    if ($this->bbox)
-      $mdiso19139 = UpdtApi::mdiso19139("$num/${num}_pal300");
-    elseif (!($mdiso19139 = UpdtApi::mdiso19139("$num/${num}_1_gtw")))
-      $mdiso19139 = UpdtApi::mdiso19139("$num/${num}_A_gtw");
-    if (!$mdiso19139)
-      throw new Exception("MD ISO absentes dans MapCat::updateFromShomGt() pour id='FR$num'");
+    $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum($this->num);
     $this->modified = $mdiso19139['mdDate'];
     $this->edition = $mdiso19139['édition'];
     $this->lastUpdate = intval($mdiso19139['dernièreCorrection']);
@@ -402,7 +387,7 @@ class MapCat {
   
   static function synchroShomGt() { // prend en compte les modifications dans les cartes ShomGt
     foreach (self::maps() as $mapid => $map) {
-      if ($map->existsInShomgGt())
+      if (CurrentGeoTiff::mapExists($map->num()))
         $map->updateFromShomGt();
       else {
         $map->modified = null;
@@ -412,17 +397,10 @@ class MapCat {
     }
     
     // recherche les cartes de ShomGt absentes du catalogue
-    $dirpath = __DIR__.'/../../../shomgeotiff/current';
-    if (!$dh = opendir($dirpath))
-      die("Ouverture de $dirpath impossible");
-    while (($filename = readdir($dh)) !== false) {
-      if (in_array($filename, ['.','..','.DS_Store']))
-        continue;
-      if (!self::mapById("FR$filename"))
-        echo "Carte FR$filename présente dans ShomGt et pas dans le catalogue<br>\n";
+    foreach (CurrentGeoTiff::listOfMaps() as $mapnum) {
+      if (!self::mapById("FR$mapnum"))
+        echo "Carte FR$mapnum présente dans ShomGt et pas dans le catalogue<br>\n";
     }
-    closedir($dh);
-    
     self::$catModified = date(DATE_ATOM);
     self::storeAsYaml();
     self::storeAsPser();

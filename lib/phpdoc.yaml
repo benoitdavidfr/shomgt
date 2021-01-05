@@ -2,6 +2,7 @@ title: lib - éléments partagés
 path: /geoapi/shomgt/lib
 doc: |
   Divers packages utilisés par les autres modules.
+    - store.inc.php regroupe des fonctions d'accès au stockage des cartes courantes et de l'historique des livraisons
     - pos.inc.php définit les concepts de position (Pos), liste de positions (LPos) et liste de listes de positions (LLPos)
     - coordsys.inc.php permet des changements simples de projection a priori sur l'ellipsoide IAG_GRS_1980
     - gebox.inc.php implémente les concepts de BBox en coordonnées euclidiennes (EBox) et en coordonnées géographiques (GBox)
@@ -15,13 +16,14 @@ doc: |
     - secretconfig.inc.php redéfinit ces mêmes paramètres qui doivent être gardés secrets
     - accesscntrl.inc.php contrôle l'accès à ShomGt
     - log.inc.php enregistre les logs dans MySql
-    - mysql.inc.php simlifie l'utilisation de MySql
+    - mysql.inc.php simplifie l'utilisation de MySql
 submodules:
   - /geoapi/shomgt/lib/schema
   - /geoapi/shomgt/lib/wfs
 phpScripts:
   - /geoapi/shomgt/lib/SevenZipArchive.php
 phpIncludes:
+  - /geoapi/shomgt/lib/store.inc.php
   - /geoapi/shomgt/lib/pos.inc.php
   - /geoapi/shomgt/lib/coordsys.inc.php
   - /geoapi/shomgt/lib/gebox.inc.php

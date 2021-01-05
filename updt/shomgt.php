@@ -68,18 +68,18 @@ journal: |
 includes:
   - ../lib/gebox.inc.php
   - ../lib/coordsys.inc.php
+  - ../lib/store.inc.php
+  - ../cat2/catapi.inc.php
   - gdalinfo.inc.php
   - ontop.inc.php
-  - mdiso19139.inc.php
-  - ../cat2/catapi.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
+require_once __DIR__.'/../lib/store.inc.php';
+require_once __DIR__.'/../cat2/catapi.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 require_once __DIR__.'/ontop.inc.php';
-require_once __DIR__.'/mdiso19139.inc.php';
-require_once __DIR__.'/../cat2/catapi.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -190,7 +190,7 @@ while (($mapname = readdir($current)) !== false) {
     $top = ceil(($gdalbox->north() - $ganbox->north())/ $gdalbox->dy() * $height);
     if (($top <= 0) || ($top > $height/2))
       $top = 400;
-    $mdiso19139 = mdiso19139("$mapname/$fbname");
+    $mdiso19139 = (new CurrentGeoTiff("$mapname/$fbname"))->mdiso19139();
     $shomgt[$lyrName]["$mapname/$fbname"] =
       ['title'=> $title]
     + (isset($mdiso19139['édition']) ? ['edition'=> $mdiso19139['édition']] : [])

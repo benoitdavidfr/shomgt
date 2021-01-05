@@ -23,9 +23,10 @@ journal: |
     - limitation aux cartes courantes, ajout des cartes effacées, création d'un pser
   31/12/2020:
     - création - version lisible avec Feedbro
-includes: [../lib/accesscntrl.inc.php, ../lib/genatom.inc.php]
+includes: [../lib/accesscntrl.inc.php, ../lib/store.inc.php, ../lib/genatom.inc.php]
 */
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/store.inc.php';
 require_once __DIR__.'/../lib/genatom.inc.php';
 
 if (!Access::cntrl()) {
@@ -40,7 +41,10 @@ define('TEST', '');
 // Définit le fuseau horaire par défaut à utiliser. Disponible depuis PHP 5.1
 date_default_timezone_set('UTC');
 
-if (!is_file(__DIR__.'/atomfeed.pser')) {
+if (is_file(__DIR__.'/atomfeed.pser')) {
+  $histo2 = unserialize(@file_get_contents(__DIR__.'/atomfeed.pser'));
+}
+else {
   if (!($histo = @file_get_contents(__DIR__.'/histo.pser')))
     die("Erreur fichier histo.pser inexistant");
   $histo = unserialize($histo);
@@ -63,7 +67,7 @@ if (!is_file(__DIR__.'/atomfeed.pser')) {
         $mdDate = array_keys($histoMapid)[$nb-1].'T12:00:00Z';
         $histo2[$mdDate][$mapid] = 'Suppression de la carte';
       }
-      elseif (file_exists(__DIR__."/../../../shomgeotiff/current/$mapnum")) {
+      elseif (CurrentGeoTiff::mapExists($mapnum)) {
         $mdDate = array_keys($histoMapid)[$nb-1];
         $mdDate = str_replace(['+01:00','+02:00'], 'T12:00:00Z', $mdDate);
         $histo2[$mdDate][$mapid] = array_values($histoMapid)[$nb-1];
@@ -72,9 +76,6 @@ if (!is_file(__DIR__.'/atomfeed.pser')) {
   }
   krsort($histo2);
   //file_put_contents(__DIR__.'/atomfeed.pser', serialize($histo2));
-}
-else {
-  $histo2 = unserialize(@file_get_contents(__DIR__.'/atomfeed.pser'));
 }
 
 //echo "<pre>"; print_r($histo2); die();
@@ -164,10 +165,8 @@ elseif (preg_match('!^/entry/([^/]+)/([^/]+)$!', $_SERVER['PATH_INFO'], $matches
     echo "<tr><td><i>Date de suppression</i></td><td>$mdDate</td></tr>\n";
   echo "</table>\n";
 }
-elseif (preg_match('!^/dwnld/(.*)$!', $_SERVER['PATH_INFO'], $matches)) { // téléchargement
-  $filepath = __DIR__."/../../../shomgeotiff/incoming/$matches[1]";
-  header('Content-type: application/x-7z-compressed');
-  readfile($filepath);
+elseif (preg_match('!^/dwnld/([^.]+)\.7z$!', $_SERVER['PATH_INFO'], $matches)) { // téléchargement
+  (new SevenZipMap($matches[1]))->readfile();
   die();
 }
 else {
