@@ -102,11 +102,7 @@ phpScripts:
   - /geoapi/shomgt/updt/crop.php
   - /geoapi/shomgt/updt/cropall.php
   - /geoapi/shomgt/updt/cropmap.php
-  - /geoapi/shomgt/updt/salveupdt.php
+  - /geoapi/shomgt/updt/slaveupdt.php
 phpIncludes:
-  - /geoapi/shomgt/updt/updtapi.inc.php
   - /geoapi/shomgt/updt/gdalinfo.inc.php
   - /geoapi/shomgt/updt/ontop.inc.php
-  - /geoapi/shomgt/updt/shomgtedition.inc.php
-  - /geoapi/shomgt/updt/mdiso19139.inc.php
-  

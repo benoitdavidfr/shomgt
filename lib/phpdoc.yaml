@@ -36,4 +36,6 @@ phpIncludes:
   - /geoapi/shomgt/lib/accesscntrl.inc.php
   - /geoapi/shomgt/lib/log.inc.php
   - /geoapi/shomgt/lib/mysql.inc.php
+  - /geoapi/shomgt/lib/genatom.inc.php
+  - /geoapi/shomgt/lib/xmltoarrayparser.inc.php
 htmlFiles:

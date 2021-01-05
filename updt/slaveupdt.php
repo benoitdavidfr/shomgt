@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: slaveupdt.php
-title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre, ne foctionne que sur le RIE
+title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre, ne fonctionne que sur le RIE
 doc: |
   script à appeler en ligne de commande
   si le catalogue du fil est plus récent que celui stocké alors le télécharge
@@ -23,6 +23,9 @@ journal: |
     - création
     - première version minimum
     - écrire la doc
+includes:
+  - ../lib/xmltoarrayparser.inc.php
+  - ../lib/store.inc.php
 */
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';

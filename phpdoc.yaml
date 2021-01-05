@@ -73,6 +73,9 @@ doc: |
         - effectuer un php dwldAndUpdt qui télécharge les cartes manquantes et les installent
       
 journal: |
+  5/1/2021:
+    - intégration d'une nouvelle livraison de 23 cartes
+    - ajout de lib/store.inc.php comme API sur le store
   3-4/1/2021:
     - transfert du flux Atom de l'historique des cartes dans un nouveau module master car ils ont peu d'adhérence avec cat2
     - écriture d'un client minimum

@@ -38,8 +38,8 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Actualité</h3>
 <ul>
-  <li>23/12/2020 : plusieurs cartes parmi les moins à jour ont été actualisées, certaines cartes ont été supprimées,
-    quelques cartes ont été ajoutées</li>
+  <li>10/12/2020, 23/12/2020, 5/1/2021 : les cartes les moins à jour ont été actualisées,
+    certaines cartes ont été supprimées, quelques cartes ont été ajoutées</li>
   <li>26/02/2020 : toutes les cartes de métropole ont enfin été mises à jour</li>
   <li>21/11/2019 : la mise à jour des cartes est en cours mais, en raison d'une difficulté au Shom,
     seule une partie des cartes a été traitée ;
@@ -152,6 +152,6 @@ Vos retours sont indispensables pour améliorer ces développements.<br>
 Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 
 <h3>Auteur</h3>
-Ce site est réalisé par Benoit DAVID, Chef de la MIG au MTES.<br>
+Ce site est réalisé par Benoit DAVID, MTES/CGDD/SRI/Ecolab.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 27/12/2020<br>
+Mise à jour: 5/1/2021<br>

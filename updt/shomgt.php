@@ -193,9 +193,9 @@ while (($mapname = readdir($current)) !== false) {
     $mdiso19139 = (new CurrentGeoTiff("$mapname/$fbname"))->mdiso19139();
     $shomgt[$lyrName]["$mapname/$fbname"] =
       ['title'=> $title]
-    + (isset($mdiso19139['édition']) ? ['edition'=> $mdiso19139['édition']] : [])
-    + (isset($mdiso19139['dernièreCorrection']) ? ['lastUpdate'=> $mdiso19139['dernièreCorrection']] : [])
-    + (isset($mdiso19139['mdDate']) ? ['lastUpdate'=> $mdiso19139['mdDate']] : [])
+    + (isset($mdiso19139['edition']) ? ['edition'=> $mdiso19139['edition']] : [])
+    + (isset($mdiso19139['lastUpdate']) ? ['lastUpdate'=> $mdiso19139['lastUpdate']] : [])
+    + (isset($mdiso19139['mdDate']) ? ['mdDate'=> $mdiso19139['mdDate']] : [])
     + [
       'scaleden'=> $shomgtgan['scaleDenominator'],
       'width'=> $width,

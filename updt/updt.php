@@ -6,16 +6,14 @@ doc: |
   script à appeler en ligne de commande
   doit être appelé avec en paramètre les noms des répertoires de livraison
   sans paramètre liste les répertoires de livraison
-  produit des commandes shell. Doit être pipé avec un shell.
+  produit des commandes shell et doit donc être pipé avec un shell.
   dezip une livraison dans tmp puis lance genpng.php
+  supprime les cartes obsolètes
   à la fin génère shomgt.yaml et efface le cache des tuiles
 
-  appel avec ttes les livraisons:
-  php updt.php 20170531 20170613 20170614 20170619 20170626 20170717 20181123 20181130 20181203 20190114 | sh
-  
 journal: |
   2/1/2021:
-    - transfert de la suprresion de cartes de genpng.php dans updt.php
+    - transfert de la suppression de cartes de genpng.php dans updt.php
   2-3/4/2019:
     traitement de plusieurs livraisons
     chgt de nom
@@ -23,26 +21,20 @@ journal: |
     suppression des gros fichiers non indispensables
   9/3/2019:
     création
+includes: [../lib/store.inc.php]
 */
+require_once __DIR__.'/../lib/store.inc.php';
+
 header('Content-type: text/plain; charset="utf8"');
 
 $shomgeotiff = realpath(__DIR__.'/../../../shomgeotiff');
   
 //echo "argc=$argc\n";
 if ($argc <= 1) {
-  $dirpath = "$shomgeotiff/incoming";
-  $dir = opendir($dirpath)
-    or die("Erreur d'ouverture du répertoire $dirpath");
-  $filenames = [];
-  while (($filename = readdir($dir)) !== false) {
-    if (!in_array($filename, ['.','..','.DS_Store'])) {
-      $filenames[] = $filename;
-    }
-  }
-  closedir($dir);
-  sort($filenames);
+  $deliveries = SevenZipMap::listOfDeliveries();
+  sort($deliveries);
   echo "Quelle livraison ?\n";
-  echo ' - ',implode("\n - ", $filenames);
+  echo ' - ',implode("\n - ", $deliveries);
   die("\n");
 }
 
@@ -74,21 +66,15 @@ foreach ($argv as $incoming) {
   echo "echo 'php genpng.php | sh'\n"; echo "php genpng.php | sh\n";
   
   // supprime dans current les cartes à supprimer
-  if (($argc > 1) && is_file("$shomgeotiff/incoming/$incoming/index.yaml")) {
-    echo "echo $shomgeotiff/incoming/$incoming/index.yaml existe\n";
-    $index = Yaml::parseFile("$shomgeotiff/incoming/$incoming/index.yaml");
-    if (isset($index['toDelete'])) {
-      foreach (array_keys($index['toDelete']) as $toDelete) {
-        if (substr($toDelete, 0, 2))
-          $toDelete = substr($toDelete, 2);
-        echo "echo \"Suppresion de la carte $toDelete\"\n";
-        if (is_dir("$shomgeotiff/current/$toDelete")) {
-          echo "echo rm -r $shomgeotiff/current/$toDelete\n"; echo "rm -r $shomgeotiff/current/$toDelete\n";
-        }
-        else
-          echo "echo \"La carte $toDelete n'existe pas dans current\"\n";
-      }
+  foreach (array_keys(SevenZipMap::obsoleteMaps($incoming)) as $obsoleteMapId) {
+    if (substr($toDelete, 0, 2))
+      $obsoleteMapNum = substr($obsoleteMapId, 2);
+    echo "echo \"Suppresion de la carte $obsoleteMapNum\"\n";
+    if (is_dir("$shomgeotiff/current/$obsoleteMapNum")) {
+      echo "echo rm -r $shomgeotiff/current/$obsoleteMapNum\n"; echo "rm -r $shomgeotiff/current/$obsoleteMapNum\n";
     }
+    else
+      echo "echo \"La carte $obsoleteMapNum n'existe pas dans current\"\n";
   }
 }
 

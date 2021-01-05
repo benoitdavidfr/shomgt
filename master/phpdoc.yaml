@@ -29,7 +29,7 @@ journal: |
     - ajout du flux Atom de l'historique des cartes
     
 phpScripts:
-  - /geoapi/shomgt/cat2/histo.php
-  - /geoapi/shomgt/cat2/atomfeed.php
+  - /geoapi/shomgt/master/histo.php
+  - /geoapi/shomgt/master/atomfeed.php
 phpIncludes:
 htmlFiles:

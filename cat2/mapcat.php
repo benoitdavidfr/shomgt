@@ -29,6 +29,7 @@ journal: |
     - passage en V2
 includes:
   - ../lib/accesscntrl.inc.php
+  - ../lib/store.inc.php
   - ../lib/gjbox.inc.php
   - ../lib/gegeom.inc.php
   - ../lib/zoom.inc.php
@@ -38,6 +39,7 @@ includes:
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/store.inc.php';
 require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';
@@ -319,8 +321,8 @@ class MapCat {
   private function updateFromShomGt(): bool {
     $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum($this->num);
     $this->modified = $mdiso19139['mdDate'];
-    $this->edition = $mdiso19139['édition'];
-    $this->lastUpdate = intval($mdiso19139['dernièreCorrection']);
+    $this->edition = $mdiso19139['edition'];
+    $this->lastUpdate = intval($mdiso19139['lastUpdate']);
     return true;
   }
   

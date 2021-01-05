@@ -4,449 +4,6 @@ $id: 'https://geoapi.fr/shomgt/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/cat2/gans
 valid: 2020-12-18/2020-12-23
 gans:
-  FR7068:
-    age: 9
-    groupTitle: 'Côte Ouest de France'
-    title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
-    bbox:
-      SW: '46°28,90''N — 003°51,00''W'
-      NE: '47°35,60''N — 001°30,00''W'
-    ganEdition: 'Edition n°3 - 2018'
-    corrections:
-      - { num: 18, semaineAvis: 1941-50 }
-      - { num: 19, semaineAvis: 1947-50 }
-      - { num: 20, semaineAvis: 1951-56 }
-      - { num: 21, semaineAvis: 2012-46 }
-      - { num: 22, semaineAvis: 2031-54 }
-      - { num: 23, semaineAvis: 2035-58 }
-      - { num: 24, semaineAvis: 2037-56 }
-      - { num: 25, semaineAvis: 2043-61 }
-      - { num: 26, semaineAvis: 2049-45 }
-    valid: '2020-12-18'
-  FR7152:
-    age: 9
-    groupTitle: 'Côte Nord de France'
-    title: 'De l''Île Grande à l''Île de Bréhat'
-    bbox:
-      SW: '48°42,94''N — 003°38,88''W'
-      NE: '49°02,64''N — 002°55,18''W'
-    ganEdition: 'Edition n°3 - 2017'
-    corrections:
-      - { num: 5, semaineAvis: 1945-45 }
-      - { num: 6, semaineAvis: 1949-37 }
-      - { num: 7, semaineAvis: 2006-47 }
-      - { num: 8, semaineAvis: 2023-47 }
-      - { num: 9, semaineAvis: 2036-52 }
-      - { num: 10, semaineAvis: 2038-48 }
-      - { num: 11, semaineAvis: 2040-52 }
-      - { num: 12, semaineAvis: 2047-42 }
-      - { num: 13, semaineAvis: 2049-36 }
-    valid: '2020-12-18'
-  FR6608:
-    age: 8
-    groupTitle: 'Mer du Nord'
-    title: 'Mer du Nord'
-    bbox:
-      SW: '48°10,00''N — 004°20,00''W'
-      NE: '62°50,00''N — 012°36,00''E'
-    ganEdition: 'Edition n°6 - 2018'
-    corrections:
-      - { num: 1, semaineAvis: 1907-10 }
-      - { num: 2, semaineAvis: 1924-9 }
-      - { num: 3, semaineAvis: 1929-4 }
-      - { num: 4, semaineAvis: 1945-4 }
-      - { num: 5, semaineAvis: 1945-6 }
-      - { num: 6, semaineAvis: 1951-4 }
-      - { num: 7, semaineAvis: 2007-8 }
-      - { num: 8, semaineAvis: 2020-10 }
-    valid: '2020-12-18'
-  FR6815:
-    age: 8
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'Océan Atlantique Nord'
-    bbox:
-      SW: '08°30,00''S — 043°53,00''W'
-      NE: '62°08,86''N — 012°42,50''E'
-    ganEdition: 'Edition n°4 - 2012'
-    corrections:
-      - { num: 16, semaineAvis: 1736-144 }
-      - { num: 17, semaineAvis: 1742-144 }
-      - { num: 18, semaineAvis: 1824-10 }
-      - { num: 19, semaineAvis: 1824-15 }
-      - { num: 20, semaineAvis: 1843-145 }
-      - { num: 21, semaineAvis: 1907-10 }
-      - { num: 22, semaineAvis: 1939-30 }
-      - { num: 23, semaineAvis: 2043-173 }
-    valid: '2020-12-18'
-  FR6844:
-    age: 8
-    groupTitle: 'Côte Sud de France'
-    title: 'De Port-Barcarès à l''embouchure de l''Aude'
-    bbox:
-      SW: '42°43,64''N — 002°56,73''E'
-      NE: '43°13,44''N — 003°24,43''E'
-    ganEdition: 'Edition n°3 - 2018'
-    corrections:
-      - { num: 8, semaineAvis: 1946-86 }
-      - { num: 9, semaineAvis: 1946-87 }
-      - { num: 10, semaineAvis: 2004-88 }
-      - { num: 11, semaineAvis: 2006-84 }
-      - { num: 12, semaineAvis: 2008-85 }
-      - { num: 13, semaineAvis: 2030-84 }
-      - { num: 14, semaineAvis: 2035-86 }
-      - { num: 15, semaineAvis: 2046-90 }
-    valid: '2020-12-18'
-  FR7033:
-    age: 8
-    groupTitle: 'Côte Ouest de France'
-    title: 'De Quiberon au Croisic'
-    bbox:
-      SW: '47°15,12''N — 003°11,08''W'
-      NE: '47°35,64''N — 002°27,30''W'
-    ganEdition: 'Edition n°3 - 2002'
-    corrections:
-      - { num: 86, semaineAvis: 1931-56 }
-      - { num: 87, semaineAvis: 1951-56 }
-      - { num: 88, semaineAvis: 2009-56 }
-      - { num: 89, semaineAvis: 2012-46 }
-      - { num: 90, semaineAvis: 2035-58 }
-      - { num: 91, semaineAvis: 2037-56 }
-      - { num: 92, semaineAvis: 2043-56 }
-      - { num: 93, semaineAvis: 2049-45 }
-    valid: '2020-12-18'
-  FR7066:
-    age: 8
-    groupTitle: 'Côte Ouest de France'
-    title: 'De l''Île Vierge à la Pointe de Penmarc''h'
-    bbox:
-      SW: '47°39,94''N — 006°34,09''W'
-      NE: '48°44,14''N — 004°13,09''W'
-    ganEdition: 'Edition n°5 - 2019'
-    corrections:
-      - { num: 2, semaineAvis: 1941-44 }
-      - { num: 3, semaineAvis: 1951-41 }
-      - { num: 4, semaineAvis: 2010-44 }
-      - { num: 5, semaineAvis: 2012-43 }
-      - { num: 6, semaineAvis: 2016-50 }
-      - { num: 7, semaineAvis: 2019-44 }
-      - { num: 8, semaineAvis: 2044-54 }
-      - { num: 9, semaineAvis: 2047-50 }
-    valid: '2020-12-18'
-  FR7151:
-    age: 8
-    groupTitle: 'Côte Nord de France'
-    title: 'De l''anse de Kernic à l''île Grande'
-    bbox:
-      SW: '48°37,84''N — 004°15,08''W'
-      NE: '48°57,54''N — 003°31,28''W'
-    ganEdition: 'Edition n°3 - 2008'
-    corrections:
-      - { num: 41, semaineAvis: 1945-45 }
-      - { num: 42, semaineAvis: 1949-37 }
-      - { num: 43, semaineAvis: 1949-40 }
-      - { num: 44, semaineAvis: 2022-42 }
-      - { num: 45, semaineAvis: 2036-52 }
-      - { num: 46, semaineAvis: 2036-53 }
-      - { num: 47, semaineAvis: 2047-42 }
-      - { num: 48, semaineAvis: 2050-40 }
-    valid: '2020-12-18'
-  FR7205:
-    age: 8
-    groupTitle: 'Côte Sud de France'
-    title: 'Golfe de La Napoule - Golfe Juan'
-    bbox:
-      SW: '43°28,66''N — 006°55,77''E'
-      NE: '43°34,74''N — 007°08,02''E'
-    hasPart:
-      - { title: 'Cartouche: A - Port de Mandelieu-La Napoule', bbox: { SW: '43°30,34''N — 006°56,14''E', NE: '43°31,69''N — 006°57,04''E' } }
-      - { title: 'Cartouche: B - Port de Cannes-Marina', bbox: { SW: '43°31,94''N — 006°56,12''E', NE: '43°32,31''N — 006°56,87''E' } }
-      - { title: 'Cartouche: C - Port de Cannes', bbox: { SW: '43°32,64''N — 007°00,59''E', NE: '43°33,14''N — 007°01,34''E' } }
-      - { title: 'Cartouche: D - Port Pierre Canto', bbox: { SW: '43°32,04''N — 007°01,74''E', NE: '43°32,79''N — 007°02,24''E' } }
-      - { title: 'Cartouche: E - Ports de Golfe Juan', bbox: { SW: '43°33,64''N — 007°04,28''E', NE: '43°34,14''N — 007°05,14''E' } }
-      - { title: 'Cartouche: F - Ports de Juan les Pins', bbox: { SW: '43°33,49''N — 007°06,54''E', NE: '43°33,99''N — 007°07,44''E' } }
-    ganEdition: 'Edition n°3 - 2016'
-    corrections:
-      - { num: 8, semaineAvis: 1935-89 }
-      - { num: 9, semaineAvis: 1935-90 }
-      - { num: 10, semaineAvis: 2010-90 }
-      - { num: 11, semaineAvis: 2023-94 }
-      - { num: 12, semaineAvis: 2039-88 }
-      - { num: 13, semaineAvis: 2039-89 }
-      - { num: 14, semaineAvis: 2039-91 }
-      - { num: 15, semaineAvis: 2047-86 }
-    valid: '2020-12-18'
-  FR7323:
-    age: 8
-    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
-    title: 'Pas de Calais'
-    bbox:
-      SW: '50°41,58''N — 000°50,12''W'
-      NE: '51°11,63''N — 001°59,89''E'
-    ganEdition: 'Edition n°6 - 2018'
-    corrections:
-      - { num: 9, semaineAvis: 1947-33 }
-      - { num: 10, semaineAvis: 2007-16 }
-      - { num: 11, semaineAvis: 2021-36 }
-      - { num: 12, semaineAvis: 2024-33 }
-      - { num: 13, semaineAvis: 2026-35 }
-      - { num: 14, semaineAvis: 2031-35 }
-      - { num: 15, semaineAvis: 2044-33 }
-      - { num: 16, semaineAvis: 2048-33 }
-    valid: '2020-12-18'
-  FR7406:
-    age: 8
-    groupTitle: 'Côte Sud de France'
-    title: 'De Marseille à Toulon'
-    bbox:
-      SW: '42°57,74''N — 005°17,33''E'
-      NE: '43°18,04''N — 005°58,04''E'
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 21, semaineAvis: 2008-90 }
-      - { num: 22, semaineAvis: 2008-91 }
-      - { num: 23, semaineAvis: 2008-92 }
-      - { num: 24, semaineAvis: 2025-90 }
-      - { num: 25, semaineAvis: 2044-89 }
-      - { num: 26, semaineAvis: 2046-92 }
-      - { num: 27, semaineAvis: 2046-93 }
-      - { num: 28, semaineAvis: 2051-93 }
-    valid: '2020-12-18'
-  FR7424:
-    age: 8
-    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
-    title: 'Pas de Calais'
-    bbox:
-      SW: '50°55,00''N — 001°17,12''E'
-      NE: '51°24,94''N — 002°26,89''E'
-    ganEdition: 'Edition n°4 - 2018'
-    corrections:
-      - { num: 24, semaineAvis: 2006-20 }
-      - { num: 25, semaineAvis: 2024-33 }
-      - { num: 26, semaineAvis: 2026-35 }
-      - { num: 27, semaineAvis: 2031-35 }
-      - { num: 28, semaineAvis: 2036-12 }
-      - { num: 29, semaineAvis: 2040-32 }
-      - { num: 30, semaineAvis: 2044-33 }
-      - { num: 31, semaineAvis: 2048-33 }
-    valid: '2020-12-18'
-  FR7510:
-    age: 8
-    groupTitle: 'Côte Nord-Est de Sardaigne'
-    title: 'De Capo Bellavista aux Bouches de Bonifacio'
-    bbox:
-      SW: ''
-      NE: ''
-    ganEdition: 'Publication 1996'
-    corrections:
-      - { num: 55, semaineAvis: 1911-95 }
-      - { num: 56, semaineAvis: 1911-97 }
-      - { num: 57, semaineAvis: 1950-97 }
-      - { num: 58, semaineAvis: 2018-98 }
-      - { num: 59, semaineAvis: 2022-101 }
-      - { num: 60, semaineAvis: 2024-95 }
-      - { num: 61, semaineAvis: 2030-98 }
-      - { num: 62, semaineAvis: 2044-97 }
-    valid: '2020-12-18'
-  FR7043:
-    age: 7.5
-    groupTitle: 'Océan Atlantique Nord - Partie Ouest'
-    title: 'Océan Atlantique Nord'
-    bbox:
-      SW: 'NaN°00,00''S — NaN°00,00''W'
-      NE: 'NaN°00,00''S — NaN°00,00''W'
-    ganEdition: 'Edition n°2 - 2016'
-    corrections:
-      - { num: 5, semaineAvis: 1721-262 }
-      - { num: 6, semaineAvis: 1737-269 }
-      - { num: 7, semaineAvis: 1739-267 }
-      - { num: 8, semaineAvis: 1741-266 }
-      - { num: 9, semaineAvis: 1802-261 }
-      - { num: 10, semaineAvis: 1824-10 }
-      - { num: 11, semaineAvis: 1827-266 }
-      - { num: 12, semaineAvis: 1837-266 }
-      - { num: 13, semaineAvis: 1908-262 }
-      - { num: 14, semaineAvis: 1913-278 }
-      - { num: 15, semaineAvis: 1923-267 }
-      - { num: 16, semaineAvis: 1923-274 }
-      - { num: 17, semaineAvis: 1943-275 }
-      - { num: 18, semaineAvis: 2008-269 }
-      - { num: 19, semaineAvis: 2038-276 }
-    valid: '2020-12-18'
-  FR7183:
-    age: 7.5
-    groupTitle: 'Océan Indien'
-    title: 'La Réunion - Partie Nord'
-    bbox:
-      SW: '21°11,70''S — 055°06,60''E'
-      NE: '20°47,40''S — 055°44,60''E'
-    hasPart:
-      - { title: 'Cartouche: A - Port de Saint-Gilles les Bains', bbox: { SW: '21°03,65''S — 055°12,45''E', NE: '21°02,41''S — 055°13,80''E' } }
-      - { title: 'Cartouche: B - Port Réunion (Pointe des Galets) - Port Ouest', bbox: { SW: '20°56,79''S — 055°16,19''E', NE: '20°55,55''S — 055°17,55''E' } }
-      - { title: 'Cartouche: C - Port Réunion (Pointe des Galets) - Port Est', bbox: { SW: '20°56,35''S — 055°18,54''E', NE: '20°55,11''S — 055°19,90''E' } }
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 3, semaineAvis: 1728-155 }
-      - { num: 4, semaineAvis: 1730-155 }
-      - { num: 5, semaineAvis: 1739-155 }
-      - { num: 6, semaineAvis: 1741-155 }
-      - { num: 7, semaineAvis: 1743-155 }
-      - { num: 8, semaineAvis: 1810-156 }
-      - { num: 9, semaineAvis: 1818-157 }
-      - { num: 10, semaineAvis: 1829-158 }
-      - { num: 11, semaineAvis: 1839-156 }
-      - { num: 12, semaineAvis: 1909-185 }
-      - { num: 13, semaineAvis: 1936-184 }
-      - { num: 14, semaineAvis: 1951-188 }
-      - { num: 15, semaineAvis: 2004-188 }
-      - { num: 16, semaineAvis: 2010-186 }
-      - { num: 17, semaineAvis: 2039-184 }
-    valid: '2020-12-18'
-  FR6651:
-    age: 7
-    groupTitle: 'Côte Nord de France'
-    title: 'De Calais à Dunkerque'
-    bbox:
-      SW: '50°56,50''N — 001°44,20''E'
-      NE: '51°14,00''N — 002°25,00''E'
-    ganEdition: 'Edition n°8 - 2016'
-    corrections:
-      - { num: 34, semaineAvis: 1951-14 }
-      - { num: 35, semaineAvis: 2024-33 }
-      - { num: 36, semaineAvis: 2026-35 }
-      - { num: 37, semaineAvis: 2031-35 }
-      - { num: 38, semaineAvis: 2040-32 }
-      - { num: 39, semaineAvis: 2044-33 }
-      - { num: 40, semaineAvis: 2048-33 }
-    valid: '2020-12-18'
-  FR6757:
-    age: 7
-    groupTitle: 'Mer Méditerranée'
-    title: 'Du Détroit de Gibraltar au Canal de Sicile'
-    bbox:
-      SW: '32°45,00''N — 006°44,00''W'
-      NE: '45°52,22''N — 019°40,48''E'
-    ganEdition: 'Edition n°2 - 1984'
-    corrections:
-      - { num: 157, semaineAvis: 1941-84 }
-      - { num: 158, semaineAvis: 2002-118 }
-      - { num: 159, semaineAvis: 2024-95 }
-      - { num: 160, semaineAvis: 2026-128 }
-      - { num: 161, semaineAvis: 2026-145 }
-      - { num: 162, semaineAvis: 2030-77 }
-      - { num: 163, semaineAvis: 2039-144 }
-    valid: '2020-12-18'
-  FR6929:
-    age: 7
-    groupTitle: 'Côte Est de Corse'
-    title: 'Abords de Porto-Vecchio'
-    bbox:
-      SW: '41°19,94''N — 009°10,94''E'
-      NE: '41°50,44''N — 009°38,64''E'
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 8, semaineAvis: 1935-95 }
-      - { num: 9, semaineAvis: 1949-97 }
-      - { num: 10, semaineAvis: 2003-95 }
-      - { num: 11, semaineAvis: 2009-97 }
-      - { num: 12, semaineAvis: 2025-93 }
-      - { num: 13, semaineAvis: 2046-97 }
-      - { num: 14, semaineAvis: 2048-96 }
-    valid: '2020-12-18'
-  FR7008:
-    age: 7
-    groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
-    title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
-    bbox:
-      SW: '41°13,93''N — 002°54,93''E'
-      NE: '43°39,94''N — 005°15,06''E'
-    ganEdition: 'Edition n°2 - 2005'
-    corrections:
-      - { num: 81, semaineAvis: 1946-86 }
-      - { num: 82, semaineAvis: 1946-87 }
-      - { num: 83, semaineAvis: 1950-82 }
-      - { num: 84, semaineAvis: 2017-85 }
-      - { num: 85, semaineAvis: 2030-84 }
-      - { num: 86, semaineAvis: 2035-86 }
-      - { num: 87, semaineAvis: 2046-90 }
-    valid: '2020-12-18'
-  FR7091:
-    age: 7
-    groupTitle: 'Côte Sud de France'
-    title: 'Abords de Toulon'
-    bbox:
-      SW: '42°59,84''N — 005°50,34''E'
-      NE: '43°09,94''N — 006°10,54''E'
-    ganEdition: 'Edition n°6 - 2018'
-    corrections:
-      - { num: 3, semaineAvis: 1935-88 }
-      - { num: 4, semaineAvis: 2016-90 }
-      - { num: 5, semaineAvis: 2025-89 }
-      - { num: 6, semaineAvis: 2025-90 }
-      - { num: 7, semaineAvis: 2044-89 }
-      - { num: 8, semaineAvis: 2046-92 }
-      - { num: 9, semaineAvis: 2046-93 }
-    valid: '2020-12-18'
-  FR7282:
-    age: 7
-    groupTitle: 'Côte Sud de France'
-    title: 'Rade d''Hyères'
-    bbox:
-      SW: '42°58,34''N — 006°07,34''E'
-      NE: '43°08,44''N — 006°27,54''E'
-    hasPart:
-      - { title: 'Cartouche: A - Port d''Hyères (Port Saint-Pierre)', bbox: { SW: '43°04,51''N — 006°09,24''E', NE: '43°05,24''N — 006°09,84''E' } }
-      - { title: 'Cartouche: B - Port de Miramar', bbox: { SW: '43°06,70''N — 006°14,40''E', NE: '43°07,21''N — 006°15,18''E' } }
-    ganEdition: 'Edition n°5 - 2018'
-    corrections:
-      - { num: 1, semaineAvis: 1935-88 }
-      - { num: 2, semaineAvis: 2009-94 }
-      - { num: 3, semaineAvis: 2016-90 }
-      - { num: 4, semaineAvis: 2023-94 }
-      - { num: 5, semaineAvis: 2025-86 }
-      - { num: 6, semaineAvis: 2025-89 }
-      - { num: 7, semaineAvis: 2044-90 }
-    valid: '2020-12-18'
-  FR7292:
-    age: 7
-    groupTitle: 'Mer Méditerranée'
-    title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
-    bbox:
-      SW: '34°40,00''N — NaN°00,00''W'
-      NE: '44°28,81''N — 016°19,19''E'
-    ganEdition: 'Edition n°3 - 2014'
-    corrections:
-      - { num: 26, semaineAvis: 1950-88 }
-      - { num: 27, semaineAvis: 2002-112 }
-      - { num: 28, semaineAvis: 2024-95 }
-      - { num: 29, semaineAvis: 2039-140 }
-      - { num: 30, semaineAvis: 2039-144 }
-      - { num: 31, semaineAvis: 2044-144 }
-      - { num: 32, semaineAvis: 2051-108 }
-    valid: '2020-12-18'
-  FR7625:
-    age: 7
-    groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
-    title: 'De Trinidad à Cabo Orange'
-    bbox:
-      SW: '03°55,00''N — 061°05,00''W'
-      NE: '10°47,00''N — 050°59,00''W'
-    ganEdition: 'Edition n°2 - 2018'
-    corrections:
-      - { num: 8, semaineAvis: 1905-252 }
-      - { num: 9, semaineAvis: 1908-260 }
-      - { num: 10, semaineAvis: 1912-250 }
-      - { num: 11, semaineAvis: 1915-255 }
-      - { num: 12, semaineAvis: 1917-256 }
-      - { num: 13, semaineAvis: 1930-255 }
-      - { num: 14, semaineAvis: 1941-254 }
-      - { num: 15, semaineAvis: 1941-255 }
-      - { num: 16, semaineAvis: 1943-253 }
-      - { num: 17, semaineAvis: 1950-253 }
-      - { num: 18, semaineAvis: 2020-255 }
-      - { num: 19, semaineAvis: 2020-256 }
-      - { num: 20, semaineAvis: 2029-261 }
-      - { num: 21, semaineAvis: 2032-254 }
-    valid: '2020-12-18'
   FR6814:
     age: 6.5
     groupTitle: 'Océan Atlantique'
@@ -5201,4 +4758,140 @@ gans:
     age: -1
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7764/2026'
+  FR6608:
+    age: -1
+    title: 'Mer du Nord'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6608/2021'
+  FR6651:
+    age: -1
+    groupTitle: 'Côte Nord de France'
+    title: 'De Calais à Dunkerque'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6651/2048'
+  FR6757:
+    age: -1
+    groupTitle: 'Mer Méditerranée'
+    title: 'Du Détroit de Gibraltar au Canal de Sicile'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6757/2040'
+  FR6815:
+    age: -1
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'Océan Atlantique Nord - Partie Est'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6815/2043'
+  FR6844:
+    age: -1
+    groupTitle: 'Côte Sud de France'
+    title: 'De Port-Barcarès à l''embouchure de l''Aude'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6844/2046'
+  FR6929:
+    age: -1
+    groupTitle: 'Côte Est de Corse'
+    title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6929/2048'
+  FR7008:
+    age: -1
+    groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
+    title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7008/2046'
+  FR7033:
+    age: -1
+    groupTitle: 'Côte Ouest de France'
+    title: 'De Quiberon au Croisic (Spéciale P)'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7033/2049'
+  FR7043:
+    age: -1
+    title: 'Océan Atlantique Nord - Partie Ouest'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7043/2039'
+  FR7066:
+    age: -1
+    groupTitle: 'Côte Ouest de France'
+    title: 'De l''île Vierge à la Pointe de Penmarc''h - Abords de Brest'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7066/2044'
+  FR7068:
+    age: -1
+    groupTitle: 'Côte Ouest de France'
+    title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7068/2049'
+  FR7091:
+    age: -1
+    groupTitle: 'Côte Sud de France'
+    title: 'Abords de Toulon'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7091/2046'
+  FR7151:
+    age: -1
+    groupTitle: 'Côte Nord de France'
+    title: 'De l''anse de Kernic à l''Ile Grande'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7151/2050'
+  FR7152:
+    age: -1
+    groupTitle: 'Côte Nord de France'
+    title: 'De l''Ile Grande à l''Ile de Bréhat'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7152/2049'
+  FR7183:
+    age: -1
+    groupTitle: 'Océan Indien'
+    title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7183/2040'
+  FR7205:
+    age: -1
+    groupTitle: 'Côte Sud de France'
+    title: 'Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7205/2040'
+  FR7282:
+    age: -1
+    groupTitle: 'Côte Sud de France'
+    title: 'Rade d''Hyères'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7282/2044'
+  FR7292:
+    age: -1
+    groupTitle: 'Mer Méditerranée'
+    title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7292/2046'
+  FR7323:
+    age: -1
+    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
+    title: 'Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7323/2048'
+  FR7330:
+    age: -1
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7330/1602'
+  FR7344:
+    age: -1
+    groupTitle: 'Manche - Mer du Nord'
+    title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7344/1602'
+  FR7360:
+    age: -1
+    groupTitle: 'Mer Méditerranée'
+    title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7360/1602'
+  FR7406:
+    age: -1
+    groupTitle: 'Côte Sud de France'
+    title: 'De Marseille à Toulon'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7406/2046'
+  FR7424:
+    age: -1
+    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
+    title: 'Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7424/2048'
+  FR7510:
+    age: -1
+    groupTitle: 'Côte Nord-Est de Sardaigne'
+    title: 'De Capo Bellavista aux Bouches de Bonifacio'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7510/2044'
+  FR7625:
+    age: -1
+    groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
+    title: 'De Trinidad à Cabo Orange'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7625/2032'
+  FR8101:
+    age: -1
+    title: 'MANCHEGRID - Carte générale'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR8101/1042'
+  FR8502:
+    age: -1
+    title: 'Action de l''Etat en Mer en ZMSOI'
+    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR8502/0953'
 eof: null

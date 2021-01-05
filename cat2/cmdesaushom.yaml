@@ -2,7 +2,7 @@ title: cmdes au shom
 description: |
   Mémorise d'une part les commandes effectuées au Shom et, d'autre part, les caractéristiques des nouvelles cartes commandées
   qui seront copiées dans mapcat.yaml et qui sont ainsi conservées lorsque mapcat.yaml est effacé.
-modified: '2020-12-26T22:36'
+modified: '2021-01-05T11:52'
 $schema:
   $id: cmdesaushom
   $schema: http://json-schema.org/schema#
@@ -121,8 +121,8 @@ $schema:
     eof: { type: 'null' }
     
 cmdes:
-  2020-12-26:
-    title: 2ème cmde suite à cat2 - 23 cartes / age >= 7 (aucune carte nouvelle)
+  2020-12-26/2021-01-05:
+    title: 2ème cmde suite à cat2 - 23 cartes / age >= 7 (aucune carte nouvelle) / réceptionnée le 5/1/2021
     cartesACommander:
       - 7068
       - 7152
