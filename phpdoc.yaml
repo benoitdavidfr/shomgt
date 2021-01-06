@@ -65,14 +65,11 @@ doc: |
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
       Par ailleurs, des fichiers modifiés par l'utilisateur sont dans le Github ce qui génère une erreur lors d'un git_pull
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
-    - améliorer le mécanisme de mise à jour en distinguant principalement 2 modes:
-      - un mode maitre qui ajoute à la situation actuelle
-        - un téléchargement Atom des cartes pour le mode esclave
-      - un mode esclave dans lequel la mise à jour consiste à:
-        - effectuer un git pull qui met à jour le catalogue
-        - effectuer un php dwldAndUpdt qui télécharge les cartes manquantes et les installent
       
 journal: |
+  6/1/2021:
+    - actualisation du code de geoapi.fr/shomgt / localhost/geopai/shomgt
+    - ajout de la couche des frontières et ZEE du Shom dans mapwcat
   5/1/2021:
     - intégration d'une nouvelle livraison de 23 cartes
     - ajout de lib/store.inc.php comme API sur le store

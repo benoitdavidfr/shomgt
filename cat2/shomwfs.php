@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: shomwfs.php
-title: cat2/shomwfs.php - utilisation du WFS du Shom dans la carte llmap
+title: cat2/shomwfs.php - WFS du Shom utilisé par les cartes LL
 classes:
 doc: |
 includes:
@@ -72,9 +72,6 @@ class ShomWfs extends FeaturesApi { //
     return $items;
   }
 };
-
-
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe - OGCFeatures simplifié
 
 
 switch ($f = $_GET['f'] ?? 'yaml') {

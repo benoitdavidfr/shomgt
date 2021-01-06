@@ -22,6 +22,10 @@ doc: |
       16-18  5k  
   
 journal: |
+  6/1/2021:
+    affinage de la détection de dépassement de la limite de bande passante
+  28/12/2020:
+    transfert dans lib de config.inc.php, secretconfig.inc.php, accesscntrl.inc.php et log.inc.php
   6/3-6/4/2019:
     refonte
 phpScripts:

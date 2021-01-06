@@ -103,10 +103,10 @@ var onEachFeature = function (feature, layer) {
 // affichage des caractéristiques de chaque polygone de ZEE
 var onEachFeatureZee = function (feature, layer) {
   layer.bindPopup(
-    '<b>ZEE</b><br>'
+    '<b>ZEE et frontières</b><br>'
     +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
   );
-  layer.bindTooltip(feature.properties.label);
+  layer.bindTooltip(feature.properties.title);
 }
 
 var map = L.map('map').setView(<?php echo json_encode($center),",$zoom";?>);  // view pour la zone
@@ -144,7 +144,21 @@ var baseLayers = {
 map.addLayer(baseLayers["Pyramide GéoTIFF"]);
 
 var overlays = {
-  "ZEE" : new L.GeoJSON.AJAX(shomgturl+'cat2/france.geojson', {
+  'frontières+ZEE' : L.layerGroup([
+    new L.GeoJSON.AJAX( // agreedmaritimeboundary
+      shomgturl+'cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary/items?f=json',
+      {style: {color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
+    ),
+    new L.GeoJSON.AJAX( // nonagreedmaritimeboundary
+      shomgturl+'cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary/items?f=json',
+      {style: {color: 'blue', dashArray: '3,6'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
+    ),
+    new L.GeoJSON.AJAX( // economicexclusivezone
+      shomgturl+'cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone/items?f=json',
+      {style: {color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
+    )
+  ]),
+  "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'cat2/france.geojson', {
     style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),
   
@@ -212,11 +226,11 @@ var overlays = {
     },
    { style: { "color": "red", "weight": 2, "opacity": 0.65 } }),
     
-// affichage d'une couche debug
+/*// affichage d'une couche debug
   "debug" : new L.TileLayer(
     'http://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png',
     {"format":"image/png","minZoom":0,"maxZoom":21,"detectRetina":false}
-  )
+  )*/
 };
 map.addLayer(overlays["antimeridien"]);
 
