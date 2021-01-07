@@ -14,9 +14,9 @@ doc: |
 
   Lisible sous Feedbro.
   Feed inutilisable pour un humain mais peut être utilisé par un client pour identifier les cartes à télécharger.
-  A faire:
-    - voir le contrôle d'accès !!!
 journal: |
+  7/1/2021:
+    - ajout caractéristiques des cartes et zones couvertes
   3/1/2021:
     - ajout du téléchargement du catalogue des cartes
   1/1/2021:
@@ -38,6 +38,23 @@ if (!Access::cntrl()) {
 //define('TEST', 'version test incoming/20170613');
 define('TEST', '');
 
+define ('TERMS', [
+  'FR'=> "France",
+  'FX'=> "France métropolitaine",
+  'GP'=> "Guadeloupe",
+  'MQ'=> "Martinique",
+  'GF'=> "Guyane",
+  'RE'=> "La Réunion",
+  'YT'=> "Mayotte",
+  'PM'=> "Saint-Pierre-et-Miquelon",
+  'BL'=> "Saint-Barthélémy",
+  'MF'=> "Saint-Martin",
+  'TF'=> "Terres australes et antarctiques françaises",
+  'PF'=> "Polynésie française",
+  'WF'=> "Wallis-et-Futuna",
+  'NC'=> "Nouvelle-Calédonie",
+  'CP'=> "Île Clipperton",
+]);
 // Définit le fuseau horaire par défaut à utiliser. Disponible depuis PHP 5.1
 date_default_timezone_set('UTC');
 
@@ -62,15 +79,20 @@ else {
   else {
     foreach ($histo as $mapid => $histoMapid) {
       $mapnum = substr($mapid, 2);
-      $nb = count($histoMapid);
-      if (array_values($histoMapid)[$nb-1] == 'Suppression de la carte') {
-        $mdDate = array_keys($histoMapid)[$nb-1].'T12:00:00Z';
+      $nb = count($histoMapid['histo']);
+      if (array_values($histoMapid['histo'])[$nb-1] == 'Suppression de la carte') {
+        $mdDate = array_keys($histoMapid['histo'])[$nb-1]; // .'T12:00:00Z'
         $histo2[$mdDate][$mapid] = 'Suppression de la carte';
       }
       elseif (CurrentGeoTiff::mapExists($mapnum)) {
-        $mdDate = array_keys($histoMapid)[$nb-1];
-        $mdDate = str_replace(['+01:00','+02:00'], 'T12:00:00Z', $mdDate);
-        $histo2[$mdDate][$mapid] = array_values($histoMapid)[$nb-1];
+        $mdDate = array_keys($histoMapid['histo'])[$nb-1];
+        $mdDate = str_replace(['+01:00','+02:00'], '', $mdDate);
+        $histo2[$mdDate][$mapid] =
+          (isset($histoMapid['title']) ? ['title'=> $histoMapid['title']] : [])
+          + (isset($histoMapid['scaleDenominator']) ? ['scaleDenominator'=> $histoMapid['scaleDenominator']] : [])
+          + (isset($histoMapid['mapsFrance']) ? ['mapsFrance'=> $histoMapid['mapsFrance']] : [])
+          + (isset($histoMapid['georss:polygon']) ? ['georss:polygon'=> $histoMapid['georss:polygon']] : [])
+          + array_values($histoMapid['histo'])[$nb-1];
       }
     }
   }
@@ -78,7 +100,7 @@ else {
   //file_put_contents(__DIR__.'/atomfeed.pser', serialize($histo2));
 }
 
-//echo "<pre>"; print_r($histo2); die();
+//echo "<pre>histo2="; print_r($histo2); die();
 //echo "<pre>"; print_r($_SERVER); die();
 $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
 $script_path = "$request_scheme://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
@@ -101,7 +123,7 @@ if (!isset($_SERVER['PATH_INFO'])) { // le feed
     ]
   ]];
   foreach ($histo2 as $mdDate => $maps) {
-    $updated = str_replace(['+01:00','+02:00'], 'T12:00:00Z', $mdDate);
+    $updated = $mdDate.'T12:00:00Z';
     foreach ($maps as $mapid => $map) {
       if ($map == 'Suppression de la carte') {
         $entries[] = [
@@ -115,6 +137,10 @@ if (!isset($_SERVER['PATH_INFO'])) { // le feed
         ];
       }
       else {
+        $categories = [];
+        foreach ($map['mapsFrance'] as $iso) {
+          $categories[] = ['term'=> "https://id.georef.eu/dc-spatial/$iso", 'label'=> TERMS[$iso]];
+        }
         $path = str_replace('incoming/','',$map['path']);
         $entries[] = [
           'title'=> "Ajout $mapid, $map[edition], dernière correction $map[lastUpdate]",
@@ -124,7 +150,11 @@ if (!isset($_SERVER['PATH_INFO'])) { // le feed
             [ 'href'=> "$script_path/entry/$mdDate/$mapid", 'rel'=> 'alternate', 'type'=>'text/html' ],
             [ 'href'=> "$script_path/dwnld/$path", 'rel'=> 'alternate', 'type'=>'application/x-7z-compressed' ],
           ],
-          'categories'=> [],
+          'summary'=> "$mapid - $map[title]"
+            .(isset($map['scaleDenominator']) ? "<br>1 : $map[scaleDenominator]" : '')
+            ."<br>$map[edition], dernière correction $map[lastUpdate]",
+          'categories'=> $categories,
+          'georss:polygon'=> $map['georss:polygon'],
         ];
       }
     }
@@ -156,7 +186,10 @@ elseif (preg_match('!^/entry/([^/]+)/([^/]+)$!', $_SERVER['PATH_INFO'], $matches
   echo "<tr><td><i>Id carte</i></td><td>$mapid</td></tr>\n";
   $map = $histo2[$mdDate][$mapid];
   if (is_array($map)) {
-    echo "<tr><td><i>Date de la carte</i></td><td>$mdDate</td></tr>\n";
+    echo "<tr><td><i>titre</i></td><td>$map[title]</td></tr>\n";
+    echo "<tr><td><i>échelle</i></td><td>1 : $map[scaleDenominator]</td></tr>\n";
+    echo "<tr><td><i>zones</i></td><td>",implode(', ', $map['mapsFrance']),"</td></tr>\n";
+    echo "<tr><td><i>date</i></td><td>$mdDate</td></tr>\n";
     echo "<tr><td><i>édition</i></td><td>$map[edition], dernière correction $map[lastUpdate]</td></tr>\n";
     $url = "$script_path/dwnld/$map[path]";
     echo "<tr><td><i>téléchargement</i></td><td><a href='$url'>$url</a></td></tr>\n";

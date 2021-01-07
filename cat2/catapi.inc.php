@@ -124,6 +124,11 @@ class CatApi {
       throw new Eception("Aucun cartouche ne correspond");
     return $nearestPart;
   }
+
+  // retourne l'objet MapCat correspondant à $mapid ou null
+  static function mapById(string $mapid): ?MapCat {
+    return MapCat::mapById($mapid);
+  }
 };
 
 

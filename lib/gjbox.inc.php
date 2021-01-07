@@ -12,6 +12,8 @@ doc: |
   Il existe une bbox particulière indéfinie codée par (!$ws && !$en)
   La Terre entière est codée [-180, -90, 180, 90]
 journal: |
+  7/1/2021:
+    correction d'un bug dans GjBox::bound()
   17/12/2020:
     création
 includes: [gegeom.inc.php, pos.inc.php]
@@ -153,9 +155,9 @@ class GjBox {
     }
     
     // agrandissement de la boite en latitude
-    if ($this->ws[1] < $pos[1])
+    if ($pos[1] < $this->ws[1])
       $this->ws[1] = $pos[1];
-    if ($this->en[1] > $pos[1])
+    if ( $pos[1] > $this->en[1])
       $this->en[1] = $pos[1];
     // gestion de la longitude
     if (!$this->straddlingTheAntimeridian()) {
@@ -208,7 +210,7 @@ class GjBox {
   }
   
   static function test_bound() {
-    if (1) {
+    if (0) {
       echo "<b>scénario 1: bbox à Wallis, pt en NC</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -222,7 +224,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (1) {
+    if (0) {
       echo "<b>scénario 2: bbox en NC, pt à Wallis</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -235,7 +237,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (1) {
+    if (0) {
       echo "<b>Scénario 3: bbox initiale en métro</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -246,7 +248,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (1) {
+    if (0) {
       echo "<b>Scénario 4: bbox initiale en métro</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -257,7 +259,7 @@ class GjBox {
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }
-    if (1) {
+    if (0) {
       echo "<b>Scénario 5: métro + NC + Wallis + GLP</b><br>\n";
       $bbox = new GjBox;
       foreach ([
@@ -266,6 +268,15 @@ class GjBox {
         "1er point en NC"=> [170,0],
         "1er point à Wallis"=> [-168,0],
         "1er point en Guadeloupe"=> [-60,0],
+      ] as $label => $pos)
+        echo "$label -> ",$bbox->bound($pos),"<br>\n";
+    }
+    if (1) {
+      echo "<b>Scénario 6: Corse</b><br>\n";
+      $bbox = new GjBox;
+      foreach ([
+        "A - Abords de l'Île-Rousse WS"=> [8.9223333333333, 42.624666666667],
+        "A - Abords de l'Île-Rousse EN"=> [8.9753333333333, 42.669333333333],
       ] as $label => $pos)
         echo "$label -> ",$bbox->bound($pos),"<br>\n";
     }

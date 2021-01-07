@@ -6,6 +6,8 @@ functions:
 doc: |
   La fonction est utilisée pour générer un fil Atom principal ou secondaire à partir des données en base
 journal: |
+  7/1/2021:
+    - ajout des champs summary et content dans entry
   31/12/2020:
     - duplication dans shomgt/lib
   25/8/2016:
@@ -30,7 +32,7 @@ doc: |
   entries : [ [ 
       'title'=> titre de l'élément
       'uri'=> l'URI de l'élément,
-      'updated'=>date et heure UTC,
+      'updated'=> date et heure UTC,
       'links'=> [ [
         'href'=> href
         'rel'=> rel
@@ -53,7 +55,7 @@ function gen_atom_feed($feed, $entries) {
   header('Content-type: text/xml; charset="utf8"');
   echo <<<EOT
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:georss="http://www.georss.org/georss">
   <title>$feed[title]</title>
   <!-- lien vers le document lui-même -->
   <link href="$feed[uri]" rel="self" type="application/atom+xml" hreflang="fr" title="Ce document"/>\n
@@ -81,11 +83,20 @@ EOT;
     if (isset($entry['categories']))
       foreach ($entry['categories'] as $category)
         echo "    <category term=\"$category[term]\" label=\"$category[label]\"/>\n";
-    echo <<<EOT
-    <updated>$entry[updated]</updated>
-    <id>$entry[uri]</id>
-  </entry>\n
-EOT;
+    echo "    <updated>$entry[updated]</updated>\n";
+    echo "    <id>$entry[uri]</id>\n";
+    if (isset($entry['summary']))
+      echo "    <summary>",str_replace('<','&lt;',$entry['summary']),"</summary>\n";
+    if (isset($entry['content']))
+      echo "    <content>",str_replace('<','&lt;',$entry['content']),"</content>\n";
+    
+    /*<!-- optional GeoRSS-Simple polygon outlining the bounding box of the pre-defined dataset described by the entry. Must be lat lon -->
+    <georss:polygon>47.202 5.755 55.183 5.755 55.183 15.253 47.202 15.253 47.202 5.755</georss:polygon>*/
+    if (isset($entry['georss:polygon'])) {
+      echo "    <!-- GeoRSS-Simple polygon outlining the bounding box of the map described by the entry in lat lon -->\n";
+      echo "    <georss:polygon>",$entry['georss:polygon'],"</georss:polygon>\n";
+    }
+    echo "  </entry>\n";
   }
   die("</feed>\n");
 }

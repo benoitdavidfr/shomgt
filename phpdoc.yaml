@@ -60,6 +60,7 @@ doc: |
   synchro: http://localhost/synchro.php?remote=http://prod.geoapi.fr&dir=geoapi/shomgt
   
   ToDoList:
+    - tester le mode esclave et pour cela réduire l'effort de mise en place d'un tel serveur
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
