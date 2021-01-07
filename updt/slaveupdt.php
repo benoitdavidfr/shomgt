@@ -33,7 +33,7 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-$atomfeedUrl = ($_SERVER['HTTP_HOST']=='localhost') ?
+$atomfeedUrl = ((($_SERVER['HTTP_HOST'] ?? null) == 'localhost') || (unix_env()['HOSTNAME']=='dmac')) ?
   'http://localhost/geoapi/shomgt/master/atomfeed.php' // test en localhost
   : 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
@@ -174,10 +174,10 @@ define ('ZONES', [
 if (php_sapi_name() == 'cli') {
   header('Content-type: text/plain; charset="utf8"');
   if ($argc <= 1) {
-    echo "Mettre à jour sur quelle zone ?\n";
+    echo "echo 'Mettre à jour sur quelle zone ?'\n";
     foreach (ZONES as $id => $label)
-      echo "  - $id pour $label\n";
-    echo "Possibilité de définir plusieurs zones séparées par des virgules, ee: GP,MQ,BL,MF\n";
+      echo "echo '  - $id pour $label'\n";
+    echo "echo 'Possibilité de définir plusieurs zones séparées par des virgules, ee: GP,MQ,BL,MF'\n";
     die("\n");
   }
   else {
