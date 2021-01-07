@@ -17,6 +17,9 @@ doc: |
   L'authentification par login/passwd n'est pas prévue à ce stade.
 
 journal: |
+  7/1/2021:
+    -limitation à une zone
+    - tests
   4/1/2021:
     - gestion du proxy
   3/1/2021:
@@ -30,8 +33,9 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php';
-//$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php';
+$atomfeedUrl = ($_SERVER['HTTP_HOST']=='localhost') ?
+  'http://localhost/geoapi/shomgt/master/atomfeed.php' // test en localhost
+  : 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
@@ -236,8 +240,8 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
 
 echo "php updt.php slave | sh\n";
 
-echo "echo '(supprimé)Suppression du répertoire $shomgeotiff/incoming/slave'\n";
-//echo "rm -r $shomgeotiff/incoming/slave\n";
+echo "echo 'Suppression du répertoire $shomgeotiff/incoming/slave'\n";
+echo "rm -r $shomgeotiff/incoming/slave\n";
 
 foreach (array_keys($updtSlave->todelete) as $mapid) {
   $mapnum = substr($mapid, 2);
