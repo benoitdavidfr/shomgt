@@ -18,7 +18,7 @@ doc: |
 
 journal: |
   7/1/2021:
-    -limitation à une zone
+    - possibilité de limiter à une zone
     - tests
   4/1/2021:
     - gestion du proxy
@@ -33,9 +33,8 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-$atomfeedUrl = ((($_SERVER['HTTP_HOST'] ?? null) == 'localhost') || (unix_env()['HOSTNAME']=='dmac')) ?
-  'http://localhost/geoapi/shomgt/master/atomfeed.php' // test en localhost
-  : 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
+//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php' // test en localhost
+$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
@@ -66,7 +65,7 @@ class UpdtSlave {
     ]);
   }
  
-  static function zonesGeo(array $category): array { // transforme un mot-clé ou une liste en liste de codes ISO2
+  static function zonesGeo(array $category): array { // transforme un mot-clé ou une liste de codes ISO2
     //echo 'category='; print_r($category);
     if (isset($category['attrib']))
       return [substr($category['attrib']['term'], strlen('https://id.georef.eu/dc-spatial/'))];
