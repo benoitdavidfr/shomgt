@@ -117,7 +117,9 @@ class CurrentGeoTiff {
     retourne [] si le fichier est absent
   */
   static function mdiso19139FromFilePath(string $path): array {
-    if (!($xmlmd = file_get_contents($path)))
+    if (!file_exists($path))
+      return [];
+    if (!($xmlmd = @file_get_contents($path)))
       return [];
   
     $pattern = '!<gmd:dateStamp>\s*<gco:DateTime[^>]*>([^<]*)</gco:DateTime>\s*</gmd:dateStamp>!';

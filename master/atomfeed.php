@@ -150,7 +150,7 @@ if (!isset($_SERVER['PATH_INFO'])) { // le feed
           'updated'=> $updated,
           'links'=> [
             [ 'href'=> "$script_path/entry/$mdDate/$mapid", 'rel'=> 'alternate', 'type'=>'text/html' ],
-            [ 'href'=> "$script_path/dwnld/$path", 'rel'=> 'alternate', 'type'=>'application/x-7z-compressed' ],
+            [ 'href'=> "$script_path/dwnld/$path.7z", 'rel'=> 'alternate', 'type'=>'application/x-7z-compressed' ],
           ],
           'summary'=> "$mapid - $map[title]"
             .(isset($map['scaleDenominator']) ? "<br>1 : $map[scaleDenominator]" : '')

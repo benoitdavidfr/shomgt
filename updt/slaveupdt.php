@@ -63,7 +63,7 @@ class UpdtSlave {
   }
  
   static function zonesGeo(array $category): array { // transforme un mot-clé ou une liste en liste de codes ISO2
-    echo 'category='; print_r($category);
+    //echo 'category='; print_r($category);
     if (isset($category['attrib']))
       return [substr($category['attrib']['term'], strlen('https://id.georef.eu/dc-spatial/'))];
     else {
@@ -116,7 +116,7 @@ class UpdtSlave {
             ];
           }
           elseif ($link['attrib']['type'] == 'application/x-7z-compressed') { // carte à ajouter 
-            echo '$entry='; print_r($entry);
+            //echo '$entry='; print_r($entry);
             $mapid = substr($entry['id'], -6);
             //echo "Ajout ",$link['attrib']['href'],"\n";
             $zonesGeo = isset($entry['category']) ? self::zonesGeo($entry['category']) : [];
@@ -126,7 +126,7 @@ class UpdtSlave {
                 'updated'=> $entry['updated'],
                 'zonesGeo'=> $zonesGeo,
               ];
-              echo '$toadd='; print_r($this->toadd);
+              //echo '$toadd='; print_r($this->toadd);
             }
           }
         }
@@ -136,7 +136,10 @@ class UpdtSlave {
   
   // indique si la carte doit être mise à jour
   function updateMap(string $mapid): bool {
-    $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum(substr($mapid, 2)); // les MD ISO de current ou []
+    $mapnum = substr($mapid, 2);
+    if (!CurrentGeoTiff::mapExists($mapnum))
+      return true;
+    $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum($mapnum); // les MD ISO de current ou []
     //print_r($mdiso19139);
     $mdDate = $mdiso19139 ? substr($mdiso19139['mdDate'], 0, 10) : null; // la date des MD ou null
     $updated = substr($this->toadd[$mapid]['updated'], 0, 10); // la partie date
@@ -233,8 +236,8 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
 
 echo "php updt.php slave | sh\n";
 
-echo "echo 'Suppression du répertoire $shomgeotiff/incoming/slave'\n";
-echo "rm -r $shomgeotiff/incoming/slave\n";
+echo "echo '(supprimé)Suppression du répertoire $shomgeotiff/incoming/slave'\n";
+//echo "rm -r $shomgeotiff/incoming/slave\n";
 
 foreach (array_keys($updtSlave->todelete) as $mapid) {
   $mapnum = substr($mapid, 2);
