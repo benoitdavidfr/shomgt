@@ -38,6 +38,7 @@ if (!Access::cntrl()) {
 //define('TEST', 'version test incoming/20170613');
 define('TEST', '');
 
+// étiquette associée au code ISO des zones
 define ('TERMS', [
   'FR'=> "France",
   'FX'=> "France métropolitaine",
@@ -55,7 +56,8 @@ define ('TERMS', [
   'NC'=> "Nouvelle-Calédonie",
   'CP'=> "Île Clipperton",
 ]);
-// Définit le fuseau horaire par défaut à utiliser. Disponible depuis PHP 5.1
+
+// Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
 
 if (is_file(__DIR__.'/atomfeed.pser')) {

@@ -30,10 +30,8 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-header('Content-type: text/plain; charset="utf8"');
-
-//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php';
-$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php';
+$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php';
+//$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php';
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
@@ -51,22 +49,40 @@ function http_proxy(): string { return unix_env()['http_proxy'] ?? ''; }
 class UpdtSlave {
   public array $catalog=[]; // [href, updated]
   public array $todelete=[]; // [mapid => title]
-  public array $toadd=[]; // [mapid => [href, updated]]
+  public array $toadd=[]; // [mapid => ['href'=> href, 'updated'=> updated, 'zonesGeo'=> listeDeZones]]
 
   static function streamContext() { // fabrique un context si un proxy est défini, sinon renvoie null
-    if (!$proxy = http_proxy())
+    if (!http_proxy())
       return null;
     return stream_context_create([
       'http'=> [
         'method'=> 'GET',
-        'proxy'=> str_replace('http://', 'tcp://', $proxy),
+        'proxy'=> str_replace('http://', 'tcp://', http_proxy()),
       ]
     ]);
   }
  
-  function __construct(string $url) {
-    if (!($xml = @file_get_contents($url, false, self::streamContext())))
-      die("echo 'Erreur ouverture de $url impossible'\n");
+  static function zonesGeo(array $category): array { // transforme un mot-clé ou une liste en liste de codes ISO2
+    echo 'category='; print_r($category);
+    if (isset($category['attrib']))
+      return [substr($category['attrib']['term'], strlen('https://id.georef.eu/dc-spatial/'))];
+    else {
+      $list = [];
+      foreach ($category as $categ) {
+        $list[] = substr($categ['attrib']['term'], strlen('https://id.georef.eu/dc-spatial/'));
+      }
+      return $list;
+    }
+  }
+  
+  function __construct(string $url, array $zonesGeoDemandees) {
+    if (!($xml = @file_get_contents($url, false, self::streamContext()))) {
+      $error = "Erreur ouverture de $url impossible";
+      $error .= http_proxy() ? ", avec proxy ".http_proxy() : ", sans proxy";
+      if (isset($http_response_header))
+        $error .= ", raison $http_response_header[0]";
+      die("echo '$error'\n");
+    }
 
     //var_dump($xml);
     //echo "$xml\n"; die();
@@ -92,21 +108,26 @@ class UpdtSlave {
         //print_r($entry);
         foreach ($entry['link'] as $link) {
           //print_r($link);
-          if ($link['attrib']['type'] == 'text/vnd.yaml') {
+          if ($link['attrib']['type'] == 'text/vnd.yaml') { // catalog 
             //echo "Catalogue ",$link['attrib']['href'],"\n";
             $this->catalog = [
               'href'=> $link['attrib']['href'],
               'updated'=> $entry['updated'],
             ];
           }
-          elseif ($link['attrib']['type'] == 'application/x-7z-compressed') {
-            //echo '$entry='; print_r($entry);
+          elseif ($link['attrib']['type'] == 'application/x-7z-compressed') { // carte à ajouter 
+            echo '$entry='; print_r($entry);
             $mapid = substr($entry['id'], -6);
             //echo "Ajout ",$link['attrib']['href'],"\n";
-            $this->toadd[$mapid] = [
-              'href'=> $link['attrib']['href'],
-              'updated'=> $entry['updated'],
-            ];
+            $zonesGeo = isset($entry['category']) ? self::zonesGeo($entry['category']) : [];
+            if (!$zonesGeoDemandees || ($zonesGeo==['FR']) || array_intersect($zonesGeoDemandees, $zonesGeo)) {
+              $this->toadd[$mapid] = [
+                'href'=> $link['attrib']['href'],
+                'updated'=> $entry['updated'],
+                'zonesGeo'=> $zonesGeo,
+              ];
+              echo '$toadd='; print_r($this->toadd);
+            }
           }
         }
       }
@@ -123,14 +144,61 @@ class UpdtSlave {
   }
 };
 
+// Liste des codes et libellés des zones
+define ('ZONES', [
+  'WLD'=> "toutes les cartes",
+  'FR'=> "France",
+  'FX'=> "France métropolitaine",
+  'GP'=> "Guadeloupe",
+  'MQ'=> "Martinique",
+  'GF'=> "Guyane",
+  'RE'=> "La Réunion",
+  'YT'=> "Mayotte",
+  'PM'=> "Saint-Pierre-et-Miquelon",
+  'BL'=> "Saint-Barthélémy",
+  'MF'=> "Saint-Martin",
+  'TF'=> "Terres australes et antarctiques françaises",
+  'PF'=> "Polynésie française",
+  'WF'=> "Wallis-et-Futuna",
+  'NC'=> "Nouvelle-Calédonie",
+  'CP'=> "Île Clipperton",
+]
+);
+if (php_sapi_name() == 'cli') {
+  header('Content-type: text/plain; charset="utf8"');
+  if ($argc <= 1) {
+    echo "Mettre à jour sur quelle zone ?\n";
+    foreach (ZONES as $id => $label)
+      echo "  - $id pour $label\n";
+    echo "Possibilité de définir plusieurs zones séparées par des virgules, ee: GP,MQ,BL,MF\n";
+    die("\n");
+  }
+  else {
+    $zonesGeo = ($argv[1] == 'WLD') ? [] : explode(',', $argv[1]);
+  }
+}
+else {
+  if (!isset($_GET['geo'])) {
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>slaveupdt</title></head><body>\n";
+    echo "Mettre à jour sur quelle zone ?<ul>\n";
+    foreach (ZONES as $id => $label) {
+      echo "<li><a href='?geo=$id'>$label</a></li>\n";
+    }
+    die("</ul>\n");
+  }
+  else {
+    echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>slaveupdt</title></head><body><pre>\n";
+    $zonesGeo = ($_GET['geo'] == 'WLD') ? [] : explode(',', $_GET['geo']);
+  }
+}
+
 // Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
 
-$updtSlave = new UpdtSlave($atomfeedUrl);
+$updtSlave = new UpdtSlave($atomfeedUrl, $zonesGeo);
 //print_r($atomfeed);
 
-$http_proxy = http_proxy();
-$wget_proxy = $http_proxy ? " -e use_proxy=on -e http_proxy=$http_proxy" : '';
+$wget_proxy = http_proxy() ? ' -e use_proxy=on -e http_proxy='.http_proxy() : '';
 $mapcatpath = __DIR__.'/../cat2/mapcat.yaml';
 if (!file_exists($mapcatpath)
   || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime($mapcatpath)))) {
