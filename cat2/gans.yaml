@@ -5,7 +5,7 @@ $schema: /var/www/html/geoapi/shomgt/cat2/gans
 valid: 2020-12-18/2020-12-23
 gans:
   FR6814:
-    age: 6.5
+    perempt: 6.5
     groupTitle: 'Océan Atlantique'
     title: 'Côte Nord-Est d''Amérique du Sud'
     bbox:
@@ -28,7 +28,7 @@ gans:
       - { num: 58, semaineAvis: 2020-256 }
     valid: '2020-12-18'
   FR7630:
-    age: 6.5
+    perempt: 6.5
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie Nord'
     bbox:
@@ -51,7 +51,7 @@ gans:
       - { num: 15, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR6968:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'
     bbox:
@@ -67,7 +67,7 @@ gans:
       - { num: 31, semaineAvis: 2050-38 }
     valid: '2020-12-18'
   FR7014:
-    age: 6
+    perempt: 6
     groupTitle: 'Méditerranée Occidentale'
     title: 'Des îles Baléares à la Corse et à la Sardaigne'
     bbox:
@@ -83,7 +83,7 @@ gans:
       - { num: 50, semaineAvis: 2039-144 }
     valid: '2020-12-18'
   FR7025:
-    age: 6
+    perempt: 6
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'Île de Corse'
     bbox:
@@ -99,7 +99,7 @@ gans:
       - { num: 13, semaineAvis: 2044-97 }
     valid: '2020-12-18'
   FR7054:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Sud de France'
     title: 'De l''embouchure de l''Aude à Sète'
     bbox:
@@ -115,7 +115,7 @@ gans:
       - { num: 10, semaineAvis: 2051-88 }
     valid: '2020-12-18'
   FR7090:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
     bbox:
@@ -134,7 +134,7 @@ gans:
       - { num: 10, semaineAvis: 2043-38 }
     valid: '2020-12-18'
   FR7093:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Sud de France'
     title: 'Rade de Toulon'
     bbox:
@@ -150,7 +150,7 @@ gans:
       - { num: 12, semaineAvis: 2046-93 }
     valid: '2020-12-18'
   FR7122:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu au phare du Four'
     bbox:
@@ -168,7 +168,7 @@ gans:
       - { num: 6, semaineAvis: 2032-51 }
     valid: '2020-12-18'
   FR7128:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (Partie Ouest)'
     bbox:
@@ -187,7 +187,7 @@ gans:
       - { num: 14, semaineAvis: 2049-33 }
     valid: '2020-12-18'
   FR7133:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Nord de France'
     title: 'Ports de la Côte Ouest du Cotentin'
     hasPart:
@@ -207,7 +207,7 @@ gans:
       - { num: 26, semaineAvis: 2044-44 }
     valid: '2020-12-18'
   FR7229:
-    age: 6
+    perempt: 6
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Nice à Piombino'
     bbox:
@@ -223,7 +223,7 @@ gans:
       - { num: 151, semaineAvis: 2047-92 }
     valid: '2020-12-18'
   FR7409:
-    age: 6
+    perempt: 6
     groupTitle: 'Côte Sud de France'
     title: 'De la Rade d''Agay à Monaco'
     bbox:
@@ -239,7 +239,7 @@ gans:
       - { num: 40, semaineAvis: 2047-86 }
     valid: '2020-12-18'
   FR6738:
-    age: 5.5
+    perempt: 5.5
     groupTitle: 'Petites Antilles'
     title: 'La Martinique'
     bbox:
@@ -260,7 +260,7 @@ gans:
       - { num: 37, semaineAvis: 1942-260 }
     valid: '2020-12-18'
   FR6948:
-    age: 5.5
+    perempt: 5.5
     groupTitle: Guadeloupe
     title: 'De Pointe-à-Pitre à Marie-Galante'
     bbox:
@@ -283,7 +283,7 @@ gans:
       - { num: 35, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR7381:
-    age: 5.5
+    perempt: 5.5
     groupTitle: 'Côte de Guyane Française'
     title: 'De Kourou à Cayenne'
     bbox:
@@ -304,7 +304,7 @@ gans:
       - { num: 18, semaineAvis: 2043-251 }
     valid: '2020-12-18'
   FR7482:
-    age: 5.5
+    perempt: 5.5
     groupTitle: Guadeloupe
     title: 'De l''Ilet à Kahouanne aux Saintes'
     bbox:
@@ -329,7 +329,7 @@ gans:
       - { num: 34, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR6015:
-    age: 5
+    perempt: 5
     groupTitle: 'Canada - Groenland - Islande'
     title: 'Des passages du Nord-Ouest à la Mer du Groenland'
     bbox:
@@ -349,7 +349,7 @@ gans:
       - { num: 42, semaineAvis: 2029-276 }
     valid: '2020-12-18'
   FR6610:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié'
     bbox:
@@ -364,7 +364,7 @@ gans:
       - { num: 11, semaineAvis: 2041-90 }
     valid: '2020-12-18'
   FR6615:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Sud de France'
     title: 'Îles de Port-Cros et du Levant'
     bbox:
@@ -379,7 +379,7 @@ gans:
       - { num: 5, semaineAvis: 2025-89 }
     valid: '2020-12-18'
   FR6824:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
     title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
     bbox:
@@ -394,7 +394,7 @@ gans:
       - { num: 151, semaineAvis: 2038-35 }
     valid: '2020-12-18'
   FR6951:
-    age: 5
+    perempt: 5
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Fos-sur-Mer à Capo Mele'
     bbox:
@@ -409,7 +409,7 @@ gans:
       - { num: 10, semaineAvis: 2044-89 }
     valid: '2020-12-18'
   FR7024:
-    age: 5
+    perempt: 5
     groupTitle: 'Mer Méditerranée'
     title: 'Bouches de Bonifacio'
     bbox:
@@ -426,7 +426,7 @@ gans:
       - { num: 50, semaineAvis: 2050-97 }
     valid: '2020-12-18'
   FR7031:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île de Penfret au Plateau des Birvideaux'
     bbox:
@@ -441,7 +441,7 @@ gans:
       - { num: 14, semaineAvis: 2039-56 }
     valid: '2020-12-18'
   FR7040:
-    age: 5
+    perempt: 5
     groupTitle: 'La Manche'
     title: 'La Manche'
     bbox:
@@ -456,7 +456,7 @@ gans:
       - { num: 5, semaineAvis: 2051-36 }
     valid: '2020-12-18'
   FR7041:
-    age: 5
+    perempt: 5
     groupTitle: 'Petites Antilles'
     title: 'La Martinique'
     bbox:
@@ -476,7 +476,7 @@ gans:
       - { num: 29, semaineAvis: 1942-260 }
     valid: '2020-12-18'
   FR7121:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Douarnenez'
     bbox:
@@ -494,7 +494,7 @@ gans:
       - { num: 17, semaineAvis: 2042-50 }
     valid: '2020-12-18'
   FR7124:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Lannion'
     bbox:
@@ -513,7 +513,7 @@ gans:
       - { num: 22, semaineAvis: 2050-40 }
     valid: '2020-12-18'
   FR7125:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Perros-Guirec - Les Sept Îles'
     bbox:
@@ -532,7 +532,7 @@ gans:
       - { num: 7, semaineAvis: 2049-37 }
     valid: '2020-12-18'
   FR7130:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Saint-Malo'
     bbox:
@@ -547,7 +547,7 @@ gans:
       - { num: 11, semaineAvis: 2049-32 }
     valid: '2020-12-18'
   FR7141:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Quiberon'
     bbox:
@@ -562,7 +562,7 @@ gans:
       - { num: 34, semaineAvis: 2043-56 }
     valid: '2020-12-18'
   FR7153:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île de Bréhat au Plateau des Roches Douvres'
     bbox:
@@ -577,7 +577,7 @@ gans:
       - { num: 6, semaineAvis: 2044-48 }
     valid: '2020-12-18'
   FR7156:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe du Grouin à la Pointe d''Agon'
     bbox:
@@ -592,7 +592,7 @@ gans:
       - { num: 8, semaineAvis: 2024-50 }
     valid: '2020-12-18'
   FR7158:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de Carteret au Cap de la Hague'
     bbox:
@@ -607,7 +607,7 @@ gans:
       - { num: 48, semaineAvis: 2051-41 }
     valid: '2020-12-18'
   FR7161:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
     title: 'Des îles Chausey à Jersey'
     bbox:
@@ -622,7 +622,7 @@ gans:
       - { num: 17, semaineAvis: 2040-44 }
     valid: '2020-12-18'
   FR7258:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Calais'
     bbox:
@@ -639,7 +639,7 @@ gans:
       - { num: 5, semaineAvis: 2048-33 }
     valid: '2020-12-18'
   FR7400:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest'
     bbox:
@@ -657,7 +657,7 @@ gans:
       - { num: 14, semaineAvis: 2047-50 }
     valid: '2020-12-18'
   FR7421:
-    age: 5
+    perempt: 5
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
     bbox:
@@ -672,7 +672,7 @@ gans:
       - { num: 39, semaineAvis: 2045-36 }
     valid: '2020-12-18'
   FR7507:
-    age: 5
+    perempt: 5
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
     bbox:
@@ -687,7 +687,7 @@ gans:
       - { num: 120, semaineAvis: 2049-82 }
     valid: '2020-12-18'
   FR7035:
-    age: 4.5
+    perempt: 4.5
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
     bbox:
@@ -706,7 +706,7 @@ gans:
       - { num: 46, semaineAvis: 2039-184 }
     valid: '2020-12-18'
   FR6843:
-    age: 4
+    perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo Creus à Port-Barcarès'
     bbox:
@@ -720,7 +720,7 @@ gans:
       - { num: 10, semaineAvis: 2037-84 }
     valid: '2020-12-18'
   FR6911:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Est de Corse'
     title: 'Golfe de Porto-Vecchio'
     bbox:
@@ -734,7 +734,7 @@ gans:
       - { num: 8, semaineAvis: 2048-96 }
     valid: '2020-12-18'
   FR6940:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à The Needles'
     bbox:
@@ -748,7 +748,7 @@ gans:
       - { num: 73, semaineAvis: 2018-25 }
     valid: '2020-12-18'
   FR7016:
-    age: 4
+    perempt: 4
     groupTitle: 'Mer Méditerranée'
     title: 'Mer Méditerranée'
     bbox:
@@ -762,7 +762,7 @@ gans:
       - { num: 72, semaineAvis: 2026-128 }
     valid: '2020-12-18'
   FR7053:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'
     bbox:
@@ -776,7 +776,7 @@ gans:
       - { num: 8, semaineAvis: 2017-85 }
     valid: '2020-12-18'
   FR7070:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Ouest de France'
     title: 'Du Pertuis de Maumusson à Mimizan-Plage'
     bbox:
@@ -790,7 +790,7 @@ gans:
       - { num: 14, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7127:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Nord de France'
     title: 'Abords de l''Île de Bréhat - Anse de Paimpol'
     bbox:
@@ -807,7 +807,7 @@ gans:
       - { num: 19, semaineAvis: 2036-52 }
     valid: '2020-12-18'
   FR7139:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Talut à la Pointe de Gâvres - Île de Groix'
     bbox:
@@ -823,7 +823,7 @@ gans:
       - { num: 11, semaineAvis: 2039-56 }
     valid: '2020-12-18'
   FR7157:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe d''Agon au Cap de Carteret'
     bbox:
@@ -837,7 +837,7 @@ gans:
       - { num: 19, semaineAvis: 2037-48 }
     valid: '2020-12-18'
   FR7203:
-    age: 4
+    perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Des Îles Baléares (Islas Baleares) à Marseille'
     bbox:
@@ -851,7 +851,7 @@ gans:
       - { num: 87, semaineAvis: 2035-86 }
     valid: '2020-12-18'
   FR7204:
-    age: 4
+    perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Marseille à l''île d''Elbe (Isola d''Elba) et aux Bouches de Bonifacio'
     bbox:
@@ -865,7 +865,7 @@ gans:
       - { num: 144, semaineAvis: 2024-95 }
     valid: '2020-12-18'
   FR7291:
-    age: 4
+    perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
     bbox:
@@ -879,7 +879,7 @@ gans:
       - { num: 17, semaineAvis: 2012-104 }
     valid: '2020-12-18'
   FR7302:
-    age: 4
+    perempt: 4
     groupTitle: Guadeloupe
     title: 'De la Pointe des Châteaux à l''Ilet à Kahouanne'
     bbox:
@@ -897,7 +897,7 @@ gans:
       - { num: 20, semaineAvis: 2019-256 }
     valid: '2020-12-18'
   FR7345:
-    age: 4
+    perempt: 4
     groupTitle: 'Petites Antilles'
     title: Guadeloupe
     bbox:
@@ -915,7 +915,7 @@ gans:
       - { num: 24, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR7374:
-    age: 4
+    perempt: 4
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'Côte de la Guyane française'
     bbox:
@@ -933,7 +933,7 @@ gans:
       - { num: 9, semaineAvis: 1943-253 }
     valid: '2020-12-18'
   FR7379:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Cayenne'
     bbox:
@@ -951,7 +951,7 @@ gans:
       - { num: 37, semaineAvis: 2002-253 }
     valid: '2020-12-18'
   FR7401:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Ouest de France'
     title: 'Accès à la Rade de Brest'
     bbox:
@@ -967,7 +967,7 @@ gans:
       - { num: 17, semaineAvis: 2047-50 }
     valid: '2020-12-18'
   FR7404:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron'
     bbox:
@@ -983,7 +983,7 @@ gans:
       - { num: 24, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7405:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De La Rochelle à la Pointe de La Coubre'
     bbox:
@@ -1001,7 +1001,7 @@ gans:
       - { num: 23, semaineAvis: 2050-60 }
     valid: '2020-12-18'
   FR7414:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Ile d''Aix au Pertuis de Maumusson'
     bbox:
@@ -1017,7 +1017,7 @@ gans:
       - { num: 25, semaineAvis: 2050-60 }
     valid: '2020-12-18'
   FR7434:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Sud de France'
     title: 'Ports de Sète, Port-la-Nouvelle, Port-Vendres et Collioure'
     hasPart:
@@ -1032,7 +1032,7 @@ gans:
       - { num: 21, semaineAvis: 2046-90 }
     valid: '2020-12-18'
   FR7441:
-    age: 4
+    perempt: 4
     groupTitle: 'Principauté de Monaco - Côte Sud de France'
     title: 'Abords et Ports de Monaco'
     bbox:
@@ -1046,7 +1046,7 @@ gans:
       - { num: 10, semaineAvis: 2039-92 }
     valid: '2020-12-18'
   FR7443:
-    age: 4
+    perempt: 4
     groupTitle: 'Côtes de France et d''Italie - Principauté de Monaco'
     title: 'Du Cap Ferrat à Capo San Lorenzo'
     bbox:
@@ -1060,7 +1060,7 @@ gans:
       - { num: 28, semaineAvis: 2039-91 }
     valid: '2020-12-18'
   FR7643:
-    age: 4
+    perempt: 4
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Port de Nouméa'
     bbox:
@@ -1086,7 +1086,7 @@ gans:
       - { num: 16, semaineAvis: 2045-222 }
     valid: '2020-12-18'
   FR6892:
-    age: 3.5
+    perempt: 3.5
     groupTitle: Martinique
     title: 'Baie de Fort-de-France'
     bbox:
@@ -1103,7 +1103,7 @@ gans:
       - { num: 8, semaineAvis: 2021-260 }
     valid: '2020-12-18'
   FR7349:
-    age: 3.5
+    perempt: 3.5
     groupTitle: 'Océan Indien'
     title: 'De la Réunion à Maurice (Mauritius) - Ile Tromelin'
     bbox:
@@ -1122,7 +1122,7 @@ gans:
       - { num: 29, semaineAvis: 2039-185 }
     valid: '2020-12-18'
   FR7460:
-    age: 3.5
+    perempt: 3.5
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De la Passe de Taapuna à la Passe d''Arue'
     hasPart:
@@ -1146,7 +1146,7 @@ gans:
       - { num: 25, semaineAvis: 2051-230 }
     valid: '2020-12-18'
   FR5417:
-    age: 3
+    perempt: 3
     groupTitle: 'Océan Atlantique Nord et Mers Boréales'
     title: 'Océan Atlantique Nord et mers boréales'
     bbox:
@@ -1159,7 +1159,7 @@ gans:
       - { num: 89, semaineAvis: 1741-266 }
     valid: '2020-12-18'
   FR6673:
-    age: 3
+    perempt: 3
     groupTitle: 'Océan Indien'
     title: 'De Chagos Archipelago à Madagascar'
     bbox:
@@ -1175,7 +1175,7 @@ gans:
       - { num: 13, semaineAvis: 2039-184 }
     valid: '2020-12-18'
   FR6680:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile d''Ouessant à l''Ile de Batz'
     bbox:
@@ -1188,7 +1188,7 @@ gans:
       - { num: 77, semaineAvis: 2019-44 }
     valid: '2020-12-18'
   FR6857:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
     bbox:
@@ -1201,7 +1201,7 @@ gans:
       - { num: 69, semaineAvis: 2050-37 }
     valid: '2020-12-23'
   FR6970:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
     bbox:
@@ -1214,7 +1214,7 @@ gans:
       - { num: 9, semaineAvis: 2031-93 }
     valid: '2020-12-18'
   FR6980:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
     hasPart:
@@ -1228,7 +1228,7 @@ gans:
       - { num: 6, semaineAvis: 2031-93 }
     valid: '2020-12-18'
   FR6991:
-    age: 3
+    perempt: 3
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
     bbox:
@@ -1241,7 +1241,7 @@ gans:
       - { num: 25, semaineAvis: 2050-66 }
     valid: '2020-12-18'
   FR7044:
-    age: 3
+    perempt: 3
     groupTitle: 'Océan Atlantique Sud'
     title: 'De la Terre de Feu au Vénézuéla'
     bbox:
@@ -1257,7 +1257,7 @@ gans:
       - { num: 6, semaineAvis: 2046-254 }
     valid: '2020-12-18'
   FR7069:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre'
     bbox:
@@ -1270,7 +1270,7 @@ gans:
       - { num: 14, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7081:
-    age: 3
+    perempt: 3
     groupTitle: 'Mer Méditerranée et Mer Noire'
     title: 'Mer Méditerranée et Mer Noire'
     bbox:
@@ -1283,7 +1283,7 @@ gans:
       - { num: 138, semaineAvis: 2039-144 }
     valid: '2020-12-18'
   FR7089:
-    age: 3
+    perempt: 3
     groupTitle: 'La Martinique'
     title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
     hasPart:
@@ -1301,7 +1301,7 @@ gans:
       - { num: 21, semaineAvis: 2048-260 }
     valid: '2020-12-18'
   FR7100:
-    age: 3
+    perempt: 3
     groupTitle: Guadeloupe
     title: 'Abords de Pointe-à-Pitre'
     bbox:
@@ -1319,7 +1319,7 @@ gans:
       - { num: 6, semaineAvis: 2040-260 }
     valid: '2020-12-18'
   FR7134:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Nord de France'
     title: 'Iles Chausey'
     bbox:
@@ -1334,7 +1334,7 @@ gans:
       - { num: 5, semaineAvis: 2040-37 }
     valid: '2020-12-18'
   FR7140:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Passes et Rade de Lorient'
     bbox:
@@ -1349,7 +1349,7 @@ gans:
       - { num: 4, semaineAvis: 2038-56 }
     valid: '2020-12-18'
   FR7145:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De La Turballe à Pornichet'
     bbox:
@@ -1367,7 +1367,7 @@ gans:
       - { num: 29, semaineAvis: 1951-58 }
     valid: '2020-12-18'
   FR7146:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Pointe de Trévignon'
     bbox:
@@ -1380,7 +1380,7 @@ gans:
       - { num: 63, semaineAvis: 2049-41 }
     valid: '2020-12-18'
   FR7147:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à la Pointe de Penmarc''h'
     bbox:
@@ -1395,7 +1395,7 @@ gans:
       - { num: 48, semaineAvis: 2044-54 }
     valid: '2020-12-18'
   FR7148:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à la Chaussée de Sein'
     bbox:
@@ -1408,7 +1408,7 @@ gans:
       - { num: 61, semaineAvis: 2012-43 }
     valid: '2020-12-18'
   FR7172:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu à la Chaussée de Sein - Iroise'
     bbox:
@@ -1421,7 +1421,7 @@ gans:
       - { num: 56, semaineAvis: 2012-43 }
     valid: '2020-12-18'
   FR7208:
-    age: 3
+    perempt: 3
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade'
     bbox:
@@ -1437,7 +1437,7 @@ gans:
       - { num: 16, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR7211:
-    age: 3
+    perempt: 3
     groupTitle: 'Océan Atlantique Nord'
     title: 'Golfe de Gascogne'
     bbox:
@@ -1450,7 +1450,7 @@ gans:
       - { num: 4, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7267:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Tropez'
     bbox:
@@ -1467,7 +1467,7 @@ gans:
       - { num: 4, semaineAvis: 2027-93 }
     valid: '2020-12-18'
   FR7310:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Est)'
     bbox:
@@ -1483,7 +1483,7 @@ gans:
       - { num: 6, semaineAvis: 2049-33 }
     valid: '2020-12-18'
   FR7312:
-    age: 3
+    perempt: 3
     title: 'La Manche (Partie Est)'
     bbox:
       SW: '49°04,94''N — 003°00,08''W'
@@ -1495,7 +1495,7 @@ gans:
       - { num: 13, semaineAvis: 2050-37 }
     valid: '2020-12-23'
   FR7395:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Du Croisic à Noirmoutier'
     bbox:
@@ -1508,7 +1508,7 @@ gans:
       - { num: 27, semaineAvis: 2049-45 }
     valid: '2020-12-18'
   FR7397:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (partie Sud)'
     bbox:
@@ -1521,7 +1521,7 @@ gans:
       - { num: 10, semaineAvis: 2047-50 }
     valid: '2020-12-18'
   FR7399:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Port de Brest'
     bbox:
@@ -1534,7 +1534,7 @@ gans:
       - { num: 5, semaineAvis: 2023-55 }
     valid: '2020-12-18'
   FR7403:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Des Sables d''Olonne à l''Ile de Ré'
     bbox:
@@ -1551,7 +1551,7 @@ gans:
       - { num: 37, semaineAvis: 2037-60 }
     valid: '2020-12-18'
   FR7408:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Sud de France'
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
     bbox:
@@ -1564,7 +1564,7 @@ gans:
       - { num: 6, semaineAvis: 2027-93 }
     valid: '2020-12-18'
   FR7415:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Charente'
     hasPart:
@@ -1578,7 +1578,7 @@ gans:
       - { num: 9, semaineAvis: 2050-60 }
     valid: '2020-12-18'
   FR7420:
-    age: 3
+    perempt: 3
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
     hasPart:
@@ -1597,7 +1597,7 @@ gans:
       - { num: 4, semaineAvis: 2043-35 }
     valid: '2020-12-18'
   FR6835:
-    age: 2.75
+    perempt: 2.75
     title: 'Océan Pacifique Nord'
     bbox:
       SW: 'NaN°00,00''S — 173°05,00''W'
@@ -1619,7 +1619,7 @@ gans:
       - { num: 77, semaineAvis: 2041-277 }
     valid: '2020-12-21'
   FR6118:
-    age: 2.5
+    perempt: 2.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Iles Saint-Pierre et Miquelon'
     bbox:
@@ -1634,7 +1634,7 @@ gans:
       - { num: 8, semaineAvis: 2038-278 }
     valid: '2020-12-18'
   FR7023:
-    age: 2.5
+    perempt: 2.5
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est'
     bbox:
@@ -1649,7 +1649,7 @@ gans:
       - { num: 106, semaineAvis: 2041-275 }
     valid: '2020-12-18'
   FR7328:
-    age: 2.5
+    perempt: 2.5
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Sud'
     bbox:
@@ -1666,7 +1666,7 @@ gans:
       - { num: 11, semaineAvis: 2039-184 }
     valid: '2020-12-18'
   FR7337:
-    age: 2.5
+    perempt: 2.5
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
     bbox:
@@ -1681,7 +1681,7 @@ gans:
       - { num: 10, semaineAvis: 2043-251 }
     valid: '2020-12-18'
   FR7677:
-    age: 2.5
+    perempt: 2.5
     groupTitle: 'Océan Indien - Archipel des Comores'
     title: 'Île de Mayotte'
     bbox:
@@ -1696,7 +1696,7 @@ gans:
       - { num: 10, semaineAvis: 2002-179 }
     valid: '2020-12-18'
   FR7470:
-    age: 2.25
+    perempt: 2.25
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Nevis'
     bbox:
@@ -1715,7 +1715,7 @@ gans:
       - { num: 12, semaineAvis: 2026-266 }
     valid: '2020-12-18'
   FR6612:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Sud de France'
     title: 'De Cassis à Bandol'
     bbox:
@@ -1729,7 +1729,7 @@ gans:
       - { num: 4, semaineAvis: 2051-93 }
     valid: '2020-12-18'
   FR6616:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Bénat au Cap Lardier'
     bbox:
@@ -1744,7 +1744,7 @@ gans:
       - { num: 8, semaineAvis: 2025-89 }
     valid: '2020-12-18'
   FR6643:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
     hasPart:
@@ -1761,7 +1761,7 @@ gans:
       - { num: 19, semaineAvis: 2051-180 }
     valid: '2020-12-18'
   FR6664:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
     bbox:
@@ -1775,7 +1775,7 @@ gans:
       - { num: 8, semaineAvis: 2039-184 }
     valid: '2020-12-18'
   FR6672:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Indien - Partie Ouest'
     title: 'De Maputo à Muqdisho - Madagascar'
     bbox:
@@ -1789,7 +1789,7 @@ gans:
       - { num: 7, semaineAvis: 2041-183 }
     valid: '2020-12-18'
   FR6693:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Sud de France'
     title: 'De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône'
     bbox:
@@ -1801,7 +1801,7 @@ gans:
       - { num: 5, semaineAvis: 2025-83 }
     valid: '2020-12-18'
   FR6822:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Nord de Bastia'
     bbox:
@@ -1813,7 +1813,7 @@ gans:
       - { num: 10, semaineAvis: 2025-93 }
     valid: '2020-12-18'
   FR6839:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Sud de France'
     title: 'Étang de Thau'
     bbox:
@@ -1831,7 +1831,7 @@ gans:
       - { num: 33, semaineAvis: 2008-92 }
     valid: '2020-12-18'
   FR6876:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
     bbox:
@@ -1851,7 +1851,7 @@ gans:
       - { num: 12, semaineAvis: 2046-227 }
     valid: '2020-12-18'
   FR6942:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta d''Orchina au Cap Muro'
     bbox:
@@ -1863,7 +1863,7 @@ gans:
       - { num: 13, semaineAvis: 2002-88 }
     valid: '2020-12-18'
   FR6969:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu'
     bbox:
@@ -1875,7 +1875,7 @@ gans:
       - { num: 9, semaineAvis: 2042-95 }
     valid: '2020-12-18'
   FR7003:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Sud de France'
     title: 'Le Cap d''Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan'
     hasPart:
@@ -1889,7 +1889,7 @@ gans:
       - { num: 2, semaineAvis: 2051-88 }
     valid: '2020-12-18'
   FR7050:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Calvi à Cargèse'
     bbox:
@@ -1901,7 +1901,7 @@ gans:
       - { num: 13, semaineAvis: 2031-93 }
     valid: '2020-12-18'
   FR7052:
-    age: 2
+    perempt: 2
     groupTitle: Nouvelle-Calédonie
     title: 'De Nouméa à l''Île des Pins'
     bbox:
@@ -1921,7 +1921,7 @@ gans:
       - { num: 25, semaineAvis: 2016-220 }
     valid: '2020-12-18'
   FR7057:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dunkerque'
     bbox:
@@ -1933,7 +1933,7 @@ gans:
       - { num: 2, semaineAvis: 2048-33 }
     valid: '2020-12-18'
   FR7076:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De Saint-Nazaire à Saint-Malo'
     bbox:
@@ -1945,7 +1945,7 @@ gans:
       - { num: 20, semaineAvis: 2049-45 }
     valid: '2020-12-23'
   FR7086:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'Rade de Cherbourg'
     bbox:
@@ -1957,7 +1957,7 @@ gans:
       - { num: 3, semaineAvis: 2029-40 }
     valid: '2020-12-18'
   FR7088:
-    age: 2
+    perempt: 2
     groupTitle: 'La Martinique'
     title: 'Havre du Robert et Baie du François'
     bbox:
@@ -1973,7 +1973,7 @@ gans:
       - { num: 8, semaineAvis: 2016-258 }
     valid: '2020-12-18'
   FR7095:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Morlaix'
     hasPart:
@@ -1986,7 +1986,7 @@ gans:
       - { num: 6, semaineAvis: 2050-40 }
     valid: '2020-12-18'
   FR7096:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Sud de Corse'
     title: 'Baie de Figari - Port de Bonifacio'
     hasPart:
@@ -1998,7 +1998,7 @@ gans:
       - { num: 6, semaineAvis: 1948-93 }
     valid: '2020-12-18'
   FR7101:
-    age: 2
+    perempt: 2
     groupTitle: Guadeloupe
     title: 'Les Saintes'
     bbox:
@@ -2012,7 +2012,7 @@ gans:
       - { num: 5, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR7120:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Cherbourg'
     bbox:
@@ -2024,7 +2024,7 @@ gans:
       - { num: 56, semaineAvis: 2029-40 }
     valid: '2020-12-18'
   FR7137:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Golfe du Morbihan'
     bbox:
@@ -2040,7 +2040,7 @@ gans:
       - { num: 4, semaineAvis: 2005-50 }
     valid: '2020-12-18'
   FR7143:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Abords des Iles de Houat et de Hoëdic'
     bbox:
@@ -2052,7 +2052,7 @@ gans:
       - { num: 21, semaineAvis: 2049-45 }
     valid: '2020-12-18'
   FR7144:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Vilaine'
     bbox:
@@ -2066,7 +2066,7 @@ gans:
       - { num: 3, semaineAvis: 2044-56 }
     valid: '2020-12-18'
   FR7154:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'De l''île de Bréhat au Cap Fréhel'
     bbox:
@@ -2080,7 +2080,7 @@ gans:
       - { num: 2, semaineAvis: 2049-33 }
     valid: '2020-12-18'
   FR7251:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'De Loctudy à Concarneau'
     bbox:
@@ -2092,7 +2092,7 @@ gans:
       - { num: 10, semaineAvis: 2049-41 }
     valid: '2020-12-18'
   FR7252:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Îles de Glénan'
     bbox:
@@ -2104,7 +2104,7 @@ gans:
       - { num: 5, semaineAvis: 2035-59 }
     valid: '2020-12-18'
   FR7268:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Pacifique Sud'
     title: Nouvelle-Calédonie
     bbox:
@@ -2122,7 +2122,7 @@ gans:
       - { num: 30, semaineAvis: 2036-225 }
     valid: '2020-12-18'
   FR7280:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe d''Ajaccio'
     bbox:
@@ -2134,7 +2134,7 @@ gans:
       - { num: 26, semaineAvis: 2002-88 }
     valid: '2020-12-18'
   FR7413:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Abords de La Rochelle'
     bbox:
@@ -2146,7 +2146,7 @@ gans:
       - { num: 10, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7418:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer'
     bbox:
@@ -2158,7 +2158,7 @@ gans:
       - { num: 13, semaineAvis: 2036-44 }
     valid: '2020-12-18'
   FR7422:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à La Pointe de La Percée'
     bbox:
@@ -2170,7 +2170,7 @@ gans:
       - { num: 54, semaineAvis: 2043-38 }
     valid: '2020-12-18'
   FR7425:
-    age: 2
+    perempt: 2
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Gironde'
     bbox:
@@ -2185,7 +2185,7 @@ gans:
       - { num: 8, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7436:
-    age: 2
+    perempt: 2
     groupTitle: 'Côtes Ouest et Est de Corse'
     title: 'Approches et Port de Bastia - Ports d''Ajaccio et de Propriano'
     hasPart:
@@ -2198,7 +2198,7 @@ gans:
       - { num: 2, semaineAvis: 2044-92 }
     valid: '2020-12-18'
   FR7489:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Indien'
     title: 'Approches Sud-Est de Madagascar'
     bbox:
@@ -2212,7 +2212,7 @@ gans:
       - { num: 5, semaineAvis: 2039-184 }
     valid: '2020-12-18'
   FR7492:
-    age: 2
+    perempt: 2
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Nord'
     bbox:
@@ -2228,7 +2228,7 @@ gans:
       - { num: 9, semaineAvis: 2002-179 }
     valid: '2020-12-18'
   FR7631:
-    age: 2
+    perempt: 2
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie centrale'
     bbox:
@@ -2242,7 +2242,7 @@ gans:
       - { num: 5, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR6418:
-    age: 1.75
+    perempt: 1.75
     groupTitle: 'Iles Gambier'
     title: 'Ile Mangareva'
     bbox:
@@ -2259,7 +2259,7 @@ gans:
       - { num: 8, semaineAvis: 2023-231 }
     valid: '2020-12-18'
   FR6985:
-    age: 1.75
+    perempt: 1.75
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Paagoumène à Ouaco'
     bbox:
@@ -2279,7 +2279,7 @@ gans:
       - { num: 13, semaineAvis: 2025-225 }
     valid: '2020-12-18'
   FR6463:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Îles Gambier'
     title: 'Île Mangareva'
     bbox:
@@ -2295,7 +2295,7 @@ gans:
       - { num: 6, semaineAvis: 2023-231 }
     valid: '2020-12-18'
   FR6768:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Sud)'
     bbox:
@@ -2311,7 +2311,7 @@ gans:
       - { num: 16, semaineAvis: 2018-222 }
     valid: '2020-12-18'
   FR6809:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Océan Indien'
     title: 'Océan Indien - Partie Sud'
     bbox:
@@ -2324,7 +2324,7 @@ gans:
       - { num: 3, semaineAvis: 1951-185 }
     valid: '2020-12-18'
   FR6884:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Océan Indien - Partie Nord'
     title: 'Océan Indien'
     bbox:
@@ -2337,7 +2337,7 @@ gans:
       - { num: 3, semaineAvis: 1951-185 }
     valid: '2020-12-18'
   FR7087:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'La Martinique'
     title: 'Havre de la Trinité et Baie du Galion'
     bbox:
@@ -2350,7 +2350,7 @@ gans:
       - { num: 8, semaineAvis: 1908-261 }
     valid: '2020-12-18'
   FR7352:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: Nuku-Hiva
     hasPart:
@@ -2370,7 +2370,7 @@ gans:
       - { num: 17, semaineAvis: 1938-231 }
     valid: '2020-12-18'
   FR7354:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Fatu-Hiva, Baies de Hiva-Oa et de Tahuata'
     hasPart:
@@ -2399,7 +2399,7 @@ gans:
       - { num: 8, semaineAvis: 2045-234 }
     valid: '2020-12-18'
   FR7378:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Côte de Guyane'
     title: 'Accès au Dégrad des Cannes'
     bbox:
@@ -2412,7 +2412,7 @@ gans:
       - { num: 3, semaineAvis: 2024-250 }
     valid: '2020-12-18'
   FR7380:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Kourou'
     bbox:
@@ -2425,7 +2425,7 @@ gans:
       - { num: 14, semaineAvis: 1943-253 }
     valid: '2020-12-18'
   FR7461:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De Taapuna à la Pointe Vénus'
     bbox:
@@ -2441,7 +2441,7 @@ gans:
       - { num: 20, semaineAvis: 2045-230 }
     valid: '2020-12-18'
   FR7471:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Saint-Barthélemy'
     bbox:
@@ -2457,7 +2457,7 @@ gans:
       - { num: 12, semaineAvis: 2043-264 }
     valid: '2020-12-18'
   FR7493:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Est'
     bbox:
@@ -2472,7 +2472,7 @@ gans:
       - { num: 6, semaineAvis: 1942-178 }
     valid: '2020-12-18'
   FR7494:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Ouest'
     bbox:
@@ -2485,7 +2485,7 @@ gans:
       - { num: 7, semaineAvis: 2002-179 }
     valid: '2020-12-18'
   FR7639:
-    age: 1.5
+    perempt: 1.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Abords et port de l''Île Saint-Pierre'
     hasPart:
@@ -2498,7 +2498,7 @@ gans:
       - { num: 4, semaineAvis: 2021-275 }
     valid: '2020-12-18'
   FR6282:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-Le-Vent'
     title: 'Passes entre les Iles Raiatea et Tahaa'
     bbox:
@@ -2513,7 +2513,7 @@ gans:
       - { num: 21, semaineAvis: 1935-226 }
     valid: '2020-12-18'
   FR6880:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tonga aux Îles des Tuamotu'
     bbox:
@@ -2528,7 +2528,7 @@ gans:
       - { num: 5, semaineAvis: 2046-230 }
     valid: '2020-12-18'
   FR6949:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Abords de Thio'
     bbox:
@@ -2543,7 +2543,7 @@ gans:
       - { num: 17, semaineAvis: 2018-222 }
     valid: '2020-12-18'
   FR7168:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Bourail à la Passe de la Poya'
     bbox:
@@ -2560,7 +2560,7 @@ gans:
       - { num: 8, semaineAvis: 1942-218 }
     valid: '2020-12-18'
   FR7313:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la passe de Koné à Ouaco'
     bbox:
@@ -2575,7 +2575,7 @@ gans:
       - { num: 8, semaineAvis: 2025-225 }
     valid: '2020-12-18'
   FR7353:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Ua-Pou et Ua-Huka'
     hasPart:
@@ -2599,7 +2599,7 @@ gans:
       - { num: 15, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7375:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Koné'
     bbox:
@@ -2614,7 +2614,7 @@ gans:
       - { num: 8, semaineAvis: 1942-219 }
     valid: '2020-12-18'
   FR7472:
-    age: 1.25
+    perempt: 1.25
     groupTitle: 'Petites Antilles'
     title: 'Ports et mouillages de Saint-Martin (Sint Maarten) et de Saint-Barthélemy'
     hasPart:
@@ -2632,7 +2632,7 @@ gans:
       - { num: 6, semaineAvis: 2043-264 }
     valid: '2020-12-18'
   FR4233:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
     bbox:
@@ -2645,7 +2645,7 @@ gans:
       - { num: 5, semaineAvis: 2012-39 }
     valid: '2020-12-18'
   FR6461:
-    age: 1
+    perempt: 1
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier'
     bbox:
@@ -2659,7 +2659,7 @@ gans:
       - { num: 20, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR6464:
-    age: 1
+    perempt: 1
     groupTitle: 'Îles Gambier'
     title: 'Îles Mangareva'
     bbox:
@@ -2673,7 +2673,7 @@ gans:
       - { num: 5, semaineAvis: 2023-230 }
     valid: '2020-12-18'
   FR6618:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Atlantique Nord'
     title: 'Atterrages Ouest des Iles Britanniques'
     bbox:
@@ -2684,7 +2684,7 @@ gans:
       - { num: 10, semaineAvis: 2042-20 }
     valid: '2020-12-18'
   FR6623:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Atlantique Nord'
     title: 'De La Manche au Détroit de Gibraltar et à l''archipel des Açores'
     bbox:
@@ -2695,7 +2695,7 @@ gans:
       - { num: 3, semaineAvis: 2038-72 }
     valid: '2020-12-18'
   FR6683:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Port du Havre'
     bbox:
@@ -2706,7 +2706,7 @@ gans:
       - { num: 10, semaineAvis: 2024-36 }
     valid: '2020-12-18'
   FR6684:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
     bbox:
@@ -2717,7 +2717,7 @@ gans:
       - { num: 9, semaineAvis: 2025-83 }
     valid: '2020-12-18'
   FR6735:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
     bbox:
@@ -2728,7 +2728,7 @@ gans:
       - { num: 134, semaineAvis: 2048-33 }
     valid: '2020-12-23'
   FR6740:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de Tahiti'
     title: 'De Maraa à Faaa'
     bbox:
@@ -2742,7 +2742,7 @@ gans:
       - { num: 7, semaineAvis: 2045-230 }
     valid: '2020-12-18'
   FR6767:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Sud de France'
     title: 'De Fos-sur-Mer à Marseille'
     bbox:
@@ -2753,7 +2753,7 @@ gans:
       - { num: 16, semaineAvis: 2008-92 }
     valid: '2020-12-18'
   FR6797:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Loire'
     bbox:
@@ -2764,7 +2764,7 @@ gans:
       - { num: 25, semaineAvis: 2043-61 }
     valid: '2020-12-18'
   FR6823:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Sud de Bastia'
     bbox:
@@ -2775,7 +2775,7 @@ gans:
       - { num: 1, semaineAvis: 2025-93 }
     valid: '2020-12-18'
   FR6903:
-    age: 1
+    perempt: 1
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Guernsey et Herm'
     bbox:
@@ -2788,7 +2788,7 @@ gans:
       - { num: 4, semaineAvis: 1938-45 }
     valid: '2020-12-18'
   FR6904:
-    age: 1
+    perempt: 1
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Guernsey Est, Herm et Sark'
     bbox:
@@ -2801,7 +2801,7 @@ gans:
       - { num: 5, semaineAvis: 1938-45 }
     valid: '2020-12-18'
   FR6956:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Est de Tahiti'
     title: 'De la Passe de Mahaena à la Baie de Taravao'
     bbox:
@@ -2815,7 +2815,7 @@ gans:
       - { num: 8, semaineAvis: 2042-228 }
     valid: '2020-12-18'
   FR6964:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Pacifique - Côte Ouest d''Amérique du Sud'
     title: 'De Panama au Cap Horn (Cabo de Hornos)'
     bbox:
@@ -2827,7 +2827,7 @@ gans:
       - { num: 59, semaineAvis: 1943-246 }
     valid: '2020-12-18'
   FR6966:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Des Héaux-de-Bréhat au Cap Lévi'
     bbox:
@@ -2838,7 +2838,7 @@ gans:
       - { num: 57, semaineAvis: 2051-41 }
     valid: '2020-12-23'
   FR6990:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
     bbox:
@@ -2849,7 +2849,7 @@ gans:
       - { num: 13, semaineAvis: 2049-45 }
     valid: '2020-12-23'
   FR7015:
-    age: 1
+    perempt: 1
     groupTitle: 'Méditerranée Occidentale'
     title: 'De Gibraltar aux Iles Baléares'
     bbox:
@@ -2860,7 +2860,7 @@ gans:
       - { num: 104, semaineAvis: 1946-86 }
     valid: '2020-12-18'
   FR7030:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Garonne'
     bbox:
@@ -2873,7 +2873,7 @@ gans:
       - { num: 7, semaineAvis: 1944-60 }
     valid: '2020-12-18'
   FR7032:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île de Groix à Belle-Ile'
     bbox:
@@ -2884,7 +2884,7 @@ gans:
       - { num: 18, semaineAvis: 2043-56 }
     valid: '2020-12-23'
   FR7067:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à Belle-Île'
     bbox:
@@ -2895,7 +2895,7 @@ gans:
       - { num: 41, semaineAvis: 2049-45 }
     valid: '2020-12-23'
   FR7094:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Phare du Four à l''Île Vierge'
     bbox:
@@ -2908,7 +2908,7 @@ gans:
       - { num: 2, semaineAvis: 2019-44 }
     valid: '2020-12-18'
   FR7102:
-    age: 1
+    perempt: 1
     groupTitle: Guadeloupe
     title: 'Ports et mouillages de Grande-Terre, de Marie-Galante et de la Désirade'
     hasPart:
@@ -2924,7 +2924,7 @@ gans:
       - { num: 3, semaineAvis: 2042-267 }
     valid: '2020-12-18'
   FR7126:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île Balanec aux Héaux-de-Bréhat'
     bbox:
@@ -2937,7 +2937,7 @@ gans:
       - { num: 22, semaineAvis: 2036-52 }
     valid: '2020-12-18'
   FR7135:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Jacques à Damgan'
     bbox:
@@ -2948,7 +2948,7 @@ gans:
       - { num: 1, semaineAvis: 2050-56 }
     valid: '2020-12-18'
   FR7142:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: Belle-Ile
     bbox:
@@ -2962,7 +2962,7 @@ gans:
       - { num: 26, semaineAvis: 2012-46 }
     valid: '2020-12-18'
   FR7149:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à Portsall'
     bbox:
@@ -2973,7 +2973,7 @@ gans:
       - { num: 14, semaineAvis: 2004-40 }
     valid: '2020-12-18'
   FR7150:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'De Portsall à l''Anse de Kernic'
     bbox:
@@ -2984,7 +2984,7 @@ gans:
       - { num: 19, semaineAvis: 2022-42 }
     valid: '2020-12-18'
   FR7155:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à la Pointe du Grouin'
     bbox:
@@ -2995,7 +2995,7 @@ gans:
       - { num: 22, semaineAvis: 2049-32 }
     valid: '2020-12-23'
   FR7160:
-    age: 1
+    perempt: 1
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Jersey à Guernsey'
     bbox:
@@ -3006,7 +3006,7 @@ gans:
       - { num: 11, semaineAvis: 2036-52 }
     valid: '2020-12-18'
   FR7162:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Muro au Cap de Feno'
     bbox:
@@ -3020,7 +3020,7 @@ gans:
       - { num: 6, semaineAvis: 1945-93 }
     valid: '2020-12-18'
   FR7200:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap d''Antibes au Cap Ferrat'
     bbox:
@@ -3036,7 +3036,7 @@ gans:
       - { num: 20, semaineAvis: 2047-86 }
     valid: '2020-12-18'
   FR7213:
-    age: 1
+    perempt: 1
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
     bbox:
@@ -3052,7 +3052,7 @@ gans:
       - { num: 13, semaineAvis: 1927-230 }
     valid: '2020-12-18'
   FR7214:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France - Côte de Belgique'
     title: 'De Dunkerque à Oostende'
     bbox:
@@ -3066,7 +3066,7 @@ gans:
       - { num: 15, semaineAvis: 2048-33 }
     valid: '2020-12-23'
   FR7222:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Est'
     bbox:
@@ -3078,7 +3078,7 @@ gans:
       - { num: 9, semaineAvis: 1951-188 }
     valid: '2020-12-18'
   FR7232:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Nez de Jobourg à la Pointe de Nacqueville'
     bbox:
@@ -3091,7 +3091,7 @@ gans:
       - { num: 17, semaineAvis: 2051-41 }
     valid: '2020-12-18'
   FR7247:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Port de Boulogne-sur-Mer'
     bbox:
@@ -3102,7 +3102,7 @@ gans:
       - { num: 4, semaineAvis: 2024-33 }
     valid: '2020-12-18'
   FR7249:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et Mouillages en Finistère Sud'
     hasPart:
@@ -3117,7 +3117,7 @@ gans:
       - { num: 9, semaineAvis: 1932-56 }
     valid: '2020-12-18'
   FR7273:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent'
     bbox:
@@ -3131,7 +3131,7 @@ gans:
       - { num: 5, semaineAvis: 1946-220 }
     valid: '2020-12-18'
   FR7311:
-    age: 1
+    perempt: 1
     title: 'La Manche (Partie Ouest)'
     bbox:
       SW: '48°14,94''N — 006°55,09''W'
@@ -3141,7 +3141,7 @@ gans:
       - { num: 18, semaineAvis: 2049-25 }
     valid: '2020-12-23'
   FR7324:
-    age: 1
+    perempt: 1
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin'
     bbox:
@@ -3153,7 +3153,7 @@ gans:
       - { num: 3, semaineAvis: 2019-256 }
     valid: '2020-12-18'
   FR7369:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
     bbox:
@@ -3167,7 +3167,7 @@ gans:
       - { num: 4, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR7377:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte de Guyane'
     title: 'Ports du Larivot et de Cayenne'
     bbox:
@@ -3179,7 +3179,7 @@ gans:
       - { num: 2, semaineAvis: 1912-250 }
     valid: '2020-12-18'
   FR7390:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Sud de France'
     title: 'Port de Marseille'
     bbox:
@@ -3190,7 +3190,7 @@ gans:
       - { num: 10, semaineAvis: 2008-92 }
     valid: '2020-12-18'
   FR7391:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Sud de France'
     title: 'Abords Sud de Marseille'
     bbox:
@@ -3201,7 +3201,7 @@ gans:
       - { num: 6, semaineAvis: 2008-92 }
     valid: '2020-12-18'
   FR7394:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Gildas au Goulet de Fromentine'
     bbox:
@@ -3216,7 +3216,7 @@ gans:
       - { num: 17, semaineAvis: 2019-60 }
     valid: '2020-12-18'
   FR7416:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Abords Sud de Boulogne-sur-Mer'
     bbox:
@@ -3227,7 +3227,7 @@ gans:
       - { num: 13, semaineAvis: 2024-33 }
     valid: '2020-12-18'
   FR7417:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe'
     bbox:
@@ -3238,7 +3238,7 @@ gans:
       - { num: 62, semaineAvis: 2038-35 }
     valid: '2020-12-18'
   FR7419:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
     hasPart:
@@ -3252,7 +3252,7 @@ gans:
       - { num: 5, semaineAvis: 2024-36 }
     valid: '2020-12-18'
   FR7423:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Raz de Sein'
     bbox:
@@ -3265,7 +3265,7 @@ gans:
       - { num: 7, semaineAvis: 2012-43 }
     valid: '2020-12-18'
   FR7426:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de la Coubre à la Pointe de la Négade'
     bbox:
@@ -3278,7 +3278,7 @@ gans:
       - { num: 1, semaineAvis: 2041-60 }
     valid: '2020-12-18'
   FR7428:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Bassin d''Arcachon'
     bbox:
@@ -3291,7 +3291,7 @@ gans:
       - { num: 16, semaineAvis: 2035-62 }
     valid: '2020-12-18'
   FR7430:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'Abords et Port de Bayonne'
     bbox:
@@ -3304,7 +3304,7 @@ gans:
       - { num: 12, semaineAvis: 2050-66 }
     valid: '2020-12-18'
   FR7440:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France'
     title: 'De Vieux Boucau à la Baie de Fontarabie'
     bbox:
@@ -3317,7 +3317,7 @@ gans:
       - { num: 27, semaineAvis: 2050-66 }
     valid: '2020-12-18'
   FR7444:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Lévi à Barfleur'
     bbox:
@@ -3328,7 +3328,7 @@ gans:
       - { num: 9, semaineAvis: 2024-40 }
     valid: '2020-12-18'
   FR7486:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Nord'
     bbox:
@@ -3340,7 +3340,7 @@ gans:
       - { num: 7, semaineAvis: 2007-195 }
     valid: '2020-12-18'
   FR7491:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Indien - Canal du Mozambique - Côte Nord de Madagasikara (Madagascar)'
     title: 'De Nosy Bé à la Baie d''Antsiranana'
     bbox:
@@ -3352,7 +3352,7 @@ gans:
       - { num: 15, semaineAvis: 1940-183 }
     valid: '2020-12-18'
   FR7640:
-    age: 1
+    perempt: 1
     groupTitle: 'Abords Sud de Terre-Neuve - Miquelon'
     title: 'Port et mouillages de l''Île Miquelon'
     hasPart:
@@ -3365,7 +3365,7 @@ gans:
       - { num: 3, semaineAvis: 2010-275 }
     valid: '2020-12-18'
   FR7657:
-    age: 1
+    perempt: 1
     groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De Mimizan-Plage à Cabo de Ajo'
     bbox:
@@ -3376,7 +3376,7 @@ gans:
       - { num: 27, semaineAvis: 2050-66 }
     valid: '2020-12-18'
   FR7665:
-    age: 1
+    perempt: 1
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cap Negre au Cap Cerbère'
     bbox:
@@ -3389,7 +3389,7 @@ gans:
       - { num: 1, semaineAvis: 2051-77 }
     valid: '2020-12-18'
   FR7798:
-    age: 1
+    perempt: 1
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique'
     bbox:
@@ -3401,7 +3401,7 @@ gans:
       - { num: 2, semaineAvis: 1951-185 }
     valid: '2020-12-18'
   FR6320:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Iles Tuamotu'
     title: Makatea
     bbox:
@@ -3416,7 +3416,7 @@ gans:
       - { num: 3, semaineAvis: 1837-208 }
     valid: '2020-12-18'
   FR6554:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'Baie Chasseloup'
     bbox:
@@ -3429,7 +3429,7 @@ gans:
       - { num: 7, semaineAvis: 2007-216 }
     valid: '2020-12-18'
   FR6607:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie Sud-Est'
     bbox:
@@ -3442,7 +3442,7 @@ gans:
       - { num: 19, semaineAvis: 2046-231 }
     valid: '2020-12-18'
   FR6671:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers du Corail et des Salomon'
     bbox:
@@ -3455,7 +3455,7 @@ gans:
       - { num: 6, semaineAvis: 2036-225 }
     valid: '2020-12-18'
   FR6717:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Île de Tahiti (Côte Sud) - Mouillages'
     title: 'Port Phaeton (Teauaa) - Tapuaeraha'
     hasPart:
@@ -3468,7 +3468,7 @@ gans:
       - { num: 4, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR6933:
-    age: 0.75
+    perempt: 0.75
     groupTitle: Nouvelle-Calédonie
     title: 'De l''Île Ouen à l''Île des Pins'
     bbox:
@@ -3481,7 +3481,7 @@ gans:
       - { num: 3, semaineAvis: 1930-222 }
     valid: '2020-12-18'
   FR6957:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
     title: 'De la Baie de Taravao à la Passe d''Aiurua'
     bbox:
@@ -3494,7 +3494,7 @@ gans:
       - { num: 6, semaineAvis: 2042-228 }
     valid: '2020-12-18'
   FR7021:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord'
     bbox:
@@ -3507,7 +3507,7 @@ gans:
       - { num: 215, semaineAvis: 2025-244 }
     valid: '2020-12-18'
   FR7049:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Loyauté à l''île Hunter'
     bbox:
@@ -3524,7 +3524,7 @@ gans:
       - { num: 3, semaineAvis: 2036-225 }
     valid: '2020-12-18'
   FR7051:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Côte Nord-Est de Nouvelle-Calédonie'
     title: 'Du Cap Colnett à Touho'
     bbox:
@@ -3539,7 +3539,7 @@ gans:
       - { num: 5, semaineAvis: 1838-205 }
     valid: '2020-12-18'
   FR7234:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'Îles Futuna et Alofi'
     bbox:
@@ -3555,7 +3555,7 @@ gans:
       - { num: 3, semaineAvis: 1930-217 }
     valid: '2020-12-18'
   FR7281:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Archipel des Tuamotu'
     title: Hao
     bbox:
@@ -3573,7 +3573,7 @@ gans:
       - { num: 14, semaineAvis: 2043-230 }
     valid: '2020-12-18'
   FR7319:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De l''Ile Pam au Cap Colnett'
     bbox:
@@ -3590,7 +3590,7 @@ gans:
       - { num: 4, semaineAvis: 1827-205 }
     valid: '2020-12-18'
   FR7368:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Ile Malden aux Iles de la Société'
     bbox:
@@ -3603,7 +3603,7 @@ gans:
       - { num: 13, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR7645:
-    age: 0.75
+    perempt: 0.75
     groupTitle: 'Côte Sud-Est de Nouvelle-Calédonie'
     title: 'Canal de La Havannah et Canal Woodin'
     bbox:
@@ -3618,7 +3618,7 @@ gans:
       - { num: 4, semaineAvis: 1930-222 }
     valid: '2020-12-18'
   FR6283:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Ile Tahaa'
     bbox:
@@ -3630,7 +3630,7 @@ gans:
       - { num: 9, semaineAvis: 1843-210 }
     valid: '2020-12-18'
   FR6525:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Côte Sud de Tahiti'
     title: 'Abords de Port Phaeton'
     bbox:
@@ -3642,7 +3642,7 @@ gans:
       - { num: 2, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR6553:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Kouaoua'
     bbox:
@@ -3654,7 +3654,7 @@ gans:
       - { num: 7, semaineAvis: 2009-220 }
     valid: '2020-12-18'
   FR6605:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Iles de la Société - Côte Nord-Est de Tahiti'
     title: 'De la Pointe Vénus à Mahaena'
     bbox:
@@ -3666,7 +3666,7 @@ gans:
       - { num: 5, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR6619:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Atlantique Nord'
     title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
     bbox:
@@ -3677,7 +3677,7 @@ gans:
       - { num: 197, semaineAvis: 2045-277 }
     valid: '2020-12-23'
   FR6670:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers de Tasman et du Corail'
     bbox:
@@ -3689,7 +3689,7 @@ gans:
       - { num: 3, semaineAvis: 2036-225 }
     valid: '2020-12-18'
   FR6770:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
     title: 'Abords Sud-Ouest de l''Île des Pins'
     bbox:
@@ -3701,7 +3701,7 @@ gans:
       - { num: 2, semaineAvis: 1842-204 }
     valid: '2020-12-18'
   FR6808:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Atlantique Sud'
     title: 'Océan Atlantique Sud - Partie Est'
     bbox:
@@ -3713,7 +3713,7 @@ gans:
       - { num: 6, semaineAvis: 2046-254 }
     valid: '2020-12-21'
   FR6817:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'De la Nouvelle-Zélande aux Iles Fidji et Samoa'
     bbox:
@@ -3725,7 +3725,7 @@ gans:
       - { num: 2, semaineAvis: 2011-215 }
     valid: '2020-12-18'
   FR6820:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''Île Lifou - Baie du Santal'
     bbox:
@@ -3740,7 +3740,7 @@ gans:
       - { num: 3, semaineAvis: 1749-204 }
     valid: '2020-12-18'
   FR6828:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Côte Sud-Ouest de Tahiti'
     title: 'De Atehiti à Maraa'
     bbox:
@@ -3752,7 +3752,7 @@ gans:
       - { num: 10, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR6898:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Atlantique Nord'
     title: 'Mer des Antilles (Mer des Caraïbes)'
     bbox:
@@ -3763,7 +3763,7 @@ gans:
       - { num: 32, semaineAvis: 2051-262 }
     valid: '2020-12-23'
   FR7011:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Nouvelle Calédonie'
     title: 'De la Presqu''île Neuméni à Port-Ounia'
     bbox:
@@ -3777,7 +3777,7 @@ gans:
       - { num: 7, semaineAvis: 1932-218 }
     valid: '2020-12-18'
   FR7166:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'Océan Pacifique Sud'
     bbox:
@@ -3789,7 +3789,7 @@ gans:
       - { num: 176, semaineAvis: 1845-200 }
     valid: '2020-12-18'
   FR7305:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
     title: 'De la Passe d''Aiurua à la Passe Havae'
     bbox:
@@ -3801,7 +3801,7 @@ gans:
       - { num: 9, semaineAvis: 2018-228 }
     valid: '2020-12-18'
   FR7314:
-    age: 0.5
+    perempt: 0.5
     groupTitle: IlesTuamotu
     title: Ahe
     hasPart:
@@ -3814,7 +3814,7 @@ gans:
       - { num: 8, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7318:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De Poum à l''Île Pam'
     bbox:
@@ -3826,7 +3826,7 @@ gans:
       - { num: 3, semaineAvis: 1827-205 }
     valid: '2020-12-18'
   FR7320:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Côte Nord-Ouest de Nouvelle-Calédonie'
     title: 'De Koumac à Poum'
     bbox:
@@ -3841,7 +3841,7 @@ gans:
       - { num: 2, semaineAvis: 2044-222 }
     valid: '2020-12-18'
   FR7347:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tuamotu aux Îles Australes'
     bbox:
@@ -3853,7 +3853,7 @@ gans:
       - { num: 2, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR7350:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Canal du Mozambique'
     title: 'Récif du Geyser - Banc de la Zélée'
     bbox:
@@ -3864,7 +3864,7 @@ gans:
       - { num: 2, semaineAvis: 1938-184 }
     valid: '2020-12-18'
   FR7355:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Hiva-Oa, Tahuata et Mohotani'
     bbox:
@@ -3879,7 +3879,7 @@ gans:
       - { num: 2, semaineAvis: 1919-229 }
     valid: '2020-12-18'
   FR7458:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Iles Tuamotu'
     title: Aratika
     hasPart:
@@ -3893,7 +3893,7 @@ gans:
       - { num: 4, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7459:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Îles Tuamotu'
     title: Tikehau
     hasPart:
@@ -3907,7 +3907,7 @@ gans:
       - { num: 2, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7620:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
     bbox:
@@ -3921,7 +3921,7 @@ gans:
       - { num: 3, semaineAvis: 1926-266 }
     valid: '2020-12-18'
   FR7756:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Touho à Ponérihouen'
     bbox:
@@ -3935,7 +3935,7 @@ gans:
       - { num: 3, semaineAvis: 1925-221 }
     valid: '2020-12-18'
   FR7797:
-    age: 0.5
+    perempt: 0.5
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique'
     bbox:
@@ -3946,7 +3946,7 @@ gans:
       - { num: 2, semaineAvis: 2007-195 }
     valid: '2020-12-18'
   FR4232:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique'
     title: 'Îles Australes'
     hasPart:
@@ -3959,7 +3959,7 @@ gans:
       - { num: 1, semaineAvis: 2043-225 }
     valid: '2020-12-18'
   FR5978:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
     hasPart:
@@ -3972,7 +3972,7 @@ gans:
       - { num: 1, semaineAvis: 1935-216 }
     valid: '2020-12-18'
   FR6279:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Iles Rimatara et Maria'
     hasPart:
@@ -3984,7 +3984,7 @@ gans:
       - { num: 4, semaineAvis: 1939-227 }
     valid: '2020-12-18'
   FR6284:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Partie Sud de Raiatea'
     bbox:
@@ -3995,7 +3995,7 @@ gans:
       - { num: 1, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR6420:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Iles Tuamotu'
     title: 'De Mataiva à Rangiroa et Makatea'
     bbox:
@@ -4006,7 +4006,7 @@ gans:
       - { num: 1, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR6434:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Archipel de la Société - Iles Sous-le-Vent'
     title: Huahine
     bbox:
@@ -4020,7 +4020,7 @@ gans:
       - { num: 16, semaineAvis: 1813-210 }
     valid: '2020-12-18'
   FR6540:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'Baie de Saint-Vincent'
     bbox:
@@ -4031,7 +4031,7 @@ gans:
       - { num: 2, semaineAvis: 1927-217 }
     valid: '2020-12-18'
   FR6657:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique Sud - Îles de la Société - Île de Moorea'
     title: 'Baies de Cook et d''Opunohu'
     bbox:
@@ -4042,7 +4042,7 @@ gans:
       - { num: 2, semaineAvis: 2018-226 }
     valid: '2020-12-18'
   FR7097:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Baie de Bourail - Coupée Mara et Baie de Moindou'
     hasPart:
@@ -4053,7 +4053,7 @@ gans:
       - { num: 1, semaineAvis: 1808-205 }
     valid: '2020-12-18'
   FR7167:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara'
     bbox:
@@ -4064,7 +4064,7 @@ gans:
       - { num: 9, semaineAvis: 1927-217 }
     valid: '2020-12-18'
   FR7248:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Iles Tuamotu'
     title: Apataki
     hasPart:
@@ -4077,7 +4077,7 @@ gans:
       - { num: 4, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7259:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Iles Loyauté'
     title: 'Ile Maré'
     hasPart:
@@ -4092,7 +4092,7 @@ gans:
       - { num: 16, semaineAvis: 1704-205 }
     valid: '2020-12-18'
   FR7321:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Récifs Bampton à l''île Hunter'
     bbox:
@@ -4103,7 +4103,7 @@ gans:
       - { num: 3, semaineAvis: 1935-216 }
     valid: '2020-12-18'
   FR7329:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Archipel des Tuamotu'
     title: Kauehi
     hasPart:
@@ -4116,7 +4116,7 @@ gans:
       - { num: 9, semaineAvis: 1932-226 }
     valid: '2020-12-18'
   FR7346:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Iles Tuamotu - Iles du roi Georges'
     title: 'Takaroa et Takapoto'
     bbox:
@@ -4129,7 +4129,7 @@ gans:
       - { num: 6, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7371:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Tahiti aux Îles Marquises'
     bbox:
@@ -4140,7 +4140,7 @@ gans:
       - { num: 1, semaineAvis: 2037-228 }
     valid: '2020-12-18'
   FR7372:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Archipel des Tuamotu'
     title: Fakarava
     hasPart:
@@ -4153,7 +4153,7 @@ gans:
       - { num: 14, semaineAvis: 1941-230 }
     valid: '2020-12-18'
   FR7453:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Archipel des Tuamotu'
     title: Makemo
     bbox:
@@ -4167,7 +4167,7 @@ gans:
       - { num: 11, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7454:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Iles Tuamotu'
     title: Faaite
     bbox:
@@ -4180,7 +4180,7 @@ gans:
       - { num: 9, semaineAvis: 2044-230 }
     valid: '2020-12-18'
   FR7762:
-    age: 0.25
+    perempt: 0.25
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Ouest)'
     bbox:
@@ -4191,72 +4191,72 @@ gans:
       - { num: 1, semaineAvis: 1930-220 }
     valid: '2020-12-18'
   FR3127:
-    age: 0
+    perempt: 0
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
     valid: '2020-12-18'
   FR6033:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
     valid: '2020-12-18'
   FR6165:
-    age: 0
+    perempt: 0
     groupTitle: 'Polynésie française - Iles Australes'
     title: Rurutu
     valid: '2020-12-18'
   FR6207:
-    age: 0
+    perempt: 0
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Raivavae (Vavitu)'
     valid: '2020-12-18'
   FR6424:
-    age: 0
+    perempt: 0
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Tubuai'
     valid: '2020-12-18'
   FR6497:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien - Archipel des Crozet - Groupe de l''Est'
     title: 'Île de la Possession, Île de l''Est'
     valid: '2020-12-18'
   FR6589:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Canala'
     valid: '2020-12-18'
   FR6604:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
     valid: '2020-12-18'
   FR6688:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Iles de la Société, de Manuae à Tahiti'
     valid: '2020-12-18'
   FR6689:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (Partie Ouest)'
     valid: '2020-12-18'
   FR6690:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie centrale) - De Makemo à Tatakoto'
     valid: '2020-12-18'
   FR6691:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie Est) de Hao à Fangataufa'
     valid: '2020-12-18'
   FR6692:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Des Îles Tuamotu aux Îles Gambier'
     valid: '2020-12-18'
   FR6713:
-    age: 0
+    perempt: 0
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Nord-Est de la Corse'
     bbox:
@@ -4265,7 +4265,7 @@ gans:
     ganEdition: 'Edition n°5 - 2016'
     valid: '2020-12-18'
   FR6821:
-    age: 0
+    perempt: 0
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Ouest de Corse'
     bbox:
@@ -4274,27 +4274,27 @@ gans:
     ganEdition: 'Edition n°2 - 2009'
     valid: '2020-12-18'
   FR6838:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
     valid: '2020-12-18'
   FR6850:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Nord de Corse'
     title: 'Saint-Florent, Centuri et Macinaggio'
     valid: '2020-12-18'
   FR6855:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Est de Corse'
     title: 'Du phare d''Alistro à Solenzara'
     valid: '2020-12-18'
   FR6907:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Etang de Berre'
     valid: '2020-12-18'
   FR6930:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Des Roches de Portsall au Plateau des Roches Douvres'
     bbox:
@@ -4303,117 +4303,117 @@ gans:
     ganEdition: 'Edition n°2 - 2009'
     valid: '2020-12-18'
   FR6934:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Alderney (Aurigny) et les Casquets'
     valid: '2020-12-18'
   FR6937:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Jersey - Côte Nord'
     valid: '2020-12-18'
   FR6938:
-    age: 0
+    perempt: 0
     groupTitle: 'Îles Anglo-Normandes - Jersey'
     title: 'Abords de Saint Hélier'
     valid: '2020-12-18'
   FR6939:
-    age: 0
+    perempt: 0
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Jersey - Côte Est'
     valid: '2020-12-18'
   FR6955:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa'
     valid: '2020-12-18'
   FR7004:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
     valid: '2020-12-18'
   FR7073:
-    age: 0
+    perempt: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
     valid: '2020-12-18'
   FR7098:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Sud-Ouest de Nouvelle Calédonie'
     title: 'Baies d''Ouaraï et Chambeyron - Passes d''Ouaraï et d''Isié'
     valid: '2020-12-18'
   FR7107:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
     valid: '2020-12-18'
   FR7129:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
     valid: '2020-12-18'
   FR7136:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'De la Baie de Pont-Mahé à Piriac-sur-Mer'
     valid: '2020-12-18'
   FR7138:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et mouillages en Bretagne Sud'
     valid: '2020-12-18'
   FR7159:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
     valid: '2020-12-18'
   FR7170:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien'
     title: 'Îles Saint-Paul et Amsterdam'
     valid: '2020-12-18'
   FR7171:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien'
     title: 'Approches des Îles Saint-Paul et Amsterdam'
     valid: '2020-12-18'
   FR7207:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
     valid: '2020-12-18'
   FR7210:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Atlantique'
     title: 'Atterrages de l''entrée de La Manche - Mer Celtique'
     valid: '2020-12-18'
   FR7218:
-    age: 0
+    perempt: 0
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
     valid: '2020-12-18'
   FR7246:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
     valid: '2020-12-18'
   FR7260:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Apataki à Fakarava'
     valid: '2020-12-18'
   FR7261:
-    age: 0
+    perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'De Fakarava à Makemo'
     valid: '2020-12-18'
   FR7262:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Makemo à Marutea Nord'
     valid: '2020-12-18'
   FR7271:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
     bbox:
@@ -4422,476 +4422,476 @@ gans:
     ganEdition: 'Publication 1990'
     valid: '2020-12-18'
   FR7283:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
     valid: '2020-12-18'
   FR7293:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: Manihi
     valid: '2020-12-18'
   FR7316:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe de Sagone'
     valid: '2020-12-18'
   FR7317:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dieppe'
     valid: '2020-12-18'
   FR7341:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Granville'
     valid: '2020-12-18'
   FR7351:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Goyeta à la Passe de Koné - Abords de Koné'
     valid: '2020-12-18'
   FR7356:
-    age: 0
+    perempt: 0
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Eiao, Hatutaa et Motu One'
     valid: '2020-12-18'
   FR7357:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Îles Marquises (Fenua Enata)'
     valid: '2020-12-18'
   FR7358:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Est'
     valid: '2020-12-18'
   FR7359:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Ouest'
     valid: '2020-12-18'
   FR7370:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Mururoa à Ducie Island'
     valid: '2020-12-18'
   FR7373:
-    age: 0
+    perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: Rangiroa
     valid: '2020-12-18'
   FR7393:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Du port de La Pointe Rouge à Cassis - Calanques de Cassis'
     valid: '2020-12-18'
   FR7396:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
     valid: '2020-12-18'
   FR7398:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret'
     valid: '2020-12-18'
   FR7402:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
     valid: '2020-12-18'
   FR7410:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ile d''Yeu'
     valid: '2020-12-18'
   FR7411:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Port des Sables-d''Olonne'
     valid: '2020-12-18'
   FR7412:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
     valid: '2020-12-18'
   FR7427:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'La Gironde - La Garonne et La Dordogne'
     valid: '2020-12-18'
   FR7431:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Baies de Fontarabie et de Saint-Jean-de-Luz'
     valid: '2020-12-18'
   FR7442:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Sud de France - Principauté de Monaco'
     title: 'De Villefranche-sur-Mer à Menton'
     valid: '2020-12-18'
   FR7456:
-    age: 0
+    perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'Toau - De Niau à Fakarava'
     valid: '2020-12-18'
   FR7457:
-    age: 0
+    perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'Raroia et Takume'
     valid: '2020-12-18'
   FR7475:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
     title: 'De Puerto Rico à Trinidad'
     valid: '2020-12-23'
   FR7480:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte de Guyane'
     title: 'Accès au fleuve Kourou - Port de Pariacabo'
     valid: '2020-12-18'
   FR7481:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte de Guyane'
     title: 'Approches de Kourou - Îles du Salut'
     valid: '2020-12-18'
   FR7484:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
     title: 'De Paramaribo aux Iles du Salut'
     valid: '2020-12-18'
   FR7485:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Atlantique - Côtes de Guyane Française et du Brésil'
     title: 'Des Iles du Salut à Cabo Orange'
     valid: '2020-12-18'
   FR7591:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien - Océan Pacifique Sud - Antarctique'
     title: 'De Cape Goodenough à Cape Adare'
     valid: '2020-12-18'
   FR7592:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'Du Glacier Dibble au Glacier Mertz'
     valid: '2020-12-18'
   FR7593:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Antarctique - Terre Adélie'
     title: 'De l''Ile Hélène au Rocher du Débarquement - Archipel de Pointe Géologie'
     valid: '2020-12-18'
   FR7594:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'De la Pointe Ebba au Cap de la Découverte'
     valid: '2020-12-18'
   FR7604:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Indien (Partie Sud)'
     title: 'De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam'
     valid: '2020-12-18'
   FR7606:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
     valid: '2020-12-18'
   FR7663:
-    age: 0
+    perempt: 0
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'
     valid: '2020-12-18'
   FR7758:
-    age: 0
+    perempt: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Îles Belep'
     valid: '2020-12-18'
   FR7760:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Nord)'
     valid: '2020-12-18'
   FR7761:
-    age: 0
+    perempt: 0
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
     valid: '2020-12-18'
   FR0101:
-    age: -1
+    perempt: -1
     groupTitle: 'Planisphère terrestre'
     title: 'Planisphère terrestre'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR0101/1715'
   FR6280:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-Le-Vent'
     title: 'Partie Nord de Raiatea - Port d''Uturoa'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6280/1931'
   FR6281:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-le-Vent'
     title: 'Partie Sud de Tahaa'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6281/1931'
   FR6462:
-    age: -1
+    perempt: -1
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier, partie Sud'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6462/1719'
   FR6498:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Indien'
     title: 'Îles Crozet'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6498/1844'
   FR6658:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Île de Moorea - Côte Nord-Ouest de Tahiti'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6658/1846'
   FR6687:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Abords de Nouméa - Passes de Boulari et de Dumbéa'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6687/1930'
   FR6741:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Indien'
     title: 'Îles Kerguelen'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6741/1901'
   FR6827:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de Nouvelle-Calédonie'
     title: 'Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6827/1901'
   FR6941:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Lizard Point à Dartmouth'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6941/1946'
   FR6986:
-    age: -1
+    perempt: -1
     groupTitle: 'Nouvelle Calédonie'
     title: 'De Port-Ounia au Cap Ndoua'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR6986/1720'
   FR7092:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7092/1929'
   FR7123:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Ouest de France'
     title: 'Ile Molène - Ile d''Ouessant - Passage du Fromveur'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7123/1945'
   FR7131:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France'
     title: 'Du Hâvre de Rothéneuf à Cancale'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7131/1943'
   FR7322:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Muéo'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7322/1933'
   FR7376:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte de Guyane'
     title: 'Embouchure du fleuve Maroni'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7376/1714'
   FR7392:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Couronne au Cap Croisette - Golfe de Marseille'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7392/1935'
   FR7407:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'De Toulon à Cavalaire-sur-Mer - Iles d''Hyères'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7407/1844'
   FR7466:
-    age: -1
+    perempt: -1
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7466/1932'
   FR7487:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Indien'
     title: 'Approches Nord - Est de Madagascar'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7487/1901'
   FR7488:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Indien'
     title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7488/1707'
   FR7490:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Indien'
     title: 'Archipel des Comores'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7490/1642'
   FR7616:
-    age: -1
+    perempt: -1
     groupTitle: 'Petites Antilles'
     title: Dominica
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7616/1901'
   FR7644:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Accès au Port de Nouméa'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7644/1724'
   FR7751:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Pacifique Nord'
     title: 'Île Clipperton - Zone Economique Exclusive'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7751/1725'
   FR7755:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Ponérihouen au Cap Dumoulin'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7755/1717'
   FR7250:
-    age: -1
+    perempt: -1
     title: 'De la pointe de la Torche à Loctudy'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7250/2027'
   FR7750:
-    age: -1
+    perempt: -1
     title: 'Approches de l’Île Clipperton'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7750/2040'
   FR7764:
-    age: -1
+    perempt: -1
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7764/2026'
   FR6608:
-    age: -1
+    perempt: -1
     title: 'Mer du Nord'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6608/2021'
   FR6651:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6651/2048'
   FR6757:
-    age: -1
+    perempt: -1
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6757/2040'
   FR6815:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Atlantique Nord'
     title: 'Océan Atlantique Nord - Partie Est'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6815/2043'
   FR6844:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6844/2046'
   FR6929:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Est de Corse'
     title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6929/2048'
   FR7008:
-    age: -1
+    perempt: -1
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7008/2046'
   FR7033:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Ouest de France'
     title: 'De Quiberon au Croisic (Spéciale P)'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7033/2049'
   FR7043:
-    age: -1
+    perempt: -1
     title: 'Océan Atlantique Nord - Partie Ouest'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7043/2039'
   FR7066:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île Vierge à la Pointe de Penmarc''h - Abords de Brest'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7066/2044'
   FR7068:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Ouest de France'
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7068/2049'
   FR7091:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Toulon'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7091/2046'
   FR7151:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France'
     title: 'De l''anse de Kernic à l''Ile Grande'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7151/2050'
   FR7152:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile Grande à l''Ile de Bréhat'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7152/2049'
   FR7183:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7183/2040'
   FR7205:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7205/2040'
   FR7282:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'Rade d''Hyères'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7282/2044'
   FR7292:
-    age: -1
+    perempt: -1
     groupTitle: 'Mer Méditerranée'
     title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7292/2046'
   FR7323:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7323/2048'
   FR7330:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Atlantique Nord'
     title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7330/1602'
   FR7344:
-    age: -1
+    perempt: -1
     groupTitle: 'Manche - Mer du Nord'
     title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7344/1602'
   FR7360:
-    age: -1
+    perempt: -1
     groupTitle: 'Mer Méditerranée'
     title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7360/1602'
   FR7406:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Sud de France'
     title: 'De Marseille à Toulon'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7406/2046'
   FR7424:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7424/2048'
   FR7510:
-    age: -1
+    perempt: -1
     groupTitle: 'Côte Nord-Est de Sardaigne'
     title: 'De Capo Bellavista aux Bouches de Bonifacio'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7510/2044'
   FR7625:
-    age: -1
+    perempt: -1
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7625/2032'
   FR8101:
-    age: -1
+    perempt: -1
     title: 'MANCHEGRID - Carte générale'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR8101/1042'
   FR8502:
-    age: -1
+    perempt: -1
     title: 'Action de l''Etat en Mer en ZMSOI'
     harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR8502/0953'
 eof: null

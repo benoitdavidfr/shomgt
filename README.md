@@ -35,6 +35,7 @@ Ce projet est décomposé en 4 modules:
       notamment sa [ZEE](https://github.com/benoitdavidfr/shomgt/tree/master/cat2/france.geojson),
     - d'identifier la liste des cartes à actualiser, à supprimer ou à ajouter,
     - de fournir au module précédent les caractéristiques des cartes,
+  - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master),
   - un [ensemble d'éléments partagés entre modules (lib)](https://github.com/benoitdavidfr/shomgt/tree/master/lib),
     notamment un package de gestion de la géométrie.
 

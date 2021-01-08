@@ -2,11 +2,11 @@ title: master - exposition master
 path: /geoapi/shomgt/master
 doc: |
   Mise en oeuvre d'un mode maitre/esclave.
-  Le maitre expose au moyen d'un fil Atom le catalogue, les cartes courantes et les cartes obsolètes.
+  Le maitre expose au moyen d'un fil Atom le catalogue, les cartes courantes et la liste des cartes obsolètes.
   L'esclave consulte régulièrement ce fil pour:
     - mettre à jour si nécessaire son catalogue,
     - identifier les nouvelles cartes, les télécharger, puis les installer
-    - identifier les cartes obsolètes et les supprime de son portefeuille.
+    - identifier les cartes obsolètes et les supprimer de son portefeuille.
   Un esclave s'installe beaucoup plus simplement et se met à jour quasi-automatiquement.
   On pourrait mettre en place un cron pour que la mise à jour soit réellement automatique.
   
@@ -15,11 +15,13 @@ doc: |
   et les gérer à la main.
   Le mode **maitre** ajoute au mode autonome le fil Atom de téléchargement dans master.
   Le mode **esclave** automatise la gestion des évolutions des cartes grâce à ../updt/slaveupdt.php
-  
-  Il y a qqs limites du mode esclave:
-    - l'accès au fil doit se faire sans authentification, donc a priori le serveur doit être sur le RIE
-    - les cartes AEM et mancheGrid ne sont pas chargées.
+
+  Pour mettre en oeuvre un maitre il faut créer le fichier histo.pser en effectuant en CLI 'php histo.php'
+  et le mettre à jour en l'effacant à chaque modification du portefeuille de cartes.
 journal: |
+  7-8/1/2021:
+    - ajout possibilité de login avec un login et un mot de passe
+    - ajout caractéristiques des cartes et zones couvertes
   3-4/1/2021:
     - écriture du client dans ../updt/slaveupdt.php
     - copie de ce répertoire sur geoapi.fr/shomgt

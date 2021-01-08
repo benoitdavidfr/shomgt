@@ -4,8 +4,6 @@ name: index.php
 title: cat2/index.php - Gestion du catalogue des cartes du Shom v2
 classes:
 doc: |
-  Du point de vue opérationnel le process est:
-  
 journal: |
   13/12/2020:
     - passage en V2
@@ -21,8 +19,8 @@ journal: |
 <li><a href='mapcat.php'>Affiche le catalogue en Html</a></li>
 <li><a href='llmap.php'>Affiche le catalogue sous la forme d'une carte</a></li>
 <li><a href='gestion.php?action=compCat'>
-  Détecte de nouvelles cartes ou des cartes périmées par confontation du catalogue au flux WFS</a></li>
-<li><a href='gan.php'>Liste les cartes à mettre à jour ordonnées par age décroissant</a></li>
+  Détecte de nouvelles cartes ou des cartes obsolètes par confontation du catalogue au flux WFS</a></li>
+<li><a href='gan.php'>Liste les cartes à mettre à jour ordonnées des plus périmées au moins périmées</a></li>
 </ul>
 <h3>Autres actions</h3><ul>
   <li><a href='mapcat.php'>Gestion du catalogue</a></li>
@@ -47,7 +45,7 @@ Le processus de mise à jour consiste à :<ol>
   et pertinentes pour ShomGt, c'est à dire cartographiant un espace français ;</li>
 <li>supprimer du portefeuille les cartes <b>obsolètes</b>, c'est à dire celles que le Shom indique comme <i>plus en vigueur</i>,
   souvent remplacées par une nouvelle carte ;</li>
-<li>remplacer les cartes <b>plus à jour</b> dans ShomGt, c'est à dire faisant l'objet soit d'une nouvelle édition, soit de corrections ; 
+<li>remplacer les cartes <b>périmées</b> dans ShomGt, c'est à dire faisant l'objet soit d'une nouvelle édition, soit de corrections ; 
   ce remplacement n'est effectué que lorsque les évolutions sont suffisamment importantes.
 </ol>
 
@@ -70,7 +68,7 @@ Les étapes sont les suivantes :
     </li>
   </ul>
 </li>
-<li><a href='gan.php?f=html'>identifier les cartes les plus "agées", cad celles nécessitant le plus une mise à jour</a></li>
+<li><a href='gan.php?f=html'>identifier les cartes les plus périmées, cad celles nécessitant le plus une mise à jour</a></li>
 <li>choisir la liste des cartes à commander au Shom (cartes à ajouter et à remplacer)
   et celles à supprimer du portefeuille, notamment celles remplacées par de nouvelles cartes commandées,</li>
 <li><ul>

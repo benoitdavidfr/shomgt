@@ -1,10 +1,9 @@
-title: cat2 - catalogue des cartes raster GéoTIFF du SHOM v2
+title: cat2 - catalogue des cartes raster GéoTIFF du SHOM v2.2
 path: /geoapi/shomgt/cat2
 doc: |
-  Ce module remplace le module cat v1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
+  Ce module remplace le module cat v2.1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
   Dans la v1 je reconstruisais le catalogue à chaque moisson.
-  Ce principe change dans cette version car je dispose du catalogue de toutes les cartes (actuellement ../cat/mapcat.json,
-  avec son schéma dans ../cat/mapcat.schema.yaml). à contrôler !
+  Ce principe change dans cette version car je dispose du catalogue de toutes les cartes (mapcatV1.yaml)
   J'ai différents outils de visu de ce catalogue, notamment la possibilité d'en faire une carte.
   Je sais aussi sélectionner les cartes d'intérêt, cad celles qui décrivent la ZEE FR.
   
@@ -63,7 +62,7 @@ doc: |
     - le catalogue des cartes recense les cartes Raster Marine du Shom d'intérêt, plus qqs cartes comme les AEM et MancheGrid
     - le catalogue des GéoTiffs (shomgt.yaml) recense les GéoTiffs les plus récents obtenus du Shom
       - une carte est souvent composée de plusieurs GéoTiffs
-    - le catalogue avec tous les GéoTiffs obtenus du Shom -> histo.php
+    - le catalogue de toutes le cartes obtenues du Shom -> histo.php
 journal: |
   21-27/12/2020:
     - améliorations

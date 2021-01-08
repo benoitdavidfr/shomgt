@@ -1,22 +1,22 @@
 <?php
 /*PhpDoc:
 name: slaveupdt.php
-title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre, ne fonctionne que sur le RIE
+title: slaveupdt.php - installe dans le portefeuille de shomgt une livraison issue du maitre
 doc: |
   script à appeler en ligne de commande
-  si le catalogue du fil est plus récent que celui stocké alors le télécharge
+  si le catalogue du fil Atom est plus récent que celui stocké alors le télécharge
   puis télécharge les cartes zippées plus récentes que les éventuelles cartes existantes
   puis appelle updt.php sur cette livraison
   et enfin efface les éventuelles cartes périmées
 
-  Fonctionne avec un éventuel proxy mais sans possibilité d'autentification dans un premier temps.
-  Correspond au cas d'usage potentiellement fréquent de mise en place d'un serveur à l'intérieur du RIE.
-  
-  Le proxy doit être défini comme variable globale Shell, exemple: export http_proxy="http://172.17.0.8:3128"
+  Fonctionne avec un éventuel proxy qui doit alors être défini comme variable globale Shell http_proxy,
+  exemple: export http_proxy="http://172.17.0.8:3128"
 
-  L'authentification par login/passwd n'est pas prévue à ce stade.
-
+  L'authentification par login/passwd sur le maitre s'effectue en définissant la variable globale Shell shomgtuserpwd,
+  exemple: export shomgtuserpwd='demo:demo'
 journal: |
+  8/1/2021:
+    - ajout authentification par login/passwd
   7/1/2021:
     - possibilité de limiter à une zone
     - tests
@@ -33,8 +33,8 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
-//$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
+//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
+$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
@@ -218,6 +218,8 @@ define ('ZONES', [
   'CP'=> "Île Clipperton",
 ]
 );
+
+// initialise la ou les zones souhaitées
 if (php_sapi_name() == 'cli') {
   header('Content-type: text/plain; charset="utf8"');
   if ($argc <= 1) {
@@ -249,10 +251,9 @@ else {
 // Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
 
+// Lit le fil Atom et structure le résultat comme un objet
 $updtSlave = new UpdtSlave($atomfeedUrl, $zonesGeo);
-//print_r($atomfeed);
 
-//wget --post-data=STRING
 $wgetOptions = (http_proxy() ? ' -e use_proxy=on -e http_proxy='.http_proxy() : '')
   .(($loginpwd = shomgtloginpwd()) ? " --post-data='$loginpwd'" : '');
 $mapcatpath = __DIR__.'/../cat2/mapcat.yaml';
@@ -260,7 +261,7 @@ if (!file_exists($mapcatpath)
   || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime($mapcatpath)))) {
   echo "echo 'Mise à jour du catalogue'\n";
   $href = $updtSlave->catalog['href'];
-  echo "wget$wgetOptions -O $mapcatpath$wget_proxy $href\n";
+  echo "wget$wgetOptions -O $mapcatpath $href\n";
   // pour que le yaml soit bien pris en compte le pser doit être effacé
   if (file_exists(__DIR__.'/../cat2/mapcat.pser'))
     unlink(__DIR__.'/../cat2/mapcat.pser');
@@ -287,6 +288,7 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
   }
 }
 
+// installe les cartes stockées dans la livraison slave
 echo "php updt.php slave | sh\n";
 
 echo "echo 'Suppression du répertoire $shomgeotiff/incoming/slave'\n";

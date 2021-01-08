@@ -15,6 +15,8 @@ doc: |
   Lisible sous Feedbro.
   Feed inutilisable pour un humain mais peut être utilisé par un client pour identifier les cartes à télécharger.
 journal: |
+  8/1/2021:
+    - ajout possibilité de login avec un login et un mot de passe
   7/1/2021:
     - ajout caractéristiques des cartes et zones couvertes
   3/1/2021:
