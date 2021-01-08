@@ -33,8 +33,8 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php' // test en localhost
-$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
+$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
+//$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
@@ -48,13 +48,23 @@ function unix_env(): array { // retourne les variables d'environnement du shell
 // Proxy éventuellement défini dans l'environnement shell
 function http_proxy(): string { return unix_env()['http_proxy'] ?? ''; }
 
+// login/passwd éventuellement défini dans l'environnement shell et si défini restructuré en login={login}&password={password}
+function shomgtloginpwd(): string {
+  if (!($shomgtuserpwd = unix_env()['shomgtuserpwd'] ?? ''))
+    return '';
+  $pos = strpos($shomgtuserpwd, ':');
+  $login = substr($shomgtuserpwd, 0, $pos);
+  $passwd = substr($shomgtuserpwd, $pos+1);
+  return "login=".urlencode($login)."&password=".urlencode($passwd);
+}
+
 // classe regroupant les infos de mise à jour 
 class UpdtSlave {
   public array $catalog=[]; // [href, updated]
   public array $todelete=[]; // [mapid => title]
   public array $toadd=[]; // [mapid => ['href'=> href, 'updated'=> updated, 'zonesGeo'=> listeDeZones]]
 
-  static function streamContext() { // fabrique un context si un proxy est défini, sinon renvoie null
+  /*static function streamContext() { // fabrique un context si un proxy est défini, sinon renvoie null
     if (!http_proxy())
       return null;
     return stream_context_create([
@@ -63,8 +73,46 @@ class UpdtSlave {
         'proxy'=> str_replace('http://', 'tcp://', http_proxy()),
       ]
     ]);
+  }*/
+
+ /*static function streamContext() { // fabrique un context si un proxy ou un userpwd est défini, sinon renvoie null
+    if (!($http_proxy = http_proxy()) && !($shomgtuserpwd = shomgtuserpwd()))
+      return null;
+    $httpOpts = ['method'=> 'GET'];
+    if ($http_proxy) {
+      $httpOpts['proxy'] = str_replace('http://', 'tcp://', $http_proxy);
+    }
+    if ($shomgtuserpwd) {
+      $httpOpts['header'] = "Accept-language: en\r\n"."Cookie: shomusrpwd=$shomgtuserpwd\r\n";
+    }
+    return stream_context_create(['http'=> $httpOpts]);
+  }*/
+  
+  static function streamContext() { // fabrique un context si un proxy ou un userpwd est défini, sinon renvoie null
+    if (!($http_proxy = http_proxy()) && !($shomgtloginpwd = shomgtloginpwd()))
+      return null;
+    if (!$shomgtloginpwd) {
+      return stream_context_create([
+        'http'=> [
+          'method'=> 'GET',
+          'proxy'=> str_replace('http://', 'tcp://', $http_proxy),
+        ]
+      ]);
+    }
+    else {
+      $httpOpts = [
+        'method'=> 'POST',
+        'header'=> "Content-type: application/x-www-form-urlencoded\r\n"
+            ."Content-Length: ".strlen($shomgtloginpwd)."\r\n",
+        'content' => $shomgtloginpwd,
+      ];
+      if ($http_proxy) {
+        $httpOpts['proxy'] = str_replace('http://', 'tcp://', $http_proxy);
+      }
+      return stream_context_create(['http'=> $httpOpts]);
+    }
   }
- 
+   
   static function zonesGeo(array $category): array { // transforme un mot-clé ou une liste de codes ISO2
     //echo 'category='; print_r($category);
     if (isset($category['attrib']))
@@ -204,13 +252,15 @@ date_default_timezone_set('UTC');
 $updtSlave = new UpdtSlave($atomfeedUrl, $zonesGeo);
 //print_r($atomfeed);
 
-$wget_proxy = http_proxy() ? ' -e use_proxy=on -e http_proxy='.http_proxy() : '';
+//wget --post-data=STRING
+$wgetOptions = (http_proxy() ? ' -e use_proxy=on -e http_proxy='.http_proxy() : '')
+  .(($loginpwd = shomgtloginpwd()) ? " --post-data='$loginpwd'" : '');
 $mapcatpath = __DIR__.'/../cat2/mapcat.yaml';
 if (!file_exists($mapcatpath)
   || ($updtSlave->catalog['updated'] > date('Y-m-d\TH:i:s\Z', filemtime($mapcatpath)))) {
   echo "echo 'Mise à jour du catalogue'\n";
   $href = $updtSlave->catalog['href'];
-  echo "wget $href -O $mapcatpath$wget_proxy\n";
+  echo "wget$wgetOptions -O $mapcatpath$wget_proxy $href\n";
   // pour que le yaml soit bien pris en compte le pser doit être effacé
   if (file_exists(__DIR__.'/../cat2/mapcat.pser'))
     unlink(__DIR__.'/../cat2/mapcat.pser');
@@ -230,7 +280,7 @@ foreach ($updtSlave->toadd as $mapid => $newMap) {
   if ($updtSlave->updateMap($mapid)) {
     echo "echo 'Mise à jour de la carte $mapid'\n";
     $mapnum = substr($mapid, 2);
-    echo "wget $newMap[href] -O $shomgeotiff/incoming/slave/$mapnum.7z$wget_proxy\n";
+    echo "wget$wgetOptions $newMap[href] -O $shomgeotiff/incoming/slave/$mapnum.7z\n";
   }
   else {
     echo "echo 'La carte $mapid est à jour'\n";

@@ -29,10 +29,19 @@ require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 require_once __DIR__.'/../lib/genatom.inc.php';
 
-if (!Access::cntrl()) {
+
+// Accès possible soit sans login/passwd soit par envoi en POST d'un login/passwd
+if (!isset($_POST['login']) || !isset($_POST['password'])) {
+  if (!Access::cntrl()) {
+    header('HTTP/1.1 403 Forbidden');
+    die("Accès interdit");
+  }
+}
+elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
   header('HTTP/1.1 403 Forbidden');
   die("Accès interdit");
 }
+  
 
 // définition de configs pour tester updtslave.php
 //define('TEST', 'version test incoming/20170613');
@@ -55,7 +64,8 @@ define ('TERMS', [
   'WF'=> "Wallis-et-Futuna",
   'NC'=> "Nouvelle-Calédonie",
   'CP'=> "Île Clipperton",
-]);
+]
+);
 
 // Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
