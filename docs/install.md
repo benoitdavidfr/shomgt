@@ -1,12 +1,9 @@
 # Installation de shomgt sur un serveur Linux
 
-*Benoit DAVID - 20/12/2020 (v2.2.1)*
-
-La procédure d'installation est en cours d'évolution.  
-Contactez contact@geoapi.fr si vous souhaitez la mettre en oeuvre.
+*Benoit DAVID - 9/1/2021 (v2.2.1)*
 
 ### Evolutions récentes
-- 8/1/2021 : évolution de la procédure
+- 9/1/2021 : évolution de la procédure
 - 20/12/2020 : passage à Php 8
 - 22/11/2019 : ajout d'une section sur la mise à jour du logiciel
 
