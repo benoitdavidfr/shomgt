@@ -1,7 +1,7 @@
-## Module gestion du catalogue des cartes Shom
+## Module de gestion du catalogue des cartes Shom
 
 ### Introduction
-Ce module gère un catalogue des cartes GéoTIFF du Shom afin :
+Ce module gère un catalogue de cartes Raster Marine du Shom afin :
 
   - de connaitre celles à commander au Shom (ajout ou actualisation) et celles obsolètes à supprimer,
   - d'exposer les caractéristiques des cartes utilisées par le module de mise à jour des cartes.
@@ -18,22 +18,22 @@ Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
 
 ### Mise en oeuvre
 Ce module remplace le module cat v2.1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
-Dans la v1 je reconstruisais le catalogue à chaque moisson.
+Dans la version précédente le catalogue était construit à chaque moisson.
 Ce principe change dans cette version car je dispose du catalogue de toutes les cartes (mapcatV1.yaml)
-J'ai différents outils de visu de ce catalogue, notamment la possibilité d'en faire une carte.
-Je sais aussi sélectionner les cartes d'intérêt, cad celles qui décrivent la ZEE FR.
+Différents outils permettent de consulter ce catalogue, notamment la possibilité d'en faire une carte.
+Les cartes d'intérêt peuvent être sélectionnées par intersection avec la ZEE française.
   
-Ma doctrine de mise à jour des cartes et en conséquence de gestion du catalogue est la suivante :
+La doctrine de mise à jour des cartes et en conséquence de gestion du catalogue est la suivante :
 
-  - je cherche à mettre à jour finement les cartes d'intérêt, cad dès qu'une correction est disponible, avec un cycle de qqs mois,
+  - chercher à mettre à jour finement les cartes d'intérêt, cad dès qu'une correction est disponible, avec un cycle de qqs mois,
     entre 1 an et 3 mois,
-  - pour cela je gère un catalogue mapcat de ces cartes avec notamment pour chacune le no et la date de sa dernière correction,
-  - j'utilise le flux WFS du Shom pour détecter les nouvelles cartes et les cartes obsolètes ; pour cela j'identifie dans ce flux
-    WFS les cartes d'intérêt (par intersection avec la ZEE) que je confronte avec les cartes du catalogue. Je contrôle cette
-    opération visuellement au travers d'une carte de toutes les cartes d'intérêt ou non,
-  - j'utilise par ailleurs le GAN pour détecter les nouvelles corrections,
-  - enfin, lors de l'ajout d'une nouvelle carte dans le catalogue, je renseigne dans mapcat les coordonnées
-    précises du cadre intérieur de chaque zone de la carte, qui sont utilisées par le module updt..
+  - pour cela gestion d'un catalogue mapcat de ces cartes avec notamment pour chacune le no et la date de sa dernière correction,
+  - utilisation du flux WFS du Shom pour détecter les nouvelles cartes et les cartes obsolètes ; pour cela identification dans ce flux
+    WFS les cartes d'intérêt (par intersection avec la ZEE) et confrontation avec les cartes du catalogue.
+    Cette opération est contrôlée visuellement au travers d'une carte de toutes les cartes d'intérêt ou non,
+  - utilisation par ailleurs du GAN pour détecter les nouvelles corrections,
+  - enfin, lors de l'ajout d'une nouvelle carte au catalogue, saisie dans mapcat des coordonnées
+    précises du cadre intérieur de chaque zone de la carte, utilisées par le module updt.
 
 L'ojectif de ce module est:
   1) de gérer le catalogue MapCat
@@ -57,7 +57,7 @@ Du point de vue architecture informatique:
 
 Le catalogue des cartes contient des infos absentes du catalogue des GéoTiffs, notamment le nom de certaines cartes, ex 7436
 
-De manière plus générale, 3 catalogues différents sont égrés dans ShomGt :
+De manière plus générale, 3 catalogues différents sont gérés dans ShomGt :
 
   - le catalogue MapCat des cartes recense les cartes Raster Marine du Shom d'intérêt, plus qqs cartes comme les AEM et MancheGrid
   - le portefeuille des GéoTiffs (shomgt.yaml stocké dans ../ws) recense les GéoTiffs les plus récents obtenus du Shom
