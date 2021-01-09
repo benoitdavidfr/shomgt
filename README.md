@@ -2,7 +2,7 @@
 
 L'objectif de ce projet est d'exposer sous la forme de web-services le contenu des
 [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
-couvrant les zones sous juridiction française pour permettre au [MTES](http://www.ecologique-solidaire.gouv.fr)
+couvrant les zones sous juridiction française pour permettre au [MTE](http://www.ecologie.gouv.fr)
 et au [MCTRCT](http://www.cohesion-territoires.gouv.fr/)
 d'assurer leurs missions de service public.
 
@@ -10,11 +10,11 @@ La principale plus-value est de permettre de consulter le contenu des cartes en 
 afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
 comme [QGis](https://www.qgis.org/).
 
-Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur.
-Cela nécessite que les utilisateurs disposent des droits  d'utilisation de ces cartes.
+Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur,
+ce qui nécessite que les utilisateurs disposent des droits  d'utilisation de ces cartes.
 C'est le cas notamment des services et des EPA de l'Etat conformément à
 [l'article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
-Pour les autres acteurs, consuler le Shom.
+Pour les autres acteurs, consulter le Shom.
 
 Ce projet propose les services suivants :
 
@@ -25,7 +25,7 @@ Ce projet propose les services suivants :
   - un service de téléchargement des GéoTiffs dans différents formats avec des infos associées,
   - un mécanisme de téléchargement et d'installation des cartes Shom à partir d'un serveur dit maitre.
 
-Il propose aussi de visualiser les données au moyen de cartes Leaflet utilisant les services décits ci-dessus.
+Il propose aussi de visualiser les données au moyen de cartes Leaflet utilisant les services décrits ci-dessus.
 
 Ce projet est décomposé en 5 modules:
 
@@ -33,7 +33,6 @@ Ce projet est décomposé en 5 modules:
     GéoTiffs](https://github.com/benoitdavidfr/shomgt/tree/master/ws)
   - la [gestion d'un catalogue des cartes du Shom](https://github.com/benoitdavidfr/shomgt/tree/master/cat2) afin
     - d'identifier les cartes d'intérêt pour ShomGt, c'est à dire celles des espaces sur lesquels la France exerce ses droits,
-      notamment sa [ZEE](https://github.com/benoitdavidfr/shomgt/tree/master/cat2/france.geojson),
     - d'identifier la liste des cartes à actualiser, à supprimer ou à ajouter,
     - de fournir au module précédent les caractéristiques des cartes,
   - les [scripts de mise à jour des GéoTiffs soit automatiquement à partir du serveur dit maitre soit à partir d'une livraison du
