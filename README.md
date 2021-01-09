@@ -7,13 +7,14 @@ et au [MCTRCT](http://www.cohesion-territoires.gouv.fr/)
 d'assurer leurs missions de service public.
 
 La principale plus-value est de permettre de consulter le contenu des cartes en supprimant leur cadre
-afin de passer d'une carte à l'autre sans couture.
+afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
+comme [QGis](https://www.qgis.org/).
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur.
-Cela peut être fait automatiquement à partir d'un autre serveur pour les acteurs disposant des droits d'utilisation de ces cartes.
+Cela nécessite que les utilisateurs disposent des droits  d'utilisation de ces cartes.
 C'est le cas notamment des services et des EPA de l'Etat conformément à
 [l'article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
-Une autre possibilité est de commander des cartes au Shom et de les intégrer dans le serveur.
+Pour les autres acteurs, consuler le Shom.
 
 Ce projet propose les services suivants :
 
