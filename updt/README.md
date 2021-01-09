@@ -1,10 +1,35 @@
-## Module de mise à jour des cartes SHOM pour les services de consultation
-Ce module permet d'intégrer une livraison Shom de cartes, chacune sous la forme d'une archive .7z,
-en effectuant :
+# Module de mise à jour des cartes SHOM pour les services de consultation
 
-  - une conversion des archives dans le format utilisé par les web-services et une installation des fichiers
-    produits dans le répertoire de stockage des GéoTiffs
-  - une mise à jour du catalogue des GéoTiffs `shomgt.yaml` stocké dans `../ws/`
+Ce module peut être utilisé soit pour charger automatiquement des cartes depuis un serveur maitre, c'est le mode appelé esclave,
+soit pour intégrer une livraison Shom de cartes, chacune sous la forme d'une archive .7z.
+
+## Mise à jour automatique en mode esclave
+La mise à jour automatique s'effectue au moyen du script `slaveupdt.php` du module `updt`. 
+
+Commencer par définir si nécessaire le proxy à utiliser en le définissant dans la variable shell `http_proxy`,
+par exemple:
+
+    export http_proxy='http://monproxy.mondomaine:8080'
+
+Puis définir si nécessaire le login et mot de passe d'accès au maitre dans la variable `shomgtuserpwd`, par exemple:
+
+    export shomgtuserpwd='demo:demo'
+
+Les cartes peuvent être sélectionnées par zone définie par son code ISO alpha 2, FX pour métropole, RE pour La Réunion, ...
+Les codes FR pour toute la France ou WLD pour toutes les cartes peuvent aussi être utilisés.
+Attention la commande php génère du code sh et son résultat doit donc être éxécuté par sh ;
+cela se fait en faisant suivre la commande php par `| sh`
+
+    docker$ cd updt
+    docker$ php slaveupdt.php RE | sh
+
+
+## Mise à jour manuelle en mode autonome
+Pour cela il faut :
+
+  - convertir les archives 7z fournies par le Shom dans le format utilisé par les web-services
+    puis installer les fichiers produits dans le répertoire de stockage des GéoTiffs
+  - mettre à jour du catalogue des GéoTiffs `shomgt.yaml` stocké dans `../ws/`
 
 Les cartes Shom doivent être stockées initialement dans un répertoire de livraison
 dans `{shomgt}/../../shomgeotiff/incoming/{date}/`

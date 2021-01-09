@@ -21,20 +21,20 @@ Ce projet propose les services suivants :
     regroupés par couche en fonction de leur échelle,
   - un service GeoJSON exposant les silhouettes des GéoTiffs,
   - un service de téléchargement des GéoTiffs dans différents formats avec des infos associées,
-  - un service GeoJSON exposant un catalogue des cartes du Shom.
+  - un mécanisme de téléchargement et d'installation des cartes Shom à partir d'un serveur dit maitre.
   
 Ce projet est décomposé en 5 modules:
 
   - les [web-services de consultation et de téléchargement des 
     GéoTiffs](https://github.com/benoitdavidfr/shomgt/tree/master/ws)
-  - les [scripts de mise à jour des GéoTiffs à partir d'une livraison du
-    Shom](https://github.com/benoitdavidfr/shomgt/tree/master/updt)
+  - les [scripts de mise à jour des GéoTiffs soit à partir d'une livraison du
+    Shom soit automatiquement à partir du serveur dit maitre](https://github.com/benoitdavidfr/shomgt/tree/master/updt),
+  - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master),
   - la [gestion d'un catalogue des cartes du Shom](https://github.com/benoitdavidfr/shomgt/tree/master/cat2) afin
     - d'identifier les cartes des espaces sur lesquels la France exerce ses droits,
       notamment sa [ZEE](https://github.com/benoitdavidfr/shomgt/tree/master/cat2/france.geojson),
     - d'identifier la liste des cartes à actualiser, à supprimer ou à ajouter,
     - de fournir au module précédent les caractéristiques des cartes,
-  - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master),
   - un [ensemble d'éléments partagés entre modules (lib)](https://github.com/benoitdavidfr/shomgt/tree/master/lib),
     notamment un package de gestion de la géométrie.
 
@@ -49,12 +49,10 @@ De plus:
 Outre le répertoire correspondant au code contenu dans ce projet Git (noté {shomgt}),
 les répertoires suivants doivent être présents sur le serveur pour que le code s'exécute correctement:
 
-  - `{shomgt}/../../shomgeotiff` - stockage des cartes Shom dans 2 sous-répertoires
+  - `{shomgt}/../../shomgeotiff` - stockage des cartes Shom dans 2 sous-répertoires,
     - `current` contient un répertoire par carte exposé construit par le module de mise à jour,
-    - `ìncoming` contient un répertoire par livraison, chacun contenant les archives fournies par le Shom
-  - `{shomgt}/vendor` - code installé par composer
-
-Le module de catalogue ne fonctionne pas actuellement derrière un proxy.
+    - `ìncoming` contient un répertoire par livraison, chacun contenant les archives fournies par le Shom,
+  - `{shomgt}/vendor` - code installé par [composer](https://getcomposer.org/).
 
 Le code utilise :
 
