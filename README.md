@@ -37,7 +37,8 @@ Ce projet est décomposé en 5 modules:
     - de fournir au module précédent les caractéristiques des cartes,
   - les [scripts de mise à jour des cartes soit automatiquement à partir du serveur dit maitre soit à partir d'une livraison du
     Shom](https://github.com/benoitdavidfr/shomgt/tree/master/updt),
-  - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master),
+  - un [fil Atom de publication des cartes disponibles pour utilisation par un serveur
+    esclave](https://github.com/benoitdavidfr/shomgt/tree/master/master),
   - un [ensemble d'éléments partagés entre modules (lib)](https://github.com/benoitdavidfr/shomgt/tree/master/lib),
     notamment un package de gestion de la géométrie.
 
