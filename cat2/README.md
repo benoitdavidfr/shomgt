@@ -12,9 +12,8 @@ Le catalogue doit être régulièrement actualisé, il est construit à partir d
   - les Groupes d'Avis aux Navigateurs (GAN) qui fournissent (sous la forme d'une page HTML)
     des informations actualisées chaque semaine sur chaque carte en vigueur.
 
-Le module utilise une définition très simplifiée de la ZEE française stockée en SHP dans `franceshp`
-et en GeoJSON dans `france.geojson`.
-Cette définition est utilisée pour déterminer les cartes Shom pertinentes.
+Le module utilise pour déterminer les cartes Shom pertinentes une définition très simplifiée de la ZEE française
+stockée en GeoJSON dans `france.geojson`.
 
 ### Mise en oeuvre
 Ce module remplace le module cat v2.1 rendu obsolète par l'impossibilité d'interroger les GAN sans fournir de date d'origine.
@@ -35,7 +34,7 @@ La doctrine de mise à jour des cartes et en conséquence de gestion du catalogu
   - enfin, lors de l'ajout d'une nouvelle carte au catalogue, saisie dans mapcat des coordonnées
     précises du cadre intérieur de chaque zone de la carte, utilisées par le module updt.
 
-L'ojectif de ce module est:
+L'objectif de ce module est:
   1) de gérer le catalogue MapCat
     - avec la description des cartes de ShomGt plus des autres cartes d'intérêt,
     - avec les dates de mise à jour, l'édition et la dernière correction issues des MD ISO ShomGt,
