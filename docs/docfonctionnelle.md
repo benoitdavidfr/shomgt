@@ -1,4 +1,5 @@
 # Pourquoi shomgt ? Comment ?
+(document mis à jour le 9/1/2021)
 
 ## 1. Besoin, objectif de shomgt et périmètre
 De nombreux utilisateurs ont besoin,
@@ -36,12 +37,13 @@ Toutefois, quelques cartes à petite échelle (< 1/4M) sont sélectionnées afin
 ## 2. Données Shom utilisées
 ### 2.1. Les cartes
 Une carte est décomposée par le Shom en une ou plusieurs images géoréférencées avec généralement une image principale
-et éventuellement des images secondaires.
+et des éventuelles images secondaires.
 L'image principale est celle de la carte principale et les images secondaires correspondent chacune à un cartouche
 présent dans la carte permettant souvent de décrire plus précisément des zones particulières telles que des ports.
 Chacune de ces images, appelée par la suite **géotiff**, est fournie par le Shom sous la forme
 d'un fichier au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF)
-auquel est associé un fichier de métadonnées ISO 19115/19139 contenant notamment l'édition de la carte.
+auquel est associé un fichier de métadonnées ISO 19115/19139 contenant notamment l'édition de la carte
+et la dernière correction prise en compte.
 Certaines cartes ne contiennent pas d'image principale mais uniquement des images secondaires ;
 par exemple la carte 7102 représente différents ports de Guadeloupe proches les uns des autres.
 
@@ -83,7 +85,7 @@ Cette identification n'identifie pas une version particulière de la carte.
     - 8502 pour la zone maritime du Sud de l’océan Indien (ZMSOI).
   - la carte 8101 MancheGrid définit un carroyage particulier pour la Manche,
   - la carte 0101 est le planisphère terrestre correspondant à l'échelle 1/40M à l'équateur ;
-    il s'étend sur plus de 360° en longitude et nécessite donc un traitement particulier.
+    il s'étend sur plus de 360° en longitude et pour cette raison nécessite un traitement particulier.
 
 ### 2.2. Le catalogue des cartes
 La commande des cartes au Shom s'effectue sur un site spécifique qui permet difficilement de sélectionner les cartes
@@ -99,7 +101,7 @@ Pour cela 2 sources de données sont utilisées:
   - le flux WFS des cartes permet de connaitre à un instant donné la liste des cartes en vigueur,
   - les pages HTML du "Groupe d’Avis aux Navigateurs en Ligne" (GAN) permettent d'obtenir pour chaque carte
     plusieurs informations très utiles, notamment:
-    - le titre et l'édition de la carte en vigueur,
+    - le titre et l'édition de la carte en vigueur, ainsi que les corrections apportées à la carte,
     - la boite en coordonnées géographiques définissant la partie utile de la carte
       et de chacun de ses éventuels cartouches, c'est à dire la zone à l'intérieur du cadre.
 
