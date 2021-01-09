@@ -9,11 +9,10 @@ d'assurer leurs missions de service public.
 La principale plus-value est de permettre de consulter le contenu des cartes en supprimant leur cadre
 afin de passer d'une carte à l'autre sans couture.
 
-Pour utiliser ces web-services, des cartes Shom doivent être au préalable commandées au Shom
-puis intégrées au moyen des scripts de mise à jour.
-La fourniture de ces cartes est gratuite pour les services et les EPA de l'Etat conformément à
+Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur.
+Cela peut être fait automatiquement pour les acteurs disposant des droits d'utilisation de ces cartes.
+C'est le cas notamment des services et des EPA de l'Etat conformément à
 [l'article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
-Commandes à faire par mail à diffusion-support@shom.fr.
 
 Ce projet propose les services suivants :
 
