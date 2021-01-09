@@ -6,6 +6,7 @@ La procédure d'installation est en cours d'évolution.
 Contactez contact@geoapi.fr si vous souhaitez la mettre en oeuvre.
 
 ### Evolutions récentes
+- 8/1/2021 : évolution de la procédure
 - 20/12/2020 : passage à Php 8
 - 22/11/2019 : ajout d'une section sur la mise à jour du logiciel
 
@@ -38,8 +39,7 @@ Le code source sera installé par un utilisateur Linux nommé `user`,
 qui devra auparavant être créé, ce qui créera le répertoire `/home/user`.  
 Cette installation sera effectuée dans le répertoire `/home/user/html/shomgt` 
 par `git install` à partir de `https://github.com/benoitdavidfr/shomgt`.  
-De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom organisées par livraison
-qui pourront être déposées au moyen d'un serveur ftp.
+De plus chez `user` le répertoire `/home/user/shomgeotiff` contiendra les cartes Shom.
 
 Le code source contient la définition du conteneur Docker dans lequel s'éxécutera le code Php.
 Ce conteneur fait correspondre:
@@ -48,7 +48,7 @@ Ce conteneur fait correspondre:
   - le port IP 80 de Linux avec le port IP 80 de Docker
   
 Le serveur Apache sera démarré dans le conteneur Docker.  
-Des commandes `bash` (ligne de commande Linux) seront exécutées dans le conteneur pour reformatter les cartes Shom
+Des commandes `bash` (ligne de commande Linux) seront exécutées dans le conteneur pour télécharger et reformatter les cartes Shom
 dans une structure utilisable par *shomgt*.
 
 A l'issue de l'installation,
@@ -81,34 +81,17 @@ enfin se déloguer:
     # adduser user sudo
     # exit
 
-b) Se loguer sur la machine Linux sous user,
-créer un répertoire shomgeotiff et dedans les sous-répertoires indiqués :  
-
-    $ mkdir shomgeotiff
-    $ mkdir shomgeotiff/current
-    $ mkdir shomgeotiff/incoming
-    $ mkdir shomgeotiff/incoming/0
-    
-c) Copier dans le répertoire `0` les cartes Shom chacune sous la forme de l'archive 7z livrée par le Shom.
-Cette copie peut être effectuée par ftp en installant auparavant un serveur ftp sur la machine Linux.
-On peut pour cela installer le serveur pure-ftpd (voir https://doc.ubuntu-fr.org/pure-ftp) ou un autre.
-
-    $ sudo apt-get install pure-ftpd
-    $ sudo /etc/init.d/pure-ftpd restart
-
-On peut aussi alternativement copier les cartes avec WinSCP.
-
-c') Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par git:
+b) Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par git:
 
     $ git config --global http.proxy http://monproxy.mondomaine:8080
 
-d) Toujours logué sur la machine Linux sous user, créer un répertoire html et dans ce répertoire cloner le code Github:  
+c) Toujours logué sur la machine Linux sous user, créer un répertoire html et dans ce répertoire cloner le code Github:  
 
     $ mkdir ~/html
     $ cd ~/html
     $ git clone https://github.com/benoitdavidfr/shomgt
     
-d') Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par docker ;
+d) Si le serveur est installé derrière un proxy alors configurer l'utilisation de ce proxy par docker ;
 pour cela voir la doc sur [https://docs.docker.com/config/daemon/systemd/#httphttps-proxy](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy).
 
 e) Fabriquer le conteneur Docker nommé `php8sgt` puis le lancer:
@@ -120,7 +103,7 @@ e) Fabriquer le conteneur Docker nommé `php8sgt` puis le lancer:
 Le conteneur s'exécute en tache de fond en lançant le serveur Apache.
 
 f) La commande `docker exec` permet de lancer des commandes dans le conteneur.
-Cette fonctionnalité est utilisée pour démarrer un bash dans le conteneur soit sous l'utilisateur `root`,
+Elle est utilisée pour démarrer un bash dans le conteneur soit sous l'utilisateur `root`,
 soit sous l'utilisateur `www-data`.  
 Dans le conteneur Docker sous l'utilisateur `root`,
 réaffecter récursivement la propriété du répertoire `/var/www` à `www-data:www-data`:
@@ -129,7 +112,7 @@ réaffecter récursivement la propriété du répertoire `/var/www` à `www-data
     docker# chown -R www-data:www-data /var/www
     docker# exit
 
-g) Se mettre dans le conteneur Docker sous `www-data` pour reformatter les cartes Shom
+g) Se mettre dans le conteneur Docker sous `www-data` pour télécharger et reformatter les cartes Shom
 
     $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
 
@@ -138,21 +121,25 @@ h) Aller dans le répertoire shomgt et y installer le composant Yaml de Symfony
     docker$ cd ~/html/shomgt
     docker$ composer require symfony/yaml
 
-i) Aller dans le module de gestion du catalogue des cartes Shom
-pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Github.
+i) Aller dans le module de mise à jour des cartes pour télécharger puis reformatter les cartes souhaitées.
+Commencer par définir si nécessaire le proxy à utiliser en le définissant dans la variable shell `http_proxy`,
+par exemple:
 
-    docker$ cd cat
-    docker$ php build.php storeFromJSON
-    
-j) Aller dans le module de mise à jour des cartes et effectuer le reformattage des cartes précédemment stockées
-dans le répertoire `/var/www/shomgeotiff/incoming/0`.
+    export http_proxy='http://monproxy.mondomaine:8080'
+
+Puis définir si nécessaire le login et mot de passe d'accès au maitre dans la variable `shomgtuserpwd`, par exemple:
+
+    export shomgtuserpwd='demo:demo'
+
+Les cartes peuvent être sélectionnées par zone définie par son code ISO alpha 2, FX pour métropole, RE pour La Réunion, ...
+Les codes FR pour toute la France ou WLD pour toutes les cartes peuvent aussi être utilisés.
 Attention la commande php génère du code sh et son résultat doit donc être éxécuté par sh ;
 cela se fait en faisant suivre la commande php par `| sh`
 
-    docker$ cd ../updt
-    docker$ php updt.php 0 | sh
+    docker$ cd updt
+    docker$ php slaveupdt.php RE | sh
 
-A ce stade, les cartes Shom déposées précédemment sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
+Les cartes Shom de la zone choisie sont utilisables dans *shomgt* avec les services *wms* et *tile*.  
 **Vérifier cette installation au moyen de la carte Leaflet *mapwcat*
 disponible sur `http://{serveur}/shomgt/mapwcat.php`**  
 Le service *wms* est disponible à l'URL `http://{serveur}/shomgt/wms.php`
@@ -183,98 +170,10 @@ Pour le relancer, relancer sous Linux le conteneur Docker appelé `php8sgt`:
   
         $ sudo chown -R user:user /home/user
 
-## 7) Ajout incrémental de cartes Shom
-Pour ajouter incrémentalement des cartes Shom :
+## 7) Mise à jour des cartes Shom
+Les cartes peuvent être mises à jour en exécutant à nouveau l'étape 4.i.
 
-  - commencer par réaffecter les droits à `user` en tapant sous Linux sous `user` la commande :
-  
-        $ sudo chown -R user:user /home/user
-  
-  - puis sous Linux chez `user` créer un répertoire `{nouvelle_livraison}` dans `/home/user/shomgeotiff/incoming`
-    et y déposer les cartes Shom à ajouter.
-    `{nouvelle_livraison}` est le nom du répertoire contenant les nouvelles cartes ;
-    il est conseillé d'utiliser des noms explicites, par exemple la date de livraison au format YYYYMMDD,
-    par exemple `20191111`.
-    
-        $ mkdir ~/shomgeotiff/incoming/{nouvelle_livraison}
-
-  - puis aller sous Docker chez `root` pour réaffecter les droits à `www-data`
-
-        $ sudo docker exec -it --user=root php8sgt /bin/bash
-        docker# chown -R www-data:www-data /var/www
-        docker# exit
-
-  - enfin aller sous Docker chez `www-data` et effectuer la mise à jour dans le module updt
-
-        $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
-        docker$ cd ~/html/shomgt/updt
-        docker$ php updt.php {nouvelle_livraison} | sh
-
-## 8) Détection de cartes à actualiser
-
-**Attention, cette procédure ne fonctionne pas si un proxy est nécessaire pour accéder à internet**,
-dans ce cas appliquer la procédure décrite à la section 8bis.
-
-Le module de gestion du catalogue permet d'identifier les cartes à actualiser.
-Le catalogue des cartes Shom est lui-même actualisé à partir, d'une part, du flux WFS du Shom
-et, d'autre part, des Groupes d'Avis aux Navigateurs (GAN) des cartes.
-Avant de consulter les cartes à actualiser, il faut actualiser le catalogue.
-Pour cela aller sous Docker chez `www-data` et aller dans le module `cat`
-
-    $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
-    docker$ cd ~/html/shomgt/cat
-
-La première chose à faire est de moissonner les GAN, cette opération prend une quinzaine de minutes.
-
-    docker$ php build.php harvestGan
-    
-Une fois ce moissonnage effectué correctement, il convient de créer le fichier du catalogue:
-
-    docker$ php build.php store
- 
-Ce catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
-et notamment les cartes à actualiser.  
-Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
-puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus section 7.
-
-## 8bis) Détection de cartes à actualiser derrière un proxy
-Si un proxy est nécessaire pour accéder à internet alors la procédure de la section 8 ne fonctionne pas et
-il est recommandé d'appliquer la procédure décrite dans cette section.
-Le principe est de télécharger
-le fichier [http://geoapi.fr/shomgt/cat/mapcat.json](http://geoapi.fr/shomgt/cat/mapcat.json)
-et de le copier dans le répertoire `~/html/shomgt/cat/` puis de le prendre en compte dans *shomgt*.
-
-Ci-dessous la procédure pas à pas :
-
-  - commencer par réaffecter les droits à `user` en tapant sous Linux sous `user` la commande :
-  
-        $ sudo chown -R user:user /home/user
-  
-  - aller chercher le fichier `http://geoapi.fr/shomgt/cat/mapcat.json` par exemple avec wget
-    en paramétrant correctement le proxy
-  
-        $ cd ~/html/shomgt/cat
-        $ wget http://geoapi.fr/shomgt/cat/mapcat.json -e use_proxy=yes -e http_proxy=http://monproxy.mondomaine:8080
-
-  - puis aller sous Docker chez `root` pour réaffecter les droits à `www-data`
-
-        $ sudo docker exec -it --user=root php8sgt /bin/bash
-        docker# chown -R www-data:www-data /var/www
-        docker# exit
-
-  - puis aller sous Docker chez `www-data` et aller dans le module `cat`
-    pour initialiser le fichier du catalogue à partir du fichier JSON fourni sur Github
-
-        $ sudo docker exec -it --user=www-data php8sgt /bin/bash 
-        docker$ cd ~/html/shomgt/cat
-        docker$ php build.php storeFromJSON
-    
-Le catalogue peut ensuite être consulté à l'URL `http://{serveur}/shomgt/cat`
-et notamment les cartes à actualiser.  
-Il convient alors de récupérer ces cartes, par exemple auprès du Shom,
-puis de les intégrer dans *shomgt* en suivant la procédure décrite ci-dessus section 7.
-
-## 9) Mise à jour du logiciel shomgt
+## 8) Mise à jour du logiciel shomgt
 
 Shomgt peut être mis à jour à partir du code sur Github. Pour cela:
 
@@ -310,7 +209,7 @@ f) relancer le serveur Shomgt:
     $ sudo docker run -p 80:80 -d --name php8sgt -h docker \
           --mount type=bind,source=/home/user,target=/var/www php8sgt
 
-## 10) Sécurisation de shomgt
+## 9) Sécurisation de shomgt
 
 Par défaut, aucun mécanisme de contrôle d'accès n'est mis en oeuvre,
 ce qui correspond à une installation du serveur en intranet.  
@@ -324,12 +223,12 @@ en copiant la fonction config() du fichier `config.inc.php` et en indiquant:
 
 Une fois ce fichier `secretconfig.inc.php` défini, cette fonction config() remplacera celle définie dans le fichier `config.inc.php`.
 
-## 11) Enregistrement des logs d'appels
+## 10) Enregistrement des logs d'appels
 
 De même, par défaut, les logs d'appel sont désactivés.
 Pour les activer, il convient :
 
-  - de créer une base MySql sur un serveur dans laquelle une table de log sera automatiquement créée,
+  - de créer sur un serveur une base MySql dans laquelle une table de log sera automatiquement créée,
   - de référencer cette base dans le fichier `config.inc.php` (ou `secretconfig.inc.php` s'il est créé)
     en indiquant dans le champ `mysqlParams` le serveur et la base MySQL dans lesquels sera créée la table de log
     ainsi que les login et mots de passe de connexion à MySQL.  

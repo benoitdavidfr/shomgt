@@ -24,7 +24,7 @@ Ce projet propose les services suivants :
   - un service de téléchargement des GéoTiffs dans différents formats avec des infos associées,
   - un service GeoJSON exposant un catalogue des cartes du Shom.
   
-Ce projet est décomposé en 4 modules:
+Ce projet est décomposé en 5 modules:
 
   - les [web-services de consultation et de téléchargement des 
     GéoTiffs](https://github.com/benoitdavidfr/shomgt/tree/master/ws)
