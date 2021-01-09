@@ -10,9 +10,10 @@ La principale plus-value est de permettre de consulter le contenu des cartes en 
 afin de passer d'une carte à l'autre sans couture.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur.
-Cela peut être fait automatiquement pour les acteurs disposant des droits d'utilisation de ces cartes.
+Cela peut être fait automatiquement à partir d'un autre serveur pour les acteurs disposant des droits d'utilisation de ces cartes.
 C'est le cas notamment des services et des EPA de l'Etat conformément à
 [l'article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
+Une autre possibilité est de commander des cartes au Shom et de les intégrer dans le serveur.
 
 Ce projet propose les services suivants :
 
@@ -22,19 +23,21 @@ Ce projet propose les services suivants :
   - un service GeoJSON exposant les silhouettes des GéoTiffs,
   - un service de téléchargement des GéoTiffs dans différents formats avec des infos associées,
   - un mécanisme de téléchargement et d'installation des cartes Shom à partir d'un serveur dit maitre.
-  
+
+Il propose aussi de visualiser les données au moyen de cartes Leaflet utilisant les services décits ci-dessus.
+
 Ce projet est décomposé en 5 modules:
 
   - les [web-services de consultation et de téléchargement des 
     GéoTiffs](https://github.com/benoitdavidfr/shomgt/tree/master/ws)
-  - les [scripts de mise à jour des GéoTiffs soit à partir d'une livraison du
-    Shom soit automatiquement à partir du serveur dit maitre](https://github.com/benoitdavidfr/shomgt/tree/master/updt),
-  - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master),
   - la [gestion d'un catalogue des cartes du Shom](https://github.com/benoitdavidfr/shomgt/tree/master/cat2) afin
-    - d'identifier les cartes des espaces sur lesquels la France exerce ses droits,
+    - d'identifier les cartes d'intérêt pour ShomGt, c'est à dire celles des espaces sur lesquels la France exerce ses droits,
       notamment sa [ZEE](https://github.com/benoitdavidfr/shomgt/tree/master/cat2/france.geojson),
     - d'identifier la liste des cartes à actualiser, à supprimer ou à ajouter,
     - de fournir au module précédent les caractéristiques des cartes,
+  - les [scripts de mise à jour des GéoTiffs soit automatiquement à partir du serveur dit maitre soit à partir d'une livraison du
+    Shom](https://github.com/benoitdavidfr/shomgt/tree/master/updt),
+  - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master),
   - un [ensemble d'éléments partagés entre modules (lib)](https://github.com/benoitdavidfr/shomgt/tree/master/lib),
     notamment un package de gestion de la géométrie.
 
