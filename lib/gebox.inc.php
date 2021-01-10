@@ -13,6 +13,7 @@ doc: |
   Une position est stockée comme un array de 2 ou 3 nombres.
   On gère aussi une liste de positions comme array de positions et une liste de listes de positions
   comme array d'array de positions.
+  
   La classe GBox soulève des difficultés pour les objets a proximité de l'anti-méridien, il vaut alors mieux utiliser la classe GjBox.
 journal: |
   9/3/2019:
@@ -24,25 +25,6 @@ includes: [coordsys.inc.php, pos.inc.php, zoom.inc.php]
 require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/pos.inc.php';
 
-// teste si une variable correspond à une position
-//function is_pos($pos): bool { return is_array($pos) && isset($pos[0]) && is_numeric($pos[0]); }
-
-// teste si une variable correspond à une liste d'au moins une position
-//function is_Lpos($lpos): bool { return is_array($lpos) && isset($lpos[0]) && is_pos($lpos[0]); }
-
-// teste si une variable correspond à une liste de listes de positions en contenant au moins une
-// peut contenir des listes vides avant de contenir une liste non vide de positions
-/*function is_LLpos($llpos): bool {
-  if (!is_array($llpos)) // si ce n'est pas un array alors ne c'est pas une liste
-    return false;
-  foreach ($llpos as $lpos) {
-    if (is_Lpos($lpos)) // si un élément de la liste est une liste de positions alors ok
-      return true;
-    elseif ($lpos) // sinon si un des éléments est une liste non vide alors KO
-      return false;
-  }
-  return false; // sinon KO
-}*/
 
 {/*PhpDoc: classes
 name: BBox
@@ -250,8 +232,9 @@ name: GBox
 title: class GBox extends BBox - Gestion d'une BBox en coord. géo., chaque point codé comme [lon, lat]
 doc: |
   (-180 <= lon <= 180) && (-90 <= lat <= 90)
-  sauf pour les boites à cheval sur l'antiméridien où:
-    (-180 <= lonmin <= 180) && (lonmin <= lonmax <= 180+360 )
+  sauf pour les boites à cheval sur l'anti-méridien où:
+    (-180 <= lonmin <= 180 < lonmax <= 180+360 )
+  Cette convention est différente de celle utilisée par GeoJSON.
 */}
 class GBox extends BBox {
   static $precision = 6; // nbre de chiffres après la virgule à conserver pour les positions

@@ -14,6 +14,8 @@ doc: |
    - certaines coordonnées internes sont à l'extérieur du rectangle du géotiff et génère des artefacts
      exemple le left de 4232/4232_2_gtw est généré négatif !
 journal: |
+  10/1/2021:
+    gestion des pdf non géo-référencés
   26/12/2020:
     suppression de la sortie en Yaml des infos non connues
   21/12/2020:
@@ -83,8 +85,8 @@ require_once __DIR__.'/ontop.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-// classe définissant l'intervalle d'échelles de chaque couche de GéoTiff
-class LayerScaleDen {
+// classe permettant de définir la couche dans laquelle sera affacté un géotiff
+class LayerName {
   // liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d'échelle des GéoTiff
   // contenus dans la couche
   static $layersScaleDenMax = [
@@ -102,16 +104,24 @@ class LayerScaleDen {
     '20M'=> 9e999,
   ];
   
-  // détermination de $lyrName à partir de $shomgtgan['scaleD']
-  static function getLyrName(int $scaleD): string {
-    // liste des catégories de cartes avec intervalle d'échelles
+  // détermination de $lyrName à partir du num de carte et de son échelle
+  static function get(string $mapname, int $scaleD): string {
+    // liste des catégories de cartes avec intervalle d'échelles et cas particuliers
     //echo "getLyrName(scaleD=$scaleD)\n";
-    $lyrName = '';
-    foreach (self::$layersScaleDenMax as $lyrName => $scaleDenMax) {
-      if ($scaleD < $scaleDenMax)
-        return "gt$lyrName";
+    if (in_array($mapname, ['7330','7344','7360','8502','8509','8517']))
+      return 'gtaem';
+    elseif (in_array($mapname, ['8101']))
+      return 'gtMancheGrid';
+    elseif (in_array($mapname, ['8510']))
+      return 'gtZonMar';
+    else {
+      $lyrName = '';
+      foreach (self::$layersScaleDenMax as $lyrName => $scaleDenMax) {
+        if ($scaleD < $scaleDenMax)
+          return "gt$lyrName";
+      }
+      return '';
     }
-    return '';
   }
 }
 
@@ -138,56 +148,57 @@ while (($mapname = readdir($current)) !== false) {
     if (!preg_match('!^(.*)\.info$!', $file, $matches))
       continue;
     $fbname = $matches[1];
-    if (!($gdalinfo = gdalinfo("$currentpath/$mapname/$fbname.info"))) {
-      // cas où la carte n'est pas géolocalisée car qu'elle ne comporte pas d'espace principal
-      continue;
+    //echo "Traitement de $mapname/$fbname\n";
+    $gdalinfo = gdalinfo($currentpath, "$mapname/$fbname");
+    if (!isset($gdalinfo['gbox'])) {
+      // la carte n'est pas géo-référencée avec 2 sous-cas:
+      $gtgan = CatApi::getCatInfoFromGtName("$mapname/$fbname");
+      // soit elle ne comporte pas d'espace principal
+      if (!isset($gtgan['gbox']))
+        continue;
+      // soit c'est une carte spéciale fournie non-référencée
+      if (isset($gtgan['borders'])) {
+        $extgbox = externalGboxForNonGeoRef($gdalinfo['width'], $gdalinfo['height'], $gtgan['borders'], $gtgan['gbox']);
+      }
     }
-    $gtbbox = $gdalinfo['gbox'];
-    $width = $gdalinfo['width'];
-    $height = $gdalinfo['height'];
-    try {
-      $shomgtgan = CatApi::getCatInfoFromGtName("$mapname/$fbname", $gtbbox);
-      if (!$shomgtgan) {
-        echo "# Erreur sur CatApi::getCatInfoFromGtName($mapname/$fbname, gtbbox)\n";
+    else { // carte géo-référencée
+      $extgbox = $gdalinfo['gbox'];
+      $gtgan = CatApi::getCatInfoFromGtName("$mapname/$fbname", $extgbox);
+      //echo '$gtgan='; print_r($gtgan);
+      if (!$gtgan) {
+        echo "# Erreur sur CatApi::getCatInfoFromGtName($mapname/$fbname, extgbox)\n";
         continue;
       }
     }
-    catch (Exception $e) {
-      echo "# Erreur ",$e->getMessage()," sur CatApi::getCatInfoFromGtName($mapname/$fbname, gtbbox)\n";
-      continue;
-    }
-    //echo "<pre>shomgtgan="; print_r($shomgtgan); echo "</pre>\n";
-    if (in_array($mapname, ['7330','7344','7360','8502']))
-      $lyrName = 'gtaem';
-    elseif (in_array($mapname, ['8101']))
-      $lyrName = 'gtMancheGrid';
+    $width = $gdalinfo['width'];
+    $height = $gdalinfo['height'];
+    $ingbox = $gtgan['gbox']; // coordonnées du cadre intérieur (zone utile) en coord. géo.
+    $lyrName = LayerName::get($mapname, str_replace('.','',$gtgan['scaleDenominator']));
+    if (preg_match('!^. - !', $gtgan['title']))
+      $title = "$gtgan[num]-$gtgan[title]";
     else
-      $lyrName = LayerScaleDen::getLyrName(str_replace('.','',$shomgtgan['scaleDenominator']));
-    if (preg_match('!^. - !', $shomgtgan['title']))
-      $title = "$shomgtgan[num]-$shomgtgan[title]";
-    else
-      $title = "$shomgtgan[num] - $shomgtgan[title]";
+      $title = "$gtgan[num] - $gtgan[title]";
     // Calcul des 2 boites en WorldMercator pour effectuer l'interpolation
     // Cas particulier 6835/6835_pal300 pour lequel le cadre intersecte l'antiméridien mais pas le contenu de la carte
-    if ($gtbbox->west() > $shomgtgan['gbox']->east()) {
+    if ($extgbox->west() > $ingbox->east()) {
       //echo "***** Cas particulier $fbname *****\n";
-      $gtbbox2 = new GBox([[$gtbbox->west()-360, $gtbbox->south()], [$gtbbox->east()-360, $gtbbox->north()]]);
-      $gdalbox = $gtbbox2->proj('WorldMercator');
+      $extgbox2 = new GBox([[$extgbox->west()-360, $extgbox->south()], [$extgbox->east()-360, $extgbox->north()]]);
+      $extwombox = $extgbox2->proj('WorldMercator');
     }
     else {
-      $gdalbox = $gtbbox->proj('WorldMercator');
+      $extwombox = $extgbox->proj('WorldMercator'); // coord. extérieures de la carte en WOM 
     }
-    $ganbox = $shomgtgan['gbox']->proj('WorldMercator');
-    $left = ceil(($ganbox->west() - $gdalbox->west()) / $gdalbox->dx() * $width);
+    $inwombox = $ingbox->proj('WorldMercator'); // coordonnées du cadre intérieur (zone utile) en WOM
+    $left = ceil(($inwombox->west() - $extwombox->west()) / $extwombox->dx() * $width);
     if (($left <= 0) || ($left > $width/2))
       $left = 400;
-    $bottom = ceil(($ganbox->south() - $gdalbox->south()) / $gdalbox->dy() * $height);
+    $bottom = ceil(($inwombox->south() - $extwombox->south()) / $extwombox->dy() * $height);
     if (($bottom <= 0) || ($bottom > $height/2))
       $bottom = 400;
-    $right = ceil(($gdalbox->east() - $ganbox->east()) / $gdalbox->dx() * $width);
+    $right = ceil(($extwombox->east() - $inwombox->east()) / $extwombox->dx() * $width);
     if (($right <= 0) || ($right > $width/2))
       $right = 400;
-    $top = ceil(($gdalbox->north() - $ganbox->north())/ $gdalbox->dy() * $height);
+    $top = ceil(($extwombox->north() - $inwombox->north())/ $extwombox->dy() * $height);
     if (($top <= 0) || ($top > $height/2))
       $top = 400;
     $mdiso19139 = (new CurrentGeoTiff("$mapname/$fbname"))->mdiso19139();
@@ -197,13 +208,13 @@ while (($mapname = readdir($current)) !== false) {
     + (isset($mdiso19139['lastUpdate']) ? ['lastUpdate'=> $mdiso19139['lastUpdate']] : [])
     + (isset($mdiso19139['mdDate']) ? ['mdDate'=> $mdiso19139['mdDate']] : [])
     + [
-      'scaleden'=> $shomgtgan['scaleDenominator'],
+      'scaleden'=> $gtgan['scaleDenominator'],
       'width'=> $width,
       'height'=> $height,
-      'south'=> $gtbbox->south(),
-      'west'=> $gtbbox->west(),
-      'north'=> $gtbbox->north(),
-      'east'=> $gtbbox->east(),
+      'south'=> $extgbox->south(),
+      'west'=> $extgbox->west(),
+      'north'=> $extgbox->north(),
+      'east'=> $extgbox->east(),
       'left'=> $left,
       'bottom'=> $bottom,
       'right'=> $right,

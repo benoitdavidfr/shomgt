@@ -27,7 +27,7 @@ class CatApi {
     retourne les infos du catalogue correspondant au GeoTiff $name, ex '6815/6815_pal300', '7282/7282_1_gtw'
     Retourne un array ayant comme propriétés
     'title': titre
-    'edition': edition
+    //'edition': edition
     'scaleDenominator': dénominateur de l'échelle avec un . comme séparateur des milliers
     'gbox': GBox
     'bboxDM': array avec 2 string en dégrés minutes, exemple ['SW'=> "16°42,71''S - 151°33,15''W", 'NE'=>"16°38,39''S - 151°26,58''W"]
@@ -64,10 +64,12 @@ class CatApi {
         'num'=> $num,
         'title'=> $mapa['title'],
         //'edition'=> $mapa['edition'],
-        'scaleDenominator'=> $mapa['scaleDenominator'],
-        'gbox'=> $map->bbox()->asGBoxes()[0],
-        'bboxDM'=> $mapa['bboxDM'],
-      ];
+        //'bboxDM'=> $mapa['bboxDM'],
+      ]
+      + (isset($mapa['scaleDenominator']) ? ['scaleDenominator'=> $mapa['scaleDenominator']] : [])
+      + ($map->bbox() ? ['gbox'=> $map->bbox()->asGBoxes()[0]] : [])
+      + ($map->borders() ? ['borders'=> $map->borders()] : [])
+      ;
     }
     else
       return self::getGTFromGBox($map, $bbox);
@@ -94,8 +96,9 @@ class CatApi {
         //'issued'=> $map->edition(),
         'scaleDenominator'=> $parta['scaleDenominator'],
         'gbox'=> $part->bbox()->asGBoxes()[0],
-        'bboxDM'=> $part->bbox()->asArray(),
+        //'bboxDM'=> $part->bbox()->asArray(),
       ];
+      + ($part->borders() ? ['borders'=> $part->borders()] : []);
     }
   
     // je cherche le cartouche qui correspond le mieux au GeoTiff

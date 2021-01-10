@@ -82,8 +82,8 @@ doc: |
         seuls les PNG découpés sont conservés à la fin pour économiser l'espace
 
 journal: |
-  3/1/2021:
-    - ajout mécanisme de mise à jour d'un esclave (en cours)
+  3-8/1/2021:
+    - ajout mécanisme de mise à jour d'un esclave
   6/11/2019:
     - écriture des scripts cropall.php et cropmap.php pour fabriquer les géotiffs rognés pour le SNUM
   3/11/2019:

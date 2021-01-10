@@ -14,6 +14,10 @@ doc: |
   Un bbox à cheval sur l'anti-méridien n'est pas géré de la même facon que dans la classe GBox
   Ici, il est géré comme spécifié par GeoJSON, cad avec $westlimit > $eastlimit
 journal: |
+  10/1/2021
+    - remplacement du terme hasPart en insetMap
+  9/1/2021
+    - ajout de la possibilité de définir des bordures
   27/12/2020
     - ajout du contrôle d'accès sur les actions
   23/12/2020:
@@ -117,20 +121,59 @@ if (0) { // tests unitaires
   die("Fin ligne ".__LINE__."\n");
 }
 
+// Epaisseurs des bords pour géoréférencer la carte ou le cartouche s'il ne l'est pas
+// Chaque épaisseur est stockée soit comme un entier soit comme une expression '^(\d+)-(\d+)$'
+class Borders {
+  protected int|string $left; # nbre de pixels de la bordure gauche
+  protected int|string $bottom; # nbre de pixels de la bordure basse
+  protected int|string $right; # nbre de pixels de la bordure droite
+  protected int|string $top; # nbre de pixels de la bordure haute
+  
+  function __construct(array $borders) {
+    $this->left = $borders['left'];
+    $this->bottom = $borders['bottom'];
+    $this->right = $borders['right'];
+    $this->top = $borders['top'];
+  }
+
+  static function calc(string $expr): int { // calcule l'expression
+    if (!preg_match('!^(\d+)-(\d+)$!', $expr, $matches))
+      throw new Exception("No match expression for '$expr'");
+    return $matches[1] - $matches[2];
+  }
+  
+  function left(): int { return is_int($this->left) ? $this->left : self::calc($this->left); }
+  function bottom(): int { return is_int($this->bottom) ? $this->bottom : self::calc($this->bottom); }
+  function right(): int { return is_int($this->right) ? $this->right : self::calc($this->right); }
+  function top(): int { return is_int($this->top) ? $this->top : self::calc($this->top); }
+  
+  function asArray(): array {
+    return [
+      'left'=> $this->left,
+      'bottom'=> $this->bottom,
+      'right'=> $this->right,
+      'top'=> $this->top,
+    ];
+  }
+};
+
 // Gestion d'un cartouche
-class MapPart {
+class InsetMap {
   protected string $title; // titre du cartouche
   protected string $scaleDenominator; // dénominateur de l'échelle du cartouche avec un . comme séparateur des milliers,
   protected BBoxDM $bbox; // boite englobante du cartouche comme BBoxDM
+  protected ?Borders $borders; // Epaisseurs des bords pour géoréférencer le cartouche s'il ne l'est pas
   
-  function __construct(array $mapPart) {
-    $this->title = $mapPart['title'];
-    $this->scaleDenominator = $mapPart['scaleDenominator'] ?? null;
-    $this->bbox = new BBoxDM($mapPart['bboxDM']);
+  function __construct(array $insetMap) {
+    $this->title = $insetMap['title'];
+    $this->scaleDenominator = $insetMap['scaleDenominator'] ?? null;
+    $this->bbox = new BBoxDM($insetMap['bboxDM']);
+    $this->borders = isset($map['borders']) ? new Borders($insetMap['borders']) : null;
   }
   
   function scaleDenominator(): string { return $this->scaleDenominator; }
   function bbox(): BBoxDM { return $this->bbox; }
+  function borders(): ?Borders { return $this->borders; }
   
   function asArray(): array {
     return [
@@ -138,7 +181,8 @@ class MapPart {
       'scaleDenominator'=> $this->scaleDenominator,
       'bboxDM'=> $this->bbox->asArray(),
       'spatial'=> $this->bbox->asDcmiBox(),
-    ];
+    ]
+    + ($this->borders ? ['borders'=> $this->borders->asArray()] : []);
   }
 };
 
@@ -168,7 +212,7 @@ doc: |
 
   Il existe des cartes sans espace principal (exemple 7436 - Approches et Port de Bastia - Ports d'Ajaccio et de Propriano)
   uniquement constituées de cartouches.
-  Ainsi, $bbox et $scaleDenominator peuvent être nuls à condition qu'il existe au moins un hasPart
+  Ainsi, $bbox et $scaleDenominator peuvent être nuls à condition qu'il existe au moins un insetMap
 */
 class MapCat {
   const PATH = __DIR__.'/mapcat.'; // chemin des fichiers stockant le catalogue en pser ou en yaml, lui ajouter l'extension
@@ -194,18 +238,20 @@ class MapCat {
   protected ?string $scaleDenominator; // dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
                                 // null ssi la carte ne comporte pas d'espace principal (source GAN)
   protected ?GjBox $bbox; // bbox de l'espace principal de la carte comme BBoxDM|GjBox, null ssi pas d'espace principal (source GAN|WFS)
+  protected ?Borders $borders; // Epaisseurs des bords pour géoréférencer la carte si elle ne l'est pas
   protected array $mapsFrance; // identifie les cartes dites d'intérêt et les zones couvertes (calculé)
   protected ?string $replaces; // indication éventuelle de la carte remplacée (source GAN)
-  protected ?string $references; // ssi la carte est un fac-similé alors référence de la carte gén. étrangère reproduite (source GAN)
+  protected ?string $references; // référence de la carte gén. étrangère reproduite ssi la carte est un fac-similé (source GAN)
   protected ?string $noteShom; // commentaire associé par le Shom à la carte (source GAN)
   protected ?string $noteCatalog; // commentaire associé à la carte dans la gestion du catalogue
-  protected array $hasPart=[]; // liste des éventuels cartouches, chacun comme MapPart (source GAN)
+  protected array $insetMaps=[]; // liste des éventuels cartouches, chacun comme InsetMap (source GAN)
   
   // retourne la propriété
   function num(): string { return $this->num; }
   function mapsFrance(): array { return $this->mapsFrance; }
   function bbox(): ?GjBox { return $this->bbox; }
-  function hasPart(): array { return $this->hasPart; }
+  function borders(): ?Borders { return $this->borders; }
+  function insetMaps(): array { return $this->insetMaps; }
   
   function __construct(string $mapid, array $map, array $options=[]) { // $map peut être une structure V2 ou V1
     $this->num = substr($mapid, 2);
@@ -217,16 +263,17 @@ class MapCat {
     $this->scaleDenominator = $map['scaleDenominator'] ?? null;
     $this->bbox = isset($map['bboxDM']) ? new BBoxDM($map['bboxDM'])
       : (isset($map['bboxLonLatFromWfs']) ? new GjBox($map['bboxLonLatFromWfs']) : null);
+    $this->borders = isset($map['borders']) ? new Borders($map['borders']) : null;
     $this->replaces = $map['replaces'] ?? null;
     $this->references = $map['references'] ?? null;
     $this->noteShom = $map['noteShom'] ?? null;
     $this->noteCatalog = $map['noteCatalog'] ?? null;
-    foreach ($map['hasPart'] ?? [] as $mapPart) {
-      $this->hasPart[] = new MapPart($mapPart);
+    foreach ($map['insetMaps'] ?? [] as $insetMap) {
+      $this->insetMaps[] = new InsetMap($insetMap);
     }
     
-    if ((!$this->bbox || !$this->scaleDenominator) && !$this->hasPart)
-      throw new Exception("Erreur dans la création de $mapid, (bbox ou scaleDenominator) et hasPart non définis");
+    if ((!$this->bbox || !$this->scaleDenominator) && !$this->insetMaps)
+      throw new Exception("Erreur dans la création de $mapid, (bbox ou scaleDenominator) et insetMaps non définis");
     if (isset($map['mapsFrance']))
       $this->mapsFrance = $map['mapsFrance'];
     else { // si non défini alors il est calculé et le catalogue est marqué pour mise à jour
@@ -234,63 +281,72 @@ class MapCat {
       self::$catUpdated = true;
     }
   }
-
+  
   // s'il n'y a pas d'espace principal, le plus grand des dénominateurs d'échelle des cartouches
   function scaleDenominator(): string {
     if ($this->scaleDenominator)
       return $this->scaleDenominator;
     $maxsd = null;
-    foreach ($this->hasPart as $part) {
-      $psd = str_replace('.', '', $part->scaleDenominator());
-      if (!$maxsd || ($psd > str_replace('.', '', $maxsd)))
-        $maxsd = $part->scaleDenominator();
+    foreach ($this->insetMaps as $imap) {
+      $isd = str_replace('.', '', $imap->scaleDenominator());
+      if (!$maxsd || ($isd > str_replace('.', '', $maxsd)))
+        $maxsd = $imap->scaleDenominator();
     }
     return $maxsd;
   }
   
-  // Génération du dénom. d'échelle comme entier
+  // Transformation du dénom. d'échelle en entier
   function scaleDenAsInt(): int { return (int)str_replace('.', '', $this->scaleDenominator()); }
 
-  // retourne la géométrie de l'espace principal comme Polygone s'il existe, sinon des cartouches comme Multi-Polygone
-  function geometry(): Geometry {
-    if ($this->bbox) {
-      //return $this->bbox->asGeometry();
-      // Représentation par une GeometryCollection composée du polygone (ou MultiPolygon) et de la ligne WS-EN (ou MultiLineString)
-      return Geometry::fromGeoJSON([
-        'type'=> 'GeometryCollection',
-        'geometries'=> [
-          $this->bbox->asGeometry()->asArray(),
-          $this->bbox->asLineWSEN()->asArray(),
-        ],
-      ]);
-    }
-    else {
-      $multiPolygonCoords = [];
-      $multiLSCoords = [];
-      foreach ($this->hasPart as $part) {
-        $multiPolygonCoords = array_merge($multiPolygonCoords, $part->bbox()->multiPolygonCoords());
-        $multiLSCoords = array_merge($multiLSCoords, $part->bbox()->multiLSCoords());
+  // si l'espace principal existe alors retourne sa géométrie sinon celle de l'union des cartouches.
+  // Cette géométrie est par défaut un polygone pour l'espace principal ou un MultiPolygon pour les cartouches.
+  // Cependant, si $type vaut 'GeometryCollection' alors la géométrie est une GeometryCollection contenant une ou des lignes WS/EN
+  function geometry(string $type=''): Geometry {
+    if ($this->bbox) { // espace principal
+      if ($type == 'GeometryCollection') {
+        // Représentation par une GeometryCollection composée du polygone (ou MultiPolygon) et de la ligne WS-EN (ou MultiLineString)
+        return Geometry::fromGeoJSON([
+          'type'=> 'GeometryCollection',
+          'geometries'=> [
+            $this->bbox->asGeometry()->asArray(),
+            $this->bbox->asLineWSEN()->asArray(),
+          ],
+        ]);
       }
-      return Geometry::fromGeoJSON([
-        'type'=> 'GeometryCollection',
-        'geometries'=> [
-          ['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords],
-          ['type'=> 'MultiLineString', 'coordinates'=> $multiLSCoords],
-        ]
-      ]);
+      else { // représentation comme Polygon
+        return $this->bbox->asGeometry();
+      }
+    }
+    else { // cartouches 
+      if ($type == 'GeometryCollection') {
+        $multiPolygonCoords = [];
+        $multiLSCoords = [];
+        foreach ($this->insetMaps as $imap) {
+          $multiPolygonCoords = array_merge($multiPolygonCoords, $imap->bbox()->multiPolygonCoords());
+          $multiLSCoords = array_merge($multiLSCoords, $imap->bbox()->multiLSCoords());
+        }
+        return Geometry::fromGeoJSON([
+          'type'=> 'GeometryCollection',
+          'geometries'=> [
+            ['type'=> 'MultiPolygon', 'coordinates'=> $multiPolygonCoords],
+            ['type'=> 'MultiLineString', 'coordinates'=> $multiLSCoords],
+          ]
+        ]);
+      }
+      else { // MultiPolygon
+        $multiPolygonCoords = [];
+        $multiLSCoords = [];
+        foreach ($this->insetMaps as $imap) {
+          $multiPolygonCoords = array_merge($multiPolygonCoords, $imap->bbox()->multiPolygonCoords());
+          $multiLSCoords = array_merge($multiLSCoords, $imap->bbox()->multiLSCoords());
+        }
+        return Geometry::fromGeoJSON([
+          'type'=> 'MultiPolygon',
+          'coordinates'=> $multiPolygonCoords,
+        ]);
+      }
     }
   }
-  
-  // EBox en WebMercator du bbox, génère une erreur s'il n'y a pas d'espace principal
-  /*function wembox(): EBox {
-    if ($this->bbox) {
-      $gboxes = $this->bbox->asGBoxes();
-      $gbox = $gboxes[0];
-      return $gbox->proj('WebMercator');
-    }
-    else
-      throw new Exception("Erreur dans MapCat::wombox(), pas d'espace principal");
-  }*/
   
   static function importFromV1() { // import du catalogue depuis la version 1 du catalogue
     echo "import du catalogue V1<br>\n";
@@ -315,15 +371,6 @@ class MapCat {
     MapCat::storeAsYaml();
     MapCat::storeAsPser();
     echo "enregistrement du catalogue en pser et en Yaml\n";
-  }
-  
-  // met à jour les champ modified, edition et lastUpdate présents dans ShomGt par lecture des MD ISO d'un des GéoTiff à la carte
-  private function updateFromShomGt(): bool {
-    $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum($this->num);
-    $this->modified = $mdiso19139['mdDate'];
-    $this->edition = $mdiso19139['edition'];
-    $this->lastUpdate = intval($mdiso19139['lastUpdate']);
-    return true;
   }
   
   static function storeAsPser() { // enregistre le catalogue comme pser 
@@ -385,6 +432,15 @@ class MapCat {
       return ['checkWarnings'=> $warnings];
     else
       return [];
+  }
+  
+  // met à jour les champ modified, edition et lastUpdate présents dans ShomGt par lecture des MD ISO d'un des GéoTiff à la carte
+  private function updateFromShomGt(): bool {
+    $mdiso19139 = CurrentGeoTiff::mdiso19139FromNum($this->num);
+    $this->modified = $mdiso19139['mdDate'];
+    $this->edition = $mdiso19139['edition'];
+    $this->lastUpdate = intval($mdiso19139['lastUpdate']);
+    return true;
   }
   
   static function synchroShomGt() { // prend en compte les modifications dans les cartes ShomGt
@@ -475,24 +531,23 @@ class MapCat {
       + ($this->bbox && (get_class($this->bbox)=='BBoxDM') ?
           [ 'bboxDM'=> $this->bbox->asArray(), 'spatial'=> $this->bbox->asDcmiBox() ] : [])
       + ($this->bbox && (get_class($this->bbox)=='GjBox') ? [ 'bboxLonLatFromWfs'=> $this->bbox->asArray() ] : [])
+      + ($this->borders ? ['borders'=> $this->borders->asArray()] : [])
       + ($this->replaces ? ['replaces'=> $this->replaces] : [])
       + ($this->references ? ['references'=> $this->references] : [])
       + ($this->noteShom ? ['noteShom'=> $this->noteShom] : [])
       + ($this->noteCatalog ? ['noteCatalog'=> $this->noteCatalog] : [])
-      + ($this->hasPart ? ['hasPart'=> array_map(function(MapPart $mapPart) { return $mapPart->asArray(); }, $this->hasPart)] : [])
+      + ($this->insetMaps ? ['insetMaps'=> array_map(function(InsetMap $insetMap) { return $insetMap->asArray(); }, $this->insetMaps)] : [])
       ;
   }
 
-  function geojson(): array { // génère la carte comme Feature GeoJSON
+  function geojson(): array { // génère la carte comme Feature GeoJSON avec une géométrie GeometryCollection pour améliorer l'affichage
     return [
       'type'=> 'Feature',
       'id'=> 'FR'.$this->num,
       'properties'=> $this->asArray(),
-      'geometry'=> $this->geometry()->asArray(),
+      'geometry'=> $this->geometry('GeometryCollection')->asArray(),
     ];
   }
-  
-  //function obsolete(): ?string { return $this->obsolete; } // consulte la propriété
   
   function makeObsolete() { // rend une carte obsolète
     $mapid = 'FR'.$this->num;
@@ -556,7 +611,7 @@ class MapCat {
         $wemboxes[$this->num] = $wembox;
     }
     else {
-      foreach ($this->hasPart as $nopart => $part) {
+      foreach ($this->insetMaps as $nopart => $part) {
         $wembox = $part->bbox()->wembox();
         if ($wembox->intersects($tileBBox)) {
           $wemboxes[$this->num."/$nopart"] = $wembox;
@@ -697,7 +752,7 @@ function llmapParams(MapCat $map): array { // paramètres de l'url de la carte L
   }
   else {
     $gbox = new GBox;
-    foreach ($map->hasPart() as $part)
+    foreach ($map->insetMaps() as $part)
       $gbox->union($part->bbox()->asGboxes()[0]);
   }
   $center = $gbox->center();
@@ -739,7 +794,7 @@ if ($f == 'html') { // affichage html
         echo "<tr><td><a href='$_SERVER[SCRIPT_NAME]/$mapid'>$mapid</a></td>",
           "<td>",isset($mapa['groupTitle']) ? "$mapa[groupTitle]$br" : '',"<a href='$llmapurl'>$mapa[title]</a></td>",
           //"<td>",strlen($mapa['groupTitle'] ?? '')+strlen($mapa['title']),"</td>",
-          "<td align='right'>",$mapa['scaleDenominator'] ?? '<i>'.$mapa['hasPart'][0]['scaleDenominator'].'</i>',"</td>",
+          "<td align='right'>",$mapa['scaleDenominator'] ?? '<i>'.$mapa['insetMaps'][0]['scaleDenominator'].'</i>',"</td>",
           "<td>",$mapa['edition'] ?? 'non définie',"</td>",
           "<td>",implode(', ', $mapa['mapsFrance']),"</td>",
           "</tr>\n";

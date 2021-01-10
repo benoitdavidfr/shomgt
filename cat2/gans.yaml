@@ -1,8 +1,8 @@
 title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
-description: 'Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (modified)'
+description: 'Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (valid)'
 $id: 'https://geoapi.fr/shomgt/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/cat2/gans
-valid: 2020-12-18/2020-12-23
+valid: 2021-01-09/2021-01-09
 gans:
   FR6814:
     perempt: 6.5
@@ -26,7 +26,7 @@ gans:
       - { num: 56, semaineAvis: 1951-247 }
       - { num: 57, semaineAvis: 2020-255 }
       - { num: 58, semaineAvis: 2020-256 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7630:
     perempt: 6.5
     groupTitle: 'Océan Atlantique'
@@ -49,7 +49,23 @@ gans:
       - { num: 13, semaineAvis: 2026-266 }
       - { num: 14, semaineAvis: 2030-264 }
       - { num: 15, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6824:
+    perempt: 6
+    groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
+    title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
+    bbox:
+      SW: '49°40,35''N — NaN°00,00''W'
+      NE: '51°10,35''N — 001°35,92''E'
+    ganEdition: 'Edition n°4 - 2006'
+    corrections:
+      - { num: 147, semaineAvis: 1941-20 }
+      - { num: 148, semaineAvis: 2007-16 }
+      - { num: 149, semaineAvis: 2007-33 }
+      - { num: 150, semaineAvis: 2024-33 }
+      - { num: 151, semaineAvis: 2038-35 }
+      - { num: 152, semaineAvis: 2101-32 }
+    valid: '2021-01-09'
   FR6968:
     perempt: 6
     groupTitle: 'Côte Sud d''Angleterre'
@@ -65,7 +81,7 @@ gans:
       - { num: 29, semaineAvis: 2050-35 }
       - { num: 30, semaineAvis: 2050-36 }
       - { num: 31, semaineAvis: 2050-38 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7014:
     perempt: 6
     groupTitle: 'Méditerranée Occidentale'
@@ -81,7 +97,7 @@ gans:
       - { num: 48, semaineAvis: 2005-148 }
       - { num: 49, semaineAvis: 2030-77 }
       - { num: 50, semaineAvis: 2039-144 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7025:
     perempt: 6
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
@@ -97,7 +113,23 @@ gans:
       - { num: 11, semaineAvis: 2022-101 }
       - { num: 12, semaineAvis: 2030-98 }
       - { num: 13, semaineAvis: 2044-97 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7031:
+    perempt: 6
+    groupTitle: 'Côte Ouest de France'
+    title: 'De l''Île de Penfret au Plateau des Birvideaux'
+    bbox:
+      SW: '47°28,94''N — 004°00,08''W'
+      NE: '47°49,04''N — 003°16,38''W'
+    ganEdition: 'Edition n°4 - 2017'
+    corrections:
+      - { num: 10, semaineAvis: 1931-53 }
+      - { num: 11, semaineAvis: 1951-56 }
+      - { num: 12, semaineAvis: 2006-56 }
+      - { num: 13, semaineAvis: 2035-59 }
+      - { num: 14, semaineAvis: 2039-56 }
+      - { num: 15, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
   FR7054:
     perempt: 6
     groupTitle: 'Côte Sud de France'
@@ -113,7 +145,7 @@ gans:
       - { num: 8, semaineAvis: 2009-92 }
       - { num: 9, semaineAvis: 2017-85 }
       - { num: 10, semaineAvis: 2051-88 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7090:
     perempt: 6
     groupTitle: 'Côte Nord de France'
@@ -132,7 +164,7 @@ gans:
       - { num: 8, semaineAvis: 2024-40 }
       - { num: 9, semaineAvis: 2038-37 }
       - { num: 10, semaineAvis: 2043-38 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7093:
     perempt: 6
     groupTitle: 'Côte Sud de France'
@@ -148,7 +180,7 @@ gans:
       - { num: 10, semaineAvis: 2044-88 }
       - { num: 11, semaineAvis: 2046-92 }
       - { num: 12, semaineAvis: 2046-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7122:
     perempt: 6
     groupTitle: 'Côte Ouest de France'
@@ -166,7 +198,7 @@ gans:
       - { num: 4, semaineAvis: 2026-46 }
       - { num: 5, semaineAvis: 2032-50 }
       - { num: 6, semaineAvis: 2032-51 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7128:
     perempt: 6
     groupTitle: 'Côte Nord de France'
@@ -185,7 +217,7 @@ gans:
       - { num: 12, semaineAvis: 2036-52 }
       - { num: 13, semaineAvis: 2040-45 }
       - { num: 14, semaineAvis: 2049-33 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7133:
     perempt: 6
     groupTitle: 'Côte Nord de France'
@@ -205,7 +237,7 @@ gans:
       - { num: 24, semaineAvis: 2010-38 }
       - { num: 25, semaineAvis: 2037-48 }
       - { num: 26, semaineAvis: 2044-44 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7229:
     perempt: 6
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
@@ -221,7 +253,7 @@ gans:
       - { num: 149, semaineAvis: 2036-104 }
       - { num: 150, semaineAvis: 2040-100 }
       - { num: 151, semaineAvis: 2047-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7409:
     perempt: 6
     groupTitle: 'Côte Sud de France'
@@ -237,7 +269,23 @@ gans:
       - { num: 38, semaineAvis: 2039-90 }
       - { num: 39, semaineAvis: 2039-91 }
       - { num: 40, semaineAvis: 2047-86 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7421:
+    perempt: 6
+    groupTitle: 'Côte Nord de France'
+    title: 'De la Pointe de La Percée à Ouistreham'
+    bbox:
+      SW: '49°14,94''N — 000°55,78''W'
+      NE: '49°34,45''N — 000°11,18''W'
+    ganEdition: 'Edition n°2 - 2005'
+    corrections:
+      - { num: 35, semaineAvis: 2010-36 }
+      - { num: 36, semaineAvis: 2029-37 }
+      - { num: 37, semaineAvis: 2032-40 }
+      - { num: 38, semaineAvis: 2036-44 }
+      - { num: 39, semaineAvis: 2045-36 }
+      - { num: 40, semaineAvis: 2101-32 }
+    valid: '2021-01-09'
   FR6738:
     perempt: 5.5
     groupTitle: 'Petites Antilles'
@@ -258,7 +306,7 @@ gans:
       - { num: 35, semaineAvis: 1908-261 }
       - { num: 36, semaineAvis: 1932-260 }
       - { num: 37, semaineAvis: 1942-260 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6948:
     perempt: 5.5
     groupTitle: Guadeloupe
@@ -281,7 +329,7 @@ gans:
       - { num: 33, semaineAvis: 2009-260 }
       - { num: 34, semaineAvis: 2027-260 }
       - { num: 35, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7381:
     perempt: 5.5
     groupTitle: 'Côte de Guyane Française'
@@ -302,7 +350,7 @@ gans:
       - { num: 16, semaineAvis: 1943-253 }
       - { num: 17, semaineAvis: 2024-250 }
       - { num: 18, semaineAvis: 2043-251 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7482:
     perempt: 5.5
     groupTitle: Guadeloupe
@@ -327,7 +375,7 @@ gans:
       - { num: 32, semaineAvis: 1943-263 }
       - { num: 33, semaineAvis: 1951-257 }
       - { num: 34, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6015:
     perempt: 5
     groupTitle: 'Canada - Groenland - Islande'
@@ -347,7 +395,7 @@ gans:
       - { num: 40, semaineAvis: 1913-279 }
       - { num: 41, semaineAvis: 1913-280 }
       - { num: 42, semaineAvis: 2029-276 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6610:
     perempt: 5
     groupTitle: 'Côte Sud de France'
@@ -362,7 +410,7 @@ gans:
       - { num: 9, semaineAvis: 2008-91 }
       - { num: 10, semaineAvis: 2023-94 }
       - { num: 11, semaineAvis: 2041-90 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6615:
     perempt: 5
     groupTitle: 'Côte Sud de France'
@@ -377,22 +425,7 @@ gans:
       - { num: 3, semaineAvis: 2023-94 }
       - { num: 4, semaineAvis: 2025-86 }
       - { num: 5, semaineAvis: 2025-89 }
-    valid: '2020-12-18'
-  FR6824:
-    perempt: 5
-    groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
-    title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
-    bbox:
-      SW: '49°40,35''N — NaN°00,00''W'
-      NE: '51°10,35''N — 001°35,92''E'
-    ganEdition: 'Edition n°4 - 2006'
-    corrections:
-      - { num: 147, semaineAvis: 1941-20 }
-      - { num: 148, semaineAvis: 2007-16 }
-      - { num: 149, semaineAvis: 2007-33 }
-      - { num: 150, semaineAvis: 2024-33 }
-      - { num: 151, semaineAvis: 2038-35 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6951:
     perempt: 5
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
@@ -407,7 +440,7 @@ gans:
       - { num: 8, semaineAvis: 2005-90 }
       - { num: 9, semaineAvis: 2008-92 }
       - { num: 10, semaineAvis: 2044-89 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7024:
     perempt: 5
     groupTitle: 'Mer Méditerranée'
@@ -424,22 +457,7 @@ gans:
       - { num: 48, semaineAvis: 2011-94 }
       - { num: 49, semaineAvis: 2025-93 }
       - { num: 50, semaineAvis: 2050-97 }
-    valid: '2020-12-18'
-  FR7031:
-    perempt: 5
-    groupTitle: 'Côte Ouest de France'
-    title: 'De l''Île de Penfret au Plateau des Birvideaux'
-    bbox:
-      SW: '47°28,94''N — 004°00,08''W'
-      NE: '47°49,04''N — 003°16,38''W'
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 10, semaineAvis: 1931-53 }
-      - { num: 11, semaineAvis: 1951-56 }
-      - { num: 12, semaineAvis: 2006-56 }
-      - { num: 13, semaineAvis: 2035-59 }
-      - { num: 14, semaineAvis: 2039-56 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7040:
     perempt: 5
     groupTitle: 'La Manche'
@@ -454,7 +472,7 @@ gans:
       - { num: 3, semaineAvis: 2049-25 }
       - { num: 4, semaineAvis: 2049-33 }
       - { num: 5, semaineAvis: 2051-36 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7041:
     perempt: 5
     groupTitle: 'Petites Antilles'
@@ -474,7 +492,7 @@ gans:
       - { num: 27, semaineAvis: 1924-256 }
       - { num: 28, semaineAvis: 1932-260 }
       - { num: 29, semaineAvis: 1942-260 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7121:
     perempt: 5
     groupTitle: 'Côte Ouest de France'
@@ -492,7 +510,7 @@ gans:
       - { num: 15, semaineAvis: 2004-42 }
       - { num: 16, semaineAvis: 2015-60 }
       - { num: 17, semaineAvis: 2042-50 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7124:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -511,7 +529,7 @@ gans:
       - { num: 20, semaineAvis: 2036-52 }
       - { num: 21, semaineAvis: 2044-52 }
       - { num: 22, semaineAvis: 2050-40 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7125:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -530,7 +548,7 @@ gans:
       - { num: 5, semaineAvis: 2038-48 }
       - { num: 6, semaineAvis: 2049-36 }
       - { num: 7, semaineAvis: 2049-37 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7130:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -545,7 +563,24 @@ gans:
       - { num: 9, semaineAvis: 2040-41 }
       - { num: 10, semaineAvis: 2045-40 }
       - { num: 11, semaineAvis: 2049-32 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7139:
+    perempt: 5
+    groupTitle: 'Côte Ouest de France'
+    title: 'De la Pointe du Talut à la Pointe de Gâvres - Île de Groix'
+    bbox:
+      SW: '47°35,30''N — 003°35,08''W'
+      NE: '47°43,39''N — 003°17,52''W'
+    hasPart:
+      - { title: 'Cartouche: A - Port Tudy', bbox: { SW: '47°38,49''N — 003°27,03''W', NE: '47°38,94''N — 003°26,23''W' } }
+    ganEdition: 'Edition n°3 - 2017'
+    corrections:
+      - { num: 8, semaineAvis: 1931-53 }
+      - { num: 9, semaineAvis: 1951-56 }
+      - { num: 10, semaineAvis: 2006-56 }
+      - { num: 11, semaineAvis: 2039-56 }
+      - { num: 12, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
   FR7141:
     perempt: 5
     groupTitle: 'Côte Ouest de France'
@@ -560,7 +595,7 @@ gans:
       - { num: 32, semaineAvis: 2035-58 }
       - { num: 33, semaineAvis: 2037-56 }
       - { num: 34, semaineAvis: 2043-56 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7153:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -575,7 +610,7 @@ gans:
       - { num: 4, semaineAvis: 2023-47 }
       - { num: 5, semaineAvis: 2040-44 }
       - { num: 6, semaineAvis: 2044-48 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7156:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -590,7 +625,7 @@ gans:
       - { num: 6, semaineAvis: 2006-43 }
       - { num: 7, semaineAvis: 2012-35 }
       - { num: 8, semaineAvis: 2024-50 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7158:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -605,7 +640,7 @@ gans:
       - { num: 46, semaineAvis: 2028-42 }
       - { num: 47, semaineAvis: 2038-38 }
       - { num: 48, semaineAvis: 2051-41 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7161:
     perempt: 5
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
@@ -620,7 +655,7 @@ gans:
       - { num: 15, semaineAvis: 2006-45 }
       - { num: 16, semaineAvis: 2036-52 }
       - { num: 17, semaineAvis: 2040-44 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7258:
     perempt: 5
     groupTitle: 'Côte Nord de France'
@@ -637,7 +672,22 @@ gans:
       - { num: 3, semaineAvis: 2026-35 }
       - { num: 4, semaineAvis: 2031-35 }
       - { num: 5, semaineAvis: 2048-33 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7291:
+    perempt: 5
+    groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
+    title: 'De Piombino à Fiumicino et côte Est de Corse'
+    bbox:
+      SW: ''
+      NE: ''
+    ganEdition: 'Edition n°2 - 2018'
+    corrections:
+      - { num: 14, semaineAvis: 1950-88 }
+      - { num: 15, semaineAvis: 1950-104 }
+      - { num: 16, semaineAvis: 1950-107 }
+      - { num: 17, semaineAvis: 2012-104 }
+      - { num: 18, semaineAvis: 2101-107 }
+    valid: '2021-01-09'
   FR7400:
     perempt: 5
     groupTitle: 'Côte Ouest de France'
@@ -655,22 +705,7 @@ gans:
       - { num: 12, semaineAvis: 2019-44 }
       - { num: 13, semaineAvis: 2031-40 }
       - { num: 14, semaineAvis: 2047-50 }
-    valid: '2020-12-18'
-  FR7421:
-    perempt: 5
-    groupTitle: 'Côte Nord de France'
-    title: 'De la Pointe de La Percée à Ouistreham'
-    bbox:
-      SW: '49°14,94''N — 000°55,78''W'
-      NE: '49°34,45''N — 000°11,18''W'
-    ganEdition: 'Edition n°2 - 2005'
-    corrections:
-      - { num: 35, semaineAvis: 2010-36 }
-      - { num: 36, semaineAvis: 2029-37 }
-      - { num: 37, semaineAvis: 2032-40 }
-      - { num: 38, semaineAvis: 2036-44 }
-      - { num: 39, semaineAvis: 2045-36 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7507:
     perempt: 5
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
@@ -685,7 +720,7 @@ gans:
       - { num: 118, semaineAvis: 2030-98 }
       - { num: 119, semaineAvis: 2035-86 }
       - { num: 120, semaineAvis: 2049-82 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7035:
     perempt: 4.5
     groupTitle: 'Océan Indien'
@@ -704,7 +739,7 @@ gans:
       - { num: 44, semaineAvis: 2010-186 }
       - { num: 45, semaineAvis: 2031-184 }
       - { num: 46, semaineAvis: 2039-184 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6843:
     perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
@@ -718,7 +753,21 @@ gans:
       - { num: 8, semaineAvis: 1950-82 }
       - { num: 9, semaineAvis: 2032-79 }
       - { num: 10, semaineAvis: 2037-84 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6857:
+    perempt: 4
+    groupTitle: 'Côte Nord de France'
+    title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
+    bbox:
+      SW: '49°10,74''N — 001°57,48''W'
+      NE: '50°12,95''N — 000°23,52''W'
+    ganEdition: 'Edition n°4 - 2012'
+    corrections:
+      - { num: 67, semaineAvis: 2050-35 }
+      - { num: 68, semaineAvis: 2050-36 }
+      - { num: 69, semaineAvis: 2050-37 }
+      - { num: 70, semaineAvis: 2101-32 }
+    valid: '2021-01-09'
   FR6911:
     perempt: 4
     groupTitle: 'Côte Est de Corse'
@@ -732,7 +781,7 @@ gans:
       - { num: 6, semaineAvis: 2040-94 }
       - { num: 7, semaineAvis: 2046-97 }
       - { num: 8, semaineAvis: 2048-96 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6940:
     perempt: 4
     groupTitle: 'Côte Sud d''Angleterre'
@@ -746,7 +795,21 @@ gans:
       - { num: 71, semaineAvis: 1951-27 }
       - { num: 72, semaineAvis: 2010-27 }
       - { num: 73, semaineAvis: 2018-25 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6991:
+    perempt: 4
+    groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
+    title: 'De la Gironde à Cabo Peñas'
+    bbox:
+      SW: '43°13,93''N — 005°53,08''W'
+      NE: '45°42,94''N — 000°47,58''W'
+    ganEdition: 'Edition n°4 - 2015'
+    corrections:
+      - { num: 23, semaineAvis: 1944-60 }
+      - { num: 24, semaineAvis: 2035-62 }
+      - { num: 25, semaineAvis: 2050-66 }
+      - { num: 26, semaineAvis: 2101-68 }
+    valid: '2021-01-09'
   FR7016:
     perempt: 4
     groupTitle: 'Mer Méditerranée'
@@ -760,7 +823,7 @@ gans:
       - { num: 70, semaineAvis: 2020-128 }
       - { num: 71, semaineAvis: 2024-95 }
       - { num: 72, semaineAvis: 2026-128 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7053:
     perempt: 4
     groupTitle: 'Côte Sud de France'
@@ -774,7 +837,7 @@ gans:
       - { num: 6, semaineAvis: 2004-88 }
       - { num: 7, semaineAvis: 2008-92 }
       - { num: 8, semaineAvis: 2017-85 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7070:
     perempt: 4
     groupTitle: 'Côte Ouest de France'
@@ -788,7 +851,7 @@ gans:
       - { num: 12, semaineAvis: 2035-62 }
       - { num: 13, semaineAvis: 2035-63 }
       - { num: 14, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7127:
     perempt: 4
     groupTitle: 'Côte Nord de France'
@@ -805,23 +868,23 @@ gans:
       - { num: 17, semaineAvis: 2006-47 }
       - { num: 18, semaineAvis: 2023-47 }
       - { num: 19, semaineAvis: 2036-52 }
-    valid: '2020-12-18'
-  FR7139:
+    valid: '2021-01-09'
+  FR7140:
     perempt: 4
     groupTitle: 'Côte Ouest de France'
-    title: 'De la Pointe du Talut à la Pointe de Gâvres - Île de Groix'
+    title: 'Passes et Rade de Lorient'
     bbox:
-      SW: '47°35,30''N — 003°35,08''W'
-      NE: '47°43,39''N — 003°17,52''W'
+      SW: '47°40,44''N — 003°25,28''W'
+      NE: '47°46,37''N — 003°19,29''W'
     hasPart:
-      - { title: 'Cartouche: A - Port Tudy', bbox: { SW: '47°38,49''N — 003°27,03''W', NE: '47°38,94''N — 003°26,23''W' } }
-    ganEdition: 'Edition n°3 - 2017'
+      - { title: 'Cartouche: A - Le Blavet - De Lanester à Hennebont', bbox: { SW: '47°44,04''N — 003°19,68''W', NE: '47°48,44''N — 003°16,28''W' } }
+    ganEdition: 'Edition n°4 - 2019'
     corrections:
-      - { num: 8, semaineAvis: 1931-53 }
-      - { num: 9, semaineAvis: 1951-56 }
-      - { num: 10, semaineAvis: 2006-56 }
-      - { num: 11, semaineAvis: 2039-56 }
-    valid: '2020-12-18'
+      - { num: 2, semaineAvis: 1931-53 }
+      - { num: 3, semaineAvis: 2035-56 }
+      - { num: 4, semaineAvis: 2038-56 }
+      - { num: 5, semaineAvis: 2101-50 }
+    valid: '2021-01-09'
   FR7157:
     perempt: 4
     groupTitle: 'Côte Nord de France'
@@ -835,7 +898,7 @@ gans:
       - { num: 17, semaineAvis: 2010-38 }
       - { num: 18, semaineAvis: 2028-42 }
       - { num: 19, semaineAvis: 2037-48 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7203:
     perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
@@ -849,7 +912,7 @@ gans:
       - { num: 85, semaineAvis: 2005-88 }
       - { num: 86, semaineAvis: 2030-77 }
       - { num: 87, semaineAvis: 2035-86 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7204:
     perempt: 4
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
@@ -863,21 +926,21 @@ gans:
       - { num: 142, semaineAvis: 1950-88 }
       - { num: 143, semaineAvis: 2005-88 }
       - { num: 144, semaineAvis: 2024-95 }
-    valid: '2020-12-18'
-  FR7291:
+    valid: '2021-01-09'
+  FR7211:
     perempt: 4
-    groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
-    title: 'De Piombino à Fiumicino et côte Est de Corse'
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'Golfe de Gascogne'
     bbox:
-      SW: ''
-      NE: ''
-    ganEdition: 'Edition n°2 - 2018'
+      SW: '42°29,93''N — 013°26,58''W'
+      NE: '48°55,74''N — 000°00,08''W'
+    ganEdition: 'Edition n°6 - 2019'
     corrections:
-      - { num: 14, semaineAvis: 1950-88 }
-      - { num: 15, semaineAvis: 1950-104 }
-      - { num: 16, semaineAvis: 1950-107 }
-      - { num: 17, semaineAvis: 2012-104 }
-    valid: '2020-12-18'
+      - { num: 2, semaineAvis: 1945-70 }
+      - { num: 3, semaineAvis: 2022-70 }
+      - { num: 4, semaineAvis: 2041-60 }
+      - { num: 5, semaineAvis: 2101-68 }
+    valid: '2021-01-09'
   FR7302:
     perempt: 4
     groupTitle: Guadeloupe
@@ -895,7 +958,37 @@ gans:
       - { num: 18, semaineAvis: 1903-265 }
       - { num: 19, semaineAvis: 1943-263 }
       - { num: 20, semaineAvis: 2019-256 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7310:
+    perempt: 4
+    groupTitle: 'Côte Nord de France'
+    title: 'Baie de Saint-Brieuc (partie Est)'
+    bbox:
+      SW: '48°33,19''N — 002°41,27''W'
+      NE: '48°43,31''N — 002°18,88''W'
+    hasPart:
+      - { title: 'Cartouche: A - Port de Dahouët', bbox: { SW: '48°34,47''N — 002°35,11''W', NE: '48°35,14''N — 002°33,73''W' } }
+      - { title: 'Cartouche: B - Port d''Erquy', bbox: { SW: '48°37,61''N — 002°29,58''W', NE: '48°38,67''N — 002°27,83''W' } }
+    ganEdition: 'Edition n°3 - 2017'
+    corrections:
+      - { num: 4, semaineAvis: 2006-46 }
+      - { num: 5, semaineAvis: 2036-52 }
+      - { num: 6, semaineAvis: 2049-33 }
+      - { num: 7, semaineAvis: 2101-36 }
+    valid: '2021-01-09'
+  FR7312:
+    perempt: 4
+    title: 'La Manche (Partie Est)'
+    bbox:
+      SW: '49°04,94''N — 003°00,08''W'
+      NE: '51°35,45''N — 002°44,92''E'
+    ganEdition: 'Edition n°3 - 2019'
+    corrections:
+      - { num: 11, semaineAvis: 2050-35 }
+      - { num: 12, semaineAvis: 2050-36 }
+      - { num: 13, semaineAvis: 2050-37 }
+      - { num: 14, semaineAvis: 2101-32 }
+    valid: '2021-01-09'
   FR7345:
     perempt: 4
     groupTitle: 'Petites Antilles'
@@ -913,7 +1006,7 @@ gans:
       - { num: 22, semaineAvis: 1943-263 }
       - { num: 23, semaineAvis: 2009-260 }
       - { num: 24, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7374:
     perempt: 4
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
@@ -931,7 +1024,7 @@ gans:
       - { num: 7, semaineAvis: 1941-254 }
       - { num: 8, semaineAvis: 1941-255 }
       - { num: 9, semaineAvis: 1943-253 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7379:
     perempt: 4
     groupTitle: 'Côte de Guyane'
@@ -949,7 +1042,7 @@ gans:
       - { num: 35, semaineAvis: 1930-255 }
       - { num: 36, semaineAvis: 1943-253 }
       - { num: 37, semaineAvis: 2002-253 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7401:
     perempt: 4
     groupTitle: 'Côte Ouest de France'
@@ -965,7 +1058,7 @@ gans:
       - { num: 15, semaineAvis: 2010-44 }
       - { num: 16, semaineAvis: 2031-40 }
       - { num: 17, semaineAvis: 2047-50 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7404:
     perempt: 4
     groupTitle: 'Côte Ouest de France'
@@ -981,7 +1074,7 @@ gans:
       - { num: 22, semaineAvis: 2011-60 }
       - { num: 23, semaineAvis: 2037-60 }
       - { num: 24, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7405:
     perempt: 4
     groupTitle: 'Côte Ouest de France'
@@ -999,7 +1092,21 @@ gans:
       - { num: 21, semaineAvis: 2041-60 }
       - { num: 22, semaineAvis: 2041-61 }
       - { num: 23, semaineAvis: 2050-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7408:
+    perempt: 4
+    groupTitle: 'Côte Sud de France'
+    title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
+    bbox:
+      SW: '42°59,94''N — 006°29,24''E'
+      NE: '43°29,64''N — 006°56,94''E'
+    ganEdition: 'Edition n°4 - 2018'
+    corrections:
+      - { num: 4, semaineAvis: 2005-90 }
+      - { num: 5, semaineAvis: 2025-91 }
+      - { num: 6, semaineAvis: 2027-93 }
+      - { num: 7, semaineAvis: 2101-94 }
+    valid: '2021-01-09'
   FR7414:
     perempt: 4
     groupTitle: 'Côte Ouest de France'
@@ -1015,7 +1122,7 @@ gans:
       - { num: 23, semaineAvis: 2038-60 }
       - { num: 24, semaineAvis: 2041-60 }
       - { num: 25, semaineAvis: 2050-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7434:
     perempt: 4
     groupTitle: 'Côte Sud de France'
@@ -1030,7 +1137,7 @@ gans:
       - { num: 19, semaineAvis: 2008-92 }
       - { num: 20, semaineAvis: 2030-84 }
       - { num: 21, semaineAvis: 2046-90 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7441:
     perempt: 4
     groupTitle: 'Principauté de Monaco - Côte Sud de France'
@@ -1044,7 +1151,7 @@ gans:
       - { num: 8, semaineAvis: 2024-90 }
       - { num: 9, semaineAvis: 2039-91 }
       - { num: 10, semaineAvis: 2039-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7443:
     perempt: 4
     groupTitle: 'Côtes de France et d''Italie - Principauté de Monaco'
@@ -1058,7 +1165,7 @@ gans:
       - { num: 26, semaineAvis: 2024-90 }
       - { num: 27, semaineAvis: 2028-101 }
       - { num: 28, semaineAvis: 2039-91 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7643:
     perempt: 4
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
@@ -1084,7 +1191,7 @@ gans:
       - { num: 14, semaineAvis: 2042-220 }
       - { num: 15, semaineAvis: 2042-221 }
       - { num: 16, semaineAvis: 2045-222 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6892:
     perempt: 3.5
     groupTitle: Martinique
@@ -1101,7 +1208,7 @@ gans:
       - { num: 6, semaineAvis: 1946-260 }
       - { num: 7, semaineAvis: 2018-260 }
       - { num: 8, semaineAvis: 2021-260 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7349:
     perempt: 3.5
     groupTitle: 'Océan Indien'
@@ -1120,7 +1227,7 @@ gans:
       - { num: 27, semaineAvis: 2031-184 }
       - { num: 28, semaineAvis: 2039-184 }
       - { num: 29, semaineAvis: 2039-185 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7460:
     perempt: 3.5
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
@@ -1144,7 +1251,7 @@ gans:
       - { num: 23, semaineAvis: 2045-230 }
       - { num: 24, semaineAvis: 2049-225 }
       - { num: 25, semaineAvis: 2051-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR5417:
     perempt: 3
     groupTitle: 'Océan Atlantique Nord et Mers Boréales'
@@ -1157,7 +1264,7 @@ gans:
       - { num: 87, semaineAvis: 1739-267 }
       - { num: 88, semaineAvis: 1739-269 }
       - { num: 89, semaineAvis: 1741-266 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6673:
     perempt: 3
     groupTitle: 'Océan Indien'
@@ -1173,7 +1280,7 @@ gans:
       - { num: 11, semaineAvis: 1951-185 }
       - { num: 12, semaineAvis: 2012-182 }
       - { num: 13, semaineAvis: 2039-184 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6680:
     perempt: 3
     groupTitle: 'Côte Nord de France'
@@ -1186,20 +1293,7 @@ gans:
       - { num: 75, semaineAvis: 1941-44 }
       - { num: 76, semaineAvis: 2016-50 }
       - { num: 77, semaineAvis: 2019-44 }
-    valid: '2020-12-18'
-  FR6857:
-    perempt: 3
-    groupTitle: 'Côte Nord de France'
-    title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
-    bbox:
-      SW: '49°10,74''N — 001°57,48''W'
-      NE: '50°12,95''N — 000°23,52''W'
-    ganEdition: 'Edition n°4 - 2012'
-    corrections:
-      - { num: 67, semaineAvis: 2050-35 }
-      - { num: 68, semaineAvis: 2050-36 }
-      - { num: 69, semaineAvis: 2050-37 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR6970:
     perempt: 3
     groupTitle: 'Côte Ouest de Corse'
@@ -1212,7 +1306,7 @@ gans:
       - { num: 7, semaineAvis: 1950-88 }
       - { num: 8, semaineAvis: 2019-96 }
       - { num: 9, semaineAvis: 2031-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6980:
     perempt: 3
     groupTitle: 'Côte Ouest de Corse'
@@ -1226,20 +1320,7 @@ gans:
       - { num: 4, semaineAvis: 1950-88 }
       - { num: 5, semaineAvis: 2019-96 }
       - { num: 6, semaineAvis: 2031-93 }
-    valid: '2020-12-18'
-  FR6991:
-    perempt: 3
-    groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
-    title: 'De la Gironde à Cabo Peñas'
-    bbox:
-      SW: '43°13,93''N — 005°53,08''W'
-      NE: '45°42,94''N — 000°47,58''W'
-    ganEdition: 'Edition n°4 - 2015'
-    corrections:
-      - { num: 23, semaineAvis: 1944-60 }
-      - { num: 24, semaineAvis: 2035-62 }
-      - { num: 25, semaineAvis: 2050-66 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7044:
     perempt: 3
     groupTitle: 'Océan Atlantique Sud'
@@ -1255,7 +1336,7 @@ gans:
       - { num: 4, semaineAvis: 1939-248 }
       - { num: 5, semaineAvis: 2043-173 }
       - { num: 6, semaineAvis: 2046-254 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7069:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1268,7 +1349,20 @@ gans:
       - { num: 12, semaineAvis: 1944-60 }
       - { num: 13, semaineAvis: 2007-61 }
       - { num: 14, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7076:
+    perempt: 3
+    groupTitle: 'Océan Atlantique - Côte Ouest de France'
+    title: 'De Saint-Nazaire à Saint-Malo'
+    bbox:
+      SW: 'NaN°00,00''S — 006°35,50''W'
+      NE: '49°19,00''N — 001°30,00''W'
+    ganEdition: 'Edition n°3 - 2019'
+    corrections:
+      - { num: 19, semaineAvis: 2049-33 }
+      - { num: 20, semaineAvis: 2049-45 }
+      - { num: 21, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
   FR7081:
     perempt: 3
     groupTitle: 'Mer Méditerranée et Mer Noire'
@@ -1281,7 +1375,7 @@ gans:
       - { num: 136, semaineAvis: 2024-95 }
       - { num: 137, semaineAvis: 2030-77 }
       - { num: 138, semaineAvis: 2039-144 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7089:
     perempt: 3
     groupTitle: 'La Martinique'
@@ -1299,7 +1393,7 @@ gans:
       - { num: 19, semaineAvis: 1911-260 }
       - { num: 20, semaineAvis: 1932-260 }
       - { num: 21, semaineAvis: 2048-260 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7100:
     perempt: 3
     groupTitle: Guadeloupe
@@ -1317,7 +1411,7 @@ gans:
       - { num: 4, semaineAvis: 2009-260 }
       - { num: 5, semaineAvis: 2015-260 }
       - { num: 6, semaineAvis: 2040-260 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7134:
     perempt: 3
     groupTitle: 'Côte Nord de France'
@@ -1332,22 +1426,7 @@ gans:
       - { num: 3, semaineAvis: 1929-40 }
       - { num: 4, semaineAvis: 2006-41 }
       - { num: 5, semaineAvis: 2040-37 }
-    valid: '2020-12-18'
-  FR7140:
-    perempt: 3
-    groupTitle: 'Côte Ouest de France'
-    title: 'Passes et Rade de Lorient'
-    bbox:
-      SW: '47°40,44''N — 003°25,28''W'
-      NE: '47°46,37''N — 003°19,29''W'
-    hasPart:
-      - { title: 'Cartouche: A - Le Blavet - De Lanester à Hennebont', bbox: { SW: '47°44,04''N — 003°19,68''W', NE: '47°48,44''N — 003°16,28''W' } }
-    ganEdition: 'Edition n°4 - 2019'
-    corrections:
-      - { num: 2, semaineAvis: 1931-53 }
-      - { num: 3, semaineAvis: 2035-56 }
-      - { num: 4, semaineAvis: 2038-56 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7145:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1365,7 +1444,7 @@ gans:
       - { num: 27, semaineAvis: 1941-50 }
       - { num: 28, semaineAvis: 1949-56 }
       - { num: 29, semaineAvis: 1951-58 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7146:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1378,7 +1457,7 @@ gans:
       - { num: 61, semaineAvis: 2035-55 }
       - { num: 62, semaineAvis: 2035-59 }
       - { num: 63, semaineAvis: 2049-41 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7147:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1393,20 +1472,22 @@ gans:
       - { num: 46, semaineAvis: 1949-44 }
       - { num: 47, semaineAvis: 2012-43 }
       - { num: 48, semaineAvis: 2044-54 }
-    valid: '2020-12-18'
-  FR7148:
+    valid: '2021-01-09'
+  FR7154:
     perempt: 3
-    groupTitle: 'Côte Ouest de France'
-    title: 'Du Goulet de Brest à la Chaussée de Sein'
+    groupTitle: 'Côte Nord de France'
+    title: 'De l''île de Bréhat au Cap Fréhel'
     bbox:
-      SW: '47°56,34''N — 005°01,54''W'
-      NE: '48°25,62''N — 004°31,69''W'
-    ganEdition: 'Edition n°3 - 2008'
+      SW: '48°31,64''N — 003°02,78''W'
+      NE: '48°51,34''N — 002°19,08''W'
+    hasPart:
+      - { title: 'Cartouche: Port de Saint-Brieuc Le Légué', bbox: { SW: '48°31,31''N — 002°45,18''W', NE: '48°32,64''N — 002°42,33''W' } }
+    ganEdition: 'Edition n°2 - 2008'
     corrections:
-      - { num: 59, semaineAvis: 1949-40 }
-      - { num: 60, semaineAvis: 1949-44 }
-      - { num: 61, semaineAvis: 2012-43 }
-    valid: '2020-12-18'
+      - { num: 1, semaineAvis: 2046-38 }
+      - { num: 2, semaineAvis: 2049-33 }
+      - { num: 3, semaineAvis: 2101-36 }
+    valid: '2021-01-09'
   FR7172:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1419,7 +1500,7 @@ gans:
       - { num: 54, semaineAvis: 1949-40 }
       - { num: 55, semaineAvis: 1949-44 }
       - { num: 56, semaineAvis: 2012-43 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7208:
     perempt: 3
     groupTitle: Guadeloupe
@@ -1435,20 +1516,7 @@ gans:
       - { num: 14, semaineAvis: 1903-265 }
       - { num: 15, semaineAvis: 1907-260 }
       - { num: 16, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
-  FR7211:
-    perempt: 3
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'Golfe de Gascogne'
-    bbox:
-      SW: '42°29,93''N — 013°26,58''W'
-      NE: '48°55,74''N — 000°00,08''W'
-    ganEdition: 'Edition n°6 - 2019'
-    corrections:
-      - { num: 2, semaineAvis: 1945-70 }
-      - { num: 3, semaineAvis: 2022-70 }
-      - { num: 4, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7267:
     perempt: 3
     groupTitle: 'Côte Sud de France'
@@ -1465,35 +1533,7 @@ gans:
       - { num: 2, semaineAvis: 2005-90 }
       - { num: 3, semaineAvis: 2025-91 }
       - { num: 4, semaineAvis: 2027-93 }
-    valid: '2020-12-18'
-  FR7310:
-    perempt: 3
-    groupTitle: 'Côte Nord de France'
-    title: 'Baie de Saint-Brieuc (partie Est)'
-    bbox:
-      SW: '48°33,19''N — 002°41,27''W'
-      NE: '48°43,31''N — 002°18,88''W'
-    hasPart:
-      - { title: 'Cartouche: A - Port de Dahouët', bbox: { SW: '48°34,47''N — 002°35,11''W', NE: '48°35,14''N — 002°33,73''W' } }
-      - { title: 'Cartouche: B - Port d''Erquy', bbox: { SW: '48°37,61''N — 002°29,58''W', NE: '48°38,67''N — 002°27,83''W' } }
-    ganEdition: 'Edition n°3 - 2017'
-    corrections:
-      - { num: 4, semaineAvis: 2006-46 }
-      - { num: 5, semaineAvis: 2036-52 }
-      - { num: 6, semaineAvis: 2049-33 }
-    valid: '2020-12-18'
-  FR7312:
-    perempt: 3
-    title: 'La Manche (Partie Est)'
-    bbox:
-      SW: '49°04,94''N — 003°00,08''W'
-      NE: '51°35,45''N — 002°44,92''E'
-    ganEdition: 'Edition n°3 - 2019'
-    corrections:
-      - { num: 11, semaineAvis: 2050-35 }
-      - { num: 12, semaineAvis: 2050-36 }
-      - { num: 13, semaineAvis: 2050-37 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR7395:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1506,7 +1546,7 @@ gans:
       - { num: 25, semaineAvis: 2019-60 }
       - { num: 26, semaineAvis: 2043-61 }
       - { num: 27, semaineAvis: 2049-45 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7397:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1519,7 +1559,7 @@ gans:
       - { num: 8, semaineAvis: 2008-48 }
       - { num: 9, semaineAvis: 2031-40 }
       - { num: 10, semaineAvis: 2047-50 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7399:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1532,7 +1572,7 @@ gans:
       - { num: 3, semaineAvis: 2008-48 }
       - { num: 4, semaineAvis: 2010-44 }
       - { num: 5, semaineAvis: 2023-55 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7403:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1549,20 +1589,20 @@ gans:
       - { num: 35, semaineAvis: 2009-62 }
       - { num: 36, semaineAvis: 2011-60 }
       - { num: 37, semaineAvis: 2037-60 }
-    valid: '2020-12-18'
-  FR7408:
+    valid: '2021-01-09'
+  FR7406:
     perempt: 3
     groupTitle: 'Côte Sud de France'
-    title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
+    title: 'De Marseille à Toulon'
     bbox:
-      SW: '42°59,94''N — 006°29,24''E'
-      NE: '43°29,64''N — 006°56,94''E'
-    ganEdition: 'Edition n°4 - 2018'
+      SW: '42°57,74''N — 005°17,33''E'
+      NE: '43°18,04''N — 005°58,04''E'
+    ganEdition: 'Edition n°4 - 2017'
     corrections:
-      - { num: 4, semaineAvis: 2005-90 }
-      - { num: 5, semaineAvis: 2025-91 }
-      - { num: 6, semaineAvis: 2027-93 }
-    valid: '2020-12-18'
+      - { num: 26, semaineAvis: 2046-92 }
+      - { num: 27, semaineAvis: 2046-93 }
+      - { num: 28, semaineAvis: 2051-93 }
+    valid: '2021-01-09'
   FR7415:
     perempt: 3
     groupTitle: 'Côte Ouest de France'
@@ -1576,7 +1616,20 @@ gans:
       - { num: 7, semaineAvis: 2012-56 }
       - { num: 8, semaineAvis: 2041-60 }
       - { num: 9, semaineAvis: 2050-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7418:
+    perempt: 3
+    groupTitle: 'Côte Nord de France'
+    title: 'Abords du Havre et d''Antifer'
+    bbox:
+      SW: '49°15,00''N — 000°20,90''W'
+      NE: '49°50,60''N — 000°16,60''W'
+    ganEdition: 'Edition n°3 - 2017'
+    corrections:
+      - { num: 12, semaineAvis: 2010-36 }
+      - { num: 13, semaineAvis: 2036-44 }
+      - { num: 14, semaineAvis: 2101-32 }
+    valid: '2021-01-09'
   FR7420:
     perempt: 3
     groupTitle: 'Côte Nord de France'
@@ -1595,7 +1648,7 @@ gans:
       - { num: 2, semaineAvis: 2010-36 }
       - { num: 3, semaineAvis: 2029-37 }
       - { num: 4, semaineAvis: 2043-35 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6835:
     perempt: 2.75
     title: 'Océan Pacifique Nord'
@@ -1617,7 +1670,7 @@ gans:
       - { num: 75, semaineAvis: 2025-245 }
       - { num: 76, semaineAvis: 2041-275 }
       - { num: 77, semaineAvis: 2041-277 }
-    valid: '2020-12-21'
+    valid: '2021-01-09'
   FR6118:
     perempt: 2.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
@@ -1632,7 +1685,7 @@ gans:
       - { num: 6, semaineAvis: 2010-275 }
       - { num: 7, semaineAvis: 2017-275 }
       - { num: 8, semaineAvis: 2038-278 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7023:
     perempt: 2.5
     groupTitle: 'Océan Pacifique Est'
@@ -1647,7 +1700,7 @@ gans:
       - { num: 104, semaineAvis: 1924-246 }
       - { num: 105, semaineAvis: 1943-246 }
       - { num: 106, semaineAvis: 2041-275 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7328:
     perempt: 2.5
     groupTitle: 'Océan Indien'
@@ -1664,7 +1717,7 @@ gans:
       - { num: 9, semaineAvis: 1951-188 }
       - { num: 10, semaineAvis: 2012-186 }
       - { num: 11, semaineAvis: 2039-184 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7337:
     perempt: 2.5
     groupTitle: 'Côtes de Guyane et du Brésil'
@@ -1679,7 +1732,7 @@ gans:
       - { num: 8, semaineAvis: 1941-254 }
       - { num: 9, semaineAvis: 1941-255 }
       - { num: 10, semaineAvis: 2043-251 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7677:
     perempt: 2.5
     groupTitle: 'Océan Indien - Archipel des Comores'
@@ -1694,7 +1747,7 @@ gans:
       - { num: 8, semaineAvis: 1744-151 }
       - { num: 9, semaineAvis: 1942-178 }
       - { num: 10, semaineAvis: 2002-179 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7470:
     perempt: 2.25
     groupTitle: 'Petites Antilles'
@@ -1713,7 +1766,7 @@ gans:
       - { num: 10, semaineAvis: 2009-263 }
       - { num: 11, semaineAvis: 2012-260 }
       - { num: 12, semaineAvis: 2026-266 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6612:
     perempt: 2
     groupTitle: 'Côte Sud de France'
@@ -1727,7 +1780,7 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2008-90 }
       - { num: 4, semaineAvis: 2051-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6616:
     perempt: 2
     groupTitle: 'Côte Sud de France'
@@ -1742,7 +1795,7 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 2009-94 }
       - { num: 8, semaineAvis: 2025-89 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6643:
     perempt: 2
     groupTitle: 'Océan Indien'
@@ -1759,7 +1812,7 @@ gans:
       - { num: 17, semaineAvis: 1945-184 }
       - { num: 18, semaineAvis: 2037-188 }
       - { num: 19, semaineAvis: 2051-180 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6664:
     perempt: 2
     groupTitle: 'Océan Indien'
@@ -1773,7 +1826,7 @@ gans:
       - { num: 6, semaineAvis: 1951-185 }
       - { num: 7, semaineAvis: 2012-182 }
       - { num: 8, semaineAvis: 2039-184 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6672:
     perempt: 2
     groupTitle: 'Océan Indien - Partie Ouest'
@@ -1787,7 +1840,7 @@ gans:
       - { num: 5, semaineAvis: 1942-178 }
       - { num: 6, semaineAvis: 1951-185 }
       - { num: 7, semaineAvis: 2041-183 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6693:
     perempt: 2
     groupTitle: 'Côte Sud de France'
@@ -1799,7 +1852,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 1941-84 }
       - { num: 5, semaineAvis: 2025-83 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6822:
     perempt: 2
     groupTitle: 'Côte Est de Corse'
@@ -1811,7 +1864,7 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 1945-93 }
       - { num: 10, semaineAvis: 2025-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6839:
     perempt: 2
     groupTitle: 'Côte Sud de France'
@@ -1829,7 +1882,7 @@ gans:
     corrections:
       - { num: 32, semaineAvis: 1943-85 }
       - { num: 33, semaineAvis: 2008-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6876:
     perempt: 2
     groupTitle: 'Océan Pacifique Sud'
@@ -1849,7 +1902,7 @@ gans:
       - { num: 10, semaineAvis: 1843-207 }
       - { num: 11, semaineAvis: 1848-208 }
       - { num: 12, semaineAvis: 2046-227 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6942:
     perempt: 2
     groupTitle: 'Côte Ouest de Corse'
@@ -1861,7 +1914,7 @@ gans:
     corrections:
       - { num: 12, semaineAvis: 1945-93 }
       - { num: 13, semaineAvis: 2002-88 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6969:
     perempt: 2
     groupTitle: 'Côte Ouest de Corse'
@@ -1873,7 +1926,19 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1950-88 }
       - { num: 9, semaineAvis: 2042-95 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6990:
+    perempt: 2
+    groupTitle: 'Océan Atlantique - Côte Ouest de France'
+    title: 'De la Pointe de Penmarc''h à la Gironde'
+    bbox:
+      SW: '45°28,34''N — 006°00,08''W'
+      NE: '47°55,42''N — 000°54,58''W'
+    ganEdition: 'Edition n°5 - 2019'
+    corrections:
+      - { num: 13, semaineAvis: 2049-45 }
+      - { num: 14, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
   FR7003:
     perempt: 2
     groupTitle: 'Côte Sud de France'
@@ -1887,7 +1952,19 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1943-85 }
       - { num: 2, semaineAvis: 2051-88 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7032:
+    perempt: 2
+    groupTitle: 'Côte Ouest de France'
+    title: 'De l''Île de Groix à Belle-Ile'
+    bbox:
+      SW: '47°14,94''N — 003°31,28''W'
+      NE: '47°44,54''N — 003°01,48''W'
+    ganEdition: 'Edition n°4 - 2017'
+    corrections:
+      - { num: 18, semaineAvis: 2043-56 }
+      - { num: 19, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
   FR7050:
     perempt: 2
     groupTitle: 'Côte Ouest de Corse'
@@ -1899,7 +1976,7 @@ gans:
     corrections:
       - { num: 12, semaineAvis: 2019-96 }
       - { num: 13, semaineAvis: 2031-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7052:
     perempt: 2
     groupTitle: Nouvelle-Calédonie
@@ -1919,7 +1996,7 @@ gans:
       - { num: 23, semaineAvis: 1930-220 }
       - { num: 24, semaineAvis: 1930-222 }
       - { num: 25, semaineAvis: 2016-220 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7057:
     perempt: 2
     groupTitle: 'Côte Nord de France'
@@ -1931,19 +2008,43 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1948-40 }
       - { num: 2, semaineAvis: 2048-33 }
-    valid: '2020-12-18'
-  FR7076:
+    valid: '2021-01-09'
+  FR7066:
     perempt: 2
-    groupTitle: 'Océan Atlantique - Côte Ouest de France'
-    title: 'De Saint-Nazaire à Saint-Malo'
+    groupTitle: 'Côte Ouest de France'
+    title: 'De l''Île Vierge à la Pointe de Penmarc''h'
     bbox:
-      SW: 'NaN°00,00''S — 006°35,50''W'
-      NE: '49°19,00''N — 001°30,00''W'
-    ganEdition: 'Edition n°3 - 2019'
+      SW: '47°39,94''N — 006°34,09''W'
+      NE: '48°44,14''N — 004°13,09''W'
+    ganEdition: 'Edition n°5 - 2019'
     corrections:
-      - { num: 19, semaineAvis: 2049-33 }
-      - { num: 20, semaineAvis: 2049-45 }
-    valid: '2020-12-23'
+      - { num: 8, semaineAvis: 2044-54 }
+      - { num: 9, semaineAvis: 2047-50 }
+    valid: '2021-01-09'
+  FR7067:
+    perempt: 2
+    groupTitle: 'Côte Ouest de France'
+    title: 'De la Chaussée de Sein à Belle-Île'
+    bbox:
+      SW: '46°59,94''N — 005°10,08''W'
+      NE: '48°04,94''N — 002°49,08''W'
+    ganEdition: 'Edition n°4 - 2015'
+    corrections:
+      - { num: 41, semaineAvis: 2049-45 }
+      - { num: 42, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
+  FR7068:
+    perempt: 2
+    groupTitle: 'Côte Ouest de France'
+    title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
+    bbox:
+      SW: '46°28,90''N — 003°51,00''W'
+      NE: '47°35,60''N — 001°30,00''W'
+    ganEdition: 'Edition n°3 - 2018'
+    corrections:
+      - { num: 26, semaineAvis: 2049-45 }
+      - { num: 27, semaineAvis: 2101-53 }
+    valid: '2021-01-09'
   FR7086:
     perempt: 2
     groupTitle: 'Côte Nord de France'
@@ -1955,7 +2056,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1943-37 }
       - { num: 3, semaineAvis: 2029-40 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7088:
     perempt: 2
     groupTitle: 'La Martinique'
@@ -1971,7 +2072,19 @@ gans:
       - { num: 6, semaineAvis: 1908-261 }
       - { num: 7, semaineAvis: 1942-260 }
       - { num: 8, semaineAvis: 2016-258 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7091:
+    perempt: 2
+    groupTitle: 'Côte Sud de France'
+    title: 'Abords de Toulon'
+    bbox:
+      SW: '42°59,84''N — 005°50,34''E'
+      NE: '43°09,94''N — 006°10,54''E'
+    ganEdition: 'Edition n°6 - 2018'
+    corrections:
+      - { num: 8, semaineAvis: 2046-92 }
+      - { num: 9, semaineAvis: 2046-93 }
+    valid: '2021-01-09'
   FR7095:
     perempt: 2
     groupTitle: 'Côte Nord de France'
@@ -1984,7 +2097,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 1949-40 }
       - { num: 6, semaineAvis: 2050-40 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7096:
     perempt: 2
     groupTitle: 'Côte Sud de Corse'
@@ -1996,7 +2109,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 1938-97 }
       - { num: 6, semaineAvis: 1948-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7101:
     perempt: 2
     groupTitle: Guadeloupe
@@ -2010,7 +2123,7 @@ gans:
       - { num: 3, semaineAvis: 1925-260 }
       - { num: 4, semaineAvis: 1951-257 }
       - { num: 5, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7120:
     perempt: 2
     groupTitle: 'Côte Nord de France'
@@ -2022,7 +2135,7 @@ gans:
     corrections:
       - { num: 55, semaineAvis: 2024-40 }
       - { num: 56, semaineAvis: 2029-40 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7137:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2038,7 +2151,7 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 1951-56 }
       - { num: 4, semaineAvis: 2005-50 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7143:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2050,7 +2163,7 @@ gans:
     corrections:
       - { num: 20, semaineAvis: 2012-46 }
       - { num: 21, semaineAvis: 2049-45 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7144:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2064,21 +2177,19 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1951-56 }
       - { num: 3, semaineAvis: 2044-56 }
-    valid: '2020-12-18'
-  FR7154:
+    valid: '2021-01-09'
+  FR7151:
     perempt: 2
     groupTitle: 'Côte Nord de France'
-    title: 'De l''île de Bréhat au Cap Fréhel'
+    title: 'De l''anse de Kernic à l''île Grande'
     bbox:
-      SW: '48°31,64''N — 003°02,78''W'
-      NE: '48°51,34''N — 002°19,08''W'
-    hasPart:
-      - { title: 'Cartouche: Port de Saint-Brieuc Le Légué', bbox: { SW: '48°31,31''N — 002°45,18''W', NE: '48°32,64''N — 002°42,33''W' } }
-    ganEdition: 'Edition n°2 - 2008'
+      SW: '48°37,84''N — 004°15,08''W'
+      NE: '48°57,54''N — 003°31,28''W'
+    ganEdition: 'Edition n°3 - 2008'
     corrections:
-      - { num: 1, semaineAvis: 2046-38 }
-      - { num: 2, semaineAvis: 2049-33 }
-    valid: '2020-12-18'
+      - { num: 48, semaineAvis: 2050-40 }
+      - { num: 49, semaineAvis: 2101-40 }
+    valid: '2021-01-09'
   FR7251:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2090,7 +2201,7 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 2035-55 }
       - { num: 10, semaineAvis: 2049-41 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7252:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2102,7 +2213,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 2035-55 }
       - { num: 5, semaineAvis: 2035-59 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7268:
     perempt: 2
     groupTitle: 'Océan Pacifique Sud'
@@ -2120,7 +2231,7 @@ gans:
       - { num: 28, semaineAvis: 1829-206 }
       - { num: 29, semaineAvis: 1935-216 }
       - { num: 30, semaineAvis: 2036-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7280:
     perempt: 2
     groupTitle: 'Côte Ouest de Corse'
@@ -2132,7 +2243,7 @@ gans:
     corrections:
       - { num: 25, semaineAvis: 1945-93 }
       - { num: 26, semaineAvis: 2002-88 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7413:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2144,19 +2255,19 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 2037-62 }
       - { num: 10, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
-  FR7418:
+    valid: '2021-01-09'
+  FR7417:
     perempt: 2
     groupTitle: 'Côte Nord de France'
-    title: 'Abords du Havre et d''Antifer'
+    title: 'Abords de Fécamp et de Dieppe'
     bbox:
-      SW: '49°15,00''N — 000°20,90''W'
-      NE: '49°50,60''N — 000°16,60''W'
-    ganEdition: 'Edition n°3 - 2017'
+      SW: '49°40,75''N — 000°09,62''W'
+      NE: '50°11,45''N — 001°19,42''E'
+    ganEdition: 'Edition n°2 - 2006'
     corrections:
-      - { num: 12, semaineAvis: 2010-36 }
-      - { num: 13, semaineAvis: 2036-44 }
-    valid: '2020-12-18'
+      - { num: 62, semaineAvis: 2038-35 }
+      - { num: 63, semaineAvis: 2101-32 }
+    valid: '2021-01-09'
   FR7422:
     perempt: 2
     groupTitle: 'Côte Nord de France'
@@ -2168,7 +2279,7 @@ gans:
     corrections:
       - { num: 53, semaineAvis: 2024-40 }
       - { num: 54, semaineAvis: 2043-38 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7425:
     perempt: 2
     groupTitle: 'Côte Ouest de France'
@@ -2183,7 +2294,7 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 2032-62 }
       - { num: 8, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7436:
     perempt: 2
     groupTitle: 'Côtes Ouest et Est de Corse'
@@ -2196,7 +2307,21 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2025-93 }
       - { num: 2, semaineAvis: 2044-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7488:
+    perempt: 2
+    groupTitle: 'Océan Indien'
+    title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
+    bbox:
+      SW: '21°45,00''S — 054°07,00''E'
+      NE: '14°40,00''S — NaN°00,00''W'
+    ganEdition: 'Publication 2013'
+    corrections:
+      - { num: 3, semaineAvis: 1751-158 }
+      - { num: 4, semaineAvis: 2012-182 }
+      - { num: 5, semaineAvis: 2031-184 }
+      - { num: 6, semaineAvis: 2039-184 }
+    valid: '2021-01-09'
   FR7489:
     perempt: 2
     groupTitle: 'Océan Indien'
@@ -2210,7 +2335,7 @@ gans:
       - { num: 3, semaineAvis: 1951-185 }
       - { num: 4, semaineAvis: 2031-184 }
       - { num: 5, semaineAvis: 2039-184 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7492:
     perempt: 2
     groupTitle: 'Archipel des Comores'
@@ -2226,7 +2351,7 @@ gans:
       - { num: 7, semaineAvis: 1729-152 }
       - { num: 8, semaineAvis: 1744-151 }
       - { num: 9, semaineAvis: 2002-179 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7631:
     perempt: 2
     groupTitle: 'Océan Atlantique'
@@ -2240,7 +2365,40 @@ gans:
       - { num: 3, semaineAvis: 1908-260 }
       - { num: 4, semaineAvis: 1943-260 }
       - { num: 5, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7657:
+    perempt: 2
+    groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
+    title: 'De Mimizan-Plage à Cabo de Ajo'
+    bbox:
+      SW: '43°11,50''N — 003°36,00''W'
+      NE: '44°18,00''N — 001°16,00''W'
+    ganEdition: 'Publication 2012'
+    corrections:
+      - { num: 27, semaineAvis: 2050-66 }
+      - { num: 28, semaineAvis: 2101-68 }
+    valid: '2021-01-09'
+  FR7755:
+    perempt: 2
+    groupTitle: 'Côte Est de Nouvelle-Calédonie'
+    title: 'De Ponérihouen au Cap Dumoulin'
+    bbox:
+      SW: '21°25,50''S — 165°24,00''E'
+      NE: '21°01,10''S — 166°02,10''E'
+    hasPart:
+      - { title: 'Cartouche: A - Baie de Poro', bbox: { SW: '21°18,42''S — 165°42,12''E', NE: '21°15,84''S — 165°44,80''E' } }
+      - { title: 'Cartouche: B - Baie Ugué', bbox: { SW: '21°09,22''S — 165°32,10''E', NE: '21°08,05''S — 165°34,62''E' } }
+    ganEdition: 'Publication 2016'
+    corrections:
+      - { num: 5, semaineAvis: 1744-204 }
+      - { num: 6, semaineAvis: 1748-205 }
+      - { num: 7, semaineAvis: 1838-205 }
+      - { num: 8, semaineAvis: 1842-208 }
+      - { num: 9, semaineAvis: 1942-224 }
+      - { num: 10, semaineAvis: 2009-220 }
+      - { num: 11, semaineAvis: 2018-220 }
+      - { num: 12, semaineAvis: 2027-220 }
+    valid: '2021-01-09'
   FR6418:
     perempt: 1.75
     groupTitle: 'Iles Gambier'
@@ -2257,7 +2415,7 @@ gans:
       - { num: 6, semaineAvis: 1944-233 }
       - { num: 7, semaineAvis: 2023-230 }
       - { num: 8, semaineAvis: 2023-231 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6985:
     perempt: 1.75
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -2277,7 +2435,7 @@ gans:
       - { num: 11, semaineAvis: 1929-219 }
       - { num: 12, semaineAvis: 2017-221 }
       - { num: 13, semaineAvis: 2025-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6463:
     perempt: 1.5
     groupTitle: 'Îles Gambier'
@@ -2293,7 +2451,7 @@ gans:
       - { num: 4, semaineAvis: 1944-233 }
       - { num: 5, semaineAvis: 2023-230 }
       - { num: 6, semaineAvis: 2023-231 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6768:
     perempt: 1.5
     groupTitle: 'Océan Pacifique'
@@ -2309,7 +2467,7 @@ gans:
       - { num: 14, semaineAvis: 1848-204 }
       - { num: 15, semaineAvis: 1930-220 }
       - { num: 16, semaineAvis: 2018-222 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6809:
     perempt: 1.5
     groupTitle: 'Océan Indien'
@@ -2322,7 +2480,7 @@ gans:
       - { num: 1, semaineAvis: 1939-183 }
       - { num: 2, semaineAvis: 1941-207 }
       - { num: 3, semaineAvis: 1951-185 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6884:
     perempt: 1.5
     groupTitle: 'Océan Indien - Partie Nord'
@@ -2335,7 +2493,7 @@ gans:
       - { num: 1, semaineAvis: 1941-201 }
       - { num: 2, semaineAvis: 1941-207 }
       - { num: 3, semaineAvis: 1951-185 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7087:
     perempt: 1.5
     groupTitle: 'La Martinique'
@@ -2348,7 +2506,7 @@ gans:
       - { num: 6, semaineAvis: 1728-255 }
       - { num: 7, semaineAvis: 1743-256 }
       - { num: 8, semaineAvis: 1908-261 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7352:
     perempt: 1.5
     groupTitle: 'Iles Marquises (Fenua Enata)'
@@ -2368,7 +2526,7 @@ gans:
       - { num: 15, semaineAvis: 1919-231 }
       - { num: 16, semaineAvis: 1925-231 }
       - { num: 17, semaineAvis: 1938-231 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7354:
     perempt: 1.5
     groupTitle: 'Îles Marquises (Fenua Enata)'
@@ -2397,7 +2555,7 @@ gans:
       - { num: 6, semaineAvis: 1919-231 }
       - { num: 7, semaineAvis: 2035-230 }
       - { num: 8, semaineAvis: 2045-234 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7378:
     perempt: 1.5
     groupTitle: 'Côte de Guyane'
@@ -2410,7 +2568,7 @@ gans:
       - { num: 1, semaineAvis: 1930-255 }
       - { num: 2, semaineAvis: 2002-253 }
       - { num: 3, semaineAvis: 2024-250 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7380:
     perempt: 1.5
     groupTitle: 'Côte de Guyane'
@@ -2423,7 +2581,7 @@ gans:
       - { num: 12, semaineAvis: 1908-260 }
       - { num: 13, semaineAvis: 1912-250 }
       - { num: 14, semaineAvis: 1943-253 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7461:
     perempt: 1.5
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
@@ -2439,7 +2597,7 @@ gans:
       - { num: 18, semaineAvis: 2025-231 }
       - { num: 19, semaineAvis: 2031-230 }
       - { num: 20, semaineAvis: 2045-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7471:
     perempt: 1.5
     groupTitle: 'Petites Antilles'
@@ -2455,7 +2613,20 @@ gans:
       - { num: 10, semaineAvis: 2008-262 }
       - { num: 11, semaineAvis: 2012-260 }
       - { num: 12, semaineAvis: 2043-264 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7487:
+    perempt: 1.5
+    groupTitle: 'Océan Indien'
+    title: 'Approches Nord-Est de Madagascar'
+    bbox:
+      SW: '21°35,00''S — 048°35,00''E'
+      NE: '11°05,00''S — NaN°00,00''W'
+    ganEdition: 'Publication 2018'
+    corrections:
+      - { num: 1, semaineAvis: 1951-185 }
+      - { num: 2, semaineAvis: 2031-184 }
+      - { num: 3, semaineAvis: 2039-184 }
+    valid: '2021-01-09'
   FR7493:
     perempt: 1.5
     groupTitle: 'Archipel des Comores'
@@ -2470,7 +2641,7 @@ gans:
       - { num: 4, semaineAvis: 1707-152 }
       - { num: 5, semaineAvis: 1729-152 }
       - { num: 6, semaineAvis: 1942-178 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7494:
     perempt: 1.5
     groupTitle: 'Archipel des Comores'
@@ -2483,7 +2654,7 @@ gans:
       - { num: 5, semaineAvis: 1736-151 }
       - { num: 6, semaineAvis: 1744-151 }
       - { num: 7, semaineAvis: 2002-179 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7639:
     perempt: 1.5
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
@@ -2496,7 +2667,7 @@ gans:
       - { num: 2, semaineAvis: 1942-275 }
       - { num: 3, semaineAvis: 2010-275 }
       - { num: 4, semaineAvis: 2021-275 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6282:
     perempt: 1.25
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-Le-Vent'
@@ -2511,7 +2682,7 @@ gans:
       - { num: 19, semaineAvis: 1843-210 }
       - { num: 20, semaineAvis: 1919-229 }
       - { num: 21, semaineAvis: 1935-226 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6880:
     perempt: 1.25
     groupTitle: 'Océan Pacifique Sud'
@@ -2526,7 +2697,7 @@ gans:
       - { num: 3, semaineAvis: 2011-215 }
       - { num: 4, semaineAvis: 2025-229 }
       - { num: 5, semaineAvis: 2046-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6949:
     perempt: 1.25
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
@@ -2541,7 +2712,7 @@ gans:
       - { num: 15, semaineAvis: 1847-204 }
       - { num: 16, semaineAvis: 2002-217 }
       - { num: 17, semaineAvis: 2018-222 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7168:
     perempt: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -2558,7 +2729,7 @@ gans:
       - { num: 6, semaineAvis: 1818-204 }
       - { num: 7, semaineAvis: 1838-203 }
       - { num: 8, semaineAvis: 1942-218 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7313:
     perempt: 1.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -2573,7 +2744,7 @@ gans:
       - { num: 6, semaineAvis: 1947-216 }
       - { num: 7, semaineAvis: 2007-216 }
       - { num: 8, semaineAvis: 2025-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7353:
     perempt: 1.25
     groupTitle: 'Iles Marquises (Fenua Enata)'
@@ -2597,7 +2768,7 @@ gans:
       - { num: 13, semaineAvis: 1932-229 }
       - { num: 14, semaineAvis: 2024-230 }
       - { num: 15, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7375:
     perempt: 1.25
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
@@ -2612,7 +2783,7 @@ gans:
       - { num: 6, semaineAvis: 1906-218 }
       - { num: 7, semaineAvis: 1942-218 }
       - { num: 8, semaineAvis: 1942-219 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7472:
     perempt: 1.25
     groupTitle: 'Petites Antilles'
@@ -2630,7 +2801,7 @@ gans:
       - { num: 4, semaineAvis: 2008-262 }
       - { num: 5, semaineAvis: 2012-260 }
       - { num: 6, semaineAvis: 2043-264 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR4233:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2643,7 +2814,7 @@ gans:
     ganEdition: 'Edition n°6 - 2016'
     corrections:
       - { num: 5, semaineAvis: 2012-39 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6461:
     perempt: 1
     groupTitle: 'Polynésie Française'
@@ -2657,7 +2828,7 @@ gans:
       - { num: 18, semaineAvis: 2023-231 }
       - { num: 19, semaineAvis: 2026-230 }
       - { num: 20, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6464:
     perempt: 1
     groupTitle: 'Îles Gambier'
@@ -2671,7 +2842,7 @@ gans:
       - { num: 3, semaineAvis: 1908-233 }
       - { num: 4, semaineAvis: 1944-233 }
       - { num: 5, semaineAvis: 2023-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6618:
     perempt: 1
     groupTitle: 'Océan Atlantique Nord'
@@ -2682,7 +2853,7 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 10, semaineAvis: 2042-20 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6623:
     perempt: 1
     groupTitle: 'Océan Atlantique Nord'
@@ -2693,7 +2864,18 @@ gans:
     ganEdition: 'Edition n°6 - 2018'
     corrections:
       - { num: 3, semaineAvis: 2038-72 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6651:
+    perempt: 1
+    groupTitle: 'Côte Nord de France'
+    title: 'De Calais à Dunkerque'
+    bbox:
+      SW: '50°56,50''N — 001°44,20''E'
+      NE: '51°14,00''N — 002°25,00''E'
+    ganEdition: 'Edition n°8 - 2016'
+    corrections:
+      - { num: 40, semaineAvis: 2048-33 }
+    valid: '2021-01-09'
   FR6683:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2704,7 +2886,7 @@ gans:
     ganEdition: 'Edition n°9 - 2017'
     corrections:
       - { num: 10, semaineAvis: 2024-36 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6684:
     perempt: 1
     groupTitle: 'Côte Sud de France'
@@ -2715,7 +2897,7 @@ gans:
     ganEdition: 'Edition n°7 - 2017'
     corrections:
       - { num: 9, semaineAvis: 2025-83 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6735:
     perempt: 1
     groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
@@ -2726,7 +2908,7 @@ gans:
     ganEdition: 'Edition n°7 - 2012'
     corrections:
       - { num: 134, semaineAvis: 2048-33 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR6740:
     perempt: 1
     groupTitle: 'Côte Ouest de Tahiti'
@@ -2740,7 +2922,7 @@ gans:
       - { num: 5, semaineAvis: 1923-230 }
       - { num: 6, semaineAvis: 2025-231 }
       - { num: 7, semaineAvis: 2045-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6767:
     perempt: 1
     groupTitle: 'Côte Sud de France'
@@ -2751,7 +2933,7 @@ gans:
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 16, semaineAvis: 2008-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6797:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -2762,7 +2944,18 @@ gans:
     ganEdition: 'Edition n°5 - 2005'
     corrections:
       - { num: 25, semaineAvis: 2043-61 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6815:
+    perempt: 1
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'Océan Atlantique Nord'
+    bbox:
+      SW: '08°30,00''S — 043°53,00''W'
+      NE: '62°08,86''N — 012°42,50''E'
+    ganEdition: 'Edition n°4 - 2012'
+    corrections:
+      - { num: 23, semaineAvis: 2043-173 }
+    valid: '2021-01-09'
   FR6823:
     perempt: 1
     groupTitle: 'Côte Est de Corse'
@@ -2773,7 +2966,33 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 1, semaineAvis: 2025-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6838:
+    perempt: 1
+    groupTitle: 'Côte Sud de France'
+    title: 'Abords de Saint-Raphaël'
+    bbox:
+      SW: '43°20,74''N — 006°42,60''E'
+      NE: '43°26,28''N — 006°53,86''E'
+    hasPart:
+      - { title: 'Cartouche: A - Port-Fréjus', bbox: { SW: '43°25,05''N — 006°44,66''E', NE: '43°25,47''N — 006°45,25''E' } }
+      - { title: 'Cartouche: B - Vieux Port - Saint-Raphaël', bbox: { SW: '43°25,20''N — 006°45,52''E', NE: '43°25,63''N — 006°46,07''E' } }
+      - { title: 'Cartouche: C - Port Santa-Lucia - Saint-Raphaël', bbox: { SW: '43°24,41''N — 006°46,18''E', NE: '43°25,14''N — 006°47,07''E' } }
+    ganEdition: 'Edition n°4 - 2017'
+    corrections:
+      - { num: 2, semaineAvis: 2101-94 }
+    valid: '2021-01-09'
+  FR6844:
+    perempt: 1
+    groupTitle: 'Côte Sud de France'
+    title: 'De Port-Barcarès à l''embouchure de l''Aude'
+    bbox:
+      SW: '42°43,64''N — 002°56,73''E'
+      NE: '43°13,44''N — 003°24,43''E'
+    ganEdition: 'Edition n°3 - 2018'
+    corrections:
+      - { num: 15, semaineAvis: 2046-90 }
+    valid: '2021-01-09'
   FR6903:
     perempt: 1
     groupTitle: 'Îles Anglo-Normandes'
@@ -2786,7 +3005,7 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 4, semaineAvis: 1938-45 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6904:
     perempt: 1
     groupTitle: 'Îles Anglo-Normandes'
@@ -2799,7 +3018,18 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 5, semaineAvis: 1938-45 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6929:
+    perempt: 1
+    groupTitle: 'Côte Est de Corse'
+    title: 'Abords de Porto-Vecchio'
+    bbox:
+      SW: '41°19,94''N — 009°10,94''E'
+      NE: '41°50,44''N — 009°38,64''E'
+    ganEdition: 'Edition n°4 - 2017'
+    corrections:
+      - { num: 14, semaineAvis: 2048-96 }
+    valid: '2021-01-09'
   FR6956:
     perempt: 1
     groupTitle: 'Côte Est de Tahiti'
@@ -2813,7 +3043,7 @@ gans:
       - { num: 6, semaineAvis: 1902-230 }
       - { num: 7, semaineAvis: 1919-231 }
       - { num: 8, semaineAvis: 2042-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6964:
     perempt: 1
     groupTitle: 'Océan Pacifique - Côte Ouest d''Amérique du Sud'
@@ -2825,7 +3055,7 @@ gans:
     corrections:
       - { num: 58, semaineAvis: 1724-235 }
       - { num: 59, semaineAvis: 1943-246 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6966:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2836,18 +3066,18 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 57, semaineAvis: 2051-41 }
-    valid: '2020-12-23'
-  FR6990:
+    valid: '2021-01-09'
+  FR7008:
     perempt: 1
-    groupTitle: 'Océan Atlantique - Côte Ouest de France'
-    title: 'De la Pointe de Penmarc''h à la Gironde'
+    groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
+    title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
     bbox:
-      SW: '45°28,34''N — 006°00,08''W'
-      NE: '47°55,42''N — 000°54,58''W'
-    ganEdition: 'Edition n°5 - 2019'
+      SW: '41°13,93''N — 002°54,93''E'
+      NE: '43°39,94''N — 005°15,06''E'
+    ganEdition: 'Edition n°2 - 2005'
     corrections:
-      - { num: 13, semaineAvis: 2049-45 }
-    valid: '2020-12-23'
+      - { num: 87, semaineAvis: 2046-90 }
+    valid: '2021-01-09'
   FR7015:
     perempt: 1
     groupTitle: 'Méditerranée Occidentale'
@@ -2858,7 +3088,7 @@ gans:
     ganEdition: 'Edition n°2 - 1998'
     corrections:
       - { num: 104, semaineAvis: 1946-86 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7030:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -2871,29 +3101,18 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 7, semaineAvis: 1944-60 }
-    valid: '2020-12-18'
-  FR7032:
+    valid: '2021-01-09'
+  FR7033:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
-    title: 'De l''Île de Groix à Belle-Ile'
+    title: 'De Quiberon au Croisic'
     bbox:
-      SW: '47°14,94''N — 003°31,28''W'
-      NE: '47°44,54''N — 003°01,48''W'
-    ganEdition: 'Edition n°4 - 2017'
+      SW: '47°15,12''N — 003°11,08''W'
+      NE: '47°35,64''N — 002°27,30''W'
+    ganEdition: 'Edition n°3 - 2002'
     corrections:
-      - { num: 18, semaineAvis: 2043-56 }
-    valid: '2020-12-23'
-  FR7067:
-    perempt: 1
-    groupTitle: 'Côte Ouest de France'
-    title: 'De la Chaussée de Sein à Belle-Île'
-    bbox:
-      SW: '46°59,94''N — 005°10,08''W'
-      NE: '48°04,94''N — 002°49,08''W'
-    ganEdition: 'Edition n°4 - 2015'
-    corrections:
-      - { num: 41, semaineAvis: 2049-45 }
-    valid: '2020-12-23'
+      - { num: 93, semaineAvis: 2049-45 }
+    valid: '2021-01-09'
   FR7094:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2906,7 +3125,7 @@ gans:
     ganEdition: 'Edition n°4 - 2018'
     corrections:
       - { num: 2, semaineAvis: 2019-44 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7102:
     perempt: 1
     groupTitle: Guadeloupe
@@ -2922,7 +3141,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1903-265 }
       - { num: 3, semaineAvis: 2042-267 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7126:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2935,7 +3154,7 @@ gans:
     ganEdition: 'Edition n°5 - 2012'
     corrections:
       - { num: 22, semaineAvis: 2036-52 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7135:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -2946,7 +3165,7 @@ gans:
     ganEdition: 'Publication 2002'
     corrections:
       - { num: 1, semaineAvis: 2050-56 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7142:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -2960,7 +3179,7 @@ gans:
     ganEdition: 'Edition n°2 - 2006'
     corrections:
       - { num: 26, semaineAvis: 2012-46 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7149:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -2971,7 +3190,7 @@ gans:
     ganEdition: 'Edition n°4 - 2015'
     corrections:
       - { num: 14, semaineAvis: 2004-40 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7150:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2982,7 +3201,18 @@ gans:
     ganEdition: 'Edition n°2 - 2008'
     corrections:
       - { num: 19, semaineAvis: 2022-42 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7152:
+    perempt: 1
+    groupTitle: 'Côte Nord de France'
+    title: 'De l''Île Grande à l''Île de Bréhat'
+    bbox:
+      SW: '48°42,94''N — 003°38,88''W'
+      NE: '49°02,64''N — 002°55,18''W'
+    ganEdition: 'Edition n°3 - 2017'
+    corrections:
+      - { num: 13, semaineAvis: 2049-36 }
+    valid: '2021-01-09'
   FR7155:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -2993,7 +3223,7 @@ gans:
     ganEdition: 'Edition n°3 - 2017'
     corrections:
       - { num: 22, semaineAvis: 2049-32 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR7160:
     perempt: 1
     groupTitle: 'Iles Anglo-Normandes'
@@ -3004,7 +3234,7 @@ gans:
     ganEdition: 'Edition n°3 - 2014'
     corrections:
       - { num: 11, semaineAvis: 2036-52 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7162:
     perempt: 1
     groupTitle: 'Côte Ouest de Corse'
@@ -3018,7 +3248,7 @@ gans:
     ganEdition: 'Edition n°3 - 2018'
     corrections:
       - { num: 6, semaineAvis: 1945-93 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7200:
     perempt: 1
     groupTitle: 'Côte Sud de France'
@@ -3034,7 +3264,25 @@ gans:
     ganEdition: 'Edition n°3 - 2017'
     corrections:
       - { num: 20, semaineAvis: 2047-86 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7205:
+    perempt: 1
+    groupTitle: 'Côte Sud de France'
+    title: 'Golfe de La Napoule - Golfe Juan'
+    bbox:
+      SW: '43°28,66''N — 006°55,77''E'
+      NE: '43°34,74''N — 007°08,02''E'
+    hasPart:
+      - { title: 'Cartouche: A - Port de Mandelieu-La Napoule', bbox: { SW: '43°30,34''N — 006°56,14''E', NE: '43°31,69''N — 006°57,04''E' } }
+      - { title: 'Cartouche: B - Port de Cannes-Marina', bbox: { SW: '43°31,94''N — 006°56,12''E', NE: '43°32,31''N — 006°56,87''E' } }
+      - { title: 'Cartouche: C - Port de Cannes', bbox: { SW: '43°32,64''N — 007°00,59''E', NE: '43°33,14''N — 007°01,34''E' } }
+      - { title: 'Cartouche: D - Port Pierre Canto', bbox: { SW: '43°32,04''N — 007°01,74''E', NE: '43°32,79''N — 007°02,24''E' } }
+      - { title: 'Cartouche: E - Ports de Golfe Juan', bbox: { SW: '43°33,64''N — 007°04,28''E', NE: '43°34,14''N — 007°05,14''E' } }
+      - { title: 'Cartouche: F - Ports de Juan les Pins', bbox: { SW: '43°33,49''N — 007°06,54''E', NE: '43°33,99''N — 007°07,44''E' } }
+    ganEdition: 'Edition n°3 - 2016'
+    corrections:
+      - { num: 15, semaineAvis: 2047-86 }
+    valid: '2021-01-09'
   FR7213:
     perempt: 1
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
@@ -3050,7 +3298,7 @@ gans:
       - { num: 11, semaineAvis: 1850-211 }
       - { num: 12, semaineAvis: 1903-229 }
       - { num: 13, semaineAvis: 1927-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7214:
     perempt: 1
     groupTitle: 'Côte Nord de France - Côte de Belgique'
@@ -3064,7 +3312,7 @@ gans:
     ganEdition: 'Edition n°8 - 2019'
     corrections:
       - { num: 15, semaineAvis: 2048-33 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR7222:
     perempt: 1
     groupTitle: 'Océan Indien'
@@ -3076,7 +3324,7 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1739-155 }
       - { num: 9, semaineAvis: 1951-188 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7232:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -3089,7 +3337,7 @@ gans:
     ganEdition: 'Publication 2013'
     corrections:
       - { num: 17, semaineAvis: 2051-41 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7247:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -3100,7 +3348,7 @@ gans:
     ganEdition: 'Edition n°3 - 2012'
     corrections:
       - { num: 4, semaineAvis: 2024-33 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7249:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3115,7 +3363,7 @@ gans:
     ganEdition: 'Edition n°2 - 2016'
     corrections:
       - { num: 9, semaineAvis: 1932-56 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7273:
     perempt: 1
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -3129,7 +3377,32 @@ gans:
       - { num: 3, semaineAvis: 1940-220 }
       - { num: 4, semaineAvis: 1942-222 }
       - { num: 5, semaineAvis: 1946-220 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7282:
+    perempt: 1
+    groupTitle: 'Côte Sud de France'
+    title: 'Rade d''Hyères'
+    bbox:
+      SW: '42°58,34''N — 006°07,34''E'
+      NE: '43°08,44''N — 006°27,54''E'
+    hasPart:
+      - { title: 'Cartouche: A - Port d''Hyères (Port Saint-Pierre)', bbox: { SW: '43°04,51''N — 006°09,24''E', NE: '43°05,24''N — 006°09,84''E' } }
+      - { title: 'Cartouche: B - Port de Miramar', bbox: { SW: '43°06,70''N — 006°14,40''E', NE: '43°07,21''N — 006°15,18''E' } }
+    ganEdition: 'Edition n°5 - 2018'
+    corrections:
+      - { num: 7, semaineAvis: 2044-90 }
+    valid: '2021-01-09'
+  FR7292:
+    perempt: 1
+    groupTitle: 'Mer Méditerranée'
+    title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
+    bbox:
+      SW: '34°40,00''N — NaN°00,00''W'
+      NE: '44°28,81''N — 016°19,19''E'
+    ganEdition: 'Edition n°3 - 2014'
+    corrections:
+      - { num: 32, semaineAvis: 2051-108 }
+    valid: '2021-01-09'
   FR7311:
     perempt: 1
     title: 'La Manche (Partie Ouest)'
@@ -3139,7 +3412,18 @@ gans:
     ganEdition: 'Edition n°4 - 2019'
     corrections:
       - { num: 18, semaineAvis: 2049-25 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
+  FR7323:
+    perempt: 1
+    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
+    title: 'Pas de Calais'
+    bbox:
+      SW: '50°41,58''N — 000°50,12''W'
+      NE: '51°11,63''N — 001°59,89''E'
+    ganEdition: 'Edition n°6 - 2018'
+    corrections:
+      - { num: 16, semaineAvis: 2048-33 }
+    valid: '2021-01-09'
   FR7324:
     perempt: 1
     groupTitle: Guadeloupe
@@ -3151,21 +3435,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2015-260 }
       - { num: 3, semaineAvis: 2019-256 }
-    valid: '2020-12-18'
-  FR7369:
-    perempt: 1
-    groupTitle: 'Océan Pacifique Sud'
-    title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
-    bbox:
-      SW: '24°24,00''S — 163°30,00''W'
-      NE: 'NaN°00,00''S — 147°26,00''W'
-    ganEdition: 'Edition n°2 - 2019'
-    corrections:
-      - { num: 1, semaineAvis: 2002-232 }
-      - { num: 2, semaineAvis: 2007-230 }
-      - { num: 3, semaineAvis: 2025-229 }
-      - { num: 4, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7377:
     perempt: 1
     groupTitle: 'Côte de Guyane'
@@ -3177,7 +3447,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1905-252 }
       - { num: 2, semaineAvis: 1912-250 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7390:
     perempt: 1
     groupTitle: 'Côte Sud de France'
@@ -3188,7 +3458,7 @@ gans:
     ganEdition: 'Edition n°6 - 2018'
     corrections:
       - { num: 10, semaineAvis: 2008-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7391:
     perempt: 1
     groupTitle: 'Côte Sud de France'
@@ -3199,7 +3469,7 @@ gans:
     ganEdition: 'Edition n°6 - 2017'
     corrections:
       - { num: 6, semaineAvis: 2008-92 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7394:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3214,7 +3484,7 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 17, semaineAvis: 2019-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7416:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -3225,18 +3495,7 @@ gans:
     ganEdition: 'Edition n°4 - 2016'
     corrections:
       - { num: 13, semaineAvis: 2024-33 }
-    valid: '2020-12-18'
-  FR7417:
-    perempt: 1
-    groupTitle: 'Côte Nord de France'
-    title: 'Abords de Fécamp et de Dieppe'
-    bbox:
-      SW: '49°40,75''N — 000°09,62''W'
-      NE: '50°11,45''N — 001°19,42''E'
-    ganEdition: 'Edition n°2 - 2006'
-    corrections:
-      - { num: 62, semaineAvis: 2038-35 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7419:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -3250,7 +3509,7 @@ gans:
     ganEdition: 'Edition n°3 - 2018'
     corrections:
       - { num: 5, semaineAvis: 2024-36 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7423:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3263,7 +3522,18 @@ gans:
     ganEdition: 'Edition n°3 - 2016'
     corrections:
       - { num: 7, semaineAvis: 2012-43 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7424:
+    perempt: 1
+    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
+    title: 'Pas de Calais'
+    bbox:
+      SW: '50°55,00''N — 001°17,12''E'
+      NE: '51°24,94''N — 002°26,89''E'
+    ganEdition: 'Edition n°4 - 2018'
+    corrections:
+      - { num: 31, semaineAvis: 2048-33 }
+    valid: '2021-01-09'
   FR7426:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3276,7 +3546,7 @@ gans:
     ganEdition: 'Edition n°5 - 2019'
     corrections:
       - { num: 1, semaineAvis: 2041-60 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7428:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3289,7 +3559,7 @@ gans:
     ganEdition: 'Publication 2012'
     corrections:
       - { num: 16, semaineAvis: 2035-62 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7430:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3302,7 +3572,7 @@ gans:
     ganEdition: 'Publication 2008'
     corrections:
       - { num: 12, semaineAvis: 2050-66 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7440:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3315,7 +3585,7 @@ gans:
     ganEdition: 'Publication 2008'
     corrections:
       - { num: 27, semaineAvis: 2050-66 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7444:
     perempt: 1
     groupTitle: 'Côte Nord de France'
@@ -3326,7 +3596,7 @@ gans:
     ganEdition: 'Publication 2016'
     corrections:
       - { num: 9, semaineAvis: 2024-40 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7486:
     perempt: 1
     groupTitle: 'Océan Indien'
@@ -3338,7 +3608,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1816-152 }
       - { num: 7, semaineAvis: 2007-195 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7491:
     perempt: 1
     groupTitle: 'Océan Indien - Canal du Mozambique - Côte Nord de Madagasikara (Madagascar)'
@@ -3350,7 +3620,18 @@ gans:
     corrections:
       - { num: 14, semaineAvis: 1938-184 }
       - { num: 15, semaineAvis: 1940-183 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7510:
+    perempt: 1
+    groupTitle: 'Côte Nord-Est de Sardaigne'
+    title: 'De Capo Bellavista aux Bouches de Bonifacio'
+    bbox:
+      SW: ''
+      NE: ''
+    ganEdition: 'Publication 1996'
+    corrections:
+      - { num: 62, semaineAvis: 2044-97 }
+    valid: '2021-01-09'
   FR7640:
     perempt: 1
     groupTitle: 'Abords Sud de Terre-Neuve - Miquelon'
@@ -3363,18 +3644,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1942-275 }
       - { num: 3, semaineAvis: 2010-275 }
-    valid: '2020-12-18'
-  FR7657:
-    perempt: 1
-    groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
-    title: 'De Mimizan-Plage à Cabo de Ajo'
-    bbox:
-      SW: '43°11,50''N — 003°36,00''W'
-      NE: '44°18,00''N — 001°16,00''W'
-    ganEdition: 'Publication 2012'
-    corrections:
-      - { num: 27, semaineAvis: 2050-66 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7665:
     perempt: 1
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
@@ -3387,7 +3657,7 @@ gans:
     ganEdition: 'Edition n°2 - 2019'
     corrections:
       - { num: 1, semaineAvis: 2051-77 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7798:
     perempt: 1
     groupTitle: 'Océan Indien'
@@ -3399,7 +3669,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1939-183 }
       - { num: 2, semaineAvis: 1951-185 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6320:
     perempt: 0.75
     groupTitle: 'Iles Tuamotu'
@@ -3414,7 +3684,7 @@ gans:
       - { num: 1, semaineAvis: 1745-209 }
       - { num: 2, semaineAvis: 1815-213 }
       - { num: 3, semaineAvis: 1837-208 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6554:
     perempt: 0.75
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -3427,7 +3697,7 @@ gans:
       - { num: 5, semaineAvis: 1942-215 }
       - { num: 6, semaineAvis: 1947-216 }
       - { num: 7, semaineAvis: 2007-216 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6607:
     perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
@@ -3440,7 +3710,7 @@ gans:
       - { num: 17, semaineAvis: 1919-233 }
       - { num: 18, semaineAvis: 2002-232 }
       - { num: 19, semaineAvis: 2046-231 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6671:
     perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
@@ -3453,7 +3723,7 @@ gans:
       - { num: 4, semaineAvis: 1935-216 }
       - { num: 5, semaineAvis: 2012-222 }
       - { num: 6, semaineAvis: 2036-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6717:
     perempt: 0.75
     groupTitle: 'Île de Tahiti (Côte Sud) - Mouillages'
@@ -3466,7 +3736,7 @@ gans:
       - { num: 2, semaineAvis: 1725-207 }
       - { num: 3, semaineAvis: 1728-210 }
       - { num: 4, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6933:
     perempt: 0.75
     groupTitle: Nouvelle-Calédonie
@@ -3479,7 +3749,7 @@ gans:
       - { num: 1, semaineAvis: 1830-207 }
       - { num: 2, semaineAvis: 1838-204 }
       - { num: 3, semaineAvis: 1930-222 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6957:
     perempt: 0.75
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
@@ -3492,7 +3762,7 @@ gans:
       - { num: 4, semaineAvis: 1802-209 }
       - { num: 5, semaineAvis: 1907-220 }
       - { num: 6, semaineAvis: 2042-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7021:
     perempt: 0.75
     groupTitle: 'Océan Pacifique Nord'
@@ -3505,7 +3775,7 @@ gans:
       - { num: 213, semaineAvis: 1910-235 }
       - { num: 214, semaineAvis: 1946-240 }
       - { num: 215, semaineAvis: 2025-244 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7049:
     perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
@@ -3522,7 +3792,7 @@ gans:
       - { num: 1, semaineAvis: 1731-203 }
       - { num: 2, semaineAvis: 1751-204 }
       - { num: 3, semaineAvis: 2036-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7051:
     perempt: 0.75
     groupTitle: 'Côte Nord-Est de Nouvelle-Calédonie'
@@ -3537,7 +3807,7 @@ gans:
       - { num: 3, semaineAvis: 1825-207 }
       - { num: 4, semaineAvis: 1828-210 }
       - { num: 5, semaineAvis: 1838-205 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7234:
     perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
@@ -3553,7 +3823,7 @@ gans:
       - { num: 1, semaineAvis: 1824-206 }
       - { num: 2, semaineAvis: 1838-206 }
       - { num: 3, semaineAvis: 1930-217 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7281:
     perempt: 0.75
     groupTitle: 'Archipel des Tuamotu'
@@ -3571,7 +3841,7 @@ gans:
       - { num: 12, semaineAvis: 1931-232 }
       - { num: 13, semaineAvis: 2003-232 }
       - { num: 14, semaineAvis: 2043-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7319:
     perempt: 0.75
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
@@ -3588,7 +3858,7 @@ gans:
       - { num: 2, semaineAvis: 1814-207 }
       - { num: 3, semaineAvis: 1818-206 }
       - { num: 4, semaineAvis: 1827-205 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7368:
     perempt: 0.75
     groupTitle: 'Océan Pacifique Sud'
@@ -3601,7 +3871,7 @@ gans:
       - { num: 11, semaineAvis: 2007-230 }
       - { num: 12, semaineAvis: 2025-229 }
       - { num: 13, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7645:
     perempt: 0.75
     groupTitle: 'Côte Sud-Est de Nouvelle-Calédonie'
@@ -3616,7 +3886,7 @@ gans:
       - { num: 2, semaineAvis: 1814-205 }
       - { num: 3, semaineAvis: 1830-207 }
       - { num: 4, semaineAvis: 1930-222 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6283:
     perempt: 0.5
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
@@ -3628,7 +3898,7 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1744-210 }
       - { num: 9, semaineAvis: 1843-210 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6525:
     perempt: 0.5
     groupTitle: 'Côte Sud de Tahiti'
@@ -3640,7 +3910,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2018-228 }
       - { num: 2, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6553:
     perempt: 0.5
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
@@ -3652,7 +3922,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1942-224 }
       - { num: 7, semaineAvis: 2009-220 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6605:
     perempt: 0.5
     groupTitle: 'Iles de la Société - Côte Nord-Est de Tahiti'
@@ -3664,7 +3934,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 1925-225 }
       - { num: 5, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6619:
     perempt: 0.5
     groupTitle: 'Océan Atlantique Nord'
@@ -3675,7 +3945,7 @@ gans:
     ganEdition: 'Edition n°3 - 1988'
     corrections:
       - { num: 197, semaineAvis: 2045-277 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR6670:
     perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
@@ -3687,7 +3957,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1935-216 }
       - { num: 3, semaineAvis: 2036-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6770:
     perempt: 0.5
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
@@ -3699,7 +3969,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1838-204 }
       - { num: 2, semaineAvis: 1842-204 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6808:
     perempt: 0.5
     groupTitle: 'Océan Atlantique Sud'
@@ -3711,7 +3981,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2043-173 }
       - { num: 6, semaineAvis: 2046-254 }
-    valid: '2020-12-21'
+    valid: '2021-01-09'
   FR6817:
     perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
@@ -3723,7 +3993,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1845-200 }
       - { num: 2, semaineAvis: 2011-215 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6820:
     perempt: 0.5
     groupTitle: 'Îles Loyauté'
@@ -3738,7 +4008,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1741-204 }
       - { num: 3, semaineAvis: 1749-204 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6828:
     perempt: 0.5
     groupTitle: 'Côte Sud-Ouest de Tahiti'
@@ -3750,7 +4020,7 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 1724-206 }
       - { num: 10, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6898:
     perempt: 0.5
     groupTitle: 'Océan Atlantique Nord'
@@ -3761,7 +4031,7 @@ gans:
     ganEdition: 'Edition n°4 - 2015'
     corrections:
       - { num: 32, semaineAvis: 2051-262 }
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR7011:
     perempt: 0.5
     groupTitle: 'Nouvelle Calédonie'
@@ -3775,7 +4045,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1808-204 }
       - { num: 7, semaineAvis: 1932-218 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7166:
     perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
@@ -3787,7 +4057,23 @@ gans:
     corrections:
       - { num: 175, semaineAvis: 1714-205 }
       - { num: 176, semaineAvis: 1845-200 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7259:
+    perempt: 0.5
+    groupTitle: 'Iles Loyauté'
+    title: 'Ile Maré'
+    hasPart:
+      - { title: 'Cartouche: Ile Maré', bbox: { SW: '21°46,48''S — 167°40,00''E', NE: '21°16,00''S — 168°13,71''E' } }
+      - { title: 'Cartouche: A - Baie de l''Allier (Baie de Puan) - Mouillage de La Roche', bbox: { SW: '21°28,42''S — 168°00,56''E', NE: '21°26,62''S — 168°03,00''E' } }
+      - { title: 'Cartouche: B - Baie de Niri (Baie de Wabao)', bbox: { SW: '21°37,89''S — 167°55,22''E', NE: '21°36,09''S — 167°57,68''E' } }
+      - { title: 'Cartouche: C - Baie de Tadine', bbox: { SW: '21°36,08''S — 167°49,87''E', NE: '21°31,93''S — 167°53,46''E' } }
+      - { title: 'Cartouche: D - Baie du Nord (Baie de Waeko)', bbox: { SW: '21°24,45''S — 167°51,67''E', NE: '21°22,53''S — 167°54,13''E' } }
+      - { title: 'Cartouche: E - Port de Tadine', bbox: { SW: '21°33,06''S — 167°52,12''E', NE: '21°32,58''S — 167°52,73''E' } }
+    ganEdition: 'Publication 1995'
+    corrections:
+      - { num: 16, semaineAvis: 1704-205 }
+      - { num: 17, semaineAvis: 2101-220 }
+    valid: '2021-01-09'
   FR7305:
     perempt: 0.5
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
@@ -3799,7 +4085,7 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1806-211 }
       - { num: 9, semaineAvis: 2018-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7314:
     perempt: 0.5
     groupTitle: IlesTuamotu
@@ -3812,7 +4098,7 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 1947-233 }
       - { num: 8, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7318:
     perempt: 0.5
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
@@ -3824,7 +4110,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1728-205 }
       - { num: 3, semaineAvis: 1827-205 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7320:
     perempt: 0.5
     groupTitle: 'Côte Nord-Ouest de Nouvelle-Calédonie'
@@ -3839,7 +4125,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1827-205 }
       - { num: 2, semaineAvis: 2044-222 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7347:
     perempt: 0.5
     groupTitle: 'Océan Pacifique Sud'
@@ -3851,7 +4137,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2002-232 }
       - { num: 2, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7350:
     perempt: 0.5
     groupTitle: 'Canal du Mozambique'
@@ -3862,7 +4148,7 @@ gans:
     ganEdition: 'Edition n°2 - 2008'
     corrections:
       - { num: 2, semaineAvis: 1938-184 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7355:
     perempt: 0.5
     groupTitle: 'Îles Marquises (Fenua Enata)'
@@ -3877,7 +4163,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1907-230 }
       - { num: 2, semaineAvis: 1919-229 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7458:
     perempt: 0.5
     groupTitle: 'Iles Tuamotu'
@@ -3891,7 +4177,7 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2026-233 }
       - { num: 4, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7459:
     perempt: 0.5
     groupTitle: 'Îles Tuamotu'
@@ -3905,7 +4191,18 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1929-232 }
       - { num: 2, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7604:
+    perempt: 0.5
+    groupTitle: 'Océan Indien (Partie Sud)'
+    title: 'De Prince Edward Islands à Heard Island'
+    bbox:
+      SW: '56°55,00''S — 034°15,00''E'
+      NE: 'NaN°00,00''S — NaN°00,00''W'
+    ganEdition: 'Edition n°3 - 2017'
+    corrections:
+      - { num: 1, semaineAvis: 2101-188 }
+    valid: '2021-01-09'
   FR7620:
     perempt: 0.5
     groupTitle: 'Petites Antilles'
@@ -3919,7 +4216,18 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1907-266 }
       - { num: 3, semaineAvis: 1926-266 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7625:
+    perempt: 0.5
+    groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
+    title: 'De Trinidad à Cabo Orange'
+    bbox:
+      SW: '03°55,00''N — 061°05,00''W'
+      NE: '10°47,00''N — 050°59,00''W'
+    ganEdition: 'Edition n°2 - 2018'
+    corrections:
+      - { num: 21, semaineAvis: 2032-254 }
+    valid: '2021-01-09'
   FR7756:
     perempt: 0.5
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
@@ -3933,7 +4241,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1825-207 }
       - { num: 3, semaineAvis: 1925-221 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7797:
     perempt: 0.5
     groupTitle: 'Océan Indien'
@@ -3944,7 +4252,7 @@ gans:
     ganEdition: 'Publication 2016'
     corrections:
       - { num: 2, semaineAvis: 2007-195 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR4232:
     perempt: 0.25
     groupTitle: 'Océan Pacifique'
@@ -3957,7 +4265,7 @@ gans:
     ganEdition: 'Edition n°5 - 2018'
     corrections:
       - { num: 1, semaineAvis: 2043-225 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR5978:
     perempt: 0.25
     groupTitle: 'Océan Pacifique Sud'
@@ -3970,7 +4278,7 @@ gans:
     ganEdition: 'Edition n°3 - 2019'
     corrections:
       - { num: 1, semaineAvis: 1935-216 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6279:
     perempt: 0.25
     groupTitle: 'Polynésie Française - Iles Australes'
@@ -3982,7 +4290,7 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 4, semaineAvis: 1939-227 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6284:
     perempt: 0.25
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
@@ -3993,7 +4301,7 @@ gans:
     ganEdition: 'Edition n°5 - 2006'
     corrections:
       - { num: 1, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6420:
     perempt: 0.25
     groupTitle: 'Iles Tuamotu'
@@ -4004,7 +4312,7 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 1, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6434:
     perempt: 0.25
     groupTitle: 'Archipel de la Société - Iles Sous-le-Vent'
@@ -4018,7 +4326,7 @@ gans:
     ganEdition: 'Edition n°4 - 2005'
     corrections:
       - { num: 16, semaineAvis: 1813-210 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6540:
     perempt: 0.25
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
@@ -4029,7 +4337,7 @@ gans:
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 2, semaineAvis: 1927-217 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6657:
     perempt: 0.25
     groupTitle: 'Océan Pacifique Sud - Îles de la Société - Île de Moorea'
@@ -4040,7 +4348,7 @@ gans:
     ganEdition: 'Edition n°4 - 2017'
     corrections:
       - { num: 2, semaineAvis: 2018-226 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7097:
     perempt: 0.25
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
@@ -4051,7 +4359,7 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 1, semaineAvis: 1808-205 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7167:
     perempt: 0.25
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -4062,7 +4370,7 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 9, semaineAvis: 1927-217 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7248:
     perempt: 0.25
     groupTitle: 'Iles Tuamotu'
@@ -4075,22 +4383,7 @@ gans:
     ganEdition: 'Edition n°2 - 2010'
     corrections:
       - { num: 4, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
-  FR7259:
-    perempt: 0.25
-    groupTitle: 'Iles Loyauté'
-    title: 'Ile Maré'
-    hasPart:
-      - { title: 'Cartouche: Ile Maré', bbox: { SW: '21°46,48''S — 167°40,00''E', NE: '21°16,00''S — 168°13,71''E' } }
-      - { title: 'Cartouche: A - Baie de l''Allier (Baie de Puan) - Mouillage de La Roche', bbox: { SW: '21°28,42''S — 168°00,56''E', NE: '21°26,62''S — 168°03,00''E' } }
-      - { title: 'Cartouche: B - Baie de Niri (Baie de Wabao)', bbox: { SW: '21°37,89''S — 167°55,22''E', NE: '21°36,09''S — 167°57,68''E' } }
-      - { title: 'Cartouche: C - Baie de Tadine', bbox: { SW: '21°36,08''S — 167°49,87''E', NE: '21°31,93''S — 167°53,46''E' } }
-      - { title: 'Cartouche: D - Baie du Nord (Baie de Waeko)', bbox: { SW: '21°24,45''S — 167°51,67''E', NE: '21°22,53''S — 167°54,13''E' } }
-      - { title: 'Cartouche: E - Port de Tadine', bbox: { SW: '21°33,06''S — 167°52,12''E', NE: '21°32,58''S — 167°52,73''E' } }
-    ganEdition: 'Publication 1995'
-    corrections:
-      - { num: 16, semaineAvis: 1704-205 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7321:
     perempt: 0.25
     groupTitle: 'Océan Pacifique Sud'
@@ -4101,7 +4394,7 @@ gans:
     ganEdition: 'Edition n°3 - 2017'
     corrections:
       - { num: 3, semaineAvis: 1935-216 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7329:
     perempt: 0.25
     groupTitle: 'Archipel des Tuamotu'
@@ -4114,7 +4407,7 @@ gans:
     ganEdition: 'Edition n°2 - 2003'
     corrections:
       - { num: 9, semaineAvis: 1932-226 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7346:
     perempt: 0.25
     groupTitle: 'Iles Tuamotu - Iles du roi Georges'
@@ -4127,18 +4420,7 @@ gans:
     ganEdition: 'Edition n°2 - 2006'
     corrections:
       - { num: 6, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
-  FR7371:
-    perempt: 0.25
-    groupTitle: 'Océan Pacifique Sud'
-    title: 'De Tahiti aux Îles Marquises'
-    bbox:
-      SW: '18°06,00''S — NaN°00,00''W'
-      NE: '07°22,00''S — 136°56,00''W'
-    ganEdition: 'Edition n°2 - 2019'
-    corrections:
-      - { num: 1, semaineAvis: 2037-228 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7372:
     perempt: 0.25
     groupTitle: 'Archipel des Tuamotu'
@@ -4151,7 +4433,7 @@ gans:
     ganEdition: 'Edition n°3 - 2004'
     corrections:
       - { num: 14, semaineAvis: 1941-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7453:
     perempt: 0.25
     groupTitle: 'Archipel des Tuamotu'
@@ -4165,7 +4447,7 @@ gans:
     ganEdition: 'Publication 1996'
     corrections:
       - { num: 11, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7454:
     perempt: 0.25
     groupTitle: 'Iles Tuamotu'
@@ -4178,7 +4460,7 @@ gans:
     ganEdition: 'Publication 1998'
     corrections:
       - { num: 9, semaineAvis: 2044-230 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7762:
     perempt: 0.25
     groupTitle: 'Océan Pacifique'
@@ -4189,72 +4471,76 @@ gans:
     ganEdition: 'Publication 2017'
     corrections:
       - { num: 1, semaineAvis: 1930-220 }
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR3127:
     perempt: 0
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6033:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6165:
     perempt: 0
     groupTitle: 'Polynésie française - Iles Australes'
     title: Rurutu
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6207:
     perempt: 0
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Raivavae (Vavitu)'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6424:
     perempt: 0
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Tubuai'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6497:
     perempt: 0
     groupTitle: 'Océan Indien - Archipel des Crozet - Groupe de l''Est'
     title: 'Île de la Possession, Île de l''Est'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6589:
     perempt: 0
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Canala'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6604:
     perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6608:
+    perempt: 0
+    title: 'Mer du Nord'
+    valid: '2021-01-09'
   FR6688:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Iles de la Société, de Manuae à Tahiti'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6689:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (Partie Ouest)'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6690:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie centrale) - De Makemo à Tatakoto'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6691:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie Est) de Hao à Fangataufa'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6692:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Des Îles Tuamotu aux Îles Gambier'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6713:
     perempt: 0
     groupTitle: 'Mer Méditerranée'
@@ -4263,7 +4549,12 @@ gans:
       SW: '41°57,94''N — 008°59,94''E'
       NE: '43°27,94''N — 010°23,14''E'
     ganEdition: 'Edition n°5 - 2016'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR6757:
+    perempt: 0
+    groupTitle: 'Mer Méditerranée'
+    title: 'Du Détroit de Gibraltar au Canal de Sicile'
+    valid: '2021-01-09'
   FR6821:
     perempt: 0
     groupTitle: 'Mer Méditerranée'
@@ -4272,27 +4563,22 @@ gans:
       SW: '41°43,94''N — 008°01,74''E'
       NE: '43°14,34''N — 009°24,94''E'
     ganEdition: 'Edition n°2 - 2009'
-    valid: '2020-12-18'
-  FR6838:
-    perempt: 0
-    groupTitle: 'Côte Sud de France'
-    title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6850:
     perempt: 0
     groupTitle: 'Côte Nord de Corse'
     title: 'Saint-Florent, Centuri et Macinaggio'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6855:
     perempt: 0
     groupTitle: 'Côte Est de Corse'
     title: 'Du phare d''Alistro à Solenzara'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6907:
     perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Etang de Berre'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6930:
     perempt: 0
     groupTitle: 'Côte Nord de France'
@@ -4301,117 +4587,131 @@ gans:
       SW: '48°29,94''N — 004°50,09''W'
       NE: '49°33,14''N — 002°29,08''W'
     ganEdition: 'Edition n°2 - 2009'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6934:
     perempt: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Alderney (Aurigny) et les Casquets'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6937:
     perempt: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Jersey - Côte Nord'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6938:
     perempt: 0
     groupTitle: 'Îles Anglo-Normandes - Jersey'
     title: 'Abords de Saint Hélier'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6939:
     perempt: 0
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Jersey - Côte Est'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR6955:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7004:
     perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7043:
+    perempt: 0
+    title: 'Océan Atlantique Nord - Partie Ouest'
+    valid: '2021-01-09'
   FR7073:
     perempt: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7098:
     perempt: 0
     groupTitle: 'Côte Sud-Ouest de Nouvelle Calédonie'
     title: 'Baies d''Ouaraï et Chambeyron - Passes d''Ouaraï et d''Isié'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7107:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7129:
     perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7136:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'De la Baie de Pont-Mahé à Piriac-sur-Mer'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7138:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et mouillages en Bretagne Sud'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7148:
+    perempt: 0
+    groupTitle: 'Côte Ouest de France'
+    title: 'Du Goulet de Brest à la Chaussée de Sein'
+    valid: '2021-01-09'
   FR7159:
     perempt: 0
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7170:
     perempt: 0
     groupTitle: 'Océan Indien'
     title: 'Îles Saint-Paul et Amsterdam'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7171:
     perempt: 0
     groupTitle: 'Océan Indien'
     title: 'Approches des Îles Saint-Paul et Amsterdam'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7183:
+    perempt: 0
+    groupTitle: 'Océan Indien'
+    title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
+    valid: '2021-01-09'
   FR7207:
     perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7210:
     perempt: 0
     groupTitle: 'Océan Atlantique'
     title: 'Atterrages de l''entrée de La Manche - Mer Celtique'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7218:
     perempt: 0
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7246:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7260:
     perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Apataki à Fakarava'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7261:
     perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'De Fakarava à Makemo'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7262:
     perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: 'De Makemo à Marutea Nord'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7271:
     perempt: 0
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
@@ -4420,202 +4720,212 @@ gans:
       SW: 'NaN°00,00''S — 167°57,92''W'
       NE: '02°36,26''S — NaN°00,00''W'
     ganEdition: 'Publication 1990'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7283:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7293:
     perempt: 0
     groupTitle: 'Iles Tuamotu'
     title: Manihi
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7316:
     perempt: 0
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe de Sagone'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7317:
     perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dieppe'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7341:
     perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Granville'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7351:
     perempt: 0
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Goyeta à la Passe de Koné - Abords de Koné'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7356:
     perempt: 0
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Eiao, Hatutaa et Motu One'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7357:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Îles Marquises (Fenua Enata)'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7358:
     perempt: 0
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Est'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7359:
     perempt: 0
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Ouest'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7369:
+    perempt: 0
+    groupTitle: 'Océan Pacifique Sud'
+    title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
+    valid: '2021-01-09'
   FR7370:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Mururoa à Ducie Island'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7371:
+    perempt: 0
+    groupTitle: 'Océan Pacifique Sud'
+    title: 'De Tahiti aux Îles Marquises'
+    valid: '2021-01-09'
   FR7373:
     perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: Rangiroa
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7393:
     perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Du port de La Pointe Rouge à Cassis - Calanques de Cassis'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7396:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7398:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7402:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7410:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ile d''Yeu'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7411:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Port des Sables-d''Olonne'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7412:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7427:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'La Gironde - La Garonne et La Dordogne'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7431:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Baies de Fontarabie et de Saint-Jean-de-Luz'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7442:
     perempt: 0
     groupTitle: 'Côte Sud de France - Principauté de Monaco'
     title: 'De Villefranche-sur-Mer à Menton'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7456:
     perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'Toau - De Niau à Fakarava'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7457:
     perempt: 0
     groupTitle: 'Archipel des Tuamotu'
     title: 'Raroia et Takume'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7475:
     perempt: 0
     groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
     title: 'De Puerto Rico à Trinidad'
-    valid: '2020-12-23'
+    valid: '2021-01-09'
   FR7480:
     perempt: 0
     groupTitle: 'Côte de Guyane'
     title: 'Accès au fleuve Kourou - Port de Pariacabo'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7481:
     perempt: 0
     groupTitle: 'Côte de Guyane'
     title: 'Approches de Kourou - Îles du Salut'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7484:
     perempt: 0
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
     title: 'De Paramaribo aux Iles du Salut'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7485:
     perempt: 0
     groupTitle: 'Océan Atlantique - Côtes de Guyane Française et du Brésil'
     title: 'Des Iles du Salut à Cabo Orange'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7591:
     perempt: 0
     groupTitle: 'Océan Indien - Océan Pacifique Sud - Antarctique'
     title: 'De Cape Goodenough à Cape Adare'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7592:
     perempt: 0
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'Du Glacier Dibble au Glacier Mertz'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7593:
     perempt: 0
     groupTitle: 'Océan Antarctique - Terre Adélie'
     title: 'De l''Ile Hélène au Rocher du Débarquement - Archipel de Pointe Géologie'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7594:
     perempt: 0
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'De la Pointe Ebba au Cap de la Découverte'
-    valid: '2020-12-18'
-  FR7604:
-    perempt: 0
-    groupTitle: 'Océan Indien (Partie Sud)'
-    title: 'De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7606:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
+  FR7616:
+    perempt: 0
+    groupTitle: 'Petites Antilles'
+    title: Dominica
+    valid: '2021-01-09'
   FR7663:
     perempt: 0
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7758:
     perempt: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Îles Belep'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7760:
     perempt: 0
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Nord)'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR7761:
     perempt: 0
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
-    valid: '2020-12-18'
+    valid: '2021-01-09'
   FR0101:
     perempt: -1
     groupTitle: 'Planisphère terrestre'
@@ -4686,11 +4996,30 @@ gans:
     groupTitle: 'Côte Nord de France'
     title: 'Du Hâvre de Rothéneuf à Cancale'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7131/1943'
+  FR7250:
+    perempt: -1
+    title: 'De la pointe de la Torche à Loctudy'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7250/2027'
   FR7322:
     perempt: -1
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Muéo'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7322/1933'
+  FR7330:
+    perempt: -1
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7330/1602'
+  FR7344:
+    perempt: -1
+    groupTitle: 'Manche - Mer du Nord'
+    title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7344/1602'
+  FR7360:
+    perempt: -1
+    groupTitle: 'Mer Méditerranée'
+    title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7360/1602'
   FR7376:
     perempt: -1
     groupTitle: 'Côte de Guyane'
@@ -4711,187 +5040,47 @@ gans:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7466/1932'
-  FR7487:
-    perempt: -1
-    groupTitle: 'Océan Indien'
-    title: 'Approches Nord - Est de Madagascar'
-    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7487/1901'
-  FR7488:
-    perempt: -1
-    groupTitle: 'Océan Indien'
-    title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
-    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7488/1707'
   FR7490:
     perempt: -1
     groupTitle: 'Océan Indien'
     title: 'Archipel des Comores'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7490/1642'
-  FR7616:
-    perempt: -1
-    groupTitle: 'Petites Antilles'
-    title: Dominica
-    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7616/1901'
   FR7644:
     perempt: -1
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Accès au Port de Nouméa'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7644/1724'
+  FR7750:
+    perempt: -1
+    title: 'Approches de l’Île Clipperton'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7750/2040'
   FR7751:
     perempt: -1
     groupTitle: 'Océan Pacifique Nord'
     title: 'Île Clipperton - Zone Economique Exclusive'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7751/1725'
-  FR7755:
-    perempt: -1
-    groupTitle: 'Côte Est de Nouvelle-Calédonie'
-    title: 'De Ponérihouen au Cap Dumoulin'
-    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7755/1717'
-  FR7250:
-    perempt: -1
-    title: 'De la pointe de la Torche à Loctudy'
-    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7250/2027'
-  FR7750:
-    perempt: -1
-    title: 'Approches de l’Île Clipperton'
-    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7750/2040'
   FR7764:
     perempt: -1
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
     harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR7764/2026'
-  FR6608:
-    perempt: -1
-    title: 'Mer du Nord'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6608/2021'
-  FR6651:
-    perempt: -1
-    groupTitle: 'Côte Nord de France'
-    title: 'De Calais à Dunkerque'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6651/2048'
-  FR6757:
-    perempt: -1
-    groupTitle: 'Mer Méditerranée'
-    title: 'Du Détroit de Gibraltar au Canal de Sicile'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6757/2040'
-  FR6815:
-    perempt: -1
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'Océan Atlantique Nord - Partie Est'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6815/2043'
-  FR6844:
-    perempt: -1
-    groupTitle: 'Côte Sud de France'
-    title: 'De Port-Barcarès à l''embouchure de l''Aude'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6844/2046'
-  FR6929:
-    perempt: -1
-    groupTitle: 'Côte Est de Corse'
-    title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR6929/2048'
-  FR7008:
-    perempt: -1
-    groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
-    title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7008/2046'
-  FR7033:
-    perempt: -1
-    groupTitle: 'Côte Ouest de France'
-    title: 'De Quiberon au Croisic (Spéciale P)'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7033/2049'
-  FR7043:
-    perempt: -1
-    title: 'Océan Atlantique Nord - Partie Ouest'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7043/2039'
-  FR7066:
-    perempt: -1
-    groupTitle: 'Côte Ouest de France'
-    title: 'De l''île Vierge à la Pointe de Penmarc''h - Abords de Brest'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7066/2044'
-  FR7068:
-    perempt: -1
-    groupTitle: 'Côte Ouest de France'
-    title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7068/2049'
-  FR7091:
-    perempt: -1
-    groupTitle: 'Côte Sud de France'
-    title: 'Abords de Toulon'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7091/2046'
-  FR7151:
-    perempt: -1
-    groupTitle: 'Côte Nord de France'
-    title: 'De l''anse de Kernic à l''Ile Grande'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7151/2050'
-  FR7152:
-    perempt: -1
-    groupTitle: 'Côte Nord de France'
-    title: 'De l''Ile Grande à l''Ile de Bréhat'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7152/2049'
-  FR7183:
-    perempt: -1
-    groupTitle: 'Océan Indien'
-    title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7183/2040'
-  FR7205:
-    perempt: -1
-    groupTitle: 'Côte Sud de France'
-    title: 'Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7205/2040'
-  FR7282:
-    perempt: -1
-    groupTitle: 'Côte Sud de France'
-    title: 'Rade d''Hyères'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7282/2044'
-  FR7292:
-    perempt: -1
-    groupTitle: 'Mer Méditerranée'
-    title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7292/2046'
-  FR7323:
-    perempt: -1
-    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
-    title: 'Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7323/2048'
-  FR7330:
-    perempt: -1
-    groupTitle: 'Océan Atlantique Nord'
-    title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7330/1602'
-  FR7344:
-    perempt: -1
-    groupTitle: 'Manche - Mer du Nord'
-    title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7344/1602'
-  FR7360:
-    perempt: -1
-    groupTitle: 'Mer Méditerranée'
-    title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7360/1602'
-  FR7406:
-    perempt: -1
-    groupTitle: 'Côte Sud de France'
-    title: 'De Marseille à Toulon'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7406/2046'
-  FR7424:
-    perempt: -1
-    groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
-    title: 'Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7424/2048'
-  FR7510:
-    perempt: -1
-    groupTitle: 'Côte Nord-Est de Sardaigne'
-    title: 'De Capo Bellavista aux Bouches de Bonifacio'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7510/2044'
-  FR7625:
-    perempt: -1
-    groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
-    title: 'De Trinidad à Cabo Orange'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR7625/2032'
   FR8101:
     perempt: -1
     title: 'MANCHEGRID - Carte générale'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR8101/1042'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR8101/1042'
   FR8502:
     perempt: -1
     title: 'Action de l''Etat en Mer en ZMSOI'
-    harvestError: 'Erreur 302 de lecture de https://www.shom.fr/qr/gan/FR8502/0953'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR8502/0953'
+  FR8509:
+    perempt: -1
+    title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR8509/1803'
+  FR8510:
+    perempt: -1
+    title: 'Délimitations des zones maritimes'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR8510/1511'
+  FR8517:
+    perempt: -1
+    title: 'Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
+    harvestError: 'Erreur 500 de lecture de https://www.shom.fr/qr/gan/FR8517/1803'
 eof: null

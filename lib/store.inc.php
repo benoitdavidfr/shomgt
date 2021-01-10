@@ -43,8 +43,12 @@ doc: |
     - {num}_{partid}_gtw.gt
     - {num}_{partid}_gtw.aux.xml
   Un GéoTiff est identifié par un nom de la forme {num}/{num}_pal300 ou {num}/{num}_{partid}_gtw
-  Les cartes AEM et la carte MancheGrid ne respectent pas ces standards
+  
+  Les cartes AEM 2017 et la carte MancheGrid ne respectent pas ces standards
     - le nom du géoTiff respecte le motif {num}/{num}_{YYYY} pour les cartes AEM et {num}/{num} pour la carte MancheGrid
+    - il n'y a pas de fichier xml
+
+  Les cartes AEM 2019 et la carte 
 */
 class CurrentGeoTiff {
   const PATH = __DIR__.'/../../../shomgeotiff/current/';
@@ -206,12 +210,24 @@ doc: |
     - avec un suffixe a,b, ... si la livraison doit être répartie en plusieurs répertoires
     - ou par un intervalle de dates de la forme YYYYMMDD--YYYYMMDD si plusieurs livraison sont agrégées
     - ou d'autres motifs dans des cas particuliers
-  Ce sous-répertoire de livraison contient un fichier 7z nommé {num}.7z par carte
-  ainsi qu'éventuellement un fichier index.yaml contenant:
-    - un champ 'title' décrivant la livraison
-    - un champ 'maps' listant sous la forme d'un texte la liste des cartes de la livraison
-    - un éventuel champ 'toDelete' listant les cartes obsolètes à supprimer sous la forme d'un array
-      dont les clés sont les id des cartes obsolètes et les valeurs décrivent la carte et la raison de son obsolescence
+      - 201707cartesAEM pour les cartes AEM livrées en 2017 ainsi que la carte MancheGrid
+      - 201911cartesAEM pour les cartes AEM livrées en 2918 ainsi que la carte des délimitations des zones maritimes
+  Ce sous-répertoire de livraison contient
+    - éventuellement un fichier index.yaml contenant:
+      - un champ 'title' décrivant la livraison
+      - un champ 'maps' listant sous la forme d'un texte la liste des cartes de la livraison
+      - un éventuel champ 'toDelete' listant les cartes obsolètes à supprimer sous la forme d'un array
+        dont les clés sont les id des cartes obsolètes et les valeurs décrivent la carte et la raison de son obsolescence
+    - un fichier 7z par carte nommé {num}.7z contenant
+      - {num}.png - miniature de la carte
+      - ssi il existe un espace principal
+        - {num}_pal300.tif - fichier GéoTiff de l'espace principal
+        - {num}_pal300.gt - fichier de MD GéoTiff de l'espace principal
+        - CARTO_GEOTIFF_{num}_pal300.xml - MD ISO du GéoTiff de l'espace principal
+      - pour chaque cartouche {partid} (s'il en existe), avec {partid} soit un entier soit une lettre
+        - {num}_{partid}_gtw.tif - fichier GéoTiff du cartouche {partid}
+        - {num}_{partid}_gtw.gt - fichier de MD GéoTiff du cartouche {partid}
+        - CARTO_GEOTIFF_{num}_{partid}_gtw.xml - MD ISO du GéoTiff du cartouche {partid}
 */
 class SevenZipMap extends SevenZipArchive {
   const PATH = __DIR__.'/../../../shomgeotiff/incoming/';

@@ -121,6 +121,57 @@ $schema:
     eof: { type: 'null' }
     
 cmdes:
+  2021-01-10:
+    title: 3ème cmde suite à cat2 - 20 cartes / indice de péremption >= 5,5 (aucune carte nouvelle)
+    cartesACommander:
+      - 6814
+      - 7630
+      - 6824
+      - 6968
+      - 7014
+      - 7025
+      - 7031
+      - 7054
+      - 7090
+      - 7093
+      - 7122
+      - 7128
+      - 7133
+      - 7229
+      - 7409
+      - 7421
+      - 6738
+      - 6948
+      - 7381
+      - 7482
+    aperçu: |
+      Cartes marines numériques raster (image) - format GéoTIFF Cartes marines numériques raster (image) - format GéoTIFF
+      Achat à l'unité
+
+          Licence : Usage interne 
+          Quantité : 20 
+          Produits téléchargeables :
+
+              6814 - Côte Nord-Est d'Amérique du Sud
+              7630 - Petites Antilles - Partie Nord - De Anguilla à la Guadeloupe
+              6824 - La Manche - Du Cap d'Antifer au Cap Gris-Nez - De Newhaven à Dover
+              6968 - De Anvil Point à Beachy Head
+              7014 - Des Îles Baléares à la Corse et à la Sardaigne
+              7025 - Île de Corse
+              7031 - De l'Île de Penfret au Plateau des Birvideaux - Abords de Lorient
+              7054 - De l'embouchure de l'Aude à Sète
+              7090 - De la Pointe de Barfleur à Saint-Vaast-la-Hougue
+              7093 - Rade de Toulon
+              7122 - De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four
+              7128 - Baie de Saint-Brieuc (Partie Ouest) - De la Pointe de la Tour à l'Anse d'Yffiniac
+              7133 - Ports de la Côte Ouest du Cotentin
+              7229 - De Nice à Piombino
+              7409 - De la Rade d'Agay à Monaco
+              7421 - De la Pointe de La Percée à Ouistreham
+              6738 - La Martinique - Partie Sud
+              6948 - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes
+              7381 - De Kourou à Cayenne
+              7482 - De l'Ilet à Kahouanne aux Saintes
   2020-12-26/2021-01-05:
     title: 2ème cmde suite à cat2 - 23 cartes / age >= 7 (aucune carte nouvelle) / réceptionnée le 5/1/2021
     cartesACommander:

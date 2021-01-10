@@ -124,6 +124,7 @@ class GeoTiff {
   static function maketile(string $lyrname, EBox $wombox, array $options=[]) {
     if (self::$verbose)
       echo "GeoTiff::maketile(lyrname=$lyrname, wombox=$wombox, options=",json_encode($options),")<br>\n";
+    //echo '<pre>$gts='; print_r(self::$gts);
     $layers = []; // liste des couches à utiliser
     if ($lyrname <> 'gtpyr')
       $layers = [ $lyrname ];
@@ -168,8 +169,8 @@ class GeoTiff {
         }
       }
     }
-    $width = isset($options['width']) ? $options['width'] : 256;
-    $height = isset($options['height']) ? $options['height'] : 256;
+    $width = $options['width'] ?? 256;
+    $height = $options['height'] ?? 256;
     // fabrication de l'image
     if (!($image = imagecreatetruecolor($width, $height)))
       throw new Exception("erreur de imagecreatetruecolor() ligne ".__LINE__);
@@ -335,6 +336,7 @@ class GeoTiff {
     Les dernières dalles en colonne (resp. en ligne) ont comme largeur (resp. hauteur) le reste
   */
   function imagecopytiles($image, EBox $bbox): bool {
+    //echo "imagecopytiles() sur this="; print_r($this);
     if (!$this->wboxnb->intersects($bbox)) // si la bbox demandée n'intersecte pas la bbox du GéoTiff
       return false; // alors retour sans rien faire
     $imax = floor(($this->width - $this->right)/1024); // nbre de dalles en X

@@ -27,20 +27,56 @@ function todecdeg($val): float {
 }
 
 /*PhpDoc: functions
-name: gdalinfo
-title: "function gdalinfo(string $filepath): array - extrait du fichier gdalinfo ['gbox'=> {gbox}, 'width'=> {width}, 'height'=> {height} ]"
+name: externalGboxForNonGeoLoc
+title: "externalGboxForNonGeoRef(int $width, int $height, array $borders, GBox $internalGBox): GBox - traite les pdf non géo-référencés"
 doc: |
-  Si ces coordonnées sont absentes alors retourne [], le GéoTiff n'est pas géolocalisé
-  De manière générale -180 <= west < east <= 180
-  Traite 2 cas particuliers:
-    - si le rectangle est à cheval sur l'anti-méridien alors rajoute 360° à east pour que -180 <= west < east <= 540
-    - cas du planisphère qui est à cheval sur l'anti-méridien mais pour lequel west < east
-      dans ce dernier cas aussi ajout de 360° à east
-      ce dernier cas est détecté en regardant si la longitude du centre est bien comprise entre les extrêmes 
+  Plusieurs cartes livrées par le Shom sont en PDF non géo-référencés.
+  Ces cartes peuvent être géo-référencées en renseignant dans le catalogue mapcat les largeurs des bords.
+  Le principe du traitement est de calculer par projection la boite intérieure en WorldMercator,
+  d'en déduire la boite extérieure en WorldMercator en rajoutant les largeurs des marges
+  et enfin de repasser en coordonnées géo. pour obtenir le géo-référencement du fichier.
 */
-function gdalinfo(string $filepath): array {
-  if (!($info = @file_get_contents($filepath)))
-    throw new Exception("Erreur d'ouverture de $filepath");
+function externalGboxForNonGeoRef(int $width, int $height, Borders $borders, GBox $inGBox): GBox {
+  $wombox = $inGBox->proj('WorldMercator'); // le cadre intérieur en coord. WorldMercator
+  //print_r($wombox);
+  
+  // Calcul de la taille du pixel en projection WorldMercator
+  $pixelSizeLat = ($wombox->north() - $wombox->south()) / ($height - $borders->top() - $borders->bottom());
+  //echo "pixelSizeLat=$pixelSizeLat\n";
+  $pixelSizeLon = ($wombox->east() - $wombox->west()) / ($width - $borders->left() - $borders->right());
+  //echo "pixelSizeLon=$pixelSizeLon\n";
+  
+  // Ajout des marges pour déterminer la boite extérieure
+  $wombox->setWest($wombox->west() - $borders->left() * $pixelSizeLon);
+  $wombox->setEast($wombox->east() + $borders->right() * $pixelSizeLon);
+  $wombox->setSouth($wombox->south() - $borders->bottom() * $pixelSizeLat);
+  $wombox->setNorth($wombox->north() + $borders->top() * $pixelSizeLat);
+  
+  // calcul de la boite extérieure en coordonnées géographiques
+  $extgbox = $wombox->geo('WorldMercator');
+  //print_r($gbox); die();
+  return $extgbox;
+}
+
+/*PhpDoc: functions
+name: gdalinfo
+title: "function gdalinfo(string $currentpath, string $gtname): array - extrait le contenu du fichier gdalinfo"
+doc: |
+  retourne normalement ['width'=> {width}, 'height'=> {height}, 'gbox'=> {gbox}?]
+  4 cas de figure
+    - si le fichier est absent ou non conforme alors levée d'une exception
+    - si le fichier ne contient pas le géoréférencement alors ne retourne que width et height
+    - si le fichier contient le géoréférencement alors retourne les 3 paramètres avec -180 <= west < east <= 180
+    - sauf si le rectangle de géoréférencement est à cheval sur l'anti-méridien alors rajoute 360° à east
+      pour que -180 <= west < 180 < east <= 540
+
+  Traite aussi le cas particulier du planisphère qui est à cheval sur l'anti-méridien mais pour lequel west < east
+  dans ce dernier cas aussi ajout de 360° à east
+  Ce dernier cas est détecté en regardant si la longitude du centre est bien comprise entre les extrêmes 
+*/
+function gdalinfo(string $currentpath, string $gtname): array {
+  if (!($info = @file_get_contents("$currentpath/$gtname.info")))
+    throw new Exception("Erreur d'ouverture de $currentpath/$gtname.info");
   //die($info);
 
   $pattern = '!Size is (\d+), (\d+)!';
@@ -51,10 +87,13 @@ function gdalinfo(string $filepath): array {
   
   $pattern = '!Upper Right \(\s*(-?[\d.]+),\s*(-?[\d.]+)\) \(\s*([\dd\'." ]+[EW]),\s*([\dd\'." ]+[NS])\)!';
   if (!preg_match($pattern, $info, $matches)) {
-    if (preg_match('!\(\s*(-?[\d.]+),\s*(-?[\d.]+)\)!', $info))
-      return []; // le GéoTiff n'est pas géolocalisé
-    else
+    if (!preg_match('!\(\s*(-?[\d.]+),\s*(-?[\d.]+)\)!', $info))
       throw new Exception("No match for $filepath Upper Right\n$info");
+    // tiff non géoréférencé
+    return [
+      'width'=> $width,
+      'height'=> $height,
+    ];
   }
   $xmax = $matches[1];
   $ymax = $matches[2];
@@ -83,9 +122,8 @@ function gdalinfo(string $filepath): array {
   if ($north < $south)
     throw new Exception("Erreur dans gdalinfo, north=$north < south=$south");
   return [
-    'gbox'=> new GBox([$west, $south, $east, $north]),
-    //'ebox'=> new EBox([$xmin, $ymin, $xmax, $ymax]),
     'width'=> $width,
     'height'=> $height,
+    'gbox'=> new GBox([$west, $south, $east, $north]),
   ];
 }

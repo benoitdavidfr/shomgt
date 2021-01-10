@@ -118,24 +118,34 @@ c.addTo(map);
 map.on('click', function(e) { c.setCoordinates(e); });
 
 var baseLayers = {
-// PYR
+  // PYR
   "Pyramide GéoTIFF" : new L.TileLayer(
     shomgturl+'tile.php/gtpyr/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
   ),
-// 1/20M
-  "Planisphère Shom 1/20M" : new L.TileLayer(
+  // 1/20M
+  "Planisphère 1/40M" : new L.TileLayer(
     shomgturl+'tile.php/gt20M/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }
   ),
+  // gtDelMar
+  "Zones maritimes" : new L.TileLayer(
+    shomgturl+'tile.php/gtZonMar/{z}/{x}/{y}.png',
+    {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
+  ),
+  // IGN
   "Plan IGN" : new L.TileLayer(
     'https://igngp.geoapi.fr/tile.php/plan-ignv2/{z}/{x}/{y}.png',
-    {"format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"}
+    { "format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,
+      "attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"
+    }
   ),
+  // OSM
   "OSM" : new L.TileLayer(
     'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
     {"attribution":"&copy; <a href='https://www.openstreetmap.org/copyright' target='_blank'>les contributeurs d’OpenStreetMap</a>"}
   ),
+  // Fond blanc
   "Fond blanc" : new L.TileLayer(
     'https://visu.gexplor.fr/utilityserver.php/whiteimg/{z}/{x}/{y}.jpg',
     { format: 'image/jpeg', minZoom: 0, maxZoom: 21, detectRetina: false}
@@ -211,7 +221,7 @@ var overlays = {
       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}
     )
   ]),
-  "Cartes MancheGrid" : new L.TileLayer(
+  "Carte MancheGrid" : new L.TileLayer(
     shomgturl+'tile.php/gtMancheGrid/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
   ),

@@ -15,8 +15,10 @@ doc: |
       - supprime le PNG
     - transfère les répertoires des nouvelles cartes dans current
 journal: |
+  10/1/2021:
+    - ajout possibilité de traiter des cartes PDF non géoréférencées
   2/1/2021:
-    - transfert de la suprresion de cartes de genpng.php dans updt.php
+    - transfert de la suppresion de cartes de genpng.php dans updt.php
   2/4/2019:
     suppression des cartes à supprimer
   1/4/2019:
@@ -43,21 +45,22 @@ while (($mapname = readdir($tmpdir)) !== false) {
     or die("Erreur d'ouverture du répertoire $tmppath/$mapname");
   echo "echo cd $tmppath/$mapname\n"; echo "cd $tmppath/$mapname\n";
   while (($tifname = readdir($mapdir)) !== false) {
-    if (!preg_match('!^(.+)\.tif$!', $tifname, $matches))
+    if (!preg_match('!^(.+)\.(tif|pdf)$!', $tifname, $matches))
       continue;
-    $gtname = $matches[1]; // nom ss path ni suffixe
+    $gtname = $matches[1]; // nom ss path ni extension
+    $ext = $matches[2]; // extension tif ou pdf
     
-    // génération des .info pour chaque GeoTiff
-    $cmde = "gdalinfo $gtname.tif > $gtname.info";
+    // génération des .info pour chaque GeoTiff/PDF
+    $cmde = "gdalinfo $gtname.$ext > $gtname.info";
     echo "echo $cmde\n"; echo "$cmde\n";
     
-    // conversion en PNG de chaque GeoTiff
-    $cmde = "gdal_translate -of PNG $gtname.tif $gtname.png";          
+    // conversion en PNG de chaque GeoTiff/PDF
+    $cmde = "gdal_translate -of PNG $gtname.$ext $gtname.png";          
     echo "echo $cmde\n"; echo "$cmde\n";
     $pngFiles[] = "$tmppath/$mapname/$gtname.png";
     
-    // suppression du .tif pour économiser de la place
-    echo "echo rm $gtname.tif\n"; echo "rm $gtname.tif\n";
+    // suppression du .tif/pdf pour économiser de la place
+    echo "echo rm $gtname.$ext\n"; echo "rm $gtname.$ext\n";
     
     // création d'un répertoire pour les dalles ou s'il existe suppression et recréation
     if (is_dir("$tmppath/$mapname/$gtname")) {

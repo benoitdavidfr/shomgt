@@ -151,9 +151,8 @@ class WebMercator extends IAG_GRS_1980 {
   title: "static function proj(array $pos): array  - convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]"
   */
   static function proj(array $pos): array {
-    list($longitude, $latitude) = $pos;
-    $lambda = $longitude * pi() / 180.0; // longitude en radians
-    $phi = $latitude * pi() / 180.0;  // latitude en radians
+    $lambda = $pos[0] * pi() / 180.0; // longitude en radians
+    $phi = $pos[1] * pi() / 180.0;  // latitude en radians
 	  
     $x = self::a() * $lambda; // (7-1)
     $y = self::a() * log(tan(pi()/4 + $phi/2)); // (7-2)
@@ -204,7 +203,7 @@ class Ellipsoid implements iEllipsoid {
     ],
   ];
   
-  static $current = self::DEFAULT; // ellipsoide courant, par défaut IAG_GRS_1980
+  static string $current = self::DEFAULT; // ellipsoide courant, par défaut IAG_GRS_1980
   
   // liste les ellipsoides proposés
   static function available(): array { return self::PARAMS; }
@@ -221,9 +220,7 @@ class Ellipsoid implements iEllipsoid {
   }
   
   // retourne la valeur d'un paramètre stocké pour l'ellipsoide courant
-  private static function param(string $name): ?float {
-    return isset(self::PARAMS[self::$current][$name]) ? self::PARAMS[self::$current][$name] : null;
-  }
+  private static function param(string $name): ?float { return self::PARAMS[self::$current][$name] ?? null; }
   
   static function a() { return self::param('a'); }
   
@@ -240,16 +237,15 @@ doc: |
   La projection WorldMercator peut être définie sur différents ellipsoides.
 */
 class WorldMercator extends Ellipsoid {
-  const epsilon = 1E-11; // tolerance de convergence du calcul de la latitude
+  const EPSILON = 1E-11; // tolerance de convergence du calcul de la latitude
   
   /*PhpDoc: methods
   name:  proj
   title: "static function proj(array $pos): array  - convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]"
   */
   static function proj(array $pos): array {
-    list($longitude, $latitude) = $pos;
-    $lambda = $longitude * pi() / 180.0; // longitude en radians
-    $phi = $latitude * pi() / 180.0;  // latitude en radians
+    $lambda = $pos[0] * pi() / 180.0; // longitude en radians
+    $phi = $pos[1] * pi() / 180.0;  // latitude en radians
     $e = self::e(); //première exentricité de l'ellipsoïde
     $x = self::a() * $lambda; // (7-6)
     $y = self::a() * log(tan(pi()/4 + $phi/2) * pow((1-$e*sin($phi))/(1+$e*sin($phi)),$e/2)); // (7-7)
@@ -268,14 +264,13 @@ class WorldMercator extends Ellipsoid {
     $e = self::e();
 
     $nbiter = 0;
-    while (1) {
+    while ($nbiter++ < 20) {
       $phi0 = $phi;
       $phi = pi()/2 - 2*atan($t * pow((1-$e*sin($phi))/(1+$e*sin($phi)),$e/2)); // (7-9)
-      if (abs($phi-$phi0) < self::epsilon)
+      if (abs($phi-$phi0) < self::EPSILON)
         return [ $lambda / pi() * 180.0 , $phi / pi() * 180.0 ];
-      if ($nbiter++ > 20)
-        throw new Exception("Convergence inachevee dans WorldMercator::geo() pour nbiter=$nbiter");
     }
+    throw new Exception("Convergence inachevee dans WorldMercator::geo() pour nbiter=$nbiter");
   }
 };
 
@@ -491,7 +486,7 @@ echo "<html><head><meta charset='UTF-8'><title>coordsys</title></head><body><pre
 
 //echo "x",UTM::zone([-179,0]),"x\n";
 
-if (1) {
+if (0) {
   echo "Example du rapport USGS pp 269-270 utilisant l'Ellipsoide de Clarke 1866\n";
   Ellipsoid::set('Clarke1866');
   $pt = [-73.5, 40.5];
@@ -527,6 +522,7 @@ $refs = [
   ],
 ];
 
+if (1)
 foreach ($refs as $name => $ref) {
   echo "\nCoordonnees Pt Geodesique <a href='$ref[src]'>$name</a>\n";
   if (isset($ref['L93'])) {
@@ -565,4 +561,13 @@ foreach ($refs as $name => $ref) {
     $cutm = UTM::proj($zone, $cgeo);
     printf ("Coordonnées en UTM-%s: %.2f / %.2f, %.2f / %.2f\n", $zone, $cutm[0], $cutm0[0], $cutm[1], $cutm0[1]);
   }
+}
+
+if (1) {
+  echo "proj([-180,0])="; print_r(WorldMercator::proj([-180,0]));
+  echo "proj([180,0])="; print_r(WorldMercator::proj([180,0]));
+  echo "proj([0,0])="; print_r(WorldMercator::proj([0,0]));
+  echo "proj([360,0])="; print_r(WorldMercator::proj([360,0]));
+
+  echo "proj([0, 90])="; print_r(WorldMercator::proj([0, 90]));
 }

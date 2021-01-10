@@ -1,9 +1,10 @@
 title: schema JSON du catalogue des cartes Shom
 $id: http://geoapi.fr/shomgt/cat2/mapcat.schema
-modified: '2020-12-24T11:42+01:00'
+modified: '2021-01-09T21:22+01:00'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    9/1/2021: Ajout de la possibilité de stocker l'épaisseur du cadre pour les cartes non géo-référencées
     24/12/2020: Gestion des cartes obsolètes dans un dictionnaire à part.
 $schema: http://json-schema.org/schema#
 definitions:
@@ -39,12 +40,18 @@ definitions:
       - '15.00'
   latLonDM:
     description: couple (latitude, longitude) en degrés minutes
-    pattern: "^\\d+°(\\d+(,\\d+)?)?'(N|S) - \\d+°(\\d+(,\\d+)?)?'(E|W)$"
+    type: string
+    pattern: '^\d+°(\d+(,\d+)?)?''(N|S) - \d+°(\d+(,\d+)?)?''(E|W)$'
     examples:
       - "44°09,00'N - 002°36,00'W"
       - "45°49,00'N - 001°00,00'W"
   bboxDM:
-    description: boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
+    description: |
+      boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
+      Les longitudes doivent être comprises entre -180° et +180°.
+      Les boites à cheval sur l'anti-méridien ont une longitude West supérieure à la longitude Est.
+      Il existe cependant des exceptions lorsque l'amplitude en longitude fait le tour de la terre ;
+      dans ce cas -180 <= west < 180 < east < 540 (360+180). 2 cartes sont dans ce cas.
     type: object
     required: [SW, NE]
     additionalProperties: false
@@ -55,34 +62,69 @@ definitions:
       NE:
         description: latitude et longitude du coin NE en degrés minutes
         $ref: '#/definitions/latLonDM'
-  latitudeDM:
-    description: latitude en degrés minutes
-    pattern: "^\\d+°(\\d+(,\\d+)?)?'(N|S)$"
+  latitudeDd:
+    description: latitude en degrés décimaux
+    type: number
+    minimum: -90
+    maximum: 90
     examples:
-      - "44°09,00'N"
-  longitudeDM:
-    description: longitude en degrés minutes
-    pattern: "^\\d+°(\\d+(,\\d+)?)?'(E|W)$"
+      - 48.4865
+      - -67.89
+  longitudeDd:
+    description: longitude en degrés décimaux
+    type: number
+    minimum: -180
+    maximum: 540
     examples:
-      - "001°00,00'W"
+      - -1
   dcmi-box:
-    description: boite englobante au format DCMI-Box en degrés, minutes en WGS84
+    description: boite englobante au format DCMI-Box en degrés décimaux en WGS84 avec les mêmes conventions que bboxDM
     type: object
     required: [southlimit, westlimit, northlimit, eastlimit]
     additionalProperties: false
     properties:
       southlimit:
         description: latitude minimum
-        $ref: '#/definitions/latitudeDM'
+        $ref: '#/definitions/latitudeDd'
       westlimit:
         description: longitude minimum
-        $ref: '#/definitions/longitudeDM'
+        $ref: '#/definitions/longitudeDd'
       northlimit:
         description: latitude maximum
-        $ref: '#/definitions/latitudeDM'
+        $ref: '#/definitions/latitudeDd'
       eastlimit:
         description: longitude maximum
-        $ref: '#/definitions/longitudeDM'
+        $ref: '#/definitions/longitudeDd'
+    examples:
+      - {southlimit: -79, westlimit: 100, northlimit: 80, eastlimit: 490} # FR0101
+      - {southlimit: -76.766666666667, westlimit: 88, northlimit: 79.283333333333, eastlimit: 448} # FR8510
+  borders:
+    description: |
+      Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
+      à celle de la boite englobante permet de déterminer ce géoréférencement.
+    type: object
+    required: [left, bottom, right, top]
+    additionalProperties: false
+    properties:
+      left:
+        description: nbre de pixels du bord gauche
+        $ref: '#/definitions/nbrePixels'
+      bottom:
+        description: nbre de pixels du bord bas
+        $ref: '#/definitions/nbrePixels'
+      right:
+        description: nbre de pixels du bord droite
+        $ref: '#/definitions/nbrePixels'
+      top:
+        description: nbre de pixels du bord haut
+        $ref: '#/definitions/nbrePixels'
+  nbrePixels:
+    description: Définition d'un nbre de pixels soit comme entier positif ou nul soit comme soustraction
+    oneOf:
+      - type: integer
+        minimum: 0
+      - type: string
+        pattern: '^\d+-\d+$'
   map:
     description: Propriétés décrivant une carte
     type: object
@@ -122,6 +164,11 @@ definitions:
       spatial:
         description: la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
         $ref: '#/definitions/dcmi-box'
+      borders:
+        description: |
+          Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
+          à celle de la boite englobante permet de déterminer ce géoréférencement.
+        $ref: '#/definitions/borders'
       bboxLonLatFromWfs:
         description: |
           boite englobante qui peut être moins précise que bboxDM si cette dernière est inconnue.
@@ -137,11 +184,11 @@ definitions:
         description: |
           identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
           Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
-          elles son listées dans le champ cartesAyantUnIntérêtInsuffisant.
+          elles sont listées dans le champ cartesAyantUnIntérêtInsuffisant.
           La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
           Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
           ou [FR] si la carte est à très petite échelle.
-          Non définie (propriété absente) si cette propriété est inconnue.
+          Ppropriété absente ssi information inconnue.
         type: array
         items:
           enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
@@ -157,10 +204,10 @@ definitions:
         type: integer
         minimum: 0
       replaces:
-        description: carte remplacée par la carte courante, optionnel
+        description: identification de la carte remplacée par la carte courante, optionnel
         type: string
       references:
-        description: ssi la carte est un fac-similé alors référence de la carte étrangère reproduite
+        description: référence de la carte étrangère reproduite ssi la carte est un fac-similé
         type: string
       noteShom:
         description: commentaire associé à la carte par le Shom
@@ -168,7 +215,7 @@ definitions:
       noteCatalog:
         description: commentaire associé à la carte dans la gestion du catalogue
         type: string
-      hasPart:
+      insetMaps:
         description: liste éventuelle de cartouches
         type: array
         minItems: 1
@@ -189,7 +236,12 @@ definitions:
             spatial:
               description: la même boite encodée en DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
               $ref: '#/definitions/dcmi-box'
-    
+            borders:
+              description: |
+                Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
+                à celle de la boite englobante permet de déterminer ce géoréférencement.
+              $ref: '#/definitions/borders'
+            
 type: object
 required: [ title, $id, $schema, modified, maps ]
 additionalProperties: false
@@ -229,9 +281,6 @@ properties:
           
           De plus, les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
           sont identifiées par la propriété mapsFrance et devraient renseigner les propriétés modified et lastUpdate.
-          
-          Enfin, il est possible de conserver les cartes qui ne sont plus en vigueur jusqu'à une réutilisation éventuelle
-          de l'identifiant.
         $ref: '#/definitions/map'
   obsoleteMaps:
     description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur suppression
@@ -272,7 +321,7 @@ properties:
             items:
               type: number
               minimum: -180
-              maximum: 180
+              maximum: 540
   modificationsDuGAN:
     description: Définit des modifications à effectuer sur les enregistrements du GAN.
     type: object

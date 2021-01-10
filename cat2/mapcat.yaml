@@ -4,7 +4,7 @@ description:
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2021-01-08T11:35:54+01:00'
+modified: '2021-01-10T17:37:53+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -49,7 +49,7 @@ maps:
       - PF
     modified: '2018-10-31+01:00'
     lastUpdate: 0
-    hasPart:
+    insetMaps:
       -
         title: 'A - Île de Rapa'
         scaleDenominator: '30.000'
@@ -87,7 +87,7 @@ maps:
       westlimit: -2.0588333333333
       northlimit: 48.642666666667
       eastlimit: -1.937
-    hasPart:
+    insetMaps:
       -
         title: 'Du Chêne Vert à l''écluse du Châtelier'
         scaleDenominator: '15.000'
@@ -119,7 +119,7 @@ maps:
       - NC
     modified: '2019-08-28+02:00'
     lastUpdate: 1
-    hasPart:
+    insetMaps:
       -
         title: 'A - Îles Chesterfield - Mouillage de l''île Longue'
         scaleDenominator: '20.000'
@@ -174,7 +174,7 @@ maps:
       westlimit: -152.41916666667
       northlimit: -16.066166666667
       eastlimit: -150.83583333333
-    hasPart:
+    insetMaps:
       -
         title: 'Manuae (Scilly)'
         scaleDenominator: '174.000'
@@ -224,7 +224,7 @@ maps:
       westlimit: -151.4345
       northlimit: -22.419
       eastlimit: -151.3005
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie d''Avera'
         scaleDenominator: '10.000'
@@ -244,7 +244,7 @@ maps:
     modified: '2017-07-05+02:00'
     lastUpdate: 2
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 6207 au cours de l''édition n° 4 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
-    hasPart:
+    insetMaps:
       -
         title: 'Île Raivavae (Vavitu)'
         scaleDenominator: '30.000'
@@ -263,7 +263,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 3
-    hasPart:
+    insetMaps:
       -
         title: 'Mouillages au Nord de Rimatara'
         scaleDenominator: '10.000'
@@ -382,7 +382,7 @@ maps:
       northlimit: -15.767833333333
       eastlimit: -148.1815
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 6320 au cours de l''édition n° 2 concernent principalement le changement de système géodésique et ponctuellement les profondeurs. Cette carte est désormais établie en WGS84.'
-    hasPart:
+    insetMaps:
       -
         title: 'Port de Temao'
         scaleDenominator: '10.000'
@@ -430,7 +430,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 14
-    hasPart:
+    insetMaps:
       -
         title: 'Île Tubuai'
         scaleDenominator: '40.000'
@@ -458,7 +458,7 @@ maps:
       westlimit: -151.0975
       northlimit: -16.626166666667
       eastlimit: -150.91083333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe Avamoa'
         scaleDenominator: '10.000'
@@ -554,7 +554,7 @@ maps:
       westlimit: 51.443833333333
       northlimit: -46.168
       eastlimit: 52.393833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Île de la Possession - Baie du Marin - Port Alfred'
         scaleDenominator: '10.000'
@@ -577,7 +577,7 @@ maps:
       westlimit: 49.5
       northlimit: -45.341666666667
       eastlimit: 52.641666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Île aux Cochons - Côte Est, Mouillage de la Meurthe'
         scaleDenominator: '50.000'
@@ -771,7 +771,7 @@ maps:
       westlimit: 5.4988333333333
       northlimit: 43.221333333333
       eastlimit: 5.7378333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de La Ciotat'
         scaleDenominator: '7.500'
@@ -811,7 +811,7 @@ maps:
       westlimit: 6.3483333333333
       northlimit: 43.196
       eastlimit: 6.6505
-    hasPart:
+    insetMaps:
       -
         title: 'A - Bormes-les-Mimosas'
         scaleDenominator: '7.500'
@@ -886,7 +886,7 @@ maps:
     modified: '2019-01-02+01:00'
     lastUpdate: 15
     noteCatalog: "Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.\nLes noteCatalog indiquées sur la carte ne semblent pas correctes.\nJe les ai corrigées en cherchant la correspondance des cartes à grande échelle avec celles à petites échelles.\n"
-    hasPart:
+    insetMaps:
       -
         title: 'A - Ile Juan de Nova'
         scaleDenominator: '50.000'
@@ -963,7 +963,7 @@ maps:
       westlimit: -150.0535
       northlimit: -17.347833333333
       eastlimit: -149.53516666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Vaiare'
         scaleDenominator: '15.000'
@@ -1259,7 +1259,7 @@ maps:
       - PF
     modified: '2017-06-21+02:00'
     lastUpdate: 2
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port Phaeton (Teauaa)'
         scaleDenominator: '10.000'
@@ -1536,7 +1536,7 @@ maps:
       westlimit: 166.94716666667
       northlimit: -20.727333333333
       eastlimit: 167.31716666667
-    hasPart:
+    insetMaps:
       -
         title: 'B - Baie de Châteaubriand'
         scaleDenominator: '20.000'
@@ -1665,7 +1665,7 @@ maps:
       northlimit: 71.5
       eastlimit: -116.5
     references: 'Fac similé carte US n°50 publiée en 1977 (édition juillet 1994).'
-    hasPart:
+    insetMaps:
       -
         title: 'Mer de Béring'
         scaleDenominator: 7.330.000
@@ -1688,7 +1688,7 @@ maps:
       westlimit: 6.711
       northlimit: 43.439
       eastlimit: 6.8986666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port-Fréjus'
         scaleDenominator: '7.500'
@@ -1721,7 +1721,7 @@ maps:
       westlimit: 3.525
       northlimit: 43.505
       eastlimit: 3.715
-    hasPart:
+    insetMaps:
       -
         title: 'A - Canal de Pisse - Saumes'
         scaleDenominator: '15.000'
@@ -1789,7 +1789,7 @@ maps:
       - FX
     modified: '2019-07-19+02:00'
     lastUpdate: 3
-    hasPart:
+    insetMaps:
       -
         title: 'B - Baie de Centuri'
         scaleDenominator: '10.000'
@@ -1856,7 +1856,7 @@ maps:
       westlimit: -176.25966666667
       northlimit: -13.2275
       eastlimit: -176.12133333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Iles Wallis'
         scaleDenominator: '100.000'
@@ -1956,7 +1956,7 @@ maps:
       northlimit: 49.533333333333
       eastlimit: -2.4416666666667
     references: 'Fac similé carte GB n°807 publiée en 1979 (édition février 2016).'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Beaucette Marina'
         scaleDenominator: '15.000'
@@ -1980,7 +1980,7 @@ maps:
       northlimit: 49.532333333333
       eastlimit: -2.2638333333333
     references: 'Fac similé carte GB n°808 publiée en 1979 (édition février 2016).'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Beaucette Marina'
         scaleDenominator: '15.000'
@@ -2003,7 +2003,7 @@ maps:
       westlimit: 4.9583333333333
       northlimit: 43.560833333333
       eastlimit: 5.2975
-    hasPart:
+    insetMaps:
       -
         title: 'A - Canal de Caronte'
         scaleDenominator: '12.500'
@@ -2221,7 +2221,7 @@ maps:
       eastlimit: -61.306666666667
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 6948 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
     noteCatalog: 'correction des 4 bords de la carte principale'
-    hasPart:
+    insetMaps:
       -
         title: 'Marie-Galante - Baie de Saint-Louis'
         scaleDenominator: '20.000'
@@ -2409,7 +2409,7 @@ maps:
       - FX
     modified: '2019-09-11+02:00'
     lastUpdate: 3
-    hasPart:
+    insetMaps:
       -
         title: 'A - Abords de l''Île-Rousse'
         scaleDenominator: '15.000'
@@ -2442,7 +2442,7 @@ maps:
       westlimit: 163.89483333333
       northlimit: -20.463833333333
       eastlimit: 164.52983333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillage de Karembé'
         scaleDenominator: '20.000'
@@ -2470,7 +2470,7 @@ maps:
       westlimit: 166.825
       northlimit: -21.802166666667
       eastlimit: 167.25833333333
-    hasPart:
+    insetMaps:
       -
         title: 'Baie de Yaté'
         scaleDenominator: '20.000'
@@ -2519,7 +2519,7 @@ maps:
     modified: '2019-10-23+02:00'
     lastUpdate: 1
     noteShom: 'Nota : Ajout d''un cartouche: D - Gruissan'
-    hasPart:
+    insetMaps:
       -
         title: 'Le Cap d''Agde - Embouchure de l''Hérault'
         scaleDenominator: '15.000'
@@ -2557,7 +2557,7 @@ maps:
       westlimit: 4.0536666666667
       northlimit: 43.571666666667
       eastlimit: 4.1943333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Palavas-les-Flots'
         scaleDenominator: '15.000'
@@ -2609,7 +2609,7 @@ maps:
       northlimit: -21.628833333333
       eastlimit: 166.91166666667
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 7011 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
-    hasPart:
+    insetMaps:
       -
         title: Port-Ounia
         scaleDenominator: '20.000'
@@ -2724,7 +2724,7 @@ maps:
       westlimit: 8.8833333333333
       northlimit: 41.48
       eastlimit: 9.56
-    hasPart:
+    insetMaps:
       -
         title: 'A - Golfo di Arzachena'
         scaleDenominator: '51.500'
@@ -2764,7 +2764,7 @@ maps:
       westlimit: -0.65316666666667
       northlimit: 45.069
       eastlimit: -0.523
-    hasPart:
+    insetMaps:
       -
         title: 'A - Cours de la Garonne (suite de la carte)'
         scaleDenominator: '20.000'
@@ -2931,7 +2931,7 @@ maps:
       westlimit: 167.75
       northlimit: -20.616666666667
       eastlimit: 173.08333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Île Walpole'
         scaleDenominator: '37.000'
@@ -2981,7 +2981,7 @@ maps:
       westlimit: 164.64483333333
       northlimit: -20.397166666667
       eastlimit: 165.27833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Hienghène'
         scaleDenominator: '15.000'
@@ -3004,7 +3004,7 @@ maps:
       westlimit: 166.36
       northlimit: -22.223333333333
       eastlimit: 167.96333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillage de Uapan'
         scaleDenominator: '50.000'
@@ -3157,7 +3157,7 @@ maps:
     modified: '2017-05-24+02:00'
     lastUpdate: 10
     noteShom: 'Nota : Nota: Les modifications effectuées sur la carte n° 7073 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Nakéty et Anse de Lavaissière'
         scaleDenominator: '20.000'
@@ -3275,7 +3275,7 @@ maps:
       westlimit: -60.954166666667
       northlimit: 14.696666666667
       eastlimit: -60.812833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie du François'
         scaleDenominator: '8.000'
@@ -3289,7 +3289,7 @@ maps:
       - MQ
     modified: '2017-06-07+02:00'
     lastUpdate: 15
-    hasPart:
+    insetMaps:
       -
         title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
         scaleDenominator: '15.000'
@@ -3332,7 +3332,7 @@ maps:
       westlimit: -1.3383333333333
       northlimit: 49.725
       eastlimit: -1.1308333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Barfleur'
         scaleDenominator: '7.500'
@@ -3411,7 +3411,7 @@ maps:
       westlimit: -4.8636666666667
       northlimit: 48.680666666667
       eastlimit: -4.4916666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Aber Wrac''h'
         scaleDenominator: '15.000'
@@ -3425,7 +3425,7 @@ maps:
       - FX
     modified: '2019-07-19+02:00'
     lastUpdate: 4
-    hasPart:
+    insetMaps:
       -
         title: 'Baie de Morlaix - De l''île de Batz à la Pointe de Primel'
         scaleDenominator: '20.000'
@@ -3449,7 +3449,7 @@ maps:
       - FX
     modified: '2019-09-18+02:00'
     lastUpdate: 5
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Figari'
         scaleDenominator: '10.000'
@@ -3468,7 +3468,7 @@ maps:
       - NC
     modified: '2017-06-07+02:00'
     lastUpdate: 0
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Bourail'
         scaleDenominator: '20.000'
@@ -3513,7 +3513,7 @@ maps:
       westlimit: -61.591
       northlimit: 16.259833333333
       eastlimit: -61.485833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillages de Sainte-Marie'
         scaleDenominator: '15.000'
@@ -3544,7 +3544,7 @@ maps:
       - GP
     modified: '2018-11-28+01:00'
     lastUpdate: 1
-    hasPart:
+    insetMaps:
       -
         title: 'A - Le Moule'
         scaleDenominator: '10.000'
@@ -3592,7 +3592,7 @@ maps:
       westlimit: -3.03
       northlimit: 47.592833333333
       eastlimit: -2.8833333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Rivière de Crac''h'
         scaleDenominator: '20.000'
@@ -3632,7 +3632,7 @@ maps:
       westlimit: -4.67
       northlimit: 48.269166666667
       eastlimit: -4.2266666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Morgat'
         scaleDenominator: '10.000'
@@ -3660,7 +3660,7 @@ maps:
       westlimit: -4.9666666666667
       northlimit: 48.547666666667
       eastlimit: -4.713
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port du Conquet'
         scaleDenominator: '10.000'
@@ -3700,7 +3700,7 @@ maps:
       westlimit: -3.8333333333333
       northlimit: 48.801333333333
       eastlimit: -3.5345
-    hasPart:
+    insetMaps:
       -
         title: 'A - Le Léguer (Rivière de Lannion)'
         scaleDenominator: '20.000'
@@ -3733,7 +3733,7 @@ maps:
       westlimit: -3.5731666666667
       northlimit: 48.915666666667
       eastlimit: -3.2733333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillages de Trégastel'
         scaleDenominator: '10.000'
@@ -3766,7 +3766,7 @@ maps:
       westlimit: -3.2843333333333
       northlimit: 48.941
       eastlimit: -3.08
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Tréguier'
         scaleDenominator: '7.500'
@@ -3789,7 +3789,7 @@ maps:
       westlimit: -3.0933333333333
       northlimit: 48.911666666667
       eastlimit: -2.89
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Lézardrieux - Le Trieux'
         scaleDenominator: '10.000'
@@ -3817,7 +3817,7 @@ maps:
       westlimit: -2.9283333333333
       northlimit: 48.770333333333
       eastlimit: -2.6733333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Saint-Quay-Portrieux'
         scaleDenominator: '7.500'
@@ -3879,7 +3879,7 @@ maps:
       westlimit: -1.9933333333333
       northlimit: 48.753333333333
       eastlimit: -1.7866666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Cancale'
         scaleDenominator: '7.500'
@@ -3893,7 +3893,7 @@ maps:
       - FX
     modified: '2019-10-30+01:00'
     lastUpdate: 21
-    hasPart:
+    insetMaps:
       -
         title: 'A - Abords de Goury'
         scaleDenominator: '10.000'
@@ -3941,7 +3941,7 @@ maps:
       westlimit: -1.9031666666667
       northlimit: 48.925
       eastlimit: -1.6783333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Sound de Chausey'
         scaleDenominator: '5.000'
@@ -3999,7 +3999,7 @@ maps:
       westlimit: -2.9896666666667
       northlimit: 47.640166666667
       eastlimit: -2.6973333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Rivière d''Auray - Port de Saint-Goustan'
         scaleDenominator: '20.000'
@@ -4023,7 +4023,7 @@ maps:
       - FX
     modified: '2019-07-19+02:00'
     lastUpdate: 3
-    hasPart:
+    insetMaps:
       -
         title: 'A - Embouchures de l''Aven et du Belon'
         scaleDenominator: '10.000'
@@ -4066,7 +4066,7 @@ maps:
       westlimit: -3.5833333333333
       northlimit: 47.724166666667
       eastlimit: -3.2906666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port Tudy'
         scaleDenominator: '5.000'
@@ -4089,7 +4089,7 @@ maps:
       westlimit: -3.42
       northlimit: 47.773833333333
       eastlimit: -3.3201666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Le Blavet - De Lanester à Hennebont'
         scaleDenominator: '12.500'
@@ -4129,7 +4129,7 @@ maps:
       westlimit: -3.3333333333333
       northlimit: 47.416666666667
       eastlimit: -2.9718333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Sauzon'
         scaleDenominator: '7.500'
@@ -4174,7 +4174,7 @@ maps:
       westlimit: -2.5901666666667
       northlimit: 47.536
       eastlimit: -2.3713333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Cours de la Vilaine - Du barrage d''Arzal à la Roche-Bernard - suite de la carte à la même échelle'
         scaleDenominator: '15.000'
@@ -4197,7 +4197,7 @@ maps:
       westlimit: -2.675
       northlimit: 47.3775
       eastlimit: -2.3115
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de La Turballe'
         scaleDenominator: '10.000'
@@ -4252,7 +4252,7 @@ maps:
       westlimit: -4.9983333333333
       northlimit: 48.076666666667
       eastlimit: -4.27
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port d''Audierne'
         scaleDenominator: '12.500'
@@ -4377,7 +4377,7 @@ maps:
       westlimit: -3.045
       northlimit: 48.856666666667
       eastlimit: -2.3166666666667
-    hasPart:
+    insetMaps:
       -
         title: 'Port de Saint-Brieuc Le Légué'
         scaleDenominator: '10.000'
@@ -4519,7 +4519,7 @@ maps:
       westlimit: 8.4566666666667
       northlimit: 41.743333333333
       eastlimit: 9.1333333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillage de Porto Pollo'
         scaleDenominator: '10.000'
@@ -4585,7 +4585,7 @@ maps:
       westlimit: 164.95166666667
       northlimit: -21.437166666667
       eastlimit: 165.58666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Coupée du Cap Goulvain'
         scaleDenominator: '20.000'
@@ -4599,7 +4599,7 @@ maps:
       - TF
     modified: '2017-06-28+02:00'
     lastUpdate: 1
-    hasPart:
+    insetMaps:
       -
         title: 'A - Île Saint-Paul'
         scaleDenominator: '30.000'
@@ -4666,7 +4666,7 @@ maps:
       westlimit: 55.11
       northlimit: -20.79
       eastlimit: 55.743333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Saint-Gilles les Bains'
         scaleDenominator: '10.000'
@@ -4699,7 +4699,7 @@ maps:
       westlimit: 7.1183333333333
       northlimit: 43.729
       eastlimit: 7.3473333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Antibes - Port Vauban'
         scaleDenominator: '7.500'
@@ -4772,7 +4772,7 @@ maps:
       westlimit: 6.9305
       northlimit: 43.58
       eastlimit: 7.1346666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Mandelieu-La Napoule'
         scaleDenominator: '7.500'
@@ -4811,7 +4811,7 @@ maps:
       - FX
     modified: '2019-07-19+02:00'
     lastUpdate: 13
-    hasPart:
+    insetMaps:
       -
         title: 'Ports de Fécamp et du Tréport'
         scaleDenominator: '12.500'
@@ -4892,7 +4892,7 @@ maps:
       westlimit: -152.31983333333
       northlimit: -16.393
       eastlimit: -152.20766666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - De la Passe ''Onoiau au Village'
         scaleDenominator: '10.000'
@@ -4916,7 +4916,7 @@ maps:
       northlimit: 51.455
       eastlimit: 3.03
     references: 'Fac similé carte BE n°102 publiée en 1987 (édition décembre 2018)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Nieuwpoort'
         scaleDenominator: '20.000'
@@ -4944,7 +4944,7 @@ maps:
       westlimit: 166.0835
       northlimit: -20.269666666667
       eastlimit: 166.8745
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe du Coëtlogon'
         scaleDenominator: '15.000'
@@ -5019,7 +5019,7 @@ maps:
       northlimit: 49.768
       eastlimit: -1.7085
     replaces: '(remplace 5636)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Abords d''Omonville-La-Rogue'
         scaleDenominator: '7.500'
@@ -5043,7 +5043,7 @@ maps:
       northlimit: -14.166666666667
       eastlimit: -177.8365
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 7234 au cours de l''édition n° 2 concernent principalement le changement de système géodésique et l''exploitation de nouveaux levés. Cette carte est désormais établie en WGS84.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Ava Leava (Anse de Sigave)'
         scaleDenominator: '10.000'
@@ -5097,7 +5097,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 3
-    hasPart:
+    insetMaps:
       -
         title: 'A - Apataki'
         scaleDenominator: '80.000'
@@ -5126,7 +5126,7 @@ maps:
       - FX
     modified: '2019-08-07+02:00'
     lastUpdate: 9
-    hasPart:
+    insetMaps:
       -
         title: 'A - Cours de l''Odet'
         scaleDenominator: '20.000'
@@ -5228,7 +5228,7 @@ maps:
       westlimit: 1.682
       northlimit: 51.022
       eastlimit: 1.9178333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Calais'
         scaleDenominator: '7.500'
@@ -5243,7 +5243,7 @@ maps:
     modified: '2017-01-25+01:00'
     lastUpdate: 16
     replaces: '(remplace 5229)'
-    hasPart:
+    insetMaps:
       -
         title: 'Ile Maré'
         scaleDenominator: '75.000'
@@ -5343,7 +5343,7 @@ maps:
       westlimit: 6.5716666666667
       northlimit: 43.345833333333
       eastlimit: 6.7563333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port-Grimaud et Marines de Cogolin'
         scaleDenominator: '10.000'
@@ -5448,7 +5448,7 @@ maps:
       westlimit: -141.28
       northlimit: -17.976666666667
       eastlimit: -140.5
-    hasPart:
+    insetMaps:
       -
         title: 'A - De la Passe Kaki aux mouillages d''Otepa'
         scaleDenominator: '30.000'
@@ -5486,7 +5486,7 @@ maps:
       westlimit: 6.1233333333333
       northlimit: 43.141666666667
       eastlimit: 6.46
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port d''Hyères (Port Saint-Pierre)'
         scaleDenominator: '7.500'
@@ -5568,7 +5568,7 @@ maps:
       westlimit: -146.11666666667
       northlimit: -14.300166666667
       eastlimit: -145.765
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe Tairapa'
         scaleDenominator: '5.000'
@@ -5625,7 +5625,7 @@ maps:
       westlimit: -2.6865
       northlimit: 48.722833333333
       eastlimit: -2.3133333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Dahouët'
         scaleDenominator: '7.500'
@@ -5693,7 +5693,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 6
-    hasPart:
+    insetMaps:
       -
         title: Ahe
         scaleDenominator: '50.000'
@@ -5777,7 +5777,7 @@ maps:
       westlimit: 164.15333333333
       northlimit: -20.091666666667
       eastlimit: 164.78833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Pam'
         scaleDenominator: '20.000'
@@ -5810,7 +5810,7 @@ maps:
       westlimit: 163.6515
       northlimit: -20.164
       eastlimit: 164.2865
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillages de Poum'
         scaleDenominator: '25.000'
@@ -5855,7 +5855,7 @@ maps:
       westlimit: 164.90333333333
       northlimit: -21.305666666667
       eastlimit: 165.16833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe de Muéo'
         scaleDenominator: '10.000'
@@ -5918,7 +5918,7 @@ maps:
       westlimit: 55.11
       northlimit: -21.108333333333
       eastlimit: 55.743333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Saint-Pierre'
         scaleDenominator: '10.000'
@@ -5932,7 +5932,7 @@ maps:
       - PF
     modified: '2019-08-07+02:00'
     lastUpdate: 9
-    hasPart:
+    insetMaps:
       -
         title: Kauehi
         scaleDenominator: '75.000'
@@ -6056,7 +6056,7 @@ maps:
       westlimit: -145.35
       northlimit: -14.343333333333
       eastlimit: -144.73833333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Takaroa - Passe Teauonae'
         scaleDenominator: '10.000'
@@ -6097,7 +6097,7 @@ maps:
       northlimit: -19.383333333333
       eastlimit: 58.35
     replaces: '(remplace 1234)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Ile Tromelin'
         scaleDenominator: '30.000'
@@ -6147,7 +6147,7 @@ maps:
     modified: '2017-04-26+02:00'
     lastUpdate: 11
     replaces: '(remplace 3931,5988)'
-    hasPart:
+    insetMaps:
       -
         title: Nuku-Hiva
         scaleDenominator: '70.000'
@@ -6187,7 +6187,7 @@ maps:
     modified: '2016-12-07+01:00'
     lastUpdate: 11
     replaces: '(remplace 5989)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Ua-Pou'
         scaleDenominator: '70.000'
@@ -6251,7 +6251,7 @@ maps:
       - PF
     modified: '2018-10-31+01:00'
     lastUpdate: 2
-    hasPart:
+    insetMaps:
       -
         title: 'A - Hiva-Oa - Baie Hanamenu'
         scaleDenominator: '10.000'
@@ -6344,7 +6344,7 @@ maps:
       westlimit: -139.26666666667
       northlimit: -9.61
       eastlimit: -138.56666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mohotani - Baie de Puioono'
         scaleDenominator: '10.000'
@@ -6372,7 +6372,7 @@ maps:
       westlimit: -141
       northlimit: -7.71
       eastlimit: -140.30166666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Eiao - Baie de Vaituha'
         scaleDenominator: '10.000'
@@ -6412,7 +6412,7 @@ maps:
       westlimit: 70.066666666667
       northlimit: -49.341666666667
       eastlimit: 70.61
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie Greenland'
         scaleDenominator: '35.800'
@@ -6435,7 +6435,7 @@ maps:
       westlimit: 69.766666666667
       northlimit: -49.333333333333
       eastlimit: 70.1365
-    hasPart:
+    insetMaps:
       -
         title: 'A - Pointe Molloy'
         scaleDenominator: '10.000'
@@ -6540,7 +6540,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 13
-    hasPart:
+    insetMaps:
       -
         title: Fakarava
         scaleDenominator: '80.000'
@@ -6578,7 +6578,7 @@ maps:
       westlimit: -147.985
       northlimit: -14.847
       eastlimit: -147.16666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - De la Passe d''Avatoru à la Passe de Tiputa'
         scaleDenominator: '30.000'
@@ -6637,7 +6637,7 @@ maps:
     modified: '2017-04-05+02:00'
     lastUpdate: 19
     replaces: '(remplace 5883.CA, 6058.CA)'
-    hasPart:
+    insetMaps:
       -
         title: 'Embouchure du fleuve Maroni'
         scaleDenominator: '60.000'
@@ -6790,7 +6790,7 @@ maps:
       westlimit: 5.0396666666667
       northlimit: 43.363666666667
       eastlimit: 5.3783333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Carry-le-Rouet'
         scaleDenominator: '5.000'
@@ -6818,7 +6818,7 @@ maps:
       westlimit: 5.3043333333333
       northlimit: 43.253333333333
       eastlimit: 5.5766666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Cassis'
         scaleDenominator: '5.000'
@@ -6841,7 +6841,7 @@ maps:
       westlimit: -2.605
       northlimit: 47.145
       eastlimit: -1.8766666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Pornic'
         scaleDenominator: '15.000'
@@ -6882,7 +6882,7 @@ maps:
       - FX
     modified: '2020-01-01+01:00'
     lastUpdate: 28
-    hasPart:
+    insetMaps:
       -
         title: 'Cours de la Loire'
         scaleDenominator: '20.000'
@@ -6971,7 +6971,7 @@ maps:
       westlimit: -4.5563333333333
       northlimit: 48.415833333333
       eastlimit: -4.2225
-    hasPart:
+    insetMaps:
       -
         title: 'A - Traverse de l''Hôpital'
         scaleDenominator: '12.500'
@@ -6999,7 +6999,7 @@ maps:
       westlimit: -4.7805
       northlimit: 48.396666666667
       eastlimit: -4.4466666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Camaret-sur-Mer'
         scaleDenominator: '10.000'
@@ -7022,7 +7022,7 @@ maps:
       westlimit: -2.4783333333333
       northlimit: 46.816666666667
       eastlimit: -1.75
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Saint-Gilles-Croix-de-Vie'
         scaleDenominator: '10.000'
@@ -7045,7 +7045,7 @@ maps:
       westlimit: -2.0833333333333
       northlimit: 46.543333333333
       eastlimit: -1.355
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Bourgenay'
         scaleDenominator: '10.000'
@@ -7078,7 +7078,7 @@ maps:
       westlimit: -1.7666666666667
       northlimit: 46.351666666667
       eastlimit: -1.0383333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Châtelaillon'
         scaleDenominator: '10.000'
@@ -7101,7 +7101,7 @@ maps:
       westlimit: -1.5483333333333
       northlimit: 46.18
       eastlimit: -1.0516666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Saint-Denis-d''Oléron'
         scaleDenominator: '10.000'
@@ -7202,7 +7202,7 @@ maps:
       westlimit: -2.4666666666667
       northlimit: 46.7915
       eastlimit: -2.179
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port-Joinville'
         scaleDenominator: '10.000'
@@ -7278,7 +7278,7 @@ maps:
       westlimit: -1.3133333333333
       northlimit: 46.014
       eastlimit: -1.07
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Boyardville'
         scaleDenominator: '10.000'
@@ -7292,7 +7292,7 @@ maps:
       - FX
     modified: '2020-01-01+01:00'
     lastUpdate: 6
-    hasPart:
+    insetMaps:
       -
         title: 'Embouchure de la Charente'
         scaleDenominator: '20.000'
@@ -7367,7 +7367,7 @@ maps:
       - FX
     modified: '2020-01-01+01:00'
     lastUpdate: 4
-    hasPart:
+    insetMaps:
       -
         title: '1'
         scaleDenominator: '30.000'
@@ -7401,7 +7401,7 @@ maps:
       - FX
     modified: '2020-01-01+01:00'
     lastUpdate: 1
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Grandcamp-Maisy'
         scaleDenominator: '10.000'
@@ -7493,7 +7493,7 @@ maps:
       westlimit: -4.9383333333333
       northlimit: 48.115833333333
       eastlimit: -4.6433333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Sein'
         scaleDenominator: '10.000'
@@ -7534,7 +7534,7 @@ maps:
       westlimit: -1.3538333333333
       northlimit: 45.699
       eastlimit: -1
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Royan'
         scaleDenominator: '10.000'
@@ -7562,7 +7562,7 @@ maps:
       westlimit: -1.4816666666667
       northlimit: 45.75
       eastlimit: -0.75
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Meschers'
         scaleDenominator: '10.000'
@@ -7577,7 +7577,7 @@ maps:
     modified: '2020-01-20+01:00'
     lastUpdate: 9
     noteCatalog: 'Correction des titres des cartouches, pas de partie principale'
-    hasPart:
+    insetMaps:
       -
         title: '1 - La Gironde - La Garonne et La Dordogne (1/3)'
         scaleDenominator: '52.000'
@@ -7621,7 +7621,7 @@ maps:
       northlimit: 44.8
       eastlimit: -0.995
     replaces: '(remplace 6766.CA)'
-    hasPart:
+    insetMaps:
       -
         title: 'Port d''Arcachon'
         scaleDenominator: '15.000'
@@ -7645,7 +7645,7 @@ maps:
       northlimit: 43.549166666667
       eastlimit: -1.4846666666667
     replaces: '(remplace 6536)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Cours de l''Adour'
         scaleDenominator: '10.000'
@@ -7660,7 +7660,7 @@ maps:
     modified: '2020-01-01+01:00'
     lastUpdate: 14
     replaces: '(remplace 6526,6556)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Fontarabie'
         scaleDenominator: '12.500'
@@ -7679,7 +7679,7 @@ maps:
       - FX
     modified: '2020-02-19+01:00'
     lastUpdate: 19
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Sète'
         scaleDenominator: '15.000'
@@ -7705,7 +7705,7 @@ maps:
     lastUpdate: 9
     replaces: '(remplace 6851.CA, 6856.CA)'
     noteShom: 'Nota : Remplacer numéro de cadre de carte 6851 par 7436 sur les cartes 6942, 7162 et 7280 pour les ports d''Ajaccio et de Propriano. Remplacer numéro de cadre de carte 6856 par 7436 sur les cartes 6822 et 6823 pour le port de Bastia.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port d''Ajaccio'
         scaleDenominator: '7.500'
@@ -7739,7 +7739,7 @@ maps:
       northlimit: 43.863333333333
       eastlimit: -1.335
     replaces: '(remplace 6557,6558,6586)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Capbreton'
         scaleDenominator: '10.000'
@@ -7831,7 +7831,7 @@ maps:
       westlimit: -144.07166666667
       northlimit: -16.285
       eastlimit: -143.3
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe Tapuhiria'
         scaleDenominator: '10.000'
@@ -7859,7 +7859,7 @@ maps:
       westlimit: -145.44
       northlimit: -16.633333333333
       eastlimit: -145.08333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe Teporioha'
         scaleDenominator: '7.500'
@@ -7882,7 +7882,7 @@ maps:
       westlimit: -146.45
       northlimit: -15.716666666667
       eastlimit: -145.68
-    hasPart:
+    insetMaps:
       -
         title: 'A - Anse Amyot'
         scaleDenominator: '5.000'
@@ -7911,7 +7911,7 @@ maps:
       northlimit: -15.613333333333
       eastlimit: -142.05833333333
     replaces: '(remplace 5267.CA)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Raroia - De la Passe Ngarue au Mouillage de Ngarumaoa'
         scaleDenominator: '12.500'
@@ -7925,7 +7925,7 @@ maps:
       - PF
     modified: '2019-07-19+02:00'
     lastUpdate: 2
-    hasPart:
+    insetMaps:
       -
         title: Aratika
         scaleDenominator: '50.000'
@@ -7955,7 +7955,7 @@ maps:
     modified: '2019-07-19+02:00'
     lastUpdate: 1
     noteShom: 'Nota : Porter la mention hors-cadre "Voir carte adjacente 7459" sur la carte 7373 (à l''ouest). Porter le cadre de la carte 7459 et la mention "7459" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention "7455 D" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.'
-    hasPart:
+    insetMaps:
       -
         title: Tikehau
         scaleDenominator: '75.000'
@@ -7984,7 +7984,7 @@ maps:
       - PF
     modified: '2017-06-14+02:00'
     lastUpdate: 12
-    hasPart:
+    insetMaps:
       -
         title: '1'
         scaleDenominator: '10.000'
@@ -8030,7 +8030,7 @@ maps:
       westlimit: -151.81383333333
       northlimit: -16.408166666667
       eastlimit: -151.67333333333
-    hasPart:
+    insetMaps:
       -
         title: 'A - Passe Teavanui'
         scaleDenominator: '6.500'
@@ -8081,7 +8081,7 @@ maps:
       - MF
     modified: '2018-10-31+01:00'
     lastUpdate: 1
-    hasPart:
+    insetMaps:
       -
         title: 'A - Saint-Martin - Baie de Marigot'
         scaleDenominator: '15.000'
@@ -8162,7 +8162,7 @@ maps:
       westlimit: -52.6785
       northlimit: 5.3436666666667
       eastlimit: -52.5095
-    hasPart:
+    insetMaps:
       -
         title: 'A - Îles du Salut'
         scaleDenominator: '15.000'
@@ -8186,7 +8186,7 @@ maps:
       northlimit: 16.4
       eastlimit: -61.576666666667
     replaces: '(remplace 3418)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Anse Deshaies'
         scaleDenominator: '10.000'
@@ -8366,7 +8366,7 @@ maps:
       westlimit: 44.945
       northlimit: -12.55
       eastlimit: 45.3
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Longoni'
         scaleDenominator: '10.000'
@@ -8389,7 +8389,7 @@ maps:
       westlimit: 45.133333333333
       northlimit: -12.721666666667
       eastlimit: 45.376666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillages de Dzaoudzi'
         scaleDenominator: '15.000'
@@ -8503,7 +8503,7 @@ maps:
       northlimit: -66.566666666667
       eastlimit: 140.19683333333
     replaces: '(remplace 6285.CA Cartouche A)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Archipel de Pointe Géologie'
         scaleDenominator: '7.500'
@@ -8527,7 +8527,7 @@ maps:
       northlimit: -66.296666666667
       eastlimit: 141.75
     replaces: '(remplace 6100, 6285)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Archipel Max Douguet - Port-Martin'
         scaleDenominator: '10.000'
@@ -8563,7 +8563,7 @@ maps:
       - FX
     modified: '2019-07-19+02:00'
     lastUpdate: 0
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Saint-Guénolé'
         scaleDenominator: '7.500'
@@ -8598,7 +8598,7 @@ maps:
       eastlimit: -61.193333333333
     replaces: '(remplace 3775)'
     references: 'Fac similé Carte GB n°697 publiée en 1992.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Prince Rupert Bay et Douglas Bay'
         scaleDenominator: '30.000'
@@ -8627,7 +8627,7 @@ maps:
       northlimit: 18.382
       eastlimit: -62.8675
     references: 'Fac similé carte GB n°2047 publiée en 1985 (édition mars 2018)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Sombrero Island'
         scaleDenominator: '15.000'
@@ -8696,7 +8696,7 @@ maps:
     modified: '2018-10-31+01:00'
     lastUpdate: 1
     noteShom: 'Nota : La carte 982 sera supprimée à la publication de la carte 7640. Porter le cadre du cartouche A et la légende "7639 A (INT 4636)" sur la carte 6118. Rayer le cadre de la carte 982 et la légende "982" sur la carte 6118.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Abords de l''Île Saint-Pierre'
         scaleDenominator: '25.000'
@@ -8717,7 +8717,7 @@ maps:
     lastUpdate: 1
     replaces: '(remplace carte 982.CA)'
     noteShom: 'Nota : Porter le cadre du cartouche A et la légende "7640 A (INT 4637)" sur la carte 6118. Porter le cadre du cartouche C et la légende "7640 C (INT 4637)" sur la carte 6118. Rayer la légende "VC 982" dans l''anse de Miquelon sur la carte 6118.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Abords Nord-Est de l''Île Miquelon'
         scaleDenominator: '20.000'
@@ -8784,7 +8784,7 @@ maps:
       westlimit: 166.74333333333
       northlimit: -22.276666666667
       eastlimit: 167.075
-    hasPart:
+    insetMaps:
       -
         title: 'A - Port de Prony'
         scaleDenominator: '10.000'
@@ -8860,7 +8860,7 @@ maps:
       northlimit: 42.441666666667
       eastlimit: 3.5
     references: 'Fac similé carte ES n°493 publiée en 1996 (édition février 2019)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Mouillage de Cadaqués'
         scaleDenominator: '10.000'
@@ -8900,7 +8900,7 @@ maps:
       westlimit: -109.7
       northlimit: 10.783333333333
       eastlimit: -108.2
-    hasPart:
+    insetMaps:
       -
         title: 'Île Clipperton'
         scaleDenominator: '20.000'
@@ -8942,7 +8942,7 @@ maps:
       eastlimit: 166.035
     replaces: '(remplace 3475.CA, 6528.CA, 6529.CA, 6537.CA)'
     noteShom: 'Nota : Porter en magenta une limite de carte et sa légende 7755 sur la carte 6686. Rayer les limites de carte et les légendes 6537, 6529 sur la carte 6686. Remplacer la légende Voir carte adjacente 6537 Adjoining chart 6537 (position hors cadre) par Voir carte adjacente 7755 Adjoining chart 7755 (position hors cadre) sur la carte 7756. Remplacer la légende Voir carte adjacente 6529 (position hors cadre) par Voir carte adjacente 7755 (position hors cadre) sur la carte 6949.'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Baie de Poro'
         scaleDenominator: '15.000'
@@ -8971,7 +8971,7 @@ maps:
       northlimit: -20.708333333333
       eastlimit: 165.71166666667
     replaces: '(remplace 6852)'
-    hasPart:
+    insetMaps:
       -
         title: 'A - Accès à Touho'
         scaleDenominator: '15.000'
@@ -8994,7 +8994,7 @@ maps:
       westlimit: 163.48166666667
       northlimit: -19.483333333333
       eastlimit: 163.76666666667
-    hasPart:
+    insetMaps:
       -
         title: 'A - Récifs d''Entrecasteaux - Île de la Surprise'
         scaleDenominator: '40.000'
@@ -9126,7 +9126,7 @@ maps:
       westlimit: -6.5
       northlimit: 51.583333333333
       eastlimit: 2.5
-    noteCatalog: 'Ajout de la carte 8101 (MANCHEGRID - Carte générale) absente du GAN'
+    noteCatalog: 'Carte spéciale absente du GAN'
   FR8502:
     title: 'Action de l''Etat en Mer en ZMSOI'
     edition: 'Publication 2010'
@@ -9145,7 +9145,73 @@ maps:
       westlimit: 30
       northlimit: 5
       eastlimit: 90
-    noteCatalog: 'Ajout de la carte 8502 (AEM ZMSOI) absente du GAN'
+    noteCatalog: 'Carte spéciale absente du GAN'
+  FR8509:
+    title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
+    edition: 'Publication 2015'
+    mapsFrance:
+      - WF
+    modified: '2018-01-18'
+    lastUpdate: 0
+    scaleDenominator: 3.158.760
+    bboxDM:
+      SW: '30°00,0''S - 153°00,0''E'
+      NE: '08°00,0''S - 174°00,0''W'
+    spatial:
+      southlimit: -30
+      westlimit: 153
+      northlimit: -8
+      eastlimit: -174
+    borders:
+      left: 292
+      bottom: 239
+      right: 299
+      top: 193
+    noteCatalog: 'Carte spéciale absente du GAN et non géoréférencée, à cheval sur l''anti-méridien, la coordonnée du bord Ouest a été modifiée pour être supérieure à -180°'
+  FR8510:
+    title: 'Délimitations des zones maritimes'
+    edition: 'Publication 2015'
+    mapsFrance:
+      - FR
+    modified: '2015-03-10'
+    lastUpdate: 0
+    scaleDenominator: 38.000.000
+    bboxDM:
+      SW: '76°46,0''S - 088°00,00''E'
+      NE: '79°17,0''N - 448°00,00''E'
+    spatial:
+      southlimit: -76.766666666667
+      westlimit: 88
+      northlimit: 79.283333333333
+      eastlimit: 448
+    borders:
+      left: 217
+      bottom: 202
+      right: 224
+      top: 212
+    noteCatalog: 'Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°'
+  FR8517:
+    title: 'Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
+    edition: 'Publication 2015'
+    mapsFrance:
+      - PF
+    modified: '2018-01-18'
+    lastUpdate: 0
+    scaleDenominator: 6.050.386
+    bboxDM:
+      SW: '35°00,0''S - 165°00,0''W'
+      NE: '05°00,0''N - 103°00,0''W'
+    spatial:
+      southlimit: -35
+      westlimit: -165
+      northlimit: 5
+      eastlimit: -103
+    borders:
+      left: 326
+      bottom: 5020-4711
+      right: 7087-6834
+      top: 286
+    noteCatalog: 'Carte spéciale absente du GAN et non géo-référencée, Clipperton est dans un cartouche non explicité'
 obsoleteMaps:
   FR5825:
     '2020-12-27T07:58:03+01:00':

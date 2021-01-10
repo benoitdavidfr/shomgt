@@ -87,6 +87,10 @@ $layers = [
     'title'=>"Cartes SHOM MancheGrid",
     'abstract'=> "Cartes Shom MancheGrid",
   ],
+  'gtZonMar'=> [
+    'title'=>"Carte des zones maritimes",
+    'abstract'=> "Cartes des zones maritimes",
+  ],
   // étiquettes des numéros
   'num20M'=> [
     'title'=>"Nos des cartes 1/20.000.000",
@@ -131,6 +135,10 @@ $layers = [
   'numMancheGrid'=> [
     'title'=>"Nos des cartes MancheGrid",
     'abstract'=> "Numéros des cartes Shom MancheGrid",
+  ],
+  'numZonMar'=> [
+    'title'=>"No de la carte des zones maritimes",
+    'abstract'=> "Numéro de la carte Shom des zones maritimes",
   ],
 ];
     
