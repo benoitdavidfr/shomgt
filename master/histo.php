@@ -27,7 +27,7 @@ journal: |
     - utilisation de ../lib/store.inc.php
   31/12/2020:
     - refonte
-includes: [../lib/store.inc.php]
+includes: [../lib/store.inc.php, ../cat2/catapi.inc.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/store.inc.php';

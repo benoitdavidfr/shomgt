@@ -48,7 +48,8 @@ doc: |
     - le nom du géoTiff respecte le motif {num}/{num}_{YYYY} pour les cartes AEM et {num}/{num} pour la carte MancheGrid
     - il n'y a pas de fichier xml
 
-  Les cartes AEM 2019 et la carte 
+  Les cartes AEM 2019 et la carte des zones ne respectent pas ces standards
+    - il n'y a pas de GéoTiff mais un pdf non géoréférencé, son nom respecte le motif {num}/{num}_{YYYY}
 */
 class CurrentGeoTiff {
   const PATH = __DIR__.'/../../../shomgeotiff/current/';

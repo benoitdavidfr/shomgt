@@ -168,7 +168,7 @@ var overlays = {
       {style: {color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
     )
   ]),
-  "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'cat2/france.inc.php', {
+  "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'cat2/france.php', {
     style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),
   

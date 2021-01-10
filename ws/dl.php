@@ -19,7 +19,7 @@ doc: |
 journal: |
   30/3/2019
     création
-includes: [geotiff.inc.php]
+includes: [../lib/accesscntrl.inc.php, geotiff.inc.php]
 */
 //ini_set('memory_limit', '12800M');
 require_once __DIR__.'/../lib/accesscntrl.inc.php';

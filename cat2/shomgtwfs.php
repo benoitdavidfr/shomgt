@@ -22,7 +22,7 @@ includes:
   - ../lib/gegeom.inc.php
   - ../lib/feature.inc.php
   - ../lib/wfs/wfsserver.inc.php
-  - france.inc.php
+  - france.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/config.inc.php';
@@ -30,7 +30,7 @@ require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/feature.inc.php';
 require_once __DIR__.'/../lib/wfs/wfsserver.inc.php';
-require_once __DIR__.'/france.inc.php';
+require_once __DIR__.'/france.php';
 
 use Symfony\Component\Yaml\Yaml;
 

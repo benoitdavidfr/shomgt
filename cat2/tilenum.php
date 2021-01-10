@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: tilenum.php
-title: tilenum.php - webservice au standard XYZ d'affichage des num des cartes Shom
+title: cat2/tilenum.php - webservice au standard XYZ d'affichage des num des cartes Shom
 doc: |
   Affichage des num. des cartes Shom conformément au standard XYZ (voir https://en.wikipedia.org/wiki/Tiled_web_map)
   facile à utiliser dans une carte Leaflet.

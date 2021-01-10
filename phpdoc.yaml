@@ -1,11 +1,11 @@
 title: shomgt - services de consultation des cartes raster GéoTIFF du SHOM V2
 path: /geoapi/shomgt
 doc: |
-  Ce projet est une réécriture de shomgt1 dans l'objectif d'une diffusion du code sur Github.
+  Ce projet est une réécriture de shomgt1 en mars 2019 dans l'objectif d'une diffusion du code sur Github.
   Il est diffusé sur https://github.com/benoitdavidfr/shomgt
   L'objectif est d'exposer sous la forme de web-services les cartes GéoTIFF du Shom couvrant les zones sous juridiction française.
   Du point de vue terminologique, on distingue les concepts de carte et de GéoTIFF.
-    - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralament à 4 chiffres ;
+    - une carte correspond à la feuille de papier ; elle est identifiée par le Shom par un numéro généralement à 4 chiffres ;
       elle décrit généralement un espace géographique (dit principal) et comprend souvent des cartouches,
       chacun décrivant un espace géographique dit secondaire,
     - j'appelle GéoTIFF l'image d'un fichier GéoTIFF qui peut être dans différents formats
@@ -16,13 +16,13 @@ doc: |
   La carte est l'unité de livraison par le Shom et de mise à jour.
   Le GéoTIFF est l'unité pour l'affichage.
   
-  Les cartes du Shom sont décrites dans un catalogue (cat) construit à partir des infos GAN du Shom,
+  Les cartes du Shom sont décrites dans un catalogue (cat) construit à partir des infos GAN du Shom.
   Les GéoTIFF sont décrits dans le fichier ws/shomgt.yaml dans lequel, à chaque GéoTIFF, sont associés:
     1) le nom du fichier correspondant
     2) le rectangle englobant en cooord. géo. WGS84 de l'image globale du GéoTIFF,
     3) la largeur et la hauteur en nbre de pixels du GéoTIFF,
     4) le titre et l'échelle de la carte,
-    5) l'édition de la carte aini que le num. de la dernière correction apportée à la carte,
+    5) l'édition de la carte ainsi que le num. de la dernière correction apportée à la carte,
     6) la largeur de chacune des 4 bordures
   Les infos 1, 2 et 3 sont issues du fichier GéoTIFF et de son géoréférencement ;
   les infos 4 sont issues du catalogue mentionné précédemment ;
@@ -34,9 +34,9 @@ doc: |
   machine. Ils sont découpés en dalles 1024X1024 stockées dans un répertoire associé au GéoTIFF.
   
   Ce projet est découpé en 5 modules:
-    - les web-services de consultation (ws) à partir des données structurées de manière adéquate
+    - les web-services de consultation (ws) à partir des données structurées de manière adéquate détaillée dans lib/store.inc.php
     - les scripts de mise à jour des GéoTiff à partir d'une livraison du Shom (updt)
-    - la gestion d'un catalogue des cartes pertinentes du Shom (cat) afin
+    - la gestion d'un catalogue des cartes pertinentes du Shom (cat2) afin
       - de connaitre la liste des cartes à actualiser
       - de disposer de leurs caractéristiques utiles au module précédent
     - un fil Atom de publication des cartes disponibles pour utilisation par un serveur esclave (master)
@@ -50,7 +50,7 @@ doc: |
   
   La mise en place d'un nouveauu serveur a été simplifiée au moyen d'un mécanisme maitre/esclave.
   Le maitre publie les données dont il dispose sous la forme d'un fil Atom.
-  Le serveur esclave consulte régulièrement ce fil pour se mettre à jour ; et cela de manière automatique.
+  Le serveur esclave consulte régulièrement ce fil pour se mettre à jour sur une zone donnée ; et cela de manière automatique.
   
   Taille occupée:
     - la totalité des archives de cartes fait environ 3 Go
@@ -60,7 +60,6 @@ doc: |
   synchro: http://localhost/synchro.php?remote=http://prod.geoapi.fr&dir=geoapi/shomgt
   
   ToDoList:
-    - tester le mode esclave et pour cela réduire l'effort de mise en place d'un tel serveur
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
     - les fichiers mis à jour par le code Php sont répartis dans les différents répertoires ce qui impose une gestion lourde de droits
       lors de l'installation du serveur ; il faudrait isoler ces fichiers pour simplifier cette gestion de droits
@@ -69,7 +68,7 @@ doc: |
       
 journal: |
   9-10/1/2021:
-    - ajout utilisation des cartes non géoréférencées par le Shom, à vérifier leur prise en compte par master et slave
+    - ajout utilisation des cartes non géoréférencées par le Shom
   6/1/2021:
     - actualisation du code de geoapi.fr/shomgt / localhost/geopai/shomgt
     - ajout de la couche des frontières et ZEE du Shom dans mapwcat
@@ -190,3 +189,5 @@ phpScripts:
   - /geoapi/shomgt/wms.php
   - /geoapi/shomgt/login.php
   - /geoapi/shomgt/test.php
+htmlFiles:
+  - /geoapi/shomgt/doc.html

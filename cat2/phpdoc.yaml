@@ -88,11 +88,11 @@ phpScripts:
   - /geoapi/shomgt/cat2/gestion.php
   - /geoapi/shomgt/cat2/gan.php
   - /geoapi/shomgt/cat2/tilenum.php
+  - /geoapi/shomgt/cat2/france.php
   - /geoapi/shomgt/cat2/shomgtwfs.php
   - /geoapi/shomgt/cat2/shomwfs.php
 phpIncludes:
   - /geoapi/shomgt/cat2/catapi.inc.php
-  - /geoapi/shomgt/cat2/france.inc.php
 htmlFiles:
   - /geoapi/shomgt/cat2/mapcat.yaml
   - /geoapi/shomgt/cat2/mapcat.schema.yaml

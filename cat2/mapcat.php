@@ -38,7 +38,7 @@ includes:
   - ../lib/gegeom.inc.php
   - ../lib/zoom.inc.php
   - ../lib/schema/jsonschema.inc.php
-  - france.inc.php
+  - france.php
   - llmap.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
@@ -48,7 +48,7 @@ require_once __DIR__.'/../lib/gjbox.inc.php';
 require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/zoom.inc.php';
 require_once __DIR__.'/../lib/schema/jsonschema.inc.php';
-require_once __DIR__.'/france.inc.php';
+require_once __DIR__.'/france.php';
 
 use Symfony\Component\Yaml\Yaml;
 
