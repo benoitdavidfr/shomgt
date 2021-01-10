@@ -20,8 +20,6 @@ require_once __DIR__.'/../lib/wfs/wfsserver.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-http://localhost/geoapi/shomgt/cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary/items
-
 class ShomWfs extends FeaturesApi { // 
   // simplification des id sous la forme [{collId}=> ['search'=> {search}, 'replace' => {replace}]]
   const REPLACE_ID = [
@@ -81,6 +79,7 @@ switch ($f = $_GET['f'] ?? 'yaml') {
   }
   case 'json':
   case 'geojson': {
+    header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');
     //header('Content-type: text/plain; charset="utf8"');
     $f = 'json';

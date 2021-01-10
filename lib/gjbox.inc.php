@@ -424,7 +424,7 @@ class GjBox {
 };
 
 
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Tests unitaires de la classe 
+if (__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) return; // Tests unitaires de la classe 
 
 
 echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gjbox</title></head><body>\n";

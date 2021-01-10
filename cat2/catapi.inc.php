@@ -84,11 +84,11 @@ class CatApi {
     'bboxDM': bboxDM
   */
   private static function getGTFromGBox(Mapcat $map, GBox $gtbbox): array {
-    if (count($map->hasPart()) == 0)
+    if (count($map->insetMaps()) == 0)
       throw new Exception("Erreur, aucun cartouche dans la carte ".$map->num());
       
-    if (count($map->hasPart()) == 1) {
-      $part = $map->hasPart()[0];
+    if (count($map->insetMaps()) == 1) {
+      $part = $map->insetMaps()[0];
       $parta = $part->asArray();
       return [
         'num'=> $map->num(),
@@ -105,7 +105,7 @@ class CatApi {
     $parts = [];
     // je prend le cartouche le plus proche en utilisant distbbox()
     $dmin = 9e999;
-    foreach ($map->hasPart() as $i => $part) {
+    foreach ($map->insetMaps() as $i => $part) {
       //echo "<pre>box="; print_r($box); echo "</pre>\n";
       $partbbox = $part->bbox();
       $dist = $gtbbox->distance($partbbox->asGBoxes()[0]);

@@ -16,7 +16,7 @@ require_once __DIR__.'/SevenZipArchive.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-if (__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) { // code de test des classes
+if (__FILE__ == realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) { // code de test des classes
   echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>store</title></head><body><pre>\n";
 }
 
@@ -195,7 +195,7 @@ class CurrentGeoTiff {
   }
 };
 
-if (__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) {
+if (__FILE__ == realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) { // Tests unitaires de la classe
   CurrentGeoTiff::testClass();
 }
 
@@ -328,7 +328,7 @@ class SevenZipMap extends SevenZipArchive {
 };
 
 
-// Tests unitaires de la classe
-if (__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) {
+
+if (__FILE__ == realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) { // Tests unitaires de la classe
   SevenZipMap::testClass();
 }

@@ -199,7 +199,7 @@ class ShomGtWfs extends FeaturesApi {
 };
 
 
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Utilisation de la classe MapCat
+if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__))) return;
 // si id est défini alors affiche le feature id, sinon affiche les features avec un filtre sur sdmin et sdmax
 // L'affichage des faetures est utilise par la carte Leaflet
 
@@ -217,6 +217,7 @@ $shomGtWfs = new ShomGtWfs;
 
 if ($id) {
   if ($item = ($shomGtWfs->gtItems()[$id] ?? null)) {
+    header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');
     //header('Content-type: text/plain; charset="utf8"');
     echo json_encode($item->asArray(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
@@ -228,6 +229,7 @@ if ($id) {
 }
 else {
   //header('Content-type: application/json; charset="utf8"');
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: text/plain; charset="utf8"');
   $nbre = 0;
   echo '{"type":"FeatureCollection","features":[',"\n";

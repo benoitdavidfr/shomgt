@@ -639,7 +639,7 @@ class MapCat {
 };
 
 
-if ((__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) && (($argv[0] ?? '') <> basename(__FILE__))) return;
+if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__))) return;
 // Utilisation de la classe MapCat
 
 

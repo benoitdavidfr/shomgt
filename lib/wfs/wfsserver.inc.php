@@ -318,6 +318,7 @@ switch ($f = $_GET['f'] ?? 'yaml') {
   }
   case 'json':
   case 'geojson': {
+    header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');
     //header('Content-type: text/plain; charset="utf8"');
     $f = 'json';

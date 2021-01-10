@@ -119,7 +119,7 @@ class Feature {
 };
 
 
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return; // Test unitaire
+if (__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) return; // Test unitaire
 
 echo "<pre>\n";
 Feature::test_new();

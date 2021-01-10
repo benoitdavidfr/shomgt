@@ -28,5 +28,6 @@ try {
 }
 if ($bbox)
   $geojson['bbox'] = $bbox->asArray();
+header('Access-Control-Allow-Origin: *');
 header('Content-type: application/json; charset="utf8"');
 echo json_encode($geojson, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 

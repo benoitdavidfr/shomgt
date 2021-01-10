@@ -68,6 +68,8 @@ doc: |
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
       
 journal: |
+  9-10/1/2021:
+    - ajout utilisation des cartes non géoréférencées par le Shom, à vérifier leur prise en compte par master et slave
   6/1/2021:
     - actualisation du code de geoapi.fr/shomgt / localhost/geopai/shomgt
     - ajout de la couche des frontières et ZEE du Shom dans mapwcat

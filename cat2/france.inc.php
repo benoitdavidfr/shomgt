@@ -81,7 +81,7 @@ class France {
 };
 
 
-if (__FILE__ <> $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) return;
+if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__))) return;
 // Vérifie l'algo d'initialisation en affichant le ZEE en GeoJSON en Yaml ou en JSON
 
 if (0) {
@@ -89,6 +89,7 @@ if (0) {
   echo Yaml::dump(France::zeeAsGeoJSON(), 5, 2);
 }
 elseif (1) {
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf8"');
   echo json_encode(France::zeeAsGeoJSON(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
 }
