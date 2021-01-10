@@ -301,6 +301,7 @@ class SevenZipMap extends SevenZipArchive {
   }
   
   function readfile(): void { // lit le fichier 7z pour un téléchargement
+    header('Access-Control-Allow-Origin: *');
     header('Content-type: application/x-7z-compressed');
     readfile($this->file);
   }

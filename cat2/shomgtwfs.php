@@ -201,7 +201,7 @@ class ShomGtWfs extends FeaturesApi {
 
 if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__))) return;
 // si id est défini alors affiche le feature id, sinon affiche les features avec un filtre sur sdmin et sdmax
-// L'affichage des faetures est utilise par la carte Leaflet
+// L'affichage des features est utilisé par la carte Leaflet
 
 if (php_sapi_name()=='cli') {
   $sdmin = ($argc > 1) ? $argv[1] : null;
@@ -228,9 +228,9 @@ if ($id) {
   }
 }
 else {
-  //header('Content-type: application/json; charset="utf8"');
   header('Access-Control-Allow-Origin: *');
-  header('Content-type: text/plain; charset="utf8"');
+  header('Content-type: application/json; charset="utf8"');
+  //header('Content-type: text/plain; charset="utf8"');
   $nbre = 0;
   echo '{"type":"FeatureCollection","features":[',"\n";
   foreach ($shomGtWfs->gtItems() as $id => $item) {

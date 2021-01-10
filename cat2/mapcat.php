@@ -823,6 +823,7 @@ if ($f == 'yaml') { // affichage en yaml
 }
 
 if ($f == 'geojson') { // affichage en GeoJSON 
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf8"');
   //header('Content-type: text/plain; charset="utf8"');
   $nbre = 0;

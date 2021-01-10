@@ -84,6 +84,7 @@ Plus d'informations sur <a href='https://geoapi.fr/gt/'>https://geoapi.fr/gt/</a
     $doclayer['maxZoom'] = 18;
     $doc['layers'][] = $doclayer;
   }
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf-8"');
   die(json_encode($doc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 }
@@ -99,6 +100,7 @@ if (preg_match('!^/([^/]*)$!', $_SERVER['PATH_INFO'], $matches)) {
   $type = $matches[1];
   $sdmin = $matches[2];
   $sdmax = $matches[4] ?? null;
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf-8"');
   die(json_encode([
     "name"=> $lyrname,
@@ -114,6 +116,7 @@ if (preg_match('!^/([^/]*)$!', $_SERVER['PATH_INFO'], $matches)) {
 
 // end_point: tilenum.php/{layer}/{z}/{x}/{y}.png
 if (!preg_match('!^/([^/]*)/(\d*)/(\d*)/(\d*)\.(png|html)$!', $_SERVER['PATH_INFO'], $matches)) {
+  header('Access-Control-Allow-Origin: *');
   header('HTTP/1.1 400 Bad Request');
   header('Content-type: text/plain; charset="utf-8"');
   die("Erreur: requête non reconnue, voir la documentation sur $url\n");
@@ -152,6 +155,7 @@ if ($fmt == 'html') {
   echo "<a href='$href'><img src='$href'></a>\n";
 }
 else {
+  header('Access-Control-Allow-Origin: *');
   if (1) { // Mise en cache
     $nbDaysInCache = 0.5;
     $nbSecondsInCache = $nbDaysInCache*24*60*60;

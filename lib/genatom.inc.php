@@ -52,6 +52,7 @@ function gen_atom_feed($feed, $entries) {
     $updated = $entries[0]['updated'];
   foreach(['title','uri'] as $k)
     $feed[$k] = str_replace(['&','<','>'],['&amp;','&lt;','&gt;'], $feed[$k]);
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: text/xml; charset="utf8"');
   echo <<<EOT
 <?xml version="1.0" encoding="utf-8"?>

@@ -35,11 +35,13 @@ require_once __DIR__.'/../lib/genatom.inc.php';
 // Accès possible soit sans login/passwd soit par envoi en POST d'un login/passwd
 if (!isset($_POST['login']) || !isset($_POST['password'])) {
   if (!Access::cntrl()) {
+    header('Access-Control-Allow-Origin: *');
     header('HTTP/1.1 403 Forbidden');
     die("Accès interdit");
   }
 }
 elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
+  header('Access-Control-Allow-Origin: *');
   header('HTTP/1.1 403 Forbidden');
   die("Accès interdit");
 }
@@ -188,6 +190,7 @@ elseif ($_SERVER['PATH_INFO'] == '/entry/mapcat.yaml') { // affichage de l'entr�
 }
 elseif ($_SERVER['PATH_INFO'] == '/dwnld/mapcat.yaml') { // téléchargement mapCatalog
   $filepath = __DIR__.'/../cat2/mapcat.yaml';
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: text/vnd.yaml');
   readfile($filepath);
   die();

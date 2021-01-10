@@ -171,6 +171,7 @@ elseif (preg_match('!^/(\d+)\.png$!', $_SERVER['PATH_INFO'], $matches)) {
 
 // téléchargement d'un GéoTiff ou de ses MD
 elseif (!preg_match('!^/((\d+)/[^.]*)(\.crop)?\.(tif|png|xml|json)$!', $_SERVER['PATH_INFO'], $matches)) {
+  header('Access-Control-Allow-Origin: *');
   header('HTTP/1.1 404 File Not Found');
   die("Erreur: paramètre $_SERVER[PATH_INFO] incorrect\n");
 }
@@ -182,6 +183,7 @@ $fmt = $matches[4];
 
 GeoTiff::init(__DIR__.'/../ws/shomgt.yaml');
 if (!($gt = GeoTiff::get($gtname))) {
+  header('Access-Control-Allow-Origin: *');
   header('HTTP/1.1 404 File Not Found');
   die("Erreur: $gtname ne correspond pas à un GéoTiff\n");
 }
@@ -189,6 +191,7 @@ $gt = $gt->asArray();
 //echo "<pre>gt="; print_r($gt); echo "</pre>\n";
 
 if ($fmt == 'json') {
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf-8"');
   die(json_encode($gt, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 }
@@ -197,6 +200,7 @@ if ($fmt == 'xml') {
   $xmlpath = str_replace('/', '/CARTO_GEOTIFF_', $gtname);
   //echo "xmlpath=$xmlpath<br>\n";
   unzip($mapnum, "$xmlpath.xml");
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/xml ');
   readfile(__DIR__."/$xmlpath.xml");
   unlink(__DIR__."/$xmlpath.xml");
@@ -215,6 +219,7 @@ $mimetypes = [
 ];
 
 if (($fmt == 'tif') && !$crop) { // pas de conversion
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: image/tiff');
   readfile(__DIR__."/$gtname.tif");
   unlink(__DIR__."/$gtname.tif");
@@ -244,6 +249,7 @@ if ($return) {
   die();
 }
 
+header('Access-Control-Allow-Origin: *');
 header('Content-type: '.$mimetypes[$fmt]);
 readfile(__DIR__."/$gtname$crop.$fmt");
 unlink(__DIR__."/$gtname$crop.$fmt");

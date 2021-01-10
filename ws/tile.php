@@ -185,6 +185,7 @@ Plus d'informations sur <a href='https://geoapi.fr/gt/'>https://geoapi.fr/gt/</a
     $doclayer['attribution'] = "(c) <a href='https://www.shom.fr/'>SHOM</a>";
     $doc['layers'][] = $doclayer;
   }
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf-8"');
   die(json_encode($doc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 }
@@ -209,6 +210,7 @@ if (preg_match('!^/([^/]*)$!', $_SERVER['PATH_INFO'], $matches)) {
   $doclayer['minZoom'] = 0;
   $doclayer['maxZoom'] = 18;
   $doclayer['attribution'] = "(c) <a href='https://www.shom.fr/'>SHOM</a>";
+  header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf-8"');
   die(json_encode($doclayer, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
 }

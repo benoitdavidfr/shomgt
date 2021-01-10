@@ -56,6 +56,7 @@ abstract class WmsServer {
     if (!$mesSys)
       $mesSys = $mesUti;
     self::log($mesSys);
+    header('Access-Control-Allow-Origin: *');
     if (isset($httpErrorCodes[$httpErrorCode]))
       header(sprintf('HTTP/1.1 %d %s', $httpErrorCode, $httpErrorCodes[$httpErrorCode]));
     else
