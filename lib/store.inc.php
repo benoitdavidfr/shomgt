@@ -72,27 +72,49 @@ class CurrentGeoTiff {
       'edition'=> "Publication 1995 - Edition n° 6 - 2016",
       'lastUpdate'=> '0',
     ],
-    '8101/8101'=> [
-      'title'=> "MancheGrid, carte générale",
-      'mdDate'=> '2010-10-23',
-      'edition'=> "Publication 2010",
-      'lastUpdate'=> '0',
-    ],
     '8502/8502_2010'=> [
       'title'=> "Action de l'Etat en mer en zone maritime Sud de l'Océan Indien (ZMSOI)",
       'mdDate'=> '2010-01-01',
       'edition'=> "Publication 2010",
       'lastUpdate'=> '0',
     ],
+    '8509/8509_2015'=> [
+      'title'=> "Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna",
+      'mdDate'=> '2018-01-18',
+      'edition'=> "Publication 2015",
+      'lastUpdate'=> '0',
+    ],
+    '8517/8517_2015'=> [
+      'title'=> "Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton",
+      'mdDate'=> '2018-01-18',
+      'edition'=> "Publication 2015",
+      'lastUpdate'=> '0',
+    ],
+    '8101/8101'=> [
+      'title'=> "MancheGrid, carte générale",
+      'mdDate'=> '2010-10-23',
+      'edition'=> "Publication 2010",
+      'lastUpdate'=> '0',
+    ],
+    '8510/8510_2015'=> [
+      'title'=> "Délimitations des zones maritimes",
+      'mdDate'=> '2015-03-10',
+      'edition'=> "Publication 2015",
+      'lastUpdate'=> '0',
+    ],
   ];
-  // association num -> gtname pour les 5 cartes spéciales
+  // association num -> gtname pour les cartes spéciales
   const NUMAEM = [
-    '7330'=> '7330/7330_2016',
-    '7344'=> '7344/7344_2016',
-    '7360'=> '7360/7360_2016',
-    '8101'=> '8101/8101',
-    '8502'=> '8502/8502_2010',
+    '7330'=> '7330/7330_2016', // AEM Atlantique
+    '7344'=> '7344/7344_2016', // AEM Manche et mer du Nord
+    '7360'=> '7360/7360_2016', // AEM Méditerranée
+    '8502'=> '8502/8502_2010', // AEM Sud de l'Océan Indien
+    '8509'=> '8509/8509_2015', // AEM Nouvelle-Calédonie - Wallis et Futuna'
+    '8517'=> '8517/8517_2015', // AEM Polynésie Française et Clipperton
+    '8101'=> '8101/8101', // Manche Grid
+    '8510'=> '8510/8510_2015', // Délimitations des zones maritimes
   ];
+  
   public string $gtname; // la clé du géotiff dans shomgt.yaml
   
   static function mapExists(string $num): string { // Si une carte existe alors retourne son répertoire dans current, sinon '' 

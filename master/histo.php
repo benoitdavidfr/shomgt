@@ -36,7 +36,7 @@ require_once __DIR__.'/../cat2/catapi.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 // noms de répertoire de incoming à exclure de l'historique
-define('EXCLUDED_DELIVNAMES', ['201911cartesAEM','20201226TEST-arriere','20201226TEST-avant']);
+define('EXCLUDED_DELIVNAMES', [/*'201911cartesAEM',*/'20201226TEST-arriere','20201226TEST-avant']);
 
 date_default_timezone_set('Europe/Paris');
 
@@ -50,10 +50,9 @@ function simplifyMapCat(?MapCat $map): array {
   }
   else { // calcul du rectangle englobant des cartouches
     $bbox = new GjBox;
-    foreach ($map->hasPart() as $part) {
-      //echo 'part='; print_r($part);
-      $bbox->bound($part->bbox()->ws());
-      $bbox->bound($part->bbox()->en());
+    foreach ($map->insetMaps() as $imap) {
+      $bbox->bound($imap->bbox()->ws());
+      $bbox->bound($imap->bbox()->en());
       //echo 'bbox='; print_r($bbox);
     }
   }

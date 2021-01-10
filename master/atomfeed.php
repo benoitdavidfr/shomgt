@@ -208,7 +208,7 @@ elseif (preg_match('!^/entry/([^/]+)/([^/]+)$!', $_SERVER['PATH_INFO'], $matches
     echo "<tr><td><i>zones</i></td><td>",implode(', ', $map['mapsFrance']),"</td></tr>\n";
     echo "<tr><td><i>date</i></td><td>$mdDate</td></tr>\n";
     echo "<tr><td><i>édition</i></td><td>$map[edition], dernière correction $map[lastUpdate]</td></tr>\n";
-    $url = "$script_path/dwnld/$map[path]";
+    $url = "$script_path/dwnld/".str_replace('incoming/', '', $map['path']).'.7z';
     echo "<tr><td><i>téléchargement</i></td><td><a href='$url'>$url</a></td></tr>\n";
   }
   else
