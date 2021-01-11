@@ -26,7 +26,8 @@ name: store.inc.php
 title: class CurrentGeoTiff - Un objet correspond à un GéoTiff stocké dans un sous-répertoire du répertoire current
 methods:
 doc: |
-  Les GéoTiff de la cartothèque courante sont stockés dans le répertoire ./../../../shomgeotiff/current
+  Les GéoTiff de la cartothèque courante (cad des cartes utilisées dans les services) sont stockés
+  dans le répertoire ./../../../shomgeotiff/current
   avec 1 sous-répertoire par carte nommé par le numéro de la carte {num} contenant
     - {num}.png - miniature de la carte
     - {num}_pal300 - répertoire des dalles de l'espace principal (ssi il en existe un)
@@ -45,11 +46,14 @@ doc: |
   Un GéoTiff est identifié par un nom de la forme {num}/{num}_pal300 ou {num}/{num}_{partid}_gtw
   
   Les cartes AEM 2017 et la carte MancheGrid ne respectent pas ces standards
-    - le nom du géoTiff respecte le motif {num}/{num}_{YYYY} pour les cartes AEM et {num}/{num} pour la carte MancheGrid
+    - le nom du géoTiff respecte le motif {num}/{num}_{YYYY}.tif pour les cartes AEM et {num}/{num}.tif pour la carte MancheGrid
+      où {YYYY} est l'année de publication de la carte
     - il n'y a pas de fichier xml
 
   Les cartes AEM 2019 et la carte des zones ne respectent pas ces standards
     - il n'y a pas de GéoTiff mais un pdf non géoréférencé, son nom respecte le motif {num}/{num}_{YYYY}
+
+  La classe CurrentGeoTiff permet d'accéder à la liste des cartes courantes
 */
 class CurrentGeoTiff {
   const PATH = __DIR__.'/../../../shomgeotiff/current/';
@@ -224,7 +228,7 @@ if (__FILE__ == realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) { /
 
 /*PhpDoc: classes
 name: SevenZipMap
-title: "class SevenZipMap extends SevenZipArchive - une carte Shom 7zippée dans une livraison"
+title: "class SevenZipMap extends SevenZipArchive - une carte Shom 7zippée dans une livraison archivée"
 methods:
 doc: |
   Les livraisons sont archivées dans le répertoire ./../../../shomgeotiff/incoming
@@ -234,7 +238,7 @@ doc: |
     - ou par un intervalle de dates de la forme YYYYMMDD--YYYYMMDD si plusieurs livraison sont agrégées
     - ou d'autres motifs dans des cas particuliers
       - 201707cartesAEM pour les cartes AEM livrées en 2017 ainsi que la carte MancheGrid
-      - 201911cartesAEM pour les cartes AEM livrées en 2918 ainsi que la carte des délimitations des zones maritimes
+      - 201911cartesAEM pour les cartes AEM livrées en 2919 ainsi que la carte des délimitations des zones maritimes
   Ce sous-répertoire de livraison contient
     - éventuellement un fichier index.yaml contenant:
       - un champ 'title' décrivant la livraison
@@ -251,6 +255,12 @@ doc: |
         - {num}_{partid}_gtw.tif - fichier GéoTiff du cartouche {partid}
         - {num}_{partid}_gtw.gt - fichier de MD GéoTiff du cartouche {partid}
         - CARTO_GEOTIFF_{num}_{partid}_gtw.xml - MD ISO du GéoTiff du cartouche {partid}
+    - les fichiers 7z des cartes spéciales (AEM + MoncheGrid + zones maritimes) ont une structure particulière, ils contiennent:
+      - soit un fichier GéoTiff dont le nom respecte le motif {num}/{num}_{YYYY}.tif
+      - soit un fichier PDF dont le nom respecte le motif {num}/{num}_{YYYY}.pdf
+      - soit un fichier GéoTiff dont le nom respecte le motif {num}/{num}.tif pour la carte MoncheGrid
+
+  La classe SevenZipMap permet d'accéder aux livraisons, au cartes des livraisosn et d'obtenir des caractéristiques de ces cartes.
 */
 class SevenZipMap extends SevenZipArchive {
   const PATH = __DIR__.'/../../../shomgeotiff/incoming/';
@@ -273,7 +283,7 @@ class SevenZipMap extends SevenZipArchive {
     return $yaml['toDelete'] ?? [];
   }
   
-  static function listOfmaps(string $delivName): array {
+  static function listOfmaps(string $delivName): array { // retourne la liste des cartes d'une livraison, chacune comme SevenZipMap 
     $list = [];
     foreach (new DirectoryIterator(SevenZipMap::PATH.$delivName) as $mapzFileInfo) { // $mapzFileInfo -> une carte zippée
       $mapzName = $mapzFileInfo->getFilename();

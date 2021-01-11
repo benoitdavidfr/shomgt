@@ -4,7 +4,7 @@ description:
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2021-01-10T17:37:53+01:00'
+modified: '2021-01-11T09:02:38+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -150,13 +150,14 @@ maps:
     lastUpdate: 32
     scaleDenominator: 4.660.000
     bboxDM:
-      SW: '47°09,00''N - 098°00,00''W'
+      SW: '48°50,00''N - 098°00,00''W'
       NE: '74°35,48''N - 012°19,50''W'
     spatial:
-      southlimit: 47.15
+      southlimit: 48.833333333333
       westlimit: -98
       northlimit: 74.591333333333
       eastlimit: -12.325
+    noteCatalog: 'La limite Sud a été modifiée pour éviter de perturber l''affichage autour de St Pierre et Miquelon'
   FR6033:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
