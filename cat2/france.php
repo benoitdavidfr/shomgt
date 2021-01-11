@@ -91,8 +91,22 @@ if (0) {
   header('Content-type: text/plain; charset="utf8"');
   echo Yaml::dump(France::zeeAsGeoJSON(), 5, 2);
 }
-elseif (1) {
+elseif (0) { // Test de la classe France
   header('Access-Control-Allow-Origin: *');
   header('Content-type: application/json; charset="utf8"');
   echo json_encode(France::zeeAsGeoJSON(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
+}
+elseif (1) { // Génération du geojson adapté à mapwcat
+  $fc = json_decode(file_get_contents(__DIR__.'/france.geojson'), true);
+  //echo Yaml::dump(['france.geojson'=> $fc], 5, 2);
+  foreach ($fc['features'] as $no => $feature) {
+    $feature['id'] = $feature['properties']['id']; // transfert de id sous feature
+    unset($feature['properties']['id']);
+    $feature['properties']['title'] = $feature['properties']['label']; // renommage label en title
+    unset($feature['properties']['label']);
+    $fc['features'][$no] = $feature;
+  }
+  header('Access-Control-Allow-Origin: *');
+  header('Content-type: application/json; charset="utf8"');
+  echo json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); 
 }

@@ -67,6 +67,10 @@ doc: |
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
       
 journal: |
+  11/1/2021:
+    - modif du géoréférencement de la carte 6015 qui génait la visualisation des alentours de St. P&M
+    - correction de la ZEE de St Martin
+    - utilisation de france.php modifié pour ajouter l'en-tête CORS et modifier la structure de france.geojson
   9-10/1/2021:
     - ajout utilisation des cartes non géoréférencées par le Shom
   6/1/2021:
