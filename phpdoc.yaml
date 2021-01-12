@@ -66,7 +66,7 @@ doc: |
       
 journal: |
   12/1/2021:
-    - modif de la couche ZEE pour distinguer les 3 zones maritimes en métropole
+    - modif de la couche ZEE pour distinguer les 3 zones maritimes en métropole et chgt de son schema
   11/1/2021:
     - modif du géoréférencement de la carte 6015 qui génait la visualisation des alentours de St. P&M
     - correction de la ZEE de St Martin
