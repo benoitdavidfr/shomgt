@@ -33,8 +33,8 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
-//$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
+//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
+$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
