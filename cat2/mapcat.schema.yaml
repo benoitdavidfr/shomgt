@@ -185,13 +185,15 @@ definitions:
           identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
           Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
           elles sont listées dans le champ cartesAyantUnIntérêtInsuffisant.
-          La valeur est [] ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
-          Elle prend un ou plusieurs codes ISO 3166-1 alpha-2 des zones intersectées par la carte
-          ou [FR] si la carte est à très petite échelle.
+          La valeur est un array vide ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
+          Elle prend un ou plusieurs codes des zones intersectées par la carte ou [FR] si la carte est à très petite échelle.
+          Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med' pour la côte de
+          Méditérannée, 'FX-Atl' pour la côte atlantique et 'FX-MMN' pour la côte de la Manche et de la mer du Nord.
           Ppropriété absente ssi information inconnue.
         type: array
         items:
-          enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
+          type: string
+          enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
       modified:
         description: |
           date de la dernière correction, ou si aucune correction date initiale ; si inconnue date des MD.

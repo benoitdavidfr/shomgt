@@ -2,380 +2,8 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (valid)'
 $id: 'https://geoapi.fr/shomgt/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/cat2/gans
-valid: 2021-01-09/2021-01-09
+valid: 2021-01-09/2021-01-11
 gans:
-  FR6814:
-    perempt: 6.5
-    groupTitle: 'Océan Atlantique'
-    title: 'Côte Nord-Est d''Amérique du Sud'
-    bbox:
-      SW: 'NaN°00,00''S — NaN°00,00''W'
-      NE: 'NaN°00,00''S — NaN°00,00''W'
-    ganEdition: 'Edition n°2 - 1989'
-    corrections:
-      - { num: 46, semaineAvis: 1721-262 }
-      - { num: 47, semaineAvis: 1745-252 }
-      - { num: 48, semaineAvis: 1804-253 }
-      - { num: 49, semaineAvis: 1825-251 }
-      - { num: 50, semaineAvis: 1829-245 }
-      - { num: 51, semaineAvis: 1831-244 }
-      - { num: 52, semaineAvis: 1836-244 }
-      - { num: 53, semaineAvis: 1905-250 }
-      - { num: 54, semaineAvis: 1923-247 }
-      - { num: 55, semaineAvis: 1925-247 }
-      - { num: 56, semaineAvis: 1951-247 }
-      - { num: 57, semaineAvis: 2020-255 }
-      - { num: 58, semaineAvis: 2020-256 }
-    valid: '2021-01-09'
-  FR7630:
-    perempt: 6.5
-    groupTitle: 'Océan Atlantique'
-    title: 'Petites Antilles - Partie Nord'
-    bbox:
-      SW: '15°47,00''N — 063°27,00''W'
-      NE: '18°46,00''N — 061°20,00''W'
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 3, semaineAvis: 1849-259 }
-      - { num: 4, semaineAvis: 1851-258 }
-      - { num: 5, semaineAvis: 1910-260 }
-      - { num: 6, semaineAvis: 1941-260 }
-      - { num: 7, semaineAvis: 1941-262 }
-      - { num: 8, semaineAvis: 1945-262 }
-      - { num: 9, semaineAvis: 2003-259 }
-      - { num: 10, semaineAvis: 2003-262 }
-      - { num: 11, semaineAvis: 2009-263 }
-      - { num: 12, semaineAvis: 2012-260 }
-      - { num: 13, semaineAvis: 2026-266 }
-      - { num: 14, semaineAvis: 2030-264 }
-      - { num: 15, semaineAvis: 2042-267 }
-    valid: '2021-01-09'
-  FR6824:
-    perempt: 6
-    groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
-    title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
-    bbox:
-      SW: '49°40,35''N — NaN°00,00''W'
-      NE: '51°10,35''N — 001°35,92''E'
-    ganEdition: 'Edition n°4 - 2006'
-    corrections:
-      - { num: 147, semaineAvis: 1941-20 }
-      - { num: 148, semaineAvis: 2007-16 }
-      - { num: 149, semaineAvis: 2007-33 }
-      - { num: 150, semaineAvis: 2024-33 }
-      - { num: 151, semaineAvis: 2038-35 }
-      - { num: 152, semaineAvis: 2101-32 }
-    valid: '2021-01-09'
-  FR6968:
-    perempt: 6
-    groupTitle: 'Côte Sud d''Angleterre'
-    title: 'De Anvil Point à Beachy Head'
-    bbox:
-      SW: '49°53,93''N — 001°59,09''W'
-      NE: '50°55,37''N — 000°21,96''W'
-    ganEdition: 'Edition n°4 - 2016'
-    corrections:
-      - { num: 26, semaineAvis: 2007-33 }
-      - { num: 27, semaineAvis: 2010-36 }
-      - { num: 28, semaineAvis: 2018-25 }
-      - { num: 29, semaineAvis: 2050-35 }
-      - { num: 30, semaineAvis: 2050-36 }
-      - { num: 31, semaineAvis: 2050-38 }
-    valid: '2021-01-09'
-  FR7014:
-    perempt: 6
-    groupTitle: 'Méditerranée Occidentale'
-    title: 'Des îles Baléares à la Corse et à la Sardaigne'
-    bbox:
-      SW: '35°30,00''N — NaN°00,00''W'
-      NE: '45°23,00''N — 010°12,00''E'
-    ganEdition: 'Edition n°3 - 2013'
-    corrections:
-      - { num: 45, semaineAvis: 1946-86 }
-      - { num: 46, semaineAvis: 1950-88 }
-      - { num: 47, semaineAvis: 2005-145 }
-      - { num: 48, semaineAvis: 2005-148 }
-      - { num: 49, semaineAvis: 2030-77 }
-      - { num: 50, semaineAvis: 2039-144 }
-    valid: '2021-01-09'
-  FR7025:
-    perempt: 6
-    groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
-    title: 'Île de Corse'
-    bbox:
-      SW: '40°48,44''N — 007°50,44''E'
-      NE: '43°18,94''N — 010°07,94''E'
-    ganEdition: 'Edition n°3 - 2018'
-    corrections:
-      - { num: 8, semaineAvis: 1950-88 }
-      - { num: 9, semaineAvis: 1950-97 }
-      - { num: 10, semaineAvis: 2018-98 }
-      - { num: 11, semaineAvis: 2022-101 }
-      - { num: 12, semaineAvis: 2030-98 }
-      - { num: 13, semaineAvis: 2044-97 }
-    valid: '2021-01-09'
-  FR7031:
-    perempt: 6
-    groupTitle: 'Côte Ouest de France'
-    title: 'De l''Île de Penfret au Plateau des Birvideaux'
-    bbox:
-      SW: '47°28,94''N — 004°00,08''W'
-      NE: '47°49,04''N — 003°16,38''W'
-    ganEdition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 10, semaineAvis: 1931-53 }
-      - { num: 11, semaineAvis: 1951-56 }
-      - { num: 12, semaineAvis: 2006-56 }
-      - { num: 13, semaineAvis: 2035-59 }
-      - { num: 14, semaineAvis: 2039-56 }
-      - { num: 15, semaineAvis: 2101-53 }
-    valid: '2021-01-09'
-  FR7054:
-    perempt: 6
-    groupTitle: 'Côte Sud de France'
-    title: 'De l''embouchure de l''Aude à Sète'
-    bbox:
-      SW: '43°07,74''N — 003°13,33''E'
-      NE: '43°27,94''N — 003°53,93''E'
-    ganEdition: 'Edition n°3 - 2017'
-    corrections:
-      - { num: 5, semaineAvis: 1943-85 }
-      - { num: 6, semaineAvis: 2004-88 }
-      - { num: 7, semaineAvis: 2007-86 }
-      - { num: 8, semaineAvis: 2009-92 }
-      - { num: 9, semaineAvis: 2017-85 }
-      - { num: 10, semaineAvis: 2051-88 }
-    valid: '2021-01-09'
-  FR7090:
-    perempt: 6
-    groupTitle: 'Côte Nord de France'
-    title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
-    bbox:
-      SW: '49°31,58''N — 001°20,38''W'
-      NE: '49°43,44''N — 001°07,93''W'
-    hasPart:
-      - { title: 'Cartouche: A - Port de Barfleur', bbox: { SW: '49°39,99''N — 001°16,13''W', NE: '49°40,64''N — 001°15,08''W' } }
-      - { title: 'Cartouche: B - Port de Saint-Vaast-la-Hougue', bbox: { SW: '49°34,84''N — 001°16,13''W', NE: '49°35,49''N — 001°15,08''W' } }
-    ganEdition: 'Edition n°3 - 2018'
-    corrections:
-      - { num: 5, semaineAvis: 1908-40 }
-      - { num: 6, semaineAvis: 1914-39 }
-      - { num: 7, semaineAvis: 1947-40 }
-      - { num: 8, semaineAvis: 2024-40 }
-      - { num: 9, semaineAvis: 2038-37 }
-      - { num: 10, semaineAvis: 2043-38 }
-    valid: '2021-01-09'
-  FR7093:
-    perempt: 6
-    groupTitle: 'Côte Sud de France'
-    title: 'Rade de Toulon'
-    bbox:
-      SW: '43°03,59''N — 005°52,54''E'
-      NE: '43°07,64''N — 006°00,64''E'
-    ganEdition: 'Edition n°7 - 2018'
-    corrections:
-      - { num: 7, semaineAvis: 1938-88 }
-      - { num: 8, semaineAvis: 2023-90 }
-      - { num: 9, semaineAvis: 2025-90 }
-      - { num: 10, semaineAvis: 2044-88 }
-      - { num: 11, semaineAvis: 2046-92 }
-      - { num: 12, semaineAvis: 2046-93 }
-    valid: '2021-01-09'
-  FR7122:
-    perempt: 6
-    groupTitle: 'Côte Ouest de France'
-    title: 'De la Pointe de Saint-Mathieu au phare du Four'
-    bbox:
-      SW: '48°17,94''N — 004°58,09''W'
-      NE: '48°32,80''N — 004°42,87''W'
-    hasPart:
-      - { title: 'Cartouche: A - Port du Conquet', bbox: { SW: '48°20,99''N — 004°47,59''W', NE: '48°21,87''N — 004°46,34''W' } }
-    ganEdition: 'Edition n°5 - 2019'
-    corrections:
-      - { num: 1, semaineAvis: 1949-40 }
-      - { num: 2, semaineAvis: 2010-44 }
-      - { num: 3, semaineAvis: 2023-51 }
-      - { num: 4, semaineAvis: 2026-46 }
-      - { num: 5, semaineAvis: 2032-50 }
-      - { num: 6, semaineAvis: 2032-51 }
-    valid: '2021-01-09'
-  FR7128:
-    perempt: 6
-    groupTitle: 'Côte Nord de France'
-    title: 'Baie de Saint-Brieuc (Partie Ouest)'
-    bbox:
-      SW: '48°31,32''N — 002°55,78''W'
-      NE: '48°46,16''N — 002°40,48''W'
-    hasPart:
-      - { title: 'Cartouche: A - Port de Saint-Quay-Portrieux', bbox: { SW: '48°38,27''N — 002°49,88''W', NE: '48°39,14''N — 002°48,53''W' } }
-      - { title: 'Cartouche: B - Port de Binic', bbox: { SW: '48°35,52''N — 002°49,78''W', NE: '48°36,30''N — 002°48,23''W' } }
-    ganEdition: 'Edition n°3 - 2016'
-    corrections:
-      - { num: 9, semaineAvis: 1943-42 }
-      - { num: 10, semaineAvis: 2006-46 }
-      - { num: 11, semaineAvis: 2012-41 }
-      - { num: 12, semaineAvis: 2036-52 }
-      - { num: 13, semaineAvis: 2040-45 }
-      - { num: 14, semaineAvis: 2049-33 }
-    valid: '2021-01-09'
-  FR7133:
-    perempt: 6
-    groupTitle: 'Côte Nord de France'
-    title: 'Ports de la Côte Ouest du Cotentin'
-    hasPart:
-      - { title: 'Cartouche: A - Abords de Goury', bbox: { SW: '49°42,19''N — 001°58,90''W', NE: '49°44,19''N — 001°55,70''W' } }
-      - { title: 'Cartouche: B - Abords de Diélette', bbox: { SW: '49°31,16''N — 001°54,78''W', NE: '49°34,78''N — 001°50,28''W' } }
-      - { title: 'Cartouche: C - Abords de Carteret et Portbail', bbox: { SW: '49°15,94''N — 001°48,68''W', NE: '49°22,94''N — 001°40,31''W' } }
-      - { title: 'Cartouche: D - Carteret', bbox: { SW: '49°21,74''N — 001°47,48''W', NE: '49°22,84''N — 001°46,13''W' } }
-      - { title: 'Cartouche: E - Portbail', bbox: { SW: '49°19,04''N — 001°43,81''W', NE: '49°20,14''N — 001°41,83''W' } }
-      - { title: 'Cartouche: F - Havre de Regnéville', bbox: { SW: '48°57,96''N — 001°35,83''W', NE: '49°01,44''N — 001°32,88''W' } }
-    ganEdition: 'Edition n°2 - 2009'
-    corrections:
-      - { num: 21, semaineAvis: 1944-39 }
-      - { num: 22, semaineAvis: 1947-39 }
-      - { num: 23, semaineAvis: 1947-40 }
-      - { num: 24, semaineAvis: 2010-38 }
-      - { num: 25, semaineAvis: 2037-48 }
-      - { num: 26, semaineAvis: 2044-44 }
-    valid: '2021-01-09'
-  FR7229:
-    perempt: 6
-    groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
-    title: 'De Nice à Piombino'
-    bbox:
-      SW: ''
-      NE: ''
-    ganEdition: 'Publication 1989'
-    corrections:
-      - { num: 146, semaineAvis: 1950-88 }
-      - { num: 147, semaineAvis: 1950-104 }
-      - { num: 148, semaineAvis: 2004-104 }
-      - { num: 149, semaineAvis: 2036-104 }
-      - { num: 150, semaineAvis: 2040-100 }
-      - { num: 151, semaineAvis: 2047-92 }
-    valid: '2021-01-09'
-  FR7409:
-    perempt: 6
-    groupTitle: 'Côte Sud de France'
-    title: 'De la Rade d''Agay à Monaco'
-    bbox:
-      SW: '43°23,34''N — 006°50,74''E'
-      NE: '43°43,64''N — 007°31,34''E'
-    ganEdition: 'Edition n°3 - 2010'
-    corrections:
-      - { num: 35, semaineAvis: 2010-90 }
-      - { num: 36, semaineAvis: 2023-94 }
-      - { num: 37, semaineAvis: 2039-89 }
-      - { num: 38, semaineAvis: 2039-90 }
-      - { num: 39, semaineAvis: 2039-91 }
-      - { num: 40, semaineAvis: 2047-86 }
-    valid: '2021-01-09'
-  FR7421:
-    perempt: 6
-    groupTitle: 'Côte Nord de France'
-    title: 'De la Pointe de La Percée à Ouistreham'
-    bbox:
-      SW: '49°14,94''N — 000°55,78''W'
-      NE: '49°34,45''N — 000°11,18''W'
-    ganEdition: 'Edition n°2 - 2005'
-    corrections:
-      - { num: 35, semaineAvis: 2010-36 }
-      - { num: 36, semaineAvis: 2029-37 }
-      - { num: 37, semaineAvis: 2032-40 }
-      - { num: 38, semaineAvis: 2036-44 }
-      - { num: 39, semaineAvis: 2045-36 }
-      - { num: 40, semaineAvis: 2101-32 }
-    valid: '2021-01-09'
-  FR6738:
-    perempt: 5.5
-    groupTitle: 'Petites Antilles'
-    title: 'La Martinique'
-    bbox:
-      SW: '14°16,70''N — 061°17,48''W'
-      NE: '14°41,10''N — 060°40,78''W'
-    ganEdition: 'Edition n°2 - 2009'
-    corrections:
-      - { num: 27, semaineAvis: 1721-256 }
-      - { num: 28, semaineAvis: 1727-258 }
-      - { num: 29, semaineAvis: 1743-256 }
-      - { num: 30, semaineAvis: 1802-258 }
-      - { num: 31, semaineAvis: 1828-256 }
-      - { num: 32, semaineAvis: 1828-257 }
-      - { num: 33, semaineAvis: 1903-263 }
-      - { num: 34, semaineAvis: 1908-260 }
-      - { num: 35, semaineAvis: 1908-261 }
-      - { num: 36, semaineAvis: 1932-260 }
-      - { num: 37, semaineAvis: 1942-260 }
-    valid: '2021-01-09'
-  FR6948:
-    perempt: 5.5
-    groupTitle: Guadeloupe
-    title: 'De Pointe-à-Pitre à Marie-Galante'
-    bbox:
-      SW: '15°40,55''N — 061°43,63''W'
-      NE: '16°16,35''N — 061°18,43''W'
-    hasPart:
-      - { title: 'Cartouche: Marie-Galante - Baie de Saint-Louis', bbox: { SW: '15°55,85''N — 061°21,19''W', NE: '15°58,65''N — 061°18,73''W' } }
-    ganEdition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 25, semaineAvis: 1725-259 }
-      - { num: 26, semaineAvis: 1746-256 }
-      - { num: 27, semaineAvis: 1751-256 }
-      - { num: 28, semaineAvis: 1841-255 }
-      - { num: 29, semaineAvis: 1848-255 }
-      - { num: 30, semaineAvis: 1848-256 }
-      - { num: 31, semaineAvis: 1916-260 }
-      - { num: 32, semaineAvis: 1951-257 }
-      - { num: 33, semaineAvis: 2009-260 }
-      - { num: 34, semaineAvis: 2027-260 }
-      - { num: 35, semaineAvis: 2042-267 }
-    valid: '2021-01-09'
-  FR7381:
-    perempt: 5.5
-    groupTitle: 'Côte de Guyane Française'
-    title: 'De Kourou à Cayenne'
-    bbox:
-      SW: '04°47,60''N — 052°50,00''W'
-      NE: '05°28,00''N — 051°50,60''W'
-    ganEdition: 'Edition n°2 - 2013'
-    corrections:
-      - { num: 8, semaineAvis: 1725-251 }
-      - { num: 9, semaineAvis: 1729-251 }
-      - { num: 10, semaineAvis: 1738-251 }
-      - { num: 11, semaineAvis: 1844-243 }
-      - { num: 12, semaineAvis: 1905-252 }
-      - { num: 13, semaineAvis: 1908-260 }
-      - { num: 14, semaineAvis: 1912-250 }
-      - { num: 15, semaineAvis: 1930-255 }
-      - { num: 16, semaineAvis: 1943-253 }
-      - { num: 17, semaineAvis: 2024-250 }
-      - { num: 18, semaineAvis: 2043-251 }
-    valid: '2021-01-09'
-  FR7482:
-    perempt: 5.5
-    groupTitle: Guadeloupe
-    title: 'De l''Ilet à Kahouanne aux Saintes'
-    bbox:
-      SW: '15°48,30''N — NaN°00,00''W'
-      NE: '16°24,00''N — 061°34,60''W'
-    hasPart:
-      - { title: 'Cartouche: A - Anse Deshaies', bbox: { SW: '16°18,00''N — 061°48,50''W', NE: '16°18,85''N — 061°47,50''W' } }
-      - { title: 'Cartouche: B - Anse de Malendure', bbox: { SW: '16°09,50''N — 061°47,90''W', NE: '16°10,55''N — 061°46,40''W' } }
-      - { title: 'Cartouche: C - Anse à la Barque', bbox: { SW: '16°05,00''N — 061°46,75''W', NE: '16°05,60''N — 061°45,90''W' } }
-    ganEdition: 'Publication 2010'
-    corrections:
-      - { num: 24, semaineAvis: 1725-258 }
-      - { num: 25, semaineAvis: 1725-259 }
-      - { num: 26, semaineAvis: 1738-255 }
-      - { num: 27, semaineAvis: 1746-256 }
-      - { num: 28, semaineAvis: 1751-256 }
-      - { num: 29, semaineAvis: 1835-255 }
-      - { num: 30, semaineAvis: 1841-255 }
-      - { num: 31, semaineAvis: 1916-262 }
-      - { num: 32, semaineAvis: 1943-263 }
-      - { num: 33, semaineAvis: 1951-257 }
-      - { num: 34, semaineAvis: 2042-267 }
-    valid: '2021-01-09'
   FR6015:
     perempt: 5
     groupTitle: 'Canada - Groenland - Islande'
@@ -2967,6 +2595,17 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2025-93 }
     valid: '2021-01-09'
+  FR6824:
+    perempt: 1
+    groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
+    title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
+    bbox:
+      SW: '49°40,35''N — NaN°00,00''W'
+      NE: '51°10,35''N — 001°35,92''E'
+    ganEdition: 'Edition n°4 - 2006'
+    corrections:
+      - { num: 152, semaineAvis: 2101-32 }
+    valid: '2021-01-11'
   FR6838:
     perempt: 1
     groupTitle: 'Côte Sud de France'
@@ -3102,6 +2741,17 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 1944-60 }
     valid: '2021-01-09'
+  FR7031:
+    perempt: 1
+    groupTitle: 'Côte Ouest de France'
+    title: 'De l''Île de Penfret au Plateau des Birvideaux'
+    bbox:
+      SW: '47°28,94''N — 004°00,08''W'
+      NE: '47°49,04''N — 003°16,38''W'
+    ganEdition: 'Edition n°4 - 2017'
+    corrections:
+      - { num: 15, semaineAvis: 2101-53 }
+    valid: '2021-01-11'
   FR7033:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -3510,6 +3160,17 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2024-36 }
     valid: '2021-01-09'
+  FR7421:
+    perempt: 1
+    groupTitle: 'Côte Nord de France'
+    title: 'De la Pointe de La Percée à Ouistreham'
+    bbox:
+      SW: '49°14,94''N — 000°55,78''W'
+      NE: '49°34,45''N — 000°11,18''W'
+    ganEdition: 'Edition n°2 - 2005'
+    corrections:
+      - { num: 40, semaineAvis: 2101-32 }
+    valid: '2021-01-11'
   FR7423:
     perempt: 1
     groupTitle: 'Côte Ouest de France'
@@ -4550,11 +4211,21 @@ gans:
       NE: '43°27,94''N — 010°23,14''E'
     ganEdition: 'Edition n°5 - 2016'
     valid: '2021-01-09'
+  FR6738:
+    perempt: 0
+    groupTitle: 'Petites Antilles'
+    title: 'La Martinique - Partie Sud (Spéciale P)'
+    valid: '2021-01-11'
   FR6757:
     perempt: 0
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
     valid: '2021-01-09'
+  FR6814:
+    perempt: 0
+    groupTitle: 'Océan Atlantique'
+    title: 'Côte Nord-Est d''Amérique du Sud'
+    valid: '2021-01-11'
   FR6821:
     perempt: 0
     groupTitle: 'Mer Méditerranée'
@@ -4608,25 +4279,60 @@ gans:
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Jersey - Côte Est'
     valid: '2021-01-09'
+  FR6948:
+    perempt: 0
+    groupTitle: Guadeloupe
+    title: 'Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)'
+    valid: '2021-01-11'
   FR6955:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa'
     valid: '2021-01-09'
+  FR6968:
+    perempt: 0
+    groupTitle: 'Côte Sud d''Angleterre'
+    title: 'De Anvil Point à Beachy Head'
+    valid: '2021-01-11'
   FR7004:
     perempt: 0
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
     valid: '2021-01-09'
+  FR7014:
+    perempt: 0
+    groupTitle: 'Méditerranée Occidentale'
+    title: 'Des îles Baléares à la Corse et à la Sardaigne'
+    valid: '2021-01-11'
+  FR7025:
+    perempt: 0
+    groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
+    title: 'Ile de Corse'
+    valid: '2021-01-11'
   FR7043:
     perempt: 0
     title: 'Océan Atlantique Nord - Partie Ouest'
     valid: '2021-01-09'
+  FR7054:
+    perempt: 0
+    groupTitle: 'Côte Sud de France'
+    title: 'De l''embouchure de l''Aude à Sète'
+    valid: '2021-01-11'
   FR7073:
     perempt: 0
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
     valid: '2021-01-09'
+  FR7090:
+    perempt: 0
+    groupTitle: 'Côte Nord de France'
+    title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
+    valid: '2021-01-11'
+  FR7093:
+    perempt: 0
+    groupTitle: 'Côte Sud de France'
+    title: 'Rade de Toulon'
+    valid: '2021-01-11'
   FR7098:
     perempt: 0
     groupTitle: 'Côte Sud-Ouest de Nouvelle Calédonie'
@@ -4637,11 +4343,26 @@ gans:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
     valid: '2021-01-09'
+  FR7122:
+    perempt: 0
+    groupTitle: 'Côte Ouest de France'
+    title: 'De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four'
+    valid: '2021-01-11'
+  FR7128:
+    perempt: 0
+    groupTitle: 'Côte Nord de France'
+    title: 'Baie de Saint-Brieuc (partie Ouest) - De la Pointe de la Tour à l''Anse d''Yffiniac'
+    valid: '2021-01-11'
   FR7129:
     perempt: 0
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
     valid: '2021-01-09'
+  FR7133:
+    perempt: 0
+    groupTitle: 'Côte Nord de France'
+    title: 'Ports de la Côte Ouest du Cotentin'
+    valid: '2021-01-11'
   FR7136:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
@@ -4692,6 +4413,11 @@ gans:
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
     valid: '2021-01-09'
+  FR7229:
+    perempt: 0
+    groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
+    title: 'De Nice à Piombino (Spéciale P)'
+    valid: '2021-01-11'
   FR7246:
     perempt: 0
     groupTitle: 'Océan Pacifique Sud'
@@ -4791,6 +4517,11 @@ gans:
     groupTitle: 'Archipel des Tuamotu'
     title: Rangiroa
     valid: '2021-01-09'
+  FR7381:
+    perempt: 0
+    groupTitle: 'Côte de Guyane Française'
+    title: 'De Kourou à Cayenne'
+    valid: '2021-01-11'
   FR7393:
     perempt: 0
     groupTitle: 'Côte Sud de France'
@@ -4811,6 +4542,11 @@ gans:
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
     valid: '2021-01-09'
+  FR7409:
+    perempt: 0
+    groupTitle: 'Côte Sud de France'
+    title: 'De la Rade d''Agay à Monaco'
+    valid: '2021-01-11'
   FR7410:
     perempt: 0
     groupTitle: 'Côte Ouest de France'
@@ -4866,6 +4602,11 @@ gans:
     groupTitle: 'Côte de Guyane'
     title: 'Approches de Kourou - Îles du Salut'
     valid: '2021-01-09'
+  FR7482:
+    perempt: 0
+    groupTitle: Guadeloupe
+    title: 'De l''Ilet à Kahouanne aux Saintes'
+    valid: '2021-01-11'
   FR7484:
     perempt: 0
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
@@ -4906,6 +4647,11 @@ gans:
     groupTitle: 'Petites Antilles'
     title: Dominica
     valid: '2021-01-09'
+  FR7630:
+    perempt: 0
+    groupTitle: 'Océan Atlantique'
+    title: 'Petites Antilles - Partie Nord - De Anguilla à la Guadeloupe'
+    valid: '2021-01-11'
   FR7663:
     perempt: 0
     groupTitle: 'Côte Est d''Espagne'

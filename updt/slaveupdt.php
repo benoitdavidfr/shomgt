@@ -33,8 +33,8 @@ includes:
 require_once __DIR__.'/../lib/xmltoarrayparser.inc.php';
 require_once __DIR__.'/../lib/store.inc.php';
 
-//$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
-$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
+$atomfeedUrl = 'http://localhost/geoapi/shomgt/master/atomfeed.php'; // test en localhost
+//$atomfeedUrl = 'https://geoapi.fr/shomgt/master/atomfeed.php'; // fonctionnement normal
 
 function unix_env(): array { // retourne les variables d'environnement du shell 
   $env = [];
@@ -198,39 +198,26 @@ class UpdtSlave {
   }
 };
 
-// Liste des codes et libellés des zones
-define ('ZONES', [
-  'WLD'=> "toutes les cartes",
-  'FR'=> "France",
-  'FX'=> "France métropolitaine",
-  'GP'=> "Guadeloupe",
-  'MQ'=> "Martinique",
-  'GF'=> "Guyane",
-  'RE'=> "La Réunion",
-  'YT'=> "Mayotte",
-  'PM'=> "Saint-Pierre-et-Miquelon",
-  'BL'=> "Saint-Barthélémy",
-  'MF'=> "Saint-Martin",
-  'TF'=> "Terres australes et antarctiques françaises",
-  'PF'=> "Polynésie française",
-  'WF'=> "Wallis-et-Futuna",
-  'NC'=> "Nouvelle-Calédonie",
-  'CP'=> "Île Clipperton",
-]
-);
-
 // initialise la ou les zones souhaitées
 if (php_sapi_name() == 'cli') {
   header('Content-type: text/plain; charset="utf8"');
   if ($argc <= 1) {
-    echo "echo 'Mettre à jour sur quelle zone ?'\n";
-    foreach (ZONES as $id => $label)
+    echo "echo 'Mettre à jour sur quelle(s) zone(s) ?'\n";
+    echo "echo '  - WLD pour toutes les cartes'\n";
+    foreach (CurrentGeoTiff::ZONES as $id => $label)
       echo "echo '  - $id pour $label'\n";
     echo "echo 'Possibilité de définir plusieurs zones séparées par des virgules, ee: GP,MQ,BL,MF'\n";
     die("\n");
   }
   else {
     $zonesGeo = ($argv[1] == 'WLD') ? [] : explode(',', $argv[1]);
+    $zonesInconnues = [];
+    foreach ($zonesGeo as $zid) {
+      if (!isset(CurrentGeoTiff::ZONES[$zid]))
+        $zonesInconnues[] = $zid;
+    }
+    if ($zonesInconnues)
+      die("echo 'Erreur: zone(s) ".implode(',',$zonesInconnues)." inconnue(s)'\n");
   }
 }
 else {

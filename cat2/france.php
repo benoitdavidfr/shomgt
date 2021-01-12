@@ -4,8 +4,12 @@ name: france.php
 title: cat2 / france.php - définit la fonction de calcul d'intersection avec la ZEE et publie la ZEE en GeoJSON avec l'en-tête CORS
 classes:
 doc: |
-  
+  Le schéma de france.geojson doit être
+  { "id": 1, "title": "Iles Crozet", "zoneid": "TF" }
+
 journal: |
+  12/1/2021:
+    - chgt de schéma de france.geojson
   10/1/2021:
     - utilisation dans mapwcat.php car nécessité de l'en-tête CORS
     - changement de nom en enlevant en .inc
@@ -30,16 +34,16 @@ class France {
     //echo Yaml::dump(['france.geojson'=> $fc], 5, 2);
     $zee = [];
     foreach ($fc['features'] as $feature) {
-      $isoa2 = $feature['properties']['isoalpha2'];
-      if (!isset($zee[$isoa2])) {
-        $zee[$isoa2] = $feature['geometry'];
+      $zoneid = $feature['properties']['zoneid'];
+      if (!isset($zee[$zoneid])) {
+        $zee[$zoneid] = $feature['geometry'];
       }
       else {
-        $zee[$isoa2]['coordinates'] = array_merge($zee[$isoa2]['coordinates'], $feature['geometry']['coordinates']);
+        $zee[$zoneid]['coordinates'] = array_merge($zee[$zoneid]['coordinates'], $feature['geometry']['coordinates']);
       }
     }
-    foreach ($zee as $isoa2 => $geometry)
-      self::$zee[$isoa2] = Geometry::fromGeoJSON($geometry);
+    foreach ($zee as $zoneid => $geometry)
+      self::$zee[$zoneid] = Geometry::fromGeoJSON($geometry);
     self::$interetInsuffisant = Yaml::parseFile(__DIR__.'/mapcatspec.yaml')['cartesAyantUnIntérêtInsuffisant'];
   }
   
@@ -47,10 +51,10 @@ class France {
     if (!self::$zee)
       self::init();
     $features = [];
-    foreach (self::$zee as $isoa2 => $geometry) {
+    foreach (self::$zee as $zoneid => $geometry) {
       $features[] = [
         'type'=> 'Feature',
-        'properties'=> ['isoalpha2'=> $isoa2],
+        'properties'=> ['zoneid'=> $zoneid],
         'geometry'=> $geometry->asArray(),
       ];
     }
@@ -59,7 +63,7 @@ class France {
   
   // calcule si la carte est d'intérêt, la géométrie doit être Polygon ou MultiPolygon
   // retourne soit [] si ce n'est pas le cas, soit ['FR'] pour les cartes à très petite échelle,
-  // soit la liste des codes ISO alpha2 des zones intersectées
+  // soit la liste des zoneid des zones intersectées
   static function interet(string $mapid, string $scaleDenominator, Geometry $geometry): array {
     $ret = self::interet2($mapid, $scaleDenominator, $geometry);
     //if ($mapid == 'FR6977')
@@ -75,11 +79,11 @@ class France {
     if (str_replace('.','',$scaleDenominator) > self::SEUIL_PETITE_ECHELLE) // je conserve les très petites échelles
       return ['FR'];
     //echo "bbox=",$this->bbox,"\n";
-    $isoa2s = [];
-    foreach (self::$zee as $isoa2 => $zeeGeom)
+    $zoneids = [];
+    foreach (self::$zee as $zoneid => $zeeGeom)
       if ($zeeGeom->inters($geometry))
-        $isoa2s[] = $isoa2;
-    return $isoa2s ? $isoa2s : [];
+        $zoneids[] = $zoneid;
+    return $zoneids ? $zoneids : [];
   }
 };
 

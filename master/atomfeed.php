@@ -51,26 +51,6 @@ elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
 //define('TEST', 'version test incoming/20170613');
 define('TEST', '');
 
-// étiquette associée au code ISO des zones
-define ('TERMS', [
-  'FR'=> "France",
-  'FX'=> "France métropolitaine",
-  'GP'=> "Guadeloupe",
-  'MQ'=> "Martinique",
-  'GF'=> "Guyane",
-  'RE'=> "La Réunion",
-  'YT'=> "Mayotte",
-  'PM'=> "Saint-Pierre-et-Miquelon",
-  'BL'=> "Saint-Barthélémy",
-  'MF'=> "Saint-Martin",
-  'TF'=> "Terres australes et antarctiques françaises",
-  'PF'=> "Polynésie française",
-  'WF'=> "Wallis-et-Futuna",
-  'NC'=> "Nouvelle-Calédonie",
-  'CP'=> "Île Clipperton",
-]
-);
-
 // Définit le fuseau horaire par défaut à utiliser.
 date_default_timezone_set('UTC');
 
@@ -154,8 +134,8 @@ if (!isset($_SERVER['PATH_INFO'])) { // le feed
       }
       else {
         $categories = [];
-        foreach ($map['mapsFrance'] as $iso) {
-          $categories[] = ['term'=> "https://id.georef.eu/dc-spatial/$iso", 'label'=> TERMS[$iso]];
+        foreach ($map['mapsFrance'] as $code) {
+          $categories[] = ['term'=> "https://id.georef.eu/dc-spatial/$code", 'label'=> CurrentGeoTiff::ZONES[$code]];
         }
         $path = str_replace('incoming/','',$map['path']);
         $entries[] = [

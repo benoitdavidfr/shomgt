@@ -38,7 +38,16 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Actualité</h3>
 <ul>
-  <li>10/12/2020, 23/12/2020, 5/1/2021 : les cartes les moins à jour ont été actualisées,
+  <li>11/1/2021 :<ul>
+    <li>ajout dans la carte Leaflet d'une couche frontières et ZEE issue du service WFS du Shom</li>
+    <li>ajout de la carte spéciale des zones maritimes (8510) et des cartes d'Action de l'Etat en mer de Polynésie (8517),
+      de Nouvelle Calédonie et de Wallis et Futuna (8509)</li>
+    <li>nouvelle version du serveur téléchargeable sur 
+    <a href='https://github.com/benoitdavidfr/shomgt' target='_blank'>Github</a>,
+    avec notamment nouvelle version de la détection des cartes à actualiser
+    et simplification du téléchargement des cartes Shom</li>
+  </ul></li>
+  <li>10 et 23/12/2020 et 5 et 11/1/2021 : les cartes les moins à jour ont été actualisées (environ 60),
     certaines cartes ont été supprimées, quelques cartes ont été ajoutées</li>
   <li>26/02/2020 : toutes les cartes de métropole ont enfin été mises à jour</li>
   <li>21/11/2019 : la mise à jour des cartes est en cours mais, en raison d'une difficulté au Shom,
@@ -154,4 +163,4 @@ Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 <h3>Auteur</h3>
 Ce site est réalisé par Benoit DAVID, MTES/CGDD/SRI/Ecolab.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 5/1/2021<br>
+Mise à jour: 11/1/2021<br>

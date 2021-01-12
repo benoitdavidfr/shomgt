@@ -52,12 +52,10 @@ doc: |
   Le maitre publie les données dont il dispose sous la forme d'un fil Atom.
   Le serveur esclave consulte régulièrement ce fil pour se mettre à jour sur une zone donnée ; et cela de manière automatique.
   
-  Taille occupée:
-    - la totalité des archives de cartes fait environ 3 Go
-    - une livraison particulière nommée all contient tt les cartes à conserver, elle pèse environ 2 Go supp.
-    - la décompression des cartes de all pèse environ 2,4 Go
   
-  synchro: http://localhost/synchro.php?remote=http://prod.geoapi.fr&dir=geoapi/shomgt
+  Taille occupée:
+    - la totalité des archives de cartes fait environ 5 Go
+    - les cartes courantes pèsent environ 2,6 Go
   
   ToDoList:
     - dans le module updt, il est nécessaire de pouvoir exprimer un ordre à respecter entre 3 images
@@ -67,10 +65,13 @@ doc: |
     - exposer une description OpenApi des web-services du projet (pas d'urgence)
       
 journal: |
+  12/1/2021:
+    - modif de la couche ZEE pour distinguer les 3 zones maritimes en métropole
   11/1/2021:
     - modif du géoréférencement de la carte 6015 qui génait la visualisation des alentours de St. P&M
     - correction de la ZEE de St Martin
     - utilisation de france.php modifié pour ajouter l'en-tête CORS et modifier la structure de france.geojson
+    - intégration d'une nouvelle livraison de 20 cartes
   9-10/1/2021:
     - ajout utilisation des cartes non géoréférencées par le Shom
   6/1/2021:

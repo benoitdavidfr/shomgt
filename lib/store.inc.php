@@ -120,6 +120,27 @@ class CurrentGeoTiff {
     '8510'=> '8510/8510_2015', // Délimitations des zones maritimes
   ];
   
+  // Liste des codes et libellés des zones utilisés dans mapsFrance
+  const ZONES = [
+    'FR'=> "France",
+    'FX-Med'=> "France métropolitaine - zone Méditérannée",
+    'FX-Atl'=> "France métropolitaine - zone Atlantique",
+    'FX-MMN'=> "France métropolitaine - zone Manche, mer du Nord",
+    'GP'=> "Guadeloupe",
+    'MQ'=> "Martinique",
+    'GF'=> "Guyane",
+    'RE'=> "La Réunion",
+    'YT'=> "Mayotte",
+    'PM'=> "Saint-Pierre-et-Miquelon",
+    'BL'=> "Saint-Barthélémy",
+    'MF'=> "Saint-Martin",
+    'TF'=> "Terres australes et antarctiques françaises",
+    'PF'=> "Polynésie française",
+    'WF'=> "Wallis-et-Futuna",
+    'NC'=> "Nouvelle-Calédonie",
+    'CP'=> "Île Clipperton",
+  ];
+
   public string $gtname; // la clé du géotiff dans shomgt.yaml
   
   static function mapExists(string $num): string { // Si une carte existe alors retourne son répertoire dans current, sinon '' 

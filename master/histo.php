@@ -19,8 +19,12 @@ doc: |
       ]
     ]
   Affichage Yaml et enregistrement dans histo.pser
-  Si histo.pser existe alors il est affiché.
+  En NON CLI si histo.pser existe alors il est affiché.
 journal: |
+  11/1/2021:
+    - chgt d'ergonomie - un appel en CLI met à jour le pser
+      1) évite d'avoir à effacer le pser avant de lancer la cmde
+      2) minimise le délai où le pser n'existe pas et donc le fil Atom plante
   7/1/2021:
     - ajout caractéristiques de la carte en provenance de ../cat2
   5/1/2021:
@@ -36,7 +40,7 @@ require_once __DIR__.'/../cat2/catapi.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 // noms de répertoire de incoming à exclure de l'historique
-define('EXCLUDED_DELIVNAMES', [/*'201911cartesAEM',*/'20201226TEST-arriere','20201226TEST-avant']);
+define('EXCLUDED_DELIVNAMES', ['20201226TEST-arriere','20201226TEST-avant']);
 
 date_default_timezone_set('Europe/Paris');
 
@@ -64,9 +68,11 @@ function simplifyMapCat(?MapCat $map): array {
   return $mapa;
 }
 
-echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>histo</title></head><body><pre>\n";
-if (!($histo = @file_get_contents(__DIR__.'/histo.pser'))) {
-  $histo = []; // [mapid => [mdDate => ['edition'=> edition, 'lastUpdate'=> lastUpdate, 'path'=> chemin] | "Suppression de la carte"]]
+if (php_sapi_name() <> 'cli')
+  echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>histo</title></head><body><pre>\n";
+
+if (!($histo = @file_get_contents(__DIR__.'/histo.pser')) || (php_sapi_name() == 'cli')) {
+  $histo = []; // format indiqué dans la doc ci-dessus
   foreach (SevenZipMap::listOfDeliveries() as $delivName) { // $delivName correspond à une livraison
     if (in_array($delivName, EXCLUDED_DELIVNAMES))
       continue;

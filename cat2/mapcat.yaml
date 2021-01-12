@@ -4,7 +4,7 @@ description:
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2021-01-11T09:02:38+01:00'
+modified: '2021-01-12T12:40:04+01:00'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -75,7 +75,7 @@ maps:
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
     edition: 'Edition n° 6 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-23+02:00'
     lastUpdate: 4
     scaleDenominator: '15.000'
@@ -98,8 +98,10 @@ maps:
     title: 'Océan Atlantique Nord et mers boréales'
     edition: 'Edition n° 5 - 1977'
     mapsFrance:
-      - FX
+      - FX-Atl
       - PM
+      - FX-Med
+      - FX-MMN
     modified: '2017-05-10+02:00'
     lastUpdate: 86
     scaleDenominator: 6.580.000
@@ -144,8 +146,7 @@ maps:
     groupTitle: 'Canada - Groenland - Islande'
     title: 'Des passages du Nord-Ouest à la Mer du Groenland'
     edition: 'Edition n° 2 - 1993'
-    mapsFrance:
-      - PM
+    mapsFrance: {  }
     modified: '2017-06-14+02:00'
     lastUpdate: 32
     scaleDenominator: 4.660.000
@@ -725,7 +726,8 @@ maps:
     title: 'Mer du Nord'
     edition: 'Edition n° 6 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2020-05-20+02:00'
     lastUpdate: 8
     scaleDenominator: 1.500.000
@@ -743,7 +745,7 @@ maps:
     title: 'De Bandol au Cap Sicié, Rade du Brusc'
     edition: 'Edition n° 5 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 7
     scaleDenominator: '20.000'
@@ -760,7 +762,7 @@ maps:
     title: 'De Cassis à Bandol - Baie de La Ciotat'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 2
     scaleDenominator: '20.000'
@@ -783,7 +785,7 @@ maps:
     title: 'Îles de Port-Cros et du Levant (Îles d''Hyères)'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 1
     scaleDenominator: '25.000'
@@ -800,7 +802,7 @@ maps:
     title: 'Du Cap Bénat au Cap Lardier - Rade de Bormes - Baie de Cavalaire'
     edition: 'Edition n° 4 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 6
     scaleDenominator: '25.000'
@@ -828,7 +830,8 @@ maps:
     title: 'Atterrages Ouest des Iles Britanniques'
     edition: 'Edition n° 4 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-10-02+02:00'
     lastUpdate: 9
     scaleDenominator: 2.180.000
@@ -866,7 +869,8 @@ maps:
     title: 'De La Manche au Détroit de Gibraltar et à l''archipel des Açores'
     edition: 'Edition n° 6 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-10-02+02:00'
     lastUpdate: 2
     scaleDenominator: 2.770.000
@@ -918,7 +922,7 @@ maps:
     title: 'De Calais à Dunkerque'
     edition: 'Edition n° 8 - 2016'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-11-24+01:00'
     lastUpdate: 40
     scaleDenominator: '43.100'
@@ -1013,6 +1017,7 @@ maps:
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - NC
+      - WF
     modified: '2019-01-02+01:00'
     lastUpdate: 3
     scaleDenominator: 3.500.000
@@ -1070,7 +1075,7 @@ maps:
     title: 'De l''île d''Ouessant à l''île de Batz'
     edition: 'Edition n° 3 - 2003'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-09+02:00'
     lastUpdate: 75
     scaleDenominator: '150.000'
@@ -1087,7 +1092,7 @@ maps:
     title: 'Port du Havre - Entrée du chenal de Rouen'
     edition: 'Edition n° 9 - 2017'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-10-23+02:00'
     lastUpdate: 9
     scaleDenominator: '15.000'
@@ -1104,7 +1109,7 @@ maps:
     title: 'Golfe et port de Fos'
     edition: 'Edition n° 7 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-10-09+02:00'
     lastUpdate: 8
     scaleDenominator: '25.000'
@@ -1223,7 +1228,7 @@ maps:
     title: 'De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-10-09+02:00'
     lastUpdate: 4
     scaleDenominator: '49.900'
@@ -1240,7 +1245,7 @@ maps:
     title: 'Côte Nord-Est de la Corse'
     edition: 'Edition n° 5 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 15
     scaleDenominator: '152.000'
@@ -1276,7 +1281,7 @@ maps:
     title: 'Pas de Calais - De Boulogne-sur-Mer à Zeebrugge, estuaire de la Tamise (Thames)'
     edition: 'Edition n° 7 - 2012'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-11-24+01:00'
     lastUpdate: 134
     scaleDenominator: '150.000'
@@ -1295,8 +1300,8 @@ maps:
     edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - MQ
-    modified: '2017-05-24+02:00'
-    lastUpdate: 27
+    modified: '2021-01-06+01:00'
+    lastUpdate: 37
     scaleDenominator: '60.000'
     bboxDM:
       SW: '14°16,60''N - 061°17,70''W'
@@ -1345,7 +1350,8 @@ maps:
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
     edition: 'Edition n° 2 - 1984'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-Med
     modified: '2020-09-30+02:00'
     lastUpdate: 163
     scaleDenominator: 2.250.000
@@ -1363,7 +1369,7 @@ maps:
     title: 'De Fos-sur-Mer à Marseille'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 15
     scaleDenominator: '49.900'
@@ -1415,7 +1421,7 @@ maps:
     title: 'Embouchure de la Loire - Port de Saint-Nazaire'
     edition: 'Edition n° 5 - 2005'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-09+02:00'
     lastUpdate: 24
     scaleDenominator: '15.000'
@@ -1471,8 +1477,8 @@ maps:
     mapsFrance:
       - MQ
       - GF
-    modified: '2017-05-24+02:00'
-    lastUpdate: 46
+    modified: '2021-01-06+01:00'
+    lastUpdate: 58
     scaleDenominator: 3.780.000
     bboxDM:
       SW: '08°00,00''S - 062°00,00''W'
@@ -1488,7 +1494,9 @@ maps:
     title: 'Océan Atlantique Nord - Partie Est'
     edition: 'Edition n° 4 - 2012'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-Med
+      - FX-MMN
     modified: '2020-10-21+02:00'
     lastUpdate: 23
     scaleDenominator: 10.000.000
@@ -1553,7 +1561,7 @@ maps:
     title: 'Côte Ouest de Corse - Du Cap Corse au Golfe d''Ajaccio'
     edition: 'Edition n° 2 - 2009'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 14
     scaleDenominator: '152.000'
@@ -1570,7 +1578,7 @@ maps:
     title: 'Abords Nord de Bastia'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 9
     scaleDenominator: '50.300'
@@ -1587,7 +1595,7 @@ maps:
     title: 'Abords Sud de Bastia'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 9
     scaleDenominator: '50.600'
@@ -1604,9 +1612,9 @@ maps:
     title: 'Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
     edition: 'Edition n° 4 - 2006'
     mapsFrance:
-      - FX
-    modified: '2019-10-09+02:00'
-    lastUpdate: 147
+      - FX-MMN
+    modified: '2021-01-06+01:00'
+    lastUpdate: 152
     scaleDenominator: '150.000'
     bboxDM:
       SW: '49°40,40''N - 000°00,00''E'
@@ -1677,7 +1685,7 @@ maps:
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 1
     scaleDenominator: '20.000'
@@ -1710,7 +1718,7 @@ maps:
     title: 'Etang de Thau'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-10-23+02:00'
     lastUpdate: 32
     scaleDenominator: '30.000'
@@ -1753,7 +1761,7 @@ maps:
     title: 'Du Cabo Creus à Port-Barcarès'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-24+02:00'
     lastUpdate: 7
     scaleDenominator: '50.000'
@@ -1770,7 +1778,7 @@ maps:
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-11-12+01:00'
     lastUpdate: 15
     scaleDenominator: '50.000'
@@ -1787,7 +1795,7 @@ maps:
     title: 'Saint-Florent, Centuri et Macinaggio'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 3
     insetMaps:
@@ -1811,7 +1819,7 @@ maps:
     title: 'Du phare d''Alistro à Solenzara'
     edition: 'Edition n° 3 - 2015'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 8
     scaleDenominator: '51.000'
@@ -1828,7 +1836,7 @@ maps:
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
     edition: 'Edition n° 4 - 2012'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-12-08+01:00'
     lastUpdate: 69
     scaleDenominator: '150.000'
@@ -1944,7 +1952,7 @@ maps:
     title: 'Guernsey et Herm'
     edition: 'Edition n° 4 - 2016'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-09-18+02:00'
     lastUpdate: 4
     scaleDenominator: '25.000'
@@ -1968,7 +1976,7 @@ maps:
     title: 'Guernsey Est, Herm et Sark'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-09-18+02:00'
     lastUpdate: 5
     scaleDenominator: '25.000'
@@ -1992,7 +2000,7 @@ maps:
     title: 'Etang de Berre'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 6
     scaleDenominator: '25.000'
@@ -2015,7 +2023,7 @@ maps:
     title: 'Golfe de Porto-Vecchio'
     edition: 'Edition n° 5 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 5
     scaleDenominator: '15.000'
@@ -2032,7 +2040,7 @@ maps:
     title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-11-24+01:00'
     lastUpdate: 14
     scaleDenominator: '50.000'
@@ -2049,7 +2057,8 @@ maps:
     title: 'Des roches de Portsall au plateau des Roches Douvres'
     edition: 'Edition n° 2 - 2009'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-08-07+02:00'
     lastUpdate: 59
     scaleDenominator: '150.000'
@@ -2083,7 +2092,7 @@ maps:
     title: 'Alderney (Aurigny) et les Casquets'
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-08-07+02:00'
     lastUpdate: 6
     scaleDenominator: '25.000'
@@ -2101,7 +2110,7 @@ maps:
     title: 'Jersey - Côte Nord'
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2017-07-05+02:00'
     lastUpdate: 4
     scaleDenominator: '25.000'
@@ -2119,7 +2128,7 @@ maps:
     title: 'Abords de Saint Hélier'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-08-07+02:00'
     lastUpdate: 1
     scaleDenominator: '25.000'
@@ -2137,7 +2146,7 @@ maps:
     title: 'Jersey - Côte Est'
     edition: 'Edition n° 6 - 2019'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 0
     scaleDenominator: '25.000'
@@ -2155,7 +2164,7 @@ maps:
     title: 'De Start Point à the Needles'
     edition: 'Edition n° 5 - 2011'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-08-07+02:00'
     lastUpdate: 69
     scaleDenominator: '150.000'
@@ -2173,7 +2182,8 @@ maps:
     title: 'De Lizard Point à Dartmouth'
     edition: 'Edition n° 6 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-11-13+01:00'
     lastUpdate: 6
     scaleDenominator: '154.000'
@@ -2191,7 +2201,7 @@ maps:
     title: 'De Punta d''Orchina au Cap Muro - Abords d''Ajaccio'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 12
     scaleDenominator: '50.000'
@@ -2209,8 +2219,8 @@ maps:
     edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - GP
-    modified: '2017-06-21+02:00'
-    lastUpdate: 25
+    modified: '2021-01-06+01:00'
+    lastUpdate: 35
     scaleDenominator: '60.000'
     bboxDM:
       SW: '15°40,50''N - 061°43,60''W'
@@ -2251,7 +2261,7 @@ maps:
     title: 'De Fos-sur-Mer à Capo Mele'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 6
     scaleDenominator: '250.000'
@@ -2338,7 +2348,8 @@ maps:
     title: 'Des Héaux de Bréhat au Cap Lévi'
     edition: 'Edition n° 4 - 2015'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2020-12-08+01:00'
     lastUpdate: 56
     scaleDenominator: '155.000'
@@ -2355,9 +2366,9 @@ maps:
     title: 'De Anvil Point à Beachy Head'
     edition: 'Edition n° 4 - 2016'
     mapsFrance:
-      - FX
-    modified: '2019-07-19+02:00'
-    lastUpdate: 25
+      - FX-MMN
+    modified: '2021-01-06+01:00'
+    lastUpdate: 31
     scaleDenominator: '150.000'
     bboxDM:
       SW: '50°02,15''N - 001°59,00''W'
@@ -2373,7 +2384,7 @@ maps:
     title: 'Du Cap Corse à la Punta di l''Acciolu - Golfe de Saint-Florent'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 7
     scaleDenominator: '50.300'
@@ -2390,7 +2401,7 @@ maps:
     title: 'De Punta di l''Acciolu à Capo Cavallo'
     edition: 'Edition n° 3 - 2015'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-09-11+02:00'
     lastUpdate: 6
     scaleDenominator: '50.500'
@@ -2407,7 +2418,7 @@ maps:
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-09-11+02:00'
     lastUpdate: 3
     insetMaps:
@@ -2482,7 +2493,7 @@ maps:
     title: 'De la Pointe de Penmarc''h à la Gironde'
     edition: 'Edition n° 5 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-12-01+01:00'
     lastUpdate: 13
     scaleDenominator: '355.000'
@@ -2499,7 +2510,7 @@ maps:
     title: 'De la Gironde à Cabo Peñas'
     edition: 'Edition n° 4 - 2015'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-30+01:00'
     lastUpdate: 23
     scaleDenominator: '368.000'
@@ -2516,7 +2527,7 @@ maps:
     title: 'Le Cap d''Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan'
     edition: 'Edition n° 5 - 2019'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-10-23+02:00'
     lastUpdate: 1
     noteShom: 'Nota : Ajout d''un cartouche: D - Gruissan'
@@ -2546,7 +2557,7 @@ maps:
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-07+02:00'
     lastUpdate: 18
     scaleDenominator: '15.000'
@@ -2579,7 +2590,7 @@ maps:
     title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-11-12+01:00'
     lastUpdate: 87
     scaleDenominator: '250.000'
@@ -2621,9 +2632,9 @@ maps:
     title: 'Des îles Baléares à la Corse et à la Sardaigne'
     edition: 'Edition n° 3 - 2013'
     mapsFrance:
-      - FX
-    modified: '2019-11-13+01:00'
-    lastUpdate: 45
+      - FX-Med
+    modified: '2021-01-06+01:00'
+    lastUpdate: 50
     scaleDenominator: 1.000.000
     bboxDM:
       SW: '35°30,00''N - 002°00,00''E'
@@ -2638,7 +2649,8 @@ maps:
     title: 'De Gibraltar aux Îles Baléares'
     edition: 'Edition n° 2 - 1998'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-Med
     modified: '2019-11-13+01:00'
     lastUpdate: 104
     scaleDenominator: 1.100.000
@@ -2656,7 +2668,7 @@ maps:
     title: 'Mer Méditerranée - Bassin oriental'
     edition: 'Edition n° 2 - 1998'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 68
     scaleDenominator: 2.250.000
@@ -2713,7 +2725,7 @@ maps:
     title: 'Bouches de Bonifacio'
     edition: 'Edition n° 5 - 2012'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 46
     scaleDenominator: '50.000'
@@ -2736,9 +2748,9 @@ maps:
     title: 'Ile de Corse'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
-    modified: '2019-07-19+02:00'
-    lastUpdate: 7
+      - FX-Med
+    modified: '2021-01-06+01:00'
+    lastUpdate: 13
     scaleDenominator: '250.000'
     bboxDM:
       SW: '40°48,50''N - 007°50,50''E'
@@ -2753,7 +2765,7 @@ maps:
     title: 'Cours de la Garonne - Du Bec d''Ambès à Bordeaux'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-30+01:00'
     lastUpdate: 7
     scaleDenominator: '20.000'
@@ -2776,9 +2788,9 @@ maps:
     title: 'De l''île de Penfret au plateau des Birvideaux - Abords de Lorient'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
-    modified: '2019-07-31+02:00'
-    lastUpdate: 10
+      - FX-Atl
+    modified: '2021-01-06+01:00'
+    lastUpdate: 15
     scaleDenominator: '50.000'
     bboxDM:
       SW: '47°29,00''N - 004°00,00''W'
@@ -2793,7 +2805,7 @@ maps:
     title: 'De l''île de Groix à Belle-Ile - Abords de Lorient'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-10-21+02:00'
     lastUpdate: 18
     scaleDenominator: '50.000'
@@ -2810,7 +2822,7 @@ maps:
     title: 'De Quiberon au Croisic (Spéciale P)'
     edition: 'Edition n° 3 - 2002'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-12-01+01:00'
     lastUpdate: 93
     scaleDenominator: '50.000'
@@ -2844,7 +2856,8 @@ maps:
     title: 'La Manche'
     edition: 'Edition n° 4 - 2003'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-09-18+02:00'
     lastUpdate: 216
     scaleDenominator: '560.000'
@@ -2953,7 +2966,7 @@ maps:
     title: 'De Calvi à Cargèse'
     edition: 'Edition n° 3 - 2015'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-09-11+02:00'
     lastUpdate: 11
     scaleDenominator: '50.000'
@@ -3016,7 +3029,7 @@ maps:
     title: 'De Sète à la Pointe de l''Espiguette'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-10-23+02:00'
     lastUpdate: 5
     scaleDenominator: '50.000'
@@ -3033,9 +3046,9 @@ maps:
     title: 'De l''embouchure de l''Aude à Sète'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
-    modified: '2019-10-23+02:00'
-    lastUpdate: 5
+      - FX-Med
+    modified: '2021-01-06+01:00'
+    lastUpdate: 10
     scaleDenominator: '50.000'
     bboxDM:
       SW: '43°07,80''N - 003°13,40''E'
@@ -3050,7 +3063,7 @@ maps:
     title: Dunkerque
     edition: 'Edition n° 5 - 2019'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-11-06+01:00'
     lastUpdate: 0
     scaleDenominator: '20.000'
@@ -3067,7 +3080,7 @@ maps:
     title: 'De l''île Vierge à la Pointe de Penmarc''h - Abords de Brest'
     edition: 'Edition n° 5 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-10-27+01:00'
     lastUpdate: 8
     scaleDenominator: '150.000'
@@ -3084,7 +3097,7 @@ maps:
     title: 'De la Chaussée de Sein à Belle-Ile'
     edition: 'Edition n° 4 - 2015'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-12-01+01:00'
     lastUpdate: 41
     scaleDenominator: '161.000'
@@ -3101,7 +3114,7 @@ maps:
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-12-01+01:00'
     lastUpdate: 26
     scaleDenominator: '150.000'
@@ -3118,7 +3131,7 @@ maps:
     title: 'De l''île d''Yeu à la Pointe de la Coubre - Plateau de Rochebonne'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-30+01:00'
     lastUpdate: 12
     scaleDenominator: '150.000'
@@ -3135,7 +3148,7 @@ maps:
     title: 'Du pertuis de Maumusson à Mimizan-Plage'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-30+01:00'
     lastUpdate: 11
     scaleDenominator: '167.000'
@@ -3194,7 +3207,8 @@ maps:
     title: 'De Saint-Nazaire à Saint-Malo'
     edition: 'Edition n° 3 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2020-12-01+01:00'
     lastUpdate: 20
     scaleDenominator: '345.000'
@@ -3211,7 +3225,9 @@ maps:
     title: 'Mer Méditerranée et mer Noire (Spéciale P)'
     edition: 'Publication 1986'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-Med
+      - FX-MMN
     modified: '2019-10-16+02:00'
     lastUpdate: 135
     scaleDenominator: 4.200.000
@@ -3230,7 +3246,7 @@ maps:
     title: 'Rade de Cherbourg'
     edition: 'Edition n° 10 - 2019'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-10-23+02:00'
     lastUpdate: 2
     scaleDenominator: '7.500'
@@ -3321,9 +3337,9 @@ maps:
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
-    modified: '2018-10-31+01:00'
-    lastUpdate: 4
+      - FX-MMN
+    modified: '2021-01-06+01:00'
+    lastUpdate: 10
     scaleDenominator: '20.000'
     bboxDM:
       SW: '49°31,64''N - 001°20,30''W'
@@ -3349,7 +3365,7 @@ maps:
     title: 'Abords de Toulon'
     edition: 'Edition n° 6 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-11-12+01:00'
     lastUpdate: 9
     scaleDenominator: '25.000'
@@ -3366,7 +3382,7 @@ maps:
     title: 'De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg'
     edition: 'Edition n° 4 - 2015'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 11
     scaleDenominator: '20.000'
@@ -3383,9 +3399,9 @@ maps:
     title: 'Rade de Toulon'
     edition: 'Edition n° 7 - 2018'
     mapsFrance:
-      - FX
-    modified: '2019-09-18+02:00'
-    lastUpdate: 7
+      - FX-Med
+    modified: '2021-01-06+01:00'
+    lastUpdate: 12
     scaleDenominator: '10.000'
     bboxDM:
       SW: '43°03,65''N - 005°52,60''E'
@@ -3400,7 +3416,7 @@ maps:
     title: 'Du phare du Four à l''Ile Vierge - Port de l''Aber-Wrac''h'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 1
     scaleDenominator: '25.000'
@@ -3423,7 +3439,7 @@ maps:
     title: 'Baie de Morlaix'
     edition: 'Edition n° 5 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 4
     insetMaps:
@@ -3447,7 +3463,7 @@ maps:
     title: 'Baie de Figari - Port de Bonifacio'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-09-18+02:00'
     lastUpdate: 5
     insetMaps:
@@ -3581,7 +3597,7 @@ maps:
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
     edition: 'Publication 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 11
     scaleDenominator: '10.000'
@@ -3604,7 +3620,7 @@ maps:
     title: 'Abords de Cherbourg - Du Cap de La Hague à la Pointe de Barfleur'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-10-16+02:00'
     lastUpdate: 54
     scaleDenominator: '47.800'
@@ -3621,7 +3637,7 @@ maps:
     title: 'Baie de Douarnenez'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 12
     scaleDenominator: '30.000'
@@ -3649,9 +3665,9 @@ maps:
     title: 'De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four'
     edition: 'Edition n° 5 - 2019'
     mapsFrance:
-      - FX
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
+      - FX-Atl
+    modified: '2021-01-06+01:00'
+    lastUpdate: 6
     scaleDenominator: '25.000'
     bboxDM:
       SW: '48°18,00''N - 004°58,00''W'
@@ -3672,7 +3688,7 @@ maps:
     title: 'Ile Molène - Ile d''Ouessant - Passage du Fromveur'
     edition: 'Edition n° 6 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-11-06+01:00'
     lastUpdate: 0
     scaleDenominator: '20.000'
@@ -3689,7 +3705,7 @@ maps:
     title: 'Baie de Lannion - De la Pointe de Primel à l''île Grande'
     edition: 'Edition n° 3 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 17
     scaleDenominator: '20.000'
@@ -3722,7 +3738,7 @@ maps:
     title: 'Abords de Perros-Guirec - Les Sept Iles - De l''Ile Grande à l''Ile Balanec'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-11-06+01:00'
     lastUpdate: 3
     scaleDenominator: '20.000'
@@ -3755,7 +3771,7 @@ maps:
     title: 'De l''île Balanec aux Héaux-de-Bréhat - Cours du Jaudy'
     edition: 'Edition n° 5 - 2012'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-16+02:00'
     lastUpdate: 21
     scaleDenominator: '20.000'
@@ -3778,7 +3794,7 @@ maps:
     title: 'Abords de l''île Bréhat, anse de Paimpol - Entrée du Trieux'
     edition: 'Edition n° 4 - 2014'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-23+02:00'
     lastUpdate: 16
     scaleDenominator: '20.000'
@@ -3806,9 +3822,9 @@ maps:
     title: 'Baie de Saint-Brieuc (partie Ouest) - De la Pointe de la Tour à l''Anse d''Yffiniac'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
-    modified: '2019-10-23+02:00'
-    lastUpdate: 9
+      - FX-Atl
+    modified: '2021-01-06+01:00'
+    lastUpdate: 14
     scaleDenominator: '25.000'
     bboxDM:
       SW: '48°31,38''N - 002°55,70''W'
@@ -3834,7 +3850,7 @@ maps:
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-23+02:00'
     lastUpdate: 6
     scaleDenominator: '20.000'
@@ -3851,7 +3867,7 @@ maps:
     title: 'Abords de Saint-Malo - De l''île des Hébihens à la Pointe de la Varde'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-23+02:00'
     lastUpdate: 6
     scaleDenominator: '15.000'
@@ -3868,7 +3884,7 @@ maps:
     title: 'Du Hâvre de Rothéneuf à Cancale'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-23+02:00'
     lastUpdate: 2
     scaleDenominator: '20.000'
@@ -3891,9 +3907,9 @@ maps:
     title: 'Ports de la Côte Ouest du Cotentin'
     edition: 'Edition n° 2 - 2009'
     mapsFrance:
-      - FX
-    modified: '2019-10-30+01:00'
-    lastUpdate: 21
+      - FX-MMN
+    modified: '2021-01-06+01:00'
+    lastUpdate: 26
     insetMaps:
       -
         title: 'A - Abords de Goury'
@@ -3930,7 +3946,7 @@ maps:
     title: 'Iles Chausey'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 3
     scaleDenominator: '15.000'
@@ -3953,7 +3969,7 @@ maps:
     title: 'De la Pointe de Saint-Jacques à Damgan'
     edition: 'Publication 2002'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 11
     scaleDenominator: '15.000'
@@ -3971,7 +3987,7 @@ maps:
     title: 'De la Baie de Pont-Mahé à Piriac-sur-Mer'
     edition: 'Publication 2001'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-16+02:00'
     lastUpdate: 16
     scaleDenominator: '15.000'
@@ -3988,7 +4004,7 @@ maps:
     title: 'Golfe du Morbihan'
     edition: 'Edition n° 2 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-02+02:00'
     lastUpdate: 2
     scaleDenominator: '20.000'
@@ -4021,7 +4037,7 @@ maps:
     title: 'Ports et mouillages en Bretagne Sud'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 3
     insetMaps:
@@ -4055,7 +4071,7 @@ maps:
     title: 'De la Pointe du Talut à la Pointe de Gâvres - Ile de Groix'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-31+02:00'
     lastUpdate: 8
     scaleDenominator: '20.000'
@@ -4078,7 +4094,7 @@ maps:
     title: 'Passes et rade de Lorient'
     edition: 'Edition n° 4 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-31+02:00'
     lastUpdate: 2
     scaleDenominator: '10.000'
@@ -4101,7 +4117,7 @@ maps:
     title: 'Baie de Quiberon'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-31+02:00'
     lastUpdate: 30
     scaleDenominator: '20.000'
@@ -4118,7 +4134,7 @@ maps:
     title: Belle-Ile
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-16+02:00'
     lastUpdate: 25
     scaleDenominator: '25.000'
@@ -4146,7 +4162,7 @@ maps:
     title: 'Abords des Iles de Houat et de Hoëdic'
     edition: 'Edition n° 2 - 2003'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 19
     scaleDenominator: '20.000'
@@ -4163,7 +4179,7 @@ maps:
     title: 'Embouchure de la Vilaine - De Damgan à La Roche-Bernard'
     edition: 'Edition n° 2 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-16+02:00'
     lastUpdate: 1
     scaleDenominator: '15.000'
@@ -4186,7 +4202,7 @@ maps:
     title: 'De La Turballe à Pornichet'
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-09+02:00'
     lastUpdate: 27
     scaleDenominator: '25.000'
@@ -4224,7 +4240,7 @@ maps:
     title: 'De la Pointe de Penmarc''h à la Pointe de Trévignon'
     edition: 'Edition n° 3 - 2009'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-23+02:00'
     lastUpdate: 60
     scaleDenominator: '49.700'
@@ -4241,7 +4257,7 @@ maps:
     title: 'De la chaussée de Sein à la Pointe de Penmarc''h - Baie d''Audierne (Spéciale P)'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-09-18+02:00'
     lastUpdate: 45
     scaleDenominator: '50.000'
@@ -4264,7 +4280,7 @@ maps:
     title: 'Du Goulet de Brest à la Chaussée de Sein'
     edition: 'Edition n° 3 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-09+02:00'
     lastUpdate: 58
     scaleDenominator: '50.000'
@@ -4281,7 +4297,7 @@ maps:
     title: 'Du Goulet de Brest à Portsall - Ile d''Ouessant'
     edition: 'Edition n° 4 - 2015'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 13
     scaleDenominator: '49.100'
@@ -4298,7 +4314,7 @@ maps:
     title: 'De Portsall à l''anse de Kernic'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 18
     scaleDenominator: '50.000'
@@ -4315,7 +4331,7 @@ maps:
     title: 'De l''anse de Kernic à l''Ile Grande'
     edition: 'Edition n° 3 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-12-09+01:00'
     lastUpdate: 48
     scaleDenominator: '48.700'
@@ -4332,7 +4348,7 @@ maps:
     title: 'De l''Ile Grande à l''Ile de Bréhat'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-12-01+01:00'
     lastUpdate: 13
     scaleDenominator: '48.700'
@@ -4349,7 +4365,8 @@ maps:
     title: 'De l''île de Bréhat au Plateau des Roches Douvres'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 1
     scaleDenominator: '48.600'
@@ -4366,7 +4383,7 @@ maps:
     title: 'De l''île de Bréhat au Cap Fréhel - Baie de Saint-Brieuc'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 56
     scaleDenominator: '48.800'
@@ -4389,7 +4406,8 @@ maps:
     title: 'Du Cap Fréhel à la Pointe du Grouin - Approches de Saint-Malo'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2020-12-01+01:00'
     lastUpdate: 22
     scaleDenominator: '48.800'
@@ -4406,7 +4424,8 @@ maps:
     title: 'De la Pointe du Grouin à la Pointe d''Agon - Baie du Mont-Saint-Michel - Iles Chausey'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 4
     scaleDenominator: '48.800'
@@ -4423,7 +4442,7 @@ maps:
     title: 'De la Pointe d''Agon au Cap de Carteret - Passage de la Déroute'
     edition: 'Edition n° 3 - 2014'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 15
     scaleDenominator: '48.400'
@@ -4440,7 +4459,7 @@ maps:
     title: 'Du Cap de Carteret au Cap de La Hague - Raz Blanchard'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-10-30+01:00'
     lastUpdate: 44
     scaleDenominator: '50.000'
@@ -4457,7 +4476,7 @@ maps:
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-10-16+02:00'
     lastUpdate: 9
     scaleDenominator: '50.000'
@@ -4474,7 +4493,7 @@ maps:
     title: 'De Jersey à Guernsey'
     edition: 'Edition n° 3 - 2014'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 10
     scaleDenominator: '50.000'
@@ -4491,7 +4510,8 @@ maps:
     title: 'Des îles Chausey à Jersey - Plateau des Minquiers'
     edition: 'Edition n° 3 - 2014'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 13
     scaleDenominator: '48.500'
@@ -4508,7 +4528,7 @@ maps:
     title: 'Du Cap Muro au Cap de Feno'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 6
     scaleDenominator: '50.000'
@@ -4638,7 +4658,7 @@ maps:
     title: 'De la Pointe de Saint-Mathieu à la Chaussée de Sein - Iroise'
     edition: 'Edition n° 3 - 2008'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-09+02:00'
     lastUpdate: 53
     scaleDenominator: '49.300'
@@ -4688,7 +4708,7 @@ maps:
     title: 'Du Cap d''Antibes au Cap Ferrat - Baie des Anges - Rade de Villefranche'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-09-30+02:00'
     lastUpdate: 19
     scaleDenominator: '25.000'
@@ -4726,7 +4746,7 @@ maps:
     title: 'Des îles Baléares (Islas Baleares) à Marseille'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-13+01:00'
     lastUpdate: 84
     scaleDenominator: '500.000'
@@ -4743,7 +4763,7 @@ maps:
     title: 'De Marseille à l''île d''Elbe (Isola d''Elba) et aux Bouches de Bonifacio'
     edition: 'Publication 1989'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-07+02:00'
     lastUpdate: 141
     scaleDenominator: '500.000'
@@ -4761,7 +4781,7 @@ maps:
     title: 'Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-09-30+02:00'
     lastUpdate: 14
     scaleDenominator: '15.000'
@@ -4809,7 +4829,7 @@ maps:
     title: 'Ports de Fécamp et du Tréport'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 13
     insetMaps:
@@ -4845,7 +4865,7 @@ maps:
     title: 'Atterrages de l''entrée de La Manche - Mer Celtique'
     edition: 'Edition n° 5 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-10-09+02:00'
     lastUpdate: 3
     scaleDenominator: '500.000'
@@ -4863,7 +4883,8 @@ maps:
     title: 'Golfe de Gascogne - De Brest à Cabo Finisterre'
     edition: 'Edition n° 6 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2019-11-06+01:00'
     lastUpdate: 2
     scaleDenominator: 1.000.000
@@ -4904,7 +4925,7 @@ maps:
     title: 'De Dunkerque à Oostende'
     edition: 'Edition n° 8 - 2019'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-11-24+01:00'
     lastUpdate: 15
     scaleDenominator: '60.000'
@@ -4989,9 +5010,9 @@ maps:
     title: 'De Nice à Piombino (Spéciale P)'
     edition: 'Publication 1989'
     mapsFrance:
-      - FX
-    modified: '2019-07-19+02:00'
-    lastUpdate: 145
+      - FX-Med
+    modified: '2021-01-06+01:00'
+    lastUpdate: 151
     scaleDenominator: '250.000'
     bboxDM:
       SW: '42°50,00''N - 007°15,00''E'
@@ -5007,7 +5028,7 @@ maps:
     title: 'Du Nez de Jobourg à la Pointe de Nacqueville'
     edition: 'Publication 2013'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 16
     scaleDenominator: '20.000'
@@ -5078,7 +5099,7 @@ maps:
     title: 'Port de Boulogne-sur-Mer'
     edition: 'Edition n° 3 - 2011'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 3
     scaleDenominator: '10.000'
@@ -5124,7 +5145,7 @@ maps:
     title: 'Ports et Mouillages en Finistère Sud'
     edition: 'Edition n° 2 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-08-07+02:00'
     lastUpdate: 9
     insetMaps:
@@ -5162,7 +5183,7 @@ maps:
     title: 'De la pointe de la Torche à Loctudy'
     edition: 'Publication 2020'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-07-01+02:00'
     lastUpdate: 0
     scaleDenominator: '20.000'
@@ -5179,7 +5200,7 @@ maps:
     title: 'De Loctudy à Concarneau'
     edition: 'Publication 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 8
     scaleDenominator: '20.000'
@@ -5198,7 +5219,7 @@ maps:
     title: 'Îles de Glénan'
     edition: 'Publication 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 3
     scaleDenominator: '20.000'
@@ -5217,7 +5238,7 @@ maps:
     title: 'Abords de Calais'
     edition: 'Edition n° 5 - 2018'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-31+02:00'
     lastUpdate: 1
     scaleDenominator: '15.000'
@@ -5332,7 +5353,7 @@ maps:
     title: 'Abords de Saint-Tropez'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 1
     scaleDenominator: '20.000'
@@ -5420,7 +5441,7 @@ maps:
     title: 'Golfe d''Ajaccio'
     edition: 'Edition n° 2 - 2009'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-11-06+01:00'
     lastUpdate: 25
     scaleDenominator: '25.000'
@@ -5475,7 +5496,7 @@ maps:
     title: 'Rade d''Hyères'
     edition: 'Edition n° 5 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-10-27+01:00'
     lastUpdate: 7
     scaleDenominator: '25.000'
@@ -5521,7 +5542,7 @@ maps:
     title: 'De Piombino à Fiumicino et côte Est de Corse'
     edition: 'Edition n° 2 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 13
     scaleDenominator: '250.000'
@@ -5539,7 +5560,7 @@ maps:
     title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
     edition: 'Edition n° 3 - 2014'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-11-09+01:00'
     lastUpdate: 31
     scaleDenominator: 1.000.000
@@ -5614,7 +5635,7 @@ maps:
     title: 'Baie de Saint-Brieuc (partie Est) - De Dahouët au Cap Fréhel'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 3
     scaleDenominator: '25.000'
@@ -5641,7 +5662,8 @@ maps:
     title: 'La Manche (partie Ouest) - De Isles of Scilly et de l''Ile d''Ouessant aux Casquets'
     edition: 'Edition n° 4 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2020-12-01+01:00'
     lastUpdate: 18
     scaleDenominator: '375.000'
@@ -5657,7 +5679,8 @@ maps:
     title: 'La Manche (partie Est) - Des Casquets au Pas de Calais'
     edition: 'Edition n° 3 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2020-12-08+01:00'
     lastUpdate: 13
     scaleDenominator: '375.000'
@@ -5715,7 +5738,7 @@ maps:
     title: 'Golfe de Sagone'
     edition: 'Edition n° 2 - 2008'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 6
     scaleDenominator: '25.000'
@@ -5732,7 +5755,7 @@ maps:
     title: 'Port de Dieppe'
     edition: 'Edition n° 3 - 2006'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2019-07-19+02:00'
     lastUpdate: 9
     scaleDenominator: '12.500'
@@ -5872,7 +5895,7 @@ maps:
     title: 'Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover'
     edition: 'Edition n° 6 - 2018'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-11-24+01:00'
     lastUpdate: 16
     scaleDenominator: '74.300'
@@ -5959,7 +5982,8 @@ maps:
     title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
     edition: 'Publication 1995 - Edition n° 6 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2016-01-11'
     lastUpdate: 0
     scaleDenominator: 1.070.000
@@ -5994,7 +6018,7 @@ maps:
     title: 'Abords de Granville'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2018-10-31+01:00'
     lastUpdate: 0
     scaleDenominator: '15.000'
@@ -6011,7 +6035,8 @@ maps:
     title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
     edition: 'Publication 1992 - Edition n° 6 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2016-01-15'
     lastUpdate: 0
     scaleDenominator: '655.000'
@@ -6452,7 +6477,7 @@ maps:
     title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
     edition: 'Publication 1995 - Edition n° 6 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2016-01-15'
     lastUpdate: 0
     scaleDenominator: '700.000'
@@ -6728,8 +6753,8 @@ maps:
     edition: 'Edition n° 2 - 2013'
     mapsFrance:
       - GF
-    modified: '2017-06-21+02:00'
-    lastUpdate: 8
+    modified: '2021-01-06+01:00'
+    lastUpdate: 18
     scaleDenominator: '100.000'
     bboxDM:
       SW: '04°47,60''N - 052°50,00''W'
@@ -6745,7 +6770,7 @@ maps:
     title: 'Port de Marseille'
     edition: 'Edition n° 6 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 9
     scaleDenominator: '10.000'
@@ -6762,7 +6787,7 @@ maps:
     title: 'Abords Sud de Marseille - Des Iles du Frioul à l''Ile de Jarre'
     edition: 'Edition n° 6 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 5
     scaleDenominator: '12.500'
@@ -6779,7 +6804,7 @@ maps:
     title: 'Du Cap Couronne au Cap Croisette - Golfe de Marseille'
     edition: 'Edition n° 4 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-08-28+02:00'
     lastUpdate: 13
     scaleDenominator: '25.000'
@@ -6807,7 +6832,7 @@ maps:
     title: 'Du port de La Pointe Rouge à Cassis - Calanques de Cassis'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2019-07-19+02:00'
     lastUpdate: 4
     scaleDenominator: '20.000'
@@ -6830,7 +6855,7 @@ maps:
     title: 'De la Pointe de Saint-Gildas au Goulet de Fromentine - Baie de Bourgneuf'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 16
     scaleDenominator: '50.500'
@@ -6863,7 +6888,7 @@ maps:
     title: 'Du Croisic à Noirmoutier - Estuaire de la Loire'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 24
     scaleDenominator: '50.300'
@@ -6880,7 +6905,7 @@ maps:
     title: 'Cours de la Loire'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 28
     insetMaps:
@@ -6909,7 +6934,7 @@ maps:
     title: 'Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic'
     edition: 'Edition n° 5 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 8
     scaleDenominator: '10.000'
@@ -6926,7 +6951,7 @@ maps:
     title: 'Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret'
     edition: 'Edition n° 5 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 9
     scaleDenominator: '10.000'
@@ -6943,7 +6968,7 @@ maps:
     title: 'Port de Brest'
     edition: 'Edition n° 4 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 3
     scaleDenominator: '7.500'
@@ -6960,7 +6985,7 @@ maps:
     title: 'Rade de Brest'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 10
     scaleDenominator: '22.500'
@@ -6988,7 +7013,7 @@ maps:
     title: 'Accès à la Rade de Brest'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 14
     scaleDenominator: '22.500'
@@ -7011,7 +7036,7 @@ maps:
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
     edition: 'Edition n° 2 - 2002'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 27
     scaleDenominator: '50.800'
@@ -7034,7 +7059,7 @@ maps:
     title: 'Des Sables d''Olonne à l''Île de Ré'
     edition: 'Edition n° 2 - 2002'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 34
     scaleDenominator: '51.000'
@@ -7067,7 +7092,7 @@ maps:
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d''Antioche'
     edition: 'Edition n° 3 - 2014'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 20
     scaleDenominator: '51.200'
@@ -7090,7 +7115,7 @@ maps:
     title: 'De La Rochelle à la Pointe de La Coubre - Ile d''Oléron'
     edition: 'Edition n° 2 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-02-19+01:00'
     lastUpdate: 19
     scaleDenominator: '51.400'
@@ -7123,7 +7148,7 @@ maps:
     title: 'De Marseille à Toulon'
     edition: 'Edition n° 4 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-11-12+01:00'
     lastUpdate: 27
     scaleDenominator: '50.000'
@@ -7140,7 +7165,7 @@ maps:
     title: 'De Toulon à Cavalaire-sur-Mer - Iles d''Hyères'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2018-10-31+01:00'
     lastUpdate: 2
     scaleDenominator: '50.200'
@@ -7157,7 +7182,7 @@ maps:
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-01-29+01:00'
     lastUpdate: 4
     scaleDenominator: '50.000'
@@ -7174,9 +7199,9 @@ maps:
     title: 'De la Rade d''Agay à Monaco'
     edition: 'Edition n° 3 - 2010'
     mapsFrance:
-      - FX
-    modified: '2020-01-01+01:00'
-    lastUpdate: 34
+      - FX-Med
+    modified: '2021-01-06+01:00'
+    lastUpdate: 40
     scaleDenominator: '49.700'
     bboxDM:
       SW: '43°23,40''N - 006°50,80''E'
@@ -7191,7 +7216,7 @@ maps:
     title: 'Ile d''Yeu'
     edition: 'Edition n° 2 - 2002'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 18
     scaleDenominator: '20.000'
@@ -7214,7 +7239,7 @@ maps:
     title: 'Port des Sables-d''Olonne'
     edition: 'Edition n° 2 - 2003'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 10
     scaleDenominator: '10.000'
@@ -7231,7 +7256,7 @@ maps:
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
     edition: 'Edition n° 2 - 2003'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 23
     scaleDenominator: '15.000'
@@ -7249,7 +7274,7 @@ maps:
     title: 'Abords de La Rochelle'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 8
     scaleDenominator: '15.000'
@@ -7267,7 +7292,7 @@ maps:
     title: 'De l''Ile d''Aix au Pertuis de Maumusson - Coureau d''Oléron'
     edition: 'Edition n° 3 - 2014'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 21
     scaleDenominator: '25.000'
@@ -7290,7 +7315,7 @@ maps:
     title: 'Embouchure de la Charente'
     edition: 'Edition n° 2 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 6
     insetMaps:
@@ -7314,7 +7339,7 @@ maps:
     title: 'Abords Sud de Boulogne-sur-Mer - Du Tréport à Boulogne-sur-Mer'
     edition: 'Edition n° 4 - 2016'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-01-01+01:00'
     lastUpdate: 12
     scaleDenominator: '75.000'
@@ -7331,7 +7356,7 @@ maps:
     title: 'Abords de Fécamp et de Dieppe - Du Cap d''Antifer à Dieppe'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-02-19+01:00'
     lastUpdate: 61
     scaleDenominator: '75.900'
@@ -7348,7 +7373,7 @@ maps:
     title: 'Abords du Havre et d''Antifer - Embouchure de la Seine - De Ouistreham au Cap d''Antifer'
     edition: 'Edition n° 3 - 2017'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-02-19+01:00'
     lastUpdate: 11
     scaleDenominator: '60.000'
@@ -7365,7 +7390,7 @@ maps:
     title: 'La Seine'
     edition: 'Edition n° 3 - 2018'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-01-01+01:00'
     lastUpdate: 4
     insetMaps:
@@ -7399,7 +7424,7 @@ maps:
     title: 'Ports en Baie de Seine'
     edition: 'Edition n° 4 - 2019'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-01-01+01:00'
     lastUpdate: 1
     insetMaps:
@@ -7448,9 +7473,9 @@ maps:
     title: 'De la Pointe de La Percée à Ouistreham'
     edition: 'Edition n° 2 - 2005'
     mapsFrance:
-      - FX
-    modified: '2020-01-01+01:00'
-    lastUpdate: 34
+      - FX-MMN
+    modified: '2021-01-06+01:00'
+    lastUpdate: 40
     scaleDenominator: '48.100'
     bboxDM:
       SW: '49°15,00''N - 000°55,70''W'
@@ -7465,7 +7490,7 @@ maps:
     title: 'De la Pointe de Barfleur à La Pointe de La Percée - Iles Saint-Marcouf'
     edition: 'Edition n° 2 - 2006'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-01-01+01:00'
     lastUpdate: 52
     scaleDenominator: '48.000'
@@ -7482,7 +7507,7 @@ maps:
     title: 'Raz de Sein'
     edition: 'Edition n° 3 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 6
     scaleDenominator: '20.000'
@@ -7505,7 +7530,7 @@ maps:
     title: 'Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland'
     edition: 'Edition n° 4 - 2018'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-11-24+01:00'
     lastUpdate: 31
     scaleDenominator: '73.900'
@@ -7523,7 +7548,7 @@ maps:
     title: 'Embouchure de la Gironde'
     edition: 'Edition n° 6 - 2017'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 6
     scaleDenominator: '25.000'
@@ -7551,7 +7576,7 @@ maps:
     title: 'De la Pointe de la Coubre à la Pointe de la Négade - Embouchure de La Gironde'
     edition: 'Edition n° 5 - 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 0
     scaleDenominator: '51.800'
@@ -7574,7 +7599,7 @@ maps:
     title: 'La Gironde - La Garonne et La Dordogne'
     edition: 'Edition n° 2 - 2016'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-20+01:00'
     lastUpdate: 9
     noteCatalog: 'Correction des titres des cartouches, pas de partie principale'
@@ -7609,7 +7634,7 @@ maps:
     title: 'Bassin d''Arcachon'
     edition: 'Publication 2012'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 15
     scaleDenominator: '35.000'
@@ -7633,7 +7658,7 @@ maps:
     title: 'Abords et Port de Bayonne - Cours de l''Adour'
     edition: 'Publication 2007'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-20+01:00'
     lastUpdate: 11
     scaleDenominator: '10.000'
@@ -7657,7 +7682,7 @@ maps:
     title: 'Baies de Fontarabie et de Saint-Jean-de-Luz'
     edition: 'Publication 2007'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 14
     replaces: '(remplace 6526,6556)'
@@ -7677,7 +7702,7 @@ maps:
     title: 'Ports de Sète, Port-la-Nouvelle, Port-Vendres et Collioure'
     edition: 'Edition n° 2 - 2015'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-02-19+01:00'
     lastUpdate: 19
     insetMaps:
@@ -7701,7 +7726,7 @@ maps:
     title: 'Approches et Port de Bastia - Ports d''Ajaccio et de Propriano'
     edition: 'Publication 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-01-01+01:00'
     lastUpdate: 9
     replaces: '(remplace 6851.CA, 6856.CA)'
@@ -7727,7 +7752,7 @@ maps:
     title: 'De Vieux Boucau à la Baie de Fontarabie'
     edition: 'Publication 2007'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 26
     scaleDenominator: '50.000'
@@ -7751,7 +7776,7 @@ maps:
     title: 'Abords et Ports de Monaco'
     edition: 'Edition n° 2 - 2018'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-02-05+01:00'
     lastUpdate: 7
     scaleDenominator: '7.500'
@@ -7768,7 +7793,7 @@ maps:
     title: 'De Villefranche-sur-Mer à Menton'
     edition: 'Edition n° 2 - 2017'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-09-30+02:00'
     lastUpdate: 17
     scaleDenominator: '20.000'
@@ -7785,7 +7810,7 @@ maps:
     title: 'Du Cap Ferrat à Capo San Lorenzo'
     edition: 'Edition n° 2 - 2014'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-01-01+01:00'
     lastUpdate: 24
     scaleDenominator: '49.600'
@@ -7802,7 +7827,7 @@ maps:
     title: 'Du Cap Lévi à Barfleur'
     edition: 'Publication 2016'
     mapsFrance:
-      - FX
+      - FX-MMN
     modified: '2020-01-01+01:00'
     lastUpdate: 8
     scaleDenominator: '20.000'
@@ -8175,8 +8200,8 @@ maps:
     edition: 'Publication 2009'
     mapsFrance:
       - GP
-    modified: '2017-06-21+02:00'
-    lastUpdate: 25
+    modified: '2021-01-06+01:00'
+    lastUpdate: 34
     scaleDenominator: '60.400'
     bboxDM:
       SW: '15°48,30''N - 062°00,00''W'
@@ -8419,7 +8444,7 @@ maps:
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
     edition: 'Publication 1996'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-01-29+01:00'
     lastUpdate: 116
     scaleDenominator: '500.000'
@@ -8437,7 +8462,7 @@ maps:
     title: 'De Capo Bellavista aux Bouches de Bonifacio'
     edition: 'Publication 1995'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-10-27+01:00'
     lastUpdate: 62
     scaleDenominator: '250.000'
@@ -8561,7 +8586,7 @@ maps:
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
     edition: 'Publication 2019'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2019-07-19+02:00'
     lastUpdate: 0
     insetMaps:
@@ -8659,8 +8684,8 @@ maps:
       - BL
       - GP
       - MF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 2
+    modified: '2021-01-06+01:00'
+    lastUpdate: 15
     scaleDenominator: '300.000'
     bboxDM:
       SW: '15°47,00''N - 063°27,00''W'
@@ -8796,7 +8821,7 @@ maps:
     title: 'De Mimizan-Plage à Cabo de Ajo'
     edition: 'Publication 2012'
     mapsFrance:
-      - FX
+      - FX-Atl
     modified: '2020-01-01+01:00'
     lastUpdate: 26
     scaleDenominator: '175.000'
@@ -8813,7 +8838,7 @@ maps:
     groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
     title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
     mapsFrance:
-      - FX
+      - FX-Med
     scaleDenominator: '425.000'
     bboxDM:
       SW: '38°36,90''N - 000°30,00''W'
@@ -8829,7 +8854,7 @@ maps:
     title: 'Du port de Barcelona au Cap Cerbère'
     edition: 'Publication 2009'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-01-01+01:00'
     lastUpdate: 24
     scaleDenominator: '175.000'
@@ -8848,7 +8873,7 @@ maps:
     title: 'Du Cap Negre au Cap Cerbère'
     edition: 'Edition n° 2 - 2019'
     mapsFrance:
-      - FX
+      - FX-Med
     modified: '2020-01-01+01:00'
     lastUpdate: 0
     scaleDenominator: '50.000'
@@ -9115,7 +9140,8 @@ maps:
     title: 'MANCHEGRID - Carte générale'
     edition: 'Publication 2010'
     mapsFrance:
-      - FX
+      - FX-Atl
+      - FX-MMN
     modified: '2010-10-23'
     lastUpdate: 0
     scaleDenominator: '880.000'
@@ -9151,6 +9177,7 @@ maps:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
     edition: 'Publication 2015'
     mapsFrance:
+      - NC
       - WF
     modified: '2018-01-18'
     lastUpdate: 0
@@ -9234,7 +9261,7 @@ obsoleteMaps:
       groupTitle: 'Côte Ouest de France'
       title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
       mapsFrance:
-        - FX
+        - FX-Atl
       scaleDenominator: '15.000'
       bboxDM:
         SW: '47°45,66''N - 004°26,36''W'
@@ -9246,10 +9273,10 @@ obsoleteMaps:
         eastlimit: -4.3053333333333
   FR6646:
     '2020-12-27T07:58:18+01:00':
-      groupTitle: 'Côte Ouest de France'
+      groupTitle: 'Côte Ouest de France '
       title: 'Abords et Ports du Guilvinec et de Lesconil'
       mapsFrance:
-        - FX
+        - FX-Atl
       scaleDenominator: '15.000'
       bboxDM:
         SW: '47°45,12''N - 004°19,24''W'
