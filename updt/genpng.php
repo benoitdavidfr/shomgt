@@ -36,7 +36,7 @@ $tmppath = "$shomgeotiff/tmp";
 
 // traitements dans tmp
 $pngFiles = [];
-$tmpdir = opendir($tmppath)
+$tmpdir = @opendir($tmppath)
   or die("Erreur d'ouverture du répertoire $tmppath\n");
 while (($mapname = readdir($tmpdir)) !== false) {
   if (!is_dir("$tmppath/$mapname") || in_array($mapname, ['.','..']))
