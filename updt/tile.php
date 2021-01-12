@@ -21,7 +21,7 @@ function error(string $message) { echo $message; die(1); }
   
 //echo "argc=$argc\n";
 if ($argc <> 2) {
-  error("Usage: argv[0] {fichierPNG}\n");
+  error("Usage: $argv[0] {fichierPNG}\n");
 }
 
 $pngpath = $argv[1];
@@ -33,7 +33,6 @@ if (!preg_match('!/([^/]+/[^/.]+)\.png$!', $pngpath, $matches))
   error("Erreur: $pngpath don't match in tile.pho line ".__LINE__);
 $gtname = $matches[1];
 $updt = Yaml::parseFile(__DIR__.'/updt.yaml');
-$rectsToDelete = isset($updt['rectsToDelete'][$gtname]) ? $updt['rectsToDelete'][$gtname] : [];
 
 if (!is_dir($dirpath))
   error("Erreur: le répertoire $dirpath doit avoir été créé\n");
@@ -44,8 +43,8 @@ $width = imagesx($image);
 $height = imagesy($image);
 
 // effacement d'éventuelles parties
-if ($rectsToDelete) {
-  $gdalinfo = gdalinfo("$dirpath.info");
+if ($rectsToDelete = ($updt['rectsToDelete'][$gtname] ?? [])) {
+  $gdalinfo = gdalinfo('', $dirpath);
   $gdalbox = $gdalinfo['gbox']->proj('WorldMercator');
   if (!imagealphablending($image, false))
     throw new Exception("erreur de imagealphablending() ligne ".__LINE__);

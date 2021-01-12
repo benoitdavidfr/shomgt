@@ -274,7 +274,7 @@ class MapCat {
     
     if ((!$this->bbox || !$this->scaleDenominator) && !$this->insetMaps)
       throw new Exception("Erreur dans la création de $mapid, (bbox ou scaleDenominator) et insetMaps non définis");
-    if (0 && isset($map['mapsFrance']))
+    if (isset($map['mapsFrance']))
       $this->mapsFrance = $map['mapsFrance'];
     else { // si non défini alors il est calculé et le catalogue est marqué pour mise à jour
       $this->mapsFrance = France::interet($mapid, $this->scaleDenominator(), $this->geometry());
