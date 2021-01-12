@@ -106,8 +106,6 @@ elseif (1) { // Génération du geojson adapté à mapwcat
   foreach ($fc['features'] as $no => $feature) {
     $feature['id'] = $feature['properties']['id']; // transfert de id sous feature
     unset($feature['properties']['id']);
-    $feature['properties']['title'] = $feature['properties']['label']; // renommage label en title
-    unset($feature['properties']['label']);
     $fc['features'][$no] = $feature;
   }
   header('Access-Control-Allow-Origin: *');
