@@ -77,9 +77,9 @@
     </Exception>
     <Layer>
       <Title>cartes GéoTIFF du Shom</Title>
-      <Abstract>Service de mise à disposition des cartes GéoTIFF du Shom mis en oeuvre par MTES/CGDD/DRI/MIG.</Abstract>
+      <Abstract>Service de mise à disposition des cartes GéoTIFF du Shom mis en oeuvre par MTE/CGDD/SRI/Ecolab.</Abstract>
       <CRS>EPSG:3857</CRS> <!-- Web Mercator -->
-      <CRS>EPSG:3395</CRS> <!-- WGS84 Mercator -->
+      <CRS>EPSG:3395</CRS> <!-- WGS84 World Mercator -->
       <CRS>EPSG:4326</CRS> <!-- WGS84 lat,lon -->
       <CRS>CRS:84</CRS> <!-- WGS84 lon,lat -->
       <EX_GeographicBoundingBox>
@@ -88,10 +88,13 @@
         <southBoundLatitude>-80.0</southBoundLatitude>
         <northBoundLatitude>80.0</northBoundLatitude>
       </EX_GeographicBoundingBox>
-      <BoundingBox CRS="EPSG:3857" minx="-20037508" miny="-15538711" maxx="20037508" maxy="15538711"/>
-      <BoundingBox CRS="EPSG:3395" minx="-20037508" miny="-15496571" maxx="20037508" maxy="15496571"/>
-      <BoundingBox CRS="EPSG:4326" minx="-80.0" miny="-180.0" maxx="80.0" maxy="180.0"/>
-      <BoundingBox CRS="CRS:84" minx="-180.0" miny="-80.0" maxx="180.0" maxy="80.0"/>
+      <!--BoundingBox CRS="EPSG:3857" minx="-20037508" miny="-15538711" maxx="20037508" maxy="15538711"/-->
+      <!--BoundingBox CRS="EPSG:3395" minx="-20037508" miny="-15496571" maxx="20037508" maxy="15496571"/-->
+      <!-- Extension de l'espace des coordonnées en longitude de -360° à +360° pour permettre la visu autour de l'anti-méridien -->
+      <BoundingBox CRS="EPSG:3857" minx="-40075017" miny="-15538711" maxx="40075017" maxy="15538711"/><!-- Web Mercator -->
+      <BoundingBox CRS="EPSG:3395" minx="-40075017" miny="-15496571" maxx="40075017" maxy="15496571"/><!-- WGS84 World Mercator -->
+      <BoundingBox CRS="EPSG:4326" minx="-80.0" miny="-360.0" maxx="80.0" maxy="360.0"/><!-- WGS84 lat,lon -->
+      <BoundingBox CRS="CRS:84" minx="-360.0" miny="-80.0" maxx="360.0" maxy="80.0"/><!-- WGS84 lon,lat -->
       <Style>
         <Name>DEFAUT</Name>
       </Style>

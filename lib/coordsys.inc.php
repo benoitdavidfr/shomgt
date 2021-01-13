@@ -522,7 +522,7 @@ $refs = [
   ],
 ];
 
-if (1)
+if (0)
 foreach ($refs as $name => $ref) {
   echo "\nCoordonnees Pt Geodesique <a href='$ref[src]'>$name</a>\n";
   if (isset($ref['L93'])) {
@@ -564,10 +564,20 @@ foreach ($refs as $name => $ref) {
 }
 
 if (1) {
-  echo "proj([-180,0])="; print_r(WorldMercator::proj([-180,0]));
-  echo "proj([180,0])="; print_r(WorldMercator::proj([180,0]));
-  echo "proj([0,0])="; print_r(WorldMercator::proj([0,0]));
-  echo "proj([360,0])="; print_r(WorldMercator::proj([360,0]));
+  //echo "proj([-180,0])="; print_r(WorldMercator::proj([-180,0]));
+  //echo "proj([180,0])="; print_r(WorldMercator::proj([180,0]));
+  //echo "proj([0,0])="; print_r(WorldMercator::proj([0,0]));
+  echo "WebMercator::proj([360,0])="; print_r(WebMercator::proj([360,0]));
+  echo "WebMercator::proj([0,80])="; print_r(WebMercator::proj([0,80]));
+  echo "WorldMercator::proj([360,0])="; print_r(WorldMercator::proj([360,0]));
+  echo "WorldMercator::proj([0,80])="; print_r(WorldMercator::proj([0,80]));
 
-  echo "proj([0, 90])="; print_r(WorldMercator::proj([0, 90]));
+
+  /*bboxDM:
+    SW: '79°00,00''S - 100°00,00''E'
+    NE: '80°00,00''N - 490°00,00''E'
+  */
+  echo "WebMercator::proj([-260,0])="; print_r(WebMercator::proj([-260,0]));
+
+  //echo "proj([0, 90])="; print_r(WorldMercator::proj([0, 90]));
 }

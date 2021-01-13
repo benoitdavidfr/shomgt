@@ -187,8 +187,8 @@ definitions:
           elles sont listées dans le champ cartesAyantUnIntérêtInsuffisant.
           La valeur est un array vide ssi la carte n'intersecte pas la ZEE française ou est listée dans cartesAyantUnIntérêtInsuffisant.
           Elle prend un ou plusieurs codes des zones intersectées par la carte ou [FR] si la carte est à très petite échelle.
-          Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med' pour la côte de
-          Méditérannée, 'FX-Atl' pour la côte atlantique et 'FX-MMN' pour la côte de la Manche et de la mer du Nord.
+          Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med' pour la facade de
+          Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche et de la mer du Nord.
           Ppropriété absente ssi information inconnue.
         type: array
         items:

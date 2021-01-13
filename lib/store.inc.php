@@ -120,7 +120,7 @@ class CurrentGeoTiff {
     '8510'=> '8510/8510_2015', // Délimitations des zones maritimes
   ];
   
-  // Liste des codes et libellés des zones utilisés dans mapsFrance
+  // Libellés associés aux codes utilisés dans mapsFrance
   const ZONES = [
     'FR'=> "France",
     'FX-Med'=> "France métropolitaine - zone Méditérannée",
