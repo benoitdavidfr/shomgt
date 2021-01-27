@@ -91,6 +91,10 @@ $layers = [
     'title'=>"Carte des zones maritimes",
     'abstract'=> "Cartes des zones maritimes",
   ],
+  'gtNE'=> [
+    'title'=>"Image Natural Earth",
+    'abstract'=> "Image Natural Earth",
+  ],
   // étiquettes des numéros
   'num20M'=> [
     'title'=>"Nos des cartes 1/20.000.000",

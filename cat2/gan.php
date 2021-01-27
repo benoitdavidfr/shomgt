@@ -23,6 +23,8 @@ doc: |
 
   Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../lib/secretconfig.inc.php
 journal: |
+  27/1/2021:
+    - actualisation de la liste des statuts des territoires
   8/1/2021:
     - renommage du concept d'age en degré de péremption
       Je considère qu'une carte est périmée dès qu'il existe une évolution (nlle édition ou correction) qui n'a pas été prise en compte
@@ -92,6 +94,9 @@ class Territoire {
   static $statuts = [ // définition des statuts
     'FR'=> '',
     'FX'=> 'FX',
+    'FX-Atl'=> 'FX',
+    'FX-MMN'=> 'FX',
+    'FX-Med'=> 'FX',
     'GP'=> 'DOM',
     'GF'=> 'DOM',
     'MQ'=> 'DOM',

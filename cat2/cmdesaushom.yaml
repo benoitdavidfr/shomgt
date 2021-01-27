@@ -121,6 +121,69 @@ $schema:
     eof: { type: 'null' }
     
 cmdes:
+  2021-01-27:
+    title: 4ème cmde suite à cat2 - 26 cartes / indice de péremption >= 4,5 (aucune nouvelle carte)
+    cartesACommander:
+      - 7153
+      - 7041
+      - 6610
+      - 6615
+      - 6843
+      - 6911
+      - 6951
+      - 7024
+      - 7040
+      - 7053
+      - 7121
+      - 7124
+      - 7125
+      - 7127
+      - 7130
+      - 7139
+      - 7141
+      - 7156
+      - 7158
+      - 7161
+      - 7211
+      - 7258
+      - 7291
+      - 7434
+      - 7507
+      - 7035
+    aperçu: |
+      Cartes marines numériques raster (image) - format GéoTIFF Cartes marines numériques raster (image) - format GéoTIFF
+      Achat à l'unité
+
+          Licence : Usage interne 
+          Quantité : 26 
+          Produits téléchargeables :
+
+              7153 - De l'Île de Bréhat au Plateau des Roches Douvres
+              7041 - La Martinique - Partie Nord
+              6610 - De Bandol au Cap Sicié - Rade du Brusc
+              6615 - Îles de Port-Cros et du Levant - (Îles d'Hyères)
+              6843 - Du Cabo Creus à Port-Barcarès
+              6911 - Golfe de Porto-Vecchio
+              6951 - De Fos-sur-Mer à Capo Mele
+              7024 - Bouches de Bonifacio
+              7040 - La Manche
+              7053 - De Sète à la Pointe de l'Espiguette
+              7121 - Baie de Douarnenez
+              7124 - Baie de Lannion - De la Pointe de Primel à l'Île Grande
+              7125 - Abords de Perros-Guirec - Les Sept Îles - De l'Île Grande à l'Île Balanec
+              7127 - Abords de l'Île de Bréhat - Anse de Paimpol - Entrée du Trieux
+              7130 - Abords de Saint-Malo - De l'île des Hébihens à la Pointe de la Varde
+              7139 - De la Pointe du Talut à la Pointe de Gâvres - Île de Groix
+              7141 - Baie de Quiberon
+              7156 - De la Pointe du Grouin à la Pointe d'Agon - Baie du Mont-Saint-Michel - Îles Chausey
+              7158 - Du Cap de Carteret au Cap de la Hague - Raz Blanchard
+              7161 - Des îles Chausey à Jersey - Plateau des Minquiers
+              7211 - Golfe de Gascogne - De Brest à Cabo Finisterre
+              7258 - Abords de Calais
+              7291 - De Piombino à Fiumicino et côte Est de Corse
+              7434 - Ports de Sète, Port-la-Nouvelle, Port-Vendres et Collioure
+              7507 - Du Golfe du Lion aux Bouches de Bonifacio
+              7035 - La Réunion
   2021-01-11:
     title: 3ème cmde suite à cat2 - 20 cartes / indice de péremption >= 5,5 (aucune carte nouvelle) / réceptionnée le 11/1/2021
     cartesACommander:
@@ -229,7 +292,7 @@ cmdes:
           7292 - De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)
           7625 - De Trinidad à Cabo Orange
   2020-12-20/23:
-    title: 1ère cmde suite à cat2 - nlles cartes + cartes / age >= 10
+    title: 1ère cmde suite à cat2 - 3 nlles cartes + 14 cartes / age >= 10
     apercu: |
       Cartes marines numériques raster (image) - format GéoTIFF Cartes marines numériques raster (image) - format GéoTIFF
       Achat à l'unité

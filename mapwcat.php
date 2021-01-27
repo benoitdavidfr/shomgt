@@ -123,7 +123,7 @@ var baseLayers = {
     shomgturl+'tile.php/gtpyr/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
   ),
-  // 1/20M
+  // Planisphère 1/40M
   "Planisphère 1/40M" : new L.TileLayer(
     shomgturl+'tile.php/gt20M/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }

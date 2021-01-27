@@ -53,6 +53,11 @@ class CatApi {
       $num = $matches[1]; // no de la carte
       $sid = '';
     }
+    // Traitement de l'image Natural Earth
+    elseif ($name == '2000/NE2_HR_LC_SR_W_DR') {
+      $num = 2000;
+      $sid = '';
+    }
     else
       throw new Exception("No match on $name in ".__FILE__." line ".__LINE__);
     if (!($map = MapCat::maps()["FR$num"] ?? null))
