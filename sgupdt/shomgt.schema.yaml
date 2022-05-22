@@ -1,0 +1,103 @@
+title: Schéma JSON de shomgt
+$schema: http://json-schema.org/schema#
+$id: http://geoapi.fr/shomgt3/maps/shomgt.schema.yaml
+definitions:
+  pos:
+    decription: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
+    oneOf:
+      - description: |
+          position en dégrés-minutes dans une chaine avec le même formattage  que celui utilisé par le Shom notamment
+          dans les coins des cartes.
+          Dans l'ordre latitude, longitude, avec la virgule comme séparateur de la partie décimale des minutes.
+          La partie décimale des minutes peut être omise de même que la partie minute.
+        type: string
+        pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
+        examples:
+          - 42°39,93'N - 9°00,93'E
+          - 42°39'N - 9°00'E
+          - 42°N - 9°E
+      - description: |
+          position en degrés décimaux dans l'ordre longitude, latitude, définie par un array de 2 nombres, comme en GeoJSON
+        type: array
+        minItems: 2
+        maxItems: 2
+        items:
+          type: number
+  rect:
+    description: |
+      Rectangle géographique défini par les positions respectives des coordonnées SW et NE.
+      Les latitudes sont comprises entre -90 et 90 et la latitude N est supérieure à la latitude S.
+      Les longitudes sont sauf exceptions comprises entre -180 et +180.
+      Normalement la longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
+      Par exception, pour les quelques cartes dont l'extension en longitude est supérieure à 360°, la longitude E est
+      supérieure à 180°.
+    type: object
+    required: [SW, NE]
+    properties:
+      SW:
+        description: coin Sud-Ouest du rectangle
+        $ref: '#/definitions/pos'
+      NE:
+        description: coin Nord-Est du rectangle
+        $ref: '#/definitions/pos'
+    examples:
+      - {SW: "40°48,4'N - 7°50,4'E", NE: "43°18,9'N - 10°07,9'E"}
+  border:
+    description: nbre de pixels d'une des 4 bordures, soit un nombre soit une expression {number}-{number}
+    oneOf:
+      - type: number
+      - type: string
+        pattern: \d+-\d+
+
+type: object
+additionalProperties: false
+properties:
+  title: {type: string, description: titre du fichier}
+  description: {type: string, description: commentaire sur le fichier}
+  created: {type: string, description: date de création du fichier au format DATE_ATOM}
+  $schema:
+    oneOf:
+      - type: object
+        $ref: http://json-schema.org/schema#
+      - type: string
+patternProperties:
+  ^gt(\d+[kM]|aem|MancheGrid|ZonMar):
+    type: [object, 'null']
+    additionalProperties: false
+    patternProperties:
+      ^\d\d\d\d(_pal300|_[\dA-Z]+_gtw|_\d+|)(.pdf)?$:
+        description: |
+          Chaque GéoTIFF est identifié par son nom qui correspond au nom du fichier contenant l'image
+          Lorsqu'un GéoTIFF intersecte l'antiméridien, par convention east > 180
+          De plus, le planisphère (0101/0101_pal300) est géré de manière spécifique:
+            - d'une part, il correspond pour un même fichier à 2 entrées.
+            - d'autre part, les longitudes ne respectent pas l'intervalle de valeur
+        type: object
+        additionalProperties: false
+        required: [title, spatial]
+        properties:
+          title:
+            description: titre du GéoTiff
+            type: string
+          spatial:
+            description: zone cartographiée dans le GéoTiff défini par un rectangle
+            $ref: '#/definitions/rect'
+          borders:
+            type: object
+            additionalProperties: false
+            required: [left, top, right, bottom]
+            properties:
+              left:
+                description: nbre de pixels à couper à gauche, soit un nombre soit une expression {number}-{number}
+                $ref: '#/definitions/border'
+              top:
+                description: nbre de pixels à couper en haut, soit un nombre soit une expression {number}-{number}
+                $ref: '#/definitions/border'
+              right:
+                description: nbre de pixels à couper à droite, soit un nombre soit une expression {number}-{number}
+                $ref: '#/definitions/border'
+              bottom:
+                description: nbre de pixels à couper en bas, soit un nombre soit une expression {number}-{number}
+                $ref: '#/definitions/border'
+          note:
+            description: note

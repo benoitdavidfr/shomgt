@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  version: '0.1'
+  title: API du service Maps
+  description: |
+  contact:
+    name: Benoit DAVID - MTE/CGDD
+    email: contact@geoapi.fr
+servers:
+  - description: Serveur de dév
+    url: http://localhost/geoapi/shomgt3/maps/index.php
+paths:
+  /:
+    description: landing page
+    get:
+      operationId: landingPage
+      summary: landing page
+      responses:
+        200:
+          description: landing page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/landingPage'
+  /collections:
+    description: |
+      Liste les collections, cad les couches ShomGt.
+    get:
+      operationId: listOfLayers
+      summary: Liste les couches
+      responses:
+        200:
+          description: liste des couches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listLayers'
+  /collections/{collectionId}:
+    description: |
+      Description d'une des couches.
+    get:
+      operationId: describeLayer
+      summary: Description d'une des couches.
+      parameters:
+        - name: collectionId
+          in: path
+          description: identifiant de la couche tel que défini dans shomgt.yaml
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: description de la couche
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/describeLayer'
+  /collections/{collectionId}/map:
+    description: |
+      Affichage partiel d'une couche
+    get:
+      operationId: getMap
+      summary: Affichage partiel d'une couche
+      parameters:
+        - name: collectionId
+          in: path
+          description: identifiant de la couche
+          required: true
+          schema:
+            type: string
+        - name: width
+          in: query
+          description: Width of the viewport to present the response (the map subset).
+          required: false
+          schema:
+            type: number
+        - name: height
+          in: query
+          description: Height of the viewport to present the response (the map subset).
+          required: false
+          schema:
+            type: number
+        - name: bbox
+          in: query
+          description: |
+            Bounding box of the rendered map. The bounding box is provided as four coordinates
+
+            * Lower left corner, coordinate axis 1
+            * Lower left corner, coordinate axis 2
+            * Upper right corner, coordinate axis 1
+            * Upper right corner, coordinate axis 2
+          required: false
+          schema:
+            type: array
+            minItems: 4
+            maxItems: 4
+            items:
+              type: number
+              format: double
+          style: form
+          explode: false
+      responses:
+        200:
+          description: description du GéoTiff
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCollection'
+        400:
+          description: erreur, caractère interdit dans l'URI
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: message d'erreur
+                    type: string
+        404:
+          description: erreur, la ressource n'a pas été trouvée
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: message d'erreur
+                    type: string
+        500:
+          description: erreur interne à l'API
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: message d'erreur
+                    type: string
+
+components:
+  schemas:
+    landingPage:
+      description: LandingPage
+      type: object
+    listLayers:
+      description: Liste des couches
+      type: object
+    describeLayer:
+      description: description d'une couche
+      type: object

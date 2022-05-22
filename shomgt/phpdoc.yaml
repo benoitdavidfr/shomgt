@@ -1,0 +1,108 @@
+title: ShomGt3/shomgt - définition du micro-service shomgt d'exposition des cartes
+path: /geoapi/shomgt3/shomgt
+doc: |
+  Ce module contient le code définissant le micro-service stockant et exposant un ensemble de GéoTiffs au travers:
+    - une interface API Maps (à la OGC) pour laquelle les collections sont les couches ShomGt et les couches de numéros,
+    - une interface Tile XYZ,
+    - une interface WMS
+    - une interface de téléchargement dl.php
+    - une carte Leaflet permettant la visualisation des tuiles et du catalogue des GéoTiffs et l'appel de dl.php
+  
+  Ce micro-service peut être mis en oeuvre par un container Docker.
+  Avant de construire le container il faut expanser les cartes et les stocker dans data/current/
+  Cela est réalisé par le module ../build
+  
+  Le container est paramétré pour les données par:
+    - le contenu du répertoire stockant les cartes expansées qui est
+      - sur l'hôte: data/current
+      - dans le container: /var/www/data/current/
+    - la var. d'env. SHOMGT3_MAPS_DIR_PATH qui contient le chemin /var/www/data/current dans le conteneur
+    - le fichier shomgt.yaml listant les GéoTiffs organisés par couche et définissant pour chacun sa couverture spatiale
+      (extension de sa zone cartographiée)
+  
+  Le container doit être exécuté au moyen de la conf. docker-compose dans le répertoire ..
+  
+  Le code peut aussi être exécuté dans le container global Php8.1
+  en définissant la variable SHOMGT3_MAPS_DIR_PATH à /var/www/html/geoapi/shomgt3/data/current
+  
+  Ce module est stocké dans un projet Git synchronisé avec le GitLab MTE.
+  
+  Pour pousser l'image sur le GitLab:
+    docker login registry.gitlab-forge.din.developpement-durable.gouv.fr
+      user: gitlab-ci-token
+      passwd: glpat-cHPYxRCTmirW5DPymAQd
+    docker build -t registry.gitlab-forge.din.developpement-durable.gouv.fr/benoit.david/shomgt3 .
+    docker push registry.gitlab-forge.din.developpement-durable.gouv.fr/benoit.david/shomgt3
+  
+  A faire:
+    - tester l'image sur Gitlab avec OVH, avec le CROSS Corsen ?
+    - développer le service WMS
+    - implémenter un cache de tuiles
+    - implémenter le z-order entre les GéoTiffs
+    - implémenter une page alphanum temporal.php donnant, en html, JSON ou Yaml, la liste des cartes exposées
+      triées sur leur numéro avec pour chacune
+      - numéro
+      - titre,
+      - scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
+      - couverture spatiale,
+      - mdDate: date de modification des métadonnées
+      - edition: édition de la carte, example: Edition n° 3 - 2016
+      - lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
+    - modifier dl.php pour permettre le téléchargement des MD ISO
+    
+  périmé:
+    cmdesDocker(Périmé avec l'utilisation de docker-compose):
+    docker build -t maps .
+    # sans montage, mode normal mais impose de relancer le container pour toute modification du code
+    docker run --name maps -p 8082:80 --network=shomgt3 --rm maps
+    # avec montage, mieux adapté au développement car permet de modifier le code sans relancer le container
+    docker run --name maps -p 8082:80 --volume "$PWD":/var/www/html --network=shomgt3 --rm maps
+    # avec montage et mode detach
+    docker run --name maps -p 8082:80 --volume "$PWD":/var/www/html --network=shomgt3 --rm -d maps
+
+    # pour arrêter le container s'il est lancé en mode detach
+    docker stop maps
+    # affiche les logs
+    docker logs maps
+    
+    # accès dans un bash au container existant, soit comme root, soit comme www-data
+    docker exec -it shomgt3_maps_1 /bin/bash
+    docker exec -it --user=www-data shomgt3_maps_1 /bin/bash
+    
+journal: |
+  8/5/2022:
+    - construction d'une image avec tous les GéoTiffs
+    - modif à la marge du code
+  7/5/2022:
+    - chgt périmètre des git et du nom du module
+    - transfert maketile.php et expand.sh dans ../build
+  6/5/2022:
+    - utilisation de docker-compose et Traefik pour exécuter le conteneur
+  3/5/2022:
+    - mise en variable d'environnement du répertoire des données des cartes expansées
+    - copie dans l'image Docker des GéoTiff expansés
+  29/4/2022:
+    - traitement des GéoTiff non géoréférencés, ceux en PDF et des GéoTiff intersectant l'anti-méridien
+    - modification du Dockerfile
+  27/4/2022:
+    - améliorations notamment maketile
+  24/4/2022:
+    - première version ok
+  23/4/2022:
+    - chgt d'architecture et de nom
+  20/4/2022:
+    - première version de /collections/{collectionId}/map
+      - l'intégration ne traite que les fichiers tif géoréférencés
+  18/4/2022:
+    - création Dockerfile pour test du mécanisme d'expansion
+submodules:
+  - /geoapi/shomgt3/maps/lib
+phpScripts:
+  - /geoapi/shomgt3/maps/maps.php
+  - /geoapi/shomgt3/maps/mapwcat.php
+  - /geoapi/shomgt3/maps/tile.php
+  - /geoapi/shomgt3/maps/showtiles.php
+htmlFiles:
+  - /geoapi/shomgt3/maps/api.yaml
+  - /geoapi/shomgt3/maps/shomgt.yaml
+  - /geoapi/shomgt3/maps/shomgt.schema.yaml

@@ -1,0 +1,125 @@
+title: sgupdt - conception du module
+organisationDesRépertoiresDansLeContainer:
+  /var/www:
+    vendor:
+      description: code de synfony/yaml:6 installé par composer dans le build du container
+    data:
+      description: données, répertoire partagé avec shomgt
+      shomgt.yaml:
+        description: fichier de config de shomgt
+      maps:
+        description: répertoires des cartes expansées courantes pour shomgt
+      tilecache:
+        description: cache de tuiles de shomgt, effacé par sgupdt après une mise à jour
+    cli:
+      description: code php
+      lib:
+        description: fichiers inc.php
+      temp:
+        description: répertoire de donées temporaires dans lequel la carte en cours de traitement est expansée
+
+variables_d'environnement:
+  SHOMGT3_SERVER_URL: 
+    description: URL du serveur de cartes 7z; doit contenir le login/passwd si nécessaire
+    default: https://sgserver.geoapi.fr/index.php
+  http_proxy:
+  https_proxy: proxy à utiliser pour le serveur de cartes 7z, défaut absent
+  SHOMGT3_MAPS_DIR_PATH:
+    description: chemin du répertoire stockant les cartes expansées
+    default: /var/www/data/maps
+  SHOMGT3_ZONE:
+    description: zone géographique de sélection
+    default: WLD
+    valeursPossibles:
+      WLD: monde, toutes les cartes disponibles
+      FX: métropole
+      FX:MMN: Facade Manche-Mer du Nord
+      FX:Atl: Façade atlantique
+      FX:Med: Façade méditerranée
+      MQ: Martinique
+      GP: Guadeloupe
+      GF: Guyane
+      RE: La Réunion
+      YT: Mayotte
+      PM: Saint-Pierre-et-Miquelon
+      BL: Saint-Barthélémy
+      MF: Saint-Martin
+      TF: TAAF
+      PF: Polynésie française
+      WF: Wallis-et-Futuna
+      NC: Nouvelle-Calédonie
+      CP: Île Clipperton
+  SHOMGT3_UPDATE_DURATION: délai entre 2 mises à jour en jours (defaut 28)
+
+algorithme:
+  - TANTQUE vrai FAIRE # boucle perpétuelle
+    - télécharger {SHOMGT3_SERVER_URL}/maps.json
+    - déduire de maps.json la liste des cartes non obsolètes
+    - POUR CHAQUE carte FAIRE
+      - SI la carte n'existe pas ALORS
+        - télécharger dans data/temp la carte sur le serveur sans paramètre
+      - SINON
+        - télécharger la carte dans data/temp en indiquant en paramètres son édition et sa dernière correction
+      - FINSI
+      - SI une carte 7z a été téléchargée ALORS
+        - dézipper le 7z
+        - effacer 7z
+        - POUR chaque tif/pdf FAIRE
+          - générer le .info
+          - générer le .png
+          - effacer le .tif/pdf
+          - daller le .png
+          - effacer le .png
+        - FINFAIRE
+        - transférer le répertoire de la carte dans les données courantes
+      - FINSI
+    - FIN FAIRE
+    - SI au moins une carte a été téléchargée ou il existe au moins une carte obsolète ALORS
+      - générer shomgt_temp.yaml en en excluant les cartes obsolètes
+      - SI shomgt_temp.yaml n'est pas conforme à son schéma ALORS
+        - transmettre une erreur et sortir
+      - FINSI
+      - remplacer shomgt.yaml par shomgt_temp.yaml
+      - effacer les cartes obsolètes
+      - effacer le contenu du cache de tuiles
+    - FINSI
+    - s'endormir SHOMGT3_UPDATE_DURATION
+  - FIN_FAIRE
+
+bugs:
+  exec2022-05-18T18:20@OVH:
+    Warning: Trying to access array offset on value of type null in /var/www/cli/shomgt.php on line 140
+    Warning: foreach() argument must be of type array|object, null given in /var/www/cli/shomgt.php on line 140
+
+
+AFaire:
+  - simplifier le mécanisme en définissant un volume dans le docker-compose évitant ainsi de créer des répertoires
+  - sécuriser sgserver par une auth http similaire à celle de ShomGT2 - FAIT 19-20/5
+  - ajouter la possibilité de définir un proxy - FAIT 19/5 - utilisation des variables d'env. standard pour wget
+  - la génération de shomgt.yaml n'est pas satisfaisante car il peut y avoir des warnings qui se retrouvent
+    dans le fichier shomgt.yaml
+    - il vaut mieux générer le fichier puis tester sa conformité à part
+  
+
+stratégieDeTests:
+  principes:
+    - Il faut que je puisse simuler des livraisons successives dans incoming.
+    - Pour faire des tests.
+    - Je pars d'une situation sans carte.
+    - Je simule qqs livraisons par ex jusqu'à 2019 y compris en transferrant les autres livraisons de incoming dans incoming2.
+    - Je lance la création des cartes dans le client.
+    - Je vérifie la version des cartes.
+    - Je transfert une livraison de incoming2 dans incoming.
+    - Je vérifie la version des cartes.
+  problèmes:
+    - le mapcat est la dernière version et référence des cartes qui n'existeront pas => erreur 404
+
+linux:
+  debian:
+    buster: debian 10 remplacée par debian 11 ("Bullseye")
+    bullseye: debian 11
+    
+docker:
+  title: problème Docker d'utilisation du conteneur basé sur php:8.1.6-cli
+  problème: le conteneur n'a pas les droits pour écrire dans le répertoire sgupdt
+  solution: en php:cli le répertoire par défaut est /. Il suffit de changer de répertoire !

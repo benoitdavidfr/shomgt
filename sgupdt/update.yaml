@@ -1,0 +1,201 @@
+title: paramètres d'amélioration des GéoTiff lors de leur dallage et utilisés pour générer le shomgt.yaml
+description: |
+  Deux types de paramètres:
+    - des zones à supprimer dans les GéoTiff
+    - les bordures pour pouvoir géoréférencer les GéoTiff qui ne le sont pas
+$schema:
+  title: Schéma JSON
+  $schema: http://json-schema.org/schema#
+  $id: http://geoapi.fr/shomgt3/sgupdt/maketile.schema.yaml
+  definitions:
+    pos:
+      decription: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
+      oneOf:
+        - description: |
+            position en dégrés-minutes dans une chaine avec le même formattage  que celui utilisé par le Shom notamment
+            dans les coins des cartes.
+            Dans l'ordre latitude, longitude, avec la virgule comme séparateur de la partie décimale des minutes.
+            La partie décimale des minutes peut être omise de même que la partie minute.
+          type: string
+          pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
+          examples:
+            - 42°39,93'N - 9°00,93'E
+            - 42°39'N - 9°00'E
+            - 42°N - 9°E
+        - description: |
+            position en degrés décimaux dans l'ordre longitude, latitude, définie par un array de 2 nombres, comme en GeoJSON
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            type: number
+    rect:
+      description: |
+        Rectangle géographique défini par les positions respectives des coordonnées SW et NE.
+        Les latitudes sont comprises entre -90 et 90 et la latitude N est supérieure à la latitude S.
+        Les longitudes sont sauf exceptions comprises entre -180 et +180.
+        Normalement la longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
+        Par exception, pour les quelques cartes dont l'extension en longitude est supérieure à 360°, la longitude E est
+        supérieure à 180°.
+      type: object
+      required: [SW, NE]
+      properties:
+        SW:
+          description: coin Sud-Ouest du rectangle
+          $ref: '#/definitions/pos'
+        NE:
+          description: coin Nord-Est du rectangle
+          $ref: '#/definitions/pos'
+      examples:
+        - {SW: "40°48,4'N - 7°50,4'E", NE: "43°18,9'N - 10°07,9'E"}
+    polygon:
+      description: |
+        Polygone défini par une liste de positions
+      type: array
+      items:
+        $ref: '#/definitions/pos'
+      examples:
+        -
+          - 45°11,40'N - 0°17,50'W
+          - 44°57,81'N - 0°17,50'W
+          - 44°57,81'N - 0°24,32'W
+          - 44°57,81'N - 0°24,32'W
+          - 45°05,44'N - 0°33,62'W
+          - 45°11,40'N - 0°33,62'W
+    border:
+      description: nbre de pixels d'une des 4 bordures, soit un nombre soit une expression {number}-{number}
+      oneOf:
+        - type: number
+        - type: string
+          pattern: \d+-\d+
+
+  type: object
+  additionalProperties: false
+  properties:
+    title: {type: string, description: titre du fichier}
+    description: {type: string, description: commentaire sur le fichier}
+    $schema:
+      oneOf:
+        - type: object
+          $ref: http://json-schema.org/schema#
+        - type: string
+  patternProperties:
+    ^\d\d\d\d(_pal300|_[\dA-Z]+_gtw|_\d+|)(.pdf)?$:
+      description: |
+        Chaque GéoTIFF est identifié par son nom qui correspond au nom du fichier contenant l'image
+      type: object
+      additionalProperties: false
+      required: [title]
+      properties:
+        title:
+          description: titre du GéoTiff, utilisé pour faciliter la lecture du fichier
+          type: string
+        spatial:
+          description: zone cartographiée dans le GéoTiff défini par un rectangle, utilisée pour faciliter la lecture du fichier
+          $ref: '#/definitions/rect'
+        borders:
+          decription: paramètre borders pour géoréférencer les GéoTiffs qui ne le sont pas
+          type: object
+          additionalProperties: false
+          required: [left, top, right, bottom]
+          properties:
+            left:
+              description: nbre de pixels à couper à gauche, soit un nombre soit une expression {number}-{number}
+              $ref: '#/definitions/border'
+            top:
+              description: nbre de pixels à couper en haut, soit un nombre soit une expression {number}-{number}
+              $ref: '#/definitions/border'
+            right:
+              description: nbre de pixels à couper à droite, soit un nombre soit une expression {number}-{number}
+              $ref: '#/definitions/border'
+            bottom:
+              description: nbre de pixels à couper en bas, soit un nombre soit une expression {number}-{number}
+              $ref: '#/definitions/border'
+        toDelete:
+          description: liste de zones à effacer dans le GéoTiff
+          type: array
+          items:
+            description: zone à effacer dans le GéoTiff, un rectangle ou un polygone
+            oneOf:
+              - description: définition de la zone par un rectangle
+                type: object
+                additionalProperties: false
+                required: [rect]
+                properties:
+                  rect:
+                    $ref: '#/definitions/rect'
+              - description: définition de la zone par un polygone
+                type: object
+                additionalProperties: false
+                required: [polygon]
+                properties:
+                  polygon:
+                    $ref: '#/definitions/polygon'
+        note:
+          description: note
+
+6969_pal300:
+  title: 6969 - Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent
+  spatial:
+    SW: 42°39,93'N - 9°00,93'E
+    NE: 43°08,95'N - 9°28,64'E
+  toDelete:
+    - rect:
+        SW: 42°39,90'N - 9°22,30'E
+        NE: 43°09,00'N - 9°28,70'E
+  note: |
+    testtoDelete: # valeurs de test
+      - rect: # petit rectangle = quart SW de la partie commune aux 3 cartes
+          SW: 42°39,90'N - 9°22,30'E
+          NE: 42°42'N - 9°25'E
+      - polygon: # test effacement petit triangle sur saint-Florent
+        - [9.2879, 42.6838]
+        - [9.3070, 42.6815]
+        - [9.3012, 42.6752]
+7427_5_gtw:
+  title: '7427-2 - La Gironde - La Garonne et La Dordogne (2/3)'
+  spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
+  toDelete:
+    - polygon: # Cartouche 7427-B - Port de Blaye
+        - 45°11,40'N - 0°17,50'W
+        - 44°57,81'N - 0°17,50'W
+        - 44°57,81'N - 0°24,32'W
+        - 44°57,81'N - 0°24,32'W
+        - 45°05,44'N - 0°33,62'W
+        - 45°11,40'N - 0°33,62'W
+'8509_2015.pdf':
+  title: '8509 - Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
+  spatial:
+    SW: 30°S - 153°E
+    NE:  8°S - 174°W
+  borders:
+    left: 292
+    bottom: 239
+    right: 299
+    top: 193
+  note: Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l'anti-méridien
+'8517_2015.pdf':
+  title: '8517 - Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
+  spatial:
+    SW: 35°S - 165°W
+    NE:  5°N - 103°W
+  borders:
+    left: 326
+    bottom: 5020-4711
+    right: 7087-6834
+    top: 286
+  note: Carte spéciale absente du GAN, uniquement en PDF et non géo-référencée, Clipperton est dans un cartouche non explicité
+'8510_2015.pdf':
+  title: '8510 - Délimitations des zones maritimes'
+  spatial:
+    SW: '76°46,0''S - 088°00,00''E'
+    NE: '79°17,0''N - 448°00,00''E'
+  borders:
+    left: 217
+    bottom: 202
+    right: 224
+    top: 212
+  note: 'Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°'
+
+
+

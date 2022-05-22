@@ -1,0 +1,199 @@
+title: organisation des fichiers dans les archives contenant les cartes et liste des cas particuliers
+abstract: |
+  La section casGénéral définit le cas général de la structuration d'une archive contenant une carte Shom.
+  La section cas fournit la liste des cas avec pour chacun soit des exemples, soit la liste cartes correspondant au cas.
+casGénéral: |
+  Dans le cas général une carte Shom est livrée dans une archive '{num}.7z' où {num} est le numéro de la carte (sans FR).
+  Son dézippage génère un répertoire {num} qui contient:
+    - '{num}.png' -> miniature de la carte
+    - '{num}_pal300.tif' -> image GéoTiff de la carte géoréférencant la zone cartographiée principale
+    - '{num}_pal300.gt' -> MD GéoTiff du fichier précédent
+    - 'CARTO_GEOTIFF_{num}_pal300.xml' - MD ISO du GéoTiff précédent
+    - pour chaque cartouche {partid} (s'il en existe), avec {partid} soit un entier soit une lettre
+      - '{num}_{partid}_gtw.tif' -> image GéoTiff du cartouche {partid}
+      - '{num}_{partid}_gtw.gt' -> MD GéoTiff du cartouche {partid}
+      - 'CARTO_GEOTIFF_{num}_{partid}_gtw.xml' -> MD ISO du cartouche {partid}
+      
+  Lorsque la carte ne comporte pas de zone principale, l'image '{num}_pal300.tif' est présente mais n'est pas géoréférencée.
+  
+  Les fichiers 7z des cartes spéciales (AEM + MoncheGrid + zones maritimes) ne respectent pas le cas général:
+    - le fichier .tif n'existe pas toujours, il peut être remplacé par un fichier .pdf pour lequel gdalinfo
+      ne peut pas extraire un géoréférencement
+    - parfois les fichiers .tif et .pdf co-existent et peuvent ou non porter le même nom de base
+    - le nom de base ne respecte pas le motif du cas général
+  
+cas:
+  casGénéralSansCartouche:
+    title: cas général sans cartouche
+    examples:
+      FR6822:
+        title: 'Abords Nord de Bastia'
+        spatial:
+          SW: '42°40,00''N - 009°22,30''E'
+          NE: '43°09,00''N - 009°50,00''E'
+        files:
+          6822_pal300.tif:
+            size: 9922, 13819
+  casGénéralAvecCartouche:
+    title: cas général avec cartouche, l'ordre des cartouches dans le GAN et dans les fichiers n'est pas le même
+    examples:
+      FR7162:
+        title: 'Du Cap Muro au Cap de Feno'
+        spatial: { SW: '41°23,80''N - 008°27,40''E', NE: '41°44,60''N - 009°08,00''E' }
+        insetMaps:
+          - title: 'A - Mouillage de Porto Pollo'
+            spatial: { SW: '41°41,54''N - 008°47,34''E', NE: '41°42,94''N - 008°48,94''E' }
+          - title: 'B - Mouillage de Campomoro'
+            spatial: { SW: '41°37,59''N - 008°48,14''E', NE: '41°38,84''N - 008°49,74''E' }
+        files:
+          7162_pal300.tif:
+            size: 13819, 9922
+          7162_1_gtw.tif:
+            size: 2785, 3224
+          7162_2_gtw.tif:
+            size: 2785, 2896
+  carteSansZonePrincipale:
+    title: carte est composée uniquement de cartouches, le fichier xxxx_pal300.tif n'est pas géoréférencé
+    solution: le fichier _pal300 n'est pas utilisé dans shomgt.yaml
+    examples:
+      FR7427:
+        title: 'La Gironde - La Garonne et La Dordogne'
+        cas: carte composée uniquement de 5 cartouches, le fichier 7427_pal300.tif n'est pas géoréférencé
+        insetMaps:
+          - title: '1 - La Gironde - La Garonne et La Dordogne (1/3)'
+            scaleDenominator: '52.000'
+            spatial: { SW: '45°08,90''N - 000°55,00''W', NE: '45°30,00''N - 000°39,40''W' }
+          - title: '2 - La Gironde - La Garonne et La Dordogne (2/3)'
+            scaleDenominator: '52.300'
+            spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
+          - title: '3 - La Gironde - La Garonne et La Dordogne (3/3)'
+            scaleDenominator: '52.400'
+            spatial: { SW: '44°51,90''N - 000°22,40''W', NE: '44°57,10''N - 000°13,60''W' }
+          - title: 'A - Port de Pauillac'
+            scaleDenominator: '20.000'
+            spatial: { SW: '45°10,24''N - 000°45,58''W', NE: '45°14,24''N - 000°42,58''W' }
+          - title: 'B - Port de Blaye'
+            scaleDenominator: '20.000'
+            spatial: { SW: '45°03,44''N - 000°43,00''W', NE: '45°08,44''N - 000°37,08''W' }
+        files:
+          7427_pal300.tif:
+            size: 13819, 9922
+          7427_1_gtw.tif:
+            size: 2483, 4539
+          7427_2_gtw.tif:
+            size: 4749, 5632
+          7427_3_gtw.tif:
+            size: 2822, 2382
+          7427_4_gtw.tif:
+            size: 4840, 9085
+          7427_5_gtw.tif:
+            size: 8370, 9085
+  geotiffPdfMêmeNom:
+    title: existence d'un GeoTiff et d'un PDF ayant le même nom
+    solution: lors de l'expansion et de la génération du PNG, l'extension .pdf est conservée pour créer des noms différents
+    list:
+      FR7330:
+        title: '7330 - De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
+        cas: GeoTiff EPSG:3395 + PDF - même nom
+        7330_2016.pdf:
+          size: 4872, 6909
+        7330_2016.tif:
+          size: 12994, 18428
+      FR7360:
+        title: '7360 - De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
+        cas: GeoTiff EPSG:3395 + PDF - même nom
+        7360_2016.pdf:
+          size: 6909, 4961
+        7360_2016.tif:
+          size: 18428, 13229
+      FR8502:
+        title: '8502 - Action de l''Etat en Mer en ZMSOI'
+        cas: GeoTiff EPSG:3395 + PDF non géoréférencé - même nom
+        8502_2010.pdf:
+          size: 5020, 7087
+        8502_2010.tif:
+          size: 13383, 18900
+      FR8101:
+        title: '8101 - MANCHEGRID - Carte générale'
+        cas: GeoTiff EPSG:3395 + PDF même nom
+        8101.pdf:
+          size: 7087, 5020
+        8101.tif:
+          size: 11813, 8369
+  geotiffPdfNomsDifférents:
+    title: existence d'un GeoTiff et d'un PDF ayant des noms différents
+    solution: ok
+    list:
+      FR7344:
+        title: '7344 - De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
+        cas: GeoTiff EPSG:3395 + PDF - noms différents
+        7344/7344_2016.tif:
+          size: 18428, 13228
+        7344/7344_2016_Mercator_WGS84.pdf:
+          size: 6909, 4961
+  pasDeGeoTiffPdfNonGéoréf:
+    title: Pas de GéoTiff, PDF non géoréférencé
+    solution: utilisation du PDF est définissant les bords et en explicitant l'extension .pdf dans le shomgt.yaml
+    list:
+      FR8509:
+        title: '8509 - Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
+        cas: PDF non géoréférencé
+        8509_2015.pdf:
+          size: 7087, 5020
+      FR8517:
+        title: '8517 - Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
+        cas: PDF non géoréférencé
+        8517_2015.pdf:
+          size: 7087, 5020
+      FR8510:
+        title: '8510 - Délimitations des zones maritimes'
+        cas: PDF non géoréférencé
+        8510_2015.pdf:
+          size: 6614, 4843
+  geotiffEtZoneCartoSurAntiMéridien:
+    title: GéoTiff et zone cartographiée (principale ou secondaire) à cheval sur l'anti-méridien
+    list:
+      FR6835:
+        cas: la zone cartographiée du cartouche intersecte l'anti-méridien mais pas la zone principale
+        title: 'Océan Pacifique Nord - Partie Est'
+        scaleDenominator: 7.330.000
+        spatial:
+          SW: '15°N - 173°05''W'
+          NE: '71°30''N - 116°30''W'
+        insetMaps:
+          - title: 'Mer de Béring'
+            scaleDenominator: 7.330.000
+            spatial: { SW: '49°N - 170°15''E', NE: '65°N - 169°20''W' }
+      FR7021:
+      FR7271:
+      FR7166:
+      FR6817:
+        cas: cadre extérieur et zone cartographiée à cheval sur l'anti-méridien
+        title: 'De la Nouvelle-Zélande aux îles Fidji et Samoa'
+        scaleDenominator: 3.500.000
+        spatial:
+          SW: '37°55,40''S - 171°34,30''E'
+          NE: '07°30,00''S - 167°00,00''W'
+      FR7283:
+  geotiffSurAintiMéridienMaisPasZoneCarto:
+    title: GéoTiff à cheval sur l'anti-méridien mais aucune zone cartographiée ne l'est
+    list:
+      FR6671:
+      FR6670:
+        title: '6670 - Mers de Tasman et du Corail - De l''Australie à la Nouvelle-Zélande et  aux Îles Fidji (Fiji)'
+        spatial:
+          SW: '35°17,40''S - 146°40,00''E'
+          NE: '16°00,00''S - 180°00,00''E'
+        note: carte dont le cadre extérieur est à cheval sur l'anti-méridien mais pas l'extension de la zone cartographiée
+  couvertureSupérieureA360deg:
+    title: zone cartographiée avec une extension en latitude supérieure à 360°
+    solution: la coordonnée Est est modifiée pour être supérieure à 180° pour que l'extension en latitude soit correcte
+    list:
+      FR0101:
+        title: 'Planisphère terrestre (axé sur 65° Ouest)'
+        scaleDenominator: 40.000.000
+        spatial: { SW: 79°S - 100°E, NE: 80°N - 490°E }
+        noteCatalog: 'correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l''extension en longitude soit supérieure à 360°, correction aussi du titre'
+      FR8510:
+        title: '8510 - Délimitations des zones maritimes'
+        spatial: { SW: 76°46'S - 088°E, NE: 79°17'N - 448°E }

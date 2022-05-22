@@ -1,0 +1,5 @@
+title: bugs
+bugs:
+  xx: |
+    Sur certaines images maketile.php détruit les couleurs sur une partie des dalles
+    

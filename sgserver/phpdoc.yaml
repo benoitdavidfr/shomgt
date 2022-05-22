@@ -1,0 +1,10 @@
+title: sgserver - serveur de cartes 7z
+path: /geoapi/shomgt3/sgserver
+doc: |
+journal: |
+  19-20/5/2022:
+    - reprise du contrôle d'accès de ShomGT2 pour hébergement sur https://geoapi.fr/shomgt3/sgserver/index.php
+  11/5/2022:
+    - création
+phpScripts:
+  - /geoapi/shomgt3/sgserver/index.php

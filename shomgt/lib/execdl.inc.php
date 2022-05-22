@@ -1,0 +1,71 @@
+<?php
+/*PhpDoc:
+title: execdl.inc.php - fonctions execCmde() et download()
+name: execdl.inc.php
+functions:
+doc: |
+journal: |
+  18/5/2022:
+    - création à partir de main.php
+*/
+
+/*PhpDoc: functions
+title: execCmde - exécution d'une commande Linux - enrobage de exec()
+name: execCmde
+doc: |
+  exécution du cmde Linux
+  exec(string $command, array &$output = null, int &$result_code = null): string|false
+*/
+function execCmde(string $cmde, int $verbose): int {
+  //echo "execCmde($cmde)\n";
+  if ($verbose >= 1)
+    echo ">> $cmde\n";
+  $output = [];
+  $result_code = 0;
+  exec($cmde, $output, $result_code);
+  if ($output && ($verbose > 1)) {
+    echo "output="; print_r($output);
+  }
+  //echo "result_code=$result_code\n";
+  return $result_code;
+}
+
+/*PhpDoc: functions
+title: download - téléchargement d'un fichier en utilisant la commande wget
+name: download
+doc: |
+  effectue un wget sur l'url et stocke le résultat dans $outputFile ; retourne le code http ; si code<>200 le fichier est vide
+  Utilise les variables d'environnement http_proxy: et https_proxy si elles sont définies
+  ainsi que le login/passwd défini dans l'URL du serveur
+*/
+function download(string $url, string $outputFile, int $verbose): int {
+  //echo "download($url, $outputFile)<br>\n";
+  execCmde("wget -O $outputFile -o ".__DIR__."/wgetlogfile.log --server-response $url", $verbose);
+  $log = file_get_contents(__DIR__.'/wgetlogfile.log');
+  //echo $log;
+  //sleep(10*60);
+  /* Lorsqu'une authentification est nécessaire, il y a plusieurs appels HTTP et donc plusieurs match du pattern
+     Il est nécessaire de récupérer le dernier match qui correspond au dernier appel HTTP
+  */
+  $httpCode = null;
+  while (preg_match('!\n  HTTP/1\.1 (\d+) ([^\n]+)\n!', $log, $matches)) {
+    $httpCode = $matches[1];
+    //echo "httpCode=$httpCode\n";
+    $log = preg_replace('!\n  HTTP/1\.1 (\d+) ([^\n]+)!', '', $log, 1);
+  }
+  //echo "httpCode=$httpCode\n";
+  if (!$httpCode)
+    throw new Exception("No match httpCode dans download($url)");
+
+  if ($httpCode <> 200)
+    unlink($outputFile); // efface le fichier vide
+  return $httpCode;
+}
+
+if (0) { // Test de download() sur le serveur servtest.php
+  echo "Test de download()<br>\n";
+  foreach (['200', '404', '400', '410', '204'] as $test) {
+    echo "$test => ",download("http://localhost/geoapi/shomgt3/sgupdt/servtest.php?test=$test", "test/$test"),"\n";
+  }
+  die();
+}
