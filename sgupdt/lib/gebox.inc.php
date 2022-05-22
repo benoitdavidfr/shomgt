@@ -17,6 +17,8 @@ doc: |
   Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
   Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
 journal: |
+  22/5/2022:
+    - correction d'un bug dans GBox::asGeoJsonBbox()
   29/4/2022:
     - création d'un GBox à partir des coins SW et NE et prise en compte du cas où il intersecte l'anti-méridien
   9/3/2019:
@@ -236,10 +238,12 @@ abstract class BBox {
 name: GBox
 title: class GBox extends BBox - Gestion d'une BBox en coord. géo., chaque point codé comme [lon, lat]
 doc: |
-  (-180 <= lon <= 180) && (-90 <= lat <= 90)
+  Par convention, on cherche à respecter:
+    (-180 <= lon <= 180) && (-90 <= lat <= 90)
   sauf pour les boites à cheval sur l'anti-méridien où:
     (-180 <= lonmin <= 180 < lonmax <= 180+360 )
   Cette convention est différente de celle utilisée par GeoJSON.
+  Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
 */}
 class GBox extends BBox {
   const ErrorParamInFromShomGt = 'GBox::ErrorParamInFromShomGt';
@@ -321,7 +325,7 @@ class GBox extends BBox {
   
   // renvoie un array de 4 coord [west, south, east, north] avec east < 180 conforme à la structuration dans GeoJSON
   function asGeoJsonBbox(): array {
-    return [$this->west(), $this->south(), $this->north(), ($this->east() > 180) ? $this->east() - 360 : $this->east()];
+    return [$this->west(), $this->south(), ($this->east() > 180) ? $this->east() - 360 : $this->east(), $this->north()];
   }
   
   function translate360West(): self { // retourne le GBox translaté de 360° vers l'ouest
