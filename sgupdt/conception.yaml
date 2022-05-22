@@ -121,17 +121,19 @@ stratégieDeTests2:
     - stocké dans shomgt3/incoming
     
 conceptionJeuTestLivraisons:
-  20170531:
+  20170531: # 2 cartes très standard au 1/50k
     6969.7z: première carte (Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent)
     6822.7z: 2ème carte (Abords Nord de Bastia)
-  20170613:
-    0101.7z: 3ème carte
-  20181130:
+  20170613: # 2 cartes particulières 
+    0101.7z: planisphère
+    7283.7z: carte à cheval sur l'anti-méridien
+  20181130: # test de l'obsolescence d'une carte
     obsolete:
       FR6822: Carte 6822 obsolète
-  20191118a:
+  20191118a: # Test de l'actualisation d'une carte
     6969.7z: actualisation de la première carte
-    
+  201911cartesAEM: # test carte PDF
+    8509.7z: carte AEM PDF à cheval sur l'anti-mérifien'
   
 linux:
   debian:

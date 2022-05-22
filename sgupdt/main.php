@@ -271,7 +271,7 @@ foreach (Maps::$mapNums as $mapnum) {
 }
 
 // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
-!execCmde("php ".__DIR__."/shomgt.php > $TEMP/shomgt.yaml", CMDE_VERBOSE)
+!execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)
   or throw new Exception("Erreur dans la génération de shomgt.yaml");
 rename("$TEMP/shomgt.yaml", "$SHOMGT3_MAPS_DIR_PATH/../shomgt.yaml")
   or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $SHOMGT3_MAPS_DIR_PATH/../shomgt.yaml)");

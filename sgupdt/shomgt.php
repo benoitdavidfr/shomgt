@@ -42,6 +42,8 @@ doc: |
     - implémenter un mécanisme z-ordrer
 
 journal: |
+  22/5/2022:
+    - ajout possibilité d'écrire shomgt.yaml dans un fichier et pas uniquement sur STDOUT
   18/5/2022:
     - adaptation à l'utilisation dans le conteneur
   17/5/2022:
@@ -65,6 +67,13 @@ require_once __DIR__.'/lib/gdalinfo.inc.php';
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
+if ($argc == 1)
+  $fout = STDOUT;
+elseif ($argc == 2) {
+  if (!($fout = fopen($argv[1], 'w')))
+    throw new Exception("Erreur d'ouverture du fichier $argv[1]");
+}
+  
 // récupère le rectangle de géoréférencement du GéoTiff $gtname stocké dans ../data
 function georefrect(string $gtname): GBox {
   //echo "georefrect($gtname)\n";
@@ -365,12 +374,12 @@ foreach ($geotiffs as $mapnum => $gtnames) {
 
 // Génération dans $yaml du fichier shomgt.yaml en vérifiant sa validité Yaml et sa conformité au schéma
 $yaml = ShomGt::allInYaml();
+fwrite($fout, $yaml);
 try {
   $parsed = Yaml::parse($yaml);
 }
 catch (ParseException $e) {
   fprintf(STDERR, "Erreur dans l'analyse Yaml du flux de sortie : %s\n", $e->getMessage());
-  echo $yaml;
   exit(1);
 }
 
@@ -378,13 +387,11 @@ $parsed['$schema'] = __DIR__.'/'.$parsed['$schema'];
 $status = JsonSchema::autoCheck($parsed);
 if ($status->ok()) {
   fprintf(STDERR, "Ok, shomgt.yaml conforme à son schéma\n");
-  echo $yaml;
   exit(0);
 }
 else {
   fprintf(STDERR, "Erreur, shomgt.yaml NON conforme à son schéma\n");
   foreach ($status->errors() as $error)
     fprintf(STDERR, "%s\n", $error);
-  echo $yaml;
   exit(2);
 }
