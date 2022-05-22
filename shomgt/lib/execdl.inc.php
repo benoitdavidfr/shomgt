@@ -5,6 +5,8 @@ name: execdl.inc.php
 functions:
 doc: |
 journal: |
+  20/5/2022:
+    - modif pour traiter un téléchargement avec authentification
   18/5/2022:
     - création à partir de main.php
 */
@@ -44,9 +46,9 @@ function download(string $url, string $outputFile, int $verbose): int {
   $log = file_get_contents(__DIR__.'/wgetlogfile.log');
   //echo $log;
   //sleep(10*60);
-  /* Lorsqu'une authentification est nécessaire, il y a plusieurs appels HTTP et donc plusieurs match du pattern
-     Il est nécessaire de récupérer le dernier match qui correspond au dernier appel HTTP
-  */
+  /* modif 20/5/2022
+     Lorsqu'une authentification est nécessaire, il y a plusieurs appels HTTP et donc plusieurs match du pattern
+     Il est alors nécessaire de récupérer le dernier match qui correspond au dernier appel HTTP */
   $httpCode = null;
   while (preg_match('!\n  HTTP/1\.1 (\d+) ([^\n]+)\n!', $log, $matches)) {
     $httpCode = $matches[1];
@@ -54,18 +56,29 @@ function download(string $url, string $outputFile, int $verbose): int {
     $log = preg_replace('!\n  HTTP/1\.1 (\d+) ([^\n]+)!', '', $log, 1);
   }
   //echo "httpCode=$httpCode\n";
-  if (!$httpCode)
+  if (!$httpCode) {
+    echo file_get_contents(__DIR__.'/wgetlogfile.log');
     throw new Exception("No match httpCode dans download($url)");
+  }
 
   if ($httpCode <> 200)
     unlink($outputFile); // efface le fichier vide
   return $httpCode;
 }
 
-if (0) { // Test de download() sur le serveur servtest.php
-  echo "Test de download()<br>\n";
-  foreach (['200', '404', '400', '410', '204'] as $test) {
-    echo "$test => ",download("http://localhost/geoapi/shomgt3/sgupdt/servtest.php?test=$test", "test/$test"),"\n";
-  }
-  die();
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire
+  
+  
+// Test de download() sur le serveur servtest.php
+echo "<h2>Test de download() sur servtest.php</h2><pre>\n";
+foreach (['200', '404', '400', '410', '204'] as $test) {
+  echo "$test => ",download("http://localhost/geoapi/shomgt3/sgupdt/servtest.php?test=$test", "../test/$test", 9),"\n";
 }
+
+echo "auth => ",download("http://user:mdp@localhost/geoapi/shomgt3/sgupdt/servtest.php?test=401", "../test/auth", 9),"\n";
+echo file_get_contents("../test/auth");
+
+echo "badauth => ",download("http://user:mauvaismdp@localhost/geoapi/shomgt3/sgupdt/servtest.php?test=401", "../test/badauth", 9),"\n";
+
+die();

@@ -10,11 +10,15 @@ doc: |
     scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
   La méthode statique read() retourne un array avec ces informations
 journal:
+  22/5/2022:
+    - utilisation EnVar
   3/5/2022:
     - correction bug
     - changement du séparateur des milliers en '_' car 1) moins confusant que '.' et 2) utilisé par Php et Yaml
     - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
 */
+require_once __DIR__.'/envvar.inc.php';
+
 class IsoMd {
   const ErrorFileNotFound = 'IsoMd::ErrorFileNotFound';
   const NoMatchForMdDate = 'IsoMd::NoMatchForMdDate';
@@ -39,7 +43,7 @@ class IsoMd {
   
   static function read(string $gtname): array {
     $mapNum = substr($gtname, 0, 4);
-    if (!($xmlmd = @file_get_contents(getenv('SHOMGT3_MAPS_DIR_PATH')."/$mapNum/CARTO_GEOTIFF_$gtname.xml")))
+    if (!($xmlmd = @file_get_contents(EnvVar::val('SHOMGT3_MAPS_DIR_PATH')."/$mapNum/CARTO_GEOTIFF_$gtname.xml")))
       throw new SExcept("Fichier de MD non trouvé pour gtname=$gtname", self::ErrorFileNotFound);
     
     $pattern = '!<gmd:dateStamp>\s*<gco:DateTime[^>]*>([^<]*)</gco:DateTime>\s*</gmd:dateStamp>!';

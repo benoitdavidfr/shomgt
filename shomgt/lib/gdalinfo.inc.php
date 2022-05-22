@@ -7,6 +7,8 @@ doc: |
   Traitement créés pour les cartes Shom sur la base de l'exemple ci-dessous.
   A adapter pour répondre à d'autres cas.
 journal: |
+  22/5/2022:
+    - modif. utilisation EnVar
   3/5/2022:
     - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
     - chagt du paramètre de GdalInfo::__construct()
@@ -19,6 +21,7 @@ journal: |
     - création pour répondre aux besoins de décodage des infos CRS liées aux cartes Shom
 */
 require_once __DIR__.'/sexcept.inc.php';
+require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/gebox.inc.php';
 
 /*PhpDoc: classes
@@ -174,7 +177,7 @@ class GdalInfo {
   }
   
   static function filepath(string $gtname): string {
-    return sprintf('%s/%s/%s.info', getenv('SHOMGT3_MAPS_DIR_PATH'), substr($gtname, 0, 4), $gtname);
+    return sprintf('%s/%s/%s.info', EnvVar::val('SHOMGT3_MAPS_DIR_PATH'), substr($gtname, 0, 4), $gtname);
   }
   function size(): array { return $this->size; }
   function ebox(): ?EBox { return $this->ebox; }

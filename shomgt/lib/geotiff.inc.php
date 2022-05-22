@@ -8,6 +8,8 @@ doc: |
   test:
     http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
 journal: |
+  22/5/2022:
+    - modif utilisation EnVar
   3/5/2022:
     - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
   1/5/2022:
@@ -17,6 +19,7 @@ journal: |
 includes:
   - lib/gdalinfo.inc.php
 */
+require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -134,7 +137,7 @@ class GeoTiff {
           }
           $tile = new GeoRefImage($tileBbox);
           $filename = sprintf("%s/%s/%s/%1X-%1X.png",
-            getenv('SHOMGT3_MAPS_DIR_PATH'), substr($this->name, 0, 4), $this->name, $i, $j);
+            EnVar::val('SHOMGT3_MAPS_DIR_PATH'), substr($this->name, 0, 4), $this->name, $i, $j);
           $tile->createfrompng($filename);
           $dest->copyresampled($tile, $intBbox, $debug);
         }
