@@ -114,6 +114,25 @@ stratégieDeTests:
   problèmes:
     - le mapcat est la dernière version et référence des cartes qui n'existeront pas => erreur 404
 
+stratégieDeTests2:
+  principes:
+    - faire des tests avec moins de cartes que normal
+    - définir un jeu de test de livraisons
+    - stocké dans shomgt3/incoming
+    
+conceptionJeuTestLivraisons:
+  20170531:
+    6969.7z: première carte (Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent)
+    6822.7z: 2ème carte (Abords Nord de Bastia)
+  20170613:
+    0101.7z: 3ème carte
+  20181130:
+    obsolete:
+      FR6822: Carte 6822 obsolète
+  20191118a:
+    6969.7z: actualisation de la première carte
+    
+  
 linux:
   debian:
     buster: debian 10 remplacée par debian 11 ("Bullseye")

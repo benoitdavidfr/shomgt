@@ -7,7 +7,7 @@ class EnvVar {
     'SHOMGT3_MAPS_DIR_PATH' => '/var/www/data/maps',
   ];
   
-  static val(string $name): string {
+  static function val(string $name): string {
     if ($val = getenv($name))
       return $val;
     else

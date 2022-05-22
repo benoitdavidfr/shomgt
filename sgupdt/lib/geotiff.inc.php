@@ -9,7 +9,7 @@ doc: |
     http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
 journal: |
   22/5/2022:
-    - modif utilisation EnVar
+    - modif utilisation EnvVar
   3/5/2022:
     - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
   1/5/2022:
@@ -137,7 +137,7 @@ class GeoTiff {
           }
           $tile = new GeoRefImage($tileBbox);
           $filename = sprintf("%s/%s/%s/%1X-%1X.png",
-            EnVar::val('SHOMGT3_MAPS_DIR_PATH'), substr($this->name, 0, 4), $this->name, $i, $j);
+            EnvVar::val('SHOMGT3_MAPS_DIR_PATH'), substr($this->name, 0, 4), $this->name, $i, $j);
           $tile->createfrompng($filename);
           $dest->copyresampled($tile, $intBbox, $debug);
         }

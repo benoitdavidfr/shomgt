@@ -1,27 +1,19 @@
---2022-05-21 05:58:39--  http://user:*password*@localhost/geoapi/shomgt3/sgupdt/servtest.php?test=401
+--2022-05-22 09:39:14--  http://localhost/geoapi/shomgt3/sgserver/index.php/maps.json
 Resolving localhost (localhost)... 127.0.0.1, ::1
 Connecting to localhost (localhost)|127.0.0.1|:80... connected.
 HTTP request sent, awaiting response... 
-  HTTP/1.1 401 Unauthorized
-  Date: Sat, 21 May 2022 05:58:39 GMT
+  HTTP/1.1 200 OK
+  Date: Sun, 22 May 2022 09:39:14 GMT
   Server: Apache/2.4.53 (Debian)
   X-Powered-By: PHP/8.1.6
-  WWW-Authenticate: Basic realm="Authentification pour acces à sertest.php"
-  Content-Length: 549
+  Content-Length: 227
   Keep-Alive: timeout=5, max=100
   Connection: Keep-Alive
-  Content-Type: text/html; charset=UTF-8
-Authentication selected: Basic realm="Authentification pour acces à sertest.php"
-Reusing existing connection to localhost:80.
-HTTP request sent, awaiting response... 
-  HTTP/1.1 401 Unauthorized
-  Date: Sat, 21 May 2022 05:58:39 GMT
-  Server: Apache/2.4.53 (Debian)
-  X-Powered-By: PHP/8.1.6
-  WWW-Authenticate: Basic realm="Authentification pour acces à sertest.php"
-  Content-Length: 546
-  Keep-Alive: timeout=5, max=99
-  Connection: Keep-Alive
-  Content-Type: text/html; charset=UTF-8
+  Content-Type: application/json
+Length: 227 [application/json]
+Saving to: ‘/var/www/html/geoapi/shomgt3/sgupdt/temp/maps.json’
 
-Username/Password Authentication Failed.
+     0K                                                       100% 4.88M=0s
+
+2022-05-22 09:39:14 (4.88 MB/s) - ‘/var/www/html/geoapi/shomgt3/sgupdt/temp/maps.json’ saved [227/227]
+

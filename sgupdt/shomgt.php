@@ -131,7 +131,7 @@ class Map {
   static $cat; // catalogue [{mapName} => Map]
   
   static function init(): void { // initialise à partir du fichier cat.json téléchargé de $SHOMGT3_SERVER_URL
-    $url = EnVar::val('SHOMGT3_SERVER_URL').'/cat.json';
+    $url = EnvVar::val('SHOMGT3_SERVER_URL').'/cat.json';
     if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
     $tempPath = __DIR__.'/temp/maps.json';
     $httpCode = download($url, $tempPath, 0);
@@ -306,7 +306,7 @@ function obsoleteMaps(): array {
   $obsoleteMaps = [];
   if (($maps = @file_get_contents(__DIR__.'/temp/maps.json')) === false) {
     if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
-    $SHOMGT3_SERVER_URL = EnVar::val('SHOMGT3_SERVER_URL');
+    $SHOMGT3_SERVER_URL = EnvVar::val('SHOMGT3_SERVER_URL');
     $httpCode = download("$SHOMGT3_SERVER_URL/maps.json", __DIR__.'/temp/maps.json', 0);
     if ($httpCode <> 200) {
       fprintf(STDERR, "Erreur de téléchargement du fichier $SHOMGT3_SERVER_URL/maps.json\n");
@@ -370,22 +370,21 @@ try {
 }
 catch (ParseException $e) {
   fprintf(STDERR, "Erreur dans l'analyse Yaml du flux de sortie : %s\n", $e->getMessage());
-  
   echo $yaml;
   exit(1);
 }
 
-$yaml['$schema'] = __DIR__.'/'.$yaml['$schema'];
-$status = JsonSchema::autoCheck($yaml);
+$parsed['$schema'] = __DIR__.'/'.$parsed['$schema'];
+$status = JsonSchema::autoCheck($parsed);
 if ($status->ok()) {
   fprintf(STDERR, "Ok, shomgt.yaml conforme à son schéma\n");
-  echo $out;
+  echo $yaml;
   exit(0);
 }
 else {
   fprintf(STDERR, "Erreur, shomgt.yaml NON conforme à son schéma\n");
   foreach ($status->errors() as $error)
     fprintf(STDERR, "%s\n", $error);
-  echo $out;
+  echo $yaml;
   exit(2);
 }

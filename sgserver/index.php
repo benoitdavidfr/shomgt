@@ -30,6 +30,8 @@ doc: |
   Les 7z sont stockés dans le répertoire ../../../shomgeotiff/incoming avec un répertoire par livraison nommé avec un nom
   commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
+  22/5/2022:
+    - mise en variable d'environnement de SHOMGT3_INCOMING_PATH pour permettre des tests sur moins de cartes
   19/5/2022:
     - ajout gestion du contrôle d'accès et modif gestion erreurs Http
   18/5/2022:
@@ -66,7 +68,7 @@ function logRecord(array $log): void {
     FILE_APPEND|LOCK_EX);
 }
 
-logRecord($_SERVER);
+//logRecord($_SERVER);
 
 define ('HTTP_ERROR_CODES', [
   204 => 'No Content', // Requête traitée avec succès mais pas d’information à renvoyer. 
@@ -119,8 +121,8 @@ catch (Exception $e) {
   sendHttpCode(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
 }
 
-
-define ('INCOMING_PATH', __DIR__.'/../../../shomgeotiff/incoming');  // chemin du répertoire des livraisons
+if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')) || !is_dir($INCOMING_PATH))
+  throw new Exception("Erreur, variable d'env. SHOMGT3_INCOMING_PATH non définie ne correspond pas au chemin d'un répertoire");
 
 date_default_timezone_set('UTC');
 
@@ -179,22 +181,23 @@ require_once __DIR__.'/lib/readmapversion.inc.php';
 // Si la carte n'existe pas alors renvoie ''. Si la carte est obsolete alors renvoie 'obsolete'
 function findNewerMap(string $mapnum): string {
   //echo "findNewerMap($mapnum)<br>\n";
+  global $INCOMING_PATH;
   // construction du fichier newermap.pser contenant pour chaque numéro de carte la livraison contenant sa dernière version
-  if (!is_file(__DIR__.'/newermap.pser') || (filemtime(INCOMING_PATH) > filemtime(__DIR__.'/newermap.pser'))) {
+  if (!is_file(__DIR__.'/newermap.pser') || (filemtime($INCOMING_PATH) > filemtime(__DIR__.'/newermap.pser'))) {
     $newermap = []; // [{mapnum} => ({deliveryName} | 'obsolete')]
-    foreach (new DirectoryIterator(INCOMING_PATH) as $delivery) {
+    foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
       if ($delivery->isDot()) continue;
       if ($delivery->getType() == 'dir') {
         //echo "* $delivery<br>\n";
         // Prise en compte des cartes que cette livraison rend obsolètes
-        if (is_file(INCOMING_PATH."/$delivery/index.yaml")) {
-          $index = Yaml::parseFile(INCOMING_PATH."/$delivery/index.yaml");
+        if (is_file($INCOMING_PATH."/$delivery/index.yaml")) {
+          $index = Yaml::parseFile($INCOMING_PATH."/$delivery/index.yaml");
           foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
             $mn = substr($mapid, 2);
             $newermap[$mn] = 'obsolete';
           }
         }
-        foreach (new DirectoryIterator(INCOMING_PATH."/$delivery") as $map7z)  {
+        foreach (new DirectoryIterator($INCOMING_PATH."/$delivery") as $map7z)  {
           if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
             //echo "- carte $map7z<br>\n";
             $mn = $map7z->getBasename('.7z');
@@ -211,25 +214,13 @@ function findNewerMap(string $mapnum): string {
   
   //echo "<pre>incoming="; print_r($incoming); die("Fin ligne ".__LINE__."\n");
   if (!($delivery = ($newermap[$mapnum] ?? null))) {
-    /*logRecord(['findNewerMap'=> [
-      'params'=> ['mapnum'=> $mapnum],
-      'return'=> '',
-    ]]);*/
     return '';
   }
   elseif ($delivery == 'obsolete') {
-    /*logRecord(['findNewerMap'=> [
-      'params'=> ['mapnum'=> $mapnum],
-      'return'=> 'obsolete',
-    ]]);*/
     return 'obsolete';
   }
   else {
-    /*logRecord(['findNewerMap'=> [
-      'params'=> ['mapnum'=> $mapnum],
-      'return'=> realpath(INCOMING_PATH)."/$delivery/$mapnum.7z",
-    ]]);*/
-    return realpath(INCOMING_PATH)."/$delivery/$mapnum.7z";
+    return "$INCOMING_PATH/$delivery/$mapnum.7z";
   }
 }
 
@@ -308,13 +299,13 @@ if (preg_match('!^/map/(\d\d\d\d)/newer/((\d\d\d\dc\d+)|(undefined))\.7z$!', $_S
 if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
   $maps = []; // [{mapnum} => {lien}]
   //echo "<pre>"; print_r($_SERVER);
-  foreach (new DirectoryIterator(INCOMING_PATH) as $delivery) {
+  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
     if ($delivery->isDot()) continue;
     if ($delivery->getType() == 'dir') {
       //echo "* $delivery<br>\n";
       // Prise en compte des cartes que cette livraison rend obsolètes
-      if (is_file(INCOMING_PATH."/$delivery/index.yaml")) {
-        $index = Yaml::parseFile(INCOMING_PATH."/$delivery/index.yaml");
+      if (is_file("$INCOMING_PATH/$delivery/index.yaml")) {
+        $index = Yaml::parseFile("$INCOMING_PATH/$delivery/index.yaml");
         foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
           $mapnum = substr($mapid, 2);
           if (!isset($maps[$mapnum])) {
@@ -329,7 +320,7 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
           }
         }
       }
-      foreach (new DirectoryIterator(INCOMING_PATH."/$delivery") as $map7z)  {
+      foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
         if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
           //echo "- carte $map7z<br>\n";
           $mapnum = $map7z->getBasename('.7z');
@@ -360,19 +351,19 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
 if (preg_match('!^/map/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
   $qmapnum = $matches[1];
   $map = []; // [{version} => ['num'=> {num}, 'status'=> 'obsolete'?, 'versions'=> [{idv}=> {path}]]]
-  foreach (new DirectoryIterator(INCOMING_PATH) as $delivery) {
+  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
     if ($delivery->isDot()) continue;
     if ($delivery->getType() == 'dir') {
       //echo "* $delivery<br>\n";
       // Prise en compte des cartes que cette livraison rend obsolètes
-      if (is_file(INCOMING_PATH."/$delivery/index.yaml")) {
-        $index = Yaml::parseFile(INCOMING_PATH."/$delivery/index.yaml");
+      if (is_file("$INCOMING_PATH/$delivery/index.yaml")) {
+        $index = Yaml::parseFile("$INCOMING_PATH/$delivery/index.yaml");
         foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
           if (substr($mapid, 2) == $qmapnum)
             $map = ['num'=> $qmapnum, 'status' => 'obsolete', 'versions'=> $map['versions']];
         }
       }
-      foreach (new DirectoryIterator(INCOMING_PATH."/$delivery") as $map7z)  {
+      foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
         if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z') && ($map7z->getBasename('.7z') == $qmapnum)) {
           $version = findMapVersionIn7z($map7z->getPathname());
           $path = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/map/$qmapnum-$version";
@@ -399,15 +390,15 @@ if (preg_match('!^/map/(\d\d\d\d)-((\d\d\d\dc\d+)|(undefined))\.(7z|png)$!', $_S
   $qversion = $matches[2];
   $qformat = $matches[5];
   //echo "qformat=$qformat\n"; die();
-  foreach (new DirectoryIterator(INCOMING_PATH) as $delivery) {
+  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
     if ($delivery->isDot()) continue;
     if ($delivery->getType() == 'dir') {
       //echo "* $delivery<br>\n";
-      foreach (new DirectoryIterator(INCOMING_PATH."/$delivery") as $map7z)  {
+      foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
         if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z') && ($map7z->getBasename('.7z') == $qmapnum)) {
           $version = findMapVersionIn7z($map7z->getPathname());
           if ($version == $qversion) {
-            $pathOf7z = realpath(INCOMING_PATH."/$delivery/$map7z");
+            $pathOf7z = realpath("$INCOMING_PATH/$delivery/$map7z");
             if ($qformat == '7z') {
               if (DEBUG)
                 echo "Simulation de téléchargement de $pathOf7z\n";
