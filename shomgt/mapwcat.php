@@ -4,6 +4,9 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  22/5/2022:
+    - modif affichage des caractéristiques de chaque GeoTiff
+    - corr. bug dans catalogues cartesAEM
   1-3/5/2022:
     - clonage dans shomgt3 et adaptation
   26/4/2022:
@@ -80,24 +83,19 @@ var shomgturl = <?php echo "'$shomgturl';\n"; ?>
 
 // affichage des caractéristiques de chaque GeoTiff
 var onEachFeature = function (feature, layer) {
-  /*
-  popupContent += '<b>Liens:</b><ul>';
-  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".png' target='_blank'>image PNG du géotiff</a></li>";
-  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+num+".png' target='_blank'>mini image PNG de la carte</a></li>";
-  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+num+".7z' target='_blank'>archive Shom de la carte</a></li>";
-  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".crop.tif' target='_blank'>"
-    +"image GéoTIFF rognée</a></li>";
-  popupContent += "<li><a href='"+shomgturl+"ws/dl.php/"+gtname+".json' target='_blank'>"
-    +"propriétés du géotiff en JSON</a></li>";
-  popupContent += '</ul>';*/
-  var popupContent = '<pre><u><i>couche</i></u>: '+feature.properties.layer+"\n";
+  var popupContent = '<pre>';
+  popupContent += '<u><i>couche</i></u>: '+feature.properties.layer+"\n";
   popupContent += '<u><i>titre</i></u>: '+feature.properties.title+"\n";
   popupContent += '<u><i>nom</i></u>: '+feature.properties.name+"\n";
-  popupContent += '<u><i>échelle</i></u>: 1/'+feature.properties.scaleDenominator+"\n";
-  popupContent += '<u><i>édition</i></u>: '+feature.properties.edition+"\n";
-  popupContent += '<u><i>dernière correction</i></u>: '+feature.properties.lastUpdate+"\n";
-  popupContent += '<u><i>mdDate</i></u>: '+feature.properties.mdDate+"\n";
+  if (feature.properties.scaleDenominator) {
+    popupContent += '<u><i>échelle</i></u>: 1/'+feature.properties.scaleDenominator+"\n";
+    popupContent += '<u><i>édition</i></u>: '+feature.properties.edition+"\n";
+    popupContent += '<u><i>dernière correction</i></u>: '+feature.properties.lastUpdate+"\n";
+    popupContent += '<u><i>mdDate</i></u>: '+feature.properties.mdDate+"\n";
+  }
   popupContent += '<u><i>Semaine de maj (estim.)</i></u>: '+feature.properties.ganWeek+"\n";
+  if (feature.properties.errorMessage)
+    popupContent += '<u><i>errorMessage</i></u>: '+feature.properties.errorMessage+"\n";
   popupContent += "</pre>\n";
   num = feature.properties.name.substring(0,4);
   ganWeek = feature.properties.ganWeek;
@@ -237,7 +235,7 @@ var overlays = {
   "Catalogue AEM" :  L.layerGroup([
     new L.UGeoJSONLayer({
       endpoint: shomgturl+'maps.php/collections/gtaem/items',
-      once: true, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
+      minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
     }),
     new L.TileLayer(
       shomgturl+'tile.php/numaem/{z}/{x}/{y}.png',
@@ -253,7 +251,7 @@ var overlays = {
   "Catalogue MancheGrid" :  L.layerGroup([
     new L.UGeoJSONLayer({
       endpoint: shomgturl+'maps.php/collections/gtMancheGrid/items',
-      once: true, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
+      minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
     }),
     new L.TileLayer(
       shomgturl+'tile.php/numMancheGrid/{z}/{x}/{y}.png',

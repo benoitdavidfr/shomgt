@@ -166,7 +166,8 @@ class Maps {
         'type'=> 'FeatureCollection',
         'features'=> $features,
       ],
-      $bbox ? ['bbox'=> $bbox->asGeoJsonBbox()] : []
+      $bbox ? ['bbox'=> $bbox->asGeoJsonBbox()] : [],
+      //['bboxParam'=> $_GET['bbox'] ?? $_POST['bbox'] ?? null]
     );
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');

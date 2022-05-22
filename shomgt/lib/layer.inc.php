@@ -13,6 +13,9 @@ doc: |
   La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
   Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
 journal: |
+  22/5/2022:
+    - dans TiffLayer gestion des cartes n'ayant pas de Mdiso
+    - dans TiffLayer duplication des silhouettes des GéoTiffs à cehval sur l'AM
   1/5/2022:
     - ajout de la classe PyrLayer
   29/4/2022:
@@ -246,34 +249,60 @@ class TiffLayer extends Layer {
     }
   }
 
+  // retourne le Feature correspondant au GeoTiff
+  private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
+    try {
+      $isoMd = IsoMD::read($gtname);
+      $errorMessage = '';
+    }
+    catch (SExcept $e) {
+      $isoMd = [];
+      $errorMessage = $e->getMessage();
+    }
+    $ganWeek = '1715'; // par défaut, c'est a peu près la date des premières livraisons
+    if (isset($isoMd['mdDate'])) { // Si la date de mise à jour des MD est remplie alors je prends pour ganweek cette semaine
+      $time = strtotime($isoMd['mdDate']);
+      $ganWeek = substr(date('o', $time), 2) . date('W', $time);
+    }
+    return [
+      'type'=> 'Feature',
+      'properties'=> array_merge(
+        [
+          'layer'=> $lyrname,
+          'name'=> $gtname,
+          'title'=> $gt['title'] ?? "titre inconnu",
+        ],
+        $isoMd ? [
+          'scaleDenominator'=> $isoMd['scaleDenominator'] ?? 'undef',
+          'mdDate'=> $isoMd['mdDate'] ?? 'undef',
+          'edition'=> $isoMd['edition'] ?? 'undef',
+          'lastUpdate'=> $isoMd['lastUpdate'] ?? 'undef',
+        ] : [],
+        ['ganWeek'=> $ganWeek],
+        $errorMessage ? ['errorMessage'=> $errorMessage] : [],
+      ),
+      'geometry'=> [
+        'type'=> 'Polygon',
+        'coordinates'=> $gbox->polygon(),
+      ],
+    ];
+  }
+  
   function items(string $lyrname, ?GBox $qgbox): array { // retourne un array de Features correspondant aux bbox des GéoTiffs
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {
-      $gbox = $gt['spatial']->geo('WorldMercator');
+      $gbox = $gt['spatial']->geo('WorldMercator'); // transf spatial en c. Géo.
+      $f = null;
       if (!$qgbox || $qgbox->inters($gbox)) {
-        $isoMd = IsoMD::read($gtname);
-        $ganWeek = '1715'; // par défaut, c'est a peu près la date des premières livraisons
-        if (isset($isoMd['mdDate'])) { // Si la date de mise à jour des MD est remplie alors je prends pour ganweek cette semaine
-          $time = strtotime($isoMd['mdDate']);
-          $ganWeek = substr(date('o', $time), 2) . date('W', $time);
-        }
-        $features[] = [
-          'type'=> 'Feature',
-          'properties'=> [
-            'layer'=> $lyrname,
-            'name'=> $gtname,
-            'title'=> $gt['title'] ?? "titre inconnu",
-            'scaleDenominator'=> $isoMd['scaleDenominator'],
-            'mdDate'=> $isoMd['mdDate'],
-            'edition'=> $isoMd['edition'],
-            'lastUpdate'=> $isoMd['lastUpdate'],
-            'ganWeek'=> $ganWeek,
-          ],
-          'geometry'=> [
-            'type'=> 'Polygon',
-            'coordinates'=> $gbox->polygon(),
-          ],
-        ];
+        $f = $this->itemForGeoTiff($lyrname, $gtname, $gt, $gbox);
+        $features[] = $f;
+      }
+      if (!$qgbox || $qgbox->inters($gbox->translate360West())) { // duplication de la silhouette à l'Ouest du planisphère
+        if (!$f)
+          $f = $this->itemForGeoTiff($lyrname, $gtname, $gt, $gbox);
+        // translation de la geometry de 360° Ouest
+        $f['geometry']['coordinates'] = $gbox->translate360West()->polygon();
+        $features[] = $f;
       }
     }
     return $features;
