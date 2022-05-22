@@ -4,6 +4,10 @@ title: layer.inc.php - définition des classes Layer, PyrLayer, LabelLayer et Ti
 name: layer.inc.php
 classes:
 doc: |
+  Les 4 classes permettent de construire à partir de shomgt.yaml la structuration en couches et de l'exploiter au travers
+  des méthodes map() qui recopie dans une image GD l'extrait de la couche correspondant à un rectangle
+  et pour la classe TiffLayer la méthode items() qui génère en GeoJSON les silhouettes des GéoTiffs.
+
   La classe abstraite Layer définit les couches du serveur de cartes.
   La classe TiffLayer correspond aux couches agrégeant des GéoTiff.
   La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
