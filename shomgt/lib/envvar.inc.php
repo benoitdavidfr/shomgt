@@ -1,6 +1,8 @@
 <?php
 // envvar.inc.php - gestion des variables d'environnement et de leur valeur par défaut
 
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 class EnvVar {
   const DEFAULTS = [
     'SHOMGT3_SERVER_URL' => 'https://sgserver.geoapi.fr/index.php',

@@ -14,6 +14,8 @@ journal: |
     - création
 includes: [sexcept.inc.php]
 */}
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/sexcept.inc.php';
 
 

@@ -23,6 +23,7 @@ journal: |
     création par copie de la version de shomgt2
 includes: [lib/gegeom.inc.php, ../lib/log.inc.php, ../lib/config.inc.php, geotiff.inc.php, cache.inc.php, errortile.inc.php]
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/lib/gegeom.inc.php';
 require_once __DIR__.'/lib/layer.inc.php';
@@ -36,6 +37,10 @@ if (is_file(__DIR__.'/tileaccess.inc.php')) {
   require_once __DIR__.'/tileaccess.inc.php';
 }
 
+if ($options = explode(',', $_GET['options'] ?? '')) {
+  echo json_encode($VERSION);
+  die();
+}
 //write_log(true);
 
 // liste des couches exposées par le service

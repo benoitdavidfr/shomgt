@@ -1,4 +1,5 @@
 <?php
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 // extrait du fichier MD ISO dont le path est fourni une chaine "${anneeEdition}c${lastUpdate}" de la carte
 function readMapVersion(string $path): string {

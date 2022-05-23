@@ -9,6 +9,8 @@ journal: |
   24/4/2022:
     - documentation
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/envvar.inc.php';
 
 function geotiffs(): array { // liste des GeoTiffs 

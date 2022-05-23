@@ -90,6 +90,8 @@ journal: |
 includes:
   - jsonschfrg.inc.php
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/jsonschfrg.inc.php';
 

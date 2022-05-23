@@ -42,12 +42,55 @@ includes: [ lib/accesscntrl.inc.php ]
   header('Content-type: text/plain; charset="utf-8"');
   die("Accès interdit");
 }*/
-
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+  
 $request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
   : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
 $dirname = dirname($_SERVER['SCRIPT_NAME']);
 $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
 //echo "<pre>"; print_r($_SERVER); die("shomgturl=$shomgturl\n");
+
+function latestVersion(array $versions): array {
+  $latest = null;
+  foreach ($versions as $k => $version) {
+    if (!$latest)
+      $latest = $k;
+    elseif (strcmp($version, $versions[$latest]) > 0)
+      $latest = $k;
+  }
+  return [$latest => $versions[$latest]];
+}
+
+if ($options = explode(',', $_GET['options'] ?? 'none')) {
+  foreach ($options as $option) {
+    switch ($option) {
+      case 'help': {
+        echo "Options de ce script:<ul>\n";
+        echo "<li>help : fournit cette aide</li>\n";
+        echo "<li>version : fournit les dates de modification des fichiers sources</li>\n";
+        echo "<li>center : fournit le centre de la carte sous la forme {lat},{lon}</li>\n";
+        // echo "<li>zoom : fournit le zoom de la carte sous la forme d'un entier</li>\n";
+        echo "</ul>\n";
+        die();
+      }
+      case 'version': {
+        $VERSION = array_merge(
+          $VERSION,
+          json_decode(file_get_contents("$shomgturl/tile.php?options=version"), true),
+          json_decode(file_get_contents("$shomgturl/maps.php?options=version"), true),
+        );
+        header('Content-type: application/json');
+        echo json_encode(['versions'=> $VERSION, 'latest'=> latestVersion($VERSION)]);
+        die();
+      }
+      case 'none': break;
+      default: {
+        echo "Attention, option '$option' non gérée<br>\n";
+        break;
+      }
+    }
+  }
+}
 
 $center = (isset($_GET['center']) ? explode(',',$_GET['center']) : [46.5, 3]);
 $center[0] = floatval($center[0]);

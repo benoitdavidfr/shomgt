@@ -5,6 +5,7 @@ title: errortile.inc.php - Génération d'une image d'erreur contenant le messag
 classes:
 doc: |
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 // en cas d'erreur dans la génération
 function error(string $message) { die($message); }

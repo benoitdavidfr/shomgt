@@ -20,6 +20,8 @@ journal: |
 includes:
   - lib/layer.inc.php
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/lib/layer.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -254,6 +256,15 @@ class Maps {
 
 try {
   if (in_array($_SERVER['PATH_INFO'] ?? '', ['', '/'])) { // appel sans paramètre 
+    if ($options = explode(',', $_GET['options'] ?? 'none')) {
+      foreach ($options as $option) {
+        if ($option=='version') {
+          header('Content-type: application/json');
+          echo json_encode($VERSION);
+          die();
+        }
+      }
+    }
     Maps::landingPage();
   }
 

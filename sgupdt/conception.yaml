@@ -90,6 +90,8 @@ bugs:
   exec2022-05-18T18:20@OVH:
     Warning: Trying to access array offset on value of type null in /var/www/cli/shomgt.php on line 140
     Warning: foreach() argument must be of type array|object, null given in /var/www/cli/shomgt.php on line 140
+  exec2022-05-23T18:20@OVH:
+    - pb de mémoire allouée dans maketile.php qui nécessite au moins 2G pour 7330
 
 
 AFaire:

@@ -1,6 +1,16 @@
 title: sgserver - serveur de cartes 7z
 path: /geoapi/shomgt3/sgserver
 doc: |
+  Utilise la variable d'environnement SHOMGT3_INCOMING_PATH
+  En local (http://php8/geoapi/shomgt3/sgserver/index.php), elle vaut:
+    /var/www/html/shomgeotiff/incoming en prod
+    /var/www/html/geoapi/shomgt3/incoming en test
+  Sur sgserver.geoapi.fr, elle vaut:
+    /home/bdavid/prod/shomgeotiff/incoming
+  Sur sgserver-test.geoapi.fr, elle vaut:
+    /home/bdavid/prod/geoapi/shomgt3/incoming
+    
+
 journal: |
   19-20/5/2022:
     - reprise du contrôle d'accès de ShomGT2 pour hébergement sur https://geoapi.fr/shomgt3/sgserver/index.php

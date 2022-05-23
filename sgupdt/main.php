@@ -81,6 +81,8 @@ journal: |
     - gestion du cas particuliers des cartes sans métadonnées
     - test OK sur un patrimoine courant identique au patrimoine archivé
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/lib/envvar.inc.php';
 require_once __DIR__.'/lib/execdl.inc.php';
 require_once __DIR__.'/lib/readmapversion.inc.php';
@@ -100,22 +102,11 @@ if (!is_dir($SHOMGT3_MAPS_DIR_PATH))
     throw new Exception("Erreur de création du répertoire $SHOMGT3_MAPS_DIR_PATH");
 
 $TEMP = "$SHOMGT3_MAPS_DIR_PATH/../temp";
-echo "TEMP=$TEMP\n";
 // créée le répertoire temp s'il n'existe pas déjà
 if (!is_dir($TEMP))
   if (!mkdir($TEMP))
     throw new Exception("Erreur de création du répertoire $TEMP");
 $TEMP = realpath($TEMP);
-
-if (0) {
-  echo "SHOMGT3_SERVER_URL='$SHOMGT3_SERVER_URL'\n";
-  echo "SHOMGT3_MAPS_DIR_PATH='$SHOMGT3_MAPS_DIR_PATH'\n";
-  echo "TEMP='$TEMP'\n";
-  while (($s = readline("quoi ?")) != 'q') {
-    echo "s='$s'\n";
-  }
-  die();
-}
 
 if (0) { // Test 
   echo "exécution de main.php\n";
@@ -127,6 +118,19 @@ if (0) { // Test
   while (($s = readline("quoi ?")) != 'q') {
     echo "s='$s'\n";
   }
+  die();
+}
+
+if (($argc > 1) && ($argv[1]=='-v')) {
+  echo "Dates de dernière modification des fichiers sources:\n";
+  foreach (['maketile.php', 'shomgt.php'] as $phpScript) {
+    $result_code = null;
+    $output = [];
+    exec("php ".__DIR__."/$phpScript -v", $output, $result_code);
+    array_shift($output);
+    $VERSION[$phpScript] = Yaml::parse(implode("\n",$output));
+  }
+  echo Yaml::dump($VERSION);
   die();
 }
 

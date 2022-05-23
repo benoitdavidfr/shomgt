@@ -20,6 +20,8 @@ journal: |
   18-20/4/2022:
     - création pour répondre aux besoins de décodage des infos CRS liées aux cartes Shom
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/sexcept.inc.php';
 require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/gebox.inc.php';

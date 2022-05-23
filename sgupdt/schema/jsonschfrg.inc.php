@@ -23,6 +23,8 @@ journal: |
   1-18/1/2019:
     Voir journal dans jsonschema.inc.php
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 

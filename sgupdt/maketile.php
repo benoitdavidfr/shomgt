@@ -26,6 +26,8 @@ journal: |
     - chgt du positionnement dans l'image Docker dans /var/www/html
     - lors de la fabrication des dalles effacement des zones définies dans shomgt.yaml
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib/gdalinfo.inc.php';
 require_once __DIR__.'/lib/gebox.inc.php';
@@ -35,13 +37,19 @@ use Symfony\Component\Yaml\Yaml;
 
 header('Content-type: text/plain; charset="utf8"');
 //ini_set('memory_limit', '12800M'); // 12 G c'est un peu abuser !!
-ini_set('memory_limit', '512M');
+ini_set('memory_limit', '2G'); // pour 7330_2016.png 512M, 1G insuffisant ; 2G ok
+
 
 function error(string $message) { echo "$message\n"; die(1); }
   
 //echo "argc=$argc\n";
 if ($argc <> 2) {
   error("Usage: $argv[0] {fichierPNG}\n");
+}
+elseif ($argv[1]=='-v') {
+  echo "Dates de dernière modification des fichiers sources:\n";
+  echo Yaml::dump($VERSION);
+  die();
 }
 
 $pngpath = $argv[1];

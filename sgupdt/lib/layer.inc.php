@@ -27,6 +27,8 @@ includes:
   - lib/grefimg.inc.php
   - lib/geotiff.inc.php
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/grefimg.inc.php';
 require_once __DIR__.'/geotiff.inc.php';

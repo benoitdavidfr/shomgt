@@ -21,6 +21,7 @@ journal: |
 includes: [coordsys.inc.php, zoom.inc.php, gebox.inc.php, sexcept.inc.php]
 forks: [ /geovect/gegeom ]
 */}
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/zoom.inc.php';

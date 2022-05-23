@@ -29,12 +29,12 @@ USER www-data:www-data
 # Installation dans /var/www de vendor avec le module Yaml de Symphony
 RUN cd /var/www && composer require symfony/yaml:6
 
-# copie des scripts Php dans /var/www/html/
-ADD --chown=www-data ./maps.php ./tile.php ./dl.php ./mapwcat.php /var/www/html/
-# copie des fichiers Php includes dans /var/www/html/lib/
-ADD --chown=www-data ./lib /var/www/html/lib/
 # copie des fichiers Leaflet dans /var/www/html/leaflet/
 ADD --chown=www-data ./leaflet /var/www/html/leaflet/
+# copie des fichiers Php includes dans /var/www/html/lib/
+ADD --chown=www-data ./lib /var/www/html/lib/
+# copie des scripts Php dans /var/www/html/
+ADD --chown=www-data ./maps.php ./tile.php ./dl.php ./mapwcat.php /var/www/html/
 
 EXPOSE 80
 ENTRYPOINT ["apache2-foreground"]

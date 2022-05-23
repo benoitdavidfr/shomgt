@@ -27,6 +27,8 @@ includes:
   - lib/grefimg.inc.php
   - lib/geotiff.inc.php
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/grefimg.inc.php';
 require_once __DIR__.'/geotiff.inc.php';
@@ -49,6 +51,8 @@ abstract class Layer {
 
   // initialise le dictionnaire des couches à partir du fichier shomgt.yaml
   static function initFromShomGt(string $filename): void {
+    if (!is_file("$filename.yaml")) // cas notamment où shomgt.yaml n'a pas encore été généré
+      return;
     if (is_file(self::LAYERS_PSER_PATH) && (filemtime(self::LAYERS_PSER_PATH) > filemtime("$filename.yaml"))) {
       self::$layers = unserialize(file_get_contents(self::LAYERS_PSER_PATH));
       return;

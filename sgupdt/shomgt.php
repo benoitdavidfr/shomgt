@@ -57,6 +57,8 @@ journal: |
   7/5/2022:
     - création
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/schema/jsonschema.inc.php';
 require_once __DIR__.'/lib/envvar.inc.php';
@@ -70,7 +72,12 @@ use Symfony\Component\Yaml\Exception\ParseException;
 if ($argc == 1)
   $fout = STDOUT;
 elseif ($argc == 2) {
-  if (!($fout = fopen($argv[1], 'w')))
+  if ($argv[1] == '-v') {
+    echo "Dates de dernière modification des fichiers sources:\n";
+    echo Yaml::dump($VERSION);
+    die();
+  }
+  elseif (!($fout = fopen($argv[1], 'w')))
     throw new Exception("Erreur d'ouverture du fichier $argv[1]");
 }
   

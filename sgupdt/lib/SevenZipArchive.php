@@ -39,6 +39,7 @@ journal: |
   7/2/2022:
     - ajout de types de retour à certaines méthodes pour passage en Php 8.1
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 /**
 *

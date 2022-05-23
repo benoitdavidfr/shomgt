@@ -16,6 +16,7 @@ journal: |
   17/12/2020:
     - création
 */}
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
   
 function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier un flottant pour simplifier le Yaml

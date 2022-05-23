@@ -15,6 +15,8 @@ functions:
 classes:
 includes: [gebox.inc.php, sexcept.inc.php]
 */}
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 require_once __DIR__.'/sexcept.inc.php';
 require_once __DIR__.'/gebox.inc.php';
 
