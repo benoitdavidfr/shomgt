@@ -99,11 +99,13 @@ if (!is_dir($SHOMGT3_MAPS_DIR_PATH))
   if (!mkdir($SHOMGT3_MAPS_DIR_PATH))
     throw new Exception("Erreur de création du répertoire $SHOMGT3_MAPS_DIR_PATH");
 
-$TEMP = realpath("$SHOMGT3_MAPS_DIR_PATH/../temp");
+$TEMP = "$SHOMGT3_MAPS_DIR_PATH/../temp";
+echo "TEMP=$TEMP\n";
 // créée le répertoire temp s'il n'existe pas déjà
 if (!is_dir($TEMP))
   if (!mkdir($TEMP))
     throw new Exception("Erreur de création du répertoire $TEMP");
+$TEMP = realpath($TEMP);
 
 if (0) {
   echo "SHOMGT3_SERVER_URL='$SHOMGT3_SERVER_URL'\n";
@@ -140,7 +142,7 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
     $httpCode = download("$SHOMGT3_SERVER_URL/maps.json", __DIR__.'/temp/maps.json', CMDE_VERBOSE);
     if ($httpCode <> 200)
       throw new Exception("Erreur de download sur maps.json, httpCode=$httpCode");
-    $maps = json_decode(file_get_contents(__DIR__.'/temp/maps.json'), true);
+    $maps = json_decode(file_get_contents(__DIR__.'/temp/maps.json'), true, 512, JSON_THROW_ON_ERROR);
     //unlink(__DIR__.'/temp/maps.json'); // ne pas le détruire car utilisé dans shomgt.php
     foreach ($maps as $mapnum => $map) {
       if (is_int($mapnum) || ctype_digit($mapnum)) { // on se limite aux cartes dont l'id est un nombre

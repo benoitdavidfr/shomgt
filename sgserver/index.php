@@ -121,8 +121,10 @@ catch (Exception $e) {
   sendHttpCode(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
 }
 
-if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')) || !is_dir($INCOMING_PATH))
-  throw new Exception("Erreur, variable d'env. SHOMGT3_INCOMING_PATH non définie ne correspond pas au chemin d'un répertoire");
+if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')))
+  throw new Exception("Erreur, variable d'env. SHOMGT3_INCOMING_PATH non définie");
+if (!is_dir($INCOMING_PATH))
+  throw new Exception("Erreur, SHOMGT3_INCOMING_PATH ne correspond pas au chemin d'un répertoire");
 
 date_default_timezone_set('UTC');
 

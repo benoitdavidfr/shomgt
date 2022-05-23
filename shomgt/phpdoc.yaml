@@ -8,19 +8,20 @@ doc: |
     - une interface de téléchargement dl.php
     - une carte Leaflet permettant la visualisation des tuiles et du catalogue des GéoTiffs et l'appel de dl.php
   
-  Ce micro-service peut être mis en oeuvre par un container Docker.
-  Avant de construire le container il faut expanser les cartes et les stocker dans data/current/
-  Cela est réalisé par le module ../build
+  Ce micro-service peut être mis en oeuvre par un conteneur Docker.
+  Il lit les GéoTiffs dans le répertoire défini par la variable d'environnement SHOMGT3_MAPS_DIR_PATH
   
-  Le container est paramétré pour les données par:
-    - le contenu du répertoire stockant les cartes expansées qui est
-      - sur l'hôte: data/current
-      - dans le container: /var/www/data/current/
-    - la var. d'env. SHOMGT3_MAPS_DIR_PATH qui contient le chemin /var/www/data/current dans le conteneur
-    - le fichier shomgt.yaml listant les GéoTiffs organisés par couche et définissant pour chacun sa couverture spatiale
-      (extension de sa zone cartographiée)
+  L'imaeg du conteneur doit être construire par:
+    $ docker build -t shomgt .
+      
+  Le conteneur doit être soit exécuté par:
+    $ docker run \
+      -e SHOMGT3_MAPS_DIR_PATH=/var/www/data/maps \
+      --name shomgt -h shomgt --volume ${PWD}/../data:/var/www/data --volume ${PWD}:/var/www/cli \
+      --network=dockerc_default -it --rm sgupdt
+
   
-  Le container doit être exécuté au moyen de la conf. docker-compose dans le répertoire ..
+  ou au moyen de la conf. docker-compose dans le répertoire ..
   
   Le code peut aussi être exécuté dans le container global Php8.1
   en définissant la variable SHOMGT3_MAPS_DIR_PATH à /var/www/html/geoapi/shomgt3/data/current

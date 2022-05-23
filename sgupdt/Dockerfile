@@ -24,7 +24,11 @@ RUN apt-get update \
 	&& ln -s /usr/local/bin/composer.phar /usr/local/bin/composer \
 
 # Attribution de /var/www à www-data:www-data
-  && chown www-data:www-data /var/www
+  && chown www-data:www-data /var/www \
+
+# Création de /var/www/data et attribution à www-data:www-data
+  && mkdir /var/www/data \
+  && chown www-data:www-data /var/www/data
 
 USER www-data:www-data
 

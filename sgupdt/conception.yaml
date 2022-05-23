@@ -118,8 +118,13 @@ stratégieDeTests2:
   principes:
     - faire des tests avec moins de cartes que normal
     - définir un jeu de test de livraisons
-    - stocké dans shomgt3/incoming
-    
+    - le stocker dans shomgt3/incoming et shomgt3/incoming2
+    - effectuer les tests suivants
+      - shomgt et sgupdt en local hors conteneur avec sgserver local // test de base du code
+      - shomgt et sgupdt en local en conteneurs avec sgserver local // test conteneurisation
+      - shomgt et sgupdt en conteneurs locaux avec sgserver distant // test sgserver distant
+      - shomgt et sgupdt en conteneurs OVH avec sgserver distant // test conteneurisation OVH
+
 conceptionJeuTestLivraisons:
   20170531: # 2 cartes très standard au 1/50k
     6969.7z: première carte (Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent)

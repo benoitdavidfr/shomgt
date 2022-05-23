@@ -16,42 +16,16 @@ doc: |
   Le script appelé dans le container est main.php
   
   Voir conception.yaml pour la conception du script.
-  
-  docker:
-    # construction de l'image
-    docker build -t sgupdt .
-    # exécution du conteneur en mode dev
-    docker run \
-      -e SHOMGT3_MAPS_DIR_PATH=/var/www/data/maps \
-      -e 'SHOMGT3_SERVER_URL=http://test:test@php8/geoapi/shomgt3/sgserver/index.php' \
-      --name sgupdt -h sgupdt --volume ${PWD}/../data:/var/www/data --volume ${PWD}:/var/www/cli \
-      --network=dockerc_default -it --rm sgupdt
-    # exécution du conteneur en mode prod
-    docker run \
-      -e SHOMGT3_MAPS_DIR_PATH=/var/www/data/maps \
-      -e 'SHOMGT3_SERVER_URL=http://test:test@php8/geoapi/shomgt3/sgserver/index.php' \
-      --name sgupdt -h sgupdt --volume ${PWD}/../data:/var/www/data \
-      --network=dockerc_default -it --rm sgupdt
-    # exécution du conteneur en mode prod sur geoapi.fr
-    docker run \
-      -e SHOMGT3_MAPS_DIR_PATH=/var/www/data/maps \
-      -e SHOMGT3_SERVER_URL=http://geoapi.fr/shomgt3/sgserver/index.php \
-      --name sgupdt -h sgupdt --volume ${PWD}/../data:/var/www/data \
-      --network=dockerc_default -it --rm sgupdt
-    # entrée dans le conteneur
-    docker exec -it --user=www-data sgupdt /bin/bash
-    
-    # sur OVH - ssh ubuntu@147.135.218.62
-    docker pull benoitdavid/shomgt3:sgupdt-v0.3.5
-    sudo docker run \
-      -e SHOMGT3_MAPS_DIR_PATH=/var/www/data/maps \
-      -e SHOMGT3_SERVER_URL=http://geoapi.fr/shomgt3/sgserver/index.php \
-      --name sgupdt -h sgupdt --volume /var/www/data:/var/www/data \
-      -it --rm benoitdavid/shomgt3:sgupdt-v0.3.5
-    # entrée dans le conteneur
-    sudo docker exec -it --user=www-data sgupdt /bin/bash
+  Voir ../docker.yaml pour les commandes Docker
     
 journal: |
+  23/5/2022:
+    - test comme conteneur
+  19-22/5/2022:
+    - authentification sur le serveur
+    - amélioration variables d'env.
+    - amélioration tests
+    - correction bugs GéoTiff à cheval sur AM et cartes sans MdIso
   18/5/2022:
     - adaptation du code pour fonctionner comme conteneur
     - test OK sur le Mac
