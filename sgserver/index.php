@@ -30,6 +30,8 @@ doc: |
   Les 7z sont stockés dans le répertoire ../../../shomgeotiff/incoming avec un répertoire par livraison nommé avec un nom
   commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
+  24/5/2022:
+    - suppression de l'utilisation du fichier newermap.pser car mécanisme buggé A REVOIR
   22/5/2022:
     - mise en variable d'environnement de SHOMGT3_INCOMING_PATH pour permettre des tests sur moins de cartes
   19/5/2022:
@@ -185,7 +187,8 @@ function findNewerMap(string $mapnum): string {
   //echo "findNewerMap($mapnum)<br>\n";
   global $INCOMING_PATH;
   // construction du fichier newermap.pser contenant pour chaque numéro de carte la livraison contenant sa dernière version
-  if (!is_file(__DIR__.'/newermap.pser') || (filemtime($INCOMING_PATH) > filemtime(__DIR__.'/newermap.pser'))) {
+  // BUG je réutilise le même newermap.pser avec des INCOMING_PATH différents
+  if (1 || !is_file(__DIR__.'/newermap.pser') || (filemtime($INCOMING_PATH) > filemtime(__DIR__.'/newermap.pser'))) {
     $newermap = []; // [{mapnum} => ({deliveryName} | 'obsolete')]
     foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
       if ($delivery->isDot()) continue;
