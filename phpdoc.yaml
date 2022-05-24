@@ -7,14 +7,21 @@ doc: |
       - le conteneur shomgt qui expose les services de tuiles et WMS à partir des données de cartes expansées
       - le conteneur sgupdt qui construit les données de cartes expansées à partir d'un serveur de cartes
     - un serveur de cartes sgserver qui est centralisé et mis à jour régulièrement
-  Enfin, il est nécessaire d'utiliser le module cat2 de shomgt2 pour identifier les cartes à actualiser.
+  Enfin, il est nécessaire d'utiliser le module cat2 de shomgt2 pour récupérer certains paramètres des GéoTiffs.
   
   Les modules shomgt et sgupdt peuvent fonctionner soit en conteneur spécifique, soit dans le conteneur général.
-  Ils partagent un répertoire contenant les données de cartes expansées et le fichier shomgt.yaml.
+  shomgt consome le répertoire data contenant les données de cartes expansées et le fichier shomgt.yaml,
+  qui est construit et mis à jour par sgupdt.php.
   
   Les 2 conteneurs et le serveur sgserver devraient pouvoir être hébergés sur l'offre Compose d'ECO.
 
 journal: |
+  24/5/2022:
+    - version 0.3 semble ok y compris en conteneurs sur OVH
+    - manque
+      - la gestion de l'ordre des couches dans sgupdt
+      - le cache de tuiles dans shomgt
+      - le serveur WMS dans shomgt
   17/5/2022:
     - 1ère version Ok
     - manque encore plusieurs parties
