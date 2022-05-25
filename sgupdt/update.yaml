@@ -87,7 +87,6 @@ $schema:
         Chaque GéoTIFF est identifié par son nom qui correspond au nom du fichier contenant l'image
       type: object
       additionalProperties: false
-      required: [title]
       properties:
         title:
           description: titre du GéoTiff, utilisé pour faciliter la lecture du fichier
@@ -167,6 +166,12 @@ $schema:
         - [9.2879, 42.6838]
         - [9.3070, 42.6815]
         - [9.3012, 42.6752]
+
+7081_pal300:
+  title: Mer Méditerranée et mer Noire (Spéciale P)
+  toDelete:
+    - rect: {SW: [-7.0, 42.1797], NE: [2.1094, 49.8364]}
+
 7204_pal300:
   z-order: 1 # > 7507_pal300
 7210_pal300:
