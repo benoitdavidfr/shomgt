@@ -2,8 +2,8 @@ title: paramètres d'amélioration des GéoTiff lors de leur dallage et utilisé
 description: |
   Trois types de paramètres:
     - des zones à supprimer dans les GéoTiff
-    - les bordures pour pouvoir géoréférencer les GéoTiff qui ne le sont pas
-    - l'ordre dans lequel doivent être triés les GéoTiffs dans chaque couche
+    - les bordures permettant de géoréférencer les GéoTiff qui ne le sont pas
+    - l'ordre dans lequel doivent être triés les GéoTiffs dans chaque couche défini par le z-order
   25/5/2022: recopie des superpositions définies pour ShomGT2
 $schema:
   title: Schéma JSON
