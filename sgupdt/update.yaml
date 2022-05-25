@@ -4,6 +4,7 @@ description: |
     - des zones à supprimer dans les GéoTiff
     - les bordures pour pouvoir géoréférencer les GéoTiff qui ne le sont pas
     - l'ordre dans lequel doivent être triés les GéoTiffs dans chaque couche
+  25/5/2022: recopie des superpositions définies pour ShomGT2
 $schema:
   title: Schéma JSON
   $schema: http://json-schema.org/schema#
@@ -143,12 +144,16 @@ $schema:
         note:
           description: note
 
+6623_pal300:
+  z-order: 1 # > 6757_pal300
+6948_pal300:
+  z-order: 0 # 7482_pal300 < 6948_pal300 < 7302_pal300
 6969_pal300:
   title: 6969 - Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent
   spatial:
     SW: 42°39,93'N - 9°00,93'E
     NE: 43°08,95'N - 9°28,64'E
-  z-order: -1
+  z-order: -1 # 6969_pal300 en dessous de 6822_pal300 et de 6823_pal300
   note: |
     toDelete: # effacement de la partie Est du GéoTiff 6969_pal300
       - rect:
@@ -162,6 +167,10 @@ $schema:
         - [9.2879, 42.6838]
         - [9.3070, 42.6815]
         - [9.3012, 42.6752]
+7204_pal300:
+  z-order: 1 # > 7507_pal300
+7210_pal300:
+  z-order: 1 # > 7311_pal300
 7427_5_gtw:
   title: '7427-2 - La Gironde - La Garonne et La Dordogne (2/3)'
   spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
@@ -173,6 +182,13 @@ $schema:
         - 44°57,81'N - 0°24,32'W
         - 45°05,44'N - 0°33,62'W
         - 45°11,40'N - 0°33,62'W
+7482_pal300:
+  z-order: -1 # 7482_pal300 < 6948_pal300 < 7302_pal300
+7761_pal300:
+  z-order: 1 # > 7762_pal300
+7302_pal300:
+  z-order: 1 # 7482_pal300 < 6948_pal300 < 7302_pal300
+
 '8509_2015.pdf':
   title: '8509 - Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
   spatial:
