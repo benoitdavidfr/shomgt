@@ -69,8 +69,9 @@ require_once __DIR__.'/lib/gdalinfo.inc.php';
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
-if ($argc == 1)
+if ($argc == 1) {
   $fout = STDOUT;
+}
 elseif ($argc == 2) {
   if ($argv[1] == '-v') {
     echo "Dates de dernière modification des fichiers sources:\n";
@@ -222,11 +223,13 @@ class Map {
 Map::init();
 //print_r(Map::$cat); die();
 
+
 class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected string $gtname;
-  protected string $title;
-  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}]
-  protected int $scaleDen;
+  protected string $title; // titer issu du catalogue de cartes
+  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}],  issu du catalogue de cartes
+  protected int $scaleDen; // dénominateur de l'échelle issu du catalogue de cartes
+  protected int $zorder; // z-order issu de update.yaml
   //protected array $borders; // [] ou sous la forme ['left'=> {border}, 'bottom'=>{border}, 'right'=> {border}, 'top'=> {border}]
   static array $shomgt=[]; // contenu de shomgt.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
   static array $params=[]; // chargement du fichier update.yaml
@@ -250,21 +253,25 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
       return;
     }
     $gtinfo = $map->gtInfo();
-    if (!$gtinfo) { echo "skip $gtname\n"; return; }
+    if (!$gtinfo) {
+      fprintf(STDERR, "Erreur: le GéoTiff $gtname n'est pas géoréférencé, il n'apparaitra donc pas dans shomgt.yaml\n");
+      return;
+    }
     if (!$gtinfo['spatial']) {
       fprintf(STDERR, "Info: le GéoTiff $gtname n'a pas de zone principale et n'apparaitra donc pas dans shomgt.yaml\n");
       return;
     }
-    $gt = new self($gtname, $gtinfo);
+    $gt = new self($gtname, $gtinfo, self::$params[$gtname]['z-order'] ?? 0);
     self::$shomgt[$gt->lyrname()][$gtname] = $gt;
   }
   
-  function __construct(string $gtname, array $info) {
+  function __construct(string $gtname, array $info, int $zorder) {
     //echo "ShomGt::__construct(gtname=$gtname, info="; print_r($info); echo ")\n";
     $this->gtname = $gtname;
     $this->title = $info['title'];
     $this->spatial = $info['spatial'];
     $this->scaleDen = $info['scaleDen'];
+    $this->zorder = $zorder;
     //$this->borders = $info['borders']; // Les borders devraient venir de build.yaml !!!
   }
   
@@ -273,6 +280,28 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
       return $lyrname;
     else
       return LayerDef::getFromScaleDen($this->scaleDen);
+  }
+  
+  static function sortwzorder(): void { // tri de chaque couche selon zorder et gtname
+    foreach (self::$shomgt as $layername => &$gts) {
+      uksort($gts,
+        function($a, $b) use($gts) {
+          //echo "function($a, $b)\n";
+          if ($gts[$a]->zorder == $gts[$b]->zorder) {
+            //echo "zorder égaux, return ",strcmp($a, $b),"\n";
+            return strcmp($a, $b);
+          }
+          elseif ($gts[$a]->zorder < $gts[$b]->zorder) { // $a < $b
+            //echo "$a ->zorder < $b ->zorder => return -1;\n";
+            return -1;
+          }
+          else { // $a > $b
+            //echo "$a ->zorder > $b ->zorder => return 1;\n";
+            return 1;
+          }
+        }
+      );
+    }
   }
   
   static function allInYaml(): string { // génère la représentation Yaml de tous les ShomGt dans un string
@@ -307,9 +336,19 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
 };
 ShomGt::init(); //print_r(ShomGt::$shomgt); die();
 
+if (0) { // Test de ShomGt::sortwzorder()
+  ShomGt::addGt('6822_pal300');
+  ShomGt::addGt('6823_pal300');
+  ShomGt::addGt('6969_pal300');
+  print_r(ShomGt::$shomgt['gt50k']);
+  ShomGt::sortwzorder();
+  print_r(ShomGt::$shomgt['gt50k']);
+  die("Fin ligne ".__LINE__."\n");
+}
+
 $geotiffs = []; // liste des géotiffs structurés par carte et type [{mapnum} => [('tif'|'pdf') => [{gtname} => 1]]]
 
-// lecture des géotiffs de shomgt
+// initialisation $geotiffs à partir de la liste des géotiffs dans data/maps
 foreach (geotiffs() as $gtname) {
   $mapnum = substr($gtname, 0, 4);
   if (substr($gtname, -4)=='.pdf')
@@ -318,7 +357,7 @@ foreach (geotiffs() as $gtname) {
     $geotiffs[$mapnum]['tif'][$gtname] = 1;  
 }
 
-function obsoleteMaps(): array {
+function obsoleteMaps(): array { // Lecture dans maps.json de la liste des nums des cartes obsolètes
   $obsoleteMaps = [];
   if (($maps = @file_get_contents(__DIR__.'/temp/maps.json')) === false) {
     if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
@@ -378,6 +417,8 @@ foreach ($geotiffs as $mapnum => $gtnames) {
     ShomGt::addGt($gtname);
   }
 }
+
+ShomGt::sortwzorder();
 
 // Génération dans $yaml du fichier shomgt.yaml en vérifiant sa validité Yaml et sa conformité au schéma
 $yaml = ShomGt::allInYaml();

@@ -1,8 +1,9 @@
 title: paramètres d'amélioration des GéoTiff lors de leur dallage et utilisés pour générer le shomgt.yaml
 description: |
-  Deux types de paramètres:
+  Trois types de paramètres:
     - des zones à supprimer dans les GéoTiff
     - les bordures pour pouvoir géoréférencer les GéoTiff qui ne le sont pas
+    - l'ordre dans lequel doivent être triés les GéoTiffs dans chaque couche
 $schema:
   title: Schéma JSON
   $schema: http://json-schema.org/schema#
@@ -63,9 +64,9 @@ $schema:
           - 45°05,44'N - 0°33,62'W
           - 45°11,40'N - 0°33,62'W
     border:
-      description: nbre de pixels d'une des 4 bordures, soit un nombre soit une expression {number}-{number}
+      description: nbre de pixels d'une des 4 bordures, soit un entier soit une expression {number}-{number}
       oneOf:
-        - type: number
+        - type: integer
         - type: string
           pattern: \d+-\d+
 
@@ -93,6 +94,14 @@ $schema:
         spatial:
           description: zone cartographiée dans le GéoTiff défini par un rectangle, utilisée pour faciliter la lecture du fichier
           $ref: '#/definitions/rect'
+        z-order:
+          description: |
+            Par défaut dans chaque couche les GéoTiffs sont ordonnés par leur nom, ce qui signifie que celui
+            ayant le plus grand numéro s'affiche au dessus des autres. Le z-order permet de modifier cet ordre.
+            Un GéoTiff ayant un z-order supérieur à celui d'un autre s'affichera au-dessus de ce dernier.
+          type: integer
+          minimum: -99
+          maximum: 99
         borders:
           decription: paramètre borders pour géoréférencer les GéoTiffs qui ne le sont pas
           type: object
@@ -139,11 +148,12 @@ $schema:
   spatial:
     SW: 42°39,93'N - 9°00,93'E
     NE: 43°08,95'N - 9°28,64'E
-  toDelete:
-    - rect:
-        SW: 42°39,90'N - 9°22,30'E
-        NE: 43°09,00'N - 9°28,70'E
+  z-order: -1
   note: |
+    toDelete: # effacement de la partie Est du GéoTiff 6969_pal300
+      - rect:
+          SW: 42°39,90'N - 9°22,30'E
+          NE: 43°09,00'N - 9°28,70'E
     testtoDelete: # valeurs de test
       - rect: # petit rectangle = quart SW de la partie commune aux 3 cartes
           SW: 42°39,90'N - 9°22,30'E
