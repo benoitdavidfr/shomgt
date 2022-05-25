@@ -32,6 +32,7 @@ doc: |
 journal: |
   24/5/2022:
     - modification de la gestion du fichier newermap.pser car gestion buggé
+    - correction d'un bug
   22/5/2022:
     - mise en variable d'environnement de SHOMGT3_INCOMING_PATH pour permettre des tests sur moins de cartes
   19/5/2022:
@@ -66,7 +67,20 @@ function logRecord(array $log): void {
   if (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60))
     unlink(__DIR__.'/log.yaml');
   file_put_contents(__DIR__.'/log.yaml',
-    Yaml::dump([ date(DATE_ATOM)=> array_merge(['path_info'=> $_SERVER['PATH_INFO'] ?? null], $log)]),
+    Yaml::dump([
+      date(DATE_ATOM)=>
+        array_merge(
+          [
+            'path_info'=> $_SERVER['PATH_INFO'] ?? null,
+            'PHP_AUTH_USER'=> $_SERVER['PHP_AUTH_USER'] ?? null,
+            'REMOTE_ADDR'=> $_SERVER['REMOTE_ADDR'] ?? null,
+            'HTTP_X_FORWARDED_FOR'=> $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null,
+            //'SERVER'=> $_SERVER,
+          ],
+          $log
+        )
+      ]
+    ),
     FILE_APPEND|LOCK_EX);
 }
 
@@ -161,6 +175,11 @@ if ($_SERVER['PATH_INFO'] == '/cat.json') {
   die();
 }
 
+if ($_SERVER['PATH_INFO'] == '/logout') {
+  header('WWW-Authenticate: Basic realm="Authentification pour acces aux ressources du SHOM"');
+  sendHttpCode(401, isset($_SERVER['PHP_AUTH_USER']) ? "Logout, user: $_SERVER[PHP_AUTH_USER]" : 'Logout, no user');
+}
+  
 if (preg_match('!^/cat/(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)\+00:00\.json$!', $_SERVER['PATH_INFO'], $matches)) {
   $ptime = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
   $dmfyaml = date(DATE_ATOM, filemtime(__DIR__.'/../mapcat/mapcat.yaml'));
@@ -367,7 +386,7 @@ if (preg_match('!^/map/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
         $index = Yaml::parseFile("$INCOMING_PATH/$delivery/index.yaml");
         foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
           if (substr($mapid, 2) == $qmapnum)
-            $map = ['num'=> $qmapnum, 'status' => 'obsolete', 'versions'=> $map['versions']];
+            $map = ['num'=> $qmapnum, 'status'=> 'obsolete', 'versions'=> $map['versions'] ?? []];
         }
       }
       foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
