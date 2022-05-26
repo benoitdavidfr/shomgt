@@ -11,11 +11,17 @@ doc: |
   
   Les modules shomgt et sgupdt peuvent fonctionner soit en conteneur spécifique, soit dans le conteneur général.
   shomgt consome le répertoire data contenant les données de cartes expansées et le fichier shomgt.yaml,
-  qui est construit et mis à jour par sgupdt.php.
+  qui est construit et mis à jour par sgupdt.
   
   Les 2 conteneurs et le serveur sgserver devraient pouvoir être hébergés sur l'offre Compose d'ECO.
+  
+  Voir le fichier filetree.yaml pour l'arborescence des fichiers, les mapping dans les conteneurs et les vars d'environnement
 
 journal: |
+  26/5/2022:
+    - ajout du cache des tuiles dans shomgt
+  25/5/2022:
+    - ajout du z-order dans sgupdt ; def. des z-order dans update.yaml ; effacement partiel de 7081
   24/5/2022:
     - version 0.3 semble ok y compris en conteneurs sur OVH
     - manque

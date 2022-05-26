@@ -5,9 +5,13 @@ name: index.php
 doc: |
   Le serveur stocke toutes cartes disponibles sous la forme d'une archive 7z ainsi que le catalogue mapcat.yaml
   et les met à disposition selon l'API définie ci-dessous.
-  Le code Http de retour est utilisé pour signaler les diffrents cas.
+  Le code Http de retour est utilisé pour signaler les différents cas.
+    
+  La variable d'environnement SHOMGT3_INCOMING_PATH est utilisée pour disposer d'un serveur pour les tests en contenant
+  que quelques cartes.
   
   api:
+    /: page d'accueil utilisée pour prposer des URL de tests
     /api: retourne la description de l'api (à faire)
     /cat.json: retourne mapcat.json 
     /cat/{date}.json: retourne mapcat.yaml si version postérieure à celle définie dans les paramètres sinon retourne 204 
@@ -27,8 +31,8 @@ doc: |
     - 404 - Not Found - la carte n'a jamais existé
     - 410 - Gone - la carte a existé mais est maintenant obsolète
 
-  Les 7z sont stockés dans le répertoire ../../../shomgeotiff/incoming avec un répertoire par livraison nommé avec un nom
-  commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
+  Les 7z sont stockés dans le répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH avec un répertoire par livraison
+  nommé avec un nom commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
   24/5/2022:
     - modification de la gestion du fichier newermap.pser car gestion buggé

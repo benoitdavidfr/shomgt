@@ -1,0 +1,133 @@
+title: arborescence des fichiers, mapping dans les containers et vars d'environnement
+fichiers:
+  php81:
+    title: sur le mac dans le conteneur Php81
+    files:
+      /var/www/html/geoapi/shomgt3:
+        description: correspond sur le mac à /Users/benoit/Sites/geoapi/shomgt3
+        data:
+          description: stockage des données, répertoire partagé avec les 2 containers
+          shomgt.yaml:
+            description: fichier de config de shomgt
+          maps:
+            description: répertoires des cartes expansées courantes pour shomgt
+          tilecache:
+            description: cache de tuiles de shomgt, effacé par sgupdt après une mise à jour
+        incoming:
+          description: livraisons du Shom utilisées en test, utilisées par sgserver
+        vendor:
+          description: code de synfony/yaml:6 installé par composer hors container
+        shomgt:
+          description: racine du container shomgt, contient le code Php de shomgt
+          leaflet:
+            description: sources, CSS et images Leaflet
+          lib:
+            description: fichiers inc.php partagés avec sgupdt
+        sgupdt:
+          description: racine du container sgupdt, contient le code Php de sgupdt
+          lib:
+            description: lien vers ../shomht/lib
+        sgserver:
+          description: contient le code Php de sgserver
+          lib:
+            description: fichiers inc.php
+      /var/www/html/shomgeotiff/incoming:
+        description: livraisons du Shom, une par répertoire avec un nom de la forme YYYYMMDD ou approchée
+    
+  shomgt:
+    title: container shomgt
+    files:
+      /var/www:
+        description: home de www-data 
+        vendor:
+          description: code de synfony/yaml:6 installé par composer dans le build du container
+        html:
+          description: racine d'Apache, code php copié de mac:/Users/benoit/Sites/geoapi/shomgt3/shomgt
+          leaflet:
+            description: sources, CSS et images Leaflet copiés de mac:/Users/benoit/Sites/geoapi/shomgt3/shomgt/leaflet
+          lib:
+            description: fichiers inc.php partagés copiés de mac:/Users/benoit/Sites/geoapi/shomgt3/shomgt/lib
+        data:
+          description: |
+            répertoire des données monté soit de mac:/Users/benoit/Sites/geoapi/shomgt3/data
+            soit sur un autre host dans le volume sg3data
+            Voir contenu dans le conteneur sgupdt
+  sgupdt:
+    title: container sgupdt
+    files:
+      /var/www:
+        vendor:
+          description: code de synfony/yaml:6 installé par composer dans le build du container
+        data:
+          description: |
+            données, répertoire monté de mac:/Users/benoit/Sites/geoapi/shomgt3/data
+            ou sur un autre host dans le volume sg3data
+          shomgt.yaml:
+            description: fichier de config de shomgt, généré par sgupdt
+          maps:
+            description: répertoires des cartes expansées courantes pour shomgt, générées par sgupdt
+          tilecache:
+            description: cache de tuiles de shomgt, effacé par sgupdt après une mise à jour
+          temp:
+            description: répertoire de donées temporaires dans lequel la carte en cours de traitement est expansée
+        cli:
+          description: code php copié (ou partagé) de mac:/Users/benoit/Sites/geoapi/shomgt3/shomgtupdt
+          lib:
+            description: fichiers inc.php partagés copiés de mac:/Users/benoit/Sites/geoapi/shomgt3/shomgtupdt/lib
+
+variables_d'environnement:
+  sgserver:
+    SHOMGT3_INCOMING_PATH:
+      description: |
+        chemin de stockage du répertoire incoming contenant les livraisons.
+        Variable utilisée pour faire fonctionner avec le même code soit le serveur standard avec toutes les cartes
+        soit un serveur avec qqs cartes de tests afin de faciliter les tests.
+  sgupdt:
+    SHOMGT3_SERVER_URL: 
+      description: URL du serveur de cartes 7z; doit contenir le login/passwd si nécessaire
+      default: https://sgserver.geoapi.fr/index.php
+    http_proxy:
+    https_proxy: proxy à utiliser pour le serveur de cartes 7z, défaut absent
+    SHOMGT3_MAPS_DIR_PATH:
+      description: chemin du répertoire stockant les cartes expansées
+      default: /var/www/data/maps
+    SHOMGT3_ZONE:
+      description: zone géographique de sélection
+      default: WLD
+      valeursPossibles:
+        WLD: monde, toutes les cartes disponibles
+        FX: métropole
+        FX:MMN: Facade Manche-Mer du Nord
+        FX:Atl: Façade atlantique
+        FX:Med: Façade méditerranée
+        MQ: Martinique
+        GP: Guadeloupe
+        GF: Guyane
+        RE: La Réunion
+        YT: Mayotte
+        PM: Saint-Pierre-et-Miquelon
+        BL: Saint-Barthélémy
+        MF: Saint-Martin
+        TF: TAAF
+        PF: Polynésie française
+        WF: Wallis-et-Futuna
+        NC: Nouvelle-Calédonie
+        CP: Île Clipperton
+    SHOMGT3_UPDATE_DURATION: délai entre 2 mises à jour en jours (defaut 28)
+
+volumesPartagés:
+  surMac:
+    dansShomgt:
+      - sg3data:/var/www/data
+      - /Users/benoit/Sites/geoapi/shomgt3/shomgt:/var/www/html (uniquement en dev)
+    dansSgupdt:
+      - sg3data:/var/www/data
+      - /Users/benoit/Sites/geoapi/shomgt3/shomgtupdt:/var/www/cli (uniquement en dev)
+  surOvh:
+    cmdes: |
+      $ sudo docker volume create sg3data
+    dansShomgt:
+      - sg3data:/var/www/data
+    dansSgupdt:
+      - sg3data:/var/www/data
+

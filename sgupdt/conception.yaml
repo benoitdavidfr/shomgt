@@ -1,22 +1,4 @@
 title: sgupdt - conception du module
-organisationDesRépertoiresDansLeContainer:
-  /var/www:
-    vendor:
-      description: code de synfony/yaml:6 installé par composer dans le build du container
-    data:
-      description: données, répertoire partagé avec shomgt
-      shomgt.yaml:
-        description: fichier de config de shomgt
-      maps:
-        description: répertoires des cartes expansées courantes pour shomgt
-      tilecache:
-        description: cache de tuiles de shomgt, effacé par sgupdt après une mise à jour
-    cli:
-      description: code php
-      lib:
-        description: fichiers inc.php
-      temp:
-        description: répertoire de donées temporaires dans lequel la carte en cours de traitement est expansée
 
 variables_d'environnement:
   SHOMGT3_SERVER_URL: 
@@ -86,22 +68,8 @@ algorithme:
     - s'endormir SHOMGT3_UPDATE_DURATION
   - FIN_FAIRE
 
-bugs:
-  exec2022-05-18T18:20@OVH:
-    Warning: Trying to access array offset on value of type null in /var/www/cli/shomgt.php on line 140
-    Warning: foreach() argument must be of type array|object, null given in /var/www/cli/shomgt.php on line 140
-  exec2022-05-23T18:20@OVH:
-    - pb de mémoire allouée dans maketile.php qui nécessite au moins 2G pour 7330
 
-
-AFaire:
-  - simplifier le mécanisme en définissant un volume dans le docker-compose évitant ainsi de créer des répertoires
-  - sécuriser sgserver par une auth http similaire à celle de ShomGT2 - FAIT 19-20/5
-  - ajouter la possibilité de définir un proxy - FAIT 19/5 - utilisation des variables d'env. standard pour wget
-  - la génération de shomgt.yaml n'est pas satisfaisante car il peut y avoir des warnings qui se retrouvent
-    dans le fichier shomgt.yaml
-    - il vaut mieux générer le fichier puis tester sa conformité à part
-  
+AFaire:  
 
 stratégieDeTests:
   principes:
@@ -147,7 +115,3 @@ linux:
     buster: debian 10 remplacée par debian 11 ("Bullseye")
     bullseye: debian 11
     
-docker:
-  title: problème Docker d'utilisation du conteneur basé sur php:8.1.6-cli
-  problème: le conteneur n'a pas les droits pour écrire dans le répertoire sgupdt
-  solution: en php:cli le répertoire par défaut est /. Il suffit de changer de répertoire !
