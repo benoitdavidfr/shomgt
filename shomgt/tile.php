@@ -19,12 +19,16 @@ doc: |
   Test:
     http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
+  26/5/2022:
+    - activation des headers de mise en cache
+    - ajout du cache de tuiles
   24/5/2022:
     - correction du code affichant la version
   1/5/2022:
     création par copie de la version de shomgt2
 includes: [lib/gegeom.inc.php, ../lib/log.inc.php, ../lib/config.inc.php, geotiff.inc.php, cache.inc.php, errortile.inc.php]
 */
+$start = ['time'=>  microtime(true), 'memory'=> memory_get_usage(true)];
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/lib/gegeom.inc.php';
@@ -32,10 +36,22 @@ require_once __DIR__.'/lib/layer.inc.php';
 #require_once __DIR__.'/../lib/log.inc.php';
 #require_once __DIR__.'/../lib/config.inc.php';
 #require_once __DIR__.'/geotiff.inc.php';
-#require_once __DIR__.'/cache.inc.php';
+require_once __DIR__.'/lib/cache.inc.php';
 require_once __DIR__.'/lib/errortile.inc.php';
+//require_once __DIR__.'/../vendor/autoload.php'; // utile pour les perfs
 
-if (is_file(__DIR__.'/tileaccess.inc.php')) {
+//use Symfony\Component\Yaml\Yaml; // utile pour les perfs
+
+// enregistrement d'un log temporaire pour estimer les performances
+/*function logRecord(array $log): void {
+  // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
+  $flag_append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
+  file_put_contents(__DIR__.'/log.yaml',
+    Yaml::dump([date(DATE_ATOM)=> array_merge(['path_info'=> $_SERVER['PATH_INFO'] ?? null], $log)]),
+    $flag_append|LOCK_EX);
+}*/
+
+if (is_file(__DIR__.'/tileaccess.inc.php')) { // possibilité de restreindre l'accès dans certains cas 
   require_once __DIR__.'/tileaccess.inc.php';
 }
 
@@ -245,8 +261,8 @@ if (!isset($layers[$lyrname])) {
   die("Erreur: couche $lyrname inexistante, voir la liste des couches sur $url\n");
 }
 
-/*if (!$debug)
-  Cache::readAndSend($lyrname, $z, $x, $y);*/
+if (!$debug)
+  Cache::readAndSend($lyrname, $z, $x, $y);
 
 try {
   $ebox = Zoom::tileEBox($z, $x, $y)->geo('WebMercator')->proj('WorldMercator');
@@ -259,30 +275,28 @@ try {
     die("Erreur: couche $lyrname inexistante en interne\n");
   }
   $layers[$lyrname]->map($grImage, $debug);
-  if (!$debug)
-    header('Content-type: image/png');
   $grImage->savealpha(true);
 } catch (Exception $e) {
   sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
 }
 
+define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60);
 if (!$debug) {
-  if (0) { // Mise en cache
-    $nbDaysInCache = 0.5;
-    $nbSecondsInCache = $nbDaysInCache*24*60*60;
-    //$nbSecondsInCache = 1;
-    header('Cache-Control: max-age='.$nbSecondsInCache); // mise en cache pour $nbDaysInCache jours
-    header('Expires: '.date('r', time() + $nbSecondsInCache)); // mise en cache pour $nbDaysInCache jours
+  if (0) { // Mise en cache par le navigateur
+    header('Cache-Control: max-age='.NB_SECONDS_IN_CACHE); // mise en cache pour NB_SECONDS_IN_CACHE s
+    header('Expires: '.date('r', time() + NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Last-Modified: '.date('r'));
   }
-  //header('Content-type: image/png');
+  header('Content-type: image/png');
   // envoi de l'image
   imagepng($grImage->image());
   flush();
-  /*try {
-    Cache::write($lyrname, $z, $x, $y, $image);
+  //logRecord(['ellapsed_time'=> microtime(true)-$start['time'], 'memory_usage'=> memory_get_usage(true)-$start['memory']]);
+  try {
+    Cache::write($lyrname, $z, $x, $y, $grImage->image());
   } catch (Exception $e) {
-  }*/
+    sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
+  }
 }
 else {
   $href = "$url/$lyrname/$z/$x/$y.png";
