@@ -8,6 +8,8 @@ doc: |
   test:
     http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
 journal: |
+  30/5/2022:
+    - modif initialisation Layer
   29/4/2022:
     - gestion de la superposition de plusieures couches
   25/4/2022:
@@ -267,6 +269,8 @@ try {
     }
     Maps::landingPage();
   }
+
+  Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
 
   if ($_SERVER['PATH_INFO'] == '/collections') { // liste des couches 
     Maps::listOfLayers();

@@ -13,6 +13,8 @@ doc: |
   La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
   Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
 journal: |
+  30/5/2022:
+    - modif initialisation Layer
   24/5/2022:
     - envoi d'une erreur Http 500 lorsque le fichier shomgt.yaml n'existe pas
   22/5/2022:
@@ -317,6 +319,11 @@ class TiffLayer extends Layer {
     return $features;
   }
 };
+
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+
+
 // Initialisation à parir du fichier shomgt.yaml
 Layer::initFromShomGt(__DIR__.'/../../data/shomgt');
 //print_r(Layer::layers());

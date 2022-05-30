@@ -19,6 +19,8 @@ doc: |
   Test:
     http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
+  30/5/2022:
+    - modif initialisation Layer
   26/5/2022:
     - activation des headers de mise en cache
     - ajout du cache de tuiles
@@ -268,6 +270,7 @@ try {
   $ebox = Zoom::tileEBox($z, $x, $y)->geo('WebMercator')->proj('WorldMercator');
   $grImage = new GeoRefImage($ebox); // création de l'image Géoréférencée
   $grImage->create(256, 256, true); // création d'une image GD transparente
+  Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
   $layers = Layer::layers();
   if (!isset($layers[$lyrname])) {
     header('HTTP/1.1 500 Internal Server Error');
