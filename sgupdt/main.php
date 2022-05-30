@@ -124,8 +124,8 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
           self::$obsoleteMaps[] = $mapnum;
       }
     }
-    //echo '$validMaps'; print_r(self::$validMaps);
-    //echo '$obsoleteMaps'; print_r(self::$obsoleteMaps);
+    //echo '$validMaps='; print_r(self::$validMaps);
+    //echo '$obsoleteMaps='; print_r(self::$obsoleteMaps);
   }
 };
 Maps::init($SERVER_URL);
@@ -151,22 +151,6 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
 }
 
 function expand(string $map7zpath) { // expansion d'une carte téléchargée comme 7z au path indiqué
-  /*
-  echo "map=$map"
-  7z x -y $map # dezip le fichier du Shom
-  mapdir=`basename $map .7z`
-  for gtiff in `ls $mapdir/?(*.tif|*.pdf)`; do
-    # echo "gtiff=$gtiff"
-    gtname=`basename $gtiff .tif`
-    gdalinfo $gtiff > $mapdir/$gtname.info # sauvegarde du géoréférencement du GéoTiff/PDF
-    echo "conversion $gtiff en PNG"
-    gdal_translate -of PNG $gtiff $mapdir/$gtname.png || exit # conversion du GéoTiff/PDF en PNG
-    rm $gtiff # suppression du fichier GéoTiff/PDF
-    php ../maketile.php $mapdir/$gtname.png || exit # découpage en dalles du PNG
-    rm $mapdir/$gtname.png # suppression du gros fichier .png
-  done
-  */
-  
   echo "expand($map7zpath)\n";
   $mapdir = dirname($map7zpath);
   $mapbasename = basename($map7zpath);
@@ -246,7 +230,7 @@ rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml")
 
 // effacement du cache des tuiles s'il existe
 if (is_dir("$MAPS_DIR_PATH/../tilecache")) {
-  execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
+  execCmde("rm -r $MAPS_DIR_PATH/../tilecache &", CMDE_VERBOSE);
 }
 
 // effacement des cartes obsolètes
