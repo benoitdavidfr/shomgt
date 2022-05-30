@@ -119,7 +119,7 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
     foreach ($maps as $mapnum => $map) {
       if (is_int($mapnum) || ctype_digit($mapnum)) { // on se limite aux cartes dont l'id est un nombre
         if ($map['status'] == 'ok') // on distingue les cartes valides de celles qui sont obsolètes
-          self::$validMaps[$mapnum] = $map['mostRecentVersion'];
+          self::$validMaps[$mapnum] = $map['lastVersion'];
         else
           self::$obsoleteMaps[] = $mapnum;
       }

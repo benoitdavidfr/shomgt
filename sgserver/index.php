@@ -36,10 +36,11 @@ doc: |
 journal: |
   30/5/2022:
     - correction d'un bug
-    - ajout d'un champ 'mostRecentVersion' dans l'entrée maps.json
+    - ajout d'un champ 'lastVersion' dans l'entrée maps.json
     - rempl. /map/... par /maps/...
     - suppression entrée API /map/{numCarte}/newer/{annéeEdition}c{derCorr}.7z
     - suppression entrée API /cat/{date}.json
+    - stockage temporaire de maps.json maintenant long à calculer
   24/5/2022:
     - modification de la gestion du fichier newermap.pser car gestion buggé
     - correction d'un bug
@@ -210,18 +211,85 @@ if ($_SERVER['PATH_INFO'] == '/logout') { // action complémentaire pour raz le 
 require_once __DIR__.'/lib/SevenZipArchive.php';
 require_once __DIR__.'/lib/readmapversion.inc.php';
 
+
+if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
+  $mapsPath = $INCOMING_PATH.'/../maps.json';
+  if (is_file($mapsPath) && (filemtime($mapsPath) > filemtime($INCOMING_PATH))) {
+    header('Content-type: application/json');
+    fpassthru(fopen($mapsPath, 'r'));
+    logRecord(['done'=> "OK - $mapsPath transmis"]);
+    die();
+  }
+
+  $maps = []; /* [{mapnum} => [
+    'status'=> 'ok' | 'obsolete'
+    'nbre'=> nbre de téléchargements disponibles
+    'lastVersion'=> identifiant de la dernière version 
+    'url'=> lien vers la page associée au numéro de carte
+  ]]*/
+  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
+    if ($delivery->isDot()) continue;
+    if ($delivery->getType() == 'dir') {
+      //echo "* $delivery<br>\n";
+      // Prise en compte des cartes que cette livraison rend obsolètes
+      if (is_file("$INCOMING_PATH/$delivery/index.yaml")) {
+        $index = Yaml::parseFile("$INCOMING_PATH/$delivery/index.yaml");
+        foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
+          $mapnum = substr($mapid, 2);
+          if (!isset($maps[$mapnum])) {
+            $maps[$mapnum] = [
+              'status'=> 'obsolete',
+              'nbre'=> 0,
+              'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
+            ];
+          }
+          else {
+            $maps[$mapnum]['status'] = 'obsolete';
+          }
+        }
+      }
+      foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
+        if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
+          //echo "- carte $map7z<br>\n";
+          $mapnum = $map7z->getBasename('.7z');
+          if (!isset($maps[$mapnum])) {
+            $maps[$mapnum] = [
+              'status'=> 'ok',
+              'nbre'=> 1,
+              'lastVersion'=> getMapVersionIn7z("$INCOMING_PATH/$delivery/$map7z"),
+              'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
+            ];
+          }
+          else {
+            $maps[$mapnum]['status'] = 'ok';
+            $maps[$mapnum]['nbre']++;
+            $maps[$mapnum]['lastVersion'] = getMapVersionIn7z("$INCOMING_PATH/$delivery/$map7z");
+          }
+        }
+      }
+    }
+  }
+  ksort($maps);
+  //echo "<pre>maps="; print_r($maps);
+  header('Content-type: application/json');
+  echo json_encode($maps);
+  file_put_contents($mapsPath, json_encode($maps));
+  logRecord(['done'=> "OK - maps.json transmis"]);
+  die();
+}
+
 // Renvoie le chemin du 7z de la dernière version de la carte $mapnum ou '' si la carte n'existe pas.
-function findMostRecentMap(string $INCOMING_PATH, string $mapnum): string {
-  //echo "findMostRecentMap($mapnum)<br>\n";
-  // construction du fichier mostrecent.pser contenant pour chaque numéro de carte la livraison contenant sa dernière version
+function findLastDelivery(string $INCOMING_PATH, string $mapnum): string {
+  //echo "findLastDelivery($mapnum)<br>\n";
+  // construction du fichier lastdelivery.pser contenant pour chaque numéro de carte le nom de sa dernière livraison
   // Ce fichier .pser doit dépendre de $INCOMING_PATH pour ne pas confondre les données entre les différents serveurs
   // De plus, il ne doit pas être dans $INCOMING_PATH car sa création modifierait la date de mise à jour d'$INCOMING_PATH
-  $mostRecentMapPath = $INCOMING_PATH.'/../mostrecent.pser';
-  if (is_file($mostRecentMapPath) && (filemtime($mostRecentMapPath) > filemtime($INCOMING_PATH))) {
-    $mostRecentMaps = unserialize(file_get_contents($mostRecentMapPath));
+  $lastDeliveryPath = $INCOMING_PATH.'/../lastdelivery.pser';
+  if (is_file($lastDeliveryPath) && (filemtime($lastDeliveryPath) > filemtime($INCOMING_PATH))) {
+    $lastDeliveries = unserialize(file_get_contents($lastDeliveryPath));
   }
   else {
-    $mostRecentMaps = []; // [{mapnum} => ({deliveryName} | 'obsolete')]
+    $lastDeliveries = []; // [{mapnum} => {deliveryName}]
     foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
       if ($delivery->isDot()) continue;
       if ($delivery->getType() == 'dir') {
@@ -230,16 +298,16 @@ function findMostRecentMap(string $INCOMING_PATH, string $mapnum): string {
           if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
             //echo "- carte $map7z<br>\n";
             $mn = $map7z->getBasename('.7z');
-            $mostRecentMaps[$mn] = $delivery->getFilename();
+            $lastDeliveries[$mn] = $delivery->getFilename();
           }
         }
       }
     }
-    file_put_contents($mostRecentMapPath, serialize($mostRecentMaps));
+    file_put_contents($lastDeliveryPath, serialize($lastDeliveries));
   }
   
   //echo "<pre>incoming="; print_r($incoming); die("Fin ligne ".__LINE__."\n");
-  if (!($delivery = ($mostRecentMaps[$mapnum] ?? null))) {
+  if (!($delivery = ($lastDeliveries[$mapnum] ?? null))) {
     return '';
   }
   else {
@@ -250,7 +318,7 @@ function findMostRecentMap(string $INCOMING_PATH, string $mapnum): string {
 // /maps/{numCarte}.7z: retourne le 7z de la dernière version de la carte
 if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
   $mapnum = $matches[1];
-  $mappath = findMostRecentMap($INCOMING_PATH, $mapnum);
+  $mappath = findLastDelivery($INCOMING_PATH, $mapnum);
   if (!$mappath) {
     sendHttpCode(404, "Carte $mapnum non trouvée");
   }
@@ -317,59 +385,6 @@ function getMapVersionIn7z(string $pathOf7z): string {
     die();
   }
 }*/
-
-
-if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
-  $maps = []; // [{mapnum} => ['status'=> {status}, 'nbre'=> {nbre}, 'url'=> {url}]]
-  //echo "<pre>"; print_r($_SERVER);
-  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
-    if ($delivery->isDot()) continue;
-    if ($delivery->getType() == 'dir') {
-      //echo "* $delivery<br>\n";
-      // Prise en compte des cartes que cette livraison rend obsolètes
-      if (is_file("$INCOMING_PATH/$delivery/index.yaml")) {
-        $index = Yaml::parseFile("$INCOMING_PATH/$delivery/index.yaml");
-        foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
-          $mapnum = substr($mapid, 2);
-          if (!isset($maps[$mapnum])) {
-            $maps[$mapnum] = [
-              'status'=> 'obsolete',
-              'nbre'=> 0,
-              'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
-            ];
-          }
-          else {
-            $maps[$mapnum]['status'] = 'obsolete';
-          }
-        }
-      }
-      foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
-        if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
-          //echo "- carte $map7z<br>\n";
-          $mapnum = $map7z->getBasename('.7z');
-          if (!isset($maps[$mapnum])) {
-            $maps[$mapnum] = [
-              'status'=> 'ok',
-              'nbre'=> 1,
-              'mostRecentVersion'=> getMapVersionIn7z("$INCOMING_PATH/$delivery/$map7z"),
-              'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
-            ];
-          }
-          else {
-            $maps[$mapnum]['nbre']++;
-            $maps[$mapnum]['mostRecentVersion'] = getMapVersionIn7z("$INCOMING_PATH/$delivery/$map7z");
-          }
-        }
-      }
-    }
-  }
-  ksort($maps);
-  //echo "<pre>maps="; print_r($maps);
-  header('Content-type: application/json');
-  echo json_encode($maps);
-  logRecord(['done'=> "OK - maps.json transmis"]);
-  die();
-}
 
 
 // /maps/{numCarte}.json: liste en JSON l'ensemble des versions disponibles avec un lien vers les 2 entrées suivantes
