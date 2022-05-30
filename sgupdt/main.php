@@ -52,11 +52,13 @@ doc: |
   
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
-    - tester dans un conteneur
 journal: |
+  30/5/2022:
+    - ajout suppression du cache de tuiles
+    - passage en paramètres des variables globales
   19/5/2022:
-    - ajout création du répertoire $SHOMGT3_MAPS_DIR_PATH s'il n'existe pas
-    - définition de valeurs par défaut pour $SHOMGT3_SERVER_URL et $SHOMGT3_MAPS_DIR_PATH
+    - ajout création du répertoire $MAPS_DIR_PATH s'il n'existe pas
+    - définition de valeurs par défaut pour $SERVER_URL et $MAPS_DIR_PATH
   18/5/2022:
     - évolution du code pour fonctionner en contenenur
     - utilisation des 2 variables d'environnement
@@ -93,15 +95,15 @@ use Symfony\Component\Yaml\Yaml;
 define ('CMDE_VERBOSE', 1); // degré de verbosité de l'exécution des cmdes
 
 // phase d'initialisation
-$SHOMGT3_SERVER_URL = EnvVar::val('SHOMGT3_SERVER_URL');
+$SERVER_URL = EnvVar::val('SHOMGT3_SERVER_URL');
 
-$SHOMGT3_MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
-// créée le répertoire $SHOMGT3_MAPS_DIR_PATH s'il n'existe pas déjà
-if (!is_dir($SHOMGT3_MAPS_DIR_PATH))
-  if (!mkdir($SHOMGT3_MAPS_DIR_PATH))
-    throw new Exception("Erreur de création du répertoire $SHOMGT3_MAPS_DIR_PATH");
+$MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
+// créée le répertoire $MAPS_DIR_PATH s'il n'existe pas déjà
+if (!is_dir($MAPS_DIR_PATH))
+  if (!mkdir($MAPS_DIR_PATH))
+    throw new Exception("Erreur de création du répertoire $MAPS_DIR_PATH");
 
-$TEMP = "$SHOMGT3_MAPS_DIR_PATH/../temp";
+$TEMP = "$MAPS_DIR_PATH/../temp";
 // créée le répertoire temp s'il n'existe pas déjà
 if (!is_dir($TEMP))
   if (!mkdir($TEMP))
@@ -140,10 +142,9 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
   static array $obsoleteMaps=[]; // liste des numéros de cartes obsolètes trouvés dans maps.json
   static array $downloaded=[]; // liste des numéros de cartes effectivement téléchargées
   
-  static function init(): void {
-    global $SHOMGT3_SERVER_URL;
+  static function init(string $SERVER_URL): void {
     if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
-    $httpCode = download("$SHOMGT3_SERVER_URL/maps.json", __DIR__.'/temp/maps.json', CMDE_VERBOSE);
+    $httpCode = download("$SERVER_URL/maps.json", __DIR__.'/temp/maps.json', CMDE_VERBOSE);
     if ($httpCode <> 200)
       throw new Exception("Erreur de download sur maps.json, httpCode=$httpCode");
     $maps = json_decode(file_get_contents(__DIR__.'/temp/maps.json'), true, 512, JSON_THROW_ON_ERROR);
@@ -156,25 +157,25 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
           self::$obsoleteMaps[] = $mapnum;
       }
     }
-    //self::$mapNums = [];
+    //echo '$mapNums'; print_r(self::$mapNums);
+    //echo '$obsoleteMaps'; print_r(self::$obsoleteMaps);
   }
 };
-Maps::init();
+Maps::init($SERVER_URL);
 
 // Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
 // ou 'undefined' si aucun fichier de MD n'est trouvé
-function findCurrentMapVersion(string $mapnum): string {
-  global $SHOMGT3_MAPS_DIR_PATH;
+function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';
-  if (!is_dir("$SHOMGT3_MAPS_DIR_PATH/$mapnum")) {
+  if (!is_dir("$MAPS_DIR_PATH/$mapnum")) {
     // la carte est absente des cartes courantes
     return '';
   }
-  foreach (new DirectoryIterator("$SHOMGT3_MAPS_DIR_PATH/$mapnum") as $filename) {
+  foreach (new DirectoryIterator("$MAPS_DIR_PATH/$mapnum") as $filename) {
     if (preg_match('!^CARTO_GEOTIFF_\d+_[^.]+\.xml!', $filename)) {
       //echo "$filename\n";
-      $currentMapVersion = readMapVersion("$SHOMGT3_MAPS_DIR_PATH/$mapnum/$filename");
+      $currentMapVersion = readMapVersion("$MAPS_DIR_PATH/$mapnum/$filename");
       //echo "currentMapVersion=$currentMapVersion\n";
       return $currentMapVersion;
     }
@@ -231,23 +232,22 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
 }
 
 // télécharge la carte, l'expanse et l'installe dans le répertoire courant, retourne le libellé du code http
-function dlExpandInstallMap(string $mapnum): string {
-  global $SHOMGT3_SERVER_URL, $SHOMGT3_MAPS_DIR_PATH, $TEMP;
-  $version = findCurrentMapVersion($mapnum);
-  $url = "$SHOMGT3_SERVER_URL/map/$mapnum" . ($version ? "/newer/$version" : '').'.7z';
+function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string {
+  $version = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
+  $url = "$SERVER_URL/map/$mapnum" . ($version ? "/newer/$version" : '').'.7z';
   //echo "\$url=$url\n";
   switch ($httpCode = download($url, "$TEMP/$mapnum.7z", CMDE_VERBOSE)) {
     case 200: { // OK
       expand("$TEMP/$mapnum.7z");
       // On copie l'ancien répertoire dans un .bak pour que le remplacement soit le plus rapide possible
       // Le répertoire .bak est supprimé ensuite
-      if (is_dir("$SHOMGT3_MAPS_DIR_PATH/$mapnum"))
-        rename("$SHOMGT3_MAPS_DIR_PATH/$mapnum", "$SHOMGT3_MAPS_DIR_PATH/$mapnum.bak")
-          or throw new Exception("Erreur rename($SHOMGT3_MAPS_DIR_PATH/$mapnum, $SHOMGT3_MAPS_DIR_PATH/$mapnum.bak)");
-      rename("$TEMP/$mapnum", "$SHOMGT3_MAPS_DIR_PATH/$mapnum")
-        or throw new Exception("Erreur rename($TEMP/$mapnum, $SHOMGT3_MAPS_DIR_PATH/$mapnum)");
-      if (is_dir("$SHOMGT3_MAPS_DIR_PATH/$mapnum.bak"))
-        execCmde("rm -r $SHOMGT3_MAPS_DIR_PATH/$mapnum.bak &", CMDE_VERBOSE);
+      if (is_dir("$MAPS_DIR_PATH/$mapnum"))
+        rename("$MAPS_DIR_PATH/$mapnum", "$MAPS_DIR_PATH/$mapnum.bak")
+          or throw new Exception("Erreur rename($MAPS_DIR_PATH/$mapnum, $MAPS_DIR_PATH/$mapnum.bak)");
+      rename("$TEMP/$mapnum", "$MAPS_DIR_PATH/$mapnum")
+        or throw new Exception("Erreur rename($TEMP/$mapnum, $MAPS_DIR_PATH/$mapnum)");
+      if (is_dir("$MAPS_DIR_PATH/$mapnum.bak"))
+        execCmde("rm -r $MAPS_DIR_PATH/$mapnum.bak &", CMDE_VERBOSE);
       unlink("/$TEMP/$mapnum.7z");
       return 'OK';
     }
@@ -272,20 +272,25 @@ function dlExpandInstallMap(string $mapnum): string {
 // téléchargement des cartes et transfert au fur et à mesure dans SHOMGT3_MAPS_DIR_PATH
 foreach (Maps::$mapNums as $mapnum) {
   echo "mapnum=$mapnum\n";
-  if (dlExpandInstallMap($mapnum) == 'OK')
+  if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
     Maps::$downloaded[] = $mapnum;
 }
 
 // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
 !execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)
   or throw new Exception("Erreur dans la génération de shomgt.yaml");
-rename("$TEMP/shomgt.yaml", "$SHOMGT3_MAPS_DIR_PATH/../shomgt.yaml")
-  or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $SHOMGT3_MAPS_DIR_PATH/../shomgt.yaml)");
+rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml")
+  or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $MAPS_DIR_PATH/../shomgt.yaml)");
+
+// effacement du cache des tuiles s'il existe
+if (is_dir("$MAPS_DIR_PATH/../tilecache")) {
+  execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
+}
 
 // effacement des cartes obsolètes
 foreach (Maps::$obsoleteMaps as $mapnum) {
-  if (is_dir("$SHOMGT3_MAPS_DIR_PATH/$mapnum"))
-    execCmde("rm -r $SHOMGT3_MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
+  if (is_dir("$MAPS_DIR_PATH/$mapnum"))
+    execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
 }
 
 echo "Fin Ok de mise à jour des cartes\n";

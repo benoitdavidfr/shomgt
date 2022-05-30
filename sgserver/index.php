@@ -34,6 +34,8 @@ doc: |
   Les 7z sont stockés dans le répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH avec un répertoire par livraison
   nommé avec un nom commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
+  30/5/2022:
+    - correction d'un bug
   24/5/2022:
     - modification de la gestion du fichier newermap.pser car gestion buggé
     - correction d'un bug
@@ -206,9 +208,8 @@ require_once __DIR__.'/lib/readmapversion.inc.php';
 
 // Renvoie le chemin du 7z de la dernière version de la carte $mapnum
 // Si la carte n'existe pas alors renvoie ''. Si la carte est obsolete alors renvoie 'obsolete'
-function findNewerMap(string $mapnum): string {
+function findNewerMap(string $INCOMING_PATH, string $mapnum): string {
   //echo "findNewerMap($mapnum)<br>\n";
-  global $INCOMING_PATH;
   // construction du fichier newermap.pser contenant pour chaque numéro de carte la livraison contenant sa dernière version
   // Ce fichier .pser doit dépendre de $INCOMING_PATH pour ne pas confondre les données entre les différents serveurs
   // De plus, il ne doit pas être dans $INCOMING_PATH car sa création modifierait la date de mise à jour d'$INCOMING_PATH
@@ -239,7 +240,7 @@ function findNewerMap(string $mapnum): string {
         }
       }
     }
-    file_put_contents(__DIR__.'/newermap.pser', serialize($newermap));
+    file_put_contents($newermapPath, serialize($newermap));
   }
   
   //echo "<pre>incoming="; print_r($incoming); die("Fin ligne ".__LINE__."\n");
@@ -257,7 +258,7 @@ function findNewerMap(string $mapnum): string {
 // /map/{numCarte}.7z: retourne le 7z de la dernière version de la carte
 if (preg_match('!^/map/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
   $mapnum = $matches[1];
-  $mappath = findNewerMap($mapnum);
+  $mappath = findNewerMap($INCOMING_PATH, $mapnum);
   if (!$mappath) {
     sendHttpCode(404, "Carte $mapnum non trouvée");
   }
@@ -300,7 +301,7 @@ if (preg_match('!^/map/(\d\d\d\d)/newer/((\d\d\d\dc\d+)|(undefined))\.7z$!', $_S
   //echo "<pre>"; print_r($matches);
   $mapnum = $matches[1];
   $mapVersion = $matches[2];
-  $mappath = findNewerMap($mapnum);
+  $mappath = findNewerMap($INCOMING_PATH, $mapnum);
   if (!$mappath) {
     sendHttpCode(404, "Carte $mapnum non trouvée");
   }

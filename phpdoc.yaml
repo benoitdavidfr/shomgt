@@ -18,15 +18,19 @@ doc: |
   Voir le fichier filetree.yaml pour l'arborescence des fichiers, les mapping dans les conteneurs et les vars d'environnement
 
 journal: |
+  30/5/2022:
+    - ajout effacement du cache des tuiles dans sgupdt
+    - correction bugs
   26/5/2022:
     - ajout du cache des tuiles dans shomgt
+    - nécessité de réfléchir à la gestion des logs, notamment utiliser ELK
   25/5/2022:
     - ajout du z-order dans sgupdt ; def. des z-order dans update.yaml ; effacement partiel de 7081
   24/5/2022:
     - version 0.3 semble ok y compris en conteneurs sur OVH
     - manque
-      - la gestion de l'ordre des couches dans sgupdt
-      - le cache de tuiles dans shomgt
+      - la gestion de l'ordre des couches dans sgupdt - FAIT 25/5
+      - le cache de tuiles dans shomgt - fAIT 26/5
       - le serveur WMS dans shomgt
   17/5/2022:
     - 1ère version Ok
