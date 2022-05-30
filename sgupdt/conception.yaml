@@ -1,5 +1,11 @@
 title: sgupdt - conception du module
 
+réflexionNlleVersion20220530:
+  - plutôt qu'interroger chaque carte pour savoir si la version stockée est différente de celle dispo
+  - je pourrais dans maps.json fournir dans sgserver pour chaque carte la dernière version dispo
+  - ainsi dans sgupdt, il suffirait de comparer la version stockée avec la version dispo
+  - cela évite d'interroger le serveur distant pour de nombreuses cartes sans utilité
+
 variables_d'environnement:
   SHOMGT3_SERVER_URL: 
     description: URL du serveur de cartes 7z; doit contenir le login/passwd si nécessaire
@@ -36,25 +42,22 @@ variables_d'environnement:
 algorithme:
   - TANTQUE vrai FAIRE # boucle perpétuelle
     - télécharger {SHOMGT3_SERVER_URL}/maps.json
-    - déduire de maps.json la liste des cartes non obsolètes
-    - POUR CHAQUE carte FAIRE
-      - SI la carte n'existe pas ALORS
-        - télécharger dans data/temp la carte sur le serveur sans paramètre
+    - POUR CHAQUE carte non obsolète dont la liste est déduite de maps.json FAIRE
+      - SI (la carte n'existe pas en local || la version la plus récente est différente de la version locale) ALORS
+        - télécharger dans data/temp la carte depuis le serveur
       - SINON
-        - télécharger la carte dans data/temp en indiquant en paramètres son édition et sa dernière correction
+        - SORTIE FAIRE
       - FINSI
-      - SI une carte 7z a été téléchargée ALORS
-        - dézipper le 7z
-        - effacer 7z
-        - POUR chaque tif/pdf FAIRE
-          - générer le .info
-          - générer le .png
-          - effacer le .tif/pdf
-          - daller le .png
-          - effacer le .png
-        - FINFAIRE
-        - transférer le répertoire de la carte dans les données courantes
-      - FINSI
+      - dézipper le 7z
+      - effacer 7z
+      - POUR chaque tif/pdf FAIRE
+        - générer le .info
+        - générer le .png
+        - effacer le .tif/pdf
+        - daller le .png
+        - effacer le .png
+      - FINFAIRE
+      - transférer le répertoire de la carte dans les données courantes
     - FIN FAIRE
     - SI au moins une carte a été téléchargée ou il existe au moins une carte obsolète ALORS
       - générer shomgt_temp.yaml en en excluant les cartes obsolètes

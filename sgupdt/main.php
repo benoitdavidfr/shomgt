@@ -6,40 +6,6 @@ doc: |
   Variable_d'Environnement:
     SHOMGT3_SERVER_URL: url du serveur de cartes en 7z
     SHOMGT3_MAPS_DIR_PATH: répertoire dans lequel les cartes expansées doivent être copiées
-  algorithme:
-    TANTQUE vrai FAIRE # boucle perpétuelle
-      télécharger {SHOMGT3_SERVER_URL}/maps.json
-      déduire de maps.json la liste des cartes non obsolètes
-      POUR CHAQUE carte FAIRE
-        SI la carte n'existe pas ALORS
-          télécharger dans temp la carte depuis le serveur sans paramètre
-        SINON
-          télécharger la carte dans temp en indiquant en paramètres son édition et sa dernière correction
-        FINSI
-        SI une carte 7z a été téléchargée ALORS
-          dézipper le 7z
-          effacer le 7z
-          POUR chaque tif/pdf FAIRE
-            générer le .info
-            générer le .png
-            effacer le .tif/pdf
-            daller le png
-            effacer le png
-          FINFAIRE
-          transférer le répertoire de la carte dans les données courantes
-        FINSI
-      FIN FAIRE 
-      SI au moins une carte a été téléchargée ou il existe au moins une carte obsolète ALORS
-        générer shomgt_temp.yaml en en excluant les cartes obsolètes
-        SI shomgt_temp.yaml n'est pas conforme à son schéma ALORS
-          transmettre une erreur et s'arrêter
-        FINSI
-        remplacer shomgt.yaml par shomgt_temp.yaml
-        effacer les cartes obsolètes
-        effacer le contenu du cache de tuiles
-      FINSI
-      s'endormir SHOMGT3_UPDATE_DURATION
-    FIN_FAIRE
 
   cas particuliers:
     Quelques cartes ne contiennent pas de MD ISO, notamment les cartes spéciales (AEM, MANCHEGRID et limites).
@@ -56,6 +22,7 @@ journal: |
   30/5/2022:
     - ajout suppression du cache de tuiles
     - passage en paramètres des variables globales
+    - mise en oeuvre du nouveau protocole du serveur de ce jour
   19/5/2022:
     - ajout création du répertoire $MAPS_DIR_PATH s'il n'existe pas
     - définition de valeurs par défaut pour $SERVER_URL et $MAPS_DIR_PATH
@@ -138,7 +105,7 @@ if (($argc > 1) && ($argv[1]=='-v')) {
 
  
 class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/maps.json
-  static array $mapNums=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json
+  static array $validMaps=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json avec leur version
   static array $obsoleteMaps=[]; // liste des numéros de cartes obsolètes trouvés dans maps.json
   static array $downloaded=[]; // liste des numéros de cartes effectivement téléchargées
   
@@ -151,13 +118,13 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
     //unlink(__DIR__.'/temp/maps.json'); // ne pas le détruire car utilisé dans shomgt.php
     foreach ($maps as $mapnum => $map) {
       if (is_int($mapnum) || ctype_digit($mapnum)) { // on se limite aux cartes dont l'id est un nombre
-        if ($map['status'] == 'ok') // et uniquement ces cartes non obsolètes
-          self::$mapNums[] = $mapnum;
+        if ($map['status'] == 'ok') // on distingue les cartes valides de celles qui sont obsolètes
+          self::$validMaps[$mapnum] = $map['mostRecentVersion'];
         else
           self::$obsoleteMaps[] = $mapnum;
       }
     }
-    //echo '$mapNums'; print_r(self::$mapNums);
+    //echo '$validMaps'; print_r(self::$validMaps);
     //echo '$obsoleteMaps'; print_r(self::$obsoleteMaps);
   }
 };
@@ -220,6 +187,7 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
     $gtname = basename($gtiff, '.tif'); // pour un .tif je prends le basename, pour un .pdf je garde le nom entier
     !execCmde("gdalinfo $mapdir/$gtiff > $mapdir/$gtname.info", CMDE_VERBOSE) // sauvegarde du géoréférencement du GéoTiff/PDF
       or throw new Exception("erreur dans gdalinfo $mapdir/$gtiff");
+    //if (1) continue; // Pour le test je n'effectue pas les commandes suivantes
     !execCmde("gdal_translate -of PNG $mapdir/$gtiff $mapdir/$gtname.png", CMDE_VERBOSE) # conversion du GéoTiff/PDF en PNG
       or throw new Exception("erreur dans gdal_translate sur $mapdir$gtiff");
     //echo "unlink(\"$mapdir/$gtiff\"); // suppression du fichier GéoTiff/PDF\n";
@@ -233,8 +201,7 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
 
 // télécharge la carte, l'expanse et l'installe dans le répertoire courant, retourne le libellé du code http
 function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string {
-  $version = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
-  $url = "$SERVER_URL/map/$mapnum" . ($version ? "/newer/$version" : '').'.7z';
+  $url = "$SERVER_URL/maps/$mapnum.7z";
   //echo "\$url=$url\n";
   switch ($httpCode = download($url, "$TEMP/$mapnum.7z", CMDE_VERBOSE)) {
     case 200: { // OK
@@ -251,10 +218,6 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
       unlink("/$TEMP/$mapnum.7z");
       return 'OK';
     }
-    case 204: { // No Content
-      echo "Pas de téléchargement pour la carte $mapnum.7z car la version du serveur est déjà présente\n";
-      return 'No Content';
-    }
     case 400: { // Bad Request
       die("Erreur $httpCode sur $mapnum.7z ligne ".__LINE__."\n");
     }
@@ -262,17 +225,16 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
       echo "La carte $mapnum.7z n'a pas été téléchargée car elle n'existe pas sur le serveur\n";
       return 'Not Found';
     }
-    case 410: { // Gone - la carte a existé mais est maintenant obsolète
-      echo "La carte $mapnum.7z est obsolète, elle sera supprimée\n";
-      return 'Gone';
-    }
   }
 }
 
 // téléchargement des cartes et transfert au fur et à mesure dans SHOMGT3_MAPS_DIR_PATH
-foreach (Maps::$mapNums as $mapnum) {
+foreach (Maps::$validMaps as $mapnum => $mapVersion) {
   echo "mapnum=$mapnum\n";
-  if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
+  $currentVersion = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
+  if ($currentVersion == $mapVersion)
+    echo "Pas de téléchargement pour la carte $mapnum.7z car la version $mapVersion est déjà présente\n";
+  elseif (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
     Maps::$downloaded[] = $mapnum;
 }
 
