@@ -1,0 +1,39 @@
+# config docker-compose de shomgt3 en dev/prod sur Mac - 23/5/2022
+# fichier dans /Users/benoit/Sites/geoapi/shomgt3
+# lance 2 containers:
+#   - shomgt expose les GéoTiffs
+#   - sgupdt construit les données par téléchargement à partir du serveur de cartes 7z
+version: '3'
+services:
+  shomgt:
+    build: shomgt
+    image: shomgt
+    hostname: shomgt
+    expose: [80]
+    volumes:
+      - sg3data:/var/www/data
+      #- /Users/benoit/Sites/geoapi/shomgt3/shomgt:/var/www/html # uniquement en dev
+    #environment:
+    #   SHOMGT3_MAPS_DIR_PATH: /var/www/data/maps # répertoire dans lequel lire les cartes expansées
+    labels:
+      traefik.http.routers.mapsdev.rule: Host(`shomgt3`)
+    networks:
+      - dockerc_default
+  sgupdt:
+    build: sgupdt
+    image: sgupdt
+    hostname: sgupdt
+    volumes:
+      - sg3data:/var/www/data
+      #- ${PWD}/sgupdt:/var/www/cli # uniquement en dev
+    environment:
+      # SHOMGT3_MAPS_DIR_PATH: /var/www/data/maps # répertoire dans lequel écrire les cartes expansées
+      SHOMGT3_SERVER_URL: http://bd:test@php81/geoapi/shomgt3/sgserver/index.php # url du serveur de cartes 7z en local
+      #SHOMGT3_SERVER_URL: http://bd:test@sgserver.geoapi.fr/index.php # url du serveur de cartes 7z sur geoapi.fr
+    networks:
+      - dockerc_default
+volumes:
+  sg3data:
+networks:
+  dockerc_default:
+    external: true

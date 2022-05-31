@@ -205,8 +205,11 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
     case 400: { // Bad Request
       die("Erreur $httpCode sur $mapnum.7z ligne ".__LINE__."\n");
     }
+    case 401: { // Unauthorized
+      die("Erreur $httpCode sur $mapnum.7z ligne ".__LINE__."\n");
+    }
     case 404: { // Not Found - la carte n'a jamais existé
-      echo "La carte $mapnum.7z n'a pas été téléchargée car elle n'existe pas sur le serveur\n";
+      echo "La carte $mapnum.7z n'a pas été téléchargée car elle n'a pas été trouvée sur le serveur\n";
       return 'Not Found';
     }
   }
