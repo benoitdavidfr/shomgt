@@ -1,10 +1,15 @@
 title: 'Catalogue des cartes Shom V2.1'
 description:
   - 'Import du fichier V1 le 2020-12-26T22:01:53+01:00'
+  - duplication du fichier pour ShomGt3
+  - les mises à jour sur ShomGt2 ne sont plus gérées sur ce fichier
+  - le 5/6/2022
+    - resynchro des bboxDM sur le GAN et
+    - transfert dans update.yaml des modif effectuées pour amélioration la visualisation
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2022-04-14T07:48:50+02:00'
+modified: '2022-06-05'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -55,22 +60,18 @@ maps:
         title: 'A - Île de Rapa'
         scaleDenominator: '30.000'
         bboxDM: { SW: '27°40,48''S - 144°27,04''W', NE: '27°32,96''S - 144°15,09''W' }
-        spatial: { southlimit: -27.674666666667, westlimit: -144.45066666667, northlimit: -27.549333333333, eastlimit: -144.2515 }
       -
         title: 'B - Îles Morotiri (Bass)'
         scaleDenominator: '30.000'
         bboxDM: { SW: '27°55,56''S - 143°31,62''W', NE: '27°51,86''S - 143°28,04''W' }
-        spatial: { southlimit: -27.926, westlimit: -143.527, northlimit: -27.864333333333, eastlimit: -143.46733333333 }
       -
         title: 'C - Île de Rapa - Baie d''Ha''urei (Ahurei)'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '27°37,39''S - 144°20,20''W', NE: '27°36,15''S - 144°17,31''W' }
-        spatial: { southlimit: -27.623166666667, westlimit: -144.33666666667, northlimit: -27.6025, eastlimit: -144.2885 }
+        bboxDM: { SW: '27°37,38''S - 144°20,20''W', NE: '27°36,15''S - 144°17,31''W' }
       -
         title: 'D - Île de Rapa - Baie Anarua'
         scaleDenominator: '10.000'
         bboxDM: { SW: '27°36,53''S - 144°23,47''W', NE: '27°35,83''S - 144°22,41''W' }
-        spatial: { southlimit: -27.608833333333, westlimit: -144.39116666667, northlimit: -27.597166666667, eastlimit: -144.3735 }
   FR4233:
     groupTitle: 'Côte Nord de France'
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
@@ -128,22 +129,18 @@ maps:
         title: 'A - Îles Chesterfield - Mouillage de l''île Longue'
         scaleDenominator: '20.000'
         bboxDM: { SW: '19°53,10''S - 158°17,33''E', NE: '19°50,79''S - 158°19,76''E' }
-        spatial: { southlimit: -19.885, westlimit: 158.28883333333, northlimit: -19.8465, eastlimit: 158.32933333333 }
       -
         title: 'B - Récifs et îles Chesterfield'
         scaleDenominator: '150.000'
         bboxDM: { SW: '20°00,00''S - 158°07,97''E', NE: '19°22,76''S - 158°30,00''E' }
-        spatial: { southlimit: -20, westlimit: 158.13283333333, northlimit: -19.379333333333, eastlimit: 158.5 }
       -
         title: 'C - Récifs d''Entrecasteaux - Atoll de Huon'
         scaleDenominator: '150.000'
         bboxDM: { SW: '18°15,19''S - 162°45,94''E', NE: '17°52,52''S - 162°59,98''E' }
-        spatial: { southlimit: -18.253166666667, westlimit: 162.76566666667, northlimit: -17.875333333333, eastlimit: 162.99966666667 }
       -
         title: 'D - Mouillage de l''île Huon'
         scaleDenominator: '20.000'
-        bboxDM: { SW: '18°03,17''S - 162°56,11''E', NE: '18°01,37''S - 162°58,04''E' }
-        spatial: { southlimit: -18.052833333333, westlimit: 162.93516666667, northlimit: -18.022833333333, eastlimit: 162.96733333333 }
+        bboxDM: { SW: '18°03,17''S - 162°56,12''E', NE: '18°01,37''S - 162°58,04''E' }
   FR6015:
     groupTitle: 'Canada - Groenland - Islande'
     title: 'Des passages du Nord-Ouest à la Mer du Groenland'
@@ -153,14 +150,8 @@ maps:
     lastUpdate: 43
     scaleDenominator: 4.660.000
     bboxDM:
-      SW: '48°50,00''N - 098°00,00''W'
+      SW: '47°09,00''N - 098°00,00''W'
       NE: '74°35,48''N - 012°19,50''W'
-    spatial:
-      southlimit: 48.833333333333
-      westlimit: -98
-      northlimit: 74.591333333333
-      eastlimit: -12.325
-    noteCatalog: 'La limite Sud a été modifiée pour éviter de perturber l''affichage autour de St Pierre et Miquelon'
   FR6033:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
@@ -467,12 +458,7 @@ maps:
     scaleDenominator: '175.017'
     bboxDM:
       SW: '16°35,00''S - 147°15,00''W'
-      NE: '15°02,6''S - 146°10,0''W'
-    spatial:
-      southlimit: -16.583333333333
-      westlimit: -147.25
-      northlimit: -15.043333333333
-      eastlimit: -146.16666666667
+      NE: '15°02,60''S - 146°10,00''W'
   FR6424:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Tubuai'
@@ -782,13 +768,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '42°58,94''N - 005°42,37''E'
-      NE: '43°09,44''N - 005°52,13''E'
-    spatial:
-      southlimit: 42.982333333333
-      westlimit: 5.7061666666667
-      northlimit: 43.157333333333
-      eastlimit: 5.8688333333333
+      SW: '42°58,94''N - 005°42,38''E'
+      NE: '43°09,44''N - 005°52,14''E'
   FR6612:
     groupTitle: 'Côte Sud de France'
     title: 'De Cassis à Bandol - Baie de La Ciotat'
@@ -887,13 +868,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: 2.770.000
     bboxDM:
-      SW: '34°50,00''N - 034°15,00''W'
+      SW: '34°49,13''N - 034°15,00''W'
       NE: '50°30,00''N - 000°55,00''W'
-    spatial:
-      southlimit: 34.833333333333
-      westlimit: -34.25
-      northlimit: 50.5
-      eastlimit: -0.91666666666667
   FR6643:
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
@@ -940,13 +916,8 @@ maps:
     lastUpdate: 45
     scaleDenominator: '43.100'
     bboxDM:
-      SW: '50°56,50''N - 001°44,30''E'
+      SW: '50°56,50''N - 001°44,20''E'
       NE: '51°14,00''N - 002°25,00''E'
-    spatial:
-      southlimit: 50.941666666667
-      westlimit: 1.7383333333333
-      northlimit: 51.233333333333
-      eastlimit: 2.4166666666667
   FR6657:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société - Île de Moorea'
     title: 'Baies de Cook et d''Opunohu'
@@ -976,17 +947,11 @@ maps:
     bboxDM:
       SW: '17°41,27''S - 150°03,21''W'
       NE: '17°20,87''S - 149°32,11''W'
-    spatial:
-      southlimit: -17.687833333333
-      westlimit: -150.0535
-      northlimit: -17.347833333333
-      eastlimit: -149.53516666667
     insetMaps:
       -
         title: 'A - Baie de Vaiare'
         scaleDenominator: '15.000'
-        bboxDM: { SW: '17°32,03''S - 149°47,01''W', NE: '17°30,43''S - 149°45,15''W' }
-        spatial: { southlimit: -17.533833333333, westlimit: -149.7835, northlimit: -17.507166666667, eastlimit: -149.7525 }
+        bboxDM: { SW: '17°32,02''S - 149°47,01''W', NE: '17°30,42''S - 149°45,15''W' }
   FR6664:
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
@@ -1036,12 +1001,7 @@ maps:
     scaleDenominator: 3.500.000
     bboxDM:
       SW: '20°59,06''S - 146°40,00''E'
-      NE: '00°06,00''N - 180°00,00''E'
-    spatial:
-      southlimit: -20.984333333333
-      westlimit: 146.66666666667
-      northlimit: 0.1
-      eastlimit: 180
+      NE: '00°06,00''S - 180°00,00''E'
     references: 'Fac similé carte AUS n°4604 publiée en 1973 (édition juin 2008).'
   FR6672:
     groupTitle: 'Océan Indien - Partie Ouest'
@@ -1093,13 +1053,8 @@ maps:
     lastUpdate: 83
     scaleDenominator: '156.700'
     bboxDM:
-      SW: '48°21,60''N - 006°18,00''W'
-      NE: '49°25,00''N - 003°57,00''W'
-    spatial:
-      southlimit: 48.36
-      westlimit: -6.3
-      northlimit: 49.416666666667
-      eastlimit: -3.95
+      SW: '48°21,54''N - 006°18,09''W'
+      NE: '49°24,94''N - 003°57,09''W'
   FR6683:
     groupTitle: 'Côte Nord de France'
     title: 'Port du Havre - Entrée du chenal de Rouen'
@@ -1110,13 +1065,8 @@ maps:
     lastUpdate: 13
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '49°25,20''N - 000°00,65''W'
-      NE: '49°31,26''N - 000°13,00''E'
-    spatial:
-      southlimit: 49.42
-      westlimit: -0.010833333333333
-      northlimit: 49.521
-      eastlimit: 0.21666666666667
+      SW: '49°25,14''N - 000°00,74''W'
+      NE: '49°31,21''N - 000°12,92''W'
   FR6684:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
@@ -1127,13 +1077,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '43°17,10''N - 004°43,70''E'
-      NE: '43°27,26''N - 005°04,08''E'
-    spatial:
-      southlimit: 43.285
-      westlimit: 4.7283333333333
-      northlimit: 43.454333333333
-      eastlimit: 5.068
+      SW: '43°17,04''N - 004°43,63''E'
+      NE: '43°27,20''N - 005°04,00''E'
   FR6687:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Abords de Nouméa - Passes de Boulari et de Dumbéa'
@@ -1144,13 +1089,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '59.600'
     bboxDM:
-      SW: '22°39,20''S - 166°12,00''E'
-      NE: '22°03,70''S - 166°38,00''E'
-    spatial:
-      southlimit: -22.653333333333
-      westlimit: 166.2
-      northlimit: -22.061666666667
-      eastlimit: 166.63333333333
+      SW: '22°39,03''S - 166°12,20''E'
+      NE: '22°03,53''S - 166°38,20''E'
   FR6688:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles de la Société - De Manuae à Tahiti'
@@ -1300,13 +1240,8 @@ maps:
     lastUpdate: 141
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '50°41,00''N - 000°55,00''E'
-      NE: '51°41,40''N - 003°16,00''E'
-    spatial:
-      southlimit: 50.683333333333
-      westlimit: 0.91666666666667
-      northlimit: 51.69
-      eastlimit: 3.2666666666667
+      SW: '50°40,95''N - 000°54,92''W'
+      NE: '51°41,35''N - 003°15,92''E'
     noteShom: 'Nota : Les modifications effectuées sur la carte n°6735 au cours de l''édition n°7 concernent principalement les informations relatives aux modifications des mesures d''organisation du trafic entrant en vigueur le 01 décembre 2012 à 0000 UTC. Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).'
   FR6738:
     groupTitle: 'Petites Antilles'
@@ -1318,13 +1253,8 @@ maps:
     lastUpdate: 37
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '14°16,60''N - 061°17,70''W'
-      NE: '14°41,00''N - 060°41,00''W'
-    spatial:
-      southlimit: 14.276666666667
-      westlimit: -61.295
-      northlimit: 14.683333333333
-      eastlimit: -60.683333333333
+      SW: '14°16,70''N - 061°17,48''W'
+      NE: '14°41,10''N - 060°40,78''W'
   FR6740:
     groupTitle: 'Côte Ouest de Tahiti'
     title: 'De Maraa à Faaa'
@@ -1371,12 +1301,7 @@ maps:
     scaleDenominator: 2.250.000
     bboxDM:
       SW: '32°45,00''N - 006°44,00''W'
-      NE: '45°52,20''N - 019°40,50''E'
-    spatial:
-      southlimit: 32.75
-      westlimit: -6.7333333333333
-      northlimit: 45.87
-      eastlimit: 19.675
+      NE: '45°52,22''N - 019°40,48''E'
     references: 'Fac similé carte IT n°340 (édition 1983).'
   FR6767:
     groupTitle: 'Côte Sud de France'
@@ -1388,13 +1313,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '49.900'
     bboxDM:
-      SW: '43°07,70''N - 004°45,40''E'
-      NE: '43°27,90''N - 005°26,00''E'
-    spatial:
-      southlimit: 43.128333333333
-      westlimit: 4.7566666666667
-      northlimit: 43.465
-      eastlimit: 5.4333333333333
+      SW: '43°07,64''N - 004°45,33''E'
+      NE: '43°27,84''N - 005°25,93''E'
   FR6768:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Sud) - Ile des Pins'
@@ -1440,13 +1360,8 @@ maps:
     lastUpdate: 29
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '47°11,52''N - 002°21,70''W'
-      NE: '47°17,58''N - 002°08,64''W'
-    spatial:
-      southlimit: 47.192
-      westlimit: -2.3616666666667
-      northlimit: 47.293
-      eastlimit: -2.144
+      SW: '47°11,46''N - 002°21,78''W'
+      NE: '47°17,52''N - 002°08,72''W'
   FR6808:
     groupTitle: 'Océan Atlantique Sud'
     title: 'Océan Atlantique Sud - Partie Est'
@@ -1534,13 +1449,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: 3.500.000
     bboxDM:
-      SW: '37°55,40''S - 171°34,30''E'
-      NE: '07°30,00''S - 167°00,00''W'
-    spatial:
-      southlimit: -37.923333333333
-      westlimit: 171.57166666667
-      northlimit: -7.5
-      eastlimit: -167
+      SW: '37°55,40''S - 167°00,00''W'
+      NE: '07°30,00''S - 171°34,30''E'
     references: 'Fac similé carte NZ n° 14605 publiée en 1976 (édition juillet 2007).'
   FR6820:
     groupTitle: 'Îles Loyauté'
@@ -1597,13 +1507,8 @@ maps:
     lastUpdate: 3
     scaleDenominator: '50.300'
     bboxDM:
-      SW: '42°40,00''N - 009°22,30''E'
-      NE: '43°09,00''N - 009°50,00''E'
-    spatial:
-      southlimit: 42.666666666667
-      westlimit: 9.3716666666667
-      northlimit: 43.15
-      eastlimit: 9.8333333333333
+      SW: '42°39,94''N - 009°22,24''E'
+      NE: '43°08,94''N - 009°49,94''E'
   FR6823:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Sud de Bastia'
@@ -1614,13 +1519,8 @@ maps:
     lastUpdate: 4
     scaleDenominator: '50.600'
     bboxDM:
-      SW: '42°14,00''N - 009°22,30''E'
-      NE: '42°44,00''N - 009°50,00''E'
-    spatial:
-      southlimit: 42.233333333333
-      westlimit: 9.3716666666667
-      northlimit: 42.733333333333
-      eastlimit: 9.8333333333333
+      SW: '42°13,94''N - 009°22,24''E'
+      NE: '42°43,94''N - 009°49,94''E'
   FR6824:
     groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
     title: 'Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
@@ -1631,13 +1531,8 @@ maps:
     lastUpdate: 158
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '49°40,40''N - 000°00,00''E'
-      NE: '51°10,40''N - 001°36,00''E'
-    spatial:
-      southlimit: 49.673333333333
-      westlimit: 0
-      northlimit: 51.173333333333
-      eastlimit: 1.6
+      SW: '49°40,35''N - 000°00,00''W'
+      NE: '51°10,35''N - 001°35,92''E'
   FR6827:
     groupTitle: 'Côte Sud de Nouvelle-Calédonie'
     title: 'Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)'
@@ -1648,13 +1543,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '59.500'
     bboxDM:
-      SW: '22°50,40''S - 166°33,80''E'
-      NE: '22°15,00''S - 166°59,80''E'
-    spatial:
-      southlimit: -22.84
-      westlimit: 166.56333333333
-      northlimit: -22.25
-      eastlimit: 166.99666666667
+      SW: '22°50,20''S - 166°34,10''E'
+      NE: '22°14,90''S - 167°00,00''E'
   FR6828:
     groupTitle: 'Côte Sud-Ouest de Tahiti'
     title: 'Côte Sud-Ouest de Tahiti - De Atehiti à Maraa'
@@ -1682,18 +1572,13 @@ maps:
     bboxDM:
       SW: '15°00,00''N - 173°05,00''W'
       NE: '71°30,00''N - 116°30,00''W'
-    spatial:
-      southlimit: 15
-      westlimit: -173.08333333333
-      northlimit: 71.5
-      eastlimit: -116.5
     references: 'Fac similé carte US n°50 publiée en 1977 (édition juillet 1994).'
     insetMaps:
       -
         title: 'Mer de Béring'
         scaleDenominator: 7.330.000
         bboxDM: { SW: '49°00,00''N - 170°15,00''E', NE: '65°00,00''N - 169°20,00''W' }
-        spatial: { southlimit: 49, westlimit: 170.25, northlimit: 65, eastlimit: -169.33333333333 }
+    noteCatalog: Extension géo. du cartouche différente du GAN qui inverse la coord. W avec la coord. E et est donc erroné
   FR6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
@@ -1704,13 +1589,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '43°20,80''N - 006°42,66''E'
-      NE: '43°26,34''N - 006°53,92''E'
-    spatial:
-      southlimit: 43.346666666667
-      westlimit: 6.711
-      northlimit: 43.439
-      eastlimit: 6.8986666666667
+      SW: '43°20,74''N - 006°42,60''E'
+      NE: '43°26,28''N - 006°53,86''E'
     insetMaps:
       -
         title: 'A - Port-Fréjus'
@@ -1737,39 +1617,29 @@ maps:
     lastUpdate: 32
     scaleDenominator: '30.000'
     bboxDM:
-      SW: '43°18,00''N - 003°31,50''E'
-      NE: '43°30,30''N - 003°42,90''E'
-    spatial:
-      southlimit: 43.3
-      westlimit: 3.525
-      northlimit: 43.505
-      eastlimit: 3.715
+      SW: '43°17,94''N - 003°31,43''E'
+      NE: '43°30,24''N - 003°42,83''E'
     insetMaps:
       -
         title: 'A - Canal de Pisse - Saumes'
         scaleDenominator: '15.000'
         bboxDM: { SW: '43°18,74''N - 003°31,73''E', NE: '43°20,54''N - 003°34,13''E' }
-        spatial: { southlimit: 43.312333333333, westlimit: 3.5288333333333, northlimit: 43.342333333333, eastlimit: 3.5688333333333 }
       -
         title: 'B - Port de Marseillan'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°20,94''N - 003°31,73''E', NE: '43°21,49''N - 003°32,43''E' }
-        spatial: { southlimit: 43.349, westlimit: 3.5288333333333, northlimit: 43.358166666667, eastlimit: 3.5405 }
       -
         title: 'C - Port de Mèze'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°25,04''N - 003°35,93''E', NE: '43°25,64''N - 003°36,93''E' }
-        spatial: { southlimit: 43.417333333333, westlimit: 3.5988333333333, northlimit: 43.427333333333, eastlimit: 3.6155 }
       -
         title: 'D - Port de Balaruc-les-Usines'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°26,24''N - 003°41,43''E', NE: '43°26,84''N - 003°41,93''E' }
-        spatial: { southlimit: 43.437333333333, westlimit: 3.6905, northlimit: 43.447333333333, eastlimit: 3.6988333333333 }
       -
         title: 'E - Port de Bouzigues'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°26,54''N - 003°39,43''E', NE: '43°26,94''N - 003°39,83''E' }
-        spatial: { southlimit: 43.442333333333, westlimit: 3.6571666666667, northlimit: 43.449, eastlimit: 3.6638333333333 }
   FR6843:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo Creus à Port-Barcarès'
@@ -1780,13 +1650,8 @@ maps:
     lastUpdate: 14
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '42°18,20''N - 002°57,60''E'
-      NE: '42°48,20''N - 003°25,30''E'
-    spatial:
-      southlimit: 42.303333333333
-      westlimit: 2.96
-      northlimit: 42.803333333333
-      eastlimit: 3.4216666666667
+      SW: '42°18,14''N - 002°57,53''E'
+      NE: '42°48,14''N - 003°25,23''E'
   FR6844:
     groupTitle: 'Côte Sud de France'
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
@@ -1797,13 +1662,8 @@ maps:
     lastUpdate: 20
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '42°43,70''N - 002°56,80''E'
-      NE: '43°13,50''N - 003°24,50''E'
-    spatial:
-      southlimit: 42.728333333333
-      westlimit: 2.9466666666667
-      northlimit: 43.225
-      eastlimit: 3.4083333333333
+      SW: '42°43,64''N - 002°56,73''E'
+      NE: '43°13,44''N - 003°24,43''E'
   FR6850:
     groupTitle: 'Côte Nord de Corse'
     title: 'Saint-Florent, Centuri et Macinaggio'
@@ -1838,13 +1698,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: '51.000'
     bboxDM:
-      SW: '41°47,00''N - 009°19,30''E'
-      NE: '42°17,20''N - 009°47,00''E'
-    spatial:
-      southlimit: 41.783333333333
-      westlimit: 9.3216666666667
-      northlimit: 42.286666666667
-      eastlimit: 9.7833333333333
+      SW: '41°46,94''N - 009°19,24''E'
+      NE: '42°17,14''N - 009°46,94''E'
   FR6857:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
@@ -1855,13 +1710,8 @@ maps:
     lastUpdate: 79
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '49°10,80''N - 001°57,40''W'
-      NE: '50°13,00''N - 000°23,60''E'
-    spatial:
-      southlimit: 49.18
-      westlimit: -1.9566666666667
-      northlimit: 50.216666666667
-      eastlimit: 0.39333333333333
+      SW: '49°10,74''N - 001°57,48''W'
+      NE: '50°12,95''N - 000°23,52''W'
   FR6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
@@ -1933,13 +1783,8 @@ maps:
     lastUpdate: 13
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '14°30,90''N - 061°08,28''W'
-      NE: '14°37,00''N - 060°59,10''W'
-    spatial:
-      southlimit: 14.515
-      westlimit: -61.138
-      northlimit: 14.616666666667
-      eastlimit: -60.985
+      SW: '14°31,00''N - 061°08,06''W'
+      NE: '14°37,10''N - 060°58,88''W'
   FR6898:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Mer des Antilles (Mer des Caraïbes)'
@@ -1971,19 +1816,13 @@ maps:
     lastUpdate: 6
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '43°23,55''N - 004°57,50''E'
-      NE: '43°33,65''N - 005°17,85''E'
-    spatial:
-      southlimit: 43.3925
-      westlimit: 4.9583333333333
-      northlimit: 43.560833333333
-      eastlimit: 5.2975
+      SW: '43°23,49''N - 004°57,43''E'
+      NE: '43°33,59''N - 005°17,78''E'
     insetMaps:
       -
         title: 'A - Canal de Caronte'
         scaleDenominator: '12.500'
         bboxDM: { SW: '43°23,48''N - 004°58,67''E', NE: '43°24,54''N - 005°03,73''E' }
-        spatial: { southlimit: 43.391333333333, westlimit: 4.9778333333333, northlimit: 43.409, eastlimit: 5.0621666666667 }
   FR6911:
     groupTitle: 'Côte Est de Corse'
     title: 'Golfe de Porto-Vecchio'
@@ -1994,13 +1833,8 @@ maps:
     lastUpdate: 9
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '41°34,36''N - 009°16,40''E'
-      NE: '41°38,52''N - 009°24,60''E'
-    spatial:
-      southlimit: 41.572666666667
-      westlimit: 9.2733333333333
-      northlimit: 41.642
-      eastlimit: 9.41
+      SW: '41°34,30''N - 009°16,34''E'
+      NE: '41°38,46''N - 009°24,54''E'
   FR6929:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
@@ -2011,13 +1845,8 @@ maps:
     lastUpdate: 19
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '41°20,00''N - 009°11,00''E'
-      NE: '41°50,50''N - 009°38,70''E'
-    spatial:
-      southlimit: 41.333333333333
-      westlimit: 9.1833333333333
-      northlimit: 41.841666666667
-      eastlimit: 9.645
+      SW: '41°19,94''N - 009°10,94''E'
+      NE: '41°50,44''N - 009°38,64''E'
   FR6930:
     groupTitle: 'Côte Nord de France'
     title: 'Des roches de Portsall au plateau des Roches Douvres'
@@ -2029,13 +1858,8 @@ maps:
     lastUpdate: 68
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '48°30,00''N - 004°50,00''W'
-      NE: '49°33,20''N - 002°29,00''W'
-    spatial:
-      southlimit: 48.5
-      westlimit: -4.8333333333333
-      northlimit: 49.553333333333
-      eastlimit: -2.4833333333333
+      SW: '48°29,94''N - 004°50,09''W'
+      NE: '49°33,14''N - 002°29,08''W'
   FR6933:
     groupTitle: Nouvelle-Calédonie
     title: 'De l''île Ouen à l''île des Pins - Passe de la Sarcelle (Spéciale P)'
@@ -2046,13 +1870,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '22°43,30''S - 166°49,50''E'
-      NE: '22°19,20''S - 167°27,60''E'
-    spatial:
-      southlimit: -22.721666666667
-      westlimit: 166.825
-      northlimit: -22.32
-      eastlimit: 167.46
+      SW: '22°43,13''S - 166°49,70''E'
+      NE: '22°19,03''S - 167°27,80''E'
   FR6940:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à the Needles'
@@ -2063,13 +1882,8 @@ maps:
     lastUpdate: 79
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '49°54,69''N - 003°40,00''W'
-      NE: '50°48,00''N - 001°34,36''W'
-    spatial:
-      southlimit: 49.9115
-      westlimit: -3.6666666666667
-      northlimit: 50.8
-      eastlimit: -1.5726666666667
+      SW: '49°42,82''N - 003°53,00''W'
+      NE: '50°44,50''N - 001°32,00''W'
     references: 'Fac similé GB 2454'
   FR6941:
     groupTitle: 'Côte Sud d''Angleterre'
@@ -2082,13 +1896,8 @@ maps:
     lastUpdate: 6
     scaleDenominator: '154.000'
     bboxDM:
-      SW: '49°22,88''N - 005°13,50''W'
-      NE: '50°25,00''N - 002°52,45''W'
-    spatial:
-      southlimit: 49.381333333333
-      westlimit: -5.225
-      northlimit: 50.416666666667
-      eastlimit: -2.8741666666667
+      SW: '49°22,92''N - 005°13,57''W'
+      NE: '50°25,03''N - 002°52,54''W'
     references: 'Fac similé carte GB442 publiée en 1978 (édition avril 2019)'
   FR6942:
     groupTitle: 'Côte Ouest de Corse'
@@ -2100,13 +1909,8 @@ maps:
     lastUpdate: 12
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '41°41,00''N - 008°21,30''E'
-      NE: '42°11,30''N - 008°49,00''E'
-    spatial:
-      southlimit: 41.683333333333
-      westlimit: 8.355
-      northlimit: 42.188333333333
-      eastlimit: 8.8166666666667
+      SW: '41°40,94''N - 008°21,24''E'
+      NE: '42°11,24''N - 008°48,94''E'
   FR6948:
     groupTitle: Guadeloupe
     title: 'Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)'
@@ -2117,15 +1921,9 @@ maps:
     lastUpdate: 35
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '15°40,50''N - 061°43,60''W'
-      NE: '16°16,30''N - 061°18,40''W'
-    spatial:
-      southlimit: 15.675
-      westlimit: -61.726666666667
-      northlimit: 16.271666666667
-      eastlimit: -61.306666666667
+      SW: '15°40,55''N - 061°43,63''W'
+      NE: '16°16,35''N - 061°18,43''W'
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 6948 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
-    noteCatalog: 'correction des 4 bords de la carte principale'
     insetMaps:
       -
         title: 'Marie-Galante - Baie de Saint-Louis'
@@ -2160,13 +1958,8 @@ maps:
     lastUpdate: 10
     scaleDenominator: '250.000'
     bboxDM:
-      SW: '42°20,00''N - 004°50,00''E'
-      NE: '44°00,00''N - 008°12,00''E'
-    spatial:
-      southlimit: 42.333333333333
-      westlimit: 4.8333333333333
-      northlimit: 44
-      eastlimit: 8.2
+      SW: '42°19,94''N - 004°49,93''E'
+      NE: '43°59,94''N - 008°11,94''E'
   FR6955:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa'
@@ -2248,13 +2041,8 @@ maps:
     lastUpdate: 76
     scaleDenominator: '155.000'
     bboxDM:
-      SW: '48°30,00''N - 003°05,20''W'
-      NE: '50°00,00''N - 001°29,20''W'
-    spatial:
-      southlimit: 48.5
-      westlimit: -3.0866666666667
-      northlimit: 50
-      eastlimit: -1.4866666666667
+      SW: '48°30,00''N - 003°06,82''W'
+      NE: '50°02,20''N - 001°27,82''W'
   FR6968:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'
@@ -2265,13 +2053,8 @@ maps:
     lastUpdate: 37
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '50°02,15''N - 001°59,00''W'
-      NE: '50°55,34''N - 000°22,05''E'
-    spatial:
-      southlimit: 50.035833333333
-      westlimit: -1.9833333333333
-      northlimit: 50.922333333333
-      eastlimit: 0.3675
+      SW: '49°53,93''N - 001°59,09''W'
+      NE: '50°55,37''N - 000°21,96''W'
     references: 'Fac similé carte GB n°2450 publiée en 1977 (édition en février 2008).'
   FR6969:
     groupTitle: 'Côte Ouest de Corse'
@@ -2283,13 +2066,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '50.300'
     bboxDM:
-      SW: '42°40,00''N - 009°01,00''E'
-      NE: '43°09,00''N - 009°28,70''E'
-    spatial:
-      southlimit: 42.666666666667
-      westlimit: 9.0166666666667
-      northlimit: 43.15
-      eastlimit: 9.4783333333333
+      SW: '42°39,94''N - 009°00,94''E'
+      NE: '43°08,94''N - 009°28,64''E'
   FR6970:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
@@ -2300,13 +2078,8 @@ maps:
     lastUpdate: 12
     scaleDenominator: '50.500'
     bboxDM:
-      SW: '42°30,50''N - 008°26,50''E'
-      NE: '42°50,90''N - 009°07,10''E'
-    spatial:
-      southlimit: 42.508333333333
-      westlimit: 8.4416666666667
-      northlimit: 42.848333333333
-      eastlimit: 9.1183333333333
+      SW: '42°30,44''N - 008°26,44''E'
+      NE: '42°50,84''N - 009°07,04''E'
   FR6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
@@ -2392,13 +2165,8 @@ maps:
     lastUpdate: 32
     scaleDenominator: '355.000'
     bboxDM:
-      SW: '45°30,50''N - 006°00,00''W'
-      NE: '47°53,50''N - 000°54,50''W'
-    spatial:
-      southlimit: 45.508333333333
-      westlimit: -6
-      northlimit: 47.891666666667
-      eastlimit: -0.90833333333333
+      SW: '45°28,34''N - 006°00,08''W'
+      NE: '47°55,42''N - 000°54,58''W'
   FR6991:
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
@@ -2409,13 +2177,8 @@ maps:
     lastUpdate: 29
     scaleDenominator: '368.000'
     bboxDM:
-      SW: '43°14,00''N - 005°53,00''W'
-      NE: '45°43,00''N - 000°47,50''W'
-    spatial:
-      southlimit: 43.233333333333
-      westlimit: -5.8833333333333
-      northlimit: 45.716666666667
-      eastlimit: -0.79166666666667
+      SW: '43°13,93''N - 005°53,08''W'
+      NE: '45°42,94''N - 000°47,58''W'
   FR7003:
     groupTitle: 'Côte Sud de France'
     title: 'Le Cap d''Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan'
@@ -2426,26 +2189,18 @@ maps:
     lastUpdate: 5
     noteShom: 'Nota : Ajout d''un cartouche: D - Gruissan'
     insetMaps:
-      -
-        title: 'Le Cap d''Agde - Embouchure de l''Hérault'
+      - title: 'A - Le Cap d''Agde - Embouchure de l''Hérault'
         scaleDenominator: '15.000'
-        bboxDM: { SW: '43°15,20''N - 003°25,60''E', NE: '43°19,30''N - 003°34,00''E' }
-        spatial: { southlimit: 43.253333333333, westlimit: 3.4266666666667, northlimit: 43.321666666667, eastlimit: 3.5666666666667 }
-      -
-        title: 'B - Saint-Cyprien'
+        bboxDM: { SW: '43°15,14''N - 003°25,53''E', NE: '43°19,24''N - 003°33,93''E' }
+      - title: 'B - Saint-Cyprien'
         scaleDenominator: '10.000'
         bboxDM: { SW: '42°35,76''N - 003°01,93''E', NE: '42°37,54''N - 003°04,42''E' }
-        spatial: { southlimit: 42.596, westlimit: 3.0321666666667, northlimit: 42.625666666667, eastlimit: 3.0736666666667 }
-      -
-        title: 'C - Banyuls-sur-Mer'
+      - title: 'C - Banyuls-sur-Mer'
         scaleDenominator: '10.000'
         bboxDM: { SW: '42°28,64''N - 003°07,03''E', NE: '42°29,34''N - 003°08,92''E' }
-        spatial: { southlimit: 42.477333333333, westlimit: 3.1171666666667, northlimit: 42.489, eastlimit: 3.1486666666667 }
-      -
-        title: 'D - Gruissan'
+      - title: 'D - Gruissan'
         scaleDenominator: '15.000'
         bboxDM: { SW: '43°04,61''N - 003°04,81''E', NE: '43°07,58''N - 003°13,18''E' }
-        spatial: { southlimit: 43.076833333333, westlimit: 3.0801666666667, northlimit: 43.126333333333, eastlimit: 3.2196666666667 }
   FR7004:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
@@ -2456,29 +2211,21 @@ maps:
     lastUpdate: 18
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '43°30,38''N - 004°03,22''E'
-      NE: '43°34,30''N - 004°11,66''E'
-    spatial:
-      southlimit: 43.506333333333
-      westlimit: 4.0536666666667
-      northlimit: 43.571666666667
-      eastlimit: 4.1943333333333
+      SW: '43°30,32''N - 004°03,15''E'
+      NE: '43°34,24''N - 004°11,59''E'
     insetMaps:
       -
         title: 'A - Palavas-les-Flots'
         scaleDenominator: '15.000'
         bboxDM: { SW: '43°30,94''N - 003°55,11''E', NE: '43°32,02''N - 003°57,21''E' }
-        spatial: { southlimit: 43.515666666667, westlimit: 3.9185, northlimit: 43.533666666667, eastlimit: 3.9535 }
       -
         title: 'B - Carnon-Plage'
         scaleDenominator: '15.000'
         bboxDM: { SW: '43°31,86''N - 003°58,05''E', NE: '43°32,90''N - 004°00,15''E' }
-        spatial: { southlimit: 43.531, westlimit: 3.9675, northlimit: 43.548333333333, eastlimit: 4.0025 }
       -
         title: 'C - Saintes-Maries-de-la-Mer'
         scaleDenominator: '15.000'
         bboxDM: { SW: '43°26,42''N - 004°24,93''E', NE: '43°27,34''N - 004°26,75''E' }
-        spatial: { southlimit: 43.440333333333, westlimit: 4.4155, northlimit: 43.455666666667, eastlimit: 4.4458333333333 }
   FR7008:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
@@ -2491,11 +2238,6 @@ maps:
     bboxDM:
       SW: '41°13,93''N - 002°54,93''E'
       NE: '43°39,94''N - 005°12,9''E'
-    spatial:
-      southlimit: 41.232166666667
-      westlimit: 2.9155
-      northlimit: 43.665666666667
-      eastlimit: 5.215
     noteCatalog: 'Correction du bord Est de la carte à partir de l''information sur la carte'
   FR7011:
     groupTitle: 'Nouvelle Calédonie'
@@ -2570,13 +2312,9 @@ maps:
     bboxDM:
       SW: '13°00,00''S - 117°30,00''E'
       NE: '40°00,00''N - 154°20,00''W'
-    spatial:
-      southlimit: -13
-      westlimit: 117.5
-      northlimit: 40
-      eastlimit: -154.33333333333
     references: 'Fac similé Carte JP n°4052 publiée en 1983.'
-    noteCatalog: 'Correction du bord Sud'
+    noteCatalog: |
+      Le GAN inverse les bords Est et Ouest et est donc erroné ; extension géo. fondée sur celle définie par la carte
   FR7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est - De San Francisco à Lima'
@@ -2606,13 +2344,8 @@ maps:
     lastUpdate: 50
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '41°08,00''N - 008°53,00''E'
-      NE: '41°28,80''N - 009°33,60''E'
-    spatial:
-      southlimit: 41.133333333333
-      westlimit: 8.8833333333333
-      northlimit: 41.48
-      eastlimit: 9.56
+      SW: '41°07,60''N - 008°52,94''E'
+      NE: '41°28,74''N - 009°33,54''E'
     insetMaps:
       -
         title: 'A - Golfo di Arzachena'
@@ -2629,13 +2362,8 @@ maps:
     lastUpdate: 13
     scaleDenominator: '250.000'
     bboxDM:
-      SW: '40°48,50''N - 007°50,50''E'
-      NE: '43°19,00''N - 010°08,00''E'
-    spatial:
-      southlimit: 40.808333333333
-      westlimit: 7.8416666666667
-      northlimit: 43.316666666667
-      eastlimit: 10.133333333333
+      SW: '40°48,44''N - 007°50,44''E'
+      NE: '43°18,94''N - 010°07,94''E'
   FR7030:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Garonne - Du Bec d''Ambès à Bordeaux'
@@ -2669,13 +2397,8 @@ maps:
     lastUpdate: 20
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '47°29,00''N - 004°00,00''W'
-      NE: '47°49,10''N - 003°16,30''W'
-    spatial:
-      southlimit: 47.483333333333
-      westlimit: -4
-      northlimit: 47.818333333333
-      eastlimit: -3.2716666666667
+      SW: '47°28,94''N - 004°00,08''W'
+      NE: '47°49,04''N - 003°16,38''W'
   FR7032:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île de Groix à Belle-Ile - Abords de Lorient'
@@ -2686,13 +2409,8 @@ maps:
     lastUpdate: 24
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '47°15,00''N - 003°31,20''W'
-      NE: '47°44,60''N - 003°01,40''W'
-    spatial:
-      southlimit: 47.25
-      westlimit: -3.52
-      northlimit: 47.743333333333
-      eastlimit: -3.0233333333333
+      SW: '47°14,94''N - 003°31,28''W'
+      NE: '47°44,54''N - 003°01,48''W'
   FR7033:
     groupTitle: 'Côte Ouest de France'
     title: 'De Quiberon au Croisic (Spéciale P)'
@@ -2705,12 +2423,9 @@ maps:
     bboxDM:
       SW: '47°15,4''N - 003°11,1''W'
       NE: '47°35,6''N - 002°27,3''W'
-    spatial:
-      southlimit: 47.256666666667
-      westlimit: -3.185
-      northlimit: 47.593333333333
-      eastlimit: -2.455
-    noteCatalog: 'correction de bboxDM à partir de la carte le 26/12/2020'
+    noteCatalog: |
+      correction de bboxDM à partir de la carte le 26/12/2020
+      bboxDMGan: {SW: "47°15,12'N - 003°11,08'W", NE: "47°35,64'N - 002°27,30'W"}
   FR7035:
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
@@ -2738,13 +2453,8 @@ maps:
     lastUpdate: 17
     scaleDenominator: '560.000'
     bboxDM:
-      SW: '48°00,00''N - 006°43,70''W'
-      NE: '51°14,90''N - 001°52,00''E'
-    spatial:
-      southlimit: 48
-      westlimit: -6.7283333333333
-      northlimit: 51.248333333333
-      eastlimit: 1.8666666666667
+      SW: '48°00,00''N - 006°43,65''W'
+      NE: '51°14,80''N - 001°52,00''E'
     references: 'Fac similé carte GB n°2675 publiée en 1978 (edition mars 2019)'
   FR7041:
     groupTitle: 'Petites Antilles'
@@ -2756,14 +2466,8 @@ maps:
     lastUpdate: 29
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '14°34,30''N - 061°18,00''W'
-      NE: '14°58,50''N - 060°41,30''W'
-    spatial:
-      southlimit: 14.571666666667
-      westlimit: -61.3
-      northlimit: 14.975
-      eastlimit: -60.688333333333
-    noteCatalog: 'Correction du bord Sud'
+      SW: '14°34,30''N - 061°17,78''W'
+      NE: '14°58,60''N - 060°41,08''W'
   FR7043:
     title: 'Océan Atlantique Nord - Partie Ouest'
     edition: 'Edition n° 2 - 2016'
@@ -2798,11 +2502,6 @@ maps:
     bboxDM:
       SW: '60°00,00''S - 070°00,00''W'
       NE: '10°00,00''N - 012°00,00''W'
-    spatial:
-      southlimit: -60
-      westlimit: -70
-      northlimit: 10
-      eastlimit: -12
     references: 'Fac similé carte BR n°19001 publiée en1979.'
   FR7049:
     groupTitle: 'Océan Pacifique Sud'
@@ -2847,13 +2546,8 @@ maps:
     lastUpdate: 11
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '42°07,40''N - 008°19,80''E'
-      NE: '42°37,50''N - 008°47,50''E'
-    spatial:
-      southlimit: 42.123333333333
-      westlimit: 8.33
-      northlimit: 42.625
-      eastlimit: 8.7916666666667
+      SW: '42°07,34''N - 008°19,74''E'
+      NE: '42°37,44''N - 008°47,44''E'
   FR7051:
     groupTitle: 'Côte Nord-Est de Nouvelle-Calédonie'
     title: 'Du Cap Colnett à Touho - Abords de Hienghène'
@@ -2887,19 +2581,12 @@ maps:
     lastUpdate: 18
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '23°14,20''S - 166°21,60''E'
-      NE: '22°13,40''S - 167°57,80''E'
-    spatial:
-      southlimit: -23.236666666667
-      westlimit: 166.36
-      northlimit: -22.223333333333
-      eastlimit: 167.96333333333
+      SW: '23°14,04''S - 166°21,80''E'
+      NE: '22°13,23''S - 167°58,00''E'
     insetMaps:
-      -
-        title: 'A - Mouillage de Uapan'
+      - title: 'A - Mouillage de Uapan'
         scaleDenominator: '50.000'
         bboxDM: { SW: '22°33,83''S - 167°24,60''E', NE: '22°29,33''S - 167°30,40''E' }
-        spatial: { southlimit: -22.563833333333, westlimit: 167.41, northlimit: -22.488833333333, eastlimit: 167.50666666667 }
   FR7053:
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'
@@ -2910,13 +2597,8 @@ maps:
     lastUpdate: 14
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '43°14,70''N - 003°39,00''E'
-      NE: '43°34,80''N - 004°19,60''E'
-    spatial:
-      southlimit: 43.245
-      westlimit: 3.65
-      northlimit: 43.58
-      eastlimit: 4.3266666666667
+      SW: '43°14,64''N - 003°38,93''E'
+      NE: '43°34,74''N - 004°19,53''E'
   FR7054:
     groupTitle: 'Côte Sud de France'
     title: 'De l''embouchure de l''Aude à Sète'
@@ -2927,13 +2609,8 @@ maps:
     lastUpdate: 15
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '43°07,80''N - 003°13,40''E'
-      NE: '43°28,00''N - 003°54,00''E'
-    spatial:
-      southlimit: 43.13
-      westlimit: 3.2233333333333
-      northlimit: 43.466666666667
-      eastlimit: 3.9
+      SW: '43°07,74''N - 003°13,33''E'
+      NE: '43°27,94''N - 003°53,93''E'
   FR7057:
     groupTitle: 'Côte Nord de France'
     title: Dunkerque
@@ -2961,13 +2638,8 @@ maps:
     lastUpdate: 16
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '47°40,00''N - 006°34,00''W'
-      NE: '48°44,20''N - 004°13,00''W'
-    spatial:
-      southlimit: 47.666666666667
-      westlimit: -6.5666666666667
-      northlimit: 48.736666666667
-      eastlimit: -4.2166666666667
+      SW: '47°39,94''N - 006°34,09''W'
+      NE: '48°44,14''N - 004°13,09''W'
   FR7067:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à Belle-Ile'
@@ -2978,13 +2650,8 @@ maps:
     lastUpdate: 48
     scaleDenominator: '161.000'
     bboxDM:
-      SW: '47°00,00''N - 005°10,00''W'
-      NE: '48°05,00''N - 002°49,00''W'
-    spatial:
-      southlimit: 47
-      westlimit: -5.1666666666667
-      northlimit: 48.083333333333
-      eastlimit: -2.8166666666667
+      SW: '46°59,94''N - 005°10,08''W'
+      NE: '48°04,94''N - 002°49,08''W'
   FR7068:
     groupTitle: 'Côte Ouest de France'
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
@@ -2995,13 +2662,8 @@ maps:
     lastUpdate: 35
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '46°30,00''N - 003°51,00''W'
+      SW: '46°28,90''N - 003°51,00''W'
       NE: '47°35,60''N - 001°30,00''W'
-    spatial:
-      southlimit: 46.5
-      westlimit: -3.85
-      northlimit: 47.593333333333
-      eastlimit: -1.5
   FR7069:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre - Plateau de Rochebonne'
@@ -3109,12 +2771,7 @@ maps:
     scaleDenominator: 4.200.000
     bboxDM:
       SW: '25°00,00''N - 007°00,00''W'
-      NE: '49°50,33''N - 042°15,50''E'
-    spatial:
-      southlimit: 25
-      westlimit: -7
-      northlimit: 49.838833333333
-      eastlimit: 42.258333333333
+      NE: '49°50,18''N - 042°17,61''E'
     replaces: '(remplace 5705)'
     references: 'Fac similé Carte IT n°360 publiée en 1984.'
   FR7086:
@@ -3144,13 +2801,8 @@ maps:
     lastUpdate: 5
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '14°42,21''N - 060°59,29''W'
-      NE: '14°48,40''N - 060°55,00''W'
-    spatial:
-      southlimit: 14.7035
-      westlimit: -60.988166666667
-      northlimit: 14.806666666667
-      eastlimit: -60.916666666667
+      SW: '14°42,31''N - 060°58,97''W'
+      NE: '14°48,50''N - 060°54,64''W'
   FR7088:
     groupTitle: 'La Martinique'
     title: 'Havre du Robert et Baie du François'
@@ -3161,19 +2813,12 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '14°36,23''N - 060°57,25''W'
-      NE: '14°41,80''N - 060°48,77''W'
-    spatial:
-      southlimit: 14.603833333333
-      westlimit: -60.954166666667
-      northlimit: 14.696666666667
-      eastlimit: -60.812833333333
+      SW: '14°36,33''N - 060°57,03''W'
+      NE: '14°41,90''N - 060°48,55''W'
     insetMaps:
-      -
-        title: 'A - Baie du François'
+      - title: 'A - Baie du François'
         scaleDenominator: '8.000'
         bboxDM: { SW: '14°36,91''N - 060°53,97''W', NE: '14°37,94''N - 060°53,06''W' }
-        spatial: { southlimit: 14.615166666667, westlimit: -60.8995, northlimit: 14.632333333333, eastlimit: -60.884333333333 }
   FR7089:
     groupTitle: 'La Martinique'
     title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
@@ -3183,31 +2828,18 @@ maps:
     modified: '2021-09-28+02:00'
     lastUpdate: 0
     insetMaps:
-      -
-        title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
-        scaleDenominator: '15.000'
-        bboxDM: { SW: '00°00,00''N - 000°00,00''E', NE: '00°00,00''N - 000°00,00''E' }
-        spatial: { southlimit: 0, westlimit: 0, northlimit: 0, eastlimit: 0 }
-      -
-        title: 'A - Saint-Pierre'
+      - title: 'A - Saint-Pierre'
         scaleDenominator: '15.000'
         bboxDM: { SW: '14°43,33''N - 061°11,55''W', NE: '14°45,10''N - 061°10,38''W' }
-        spatial: { southlimit: 14.722166666667, westlimit: -61.1925, northlimit: 14.751666666667, eastlimit: -61.173 }
-      -
-        title: 'B - Case-Pilote'
+      - title: 'B - Case-Pilote'
         scaleDenominator: '15.000'
         bboxDM: { SW: '14°38,17''N - 061°09,48''W', NE: '14°39,00''N - 061°08,08''W' }
-        spatial: { southlimit: 14.636166666667, westlimit: -61.158, northlimit: 14.65, eastlimit: -61.134666666667 }
-      -
-        title: 'C - Cul-de-Sac du Marin'
+      - title: 'C - Cul-de-Sac du Marin'
         scaleDenominator: '15.000'
         bboxDM: { SW: '14°25,16''N - 060°55,32''W', NE: '14°28,40''N - 060°51,65''W' }
-        spatial: { southlimit: 14.419333333333, westlimit: -60.922, northlimit: 14.473333333333, eastlimit: -60.860833333333 }
-      -
-        title: 'D - Baie du Vauclin'
+      - title: 'D - Baie du Vauclin'
         scaleDenominator: '15.000'
         bboxDM: { SW: '14°30,66''N - 060°50,43''W', NE: '14°34,84''N - 060°47,86''W' }
-        spatial: { southlimit: 14.511, westlimit: -60.8405, northlimit: 14.580666666667, eastlimit: -60.797666666667 }
   FR7090:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
@@ -3218,24 +2850,15 @@ maps:
     lastUpdate: 10
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '49°31,64''N - 001°20,30''W'
-      NE: '49°43,50''N - 001°07,85''W'
-    spatial:
-      southlimit: 49.527333333333
-      westlimit: -1.3383333333333
-      northlimit: 49.725
-      eastlimit: -1.1308333333333
+      SW: '49°31,58''N - 001°20,38''W'
+      NE: '49°43,44''N - 001°07,93''W'
     insetMaps:
-      -
-        title: 'A - Port de Barfleur'
+      - title: 'A - Port de Barfleur'
         scaleDenominator: '7.500'
         bboxDM: { SW: '49°39,99''N - 001°16,13''W', NE: '49°40,64''N - 001°15,08''W' }
-        spatial: { southlimit: 49.6665, westlimit: -1.2688333333333, northlimit: 49.677333333333, eastlimit: -1.2513333333333 }
-      -
-        title: 'B - Port de Saint-Vaast-la-Hougue'
+      - title: 'B - Port de Saint-Vaast-la-Hougue'
         scaleDenominator: '7.500'
-        bboxDM: { SW: '49°34,84''N - 001°16,13''W', NE: '49°35,49''N - 001°15,08''W' }
-        spatial: { southlimit: 49.580666666667, westlimit: -1.2688333333333, northlimit: 49.5915, eastlimit: -1.2513333333333 }
+        bboxDM: { SW: '49°39,99''N - 001°16,13''W', NE: '49°40,64''N - 001°15,08''W' }
   FR7091:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Toulon'
@@ -3246,13 +2869,8 @@ maps:
     lastUpdate: 14
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '42°59,90''N - 005°50,40''E'
-      NE: '43°10,00''N - 006°10,60''E'
-    spatial:
-      southlimit: 42.998333333333
-      westlimit: 5.84
-      northlimit: 43.166666666667
-      eastlimit: 6.1766666666667
+      SW: '42°59,84''N - 005°50,34''E'
+      NE: '43°09,94''N - 006°10,54''E'
   FR7092:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg'
@@ -3263,13 +2881,8 @@ maps:
     lastUpdate: 3
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '49°37,41''N - 001°45,00''W'
-      NE: '49°45,50''N - 001°26,71''W'
-    spatial:
-      southlimit: 49.6235
-      westlimit: -1.75
-      northlimit: 49.758333333333
-      eastlimit: -1.4451666666667
+      SW: '49°37,35''N - 001°45,08''W'
+      NE: '49°45,44''N - 001°26,79''W'
   FR7093:
     groupTitle: 'Côte Sud de France'
     title: 'Rade de Toulon'
@@ -3280,13 +2893,8 @@ maps:
     lastUpdate: 12
     scaleDenominator: '10.000'
     bboxDM:
-      SW: '43°03,65''N - 005°52,60''E'
-      NE: '43°07,70''N - 006°00,70''E'
-    spatial:
-      southlimit: 43.060833333333
-      westlimit: 5.8766666666667
-      northlimit: 43.128333333333
-      eastlimit: 6.0116666666667
+      SW: '43°03,59''N - 005°52,54''E'
+      NE: '43°07,64''N - 006°00,64''E'
   FR7094:
     groupTitle: 'Côte Nord de France'
     title: 'Du phare du Four à l''Ile Vierge - Port de l''Aber-Wrac''h'
@@ -3297,19 +2905,12 @@ maps:
     lastUpdate: 1
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '48°30,75''N - 004°51,82''W'
-      NE: '48°40,84''N - 004°29,50''W'
-    spatial:
-      southlimit: 48.5125
-      westlimit: -4.8636666666667
-      northlimit: 48.680666666667
-      eastlimit: -4.4916666666667
+      SW: '48°30,69''N - 004°51,91''W'
+      NE: '48°40,78''N - 004°29,59''W'
     insetMaps:
-      -
-        title: 'A - Aber Wrac''h'
+      - title: 'A - Aber Wrac''h'
         scaleDenominator: '15.000'
         bboxDM: { SW: '48°35,05''N - 004°34,29''W', NE: '48°36,34''N - 004°30,63''W' }
-        spatial: { southlimit: 48.584166666667, westlimit: -4.5715, northlimit: 48.605666666667, eastlimit: -4.5105 }
   FR7095:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Morlaix'
@@ -3319,21 +2920,15 @@ maps:
     modified: '2022-02-09+01:00'
     lastUpdate: 9
     insetMaps:
-      -
-        title: 'Baie de Morlaix - De l''île de Batz à la Pointe de Primel'
+      - title: 'Baie de Morlaix - De l''île de Batz à la Pointe de Primel'
         scaleDenominator: '20.000'
-        bboxDM: { SW: '48°38,20''N - 004°03,47''W', NE: '48°46,29''N - 003°48,86''W' }
-        spatial: { southlimit: 48.636666666667, westlimit: -4.0578333333333, northlimit: 48.7715, eastlimit: -3.8143333333333 }
-      -
-        title: 'A - Ports de Roscoff'
+        bboxDM: { SW: '48°38,14''N - 004°03,56''W', NE: '48°46,23''N - 003°48,94''W' }
+      - title: 'A - Ports de Roscoff'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°42,69''N - 003°59,21''W', NE: '48°44,24''N - 003°56,67''W' }
-        spatial: { southlimit: 48.7115, westlimit: -3.9868333333333, northlimit: 48.737333333333, eastlimit: -3.9445 }
-      -
-        title: 'B - Rivière de Morlaix'
+      - title: 'B - Rivière de Morlaix'
         scaleDenominator: '15.000'
         bboxDM: { SW: '48°34,64''N - 003°52,20''W', NE: '48°38,94''N - 003°49,89''W' }
-        spatial: { southlimit: 48.577333333333, westlimit: -3.87, northlimit: 48.649, eastlimit: -3.8315 }
   FR7096:
     groupTitle: 'Côte Sud de Corse'
     title: 'Baie de Figari - Port de Bonifacio'
@@ -3399,19 +2994,12 @@ maps:
     lastUpdate: 6
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '16°06,65''N - 061°35,46''W'
-      NE: '16°15,59''N - 061°29,15''W'
-    spatial:
-      southlimit: 16.110833333333
-      westlimit: -61.591
-      northlimit: 16.259833333333
-      eastlimit: -61.485833333333
+      SW: '16°06,50''N - 061°35,69''W'
+      NE: '16°15,44''N - 061°29,38''W'
     insetMaps:
-      -
-        title: 'A - Mouillages de Sainte-Marie'
+      - title: 'A - Mouillages de Sainte-Marie'
         scaleDenominator: '15.000'
         bboxDM: { SW: '16°05,05''N - 061°34,43''W', NE: '16°06,85''N - 061°32,73''W' }
-        spatial: { southlimit: 16.084166666667, westlimit: -61.573833333333, northlimit: 16.114166666667, eastlimit: -61.5455 }
   FR7101:
     groupTitle: Guadeloupe
     title: 'Les Saintes'
@@ -3422,13 +3010,8 @@ maps:
     lastUpdate: 1
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '15°49,55''N - 061°39,50''W'
-      NE: '15°53,73''N - 061°33,11''W'
-    spatial:
-      southlimit: 15.825833333333
-      westlimit: -61.658333333333
-      northlimit: 15.8955
-      eastlimit: -61.551833333333
+      SW: '15°49,40''N - 061°39,73''W'
+      NE: '15°53,58''N - 061°33,34''W'
   FR7102:
     groupTitle: Guadeloupe
     title: 'Ports et mouillages de Grande-Terre, de Marie-Galante et de la Désirade'
@@ -3501,13 +3084,8 @@ maps:
     lastUpdate: 54
     scaleDenominator: '47.800'
     bboxDM:
-      SW: '49°36,40''N - 001°57,30''W'
-      NE: '49°55,70''N - 001°13,50''W'
-    spatial:
-      southlimit: 49.606666666667
-      westlimit: -1.955
-      northlimit: 49.928333333333
-      eastlimit: -1.225
+      SW: '49°36,34''N - 001°57,38''W'
+      NE: '49°55,65''N - 001°13,58''W'
   FR7121:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Douarnenez'
@@ -3518,24 +3096,15 @@ maps:
     lastUpdate: 17
     scaleDenominator: '30.000'
     bboxDM:
-      SW: '48°04,00''N - 004°40,20''W'
-      NE: '48°16,15''N - 004°13,60''W'
-    spatial:
-      southlimit: 48.066666666667
-      westlimit: -4.67
-      northlimit: 48.269166666667
-      eastlimit: -4.2266666666667
+      SW: '48°03,94''N - 004°40,28''W'
+      NE: '48°16,09''N - 004°13,68''W'
     insetMaps:
-      -
-        title: 'A - Port de Morgat'
+      - title: 'A - Port de Morgat'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '48°12,99''N - 004°30,49''W', NE: '48°13,84''N - 004°29,14''W' }
-        spatial: { southlimit: 48.2165, westlimit: -4.5081666666667, northlimit: 48.230666666667, eastlimit: -4.4856666666667 }
-      -
-        title: 'B - Port de Douarnenez'
+        bboxDM: { SW: '48°12,99''N - 004°30,48''W', NE: '48°13,84''N - 004°29,14''W' }
+      - title: 'B - Port de Douarnenez'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°04,84''N - 004°21,28''W', NE: '48°06,59''N - 004°18,93''W' }
-        spatial: { southlimit: 48.080666666667, westlimit: -4.3546666666667, northlimit: 48.109833333333, eastlimit: -4.3155 }
   FR7122:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four'
@@ -3546,19 +3115,12 @@ maps:
     lastUpdate: 6
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '48°18,00''N - 004°58,00''W'
-      NE: '48°32,86''N - 004°42,78''W'
-    spatial:
-      southlimit: 48.3
-      westlimit: -4.9666666666667
-      northlimit: 48.547666666667
-      eastlimit: -4.713
+      SW: '48°17,94''N - 004°58,09''W'
+      NE: '48°32,80''N - 004°42,87''W'
     insetMaps:
-      -
-        title: 'A - Port du Conquet'
+      - title: 'A - Port du Conquet'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°20,99''N - 004°47,59''W', NE: '48°21,87''N - 004°46,34''W' }
-        spatial: { southlimit: 48.349833333333, westlimit: -4.7931666666667, northlimit: 48.3645, eastlimit: -4.7723333333333 }
   FR7123:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile Molène - Ile d''Ouessant - Passage du Fromveur'
@@ -3569,13 +3131,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°21,91''N - 005°11,00''W'
-      NE: '48°30,00''N - 004°53,16''W'
-    spatial:
-      southlimit: 48.365166666667
-      westlimit: -5.1833333333333
-      northlimit: 48.5
-      eastlimit: -4.886
+      SW: '48°21,85''N - 005°11,09''W'
+      NE: '48°29,94''N - 004°53,25''W'
   FR7124:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Lannion - De la Pointe de Primel à l''île Grande'
@@ -3586,29 +3143,18 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°40,00''N - 003°50,00''W'
-      NE: '48°48,08''N - 003°32,07''W'
-    spatial:
-      southlimit: 48.666666666667
-      westlimit: -3.8333333333333
-      northlimit: 48.801333333333
-      eastlimit: -3.5345
+      SW: '48°39,94''N - 003°50,08''W'
+      NE: '48°48,02''N - 003°32,15''W'
     insetMaps:
-      -
-        title: 'A - Le Léguer (Rivière de Lannion)'
+      - title: 'A - Le Léguer (Rivière de Lannion)'
         scaleDenominator: '20.000'
         bboxDM: { SW: '48°43,24''N - 003°32,53''W', NE: '48°44,75''N - 003°27,78''W' }
-        spatial: { southlimit: 48.720666666667, westlimit: -3.5421666666667, northlimit: 48.745833333333, eastlimit: -3.463 }
-      -
-        title: 'B - Port de Lannion (Le Léguer)'
+      - title: 'B - Port de Lannion (Le Léguer)'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°43,78''N - 003°28,28''W', NE: '48°44,34''N - 003°27,43''W' }
-        spatial: { southlimit: 48.729666666667, westlimit: -3.4713333333333, northlimit: 48.739, eastlimit: -3.4571666666667 }
-      -
-        title: 'C - Port de Trébeurden'
+      - title: 'C - Port de Trébeurden'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°45,99''N - 003°35,65''W', NE: '48°46,42''N - 003°34,98''W' }
-        spatial: { southlimit: 48.7665, westlimit: -3.5941666666667, northlimit: 48.773666666667, eastlimit: -3.583 }
   FR7125:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Perros-Guirec - Les Sept Iles - De l''Ile Grande à l''Ile Balanec'
@@ -3619,29 +3165,18 @@ maps:
     lastUpdate: 7
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°46,85''N - 003°34,39''W'
-      NE: '48°54,94''N - 003°16,40''W'
-    spatial:
-      southlimit: 48.780833333333
-      westlimit: -3.5731666666667
-      northlimit: 48.915666666667
-      eastlimit: -3.2733333333333
+      SW: '48°46,79''N - 003°34,47''W'
+      NE: '48°54,88''N - 003°16,48''W'
     insetMaps:
-      -
-        title: 'A - Mouillages de Trégastel'
+      - title: 'A - Mouillages de Trégastel'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°49,76''N - 003°31,78''W', NE: '48°50,46''N - 003°30,54''W' }
-        spatial: { southlimit: 48.829333333333, westlimit: -3.5296666666667, northlimit: 48.841, eastlimit: -3.509 }
-      -
-        title: 'B - Port de Ploumanac''h'
+      - title: 'B - Port de Ploumanac''h'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°49,51''N - 003°30,02''W', NE: '48°50,37''N - 003°28,78''W' }
-        spatial: { southlimit: 48.825166666667, westlimit: -3.5003333333333, northlimit: 48.8395, eastlimit: -3.4796666666667 }
-      -
-        title: 'C - Port de Perros-Guirec'
+      - title: 'C - Port de Perros-Guirec'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°47,78''N - 003°26,88''W', NE: '48°48,64''N - 003°25,50''W' }
-        spatial: { southlimit: 48.796333333333, westlimit: -3.448, northlimit: 48.810666666667, eastlimit: -3.425 }
   FR7126:
     groupTitle: 'Côte Nord de France'
     title: 'De l''île Balanec aux Héaux-de-Bréhat - Cours du Jaudy'
@@ -3652,19 +3187,12 @@ maps:
     lastUpdate: 21
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°44,60''N - 003°17,06''W'
-      NE: '48°56,46''N - 003°04,80''W'
-    spatial:
-      southlimit: 48.743333333333
-      westlimit: -3.2843333333333
-      northlimit: 48.941
-      eastlimit: -3.08
+      SW: '48°44,54''N - 003°17,14''W'
+      NE: '48°56,40''N - 003°04,88''W'
     insetMaps:
-      -
-        title: 'A - Port de Tréguier'
+      - title: 'A - Port de Tréguier'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°46,73''N - 003°14,57''W', NE: '48°48,74''N - 003°12,15''W' }
-        spatial: { southlimit: 48.778833333333, westlimit: -3.2428333333333, northlimit: 48.812333333333, eastlimit: -3.2025 }
   FR7127:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de l''île Bréhat, anse de Paimpol - Entrée du Trieux'
@@ -3675,24 +3203,15 @@ maps:
     lastUpdate: 26
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°42,84''N - 003°05,60''W'
-      NE: '48°54,70''N - 002°53,40''W'
-    spatial:
-      southlimit: 48.714
-      westlimit: -3.0933333333333
-      northlimit: 48.911666666667
-      eastlimit: -2.89
+      SW: '48°42,78''N - 003°05,68''W'
+      NE: '48°54,64''N - 002°53,48''W'
     insetMaps:
-      -
-        title: 'A - Port de Lézardrieux - Le Trieux'
+      - title: 'A - Port de Lézardrieux - Le Trieux'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°46,74''N - 003°06,58''W', NE: '48°48,39''N - 003°04,95''W' }
-        spatial: { southlimit: 48.779, westlimit: -3.1096666666667, northlimit: 48.8065, eastlimit: -3.0825 }
-      -
-        title: 'B - Port de Paimpol'
+      - title: 'B - Port de Paimpol'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°46,69''N - 003°03,02''W', NE: '48°47,50''N - 003°01,31''W' }
-        spatial: { southlimit: 48.778166666667, westlimit: -3.0503333333333, northlimit: 48.791666666667, eastlimit: -3.0218333333333 }
   FR7128:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Ouest) - De la Pointe de la Tour à l''Anse d''Yffiniac'
@@ -3703,24 +3222,15 @@ maps:
     lastUpdate: 14
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '48°31,38''N - 002°55,70''W'
-      NE: '48°46,22''N - 002°40,40''W'
-    spatial:
-      southlimit: 48.523
-      westlimit: -2.9283333333333
-      northlimit: 48.770333333333
-      eastlimit: -2.6733333333333
+      SW: '48°31,32''N - 002°55,78''W'
+      NE: '48°46,16''N - 002°40,48''W'
     insetMaps:
-      -
-        title: 'A - Port de Saint-Quay-Portrieux'
+      - title: 'A - Port de Saint-Quay-Portrieux'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°38,27''N - 002°49,88''W', NE: '48°39,14''N - 002°48,53''W' }
-        spatial: { southlimit: 48.637833333333, westlimit: -2.8313333333333, northlimit: 48.652333333333, eastlimit: -2.8088333333333 }
-      -
-        title: 'B - Port de Binic'
+      - title: 'B - Port de Binic'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°35,52''N - 002°49,78''W', NE: '48°36,30''N - 002°48,23''W' }
-        spatial: { southlimit: 48.592, westlimit: -2.8296666666667, northlimit: 48.605, eastlimit: -2.8038333333333 }
   FR7129:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
@@ -3731,13 +3241,8 @@ maps:
     lastUpdate: 6
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°33,00''N - 002°19,94''W'
-      NE: '48°44,87''N - 002°07,73''W'
-    spatial:
-      southlimit: 48.55
-      westlimit: -2.3323333333333
-      northlimit: 48.747833333333
-      eastlimit: -2.1288333333333
+      SW: '48°32,94''N - 002°20,03''W'
+      NE: '48°44,81''N - 002°07,81''W'
   FR7130:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Saint-Malo - De l''île des Hébihens à la Pointe de la Varde'
@@ -3748,13 +3253,8 @@ maps:
     lastUpdate: 11
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '48°36,88''N - 002°11,56''W'
-      NE: '48°42,95''N - 001°58,13''W'
-    spatial:
-      southlimit: 48.614666666667
-      westlimit: -2.1926666666667
-      northlimit: 48.715833333333
-      eastlimit: -1.9688333333333
+      SW: '48°36,82''N - 002°11,64''W'
+      NE: '48°42,89''N - 001°58,21''W'
   FR7131:
     groupTitle: 'Côte Nord de France'
     title: 'Du Hâvre de Rothéneuf à Cancale'
@@ -3765,19 +3265,12 @@ maps:
     lastUpdate: 2
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '48°39,70''N - 001°59,60''W'
-      NE: '48°45,20''N - 001°47,20''W'
-    spatial:
-      southlimit: 48.661666666667
-      westlimit: -1.9933333333333
-      northlimit: 48.753333333333
-      eastlimit: -1.7866666666667
+      SW: '48°39,64''N - 001°59,68''W'
+      NE: '48°45,14''N - 001°47,28''W'
     insetMaps:
-      -
-        title: 'A - Port de Cancale'
+      - title: 'A - Port de Cancale'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°39,87''N - 001°51,88''W', NE: '48°40,38''N - 001°50,94''W' }
-        spatial: { southlimit: 48.6645, westlimit: -1.8646666666667, northlimit: 48.673, eastlimit: -1.849 }
   FR7133:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de la Côte Ouest du Cotentin'
@@ -3787,36 +3280,24 @@ maps:
     modified: '2021-01-06+01:00'
     lastUpdate: 26
     insetMaps:
-      -
-        title: 'A - Abords de Goury'
+      - title: 'A - Abords de Goury'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°42,19''N - 001°58,90''W', NE: '49°44,19''N - 001°55,70''W' }
-        spatial: { southlimit: 49.703166666667, westlimit: -1.9816666666667, northlimit: 49.7365, eastlimit: -1.9283333333333 }
-      -
-        title: 'B - Abords de Diélette'
+      - title: 'B - Abords de Diélette'
         scaleDenominator: '15.000'
         bboxDM: { SW: '49°31,16''N - 001°54,78''W', NE: '49°34,78''N - 001°50,28''W' }
-        spatial: { southlimit: 49.519333333333, westlimit: -1.913, northlimit: 49.579666666667, eastlimit: -1.838 }
-      -
-        title: 'C - Abords de Carteret et Portbail'
+      - title: 'C - Abords de Carteret et Portbail'
         scaleDenominator: '20.000'
         bboxDM: { SW: '49°15,94''N - 001°48,68''W', NE: '49°22,94''N - 001°40,31''W' }
-        spatial: { southlimit: 49.265666666667, westlimit: -1.8113333333333, northlimit: 49.382333333333, eastlimit: -1.6718333333333 }
-      -
-        title: 'D - Carteret'
+      - title: 'D - Carteret'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°21,74''N - 001°47,48''W', NE: '49°22,84''N - 001°46,13''W' }
-        spatial: { southlimit: 49.362333333333, westlimit: -1.7913333333333, northlimit: 49.380666666667, eastlimit: -1.7688333333333 }
-      -
-        title: 'E - Portbail'
+      - title: 'E - Portbail'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°19,04''N - 001°43,81''W', NE: '49°20,14''N - 001°41,83''W' }
-        spatial: { southlimit: 49.317333333333, westlimit: -1.7301666666667, northlimit: 49.335666666667, eastlimit: -1.6971666666667 }
-      -
-        title: 'F - Havre de Regnéville'
+      - title: 'F - Havre de Regnéville'
         scaleDenominator: '15.000'
         bboxDM: { SW: '48°57,96''N - 001°35,83''W', NE: '49°01,44''N - 001°32,88''W' }
-        spatial: { southlimit: 48.966, westlimit: -1.5971666666667, northlimit: 49.024, eastlimit: -1.548 }
   FR7134:
     groupTitle: 'Côte Nord de France'
     title: 'Iles Chausey'
@@ -3827,19 +3308,12 @@ maps:
     lastUpdate: 3
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '48°49,44''N - 001°54,19''W'
-      NE: '48°55,50''N - 001°40,70''W'
-    spatial:
-      southlimit: 48.824
-      westlimit: -1.9031666666667
-      northlimit: 48.925
-      eastlimit: -1.6783333333333
+      SW: '48°49,38''N - 001°54,27''W'
+      NE: '48°55,44''N - 001°40,78''W'
     insetMaps:
-      -
-        title: 'A - Sound de Chausey'
+      - title: 'A - Sound de Chausey'
         scaleDenominator: '5.000'
         bboxDM: { SW: '48°51,90''N - 001°49,90''W', NE: '48°52,52''N - 001°48,59''W' }
-        spatial: { southlimit: 48.865, westlimit: -1.8316666666667, northlimit: 48.875333333333, eastlimit: -1.8098333333333 }
   FR7135:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Jacques à Damgan'
@@ -3952,19 +3426,12 @@ maps:
     lastUpdate: 17
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '47°35,36''N - 003°35,00''W'
-      NE: '47°43,45''N - 003°17,44''W'
-    spatial:
-      southlimit: 47.589333333333
-      westlimit: -3.5833333333333
-      northlimit: 47.724166666667
-      eastlimit: -3.2906666666667
+      SW: '47°35,30''N - 003°35,08''W'
+      NE: '47°43,39''N - 003°17,52''W'
     insetMaps:
-      -
-        title: 'A - Port Tudy'
+      - title: 'A - Port Tudy'
         scaleDenominator: '5.000'
         bboxDM: { SW: '47°38,49''N - 003°27,03''W', NE: '47°38,94''N - 003°26,23''W' }
-        spatial: { southlimit: 47.6415, westlimit: -3.4505, northlimit: 47.649, eastlimit: -3.4371666666667 }
   FR7140:
     groupTitle: 'Côte Ouest de France'
     title: 'Passes et rade de Lorient'
@@ -3975,19 +3442,12 @@ maps:
     lastUpdate: 7
     scaleDenominator: '10.000'
     bboxDM:
-      SW: '47°40,50''N - 003°25,20''W'
-      NE: '47°46,43''N - 003°19,21''W'
-    spatial:
-      southlimit: 47.675
-      westlimit: -3.42
-      northlimit: 47.773833333333
-      eastlimit: -3.3201666666667
+      SW: '47°40,44''N - 003°25,28''W'
+      NE: '47°46,37''N - 003°19,29''W'
     insetMaps:
-      -
-        title: 'A - Le Blavet - De Lanester à Hennebont'
+      - title: 'A - Le Blavet - De Lanester à Hennebont'
         scaleDenominator: '12.500'
         bboxDM: { SW: '47°44,04''N - 003°19,68''W', NE: '47°48,44''N - 003°16,28''W' }
-        spatial: { southlimit: 47.734, westlimit: -3.328, northlimit: 47.807333333333, eastlimit: -3.2713333333333 }
   FR7141:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Quiberon'
@@ -3998,13 +3458,8 @@ maps:
     lastUpdate: 34
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '47°23,90''N - 003°08,64''W'
-      NE: '47°35,83''N - 002°56,70''W'
-    spatial:
-      southlimit: 47.398333333333
-      westlimit: -3.144
-      northlimit: 47.597166666667
-      eastlimit: -2.945
+      SW: '47°23,84''N - 003°08,72''W'
+      NE: '47°35,77''N - 002°56,78''W'
   FR7142:
     groupTitle: 'Côte Ouest de France'
     title: Belle-Ile
@@ -4015,24 +3470,15 @@ maps:
     lastUpdate: 25
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '47°14,95''N - 003°20,00''W'
-      NE: '47°25,00''N - 002°58,31''W'
-    spatial:
-      southlimit: 47.249166666667
-      westlimit: -3.3333333333333
-      northlimit: 47.416666666667
-      eastlimit: -2.9718333333333
+      SW: '47°14,89''N - 003°20,08''W'
+      NE: '47°24,94''N - 002°58,17''W'
     insetMaps:
-      -
-        title: 'A - Sauzon'
+      - title: 'A - Sauzon'
         scaleDenominator: '7.500'
         bboxDM: { SW: '47°21,77''N - 003°13,36''W', NE: '47°22,82''N - 003°12,65''W' }
-        spatial: { southlimit: 47.362833333333, westlimit: -3.2226666666667, northlimit: 47.380333333333, eastlimit: -3.2108333333333 }
-      -
-        title: 'B - Le Palais'
+      - title: 'B - Le Palais'
         scaleDenominator: '7.500'
         bboxDM: { SW: '47°20,67''N - 003°09,88''W', NE: '47°21,07''N - 003°08,78''W' }
-        spatial: { southlimit: 47.3445, westlimit: -3.1646666666667, northlimit: 47.351166666667, eastlimit: -3.1463333333333 }
   FR7143:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords des Iles de Houat et de Hoëdic'
@@ -4043,13 +3489,8 @@ maps:
     lastUpdate: 23
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '47°17,90''N - 003°04,80''W'
-      NE: '47°26,20''N - 002°47,05''W'
-    spatial:
-      southlimit: 47.298333333333
-      westlimit: -3.08
-      northlimit: 47.436666666667
-      eastlimit: -2.7841666666667
+      SW: '47°17,84''N - 003°04,88''W'
+      NE: '47°26,14''N - 002°47,13''W'
   FR7144:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Vilaine - De Damgan à La Roche-Bernard'
@@ -4121,13 +3562,8 @@ maps:
     lastUpdate: 66
     scaleDenominator: '49.700'
     bboxDM:
-      SW: '47°34,90''N - 004°31,00''W'
-      NE: '47°55,00''N - 003°47,30''W'
-    spatial:
-      southlimit: 47.581666666667
-      westlimit: -4.5166666666667
-      northlimit: 47.916666666667
-      eastlimit: -3.7883333333333
+      SW: '47°34,84''N - 004°31,08''W'
+      NE: '47°54,94''N - 003°47,38''W'
   FR7147:
     groupTitle: 'Côte Ouest de France'
     title: 'De la chaussée de Sein à la Pointe de Penmarc''h - Baie d''Audierne (Spéciale P)'
@@ -4138,19 +3574,12 @@ maps:
     lastUpdate: 45
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '47°44,60''N - 004°59,90''W'
-      NE: '48°04,60''N - 004°16,20''W'
-    spatial:
-      southlimit: 47.743333333333
-      westlimit: -4.9983333333333
-      northlimit: 48.076666666667
-      eastlimit: -4.27
+      SW: '47°44,54''N - 004°59,98''W'
+      NE: '48°04,54''N - 004°16,28''W'
     insetMaps:
-      -
-        title: 'A - Port d''Audierne'
+      - title: 'A - Port d''Audierne'
         scaleDenominator: '12.500'
         bboxDM: { SW: '47°59,44''N - 004°33,98''W', NE: '48°01,59''N - 004°31,28''W' }
-        spatial: { southlimit: 47.990666666667, westlimit: -4.5663333333333, northlimit: 48.0265, eastlimit: -4.5213333333333 }
   FR7148:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à la Chaussée de Sein'
@@ -4161,13 +3590,8 @@ maps:
     lastUpdate: 4
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '47°56,40''N - 005°01,50''W'
-      NE: '48°25,70''N - 004°31,60''W'
-    spatial:
-      southlimit: 47.94
-      westlimit: -5.025
-      northlimit: 48.428333333333
-      eastlimit: -4.5266666666667
+      SW: '47°56,34''N - 005°01,54''W'
+      NE: '48°25,62''N - 004°31,69''W'
   FR7149:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à Portsall - Ile d''Ouessant'
@@ -4178,13 +3602,8 @@ maps:
     lastUpdate: 6
     scaleDenominator: '49.100'
     bboxDM:
-      SW: '48°15,90''N - 005°15,60''W'
-      NE: '48°35,70''N - 004°31,90''W'
-    spatial:
-      southlimit: 48.265
-      westlimit: -5.26
-      northlimit: 48.595
-      eastlimit: -4.5316666666667
+      SW: '48°15,84''N - 005°15,69''W'
+      NE: '48°35,64''N - 004°31,99''W'
   FR7150:
     groupTitle: 'Côte Nord de France'
     title: 'De Portsall à l''anse de Kernic'
@@ -4195,13 +3614,8 @@ maps:
     lastUpdate: 2
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '48°30,00''N - 004°55,40''W'
-      NE: '48°49,80''N - 004°11,60''W'
-    spatial:
-      southlimit: 48.5
-      westlimit: -4.9233333333333
-      northlimit: 48.83
-      eastlimit: -4.1933333333333
+      SW: '48°29,94''N - 004°55,49''W'
+      NE: '48°49,74''N - 004°11,69''W'
   FR7151:
     groupTitle: 'Côte Nord de France'
     title: 'De l''anse de Kernic à l''Ile Grande'
@@ -4212,13 +3626,8 @@ maps:
     lastUpdate: 53
     scaleDenominator: '48.700'
     bboxDM:
-      SW: '48°37,90''N - 004°15,00''W'
-      NE: '48°57,60''N - 003°31,20''W'
-    spatial:
-      southlimit: 48.631666666667
-      westlimit: -4.25
-      northlimit: 48.96
-      eastlimit: -3.52
+      SW: '48°37,84''N - 004°15,08''W'
+      NE: '48°57,54''N - 003°31,28''W'
   FR7152:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile Grande à l''Ile de Bréhat'
@@ -4229,13 +3638,8 @@ maps:
     lastUpdate: 19
     scaleDenominator: '48.700'
     bboxDM:
-      SW: '48°43,00''N - 003°38,80''W'
-      NE: '49°02,70''N - 002°55,10''W'
-    spatial:
-      southlimit: 48.716666666667
-      westlimit: -3.6466666666667
-      northlimit: 49.045
-      eastlimit: -2.9183333333333
+      SW: '48°42,94''N - 003°38,88''W'
+      NE: '49°02,64''N - 002°55,18''W'
   FR7153:
     groupTitle: 'Côte Nord de France'
     title: 'De l''île de Bréhat au Plateau des Roches Douvres'
@@ -4247,13 +3651,8 @@ maps:
     lastUpdate: 14
     scaleDenominator: '48.600'
     bboxDM:
-      SW: '48°48,70''N - 003°12,40''W'
-      NE: '49°08,30''N - 002°28,70''W'
-    spatial:
-      southlimit: 48.811666666667
-      westlimit: -3.2066666666667
-      northlimit: 49.138333333333
-      eastlimit: -2.4783333333333
+      SW: '48°48,64''N - 003°12,48''W'
+      NE: '49°08,24''N - 002°28,78''W'
   FR7154:
     groupTitle: 'Côte Nord de France'
     title: 'De l''île de Bréhat au Cap Fréhel - Baie de Saint-Brieuc'
@@ -4264,19 +3663,12 @@ maps:
     lastUpdate: 14
     scaleDenominator: '48.800'
     bboxDM:
-      SW: '48°31,70''N - 003°02,70''W'
-      NE: '48°51,40''N - 002°19,00''W'
-    spatial:
-      southlimit: 48.528333333333
-      westlimit: -3.045
-      northlimit: 48.856666666667
-      eastlimit: -2.3166666666667
+      SW: '48°31,64''N - 003°02,78''W'
+      NE: '48°51,34''N - 002°19,08''W'
     insetMaps:
-      -
-        title: 'Port de Saint-Brieuc Le Légué'
+      - title: 'Port de Saint-Brieuc Le Légué'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°31,31''N - 002°45,18''W', NE: '48°32,64''N - 002°42,33''W' }
-        spatial: { southlimit: 48.521833333333, westlimit: -2.753, northlimit: 48.544, eastlimit: -2.7055 }
   FR7155:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à la Pointe du Grouin - Approches de Saint-Malo'
@@ -4288,13 +3680,8 @@ maps:
     lastUpdate: 30
     scaleDenominator: '48.800'
     bboxDM:
-      SW: '48°34,00''N - 002°27,00''W'
-      NE: '48°53,70''N - 001°43,20''W'
-    spatial:
-      southlimit: 48.566666666667
-      westlimit: -2.45
-      northlimit: 48.895
-      eastlimit: -1.72
+      SW: '48°33,94''N - 002°27,08''W'
+      NE: '48°53,64''N - 001°43,28''W'
   FR7156:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe du Grouin à la Pointe d''Agon - Baie du Mont-Saint-Michel - Iles Chausey'
@@ -4306,13 +3693,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: '48.800'
     bboxDM:
-      SW: '48°33,10''N - 002°00,26''W'
-      NE: '49°02,03''N - 001°30,40''W'
-    spatial:
-      southlimit: 48.551666666667
-      westlimit: -2.0043333333333
-      northlimit: 49.033833333333
-      eastlimit: -1.5066666666667
+      SW: '48°33,04''N - 002°00,34''W'
+      NE: '49°01,97''N - 001°30,48''W'
   FR7157:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe d''Agon au Cap de Carteret - Passage de la Déroute'
@@ -4323,13 +3705,8 @@ maps:
     lastUpdate: 1
     scaleDenominator: '48.400'
     bboxDM:
-      SW: '48°57,40''N - 002°04,00''W'
-      NE: '49°26,00''N - 001°34,20''W'
-    spatial:
-      southlimit: 48.956666666667
-      westlimit: -2.0666666666667
-      northlimit: 49.433333333333
-      eastlimit: -1.57
+      SW: '48°57,34''N - 002°04,08''W'
+      NE: '49°25,94''N - 001°34,28''W'
   FR7158:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de Carteret au Cap de La Hague - Raz Blanchard'
@@ -4340,13 +3717,8 @@ maps:
     lastUpdate: 48
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '49°21,80''N - 002°17,80''W'
-      NE: '49°49,60''N - 001°48,00''W'
-    spatial:
-      southlimit: 49.363333333333
-      westlimit: -2.2966666666667
-      northlimit: 49.826666666667
-      eastlimit: -1.8
+      SW: '49°21,74''N - 002°17,88''W'
+      NE: '49°49,54''N - 001°48,08''W'
   FR7159:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
@@ -4370,9 +3742,6 @@ maps:
     lastUpdate: 10
     scaleDenominator: '50.000'
     bboxDM: {SW: "49°06,04'N - 002°42,08'W", NE: "49°25,54'N - 001°58,38'W"}
-    noteCatalog: |
-      Le 4/6/2022 correction du champ bboxDM en reprenant la valeur du GAN pour effacer le cadre visible sur la carte.
-      A noter que l'info du GAN est plus précise que l'inscription portée sur la carte.
   FR7161:
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
     title: 'Des îles Chausey à Jersey - Plateau des Minquiers'
@@ -4384,13 +3753,8 @@ maps:
     lastUpdate: 24
     scaleDenominator: '48.500'
     bboxDM:
-      SW: '48°51,60''N - 002°31,50''W'
-      NE: '49°11,20''N - 001°47,80''W'
-    spatial:
-      southlimit: 48.86
-      westlimit: -2.525
-      northlimit: 49.186666666667
-      eastlimit: -1.7966666666667
+      SW: '48°51,54''N - 002°31,58''W'
+      NE: '49°11,14''N - 001°47,88''W'
   FR7162:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Muro au Cap de Feno'
@@ -4401,24 +3765,15 @@ maps:
     lastUpdate: 6
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '41°23,80''N - 008°27,40''E'
-      NE: '41°44,60''N - 009°08,00''E'
-    spatial:
-      southlimit: 41.396666666667
-      westlimit: 8.4566666666667
-      northlimit: 41.743333333333
-      eastlimit: 9.1333333333333
+      SW: '41°23,74''N - 008°27,34''E'
+      NE: '41°44,54''N - 009°07,94''E'
     insetMaps:
-      -
-        title: 'A - Mouillage de Porto Pollo'
+      - title: 'A - Mouillage de Porto Pollo'
         scaleDenominator: '10.000'
         bboxDM: { SW: '41°41,54''N - 008°47,34''E', NE: '41°42,94''N - 008°48,94''E' }
-        spatial: { southlimit: 41.692333333333, westlimit: 8.789, northlimit: 41.715666666667, eastlimit: 8.8156666666667 }
-      -
-        title: 'B - Mouillage de Campomoro'
+      - title: 'B - Mouillage de Campomoro'
         scaleDenominator: '10.000'
         bboxDM: { SW: '41°37,59''N - 008°48,14''E', NE: '41°38,84''N - 008°49,74''E' }
-        spatial: { southlimit: 41.6265, westlimit: 8.8023333333333, northlimit: 41.647333333333, eastlimit: 8.829 }
   FR7166:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Océan Pacifique Sud - Partie Ouest'
@@ -4433,13 +3788,9 @@ maps:
     bboxDM:
       SW: '51°05,44''S - 163°30,00''E'
       NE: '02°45,00''S - 108°28,11''W'
-    spatial:
-      southlimit: -51.090666666667
-      westlimit: 163.5
-      northlimit: -2.75
-      eastlimit: -108.4685
     replaces: '(remplace 5037,5038,5361)'
     references: 'Fac similé Carte NZ n°14061 publiée en 1986.'
+    noteCatalog: GAN faux, bords Est et Ouest inversés
   FR7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)'
@@ -4450,13 +3801,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '22°06,60''S - 165°31,40''E'
-      NE: '21°42,30''S - 166°09,50''E'
-    spatial:
-      southlimit: -22.11
-      westlimit: 165.52333333333
-      northlimit: -21.705
-      eastlimit: 166.15833333333
+      SW: '22°06,44''S - 165°31,60''E'
+      NE: '21°42,13''S - 166°09,70''E'
   FR7168:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Bourail à la Passe de la Poya'
@@ -4531,13 +3877,8 @@ maps:
     lastUpdate: 5
     scaleDenominator: '49.300'
     bboxDM:
-      SW: '48°01,90''N - 005°15,60''W'
-      NE: '48°21,80''N - 004°31,90''W'
-    spatial:
-      southlimit: 48.031666666667
-      westlimit: -5.26
-      northlimit: 48.363333333333
-      eastlimit: -4.5316666666667
+      SW: '48°01,84''N - 005°15,69''W'
+      NE: '48°21,74''N - 004°31,99''W'
   FR7183:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
@@ -4550,27 +3891,16 @@ maps:
     bboxDM:
       SW: '21°11,70''S - 055°06,60''E'
       NE: '20°47,40''S - 055°44,60''E'
-    spatial:
-      southlimit: -21.195
-      westlimit: 55.11
-      northlimit: -20.79
-      eastlimit: 55.743333333333
     insetMaps:
-      -
-        title: 'A - Port de Saint-Gilles les Bains'
+      - title: 'A - Port de Saint-Gilles les Bains'
         scaleDenominator: '10.000'
         bboxDM: { SW: '21°03,65''S - 055°12,45''E', NE: '21°02,41''S - 055°13,80''E' }
-        spatial: { southlimit: -21.060833333333, westlimit: 55.2075, northlimit: -21.040166666667, eastlimit: 55.23 }
-      -
-        title: 'B - Port Réunion (Pointe des Galets) - Port Ouest'
+      - title: 'B - Port Réunion (Pointe des Galets) - Port Ouest'
         scaleDenominator: '10.000'
         bboxDM: { SW: '20°56,79''S - 055°16,19''E', NE: '20°55,55''S - 055°17,55''E' }
-        spatial: { southlimit: -20.9465, westlimit: 55.269833333333, northlimit: -20.925833333333, eastlimit: 55.2925 }
-      -
-        title: 'C - Port Réunion (Pointe des Galets) - Port Est'
+      - title: 'C - Port Réunion (Pointe des Galets) - Port Est'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '20°56,35''S - 055°18,55''E', NE: '20°55,11''S - 055°19,90''E' }
-        spatial: { southlimit: -20.939166666667, westlimit: 55.309166666667, northlimit: -20.9185, eastlimit: 55.331666666667 }
+        bboxDM: { SW: '20°56,35''S - 055°18,54''E', NE: '20°55,11''S - 055°19,90''E' }
   FR7200:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap d''Antibes au Cap Ferrat - Baie des Anges - Rade de Villefranche'
@@ -4581,34 +3911,21 @@ maps:
     lastUpdate: 1
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '43°29,10''N - 007°07,10''E'
+      SW: '43°29,04''N - 007°07,04''E'
       NE: '43°43,74''N - 007°20,84''E'
-    spatial:
-      southlimit: 43.485
-      westlimit: 7.1183333333333
-      northlimit: 43.729
-      eastlimit: 7.3473333333333
     insetMaps:
-      -
-        title: 'A - Antibes - Port Vauban'
+      - title: 'A - Antibes - Port Vauban'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°34,84''N - 007°07,14''E', NE: '43°35,59''N - 007°08,24''E' }
-        spatial: { southlimit: 43.580666666667, westlimit: 7.119, northlimit: 43.593166666667, eastlimit: 7.1373333333333 }
-      -
-        title: 'B - Marina Baie des Anges'
+      - title: 'B - Marina Baie des Anges'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°37,74''N - 007°08,04''E', NE: '43°38,29''N - 007°08,64''E' }
-        spatial: { southlimit: 43.629, westlimit: 7.134, northlimit: 43.638166666667, eastlimit: 7.144 }
-      -
-        title: 'C - Port de Saint-Laurent-du-Var'
+      - title: 'C - Port de Saint-Laurent-du-Var'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°39,04''N - 007°10,54''E', NE: '43°39,54''N - 007°11,34''E' }
-        spatial: { southlimit: 43.650666666667, westlimit: 7.1756666666667, northlimit: 43.659, eastlimit: 7.189 }
-      -
-        title: 'D - Port de Nice et Rade de Villefranche'
+      - title: 'D - Port de Nice et Rade de Villefranche'
         scaleDenominator: '10.000'
         bboxDM: { SW: '43°40,36''N - 007°16,64''E', NE: '43°42,44''N - 007°19,68''E' }
-        spatial: { southlimit: 43.672666666667, westlimit: 7.2773333333333, northlimit: 43.707333333333, eastlimit: 7.328 }
   FR7203:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Des îles Baléares (Islas Baleares) à Marseille'
@@ -4619,13 +3936,8 @@ maps:
     lastUpdate: 90
     scaleDenominator: '500.000'
     bboxDM:
-      SW: '38°50,00''N - 001°37,00''E'
-      NE: '43°54,00''N - 006°13,00''E'
-    spatial:
-      southlimit: 38.833333333333
-      westlimit: 1.6166666666667
-      northlimit: 43.9
-      eastlimit: 6.2166666666667
+      SW: '38°49,93''N - 001°36,93''E'
+      NE: '43°53,94''N - 006°12,93''E'
   FR7204:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Marseille à l''île d''Elbe (Isola d''Elba) et aux Bouches de Bonifacio'
@@ -4654,44 +3966,27 @@ maps:
     lastUpdate: 2
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '43°28,72''N - 006°55,83''E'
-      NE: '43°34,80''N - 007°08,08''E'
-    spatial:
-      southlimit: 43.478666666667
-      westlimit: 6.9305
-      northlimit: 43.58
-      eastlimit: 7.1346666666667
+      SW: '43°28,66''N - 006°55,77''E'
+      NE: '43°34,74''N - 007°08,02''E'
     insetMaps:
-      -
-        title: 'A - Port de Mandelieu-La Napoule'
+      - title: 'A - Port de Mandelieu-La Napoule'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°30,34''N - 006°56,14''E', NE: '43°31,69''N - 006°57,04''E' }
-        spatial: { southlimit: 43.505666666667, westlimit: 6.9356666666667, northlimit: 43.528166666667, eastlimit: 6.9506666666667 }
-      -
-        title: 'B - Port de Cannes-Marina'
+      - title: 'B - Port de Cannes-Marina'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°31,94''N - 006°56,12''E', NE: '43°32,31''N - 006°56,87''E' }
-        spatial: { southlimit: 43.532333333333, westlimit: 6.9353333333333, northlimit: 43.5385, eastlimit: 6.9478333333333 }
-      -
-        title: 'C - Port de Cannes'
+      - title: 'C - Port de Cannes'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°32,64''N - 007°00,59''E', NE: '43°33,14''N - 007°01,34''E' }
-        spatial: { southlimit: 43.544, westlimit: 7.0098333333333, northlimit: 43.552333333333, eastlimit: 7.0223333333333 }
-      -
-        title: 'D - Port Pierre Canto'
+      - title: 'D - Port Pierre Canto'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°32,04''N - 007°01,74''E', NE: '43°32,79''N - 007°02,24''E' }
-        spatial: { southlimit: 43.534, westlimit: 7.029, northlimit: 43.5465, eastlimit: 7.0373333333333 }
-      -
-        title: 'E - Ports de Golfe Juan'
+      - title: 'E - Ports de Golfe Juan'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°33,64''N - 007°04,28''E', NE: '43°34,14''N - 007°05,14''E' }
-        spatial: { southlimit: 43.560666666667, westlimit: 7.0713333333333, northlimit: 43.569, eastlimit: 7.0856666666667 }
-      -
-        title: 'F - Ports de Juan les Pins'
+      - title: 'F - Ports de Juan les Pins'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°33,49''N - 007°06,54''E', NE: '43°33,99''N - 007°07,44''E' }
-        spatial: { southlimit: 43.558166666667, westlimit: 7.109, northlimit: 43.5665, eastlimit: 7.124 }
   FR7207:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
@@ -4701,16 +3996,12 @@ maps:
     modified: '2021-12-08+01:00'
     lastUpdate: 3
     insetMaps:
-      -
-        title: 'Ports de Fécamp et du Tréport'
+      - title: 'Ports de Fécamp et du Tréport'
         scaleDenominator: '12.500'
-        bboxDM: { SW: '00°00,00''N - 000°00,00''E', NE: '00°00,00''N - 000°00,00''E' }
-        spatial: { southlimit: 0, westlimit: 0, northlimit: 0, eastlimit: 0 }
-      -
-        title: 'B - Fécamp'
+        bboxDM: { SW: "50°02,50'N - 001°16,86'E", NE: "50°06,37'N - 001°24,72'E" }
+      - title: 'B - Fécamp'
         scaleDenominator: '12.500'
-        bboxDM: { SW: '49°44,20''N - 000°15,81''E', NE: '49°47,65''N - 000°23,62''E' }
-        spatial: { southlimit: 49.736666666667, westlimit: 0.2635, northlimit: 49.794166666667, eastlimit: 0.39366666666667 }
+        bboxDM: { SW: "50°02,50'N - 001°16,86'E", NE: "50°06,37'N - 001°24,72'E" }
   FR7208:
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade (Spéciale P)'
@@ -4721,13 +4012,8 @@ maps:
     lastUpdate: 11
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '15°48,50''N - 061°23,00''W'
-      NE: '16°24,20''N - 060°57,80''W'
-    spatial:
-      southlimit: 15.808333333333
-      westlimit: -61.383333333333
-      northlimit: 16.403333333333
-      eastlimit: -60.963333333333
+      SW: '15°48,35''N - 061°23,23''W'
+      NE: '16°24,05''N - 060°58,03''W'
   FR7210:
     groupTitle: 'Océan Atlantique'
     title: 'Atterrages de l''entrée de La Manche - Mer Celtique'
@@ -4757,13 +4043,8 @@ maps:
     lastUpdate: 12
     scaleDenominator: 1.000.000
     bboxDM:
-      SW: '42°30,00''N - 013°26,50''W'
-      NE: '48°55,83''N - 000°00,00''E'
-    spatial:
-      southlimit: 42.5
-      westlimit: -13.441666666667
-      northlimit: 48.9305
-      eastlimit: 0
+      SW: '42°29,93''N - 013°26,58''W'
+      NE: '48°55,74''N - 000°00,08''W'
     references: 'Fac similé ES 4A'
   FR7213:
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
@@ -4798,25 +4079,16 @@ maps:
     lastUpdate: 0
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '51°03,00''N - 002°05,00''E'
-      NE: '51°27,30''N - 003°01,80''E'
-    spatial:
-      southlimit: 51.05
-      westlimit: 2.0833333333333
-      northlimit: 51.455
-      eastlimit: 3.03
+      SW: '51°02,61''N - 002°04,92''E'
+      NE: '51°27,25''N - 003°01,72''E'
     references: 'Fac similé carte BE n°102 publiée en 1987 (édition décembre 2018)'
     insetMaps:
-      -
-        title: 'A - Nieuwpoort'
+      - title: 'A - Nieuwpoort'
         scaleDenominator: '20.000'
         bboxDM: { SW: '51°08,00''N - 002°42,82''E', NE: '51°09,45''N - 002°45,52''E' }
-        spatial: { southlimit: 51.133333333333, westlimit: 2.7136666666667, northlimit: 51.1575, eastlimit: 2.7586666666667 }
-      -
-        title: 'B - Oostende'
+      - title: 'B - Oostende'
         scaleDenominator: '15.000'
         bboxDM: { SW: '51°13,37''N - 002°54,72''E', NE: '51°14,62''N - 002°56,51''E' }
-        spatial: { southlimit: 51.222833333333, westlimit: 2.912, northlimit: 51.243666666667, eastlimit: 2.9418333333333 }
   FR7218:
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
@@ -5017,36 +4289,24 @@ maps:
     modified: '2021-12-22+01:00'
     lastUpdate: 14
     insetMaps:
-      -
-        title: 'A - Cours de l''Odet'
+      - title: 'A - Cours de l''Odet'
         scaleDenominator: '20.000'
         bboxDM: { SW: '47°51,44''N - 004°11,30''W', NE: '47°59,52''N - 004°02,83''W' }
-        spatial: { southlimit: 47.857333333333, westlimit: -4.1883333333333, northlimit: 47.992, eastlimit: -4.0471666666667 }
-      -
-        title: 'B - Ports de Bénodet et de Sainte-Marine'
+      - title: 'B - Ports de Bénodet et de Sainte-Marine'
         scaleDenominator: '7.500'
         bboxDM: { SW: '47°52,09''N - 004°07,50''W', NE: '47°53,16''N - 004°06,30''W' }
-        spatial: { southlimit: 47.868166666667, westlimit: -4.125, northlimit: 47.886, eastlimit: -4.105 }
-      -
-        title: 'C - Port de Loctudy'
+      - title: 'C - Port de Loctudy'
         scaleDenominator: '10.000'
         bboxDM: { SW: '47°49,54''N - 004°11,08''W', NE: '47°51,53''N - 004°08,85''W' }
-        spatial: { southlimit: 47.825666666667, westlimit: -4.1846666666667, northlimit: 47.858833333333, eastlimit: -4.1475 }
-      -
-        title: 'D - Mouillages des Îles de Glénan'
+      - title: 'D - Mouillages des Îles de Glénan'
         scaleDenominator: '10.000'
         bboxDM: { SW: '47°42,01''N - 004°01,17''W', NE: '47°44,00''N - 003°58,94''W' }
-        spatial: { southlimit: 47.700166666667, westlimit: -4.0195, northlimit: 47.733333333333, eastlimit: -3.9823333333333 }
-      -
-        title: 'E - Port-La-Forêt'
+      - title: 'E - Port-La-Forêt'
         scaleDenominator: '10.000'
         bboxDM: { SW: '47°52,54''N - 003°59,58''W', NE: '47°54,53''N - 003°57,46''W' }
-        spatial: { southlimit: 47.875666666667, westlimit: -3.993, northlimit: 47.908833333333, eastlimit: -3.9576666666667 }
-      -
-        title: 'F - Port de Concarneau'
+      - title: 'F - Port de Concarneau'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '47°50,94''N - 003°56,05''W', NE: '47°52,93''N - 003°53,92''W' }
-        spatial: { southlimit: 47.849, westlimit: -3.9341666666667, northlimit: 47.882166666667, eastlimit: -3.8986666666667 }
+        bboxDM: { SW: '47°50,94''N - 003°56,04''W', NE: '47°52,93''N - 003°53,92''W' }
   FR7250:
     title: 'De la pointe de la Torche à Loctudy'
     edition: 'Publication 2020'
@@ -5056,13 +4316,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '47°42,60''N - 004°26,10''W'
+      SW: '47°42,60''N - 004°25,10''W'
       NE: '47°50,70''N - 004°07,47''W'
-    spatial:
-      southlimit: 47.71
-      westlimit: -4.435
-      northlimit: 47.845
-      eastlimit: -4.1245
   FR7251:
     groupTitle: 'Côte Ouest de France'
     title: 'De Loctudy à Concarneau'
@@ -5226,29 +4481,18 @@ maps:
     lastUpdate: 2
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '43°08,87''N - 006°34,30''E'
-      NE: '43°20,75''N - 006°45,38''E'
-    spatial:
-      southlimit: 43.147833333333
-      westlimit: 6.5716666666667
-      northlimit: 43.345833333333
-      eastlimit: 6.7563333333333
+      SW: '43°08,81''N - 006°34,24''E'
+      NE: '43°20,69''N - 006°45,32''E'
     insetMaps:
-      -
-        title: 'A - Port-Grimaud et Marines de Cogolin'
+      - title: 'A - Port-Grimaud et Marines de Cogolin'
         scaleDenominator: '10.000'
         bboxDM: { SW: '43°15,69''N - 006°34,44''E', NE: '43°16,54''N - 006°35,74''E' }
-        spatial: { southlimit: 43.2615, westlimit: 6.574, northlimit: 43.275666666667, eastlimit: 6.5956666666667 }
-      -
-        title: 'B - Sainte-Maxime'
+      - title: 'B - Sainte-Maxime'
         scaleDenominator: '10.000'
         bboxDM: { SW: '43°18,04''N - 006°37,74''E', NE: '43°18,63''N - 006°38,79''E' }
-        spatial: { southlimit: 43.300666666667, westlimit: 6.629, northlimit: 43.3105, eastlimit: 6.6465 }
-      -
-        title: 'C - Saint-Tropez'
+      - title: 'C - Saint-Tropez'
         scaleDenominator: '10.000'
         bboxDM: { SW: '43°15,91''N - 006°37,44''E', NE: '43°16,76''N - 006°38,64''E' }
-        spatial: { southlimit: 43.265166666667, westlimit: 6.624, northlimit: 43.279333333333, eastlimit: 6.644 }
   FR7268:
     groupTitle: 'Océan Pacifique Sud'
     title: Nouvelle-Calédonie
@@ -5280,13 +4524,9 @@ maps:
     bboxDM:
       SW: '51°00,00''S - 104°00,00''E'
       NE: '02°36,26''S - 167°57,92''W'
-    spatial:
-      southlimit: -51
-      westlimit: 104
-      northlimit: -2.6043333333333
-      eastlimit: -167.96533333333
     replaces: '(remplace 5356)'
     references: 'Fac similé Carte AU n°4060 publiée en 1987'
+    noteCatalog: "GAN faux, bords Est et Ouest inversés"
   FR7273:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent (Spéciale P)'
@@ -5297,13 +4537,8 @@ maps:
     lastUpdate: 1
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '22°24,30''S - 165°53,80''E'
-      NE: '22°00,10''S - 166°31,90''E'
-    spatial:
-      southlimit: -22.405
-      westlimit: 165.89666666667
-      northlimit: -22.001666666667
-      eastlimit: 166.53166666667
+      SW: '22°24,13''S - 165°54,00''E'
+      NE: '21°59,93''S - 166°32,10''E'
   FR7280:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe d''Ajaccio'
@@ -5314,13 +4549,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '41°42,50''N - 008°34,85''E'
-      NE: '41°57,35''N - 008°48,39''E'
-    spatial:
-      southlimit: 41.708333333333
-      westlimit: 8.5808333333333
-      northlimit: 41.955833333333
-      eastlimit: 8.8065
+      SW: '41°42,44''N - 008°34,79''E'
+      NE: '41°57,29''N - 008°48,33''E'
   FR7281:
     groupTitle: 'Archipel des Tuamotu'
     title: Hao
@@ -5369,24 +4599,15 @@ maps:
     lastUpdate: 4
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '42°58,40''N - 006°07,40''E'
-      NE: '43°08,50''N - 006°27,60''E'
-    spatial:
-      southlimit: 42.973333333333
-      westlimit: 6.1233333333333
-      northlimit: 43.141666666667
-      eastlimit: 6.46
+      SW: '42°58,34''N - 006°07,34''E'
+      NE: '43°08,44''N - 006°27,54''E'
     insetMaps:
-      -
-        title: 'A - Port d''Hyères (Port Saint-Pierre)'
+      - title: 'A - Port d''Hyères (Port Saint-Pierre)'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°04,51''N - 006°09,24''E', NE: '43°05,24''N - 006°09,84''E' }
-        spatial: { southlimit: 43.075166666667, westlimit: 6.154, northlimit: 43.087333333333, eastlimit: 6.164 }
-      -
-        title: 'B - Port de Miramar'
+      - title: 'B - Port de Miramar'
         scaleDenominator: '7.500'
         bboxDM: { SW: '43°06,70''N - 006°14,40''E', NE: '43°07,21''N - 006°15,18''E' }
-        spatial: { southlimit: 43.111666666667, westlimit: 6.24, northlimit: 43.120166666667, eastlimit: 6.253 }
   FR7283:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
@@ -5399,12 +4620,8 @@ maps:
     bboxDM:
       SW: '16°30,00''S - 177°00,00''E'
       NE: '09°40,56''S - 172°47,00''W'
-    spatial:
-      southlimit: -16.5
-      westlimit: 177
-      northlimit: -9.676
-      eastlimit: -172.78333333333
     replaces: '(remplace 6067)'
+    noteCatalog: "GAN faux, bords Est et Ouest inversés"
   FR7291:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
@@ -5474,13 +4691,8 @@ maps:
     lastUpdate: 15
     scaleDenominator: '59.900'
     bboxDM:
-      SW: '16°14,60''N - 061°47,00''W'
-      NE: '16°38,96''N - 061°10,00''W'
-    spatial:
-      southlimit: 16.243333333333
-      westlimit: -61.783333333333
-      northlimit: 16.649333333333
-      eastlimit: -61.166666666667
+      SW: '16°14,45''N - 061°47,24''W'
+      NE: '16°38,81''N - 061°10,23''W'
   FR7305:
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
     title: 'De la Passe d''Aiurua à la Passe Havae'
@@ -5508,24 +4720,15 @@ maps:
     lastUpdate: 9
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '48°33,25''N - 002°41,19''W'
-      NE: '48°43,37''N - 002°18,80''W'
-    spatial:
-      southlimit: 48.554166666667
-      westlimit: -2.6865
-      northlimit: 48.722833333333
-      eastlimit: -2.3133333333333
+      SW: '48°33,19''N - 002°41,27''W'
+      NE: '48°43,31''N - 002°18,88''W'
     insetMaps:
-      -
-        title: 'A - Port de Dahouët'
+      - title: 'A - Port de Dahouët'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°34,47''N - 002°35,11''W', NE: '48°35,14''N - 002°33,73''W' }
-        spatial: { southlimit: 48.5745, westlimit: -2.5851666666667, northlimit: 48.585666666667, eastlimit: -2.5621666666667 }
-      -
-        title: 'B - Port d''Erquy'
+      - title: 'B - Port d''Erquy'
         scaleDenominator: '7.500'
         bboxDM: { SW: '48°37,61''N - 002°29,58''W', NE: '48°38,67''N - 002°27,83''W' }
-        spatial: { southlimit: 48.626833333333, westlimit: -2.493, northlimit: 48.6445, eastlimit: -2.4638333333333 }
   FR7311:
     title: 'La Manche (partie Ouest) - De Isles of Scilly et de l''Ile d''Ouessant aux Casquets'
     edition: 'Edition n° 4 - 2019'
@@ -5536,13 +4739,8 @@ maps:
     lastUpdate: 41
     scaleDenominator: '375.000'
     bboxDM:
-      SW: '48°15,00''N - 006°55,00''W'
-      NE: '50°48,00''N - 001°10,00''W'
-    spatial:
-      southlimit: 48.25
-      westlimit: -6.9166666666667
-      northlimit: 50.8
-      eastlimit: -1.1666666666667
+      SW: '48°14,94''N - 006°55,09''W'
+      NE: '50°47,95''N - 001°10,08''W'
   FR7312:
     title: 'La Manche (partie Est) - Des Casquets au Pas de Calais'
     edition: 'Edition n° 3 - 2019'
@@ -5553,13 +4751,8 @@ maps:
     lastUpdate: 25
     scaleDenominator: '375.000'
     bboxDM:
-      SW: '49°05,00''N - 003°00,00''W'
-      NE: '51°35,50''N - 002°45,00''E'
-    spatial:
-      southlimit: 49.083333333333
-      westlimit: -3
-      northlimit: 51.591666666667
-      eastlimit: 2.75
+      SW: '49°04,94''N - 003°00,08''W'
+      NE: '51°35,45''N - 002°44,92''E'
   FR7313:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la passe de Koné à Ouaco'
@@ -5611,13 +4804,8 @@ maps:
     lastUpdate: 6
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '41°56,27''N - 008°31,61''E'
-      NE: '42°11,12''N - 008°45,20''E'
-    spatial:
-      southlimit: 41.937833333333
-      westlimit: 8.5268333333333
-      northlimit: 42.185333333333
-      eastlimit: 8.7533333333333
+      SW: '41°56,21''N - 008°31,55''E'
+      NE: '42°11,06''N - 008°45,14''E'
   FR7317:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dieppe'
@@ -5628,13 +4816,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '12.500'
     bboxDM:
-      SW: '49°54,90''N - 001°00,55''E'
-      NE: '49°58,36''N - 001°08,49''E'
-    spatial:
-      southlimit: 49.915
-      westlimit: 1.0091666666667
-      northlimit: 49.972666666667
-      eastlimit: 1.1415
+      SW: '49°54,85''N - 001°00,47''E'
+      NE: '49°58,31''N - 001°08,41''E'
   FR7318:
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De Poum à l''Île Pam'
@@ -5768,13 +4951,8 @@ maps:
     lastUpdate: 21
     scaleDenominator: '74.300'
     bboxDM:
-      SW: '50°42,80''N - 000°53,00''E'
-      NE: '51°08,80''N - 001°55,14''E'
-    spatial:
-      southlimit: 50.713333333333
-      westlimit: 0.88333333333333
-      northlimit: 51.146666666667
-      eastlimit: 1.919
+      SW: '50°41,58''N - 000°50,12''W'
+      NE: '51°11,63''N - 001°59,89''E'
     references: 'Fac similé carte GB n°1892 publiée en 1973 (édition novembre 2017)'
   FR7324:
     groupTitle: Guadeloupe
@@ -5786,13 +4964,8 @@ maps:
     lastUpdate: 1
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '16°14,58''N - 061°37,80''W'
-      NE: '16°26,50''N - 061°29,38''W'
-    spatial:
-      southlimit: 16.243
-      westlimit: -61.63
-      northlimit: 16.441666666667
-      eastlimit: -61.489666666667
+      SW: '16°14,43''N - 061°38,04''W'
+      NE: '16°26,35''N - 061°29,61''W'
   FR7328:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Sud - De la Pointe des Châteaux à la Pointe Marcellin'
@@ -5891,13 +5064,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '15.000'
     bboxDM:
-      SW: '48°47,55''N - 001°42,67''W'
-      NE: '48°51,50''N - 001°33,35''W'
-    spatial:
-      southlimit: 48.7925
-      westlimit: -1.7111666666667
-      northlimit: 48.858333333333
-      eastlimit: -1.5558333333333
+      SW: '48°47,49''N - 001°42,75''W'
+      NE: '48°51,44''N - 001°33,43''W'
   FR7344:
     groupTitle: 'Manche - Mer du Nord'
     title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
@@ -5926,13 +5094,8 @@ maps:
     lastUpdate: 24
     scaleDenominator: '149.000'
     bboxDM:
-      SW: '15°42,40''N - 062°12,00''W'
-      NE: '16°43,00''N - 060°39,80''W'
-    spatial:
-      southlimit: 15.706666666667
-      westlimit: -62.2
-      northlimit: 16.716666666667
-      eastlimit: -60.663333333333
+      SW: '15°42,25''N - 062°12,24''W'
+      NE: '16°42,85''N - 060°40,03''W'
   FR7346:
     groupTitle: 'Iles Tuamotu - Iles du roi Georges'
     title: 'Iles du Roi Georges. Takaroa et Takapoto'
@@ -6643,13 +5806,8 @@ maps:
     lastUpdate: 1
     scaleDenominator: '10.000'
     bboxDM:
-      SW: '43°16,60''N - 005°17,06''E'
-      NE: '43°22,54''N - 005°22,60''E'
-    spatial:
-      southlimit: 43.276666666667
-      westlimit: 5.2843333333333
-      northlimit: 43.375666666667
-      eastlimit: 5.3766666666667
+      SW: '43°16,54''N - 005°17,00''E'
+      NE: '43°22,48''N - 005°22,53''E'
   FR7391:
     groupTitle: 'Côte Sud de France'
     title: 'Abords Sud de Marseille - Des Iles du Frioul à l''Ile de Jarre'
@@ -6660,13 +5818,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '12.500'
     bboxDM:
-      SW: '43°11,40''N - 005°16,15''E'
-      NE: '43°18,80''N - 005°23,10''E'
-    spatial:
-      southlimit: 43.19
-      westlimit: 5.2691666666667
-      northlimit: 43.313333333333
-      eastlimit: 5.385
+      SW: '43°11,34''N - 005°16,08''E'
+      NE: '43°18,74''N - 005°23,03''E'
   FR7392:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Couronne au Cap Croisette - Golfe de Marseille'
@@ -6677,24 +5830,15 @@ maps:
     lastUpdate: 1
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '43°11,70''N - 005°02,38''E'
-      NE: '43°21,82''N - 005°22,70''E'
-    spatial:
-      southlimit: 43.195
-      westlimit: 5.0396666666667
-      northlimit: 43.363666666667
-      eastlimit: 5.3783333333333
+      SW: '43°11,64''N - 005°02,31''E'
+      NE: '43°21,76''N - 005°22,63''E'
     insetMaps:
-      -
-        title: 'A - Port de Carry-le-Rouet'
+      - title: 'A - Port de Carry-le-Rouet'
         scaleDenominator: '5.000'
         bboxDM: { SW: '43°19,44''N - 005°08,93''E', NE: '43°19,94''N - 005°09,43''E' }
-        spatial: { southlimit: 43.324, westlimit: 5.1488333333333, northlimit: 43.332333333333, eastlimit: 5.1571666666667 }
-      -
-        title: 'B - Port de Sausset-les-Pins'
+      - title: 'B - Port de Sausset-les-Pins'
         scaleDenominator: '5.000'
         bboxDM: { SW: '43°19,59''N - 005°06,23''E', NE: '43°19,94''N - 005°06,73''E' }
-        spatial: { southlimit: 43.3265, westlimit: 5.1038333333333, northlimit: 43.332333333333, eastlimit: 5.1121666666667 }
   FR7393:
     groupTitle: 'Côte Sud de France'
     title: 'Du port de La Pointe Rouge à Cassis - Calanques de Cassis'
@@ -6705,19 +5849,12 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '43°07,10''N - 005°18,26''E'
-      NE: '43°15,20''N - 005°34,60''E'
-    spatial:
-      southlimit: 43.118333333333
-      westlimit: 5.3043333333333
-      northlimit: 43.253333333333
-      eastlimit: 5.5766666666667
+      SW: '43°07,04''N - 005°18,20''E'
+      NE: '43°15,14''N - 005°34,53''E'
     insetMaps:
-      -
-        title: 'A - Port de Cassis'
+      - title: 'A - Port de Cassis'
         scaleDenominator: '5.000'
         bboxDM: { SW: '43°12,47''N - 005°31,83''E', NE: '43°12,96''N - 005°32,40''E' }
-        spatial: { southlimit: 43.207833333333, westlimit: 5.5305, northlimit: 43.216, eastlimit: 5.54 }
   FR7394:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Gildas au Goulet de Fromentine - Baie de Bourgneuf'
@@ -6728,29 +5865,18 @@ maps:
     lastUpdate: 5
     scaleDenominator: '50.500'
     bboxDM:
-      SW: '46°48,30''N - 002°36,30''W'
-      NE: '47°08,70''N - 001°52,60''W'
-    spatial:
-      southlimit: 46.805
-      westlimit: -2.605
-      northlimit: 47.145
-      eastlimit: -1.8766666666667
+      SW: '46°48,24''N - 002°36,38''W'
+      NE: '47°08,64''N - 001°52,68''W'
     insetMaps:
-      -
-        title: 'A - Pornic'
+      - title: 'A - Pornic'
         scaleDenominator: '15.000'
         bboxDM: { SW: '47°06,14''N - 002°07,28''W', NE: '47°06,97''N - 002°05,88''W' }
-        spatial: { southlimit: 47.102333333333, westlimit: -2.1213333333333, northlimit: 47.116166666667, eastlimit: -2.098 }
-      -
-        title: 'B - L''Herbaudière'
+      - title: 'B - L''Herbaudière'
         scaleDenominator: '15.000'
         bboxDM: { SW: '47°01,32''N - 002°18,48''W', NE: '47°02,69''N - 002°16,93''W' }
-        spatial: { southlimit: 47.022, westlimit: -2.308, northlimit: 47.044833333333, eastlimit: -2.2821666666667 }
-      -
-        title: 'C - Noirmoutier-en-l''Île'
+      - title: 'C - Noirmoutier-en-l''Île'
         scaleDenominator: '15.000'
         bboxDM: { SW: '46°58,94''N - 002°14,93''W', NE: '47°00,16''N - 002°11,21''W' }
-        spatial: { southlimit: 46.982333333333, westlimit: -2.2488333333333, northlimit: 47.002666666667, eastlimit: -2.1868333333333 }
   FR7395:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Croisic à Noirmoutier - Estuaire de la Loire'
@@ -6761,13 +5887,8 @@ maps:
     lastUpdate: 34
     scaleDenominator: '50.300'
     bboxDM:
-      SW: '47°00,00''N - 002°50,20''W'
-      NE: '47°20,30''N - 002°06,40''W'
-    spatial:
-      southlimit: 47
-      westlimit: -2.8366666666667
-      northlimit: 47.338333333333
-      eastlimit: -2.1066666666667
+      SW: '46°59,94''N - 002°50,28''W'
+      NE: '47°20,24''N - 002°06,48''W'
   FR7396:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
@@ -6777,26 +5898,18 @@ maps:
     modified: '2020-01-01+01:00'
     lastUpdate: 28
     insetMaps:
-      -
-        title: 'Cours de la Loire'
+      - title: 'Cours de la Loire'
         scaleDenominator: '20.000'
-        bboxDM: { SW: '00°00,00''N - 000°00,00''E', NE: '00°00,00''N - 000°00,00''E' }
-        spatial: { southlimit: 0, westlimit: 0, northlimit: 0, eastlimit: 0 }
-      -
-        title: 'B - De Paimboeuf à l''Ile de Bois'
+        bboxDM: { SW: "47°11,44'N - 001°35,28'W", NE: "47°12,94'N - 001°32,38'W" }
+      - title: 'B - De Paimboeuf à l''Ile de Bois'
         scaleDenominator: '20.000'
         bboxDM: { SW: '47°12,46''N - 002°05,18''W', NE: '47°18,56''N - 001°47,78''W' }
-        spatial: { southlimit: 47.207666666667, westlimit: -2.0863333333333, northlimit: 47.309333333333, eastlimit: -1.7963333333333 }
-      -
-        title: 'C - De l''Ile de Bois à Nantes'
+      - title: 'C - De l''Ile de Bois à Nantes'
         scaleDenominator: '20.000'
         bboxDM: { SW: '47°11,24''N - 001°48,78''W', NE: '47°13,09''N - 001°34,48''W' }
-        spatial: { southlimit: 47.187333333333, westlimit: -1.813, northlimit: 47.218166666667, eastlimit: -1.5746666666667 }
-      -
-        title: 'D - Port de Nantes'
+      - title: 'D - Port de Nantes'
         scaleDenominator: '15.000'
         bboxDM: { SW: '47°11,44''N - 001°35,28''W', NE: '47°12,94''N - 001°32,38''W' }
-        spatial: { southlimit: 47.190666666667, westlimit: -1.588, northlimit: 47.215666666667, eastlimit: -1.5396666666667 }
   FR7397:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic'
@@ -6807,13 +5920,8 @@ maps:
     lastUpdate: 14
     scaleDenominator: '10.000'
     bboxDM:
-      SW: '48°16,53''N - 004°31,05''W'
-      NE: '48°20,58''N - 004°22,15''W'
-    spatial:
-      southlimit: 48.2755
-      westlimit: -4.5175
-      northlimit: 48.343
-      eastlimit: -4.3691666666667
+      SW: '48°16,47''N - 004°31,13''W'
+      NE: '48°20,51''N - 004°22,24''W'
   FR7398:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret'
@@ -6824,13 +5932,8 @@ maps:
     lastUpdate: 1
     scaleDenominator: '10.000'
     bboxDM:
-      SW: '48°16,68''N - 004°33,33''W'
-      NE: '48°22,60''N - 004°27,00''W'
-    spatial:
-      southlimit: 48.278
-      westlimit: -4.5555
-      northlimit: 48.376666666667
-      eastlimit: -4.45
+      SW: '48°16,62''N - 004°33,41''W'
+      NE: '48°22,54''N - 004°27,09''W'
   FR7399:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de Brest'
@@ -6841,13 +5944,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: '7.500'
     bboxDM:
-      SW: '48°20,92''N - 004°31,98''W'
-      NE: '48°23,95''N - 004°25,30''W'
-    spatial:
-      southlimit: 48.348666666667
-      westlimit: -4.533
-      northlimit: 48.399166666667
-      eastlimit: -4.4216666666667
+      SW: '48°20,86''N - 004°32,07''W'
+      NE: '48°23,89''N - 004°25,39''W'
   FR7400:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest'
@@ -6858,24 +5956,15 @@ maps:
     lastUpdate: 22
     scaleDenominator: '22.500'
     bboxDM:
-      SW: '48°15,85''N - 004°33,38''W'
-      NE: '48°24,95''N - 004°13,35''W'
-    spatial:
-      southlimit: 48.264166666667
-      westlimit: -4.5563333333333
-      northlimit: 48.415833333333
-      eastlimit: -4.2225
+      SW: '48°15,79''N - 004°33,47''W'
+      NE: '48°24,89''N - 004°13,44''W'
     insetMaps:
-      -
-        title: 'A - Traverse de l''Hôpital'
+      - title: 'A - Traverse de l''Hôpital'
         scaleDenominator: '12.500'
         bboxDM: { SW: '48°17,77''N - 004°18,93''W', NE: '48°19,04''N - 004°16,86''W' }
-        spatial: { southlimit: 48.296166666667, westlimit: -4.3155, northlimit: 48.317333333333, eastlimit: -4.281 }
-      -
-        title: 'B - Rivière du Faou'
+      - title: 'B - Rivière du Faou'
         scaleDenominator: '22.500'
         bboxDM: { SW: '48°17,24''N - 004°14,08''W', NE: '48°18,04''N - 004°10,78''W' }
-        spatial: { southlimit: 48.287333333333, westlimit: -4.2346666666667, northlimit: 48.300666666667, eastlimit: -4.1796666666667 }
   FR7401:
     groupTitle: 'Côte Ouest de France'
     title: 'Accès à la Rade de Brest'
@@ -6886,19 +5975,12 @@ maps:
     lastUpdate: 23
     scaleDenominator: '22.500'
     bboxDM:
-      SW: '48°14,70''N - 004°46,83''W'
-      NE: '48°23,80''N - 004°26,80''W'
-    spatial:
-      southlimit: 48.245
-      westlimit: -4.7805
-      northlimit: 48.396666666667
-      eastlimit: -4.4466666666667
+      SW: '48°14,64''N - 004°46,92''W'
+      NE: '48°23,74''N - 004°26,89''W'
     insetMaps:
-      -
-        title: 'A - Port de Camaret-sur-Mer'
+      - title: 'A - Port de Camaret-sur-Mer'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°16,36''N - 004°36,09''W', NE: '48°17,31''N - 004°34,44''W' }
-        spatial: { southlimit: 48.272666666667, westlimit: -4.6015, northlimit: 48.2885, eastlimit: -4.574 }
   FR7402:
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
@@ -6909,19 +5991,12 @@ maps:
     lastUpdate: 32
     scaleDenominator: '50.800'
     bboxDM:
-      SW: '46°28,50''N - 002°28,70''W'
-      NE: '46°49,00''N - 001°45,00''W'
-    spatial:
-      southlimit: 46.475
-      westlimit: -2.4783333333333
-      northlimit: 46.816666666667
-      eastlimit: -1.75
+      SW: '46°28,44''N - 002°28,78''W'
+      NE: '46°48,94''N - 001°45,08''W'
     insetMaps:
-      -
-        title: 'A - Port de Saint-Gilles-Croix-de-Vie'
+      - title: 'A - Port de Saint-Gilles-Croix-de-Vie'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°40,94''N - 001°58,18''W', NE: '46°41,99''N - 001°55,98''W' }
-        spatial: { southlimit: 46.682333333333, westlimit: -1.9696666666667, northlimit: 46.699833333333, eastlimit: -1.933 }
   FR7403:
     groupTitle: 'Côte Ouest de France'
     title: 'Des Sables d''Olonne à l''Île de Ré'
@@ -6932,29 +6007,18 @@ maps:
     lastUpdate: 40
     scaleDenominator: '51.000'
     bboxDM:
-      SW: '46°12,00''N - 002°05,00''W'
-      NE: '46°32,60''N - 001°21,30''W'
-    spatial:
-      southlimit: 46.2
-      westlimit: -2.0833333333333
-      northlimit: 46.543333333333
-      eastlimit: -1.355
+      SW: '46°11,94''N - 002°05,08''W'
+      NE: '46°32,54''N - 001°21,38''W'
     insetMaps:
-      -
-        title: 'A - Port de Bourgenay'
+      - title: 'A - Port de Bourgenay'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°25,54''N - 001°41,48''W', NE: '46°26,54''N - 001°40,18''W' }
-        spatial: { southlimit: 46.425666666667, westlimit: -1.6913333333333, northlimit: 46.442333333333, eastlimit: -1.6696666666667 }
-      -
-        title: 'B - Port de Jard-sur-Mer'
+      - title: 'B - Port de Jard-sur-Mer'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°23,65''N - 001°35,28''W', NE: '46°24,64''N - 001°33,98''W' }
-        spatial: { southlimit: 46.394166666667, westlimit: -1.588, northlimit: 46.410666666667, eastlimit: -1.5663333333333 }
-      -
-        title: 'C - Port de la Tranche-sur-Mer'
+      - title: 'C - Port de la Tranche-sur-Mer'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°19,94''N - 001°26,38''W', NE: '46°20,94''N - 001°24,98''W' }
-        spatial: { southlimit: 46.332333333333, westlimit: -1.4396666666667, northlimit: 46.349, eastlimit: -1.4163333333333 }
   FR7404:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d''Antioche'
@@ -6965,19 +6029,12 @@ maps:
     lastUpdate: 27
     scaleDenominator: '51.200'
     bboxDM:
-      SW: '46°00,40''N - 001°46,00''W'
-      NE: '46°21,10''N - 001°02,30''W'
-    spatial:
-      southlimit: 46.006666666667
-      westlimit: -1.7666666666667
-      northlimit: 46.351666666667
-      eastlimit: -1.0383333333333
+      SW: '46°00,34''N - 001°46,08''W'
+      NE: '46°21,04''N - 001°02,38''W'
     insetMaps:
-      -
-        title: 'A - Port de Châtelaillon'
+      - title: 'A - Port de Châtelaillon'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°02,99''N - 001°06,58''W', NE: '46°03,84''N - 001°05,08''W' }
-        spatial: { southlimit: 46.049833333333, westlimit: -1.1096666666667, northlimit: 46.064, eastlimit: -1.0846666666667 }
   FR7405:
     groupTitle: 'Côte Ouest de France'
     title: 'De La Rochelle à la Pointe de La Coubre - Ile d''Oléron'
@@ -6988,29 +6045,18 @@ maps:
     lastUpdate: 30
     scaleDenominator: '51.400'
     bboxDM:
-      SW: '45°40,40''N - 001°32,90''W'
-      NE: '46°10,80''N - 001°03,10''W'
-    spatial:
-      southlimit: 45.673333333333
-      westlimit: -1.5483333333333
-      northlimit: 46.18
-      eastlimit: -1.0516666666667
+      SW: '45°40,44''N - 001°32,88''W'
+      NE: '46°10,84''N - 001°03,08''W'
     insetMaps:
-      -
-        title: 'A - Port de Saint-Denis-d''Oléron'
+      - title: 'A - Port de Saint-Denis-d''Oléron'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°01,94''N - 001°22,58''W', NE: '46°02,44''N - 001°21,58''W' }
-        spatial: { southlimit: 46.032333333333, westlimit: -1.3763333333333, northlimit: 46.040666666667, eastlimit: -1.3596666666667 }
-      -
-        title: 'B - Port du Douhet'
+      - title: 'B - Port du Douhet'
         scaleDenominator: '10.000'
         bboxDM: { SW: '45°59,79''N - 001°19,58''W', NE: '46°00,34''N - 001°18,98''W' }
-        spatial: { southlimit: 45.9965, westlimit: -1.3263333333333, northlimit: 46.005666666667, eastlimit: -1.3163333333333 }
-      -
-        title: 'C - Port de La Cotinière'
+      - title: 'C - Port de La Cotinière'
         scaleDenominator: '10.000'
         bboxDM: { SW: '45°54,34''N - 001°19,98''W', NE: '45°55,14''N - 001°19,38''W' }
-        spatial: { southlimit: 45.905666666667, westlimit: -1.333, northlimit: 45.919, eastlimit: -1.323 }
   FR7406:
     groupTitle: 'Côte Sud de France'
     title: 'De Marseille à Toulon'
@@ -7021,13 +6067,8 @@ maps:
     lastUpdate: 31
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '42°57,80''N - 005°17,40''E'
-      NE: '43°18,10''N - 005°58,10''E'
-    spatial:
-      southlimit: 42.963333333333
-      westlimit: 5.29
-      northlimit: 43.301666666667
-      eastlimit: 5.9683333333333
+      SW: '42°57,74''N - 005°17,33''E'
+      NE: '43°18,04''N - 005°58,04''E'
   FR7407:
     groupTitle: 'Côte Sud de France'
     title: 'De Toulon à Cavalaire-sur-Mer - Iles d''Hyères'
@@ -7038,13 +6079,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '50.200'
     bboxDM:
-      SW: '42°52,20''N - 005°51,50''E'
-      NE: '43°12,50''N - 006°32,50''E'
-    spatial:
-      southlimit: 42.87
-      westlimit: 5.8583333333333
-      northlimit: 43.208333333333
-      eastlimit: 6.5416666666667
+      SW: '42°52,14''N - 005°51,44''E'
+      NE: '43°12,44''N - 006°32,44''E'
   FR7408:
     groupTitle: 'Côte Sud de France'
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
@@ -7055,13 +6091,8 @@ maps:
     lastUpdate: 8
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '43°00,00''N - 006°29,30''E'
-      NE: '43°29,70''N - 006°57,00''E'
-    spatial:
-      southlimit: 43
-      westlimit: 6.4883333333333
-      northlimit: 43.495
-      eastlimit: 6.95
+      SW: '42°59,94''N - 006°29,24''E'
+      NE: '43°29,64''N - 006°56,94''E'
   FR7409:
     groupTitle: 'Côte Sud de France'
     title: 'De la Rade d''Agay à Monaco'
@@ -7072,13 +6103,8 @@ maps:
     lastUpdate: 0
     scaleDenominator: '49.700'
     bboxDM:
-      SW: '43°23,40''N - 006°50,80''E'
-      NE: '43°43,70''N - 007°31,40''E'
-    spatial:
-      southlimit: 43.39
-      westlimit: 6.8466666666667
-      northlimit: 43.728333333333
-      eastlimit: 7.5233333333333
+      SW: '43°23,34''N - 006°50,74''E'
+      NE: '43°43,64''N - 007°31,34''E'
   FR7410:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile d''Yeu'
@@ -7089,19 +6115,12 @@ maps:
     lastUpdate: 0
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '46°39,40''N - 002°28,00''W'
-      NE: '46°47,49''N - 002°10,74''W'
-    spatial:
-      southlimit: 46.656666666667
-      westlimit: -2.4666666666667
-      northlimit: 46.7915
-      eastlimit: -2.179
+      SW: '46°39,34''N - 002°28,08''W'
+      NE: '46°47,43''N - 002°10,82''W'
     insetMaps:
-      -
-        title: 'A - Port-Joinville'
+      - title: 'A - Port-Joinville'
         scaleDenominator: '10.000'
         bboxDM: { SW: '46°43,34''N - 002°21,28''W', NE: '46°44,24''N - 002°19,88''W' }
-        spatial: { southlimit: 46.722333333333, westlimit: -2.3546666666667, northlimit: 46.737333333333, eastlimit: -2.3313333333333 }
   FR7411:
     groupTitle: 'Côte Ouest de France'
     title: 'Port des Sables-d''Olonne'
@@ -7112,13 +6131,8 @@ maps:
     lastUpdate: 10
     scaleDenominator: '10.000'
     bboxDM:
-      SW: '46°26,76''N - 001°52,60''W'
-      NE: '46°30,80''N - 001°44,01''W'
-    spatial:
-      southlimit: 46.446
-      westlimit: -1.8766666666667
-      northlimit: 46.513333333333
-      eastlimit: -1.7335
+      SW: '46°26,70''N - 001°52,68''W'
+      NE: '46°30,74''N - 001°44,09''W'
   FR7412:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
@@ -7165,19 +6179,12 @@ maps:
     lastUpdate: 29
     scaleDenominator: '25.000'
     bboxDM:
-      SW: '45°46,00''N - 001°18,80''W'
-      NE: '46°00,84''N - 001°04,20''W'
-    spatial:
-      southlimit: 45.766666666667
-      westlimit: -1.3133333333333
-      northlimit: 46.014
-      eastlimit: -1.07
+      SW: '45°45,94''N - 001°18,88''W'
+      NE: '46°00,78''N - 001°04,28''W'
     insetMaps:
-      -
-        title: 'A - Port de Boyardville'
+      - title: 'A - Port de Boyardville'
         scaleDenominator: '10.000'
         bboxDM: { SW: '45°57,84''N - 001°14,58''W', NE: '45°58,81''N - 001°13,25''W' }
-        spatial: { southlimit: 45.964, westlimit: -1.243, northlimit: 45.980166666667, eastlimit: -1.2208333333333 }
   FR7415:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Charente'
@@ -7212,13 +6219,8 @@ maps:
     lastUpdate: 12
     scaleDenominator: '75.000'
     bboxDM:
-      SW: '50°01,50''N - 000°57,40''E'
-      NE: '50°46,10''N - 001°45,00''E'
-    spatial:
-      southlimit: 50.025
-      westlimit: 0.95666666666667
-      northlimit: 50.768333333333
-      eastlimit: 1.75
+      SW: '50°01,45''N - 000°57,32''W'
+      NE: '50°46,05''N - 001°44,92''E'
   FR7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe - Du Cap d''Antifer à Dieppe'
@@ -7229,13 +6231,8 @@ maps:
     lastUpdate: 6
     scaleDenominator: '75.900'
     bboxDM:
-      SW: '49°40,80''N - 000°09,70''E'
-      NE: '50°11,50''N - 001°19,50''E'
-    spatial:
-      southlimit: 49.68
-      westlimit: 0.16166666666667
-      northlimit: 50.191666666667
-      eastlimit: 1.325
+      SW: '49°40,75''N - 000°09,62''W'
+      NE: '50°11,45''N - 001°19,42''E'
   FR7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer - Embouchure de la Seine - De Ouistreham au Cap d''Antifer'
@@ -7246,13 +6243,8 @@ maps:
     lastUpdate: 23
     scaleDenominator: '60.000'
     bboxDM:
-      SW: '49°15,00''N - 000°20,80''W'
-      NE: '49°50,60''N - 000°16,60''E'
-    spatial:
-      southlimit: 49.25
-      westlimit: -0.34666666666667
-      northlimit: 49.843333333333
-      eastlimit: 0.27666666666667
+      SW: '49°15,00''N - 000°20,90''W'
+      NE: '49°50,60''N - 000°16,60''W'
   FR7419:
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
@@ -7262,31 +6254,21 @@ maps:
     modified: '2021-09-28+02:00'
     lastUpdate: 8
     insetMaps:
-      -
-        title: 'La Seine du havre à Rouen 1/3'
+      - title: 'La Seine du havre à Rouen 1/3'
         scaleDenominator: '30.000'
-        bboxDM: { SW: '49°25,04''N - 000°08,58''W', NE: '49°30,84''N - 000°13,02''E' }
-        spatial: { southlimit: 49.417333333333, westlimit: -0.143, northlimit: 49.514, eastlimit: 0.217 }
-      -
-        title: 'La Seine du havre à Rouen 2/3'
+        bboxDM: { SW: '49°20,96''N - 000°58,22''W', NE: '49°26,00''N - 001°02,48''E' }
+      - title: 'La Seine du havre à Rouen 2/3'
         scaleDenominator: '60.100'
-        bboxDM: { SW: '49°24,80''N - 000°10,00''E', NE: '49°29,95''N - 000°30,00''E' }
-        spatial: { southlimit: 49.413333333333, westlimit: 0.16666666666667, northlimit: 49.499166666667, eastlimit: 0.5 }
-      -
-        title: 'La Seine du havre à Rouen 3/3'
+        bboxDM: { SW: '49°19,65''N - 000°26,82''W', NE: '49°31,64''N - 001°04,92''E' }
+      - title: 'La Seine du havre à Rouen 3/3'
         scaleDenominator: '60.100'
-        bboxDM: { SW: '49°19,64''N - 000°26,82''E', NE: '49°31,64''N - 001°04,92''E' }
-        spatial: { southlimit: 49.327333333333, westlimit: 0.447, northlimit: 49.527333333333, eastlimit: 1.082 }
-      -
-        title: 'A - Port de Rouen'
-        scaleDenominator: '15.000'
-        bboxDM: { SW: '49°20,96''N - 000°58,22''E', NE: '49°26,00''N - 001°02,48''E' }
-        spatial: { southlimit: 49.349333333333, westlimit: 0.97033333333333, northlimit: 49.433333333333, eastlimit: 1.0413333333333 }
-      -
-        title: 'B - Port de Rouen'
+        bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' }
+      - title: 'A - Port de Rouen'
         scaleDenominator: '15.000'
         bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' }
-        spatial: { southlimit: 49.415833333333, westlimit: 1.011, northlimit: 49.450833333333, eastlimit: 1.082 }
+      - title: 'B - Port de Rouen'
+        scaleDenominator: '15.000'
+        bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' }
   FR7420:
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
@@ -7296,46 +6278,30 @@ maps:
     modified: '2022-03-02+01:00'
     lastUpdate: 8
     insetMaps:
-      -
-        title: 'A - Port de Grandcamp-Maisy'
+      - title: 'A - Port de Grandcamp-Maisy'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°23,19''N - 001°04,04''W', NE: '49°24,42''N - 001°01,66''W' }
-        spatial: { southlimit: 49.3865, westlimit: -1.0673333333333, northlimit: 49.407, eastlimit: -1.0276666666667 }
-      -
-        title: 'B - Port de Port-en-Bessin'
+      - title: 'B - Port de Port-en-Bessin'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°20,62''N - 000°46,58''W', NE: '49°21,75''N - 000°44,35''W' }
-        spatial: { southlimit: 49.343666666667, westlimit: -0.77633333333333, northlimit: 49.3625, eastlimit: -0.73916666666667 }
-      -
-        title: 'C - Port de Courseulles-sur-Mer'
+      - title: 'C - Port de Courseulles-sur-Mer'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°19,81''N - 000°28,50''W', NE: '49°21,34''N - 000°26,65''W' }
-        spatial: { southlimit: 49.330166666667, westlimit: -0.475, northlimit: 49.355666666667, eastlimit: -0.44416666666667 }
-      -
-        title: 'E - Port de Caen'
+      - title: 'E - Port de Caen'
         scaleDenominator: '17.500'
         bboxDM: { SW: '49°10,65''N - 000°21,58''W', NE: '49°14,64''N - 000°16,28''W' }
-        spatial: { southlimit: 49.1775, westlimit: -0.35966666666667, northlimit: 49.244, eastlimit: -0.27133333333333 }
-      -
-        title: 'D - Rade de Caen - Port de Ouistreham'
+      - title: 'D - Rade de Caen - Port de Ouistreham'
         scaleDenominator: '17.500'
         bboxDM: { SW: '49°13,94''N - 000°16,88''W', NE: '49°21,12''N - 000°09,31''W' }
-        spatial: { southlimit: 49.232333333333, westlimit: -0.28133333333333, northlimit: 49.352, eastlimit: -0.15516666666667 }
-      -
-        title: 'F - Port de Dives-sur-Mer - Port Guillaume'
+      - title: 'F - Port de Dives-sur-Mer - Port Guillaume'
         scaleDenominator: '10.000'
         bboxDM: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''W' }
-        spatial: { southlimit: 49.291333333333, westlimit: -0.108, northlimit: 49.315, eastlimit: -0.083833333333333 }
-      -
-        title: 'H - Port de Honfleur'
+      - title: 'H - Port de Honfleur'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '49°24,95''N - 000°12,80''E', NE: '49°26,15''N - 000°15,18''E' }
-        spatial: { southlimit: 49.415833333333, westlimit: 0.21333333333333, northlimit: 49.435833333333, eastlimit: 0.253 }
-      -
-        title: 'G - Port de Deauville - Trouville'
+        bboxDM: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''W' }
+      - title: 'G - Port de Deauville - Trouville'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '49°21,45''N - 000°03,22''E', NE: '49°22,87''N - 000°05,45''E' }
-        spatial: { southlimit: 49.3575, westlimit: 0.053666666666667, northlimit: 49.381166666667, eastlimit: 0.090833333333333 }
+        bboxDM: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''WE' }
   FR7421:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
@@ -7346,13 +6312,8 @@ maps:
     lastUpdate: 2
     scaleDenominator: '48.100'
     bboxDM:
-      SW: '49°15,00''N - 000°55,70''W'
-      NE: '49°34,50''N - 000°11,10''W'
-    spatial:
-      southlimit: 49.25
-      westlimit: -0.92833333333333
-      northlimit: 49.575
-      eastlimit: -0.185
+      SW: '49°14,94''N - 000°55,78''W'
+      NE: '49°34,45''N - 000°11,18''W'
   FR7422:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à La Pointe de La Percée - Iles Saint-Marcouf'
@@ -7363,13 +6324,8 @@ maps:
     lastUpdate: 57
     scaleDenominator: '48.000'
     bboxDM:
-      SW: '49°19,20''N - 001°20,50''W'
-      NE: '49°47,70''N - 000°50,00''W'
-    spatial:
-      southlimit: 49.32
-      westlimit: -1.3416666666667
-      northlimit: 49.795
-      eastlimit: -0.83333333333333
+      SW: '49°19,14''N - 001°20,58''W'
+      NE: '49°47,65''N - 000°50,08''W'
   FR7423:
     groupTitle: 'Côte Ouest de France'
     title: 'Raz de Sein'
@@ -7380,19 +6336,12 @@ maps:
     lastUpdate: 6
     scaleDenominator: '20.000'
     bboxDM:
-      SW: '47°58,86''N - 004°56,30''W'
-      NE: '48°06,95''N - 004°38,60''W'
-    spatial:
-      southlimit: 47.981
-      westlimit: -4.9383333333333
-      northlimit: 48.115833333333
-      eastlimit: -4.6433333333333
+      SW: '47°58,80''N - 004°56,39''W'
+      NE: '48°06,89''N - 004°38,68''W'
     insetMaps:
-      -
-        title: 'A - Port de Sein'
+      - title: 'A - Port de Sein'
         scaleDenominator: '10.000'
         bboxDM: { SW: '48°01,84''N - 004°51,29''W', NE: '48°02,84''N - 004°50,24''W' }
-        spatial: { southlimit: 48.030666666667, westlimit: -4.8548333333333, northlimit: 48.047333333333, eastlimit: -4.8373333333333 }
   FR7424:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland'
@@ -7403,13 +6352,8 @@ maps:
     lastUpdate: 39
     scaleDenominator: '73.900'
     bboxDM:
-      SW: '50°55,00''N - 001°17,10''E'
-      NE: '51°24,90''N - 002°26,90''E'
-    spatial:
-      southlimit: 50.916666666667
-      westlimit: 1.285
-      northlimit: 51.415
-      eastlimit: 2.4483333333333
+      SW: '50°55,00''N - 001°17,12''E'
+      NE: '51°24,94''N - 002°26,89''E'
     references: 'Fac similé carte GB n°323 publiée en 1989 (édition novembre 2017)'
   FR7425:
     groupTitle: 'Côte Ouest de France'
@@ -7917,19 +6861,12 @@ maps:
     lastUpdate: 0
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '16°35,3''S - 144°38,5''W'
-      NE: '16°15,0''S - 144°07,7''W'
-    spatial:
-      southlimit: -16.588333333333
-      westlimit: -144.64166666667
-      northlimit: -16.25
-      eastlimit: -144.12833333333
+      SW: '16°35,30''S - 144°38,50''W'
+      NE: '16°15,00''S - 144°07,70''W'
     insetMaps:
-      -
-        title: 'A - Passe Pakata'
+      - title: 'A - Passe Pakata'
         scaleDenominator: '5.000'
-        bboxDM: { SW: '16°22,35''S - 144°21,57''W', NE: '16°21,75''S - 144°20,95''W' }
-        spatial: { southlimit: -16.3725, westlimit: -144.3595, northlimit: -16.3625, eastlimit: -144.34916666667 }
+        bboxDM: { SW: '16°22,35''S - 144°21,50''W', NE: '16°21,75''S - 144°20,95''W' }
   FR7466:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
@@ -8485,17 +7422,14 @@ maps:
         title: 'A - Port de Saint-Guénolé'
         scaleDenominator: '7.500'
         bboxDM: { SW: '47°47,68''N - 004°25,05''W', NE: '47°49,17''N - 004°22,06''W' }
-        spatial: { southlimit: 47.794666666667, westlimit: -4.4175, northlimit: 47.8195, eastlimit: -4.3676666666667 }
       -
         title: 'B - Port du Guilvinec-Léchiagat'
         scaleDenominator: '10.000'
         bboxDM: { SW: '47°45,14''N - 004°20,84''W', NE: '47°48,19''N - 004°16,12''W' }
-        spatial: { southlimit: 47.752333333333, westlimit: -4.3473333333333, northlimit: 47.803166666667, eastlimit: -4.2686666666667 }
       -
         title: 'C - Port de Lesconil'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '47°46,19''N - 004°13,72''W', NE: '47°48,17''N - 004°09,74''W' }
-        spatial: { southlimit: 47.769833333333, westlimit: -4.2286666666667, northlimit: 47.802833333333, eastlimit: -4.1623333333333 }
+        bboxDM: { SW: '47°46,18''N - 004°13,72''W', NE: '47°48,17''N - 004°09,74''W' }
   FR7620:
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
@@ -8506,20 +7440,13 @@ maps:
     lastUpdate: 1
     scaleDenominator: '50.000'
     bboxDM:
-      SW: '18°05,30''N - 063°20,97''W'
+      SW: '18°05,30''N - 063°20,96''W'
       NE: '18°22,92''N - 062°52,05''W'
-    spatial:
-      southlimit: 18.088333333333
-      westlimit: -63.3495
-      northlimit: 18.382
-      eastlimit: -62.8675
     references: 'Fac similé carte GB n°2047 publiée en 1985 (édition mars 2018)'
     insetMaps:
-      -
-        title: 'A - Sombrero Island'
+      - title: 'A - Sombrero Island'
         scaleDenominator: '15.000'
         bboxDM: { SW: '18°34,40''N - 063°26,27''W', NE: '18°35,86''N - 063°24,99''W' }
-        spatial: { southlimit: 18.573333333333, westlimit: -63.437833333333, northlimit: 18.597666666667, eastlimit: -63.4165 }
   FR7625:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
@@ -8605,21 +7532,15 @@ maps:
     replaces: '(remplace carte 982.CA)'
     noteShom: 'Nota : Porter le cadre du cartouche A et la légende "7640 A (INT 4637)" sur la carte 6118. Porter le cadre du cartouche C et la légende "7640 C (INT 4637)" sur la carte 6118. Rayer la légende "VC 982" dans l''anse de Miquelon sur la carte 6118.'
     insetMaps:
-      -
-        title: 'A - Abords Nord-Est de l''Île Miquelon'
+      - title: 'A - Abords Nord-Est de l''Île Miquelon'
         scaleDenominator: '20.000'
-        bboxDM: { SW: '47°01,30''N - 056°24,23''W', NE: '47°09,20''N - 056°12,37''W' }
-        spatial: { southlimit: 47.021666666667, westlimit: -56.403833333333, northlimit: 47.153333333333, eastlimit: -56.206166666667 }
-      -
-        title: 'B - Port de Miquelon'
+        bboxDM: { SW: '47°01,30''N - 056°24,22''W', NE: '47°09,20''N - 056°12,38''W' }
+      - title: 'B - Port de Miquelon'
         scaleDenominator: '10.000'
         bboxDM: { SW: '47°05,55''N - 056°23,43''W', NE: '47°07,11''N - 056°20,88''W' }
-        spatial: { southlimit: 47.0925, westlimit: -56.3905, northlimit: 47.1185, eastlimit: -56.348 }
-      -
-        title: 'C - Mouillages de l''Anse du Gouvernement'
+      - title: 'C - Mouillages de l''Anse du Gouvernement'
         scaleDenominator: '20.000'
         bboxDM: { SW: '46°53,06''N - 056°19,86''W', NE: '46°56,72''N - 056°11,64''W' }
-        spatial: { southlimit: 46.884333333333, westlimit: -56.331, northlimit: 46.945333333333, eastlimit: -56.194 }
   FR7643:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Port de Nouméa'
@@ -8765,19 +7686,12 @@ maps:
     lastUpdate: 0
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '9°47,9''N - 109°42,0''W'
-      NE: '10°47,0''N - 108°12,0''W'
-    spatial:
-      southlimit: 9.7983333333333
-      westlimit: -109.7
-      northlimit: 10.783333333333
-      eastlimit: -108.2
+      SW: '09°47,87''N - 109°42,00''W'
+      NE: '10°47,00''N - 108°12,00''W'
     insetMaps:
-      -
-        title: 'Île Clipperton'
+      - title: 'Île Clipperton'
         scaleDenominator: '20.000'
         bboxDM: { SW: '10°15,50''N - 109°15,33''W', NE: '10°20,40''N - 109°11,00''W' }
-        spatial: { southlimit: 10.258333333333, westlimit: -109.2555, northlimit: 10.34, eastlimit: -109.18333333333 }
   FR7751:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Île Clipperton - Zone Economique Exclusive'

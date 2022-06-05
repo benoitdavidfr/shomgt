@@ -158,7 +158,8 @@ definitions:
       bboxDM:
         description: |
           boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
-          ces coordonnées sont celles indiquées sur la carte dans les coins SW et NE et sont aussi indiquées dans le GAN.
+          ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
+          les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
           Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
         $ref: '#/definitions/bboxDM'
       spatial:

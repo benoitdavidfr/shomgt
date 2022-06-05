@@ -157,6 +157,10 @@ $schema:
                     $ref: '#/definitions/polygon'
         note:
           description: note
+6015_pal300:
+  title: 'Des passages du Nord-Ouest à la Mer du Groenland'
+  spatial: { SW: "48°50,00'N - 098°00,00'W", NE: "74°35,48'N - 012°19,50'W" }
+  note: "Modification de la limite Sud pour éviter de perturber l'affichage autour de St Pierre et Miquelon"
 
 6623_pal300:
   z-order: 1 # > 6757_pal300
