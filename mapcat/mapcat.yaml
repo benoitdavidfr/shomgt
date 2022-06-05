@@ -6301,7 +6301,7 @@ maps:
         bboxDM: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''W' }
       - title: 'G - Port de Deauville - Trouville'
         scaleDenominator: '10.000'
-        bboxDM: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''WE' }
+        bboxDM: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''W' }
   FR7421:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
