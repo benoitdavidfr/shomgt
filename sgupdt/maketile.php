@@ -6,7 +6,7 @@ doc: |
   script à appeler en ligne de commande avec en paramètre le chemin du fichier PNG en paramètre
   Crée un répertoire ayant le même nom que le png sans l'extension .png
   et y crée les dalles avec comme nom sprintf('%s/%X-%X.png', $dirpath, $i, $j)
-  Lit le fichier build.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
+  Lit le fichier update.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
   Pour effacer ces zones, utilise le fichier .info créé à partir du tif avec gdalinfo pour géoréférencer l'image
   
   limites:

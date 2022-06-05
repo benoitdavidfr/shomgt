@@ -4,6 +4,10 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  1/6/2022:
+    - ajout utilisation de la variable d'environnement SHOMGT3_MAPWCAT_FORCE_HTTPS
+      - si elle vaut 'true' les appels générés sont en https même si l'appel de mapwcat.php est en http
+      - indispensable pour utiliser shomgt derrière Traefik en https
   22/5/2022:
     - modif affichage des caractéristiques de chaque GeoTiff
     - corr. bug dans catalogues cartesAEM
@@ -43,9 +47,12 @@ includes: [ lib/accesscntrl.inc.php ]
   die("Accès interdit");
 }*/
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
-  
-$request_scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
-  : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http');
+
+/*$request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
+  : (isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
+  : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http'));*/
+$request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
+  : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
 $dirname = dirname($_SERVER['SCRIPT_NAME']);
 $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
 //echo "<pre>"; print_r($_SERVER); die("shomgturl=$shomgturl\n");

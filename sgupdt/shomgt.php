@@ -30,18 +30,18 @@ doc: |
       - à partir de ces infos je construis l'objet ShomGt
       - je récupère l'échelle et j'en déduis avec LayerDef la couche à laquelle il appartient
       - enfin, je l'insère dans ShomGt
+    - je vérifie que la structure ShomGT est conforme à son schéma
     - enfin, j'affiche ShomGt en Yaml
 
   La classe LayerDef définit les couches à créer dans shomgt et permet d'associer une couche à un géotiff.
   La classe Map gère le catalogue des cartes et retrouve pour un géotiff les infos correspondantes.
   La classe ShomGt contient une représentation de shomgt.yaml qui se construit progressivement.
 
-  A faire:
-    - remplacer l'accès à mapcat.yaml par un téléchargement
-    - transférer jsonschema.inc.php dans lib/
-    - implémenter un mécanisme z-ordrer
-
 journal: |
+  3/6/2022:
+    - si update.yaml contient une info spatial, elle remplace celle du catalogue
+    - l'idée est que le catalogue définit le rectangle officiel mais que ce rectangle peut devoir être modifié
+      pour effacer une partie de la carte et dans ce cas cette info est dans update.yaml
   22/5/2022:
     - ajout possibilité d'écrire shomgt.yaml dans un fichier et pas uniquement sur STDOUT
   18/5/2022:
@@ -177,7 +177,7 @@ class Map {
     return new Map("inset $no of $this->name", $this->map['insetMaps'][$no]);
   }
   
-  // fabrique ['title'=> {title}, 'spatial'=> {spatial}, 'scaleDen'=> {scaleDen}, 'borders'=> {borders}]
+  // fabrique ['title'=> {title}, 'spatial'=> {spatial}, 'scaleDen'=> {scaleDen}]
   function gtInfo(): array {
     return [
       'title'=> $this->map['title'],
@@ -226,8 +226,8 @@ Map::init();
 
 class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected string $gtname;
-  protected string $title; // titer issu du catalogue de cartes
-  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}],  issu du catalogue de cartes
+  protected string $title; // titre issu du catalogue de cartes
+  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du update.yaml ou sinon du catalogue de cartes
   protected int $scaleDen; // dénominateur de l'échelle issu du catalogue de cartes
   protected int $zorder; // z-order issu de update.yaml
   //protected array $borders; // [] ou sous la forme ['left'=> {border}, 'bottom'=>{border}, 'right'=> {border}, 'top'=> {border}]
@@ -261,6 +261,8 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
       fprintf(STDERR, "Info: le GéoTiff $gtname n'a pas de zone principale et n'apparaitra donc pas dans shomgt.yaml\n");
       return;
     }
+    if (isset(self::$params[$gtname]['spatial']))
+      $gtinfo['spatial'] = self::$params[$gtname]['spatial'];
     $gt = new self($gtname, $gtinfo, self::$params[$gtname]['z-order'] ?? 0);
     self::$shomgt[$gt->lyrname()][$gtname] = $gt;
   }

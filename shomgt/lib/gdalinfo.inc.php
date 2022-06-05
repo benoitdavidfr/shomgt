@@ -181,6 +181,7 @@ class GdalInfo {
   static function filepath(string $gtname): string {
     return sprintf('%s/%s/%s.info', EnvVar::val('SHOMGT3_MAPS_DIR_PATH'), substr($gtname, 0, 4), $gtname);
   }
+  
   function size(): array { return $this->size; }
   function ebox(): ?EBox { return $this->ebox; }
 

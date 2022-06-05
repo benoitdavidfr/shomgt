@@ -14,12 +14,15 @@ services:
     expose: [80]
     volumes:
       - sg3data:/var/www/data
-    #environment:
+    environment:
       # SHOMGT3_MAPS_DIR_PATH: /var/www/data/maps # répertoire dans lequel lire les cartes expansées
+      SHOMGT3_MAPWCAT_FORCE_HTTPS: 'true' # force mapwcat à générer des URL https
     networks:
       - registre_default
     labels:
-      traefik.http.routers.mapsdev.rule: Host(`shomgt3.ecolabdata.fr`)
+      - traefik.http.routers.shomgt.rule=Host(`shomgt3.ecolabdata.fr`)
+      - traefik.http.routers.shomgt.tls=true
+      - traefik.http.routers.shomgt.tls.certresolver=myresolver
   sgupdt:
     image: benoitdavid/shomgt3:sgupdt-v0.3
     hostname: sgupdt
