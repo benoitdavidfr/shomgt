@@ -4,8 +4,9 @@ description:
   - duplication du fichier pour ShomGt3
   - les mises à jour sur ShomGt2 ne sont plus gérées sur ce fichier
   - le 5/6/2022
-    - resynchro des bboxDM sur le GAN et
+    - resynchro des bboxDM sur le GAN
     - transfert dans update.yaml des modif effectuées pour amélioration la visualisation
+    - vérification visuelle globale
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: /var/www/html/geoapi/shomgt/cat2/mapcat
 created: '2020-12-26T22:01:53+01:00'
@@ -238,26 +239,17 @@ maps:
       - PF
     modified: '2022-03-09+01:00'
     lastUpdate: 0
-    scaleDenominator: '30.000'
-    bboxDM:
-      SW: '16°54,15''S - 154°01,5''W'
-      NE: '16°43,69''S - 153°52,97''W'
-    spatial:
-      southlimit: -16.9025
-      westlimit: -154.025
-      northlimit: -16.728166666667
-      eastlimit: -153.88283333333
+    noteCatalog: La structuration des GéoTiff correspond à 3 cartouches sans zone principale
     insetMaps:
-      -
-        title: 'A - Entrée du lagon et mouillage'
+      - title: 'Maupihaa (Mopelia)'
+        scaleDenominator: '30.000'
+        bboxDM: { SW: '16°54,15''S - 154°01,5''W', NE: '16°43,69''S - 153°52,97''W' }
+      - title: 'A - Entrée du lagon et mouillage'
         scaleDenominator: '10.000'
         bboxDM: { SW: '16°47,95''S - 153°58,88''W', NE: '16°46,14''S - 153°56,37''W' }
-        spatial: { southlimit: -16.799166666667, westlimit: -153.98133333333, northlimit: -16.769, eastlimit: -153.9395 }
-      -
-        title: 'B - Passe Taihaaru Vahine'
+      - title: 'B - Passe Taihaaru Vahine'
         scaleDenominator: '3.000'
         bboxDM: { SW: '16°47,35''S - 153°58,88''W', NE: '16°46,86''S - 153°58,12''W' }
-        spatial: { southlimit: -16.789166666667, westlimit: -153.98133333333, northlimit: -16.781, eastlimit: -153.96866666667 }
   FR6207:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Raivavae (Vavitu)'
@@ -1066,7 +1058,8 @@ maps:
     scaleDenominator: '15.000'
     bboxDM:
       SW: '49°25,14''N - 000°00,74''W'
-      NE: '49°31,21''N - 000°12,92''W'
+      NE: '49°31,21''N - 000°12,92''E'
+    noteCatalog: GAN faux, erreur de signe du bord Est
   FR6684:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
@@ -1240,9 +1233,14 @@ maps:
     lastUpdate: 141
     scaleDenominator: '150.000'
     bboxDM:
-      SW: '50°40,95''N - 000°54,92''W'
+      SW: '50°40,95''N - 000°54,92''E'
       NE: '51°41,35''N - 003°15,92''E'
-    noteShom: 'Nota : Les modifications effectuées sur la carte n°6735 au cours de l''édition n°7 concernent principalement les informations relatives aux modifications des mesures d''organisation du trafic entrant en vigueur le 01 décembre 2012 à 0000 UTC. Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).'
+    noteShom: |
+      Nota : Les modifications effectuées sur la carte n°6735 au cours de l'édition n°7 concernent principalement les
+      informations relatives aux modifications des mesures d'organisation du trafic entrant en vigueur le 01 décembre 2012
+      à 0000 UTC.
+      Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).
+    noteCatalog: GAN faux, signe erroné sur le bord Ouest.
   FR6738:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Sud (Spéciale P)'
@@ -1449,9 +1447,10 @@ maps:
     lastUpdate: 0
     scaleDenominator: 3.500.000
     bboxDM:
-      SW: '37°55,40''S - 167°00,00''W'
-      NE: '07°30,00''S - 171°34,30''E'
+      SW: '37°55,40''S - 171°34,30''E'
+      NE: '07°30,00''S - 167°00,00''W'
     references: 'Fac similé carte NZ n° 14605 publiée en 1976 (édition juillet 2007).'
+    noteCatalog: GAN faux, inversion bords Est et Ouest
   FR6820:
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''île Lifou - Baie du Santal'
@@ -1711,7 +1710,8 @@ maps:
     scaleDenominator: '150.000'
     bboxDM:
       SW: '49°10,74''N - 001°57,48''W'
-      NE: '50°12,95''N - 000°23,52''W'
+      NE: '50°12,95''N - 000°23,52''E'
+    noteCatalog: GAN faux, erreur de signe sur le bord Est
   FR6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
@@ -2054,8 +2054,9 @@ maps:
     scaleDenominator: '150.000'
     bboxDM:
       SW: '49°53,93''N - 001°59,09''W'
-      NE: '50°55,37''N - 000°21,96''W'
+      NE: '50°55,37''N - 000°21,96''E'
     references: 'Fac similé carte GB n°2450 publiée en 1977 (édition en février 2008).'
+    noteCatalog: GAN faux, erreur de signe sur le bord Est
   FR6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu - Golfe de Saint-Florent'
@@ -4054,21 +4055,14 @@ maps:
       - PF
     modified: '2016-10-19+02:00'
     lastUpdate: 9
-    scaleDenominator: '25.000'
-    bboxDM:
-      SW: '16°30,55''S - 152°19,19''W'
-      NE: '16°23,58''S - 152°12,46''W'
-    spatial:
-      southlimit: -16.509166666667
-      westlimit: -152.31983333333
-      northlimit: -16.393
-      eastlimit: -152.20766666667
+    noteCatalog: Les GéoTiff sont structurés sans partie principale avec 2 cartouches
     insetMaps:
-      -
-        title: 'A - De la Passe ''Onoiau au Village'
+      - title: Maupiti
+        scaleDenominator: '25.000'
+        bboxDM: { SW: '16°30,55''S - 152°19,19''W', NE: '16°23,58''S - 152°12,46''W' }
+      - title: 'A - De la Passe ''Onoiau au Village'
         scaleDenominator: '10.000'
         bboxDM: { SW: '16°29,40''S - 152°15,69''W', NE: '16°26,61''S - 152°14,18''W' }
-        spatial: { southlimit: -16.49, westlimit: -152.2615, northlimit: -16.4435, eastlimit: -152.23633333333 }
   FR7214:
     groupTitle: 'Côte Nord de France - Côte de Belgique'
     title: 'De Dunkerque à Oostende'
@@ -4951,9 +4945,10 @@ maps:
     lastUpdate: 21
     scaleDenominator: '74.300'
     bboxDM:
-      SW: '50°41,58''N - 000°50,12''W'
+      SW: '50°41,58''N - 000°50,12''E'
       NE: '51°11,63''N - 001°59,89''E'
     references: 'Fac similé carte GB n°1892 publiée en 1973 (édition novembre 2017)'
+    noteCatalog: "GAN faux signe erroné bord le bord Ouest"
   FR7324:
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis (Spéciale P)'
@@ -5898,9 +5893,9 @@ maps:
     modified: '2020-01-01+01:00'
     lastUpdate: 28
     insetMaps:
-      - title: 'Cours de la Loire'
-        scaleDenominator: '20.000'
-        bboxDM: { SW: "47°11,44'N - 001°35,28'W", NE: "47°12,94'N - 001°32,38'W" }
+      - title: 'A - De la Pointe de Mindin à Paimboeuf '
+        scaleDenominator: '15.000'
+        bboxDM: { SW: "47°16,04'N - 002°10,98'W", NE: "47°18,54'N - 002°01,58'W" }
       - title: 'B - De Paimboeuf à l''Ile de Bois'
         scaleDenominator: '20.000'
         bboxDM: { SW: '47°12,46''N - 002°05,18''W', NE: '47°18,56''N - 001°47,78''W' }
@@ -6219,8 +6214,9 @@ maps:
     lastUpdate: 12
     scaleDenominator: '75.000'
     bboxDM:
-      SW: '50°01,45''N - 000°57,32''W'
+      SW: '50°01,45''N - 000°57,32''E'
       NE: '50°46,05''N - 001°44,92''E'
+    noteCatalog: "GAN faux signe erroné bord le bord Ouest"
   FR7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe - Du Cap d''Antifer à Dieppe'
@@ -6231,8 +6227,9 @@ maps:
     lastUpdate: 6
     scaleDenominator: '75.900'
     bboxDM:
-      SW: '49°40,75''N - 000°09,62''W'
+      SW: '49°40,75''N - 000°09,62''E'
       NE: '50°11,45''N - 001°19,42''E'
+    noteCatalog: GAN faux, erreur de signe sur le bord Ouest
   FR7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer - Embouchure de la Seine - De Ouistreham au Cap d''Antifer'
@@ -6244,7 +6241,8 @@ maps:
     scaleDenominator: '60.000'
     bboxDM:
       SW: '49°15,00''N - 000°20,90''W'
-      NE: '49°50,60''N - 000°16,60''W'
+      NE: '49°50,60''N - 000°16,60''E'
+    noteCatalog: GAN faux, erreur de signe sur le bord Est
   FR7419:
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
@@ -6253,22 +6251,23 @@ maps:
       - FX-MMN
     modified: '2021-09-28+02:00'
     lastUpdate: 8
+    noteCatalog: GAN faux, bbox pris sur la carte
     insetMaps:
       - title: 'La Seine du havre à Rouen 1/3'
         scaleDenominator: '30.000'
-        bboxDM: { SW: '49°20,96''N - 000°58,22''W', NE: '49°26,00''N - 001°02,48''E' }
+        bboxDM: { SW: "49°25,0'N - 000°08,6'W", NE: "49°30,8'N - 000°13,0'E" }
       - title: 'La Seine du havre à Rouen 2/3'
         scaleDenominator: '60.100'
-        bboxDM: { SW: '49°19,65''N - 000°26,82''W', NE: '49°31,64''N - 001°04,92''E' }
+        bboxDM: { SW: "49°24,8'N - 000°10,0'E", NE: "49°29,95'N - 000°30,00'E" }
       - title: 'La Seine du havre à Rouen 3/3'
         scaleDenominator: '60.100'
-        bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' }
+        bboxDM: { SW: "49°19,6'N - 000°26,8'E", NE: "49°31,6'N - 001°04,92'E" }
       - title: 'A - Port de Rouen'
         scaleDenominator: '15.000'
-        bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' }
+        bboxDM: { SW: "49°20,96'N - 000°58,22'E", NE: "49°26,00'N - 001°02,48'E" }
       - title: 'B - Port de Rouen'
         scaleDenominator: '15.000'
-        bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' }
+        bboxDM: { SW: '49°24,95''N - 001°00,66''E', NE: '49°27,05''N - 001°04,92''E' } # GAN correct
   FR7420:
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
