@@ -19,6 +19,8 @@ doc: |
   Voir ../docker.yaml pour les commandes Docker
     
 journal: |
+  6/6/2022:
+    - création image v0.4
   23/5/2022:
     - test comme conteneur
   19-22/5/2022:

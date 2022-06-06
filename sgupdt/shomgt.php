@@ -38,6 +38,8 @@ doc: |
   La classe ShomGt contient une représentation de shomgt.yaml qui se construit progressivement.
 
 journal: |
+  6/6/2022:
+    - correction bug
   3/6/2022:
     - si update.yaml contient une info spatial, elle remplace celle du catalogue
     - l'idée est que le catalogue définit le rectangle officiel mais que ce rectangle peut devoir être modifié
@@ -167,7 +169,7 @@ class Map {
   }
   
   //function title(): string { return $this->map['title']; }
-  //function spatial(): array { return $this->map['bboxDM'] ?? []; }
+  //function spatial(): array { return $this->map['spatial'] ?? []; }
   function scaleDen(): ?int {
     return isset($this->map['scaleDenominator']) ? str_replace('.', '', $this->map['scaleDenominator']) : null;
   }
@@ -181,7 +183,7 @@ class Map {
   function gtInfo(): array {
     return [
       'title'=> $this->map['title'],
-      'spatial'=> $this->map['bboxDM'] ?? [],
+      'spatial'=> $this->map['spatial'] ?? [],
       'scaleDen'=> $this->scaleDen(),
     ];
   }
@@ -193,7 +195,7 @@ class Map {
     $best = -1;
     foreach ($this->map['insetMaps'] as $no => $insetMap) {
       //echo "insetMaps[$no]="; print_r($insetMap);
-      $dist = GBox::fromShomGt($insetMap['bboxDM'])->distance($georefrect);
+      $dist = GBox::fromShomGt($insetMap['spatial'])->distance($georefrect);
       //echo "distance=$dist\n";
       if (($best == -1) || ($dist < $distmin)) {
         $best = $no;

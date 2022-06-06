@@ -71,6 +71,8 @@ doc: |
     docker exec -it --user=www-data shomgt3_maps_1 /bin/bash
     
 journal: |
+  6/6/2022:
+    - création image v0.4
   8/5/2022:
     - construction d'une image avec tous les GéoTiffs
     - modif à la marge du code
