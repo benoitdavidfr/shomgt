@@ -37,21 +37,18 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/lib/gegeom.inc.php';
 require_once __DIR__.'/lib/layer.inc.php';
-#require_once __DIR__.'/../lib/log.inc.php';
-#require_once __DIR__.'/../lib/config.inc.php';
-#require_once __DIR__.'/geotiff.inc.php';
 require_once __DIR__.'/lib/cache.inc.php';
 require_once __DIR__.'/lib/errortile.inc.php';
-require_once __DIR__.'/../vendor/autoload.php'; // utile pour les perfs
+require_once __DIR__.'/../vendor/autoload.php'; // utile pour logRecord()
 
-use Symfony\Component\Yaml\Yaml; // utile pour les perfs
+use Symfony\Component\Yaml\Yaml; // utile pour pour logRecord()
 
-//define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60); // nb secondes en cache pour le navigateur si <> 0
-define ('NB_SECONDS_IN_CACHE', 0); // pas de mise en cache par le navigateur
-//define ('SERVER_TILECACHE', true); // mise en cache des tuiles sur le serveur
-define ('SERVER_TILECACHE', false); // PAS de mise en cache des tuiles sur le serveur
+define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60); // nb secondes en cache pour le navigateur si <> 0
+//define ('NB_SECONDS_IN_CACHE', 0); // pas de mise en cache par le navigateur
+define ('SERVER_TILECACHE', true); // mise en cache des tuiles sur le serveur
+//define ('SERVER_TILECACHE', false); // PAS de mise en cache des tuiles sur le serveur
 
-// enregistrement d'un log temporaire pour estimer les performances
+// enregistrement d'un log temporaire pour afficher des infos, par ex. estimer les performances
 function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
   $flag_append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
@@ -60,9 +57,9 @@ function logRecord(array $log): void {
     $flag_append|LOCK_EX);
 }
 
-if (is_file(__DIR__.'/tileaccess.inc.php')) { // possibilité de restreindre l'accès dans certains cas 
+/*if (is_file(__DIR__.'/tileaccess.inc.php')) { // possibilité de restreindre l'accès dans certains cas 
   require_once __DIR__.'/tileaccess.inc.php';
-}
+}*/
 
 if ($options = explode(',', $_GET['options'] ?? 'none')) {
   foreach ($options as $option) {
