@@ -89,7 +89,8 @@ if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
   imagealphablending($image, false)
     or error("erreur de imagealphablending() ligne ".__LINE__);
   $transparent = imagecolorallocatealpha($image, 0xFF, 0xFF, 0xFF, 0x7F);
-  $gdalinfo = new GdalInfo(dirname($pngpath).'/'.basename($pngpath, '.png').'.info');
+  $gdalinfo = new GdalInfo(dirname($pngpath).'/'.basename($pngpath, '.png').'.info.json');
+  print_r($gdalinfo);
   $gri = new GeoRefImage($gdalinfo->ebox(), $image);
   foreach ($listOfZonesToDelete as $zoneToDelete) {
     echo "Effacement de:\n", Yaml::dump($zoneToDelete);

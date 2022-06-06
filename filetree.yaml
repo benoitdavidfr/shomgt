@@ -114,6 +114,13 @@ variables_d'environnement:
         NC: Nouvelle-Calédonie
         CP: Île Clipperton
     SHOMGT3_UPDATE_DURATION: délai entre 2 mises à jour en jours (defaut 28)
+  shomgt:
+    SHOMGT3_MAPS_DIR_PATH:
+      description: chemin du répertoire stockant les cartes expansées
+      default: /var/www/data/maps
+    SHOMGT3_MAPWCAT_FORCE_HTTPS:
+      description: si true alors https est forcé
+      default: pas de défaut, vaut alors ''
 
 volumesPartagés:
   surMac:

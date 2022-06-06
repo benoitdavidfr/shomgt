@@ -1,14 +1,20 @@
 title: 'Catalogue des cartes Shom V2.1'
 description:
   - 'Import du fichier V1 le 2020-12-26T22:01:53+01:00'
-  - duplication du fichier pour ShomGt3
-  - les mises à jour sur ShomGt2 ne sont plus gérées sur ce fichier
-  - le 5/6/2022
-    - resynchro des bboxDM sur le GAN
-    - transfert dans update.yaml des modif effectuées pour amélioration la visualisation
-    - vérification visuelle globale
+  - duplication du fichier pour ShomGt3 en avril-mai 2022
+    - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
+  - les 5-6/6/2022
+    - j'ai constaté que certains problèmes de visualisation du cadre, soulevés par Jobourg, provenaient des écarts avec le GAN
+    - j'ai donc décidé de resynchroniser les bboxDM sur le GAN
+    - j'ai aussi transferé dans update.yaml des modif effectuées pour améliorer la visualisation
+    - j'ai effectué vérification visuelle globale, constatant notamment plusieurs erreurs dans le GAN
+    - j'ai créé dans le schéma un champ badGan pour expliciter ces erreurs
+    - j'essaie de gérer dans ce fichier les extensions spatiales indépendamment d'un choix de visualisation
+    - toutefois je structure dans ce fichier les cartes en fonction de la structure des GéoTiffs
+    - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
+      - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
-$schema: /var/www/html/geoapi/shomgt/cat2/mapcat
+$schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
 modified: '2022-06-05'
 maps:
@@ -24,12 +30,10 @@ maps:
     bboxDM:
       SW: '79°00,00''S - 100°00,00''E'
       NE: '80°00,00''N - 490°00,00''E'
-    spatial:
-      southlimit: -79
-      westlimit: 100
-      northlimit: 80
-      eastlimit: 490
-    noteCatalog: 'correction de FR0101 pour que le bord Est ait une longitude supérieure au bord West et que l''extension en longitude soit supérieure à 360°, correction aussi du titre'
+    noteCatalog: |
+      correction de l'extension géo. pour que le bord Est ait une longitude supérieure au bord West et que l'extension en
+      longitude soit supérieure à 360°, correction aussi du titre
+    badGan: carte absente du GAN
   FR3127:
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
@@ -150,9 +154,11 @@ maps:
     modified: '2021-03-31+02:00'
     lastUpdate: 43
     scaleDenominator: 4.660.000
-    bboxDM:
-      SW: '47°09,00''N - 098°00,00''W'
-      NE: '74°35,48''N - 012°19,50''W'
+    bboxDM: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
+    noteCatalog: |
+      Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
+      On pourrait améliorer les corrections mais cela évite un affichage très moche.
+    badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
   FR6033:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
@@ -239,7 +245,8 @@ maps:
       - PF
     modified: '2022-03-09+01:00'
     lastUpdate: 0
-    noteCatalog: La structuration des GéoTiff correspond à 3 cartouches sans zone principale
+    noteCatalog: La structuration des GéoTiffs correspond à 3 cartouches sans zone principale
+    badGan: GAN incomplet
     insetMaps:
       - title: 'Maupihaa (Mopelia)'
         scaleDenominator: '30.000'
@@ -871,33 +878,27 @@ maps:
     modified: '2019-01-02+01:00'
     lastUpdate: 15
     scaleDenominator: '150.000'
-    noteCatalog: "Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.\nLes noteCatalog indiquées sur la carte ne semblent pas correctes.\nJe les ai corrigées en cherchant la correspondance des cartes à grande échelle avec celles à petites échelles.\n"
+    noteCatalog: |
+      Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.
+      Les coordonnées indiquées sur la carte ne semblent pas correctes.
+      Je les ai corrigées en cherchant la correspondance des cartes à grande échelle avec celles à petites échelles.
+    badGan: GAN faux
     insetMaps:
-      -
-        title: 'A - Ile Juan de Nova'
+      - title: 'A - Ile Juan de Nova'
         scaleDenominator: '50.000'
         bboxDM: { SW: '17°06,40''S - 042°36,30''E', NE: '16°54,37''S - 042°52,53''E' }
-        spatial: { southlimit: -17.106666666667, westlimit: 42.605, northlimit: -16.906166666667, eastlimit: 42.8755 }
-      -
-        title: 'B - Mouillage Nord d''Europa'
+      - title: 'B - Mouillage Nord d''Europa'
         scaleDenominator: '15.000'
         bboxDM: { SW: '22°21,40''S - 040°18,80''E', NE: '22°18,57''S - 040°22,10''E' }
-        spatial: { southlimit: -22.356666666667, westlimit: 40.313333333333, northlimit: -22.3095, eastlimit: 40.368333333333 }
-      -
-        title: 'C - Ile Europa'
+      - title: 'C - Ile Europa'
         scaleDenominator: '50.000'
         bboxDM: { SW: '22°25,40''S - 040°16,30''E', NE: '22°17,40''S - 040°27,30''E' }
-        spatial: { southlimit: -22.423333333333, westlimit: 40.271666666667, northlimit: -22.29, eastlimit: 40.455 }
-      -
-        title: 'D - Iles Bassas da India'
+      - title: 'D - Iles Bassas da India'
         scaleDenominator: '150.000'
         bboxDM: { SW: '21°36,10''S - 039°33,40''E', NE: '21°19,86''S - 039°47,15''E' }
-        spatial: { southlimit: -21.601666666667, westlimit: 39.556666666667, northlimit: -21.331, eastlimit: 39.785833333333 }
-      -
-        title: 'E - Iles Glorieuses'
+      - title: 'E - Iles Glorieuses'
         scaleDenominator: '150.000'
         bboxDM: { SW: '11°37,82''S - 047°11,95''E', NE: '11°21,56''S - 047°30,95''E' }
-        spatial: { southlimit: -11.630333333333, westlimit: 47.199166666667, northlimit: -11.359333333333, eastlimit: 47.515833333333 }
   FR6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
@@ -1059,7 +1060,7 @@ maps:
     bboxDM:
       SW: '49°25,14''N - 000°00,74''W'
       NE: '49°31,21''N - 000°12,92''E'
-    noteCatalog: GAN faux, erreur de signe du bord Est
+    badGan: GAN faux, erreur de signe du bord Est
   FR6684:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
@@ -1240,7 +1241,7 @@ maps:
       informations relatives aux modifications des mesures d'organisation du trafic entrant en vigueur le 01 décembre 2012
       à 0000 UTC.
       Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).
-    noteCatalog: GAN faux, signe erroné sur le bord Ouest.
+    badGan: GAN faux, signe erroné sur le bord Ouest.
   FR6738:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Sud (Spéciale P)'
@@ -1450,7 +1451,7 @@ maps:
       SW: '37°55,40''S - 171°34,30''E'
       NE: '07°30,00''S - 167°00,00''W'
     references: 'Fac similé carte NZ n° 14605 publiée en 1976 (édition juillet 2007).'
-    noteCatalog: GAN faux, inversion bords Est et Ouest
+    badGan: GAN faux, inversion bords Est et Ouest
   FR6820:
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''île Lifou - Baie du Santal'
@@ -1577,7 +1578,7 @@ maps:
         title: 'Mer de Béring'
         scaleDenominator: 7.330.000
         bboxDM: { SW: '49°00,00''N - 170°15,00''E', NE: '65°00,00''N - 169°20,00''W' }
-    noteCatalog: Extension géo. du cartouche différente du GAN qui inverse la coord. W avec la coord. E et est donc erroné
+    badGan: GAN faux, inversion des bords Est et Ouest de l'extension géo.
   FR6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
@@ -1711,7 +1712,7 @@ maps:
     bboxDM:
       SW: '49°10,74''N - 001°57,48''W'
       NE: '50°12,95''N - 000°23,52''E'
-    noteCatalog: GAN faux, erreur de signe sur le bord Est
+    badGan: GAN faux, erreur de signe sur le bord Est
   FR6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
@@ -2056,7 +2057,7 @@ maps:
       SW: '49°53,93''N - 001°59,09''W'
       NE: '50°55,37''N - 000°21,96''E'
     references: 'Fac similé carte GB n°2450 publiée en 1977 (édition en février 2008).'
-    noteCatalog: GAN faux, erreur de signe sur le bord Est
+    badGan: GAN faux, erreur de signe sur le bord Est
   FR6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu - Golfe de Saint-Florent'
@@ -2236,10 +2237,9 @@ maps:
     modified: '2022-03-23+01:00'
     lastUpdate: 91
     scaleDenominator: '250.000'
-    bboxDM:
-      SW: '41°13,93''N - 002°54,93''E'
-      NE: '43°39,94''N - 005°12,9''E'
-    noteCatalog: 'Correction du bord Est de la carte à partir de l''information sur la carte'
+    bboxDM: {SW: "41°13,93'N - 002°54,93'E", NE: "43°39,94'N - 005°12,9'E"}
+    noteCatalog: Correction du bord Est de la carte à partir de l'information sur la carte
+    badGan: Le bord Est défini par le GAN intègre en partie le cadre
   FR7011:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De la presqu''île Neuméni à Port-Ounia'
@@ -2314,8 +2314,7 @@ maps:
       SW: '13°00,00''S - 117°30,00''E'
       NE: '40°00,00''N - 154°20,00''W'
     references: 'Fac similé Carte JP n°4052 publiée en 1983.'
-    noteCatalog: |
-      Le GAN inverse les bords Est et Ouest et est donc erroné ; extension géo. fondée sur celle définie par la carte
+    badGan: GAN faux, inversion des bords Est et Ouest de l'extension géo.
   FR7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est - De San Francisco à Lima'
@@ -2421,12 +2420,11 @@ maps:
     modified: '2022-03-02+01:00'
     lastUpdate: 97
     scaleDenominator: '50.000'
-    bboxDM:
-      SW: '47°15,4''N - 003°11,1''W'
-      NE: '47°35,6''N - 002°27,3''W'
+    bboxDM: {SW: "47°15,4'N - 003°11,1'W", NE: "47°35,6'N - 002°27,3'W"}
     noteCatalog: |
       correction de bboxDM à partir de la carte le 26/12/2020
       bboxDMGan: {SW: "47°15,12'N - 003°11,08'W", NE: "47°35,64'N - 002°27,30'W"}
+    badGan: GAN faux, le bord Sud est faux
   FR7035:
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
@@ -3730,9 +3728,6 @@ maps:
     lastUpdate: 9
     scaleDenominator: '50.000'
     bboxDM: {SW: "49°20,64'N - 002°43,74'W", NE: "49°49,04'N - 002°13,48'W" }
-    noteCatalog: |
-      Le 4/6/2022 correction du champ bboxDM en reprenant la valeur du GAN pour effacer le cadre visible sur la carte.
-      A noter que l'info du GAN est plus précise que l'inscription portée sur la carte.
   FR7160:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Jersey à Guernsey'
@@ -3791,7 +3786,7 @@ maps:
       NE: '02°45,00''S - 108°28,11''W'
     replaces: '(remplace 5037,5038,5361)'
     references: 'Fac similé Carte NZ n°14061 publiée en 1986.'
-    noteCatalog: GAN faux, bords Est et Ouest inversés
+    badGan: GAN faux, bords Est et Ouest inversés
   FR7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)'
@@ -4055,7 +4050,8 @@ maps:
       - PF
     modified: '2016-10-19+02:00'
     lastUpdate: 9
-    noteCatalog: Les GéoTiff sont structurés sans partie principale avec 2 cartouches
+    noteCatalog: Les GéoTiffs sont structurés sans partie principale avec 2 cartouches
+    badGan: Le GAN n'est pas structuré comme les GéoTiffs
     insetMaps:
       - title: Maupiti
         scaleDenominator: '25.000'
@@ -4520,7 +4516,7 @@ maps:
       NE: '02°36,26''S - 167°57,92''W'
     replaces: '(remplace 5356)'
     references: 'Fac similé Carte AU n°4060 publiée en 1987'
-    noteCatalog: "GAN faux, bords Est et Ouest inversés"
+    badGan: "GAN faux, bords Est et Ouest inversés"
   FR7273:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent (Spéciale P)'
@@ -4615,7 +4611,7 @@ maps:
       SW: '16°30,00''S - 177°00,00''E'
       NE: '09°40,56''S - 172°47,00''W'
     replaces: '(remplace 6067)'
-    noteCatalog: "GAN faux, bords Est et Ouest inversés"
+    badGan: "GAN faux, bords Est et Ouest inversés"
   FR7291:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
@@ -4948,7 +4944,7 @@ maps:
       SW: '50°41,58''N - 000°50,12''E'
       NE: '51°11,63''N - 001°59,89''E'
     references: 'Fac similé carte GB n°1892 publiée en 1973 (édition novembre 2017)'
-    noteCatalog: "GAN faux signe erroné bord le bord Ouest"
+    badGan: "GAN faux signe erroné bord le bord Ouest"
   FR7324:
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis (Spéciale P)'
@@ -6216,7 +6212,7 @@ maps:
     bboxDM:
       SW: '50°01,45''N - 000°57,32''E'
       NE: '50°46,05''N - 001°44,92''E'
-    noteCatalog: "GAN faux signe erroné bord le bord Ouest"
+    badGan: "GAN faux, signe erroné du bord Ouest"
   FR7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe - Du Cap d''Antifer à Dieppe'
@@ -6229,7 +6225,7 @@ maps:
     bboxDM:
       SW: '49°40,75''N - 000°09,62''E'
       NE: '50°11,45''N - 001°19,42''E'
-    noteCatalog: GAN faux, erreur de signe sur le bord Ouest
+    badGan: GAN faux, erreur de signe sur le bord Ouest
   FR7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer - Embouchure de la Seine - De Ouistreham au Cap d''Antifer'
@@ -6242,7 +6238,7 @@ maps:
     bboxDM:
       SW: '49°15,00''N - 000°20,90''W'
       NE: '49°50,60''N - 000°16,60''E'
-    noteCatalog: GAN faux, erreur de signe sur le bord Est
+    badGan: GAN faux, erreur de signe sur le bord Est
   FR7419:
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
@@ -6251,7 +6247,7 @@ maps:
       - FX-MMN
     modified: '2021-09-28+02:00'
     lastUpdate: 8
-    noteCatalog: GAN faux, bbox pris sur la carte
+    badGan: GAN faux, bbox pris sur la carte
     insetMaps:
       - title: 'La Seine du havre à Rouen 1/3'
         scaleDenominator: '30.000'
@@ -7912,7 +7908,7 @@ maps:
       westlimit: -6.5
       northlimit: 51.583333333333
       eastlimit: 2.5
-    noteCatalog: 'Carte spéciale absente du GAN'
+    badGan: 'Carte spéciale absente du GAN'
   FR8502:
     title: 'Action de l''Etat en Mer en ZMSOI'
     edition: 'Publication 2010'
@@ -7935,69 +7931,34 @@ maps:
   FR8509:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
     edition: 'Publication 2015'
-    mapsFrance:
-      - NC
-      - WF
+    mapsFrance: [ NC, WF ]
     modified: '2018-01-18'
     lastUpdate: 0
     scaleDenominator: 3.158.760
-    bboxDM:
-      SW: '30°00,0''S - 153°00,0''E'
-      NE: '08°00,0''S - 174°00,0''W'
-    spatial:
-      southlimit: -30
-      westlimit: 153
-      northlimit: -8
-      eastlimit: -174
-    borders:
-      left: 292
-      bottom: 239
-      right: 299
-      top: 193
-    noteCatalog: 'Carte spéciale absente du GAN et non géoréférencée, à cheval sur l''anti-méridien, la coordonnée du bord Ouest a été modifiée pour être supérieure à -180°'
+    bboxDM: { SW: '30°S - 153°E', NE: '08°S - 174°W' }
+    borders: { left: 292, bottom: 239, right: 299, top: 193 }
+    noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l''anti-méridien"
+    badGan: "Carte spéciale absente du GAN"
   FR8510:
     title: 'Délimitations des zones maritimes'
     edition: 'Publication 2015'
-    mapsFrance:
-      - FR
+    mapsFrance: [FR]
     modified: '2015-03-10'
     lastUpdate: 0
     scaleDenominator: 38.000.000
-    bboxDM:
-      SW: '76°46,0''S - 088°00,00''E'
-      NE: '79°17,0''N - 448°00,00''E'
-    spatial:
-      southlimit: -76.766666666667
-      westlimit: 88
-      northlimit: 79.283333333333
-      eastlimit: 448
-    borders:
-      left: 217
-      bottom: 202
-      right: 224
-      top: 212
-    noteCatalog: 'Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°'
+    bboxDM: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E" }
+    borders: { left: 217, bottom: 202, right: 224, top: 212 }
+    noteCatalog: "Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°"
+    badGan: "Carte spéciale absente du GAN"
   FR8517:
     title: 'Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
     edition: 'Publication 2015'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     modified: '2018-01-18'
     lastUpdate: 0
     scaleDenominator: 6.050.386
-    bboxDM:
-      SW: '35°00,0''S - 165°00,0''W'
-      NE: '05°00,0''N - 103°00,0''W'
-    spatial:
-      southlimit: -35
-      westlimit: -165
-      northlimit: 5
-      eastlimit: -103
-    borders:
-      left: 326
-      bottom: 5020-4711
-      right: 7087-6834
-      top: 286
+    bboxDM: { SW: "35°S - 165°W", NE: "05°N - 103°W" }
+    borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
     noteCatalog: 'Carte spéciale absente du GAN et non géo-référencée, Clipperton est dans un cartouche non explicité'
 obsoleteMaps:
   FR5825:

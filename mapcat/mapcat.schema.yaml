@@ -1,9 +1,10 @@
 title: schema JSON du catalogue des cartes Shom
 $id: http://geoapi.fr/shomgt/cat2/mapcat.schema
-modified: '2021-01-09T21:22+01:00'
+modified: '2022-06-06'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    6/6/2022: Ajout définition du champ badGan
     9/1/2021: Ajout de la possibilité de stocker l'épaisseur du cadre pour les cartes non géo-référencées
     24/12/2020: Gestion des cartes obsolètes dans un dictionnaire à part.
 $schema: http://json-schema.org/schema#
@@ -41,10 +42,11 @@ definitions:
   latLonDM:
     description: couple (latitude, longitude) en degrés minutes
     type: string
-    pattern: '^\d+°(\d+(,\d+)?)?''(N|S) - \d+°(\d+(,\d+)?)?''(E|W)$'
+    pattern: '^\d+°(\d+(,\d+)?'')?(N|S) - \d+°(\d+(,\d+)?'')?(E|W)$'
     examples:
       - "44°09,00'N - 002°36,00'W"
       - "45°49,00'N - 001°00,00'W"
+      - "30°S - 153°E"
   bboxDM:
     description: |
       boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
@@ -163,12 +165,14 @@ definitions:
           Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
         $ref: '#/definitions/bboxDM'
       spatial:
-        description: la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+        description: |
+          la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
+          En cours de suppression.
         $ref: '#/definitions/dcmi-box'
       borders:
         description: |
-          Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
-          à celle de la boite englobante permet de déterminer ce géoréférencement.
+          Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement lorsque
+          le GéoTiff ne l'est pas.
         $ref: '#/definitions/borders'
       bboxLonLatFromWfs:
         description: |
@@ -219,6 +223,9 @@ definitions:
         type: string
       noteCatalog:
         description: commentaire associé à la carte dans la gestion du catalogue
+        type: string
+      badGan:
+        description: commentaire indiquant une erreur dans le GAN ; si présent indique que le GAN est faux
         type: string
       insetMaps:
         description: liste éventuelle de cartouches

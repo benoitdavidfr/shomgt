@@ -4,6 +4,8 @@ title: geotiffs.inc.php - liste les GeoTiffs
 name: geotiffs.inc.php
 doc: |
 journal: |
+  6/6/2022:
+    - passage à gdalinfo -json
   22/5/2022:
     - utilisation EnvVar
   24/4/2022:
@@ -14,15 +16,16 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 require_once __DIR__.'/envvar.inc.php';
 
 function geotiffs(): array { // liste des GeoTiffs 
+  $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
   $gtiffs = [];
-  foreach (new DirectoryIterator(EnvVar::val('SHOMGT3_MAPS_DIR_PATH')) as $map) {
+  foreach (new DirectoryIterator($MAPS_DIR_PATH) as $map) {
     if ($map->isDot()) continue;
     if ($map->getType() == 'dir') {
       //echo $map->getFilename() . "<br>\n";
-      foreach (new DirectoryIterator(EnvVar::val('SHOMGT3_MAPS_DIR_PATH')."/$map") as $gtiff) {
-        if (substr($gtiff->getFilename(), -5) <> '.info') continue;
+      foreach (new DirectoryIterator("$MAPS_DIR_PATH/$map") as $gtiff) {
+        if (substr($gtiff->getFilename(), -10) <> '.info.json') continue;
         //echo '** ',$gtiff->getFilename() . "<br>\n";
-        $gtiffs[] = substr($gtiff->getFilename(), 0, strlen($gtiff->getFilename())-5);
+        $gtiffs[] = substr($gtiff->getFilename(), 0, strlen($gtiff->getFilename())-10);
       }
     }
   }

@@ -169,8 +169,8 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
   foreach ($gtiffs as $gtiff) {
     echo "  gtiff=$gtiff\n";
     $gtname = basename($gtiff, '.tif'); // pour un .tif je prends le basename, pour un .pdf je garde le nom entier
-    !execCmde("gdalinfo $mapdir/$gtiff > $mapdir/$gtname.info", CMDE_VERBOSE) // sauvegarde du géoréférencement du GéoTiff/PDF
-      or throw new Exception("erreur dans gdalinfo $mapdir/$gtiff");
+    !execCmde("gdalinfo -json $mapdir/$gtiff > $mapdir/$gtname.info.json", CMDE_VERBOSE) // sauvegarde du géoréf. du GéoTiff/PDF
+      or throw new Exception("erreur dans gdalinfo -json $mapdir/$gtiff");
     //if (1) continue; // Pour le test je n'effectue pas les commandes suivantes
     !execCmde("gdal_translate -of PNG $mapdir/$gtiff $mapdir/$gtname.png", CMDE_VERBOSE) # conversion du GéoTiff/PDF en PNG
       or throw new Exception("erreur dans gdal_translate sur $mapdir$gtiff");

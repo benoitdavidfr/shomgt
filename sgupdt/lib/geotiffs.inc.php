@@ -4,6 +4,8 @@ title: geotiffs.inc.php - liste les GeoTiffs
 name: geotiffs.inc.php
 doc: |
 journal: |
+  6/6/2022:
+    - passage à gdalinfo -json
   22/5/2022:
     - utilisation EnvVar
   24/4/2022:
@@ -21,9 +23,9 @@ function geotiffs(): array { // liste des GeoTiffs
     if ($map->getType() == 'dir') {
       //echo $map->getFilename() . "<br>\n";
       foreach (new DirectoryIterator("$MAPS_DIR_PATH/$map") as $gtiff) {
-        if (substr($gtiff->getFilename(), -5) <> '.info') continue;
+        if (substr($gtiff->getFilename(), -10) <> '.info.json') continue;
         //echo '** ',$gtiff->getFilename() . "<br>\n";
-        $gtiffs[] = substr($gtiff->getFilename(), 0, strlen($gtiff->getFilename())-5);
+        $gtiffs[] = substr($gtiff->getFilename(), 0, strlen($gtiff->getFilename())-10);
       }
     }
   }

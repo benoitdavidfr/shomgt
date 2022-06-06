@@ -13,6 +13,8 @@ doc: |
   La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
   Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
 journal: |
+  6/6/2022:
+    - modif. définition du niveau de zoom dans PyrLayer::map()
   30/5/2022:
     - modif initialisation Layer
   24/5/2022:
@@ -86,7 +88,8 @@ abstract class Layer {
 
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
   // lorsqu'un élément intersecte l'anti-méridien, il est dupliqué dans les 2 hémisphères Ouest et Est
-  abstract function map(GeoRefImage $grImage, bool $debug): void;
+  // le paramètre zoom est uniquement utilisé dans la classe PyrLayer
+  abstract function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void;
 };
 
 /*PhpDoc: classes
@@ -97,6 +100,8 @@ doc: |
   Le choix des échelles en fonction du niveau de zoom est défini dans la méthode PyrLayer::map()
 */
 class PyrLayer extends Layer {
+  const ErrorBadZoomValue = 'PyrLayer::ErrorBadZoomValue';
+  
   function asArray(): array {
     return ['title'=> "Pyramide des cartes GéoTiff du 1/40M au 1/5k"];
   }
@@ -106,8 +111,9 @@ class PyrLayer extends Layer {
     return $gbox->proj('WorldMercator');
   }
   
-  function map(GeoRefImage $grImage, bool $debug): void {
-    $zoom = Zoom::zoomForGBoxSize($grImage->ebox()->geo('WorldMercator')->size());
+  function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void {
+    if ($zoom == -1)
+      throw new SExcept("dans PyrLayer::map() le paramètre zoom doit être défini", self::ErrorBadZoomValue);
     $layernames = ['gt40M'];
     if ($zoom >= 6)
       $layernames[] = 'gt10M';
@@ -165,7 +171,7 @@ class LabelLayer extends Layer {
     return $ebox;
   }
   
-  function map(GeoRefImage $grImage, bool $debug): void {
+  function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void {
     $bg_color = $grImage->colorallocate([255, 255, 0]);
     $text_color = $grImage->colorallocate([255, 0, 0]);
     foreach ($this->nws as $gtname => $nw) {
@@ -234,7 +240,7 @@ class TiffLayer extends Layer {
   
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
   // lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est
-  function map(GeoRefImage $grImage, bool $debug): void {
+  function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void {
     //echo "<pre>"; print_r($this); echo "</pre>\n";
     $qebox = $grImage->ebox();
     // L'image est construite par la superposition des extraits des GéoTiffs intersectant le rectangle demandé

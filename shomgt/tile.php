@@ -19,6 +19,8 @@ doc: |
   Test:
     http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
+  6/6/2022:
+    - mise en constantes du débrayage des cachess
   30/5/2022:
     - modif initialisation Layer
   26/5/2022:
@@ -40,18 +42,23 @@ require_once __DIR__.'/lib/layer.inc.php';
 #require_once __DIR__.'/geotiff.inc.php';
 require_once __DIR__.'/lib/cache.inc.php';
 require_once __DIR__.'/lib/errortile.inc.php';
-//require_once __DIR__.'/../vendor/autoload.php'; // utile pour les perfs
+require_once __DIR__.'/../vendor/autoload.php'; // utile pour les perfs
 
-//use Symfony\Component\Yaml\Yaml; // utile pour les perfs
+use Symfony\Component\Yaml\Yaml; // utile pour les perfs
+
+//define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60); // nb secondes en cache pour le navigateur si <> 0
+define ('NB_SECONDS_IN_CACHE', 0); // pas de mise en cache par le navigateur
+//define ('SERVER_TILECACHE', true); // mise en cache des tuiles sur le serveur
+define ('SERVER_TILECACHE', false); // PAS de mise en cache des tuiles sur le serveur
 
 // enregistrement d'un log temporaire pour estimer les performances
-/*function logRecord(array $log): void {
+function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
   $flag_append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
   file_put_contents(__DIR__.'/log.yaml',
     Yaml::dump([date(DATE_ATOM)=> array_merge(['path_info'=> $_SERVER['PATH_INFO'] ?? null], $log)]),
     $flag_append|LOCK_EX);
-}*/
+}
 
 if (is_file(__DIR__.'/tileaccess.inc.php')) { // possibilité de restreindre l'accès dans certains cas 
   require_once __DIR__.'/tileaccess.inc.php';
@@ -263,7 +270,7 @@ if (!isset($layers[$lyrname])) {
   die("Erreur: couche $lyrname inexistante, voir la liste des couches sur $url\n");
 }
 
-if (!$debug)
+if (SERVER_TILECACHE && !$debug)
   Cache::readAndSend($lyrname, $z, $x, $y);
 
 try {
@@ -277,15 +284,14 @@ try {
     header('Content-type: text/plain; charset="utf-8"');
     die("Erreur: couche $lyrname inexistante en interne\n");
   }
-  $layers[$lyrname]->map($grImage, $debug);
+  $layers[$lyrname]->map($grImage, $debug, $z);
   $grImage->savealpha(true);
 } catch (Exception $e) {
   sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
 }
 
-define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60);
 if (!$debug) {
-  if (0) { // Mise en cache par le navigateur
+  if (NB_SECONDS_IN_CACHE) { // Mise en cache par le navigateur
     header('Cache-Control: max-age='.NB_SECONDS_IN_CACHE); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Expires: '.date('r', time() + NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Last-Modified: '.date('r'));
@@ -296,7 +302,8 @@ if (!$debug) {
   flush();
   //logRecord(['ellapsed_time'=> microtime(true)-$start['time'], 'memory_usage'=> memory_get_usage(true)-$start['memory']]);
   try {
-    Cache::write($lyrname, $z, $x, $y, $grImage->image());
+    if (SERVER_TILECACHE)
+      Cache::write($lyrname, $z, $x, $y, $grImage->image());
   } catch (Exception $e) {
     sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());
   }
