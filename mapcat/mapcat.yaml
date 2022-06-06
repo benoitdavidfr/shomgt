@@ -13,6 +13,7 @@ description:
     - toutefois je structure dans ce fichier les cartes en fonction de la structure des GéoTiffs
     - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
       - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
+    - suppression des champs spatial et replacement du champ bboxDM par spatial
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'

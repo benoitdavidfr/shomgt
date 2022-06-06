@@ -4,7 +4,9 @@ modified: '2022-06-06'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
-    6/6/2022: Ajout définition du champ badGan
+    6/6/2022:
+      - Ajout définition du champ badGan
+      - suppression des champs spatial et replacement du champ bboxDM par spatial
     9/1/2021: Ajout de la possibilité de stocker l'épaisseur du cadre pour les cartes non géo-référencées
     24/12/2020: Gestion des cartes obsolètes dans un dictionnaire à part.
 $schema: http://json-schema.org/schema#
