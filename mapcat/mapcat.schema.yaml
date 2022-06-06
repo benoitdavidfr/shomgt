@@ -47,7 +47,7 @@ definitions:
       - "44°09,00'N - 002°36,00'W"
       - "45°49,00'N - 001°00,00'W"
       - "30°S - 153°E"
-  bboxDM:
+  spatial:
     description: |
       boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
       Les longitudes doivent être comprises entre -180° et +180°.
@@ -157,18 +157,13 @@ definitions:
           dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
           Champ absent ssi la carte ne comporte pas d'espace principal
         $ref: '#/definitions/scaleDenominator'
-      bboxDM:
+      spatial:
         description: |
           boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
           ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
           les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
           Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
-        $ref: '#/definitions/bboxDM'
-      spatial:
-        description: |
-          la propriété bboxDM encodée au format DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
-          En cours de suppression.
-        $ref: '#/definitions/dcmi-box'
+        $ref: '#/definitions/spatial'
       borders:
         description: |
           Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement lorsque
@@ -234,7 +229,7 @@ definitions:
         items:
           type: object
           additionalProperties: false
-          required: [title, scaleDenominator, bboxDM]
+          required: [title, scaleDenominator, spatial]
           properties:
             title:
               description: titre du cartouche
@@ -242,12 +237,9 @@ definitions:
             scaleDenominator:
               description: dénominateur de l'échelle avec un . comme séparateur des milliers
               $ref: '#/definitions/scaleDenominator'
-            bboxDM:
-              description: boite englobante du cartouche en degrés, minutes en WGS84
-              $ref: '#/definitions/bboxDM'
             spatial:
-              description: la même boite encodée en DCMI-Box, optionnelle avec l'objectif d'améliorer l'interopérabilité.
-              $ref: '#/definitions/dcmi-box'
+              description: boite englobante du cartouche en degrés, minutes en WGS84
+              $ref: '#/definitions/spatial'
             borders:
               description: |
                 Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
