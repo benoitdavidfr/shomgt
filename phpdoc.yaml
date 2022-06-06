@@ -23,7 +23,7 @@ journal: |
     - portage de sgupdt et shomgt sur Alwaysdata avec la totalité des cartes
     - correction d'un bug dans le calcul du niveau de zoom pour afficher la couche pyramide
   5/6/2022:
-    - correction masssive de mapcat à partir du GAN
+    - correction massive de mapcat à partir du GAN
   30/5/2022:
     - ajout effacement du cache des tuiles dans sgupdt
     - correction bugs
