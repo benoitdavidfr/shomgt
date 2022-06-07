@@ -36,10 +36,7 @@ doc: |
     docker push registry.gitlab-forge.din.developpement-durable.gouv.fr/benoit.david/shomgt3
   
   A faire:
-    - tester l'image sur Gitlab avec OVH, avec le CROSS Corsen ?
     - développer le service WMS
-    - implémenter un cache de tuiles
-    - implémenter le z-order entre les GéoTiffs
     - implémenter une page alphanum temporal.php donnant, en html, JSON ou Yaml, la liste des cartes exposées
       triées sur leur numéro avec pour chacune
       - numéro
@@ -71,6 +68,8 @@ doc: |
     docker exec -it --user=www-data shomgt3_maps_1 /bin/bash
     
 journal: |
+  7/6/2022:
+    - ajout de l'érosion de l'encombrement des cartes pour s'asssurer que le trait du bord disparait
   6/6/2022:
     - création image v0.4
   8/5/2022:

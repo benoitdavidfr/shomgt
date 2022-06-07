@@ -27,7 +27,7 @@ journal: |
     - création
 includes: [coordsys.inc.php, pos.inc.php, zoom.inc.php, sexcept.inc.php]
 */}
-  $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/pos.inc.php';
@@ -486,6 +486,15 @@ class EBox extends BBox {
         $proj::geo($this->min),
         $proj::geo($this->max)
       ]);
+  }
+  
+  // dilate le rectangle de $dilate
+  function dilate(float $dilate): EBox {
+    $this->min[0] -= $dilate;
+    $this->min[1] -= $dilate;
+    $this->max[0] += $dilate;
+    $this->max[1] += $dilate;
+    return $this;
   }
 };
 

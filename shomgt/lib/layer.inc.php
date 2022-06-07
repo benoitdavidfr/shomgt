@@ -13,6 +13,9 @@ doc: |
   La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
   Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
 journal: |
+  7/6/2022:
+    - ajout d'une érosion des rectangles englobants des cartes d'une mesure définie sur la carte, ex 1mm
+      pour s'assurer que le trait du bord de la carte est bien effacé
   6/6/2022:
     - modif. définition du niveau de zoom dans PyrLayer::map()
   30/5/2022:
@@ -52,6 +55,7 @@ doc: |
 */
 abstract class Layer {
   const LAYERS_PSER_PATH = __DIR__.'/layers.pser';
+  const DILATE = - 1e-3; // dilatation en mètres sur la carte
 
   static array $layers=[]; // dictionaire [{lyrName} => Layer]
 
@@ -70,13 +74,24 @@ abstract class Layer {
     $shomgt = Yaml::parseFile("$filename.yaml");
     foreach ($shomgt as $lyrName => $dictOfGT) {
       if (substr($lyrName,0,2)=='gt') {
-        self::$layers[$lyrName] = new TiffLayer($dictOfGT ?? []);
-        self::$layers['num'.substr($lyrName,2)] = new LabelLayer($dictOfGT ?? []);
+        self::$layers[$lyrName] = new TiffLayer($lyrName, $dictOfGT ?? []);
+        self::$layers['num'.substr($lyrName,2)] = new LabelLayer($lyrName, $dictOfGT ?? []);
       }
     }
     file_put_contents(self::LAYERS_PSER_PATH, serialize(self::$layers));
   }
   
+  static function dilate(string $lyrName): float { // calcule le coeff de dilatation en fonction du nom de la couche
+    $sd = substr($lyrName, 2);
+    if (ctype_digit(substr($sd, 0, 1)) && ($sd <> '40M')) {
+      $sd = str_replace(['k','M'], ['000','000000'], $sd);
+      return self::DILATE * $sd;
+    }
+    else {
+      return 0;
+    }
+  }
+
   // retourne le dictionnaire des couches
   static function layers() { return self::$layers; }
   
@@ -155,10 +170,14 @@ doc: |
 class LabelLayer extends Layer {
   protected array $nws=[]; // dictionnaire [gtname => coin NW du rectangle englobant du GéoTiff en coord. WorldMercator]
   
-  function __construct(array $dictOfGT) {
+  function __construct(string $lyrName, array $dictOfGT) {
     foreach ($dictOfGT as $gtname => $gt) {
       $gbox = GBox::fromShomGt($gt['spatial']);
-      $this->nws[$gtname] = WorldMercator::proj([$gbox->west(), $gbox->north()]);
+      $nw = WorldMercator::proj([$gbox->west(), $gbox->north()]);
+      $dilate = self::dilate($lyrName);
+      $nw[0] -= $dilate;
+      $nw[1] += $dilate;
+      $this->nws[$gtname] = $nw;
     }
   }
   
@@ -199,14 +218,16 @@ class TiffLayer extends Layer {
   const ErrorBadGeoCoords = 'Layer::ErrorBadGeoCoords';
   
   protected array $geotiffs=[]; // dictionnaire [gtname => ['title'=>string, 'spatial'=>EBox, 'borders'=>{borders}?]]
-    
-  function __construct(array $dictOfGT) {
+  
+  function __construct(string $lyrName, array $dictOfGT) {
+    //echo "lyrName=$lyrName<br>\n";
+    //echo "dilate=$dilate<br>\n";
     foreach ($dictOfGT as $gtname => $gt) {
       foreach ($gt['borders'] ?? [] as $k => $b)
         $gt['borders'][$k] = eval("return $b;"); // si c'est une expression, l'évalue et stocke le résultat
       $this->geotiffs[$gtname] = [
         'title'=> $gt['title'],
-        'spatial'=> GBox::fromShomGt($gt['spatial'])->proj('WorldMercator'),
+        'spatial'=> GBox::fromShomGt($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
         'borders'=> $gt['borders'] ?? null,
       ];
     }

@@ -120,7 +120,7 @@ class LayerDef {
     '10M'=> 1.4e7,
     '40M'=> 9e999,
   ];
-  // liste des noms des couches supplémentaires avec la liste des noms de géotiif de la couche
+  // liste des noms des couches supplémentaires avec la liste des noms de géotiff de la couche
   const SPECIAL_LAYERS = [
     'gtaem' => ['7330_2016', '7344_2016', '7360_2016', '8502_2010', '8509_2015.pdf', '8517_2015.pdf'],
     'gtMancheGrid' => ['8101'],
