@@ -17,6 +17,8 @@ doc: |
   En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
   Ce dernier mécanisme est notamment utilisé par QGis
 journal: |
+  8/6/2022:
+    - adaptation du dessin des silhouettes quand l'échelle est trop petite
   7/6/2022:
     - clonage dans ShomGt3
   7-8/2/2022:
@@ -53,6 +55,9 @@ require_once __DIR__.'/lib/coordsys.inc.php';
 require_once __DIR__.'/lib/gebox.inc.php';
 require_once __DIR__.'/lib/wmsserver.inc.php';
 require_once __DIR__.'/lib/layer.inc.php';
+
+WmsServer::log("appel avec REQUEST_URI=".json_encode($_SERVER['REQUEST_URI'], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
 // Mécanisme de contrôle d'accès sur l'IP et le login / mdp
 // Si le contrôle est activé et s'il est refusé alors demande d'authentification
@@ -96,7 +101,7 @@ doc: |
   et qui appelle les méthodes getCapabilities() et getMap()
 */
 class WmsShomGt extends WmsServer {
-  const BASE = 20037508.3427892476320267; // xmax en Web Mercator
+  const BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
   
   // méthode GetCapabilities du serveur Shomgt
   function getCapabilities(string $version='') {
@@ -123,7 +128,7 @@ class WmsShomGt extends WmsServer {
       case 'EPSG:4326': { // WGS84 LatLon
         if (($bbox[0] < WorldMercator::MinLat) || ($bbox[0] > WorldMercator::MaxLat))
           WmsServer::exception(400, "Erreur, latitude incorrecte dans le paramètre BBOX", 'InvalidRequest');
-        return EBox([
+        return new EBox([
           WorldMercator::proj([$bbox[1], $bbox[0]]),
           WorldMercator::proj([$bbox[3], $bbox[2]]),
         ]);
@@ -152,7 +157,10 @@ class WmsShomGt extends WmsServer {
     // avec un dessin des GéoTiffs présents dans la couche demandée
     $originalLayers = [];
     if ($lyrnames[0] == 'gtpyr') {
-      $zoom = round(log(self::BASE/$scaleden/0.00028, 2))-7;
+      $zoom = round(log(self::BASE*2/$wombox->dx(), 2));
+      //echo "dx=",$wombox->dx(),", zoom=$zoom\n"; die();
+      if ($zoom < 0)
+        $zoom = 0;
     }
     elseif (ctype_digit(substr($lyrnames[0], 2, 1))) {
       $numscaleden = str_replace(['k','M'], ['000','000000'], substr($lyrnames[0], 2)); // dén. échelle couche
@@ -162,7 +170,11 @@ class WmsShomGt extends WmsServer {
       }
       $zoom = -1;
     }
-    else {
+    else { // les couches spéciales
+      if ($scaleden > 40_000_000) { // échelle demandée est trop petite
+        $originalLayers = $lyrnames;
+        $lyrnames = ['gt40M'];
+      }
       $zoom = -1;
     }
       
@@ -172,12 +184,15 @@ class WmsShomGt extends WmsServer {
     $grImage->create($width, $height, true); // création d'une image GD transparente
   
     foreach ($lyrnames as $lyrname) { // dessin des couches demandées 
-      Layer::layers()[$lyrname]->map($grImage, $debug);
+      Layer::layers()[$lyrname]->map($grImage, $debug, $zoom);
     }
     
-    // Si l'échelle est trop petite par rapport à la couche demandée, dessin des GéoTiffs présents dans les couche demandées
+    // Si l'échelle est trop petite par rapport à la couche demandée, dessin des silhouettes des GéoTiffs des couche demandées
+    // ainsi que les numéros
     $color = null;
     foreach ($originalLayers as $lyrname) {
+      $numLyrName = 'num'.substr($lyrname, 2);
+      Layer::layers()[$numLyrName]->map($grImage, $debug, $zoom);
       if (!$color)
         $color = $grImage->colorallocate([0,0, 255]);
       foreach (Layer::layers()[$lyrname]->itemEBoxes() as $ebox)
@@ -238,8 +253,8 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'styles'=> '',
       'format'=> 'image/png',
       'transparent'=> 'true',
-      'height'=> '800',
-      'width'=> '400',
+      'width'=>  '800',
+      'height'=> '400',
       'crs'=> 'EPSG:4326',
       'bbox'=> '43,-3,46,3',
     ],
@@ -303,8 +318,8 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
   }
   //echo "<pre>"; print_r($_SERVER); echo "</pre>\n";
 } else {
-  $server = new WmsShomGt;
   try {
+    $server = new WmsShomGt;
     $server->process($_GET);
   }
   catch (SExcept $e) {
