@@ -19,6 +19,7 @@ doc: |
 journal: |
   8/6/2022:
     - adaptation du dessin des silhouettes quand l'échelle est trop petite
+    - test Ok avec QGis
   7/6/2022:
     - clonage dans ShomGt3
   7-8/2/2022:
@@ -49,7 +50,6 @@ journal: |
   17/6/2017
     Reprise du serveur de cadastre et évolutions
 */
-//die("OK ligne ".__LINE__." de ".__FILE__);
 //require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/lib/coordsys.inc.php';
 require_once __DIR__.'/lib/gebox.inc.php';
@@ -146,35 +146,41 @@ class WmsShomGt extends WmsServer {
     }
   }
   
+  // indique si l'échelle demandée est considére comme trop petite pour la couche
+  private function tooSmallScale(float $scaleden, string $lyrname): bool {
+    if (ctype_digit(substr($lyrname, 2, 1))) {
+      $layerscaleden = str_replace(['k','M'], ['000','000000'], substr($lyrname, 2)); // dén. échelle de la couche
+    }
+    else { // les couches spéciales
+      $layerscaleden = 40_000_000;
+    }
+    return ($scaleden > $layerscaleden * 4);
+  }
+  
   // méthode GetMap du serveur Shomgt
   function getMap(string $version, array $lyrnames, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor) {
-    if (($width <= 0) || ($width > 2048) || ($height <= 0) || ($height > 2048))
+    if (($width < 100) || ($width > 2048) || ($height < 100) || ($height > 2048))
       WmsServer::exception(400, "Erreur, paramètre WIDTH ou HEIGHT incorrect", 'InvalidRequest');
     //    echo "bbox="; print_r($bbox); //die();
-    $wombox = $this->wombox($crs, $bbox);
-    $scaleden = $wombox->dx() / $width / 0.00028;
-    // Si l'échelle est trop petite par rapport à la couche demandée, c'est le planisphère qui est retourné
-    // avec un dessin des GéoTiffs présents dans la couche demandée
+    $wombox = $this->wombox($crs, $bbox); // calcul du rectangle de la requête en World Mercator
+    // dx() est en mètres, $width est un nbre de pixels, 0.00028 est la taille std du pixel pour WMS
+    $scaleden = $wombox->dx() / $width / 0.00028; // dénominateur de l'échelle demandée
     $originalLayers = [];
-    if ($lyrnames[0] == 'gtpyr') {
+    if (in_array('gtpyr', $lyrnames)) {
       $zoom = round(log(self::BASE*2/$wombox->dx(), 2));
       //echo "dx=",$wombox->dx(),", zoom=$zoom\n"; die();
       if ($zoom < 0)
         $zoom = 0;
     }
-    elseif (ctype_digit(substr($lyrnames[0], 2, 1))) {
-      $numscaleden = str_replace(['k','M'], ['000','000000'], substr($lyrnames[0], 2)); // dén. échelle couche
-      if ($scaleden > $numscaleden * 4) { // échelle demandée est trop petite
-        $originalLayers = $lyrnames;
-        $lyrnames = ['gt40M'];
-      }
+    // Pour les couches autres que gtpyr, afin d'éviter de saturer le serveur avec des requêtes dont le résultat a peu de sens
+    // si l'échelle est trop petite par rapport à la couche demandée, affichage du planisphère avec un dessin des silhouettes
+    // des GéoTiffs présents de la couche demandée
+    elseif ($this->tooSmallScale($scaleden, $lyrnames[0])) {
+      $originalLayers = $lyrnames;
+      $lyrnames = ['gt40M'];
       $zoom = -1;
     }
-    else { // les couches spéciales
-      if ($scaleden > 40_000_000) { // échelle demandée est trop petite
-        $originalLayers = $lyrnames;
-        $lyrnames = ['gt40M'];
-      }
+    else {
       $zoom = -1;
     }
       
@@ -183,22 +189,23 @@ class WmsShomGt extends WmsServer {
     $grImage = new GeoRefImage($wombox); // création de l'image Géoréférencée
     $grImage->create($width, $height, true); // création d'une image GD transparente
   
-    foreach ($lyrnames as $lyrname) { // dessin des couches demandées 
+    foreach ($lyrnames as $lyrname) { // dessin des couches demandées ou de la couche gt40M sur laquelle dessin des silhouettes
       Layer::layers()[$lyrname]->map($grImage, $debug, $zoom);
     }
     
     // Si l'échelle est trop petite par rapport à la couche demandée, dessin des silhouettes des GéoTiffs des couche demandées
-    // ainsi que les numéros
+    // ainsi que leur numéro
     $color = null;
     foreach ($originalLayers as $lyrname) {
       $numLyrName = 'num'.substr($lyrname, 2);
       Layer::layers()[$numLyrName]->map($grImage, $debug, $zoom);
       if (!$color)
         $color = $grImage->colorallocate([0,0, 255]);
-      foreach (Layer::layers()[$lyrname]->itemEBoxes() as $ebox)
+      foreach (Layer::layers()[$lyrname]->itemEBoxes($wombox) as $ebox)
         $grImage->rectangle($ebox, $color);
     }
 
+    // génération de l'image
     $grImage->savealpha(true);
     if (!$debug)
       header('Content-type: '.$format);
@@ -222,7 +229,7 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
     echo "<a href='?action=logout'>Se déloguer en http (cliquer sur annuler)</a><br>\n";
   }*/
   echo "<h3>URL de Test du serveur WMS de ShomGt</h3>\n";
-  foreach ([
+  $menu = [
     'GetCapabilities' => [
       'SERVICE'=> 'WMS',
       'REQUEST'=> 'GetCapabilities',
@@ -310,13 +317,15 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'crs'=> 'CRS:84',
       'bbox'=> '-180,-80,180,80',
     ],
-  ] as $label => $params) {
+  ];
+  foreach ($menu as $label => $params) {
     $href = '';
     foreach ($params as $k => $v)
       $href .= ($href ? '&amp;' : '?').$k.'='.urlencode($v);
     echo "<a href='$href'>$label</a><br>\n";
   }
   //echo "<pre>"; print_r($_SERVER); echo "</pre>\n";
+  echo "</body></html>\n";
 } else {
   try {
     $server = new WmsShomGt;

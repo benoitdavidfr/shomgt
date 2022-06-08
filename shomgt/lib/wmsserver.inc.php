@@ -4,7 +4,7 @@ name: wmsserver.inc.php
 title: wmsserver.inc.php - définition de la classe abstraite WmsServer
 classes:
 doc: |
-  Cette classe gère de manière minimum le protocole WMS 1.1.1 ou 1.3.0 et fournit qqs méthodes génériques ;
+  Cette classe gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
   elle est indépendante des fonctionnalités du serveur de shomgt.
   Elle génère un fichier temporaire de log utile au déverminage
 journal: |

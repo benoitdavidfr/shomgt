@@ -216,6 +216,7 @@ doc: |
 */
 class TiffLayer extends Layer {
   const ErrorBadGeoCoords = 'Layer::ErrorBadGeoCoords';
+  const WOM_BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
   
   protected array $geotiffs=[]; // dictionnaire [gtname => ['title'=>string, 'spatial'=>EBox, 'borders'=>{borders}?]]
   
@@ -346,10 +347,19 @@ class TiffLayer extends Layer {
     return $features;
   }
   
-  function itemEBoxes(): array { // retourne la liste des EBox correspondant aux GéoTiffs de la couche 
+  // retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle
+  // Pour les GéoTiffs à cheval sur l'anti-méridien, les duplique à l'Ouest
+  function itemEBoxes(EBox $wombox): array {
     $eboxes = [];
-    foreach($this->geotiffs as $gtname => $gt)
-      $eboxes[] = $gt['spatial'];
+    foreach($this->geotiffs as $gtname => $gt) {
+      if ($wombox->inters($gt['spatial']))
+        $eboxes[] = $gt['spatial'];
+      if ($gt['spatial']->east() > self::WOM_BASE) {
+        $translated = $gt['spatial']->translateInX(- 2 * self::WOM_BASE);
+        if ($wombox->inters($translated))
+          $eboxes[] = $translated;
+      }
+    }
     return $eboxes;
   }
 };
