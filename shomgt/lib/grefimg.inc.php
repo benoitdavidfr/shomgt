@@ -47,6 +47,7 @@ class GeoRefImage {
   const ErrorCopy = 'GeoRefImage::ErrorCopy';
   const ErrorColorAllocate = 'GeoRefImage::ErrorColorAllocate';
   const ErrorFilledRectangle = 'GeoRefImage::ErrorFilledRectangle';
+  const ErrorRectangle = 'GeoRefImage::ErrorRectangle';
   const ErrorFilledPolygon = 'GeoRefImage::ErrorFilledPolygon';
   const ErrorDrawString = 'GeoRefImage::ErrorDrawString';
   const ErrorSaveAlpha = 'GeoRefImage::ErrorSaveAlpha';
@@ -178,6 +179,14 @@ class GeoRefImage {
       throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
   }
   
+  // Dessine le rectangle dans la couleur
+  function rectangle(EBox $rect, int $color): void {
+    $nw = $this->toImgPos([$rect->west(), $rect->north()], false);
+    $se = $this->toImgPos([$rect->east(), $rect->south()], false);
+    if (!imagerectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color))
+      throw new SExcept("erreur de imagerectangle()", self::ErrorRectangle);
+  }
+
   // Dessine le polygone défini par une liste de positions en le remplissant avec la couleur
   function filledpolygon(array $lpos, int $color): void {
     foreach ($lpos as $i => $pos) {

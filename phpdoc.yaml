@@ -18,12 +18,19 @@ doc: |
   Voir le fichier filetree.yaml pour l'arborescence des fichiers, les mapping dans les conteneurs et les vars d'environnement
 
 journal: |
+  7/6/2022:
+    - ajout érosion de l'encombrement des cartes pour effacer les traits des bords des cartes
   6/6/2022:
-    - réécriture de l'utilisation de gdalinfo, utilisation de la version json, suppression de la détection du CRS
+    - réécriture de l'utilisation de gdalinfo, utilisation de la sortie json, suppression de la détection du CRS
     - portage de sgupdt et shomgt sur Alwaysdata avec la totalité des cartes
+      - Alwaysdata propose une version ancienne de gdalinfo qui ne fournit pas la même version de WKT
     - correction d'un bug dans le calcul du niveau de zoom pour afficher la couche pyramide
+    - test OK sur OVH de la version 0.4 des images
   5/6/2022:
-    - correction massive de mapcat à partir du GAN
+    - correction massive des bboxDM de mapcat à partir du GAN
+    - suppression dans mapcat du chmap spatial et renommage de bboxDM en spatial
+  3/6/2022:
+    - fonctionnement OK du docker-compose au CROSS Corsen avec les images v0.3
   30/5/2022:
     - ajout effacement du cache des tuiles dans sgupdt
     - correction bugs

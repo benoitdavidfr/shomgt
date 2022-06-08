@@ -345,6 +345,13 @@ class TiffLayer extends Layer {
     }
     return $features;
   }
+  
+  function itemEBoxes(): array { // retourne la liste des EBox correspondant aux GéoTiffs de la couche 
+    $eboxes = [];
+    foreach($this->geotiffs as $gtname => $gt)
+      $eboxes[] = $gt['spatial'];
+    return $eboxes;
+  }
 };
 
 
