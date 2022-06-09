@@ -11,15 +11,24 @@ includes:
   - protect.inc.php
 classes:
 doc: |
+  QGis essaie par défaut d'afficher les couches dans leur extension maximum.
+  C'est généralement très pénalisant car il faut alors afficher tous les GéoTiffs de la couche alors que cela n'a pas
+  beaucoup de sens.
+  Pour éviter cela dans le cas général, le serveur détermine si l'échelle demandé est trop petite par rapport à l'échelle
+  de référence de la couche et dans ce cas retourne les silhouettes des GéoTiffs sur fond du planisphère 1/40M.
+  Il existe des cas particuliers où ce mécanisme n'est pas mis en oeuvre mais l'important est qu'il fonctionne dans le
+  cas général généré par QGis.
+
   Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
   qui teste l'adresse IP de provenance et l'existence d'un cookie adhoc.
   Pour un serveur WMS, le cookie n'est pas utilisé par les clients lourds.
   En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
   Ce dernier mécanisme est notamment utilisé par QGis
 journal: |
-  8/6/2022:
+  8-9/6/2022:
     - adaptation du dessin des silhouettes quand l'échelle est trop petite
     - test Ok avec QGis
+    - affinage notamment du niveau de zoom
   7/6/2022:
     - clonage dans ShomGt3
   7-8/2/2022:
@@ -56,9 +65,6 @@ require_once __DIR__.'/lib/gebox.inc.php';
 require_once __DIR__.'/lib/wmsserver.inc.php';
 require_once __DIR__.'/lib/layer.inc.php';
 
-WmsServer::log("appel avec REQUEST_URI=".json_encode($_SERVER['REQUEST_URI'], JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
-WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
-
 // Mécanisme de contrôle d'accès sur l'IP et le login / mdp
 // Si le contrôle est activé et s'il est refusé alors demande d'authentification
 /*try {
@@ -93,15 +99,20 @@ catch (Exception $e) {
   WmsServer::exception(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
 }*/
 
+// écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
+WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
+WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+
 /*PhpDoc: classes
 name: class WmsShomGt
 title: class WmsShomGt - classe implémentant les fonctions du WMS de ShomGt
 doc: |
-  La classe WmsShomGt hérite de la classe WmsServer qui gère un serveur WMS générique
-  et qui appelle les méthodes getCapabilities() et getMap()
+  La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
+  Le script appelle WmsServer::process() qui appelle les méthodes WmsShomGt::getCapabilities() ou WmsShomGt::getMap()
 */
 class WmsShomGt extends WmsServer {
   const BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
+  const OUTLINE_COLOR = [0, 0, 255]; // couleur des silhouettes sous la forme [R,V,B]
   
   // méthode GetCapabilities du serveur Shomgt
   function getCapabilities(string $version='') {
@@ -114,7 +125,7 @@ class WmsShomGt extends WmsServer {
     ));
   }
 
-  private function wombox(string $crs, array $bbox): EBox { // calcul EBox en WorldMercator 
+  private function wombox(string $crs, array $bbox): EBox { // calcul EBox en WorldMercator en fonction de crs 
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
         return new EBox([[$bbox[0], $bbox[1]], [$bbox[2], $bbox[3]]]);
@@ -146,42 +157,44 @@ class WmsShomGt extends WmsServer {
     }
   }
   
-  // indique si l'échelle demandée est considére comme trop petite pour la couche
+  // indique si l'échelle demandée est considérée comme trop petite pour la couche
   private function tooSmallScale(float $scaleden, string $lyrname): bool {
-    if (ctype_digit(substr($lyrname, 2, 1))) {
+    if (ctype_digit(substr($lyrname, 2, 1))) { // les couches correspondant à une échelle
       $layerscaleden = str_replace(['k','M'], ['000','000000'], substr($lyrname, 2)); // dén. échelle de la couche
     }
     else { // les couches spéciales
       $layerscaleden = 40_000_000;
     }
+    // l'échelle demandée est trop petite ssi son dén. est plus de 4 fois supérieur à celui de l'échelle de réf. de la couche
     return ($scaleden > $layerscaleden * 4);
   }
   
-  // méthode GetMap du serveur Shomgt
+  // méthode GetMap du serveur WMS Shomgt
   function getMap(string $version, array $lyrnames, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor) {
     if (($width < 100) || ($width > 2048) || ($height < 100) || ($height > 2048))
       WmsServer::exception(400, "Erreur, paramètre WIDTH ou HEIGHT incorrect", 'InvalidRequest');
     //    echo "bbox="; print_r($bbox); //die();
-    $wombox = $this->wombox($crs, $bbox); // calcul du rectangle de la requête en World Mercator
+    $wombox = $this->wombox($crs, $bbox); // calcul en World Mercator du rectangle de la requête
     // dx() est en mètres, $width est un nbre de pixels, 0.00028 est la taille std du pixel pour WMS
     $scaleden = $wombox->dx() / $width / 0.00028; // dénominateur de l'échelle demandée
-    $originalLayers = [];
-    if (in_array('gtpyr', $lyrnames)) {
-      $zoom = round(log(self::BASE*2/$wombox->dx(), 2));
-      //echo "dx=",$wombox->dx(),", zoom=$zoom\n"; die();
+    $originalLayerName = null; // valeur par défaut
+    $zoom = -1; // valeur par défaut
+    if (in_array('gtpyr', $lyrnames)) { // si gtpyr est demandé, on ne teste pas si l'échelle est trop petite
+      // Explication de la formule de déduction du zoom
+      // Si width=256 alors zomm est le log base 2 de BASE*2/dx, plus dx diminue plus le zoom augmente
+      // A dx constant, si width augmente alors le zoom augmente car on affiche plus de détails
+      // La formule dans le log() est sans unité puisque c'est m / m * pixels / pixels
+      // Enfin en expérimentant avec QGis en cherchant à obtenir la bonne carte pour une échelle donnée, j'ajuste avec le -0.5 
+      $zoom = round(log(self::BASE*2/$wombox->dx() * $width/256, 2) - 0.5);
       if ($zoom < 0)
         $zoom = 0;
     }
-    // Pour les couches autres que gtpyr, afin d'éviter de saturer le serveur avec des requêtes dont le résultat a peu de sens
-    // si l'échelle est trop petite par rapport à la couche demandée, affichage du planisphère avec un dessin des silhouettes
-    // des GéoTiffs présents de la couche demandée
+    // On détecte sii l'échelle est trop petite par rapport à la couche demandée et dans ce cas on copie le nom
+    // de la première couche dans $originalLayerName et on affecte à $lyrnames le planisphère 1/40M.
+    // Si plusieurs couches ont été demandées, seule la première est prise en compte.
     elseif ($this->tooSmallScale($scaleden, $lyrnames[0])) {
-      $originalLayers = $lyrnames;
+      $originalLayerName = $lyrnames[0];
       $lyrnames = ['gt40M'];
-      $zoom = -1;
-    }
-    else {
-      $zoom = -1;
     }
       
     Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
@@ -189,22 +202,41 @@ class WmsShomGt extends WmsServer {
     $grImage = new GeoRefImage($wombox); // création de l'image Géoréférencée
     $grImage->create($width, $height, true); // création d'une image GD transparente
   
-    foreach ($lyrnames as $lyrname) { // dessin des couches demandées ou de la couche gt40M sur laquelle dessin des silhouettes
+    foreach ($lyrnames as $lyrname) { // dessin des couches demandées ou de la couche gt40M si échelle inappropriée
       Layer::layers()[$lyrname]->map($grImage, $debug, $zoom);
     }
     
-    // Si l'échelle est trop petite par rapport à la couche demandée, dessin des silhouettes des GéoTiffs des couche demandées
-    // ainsi que leur numéro
-    $color = null;
-    foreach ($originalLayers as $lyrname) {
-      $numLyrName = 'num'.substr($lyrname, 2);
+    // Si échelle inappropriée alors dessin des silhouettes des GéoTiffs de la 1ère couche demandée ainsi que leur numéro
+    if ($originalLayerName) {
+      // dessin des étiquettes des numéros des GéoTiffs
+      $numLyrName = 'num'.substr($originalLayerName, 2);
       Layer::layers()[$numLyrName]->map($grImage, $debug, $zoom);
-      if (!$color)
-        $color = $grImage->colorallocate([0,0, 255]);
-      foreach (Layer::layers()[$lyrname]->itemEBoxes($wombox) as $ebox)
+      $color = $grImage->colorallocate(self::OUTLINE_COLOR);
+      // dessin des silhouettes des GéoTiffs - affichage de leur rectangle dans la couleur définie ci-dessus
+      foreach (Layer::layers()[$originalLayerName]->itemEBoxes($wombox) as $ebox)
         $grImage->rectangle($ebox, $color);
     }
-
+    
+    if (0) { // commentaire de debug
+      if ($debug) echo "Debug ligne ",__LINE__,"<br>\n";
+      $wombox2 = new EBox([
+        $wombox->west(),
+        $wombox->north()-$wombox->dy()/10,
+        //($wombox->north()+$wombox->south())/2,
+        ($wombox->west()+$wombox->east())/2,
+        $wombox->north(),
+      ]);
+      $grImage2 = new GeoRefImage($wombox2);
+      $grImage2->create($width/2, $height/10, true);
+      $bg_color = $grImage2->colorallocate([255, 255, 0]);
+      $text_color = $grImage2->colorallocate([255, 0, 0]);
+      $grImage2->string(
+          12, [$grImage2->ebox()->west(), $grImage2->ebox()->north()],
+          "scaleden=$scaleden, zoom=$zoom, zoom2=".log(self::BASE*2/$wombox->dx()*$width/256, 2),
+          $text_color, $bg_color, $debug);
+      $grImage->copyresampled($grImage2, $wombox2, $debug);
+    }
+    
     // génération de l'image
     $grImage->savealpha(true);
     if (!$debug)
