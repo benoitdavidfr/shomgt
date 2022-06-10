@@ -99,8 +99,8 @@ catch (Exception $e) {
 }*/
 
 // écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
-//WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
-//WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
+WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
 /*PhpDoc: classes
 name: class WmsShomGt
