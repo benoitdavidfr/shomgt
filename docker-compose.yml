@@ -1,4 +1,4 @@
-# config docker-compose de shomgt3 pour test sur VPS OVH - 31/5/2022
+# config docker-compose de shomgt3 pour test sur VPS OVH - 10/6/2022
 # fichier dans /Users/benoit/Sites/geoapi/shomgt3
 # lance 2 containers:
 #   - shomgt expose les GéoTiffs
@@ -8,13 +8,13 @@
 version: '3'
 services:
   shomgt:
-    image: benoitdavid/shomgt3:shomgt-v0.3
+    image: benoitdavid/shomgt3:shomgt-v0.5
     hostname: shomgt
     ports: ["80:80"]
     volumes:
       - sg3data:/var/www/data
   sgupdt:
-    image: benoitdavid/shomgt3:sgupdt-v0.3
+    image: benoitdavid/shomgt3:sgupdt-v0.5
     hostname: sgupdt
     volumes:
       - sg3data:/var/www/data

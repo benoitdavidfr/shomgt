@@ -131,10 +131,29 @@ volumesPartagés:
       - sg3data:/var/www/data
       - /Users/benoit/Sites/geoapi/shomgt3/shomgtupdt:/var/www/cli (uniquement en dev)
   surOvh:
-    cmdes: |
-      $ sudo docker volume create sg3data
     dansShomgt:
       - sg3data:/var/www/data
     dansSgupdt:
       - sg3data:/var/www/data
 
+tests:
+  title: protocole de tests
+  sgupdt:
+    - suppression du volume sg3data et recréation des cartes
+    - suppression des cartes suivantes et recréation
+      - ouvrir le disque sg3data
+        - sudo docker run -it --rm -v shomgt_sg3data:/var/www/data ubuntu:latest /bin/bash
+      - 6969 - carte std
+      - 7283 - carte à cheval sur l'AM
+      - 6835 - carte ayant un cartouche à cheval sur l'AM
+      - 8502 - carte non géoréférencée
+      - 7081 - carte en partie effacée
+      - 7482 - carte sous 6948_pal300 < 7302_pal300
+      - cd /var/www/data/maps
+      - rm -r 7283 6969 7283 6835 8502 7081 7482
+      - relancer le conteneur sgupdt
+  shomgt:
+    - accès aux url définies dans wms.php
+    - accès à mapwcat.php
+    - accès au WMS à partir ed QGis
+    
