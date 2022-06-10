@@ -170,6 +170,10 @@ abstract class BBox {
       ]];
   }
   
+  function translateInX(float $dx): self { // renvoie le rectangle translaté en X
+    return new self([$this->min[0] + $dx, $this->min[1], $this->max[0] + $dx, $this->max[1]]);
+  }
+  
   // modifie $this pour qu'il soit l'union de $this et de $b2, renvoie $this
   // la BBox indéterminée est un élément neutre pour l'union
   function unionVerbose(BBox $b2): BBox {
@@ -234,6 +238,15 @@ abstract class BBox {
   
   // version bouléenne de intersects()
   function inters(BBox $b2): bool { return $this->intersects($b2) ? true : false; }
+  
+  // dilate le rectangle de $dilate
+  function dilate(float $dilate): EBox {
+    $this->min[0] -= $dilate;
+    $this->min[1] -= $dilate;
+    $this->max[0] += $dilate;
+    $this->max[1] += $dilate;
+    return $this;
+  }
 };
 
 {/*PhpDoc: classes
