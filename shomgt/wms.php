@@ -18,7 +18,7 @@ doc: |
   En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
   Ce dernier mécanisme est notamment utilisé par QGis
 journal: |
-  8-9/6/2022:
+  8-10/6/2022:
     - adaptation du dessin des silhouettes quand l'échelle est trop petite
     - test Ok avec QGis
     - affinage notamment du niveau de zoom
@@ -110,9 +110,11 @@ doc: |
   Le script appelle WmsServer::process() qui appelle les méthodes WmsShomGt::getCapabilities() ou WmsShomGt::getMap()
 */
 class WmsShomGt extends WmsServer {
-  const STD_PIXEL_SIZE = 0.00028; // taille du pixel définie par WMS en mètres 
+  const STD_PIXEL_SIZE = 0.00028; // taille du pixel définie par WMS en mètres, soit 90,7 dpi (1 inch = 25,4 mm)
+  // Le Mac demande du 72 dpi, le PC du 96 dpi
   const BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
-  const OUTLINE_COLOR = [0, 0, 255]; // couleur des silhouettes sous la forme [R,V,B]
+  // = demi grand axe de l'ellipsoide WGS84 (6378137.0) * PI
+  const OUTLINE_COLOR = [0, 0, 0xFF]; // couleur des silhouettes sous la forme [R,V,B]
   
   // méthode GetCapabilities du serveur Shomgt
   function getCapabilities(string $version='') {
@@ -172,6 +174,10 @@ class WmsShomGt extends WmsServer {
     return ($scaleden > $layerscaleden * 4);
   }
   
+  private function zoom(EBox $wombox, int $width): float {
+    return log(self::BASE*2/$wombox->dx() * $width/256, 2);
+  }
+  
   // méthode GetMap du serveur WMS Shomgt
   function getMap(string $version, array $lyrnames, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor) {
     if (($width < 100) || ($width > 2048) || ($height < 100) || ($height > 2048))
@@ -187,8 +193,8 @@ class WmsShomGt extends WmsServer {
       // Si width=256 alors zomm est le log base 2 de BASE*2/dx, plus dx diminue plus le zoom augmente
       // A dx constant, si width augmente alors le zoom augmente car on affiche plus de détails
       // La formule dans le log() est sans unité puisque c'est m / m * pixels / pixels
-      // Enfin en expérimentant avec QGis en cherchant à obtenir la bonne carte pour une échelle donnée, j'ajuste avec le -0.5 
-      $zoom = round(log(self::BASE*2/$wombox->dx() * $width/256, 2) - 0.5);
+      // Enfin en expérimentant avec QGis en cherchant à obtenir la bonne carte pour une échelle donnée, j'ajuste avec le -1 
+      $zoom = round($this->zoom($wombox, $width) - 1);
       if ($zoom < 0)
         $zoom = 0;
     }
@@ -235,7 +241,7 @@ class WmsShomGt extends WmsServer {
       $text_color = $grImage2->colorallocate([255, 0, 0]);
       $grImage2->string(
           12, [$grImage2->ebox()->west(), $grImage2->ebox()->north()],
-          "scaleden=$scaleden, zoom=$zoom, zoom2=".log(self::BASE*2/$wombox->dx()*$width/256, 2),
+          sprintf("scaleden=%.2f, zoom=%d, zoom2=%.2f", $scaleden, $zoom, $this->zoom($wombox, $width)),
           $text_color, $bg_color, $debug);
       $grImage->copyresampled($grImage2, $wombox2, $debug);
     }
