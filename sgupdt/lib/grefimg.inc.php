@@ -5,6 +5,8 @@ title: grefimg.inc.php - Définition de la classe GeoRefImage gérant image géo
 doc: |
   Définition de la classe GeoRefImage.
 journal: |
+  10/6/2022:
+    - revue de code
   27/4/2022:
     - ajout GeoRefImage::imagefilledpolygon()
   26/4/2022:
@@ -47,6 +49,7 @@ class GeoRefImage {
   const ErrorCopy = 'GeoRefImage::ErrorCopy';
   const ErrorColorAllocate = 'GeoRefImage::ErrorColorAllocate';
   const ErrorFilledRectangle = 'GeoRefImage::ErrorFilledRectangle';
+  const ErrorRectangle = 'GeoRefImage::ErrorRectangle';
   const ErrorFilledPolygon = 'GeoRefImage::ErrorFilledPolygon';
   const ErrorDrawString = 'GeoRefImage::ErrorDrawString';
   const ErrorSaveAlpha = 'GeoRefImage::ErrorSaveAlpha';
@@ -61,19 +64,25 @@ class GeoRefImage {
 
   // création d'une image vide avec un fond soit transparent soit blanc
   function create(int $width, int $height, bool $transparent): void {
-    $this->image = imagecreate($width, $height)
+    $this->image = @imagecreate($width, $height)
       or throw new SExcept("Erreur dans imagecreate() pour GeoRefImage::imagecreate($width, $height)", self::ErrorCreate);
     if ($transparent) {
-      imagealphablending($this->image, false)
+      @imagealphablending($this->image, false)
         or throw new SExcept("Erreur dans imagealphablending(false) pour GeoRefImage::imagecreate()", self::ErrorCreate);
-      $transparent = imagecolorallocatealpha($this->image, 0xFF, 0xFF, 0xFF, 0x7F);
-      imagefilledrectangle($this->image, 0, 0, $width, $height, $transparent);
-      imagealphablending($this->image, true)
+      $transparent = @imagecolorallocatealpha($this->image, 0xFF, 0xFF, 0xFF, 0x7F);
+      if ($transparent === false)
+        throw new SExcept("Erreur dans imagecolorallocatealpha(image, 0xFF, 0xFF, 0xFF, 0x7F)", self::ErrorColorAllocate);
+      @imagefilledrectangle($this->image, 0, 0, $width, $height, $transparent)
+        or throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
+      @imagealphablending($this->image, true)
         or throw new SExcept("Erreur dans imagealphablending(true) pour GeoRefImage::imagecreate()", self::ErrorCreate);
     }
     else {
-      $white = imagecolorallocate($this->image, 255, 255, 255);
-      imagefilledrectangle($this->image, 0, 0, $width, $height, $white);
+      $white = @imagecolorallocate($this->image, 0xFF, 0xFF, 0xFF);
+      if ($white === false)
+        throw new SExcept("Erreur dans imagecolorallocatealpha(image, 0xFF, 0xFF, 0xFF)", self::ErrorColorAllocate);
+      @imagefilledrectangle($this->image, 0, 0, $width, $height, $white)
+        or throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
     }
   }
 
@@ -113,60 +122,47 @@ class GeoRefImage {
   function copyresampled(GeoRefImage $srcImg, EBox $qebox, bool $debug): void {
     $sw = [$qebox->west(), $qebox->south()]; // position SW de $qebox en coord. utilisateur
     $ne = [$qebox->east(), $qebox->north()]; // position NE de $qebox en coord. utilisateur
-    $sw_dst = $this->toImgPos($sw, $debug ? 'sw_dst' : false); if ($debug) echo "sw_dst=$sw_dst[0],$sw_dst[1]<br>\n";
-    $ne_dst = $this->toImgPos($ne, $debug ? 'ne_dst' : false); if ($debug) echo "ne_dst=$ne_dst[0],$ne_dst[1]<br>\n";
-    $sw_src = $srcImg->toImgPos($sw, $debug ? 'sw_src' : false); if ($debug) echo "sw_src=$sw_src[0],$sw_src[1]<br>\n";
-    $ne_src = $srcImg->toImgPos($ne, $debug ? 'ne_src' : false); if ($debug) echo "ne_src=$ne_src[0],$ne_src[1]<br>\n";
-    // si une des largeurs ou hauteurs est nulle ou négative, pas de copie
+    $sw_dst = $this->toImgPos($sw, $debug ? 'sw_dst' : ''); if ($debug) echo "sw_dst=$sw_dst[0],$sw_dst[1]<br>\n";
+    $ne_dst = $this->toImgPos($ne, $debug ? 'ne_dst' : ''); if ($debug) echo "ne_dst=$ne_dst[0],$ne_dst[1]<br>\n";
+    $sw_src = $srcImg->toImgPos($sw, $debug ? 'sw_src' : ''); if ($debug) echo "sw_src=$sw_src[0],$sw_src[1]<br>\n";
+    $ne_src = $srcImg->toImgPos($ne, $debug ? 'ne_src' : ''); if ($debug) echo "ne_src=$ne_src[0],$ne_src[1]<br>\n";
+    // si une des largeurs ou hauteurs est nulle ou négative alors pas de copie
     if (($ne_dst[0] <= $sw_dst[0]) || ($sw_dst[1] <= $ne_dst[1]) || ($ne_src[0] <= $sw_src[0]) || ($sw_src[1] <= $ne_src[1]))
       return;
-    if (!$this->copyresampledDebug(
-        $this->image, // GdImage $dst_image,
-        $srcImg->image(), // GdImage $src_image,
-        $sw_dst[0], // int $dst_x,
-        $ne_dst[1], // int $dst_y,
-        $sw_src[0], // int $src_x,
-        $ne_src[1], // int $src_y,
-        $ne_dst[0] - $sw_dst[0], // int $dst_width,
-        $sw_dst[1] - $ne_dst[1], // int $dst_height,
-        $ne_src[0] - $sw_src[0], // int $src_width,
-        $sw_src[1] - $ne_src[1], // int $src_height)
-        $debug))
-          throw new Exception("Erreur dans imagecopyresampled() pour imagecopyresampled()", self::ErrorCopy);
-    {/*imagecopyresampled(
-        GdImage $dst_image,
-        GdImage $src_image,
-        int $dst_x,
-        int $dst_y,
-        int $src_x,
-        int $src_y,
-        int $dst_width,
-        int $dst_height,
-        int $src_width,
-        int $src_height
-    ): bool*/}
+    @imagecopyresampled(
+      $this->image, // GdImage $dst_image,
+      $srcImg->image(), // GdImage $src_image,
+      $sw_dst[0], // int $dst_x,
+      $ne_dst[1], // int $dst_y,
+      $sw_src[0], // int $src_x,
+      $ne_src[1], // int $src_y,
+      $ne_dst[0] - $sw_dst[0], // int $dst_width,
+      $sw_dst[1] - $ne_dst[1], // int $dst_height,
+      $ne_src[0] - $sw_src[0], // int $src_width,
+      $sw_src[1] - $ne_src[1]) // int $src_height)
+        or throw new Exception("Erreur dans imagecopyresampled()", self::ErrorCopy);
   }
 
   // Utilisé pour debug
-  private function copyresampledDebug(GdImage $dst_image, GdImage $src_image, int $dst_x, int $dst_y, int $src_x, int $src_y, int $dst_width, int $dst_height, int $src_width, int $src_height, bool $debug): bool {
+  /*private function copyresampledDebug(GdImage $dst_image, GdImage $src_image, int $dst_x, int $dst_y, int $src_x, int $src_y, int $dst_width, int $dst_height, int $src_width, int $src_height, bool $debug): bool {
     if ($debug)
       printf("<pre>imagecopyresampled(dst_image, src_image, dst_x=%d, dst_y=%d, src_x=%d, src_y=%d, "
         ."dst_width=%d, dst_height=%d, src_width=%d, src_height=%d)</pre>\n",
         $dst_x, $dst_y, $src_x, $src_y, $dst_width, $dst_height, $src_width, $src_height);
     return imagecopyresampled($dst_image, $src_image,
         $dst_x, $dst_y, $src_x, $src_y, $dst_width, $dst_height, $src_width, $src_height);
-  }
+  }*/
   
   // Alloue une couleur pour l'image
   function colorallocate(array $rvb): int {
-    $color = imagecolorallocate($this->image, $rvb[0], $rvb[1], $rvb[2]);
+    $color = @imagecolorallocate($this->image, $rvb[0], $rvb[1], $rvb[2]);
     if ($color === false)
       throw new SExcept("Erreur dans imagecolorallocate(image, $rvb[0], $rvb[1], $rvb[2])", self::ErrorColorAllocate);
     return $color;
   }
   
   function savealpha(bool $enable): void {
-    imagesavealpha($this->image, $enable)
+    @imagesavealpha($this->image, $enable)
       or throw new SExcept("Erreur imageSaveAlpha", self::ErrorSaveAlpha);
   }
   
@@ -174,19 +170,27 @@ class GeoRefImage {
   function filledrectangle(EBox $rect, int $color): void {
     $nw = $this->toImgPos([$rect->west(), $rect->north()], false);
     $se = $this->toImgPos([$rect->east(), $rect->south()], false);
-    if (!imagefilledrectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color))
-      throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
+    @imagefilledrectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
+      or throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
   }
   
+  // Dessine le rectangle dans la couleur
+  function rectangle(EBox $rect, int $color): void {
+    $nw = $this->toImgPos([$rect->west(), $rect->north()], false);
+    $se = $this->toImgPos([$rect->east(), $rect->south()], false);
+    @imagerectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
+      or throw new SExcept("erreur de imagerectangle()", self::ErrorRectangle);
+  }
+
   // Dessine le polygone défini par une liste de positions en le remplissant avec la couleur
   function filledpolygon(array $lpos, int $color): void {
     foreach ($lpos as $i => $pos) {
-      $pos = $this->toImgPos($pos, false);
+      $pos = $this->toImgPos($pos, '');
       $points[2*$i] = $pos[0];
       $points[2*$i+1] = $pos[1];
     }
-    if (!imagefilledpolygon($this->image, $points, $color))
-      throw new SExcept("erreur de imagefilledpolygon()", self::ErrorFilledPolygon);
+    @imagefilledpolygon($this->image, $points, $color)
+      or throw new SExcept("erreur de imagefilledpolygon()", self::ErrorFilledPolygon);
   }
 
   // Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
@@ -200,12 +204,10 @@ class GeoRefImage {
       printf("imagefilledrectangle(image, x1=%d, y1=%d, x2=%d, y2=%d, color=%d)<br>\n",
         $pos[0], $pos[1], $pos[0]+$dx, $pos[1]+$dy, $bg_color);
     //imagefilledrectangle(GdImage $image, int $x1, int $y1, int $x2, int $y2, int $color): bool
-    if (!imagefilledrectangle($this->image, $pos[0], $pos[1], $pos[0]+$dx, $pos[1]+$dy, $bg_color))
-      throw new SExcept("erreur de imagestring()", self::ErrorDrawString);
+    @imagefilledrectangle($this->image, $pos[0], $pos[1], $pos[0]+$dx, $pos[1]+$dy, $bg_color)
+      or throw new SExcept("erreur de imagestring()", self::ErrorDrawString);
     
-    if (!imagestring($this->image, $font, $pos[0]+2, $pos[1], $string, $text_color))
-      throw new SExcept("erreur de imagestring()", self::ErrorDrawString);
-    
-    //imagestring(GdImage $image, GdFont|int $font, int $x, int $y, string $string, int $color): bool
+    @imagestring($this->image, $font, $pos[0]+2, $pos[1], $string, $text_color)
+      or throw new SExcept("erreur de imagestring()", self::ErrorDrawString);
   }
 };

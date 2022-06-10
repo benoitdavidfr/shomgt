@@ -1,14 +1,7 @@
 <?php
 /*PhpDoc:
 name: wms.php
-title: wms.php - service WMS de shomgt avec authentification
-includes:
-  - ../lib/accesscntrl.inc.php
-  - ../lib/coordsys.inc.php
-  - ../lib/gebox.inc.php
-  - wmsserver.inc.php
-  - geotiff.inc.php
-  - protect.inc.php
+title: wms.php - service WMS de shomgt (avec authentification - pas dans cette version)
 classes:
 doc: |
   QGis essaie par défaut d'afficher les couches dans leur extension maximum.
@@ -58,6 +51,12 @@ journal: |
     le serveur ne fonctionne pas avec QGis sur certaines couches !!!! Je ne comprends pas
   17/6/2017
     Reprise du serveur de cadastre et évolutions
+includes:
+  - lib/accesscntrl.inc.php
+  - lib/coordsys.inc.php
+  - lib/gebox.inc.php
+  - lib/wmsserver.inc.php
+  - lib/layer.inc.php
 */
 //require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/lib/coordsys.inc.php';
@@ -100,8 +99,8 @@ catch (Exception $e) {
 }*/
 
 // écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
-WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
-WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+//WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
+//WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
 /*PhpDoc: classes
 name: class WmsShomGt
@@ -111,6 +110,7 @@ doc: |
   Le script appelle WmsServer::process() qui appelle les méthodes WmsShomGt::getCapabilities() ou WmsShomGt::getMap()
 */
 class WmsShomGt extends WmsServer {
+  const STD_PIXEL_SIZE = 0.00028; // taille du pixel définie par WMS en mètres 
   const BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
   const OUTLINE_COLOR = [0, 0, 255]; // couleur des silhouettes sous la forme [R,V,B]
   
@@ -162,8 +162,11 @@ class WmsShomGt extends WmsServer {
     if (ctype_digit(substr($lyrname, 2, 1))) { // les couches correspondant à une échelle
       $layerscaleden = str_replace(['k','M'], ['000','000000'], substr($lyrname, 2)); // dén. échelle de la couche
     }
-    else { // les couches spéciales
-      $layerscaleden = 40_000_000;
+    elseif ($lyrname=='gtZonMar') {
+      $layerscaleden = 9e999;
+    }
+    else { // les autres couches spéciales
+      $layerscaleden = 10_000_000;
     }
     // l'échelle demandée est trop petite ssi son dén. est plus de 4 fois supérieur à celui de l'échelle de réf. de la couche
     return ($scaleden > $layerscaleden * 4);
@@ -176,7 +179,7 @@ class WmsShomGt extends WmsServer {
     //    echo "bbox="; print_r($bbox); //die();
     $wombox = $this->wombox($crs, $bbox); // calcul en World Mercator du rectangle de la requête
     // dx() est en mètres, $width est un nbre de pixels, 0.00028 est la taille std du pixel pour WMS
-    $scaleden = $wombox->dx() / $width / 0.00028; // dénominateur de l'échelle demandée
+    $scaleden = $wombox->dx() / $width / self::STD_PIXEL_SIZE; // dénominateur de l'échelle demandée
     $originalLayerName = null; // valeur par défaut
     $zoom = -1; // valeur par défaut
     if (in_array('gtpyr', $lyrnames)) { // si gtpyr est demandé, on ne teste pas si l'échelle est trop petite

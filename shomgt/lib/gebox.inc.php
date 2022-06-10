@@ -27,7 +27,7 @@ journal: |
     - création
 includes: [coordsys.inc.php, pos.inc.php, zoom.inc.php, sexcept.inc.php]
 */}
-$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+  $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/pos.inc.php';
@@ -429,11 +429,7 @@ class EBox extends BBox {
   
   function dx(): ?float  { return $this->min ? $this->max[0] - $this->min[0] : null; }
   function dy(): ?float  { return $this->min ? $this->max[1] - $this->min[1] : null; }
-  
-  function translateInX(float $dx): self { // renvoie le rectangle translaté en X
-    return new self([$this->min[0] + $dx, $this->min[1], $this->max[0] + $dx, $this->max[1]]);
-  }
-  
+   
   // taille max en unité ou lève une exception si la EBox est indéterminée
   function size(): float {
     if (!$this->min)
@@ -490,15 +486,6 @@ class EBox extends BBox {
         $proj::geo($this->min),
         $proj::geo($this->max)
       ]);
-  }
-  
-  // dilate le rectangle de $dilate
-  function dilate(float $dilate): EBox {
-    $this->min[0] -= $dilate;
-    $this->min[1] -= $dilate;
-    $this->max[0] += $dilate;
-    $this->max[1] += $dilate;
-    return $this;
   }
 };
 

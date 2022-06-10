@@ -90,7 +90,7 @@ variables_d'environnement:
     https_proxy: proxy à utiliser pour le serveur de cartes 7z, défaut absent
     SHOMGT3_MAPS_DIR_PATH:
       description: chemin du répertoire stockant les cartes expansées
-      default: /var/www/data/maps
+      default: dir(envvar.inc.php).'/../../data/maps'
     SHOMGT3_ZONE:
       description: zone géographique de sélection
       default: WLD

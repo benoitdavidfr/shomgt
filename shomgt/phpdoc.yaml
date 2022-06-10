@@ -68,6 +68,8 @@ doc: |
     docker exec -it --user=www-data shomgt3_maps_1 /bin/bash
     
 journal: |
+  8-9/6/2022:
+    - ajout serveur WMS
   7/6/2022:
     - ajout de l'érosion de l'encombrement des cartes pour s'asssurer que le trait du bord disparait
   6/6/2022:

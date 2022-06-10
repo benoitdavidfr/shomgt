@@ -76,13 +76,14 @@ class GdalInfo {
     if (!is_file($filename))
       throw new SExcept("file '$filename' not found in GdalInfo", self::ErrorFileNotFound);
     $info = json_decode(file_get_contents($filename), true);
+    //WmsServer::log("Dans GdalInfo::__construct(), info=".json_encode($info, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
   
     if (!isset($info['size']))
       throw new SExcept("No match for Size", self::ErrorNoMatch);
     $this->size = ['width'=> $info['size'][0], 'height'=> $info['size'][1]];
   
     // si le champ coordinateSystem n'est pas défini alors le fichier n'est pas géoréférencé
-    if (!isset($info['coordinateSystem']))
+    if (!isset($info['coordinateSystem']) || !isset($info['coordinateSystem']['wkt']) || !$info['coordinateSystem']['wkt'])
       return;
 
     $this->ebox = new EBox([
