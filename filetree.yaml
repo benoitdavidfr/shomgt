@@ -155,5 +155,5 @@ tests:
   shomgt:
     - accès aux url définies dans wms.php
     - accès à mapwcat.php
-    - accès au WMS à partir ed QGis
+    - accès au WMS à partir de QGis
     

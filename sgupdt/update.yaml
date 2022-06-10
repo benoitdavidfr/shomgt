@@ -13,6 +13,8 @@ description: |
     - la suppression de zones est longue à définir et devrait être exceptionnelle
     - de même la définition des bordures correspond à qualques cas particuliers
     
+  10/6/2022:
+    - ajout effacement dans 7420_5_gtw et 7420_4_gtw correspondant à demande Jobourg CARTE_2
   4/6/2022:
     - pour le moment, les 3 seules façons d'appliquer un nouveau jeu de paramètres sont
       - soit de regénérer toutes les cartes
@@ -195,6 +197,24 @@ $schema:
   z-order: 1 # > 7507_pal300
 7210_pal300:
   z-order: 1 # > 7311_pal300
+7420_5_gtw:
+  title: Rade de Caen - Port de Ouistream
+  toDelete:
+    - polygon: # Effacement du Port de Caen (7420_4_gtw) qui apparait
+        - [-0.15483388286219, 49.301145470209]
+        - [-0.15372166989806, 49.231695228391]
+        - [-0.24757533310195, 49.230801340912]
+        - [-0.24783199763214, 49.240130494881]
+        - [-0.17021236596237, 49.301173364641]
+        - [-0.15483388286219, 49.301145470209]
+7420_4_gtw:
+  title: Port de Caen
+  toDelete:
+    - polygon: # Effacement de la rade de Caen (7420_5_gtw) qui apparait
+        - [-0.36043821307259, 49.244333624641]
+        - [-0.28420884760798, 49.244333624641]
+        - [-0.35924044526506, 49.184059237147]
+        - [-0.36043821307259, 49.244333624641]
 7427_5_gtw:
   title: '7427-2 - La Gironde - La Garonne et La Dordogne (2/3)'
   spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
@@ -230,3 +250,20 @@ $schema:
   spatial: { SW: "35°S - 165°W", NE:  "5°N - 103°W" }
   borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
   note: "Carte spéciale absente du GAN, uniquement en PDF et non géo-référencée, Clipperton est dans un cartouche non explicité"
+
+xx:
+  type: FeatureCollection
+  name: update
+  crs:
+    type: name
+    properties:
+      name: 'urngc:def:crsGC:1.3:CRS84'
+  features:
+    -
+      type: Feature
+      properties:
+        id: 2
+        geotiff: '7420_4'
+      geometry:
+        type: MultiPolygon
+        coordinates:
