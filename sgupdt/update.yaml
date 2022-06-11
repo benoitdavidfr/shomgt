@@ -144,7 +144,7 @@ $schema:
           description: liste de zones à effacer dans le GéoTiff
           type: array
           items:
-            description: zone à effacer dans le GéoTiff, un rectangle ou un polygone
+            description: la zone à effacer dans le GéoTiff est soit un rectangle soit un polygone
             oneOf:
               - description: définition de la zone par un rectangle
                 type: object
@@ -169,23 +169,7 @@ $schema:
   z-order: 0 # 7482_pal300 < 6948_pal300 < 7302_pal300
 6969_pal300:
   title: 6969 - Du Cap Corse à la Punta di l'Acciolu - Golfe de Saint-Florent
-  #spatial: {SW: "42°39,93'N - 9°00,93'E", NE: "43°08,95'N - 9°28,64'E"}
   z-order: -1 # 6969_pal300 en dessous de 6822_pal300 et de 6823_pal300
-  note: |
-    le champ spatial correspond aux inscriptions sur la carte qui ne correspondent pas au contenu du catalogue
-    spatialFromCatalog: { SW: "42°40,00'N - 009°01,00'E", NE: "43°09,00'N - 009°28,70'E"}
-    toDelete: # effacement de la partie Est du GéoTiff 6969_pal300
-      - rect:
-          SW: 42°39,90'N - 9°22,30'E
-          NE: 43°09,00'N - 9°28,70'E
-    testtoDelete: # valeurs de test
-      - rect: # petit rectangle = quart SW de la partie commune aux 3 cartes
-          SW: 42°39,90'N - 9°22,30'E
-          NE: 42°42'N - 9°25'E
-      - polygon: # test effacement petit triangle sur saint-Florent
-        - [9.2879, 42.6838]
-        - [9.3070, 42.6815]
-        - [9.3012, 42.6752]
 7081_pal300:
   title: Mer Méditerranée et mer Noire (Spéciale P)
   toDelete:
@@ -246,22 +230,3 @@ $schema:
   z-order: 1 # > 7762_pal300
 7302_pal300:
   z-order: 1 # 7482_pal300 < 6948_pal300 < 7302_pal300
-
-'8509_2015.pdf':
-  title: '8509 - Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
-  #spatial: { SW: 30°S - 153°E, NE:  8°S - 174°W }
-  #borders: { left: 292, bottom: 239, right: 299, top: 193 }
-  note: Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l'anti-méridien
-'8510_2015.pdf':
-  title: '8510 - Délimitations des zones maritimes'
-  #spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E" }
-  #borders: { left: 217, bottom: 202, right: 224, top: 212 }
-  note: |
-    Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée, fait le tour de la Terre,
-    le bord Est est supérieur à 180°
-'8517_2015.pdf':
-  title: '8517 - Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
-  #spatial: { SW: "35°S - 165°W", NE:  "5°N - 103°W" }
-  #borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
-  note: "Carte spéciale absente du GAN, uniquement en PDF et non géo-référencée, Clipperton est dans un cartouche non explicité"
-
