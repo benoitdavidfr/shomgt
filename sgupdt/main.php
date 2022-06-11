@@ -65,9 +65,10 @@ define ('CMDE_VERBOSE', 1); // degré de verbosité de l'exécution des cmdes
 $SERVER_URL = EnvVar::val('SHOMGT3_SERVER_URL');
 
 $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
+
 // créée le répertoire $MAPS_DIR_PATH s'il n'existe pas déjà
-if (!is_dir($MAPS_DIR_PATH))
-  if (!mkdir($MAPS_DIR_PATH))
+if (!@is_dir($MAPS_DIR_PATH))
+  if (!@mkdir($MAPS_DIR_PATH))
     throw new Exception("Erreur de création du répertoire $MAPS_DIR_PATH");
 
 $TEMP = "$MAPS_DIR_PATH/../temp";

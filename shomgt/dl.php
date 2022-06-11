@@ -9,7 +9,7 @@ journal: |
   3/6/2022:
     - correction d'un bug sur SHOMGT3_MAPS_DIR_PATH
 */
-require_once __DIR__.'/envvar.inc.php';
+require_once __DIR__.'/lib/envvar.inc.php';
 require_once __DIR__.'/lib/gdalinfo.inc.php';
 
 if (in_array($_SERVER['PATH_INFO'] ?? '', ['', '/'])) { // appel sans paramètre 

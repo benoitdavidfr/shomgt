@@ -14,10 +14,11 @@ description:
     - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
       - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
     - suppression des champs spatial et replacement du champ bboxDM par spatial
+  - le 11/6/2022 - correction de FR6966 badGan
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2022-06-05'
+modified: '2022-06-11'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -1635,9 +1636,14 @@ maps:
     modified: '2022-03-23+01:00'
     lastUpdate: 76
     scaleDenominator: '155.000'
-    spatial:
-      SW: '48°30,00''N - 003°06,82''W'
-      NE: '50°02,20''N - 001°27,82''W'
+    spatial:  # saisis à partir de la carte
+      SW: "48°30,0'N - 003°05,3'W"
+      NE: "50°02,2'N - 001°29,3'W"
+    badGan: |
+      valeurs du GAN
+      spatial:
+        SW: '48°30,00''N - 003°06,82''W'
+        NE: '50°02,20''N - 001°27,82''W'
   FR6968:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'

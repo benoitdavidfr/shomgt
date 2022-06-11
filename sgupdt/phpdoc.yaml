@@ -19,6 +19,10 @@ doc: |
   Voir ../docker.yaml pour les commandes Docker
     
 journal: |
+  11/6/2022:
+    - intégration dans update.yaml les corrections correspondants aux demandes du 31/5 de Jobourg
+  10/6/2022:
+    - création image v0.5
   6/6/2022:
     - création image v0.4
   23/5/2022:
