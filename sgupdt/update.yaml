@@ -192,7 +192,14 @@ $schema:
   title: Mer Méditerranée et mer Noire (Spéciale P)
   toDelete:
     - rect: {SW: [-7.0, 42.1797], NE: [2.1094, 49.8364]}
-
+7133_4_gtw:
+  title: 7133 - D - Carteret
+  toDelete:
+    - polygon: # effacement du coin SW du cartouche
+        - [ -1.7914426, 49.3622692 ]
+        - [ -1.7844695, 49.3622692 ]
+        - [ -1.7914761, 49.3658498 ]
+        - [ -1.7914426, 49.3622692 ]
 7204_pal300:
   z-order: 1 # > 7507_pal300
 7210_pal300:
@@ -217,7 +224,7 @@ $schema:
         - [-0.36043821307259, 49.244333624641]
 7427_5_gtw:
   title: '7427-2 - La Gironde - La Garonne et La Dordogne (2/3)'
-  spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
+  #spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
   toDelete:
     - polygon: # Cartouche 7427-B - Port de Blaye
         - 45°11,40'N - 0°17,50'W
@@ -235,35 +242,19 @@ $schema:
 
 '8509_2015.pdf':
   title: '8509 - Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
-  spatial: { SW: 30°S - 153°E, NE:  8°S - 174°W }
-  borders: { left: 292, bottom: 239, right: 299, top: 193 }
+  #spatial: { SW: 30°S - 153°E, NE:  8°S - 174°W }
+  #borders: { left: 292, bottom: 239, right: 299, top: 193 }
   note: Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l'anti-méridien
 '8510_2015.pdf':
   title: '8510 - Délimitations des zones maritimes'
-  spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E" }
-  borders: { left: 217, bottom: 202, right: 224, top: 212 }
+  #spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E" }
+  #borders: { left: 217, bottom: 202, right: 224, top: 212 }
   note: |
     Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée, fait le tour de la Terre,
     le bord Est est supérieur à 180°
 '8517_2015.pdf':
   title: '8517 - Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
-  spatial: { SW: "35°S - 165°W", NE:  "5°N - 103°W" }
-  borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
+  #spatial: { SW: "35°S - 165°W", NE:  "5°N - 103°W" }
+  #borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
   note: "Carte spéciale absente du GAN, uniquement en PDF et non géo-référencée, Clipperton est dans un cartouche non explicité"
 
-xx:
-  type: FeatureCollection
-  name: update
-  crs:
-    type: name
-    properties:
-      name: 'urngc:def:crsGC:1.3:CRS84'
-  features:
-    -
-      type: Feature
-      properties:
-        id: 2
-        geotiff: '7420_4'
-      geometry:
-        type: MultiPolygon
-        coordinates:

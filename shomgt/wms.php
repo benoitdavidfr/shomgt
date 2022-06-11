@@ -12,12 +12,15 @@ doc: |
   Il existe des cas particuliers où ce mécanisme n'est pas mis en oeuvre mais l'important est qu'il fonctionne dans le
   cas général généré par QGis.
 
+  **Contrôle d'accès NON ACTIVé
   Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
   qui teste l'adresse IP de provenance et l'existence d'un cookie adhoc.
   Pour un serveur WMS, le cookie n'est pas utilisé par les clients lourds.
   En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
   Ce dernier mécanisme est notamment utilisé par QGis
 journal: |
+  11/6/2022:
+    - augmentation à 10 du repport de tooSmallScale() que je trouve trop faible
   8-10/6/2022:
     - adaptation du dessin des silhouettes quand l'échelle est trop petite
     - test Ok avec QGis
@@ -170,8 +173,8 @@ class WmsShomGt extends WmsServer {
     else { // les autres couches spéciales
       $layerscaleden = 10_000_000;
     }
-    // l'échelle demandée est trop petite ssi son dén. est plus de 4 fois supérieur à celui de l'échelle de réf. de la couche
-    return ($scaleden > $layerscaleden * 4);
+    // l'échelle demandée est trop petite ssi son dén. est plus de 10 fois supérieur à celui de l'échelle de réf. de la couche
+    return ($scaleden > $layerscaleden * 10);
   }
   
   private function zoom(EBox $wombox, int $width): float {
