@@ -44,5 +44,6 @@ En dehors de ce réseau, l'accès au serveur nécessite une authentification et 
 `SHOMGT3_SERVER_URL` doit être définie avec l'URL `http://{login}:{passwd}@php81/geoapi/shomgt3/sgserver/index.php`
 en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.
 
-
+## Avancement du développement
+Le 11/6/2022, une première version est utilisable et utilisée par certains services du ministère.
 
