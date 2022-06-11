@@ -8,13 +8,13 @@
 version: '3'
 services:
   shomgt:
-    image: benoitdavid/shomgt3:shomgt-v0.5
+    image: benoitdavid/shomgt3:shomgt-v0.6
     hostname: shomgt
     ports: ["80:80"]
     volumes:
       - sg3data:/var/www/data
   sgupdt:
-    image: benoitdavid/shomgt3:sgupdt-v0.5
+    image: benoitdavid/shomgt3:sgupdt-v0.6
     hostname: sgupdt
     volumes:
       - sg3data:/var/www/data

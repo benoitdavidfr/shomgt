@@ -11,6 +11,9 @@ comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 Par rapport à la version précédente, cette version améliore la possibilité de construire un serveur local,
 de l'approvisionner avec les cartes du Shom, puis de mettre à jour ces cartes, de manière simple en utilisant docker-compose.
 
+Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
+Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
+
 Ce projet ce décompose en 4 sous-projets:
 
   - **shomgt** expose les services suivants de consultation des cartes:
@@ -32,5 +35,14 @@ Ce projet ce décompose en 4 sous-projets:
 ## Déploiement Docker
 Avec cette version , les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
+Des images sont proposées sur https://hub.docker.com/r/benoitdavid/shomgt3.
+Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](blob/main/docker-compose.yml).
+
+A partir d'un serveur sur le réseau de l'Etat ou d'un EPA,
+le conteneur sgupdt se connecte au serveur sgserver pour télécharger les cartes du Shom.
+En dehors de ce réseau, l'accès au serveur nécessite une authentification et la variable d'environnement
+`SHOMGT3_SERVER_URL` doit être définie avec l'URL `http://{login}:{passwd}@php81/geoapi/shomgt3/sgserver/index.php`
+en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.
+
 
 
