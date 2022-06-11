@@ -40,7 +40,9 @@ Des images sont proposées sur https://hub.docker.com/r/benoitdavid/shomgt3.
 Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](docker-compose.yml).
 
 A partir d'un serveur sur le réseau de l'Etat ou d'un EPA,
-le conteneur sgupdt se connecte au serveur sgserver pour télécharger les cartes du Shom.
+le conteneur sgupdt se connecte au serveur sgserver pour télécharger les cartes du Shom.  
+Si un proxy doit être utilisé, il doit être défini en s'inspirant des exemples
+du fichier [docker-compose.yml](docker-compose.yml).  
 En dehors de ce réseau, l'accès au serveur nécessite une authentification et la variable d'environnement
 `SHOMGT3_SERVER_URL` doit être définie avec l'URL `http://{login}:{passwd}@php81/geoapi/shomgt3/sgserver/index.php`
 en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.
