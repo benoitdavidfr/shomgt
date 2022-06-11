@@ -1,8 +1,8 @@
 # ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom - en cours de développement
 Ce projet correspond à une nouvelle version de ShomGT dont l'objectif est d'exposer sous la forme de web-services le contenu des
 [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
-couvrant les zones sous juridiction française pour permettre au [MTE](http://www.ecologie.gouv.fr)
-et au [MCTRCT](http://www.cohesion-territoires.gouv.fr/) d'assurer leurs missions de service public.
+couvrant les zones sous juridiction française pour permettre aux services du [MTECT](http://www.ecologie.gouv.fr),
+du [MTE](http://www.ecologie.gouv.fr/) et du secrétariat d'Etat à la mer d'assurer leurs missions de service public.
 
 La principale plus-value de ShomGT est de permettre de consulter le contenu des cartes en supprimant leur cadre
 afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
@@ -36,7 +36,7 @@ Ce projet ce décompose en 4 sous-projets:
 Avec cette version , les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
 Des images sont proposées sur https://hub.docker.com/r/benoitdavid/shomgt3.
-Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](blob/main/docker-compose.yml).
+Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](docker-compose.yml).
 
 A partir d'un serveur sur le réseau de l'Etat ou d'un EPA,
 le conteneur sgupdt se connecte au serveur sgserver pour télécharger les cartes du Shom.
