@@ -145,7 +145,7 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
       //echo "$filename\n";
       $currentMapVersion = readMapVersion("$MAPS_DIR_PATH/$mapnum/$filename");
       //echo "currentMapVersion=$currentMapVersion\n";
-      return $currentMapVersion;
+      return $currentMapVersion['version'];
     }
   }
   return 'undefined';

@@ -1,9 +1,10 @@
-# config docker-compose de shomgt3 pour test sur VPS OVH - 10/6/2022
-# fichier dans /Users/benoit/Sites/geoapi/shomgt3
+# config docker-compose de référence pour shomgt3 - 11/6/2022
 # lance 2 containers:
 #   - shomgt expose les GéoTiffs
 #   - sgupdt construit les données par téléchargement à partir du serveur de cartes 7z
 # Les 2 conteneurs partagent le volume sg3data dans lequel sgupdt construit les données et shomgt les consomme
+# Des variables d'environnement doivent être utilisées si un proxy est nécessaire ou si une authentification sur le serveur
+# de cartes est nécessaire.
 
 version: '3'
 services:

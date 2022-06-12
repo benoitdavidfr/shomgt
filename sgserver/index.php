@@ -251,18 +251,21 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
         //echo "- carte $map7z<br>\n";
         $mapnum = $map7z->getBasename('.7z');
         //echo "** $mapnum valide<br>\n";
+        $mapVersion = getMapVersionFrom7z("$INCOMING_PATH/$delivery/$map7z");
         if (!isset($maps[$mapnum])) {
           $maps[$mapnum] = [
             'status'=> 'ok',
             'nbre'=> 1,
-            'lastVersion'=> getMapVersionFrom7z("$INCOMING_PATH/$delivery/$map7z"),
+            'lastVersion'=> $mapVersion['version'],
+            'dateStamp'=> $mapVersion['dateStamp'] ?? '',
             'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
           ];
         }
         else {
           $maps[$mapnum]['status'] = 'ok';
           $maps[$mapnum]['nbre']++;
-          $maps[$mapnum]['lastVersion'] = getMapVersionFrom7z("$INCOMING_PATH/$delivery/$map7z");
+          $maps[$mapnum]['lastVersion'] = $mapVersion['version'];
+          $maps[$mapnum]['dateStamp'] = $mapVersion['dateStamp'] ?? '';
         }
       }
     }
@@ -271,8 +274,8 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
   //echo "<pre>maps="; print_r($maps);
   header('Content-type: application/json');
   echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  file_put_contents($mapsPath,
-    json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
+  //file_put_contents($mapsPath,
+    //json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
   logRecord(['done'=> "OK - maps.json transmis"]);
   die();
 }
@@ -329,7 +332,7 @@ if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
 
 // Renvoit le libellé de la version de la carte organisée comme archive 7z située à $pathOf7z
 // Renvoit 'undefined' si cette carte ne comporte pas de MDISO et donc pas de version.
-function getMapVersionFrom7z(string $pathOf7z): string {
+function getMapVersionFrom7z(string $pathOf7z): array {
   $archive = new SevenZipArchive($pathOf7z);
   foreach ($archive as $entry) {
     if (preg_match('!^\d+/CARTO_GEOTIFF_[^.]+\.xml$!', $entry['Name'])) {
@@ -347,7 +350,7 @@ function getMapVersionFrom7z(string $pathOf7z): string {
     }
   }
   //echo "getMapVersionFrom7z()-> undefined<br>\n";
-  return 'undefined';
+  return ['version'=> 'undefined'];
 }
 
 // /maps/{numCarte}.json: liste en JSON l'ensemble des versions disponibles avec un lien vers les 2 entrées suivantes
@@ -368,13 +371,17 @@ if (preg_match('!^/maps/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
     }
     foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
       if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z') && ($map7z->getBasename('.7z') == $qmapnum)) {
-        $version = getMapVersionFrom7z($map7z->getPathname());
+        $mapversion = getMapVersionFrom7z($map7z->getPathname());
+        $version = $mapversion['version'];
         $path = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum-$version";
         $map['num'] = $qmapnum;
         $map['status'] = 'ok';
         $map['lastVersion'] = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum.7z";
-        $map['versions'][$version]['archive'] = $path.'.7z';
-        $map['versions'][$version]['thumbnail'] = $path.'.png';
+        $map['versions'][$version] = [
+          'archive'=> $path.'.7z',
+          'dateStamp' => $mapversion['dateStamp'],
+          'thumbnail'=> $path.'.png',
+        ];
       }
     }
   }
