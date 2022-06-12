@@ -257,7 +257,7 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
             'status'=> 'ok',
             'nbre'=> 1,
             'lastVersion'=> $mapVersion['version'],
-            'dateStamp'=> $mapVersion['dateStamp'] ?? '',
+            'modified'=> $mapVersion['dateStamp'] ?? '',
             'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
           ];
         }
@@ -265,7 +265,7 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
           $maps[$mapnum]['status'] = 'ok';
           $maps[$mapnum]['nbre']++;
           $maps[$mapnum]['lastVersion'] = $mapVersion['version'];
-          $maps[$mapnum]['dateStamp'] = $mapVersion['dateStamp'] ?? '';
+          $maps[$mapnum]['modified'] = $mapVersion['dateStamp'] ?? '';
         }
       }
     }
@@ -274,8 +274,8 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
   //echo "<pre>maps="; print_r($maps);
   header('Content-type: application/json');
   echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  //file_put_contents($mapsPath,
-    //json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
+  file_put_contents($mapsPath,
+    json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
   logRecord(['done'=> "OK - maps.json transmis"]);
   die();
 }
@@ -330,8 +330,10 @@ if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
 }
 
 
-// Renvoit le libellé de la version de la carte organisée comme archive 7z située à $pathOf7z
-// Renvoit 'undefined' si cette carte ne comporte pas de MDISO et donc pas de version.
+// Renvoit pour la carte formattée comme archive 7z située à $pathOf7zun
+// le dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}] où {version} est le libellé de la version
+// et {dateStamp} est la date de dernière modification du fichier des MD de la carte
+// Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.
 function getMapVersionFrom7z(string $pathOf7z): array {
   $archive = new SevenZipArchive($pathOf7z);
   foreach ($archive as $entry) {
@@ -379,7 +381,7 @@ if (preg_match('!^/maps/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
         $map['lastVersion'] = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum.7z";
         $map['versions'][$version] = [
           'archive'=> $path.'.7z',
-          'dateStamp' => $mapversion['dateStamp'],
+          'modified' => $mapversion['dateStamp'],
           'thumbnail'=> $path.'.png',
         ];
       }
