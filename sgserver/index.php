@@ -31,6 +31,8 @@ doc: |
   Les 7z sont stockés dans le répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH avec un répertoire par livraison
   nommé avec un nom commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
+  12/6/2022:
+    - ajout du champ modified dans 
   30/5/2022:
     - correction d'un bug
     - ajout d'un champ 'lastVersion' pour chaque carte dans le document maps.json
@@ -233,6 +235,7 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
     'status'=> 'ok' | 'obsolete'
     'nbre'=> nbre de téléchargements disponibles
     'lastVersion'=> identifiant de la dernière version 
+    'modified'=> date de dernière modification de la dernière version (issue du champ dateStamp des MD)
     'url'=> lien vers la page associée au numéro de carte
   ]]*/
   foreach (deliveries($INCOMING_PATH) as $delivery) {
