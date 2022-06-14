@@ -111,10 +111,14 @@ definitions:
       - type: string
         pattern: '^\d+-\d+$'
   map:
-    description: Propriétés décrivant une carte
+    description: |
+      Propriétés décrivant une carte.
+      Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
+      Une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
+      Lorsque l'info est différente de celle du GAN, le champ badGan doit être renseigné.
     type: object
     additionalProperties: false
-    required: [title]
+    required: [title, mapsFrance]
     properties:
       groupTitle:
         description: sur-titre optionnel identifiant un ensemble de cartes
@@ -133,10 +137,10 @@ definitions:
         $ref: '#/definitions/scaleDenominator'
       spatial:
         description: |
-          boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
+          boite englobante de l'espace principal de la carte en degrés et minutes en WGS84,
           ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
           les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
-          Champ absent ssi la carte ne comporte pas d'espace principal ou comporte le champ bboxLonLatFromWfs
+          Champ absent ssi la carte ne comporte pas d'espace principal.
         $ref: '#/definitions/spatial'
       borders:
         description: |
@@ -145,16 +149,11 @@ definitions:
         $ref: '#/definitions/borders'
       mapsFrance:
         description: |
-          identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
-          Une telle carte doit intersecter la ZEE française ; cependant quelques cartes satisfaisant ce critère sont exclues ;
-          elles sont listées dans le champ cartesAyantUnIntérêtInsuffisant.
-          La valeur est un array vide ssi la carte n'intersecte pas la ZEE française
-          ou est listée dans cartesAyantUnIntérêtInsuffisant.
-          Elle prend un ou plusieurs codes des zones intersectées par la carte ou [FR] si la carte est à très petite échelle.
+          Liste de codes résumant l'intersection de la carte avec la ZEE française, ce qui est le cas de la plupart des cartes.
+          Quelques cartes ne l'intersecte pas, ce sont des cartes petite échelle (< 1/6M) facilitant la navigation.
           Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med'
           pour la facade de Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche
           et de la mer du Nord.
-          Propriété absente ssi information inconnue.
         type: array
         items:
           type: string
@@ -173,8 +172,8 @@ definitions:
         type: string
       badGan:
         description: |
-          commentaire indiquant une erreur dans le GAN ; si présent indique que l'info de ce catalogue est différente
-          de celle du GAN ; permet de lister rapidement les écarts au GAN.
+          commentaire indiquant que l'info de ce catalogue est différente de celle du GAN ;
+          permet de lister rapidement les écarts au GAN.
         type: string
       insetMaps:
         description: liste éventuelle de cartouches
@@ -196,8 +195,8 @@ definitions:
               $ref: '#/definitions/spatial'
             borders:
               description: |
-                Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
-                à celle de la boite englobante permet de déterminer ce géoréférencement.
+                Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement lorsque
+                le GéoTiff ne l'est pas.
               $ref: '#/definitions/borders'
             noteCatalog:
               description: commentaire associé au cartouche dans la gestion du catalogue
@@ -223,12 +222,7 @@ properties:
     additionalProperties: false
     patternProperties:
       ^FR\d\d\d\d:
-        description: |
-          Description d'une carte.
-          Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
-          Une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
-          De plus, les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
-          sont identifiées par la propriété mapsFrance et devraient renseigner les propriétés modified et lastUpdate.
+        description: Description d'une carte.
         $ref: '#/definitions/map'
   obsoleteMaps:
     description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur suppression
