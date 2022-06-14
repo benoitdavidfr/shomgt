@@ -68,21 +68,6 @@ definitions:
       NE:
         description: latitude et longitude du coin NE en degrés minutes
         $ref: '#/definitions/latLonDM'
-  latitudeDd:
-    description: latitude en degrés décimaux
-    type: number
-    minimum: -90
-    maximum: 90
-    examples:
-      - 48.4865
-      - -67.89
-  longitudeDd:
-    description: longitude en degrés décimaux
-    type: number
-    minimum: -180
-    maximum: 540
-    examples:
-      - -1
   borders:
     description: |
       Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
