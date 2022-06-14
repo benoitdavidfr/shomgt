@@ -1,21 +1,31 @@
-title: 'Catalogue des cartes Shom V2.1'
-description:
-  - 'Import du fichier V1 le 2020-12-26T22:01:53+01:00'
-  - duplication du fichier pour ShomGt3 en avril-mai 2022
-    - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
-  - les 5-6/6/2022
-    - j'ai constaté que certains problèmes de visualisation du cadre, soulevés par Jobourg, provenaient des écarts avec le GAN
-    - j'ai donc décidé de resynchroniser les bboxDM sur le GAN
-    - j'ai aussi transferé dans update.yaml des modif effectuées pour améliorer la visualisation
-    - j'ai effectué vérification visuelle globale, constatant notamment plusieurs erreurs dans le GAN
-    - j'ai créé dans le schéma un champ badGan pour expliciter ces erreurs
-    - j'essaie de gérer dans ce fichier les extensions spatiales indépendamment d'un choix de visualisation
-    - toutefois je structure dans ce fichier les cartes en fonction de la structure des GéoTiffs
-    - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
-      - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
-    - suppression des champs spatial et replacement du champ bboxDM par spatial
-  - le 11/6/2022 - correction de FR6966 badGan
-  - le 13/6/2022 - transmission erreurs au Shom
+title: Catalogue des cartes Shom V3
+description: |
+  Dans ShomGt3, mapcat.yaml constitue une référence indispensable pour construire shomgt.yaml dans sgupdt,
+  sont utilisés notamment l'extension spatiale et l'échelle des cartes et des cartouches.
+  La liste des bordures est aussi utilisée pour les GéoTiffs non ou mal géoréférencés.
+  Ce catalogue ne contient pas les infos de version (édition et correction), il ne recense que les caractéristiques stables
+  des cartes. Il est constitué principalement par copie d'infos issues du GAN et détection des écarts.
+  Cependant ces écarts au GAN existent et sont notés dans les champs noteCatalog et badGan.
+  Notamment, la structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
+  qui n'est pas toujours identique à celle du GAN.
+  
+  Journal:
+    - duplication du fichier pour ShomGt3 en avril-mai 2022
+      - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
+    - les 5-6/6/2022
+      - j'ai constaté que certains problèmes de visualisation du cadre, soulevés par Jobourg, provenaient des écarts avec le GAN
+      - j'ai donc décidé de resynchroniser les bboxDM sur le GAN
+      - j'ai aussi transferé dans update.yaml des modif effectuées pour améliorer la visualisation
+      - j'ai effectué vérification visuelle globale, constatant notamment plusieurs erreurs dans le GAN
+      - j'ai créé dans le schéma un champ badGan pour expliciter ces erreurs
+      - j'essaie de gérer dans ce fichier les extensions spatiales indépendamment d'un choix de visualisation
+      - toutefois je structure dans ce fichier les cartes en fonction de la structure des GéoTiffs
+      - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
+        - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
+      - suppression des champs spatial et replacement du champ bboxDM par spatial
+    - le 11/6/2022 - correction de FR6966 badGan
+    - le 13/6/2022 - transmission erreurs au Shom
+    - le 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
@@ -24,11 +34,8 @@ maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
     title: 'Planisphère terrestre (axé sur 65° Ouest)'
-    edition: 'Edition n° 4 - 2016'
     mapsFrance:
       - FR
-    modified: '2021-01-06+01:00'
-    lastUpdate: 0
     scaleDenominator: 40.000.000
     spatial:
       SW: '79°00,00''S - 100°00,00''E'
@@ -40,11 +47,8 @@ maps:
   FR3127:
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre - De la rivière des Pères à la Pointe du Vieux Fort'
-    edition: 'Edition n° 3 - 2009'
     mapsFrance:
       - GP
-    modified: '2017-04-26+02:00'
-    lastUpdate: 3
     scaleDenominator: '12.500'
     spatial:
       SW: '15°56,57''N - 061°44,97''W'
@@ -52,11 +56,8 @@ maps:
   FR4232:
     groupTitle: 'Océan Pacifique'
     title: 'Îles Australes - Île de Rapa - Îles Morotiri'
-    edition: 'Edition n° 5 - 2018'
     mapsFrance:
       - PF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '30.000'
     insetMaps:
       - title: 'A - Île de Rapa'
@@ -74,11 +75,8 @@ maps:
   FR4233:
     groupTitle: 'Côte Nord de France'
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
-    edition: 'Edition n° 6 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2019-10-23+02:00'
-    lastUpdate: 4
     scaleDenominator: '15.000'
     spatial:
       SW: '48°30,89''N - 002°03,53''W'
@@ -90,14 +88,11 @@ maps:
   FR5417:
     groupTitle: 'Océan Atlantique Nord et Mers Boréales'
     title: 'Océan Atlantique Nord et mers boréales'
-    edition: 'Edition n° 5 - 1977'
     mapsFrance:
       - FX-Atl
       - PM
       - FX-Med
       - FX-MMN
-    modified: '2017-05-10+02:00'
-    lastUpdate: 86
     scaleDenominator: 6.580.000
     spatial:
       SW: '43°00,00''N - 062°20,00''W'
@@ -105,11 +100,8 @@ maps:
   FR5978:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - NC
-    modified: '2019-08-28+02:00'
-    lastUpdate: 1
     scaleDenominator: '150.000'
     insetMaps:
       - title: 'A - Îles Chesterfield - Mouillage de l''île Longue'
@@ -127,10 +119,7 @@ maps:
   FR6015:
     groupTitle: 'Canada - Groenland - Islande'
     title: 'Des passages du Nord-Ouest à la Mer du Groenland'
-    edition: 'Edition n° 2 - 1993'
     mapsFrance: {  }
-    modified: '2021-03-31+02:00'
-    lastUpdate: 43
     scaleDenominator: 4.660.000
     spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
     noteCatalog: |
@@ -140,11 +129,8 @@ maps:
   FR6033:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
-    edition: 'Edition n° 4 - 2014'
     mapsFrance:
       - PF
-    modified: '2017-06-21+02:00'
-    lastUpdate: 2
     scaleDenominator: '174.000'
     spatial:
       SW: '17°06,47''S - 152°25,15''W'
@@ -162,11 +148,8 @@ maps:
   FR6118:
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Iles Saint-Pierre et Miquelon'
-    edition: 'Edition n° 5 - 2017'
     mapsFrance:
       - PM
-    modified: '2018-10-31+01:00'
-    lastUpdate: 3
     scaleDenominator: '80.000'
     spatial:
       SW: '46°35,00''N - 056°38,95''W'
@@ -174,11 +157,8 @@ maps:
   FR6165:
     groupTitle: 'Polynésie française - Iles Australes'
     title: Rurutu
-    edition: 'Edition n° 3 - 2010'
     mapsFrance:
       - PF
-    modified: '2017-06-21+02:00'
-    lastUpdate: 2
     scaleDenominator: '30.000'
     spatial:
       SW: '22°36,03''S - 151°26,07''W'
@@ -193,11 +173,8 @@ maps:
   FR6176:
     groupTitle: 'Polynésie française - Iles de la Société'
     title: 'Maupihaa (Mopelia)'
-    edition: 'Edition n° 2 - 2022'
     mapsFrance:
       - PF
-    modified: '2022-03-09+01:00'
-    lastUpdate: 0
     noteCatalog: La structuration des GéoTiffs correspond à 3 cartouches sans zone principale
     badGan: GAN incomplet
     insetMaps:
@@ -213,11 +190,8 @@ maps:
   FR6207:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Raivavae (Vavitu)'
-    edition: 'Edition n° 4 - 2010'
     mapsFrance:
       - PF
-    modified: '2017-07-05+02:00'
-    lastUpdate: 2
     scaleDenominator: '30.000'
     noteShom: "Nota : Les modifications effectuées sur la carte n° 6207 au cours de l''édition n° 4 concernent principalement le\nchangement de système géodésique. Cette carte est désormais établie en WGS84.\n"
     insetMaps:
@@ -230,11 +204,8 @@ maps:
   FR6279:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Iles Rimatara et Maria'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '80.000'
     insetMaps:
       - title: 'Mouillages au Nord de Rimatara'
@@ -249,11 +220,8 @@ maps:
   FR6280:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-Le-Vent'
     title: 'Partie Nord de Raiatea - Port d''Uturoa'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-31+02:00'
-    lastUpdate: 0
     scaleDenominator: '12.000'
     spatial:
       SW: '16°46,02''S - 151°31,05''W'
@@ -261,11 +229,8 @@ maps:
   FR6281:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-le-Vent'
     title: 'Partie Sud de Tahaa'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-31+02:00'
-    lastUpdate: 0
     scaleDenominator: '12.000'
     spatial:
       SW: '16°42,71''S - 151°33,15''W'
@@ -273,11 +238,8 @@ maps:
   FR6282:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-Le-Vent'
     title: 'Passes entre les Iles Raiatea et Tahaa'
-    edition: 'Edition n° 4 - 2005'
     mapsFrance:
       - PF
-    modified: '2017-02-01+01:00'
-    lastUpdate: 17
     scaleDenominator: '30.000'
     spatial:
       SW: '16°48,76''S - 151°35,55''W'
@@ -285,11 +247,8 @@ maps:
   FR6283:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Ile Tahaa'
-    edition: 'Edition n° 4 - 2005'
     mapsFrance:
       - PF
-    modified: '2017-06-07+02:00'
-    lastUpdate: 7
     scaleDenominator: '30.000'
     spatial:
       SW: '16°41,46''S - 151°37,15''W'
@@ -297,11 +256,8 @@ maps:
   FR6284:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Partie Sud de Raiatea'
-    edition: 'Edition n° 5 - 2005'
     mapsFrance:
       - PF
-    modified: '2017-06-07+02:00'
-    lastUpdate: 12
     scaleDenominator: '30.000'
     spatial:
       SW: '16°57,76''S - 151°33,15''W'
@@ -309,11 +265,8 @@ maps:
   FR6320:
     groupTitle: 'Iles Tuamotu'
     title: Makatea
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - PF
-    modified: '2017-06-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '30.000'
     spatial:
       SW: '15°56,97''S - 148°18,44''W'
@@ -326,11 +279,8 @@ maps:
   FR6418:
     groupTitle: 'Iles Gambier'
     title: 'Ile Mangareva - Rade de Rikitea'
-    edition: 'Edition n° 5 - 2010'
     mapsFrance:
       - PF
-    modified: '2017-03-01+01:00'
-    lastUpdate: 2
     scaleDenominator: '5.000'
     spatial:
       SW: '23°08,82''S - 134°58,50''W'
@@ -338,11 +288,8 @@ maps:
   FR6420:
     groupTitle: 'Iles Tuamotu'
     title: 'De Mataiva à Rangiroa et Makatea'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 4
     scaleDenominator: '175.000'
     spatial:
       SW: '15°53,82''S - 148°44,86''W'
@@ -350,11 +297,8 @@ maps:
   FR6421:
     groupTitle: 'Polynésie Française - Iles Tuamotu - Iles Palliser'
     title: 'Îles Arutua, Apataki, Kaukura, Niau'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - PF
-    modified: '2021-03-31+02:00'
-    lastUpdate: 0
     scaleDenominator: '175.017'
     spatial:
       SW: '16°35,00''S - 147°15,00''W'
@@ -362,11 +306,8 @@ maps:
   FR6424:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Tubuai'
-    edition: 'Edition n° 2 - 2001'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 14
     scaleDenominator: '40.000'
     insetMaps:
       - title: 'Île Tubuai'
@@ -378,11 +319,8 @@ maps:
   FR6434:
     groupTitle: 'Archipel de la Société - Iles Sous-le-Vent'
     title: Huahine
-    edition: 'Edition n° 4 - 2005'
     mapsFrance:
       - PF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 15
     scaleDenominator: '30.000'
     spatial:
       SW: '16°53,37''S - 151°05,85''W'
@@ -397,11 +335,8 @@ maps:
   FR6461:
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier'
-    edition: 'Edition n° 2 - 1992'
     mapsFrance:
       - PF
-    modified: '2019-08-21+02:00'
-    lastUpdate: 16
     scaleDenominator: '60.000'
     spatial:
       SW: '23°26,00''S - 135°10,35''W'
@@ -409,11 +344,8 @@ maps:
   FR6462:
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier - Partie Sud'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - PF
-    modified: '2017-05-10+02:00'
-    lastUpdate: 0
     scaleDenominator: '30.000'
     spatial:
       SW: '23°18,50''S - 135°07,25''W'
@@ -421,11 +353,8 @@ maps:
   FR6463:
     groupTitle: 'Îles Gambier'
     title: 'Île Mangareva - Passe de l''Ouest'
-    edition: 'Edition n° 4 - 2011'
     mapsFrance:
       - PF
-    modified: '2017-03-01+01:00'
-    lastUpdate: 1
     scaleDenominator: '15.000'
     spatial:
       SW: '23°09,07''S - 135°03,15''W'
@@ -433,11 +362,8 @@ maps:
   FR6464:
     groupTitle: 'Îles Gambier'
     title: 'Îles Mangareva - Rikitea - Totegegie'
-    edition: 'Edition n° 4 - 2012'
     mapsFrance:
       - PF
-    modified: '2017-07-05+02:00'
-    lastUpdate: 1
     scaleDenominator: '15.000'
     spatial:
       SW: '23°08,87''S - 134°58,73''W'
@@ -445,11 +371,8 @@ maps:
   FR6497:
     groupTitle: 'Océan Indien - Archipel des Crozet - Groupe de l''Est'
     title: 'Île de la Possession, Île de l''Est'
-    edition: 'Edition n° 5 - 2018'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '75.000'
     spatial:
       SW: '46°37,08''S - 051°26,63''E'
@@ -461,11 +384,8 @@ maps:
   FR6498:
     groupTitle: 'Océan Indien'
     title: 'Îles Crozet'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - TF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '250.000'
     spatial:
       SW: '46°50,00''S - 049°30,00''E'
@@ -477,11 +397,8 @@ maps:
   FR6525:
     groupTitle: 'Côte Sud de Tahiti'
     title: 'Abords de Port Phaeton'
-    edition: 'Edition n° 5 - 2017'
     mapsFrance:
       - PF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '25.000'
     spatial:
       SW: '17°54,62''S - 149°24,21''W'
@@ -489,11 +406,8 @@ maps:
   FR6540:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'Baie de Saint-Vincent'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - NC
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: '25.000'
     spatial:
       SW: '22°06,34''S - 165°59,70''E'
@@ -501,11 +415,8 @@ maps:
   FR6553:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Kouaoua'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-07-05+02:00'
-    lastUpdate: 5
     scaleDenominator: '20.000'
     spatial:
       SW: '21°25,34''S - 165°48,00''E'
@@ -514,11 +425,8 @@ maps:
   FR6554:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'Baie Chasseloup - Anse Vavouto'
-    edition: 'Edition n° 3 - 2012'
     mapsFrance:
       - NC
-    modified: '2017-07-05+02:00'
-    lastUpdate: 4
     scaleDenominator: '20.000'
     spatial:
       SW: '21°01,33''S - 164°32,20''E'
@@ -526,11 +434,8 @@ maps:
   FR6589:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Canala'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - NC
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '21°31,84''S - 165°54,60''E'
@@ -538,11 +443,8 @@ maps:
   FR6604:
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
-    edition: 'Edition n° 3 - 2010'
     mapsFrance:
       - PF
-    modified: '2016-12-21+01:00'
-    lastUpdate: 0
     scaleDenominator: '150.000'
     spatial:
       SW: '22°24,95''S - 139°35,01''W'
@@ -550,11 +452,8 @@ maps:
   FR6605:
     groupTitle: 'Iles de la Société - Côte Nord-Est de Tahiti'
     title: 'De la Pointe Vénus à Mahaena'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - PF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '25.000'
     spatial:
       SW: '17°35,02''S - 149°30,01''W'
@@ -562,11 +461,8 @@ maps:
   FR6607:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie Sud-Est'
-    edition: 'Edition n° 3 - 2004'
     mapsFrance:
       - PF
-    modified: '2016-12-15+01:00'
-    lastUpdate: 16
     scaleDenominator: 3.500.000
     spatial:
       SW: '28°15,00''S - 153°30,00''W'
@@ -574,11 +470,8 @@ maps:
   FR6610:
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié - Rade du Brusc'
-    edition: 'Edition n° 6 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-10-20+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '42°58,94''N - 005°42,38''E'
@@ -586,11 +479,8 @@ maps:
   FR6612:
     groupTitle: 'Côte Sud de France'
     title: 'De Cassis à Bandol - Baie de La Ciotat'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-01+01:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '43°06,12''N - 005°29,93''E'
@@ -602,11 +492,8 @@ maps:
   FR6615:
     groupTitle: 'Côte Sud de France'
     title: 'Îles de Port-Cros et du Levant - (Îles d''Hyères)'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-22+01:00'
-    lastUpdate: 1
     scaleDenominator: '25.000'
     spatial:
       SW: '42°53,54''N - 006°20,90''E'
@@ -614,11 +501,8 @@ maps:
   FR6616:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Bénat au Cap Lardier - Rade de Bormes - Baie de Cavalaire'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-22+01:00'
-    lastUpdate: 1
     scaleDenominator: '25.000'
     spatial:
       SW: '43°02,67''N - 006°20,90''E'
@@ -633,12 +517,9 @@ maps:
   FR6618:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Atterrages Ouest des Îles Britanniques'
-    edition: 'Edition n° 5 - 2022'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 2.180.000
     spatial:
       SW: '48°15,00''N - 034°15,00''W'
@@ -647,12 +528,9 @@ maps:
   FR6623:
     groupTitle: 'Océan Atlantique Nord'
     title: 'De La Manche au Détroit de Gibraltar et à l''archipel des Açores'
-    edition: 'Edition n° 6 - 2018'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 8
     scaleDenominator: 2.770.000
     spatial:
       SW: '34°49,13''N - 034°15,00''W'
@@ -660,11 +538,8 @@ maps:
   FR6643:
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
-    edition: 'Edition n° 2 - 1991'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 15
     scaleDenominator: '150.000'
     noteCatalog: |
       Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.
@@ -675,26 +550,48 @@ maps:
       - title: 'A - Ile Juan de Nova'
         scaleDenominator: '50.000'
         spatial: { SW: '17°06,40''S - 042°36,30''E', NE: '16°54,37''S - 042°52,53''E' }
+        noteCatalog: |
+          Ce cartouche n'est pas en WGS84 mais en MHM 1953.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 0,1' vers le Sud et 0,3' vers l'Ouest.
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique je corrige de -0,1' en latitude et +0,3' en longitude.
       - title: 'B - Mouillage Nord d''Europa'
         scaleDenominator: '15.000'
         spatial: { SW: '22°21,40''S - 040°18,80''E', NE: '22°18,57''S - 040°22,10''E' }
+        noteCatalog: |
+          Ce cartouche n'est pas en WGS84 mais en MHM 1954.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 1,4' vers le Nord et 0,3' vers l'Ouest.
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique je corrige de +1,4' en latitude et +0,3' en longitude.
       - title: 'C - Ile Europa'
         scaleDenominator: '50.000'
         spatial: { SW: '22°25,40''S - 040°16,30''E', NE: '22°17,40''S - 040°27,30''E' }
+        noteCatalog: correction identique à celle du cartouche B
       - title: 'D - Iles Bassas da India'
         scaleDenominator: '150.000'
         spatial: { SW: '21°36,10''S - 039°33,40''E', NE: '21°19,86''S - 039°47,15''E' }
+        noteCatalog: |
+          Ce cartouche n'est pas en WGS84 mais dans un système géodésique local.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 1,1' vers le Nord et de 1,6' vers l'Est
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique la boite est corrigée de +1,1' en latitude et -1,6' en longitude.
       - title: 'E - Iles Glorieuses'
         scaleDenominator: '150.000'
         spatial: { SW: '11°37,82''S - 047°11,95''E', NE: '11°21,56''S - 047°30,95''E' }
+        noteCatalog: |
+          Ce cartouche n'est pas en WGS84 mais en MHG 1977.
+          Une indication portée sur la carte précise que les coordonnées WGS84 doivent être corrigées
+          de 0,32' vers le Nord et de 0,05' vers l'Est
+          Cette correction ne permet pas de mettre en place la carte.
+          En pratique la boite est corrigée de +0,32' en latitude et -0,05' en longitude.
   FR6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
-    edition: 'Edition n° 8 - 2016'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 45
     scaleDenominator: '43.100'
     spatial:
       SW: '50°56,50''N - 001°44,20''E'
@@ -702,11 +599,8 @@ maps:
   FR6657:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société - Île de Moorea'
     title: 'Baies de Cook et d''Opunohu'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - PF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: '12.500'
     spatial:
       SW: '17°31,22''S - 149°52,71''W'
@@ -714,11 +608,8 @@ maps:
   FR6658:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Île de Moorea - Côte Nord-Ouest de Tahiti'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - PF
-    modified: '2018-11-14+01:00'
-    lastUpdate: 0
     scaleDenominator: '50.000'
     spatial:
       SW: '17°41,27''S - 150°03,21''W'
@@ -730,12 +621,9 @@ maps:
   FR6664:
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
-    edition: 'Edition n° 4 - 2011'
     mapsFrance:
       - TF
       - RE
-    modified: '2017-01-25+01:00'
-    lastUpdate: 4
     scaleDenominator: 3.500.000
     spatial:
       SW: '38°13,62''S - 025°20,00''E'
@@ -744,11 +632,8 @@ maps:
   FR6670:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers de Tasman et du Corail - De l''Australie à la Nouvelle-Zélande et  aux Îles Fidji (Fiji)'
-    edition: 'Edition n° 5 - 2017'
     mapsFrance:
       - NC
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: 3.500.000
     spatial:
       SW: '35°17,40''S - 146°40,00''E'
@@ -757,12 +642,9 @@ maps:
   FR6671:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers du Corail et des Salomon - et mers adjacentes'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - NC
       - WF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 3
     scaleDenominator: 3.500.000
     spatial:
       SW: '20°59,06''S - 146°40,00''E'
@@ -771,13 +653,10 @@ maps:
   FR6672:
     groupTitle: 'Océan Indien - Partie Ouest'
     title: 'De Maputo à Muqdisho - Madagascar'
-    edition: 'Edition n° 6 - 2021'
     mapsFrance:
       - TF
       - RE
       - YT
-    modified: '2021-07-27+02:00'
-    lastUpdate: 0
     scaleDenominator: 3.500.000
     spatial:
       SW: '27°00,00''S - 032°00,00''E'
@@ -786,13 +665,10 @@ maps:
   FR6673:
     groupTitle: 'Océan Indien'
     title: 'De Chagos Archipelago à Madagascar'
-    edition: 'Edition n° 5 - 2022'
     mapsFrance:
       - TF
       - RE
       - YT
-    modified: '2022-02-23+01:00'
-    lastUpdate: 0
     scaleDenominator: 3.500.000
     spatial:
       SW: '24°18,14''S - 044°27,00''E'
@@ -801,11 +677,8 @@ maps:
   FR6680:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile d''Ouessant à l''Ile de Batz'
-    edition: 'Edition n° 3 - 2003'
     mapsFrance:
       - FX-Atl
-    modified: '2021-08-25+02:00'
-    lastUpdate: 83
     scaleDenominator: '156.700'
     spatial:
       SW: '48°21,54''N - 006°18,09''W'
@@ -813,11 +686,8 @@ maps:
   FR6683:
     groupTitle: 'Côte Nord de France'
     title: 'Port du Havre - Entrée du chenal de Rouen'
-    edition: 'Edition n° 9 - 2017'
     mapsFrance:
       - FX-MMN
-    modified: '2021-07-28+02:00'
-    lastUpdate: 13
     scaleDenominator: '15.000'
     spatial:
       SW: '49°25,14''N - 000°00,74''W'
@@ -826,11 +696,8 @@ maps:
   FR6684:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
-    edition: 'Edition n° 7 - 2017'
     mapsFrance:
       - FX-Med
-    modified: '2019-10-09+02:00'
-    lastUpdate: 8
     scaleDenominator: '25.000'
     spatial:
       SW: '43°17,04''N - 004°43,63''E'
@@ -838,11 +705,8 @@ maps:
   FR6687:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Abords de Nouméa - Passes de Boulari et de Dumbéa'
-    edition: 'Edition n° 6 - 2019'
     mapsFrance:
       - NC
-    modified: '2019-07-24+02:00'
-    lastUpdate: 0
     scaleDenominator: '59.600'
     spatial:
       SW: '22°39,03''S - 166°12,20''E'
@@ -850,11 +714,8 @@ maps:
   FR6688:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles de la Société - De Manuae à Tahiti'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '592.000'
     spatial:
       SW: '18°40,00''S - 154°52,00''W'
@@ -862,11 +723,8 @@ maps:
   FR6689:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (Partie Ouest) - De Tahiti à Rangiroa et Makemo'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '595.000'
     spatial:
       SW: '18°17,44''S - 150°00,00''W'
@@ -874,11 +732,8 @@ maps:
   FR6690:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie centrale) - De Makemo à Tatakoto'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '592.000'
     spatial:
       SW: '18°42,00''S - 144°15,00''W'
@@ -886,11 +741,8 @@ maps:
   FR6691:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie Est) - De Hao à Fangataufa'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '578.000'
     spatial:
       SW: '23°25,00''S - 142°00,00''W'
@@ -898,11 +750,8 @@ maps:
   FR6692:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Des Îles Tuamotu aux Îles Gambier'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '574.000'
     spatial:
       SW: '24°20,00''S - 139°15,00''W'
@@ -910,11 +759,8 @@ maps:
   FR6693:
     groupTitle: 'Côte Sud de France'
     title: 'De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2019-10-09+02:00'
-    lastUpdate: 4
     scaleDenominator: '49.900'
     spatial:
       SW: '43°08,64''N - 004°15,23''E'
@@ -922,11 +768,8 @@ maps:
   FR6713:
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Nord-Est de la Corse - Canal de Corse'
-    edition: 'Edition n° 6 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-02-16+01:00'
-    lastUpdate: 1
     scaleDenominator: '152.000'
     spatial:
       SW: '41°57,94''N - 008°59,94''E'
@@ -934,11 +777,8 @@ maps:
   FR6717:
     groupTitle: 'Île de Tahiti (Côte Sud) - Mouillages'
     title: 'Port Phaeton (Teauaa) - Tapuaeraha'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - PF
-    modified: '2017-06-21+02:00'
-    lastUpdate: 2
     scaleDenominator: '10.000'
     insetMaps:
       - title: 'A - Port Phaeton (Teauaa)'
@@ -950,11 +790,8 @@ maps:
   FR6735:
     groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais - De Boulogne-sur-Mer à Zeebrugge, estuaire de la Tamise (Thames)'
-    edition: 'Edition n° 7 - 2012'
     mapsFrance:
       - FX-MMN
-    modified: '2021-12-08+01:00'
-    lastUpdate: 141
     scaleDenominator: '150.000'
     spatial:
       SW: '50°40,95''N - 000°54,92''E'
@@ -968,11 +805,8 @@ maps:
   FR6738:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Sud (Spéciale P)'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - MQ
-    modified: '2021-01-06+01:00'
-    lastUpdate: 37
     scaleDenominator: '60.000'
     spatial:
       SW: '14°16,70''N - 061°17,48''W'
@@ -980,11 +814,8 @@ maps:
   FR6740:
     groupTitle: 'Côte Ouest de Tahiti'
     title: 'De Maraa à Faaa'
-    edition: 'Edition n° 3 - 2009'
     mapsFrance:
       - PF
-    modified: '2016-12-07+01:00'
-    lastUpdate: 3
     scaleDenominator: '25.000'
     spatial:
       SW: '17°46,18''S - 149°40,51''W'
@@ -992,11 +823,8 @@ maps:
   FR6741:
     groupTitle: 'Océan Indien'
     title: 'Îles Kerguelen'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 2
     scaleDenominator: '300.000'
     spatial:
       SW: '50°10,50''S - 067°20,00''E'
@@ -1004,12 +832,9 @@ maps:
   FR6757:
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
-    edition: 'Edition n° 2 - 1984'
     mapsFrance:
       - FX-Atl
       - FX-Med
-    modified: '2020-09-30+02:00'
-    lastUpdate: 163
     scaleDenominator: 2.250.000
     spatial:
       SW: '32°45,00''N - 006°44,00''W'
@@ -1018,11 +843,8 @@ maps:
   FR6767:
     groupTitle: 'Côte Sud de France'
     title: 'De Fos-sur-Mer à Marseille'
-    edition: 'Edition n° 5 - 2022'
     mapsFrance:
       - FX-Med
-    modified: '2022-01-19+01:00'
-    lastUpdate: 0
     scaleDenominator: '49.900'
     spatial:
       SW: '43°07,64''N - 004°45,33''E'
@@ -1030,11 +852,8 @@ maps:
   FR6768:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Sud) - Ile des Pins'
-    edition: 'Edition n° 3 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-05-17+02:00'
-    lastUpdate: 11
     scaleDenominator: '300.000'
     spatial:
       SW: '23°33,84''S - 165°00,20''E'
@@ -1043,11 +862,8 @@ maps:
   FR6770:
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
     title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - NC
-    modified: '2017-03-08+01:00'
-    lastUpdate: 0
     scaleDenominator: '25.000'
     spatial:
       SW: '22°43,13''S - 167°16,80''E'
@@ -1055,11 +871,8 @@ maps:
   FR6797:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Loire - Port de Saint-Nazaire'
-    edition: 'Edition n° 5 - 2005'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 29
     scaleDenominator: '15.000'
     spatial:
       SW: '47°11,46''N - 002°21,78''W'
@@ -1067,10 +880,7 @@ maps:
   FR6808:
     groupTitle: 'Océan Atlantique Sud'
     title: 'Océan Atlantique Sud - Partie Est'
-    edition: 'Edition n° 4 - 2022'
     mapsFrance: {  }
-    modified: '2022-02-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 10.000.000
     spatial:
       SW: '57°10,00''S - 027°00,00''W'
@@ -1079,13 +889,10 @@ maps:
   FR6809:
     groupTitle: 'Océan Indien'
     title: 'Océan Indien - Partie Sud'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - TF
       - RE
       - YT
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: 8.922.000
     spatial:
       SW: '51°05,60''S - 024°50,00''E'
@@ -1094,12 +901,9 @@ maps:
   FR6814:
     groupTitle: 'Océan Atlantique'
     title: 'Côte Nord-Est d''Amérique du Sud'
-    edition: 'Edition n° 2 - 1989'
     mapsFrance:
       - MQ
       - GF
-    modified: '2021-01-06+01:00'
-    lastUpdate: 58
     scaleDenominator: 3.780.000
     spatial:
       SW: '08°00,00''S - 062°00,00''W'
@@ -1108,13 +912,10 @@ maps:
   FR6815:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Océan Atlantique Nord - Partie Est'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - FX-Atl
       - FX-Med
       - FX-MMN
-    modified: '2022-02-16+01:00'
-    lastUpdate: 1
     scaleDenominator: 10.000.000
     spatial:
       SW: '08°30,00''S - 043°53,00''W'
@@ -1123,12 +924,9 @@ maps:
   FR6817:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De la Nouvelle-Zélande aux îles Fidji et Samoa'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - NC
       - WF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 0
     scaleDenominator: 3.500.000
     spatial:
       SW: '37°55,40''S - 171°34,30''E'
@@ -1138,11 +936,8 @@ maps:
   FR6820:
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''île Lifou - Baie du Santal'
-    edition: 'Edition n° 3 - 2015'
     mapsFrance:
       - NC
-    modified: '2017-02-01+01:00'
-    lastUpdate: 1
     scaleDenominator: '35.000'
     spatial:
       SW: '20°57,84''S - 166°56,83''E'
@@ -1157,11 +952,8 @@ maps:
   FR6821:
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Ouest de Corse - Du Cap Corse au Golfe d''Ajaccio'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - FX-Med
-    modified: '2019-07-19+02:00'
-    lastUpdate: 14
     scaleDenominator: '152.000'
     spatial:
       SW: '41°43,94''N - 008°01,74''E'
@@ -1169,11 +961,8 @@ maps:
   FR6822:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Nord de Bastia'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-04-06+02:00'
-    lastUpdate: 3
     scaleDenominator: '50.300'
     spatial:
       SW: '42°39,94''N - 009°22,24''E'
@@ -1181,11 +970,8 @@ maps:
   FR6823:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Sud de Bastia'
-    edition: 'Edition n° 4 - 2020'
     mapsFrance:
       - FX-Med
-    modified: '2022-04-06+02:00'
-    lastUpdate: 4
     scaleDenominator: '50.600'
     spatial:
       SW: '42°13,94''N - 009°22,24''E'
@@ -1193,11 +979,8 @@ maps:
   FR6824:
     groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
     title: 'Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
-    edition: 'Edition n° 4 - 2006'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 158
     scaleDenominator: '150.000'
     spatial:
       SW: '49°40,35''N - 000°00,00''W'
@@ -1205,11 +988,8 @@ maps:
   FR6827:
     groupTitle: 'Côte Sud de Nouvelle-Calédonie'
     title: 'Du Mont Dore à Port-Boisé - Passes de Mato et de Uatio (Spéciale P)'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - NC
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '59.500'
     spatial:
       SW: '22°50,20''S - 166°34,10''E'
@@ -1217,21 +997,15 @@ maps:
   FR6828:
     groupTitle: 'Côte Sud-Ouest de Tahiti'
     title: 'Côte Sud-Ouest de Tahiti - De Atehiti à Maraa'
-    edition: 'Edition n° 3 - 2009'
     mapsFrance:
       - PF
-    modified: '2017-06-14+02:00'
-    lastUpdate: 9
     scaleDenominator: '25.000'
     spatial:
       SW: '17°49,82''S - 149°36,37''W'
       NE: '17°40,86''S - 149°22,63''W'
   FR6835:
     title: 'Océan Pacifique Nord - Partie Est'
-    edition: 'Edition n° 2 - 1997'
     mapsFrance: {  }
-    modified: '2021-01-06+01:00'
-    lastUpdate: 77
     scaleDenominator: 7.330.000
     spatial:
       SW: '15°00,00''N - 173°05,00''W'
@@ -1245,11 +1019,8 @@ maps:
   FR6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-10-13+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '43°20,74''N - 006°42,60''E'
@@ -1267,11 +1038,8 @@ maps:
   FR6839:
     groupTitle: 'Côte Sud de France'
     title: 'Etang de Thau'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - FX-Med
-    modified: '2019-10-23+02:00'
-    lastUpdate: 32
     scaleDenominator: '30.000'
     spatial:
       SW: '43°17,94''N - 003°31,43''E'
@@ -1295,11 +1063,8 @@ maps:
   FR6843:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo Creus à Port-Barcarès'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Med
-    modified: '2022-03-23+01:00'
-    lastUpdate: 14
     scaleDenominator: '50.000'
     spatial:
       SW: '42°18,14''N - 002°57,53''E'
@@ -1307,11 +1072,8 @@ maps:
   FR6844:
     groupTitle: 'Côte Sud de France'
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2022-02-23+01:00'
-    lastUpdate: 20
     scaleDenominator: '50.000'
     spatial:
       SW: '42°43,64''N - 002°56,73''E'
@@ -1319,11 +1081,8 @@ maps:
   FR6850:
     groupTitle: 'Côte Nord de Corse'
     title: 'Saint-Florent, Centuri et Macinaggio'
-    edition: 'Edition n° 4 - 2020'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-22+01:00'
-    lastUpdate: 3
     insetMaps:
       - title: 'B - Baie de Centuri'
         scaleDenominator: '10.000'
@@ -1337,11 +1096,8 @@ maps:
   FR6855:
     groupTitle: 'Côte Est de Corse'
     title: 'Du phare d''Alistro à Solenzara'
-    edition: 'Edition n° 3 - 2015'
     mapsFrance:
       - FX-Med
-    modified: '2019-08-28+02:00'
-    lastUpdate: 8
     scaleDenominator: '51.000'
     spatial:
       SW: '41°46,94''N - 009°19,24''E'
@@ -1349,11 +1105,8 @@ maps:
   FR6857:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
-    edition: 'Edition n° 4 - 2012'
     mapsFrance:
       - FX-MMN
-    modified: '2021-12-15+01:00'
-    lastUpdate: 79
     scaleDenominator: '150.000'
     spatial:
       SW: '49°10,74''N - 001°57,48''W'
@@ -1362,11 +1115,8 @@ maps:
   FR6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
-    edition: 'Edition n° 3 - 2012'
     mapsFrance:
       - WF
-    modified: '2021-01-06+01:00'
-    lastUpdate: 12
     scaleDenominator: '20.000'
     spatial:
       SW: '13°25,57''S - 176°15,58''W'
@@ -1378,12 +1128,9 @@ maps:
   FR6880:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tonga aux Îles des Tuamotu'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - WF
       - PF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: 3.500.000
     spatial:
       SW: '27°54,39''S - 175°20,00''W'
@@ -1391,13 +1138,10 @@ maps:
     references: 'Fac similé carte NZ n°14606 publiée en 1977 (édition avril 1992).'
   FR6884:
     title: 'Océan Indien - Partie Nord'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - TF
       - RE
       - YT
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 10.000.000
     spatial:
       SW: '23°40,00''S - 033°20,00''E'
@@ -1406,11 +1150,8 @@ maps:
   FR6892:
     groupTitle: Martinique
     title: 'Baie de Fort-de-France (Spéciale P)'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - MQ
-    modified: '2022-03-16+01:00'
-    lastUpdate: 13
     scaleDenominator: '15.000'
     spatial:
       SW: '14°31,00''N - 061°08,06''W'
@@ -1418,14 +1159,11 @@ maps:
   FR6898:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Mer des Antilles (Mer des Caraïbes)'
-    edition: 'Edition n° 5 - 2022'
     mapsFrance:
       - MQ
       - BL
       - GP
       - MF
-    modified: '2022-02-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 2.750.000
     spatial:
       SW: '07°20,00''N - 084°51,24''W'
@@ -1434,11 +1172,8 @@ maps:
   FR6907:
     groupTitle: 'Côte Sud de France'
     title: 'Etang de Berre'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Med
-    modified: '2019-07-19+02:00'
-    lastUpdate: 6
     scaleDenominator: '25.000'
     spatial:
       SW: '43°23,49''N - 004°57,43''E'
@@ -1450,11 +1185,8 @@ maps:
   FR6911:
     groupTitle: 'Côte Est de Corse'
     title: 'Golfe de Porto-Vecchio'
-    edition: 'Edition n° 5 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-20+01:00'
-    lastUpdate: 9
     scaleDenominator: '15.000'
     spatial:
       SW: '41°34,30''N - 009°16,34''E'
@@ -1462,11 +1194,8 @@ maps:
   FR6929:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-08+01:00'
-    lastUpdate: 19
     scaleDenominator: '50.000'
     spatial:
       SW: '41°19,94''N - 009°10,94''E'
@@ -1474,12 +1203,9 @@ maps:
   FR6930:
     groupTitle: 'Côte Nord de France'
     title: 'Des roches de Portsall au plateau des Roches Douvres'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 68
     scaleDenominator: '150.000'
     spatial:
       SW: '48°29,94''N - 004°50,09''W'
@@ -1487,11 +1213,8 @@ maps:
   FR6933:
     groupTitle: Nouvelle-Calédonie
     title: 'De l''île Ouen à l''île des Pins - Passe de la Sarcelle (Spéciale P)'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - NC
-    modified: '2017-05-10+02:00'
-    lastUpdate: 0
     scaleDenominator: '60.000'
     spatial:
       SW: '22°43,13''S - 166°49,70''E'
@@ -1499,11 +1222,8 @@ maps:
   FR6940:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à the Needles'
-    edition: 'Edition n° 5 - 2011'
     mapsFrance:
       - FX-MMN
-    modified: '2022-01-12+01:00'
-    lastUpdate: 79
     scaleDenominator: '150.000'
     spatial:
       SW: '49°42,82''N - 003°53,00''W'
@@ -1512,12 +1232,9 @@ maps:
   FR6941:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Lizard Point à Dartmouth'
-    edition: 'Edition n° 7 - 2019'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-01-12+01:00'
-    lastUpdate: 6
     scaleDenominator: '154.000'
     spatial:
       SW: '49°22,92''N - 005°13,57''W'
@@ -1526,11 +1243,8 @@ maps:
   FR6942:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta d''Orchina au Cap Muro - Abords d''Ajaccio'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Med
-    modified: '2019-11-06+01:00'
-    lastUpdate: 12
     scaleDenominator: '50.000'
     spatial:
       SW: '41°40,94''N - 008°21,24''E'
@@ -1538,11 +1252,8 @@ maps:
   FR6948:
     groupTitle: Guadeloupe
     title: 'Guadeloupe - De Pointe-à-Pitre à Marie-Galante - Canal des Saintes (Spéciale P)'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - GP
-    modified: '2021-01-06+01:00'
-    lastUpdate: 35
     scaleDenominator: '60.000'
     spatial:
       SW: '15°40,55''N - 061°43,63''W'
@@ -1555,11 +1266,8 @@ maps:
   FR6949:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Abords de Thio'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-04-12+02:00'
-    lastUpdate: 13
     scaleDenominator: '60.000'
     spatial:
       SW: '21°41,93''S - 165°52,20''E'
@@ -1568,11 +1276,8 @@ maps:
   FR6951:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Fos-sur-Mer à Capo Mele'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-06+01:00'
-    lastUpdate: 10
     scaleDenominator: '250.000'
     spatial:
       SW: '42°19,94''N - 004°49,93''E'
@@ -1580,11 +1285,8 @@ maps:
   FR6955:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea - Îles de Maiao et de Tetiaroa'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '173.000'
     spatial:
       SW: '18°04,52''S - 150°45,01''W'
@@ -1592,11 +1294,8 @@ maps:
   FR6956:
     groupTitle: 'Côte Est de Tahiti'
     title: 'De la Passe de Mahaena à la Baie de Taravao'
-    edition: 'Edition n° 3 - 2010'
     mapsFrance:
       - PF
-    modified: '2017-05-24+02:00'
-    lastUpdate: 5
     scaleDenominator: '25.000'
     spatial:
       SW: '17°45,42''S - 149°21,01''W'
@@ -1605,11 +1304,8 @@ maps:
   FR6957:
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
     title: 'De la Baie de Taravao à la Passe d''Aiurua'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - PF
-    modified: '2016-11-09+01:00'
-    lastUpdate: 3
     scaleDenominator: '25.000'
     spatial:
       SW: '17°50,18''S - 149°17,01''W'
@@ -1617,11 +1313,8 @@ maps:
   FR6964:
     groupTitle: 'Océan Pacifique - Côte Ouest d''Amérique du Sud'
     title: 'De Panama au Cap Horn (Cabo de Hornos)'
-    edition: 'Edition n° 2 - 1994'
     mapsFrance:
       - CP
-    modified: '2017-06-14+02:00'
-    lastUpdate: 58
     scaleDenominator: 10.000.000
     spatial:
       SW: '60°00,00''S - 120°00,00''W'
@@ -1630,12 +1323,9 @@ maps:
   FR6966:
     groupTitle: 'Côte Nord de France'
     title: 'Des Héaux de Bréhat au Cap Lévi'
-    edition: 'Edition n° 4 - 2015'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 76
     scaleDenominator: '155.000'
     spatial:  # saisis à partir de la carte
       SW: "48°30,0'N - 003°05,3'W"
@@ -1648,11 +1338,8 @@ maps:
   FR6968:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'
-    edition: 'Edition n° 4 - 2016'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 37
     scaleDenominator: '150.000'
     spatial:
       SW: '49°53,93''N - 001°59,09''W'
@@ -1662,11 +1349,8 @@ maps:
   FR6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu - Golfe de Saint-Florent'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-01+01:00'
-    lastUpdate: 0
     scaleDenominator: '50.300'
     spatial:
       SW: '42°39,94''N - 009°00,94''E'
@@ -1674,11 +1358,8 @@ maps:
   FR6970:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
-    edition: 'Edition n° 3 - 2015'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-29+02:00'
-    lastUpdate: 12
     scaleDenominator: '50.500'
     spatial:
       SW: '42°30,44''N - 008°26,44''E'
@@ -1686,11 +1367,8 @@ maps:
   FR6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2022-01-12+01:00'
-    lastUpdate: 8
     insetMaps:
       - title: 'A - Abords de l''Île-Rousse'
         scaleDenominator: '15.000'
@@ -1704,11 +1382,8 @@ maps:
   FR6985:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Paagoumène à Ouaco'
-    edition: 'Edition n° 3 - 2011'
     mapsFrance:
       - NC
-    modified: '2017-01-25+01:00'
-    lastUpdate: 7
     scaleDenominator: '60.300'
     spatial:
       SW: '20°52,34''S - 163°53,69''E'
@@ -1723,11 +1398,8 @@ maps:
   FR6986:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De Port-Ounia au Cap Ndoua'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - NC
-    modified: '2017-05-17+02:00'
-    lastUpdate: 0
     scaleDenominator: '59.700'
     spatial:
       SW: '22°23,63''S - 166°49,50''E'
@@ -1739,11 +1411,8 @@ maps:
   FR6990:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-30+02:00'
-    lastUpdate: 32
     scaleDenominator: '355.000'
     spatial:
       SW: '45°28,34''N - 006°00,08''W'
@@ -1751,11 +1420,8 @@ maps:
   FR6991:
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
-    edition: 'Edition n° 4 - 2015'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-01+01:00'
-    lastUpdate: 29
     scaleDenominator: '368.000'
     spatial:
       SW: '43°13,93''N - 005°53,08''W'
@@ -1763,11 +1429,8 @@ maps:
   FR7003:
     groupTitle: 'Côte Sud de France'
     title: 'Le Cap d''Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-Med
-    modified: '2021-10-13+02:00'
-    lastUpdate: 5
     noteShom: 'Nota : Ajout d''un cartouche: D - Gruissan'
     insetMaps:
       - title: 'A - Le Cap d''Agde - Embouchure de l''Hérault'
@@ -1785,11 +1448,8 @@ maps:
   FR7004:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes - Ports de Palavas-les-Flots, Carnon-Plage et des Saintes-Maries-de-la-Mer'
-    edition: 'Edition n° 2 - 2005'
     mapsFrance:
       - FX-Med
-    modified: '2019-08-07+02:00'
-    lastUpdate: 18
     scaleDenominator: '15.000'
     spatial:
       SW: '43°30,32''N - 004°03,15''E'
@@ -1807,11 +1467,8 @@ maps:
   FR7008:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
-    edition: 'Edition n° 2 - 2005'
     mapsFrance:
       - FX-Med
-    modified: '2022-03-23+01:00'
-    lastUpdate: 91
     scaleDenominator: '250.000'
     spatial: {SW: "41°13,93'N - 002°54,93'E", NE: "43°39,94'N - 005°12,9'E"}
     noteCatalog: Correction du bord Est de la carte à partir de l'information sur la carte
@@ -1819,11 +1476,8 @@ maps:
   FR7011:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De la presqu''île Neuméni à Port-Ounia'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-06-07+02:00'
-    lastUpdate: 5
     scaleDenominator: '59.800'
     spatial:
       SW: '22°02,03''S - 166°16,60''E'
@@ -1836,11 +1490,8 @@ maps:
   FR7014:
     groupTitle: 'Méditerranée Occidentale'
     title: 'Des îles Baléares à la Corse et à la Sardaigne'
-    edition: 'Edition n° 3 - 2013'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-06+01:00'
-    lastUpdate: 50
     scaleDenominator: 1.000.000
     spatial:
       SW: '35°30,00''N - 002°00,00''E'
@@ -1848,12 +1499,9 @@ maps:
   FR7015:
     groupTitle: 'Méditerranée Occidentale'
     title: 'De Gibraltar aux Îles Baléares'
-    edition: 'Edition n° 2 - 1998'
     mapsFrance:
       - FX-Atl
       - FX-Med
-    modified: '2019-11-13+01:00'
-    lastUpdate: 104
     scaleDenominator: 1.100.000
     spatial:
       SW: '33°40,00''N - 005°22,00''W'
@@ -1862,12 +1510,9 @@ maps:
   FR7021:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Sud-Ouest'
-    edition: 'Edition n° 2 - 1991'
     mapsFrance:
       - WF
       - PF
-    modified: '2017-06-07+02:00'
-    lastUpdate: 212
     scaleDenominator: 10.000.000
     spatial:
       SW: '13°00,00''S - 117°30,00''E'
@@ -1877,12 +1522,9 @@ maps:
   FR7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est - De San Francisco à Lima'
-    edition: 'Publication 1984'
     mapsFrance:
       - PF
       - CP
-    modified: '2021-01-06+01:00'
-    lastUpdate: 106
     scaleDenominator: 10.000.000
     spatial:
       SW: '13°00,00''S - 164°00,00''W'
@@ -1891,11 +1533,8 @@ maps:
   FR7024:
     groupTitle: 'Mer Méditerranée'
     title: 'Bouches de Bonifacio'
-    edition: 'Edition n° 5 - 2012'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-06+01:00'
-    lastUpdate: 50
     scaleDenominator: '50.000'
     spatial:
       SW: '41°07,60''N - 008°52,94''E'
@@ -1907,11 +1546,8 @@ maps:
   FR7025:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'Ile de Corse'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-06+01:00'
-    lastUpdate: 13
     scaleDenominator: '250.000'
     spatial:
       SW: '40°48,44''N - 007°50,44''E'
@@ -1919,11 +1555,8 @@ maps:
   FR7030:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Garonne - Du Bec d''Ambès à Bordeaux'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2019-10-30+01:00'
-    lastUpdate: 7
     scaleDenominator: '20.000'
     spatial:
       SW: '44°55,94''N - 000°39,19''W'
@@ -1935,11 +1568,8 @@ maps:
   FR7031:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île de Penfret au plateau des Birvideaux - Abords de Lorient'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-29+02:00'
-    lastUpdate: 20
     scaleDenominator: '50.000'
     spatial:
       SW: '47°28,94''N - 004°00,08''W'
@@ -1947,11 +1577,8 @@ maps:
   FR7032:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île de Groix à Belle-Ile - Abords de Lorient'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-29+02:00'
-    lastUpdate: 24
     scaleDenominator: '50.000'
     spatial:
       SW: '47°14,94''N - 003°31,28''W'
@@ -1959,11 +1586,8 @@ maps:
   FR7033:
     groupTitle: 'Côte Ouest de France'
     title: 'De Quiberon au Croisic (Spéciale P)'
-    edition: 'Edition n° 3 - 2002'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-02+01:00'
-    lastUpdate: 97
     scaleDenominator: '50.000'
     spatial: {SW: "47°15,4'N - 003°11,1'W", NE: "47°35,6'N - 002°27,3'W"}
     noteCatalog: |
@@ -1973,23 +1597,17 @@ maps:
   FR7035:
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
-    edition: 'Edition n° 2 - 1998'
     mapsFrance:
       - RE
-    modified: '2021-01-06+01:00'
-    lastUpdate: 46
     scaleDenominator: '175.000'
     spatial:
       SW: '21°41,80''S - 054°41,60''E'
       NE: '20°30,80''S - 056°32,60''E'
   FR7040:
     title: 'La Manche'
-    edition: 'Edition n° 5 - 2020'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2021-12-15+01:00'
-    lastUpdate: 17
     scaleDenominator: '560.000'
     spatial:
       SW: '48°00,00''N - 006°43,65''W'
@@ -1998,18 +1616,14 @@ maps:
   FR7041:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Nord (Spéciale P)'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - MQ
-    modified: '2021-01-06+01:00'
-    lastUpdate: 29
     scaleDenominator: '60.000'
     spatial:
       SW: '14°34,30''N - 061°17,78''W'
       NE: '14°58,60''N - 060°41,08''W'
   FR7043:
     title: 'Océan Atlantique Nord - Partie Ouest'
-    edition: 'Edition n° 2 - 2016'
     mapsFrance:
       - PM
       - MQ
@@ -2017,8 +1631,6 @@ maps:
       - GF
       - GP
       - MF
-    modified: '2020-09-23+02:00'
-    lastUpdate: 19
     scaleDenominator: 10.000.000
     spatial:
       SW: '10°00,00''S - 085°00,00''W'
@@ -2027,11 +1639,8 @@ maps:
   FR7044:
     groupTitle: 'Océan Atlantique Sud'
     title: 'De la Terre de Feu au Vénézuéla'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - GF
-    modified: '2017-06-21+02:00'
-    lastUpdate: 1
     scaleDenominator: 10.000.000
     spatial:
       SW: '60°00,00''S - 070°00,00''W'
@@ -2040,11 +1649,8 @@ maps:
   FR7049:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Loyauté à l''île Hunter'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-05-24+02:00'
-    lastUpdate: 0
     scaleDenominator: '500.000'
     spatial:
       SW: '24°00,00''S - 167°45,00''E'
@@ -2062,11 +1668,8 @@ maps:
   FR7050:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Calvi à Cargèse'
-    edition: 'Edition n° 3 - 2015'
     mapsFrance:
       - FX-Med
-    modified: '2019-09-11+02:00'
-    lastUpdate: 11
     scaleDenominator: '50.000'
     spatial:
       SW: '42°07,34''N - 008°19,74''E'
@@ -2074,11 +1677,8 @@ maps:
   FR7051:
     groupTitle: 'Côte Nord-Est de Nouvelle-Calédonie'
     title: 'Du Cap Colnett à Touho - Abords de Hienghène'
-    edition: 'Edition n° 3 - 2013'
     mapsFrance:
       - NC
-    modified: '2017-06-07+02:00'
-    lastUpdate: 2
     scaleDenominator: '60.300'
     spatial:
       SW: '20°48,13''S - 164°38,69''E'
@@ -2090,11 +1690,8 @@ maps:
   FR7052:
     groupTitle: Nouvelle-Calédonie
     title: 'De Nouméa à l''île des Pins - Le grand lagon Sud (Spéciale P)'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - NC
-    modified: '2017-05-17+02:00'
-    lastUpdate: 18
     scaleDenominator: '150.000'
     spatial:
       SW: '23°14,04''S - 166°21,80''E'
@@ -2106,11 +1703,8 @@ maps:
   FR7053:
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2022-01-26+01:00'
-    lastUpdate: 14
     scaleDenominator: '50.000'
     spatial:
       SW: '43°14,64''N - 003°38,93''E'
@@ -2118,11 +1712,8 @@ maps:
   FR7054:
     groupTitle: 'Côte Sud de France'
     title: 'De l''embouchure de l''Aude à Sète'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-Med
-    modified: '2022-02-23+01:00'
-    lastUpdate: 15
     scaleDenominator: '50.000'
     spatial:
       SW: '43°07,74''N - 003°13,33''E'
@@ -2130,11 +1721,8 @@ maps:
   FR7057:
     groupTitle: 'Côte Nord de France'
     title: Dunkerque
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-MMN
-    modified: '2019-11-06+01:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '50°58,95''N - 002°05,12''E'
@@ -2142,11 +1730,8 @@ maps:
   FR7066:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île Vierge à la Pointe de Penmarc''h - Abords de Brest'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2021-10-27+02:00'
-    lastUpdate: 16
     scaleDenominator: '150.000'
     spatial:
       SW: '47°39,94''N - 006°34,09''W'
@@ -2154,11 +1739,8 @@ maps:
   FR7067:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à Belle-Ile'
-    edition: 'Edition n° 4 - 2015'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 48
     scaleDenominator: '161.000'
     spatial:
       SW: '46°59,94''N - 005°10,08''W'
@@ -2166,11 +1748,8 @@ maps:
   FR7068:
     groupTitle: 'Côte Ouest de France'
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-15+01:00'
-    lastUpdate: 35
     scaleDenominator: '150.000'
     spatial:
       SW: '46°28,90''N - 003°51,00''W'
@@ -2178,11 +1757,8 @@ maps:
   FR7069:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre - Plateau de Rochebonne'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-08+01:00'
-    lastUpdate: 21
     scaleDenominator: '150.000'
     spatial:
       SW: '45°41,20''N - 003°21,00''W'
@@ -2190,25 +1766,23 @@ maps:
   FR7070:
     groupTitle: 'Côte Ouest de France'
     title: 'Du pertuis de Maumusson à Mimizan-Plage'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2021-05-26+02:00'
-    lastUpdate: 19
     scaleDenominator: '167.000'
     spatial:
       SW: '44°09,00''N - 002°36,00''W'
       NE: '45°49,00''N - 001°00,00''W'
-    noteShom: 'Nota : Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte 7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte. Remplacer la mention hors-cadre "Voir carte adjacente 6786" par "Voir carte adjacente 7070 (INT 1804)" sur la carte 7657. Supprimer le cadre de la carte 6786 sur la carte 6991.'
+    noteShom: |
+      Nota : Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte
+      7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte.
+      Remplacer la mention hors-cadre "Voir carte adjacente 6786" par "Voir carte adjacente 7070 (INT 1804)" sur la carte 7657.
+      Supprimer le cadre de la carte 6786 sur la carte 6991.'
     noteCatalog: 'Titre faux ainsi que les bords Nord et Sud'
   FR7073:
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-05-24+02:00'
-    lastUpdate: 10
     noteShom: 'Nota : Nota: Les modifications effectuées sur la carte n° 7073 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
     insetMaps:
       - title: 'A - Baie de Nakéty et Anse de Lavaissière'
@@ -2232,12 +1806,9 @@ maps:
   FR7076:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De Saint-Nazaire à Saint-Malo'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 45
     scaleDenominator: '345.000'
     spatial:
       SW: '47°00,00''N - 006°35,50''W'
@@ -2245,13 +1816,10 @@ maps:
   FR7081:
     groupTitle: 'Mer Méditerranée et Mer Noire'
     title: 'Mer Méditerranée et mer Noire (Spéciale P)'
-    edition: 'Publication 1986'
     mapsFrance:
       - FX-Atl
       - FX-Med
       - FX-MMN
-    modified: '2021-08-04+02:00'
-    lastUpdate: 140
     scaleDenominator: 4.200.000
     spatial:
       SW: '25°00,00''N - 007°00,00''W'
@@ -2261,11 +1829,8 @@ maps:
   FR7086:
     groupTitle: 'Côte Nord de France'
     title: 'Rade de Cherbourg'
-    edition: 'Edition n° 10 - 2019'
     mapsFrance:
       - FX-MMN
-    modified: '2019-10-23+02:00'
-    lastUpdate: 2
     scaleDenominator: '7.500'
     spatial:
       SW: '49°37,95''N - 001°40,93''W'
@@ -2273,11 +1838,8 @@ maps:
   FR7087:
     groupTitle: 'La Martinique'
     title: 'La Martinique - Havre de la Trinité et Baie du Galion (Spéciale P)'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - MQ
-    modified: '2017-06-07+02:00'
-    lastUpdate: 5
     scaleDenominator: '15.000'
     spatial:
       SW: '14°42,31''N - 060°58,97''W'
@@ -2285,11 +1847,8 @@ maps:
   FR7088:
     groupTitle: 'La Martinique'
     title: 'Havre du Robert et Baie du François'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - MQ
-    modified: '2021-09-01+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '14°36,33''N - 060°57,03''W'
@@ -2301,11 +1860,8 @@ maps:
   FR7089:
     groupTitle: 'La Martinique'
     title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - MQ
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     insetMaps:
       - title: 'A - Saint-Pierre'
         scaleDenominator: '15.000'
@@ -2322,11 +1878,8 @@ maps:
   FR7090:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-MMN
-    modified: '2021-01-06+01:00'
-    lastUpdate: 10
     scaleDenominator: '20.000'
     spatial:
       SW: '49°31,58''N - 001°20,38''W'
@@ -2341,11 +1894,8 @@ maps:
   FR7091:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Toulon'
-    edition: 'Edition n° 6 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-08+01:00'
-    lastUpdate: 14
     scaleDenominator: '25.000'
     spatial:
       SW: '42°59,84''N - 005°50,34''E'
@@ -2353,11 +1903,8 @@ maps:
   FR7092:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Nacqueville au Cap Lévi - Rade de Cherbourg'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-MMN
-    modified: '2021-04-28+02:00'
-    lastUpdate: 3
     scaleDenominator: '20.000'
     spatial:
       SW: '49°37,35''N - 001°45,08''W'
@@ -2365,11 +1912,8 @@ maps:
   FR7093:
     groupTitle: 'Côte Sud de France'
     title: 'Rade de Toulon'
-    edition: 'Edition n° 7 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-06+01:00'
-    lastUpdate: 12
     scaleDenominator: '10.000'
     spatial:
       SW: '43°03,59''N - 005°52,54''E'
@@ -2377,11 +1921,8 @@ maps:
   FR7094:
     groupTitle: 'Côte Nord de France'
     title: 'Du phare du Four à l''Ile Vierge - Port de l''Aber-Wrac''h'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2019-07-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '25.000'
     spatial:
       SW: '48°30,69''N - 004°51,91''W'
@@ -2393,11 +1934,8 @@ maps:
   FR7095:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Morlaix'
-    edition: 'Edition n° 5 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 9
     insetMaps:
       - title: 'Baie de Morlaix - De l''île de Batz à la Pointe de Primel'
         scaleDenominator: '20.000'
@@ -2411,11 +1949,8 @@ maps:
   FR7096:
     groupTitle: 'Côte Sud de Corse'
     title: 'Baie de Figari - Port de Bonifacio'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-Med
-    modified: '2019-09-18+02:00'
-    lastUpdate: 5
     insetMaps:
       - title: 'A - Baie de Figari'
         scaleDenominator: '10.000'
@@ -2426,11 +1961,8 @@ maps:
   FR7097:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Baie de Bourail - Coupée Mara et Baie de Moindou'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-06-07+02:00'
-    lastUpdate: 0
     insetMaps:
       - title: 'A - Baie de Bourail'
         scaleDenominator: '20.000'
@@ -2441,11 +1973,8 @@ maps:
   FR7098:
     groupTitle: 'Côte Sud-Ouest de Nouvelle Calédonie'
     title: 'Baies d''Ouaraï et Chambeyron - Passes d''Ouaraï et d''Isié'
-    edition: 'Edition n° 2 - 2007'
     mapsFrance:
       - NC
-    modified: '2017-06-07+02:00'
-    lastUpdate: 2
     scaleDenominator: '25.000'
     spatial:
       SW: '21°56,03''S - 165°40,50''E'
@@ -2453,11 +1982,8 @@ maps:
   FR7100:
     groupTitle: Guadeloupe
     title: 'Guadeloupe - Abords de Pointe-à-Pitre (Spéciale P)'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - GP
-    modified: '2021-01-06+01:00'
-    lastUpdate: 6
     scaleDenominator: '15.000'
     spatial:
       SW: '16°06,50''N - 061°35,69''W'
@@ -2469,11 +1995,8 @@ maps:
   FR7101:
     groupTitle: Guadeloupe
     title: 'Les Saintes'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - GP
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: '15.000'
     spatial:
       SW: '15°49,40''N - 061°39,73''W'
@@ -2481,11 +2004,8 @@ maps:
   FR7102:
     groupTitle: Guadeloupe
     title: 'Ports et mouillages de Grande-Terre, de Marie-Galante et de la Désirade'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - GP
-    modified: '2018-11-28+01:00'
-    lastUpdate: 1
     insetMaps:
       - title: 'A - Le Moule'
         scaleDenominator: '10.000'
@@ -2508,11 +2028,8 @@ maps:
   FR7107:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
-    edition: 'Edition n° 2 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-16+02:00'
-    lastUpdate: 1
     scaleDenominator: '10.000'
     spatial:
       SW: '47°31,52''N - 003°01,80''W'
@@ -2524,11 +2041,8 @@ maps:
   FR7120:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Cherbourg - Du Cap de La Hague à la Pointe de Barfleur'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - FX-MMN
-    modified: '2019-10-16+02:00'
-    lastUpdate: 54
     scaleDenominator: '47.800'
     spatial:
       SW: '49°36,34''N - 001°57,38''W'
@@ -2536,11 +2050,8 @@ maps:
   FR7121:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Douarnenez'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2021-01-06+01:00'
-    lastUpdate: 17
     scaleDenominator: '30.000'
     spatial:
       SW: '48°03,94''N - 004°40,28''W'
@@ -2555,11 +2066,8 @@ maps:
   FR7122:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu au phare du Four - Chenal du Four'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2021-01-06+01:00'
-    lastUpdate: 6
     scaleDenominator: '25.000'
     spatial:
       SW: '48°17,94''N - 004°58,09''W'
@@ -2571,11 +2079,8 @@ maps:
   FR7123:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile Molène - Ile d''Ouessant - Passage du Fromveur'
-    edition: 'Edition n° 6 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2019-11-06+01:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '48°21,85''N - 005°11,09''W'
@@ -2583,11 +2088,8 @@ maps:
   FR7124:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Lannion - De la Pointe de Primel à l''île Grande'
-    edition: 'Edition n° 4 - 2022'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '48°39,94''N - 003°50,08''W'
@@ -2605,11 +2107,8 @@ maps:
   FR7125:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Perros-Guirec - Les Sept Iles - De l''Ile Grande à l''Ile Balanec'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2021-01-06+01:00'
-    lastUpdate: 7
     scaleDenominator: '20.000'
     spatial:
       SW: '48°46,79''N - 003°34,47''W'
@@ -2627,11 +2126,8 @@ maps:
   FR7126:
     groupTitle: 'Côte Nord de France'
     title: 'De l''île Balanec aux Héaux-de-Bréhat - Cours du Jaudy'
-    edition: 'Edition n° 5 - 2012'
     mapsFrance:
       - FX-Atl
-    modified: '2019-10-16+02:00'
-    lastUpdate: 21
     scaleDenominator: '20.000'
     spatial:
       SW: '48°44,54''N - 003°17,14''W'
@@ -2643,11 +2139,8 @@ maps:
   FR7127:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de l''île Bréhat, anse de Paimpol - Entrée du Trieux'
-    edition: 'Edition n° 4 - 2014'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-09+01:00'
-    lastUpdate: 26
     scaleDenominator: '20.000'
     spatial:
       SW: '48°42,78''N - 003°05,68''W'
@@ -2662,11 +2155,8 @@ maps:
   FR7128:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Ouest) - De la Pointe de la Tour à l''Anse d''Yffiniac'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2021-01-06+01:00'
-    lastUpdate: 14
     scaleDenominator: '25.000'
     spatial:
       SW: '48°31,32''N - 002°55,78''W'
@@ -2681,11 +2171,8 @@ maps:
   FR7129:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2019-10-23+02:00'
-    lastUpdate: 6
     scaleDenominator: '20.000'
     spatial:
       SW: '48°32,94''N - 002°20,03''W'
@@ -2693,11 +2180,8 @@ maps:
   FR7130:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Saint-Malo - De l''île des Hébihens à la Pointe de la Varde'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2021-01-06+01:00'
-    lastUpdate: 11
     scaleDenominator: '15.000'
     spatial:
       SW: '48°36,82''N - 002°11,64''W'
@@ -2705,11 +2189,8 @@ maps:
   FR7131:
     groupTitle: 'Côte Nord de France'
     title: 'Du Hâvre de Rothéneuf à Cancale'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-28+02:00'
-    lastUpdate: 2
     scaleDenominator: '20.000'
     spatial:
       SW: '48°39,64''N - 001°59,68''W'
@@ -2721,11 +2202,8 @@ maps:
   FR7133:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de la Côte Ouest du Cotentin'
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - FX-MMN
-    modified: '2021-01-06+01:00'
-    lastUpdate: 26
     insetMaps:
       - title: 'A - Abords de Goury'
         scaleDenominator: '10.000'
@@ -2748,11 +2226,8 @@ maps:
   FR7134:
     groupTitle: 'Côte Nord de France'
     title: 'Iles Chausey'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2021-09-28+02:00'
-    lastUpdate: 3
     scaleDenominator: '15.000'
     spatial:
       SW: '48°49,38''N - 001°54,27''W'
@@ -2764,11 +2239,8 @@ maps:
   FR7135:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Jacques à Damgan'
-    edition: 'Edition n° 2 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-28+02:00'
-    lastUpdate: 2
     scaleDenominator: '15.000'
     spatial:
       SW: '47°25,68''N - 002°47,71''W'
@@ -2777,11 +2249,8 @@ maps:
   FR7136:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Baie de Pont-Mahé à Piriac-sur-Mer'
-    edition: 'Publication 2001'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-28+02:00'
-    lastUpdate: 16
     scaleDenominator: '15.000'
     spatial:
       SW: '47°21,64''N - 002°39,08''W'
@@ -2789,11 +2258,8 @@ maps:
   FR7137:
     groupTitle: 'Côte Ouest de France'
     title: 'Golfe du Morbihan'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-28+02:00'
-    lastUpdate: 8
     scaleDenominator: '20.000'
     spatial:
       SW: '47°30,32''N - 002°59,38''W'
@@ -2811,11 +2277,8 @@ maps:
   FR7138:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et mouillages en Bretagne Sud'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2019-07-19+02:00'
-    lastUpdate: 3
     insetMaps:
       - title: 'A - Embouchures de l''Aven et du Belon'
         scaleDenominator: '10.000'
@@ -2835,11 +2298,8 @@ maps:
   FR7139:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Talut à la Pointe de Gâvres - Ile de Groix'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-29+02:00'
-    lastUpdate: 17
     scaleDenominator: '20.000'
     spatial:
       SW: '47°35,30''N - 003°35,08''W'
@@ -2851,11 +2311,8 @@ maps:
   FR7140:
     groupTitle: 'Côte Ouest de France'
     title: 'Passes et rade de Lorient'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2021-09-28+02:00'
-    lastUpdate: 7
     scaleDenominator: '10.000'
     spatial:
       SW: '47°40,44''N - 003°25,28''W'
@@ -2867,11 +2324,8 @@ maps:
   FR7141:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Quiberon'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - FX-Atl
-    modified: '2021-01-06+01:00'
-    lastUpdate: 34
     scaleDenominator: '20.000'
     spatial:
       SW: '47°23,84''N - 003°08,72''W'
@@ -2879,11 +2333,8 @@ maps:
   FR7142:
     groupTitle: 'Côte Ouest de France'
     title: Belle-Ile
-    edition: 'Edition n° 2 - 2005'
     mapsFrance:
       - FX-Atl
-    modified: '2019-10-16+02:00'
-    lastUpdate: 25
     scaleDenominator: '25.000'
     spatial:
       SW: '47°14,89''N - 003°20,08''W'
@@ -2898,11 +2349,8 @@ maps:
   FR7143:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords des Iles de Houat et de Hoëdic'
-    edition: 'Edition n° 2 - 2003'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-02+01:00'
-    lastUpdate: 23
     scaleDenominator: '20.000'
     spatial:
       SW: '47°17,84''N - 003°04,88''W'
@@ -2910,11 +2358,8 @@ maps:
   FR7144:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Vilaine - De Damgan à La Roche-Bernard'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2019-10-16+02:00'
-    lastUpdate: 1
     scaleDenominator: '15.000'
     spatial:
       SW: '47°26,09''N - 002°35,41''W'
@@ -2926,11 +2371,8 @@ maps:
   FR7145:
     groupTitle: 'Côte Ouest de France'
     title: 'De La Turballe à Pornichet'
-    edition: 'Edition n° 2 - 2005'
     mapsFrance:
       - FX-Atl
-    modified: '2021-10-13+02:00'
-    lastUpdate: 32
     scaleDenominator: '25.000'
     spatial:
       SW: '47°12,54''N - 002°40,50''W'
@@ -2951,11 +2393,8 @@ maps:
   FR7146:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Pointe de Trévignon'
-    edition: 'Edition n° 3 - 2009'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 66
     scaleDenominator: '49.700'
     spatial:
       SW: '47°34,84''N - 004°31,08''W'
@@ -2963,11 +2402,8 @@ maps:
   FR7147:
     groupTitle: 'Côte Ouest de France'
     title: 'De la chaussée de Sein à la Pointe de Penmarc''h - Baie d''Audierne (Spéciale P)'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - FX-Atl
-    modified: '2019-09-18+02:00'
-    lastUpdate: 45
     scaleDenominator: '50.000'
     spatial:
       SW: '47°44,54''N - 004°59,98''W'
@@ -2979,11 +2415,8 @@ maps:
   FR7148:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à la Chaussée de Sein'
-    edition: 'Edition n° 4 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2022-01-26+01:00'
-    lastUpdate: 4
     scaleDenominator: '50.000'
     spatial:
       SW: '47°56,34''N - 005°01,54''W'
@@ -2991,11 +2424,8 @@ maps:
   FR7149:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à Portsall - Ile d''Ouessant'
-    edition: 'Edition n° 5 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2022-01-26+01:00'
-    lastUpdate: 6
     scaleDenominator: '49.100'
     spatial:
       SW: '48°15,84''N - 005°15,69''W'
@@ -3003,11 +2433,8 @@ maps:
   FR7150:
     groupTitle: 'Côte Nord de France'
     title: 'De Portsall à l''anse de Kernic'
-    edition: 'Edition n° 3 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-23+01:00'
-    lastUpdate: 2
     scaleDenominator: '50.000'
     spatial:
       SW: '48°29,94''N - 004°55,49''W'
@@ -3015,11 +2442,8 @@ maps:
   FR7151:
     groupTitle: 'Côte Nord de France'
     title: 'De l''anse de Kernic à l''Ile Grande'
-    edition: 'Edition n° 3 - 2008'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 53
     scaleDenominator: '48.700'
     spatial:
       SW: '48°37,84''N - 004°15,08''W'
@@ -3027,11 +2451,8 @@ maps:
   FR7152:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile Grande à l''Ile de Bréhat'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-09+01:00'
-    lastUpdate: 19
     scaleDenominator: '48.700'
     spatial:
       SW: '48°42,94''N - 003°38,88''W'
@@ -3039,12 +2460,9 @@ maps:
   FR7153:
     groupTitle: 'Côte Nord de France'
     title: 'De l''île de Bréhat au Plateau des Roches Douvres'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2021-12-15+01:00'
-    lastUpdate: 14
     scaleDenominator: '48.600'
     spatial:
       SW: '48°48,64''N - 003°12,48''W'
@@ -3052,11 +2470,8 @@ maps:
   FR7154:
     groupTitle: 'Côte Nord de France'
     title: 'De l''île de Bréhat au Cap Fréhel - Baie de Saint-Brieuc'
-    edition: 'Edition n° 3 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 14
     scaleDenominator: '48.800'
     spatial:
       SW: '48°31,64''N - 003°02,78''W'
@@ -3068,12 +2483,9 @@ maps:
   FR7155:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à la Pointe du Grouin - Approches de Saint-Malo'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2021-12-15+01:00'
-    lastUpdate: 30
     scaleDenominator: '48.800'
     spatial:
       SW: '48°33,94''N - 002°27,08''W'
@@ -3081,12 +2493,9 @@ maps:
   FR7156:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe du Grouin à la Pointe d''Agon - Baie du Mont-Saint-Michel - Iles Chausey'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2021-01-06+01:00'
-    lastUpdate: 8
     scaleDenominator: '48.800'
     spatial:
       SW: '48°33,04''N - 002°00,34''W'
@@ -3094,11 +2503,8 @@ maps:
   FR7157:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe d''Agon au Cap de Carteret - Passage de la Déroute'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 1
     scaleDenominator: '48.400'
     spatial:
       SW: '48°57,34''N - 002°04,08''W'
@@ -3106,11 +2512,8 @@ maps:
   FR7158:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de Carteret au Cap de La Hague - Raz Blanchard'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - FX-MMN
-    modified: '2021-01-06+01:00'
-    lastUpdate: 48
     scaleDenominator: '50.000'
     spatial:
       SW: '49°21,74''N - 002°17,88''W'
@@ -3118,32 +2521,23 @@ maps:
   FR7159:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - FX-MMN
-    modified: '2019-10-16+02:00'
-    lastUpdate: 9
     scaleDenominator: '50.000'
     spatial: {SW: "49°20,64'N - 002°43,74'W", NE: "49°49,04'N - 002°13,48'W" }
   FR7160:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Jersey à Guernsey'
-    edition: 'Edition n° 3 - 2014'
     mapsFrance:
       - FX-MMN
-    modified: '2019-07-19+02:00'
-    lastUpdate: 10
     scaleDenominator: '50.000'
     spatial: {SW: "49°06,04'N - 002°42,08'W", NE: "49°25,54'N - 001°58,38'W"}
   FR7161:
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
     title: 'Des îles Chausey à Jersey - Plateau des Minquiers'
-    edition: 'Edition n° 3 - 2014'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2021-12-15+01:00'
-    lastUpdate: 24
     scaleDenominator: '48.500'
     spatial:
       SW: '48°51,54''N - 002°31,58''W'
@@ -3151,11 +2545,8 @@ maps:
   FR7162:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Muro au Cap de Feno'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2019-11-06+01:00'
-    lastUpdate: 6
     scaleDenominator: '50.000'
     spatial:
       SW: '41°23,74''N - 008°27,34''E'
@@ -3170,13 +2561,10 @@ maps:
   FR7166:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Océan Pacifique Sud - Partie Ouest'
-    edition: 'Publication 1988'
     mapsFrance:
       - NC
       - WF
       - PF
-    modified: '2017-04-05+02:00'
-    lastUpdate: 175
     scaleDenominator: 10.000.000
     spatial:
       SW: '51°05,44''S - 163°30,00''E'
@@ -3187,11 +2575,8 @@ maps:
   FR7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 8
     scaleDenominator: '60.000'
     spatial:
       SW: '22°06,44''S - 165°31,60''E'
@@ -3199,11 +2584,8 @@ maps:
   FR7168:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Bourail à la Passe de la Poya'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '60.000'
     spatial:
       SW: '21°50,54''S - 164°57,10''E'
@@ -3215,11 +2597,8 @@ maps:
   FR7170:
     groupTitle: 'Océan Indien'
     title: 'Îles Saint-Paul et Amsterdam'
-    edition: 'Edition n° 2 - 2014'
     mapsFrance:
       - TF
-    modified: '2017-06-28+02:00'
-    lastUpdate: 1
     insetMaps:
       - title: 'A - Île Saint-Paul'
         scaleDenominator: '30.000'
@@ -3233,11 +2612,8 @@ maps:
   FR7171:
     groupTitle: 'Océan Indien'
     title: 'Approches des Îles Saint-Paul et Amsterdam'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - TF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '350.000'
     spatial:
       SW: '39°17,00''S - 076°30,00''E'
@@ -3245,11 +2621,8 @@ maps:
   FR7172:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu à la Chaussée de Sein - Iroise'
-    edition: 'Edition n° 4 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2022-01-26+01:00'
-    lastUpdate: 5
     scaleDenominator: '49.300'
     spatial:
       SW: '48°01,84''N - 005°15,69''W'
@@ -3257,11 +2630,8 @@ maps:
   FR7183:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
-    edition: 'Edition n° 5 - 2021'
     mapsFrance:
       - RE
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '60.000'
     spatial:
       SW: '21°11,70''S - 055°06,60''E'
@@ -3279,11 +2649,8 @@ maps:
   FR7200:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap d''Antibes au Cap Ferrat - Baie des Anges - Rade de Villefranche'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-03-02+01:00'
-    lastUpdate: 1
     scaleDenominator: '25.000'
     spatial:
       SW: '43°29,04''N - 007°07,04''E'
@@ -3304,11 +2671,8 @@ maps:
   FR7203:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Des îles Baléares (Islas Baleares) à Marseille'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - FX-Med
-    modified: '2022-03-23+01:00'
-    lastUpdate: 90
     scaleDenominator: '500.000'
     spatial:
       SW: '38°49,93''N - 001°36,93''E'
@@ -3316,11 +2680,8 @@ maps:
   FR7204:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Marseille à l''île d''Elbe (Isola d''Elba) et aux Bouches de Bonifacio'
-    edition: 'Publication 1989'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 145
     scaleDenominator: '500.000'
     spatial:
       SW: '41°06,00''N - 004°45,00''E'
@@ -3329,11 +2690,8 @@ maps:
   FR7205:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-03-16+01:00'
-    lastUpdate: 2
     scaleDenominator: '15.000'
     spatial:
       SW: '43°28,66''N - 006°55,77''E'
@@ -3360,11 +2718,8 @@ maps:
   FR7207:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
-    edition: 'Edition n° 3 - 2020'
     mapsFrance:
       - FX-MMN
-    modified: '2021-12-08+01:00'
-    lastUpdate: 3
     insetMaps:
       - title: 'Ports de Fécamp et du Tréport'
         scaleDenominator: '12.500'
@@ -3375,11 +2730,8 @@ maps:
   FR7208:
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade (Spéciale P)'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - GP
-    modified: '2017-03-29+02:00'
-    lastUpdate: 11
     scaleDenominator: '60.000'
     spatial:
       SW: '15°48,35''N - 061°23,23''W'
@@ -3387,11 +2739,8 @@ maps:
   FR7210:
     groupTitle: 'Océan Atlantique'
     title: 'Atterrages de l''entrée de La Manche - Mer Celtique'
-    edition: 'Edition n° 6 - 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-23+01:00'
-    lastUpdate: 6
     scaleDenominator: '500.000'
     spatial:
       SW: '48°20,00''N - 013°27,65''W'
@@ -3400,12 +2749,9 @@ maps:
   FR7211:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Golfe de Gascogne - De Brest à Cabo Finisterre'
-    edition: 'Edition n° 6 - 2019'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2021-12-01+01:00'
-    lastUpdate: 12
     scaleDenominator: 1.000.000
     spatial:
       SW: '42°29,93''N - 013°26,58''W'
@@ -3414,11 +2760,8 @@ maps:
   FR7213:
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
-    edition: 'Edition n° 2 - 2009'
     mapsFrance:
       - PF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 9
     noteCatalog: Les GéoTiffs sont structurés sans partie principale avec 2 cartouches
     badGan: Le GAN n'est pas structuré comme les GéoTiffs
     insetMaps:
@@ -3431,11 +2774,8 @@ maps:
   FR7214:
     groupTitle: 'Côte Nord de France - Côte de Belgique'
     title: 'De Dunkerque à Oostende'
-    edition: 'Edition n° 9 - 2022'
     mapsFrance:
       - FX-MMN
-    modified: '2022-04-06+02:00'
-    lastUpdate: 0
     scaleDenominator: '60.000'
     spatial:
       SW: '51°02,61''N - 002°04,92''E'
@@ -3451,11 +2791,8 @@ maps:
   FR7218:
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - NC
-    modified: '2019-08-28+02:00'
-    lastUpdate: 1
     scaleDenominator: '75.000'
     spatial:
       SW: '20°47,01''S - 166°05,01''E'
@@ -3476,11 +2813,8 @@ maps:
   FR7222:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Est - De la Pointe de la Rivière du Mât à la Pointe Marcellin'
-    edition: 'Publication 1996'
     mapsFrance:
       - RE
-    modified: '2016-10-19+02:00'
-    lastUpdate: 7
     scaleDenominator: '60.000'
     spatial:
       SW: '21°27,50''S - 055°39,00''E'
@@ -3489,11 +2823,8 @@ maps:
   FR7229:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Nice à Piombino (Spéciale P)'
-    edition: 'Edition n° 2 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-02-16+01:00'
-    lastUpdate: 1
     scaleDenominator: '250.000'
     spatial:
       SW: '42°50,00''N - 007°15,00''E'
@@ -3502,11 +2833,8 @@ maps:
   FR7232:
     groupTitle: 'Côte Nord de France'
     title: 'Du Nez de Jobourg à la Pointe de Nacqueville'
-    edition: 'Edition n° 2 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2021-10-05+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '49°38,00''N - 002°00,80''W'
@@ -3519,11 +2847,8 @@ maps:
   FR7234:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Futuna et Alofi'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - WF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '60.000'
     spatial:
       SW: '14°26,70''S - 178°15,49''W'
@@ -3539,11 +2864,8 @@ maps:
   FR7246:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
-    edition: 'Edition n° 2 - 2018'
     mapsFrance:
       - PF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: 6.000.000
     spatial:
       SW: '31°20,00''S - 166°40,00''W'
@@ -3552,11 +2874,8 @@ maps:
   FR7247:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Boulogne-sur-Mer'
-    edition: 'Edition n° 3 - 2011'
     mapsFrance:
       - FX-MMN
-    modified: '2019-07-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '10.000'
     spatial:
       SW: '50°41,75''N - 001°30,75''E'
@@ -3564,11 +2883,8 @@ maps:
   FR7248:
     groupTitle: 'Iles Tuamotu'
     title: Apataki
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 3
     insetMaps:
       - title: 'A - Apataki'
         scaleDenominator: '80.000'
@@ -3585,11 +2901,8 @@ maps:
   FR7249:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et Mouillages en Finistère Sud'
-    edition: 'Edition n° 2 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-22+01:00'
-    lastUpdate: 14
     insetMaps:
       - title: 'A - Cours de l''Odet'
         scaleDenominator: '20.000'
@@ -3611,11 +2924,8 @@ maps:
         spatial: { SW: '47°50,94''N - 003°56,04''W', NE: '47°52,93''N - 003°53,92''W' }
   FR7250:
     title: 'De la pointe de la Torche à Loctudy'
-    edition: 'Publication 2020'
     mapsFrance:
       - FX-Atl
-    modified: '2020-07-01+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '47°42,60''N - 004°25,10''W'
@@ -3623,11 +2933,8 @@ maps:
   FR7251:
     groupTitle: 'Côte Ouest de France'
     title: 'De Loctudy à Concarneau'
-    edition: 'Publication 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 14
     scaleDenominator: '20.000'
     spatial:
       SW: '47°45,96''N - 004°10,83''W'
@@ -3637,11 +2944,8 @@ maps:
   FR7252:
     groupTitle: 'Côte Ouest de France'
     title: 'Îles de Glénan'
-    edition: 'Publication 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2019-07-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '20.000'
     spatial:
       SW: '47°39,52''N - 004°08,62''W'
@@ -3651,11 +2955,8 @@ maps:
   FR7258:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Calais'
-    edition: 'Edition n° 5 - 2018'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 11
     scaleDenominator: '15.000'
     spatial:
       SW: '50°55,25''N - 001°40,92''E'
@@ -3667,11 +2968,8 @@ maps:
   FR7259:
     groupTitle: 'Iles Loyauté'
     title: 'Ile Maré'
-    edition: 'Publication 1995'
     mapsFrance:
       - NC
-    modified: '2017-01-25+01:00'
-    lastUpdate: 16
     replaces: '(remplace 5229)'
     insetMaps:
       - title: 'Ile Maré'
@@ -3695,11 +2993,8 @@ maps:
   FR7260:
     groupTitle: 'Iles Tuamotu'
     title: 'De Apataki à Fakarava'
-    edition: 'Publication 2005'
     mapsFrance:
       - PF
-    modified: '2019-08-07+02:00'
-    lastUpdate: 8
     scaleDenominator: '175.000'
     spatial:
       SW: '16°26,00''S - 146°21,20''W'
@@ -3708,11 +3003,8 @@ maps:
   FR7261:
     groupTitle: 'Archipel des Tuamotu'
     title: 'De Fakarava à Makemo'
-    edition: 'Publication 1993'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 10
     scaleDenominator: '175.000'
     spatial:
       SW: '17°31,17''S - 145°44,80''W'
@@ -3720,11 +3012,8 @@ maps:
   FR7262:
     groupTitle: 'Iles Tuamotu'
     title: 'De Makemo à Marutea Nord'
-    edition: 'Publication 2006'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 7
     scaleDenominator: '174.000'
     spatial:
       SW: '17°55,60''S - 144°05,40''W'
@@ -3732,11 +3021,8 @@ maps:
   FR7267:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Tropez'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-08+01:00'
-    lastUpdate: 2
     scaleDenominator: '20.000'
     spatial:
       SW: '43°08,81''N - 006°34,24''E'
@@ -3754,11 +3040,8 @@ maps:
   FR7268:
     groupTitle: 'Océan Pacifique Sud'
     title: Nouvelle-Calédonie
-    edition: 'Publication 1993'
     mapsFrance:
       - NC
-    modified: '2017-05-17+02:00'
-    lastUpdate: 24
     scaleDenominator: '850.000'
     spatial:
       SW: '23°28,30''S - 160°07,90''E'
@@ -3767,12 +3050,9 @@ maps:
   FR7271:
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
-    edition: 'Publication 1990'
     mapsFrance:
       - NC
       - WF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 212
     scaleDenominator: 10.000.000
     spatial:
       SW: '51°00,00''S - 104°00,00''E'
@@ -3783,11 +3063,8 @@ maps:
   FR7273:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent (Spéciale P)'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - NC
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: '60.000'
     spatial:
       SW: '22°24,13''S - 165°54,00''E'
@@ -3795,11 +3072,8 @@ maps:
   FR7280:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe d''Ajaccio'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '25.000'
     spatial:
       SW: '41°42,44''N - 008°34,79''E'
@@ -3807,11 +3081,8 @@ maps:
   FR7281:
     groupTitle: 'Archipel des Tuamotu'
     title: Hao
-    edition: 'Edition n° 2 - 2015'
     mapsFrance:
       - PF
-    modified: '2019-07-31+02:00'
-    lastUpdate: 12
     scaleDenominator: '75.000'
     spatial:
       SW: '18°29,00''S - 141°16,80''W'
@@ -3832,11 +3103,8 @@ maps:
   FR7282:
     groupTitle: 'Côte Sud de France'
     title: 'Rade d''Hyères'
-    edition: 'Edition n° 6 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-02-02+01:00'
-    lastUpdate: 4
     scaleDenominator: '25.000'
     spatial:
       SW: '42°58,34''N - 006°07,34''E'
@@ -3851,11 +3119,8 @@ maps:
   FR7283:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
-    edition: 'Publication 1992'
     mapsFrance:
       - WF
-    modified: '2016-12-07+01:00'
-    lastUpdate: 20
     scaleDenominator: 1.000.000
     spatial:
       SW: '16°30,00''S - 177°00,00''E'
@@ -3865,11 +3130,8 @@ maps:
   FR7291:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-10-06+02:00'
-    lastUpdate: 0
     scaleDenominator: '250.000'
     spatial:
       SW: '41°28,00''N - 009°13,00''E'
@@ -3878,11 +3140,8 @@ maps:
   FR7292:
     groupTitle: 'Mer Méditerranée'
     title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-01-12+01:00'
-    lastUpdate: 2
     scaleDenominator: 1.000.000
     spatial:
       SW: '34°40,00''N - 008°00,00''E'
@@ -3891,11 +3150,8 @@ maps:
   FR7293:
     groupTitle: 'Iles Tuamotu'
     title: Manihi
-    edition: 'Edition n° 2 - 2007'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '50.000'
     spatial:
       SW: '14°31,90''S - 146°07,00''W'
@@ -3907,11 +3163,8 @@ maps:
   FR7302:
     groupTitle: Guadeloupe
     title: 'De la Pointe des Châteaux à l''Ilet à Kahouanne'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - GP
-    modified: '2017-06-21+02:00'
-    lastUpdate: 15
     scaleDenominator: '59.900'
     spatial:
       SW: '16°14,45''N - 061°47,24''W'
@@ -3919,11 +3172,8 @@ maps:
   FR7305:
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
     title: 'De la Passe d''Aiurua à la Passe Havae'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - PF
-    modified: '2016-12-07+01:00'
-    lastUpdate: 7
     scaleDenominator: '25.000'
     spatial:
       SW: '17°57,41''S - 149°17,04''W'
@@ -3931,11 +3181,8 @@ maps:
   FR7310:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Est) - De Dahouët au Cap Fréhel'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-09+01:00'
-    lastUpdate: 9
     scaleDenominator: '25.000'
     spatial:
       SW: '48°33,19''N - 002°41,27''W'
@@ -3949,24 +3196,18 @@ maps:
         spatial: { SW: '48°37,61''N - 002°29,58''W', NE: '48°38,67''N - 002°27,83''W' }
   FR7311:
     title: 'La Manche (partie Ouest) - De Isles of Scilly et de l''Ile d''Ouessant aux Casquets'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 41
     scaleDenominator: '375.000'
     spatial:
       SW: '48°14,94''N - 006°55,09''W'
       NE: '50°47,95''N - 001°10,08''W'
   FR7312:
     title: 'La Manche (partie Est) - Des Casquets au Pas de Calais'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 25
     scaleDenominator: '375.000'
     spatial:
       SW: '49°04,94''N - 003°00,08''W'
@@ -3974,11 +3215,8 @@ maps:
   FR7313:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la passe de Koné à Ouaco'
-    edition: 'Edition n° 2 - 2012'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '60.200'
     spatial:
       SW: '21°09,00''S - 164°15,00''E'
@@ -3986,11 +3224,8 @@ maps:
   FR7314:
     groupTitle: IlesTuamotu
     title: Ahe
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 6
     insetMaps:
       - title: Ahe
         scaleDenominator: '50.000'
@@ -4004,11 +3239,8 @@ maps:
   FR7316:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe de Sagone'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - FX-Med
-    modified: '2019-08-28+02:00'
-    lastUpdate: 6
     scaleDenominator: '25.000'
     spatial:
       SW: '41°56,21''N - 008°31,55''E'
@@ -4016,11 +3248,8 @@ maps:
   FR7317:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dieppe'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2021-12-01+01:00'
-    lastUpdate: 0
     scaleDenominator: '12.500'
     spatial:
       SW: '49°54,85''N - 001°00,47''E'
@@ -4028,11 +3257,8 @@ maps:
   FR7318:
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De Poum à l''Île Pam'
-    edition: 'Edition n° 4 - 2014'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '60.500'
     spatial:
       SW: '20°16,04''S - 163°39,59''E'
@@ -4040,11 +3266,8 @@ maps:
   FR7319:
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De l''Ile Pam au Cap Colnett'
-    edition: 'Edition n° 2 - 2014'
     mapsFrance:
       - NC
-    modified: '2016-12-14+01:00'
-    lastUpdate: 1
     scaleDenominator: '60.400'
     spatial:
       SW: '20°30,00''S - 164°09,20''E'
@@ -4062,11 +3285,8 @@ maps:
   FR7320:
     groupTitle: 'Côte Nord-Ouest de Nouvelle-Calédonie'
     title: 'De Koumac à Poum'
-    edition: 'Edition n° 3 - 2011'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '60.400'
     spatial:
       SW: '20°34,34''S - 163°39,09''E'
@@ -4081,11 +3301,8 @@ maps:
   FR7321:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Récifs Bampton à l''île Hunter - Nouvelle-Calédonie - Vanuatu'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - NC
-    modified: '2018-10-31+01:00'
-    lastUpdate: 2
     scaleDenominator: 1.500.000
     spatial:
       SW: '26°16,00''S - 157°00,00''E'
@@ -4093,11 +3310,8 @@ maps:
   FR7322:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Muéo'
-    edition: 'Edition n° 3 - 2019'
     mapsFrance:
       - NC
-    modified: '2019-08-14+02:00'
-    lastUpdate: 0
     scaleDenominator: '25.000'
     spatial:
       SW: '21°28,49''S - 164°54,20''E'
@@ -4112,11 +3326,8 @@ maps:
   FR7323:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais - De Boulogne-sur-Mer à Calais et de Dungeness à Dover'
-    edition: 'Edition n° 6 - 2018'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 21
     scaleDenominator: '74.300'
     spatial:
       SW: '50°41,58''N - 000°50,12''E'
@@ -4126,11 +3337,8 @@ maps:
   FR7324:
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis (Spéciale P)'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - GP
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: '20.000'
     spatial:
       SW: '16°14,43''N - 061°38,04''W'
@@ -4138,11 +3346,8 @@ maps:
   FR7328:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Sud - De la Pointe des Châteaux à la Pointe Marcellin'
-    edition: 'Edition n° 2 - 2012'
     mapsFrance:
       - RE
-    modified: '2021-04-14+02:00'
-    lastUpdate: 12
     scaleDenominator: '59.900'
     spatial:
       SW: '21°30,80''S - 055°06,60''E'
@@ -4154,11 +3359,8 @@ maps:
   FR7329:
     groupTitle: 'Archipel des Tuamotu'
     title: Kauehi
-    edition: 'Edition n° 2 - 2003'
     mapsFrance:
       - PF
-    modified: '2019-08-07+02:00'
-    lastUpdate: 9
     insetMaps:
       - title: Kauehi
         scaleDenominator: '75.000'
@@ -4175,12 +3377,9 @@ maps:
   FR7330:
     groupTitle: 'Océan Atlantique Nord'
     title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
-    edition: 'Publication 1995 - Edition n° 6 - 2016'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2016-01-11'
-    lastUpdate: 0
     scaleDenominator: 1.070.000
     spatial:
       SW: '41°28,00''N - 010°30,00''W'
@@ -4188,11 +3387,8 @@ maps:
   FR7337:
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
-    edition: 'Publication 1996'
     mapsFrance:
       - GF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 5
     scaleDenominator: '80.000'
     spatial:
       SW: '04°12,00''N - 051°55,00''W'
@@ -4201,11 +3397,8 @@ maps:
   FR7341:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Granville'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-MMN
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '15.000'
     spatial:
       SW: '48°47,49''N - 001°42,75''W'
@@ -4213,12 +3406,9 @@ maps:
   FR7344:
     groupTitle: 'Manche - Mer du Nord'
     title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
-    edition: 'Publication 1992 - Edition n° 6 - 2016'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2016-01-15'
-    lastUpdate: 0
     scaleDenominator: '655.000'
     spatial:
       SW: '47°30,00''N - 007°00,00''W'
@@ -4226,11 +3416,8 @@ maps:
   FR7345:
     groupTitle: 'Petites Antilles'
     title: 'Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)'
-    edition: 'Edition n° 3 - 2010'
     mapsFrance:
       - GP
-    modified: '2021-01-06+01:00'
-    lastUpdate: 24
     scaleDenominator: '149.000'
     spatial:
       SW: '15°42,25''N - 062°12,24''W'
@@ -4238,11 +3425,8 @@ maps:
   FR7346:
     groupTitle: 'Iles Tuamotu - Iles du roi Georges'
     title: 'Iles du Roi Georges. Takaroa et Takapoto'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 5
     scaleDenominator: '60.000'
     spatial:
       SW: '14°45,00''S - 145°21,00''W'
@@ -4254,11 +3438,8 @@ maps:
   FR7347:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tuamotu aux Îles Australes'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: 1.500.000
     spatial:
       SW: '29°04,00''S - 149°40,00''W'
@@ -4266,11 +3447,8 @@ maps:
   FR7349:
     groupTitle: 'Océan Indien'
     title: 'De la Réunion à Maurice (Mauritius) - Ile Tromelin'
-    edition: 'Publication 1996'
     mapsFrance:
       - RE
-    modified: '2021-01-06+01:00'
-    lastUpdate: 29
     scaleDenominator: '350.000'
     spatial:
       SW: '21°45,00''S - 054°40,00''E'
@@ -4283,12 +3461,9 @@ maps:
   FR7350:
     groupTitle: 'Canal du Mozambique'
     title: 'Récif du Geyser - Banc de la Zélée'
-    edition: 'Edition n° 2 - 2008'
     mapsFrance:
       - TF
       - YT
-    modified: '2016-10-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '156.000'
     spatial:
       SW: '12°53,00''S - 045°37,00''E'
@@ -4296,11 +3471,8 @@ maps:
   FR7351:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Goyeta à la Passe de Koné - Abords de Koné'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - NC
-    modified: '2017-07-05+02:00'
-    lastUpdate: 2
     scaleDenominator: '25.000'
     spatial:
       SW: '21°17,74''S - 164°41,20''E'
@@ -4308,11 +3480,8 @@ maps:
   FR7352:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: Nuku-Hiva
-    edition: 'Publication 1995'
     mapsFrance:
       - PF
-    modified: '2017-04-26+02:00'
-    lastUpdate: 11
     replaces: '(remplace 3931,5988)'
     insetMaps:
       - title: Nuku-Hiva
@@ -4336,11 +3505,8 @@ maps:
   FR7353:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Ua-Pou et Ua-Huka'
-    edition: 'Publication 1995'
     mapsFrance:
       - PF
-    modified: '2016-12-07+01:00'
-    lastUpdate: 11
     replaces: '(remplace 5989)'
     insetMaps:
       - title: 'A - Ua-Pou'
@@ -4379,11 +3545,8 @@ maps:
   FR7354:
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Fatu-Hiva, Baies de Hiva-Oa et de Tahuata'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - PF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 2
     insetMaps:
       - title: 'A - Hiva-Oa - Baie Hanamenu'
         scaleDenominator: '10.000'
@@ -4433,11 +3596,8 @@ maps:
   FR7355:
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Hiva-Oa, Tahuata et Mohotani'
-    edition: 'Edition n° 2 - 2018'
     mapsFrance:
       - PF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '70.000'
     spatial:
       SW: '10°05,00''S - 139°16,00''W'
@@ -4452,11 +3612,8 @@ maps:
   FR7356:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Eiao, Hatutaa et Motu One'
-    edition: 'Publication 2000'
     mapsFrance:
       - PF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '70.000'
     spatial:
       SW: '08°11,00''S - 141°00,00''W'
@@ -4468,11 +3625,8 @@ maps:
   FR7357:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Îles Marquises (Fenua Enata)'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '500.000'
     spatial:
       SW: '11°48,00''S - 141°18,00''W'
@@ -4480,11 +3634,8 @@ maps:
   FR7358:
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Est'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - TF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '35.800'
     spatial:
       SW: '49°35,00''S - 070°04,00''E'
@@ -4496,11 +3647,8 @@ maps:
   FR7359:
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan - Partie Ouest'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - TF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '35.800'
     spatial:
       SW: '49°41,20''S - 069°46,00''E'
@@ -4515,11 +3663,8 @@ maps:
   FR7360:
     groupTitle: 'Mer Méditerranée'
     title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
-    edition: 'Publication 1995 - Edition n° 6 - 2016'
     mapsFrance:
       - FX-Med
-    modified: '2016-01-15'
-    lastUpdate: 0
     scaleDenominator: '700.000'
     spatial:
       SW: '39°57,00''N - 001°30,00''E'
@@ -4527,11 +3672,8 @@ maps:
   FR7368:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Ile Malden aux Iles de la Société'
-    edition: 'Publication 1995'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 10
     scaleDenominator: 1.600.000
     spatial:
       SW: '18°22,00''S - 161°52,00''W'
@@ -4539,11 +3681,8 @@ maps:
   FR7369:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: 1.500.000
     spatial:
       SW: '24°24,00''S - 163°30,00''W'
@@ -4551,11 +3690,8 @@ maps:
   FR7370:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Mururoa à Ducie Island'
-    edition: 'Publication 1995'
     mapsFrance:
       - PF
-    modified: '2016-10-26+02:00'
-    lastUpdate: 12
     scaleDenominator: 1.500.000
     spatial:
       SW: '26°30,00''S - 140°00,00''W'
@@ -4564,11 +3700,8 @@ maps:
   FR7371:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Tahiti aux Îles Marquises'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-08-21+02:00'
-    lastUpdate: 0
     scaleDenominator: 1.580.000
     spatial:
       SW: '18°06,00''S - 153°00,00''W'
@@ -4576,11 +3709,8 @@ maps:
   FR7372:
     groupTitle: 'Archipel des Tuamotu'
     title: Fakarava
-    edition: 'Edition n° 3 - 2004'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 13
     insetMaps:
       - title: Fakarava
         scaleDenominator: '80.000'
@@ -4597,11 +3727,8 @@ maps:
   FR7373:
     groupTitle: 'Archipel des Tuamotu'
     title: Rangiroa
-    edition: 'Edition n° 2 - 2002'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 28
     scaleDenominator: '80.000'
     spatial:
       SW: '15°23,32''S - 147°59,10''W'
@@ -4619,11 +3746,8 @@ maps:
   FR7374:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'Côte de la Guyane française'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - GF
-    modified: '2021-11-10+01:00'
-    lastUpdate: 1
     scaleDenominator: '500.000'
     spatial:
       SW: '04°10,00''N - 055°28,00''W'
@@ -4631,11 +3755,8 @@ maps:
   FR7375:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Koné'
-    edition: 'Edition n° 2 - 2012'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 3
     scaleDenominator: '60.000'
     spatial:
       SW: '21°29,84''S - 164°31,10''E'
@@ -4643,11 +3764,8 @@ maps:
   FR7376:
     groupTitle: 'Côte de Guyane'
     title: 'Embouchure du fleuve Maroni'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - GF
-    modified: '2021-11-10+01:00'
-    lastUpdate: 1
     replaces: '(remplace 5883.CA, 6058.CA)'
     insetMaps:
       - title: 'Embouchure du fleuve Maroni'
@@ -4662,11 +3780,8 @@ maps:
   FR7377:
     groupTitle: 'Côte de Guyane'
     title: 'Ports du Larivot et de Cayenne'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - GF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '10.000'
     spatial:
       SW: '04°53,78''N - 052°22,90''W'
@@ -4674,11 +3789,8 @@ maps:
   FR7378:
     groupTitle: 'Côte de Guyane'
     title: 'Accès au Dégrad des Cannes'
-    edition: 'Edition n° 6 - 2019'
     mapsFrance:
       - GF
-    modified: '2019-07-24+02:00'
-    lastUpdate: 1
     scaleDenominator: '15.000'
     spatial:
       SW: '04°50,40''N - 052°17,70''W'
@@ -4686,11 +3798,8 @@ maps:
   FR7379:
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Cayenne'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - GF
-    modified: '2021-09-28+02:00'
-    lastUpdate: 1
     scaleDenominator: '50.000'
     spatial:
       SW: '04°49,00''N - 052°30,00''W'
@@ -4698,11 +3807,8 @@ maps:
   FR7380:
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Kourou'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - GF
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '50.000'
     spatial:
       SW: '05°04,00''N - 052°51,00''W'
@@ -4710,11 +3816,8 @@ maps:
   FR7381:
     groupTitle: 'Côte de Guyane Française'
     title: 'De Kourou à Cayenne'
-    edition: 'Edition n° 2 - 2013'
     mapsFrance:
       - GF
-    modified: '2021-01-06+01:00'
-    lastUpdate: 18
     scaleDenominator: '100.000'
     spatial:
       SW: '04°47,60''N - 052°50,00''W'
@@ -4723,11 +3826,8 @@ maps:
   FR7390:
     groupTitle: 'Côte Sud de France'
     title: 'Port de Marseille'
-    edition: 'Edition n° 7 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-15+01:00'
-    lastUpdate: 1
     scaleDenominator: '10.000'
     spatial:
       SW: '43°16,54''N - 005°17,00''E'
@@ -4735,11 +3835,8 @@ maps:
   FR7391:
     groupTitle: 'Côte Sud de France'
     title: 'Abords Sud de Marseille - Des Iles du Frioul à l''Ile de Jarre'
-    edition: 'Edition n° 7 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-11-17+01:00'
-    lastUpdate: 0
     scaleDenominator: '12.500'
     spatial:
       SW: '43°11,34''N - 005°16,08''E'
@@ -4747,11 +3844,8 @@ maps:
   FR7392:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Couronne au Cap Croisette - Golfe de Marseille'
-    edition: 'Edition n° 6 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-01-26+01:00'
-    lastUpdate: 1
     scaleDenominator: '25.000'
     spatial:
       SW: '43°11,64''N - 005°02,31''E'
@@ -4766,11 +3860,8 @@ maps:
   FR7393:
     groupTitle: 'Côte Sud de France'
     title: 'Du port de La Pointe Rouge à Cassis - Calanques de Cassis'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-12-22+01:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '43°07,04''N - 005°18,20''E'
@@ -4782,11 +3873,8 @@ maps:
   FR7394:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Gildas au Goulet de Fromentine - Baie de Bourgneuf'
-    edition: 'Edition n° 4 - 2021'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-09+01:00'
-    lastUpdate: 5
     scaleDenominator: '50.500'
     spatial:
       SW: '46°48,24''N - 002°36,38''W'
@@ -4804,11 +3892,8 @@ maps:
   FR7395:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Croisic à Noirmoutier - Estuaire de la Loire'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-15+01:00'
-    lastUpdate: 34
     scaleDenominator: '50.300'
     spatial:
       SW: '46°59,94''N - 002°50,28''W'
@@ -4816,11 +3901,8 @@ maps:
   FR7396:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-01+01:00'
-    lastUpdate: 28
     insetMaps:
       - title: 'A - De la Pointe de Mindin à Paimboeuf '
         scaleDenominator: '15.000'
@@ -4837,11 +3919,8 @@ maps:
   FR7397:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Sud) - Anse du Fret - Anse du Poulmic'
-    edition: 'Edition n° 5 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2021-10-20+02:00'
-    lastUpdate: 14
     scaleDenominator: '10.000'
     spatial:
       SW: '48°16,47''N - 004°31,13''W'
@@ -4849,11 +3928,8 @@ maps:
   FR7398:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (Partie Ouest) - Baie de Roscanvel - Anse du Fret'
-    edition: 'Edition n° 6 - 2021'
     mapsFrance:
       - FX-Atl
-    modified: '2022-01-26+01:00'
-    lastUpdate: 1
     scaleDenominator: '10.000'
     spatial:
       SW: '48°16,62''N - 004°33,41''W'
@@ -4861,11 +3937,8 @@ maps:
   FR7399:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de Brest'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2021-11-17+01:00'
-    lastUpdate: 8
     scaleDenominator: '7.500'
     spatial:
       SW: '48°20,86''N - 004°32,07''W'
@@ -4873,11 +3946,8 @@ maps:
   FR7400:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2022-01-26+01:00'
-    lastUpdate: 22
     scaleDenominator: '22.500'
     spatial:
       SW: '48°15,79''N - 004°33,47''W'
@@ -4892,11 +3962,8 @@ maps:
   FR7401:
     groupTitle: 'Côte Ouest de France'
     title: 'Accès à la Rade de Brest'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Atl
-    modified: '2022-01-26+01:00'
-    lastUpdate: 23
     scaleDenominator: '22.500'
     spatial:
       SW: '48°14,64''N - 004°46,92''W'
@@ -4908,11 +3975,8 @@ maps:
   FR7402:
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
-    edition: 'Edition n° 2 - 2002'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-30+02:00'
-    lastUpdate: 32
     scaleDenominator: '50.800'
     spatial:
       SW: '46°28,44''N - 002°28,78''W'
@@ -4924,11 +3988,8 @@ maps:
   FR7403:
     groupTitle: 'Côte Ouest de France'
     title: 'Des Sables d''Olonne à l''Île de Ré'
-    edition: 'Edition n° 2 - 2002'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-08+01:00'
-    lastUpdate: 40
     scaleDenominator: '51.000'
     spatial:
       SW: '46°11,94''N - 002°05,08''W'
@@ -4946,11 +4007,8 @@ maps:
   FR7404:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d''Antioche'
-    edition: 'Edition n° 3 - 2014'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-22+01:00'
-    lastUpdate: 27
     scaleDenominator: '51.200'
     spatial:
       SW: '46°00,34''N - 001°46,08''W'
@@ -4962,11 +4020,8 @@ maps:
   FR7405:
     groupTitle: 'Côte Ouest de France'
     title: 'De La Rochelle à la Pointe de La Coubre - Ile d''Oléron'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-22+01:00'
-    lastUpdate: 30
     scaleDenominator: '51.400'
     spatial:
       SW: '45°40,44''N - 001°32,88''W'
@@ -4984,11 +4039,8 @@ maps:
   FR7406:
     groupTitle: 'Côte Sud de France'
     title: 'De Marseille à Toulon'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 31
     scaleDenominator: '50.000'
     spatial:
       SW: '42°57,74''N - 005°17,33''E'
@@ -4996,11 +4048,8 @@ maps:
   FR7407:
     groupTitle: 'Côte Sud de France'
     title: 'De Toulon à Cavalaire-sur-Mer - Iles d''Hyères'
-    edition: 'Edition n° 5 - 2022'
     mapsFrance:
       - FX-Med
-    modified: '2022-04-06+02:00'
-    lastUpdate: 0
     scaleDenominator: '50.200'
     spatial:
       SW: '42°52,14''N - 005°51,44''E'
@@ -5008,11 +4057,8 @@ maps:
   FR7408:
     groupTitle: 'Côte Sud de France'
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 8
     scaleDenominator: '50.000'
     spatial:
       SW: '42°59,94''N - 006°29,24''E'
@@ -5020,11 +4066,8 @@ maps:
   FR7409:
     groupTitle: 'Côte Sud de France'
     title: 'De la Rade d''Agay à Monaco'
-    edition: 'Edition n° 4 - 2022'
     mapsFrance:
       - FX-Med
-    modified: '2022-03-23+01:00'
-    lastUpdate: 0
     scaleDenominator: '49.700'
     spatial:
       SW: '43°23,34''N - 006°50,74''E'
@@ -5032,11 +4075,8 @@ maps:
   FR7410:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile d''Yeu'
-    edition: 'Edition n° 3 - 2022'
     mapsFrance:
       - FX-Atl
-    modified: '2022-04-06+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '46°39,34''N - 002°28,08''W'
@@ -5048,11 +4088,8 @@ maps:
   FR7411:
     groupTitle: 'Côte Ouest de France'
     title: 'Port des Sables-d''Olonne'
-    edition: 'Edition n° 2 - 2003'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-01+01:00'
-    lastUpdate: 10
     scaleDenominator: '10.000'
     spatial:
       SW: '46°26,70''N - 001°52,68''W'
@@ -5060,11 +4097,8 @@ maps:
   FR7412:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
-    edition: 'Edition n° 2 - 2003'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-01+01:00'
-    lastUpdate: 23
     scaleDenominator: '15.000'
     spatial:
       SW: '46°11,04''N - 001°30,98''W'
@@ -5073,11 +4107,8 @@ maps:
   FR7413:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords de La Rochelle'
-    edition: 'Edition n° 4 - 2022'
     mapsFrance:
       - FX-Atl
-    modified: '2022-04-06+02:00'
-    lastUpdate: 0
     scaleDenominator: '15.000'
     spatial:
       SW: '46°04,67''N - 001°19,29''W'
@@ -5086,11 +4117,8 @@ maps:
   FR7414:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Ile d''Aix au Pertuis de Maumusson - Coureau d''Oléron'
-    edition: 'Edition n° 3 - 2014'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-22+01:00'
-    lastUpdate: 29
     scaleDenominator: '25.000'
     spatial:
       SW: '45°45,94''N - 001°18,88''W'
@@ -5102,11 +4130,8 @@ maps:
   FR7415:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Charente'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2021-12-22+01:00'
-    lastUpdate: 12
     insetMaps:
       - title: 'Embouchure de la Charente'
         scaleDenominator: '20.000'
@@ -5120,11 +4145,8 @@ maps:
   FR7416:
     groupTitle: 'Côte Nord de France'
     title: 'Abords Sud de Boulogne-sur-Mer - Du Tréport à Boulogne-sur-Mer'
-    edition: 'Edition n° 4 - 2016'
     mapsFrance:
       - FX-MMN
-    modified: '2020-01-01+01:00'
-    lastUpdate: 12
     scaleDenominator: '75.000'
     spatial:
       SW: '50°01,45''N - 000°57,32''E'
@@ -5133,11 +4155,8 @@ maps:
   FR7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe - Du Cap d''Antifer à Dieppe'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 6
     scaleDenominator: '75.900'
     spatial:
       SW: '49°40,75''N - 000°09,62''E'
@@ -5146,11 +4165,8 @@ maps:
   FR7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer - Embouchure de la Seine - De Ouistreham au Cap d''Antifer'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-23+01:00'
-    lastUpdate: 23
     scaleDenominator: '60.000'
     spatial:
       SW: '49°15,00''N - 000°20,90''W'
@@ -5159,19 +4175,16 @@ maps:
   FR7419:
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - FX-MMN
-    modified: '2021-09-28+02:00'
-    lastUpdate: 8
     badGan: GAN faux, bbox pris sur la carte
     insetMaps:
       - title: 'La Seine du havre à Rouen 1/3'
         scaleDenominator: '30.000'
-        spatial: { SW: "49°25,04'N — 000°08,58'W", NE: "49°30,84'N — 000°13,02'E" } # erreur signe bord Est
+        spatial: { SW: "49°25,04'N - 000°08,58'W", NE: "49°30,84'N - 000°13,02'E" } # erreur signe bord Est
       - title: 'La Seine du havre à Rouen 2/3'
         scaleDenominator: '60.100'
-        spatial: { SW: "49°24,80'N — 000°10,00'E", NE: "49°29,95'N — 000°30,00'E" } # erreur signe bords Ouest et Est
+        spatial: { SW: "49°24,80'N - 000°10,00'E", NE: "49°29,95'N - 000°30,00'E" } # erreur signe bords Ouest et Est
       - title: 'La Seine du havre à Rouen 3/3'
         scaleDenominator: '60.100'
         spatial: { SW: "49°19,65'N - 000°26,82'E", NE: "49°31,64'N - 001°04,92'E" } # erreur signe bord Ouest
@@ -5184,11 +4197,8 @@ maps:
   FR7420:
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
-    edition: 'Edition n° 4 - 2019'
     mapsFrance:
       - FX-MMN
-    modified: '2022-03-02+01:00'
-    lastUpdate: 8
     insetMaps:
       - title: 'A - Port de Grandcamp-Maisy'
         scaleDenominator: '10.000'
@@ -5217,11 +4227,8 @@ maps:
   FR7421:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2022-04-06+02:00'
-    lastUpdate: 2
     scaleDenominator: '48.100'
     spatial:
       SW: '49°14,94''N - 000°55,78''W'
@@ -5229,11 +4236,8 @@ maps:
   FR7422:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à La Pointe de La Percée - Iles Saint-Marcouf'
-    edition: 'Edition n° 2 - 2006'
     mapsFrance:
       - FX-MMN
-    modified: '2021-09-28+02:00'
-    lastUpdate: 57
     scaleDenominator: '48.000'
     spatial:
       SW: '49°19,14''N - 001°20,58''W'
@@ -5241,11 +4245,8 @@ maps:
   FR7423:
     groupTitle: 'Côte Ouest de France'
     title: 'Raz de Sein'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-01+01:00'
-    lastUpdate: 6
     scaleDenominator: '20.000'
     spatial:
       SW: '47°58,80''N - 004°56,39''W'
@@ -5257,11 +4258,8 @@ maps:
   FR7424:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais - De Calais à Dunkerque et de Dover à North Foreland'
-    edition: 'Edition n° 4 - 2018'
     mapsFrance:
       - FX-MMN
-    modified: '2021-12-08+01:00'
-    lastUpdate: 39
     scaleDenominator: '73.900'
     spatial:
       SW: '50°55,00''N - 001°17,12''E'
@@ -5270,11 +4268,8 @@ maps:
   FR7425:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Gironde'
-    edition: 'Edition n° 6 - 2017'
     mapsFrance:
       - FX-Atl
-    modified: '2022-02-23+01:00'
-    lastUpdate: 11
     scaleDenominator: '25.000'
     spatial:
       SW: '45°31,82''N - 001°21,23''W'
@@ -5289,11 +4284,8 @@ maps:
   FR7426:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de la Coubre à la Pointe de la Négade - Embouchure de La Gironde'
-    edition: 'Edition n° 5 - 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     scaleDenominator: '51.800'
     spatial:
       SW: '45°24,00''N - 001°28,90''W'
@@ -5305,11 +4297,8 @@ maps:
   FR7427:
     groupTitle: 'Côte Ouest de France'
     title: 'La Gironde - La Garonne et La Dordogne'
-    edition: 'Edition n° 2 - 2016'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-20+01:00'
-    lastUpdate: 9
     noteCatalog: 'Correction des titres des cartouches, pas de partie principale'
     insetMaps:
       - title: '1 - La Gironde - La Garonne et La Dordogne (1/3)'
@@ -5330,11 +4319,8 @@ maps:
   FR7428:
     groupTitle: 'Côte Ouest de France'
     title: 'Bassin d''Arcachon'
-    edition: 'Edition n° 2 - 2021'
     mapsFrance:
       - FX-Atl
-    modified: '2021-10-13+02:00'
-    lastUpdate: 0
     scaleDenominator: '35.000'
     spatial:
       SW: '44°27,30''N - 001°19,50''W'
@@ -5347,11 +4333,8 @@ maps:
   FR7430:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords et Port de Bayonne - Cours de l''Adour'
-    edition: 'Publication 2007'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-20+01:00'
-    lastUpdate: 11
     scaleDenominator: '10.000'
     spatial:
       SW: '43°28,90''N - 001°37,23''W'
@@ -5364,11 +4347,8 @@ maps:
   FR7431:
     groupTitle: 'Côte Ouest de France'
     title: 'Baies de Fontarabie et de Saint-Jean-de-Luz'
-    edition: 'Edition n° 2 - 2021'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-09+01:00'
-    lastUpdate: 2
     replaces: '(remplace 6526,6556)'
     insetMaps:
       - title: 'A - Baie de Fontarabie'
@@ -5380,11 +4360,8 @@ maps:
   FR7434:
     groupTitle: 'Côte Sud de France'
     title: 'Ports de Sète, Port-la-Nouvelle, Port-Vendres et Collioure'
-    edition: 'Edition n° 2 - 2015'
     mapsFrance:
       - FX-Med
-    modified: '2022-02-23+01:00'
-    lastUpdate: 27
     insetMaps:
       - title: 'A - Port de Sète'
         scaleDenominator: '15.000'
@@ -5398,11 +4375,8 @@ maps:
   FR7436:
     groupTitle: 'Côtes Ouest et Est de Corse'
     title: 'Approches et Port de Bastia - Ports d''Ajaccio et de Propriano'
-    edition: 'Edition n° 2 - 2020'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 4
     replaces: '(remplace 6851.CA, 6856.CA)'
     noteShom: 'Nota : Remplacer numéro de cadre de carte 6851 par 7436 sur les cartes 6942, 7162 et 7280 pour les ports d''Ajaccio et de Propriano. Remplacer numéro de cadre de carte 6856 par 7436 sur les cartes 6822 et 6823 pour le port de Bastia.'
     insetMaps:
@@ -5418,11 +4392,8 @@ maps:
   FR7440:
     groupTitle: 'Côte Ouest de France'
     title: 'De Vieux Boucau à la Baie de Fontarabie'
-    edition: 'Publication 2007'
     mapsFrance:
       - FX-Atl
-    modified: '2020-01-01+01:00'
-    lastUpdate: 26
     scaleDenominator: '50.000'
     spatial:
       SW: '43°22,20''N - 001°47,90''W'
@@ -5435,11 +4406,8 @@ maps:
   FR7441:
     groupTitle: 'Principauté de Monaco - Côte Sud de France'
     title: 'Abords et Ports de Monaco'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-04-06+02:00'
-    lastUpdate: 1
     scaleDenominator: '7.500'
     spatial:
       SW: '43°42,64''N - 007°23,54''E'
@@ -5447,11 +4415,8 @@ maps:
   FR7442:
     groupTitle: 'Côte Sud de France - Principauté de Monaco'
     title: 'De Villefranche-sur-Mer à Menton'
-    edition: 'Edition n° 3 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2022-04-06+02:00'
-    lastUpdate: 2
     scaleDenominator: '20.000'
     spatial:
       SW: '43°39,50''N - 007°18,00''E'
@@ -5459,11 +4424,8 @@ maps:
   FR7443:
     groupTitle: 'Côtes de France et d''Italie - Principauté de Monaco'
     title: 'Du Cap Ferrat à Capo San Lorenzo'
-    edition: 'Edition n° 2 - 2014'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 29
     scaleDenominator: '49.600'
     spatial:
       SW: '43°33,00''N - 007°19,10''E'
@@ -5471,11 +4433,8 @@ maps:
   FR7444:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Lévi à Barfleur'
-    edition: 'Edition n° 2 - 2021'
     mapsFrance:
       - FX-MMN
-    modified: '2021-10-05+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '49°39,20''N - 001°30,00''W'
@@ -5484,11 +4443,8 @@ maps:
   FR7453:
     groupTitle: 'Archipel des Tuamotu'
     title: Makemo
-    edition: 'Publication 1996'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 10
     scaleDenominator: '75.000'
     spatial:
       SW: '16°47,50''S - 144°04,30''W'
@@ -5503,11 +4459,8 @@ maps:
   FR7454:
     groupTitle: 'Iles Tuamotu'
     title: Faaite
-    edition: 'Publication 1998'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 8
     scaleDenominator: '50.000'
     spatial:
       SW: '16°51,90''S - 145°26,40''W'
@@ -5519,11 +4472,8 @@ maps:
   FR7456:
     groupTitle: 'Archipel des Tuamotu'
     title: 'Toau - De Niau à Fakarava'
-    edition: 'Publication 2002'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 6
     scaleDenominator: '75.000'
     spatial:
       SW: '16°13,40''S - 146°27,00''W'
@@ -5538,11 +4488,8 @@ maps:
   FR7457:
     groupTitle: 'Archipel des Tuamotu'
     title: 'Raroia et Takume'
-    edition: 'Publication 2003'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 8
     scaleDenominator: '75.000'
     spatial:
       SW: '16°21,50''S - 142°35,60''W'
@@ -5555,11 +4502,8 @@ maps:
   FR7458:
     groupTitle: 'Iles Tuamotu'
     title: Aratika
-    edition: 'Edition n° 2 - 2011'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 2
     insetMaps:
       - title: Aratika
         scaleDenominator: '50.000'
@@ -5576,11 +4520,8 @@ maps:
   FR7459:
     groupTitle: 'Îles Tuamotu'
     title: Tikehau
-    edition: 'Publication 2019'
     mapsFrance:
       - PF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 1
     noteShom: 'Nota : Porter la mention hors-cadre "Voir carte adjacente 7459" sur la carte 7373 (à l''ouest). Porter le cadre de la carte 7459 et la mention "7459" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention "7455 D" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.'
     insetMaps:
       - title: Tikehau
@@ -5598,11 +4539,8 @@ maps:
   FR7460:
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De la Passe de Taapuna à la Passe d''Arue'
-    edition: 'Edition n° 4 - 2015'
     mapsFrance:
       - PF
-    modified: '2022-02-23+01:00'
-    lastUpdate: 27
     insetMaps:
       - title: '1'
         scaleDenominator: '10.000'
@@ -5613,11 +4551,8 @@ maps:
   FR7461:
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De Taapuna à la Pointe Vénus'
-    edition: 'Publication 2009'
     mapsFrance:
       - PF
-    modified: '2017-06-14+02:00'
-    lastUpdate: 15
     scaleDenominator: '25.000'
     spatial:
       SW: '17°37,20''S - 149°41,84''W'
@@ -5626,11 +4561,8 @@ maps:
   FR7463:
     groupTitle: 'Polynésie Française - Iles Tuamotu'
     title: Katiu
-    edition: 'Publication 2021'
     mapsFrance:
       - PF
-    modified: '2021-05-05+02:00'
-    lastUpdate: 0
     scaleDenominator: '50.000'
     spatial:
       SW: '16°35,30''S - 144°38,50''W'
@@ -5642,11 +4574,8 @@ maps:
   FR7466:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - PF
-    modified: '2019-08-07+02:00'
-    lastUpdate: 0
     scaleDenominator: '20.000'
     spatial:
       SW: '16°36,42''S - 151°48,83''W'
@@ -5658,12 +4587,9 @@ maps:
   FR7470:
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Nevis'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - BL
       - MF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 3
     scaleDenominator: '148.000'
     spatial:
       SW: '16°55,00''N - 063°21,80''W'
@@ -5671,12 +4597,9 @@ maps:
   FR7471:
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Saint-Barthélemy'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - BL
       - MF
-    modified: '2019-07-19+02:00'
-    lastUpdate: 6
     scaleDenominator: '60.000'
     spatial:
       SW: '17°49,00''N - 063°16,00''W'
@@ -5684,12 +4607,9 @@ maps:
   FR7472:
     groupTitle: 'Petites Antilles'
     title: 'Ports et mouillages de Saint-Martin (Sint Maarten) et de Saint-Barthélemy'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - BL
       - MF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     insetMaps:
       - title: 'A - Saint-Martin - Baie de Marigot'
         scaleDenominator: '15.000'
@@ -5709,14 +4629,11 @@ maps:
   FR7475:
     groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
     title: 'De Puerto Rico à Trinidad'
-    edition: 'Edition n° 2 - 2010'
     mapsFrance:
       - MQ
       - BL
       - GP
       - MF
-    modified: '2020-10-21+02:00'
-    lastUpdate: 72
     scaleDenominator: 1.030.000
     spatial:
       SW: '09°30,00''N - 066°30,00''W'
@@ -5725,11 +4642,8 @@ maps:
   FR7480:
     groupTitle: 'Côte de Guyane'
     title: 'Accès au fleuve Kourou - Port de Pariacabo'
-    edition: 'Edition n° 4 - 2020'
     mapsFrance:
       - GF
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '10.000'
     spatial:
       SW: '05°08,48''N - 052°40,43''W'
@@ -5737,11 +4651,8 @@ maps:
   FR7481:
     groupTitle: 'Côte de Guyane'
     title: 'Approches de Kourou - Îles du Salut'
-    edition: 'Edition n° 4 - 2020'
     mapsFrance:
       - GF
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '25.000'
     spatial:
       SW: '05°05,70''N - 052°40,71''W'
@@ -5753,11 +4664,8 @@ maps:
   FR7482:
     groupTitle: Guadeloupe
     title: 'De l''Ilet à Kahouanne aux Saintes'
-    edition: 'Publication 2009'
     mapsFrance:
       - GP
-    modified: '2021-09-28+02:00'
-    lastUpdate: 34
     scaleDenominator: '60.400'
     spatial:
       SW: '15°48,30''N - 062°00,00''W'
@@ -5776,11 +4684,8 @@ maps:
   FR7484:
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
     title: 'De Paramaribo aux Iles du Salut'
-    edition: 'Edition n° 3 - 2020'
     mapsFrance:
       - GF
-    modified: '2021-11-10+01:00'
-    lastUpdate: 2
     scaleDenominator: '299.000'
     spatial:
       SW: '05°05,00''N - 055°25,00''W'
@@ -5788,11 +4693,8 @@ maps:
   FR7485:
     groupTitle: 'Océan Atlantique - Côtes de Guyane Française et du Brésil'
     title: 'Des Iles du Salut à Cabo Orange'
-    edition: 'Edition n° 3 - 2020'
     mapsFrance:
       - GF
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '300.000'
     spatial:
       SW: '04°20,00''N - 052°43,00''W'
@@ -5800,12 +4702,9 @@ maps:
   FR7486:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Nord'
-    edition: 'Edition n° 3 - 2013'
     mapsFrance:
       - TF
       - YT
-    modified: '2016-10-19+02:00'
-    lastUpdate: 5
     scaleDenominator: 1.076.000
     spatial:
       SW: '16°20,00''S - 040°12,00''E'
@@ -5813,12 +4712,9 @@ maps:
   FR7487:
     groupTitle: 'Océan Indien'
     title: 'Approches Nord - Est de Madagascar'
-    edition: 'Publication 2018'
     mapsFrance:
       - TF
       - RE
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 1.058.000
     spatial:
       SW: '21°35,00''S - 048°35,00''E'
@@ -5828,12 +4724,9 @@ maps:
   FR7488:
     groupTitle: 'Océan Indien'
     title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
-    edition: 'Publication 2013'
     mapsFrance:
       - TF
       - RE
-    modified: '2017-02-15+01:00'
-    lastUpdate: 2
     scaleDenominator: 1.050.000
     spatial:
       SW: '21°45,00''S - 054°07,00''E'
@@ -5841,11 +4734,8 @@ maps:
   FR7489:
     groupTitle: 'Océan Indien'
     title: 'Approches Sud-Est de Madagascar'
-    edition: 'Publication 2017'
     mapsFrance:
       - RE
-    modified: '2019-01-02+01:00'
-    lastUpdate: 1
     scaleDenominator: 1.008.000
     spatial:
       SW: '27°22,00''S - 044°40,00''E'
@@ -5855,12 +4745,9 @@ maps:
   FR7490:
     groupTitle: 'Océan Indien'
     title: 'Archipel des Comores'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - TF
       - YT
-    modified: '2021-10-05+02:00'
-    lastUpdate: 2
     scaleDenominator: '350.000'
     spatial:
       SW: '13°25,00''S - 042°58,00''E'
@@ -5869,12 +4756,9 @@ maps:
   FR7491:
     groupTitle: 'Océan Indien - Canal du Mozambique - Côte Nord de Madagasikara (Madagascar)'
     title: 'De Nosy Bé à la Baie d''Antsiranana - Récif du Geyser - Iles Glorieuses'
-    edition: 'Publication 1998'
     mapsFrance:
       - TF
       - YT
-    modified: '2019-07-19+02:00'
-    lastUpdate: 13
     scaleDenominator: '350.000'
     spatial:
       SW: '13°37,00''S - 046°23,00''E'
@@ -5883,11 +4767,8 @@ maps:
   FR7492:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Nord - De la Passe des Îles Choazil à Dzaoudzi'
-    edition: 'Edition n° 4 - 2014'
     mapsFrance:
       - YT
-    modified: '2017-06-07+02:00'
-    lastUpdate: 6
     scaleDenominator: '35.000'
     spatial:
       SW: '12°47,20''S - 044°56,70''E'
@@ -5899,11 +4780,8 @@ maps:
   FR7493:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Est - De Dzaoudzi à la Pointe Saziley'
-    edition: 'Edition n° 4 - 2015'
     mapsFrance:
       - YT
-    modified: '2017-02-15+01:00'
-    lastUpdate: 4
     scaleDenominator: '35.000'
     spatial:
       SW: '13°04,50''S - 045°08,00''E'
@@ -5915,11 +4793,8 @@ maps:
   FR7494:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Ouest, De Chissioua Mbouini à la Baie d''Acoua'
-    edition: 'Edition n° 3 - 2014'
     mapsFrance:
       - YT
-    modified: '2017-04-26+02:00'
-    lastUpdate: 4
     scaleDenominator: '35.000'
     spatial:
       SW: '13°04,00''S - 044°55,40''E'
@@ -5928,11 +4803,8 @@ maps:
   FR7507:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
-    edition: 'Publication 1996'
     mapsFrance:
       - FX-Med
-    modified: '2021-01-06+01:00'
-    lastUpdate: 120
     scaleDenominator: '500.000'
     spatial:
       SW: '40°35,00''N - 003°00,00''E'
@@ -5941,11 +4813,8 @@ maps:
   FR7510:
     groupTitle: 'Côte Nord-Est de Sardaigne'
     title: 'De Capo Bellavista aux Bouches de Bonifacio'
-    edition: 'Edition n° 2 - 2021'
     mapsFrance:
       - FX-Med
-    modified: '2021-09-28+02:00'
-    lastUpdate: 0
     scaleDenominator: '250.000'
     spatial:
       SW: '39°55,00''N - 008°50,00''E'
@@ -5954,11 +4823,8 @@ maps:
   FR7591:
     groupTitle: 'Océan Indien - Océan Pacifique Sud - Antarctique'
     title: 'De Cape Goodenough à Cape Adare'
-    edition: 'Publication 2006'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 2.000.000
     spatial:
       SW: '71°30,00''S - 122°30,00''E'
@@ -5967,11 +4833,8 @@ maps:
   FR7592:
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'Du Glacier Dibble au Glacier Mertz'
-    edition: 'Publication 2004'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '500.000'
     spatial:
       SW: '67°25,00''S - 134°00,00''E'
@@ -5980,11 +4843,8 @@ maps:
   FR7593:
     groupTitle: 'Océan Antarctique - Terre Adélie'
     title: 'De l''Ile Hélène au Rocher du Débarquement - Archipel de Pointe Géologie'
-    edition: 'Publication 2003'
     mapsFrance:
       - TF
-    modified: '2016-10-19+02:00'
-    lastUpdate: 2
     scaleDenominator: '20.000'
     spatial:
       SW: '66°42,07''S - 139°42,00''E'
@@ -5997,11 +4857,8 @@ maps:
   FR7594:
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'De la Pointe Ebba au Cap de la Découverte'
-    edition: 'Publication 2003'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '100.000'
     spatial:
       SW: '66°58,00''S - 139°16,00''E'
@@ -6017,11 +4874,8 @@ maps:
   FR7604:
     groupTitle: 'Océan Indien (Partie Sud)'
     title: 'De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - TF
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: 4.000.000
     spatial:
       SW: '56°55,00''S - 034°15,00''E'
@@ -6029,11 +4883,8 @@ maps:
   FR7606:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
-    edition: 'Publication 2019'
     mapsFrance:
       - FX-Atl
-    modified: '2019-07-19+02:00'
-    lastUpdate: 0
     insetMaps:
       - title: 'A - Port de Saint-Guénolé'
         scaleDenominator: '7.500'
@@ -6047,11 +4898,8 @@ maps:
   FR7620:
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
-    edition: 'Edition n° 2 - 2018'
     mapsFrance:
       - MF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 1
     scaleDenominator: '50.000'
     spatial:
       SW: '18°05,30''N - 063°20,96''W'
@@ -6064,11 +4912,8 @@ maps:
   FR7625:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
-    edition: 'Edition n° 2 - 2018'
     mapsFrance:
       - GF
-    modified: '2020-08-05+02:00'
-    lastUpdate: 21
     scaleDenominator: 1.010.000
     spatial:
       SW: '03°55,00''N - 061°05,00''W'
@@ -6076,13 +4921,10 @@ maps:
   FR7630:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie Nord - De Anguilla à la Guadeloupe'
-    edition: 'Edition n° 4 - 2017'
     mapsFrance:
       - BL
       - GP
       - MF
-    modified: '2021-01-06+01:00'
-    lastUpdate: 15
     scaleDenominator: '300.000'
     spatial:
       SW: '15°47,00''N - 063°27,00''W'
@@ -6090,12 +4932,9 @@ maps:
   FR7631:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie centrale'
-    edition: 'Edition n° 2 - 2018'
     mapsFrance:
       - MQ
       - GP
-    modified: '2018-10-31+01:00'
-    lastUpdate: 1
     scaleDenominator: '304.400'
     spatial:
       SW: '13°40,00''N - 062°20,00''W'
@@ -6103,11 +4942,8 @@ maps:
   FR7639:
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Abords et port de l''Île Saint-Pierre'
-    edition: 'Edition n° 2 - 2022'
     mapsFrance:
       - PM
-    modified: '2022-04-06+02:00'
-    lastUpdate: 0
     noteShom: 'Nota : La carte 982 sera supprimée à la publication de la carte 7640. Porter le cadre du cartouche A et la légende "7639 A (INT 4636)" sur la carte 6118. Rayer le cadre de la carte 982 et la légende "982" sur la carte 6118.'
     insetMaps:
       - title: 'A - Abords de l''Île Saint-Pierre'
@@ -6119,11 +4955,8 @@ maps:
   FR7640:
     groupTitle: 'Abords Sud de Terre-Neuve - Miquelon'
     title: 'Port et mouillages de l''Île Miquelon'
-    edition: 'Edition n° 2 - 2022'
     mapsFrance:
       - PM
-    modified: '2022-03-09+01:00'
-    lastUpdate: 0
     replaces: '(remplace carte 982.CA)'
     noteShom: 'Nota : Porter le cadre du cartouche A et la légende "7640 A (INT 4637)" sur la carte 6118. Porter le cadre du cartouche C et la légende "7640 C (INT 4637)" sur la carte 6118. Rayer la légende "VC 982" dans l''anse de Miquelon sur la carte 6118.'
     insetMaps:
@@ -6139,11 +4972,8 @@ maps:
   FR7643:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Port de Nouméa'
-    edition: 'Edition n° 3 - 2016'
     mapsFrance:
       - NC
-    modified: '2017-03-15+01:00'
-    lastUpdate: 1
     scaleDenominator: '10.000'
     spatial:
       SW: '22°19,15''S - 166°22,80''E'
@@ -6151,11 +4981,8 @@ maps:
   FR7644:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Accès au Port de Nouméa'
-    edition: 'Edition n° 3 - 2017'
     mapsFrance:
       - NC
-    modified: '2022-03-16+01:00'
-    lastUpdate: 23
     scaleDenominator: '25.000'
     spatial:
       SW: '22°23,58''S - 166°14,00''E'
@@ -6163,11 +4990,8 @@ maps:
   FR7645:
     groupTitle: 'Côte Sud-Est de Nouvelle-Calédonie'
     title: 'Canal de La Havannah et Canal Woodin'
-    edition: 'Edition n° 5 - 2016'
     mapsFrance:
       - NC
-    modified: '2017-03-29+02:00'
-    lastUpdate: 1
     scaleDenominator: '31.000'
     spatial:
       SW: '22°29,20''S - 166°44,60''E'
@@ -6179,11 +5003,8 @@ maps:
   FR7657:
     groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De Mimizan-Plage à Cabo de Ajo'
-    edition: 'Publication 2012'
     mapsFrance:
       - FX-Atl
-    modified: '2022-03-09+01:00'
-    lastUpdate: 32
     scaleDenominator: '175.000'
     spatial:
       SW: '43°11,50''N - 003°36,00''W'
@@ -6192,11 +5013,8 @@ maps:
   FR7663:
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'
-    edition: 'Publication 2009'
     mapsFrance:
       - FX-Med
-    modified: '2020-01-01+01:00'
-    lastUpdate: 24
     scaleDenominator: '175.000'
     spatial:
       SW: '41°16,50''N - 002°06,00''E'
@@ -6206,11 +5024,8 @@ maps:
   FR7665:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cap Negre au Cap Cerbère'
-    edition: 'Edition n° 2 - 2019'
     mapsFrance:
       - FX-Med
-    modified: '2020-01-01+01:00'
-    lastUpdate: 0
     scaleDenominator: '50.000'
     spatial:
       SW: '41°58,00''N - 003°02,75''E'
@@ -6223,11 +5038,8 @@ maps:
   FR7677:
     groupTitle: 'Océan Indien - Archipel des Comores'
     title: 'Île de Mayotte'
-    edition: 'Edition n° 2 - 2022'
     mapsFrance:
       - YT
-    modified: '2022-01-19+01:00'
-    lastUpdate: 0
     scaleDenominator: '156.000'
     spatial:
       SW: '13°17,60''S - 044°10,40''E'
@@ -6235,11 +5047,8 @@ maps:
     replaces: '(remplace 6237)'
   FR7750:
     title: 'Approches de l’Île Clipperton'
-    edition: 'Publication 2020'
     mapsFrance:
       - CP
-    modified: '2020-09-30+02:00'
-    lastUpdate: 0
     scaleDenominator: '150.000'
     spatial:
       SW: '09°47,87''N - 109°42,00''W'
@@ -6251,11 +5060,8 @@ maps:
   FR7751:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Île Clipperton - Zone Economique Exclusive'
-    edition: 'Edition n° 2 - 2017'
     mapsFrance:
       - CP
-    modified: '2017-06-21+02:00'
-    lastUpdate: 0
     scaleDenominator: 1.570.000
     spatial:
       SW: '05°00,00''N - 117°06,00''W'
@@ -6263,11 +5069,8 @@ maps:
   FR7755:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Ponérihouen au Cap Dumoulin'
-    edition: 'Publication 2016'
     mapsFrance:
       - NC
-    modified: '2017-04-26+02:00'
-    lastUpdate: 4
     scaleDenominator: '60.000'
     spatial:
       SW: '21°25,50''S - 165°24,00''E'
@@ -6284,11 +5087,8 @@ maps:
   FR7756:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Touho à Ponérihouen'
-    edition: 'Publication 2014'
     mapsFrance:
       - NC
-    modified: '2016-10-19+02:00'
-    lastUpdate: 1
     scaleDenominator: '60.200'
     spatial:
       SW: '21°06,90''S - 165°04,60''E'
@@ -6301,11 +5101,8 @@ maps:
   FR7758:
     groupTitle: Nouvelle-Calédonie
     title: 'Îles Belep'
-    edition: 'Edition n° 3 - 2018'
     mapsFrance:
       - NC
-    modified: '2018-10-31+01:00'
-    lastUpdate: 0
     scaleDenominator: '40.000'
     spatial:
       SW: '19°52,80''S - 163°28,90''E'
@@ -6317,11 +5114,8 @@ maps:
   FR7760:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Nord)'
-    edition: 'Publication 2018'
     mapsFrance:
       - NC
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '307.000'
     spatial:
       SW: '20°36,07''S - 162°32,30''E'
@@ -6331,11 +5125,8 @@ maps:
   FR7761:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
-    edition: 'Publication 2018'
     mapsFrance:
       - NC
-    modified: '2019-01-02+01:00'
-    lastUpdate: 1
     scaleDenominator: '300.000'
     spatial:
       SW: '21°00,00''S - 163°59,10''E'
@@ -6344,11 +5135,8 @@ maps:
   FR7762:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Ouest)'
-    edition: 'Publication 2017'
     mapsFrance:
       - NC
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: '300.000'
     spatial:
       SW: '22°53,00''S - 163°01,00''E'
@@ -6357,11 +5145,8 @@ maps:
     noteShom: 'Nota : Remplacer le renvoi hors cadre "Voir carte adjacente 2799" par "Voir carte adjacente 7762 (INT6842)" sur la carte 3972 (au Sud), rayer le renvoi hors cadre "Voir carte adjacente 1946" sur la carte 6768 (au Nord-Ouest), rayer le renvoi hors cadre "VC 2799" sur la carte 6686 (au Nord-Ouest), rayer les limites de cartes et légendes "1946" et "2799" sur la carte 7268, porter un renvoi hors cadre "Voir carte adjacente 7762 (INT6842)" sur la carte 6768 (à l''Ouest), porter un renvoi hors cadre "VC 7762 (INT6842)" sur la carte 6686 (à l''Ouest), porter le cadre de la carte et la légende "7762 (INT6842)" sur la carte 7268.'
   FR7764:
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
-    edition: 'Publication 2020'
     mapsFrance:
       - NC
-    modified: '2020-06-24+02:00'
-    lastUpdate: 0
     scaleDenominator: '25.000'
     spatial:
       SW: '22°36,55''S - 167°16,62''E'
@@ -6369,12 +5154,9 @@ maps:
   FR7797:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie centrale'
-    edition: 'Publication 2016'
     mapsFrance:
       - TF
       - YT
-    modified: '2019-01-02+01:00'
-    lastUpdate: 1
     scaleDenominator: 1.000.000
     spatial:
       SW: '21°30,00''S - 033°56,00''E'
@@ -6384,11 +5166,8 @@ maps:
   FR7798:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Sud'
-    edition: 'Publication 2016'
     mapsFrance:
       - TF
-    modified: '2019-01-02+01:00'
-    lastUpdate: 0
     scaleDenominator: 1.008.000
     spatial:
       SW: '27°22,00''S - 034°21,00''E'
@@ -6396,12 +5175,9 @@ maps:
     noteShom: 'Nota : Remplacer la légende Voir carte adjacente 1442 par Voir carte adjacente 7798 (INT7053) sur la carte 4177 (hors cadre). Porter en magenta une limite de carte et sa légende 7798 (INT7053) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
   FR8101:
     title: 'MANCHEGRID - Carte générale'
-    edition: 'Publication 2010'
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    modified: '2010-10-23'
-    lastUpdate: 0
     scaleDenominator: '880.000'
     spatial:
       SW: '48°30,00''N - 006°30,00''W'
@@ -6409,13 +5185,10 @@ maps:
     badGan: 'Carte spéciale absente du GAN'
   FR8502:
     title: 'Action de l''Etat en Mer en ZMSOI'
-    edition: 'Publication 2010'
     mapsFrance:
       - TF
       - RE
       - YT
-    modified: '2010-01-01'
-    lastUpdate: 0
     scaleDenominator: 7.904.971
     spatial:
       SW: '60°00,00''S - 030°00,00''E'
@@ -6423,10 +5196,7 @@ maps:
     noteCatalog: 'Carte spéciale absente du GAN'
   FR8509:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
-    edition: 'Publication 2015'
     mapsFrance: [ NC, WF ]
-    modified: '2018-01-18'
-    lastUpdate: 0
     scaleDenominator: 3.158.760
     spatial: { SW: '30°S - 153°E', NE: '08°S - 174°W' }
     borders: { left: 292, bottom: 239, right: 299, top: 193 }
@@ -6434,10 +5204,7 @@ maps:
     badGan: "Carte spéciale absente du GAN"
   FR8510:
     title: 'Délimitations des zones maritimes'
-    edition: 'Publication 2015'
     mapsFrance: [FR]
-    modified: '2015-03-10'
-    lastUpdate: 0
     scaleDenominator: 38.000.000
     spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E" }
     borders: { left: 217, bottom: 202, right: 224, top: 212 }
@@ -6445,10 +5212,7 @@ maps:
     badGan: "Carte spéciale absente du GAN"
   FR8517:
     title: 'Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
-    edition: 'Publication 2015'
     mapsFrance: [PF]
-    modified: '2018-01-18'
-    lastUpdate: 0
     scaleDenominator: 6.050.386
     spatial: { SW: "35°S - 165°W", NE: "05°N - 103°W" }
     borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
@@ -6623,3 +5387,25 @@ obsoleteMaps:
         SW: '38°36,90''N - 000°30,00''W'
         NE: '41°23,30''N - 004°50,00''E'
       references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
+cartesAyantUnIntérêtInsuffisant:
+  FR0101Q:
+     title: 0101Q - Planisphère des fuseaux horaires (axé sur 65° W)
+     scaleDenominator: '40.000.000'
+     reason: carte des fuseaux horaires inutile
+  FR5438:
+    title: 5438 - Océan Pacifique - Océan Pacifique
+    scaleDenominator: '27.000.000'
+    reason: carte ancienne, apport insuffisant par rapport au planisphère
+  FR6963:
+    title: 6963 - De San Rossore au Canale de Piombino - Isole d'Elba, Capraia et Gorgona
+    scaleDenominator: '100.000'
+    reason: n'intersecte pas assez la Corse
+  FR7678:
+    title: 7678 - Îles Anjouan et Mohéli
+    scaleDenominator: '156.000'
+    reason: la faible intersection avec la France est couverte par FR7677 à la même échelle
+  FR9999:
+    title: 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier
+    scaleDenominator: '50.000'
+    reason: carte inutile de par son objet
+eof:

@@ -4,6 +4,7 @@ modified: '2022-06-12'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    14/6/2022: suppression de plusieurs rubriques inutiles dans cette version.
     12/6/2022: suppression dcmi-box
     6/6/2022:
       - Ajout définition du champ badGan
@@ -115,9 +116,6 @@ definitions:
     additionalProperties: false
     required: [title]
     properties:
-      castype:
-        description: uniquement utilisé pour décrire les cas-types
-        type: string
       groupTitle:
         description: sur-titre optionnel identifiant un ensemble de cartes
         type: string
@@ -128,12 +126,6 @@ definitions:
         type: string
         examples:
           - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
-      edition:
-        description: édition de la carte indiquée par le Shom
-        type: string
-        examples:
-          - Édition n° 3 - 2018
-          - Publication 2017
       scaleDenominator:
         description: |
           dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
@@ -151,17 +143,6 @@ definitions:
           Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement lorsque
           le GéoTiff ne l'est pas.
         $ref: '#/definitions/borders'
-      bboxLonLatFromWfs:
-        description: |
-          boite englobante qui peut être moins précise que spatial si ce dernier est inconnu.
-          En degrés décimaux dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON.
-        type: array
-        minItems: 4
-        maxItems: 4
-        items:
-          type: number
-          minimum: -180
-          maximum: 180
       mapsFrance:
         description: |
           identifie les cartes dites d'intérêt, cad décrivant les espaces sur lesquels la France exerce ses droits.
@@ -178,17 +159,6 @@ definitions:
         items:
           type: string
           enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
-      modified:
-        description: |
-          date de la dernière correction, ou si aucune correction date initiale ; si inconnue date des MD.
-          Ce champ devrait être présent pour les cartes d'intérêt.
-        $ref: '#/definitions/dateIso8601'
-      lastUpdate:
-        description: |
-          no de la dernière correction de la carte, 0 si aucune correction.
-          Ce champ devrait être présent pour les cartes d'intérêt.
-        type: integer
-        minimum: 0
       replaces:
         description: identification de la carte remplacée par la carte courante, optionnel
         type: string
@@ -202,7 +172,9 @@ definitions:
         description: commentaire associé à la carte dans la gestion du catalogue
         type: string
       badGan:
-        description: commentaire indiquant une erreur dans le GAN ; si présent indique que le GAN est faux
+        description: |
+          commentaire indiquant une erreur dans le GAN ; si présent indique que l'info de ce catalogue est différente
+          de celle du GAN ; permet de lister rapidement les écarts au GAN.
         type: string
       insetMaps:
         description: liste éventuelle de cartouches
@@ -227,17 +199,16 @@ definitions:
                 Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
                 à celle de la boite englobante permet de déterminer ce géoréférencement.
               $ref: '#/definitions/borders'
+            noteCatalog:
+              description: commentaire associé au cartouche dans la gestion du catalogue
+              type: string
 
 type: object
 required: [ title, $id, $schema, modified, maps ]
 additionalProperties: false
 properties:
   title: { description: 'titre du document', type: string }
-  description:
-    description: 'commentaires sur le document structurés comme une liste de string'
-    type: array
-    items:
-      type: string
+  description: { description: "commentaires sur le document", type: string}
   $id: { description: 'identifiant du document', type: string , format: uri }
   $schema:
     description: 'schema JSON du document'
@@ -253,19 +224,9 @@ properties:
     patternProperties:
       ^FR\d\d\d\d:
         description: |
-          Description d'une carte. 3 types de descriptions cohabitent.
-           - Les nouvelles cartes qui entrent au catalogue peuvent être moins bien connues, par ex. uniquement au travers du flux WFS.
-             Dans ce cas seules les propriétés suivantes peuvent être renseignées:
-               - title
-               - scaleDenominator
-               - bboxLonLatFromWfs
-          
-          Après accès au GAN ou à la carte elle même, on peut renseigner le champ spatial et on peut effacer
-          bboxLonLatFromWfs.
-          On a encore 2 types de cartes:
-            - Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
-            - une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
-          
+          Description d'une carte.
+          Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
+          Une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
           De plus, les cartes, dites d'intérêt, cad celles décrivant des espaces sur lesquels la France exerce ses droits,
           sont identifiées par la propriété mapsFrance et devraient renseigner les propriétés modified et lastUpdate.
         $ref: '#/definitions/map'
@@ -283,99 +244,6 @@ properties:
             description: propriétés de chaque carte
             type: object
             $ref: '#/definitions/map'
-  cartesAjoutéesAuServiceWfs:
-    description: liste quelques cartes ajoutées au service WFS du Shom, indexées sur leur numéro précédé de 'FR'
-    type: object
-    additionalProperties: false
-    patternProperties:
-      ^FR\d\d\d\d:
-        description: description de la carte
-        type: object
-        additionalProperties: false
-        required: [title, scaleDenominator, bboxLonLatDd]
-        properties:
-          title: { description: 'titre de la carte préfixé par son numéro', type: string }
-          scaleDenominator:
-            description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
-            $ref: '#/definitions/scaleDenominator'
-          bboxLonLatDd:
-            description: |
-              boite englobante approximative en LonLat, en degrés décimaux et en WGS84,
-              dans l'ordre [westlimit, southlimit, eastlimit, northlimit] comme en JSON.
-            type: array
-            minItems: 4
-            maxItems: 4
-            items:
-              type: number
-              minimum: -180
-              maximum: 540
-  modificationsDuGAN:
-    description: Définit des modifications à effectuer sur les enregistrements du GAN.
-    type: object
-    additionalProperties: false
-    patternProperties:
-      ^FR\d\d\d\d:
-        description: Description de la modification d'une carte.
-        type: object
-        additionalProperties: false
-        required: [title, reasonForModification]
-        properties:
-          title: { description: titre correct de la carte, type: string}
-          reasonForModification: { description: motif de la modification, type: string }
-          originalTitle: { description: titre original de la carte à corriger, type: string }
-          edition: { description: édition de la carte indiquée par le Shom, type: string }
-          references: { description: référence à la carte étrangère reproduite par le Shom, type: string }
-          scaleDenominator:
-            description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
-            $ref: '#/definitions/scaleDenominator'
-          originalBboxDM:
-            description: boite englobante à corriger de l'espace principal de la carte en degrés, minutes en WGS84,
-            $ref: '#/definitions/bboxDM'
-          bboxDM:
-            description: boite englobante corrigée de l'espace principal de la carte en degrés, minutes en WGS84,
-            $ref: '#/definitions/bboxDM'
-          hasPart:
-            description: |
-              liste des cartouches, nécessaire si des modifications doivent être apportées à ces cartouches.
-              L'ordre des cartouches doit être le même que dans les données d'origine.
-            type: array
-            items:
-              type: object
-              required: [title]
-              properties:
-                title: { description: titre du cartouche correct, type: string }
-                originalTitle: { description: titre du cartouche à corriger, type: string }
-                reasonForModification: { description: motif de la modification de ce cartouche, type: string }
-                scaleDenominator:
-                  description: dénominateur de l'échelle avec un . comme séparateur des milliers
-                  $ref: '#/definitions/scaleDenominator'
-                originalBboxDM:
-                  description: boite englobante à corriger du cartouche en degrés, minutes en WGS84
-                  $ref: '#/definitions/bboxDM'
-                bboxDM:
-                  description: boite englobante corrigée du cartouche en degrés, minutes en WGS84
-                  $ref: '#/definitions/bboxDM'
-  cartesAjoutéesAuGan:
-    description: |
-      Liste les cartes absente du GAN.
-    type: object
-    additionalProperties: false
-    patternProperties:
-      ^FR\d\d\d\d:
-        description: description de la carte
-        type: object
-        additionalProperties: false
-        required: [title, reasonForModification, bboxDM, edition]
-        properties:
-          title: { description: titre de la carte, type: string }
-          reasonForModification: { description: motif de la modification, type: string }
-          edition: { description: édition de la carte indiquée par le Shom, type: string }
-          scaleDenominator:
-            description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
-            $ref: '#/definitions/scaleDenominator'
-          bboxDM:
-            description: boite englobante corrigée de l'espace principal de la carte en degrés, minutes en WGS84,
-            $ref: '#/definitions/bboxDM'
   cartesAyantUnIntérêtInsuffisant:
     description: |
       Liste les cartes dont l'intérêt est insuffisant pour décrire les espaces sur lesquels la France exerce ses droits.
