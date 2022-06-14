@@ -84,11 +84,11 @@ class FtServer {
       'title'=> "Silhouettes des GéoTiffs",
       'url'=> '',
       'shomIds'=> [
-        //'graem'=> 'GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table',
         'gt800'=> 'CARTES_MARINES_GRILLE:grille_geotiff_800',
         'gt300-800'=> 'CARTES_MARINES_GRILLE:grille_geotiff_300_800',
         'gt30-300'=> 'CARTES_MARINES_GRILLE:grille_geotiff_30_300',
         'gt30'=> 'CARTES_MARINES_GRILLE:grille_geotiff_30',
+        'gtaem'=> 'GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table',
       ],
     ],
   ];
@@ -108,7 +108,7 @@ class FtServer {
     }
     else {
       $features = []; // liste des features à construire
-      foreach (self::$collections['gt']['shomIds'] as $shomId) {
+      foreach (self::$collections['gt']['shomIds'] as $sid => $shomId) {
         $startindex = 0;
         $count = 1000;
         $numberReturned = 0;
@@ -116,6 +116,13 @@ class FtServer {
           $items = $shomFt->items($shomId, [], $count, $startindex);
           //$gt[$sid][$startindex] = $items;
           foreach ($items['features'] as $ft) {
+            if ($sid == 'gtaem') { // adaptaion des propriétés des cartes spéciales 
+              $ft['properties'] = [
+                'name'=> $ft['properties']['name'],
+                'id_md'=> $ft['properties']['id_md'],
+                'carte_id'=> $ft['properties']['source'],
+              ];
+            }
             $features[] = [
               'type'=> 'Feature',
               'id'=> $ft['id'],
@@ -173,7 +180,13 @@ class FtServer {
     die();
   }
   
-  function run(string $path_info) {
+  function home() {
+    header('Content-type: application/json; charset="utf-8"');
+    echo json_encode(['collections'=> self().'/collections']);
+    die();
+  }
+  
+  function run(?string $path_info) {
     if (!$path_info)
       $this->home();
     elseif ($path_info == '/collections') {
