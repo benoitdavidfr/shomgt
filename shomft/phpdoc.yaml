@@ -4,7 +4,7 @@ doc: |
   Les objectifs de ce module sont
     - d'exposer les silhouettes des cartes et les délimitations maritimes provenant du serveur WFS du Shom
     - de compléter ce serveur avec des cartes qui en sont abssentes
-    - d'exposer les contours de ZEE simplifiés
+    - d'exposer les contours simplifiés de la ZEE
 
   Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.
   Les collections suivantes sont définies:
@@ -19,7 +19,7 @@ doc: |
     - ft.php/collections/{coll} - décrit la collection {coll}
     - ft.php/collections/{coll}/items - retourne le contenu GéoJSON de la collection {coll}
     
-  Les données sont aussi disponibles dans différents fichiers {coll}.json
+  Provisoirement les données sont aussi disponibles dans différents fichiers {coll}.json
   
   ft.php interroge le serveur WFS du Shom et enregistre en cache les données.
 journal: |
