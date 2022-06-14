@@ -191,6 +191,15 @@ var onEachFeatureZee = function (feature, layer) {
   layer.bindTooltip(feature.properties.title);
 }
 
+// affichage des caractéristiques de chaque polygone de GT
+var onEachFeatureGt = function (feature, layer) {
+  layer.bindPopup(
+    '<b>GT</b><br>'
+    +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
+  );
+  layer.bindTooltip(feature.properties.name);
+}
+
 var map = L.map('map').setView(<?php echo json_encode($center),",$zoom";?>);  // view pour la zone
 L.control.scale({position:'bottomleft', metric:true, imperial:false}).addTo(map);
 
@@ -254,6 +263,11 @@ var overlays = {
     style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),
 */
+
+  "ShomGt" : new L.GeoJSON.AJAX(shomgturl+'../shomft/ft.php/collections/gt/items', {
+    style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureGt
+  }),
+
 <?php
   // liste des scaleDenomnator
   $sds = ['10M', '4M', '2M', '1M', '500k', '250k', '100k', '50k', '25k', '12k', '5k'];

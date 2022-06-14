@@ -1,0 +1,32 @@
+title: ShomGt3/shomft - serveur d'objets géographiques principalement en provenance du Shom
+path: /geoapi/shomgt3/shomft
+doc: |
+  Les objectifs de ce module sont
+    - d'exposer les silhouettes des cartes et les délimitations maritimes provenant du serveur WFS du Shom
+    - de compléter ce serveur avec des cartes qui en sont abssentes
+    - d'exposer les contours de ZEE simplifiés
+
+  Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.
+  Les collections suivantes sont définies:
+    - gt qui regroupe toutes les cartes
+    - gt{xx} qui reprennent les noms des couches de shomgt et qui correspondent aux silhouettes des cartes
+    - delmar - délimitations maritimes
+    - frzee - ZEE française simplifiée et sous la forme de polygones
+  
+  Les points d'entrée sont:
+    - ft.php - page d'accueil
+    - ft.php/collections - liste les collections
+    - ft.php/collections/{coll} - décrit la collection {coll}
+    - ft.php/collections/{coll}/items - retourne le contenu GéoJSON de la collection {coll}
+    
+  Les données sont aussi disponibles dans différents fichiers {coll}.json
+  
+  ft.php interroge le serveur WFS du Shom et enregistre en cache les données.
+journal: |
+  13/6/2022:
+    - création du module
+submodules:
+phpScripts:
+  - /geoapi/shomgt3/shomft/ft.php
+phpIncludes:
+htmlFiles:

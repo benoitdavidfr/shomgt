@@ -243,7 +243,7 @@ class Point extends Geometry {
   function add($v): Point {
     /*PhpDoc: methods
     name:  add
-    title: "function add(Point $v): Point - $this + $v en 2D, $v peut être un Point ou une position"
+    title: "function add($v): Point - $this + $v en 2D, $v peut être un Point ou une position"
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] + $v[0], $this->coords[1] + $v[1]]);

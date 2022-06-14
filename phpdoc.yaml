@@ -18,6 +18,8 @@ doc: |
   Voir le fichier filetree.yaml pour l'arborescence des fichiers, les mapping dans les conteneurs et les vars d'environnement
 
 journal: |
+  12/6/2022:
+    - création du module map
   11/6/2022:
     - intégration dans update.yaml les corrections correspondants aux demandes du 31/5 de Jobourg
     - création d'une image 0.6, test Ok sur Ovh
@@ -83,6 +85,8 @@ submodules:
   - /geoapi/shomgt3/sgupdt
   - /geoapi/shomgt3/sgserver
   - /geoapi/shomgt3/mapcat
+  - /geoapi/shomgt3/shomft
+  - /geoapi/shomgt3/dashboard
 phpScripts:
 phpIncludes:
 htmlFiles:

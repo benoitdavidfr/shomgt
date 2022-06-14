@@ -1,0 +1,18 @@
+title: ShomGt3/dashboard - tableau de bord pour identifier les cartes périmées, les cartes obsolètes et les nouvelles cartes
+path: /geoapi/shomgt3/dashboard
+doc: |
+  Les objectifs de ce module sont
+    - d'exposer un tableau de bord permettant d'identifier dans le portefeuille
+      - les cartes les plus périmées pour les remplacer
+      - les cartes obsolètes pour les marquer comme telle
+      - les nouvelles cartes pour les ajouter au portefeuille
+  Voir conception.yaml pour la conception du module
+journal: |
+  12/6/2022:
+    - création du module
+submodules:
+phpScripts:
+  - /geoapi/shomgt3/dashboard/gan.php
+phpIncludes:
+htmlFiles:
+  - /geoapi/shomgt3/dashboard/conception.yaml
