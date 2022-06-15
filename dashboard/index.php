@@ -197,6 +197,18 @@ class Gan {
   const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
+  // le champ édition du GAN comporte des erreurs qui perturbent le TdB, ci-dessous corrections
+  const CORRECTIONS = [
+    '6942'=> ["Edition n°3 - 2015"=> "Edition n°3 - 2016"],
+    '7143'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
+    '7268'=> ["Publication 1992"=> "Publication 1993"],
+    '7411'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
+    '7414'=> ["Edition n°3 - 2013"=> "Edition n°3 - 2014"],
+    '7507'=> ["Publication 1995"=> "Publication 1996"],
+    '7593'=> ["Publication 2002"=> "Publication 2003"],
+    '7755'=> ["Publication 2015"=> "Publication 2016"],
+  ];
+  
   static string $hvalid=''; // intervalles des dates de la moisson des GAN
   static array $gans=[]; // dictionnaire [$mapnum => Gan]
   
@@ -220,6 +232,10 @@ class Gan {
   static function item(string $mapnum): ?self { return self::$gans[$mapnum] ?? null; }
   
   function version(): string { // calcule la version sous la forme {annee}c{noCorrection}
+    // COORECTIONS DU GAN
+    if (isset(self::CORRECTIONS[$this->mapnum][$this->edition]))
+      $this->edition = self::CORRECTIONS[$this->mapnum][$this->edition];
+
     if (!$this->edition && !$this->corrections)
       return 'undef';
     if (preg_match('!^Edition n°\d+ - (\d+)$!', $this->edition, $matches)) {
