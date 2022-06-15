@@ -187,10 +187,10 @@ class Gan {
   protected string $mapnum;
   protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title=''; // titre
-  protected ?string $ganEdition=null; // edition
+  protected ?string $edition=null; // edition
+  protected array $corrections=[]; // liste des corrections
   protected array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
   protected array $inSets=[]; // cartouches
-  protected array $corrections=[]; // liste des corrections
   protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
   protected string $valid; // date de moissonnage du GAN en format ISO
   protected string $harvestError=''; // erreur éventuelle du moissonnage
@@ -380,11 +380,11 @@ class Gan {
     $this->mapnum = $mapnum;
     // cas où soit le GAN ne renvoie aucune info signifiant qu'il n'y a pas de corrections, soit il renvoie une erreur
     if (!$record || isset($record['harvestError'])) {
-      $this->ganEdition = null;
+      $this->edition = null;
     }
     else { // cas où il existe des corrections
       $this->postProcessTitle($record['title']);
-      $this->ganEdition = $record['edition'];
+      $this->edition = $record['edition'];
     }
     
     $this->corrections = $record['corrections'] ?? [];
@@ -410,7 +410,7 @@ class Gan {
       case 7: { // sur-titre + titre + bbox
         $this->groupTitle = trim($matches[1]);
         $this->title = trim($matches[2]);
-        $this->bbox = ['SW'=> trim($matches[4]), 'NE'=> trim($matches[6])];
+        $this->spatial = ['SW'=> trim($matches[4]), 'NE'=> trim($matches[6])];
         break;
       }
       default: throw new Exception("Erreur d'analyse du titre '$title', count=".count($matches));
@@ -451,7 +451,7 @@ class Gan {
     + ($this->inSets ?
         ['inSets'=> array_map(function (GanInSet $inset): array { return $inset->asArray(); }, $this->inSets)]
         : [])
-    + ($this->ganEdition ? ['ganEdition'=> $this->ganEdition] : [])
+    + ($this->edition ? ['edition'=> $this->edition] : [])
     + ($this->corrections ? ['corrections'=> $this->corrections] : [])
     + ($this->analyzeErrors ? ['analyzeErrors'=> $this->analyzeErrors] : [])
     + ($this->valid ? ['valid'=> $this->valid] : [])
@@ -595,56 +595,6 @@ if ($a == 'listMaps') { // Affiche en Html les cartes avec synthèse moisson et 
           "<td>",$ganHHref ?? 'indéfini',"</td>\n",
           "<td><pre>",$ganAnalyze ? Yaml::dump($ganAnalyze) : '',"</pre></td>",
           "<td>",$age ?? 'indéfini',"</td>",
-          "</tr>\n";
-  }
-  echo "</table>\n";
-  die();
-}
-
-if (!$a && ($f == 'html')) {
-  echo "<h2>Cartes à mettre à jour, les plus périmées d'abord (<a href='?a=menu'>?</a>)</h2>\n";
-  Gan::loadFromPser();
-  echo "- dates des moissons: ",Gan::$hvalid,"<br>\n";
-  echo "- le degré de péremption (noté dp) est défini par le nbre de corrections non prises en compte et la zone couverte<br>\n";
-  echo "<table border=1>\n","<th>",
-    implode('</th><th>',
-      ['mapid','title - édition - der. corr.','dp','FR','gan','liste des corr. du GAN depuis lastUpdt']),
-    "</th>\n";
-  foreach (Gan::gans() as $mapid => $gan) {
-    $gana = $gan->asArray();
-    $mapa = Mapcat::maps($mapid);
-    $ganHref = null; // href vers le Shom
-    $ganLHref = null; // href local
-    if (isset($mapa['modified'])) {
-      $ganWeek = Gan::week($mapa['modified']);
-      $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
-      $ganHref = "<a href='$url'>$ganWeek</a>";
-      if (file_exists("$gandir/$mapid-$ganWeek.html"))
-        $ganLHref = "<a href='gan/$mapid-$ganWeek.html'>$ganWeek</a>";
-      elseif (isset($gana['harvestError']))
-        $ganLHref = 'error';
-    }
-    if (isset($gana['ganEdition'])) {
-      $mapa['edition'] = str_replace('° ','°', $mapa['edition']);
-      if ($mapa['edition'] <> $gana['ganEdition']) {
-        $ganec = ['ganEdition'=> $gana['ganEdition'], 'mapEdition'=> $mapa['edition']]
-        + (isset($gana['corrections']) ? ['corrections'=> $gana['corrections']] : []);
-      }
-      else {
-        $ganec = (isset($gana['ganEdition']) ? ['edition'=> $gana['ganEdition']] : [])
-          + (isset($gana['corrections']) ? ['corrections'=> $gana['corrections']] : []);
-      }
-    }
-    echo "<tr><td>$mapid</td><td>",$mapa['title'] ?? 'indéfini',
-            "<br>$mapa[edition] - dern. corr.: ",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
-          "<td>",$gana['perempt'] ?? 'indéfini',"</td>",
-          "<td>",implode(', ', $mapa['mapsFrance']) ?? 'indéfini',"</td>",
-          //"<td>",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
-          "<td>",$ganHref ?? 'indéfini',"</td>",
-          //"<td>",$ganLHref ?? 'indéfini',"</td>\n",
-          "<td><pre>",$ganec ? Yaml::dump($ganec) : '',"</pre></td>",
-          //"</tr><tr><td>gana[ganEdition]</td><td colspan=6>",dumpUtf8($gana['ganEdition']),"</td>",
-          //"</tr><tr><td>mapa['edition']</td><td colspan=6>",dumpUtf8($mapa['edition']),"</td>",
           "</tr>\n";
   }
   echo "</table>\n";

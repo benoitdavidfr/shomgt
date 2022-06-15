@@ -1,7 +1,7 @@
 title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
-description: 'Seules sont présentes les cartes non obsolètes ayant une date de dernière correction (valid)'
-$id: 'https://geoapi.fr/shomgt/cat2/gans'
-$schema: /var/www/html/geoapi/shomgt3/cat/gans
+description: 'Seules sont présentes les cartes non obsolètes présentes sur sgserver'
+$id: 'https://geoapi.fr/shomgt3/cat2/gans'
+$schema: /var/www/html/geoapi/shomgt3/dashboard/gans
 valid: 2022-06-12/2022-06-12
 gans:
   '0101':
@@ -9,11 +9,17 @@ gans:
   6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu'
+    spatial:
+      SW: '42°39,94''N — 009°00,94''E'
+      NE: '43°08,94''N — 009°28,64''E'
     ganEdition: 'Edition n°4 - 2021'
     valid: '2022-06-12'
   7283:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
+    spatial:
+      SW: '16°30,00''S — 172°47,00''W'
+      NE: '09°40,56''S — 177°00,00''E'
     ganEdition: 'Publication 1992'
     valid: '2022-06-12'
   7330:

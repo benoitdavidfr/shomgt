@@ -2,12 +2,16 @@
 // dashboard/index.php
 
 require_once __DIR__.'/lib/gegeom.inc.php';
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard</title></head><body>\n";
 if (!isset($_GET['a'])) {
   echo "<h2>Menu:</h2><ul>\n";
   echo "<li><a href='?a=listOfInterest'>listOfInterest</li>\n";
-  echo "<li><a href='?a=newObsoleteMaps'>Nouvelles cartes et cartes obsolètes dans le patrimoine par rapport au WFS</li>\n";
+  echo "<li><a href='?a=newObsoleteMaps'>Nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
+  echo "<li><a href='?a=perempt'>Degrés de péremption des cartes du portefeuille</li>\n";
   echo "</ul>\n";
   die();
 }
@@ -166,4 +170,222 @@ if ($_GET['a'] == 'newObsoleteMaps') { // détecte de nouvelles cartes à ajoute
         echo "- $mapid<br>\n";
     }
   }
+}
+
+class GanInSet {
+  protected string $title;
+  protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
+  
+  function __construct(string $html) {
+    //echo "html=$html\n";
+    if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $html, $matches))
+      throw new Exception("Erreur de construction de GanInSet sur '$html'");
+    $this->title = trim($matches[1]);
+    $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
+  }
+  
+  function asArray(): array {
+    return [
+      'title'=> $this->title,
+      'spatial'=> $this->spatial,
+    ];
+  }
+};
+
+class Gan {
+  const GAN_DIR = __DIR__.'/gan';
+  const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
+  const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
+  const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
+  static string $hvalid=''; // intervalles des dates de la moisson des GAN
+  static array $gans=[]; // dictionnaire [$mapnum => Gan]
+  
+  public readonly string $mapnum;
+  public readonly ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
+  public readonly string $title; // titre
+  public readonly ?string $edition; // edition
+  public readonly array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
+  public readonly array $inSets; // cartouches
+  public readonly array $corrections; // liste des corrections
+  public readonly array $analyzeErrors; // erreurs éventuelles d'analyse du résultat du moissonnage
+  public readonly string $valid; // date de moissonnage du GAN en format ISO
+  public readonly string $harvestError; // erreur éventuelle du moissonnage
+
+  static function init(): void {
+    $contents = unserialize(file_get_contents(self::PATH_PSER));
+    self::$hvalid = $contents['valid'];
+    self::$gans = $contents['gans'];
+  }
+  
+  static function item(string $mapnum): ?self { return self::$gans[$mapnum] ?? null; }
+  
+  function version(): string { // calcule la version sous la forme {annee}c{noCorrection}
+    if (!$this->edition && !$this->corrections)
+      return 'undef';
+    if (preg_match('!^Edition n°\d+ - (\d+)$!', $this->edition, $matches)) {
+      $anneeEdition = $matches[1];
+      // "anneeEdition=$anneeEdition<br>\n";
+    }
+    elseif (preg_match('!^Publication (\d+)$!', $this->edition, $matches)) {
+      $anneeEdition = $matches[1];
+      //echo "anneeEdition=$anneeEdition<br>\n";
+    }
+    else {
+      throw new Exception("No match pour version edition='$this->edition'");
+    }
+    if (!$this->corrections) {
+      return $anneeEdition.'c0';
+    }
+    else {
+      $lastCorrection = $this->corrections[count($this->corrections)-1];
+      $num = $lastCorrection['num'];
+      return $anneeEdition.'c'.$num;
+    }
+    echo "mapnum=$this->mapnum, edition=$this->edition<br>\n";
+    echo "<pre>corrections = "; print_r($this->corrections); echo "</pre>";
+  }
+};
+
+class Mapcat {
+  protected string $title;
+  protected array $mapsFrance;
+  
+  static array $all; // [mapNum => MapCat]
+  
+  static function init() {
+    $mapcat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
+    foreach ($mapcat['maps'] as $mapid => $map) {
+      $mapNum = substr($mapid, 2);
+      self::$all[$mapNum] = new self($mapNum, $map);
+    }
+  }
+  
+  static function item(string $mapNum): ?self { return self::$all[$mapNum] ?? null; }
+  
+  function title(): string { return $this->title; }
+  function mapsFrance(): array { return $this->mapsFrance; }
+  
+  function __construct(string $mapNum, array $map) {
+    $this->title = $map['title'];
+    $this->mapsFrance = $map['mapsFrance'];
+  }
+  
+  function spatialCoeff(): int {
+    if (in_array('FR', $this->mapsFrance)) return 1;
+    if (in_array('FX-Med', $this->mapsFrance)) return 1;
+    if (in_array('FX-Atl', $this->mapsFrance)) return 1;
+    if (in_array('FX-MMN', $this->mapsFrance)) return 1;
+    if (in_array('GP', $this->mapsFrance)) return 2;
+    if (in_array('GF', $this->mapsFrance)) return 2;
+    if (in_array('MQ', $this->mapsFrance)) return 2;
+    if (in_array('YT', $this->mapsFrance)) return 2;
+    if (in_array('RE', $this->mapsFrance)) return 2;
+    if (in_array('PM', $this->mapsFrance)) return 2;
+    if (in_array('TF', $this->mapsFrance)) return 2;
+    return 4;
+  }
+};
+
+class Perempt {
+  protected string $mapNum;
+  protected string $pfVersion; // info du portefeuille 
+  protected string $pfModified; // info du portefeuille 
+  protected string $ganVersion; // info du GAN 
+  protected array $ganCorrections; // info du GAN
+  protected float $degree; // degré de péremption
+  static array $all; // [mapNum => Perempt]
+
+  static function init(): void {
+    foreach (Portfolio::$all as $mapnum => $map) {
+      if ($map['status'] <> 'ok') continue;
+      self::$all[$mapnum] = new self($mapnum, $map);
+    }
+  }
+  
+  static function showAll(): void {
+    usort(self::$all,
+      function(Perempt $a, Perempt $b) {
+        if ($a->degree() < $b->degree()) return 1;
+        elseif ($a->degree() == $b->degree()) return 0;
+        else return -1;
+      });
+    //echo "<pre>Perempt="; print_r(Perempt::$all);
+    echo "<table border=1>",
+         "<th>num</th><th>title</th><th>maps</th><th>pfModified</th><th>pfVersion</th>",
+         "<th>ganVersion</th><th>degré</th><th>corrections</th>\n";
+    foreach (Perempt::$all as $p) {
+      $p->showAsRow();
+    }
+    echo "</table>\n";
+    
+  }
+  
+  function __construct(string $mapNum, array $map) {
+    //echo "<pre>"; print_r($map);
+    $this->mapNum = $mapNum;
+    $this->pfVersion = $map['lastVersion'];
+    $this->pfModified = substr($map['modified'], 0, 10);
+  }
+  
+  function setGan(Gan $gan): void {
+    $this->ganVersion = $gan->version();
+    $this->ganCorrections = $gan->corrections;
+    $this->degree = $this->degree();
+  }
+
+  function title(): string { return MapCat::item($this->mapNum)->title(); }
+  function mapsFrance(): array { return MapCat::item($this->mapNum)->mapsFrance(); }
+    
+  function degree(): float {
+    if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undef'))
+      return 0;
+    if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
+      $pfYear = $matches[1];
+      $pfNCor = $matches[2];
+    }
+    else
+      return 100;
+    if (preg_match('!^(\d+)c(\d+)$!', $this->ganVersion, $matches)) {
+      $ganYear = $matches[1];
+      $ganNCor = $matches[2];
+    }
+    else
+      return 100;
+    if ($pfYear == $ganYear) {
+      $d = $ganNCor - $pfNCor;
+      if ($d < 0) $d = 0;
+      return $d / MapCat::item($this->mapNum)->spatialCoeff();
+    }
+    else
+      return 100;
+  }
+  
+  function showAsRow(): void {
+    echo "<tr><td>$this->mapNum</td>";
+    echo "<td>",$this->title(),"</td>";
+    echo "<td>",implode(', ', $this->mapsFrance()),"</td>";
+    echo "<td>$this->pfModified</td>";
+    echo "<td>$this->pfVersion</td>";
+    echo "<td>$this->ganVersion</td>";
+    printf("<td>%.2f</td>", $this->degree);
+    echo "<td><table border=1>";
+    foreach ($this->ganCorrections as $c) {
+      echo "<tr><td>$c[num]</td><td>$c[semaineAvis]</td></tr>";
+    }
+    echo "</table></td>\n";
+    //echo "<td><pre>"; print_r($this); echo "</pre></td>";
+    echo "</tr>\n";
+  }
+};
+
+if ($_GET['a'] == 'perempt') {
+  Portfolio::init();
+  MapCat::init();
+  Gan::init();
+  //echo "<pre>Gan="; print_r(Gan::$gans);
+  Perempt::init();
+  foreach (Perempt::$all as $mapNum => $perempt) {
+    $perempt->setGan(Gan::item($mapNum));
+  }
+  Perempt::showAll();
 }

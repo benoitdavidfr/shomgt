@@ -5,7 +5,7 @@ description: |
   La liste des bordures est aussi utilisée pour les GéoTiffs non ou mal géoréférencés.
   Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques stables
   des cartes. Il est constitué principalement par copie d'infos issues du GAN et détection des écarts.
-  Cependant ces écarts au GAN existent et sont expliqués dans les champs noteCatalog et badGan.
+  Ces écarts au GAN existent et sont expliqués dans les champs noteCatalog et badGan.
   Notamment, la structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
   qui n'est pas toujours identique à celle du GAN.
   
