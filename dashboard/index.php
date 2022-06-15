@@ -200,16 +200,16 @@ class Gan {
   static string $hvalid=''; // intervalles des dates de la moisson des GAN
   static array $gans=[]; // dictionnaire [$mapnum => Gan]
   
-  public readonly string $mapnum;
-  public readonly ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
-  public readonly string $title; // titre
-  public readonly ?string $edition; // edition
-  public readonly array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  public readonly array $inSets; // cartouches
-  public readonly array $corrections; // liste des corrections
-  public readonly array $analyzeErrors; // erreurs éventuelles d'analyse du résultat du moissonnage
-  public readonly string $valid; // date de moissonnage du GAN en format ISO
-  public readonly string $harvestError; // erreur éventuelle du moissonnage
+  protected string $mapnum;
+  protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
+  protected string $title; // titre
+  protected ?string $edition=''; // edition
+  protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
+  protected array $inSets; // cartouches
+  public readOnly array $corrections; // liste des corrections
+  protected array $analyzeErrors; // erreurs éventuelles d'analyse du résultat du moissonnage
+  protected string $valid; // date de moissonnage du GAN en format ISO
+  protected string $harvestError; // erreur éventuelle du moissonnage
 
   static function init(): void {
     $contents = unserialize(file_get_contents(self::PATH_PSER));
@@ -290,8 +290,8 @@ class Perempt {
   protected string $mapNum;
   protected string $pfVersion; // info du portefeuille 
   protected string $pfModified; // info du portefeuille 
-  protected string $ganVersion; // info du GAN 
-  protected array $ganCorrections; // info du GAN
+  protected string $ganVersion=''; // info du GAN 
+  protected array $ganCorrections=[]; // info du GAN
   protected float $degree; // degré de péremption
   static array $all; // [mapNum => Perempt]
 
@@ -300,24 +300,6 @@ class Perempt {
       if ($map['status'] <> 'ok') continue;
       self::$all[$mapnum] = new self($mapnum, $map);
     }
-  }
-  
-  static function showAll(): void {
-    usort(self::$all,
-      function(Perempt $a, Perempt $b) {
-        if ($a->degree() < $b->degree()) return 1;
-        elseif ($a->degree() == $b->degree()) return 0;
-        else return -1;
-      });
-    //echo "<pre>Perempt="; print_r(Perempt::$all);
-    echo "<table border=1>",
-         "<th>num</th><th>title</th><th>maps</th><th>pfModified</th><th>pfVersion</th>",
-         "<th>ganVersion</th><th>degré</th><th>corrections</th>\n";
-    foreach (Perempt::$all as $p) {
-      $p->showAsRow();
-    }
-    echo "</table>\n";
-    
   }
   
   function __construct(string $mapNum, array $map) {
@@ -338,26 +320,47 @@ class Perempt {
     
   function degree(): float {
     if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undef'))
-      return 0;
+      return -1;
+    $spc = MapCat::item($this->mapNum)->spatialCoeff();
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
       $pfYear = $matches[1];
       $pfNCor = $matches[2];
     }
     else
-      return 100;
+      return 100 / $spc;
     if (preg_match('!^(\d+)c(\d+)$!', $this->ganVersion, $matches)) {
       $ganYear = $matches[1];
       $ganNCor = $matches[2];
     }
     else
-      return 100;
+      return 100 / $spc;
     if ($pfYear == $ganYear) {
       $d = $ganNCor - $pfNCor;
       if ($d < 0) $d = 0;
-      return $d / MapCat::item($this->mapNum)->spatialCoeff();
+      return $d / $spc;
     }
     else
-      return 100;
+      return 100 / $spc;
+  }
+
+  static function showAll(): void {
+    usort(self::$all,
+      function(Perempt $a, Perempt $b) {
+        if ($a->degree() < $b->degree()) return 1;
+        elseif ($a->degree() == $b->degree()) return 0;
+        else return -1;
+      });
+    //echo "<pre>Perempt="; print_r(Perempt::$all);
+    echo "<h2>Degrés de péremption des cartes du portefeuille</h2>\n";
+    echo "<table border=1><tr><td><b>Validité du GAN</b></td><td>",Gan::$hvalid,"</td></tr></table>\n";
+    echo "<table border=1>",
+         "<th>num</th><th>title</th><th>maps</th><th>pfModified</th><th>pfVersion</th>",
+         "<th>ganVersion</th><th>degré</th><th>corrections</th>\n";
+    foreach (Perempt::$all as $p) {
+      $p->showAsRow();
+    }
+    echo "</table>\n";
+    
   }
   
   function showAsRow(): void {
@@ -384,6 +387,7 @@ if ($_GET['a'] == 'perempt') {
   Gan::init();
   //echo "<pre>Gan="; print_r(Gan::$gans);
   Perempt::init();
+  // Mise à jour de perempt à partir du GAN
   foreach (Perempt::$all as $mapNum => $perempt) {
     $perempt->setGan(Gan::item($mapNum));
   }
