@@ -2,7 +2,7 @@ title: Schéma JSON de shomgt
 $schema: http://json-schema.org/schema#
 $id: http://geoapi.fr/shomgt3/maps/shomgt.schema.yaml
 definitions:
-  pos:
+  position:
     decription: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
     oneOf:
       - description: |
@@ -23,7 +23,7 @@ definitions:
         maxItems: 2
         items:
           type: number
-  rect:
+  bbox:
     description: |
       Rectangle géographique défini par les positions respectives des coordonnées SW et NE.
       Les latitudes sont comprises entre -90 et 90 et la latitude N est supérieure à la latitude S.
@@ -36,12 +36,25 @@ definitions:
     properties:
       SW:
         description: coin Sud-Ouest du rectangle
-        $ref: '#/definitions/pos'
+        $ref: '#/definitions/position'
       NE:
         description: coin Nord-Est du rectangle
-        $ref: '#/definitions/pos'
+        $ref: '#/definitions/position'
     examples:
       - {SW: "40°48,4'N - 7°50,4'E", NE: "43°18,9'N - 10°07,9'E"}
+  polygon:
+    description: Polygone défini par une liste de positions
+    type: array
+    items:
+      $ref: '#/definitions/position'
+    examples:
+      -
+        - 45°11,40'N - 0°17,50'W
+        - 44°57,81'N - 0°17,50'W
+        - 44°57,81'N - 0°24,32'W
+        - 44°57,81'N - 0°24,32'W
+        - 45°05,44'N - 0°33,62'W
+        - 45°11,40'N - 0°33,62'W
   border:
     description: nbre de pixels d'une des 4 bordures, soit un nombre soit une expression {number}-{number}
     oneOf:
@@ -81,7 +94,7 @@ patternProperties:
             type: string
           spatial:
             description: zone cartographiée dans le GéoTiff défini par un rectangle
-            $ref: '#/definitions/rect'
+            $ref: '#/definitions/bbox'
           borders:
             type: object
             additionalProperties: false
@@ -99,5 +112,24 @@ patternProperties:
               bottom:
                 description: nbre de pixels à couper en bas, soit un nombre soit une expression {number}-{number}
                 $ref: '#/definitions/border'
+          deleted:
+            description: liste de zones à effacer dans le GéoTiff de l'espace principal
+            type: object
+            additionalProperties: false
+            properties:
+              polygons:
+                description: zones à effacer définies comme polygones
+                type: array
+                items:
+                  $ref: '#/definitions/polygon'
+              bboxes:
+                description: zones à effacer définies comme boites
+                type: array
+                items:
+                  $ref: '#/definitions/bbox'
+          layer:
+            description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
+            type: string
+          
           note:
             description: note

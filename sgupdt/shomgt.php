@@ -6,7 +6,6 @@ doc: |
   Ce script génère le fichier shomgt.yaml soit s'il est défini dans le fichier en paramètre soit sinon sur STDOUT 
   Il prend en entrée:
     - le catalogue des cartes téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
-    - les paramètres dans update.yaml
     - la liste des géotiffs prévus dans shomgt, avec pour certains leur géoréférencement (GdalInfo)
   Il retourne:
     - le code 0 ssi la sortie est du Yaml correct et est conforme au schéma shomgt.schema.yaml
@@ -38,6 +37,8 @@ doc: |
   La classe ShomGt contient une représentation de shomgt.yaml qui se construit progressivement.
 
 journal: |
+  17/6/2022:
+    - adaptation au transfert de update.yaml dans mapcat.yaml
   6/6/2022:
     - correction bug
   3/6/2022:
@@ -63,10 +64,11 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/schema/jsonschema.inc.php';
-require_once __DIR__.'/lib/envvar.inc.php';
-require_once __DIR__.'/lib/execdl.inc.php';
+#require_once __DIR__.'/lib/envvar.inc.php';
+#require_once __DIR__.'/lib/execdl.inc.php';
 require_once __DIR__.'/lib/geotiffs.inc.php';
-require_once __DIR__.'/lib/gdalinfo.inc.php';
+require_once __DIR__.'/lib/mapcat.inc.php';
+#require_once __DIR__.'/lib/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -82,23 +84,6 @@ elseif ($argc == 2) {
   }
   elseif (!($fout = fopen($argv[1], 'w')))
     throw new Exception("Erreur d'ouverture du fichier $argv[1]");
-}
-  
-// récupère le rectangle de géoréférencement du GéoTiff $gtname stocké dans ../data
-function georefrect(string $gtname): GBox {
-  //echo "georefrect($gtname)\n";
-  //$gtinfopath = __DIR__.'/temp/'.substr($gtname, 0, 4)."/$gtname.info";
-  //if (!is_file($gtinfopath)) {
-    //echo "le fichier $gtinfopath n'existe pas dans temp\n";
-    $gtinfopath = GdalInfo::filepath($gtname);
-    //}
-  /*else {
-    echo "le fichier $gtinfopath existe dans temp\n";
-  }*/
-  $gdalinfo = new GdalInfo($gtinfopath);
-  //print_r($gdalinfo);
-  //print_r($gdalinfo->ebox()->geo('WorldMercator'));
-  return $gdalinfo->ebox()->geo('WorldMercator');
 }
 
 // Gère la définition des couches std et spéciales
@@ -121,18 +106,16 @@ class LayerDef {
     '40M'=> 9e999,
   ];
   // liste des noms des couches supplémentaires avec la liste des noms de géotiff de la couche
-  const SPECIAL_LAYERS = [
+  /*const SPECIAL_LAYERS = [
     'gtaem' => ['7330_2016', '7344_2016', '7360_2016', '8502_2010', '8509_2015.pdf', '8517_2015.pdf', '8523_2021'],
     'gtMancheGrid' => ['8101'],
     'gtZonMar' => ['8510_2015.pdf'],
+  ];*/
+  const SPECIAL_LAYERS = [
+    'gtaem',
+    'gtMancheGrid',
+    'gtZonMar',
   ];
-  
-  static function specialGt(string $gtname): ?string {
-    foreach (self::SPECIAL_LAYERS as $lyrname => $gtnames)
-      if (in_array($gtname, $gtnames))
-        return $lyrname;
-    return null;
-  }
   
   static function getFromScaleDen(int $scaleDen): string { // retourne le nom de la couche en fonction du dén. de l'échelle
     foreach (self::LAYERS_SCALE_DEN_MAX as $lyrId => $scaleDenMax) {
@@ -142,114 +125,29 @@ class LayerDef {
   }
 };
 
-// gère le catalogue de cartes et sait retourner pour un gtname les infos correspondantes
-class Map {
-  protected string $name; // le nom de la carte
-  protected array $map; // les caractéristiques de la carte correspondant au fichier mapcat.yaml
-  
-  static $cat; // catalogue [{mapName} => Map]
-  
-  static function init(): void { // initialise à partir du fichier cat.json téléchargé de $SHOMGT3_SERVER_URL
-    $url = EnvVar::val('SHOMGT3_SERVER_URL').'/cat.json';
-    if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
-    $tempPath = __DIR__.'/temp/maps.json';
-    $httpCode = download($url, $tempPath, 0);
-    if ($httpCode <> 200)
-      throw new Exception("Erreur de download de cat.json");
-    $mapcat = json_decode(file_get_contents($tempPath), true);
-    unlink($tempPath);
-    foreach ($mapcat['maps'] as $name => $map) {
-      self::$cat[$name] = new Map($name, $map);
-    }
-  }
-  
-  function __construct(string $name, array $map) {
-    $this->name = $name;
-    $this->map = $map;
-  }
-  
-  //function title(): string { return $this->map['title']; }
-  //function spatial(): array { return $this->map['spatial'] ?? []; }
-  function scaleDen(): ?int {
-    return isset($this->map['scaleDenominator']) ? str_replace('.', '', $this->map['scaleDenominator']) : null;
-  }
-  function insetMaps(): array { return $this->map['insetMaps'] ?? []; }
-  
-  function insetMap(int $no): Map {
-    return new Map("inset $no of $this->name", $this->map['insetMaps'][$no]);
-  }
-  
-  // fabrique ['title'=> {title}, 'spatial'=> {spatial}, 'scaleDen'=> {scaleDen}]
-  function gtInfo(): array {
-    return [
-      'title'=> $this->map['title'],
-      'spatial'=> $this->map['spatial'] ?? [],
-      'scaleDen'=> $this->scaleDen(),
-    ];
-  }
-  
-  // sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet Map
-  function insetMapFromRect(GBox $georefrect): Map {
-    //echo "Map::insetMap($georefrect)\n";
-    //echo "map="; print_r($this->map);
-    $best = -1;
-    foreach ($this->map['insetMaps'] as $no => $insetMap) {
-      //echo "insetMaps[$no]="; print_r($insetMap);
-      $dist = GBox::fromShomGt($insetMap['spatial'])->distance($georefrect);
-      //echo "distance=$dist\n";
-      if (($best == -1) || ($dist < $distmin)) {
-        $best = $no;
-        $distmin = $dist;;
-      }
-    }
-    //  echo "best="; print_r($this->map['insetMaps'][$best]);
-    return new Map("inset $best of $this->name", $this->map['insetMaps'][$best]);
-  }
-  
-  static function fromGtname(string $gtname): ?self { // retourne la carte ou le cartouche correspondant à $gtname
-    $mapnum = substr($gtname, 0, 4);
-    $map = self::$cat["FR$mapnum"] ?? null;
-    if (!$map)
-      return null;
-    if (preg_match('!^\d+_pal300$!', $gtname) || LayerDef::specialGt($gtname)) {
-      return $map;
-    }
-    elseif (count($map->insetMaps())==1) {
-      return $map->insetMap(0);
-    }
-    else {
-      return $map->insetMapFromRect(georefrect($gtname));
-    }
-  }
-};
-Map::init();
-//print_r(Map::$cat); die();
-
-
 class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected string $gtname;
   protected string $title; // titre issu du catalogue de cartes
-  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du update.yaml ou sinon du catalogue de cartes
+  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du catalogue de cartes
   protected int $scaleDen; // dénominateur de l'échelle issu du catalogue de cartes
-  protected int $zorder; // z-order issu de update.yaml
-  //protected array $borders; // [] ou sous la forme ['left'=> {border}, 'bottom'=>{border}, 'right'=> {border}, 'top'=> {border}]
-  static array $shomgt=[]; // contenu de shomgt.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
-  static array $params=[]; // chargement du fichier update.yaml
+  protected int $zorder; // z-order issu du catalogue de cartes
+  protected array $deleted; // zones effacées dans le GéoTiff
+  protected ?string $layer; // nom de la couche pour les cartes spéciales, null sinon
+
+  static array $all=[]; // contenu de shomgt.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
 
   static function init(): void {
     foreach (array_reverse(LayerDef::LAYERS_SCALE_DEN_MAX) as $lyrId => $scaleDenMax) {
       //echo "$lyrId => $scaleDenMax\n";
-      self::$shomgt["gt$lyrId"] = [];
+      self::$all["gt$lyrId"] = [];
     }
-    foreach (array_keys(LayerDef::SPECIAL_LAYERS) as $lyrname)
-      self::$shomgt[$lyrname] = [];
-    
-    self::$params = Yaml::parseFile(__DIR__.'/update.yaml');
+    foreach (LayerDef::SPECIAL_LAYERS as $lyrname)
+      self::$all[$lyrname] = [];
   }
   
   static function addGt(string $gtname): void { // ajoute un GT par son nom
     //echo "ShomGt::addGt($gtname)\n";
-    $map = Map::fromGtname($gtname);
+    $map = MapCat::fromGtname($gtname, false);
     if (!$map) {
       fprintf(STDERR, "Alerte: le GéoTiff $gtname n'existe pas dans le catalogue, il n'apparaitra donc pas dans shomgt.yaml\n");
       return;
@@ -263,31 +161,26 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
       fprintf(STDERR, "Info: le GéoTiff $gtname n'a pas de zone principale et n'apparaitra donc pas dans shomgt.yaml\n");
       return;
     }
-    if (isset(self::$params[$gtname]['spatial']))
-      $gtinfo['spatial'] = self::$params[$gtname]['spatial'];
-    $gt = new self($gtname, $gtinfo, self::$params[$gtname]['z-order'] ?? 0);
-    self::$shomgt[$gt->lyrname()][$gtname] = $gt;
+    //echo 'gtinfo='; print_r($gtinfo);
+    $gt = new self($gtname, $gtinfo);
+    self::$all[$gt->layer][$gtname] = $gt;
   }
   
-  function __construct(string $gtname, array $info, int $zorder) {
-    //echo "ShomGt::__construct(gtname=$gtname, info="; print_r($info); echo ")\n";
+  function __construct(string $gtname, array $info) {
     $this->gtname = $gtname;
     $this->title = $info['title'];
     $this->spatial = $info['spatial'];
     $this->scaleDen = $info['scaleDen'];
-    $this->zorder = $zorder;
-    //$this->borders = $info['borders']; // Les borders devraient venir de build.yaml !!!
-  }
-  
-  function lyrname(): string {
-    if ($lyrname = LayerDef::specialGt($this->gtname))
-      return $lyrname;
-    else
-      return LayerDef::getFromScaleDen($this->scaleDen);
+    $this->zorder = $info['z-order'] ?? 0;
+    $this->deleted = $info['toDelete'] ?? [];
+    unset($this->deleted['geotiffname']);
+    $this->layer = $info['layer'] ?? LayerDef::getFromScaleDen($this->scaleDen);
+    //echo 'info='; print_r($info);
+    //echo 'ShomGt='; print_r($this);
   }
   
   static function sortwzorder(): void { // tri de chaque couche selon zorder et gtname
-    foreach (self::$shomgt as $layername => &$gts) {
+    foreach (self::$all as $layername => &$gts) {
       uksort($gts,
         function($a, $b) use($gts) {
           //echo "function($a, $b)\n";
@@ -308,37 +201,35 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     }
   }
   
-  static function allInYaml(): string { // génère la représentation Yaml de tous les ShomGt dans un string
-    $yaml = "title: liste de GéoTiffs préparée pour le container shomgt\n";
-    $yaml .= "description: fichier généré par " .__FILE__."\n";
-    $yaml .= "created: '".date(DATE_ATOM)."'\n";
-    $yaml .= "\$schema: shomgt\n";
-    foreach (self::$shomgt as $lyrname => $gtiffs) {
-      $yaml .= "$lyrname:\n";
-      foreach ($gtiffs as $gtname => $gtiff) {
-        $yaml .= $gtiff->yaml();
+  static function allAsArray(): array { // génère la représentation Yaml de tous les ShomGt dans un string
+    $array = [
+      'title'=> "liste de GéoTiffs préparée pour le container shomgt",
+      'description'=> "fichier généré par " .__FILE__,
+      'created'=> date(DATE_ATOM),
+      '$schema'=> "shomgt",
+    ];
+    foreach (self::$all as $lyrname => $shomGts) {
+      foreach ($shomGts as $gtname => $shomGt) {
+        $array[$lyrname][$gtname] = $shomGt->asArray();
       }
     }
-    return $yaml;
+    return $array;
   }
   
-  function yaml(): string { // génère la représentation Yaml d'un ShomGt dans un string
-    //print_r($this);
-    if (preg_match('!^[\d_]+$!', $this->gtname))
-      $yaml = "  '$this->gtname':\n";
-    else
-      $yaml = "  $this->gtname:\n";
+  function asArray(): array { // génère la représentation Yaml d'un ShomGt dans un array
     $mapnum = substr($this->gtname, 0, 4);
-    $yaml .= "    title: $mapnum - $this->title\n";
-    $yaml .= "    spatial: {SW: \"".$this->spatial['SW']."\", NE: \"".$this->spatial['NE']."\"}\n";
-    if ($borders = self::$params[$this->gtname]['borders'] ?? []) {
-      //$out[] = "    borders: {left: $borders[left], bottom: $borders[bottom], right: $borders[right], top: $borders[top]}\n";
-      $yaml .= "    borders: ".Yaml::dump($borders, 0)."\n";
-    }
-    return $yaml;
+    $array = [
+      'title'=> "$mapnum - $this->title",
+      'spatial'=> $this->spatial,
+    ];
+    if ($this->deleted)
+      $array['deleted'] = $this->deleted;
+    return $array;
   }
 };
 ShomGt::init(); //print_r(ShomGt::$shomgt); die();
+
+MapCat::init();
 
 if (0) { // Test de ShomGt::sortwzorder()
   ShomGt::addGt('6822_pal300');
@@ -423,9 +314,10 @@ foreach ($geotiffs as $mapnum => $gtnames) {
 }
 
 ShomGt::sortwzorder();
+//print_r(ShomGt::$all); die();
 
 // Génération dans $yaml du fichier shomgt.yaml en vérifiant sa validité Yaml et sa conformité au schéma
-$yaml = ShomGt::allInYaml();
+$yaml = Yaml::dump(ShomGt::allAsArray(), 3, 2);
 fwrite($fout, $yaml);
 try {
   $parsed = Yaml::parse($yaml);

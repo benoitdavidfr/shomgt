@@ -66,9 +66,13 @@ class GdalInfo {
     return (in_array($matches[4],['E','N']) ? +1 : -1) * ($matches[1] + ($matches[2] + $matches[3]/60)/60);
   }
   
-  static function filepath(string $gtname): string {
-    return sprintf('%s/%s/%s.info.json', EnvVar::val('SHOMGT3_MAPS_DIR_PATH'), substr($gtname, 0, 4), $gtname);
+  // retourne le chemin du fichier info.json correspondant à un gtname, temp indique sir la carte est dans temp ou dans maps
+  static function filepath(string $gtname, bool $temp): string {
+    return sprintf('%s/%s/%s.info.json',
+      EnvVar::val('SHOMGT3_MAPS_DIR_PATH').($temp ? '/../temp' : ''),
+      substr($gtname, 0, 4), $gtname);
   }
+  
   function size(): array { return $this->size; }
   function ebox(): ?EBox { return $this->ebox; }
 
