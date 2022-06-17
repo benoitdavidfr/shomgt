@@ -77,6 +77,11 @@ if (!@is_dir($TEMP))
   if (!@mkdir($TEMP))
     throw new Exception("Erreur de création du répertoire $TEMP");
 $TEMP = realpath($TEMP);
+!execCmde("rm -rf $TEMP/*", CMDE_VERBOSE)
+  or throw new Exception("erreur dans rm -r $TEMP/*");
+!execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
+  or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
+
 
 if (0) { // Test 
   echo "exécution de main.php\n";
