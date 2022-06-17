@@ -73,8 +73,8 @@ if (!@is_dir($MAPS_DIR_PATH))
 
 $TEMP = "$MAPS_DIR_PATH/../temp";
 // créée le répertoire temp s'il n'existe pas déjà
-if (!is_dir($TEMP))
-  if (!mkdir($TEMP))
+if (!@is_dir($TEMP))
+  if (!@mkdir($TEMP))
     throw new Exception("Erreur de création du répertoire $TEMP");
 $TEMP = realpath($TEMP);
 

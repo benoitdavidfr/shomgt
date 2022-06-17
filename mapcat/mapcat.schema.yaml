@@ -130,27 +130,6 @@ definitions:
         - 44°57,81'N - 0°24,32'W
         - 45°05,44'N - 0°33,62'W
         - 45°11,40'N - 0°33,62'W
-  toDelete:
-    description: liste de zones à effacer dans le GéoTiff
-    type: array
-    items:
-      description: la zone à effacer dans le GéoTiff est soit un bbox soit un polygone
-      oneOf:
-        - description: définition de la zone par un rectangle
-          type: object
-          additionalProperties: false
-          required: [bbox]
-          properties:
-            bbox:
-              $ref: '#/definitions/bbox'
-        - description: définition de la zone par un polygone
-          type: object
-          additionalProperties: false
-          required: [polygon]
-          properties:
-            polygon:
-              $ref: '#/definitions/polygon'
-  
   map:
     description: |
       Propriétés décrivant une carte.
@@ -220,12 +199,24 @@ definitions:
         description: z-order de l'espace principal
         $ref: '#/definitions/z-order'
       toDelete:
-        description: liste de zones à effacer dans l'espace principal
-        $ref: '#/definitions/toDelete'
+        description: liste de zones à effacer dans le GéoTiff de l'espace principal
+        type: object
+        additionalProperties: false
+        properties:
+          polygons:
+            description: zones à effacer définies comme polygones
+            type: array
+            items:
+              $ref: '#/definitions/polygon'
+          bboxes:
+            description: zones à effacer définies comme boites
+            type: array
+            items:
+              $ref: '#/definitions/bbox'
       layer:
         description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
         type: string
-      filename:
+      geotiffname:
         description: pour les cartes spéciales nom du fichier .tif sans l'extension .tif, dans l'archive 7z
         type: string
       insetMaps:
@@ -258,8 +249,24 @@ definitions:
               description: z-order du cartouche
               $ref: '#/definitions/z-order'
             toDelete:
-              description: liste de zones à effacer dans le cartouche
-              $ref: '#/definitions/toDelete'
+              description: liste de zones à effacer dans GéoTiff du cartouche
+              type: object
+              additionalProperties: false
+              required: [geotiffname]
+              properties:
+                geotiffname:
+                  description: nom du fichier .tif du cartouche sans l'extension .tif
+                  type: string
+                polygons:
+                  description: zones à effacer définies comme polygones
+                  type: array
+                  items:
+                    $ref: '#/definitions/polygon'
+                bboxes:
+                  description: zones à effacer définies comme boites
+                  type: array
+                  items:
+                    $ref: '#/definitions/bbox'
 
 type: object
 required: [ title, $id, $schema, modified, maps ]
