@@ -43,31 +43,45 @@ definitions:
     counterexamples:
       - '1500'
       - '15.00'
-  latLonDM:
-    description: couple (latitude, longitude) en degrés minutes
-    type: string
-    pattern: '^\d+°(\d+(,\d+)?'')?(N|S) - \d+°(\d+(,\d+)?'')?(E|W)$'
-    examples:
-      - "44°09,00'N - 002°36,00'W"
-      - "45°49,00'N - 001°00,00'W"
-      - "30°S - 153°E"
-  spatial:
+  position:
+    decription: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
+    oneOf:
+      - description: |
+          position en dégrés-minutes dans une chaine avec le même formattage que celui utilisé par le Shom notamment
+          dans les coins des cartes.
+          Dans l'ordre latitude, longitude, avec la virgule comme séparateur de la partie décimale des minutes.
+          La partie décimale des minutes peut être omise de même que la partie minute.
+        type: string
+        pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
+        examples:
+          - 42°39,93'N - 9°00,93'E
+          - 42°39'N - 9°00'E
+          - 42°N - 9°E
+      - description: |
+          position en degrés décimaux dans l'ordre longitude, latitude, définie par un array de 2 nombres, comme en GeoJSON
+        type: array
+        minItems: 2
+        maxItems: 2
+        items:
+          type: number
+  bbox:
     description: |
-      boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
-      Les longitudes doivent être comprises entre -180° et +180°.
-      Les boites à cheval sur l'anti-méridien ont une longitude West supérieure à la longitude Est.
-      Il existe cependant 2 exceptions pour lesquelles l'amplitude en longitude fait plus que le tour de la terre ;
-      dans ce cas -180 <= west < 180 < east < 540 (360+180).
+      Boite englobante définie par ses 2 coins SW et NE.
+      Les latitudes sont comprises entre -90° et +90° et la latitude N est supérieure à la latitude S.
+      Les longitudes sont sauf exceptions comprises entre -180° et +180°.
+      La longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
+      Par exception, pour les quelques cartes dont l'extension en longitude est supérieure à 360°,
+      -180° <= west < 180° < east < 540° (360+180).
     type: object
     required: [SW, NE]
     additionalProperties: false
     properties:
       SW:
-        description: latitude et longitude du coin SW en degrés minutes
-        $ref: '#/definitions/latLonDM'
+        description: position du coin SW
+        $ref: '#/definitions/position'
       NE:
-        description: latitude et longitude du coin NE en degrés minutes
-        $ref: '#/definitions/latLonDM'
+        description: position du coin NE
+        $ref: '#/definitions/position'
   borders:
     description: |
       Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
@@ -95,6 +109,48 @@ definitions:
         minimum: 0
       - type: string
         pattern: '^\d+-\d+$'
+  z-order:
+    description: |
+      Par défaut dans chaque couche les GéoTiffs sont ordonnés par leur nom, ce qui signifie que celui
+      ayant le plus grand numéro s'affiche au dessus des autres. Le z-order permet de modifier cet ordre.
+      Un GéoTiff ayant un z-order supérieur à celui d'un autre s'affichera au-dessus de ce dernier.
+    type: integer
+    minimum: -99
+    maximum: 99
+  polygon:
+    description: Polygone défini par une liste de positions
+    type: array
+    items:
+      $ref: '#/definitions/position'
+    examples:
+      -
+        - 45°11,40'N - 0°17,50'W
+        - 44°57,81'N - 0°17,50'W
+        - 44°57,81'N - 0°24,32'W
+        - 44°57,81'N - 0°24,32'W
+        - 45°05,44'N - 0°33,62'W
+        - 45°11,40'N - 0°33,62'W
+  toDelete:
+    description: liste de zones à effacer dans le GéoTiff
+    type: array
+    items:
+      description: la zone à effacer dans le GéoTiff est soit un bbox soit un polygone
+      oneOf:
+        - description: définition de la zone par un rectangle
+          type: object
+          additionalProperties: false
+          required: [bbox]
+          properties:
+            bbox:
+              $ref: '#/definitions/bbox'
+        - description: définition de la zone par un polygone
+          type: object
+          additionalProperties: false
+          required: [polygon]
+          properties:
+            polygon:
+              $ref: '#/definitions/polygon'
+  
   map:
     description: |
       Propriétés décrivant une carte.
@@ -126,7 +182,7 @@ definitions:
           ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
           les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
           Champ absent ssi la carte ne comporte pas d'espace principal.
-        $ref: '#/definitions/spatial'
+        $ref: '#/definitions/bbox'
       borders:
         description: |
           Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement lorsque
@@ -160,6 +216,12 @@ definitions:
           commentaire indiquant que l'info de ce catalogue est différente de celle du GAN ;
           permet de lister rapidement les écarts au GAN.
         type: string
+      z-order:
+        description: z-order de l'espace principal
+        $ref: '#/definitions/z-order'
+      toDelete:
+        description: liste de zones à effacer dans l'espace principal
+        $ref: '#/definitions/toDelete'
       insetMaps:
         description: liste éventuelle de cartouches
         type: array
@@ -176,8 +238,8 @@ definitions:
               description: dénominateur de l'échelle avec un . comme séparateur des milliers
               $ref: '#/definitions/scaleDenominator'
             spatial:
-              description: boite englobante du cartouche en degrés, minutes en WGS84
-              $ref: '#/definitions/spatial'
+              description: boite englobante du cartouche
+              $ref: '#/definitions/bbox'
             borders:
               description: |
                 Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement lorsque
@@ -186,6 +248,12 @@ definitions:
             noteCatalog:
               description: commentaire associé au cartouche dans la gestion du catalogue
               type: string
+            z-order:
+              description: z-order du cartouche
+              $ref: '#/definitions/z-order'
+            toDelete:
+              description: liste de zones à effacer dans le cartouche
+              $ref: '#/definitions/toDelete'
 
 type: object
 required: [ title, $id, $schema, modified, maps ]

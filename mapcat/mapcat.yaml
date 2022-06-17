@@ -27,6 +27,7 @@ description: |
     - 13/6/2022 - transmission erreurs au Shom
     - 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
     - 15/6/2022 - ajout 2 nouvelles cartes
+    - 17/6/2022 - intégration des paramètres d'affichage
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
@@ -518,14 +519,13 @@ maps:
     references: 'Fac similé carte GB n°4102 publiée en 1972 (édition août 2015).'
   FR6623:
     groupTitle: 'Océan Atlantique Nord'
-    title: 'De La Manche au Détroit de Gibraltar et à l''archipel des Açores'
-    mapsFrance:
-      - FX-Atl
-      - FX-MMN
+    title: De La Manche au Détroit de Gibraltar et à l'archipel des Açores
+    mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: 2.770.000
     spatial:
       SW: '34°49,13''N - 034°15,00''W'
       NE: '50°30,00''N - 000°55,00''W'
+    z-order: 1 # > 6757_pal300
   FR6643:
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
@@ -1249,7 +1249,10 @@ maps:
     spatial:
       SW: '15°40,55''N - 061°43,63''W'
       NE: '16°16,35''N - 061°18,43''W'
-    noteShom: 'Nota : Les modifications effectuées sur la carte n° 6948 au cours de l''édition n° 2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+    noteShom: |
+      Nota : Les modifications effectuées sur la carte n° 6948 au cours de l''édition n° 2 concernent principalement
+      le changement de système géodésique. Cette carte est désormais établie en WGS84.
+    z-order: 0 # 7482_pal300 < 6948_pal300 < 7302_pal300
     insetMaps:
       - title: 'Marie-Galante - Baie de Saint-Louis'
         scaleDenominator: '20.000'
@@ -1340,12 +1343,10 @@ maps:
   FR6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu - Golfe de Saint-Florent'
-    mapsFrance:
-      - FX-Med
+    mapsFrance: [FX-Med]
     scaleDenominator: '50.300'
-    spatial:
-      SW: '42°39,94''N - 009°00,94''E'
-      NE: '43°08,94''N - 009°28,64''E'
+    spatial: { SW: "42°39,94'N - 009°00,94'E", NE: "43°08,94'N - 009°28,64'E" }
+    z-order: -1 # 6969_pal300 en dessous de 6822_pal300 et de 6823_pal300
   FR6970:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
@@ -1819,16 +1820,15 @@ maps:
   FR7081:
     groupTitle: 'Mer Méditerranée et Mer Noire'
     title: 'Mer Méditerranée et mer Noire (Spéciale P)'
-    mapsFrance:
-      - FX-Atl
-      - FX-Med
-      - FX-MMN
+    mapsFrance: [FX-Atl, FX-Med, FX-MMN]
     scaleDenominator: 4.200.000
     spatial:
       SW: '25°00,00''N - 007°00,00''W'
       NE: '49°50,18''N - 042°17,61''E'
     replaces: '(remplace 5705)'
     references: 'Fac similé Carte IT n°360 publiée en 1984.'
+    toDelete:
+      - bbox: {SW: [-7.0, 42.1797], NE: [2.1094, 49.8364]} # coin NW de la carte couvrant le Golfe de Gascogne
   FR7086:
     groupTitle: 'Côte Nord de France'
     title: 'Rade de Cherbourg'
@@ -2044,12 +2044,10 @@ maps:
   FR7120:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Cherbourg - Du Cap de La Hague à la Pointe de Barfleur'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '47.800'
-    spatial:
-      SW: '49°36,34''N - 001°57,38''W'
-      NE: '49°55,65''N - 001°13,58''W'
+    spatial: {SW: "49°36,34'N - 001°57,38'W", NE: "49°55,65'N - 001°13,58'W"}
+    z-order: 1 # 7120_pal300 > 7158_pal300
   FR7121:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Douarnenez'
@@ -2220,6 +2218,12 @@ maps:
       - title: 'D - Carteret'
         scaleDenominator: '10.000'
         spatial: { SW: '49°21,74''N - 001°47,48''W', NE: '49°22,84''N - 001°46,13''W' }
+        toDelete:
+          - polygon: # effacement du coin SW du cartouche
+              - [ -1.7914426, 49.3622692 ]
+              - [ -1.7844695, 49.3622692 ]
+              - [ -1.7914761, 49.3658498 ]
+              - [ -1.7914426, 49.3622692 ]
       - title: 'E - Portbail'
         scaleDenominator: '10.000'
         spatial: { SW: '49°19,04''N - 001°43,81''W', NE: '49°20,14''N - 001°41,83''W' }
@@ -2524,10 +2528,14 @@ maps:
   FR7159:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '50.000'
     spatial: {SW: "49°20,64'N - 002°43,74'W", NE: "49°49,04'N - 002°13,48'W" }
+    toDelete:
+      - polygon: # effacement du coin NW de la carte qui gène la lecture de la carte à plus petite échelle 
+          - 49°49,02'N - 2°43,71'W # coin NW
+          - 49°49,02'N - 2°28'W # mi-chemin entre les coins NW et NE
+          - 49°35'N - 2°43,71'W # mi-chemin entre les coins NW et SW
   FR7160:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Jersey à Guernsey'
@@ -2690,6 +2698,7 @@ maps:
       SW: '41°06,00''N - 004°45,00''E'
       NE: '44°29,00''N - 011°30,00''E'
     replaces: '(remplace 1303,1865)'
+    z-order: 1 # > 7507_pal300
   FR7205:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe de La Napoule - Golfe Juan - Iles de Lérins - Abords de Cannes'
@@ -2749,6 +2758,7 @@ maps:
       SW: '48°20,00''N - 013°27,65''W'
       NE: '51°33,52''N - 004°52,00''W'
     references: 'Fac similé carte GB n°2649 publiée en 1978 (édition février 2017)'
+    z-order: 1 # > 7311_pal300
   FR7211:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Golfe de Gascogne - De Brest à Cabo Finisterre'
@@ -3166,12 +3176,10 @@ maps:
   FR7302:
     groupTitle: Guadeloupe
     title: 'De la Pointe des Châteaux à l''Ilet à Kahouanne'
-    mapsFrance:
-      - GP
+    mapsFrance: [GP]
     scaleDenominator: '59.900'
-    spatial:
-      SW: '16°14,45''N - 061°47,24''W'
-      NE: '16°38,81''N - 061°10,23''W'
+    spatial: {SW: "16°14,45'N - 061°47,24'W", NE: "16°38,81'N - 061°10,23'W"}
+    z-order: 1 # 7482_pal300 < 6948_pal300 < 7302_pal300
   FR7305:
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
     title: 'De la Passe d''Aiurua à la Passe Havae'
@@ -4200,8 +4208,7 @@ maps:
   FR7420:
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     insetMaps:
       - title: 'A - Port de Grandcamp-Maisy'
         scaleDenominator: '10.000'
@@ -4214,10 +4221,24 @@ maps:
         spatial: { SW: '49°19,81''N - 000°28,50''W', NE: '49°21,34''N - 000°26,65''W' }
       - title: 'E - Port de Caen'
         scaleDenominator: '17.500'
+        toDelete:
+          - polygon: # Effacement de la rade de Caen (D) qui apparait
+              - [-0.36043821307259, 49.244333624641]
+              - [-0.28420884760798, 49.244333624641]
+              - [-0.35924044526506, 49.184059237147]
+              - [-0.36043821307259, 49.244333624641]
         spatial: { SW: '49°10,65''N - 000°21,58''W', NE: '49°14,64''N - 000°16,28''W' }
       - title: 'D - Rade de Caen - Port de Ouistreham'
         scaleDenominator: '17.500'
         spatial: { SW: '49°13,94''N - 000°16,88''W', NE: '49°21,12''N - 000°09,31''W' }
+        toDelete:
+          - polygon: # Effacement du Port de Caen (E) qui apparait
+              - [-0.15483388286219, 49.301145470209]
+              - [-0.15372166989806, 49.231695228391]
+              - [-0.24757533310195, 49.230801340912]
+              - [-0.24783199763214, 49.240130494881]
+              - [-0.17021236596237, 49.301173364641]
+              - [-0.15483388286219, 49.301145470209]
       - title: 'F - Port de Dives-sur-Mer - Port Guillaume'
         scaleDenominator: '10.000'
         spatial: { SW: '49°17,48''N - 000°06,48''W', NE: '49°18,90''N - 000°05,03''W' }
@@ -4310,6 +4331,14 @@ maps:
       - title: '2 - La Gironde - La Garonne et La Dordogne (2/3)'
         scaleDenominator: '52.300'
         spatial: { SW: '44°50,18''N - 000°45,00''W', NE: '45°11,40''N - 000°17,50''W' }
+        toDelete:
+          - polygon: # Cartouche 7427-B - Port de Blaye
+              - 45°11,40'N - 0°17,50'W
+              - 44°57,81'N - 0°17,50'W
+              - 44°57,81'N - 0°24,32'W
+              - 44°57,81'N - 0°24,32'W
+              - 45°05,44'N - 0°33,62'W
+              - 45°11,40'N - 0°33,62'W
       - title: '3 - La Gironde - La Garonne et La Dordogne (3/3)'
         scaleDenominator: '52.400'
         spatial: { SW: '44°51,90''N - 000°22,40''W', NE: '44°57,10''N - 000°13,60''W' }
@@ -4667,8 +4696,7 @@ maps:
   FR7482:
     groupTitle: Guadeloupe
     title: 'De l''Ilet à Kahouanne aux Saintes'
-    mapsFrance:
-      - GP
+    mapsFrance: [GP]
     scaleDenominator: '60.400'
     spatial:
       SW: '15°48,30''N - 062°00,00''W'
@@ -4684,6 +4712,7 @@ maps:
       - title: 'C - Anse à la Barque'
         scaleDenominator: '10.000'
         spatial: { SW: '16°05,00''N - 061°46,75''W', NE: '16°05,60''N - 061°45,90''W' }
+    z-order: -1 # 7482_pal300 < 6948_pal300 < 7302_pal300
   FR7484:
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
     title: 'De Paramaribo aux Iles du Salut'
@@ -5128,13 +5157,16 @@ maps:
   FR7761:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
-    mapsFrance:
-      - NC
+    mapsFrance: [NC]
     scaleDenominator: '300.000'
-    spatial:
-      SW: '21°00,00''S - 163°59,10''E'
-      NE: '18°56,10''S - 167°11,58''E'
-    noteShom: 'Nota : La carte 2799.CA - Edition n°2 - 1956 a été supprimée lors de la publication de la carte 7762. Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841)" sur la carte 3972 (à l''Est). Porter le renvoi hors cadre "VC 7761 (INT 6841)" sur la carte 6686 (au Nord). Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841) Adjoining chart 7761 (INT 6841)" sur la carte 7762 (au Nord-Est). Porter le cadre de la carte 7761 et la légende "7761 (INT 6841)" sur la carte 7268.'
+    spatial: {SW: "21°00,00'S - 163°59,10'E", NE: "18°56,10'S - 167°11,58'E"}
+    noteShom: |
+      Nota : La carte 2799.CA - Edition n°2 - 1956 a été supprimée lors de la publication de la carte 7762.
+      Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841)" sur la carte 3972 (à l''Est).
+      Porter le renvoi hors cadre "VC 7761 (INT 6841)" sur la carte 6686 (au Nord).
+      Porter le renvoi hors cadre "Voir carte adjacente 7761 (INT 6841) Adjoining chart 7761 (INT 6841)" sur la carte 7762
+      (au Nord-Est). Porter le cadre de la carte 7761 et la légende "7761 (INT 6841)" sur la carte 7268.
+    z-order: 1 # > 7762_pal300
   FR7762:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Ouest)'
