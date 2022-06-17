@@ -27,7 +27,7 @@ description: |
     - 13/6/2022 - transmission erreurs au Shom
     - 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
     - 15/6/2022 - ajout 2 nouvelles cartes
-    - 17/6/2022 - intégration des paramètres d'affichage
+    - 17/6/2022 - intégration des paramètres d'affichage et des noms de couche et de fichier pour les cartes spéciales
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
@@ -3388,13 +3388,11 @@ maps:
   FR7330:
     groupTitle: 'Océan Atlantique Nord'
     title: 'De Cherbourg à Hendaye - Action de l''Etat en Mer en Zone Maritime Atlantique'
-    mapsFrance:
-      - FX-Atl
-      - FX-MMN
+    mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: 1.070.000
-    spatial:
-      SW: '41°28,00''N - 010°30,00''W'
-      NE: '52°00,00''N - 000°00,00''E'
+    spatial: {SW: "41°28,00'N - 010°30,00'W", NE: "52°00,00'N - 000°00,00'E"}
+    layer: gtaem
+    filename: '7330_2016'
   FR7337:
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
@@ -3417,13 +3415,11 @@ maps:
   FR7344:
     groupTitle: 'Manche - Mer du Nord'
     title: 'De Brest à la frontière belge - Action de l''Etat en Mer - Zone Manche et Mer du Nord'
-    mapsFrance:
-      - FX-Atl
-      - FX-MMN
+    mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: '655.000'
-    spatial:
-      SW: '47°30,00''N - 007°00,00''W'
-      NE: '51°55,00''N - 003°00,00''E'
+    spatial: {SW: "47°30,00'N - 007°00,00'W", NE: "51°55,00'N - 003°00,00'E"}
+    layer: gtaem
+    filename: '7344_2016'
   FR7345:
     groupTitle: 'Petites Antilles'
     title: 'Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)'
@@ -3674,12 +3670,11 @@ maps:
   FR7360:
     groupTitle: 'Mer Méditerranée'
     title: 'De Cerbère à Menton - Action de l''Etat en Mer - Zone Méditerranée'
-    mapsFrance:
-      - FX-Med
+    mapsFrance: [FX-Med]
     scaleDenominator: '700.000'
-    spatial:
-      SW: '39°57,00''N - 001°30,00''E'
-      NE: '44°40,00''N - 010°50,00''E'
+    spatial: {SW: "39°57,00'N - 001°30,00'E", NE: "44°40,00'N - 010°50,00'E"}
+    layer: gtaem
+    filename: '7360_2016'
   FR7368:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Ile Malden aux Iles de la Société'
@@ -5210,22 +5205,20 @@ maps:
     noteShom: 'Nota : Remplacer la légende Voir carte adjacente 1442 par Voir carte adjacente 7798 (INT7053) sur la carte 4177 (hors cadre). Porter en magenta une limite de carte et sa légende 7798 (INT7053) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
   FR8101:
     title: 'MANCHEGRID - Carte générale'
-    mapsFrance:
-      - FX-Atl
-      - FX-MMN
+    mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: '880.000'
-    spatial:
-      SW: '48°30,00''N - 006°30,00''W'
-      NE: '51°35,00''N - 002°30,00''E'
+    spatial: {SW: "48°30,00'N - 006°30,00'W", NE: "51°35,00'N - 002°30,00'E"}
     badGan: 'Carte spéciale absente du GAN'
+    layer: gtMancheGrid
+    filename: '8101'
   FR8502:
     title: 'Action de l''Etat en Mer en ZMSOI'
     mapsFrance: [TF, RE, YT]
     scaleDenominator: 7.904.971
-    spatial:
-      SW: '60°00,00''S - 030°00,00''E'
-      NE: '05°00,00''N - 090°00,00''E'
+    spatial: {SW: "60°00,00'S - 030°00,00'E", NE: "05°00,00'N - 090°00,00'E"}
     noteCatalog: 'Carte spéciale absente du GAN'
+    layer: gtaem
+    filename: '8502_2010'
   FR8509:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
     mapsFrance: [ NC, WF ]
@@ -5234,6 +5227,8 @@ maps:
     borders: { left: 292, bottom: 239, right: 299, top: 193 }
     noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l''anti-méridien"
     badGan: "Carte spéciale absente du GAN"
+    layer: gtaem
+    filename: '8509_2015.pdf'
   FR8510:
     title: 'Délimitations des zones maritimes'
     mapsFrance: [FR]
@@ -5242,6 +5237,8 @@ maps:
     borders: { left: 217, bottom: 202, right: 224, top: 212 }
     noteCatalog: "Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°"
     badGan: "Carte spéciale absente du GAN"
+    layer: gtZonMar
+    filename: '8510_2015.pdf'
   FR8517:
     title: 'Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
     mapsFrance: [PF]
@@ -5249,6 +5246,8 @@ maps:
     spatial: { SW: "35°S - 165°W", NE: "05°N - 103°W" }
     borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
     noteCatalog: 'Carte spéciale absente du GAN et non géo-référencée, Clipperton est dans un cartouche non explicité'
+    layer: gtaem
+    filename: '8517_2015.pdf'
   FR8523:
     title: Carte d'Action de l'État en Mer - Océan Atlantique Nord - Zone maritime Antilles-Guyane
     mapsFrance: [GP, MQ, GF, BL, MF]
@@ -5256,6 +5255,8 @@ maps:
     spatial: { SW: "0°N - 70°W", NE: "21°N - 30°W" }
     noteCatalog: "Carte spéciale absente du GAN, le tiff est géoréférencé"
     badGan: "Carte spéciale absente du GAN"
+    layer: gtaem
+    filename: '8523_2021'
 obsoleteMaps:
   FR5825:
     '2020-12-27T07:58:03+01:00':

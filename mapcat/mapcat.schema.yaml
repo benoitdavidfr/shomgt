@@ -222,6 +222,12 @@ definitions:
       toDelete:
         description: liste de zones à effacer dans l'espace principal
         $ref: '#/definitions/toDelete'
+      layer:
+        description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
+        type: string
+      filename:
+        description: pour les cartes spéciales nom du fichier .tif sans l'extension .tif, dans l'archive 7z
+        type: string
       insetMaps:
         description: liste éventuelle de cartouches
         type: array
