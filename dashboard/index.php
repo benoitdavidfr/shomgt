@@ -198,6 +198,8 @@ class Gan {
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
   // le champ édition du GAN comporte des erreurs qui perturbent le TdB, ci-dessous corrections
+  // Il se lit {{num}=> [{edACorriger}=> {edCorrigée}]}
+  // Liste d'écarts transmise le 15/6/2022 au Shom
   const CORRECTIONS = [
     '6942'=> ["Edition n°3 - 2015"=> "Edition n°3 - 2016"],
     '7143'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
@@ -231,13 +233,13 @@ class Gan {
   
   static function item(string $mapnum): ?self { return self::$gans[$mapnum] ?? null; }
   
-  function version(): string { // calcule la version sous la forme {annee}c{noCorrection}
+  function version(): string { // calcule la version sous la forme {anneeEdition}c{noCorrection}
     // COORECTIONS DU GAN
     if (isset(self::CORRECTIONS[$this->mapnum][$this->edition]))
       $this->edition = self::CORRECTIONS[$this->mapnum][$this->edition];
 
     if (!$this->edition && !$this->corrections)
-      return 'undef';
+      return 'undefined';
     if (preg_match('!^Edition n°\d+ - (\d+)$!', $this->edition, $matches)) {
       $anneeEdition = $matches[1];
       // "anneeEdition=$anneeEdition<br>\n";
@@ -335,7 +337,7 @@ class Perempt {
   function mapsFrance(): array { return MapCat::item($this->mapNum)->mapsFrance(); }
     
   function degree(): float {
-    if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undef'))
+    if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undefined'))
       return -1;
     $spc = MapCat::item($this->mapNum)->spatialCoeff();
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
@@ -405,7 +407,10 @@ if ($_GET['a'] == 'perempt') {
   Perempt::init();
   // Mise à jour de perempt à partir du GAN
   foreach (Perempt::$all as $mapNum => $perempt) {
-    $perempt->setGan(Gan::item($mapNum));
+    if (!($gan = Gan::item($mapNum)))
+      echo "Erreur, Gan absent pour carte $mapNum\n";
+    else
+      $perempt->setGan($gan);
   }
   Perempt::showAll();
 }

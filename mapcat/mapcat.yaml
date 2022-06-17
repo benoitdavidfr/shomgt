@@ -12,7 +12,7 @@ description: |
   Journal:
     - duplication du fichier pour ShomGt3 en avril-mai 2022
       - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
-    - les 5-6/6/2022
+    - 5-6/6/2022
       - j'ai constaté que certains problèmes de visualisation du cadre, soulevés par Jobourg, provenaient des écarts avec le GAN
       - j'ai donc décidé de resynchroniser les bboxDM sur le GAN
       - j'ai aussi transferé dans update.yaml des modif effectuées pour améliorer la visualisation
@@ -23,13 +23,14 @@ description: |
       - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
         - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
       - suppression des champs spatial et replacement du champ bboxDM par spatial
-    - le 11/6/2022 - correction de FR6966 badGan
-    - le 13/6/2022 - transmission erreurs au Shom
-    - le 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
+    - 11/6/2022 - correction de FR6966 badGan
+    - 13/6/2022 - transmission erreurs au Shom
+    - 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
+    - 15/6/2022 - ajout 2 nouvelles cartes
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2022-06-14'
+modified: '2022-06-15'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -116,16 +117,6 @@ maps:
       - title: 'D - Mouillage de l''île Huon'
         scaleDenominator: '20.000'
         spatial: { SW: '18°03,17''S - 162°56,12''E', NE: '18°01,37''S - 162°58,04''E' }
-  FR6015:
-    groupTitle: 'Canada - Groenland - Islande'
-    title: 'Des passages du Nord-Ouest à la Mer du Groenland'
-    mapsFrance: []
-    scaleDenominator: 4.660.000
-    spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
-    noteCatalog: |
-      Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
-      On pourrait améliorer les corrections mais cela évite un affichage très moche.
-    badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
   FR6033:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société - Îles sous-le-Vent'
@@ -1358,12 +1349,24 @@ maps:
   FR6970:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
-    mapsFrance:
-      - FX-Med
+    mapsFrance: [FX-Med]
     scaleDenominator: '50.500'
     spatial:
       SW: '42°30,44''N - 008°26,44''E'
       NE: '42°50,84''N - 009°07,04''E'
+  FR6977:
+    groupTitle: Océan Pacifique Nord
+    title: Océan Pacifique Nord - Partie Nord-Ouest
+    mapsFrance: []
+    scaleDenominator: '7.080.000'
+    spatial:
+      SW: "22°13'N - 117°10'E"
+      NE: "62°00'N - 154°48,08'W"
+    noteCatalog: |
+      GAN faux
+      SW: "21°00,54'N - 165°59,55'E"
+      NE: "62°45,52'N - 161°00,01'W"
+    badGan: extension spatiale fausse
   FR6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
@@ -5185,10 +5188,7 @@ maps:
     badGan: 'Carte spéciale absente du GAN'
   FR8502:
     title: 'Action de l''Etat en Mer en ZMSOI'
-    mapsFrance:
-      - TF
-      - RE
-      - YT
+    mapsFrance: [TF, RE, YT]
     scaleDenominator: 7.904.971
     spatial:
       SW: '60°00,00''S - 030°00,00''E'
@@ -5217,6 +5217,13 @@ maps:
     spatial: { SW: "35°S - 165°W", NE: "05°N - 103°W" }
     borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
     noteCatalog: 'Carte spéciale absente du GAN et non géo-référencée, Clipperton est dans un cartouche non explicité'
+  FR8523:
+    title: Carte d'Action de l'État en Mer - Océan Atlantique Nord - Zone maritime Antilles-Guyane
+    mapsFrance: [GP, MQ, GF, BL, MF]
+    scaleDenominator: '4.000.000'
+    spatial: { SW: "0°N - 70°W", NE: "21°N - 30°W" }
+    noteCatalog: "Carte spéciale absente du GAN, le tiff est géoréférencé"
+    badGan: "Carte spéciale absente du GAN"
 obsoleteMaps:
   FR5825:
     '2020-12-27T07:58:03+01:00':
@@ -5228,6 +5235,17 @@ obsoleteMaps:
       spatial:
         SW: '10°15,53''N - 109°15,27''W'
         NE: '10°20,33''N - 109°11,18''W'
+  FR6015:
+    '2022-06-16':
+      groupTitle: 'Canada - Groenland - Islande'
+      title: 'Des passages du Nord-Ouest à la Mer du Groenland'
+      mapsFrance: []
+      scaleDenominator: 4.660.000
+      spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
+      noteCatalog: |
+        Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
+        On pourrait améliorer les corrections mais cela évite un affichage très moche.
+      badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
   FR6608:
     '2022-04-06':
       title: 'Mer du Nord'
