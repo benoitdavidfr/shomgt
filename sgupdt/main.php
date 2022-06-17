@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  17/6/2022:
+    - adaptation au transfert de update.yaml dans mapcat.yaml
   30/5/2022:
     - ajout suppression du cache de tuiles
     - passage en paramètres des variables globales
