@@ -1,17 +1,19 @@
 <?php
 /*PhpDoc:
 name: maketile.php
-title: maketile.php - découpage d'un PNG en dalles de 1024 X 1024 + effacement de zones définies dans build.yaml
+title: maketile.php - découpage d'un PNG en dalles de 1024 X 1024 + effacement de zones définies dans mapcat.yaml
 doc: |
-  script à appeler en ligne de commande avec en paramètre le chemin du fichier PNG en paramètre
+  script à appeler en ligne de commande avec en paramètre le chemin du fichier PNG
   Crée un répertoire ayant le même nom que le png sans l'extension .png
   et y crée les dalles avec comme nom sprintf('%s/%X-%X.png', $dirpath, $i, $j)
-  Lit le fichier update.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
+  Lit le fichier mapcat.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
   Pour effacer ces zones, utilise le fichier .info créé à partir du tif avec gdalinfo pour géoréférencer l'image
   
   limites:
     - Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
 journal: |
+  17/6/2022:
+    - adaptation au transfert de update.yaml dans mapcat.yaml
   16/5/2022:
     - le nom du fichier de paramètres est update.yaml
   8/5/2022:
@@ -29,6 +31,7 @@ journal: |
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/lib/mapcat.inc.php';
 require_once __DIR__.'/lib/gdalinfo.inc.php';
 require_once __DIR__.'/lib/gebox.inc.php';
 require_once __DIR__.'/lib/grefimg.inc.php';
@@ -67,20 +70,15 @@ $height = imagesy($image);
 
 // Lecture du fichier shomgt.yaml pour voir s'il existe des zones à effacer pour le GeoTiff en cours de traitement
 
-// On commence par construire la structure toDelete par nom de GT à partir de shomgt.yaml et à l'enregistrer en .pser
-if (is_file(__DIR__.'/todelete.pser') && (filemtime(__DIR__.'/todelete.pser') > filemtime(__DIR__.'/update.yaml'))) {
-  $toDelete = unserialize(file_get_contents(__DIR__.'/todelete.pser'));
+// On commence par construire la structure toDelete par nom de GT à partir de mapcat.yaml et à l'enregistrer en .pser
+if (is_file(__DIR__.'/temp/todelete.pser')
+    && (filemtime(__DIR__.'/temp/todelete.pser') > filemtime(__DIR__.'/temp/mapcat.json'))) {
+  $toDelete = unserialize(file_get_contents(__DIR__.'/temp/todelete.pser'));
 }
 else {
-  $toDelete = []; // [{gtname}=> [{zone}]]
-  $buildParams = Yaml::parseFile(__DIR__.'/update.yaml');
-  foreach ($buildParams as $gtname => $gt) {
-    if (ctype_digit(substr($gtname, 0, 4))) {
-      if (isset($gt['toDelete']))
-        $toDelete[$gtname] = $gt['toDelete'];
-    }
-  }
-  file_put_contents(__DIR__.'/todelete.pser', serialize($toDelete));
+  MapCat::init(); 
+  $toDelete = Mapcat::toDelete(); // [{gtname}=> ['polygons'=> [{polygon}, 'bboxes'=> [{bbox}]]]]
+  file_put_contents(__DIR__.'/temp/todelete.pser', serialize($toDelete));
 }
 
 // Si la liste des zones à effacer est non vide pour l'image courante alors je construis une image géoréférencée
@@ -90,24 +88,24 @@ if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
     or error("erreur de imagealphablending() ligne ".__LINE__);
   $transparent = imagecolorallocatealpha($image, 0xFF, 0xFF, 0xFF, 0x7F);
   $gdalinfo = new GdalInfo(dirname($pngpath).'/'.basename($pngpath, '.png').'.info.json');
-  print_r($gdalinfo);
+  //print_r($gdalinfo);
   $gri = new GeoRefImage($gdalinfo->ebox(), $image);
-  foreach ($listOfZonesToDelete as $zoneToDelete) {
-    echo "Effacement de:\n", Yaml::dump($zoneToDelete);
-    if (isset($zoneToDelete['rect'])) {
-      $gbox = GBox::fromShomGt($zoneToDelete['rect']); // interprétation du rectangle come GBox
-      $gri->filledrectangle($gbox->proj('WorldMercator'), $transparent);
+  
+  foreach ($listOfZonesToDelete['bboxes'] ?? [] as $bboxToDelete) {
+    echo "Effacement de:\n", Yaml::dump($bboxToDelete);
+    $gbox = GBox::fromShomGt($bboxToDelete); // interprétation du rectangle comme GBox
+    $gri->filledrectangle($gbox->proj('WorldMercator'), $transparent);
+  }
+  
+  foreach ($listOfZonesToDelete['polygons'] ?? [] as $polygonToDelete) {
+    echo "Effacement de:\n", Yaml::dump($polygonToDelete);
+    $polygon = [];
+    foreach ($polygonToDelete as $i => $pos) {
+      if (is_string($pos))
+        $pos = GBox::posFromGeoCoords($pos);
+      $polygon[$i] = WorldMercator::proj($pos);
     }
-    elseif (isset($zoneToDelete['polygon'])) {
-      foreach ($zoneToDelete['polygon'] as $i => $pos) {
-        if (is_string($pos))
-          $pos = GBox::posFromGeoCoords($pos);
-        $polygon[$i] = WorldMercator::proj($pos);
-      }
-      $gri->filledpolygon($polygon, $transparent);
-    }
-    else
-      error("Type de zone non reconnue\n");
+    $gri->filledpolygon($polygon, $transparent);
   }
   $image = $gri->image();
   imagealphablending($image, true)
