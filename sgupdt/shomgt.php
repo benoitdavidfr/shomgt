@@ -203,6 +203,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
       '$schema'=> "shomgt",
     ];
     foreach (self::$all as $lyrname => $shomGts) {
+      $array[$lyrname] = [];
       foreach ($shomGts as $gtname => $shomGt) {
         $array[$lyrname][$gtname] = $shomGt->asArray();
       }

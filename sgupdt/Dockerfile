@@ -42,6 +42,6 @@ ADD --chown=www-data ./schema /var/www/cli/schema/
 ADD --chown=www-data ./lib /var/www/cli/lib/
 
 # copie des scripts Sh et Php dans /var/www/cli/
-ADD --chown=www-data ./main.php ./maketile.php ./shomgt.php ./shomgt.schema.yaml ./update.yaml /var/www/cli/
+ADD --chown=www-data ./main.php ./maketile.php ./shomgt.php ./shomgt.schema.yaml /var/www/cli/
 
 CMD ["php", "/var/www/cli/main.php"]

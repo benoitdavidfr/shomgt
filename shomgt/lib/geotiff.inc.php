@@ -88,7 +88,7 @@ class GeoTiff {
       echo "GeoTiff::__construct($name, $spatial,",json_encode($borders),")<br>\n";
     $this->name = $name;
     $mapNum = substr($name, 0, 4);
-    $gdalInfo = new GdalInfo(GdalInfo::filepath($name));
+    $gdalInfo = new GdalInfo(GdalInfo::filepath($name, false));
     $this->size = $gdalInfo->size();
     if ($borders) { // Le géoréférencement est déduit du rectangle de la zone cartographiée et des bordures
       $this->ebox = $this->deduceGeoRefFromBorders($spatial, $borders);
