@@ -227,7 +227,7 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
       or throw new Exception("erreur dans gdal_translate sur $mapdir$gtiff");
     //echo "unlink(\"$mapdir/$gtiff\"); // suppression du fichier GéoTiff/PDF\n";
     unlink("$mapdir/$gtiff"); // suppression du fichier GéoTiff/PDF
-    !execCmde("php ".__DIR__."/maketile.php $mapdir/$gtname.png", CMDE_VERBOSE)
+    !execCmde("php maketile.php $mapdir/$gtname.png", CMDE_VERBOSE)
       or throw new Exception("erreur dans php maketile.php $mapdir/$gtname.png");
     //echo "unlink(\"$mapdir/$gtname.png\");\n";
     unlink("$mapdir/$gtname.png");
