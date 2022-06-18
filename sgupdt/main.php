@@ -57,6 +57,7 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 require_once __DIR__.'/lib/envvar.inc.php';
 require_once __DIR__.'/lib/execdl.inc.php';
 require_once __DIR__.'/lib/readmapversion.inc.php';
+require_once __DIR__.'/lib/mapcat.inc.php';
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -137,6 +138,48 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
   }
 };
 Maps::init($SERVER_URL);
+
+MapCat::init(); // lit le fichier mapcat.yaml
+
+// lit dans le fichier shomgt.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml
+class ShomGtDelZone {
+  static array $deleted=[]; // [{mapnum} => [{gtname} => {toDel}]]
+  
+  static function init(): void { // lit le fichier et structure les zones à effacer par mapnum et gtname
+    if (is_file(__DIR__.'/../data/shomgt.yaml'))
+      $yaml = Yaml::parseFile(__DIR__.'/../data/shomgt.yaml');
+    else
+      $yaml = [];
+    foreach ($yaml as $layerName => $layer) {
+      if (substr($layerName, 0, 2)<>'gt') continue; // ce n'est pas une couche
+      foreach ($layer as $gtname => $gt) {
+        if (isset($gt['deleted'])) {
+          $mapnum = substr($gtname, 0, 4);
+          self::$deleted[$mapnum][$gtname] = $gt['deleted'];
+        }
+      }
+    }
+  }
+  
+  // retourne pour un mapnum la définition par gtname des zones effacées de shomgt.yaml ou [] si aucune zone n'est définie
+  static function deleted(string $mapnum): array {
+    if (isset(self::$deleted[$mapnum])) {
+      $deleted = self::$deleted[$mapnum];
+      ksort($deleted);
+      return $deleted;
+    }
+    else
+      return [];
+  }
+
+  // Teste si pour un $mapnum les zones à effacer de MapCat sont ou non identiques aux zones effacées de shomgt.yaml
+  static function sameDelZones(string $mapnum): bool {
+    //echo "ShomGtDelZone::deleted="; print_r(ShomGtDelZone::deleted($mapnum));
+    //echo "MapCat::toDeleteByGtname="; print_r(MapCat::toDeleteByGtname("FR$mapnum"));
+    return MapCat::toDeleteByGtname("FR$mapnum") == ShomGtDelZone::deleted($mapnum);
+  }
+};
+ShomGtDelZone::init(); // print_r(ShomGtDelZone::$deleted); die();
 
 // Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
 // ou 'undefined' si aucun fichier de MD n'est trouvé
@@ -227,9 +270,17 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
 foreach (Maps::$validMaps as $mapnum => $mapVersion) {
   echo "mapnum=$mapnum\n";
   $currentVersion = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
-  if ($currentVersion == $mapVersion)
-    echo "Pas de téléchargement pour la carte $mapnum.7z car la version $mapVersion est déjà présente\n";
-  elseif (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
+  if ($currentVersion == $mapVersion) {
+    if (ShomGtDelZone::sameDelZones($mapnum)) {
+      echo "  Pas de téléchargement pour la carte $mapnum.7z car la version $mapVersion est déjà présente",
+        " et les zones à effacer sont identiques\n";
+      continue;
+    }
+    else {
+      echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées et la carte est rechargée\n";
+    }
+  }
+  if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
     Maps::$downloaded[] = $mapnum;
 }
 

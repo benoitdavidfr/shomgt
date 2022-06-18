@@ -312,7 +312,7 @@ ShomGt::sortwzorder();
 //print_r(ShomGt::$all); die();
 
 // Génération dans $yaml du fichier shomgt.yaml en vérifiant sa validité Yaml et sa conformité au schéma
-$yaml = Yaml::dump(ShomGt::allAsArray(), 3, 2);
+$yaml = Yaml::dump(ShomGt::allAsArray(), 6, 2);
 fwrite($fout, $yaml);
 try {
   $parsed = Yaml::parse($yaml);

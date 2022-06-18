@@ -77,7 +77,7 @@ if (is_file(__DIR__.'/temp/todelete.pser')
 }
 else {
   MapCat::init(); 
-  $toDelete = Mapcat::toDelete(); // [{gtname}=> ['polygons'=> [{polygon}, 'bboxes'=> [{bbox}]]]]
+  $toDelete = Mapcat::allZonesToDelete(); // [{gtname}=> ['polygons'=> [{polygon}, 'bboxes'=> [{bbox}]]]]
   file_put_contents(__DIR__.'/temp/todelete.pser', serialize($toDelete));
 }
 
