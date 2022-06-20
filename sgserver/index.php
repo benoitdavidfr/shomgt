@@ -31,8 +31,14 @@ doc: |
   Les 7z sont stockés dans le répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH avec un répertoire par livraison
   nommé avec un nom commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
+  20/6/2022:
+    - réécriture du calcul des versions des cartes pour
+      - décomposer le calcul par livraison et ainsi accélérer le calcul global pour une nouvelle livraison
+      - fusionner les fichiers conservés pour /maps.json et lastDelivery
+  19/6/2022:
+    - gestion d'une version pour /maps.json pour exclure la carte 8523 si version=0
   12/6/2022:
-    - ajout du champ modified dans 
+    - ajout du champ modified 
   30/5/2022:
     - correction d'un bug
     - ajout d'un champ 'lastVersion' pour chaque carte dans le document maps.json
@@ -67,7 +73,7 @@ journal: |
 if (!defined('DEBUG'))
   define ('DEBUG', false); // le mode !DEBUG doit être utilisé pour fonctionner avec sgupdt
 
-define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service
+define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service en V0
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib/accesscntrl.inc.php';
@@ -196,23 +202,6 @@ if ($_SERVER['PATH_INFO'] == '/logout') { // action complémentaire pour raz le 
   header('WWW-Authenticate: Basic realm="Authentification pour acces aux ressources du SHOM"');
   sendHttpCode(401, isset($_SERVER['PHP_AUTH_USER']) ? "Logout, user: $_SERVER[PHP_AUTH_USER]" : 'Logout, no user');
 }
-  
-/*if (preg_match('!^/cat/(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)\+00:00\.json$!', $_SERVER['PATH_INFO'], $matches)) {
-  $ptime = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
-  $dmfyaml = date(DATE_ATOM, filemtime(__DIR__.'/../mapcat/mapcat.yaml'));
-  if (filemtime(__DIR__.'/../mapcat/mapcat.yaml') > $ptime) { // fichier plus récent 
-    header('Content-type: application/json; charset="utf-8"');
-    echo json_encode(
-      Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml'),
-      JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-    logRecord(['done'=> "ok - mapcat.json"]);
-    die();
-  }
-  else { // fichier pas plus récent
-    sendHttpCode(DEBUG ? 404 : 204, "La date de dernière modification de mapcat.yaml est antérieure à ".date(DATE_ATOM, $ptime));
-  }
-}*/
-
 
 require_once __DIR__.'/lib/SevenZipArchive.php';
 require_once __DIR__.'/lib/readmapversion.inc.php';
@@ -228,117 +217,173 @@ function deliveries(string $INCOMING_PATH): array { // liste des livraisons tri�
   return $deliveries;
 }
 
-function buildMapVersions(string $INCOMING_PATH): array {
-  $https = (($_SERVER['HTTPS'] ?? '') == 'on');
-  $maps = []; /* [{mapnum} => [
-    'status'=> 'ok' | 'obsolete'
-    'nbre'=> nbre de téléchargements disponibles
-    'lastVersion'=> identifiant de la dernière version 
-    'modified'=> date de dernière modification de la dernière version (issue du champ dateStamp des MD)
-    'url'=> lien vers la page associée au numéro de carte
-  ]]*/
-  foreach (deliveries($INCOMING_PATH) as $delivery) {
-    //echo "* $delivery<br>\n";
-    // Prise en compte des cartes que cette livraison rend obsolètes
-    if (is_file("$INCOMING_PATH/$delivery/index.yaml")) {
-      $index = Yaml::parseFile("$INCOMING_PATH/$delivery/index.yaml");
+// gère les versions des cartes, permet de déduire maps.json et lastdelivery
+// construction d'un fichier par livraison pour éviter d'avoir tout à recalculer
+// Chaque objet correspond à l'état d'une carte pour une livraison ou l'ensemble des livraisons
+class MapVersion {
+  protected string $status; // 'ok' | 'obsolete'
+  protected int $nbre=0; // nbre de téléchargements disponibles pour la carte
+  protected ?string $lastVersion=null; // identifiant de la dernière version
+  protected ?string $modified=null; // date de dernière modification de la dernière version (issue du champ dateStamp des MD)
+  protected ?string $lastDelivery=null; // nom du répertoire de livraison correspondant à la version
+  
+  // fabrique un objet à partir soit du status 'ok' et de l'info ['version'=> {version}, 'dateStamp'=> {dateStamp}]
+  // retournée par self::getFrom7z(), soit du status 'obsolete'
+  private function __construct(string $status, array $mapVersion=[]) {
+    if ($status == 'obsolete')
+      $this->status = 'obsolete';
+    else {
+      $this->status = 'ok';
+      $this->nbre = 1;
+      $this->lastVersion = $mapVersion['version'];
+      $this->modified = $mapVersion['dateStamp'] ?? '';
+    }
+  }
+  
+  // prend en compte une nouvelle version en combinant les objets
+  private function update(self $new): void {
+    //echo "<pre>update, this="; print_r($this); print_r($new);
+    if ($new->status == 'obsolete')
+      $this->status = 'obsolete';
+    else {
+      $this->status = 'ok';
+      $this->nbre++;
+      $this->lastVersion = $new->lastVersion;
+      $this->modified = $new->modified;
+    }
+    //print_r($this);
+  }
+  
+  private function asArray(string $mapnum): array { // fabrique un array pour allAsArray()
+    $https = (($_SERVER['HTTPS'] ?? '') == 'on') ? 'https' : 'http';
+    return [
+      'status'=> $this->status,
+      'nbre'=> $this->nbre,
+      'lastVersion'=> $this->lastVersion,
+      'modified'=> $this->modified,
+      'url'=> "$https://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
+    ];
+  }
+  
+  // Renvoit pour la carte formattée comme archive 7z située à $pathOf7zun
+  // le dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}] où {version} est le libellé de la version
+  // et {dateStamp} est la date de dernière modification du fichier des MD de la carte
+  // Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.
+  private static function getFrom7z(string $pathOf7z): array {
+    $archive = new SevenZipArchive($pathOf7z);
+    foreach ($archive as $entry) {
+      if (preg_match('!^\d+/CARTO_GEOTIFF_[^.]+\.xml$!', $entry['Name'])) {
+        //print_r($entry);
+        if (!is_dir(__DIR__.'/temp'))
+          if (!mkdir(__DIR__.'/temp'))
+            throw new Exception("Erreur de création du répertoire __DIR__/temp");
+        $archive->extractTo(__DIR__.'/temp', $entry['Name']);
+        $mdPath = __DIR__."/temp/$entry[Name]";
+        $mapVersion = readMapVersion($mdPath);
+        unlink($mdPath);
+        rmdir(dirname($mdPath));
+        //echo "getMapVersionFrom7z()-> $mapVersion<br>\n";
+        return $mapVersion;
+      }
+    }
+    //echo "getMapVersionFrom7z()-> undefined<br>\n";
+    return ['version'=> 'undefined'];
+  }
+
+  // construit si nécessaire et enregistre les versions de carte pour la livraison
+  private static function buildForADelivery(string $deliveryPath): array {
+    //echo "buildForADelivery($deliveryPath)<br>\n";
+    if (is_file("$deliveryPath/mapversions.pser") && (filemtime("$deliveryPath/mapversions.pser") > filemtime($deliveryPath))) {
+      return unserialize(file_get_contents("$deliveryPath/mapversions.pser"));
+    }
+    
+    $mapVersions = []; // [{manum} => MapVersion] - la dernière version pour chaque carte + nbre de téléchargements
+    if (is_file("$deliveryPath/index.yaml")) {
+      $index = Yaml::parseFile("$deliveryPath/index.yaml");
       foreach (array_keys($index['toDelete'] ?? []) as $mapid) {
         $mapnum = substr($mapid, 2);
         //echo "** $mapnum obsolete<br>\n";
-        $maps[$mapnum]['status'] = 'obsolete';
+        $mapVersions[$mapnum] = new self('obsolete');
       }
     }
-    foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
+    foreach (new DirectoryIterator($deliveryPath) as $map7z)  {
       if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
         //echo "- carte $map7z<br>\n";
         $mapnum = $map7z->getBasename('.7z');
         //echo "** $mapnum valide<br>\n";
-        $mapVersion = getMapVersionFrom7z("$INCOMING_PATH/$delivery/$map7z");
-        if (!isset($maps[$mapnum])) {
-          $maps[$mapnum] = [
-            'status'=> 'ok',
-            'nbre'=> 1,
-            'lastVersion'=> $mapVersion['version'],
-            'modified'=> $mapVersion['dateStamp'] ?? '',
-            'url'=> ($https ? 'https' : 'http')."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
-          ];
-        }
-        else {
-          $maps[$mapnum]['status'] = 'ok';
-          $maps[$mapnum]['nbre']++;
-          $maps[$mapnum]['lastVersion'] = $mapVersion['version'];
-          $maps[$mapnum]['modified'] = $mapVersion['dateStamp'] ?? '';
-        }
+        $mapVersion = self::getFrom7z("$deliveryPath/$map7z");
+        $mapVersions[$mapnum] = new self('ok', $mapVersion);
       }
     }
+    file_put_contents("$deliveryPath/mapversions.pser", serialize($mapVersions));
+    //echo '<pre>$mapVersions='; print_r($mapVersions); echo "</pre>\n";
+    return $mapVersions;
   }
-  ksort($maps, SORT_STRING);
-  //echo "<pre>maps="; print_r($maps);
-  return $maps;
-}
+  
+  // construit si nécessaire et enregistre les versions de cartes pour toutes les livraisons
+  private static function buildAll(string $INCOM_PATH): array {
+    if (is_file("$INCOM_PATH/mapversions.pser") && (filemtime("$INCOM_PATH/mapversions.pser") > filemtime($INCOM_PATH))) {
+      return unserialize(file_get_contents("$INCOM_PATH/mapversions.pser"));
+    }
+    
+    $mapVersions = []; // [{manum} => MapVersion] - la dernière version pour chaque carte + nbre de téléchargements
+    foreach (deliveries($INCOM_PATH) as $delivery) {
+      $mapVDel = self::buildForADelivery("$INCOM_PATH/$delivery");
+      foreach ($mapVDel as $mapnum => $mapVersion) {
+        if (!isset($mapVersions[$mapnum]))
+          $mapVersions[$mapnum] = $mapVersion;
+        else
+          $mapVersions[$mapnum]->update($mapVersion);
+        $mapVersions[$mapnum]->lastDelivery = $delivery;
+      }
+    }
+    ksort($mapVersions, SORT_STRING);
+    file_put_contents("$INCOM_PATH/mapversions.pser", serialize($mapVersions));
+    return $mapVersions;
+  }
+  
+  // construit l'array à fournir pour maps.json
+  static function allAsArray(string $INCOMING_PATH): array {
+    $allAsArray = [];
+    $mapVersions = self::buildAll($INCOMING_PATH);
+    foreach($mapVersions as $mapnum => $mapVersion)
+      $allAsArray[$mapnum] = $mapVersion->asArray($mapnum);
+    return $allAsArray;
+  }
+  
+  // Renvoie pour une carte $mapnum le chemin du 7z de sa dernière livraison ou '' s'il n'y en a aucune.
+  static function lastDelivery(string $INCOMING_PATH, string $mapnum): string {
+    $mapVersions = self::buildAll($INCOMING_PATH);
+    if (isset($mapVersions[$mapnum]))
+      return $INCOMING_PATH.'/'.$mapVersions[$mapnum]->lastDelivery."/$mapnum.7z";
+    else
+      return '';
+  }
+};
+
 
 if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
-  $mapsPath = $INCOMING_PATH.'/../maps.json';
-
-  if (!is_file($mapsPath) || (filemtime($mapsPath) <= filemtime($INCOMING_PATH))) {
-    $maps = buildMapVersions($INCOMING_PATH);
-    file_put_contents($mapsPath,
-      json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
-  }
-  else {
-    $maps = json_decode(file_get_contents($mapsPath), true);
-  }
+  $mapVersions = MapVersion::allAsArray($INCOMING_PATH);
   switch($_GET['version'] ?? 0) {
     case 0: {
       foreach (EXCLUDED_MAPS as $em)
-        unset($maps[$em]);
+        unset($mapVersions[$em]);
       break;
     }
     case 1: break;
   }
+  //echo '<pre>$mapVersions='; print_r($mapVersions); die();
   header('Content-type: application/json');
-  echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+  echo json_encode($mapVersions, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
   logRecord(['done'=> "OK - maps.json transmis"]);
   die();
-}
-
-// Renvoie pour une carte $mapnum le chemin du 7z de sa dernière livraison ou '' s'il n'y en a aucune.
-function findLastDelivery(string $INCOMING_PATH, string $mapnum): string {
-  //echo "findLastDelivery($mapnum)<br>\n";
-  // construction du fichier lastdelivery.pser contenant pour chaque numéro de carte le nom de sa dernière livraison
-  // La localisation de ce fichier doit dépendre de $INCOMING_PATH pour ne pas confondre les données entre les diff. serveurs
-  // De plus, il ne doit pas être dans $INCOMING_PATH car sa création modifierait la date de mise à jour d'$INCOMING_PATH
-  $lastDeliveryPath = $INCOMING_PATH.'/../lastdelivery.pser';
-  if (is_file($lastDeliveryPath) && (filemtime($lastDeliveryPath) > filemtime($INCOMING_PATH))) {
-    $lastDeliveries = unserialize(file_get_contents($lastDeliveryPath));
-  }
-  else {
-    foreach (deliveries($INCOMING_PATH) as $delivery) {
-      //echo "* $delivery<br>\n";
-      foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
-        if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z')) {
-          //echo "- carte $map7z<br>\n";
-          $mn = $map7z->getBasename('.7z');
-          $lastDeliveries[$mn] = $delivery;
-        }
-      }
-    }
-    file_put_contents($lastDeliveryPath, serialize($lastDeliveries));
-  }
-  
-  if (!isset($lastDeliveries[$mapnum])) {
-    return '';
-  }
-  else {
-    $delivery = $lastDeliveries[$mapnum];
-    return "$INCOMING_PATH/$delivery/$mapnum.7z";
-  }
 }
 
 // /maps/{numCarte}.7z: retourne le 7z de la dernière version de la carte
 if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
   $mapnum = $matches[1];
-  $mappath = findLastDelivery($INCOMING_PATH, $mapnum);
+  $mappath = MapVersion::lastDelivery($INCOMING_PATH, $mapnum);
+  //echo "mappath=$mappath<br>\n"; die();
   if (!$mappath) {
     sendHttpCode(404, "Carte $mapnum non trouvée");
   }
@@ -351,31 +396,6 @@ if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
   }
 }
 
-
-// Renvoit pour la carte formattée comme archive 7z située à $pathOf7zun
-// le dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}] où {version} est le libellé de la version
-// et {dateStamp} est la date de dernière modification du fichier des MD de la carte
-// Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.
-function getMapVersionFrom7z(string $pathOf7z): array {
-  $archive = new SevenZipArchive($pathOf7z);
-  foreach ($archive as $entry) {
-    if (preg_match('!^\d+/CARTO_GEOTIFF_[^.]+\.xml$!', $entry['Name'])) {
-      //print_r($entry);
-      if (!is_dir(__DIR__.'/temp'))
-        if (!mkdir(__DIR__.'/temp'))
-          throw new Exception("Erreur de création du répertoire __DIR__/temp");
-      $archive->extractTo(__DIR__.'/temp', $entry['Name']);
-      $mdPath = __DIR__."/temp/$entry[Name]";
-      $mapVersion = readMapVersion($mdPath);
-      unlink($mdPath);
-      rmdir(dirname($mdPath));
-      //echo "getMapVersionFrom7z()-> $mapVersion<br>\n";
-      return $mapVersion;
-    }
-  }
-  //echo "getMapVersionFrom7z()-> undefined<br>\n";
-  return ['version'=> 'undefined'];
-}
 
 // /maps/{numCarte}.json: liste en JSON l'ensemble des versions disponibles avec un lien vers les 2 entrées suivantes
 if (preg_match('!^/maps/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
