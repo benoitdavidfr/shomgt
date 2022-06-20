@@ -187,6 +187,15 @@ if ($_SERVER['PATH_INFO'] == '/server') {
   echo "<pre>\n"; print_r($_SERVER); die();
 }
 
+if (in_array($_SERVER['PATH_INFO'], ['/api','/api.json'])) { // envoi de de la doc de l'API 
+  header('Content-type: application/json; charset="utf-8"');
+  echo json_encode(
+    Yaml::parseFile(__DIR__.'/api.yaml'),
+    JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+  logRecord(['done'=> "ok - api.json"]);
+  die();
+}
+
 if ($_SERVER['PATH_INFO'] == '/cat.json') { // envoi de mapcat 
   header('Content-type: application/json; charset="utf-8"');
   echo json_encode(
@@ -267,7 +276,7 @@ class MapVersion {
   // le dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}] où {version} est le libellé de la version
   // et {dateStamp} est la date de dernière modification du fichier des MD de la carte
   // Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.
-  private static function getFrom7z(string $pathOf7z): array {
+  static function getFrom7z(string $pathOf7z): array {
     $archive = new SevenZipArchive($pathOf7z);
     foreach ($archive as $entry) {
       if (preg_match('!^\d+/CARTO_GEOTIFF_[^.]+\.xml$!', $entry['Name'])) {
@@ -413,7 +422,7 @@ if (preg_match('!^/maps/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
     }
     foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
       if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z') && ($map7z->getBasename('.7z') == $qmapnum)) {
-        $mapversion = getMapVersionFrom7z($map7z->getPathname());
+        $mapversion = MapVersion::getFrom7z($map7z->getPathname());
         $version = $mapversion['version'];
         $path = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum-$version";
         $map['num'] = $qmapnum;
