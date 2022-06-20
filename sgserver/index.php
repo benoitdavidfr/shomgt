@@ -67,6 +67,8 @@ journal: |
 if (!defined('DEBUG'))
   define ('DEBUG', false); // le mode !DEBUG doit être utilisé pour fonctionner avec sgupdt
 
+define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib/accesscntrl.inc.php';
 
@@ -177,6 +179,10 @@ if (!($_SERVER['PATH_INFO'] ?? null)) {
   die();
 }
 
+if ($_SERVER['PATH_INFO'] == '/server') {
+  echo "<pre>\n"; print_r($_SERVER); die();
+}
+
 if ($_SERVER['PATH_INFO'] == '/cat.json') { // envoi de mapcat 
   header('Content-type: application/json; charset="utf-8"');
   echo json_encode(
@@ -222,15 +228,8 @@ function deliveries(string $INCOMING_PATH): array { // liste des livraisons tri�
   return $deliveries;
 }
 
-if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
-  $mapsPath = $INCOMING_PATH.'/../maps.json';
-  if (is_file($mapsPath) && (filemtime($mapsPath) > filemtime($INCOMING_PATH))) {
-    header('Content-type: application/json');
-    fpassthru(fopen($mapsPath, 'r'));
-    logRecord(['done'=> "OK - $mapsPath transmis"]);
-    die();
-  }
-
+function buildMapVersions(string $INCOMING_PATH): array {
+  $https = (($_SERVER['HTTPS'] ?? '') == 'on');
   $maps = []; /* [{mapnum} => [
     'status'=> 'ok' | 'obsolete'
     'nbre'=> nbre de téléchargements disponibles
@@ -261,7 +260,7 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
             'nbre'=> 1,
             'lastVersion'=> $mapVersion['version'],
             'modified'=> $mapVersion['dateStamp'] ?? '',
-            'url'=> "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
+            'url'=> ($https ? 'https' : 'http')."://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$mapnum.json",
           ];
         }
         else {
@@ -275,10 +274,30 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
   }
   ksort($maps, SORT_STRING);
   //echo "<pre>maps="; print_r($maps);
+  return $maps;
+}
+
+if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
+  $mapsPath = $INCOMING_PATH.'/../maps.json';
+
+  if (!is_file($mapsPath) || (filemtime($mapsPath) <= filemtime($INCOMING_PATH))) {
+    $maps = buildMapVersions($INCOMING_PATH);
+    file_put_contents($mapsPath,
+      json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
+  }
+  else {
+    $maps = json_decode(file_get_contents($mapsPath), true);
+  }
+  switch($_GET['version'] ?? 0) {
+    case 0: {
+      foreach (EXCLUDED_MAPS as $em)
+        unset($maps[$em]);
+      break;
+    }
+    case 1: break;
+  }
   header('Content-type: application/json');
   echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  file_put_contents($mapsPath,
-    json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
   logRecord(['done'=> "OK - maps.json transmis"]);
   die();
 }

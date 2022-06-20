@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  19/6/2022:
+    - ajout mention d'une version dans l'appel à $SERVER_URL/maps.json
   17/6/2022:
     - adaptation au transfert de update.yaml dans mapcat.yaml
   30/5/2022:
@@ -62,6 +64,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+define ('SGSERVER_VERSION', '1'); // no de version utilisée dans l'appel au serveur sgserver
 define ('CMDE_VERBOSE', 1); // degré de verbosité de l'exécution des cmdes
 
 // phase d'initialisation
@@ -74,6 +77,7 @@ if (!@is_dir($MAPS_DIR_PATH))
   if (!@mkdir($MAPS_DIR_PATH))
     throw new Exception("Erreur de création du répertoire $MAPS_DIR_PATH");
 
+// $TEMP est le répertoire dans lequel sont créées les cartes avant d'être déplacées une fois terminées dans $MAPS_DIR_PATH
 $TEMP = "$MAPS_DIR_PATH/../temp";
 // créée le répertoire temp s'il n'existe pas déjà
 if (!@is_dir($TEMP))
@@ -82,8 +86,14 @@ if (!@is_dir($TEMP))
 $TEMP = realpath($TEMP);
 !execCmde("rm -rf $TEMP/*", CMDE_VERBOSE)
   or throw new Exception("erreur dans rm -r $TEMP/*");
-!execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
-  or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
+
+// __DIR__.'/temp' est de répertoire dans lequel sont téléchrgées maps.json et cat.json
+if (!@is_dir(__DIR__.'/temp')) 
+  if (!@mkdir(__DIR__.'/temp'))
+    throw new Exception("Erreur de création du répertoire ".__DIR__.'/temp');
+else
+  !execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
+    or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
 
 
 if (0) { // Test 
@@ -119,8 +129,7 @@ class Maps { // stocke les informations téléchargées de {SHOMGT3_SERVER_URL}/
   static array $downloaded=[]; // liste des numéros de cartes effectivement téléchargées
   
   static function init(string $SERVER_URL): void {
-    if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
-    $httpCode = download("$SERVER_URL/maps.json", __DIR__.'/temp/maps.json', CMDE_VERBOSE);
+    $httpCode = download("$SERVER_URL/maps.json?version=".SGSERVER_VERSION, __DIR__.'/temp/maps.json', CMDE_VERBOSE);
     if ($httpCode <> 200)
       throw new Exception("Erreur de download sur maps.json, httpCode=$httpCode");
     $maps = json_decode(file_get_contents(__DIR__.'/temp/maps.json'), true, 512, JSON_THROW_ON_ERROR);
