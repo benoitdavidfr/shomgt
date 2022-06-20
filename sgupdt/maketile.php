@@ -12,6 +12,8 @@ doc: |
   limites:
     - Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
 journal: |
+  20/6/2022:
+    - ajout d'un die(0) à la fin du script pour s'assurer du renvoi du code 0
   17/6/2022:
     - adaptation au transfert de update.yaml dans mapcat.yaml
   16/5/2022:
@@ -189,3 +191,4 @@ if ($w && $h) {
 }
 
 echo "Découpage OK du fichier $pngpath en ",($imax+1)," X ",$jmax+1," dalles\n";
+die(0);

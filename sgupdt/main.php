@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  20/6/2022:
+    - correction d'un bug
   19/6/2022:
     - ajout mention d'une version dans l'appel à $SERVER_URL/maps.json
   17/6/2022:
@@ -232,12 +234,12 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
     !execCmde("gdalinfo -json $mapdir/$gtiff > $mapdir/$gtname.info.json", CMDE_VERBOSE) // sauvegarde du géoréf. du GéoTiff/PDF
       or throw new Exception("erreur dans gdalinfo -json $mapdir/$gtiff");
     //if (1) continue; // Pour le test je n'effectue pas les commandes suivantes
-    !execCmde("gdal_translate -of PNG $mapdir/$gtiff $mapdir/$gtname.png", CMDE_VERBOSE) # conversion du GéoTiff/PDF en PNG
-      or throw new Exception("erreur dans gdal_translate sur $mapdir$gtiff");
+    !($result = execCmde("gdal_translate -of PNG $mapdir/$gtiff $mapdir/$gtname.png", CMDE_VERBOSE)) // conversion en PNG
+      or throw new Exception("erreur dans gdal_translate sur $mapdir$gtiff, result=".json_encode($result));
     //echo "unlink(\"$mapdir/$gtiff\"); // suppression du fichier GéoTiff/PDF\n";
     unlink("$mapdir/$gtiff"); // suppression du fichier GéoTiff/PDF
-    !execCmde("php maketile.php $mapdir/$gtname.png", CMDE_VERBOSE)
-      or throw new Exception("erreur dans php maketile.php $mapdir/$gtname.png");
+    !($result = execCmde("php ".__DIR__."/maketile.php $mapdir/$gtname.png", CMDE_VERBOSE))
+      or throw new Exception("erreur dans php maketile.php $mapdir/$gtname.png, result=".json_encode($result));
     //echo "unlink(\"$mapdir/$gtname.png\");\n";
     unlink("$mapdir/$gtname.png");
   }
@@ -286,7 +288,7 @@ foreach (Maps::$validMaps as $mapnum => $mapVersion) {
       continue;
     }
     else {
-      echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées et la carte est rechargée\n";
+      echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées donc la carte est rechargée\n";
     }
   }
   if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')

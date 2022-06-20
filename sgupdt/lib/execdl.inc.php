@@ -5,6 +5,8 @@ name: execdl.inc.php
 functions:
 doc: |
 journal: |
+  20/6/2022:
+    - modif du retour d'execCmde() pour récupérer l'output de la commande appelée en cas d'erreur
   20/5/2022:
     - modif pour traiter un téléchargement avec authentification
   18/5/2022:
@@ -13,24 +15,27 @@ journal: |
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 /*PhpDoc: functions
-title: execCmde - exécution d'une commande Linux - enrobage de exec()
+title: execCmde - exécute une commande Linux - enrobage de exec()
 name: execCmde
 doc: |
-  exécution du cmde Linux
-  exec(string $command, array &$output = null, int &$result_code = null): string|false
+  exécute une cmde Linux, $verbose est le degré de verbosité
+  retourne [] ssi tout est ok, cad le retour d'exec() !== false && $result_code == 0
+  sinon retourne ['result_code'=> {result_code}, 'output'=> {output}]
 */
-function execCmde(string $cmde, int $verbose): int {
+function execCmde(string $cmde, int $verbose): array {
   //echo "execCmde($cmde)\n";
   if ($verbose >= 1)
     echo ">> $cmde\n";
   $output = [];
   $result_code = 0;
-  exec($cmde, $output, $result_code);
+  $return = exec($cmde, $output, $result_code);
   if ($output && ($verbose > 1)) {
     echo "output="; print_r($output);
   }
-  //echo "result_code=$result_code\n";
-  return $result_code;
+  if (($return === false) || ($result_code <> 0)) // erreur d'appel d'exec() ou code retour <> 0
+    return ['result_code'=> $result_code, 'output'=> $output];
+  else  // tout est ok
+    return [];
 }
 
 /*PhpDoc: functions
