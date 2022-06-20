@@ -70,10 +70,8 @@ journal: |
     - création
 */
 //define ('DEBUG', true); // le mode DEBUG facilite le test interactif du serveur
-if (!defined('DEBUG'))
-  define ('DEBUG', false); // le mode !DEBUG doit être utilisé pour fonctionner avec sgupdt
 
-define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service en V0
+define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service en V0 car incompatble avec sgupdt v0.6
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib/accesscntrl.inc.php';
@@ -389,7 +387,6 @@ if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
   }
   else {
     header('Content-type: application/x-7z-compressed');
-    //echo file_get_contents($mappath);
     fpassthru(fopen($mappath, 'r'));
     logRecord(['done'=> "OK - $mappath transmis"]);
     die();
@@ -400,6 +397,7 @@ if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
 // /maps/{numCarte}.json: liste en JSON l'ensemble des versions disponibles avec un lien vers les 2 entrées suivantes
 if (preg_match('!^/maps/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
   $qmapnum = $matches[1];
+  $https = (($_SERVER['HTTPS'] ?? '') == 'on') ? 'https' : 'http';
   $map = []; // [{version} => ['num'=> {num}, 'status'=> 'obsolete'?, 'versions'=> [{idVersion}=> {path}]]]
   foreach (deliveries($INCOMING_PATH) as $delivery) {
     //echo "* $delivery<br>\n";
@@ -420,7 +418,7 @@ if (preg_match('!^/maps/(\d\d\d\d)\.json$!', $_SERVER['PATH_INFO'], $matches)) {
         $path = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum-$version";
         $map['num'] = $qmapnum;
         $map['status'] = 'ok';
-        $map['lastVersion'] = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum.7z";
+        $map['lastVersion'] = "$https://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]/maps/$qmapnum.7z";
         $map['versions'][$version] = [
           'archive'=> $path.'.7z',
           'modified' => $mapversion['dateStamp'],
@@ -455,7 +453,7 @@ if (preg_match('!^/maps/(\d\d\d\d)-((\d\d\d\dc\d+)|(undefined))\.(7z|png)$!', $_
           if ($version == $qversion) {
             $pathOf7z = realpath("$INCOMING_PATH/$delivery/$map7z");
             if ($qformat == '7z') {
-              if (DEBUG)
+              if (defined(DEBUG))
                 echo "Simulation de téléchargement de $pathOf7z\n";
               else {
                 header('Content-type: application/x-7z-compressed');
