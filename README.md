@@ -15,7 +15,7 @@ de l'approvisionner avec les cartes du Shom, puis de mettre à jour ces cartes, 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
-Ce projet ce décompose en 4 sous-projets:
+Ce projet ce décompose en 6 sous-projets:
 
   - **shomgt** expose les services suivants de consultation des cartes:
     - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
@@ -30,8 +30,16 @@ Ce projet ce décompose en 4 sous-projets:
     
   - **sgserver** expose les données du Shom à *sgupdt*. Il est mis à jour régulièrement grâce à *mapcat*.
   
-  - **mapcat** a pour objectif d'identifier les cartes nécessitant une mise à jour ;
-    pour cela il gère un catalogue des cartes.
+  - **mapcat** est un catalogue des cartes Shom couvrant les zones sous juridiction française. Il décrit notamment
+    les extensions spatiales des cartes et de leurs cartouches.
+  
+  - **shomft** constitue un proxy du serveur WFS du Shom pour les cartes GéoTiff et permet de connaître ls nouvelles cartes.
+    Il expose aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes concernées.
+  
+  - **dashboard** expose un tableau de bord permettant d'identifier
+    - les cartes les plus périmées à remplacer
+    - les cartes obsolètes à marquer comme telle
+    - les nouvelles cartes à ajouter au portefeuille
 
 ## Déploiement Docker
 Avec cette version , les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
@@ -44,7 +52,7 @@ le conteneur sgupdt se connecte au serveur sgserver pour télécharger les carte
 Si un proxy doit être utilisé, il doit être défini en s'inspirant des exemples
 du fichier [docker-compose.yml](docker-compose.yml).  
 En dehors de ce réseau, l'accès au serveur nécessite une authentification et la variable d'environnement
-`SHOMGT3_SERVER_URL` doit être définie avec l'URL `http://{login}:{passwd}@php81/geoapi/shomgt3/sgserver/index.php`
+`SHOMGT3_SERVER_URL` doit être définie avec l'URL `http://{login}:{passwd}@sgserver.geoapi.fr/index.php`
 en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.
 
 ## Avancement du développement
