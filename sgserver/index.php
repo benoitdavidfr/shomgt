@@ -162,19 +162,31 @@ if (!is_dir($INCOMING_PATH))
 //date_default_timezone_set('UTC');
 
 if (!($_SERVER['PATH_INFO'] ?? null)) {
-  echo "<h2>Serveur de cartes du Shom au format 7z</h2>\n";
-  echo "<b>Menu:</b><ul>\n";
-  echo "<li><a href='index.php/api.json'>Documentation de l'API conforme aux spécifications OpanAPI 3</a></li>\n";
-  echo "<li><a href='index.php/cat.json'>Catalogue de cartes</a></li>\n";
-  echo "<li><a href='index.php/cat/schema.json'>Schéma du catalogue de cartes</a></li>\n";
-  echo "<li><a href='index.php/maps.json'>Liste des cartes exposées par le serveur</a></li>\n";
+?>
+<h2>Serveur de cartes GéoTiff du Shom au format 7z</h2>
+L'utilisation de ce serveur est réservée aux agents de l'Etat et de ses Etablissements publics à caractère Administratif (EPA)
+pour leurs missions de service public et un usage interne.
+L'utilisation est soumise aux conditions générales d’utilisation des produits numériques, services et prestations du Shom
+que vous trouverez en annexe 1
+du <a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf'>Répertoire des principaux documents
+dans lesquels figurent les informations publiques produites par le Shom disponible ici page 52</a>.
+En utilisant ce site ou l'une de ses API, vous acceptez ces conditions d'utilisation.</p>
 
-  echo "<li><a href='index.php/maps/6969.7z'>Exemple de téléchargement de la dernière version de la carte no 6969</a></li>\n";
-  echo "<li><a href='index.php/maps/6969.json'>Exemple de la liste des versions de la carte no 6969</a></li>\n";
-  echo "<li><a href='index.php/maps/6969-2016c7.7z'>Exemple de téléchargement la version 2016c7 de la carte 6969</a></li>\n";
-  echo "<li><a href='index.php/maps/6969-2016c7.png'>Exemple de vignette de la version 2016c7 de la carte 6969</a></li>\n";
-  echo "<li><a href='index.php/maps/7330-undefined.7z'>Exemple de téléchargement de la carte 7330 non versionnée</a></li>\n";
-  echo "</ul>\n";
+Ce site est expérimental propose différents mécanismes d'accès au contenu des cartes du Shom.</p>
+
+<h3>Exemples d'utilisation du serveur:</h3><ul>
+<li><a href='index.php/api.json'>Documentation de l'API conforme aux spécifications OpenAPI 3</a></li>
+<li><a href='index.php/cat.json'>Catalogue des cartes ShomGT</a></li>
+<li><a href='index.php/cat/schema.json'>Schéma du catalogue de cartes</a></li>
+<li><a href='index.php/maps.json'>Liste des cartes exposées par le serveur</a></li>
+
+<li><a href='index.php/maps/6969.7z'>Exemple de téléchargement de la dernière version de la carte no 6969</a></li>
+<li><a href='index.php/maps/6969.json'>Exemple de la liste des versions de la carte no 6969</a></li>
+<li><a href='index.php/maps/6969-2016c2.7z'>Exemple de téléchargement la version 2016c2 de la carte 6969</a></li>
+<li><a href='index.php/maps/6969-2016c2.png'>Exemple de vignette de la version 2016c2 de la carte 6969</a></li>
+<li><a href='index.php/maps/7330-undefined.7z'>Exemple de téléchargement de la carte 7330 non versionnée</a></li>
+</ul>
+<?php
   die();
 }
 

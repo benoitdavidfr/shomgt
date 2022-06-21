@@ -3,15 +3,20 @@ info:
   version: '1.0'
   title: Serveur de cartes Shom GéoTiff dans le format d'archive 7z tel que livré par le Shom
   description: |
-    Ce serveur permet de télécharger les cartes Shom GéoTiff dans le format d'archive 7z tel que livré par le Shom.  
-    Il permet en outre de connaitre la liste des cartes disponibles ainsi que pour chaque carte la dernière version
-    disponible sur le serveur et les différentes versions disponibles et de télécharger chacune de ces versions.  
-    Les versions sont identifiées par une chaine respectant le motif '{année}c{correction}' où
+    Ce serveur permet de télécharger
+    les [cartes Shom GéoTiff](https://diffusion.shom.fr/pro/navigation/cartes-marines/cartes-marines-geotiff.html)
+    dans le format d'archive 7z tel que livré par le Shom.  
+    Il permet en outre de connaitre la liste des cartes disponibles, de télécharger la dernière version disponible d'une carte,
+    de lister les différentes versions disponibles d'une carte et de télécharger chacune de ces versions.  
+    Les versions des cartes sont identifiées par une chaine respectant le motif '{année}c{correction}' où
     {année} est l'année d'édition de la carte et {correction} est le numéro de la dernière correction apportée
-    à la carte.
+    à la carte ; quelques cartes ne sont pas versionnées et la version est alors 'undefined'.
+  termsOfService: https://sgserver.geoapi.fr/termsofservice.php
   contact:
     name: 'Benoit DAVID - MTE/CGDD'
     email: contact@geoapi.fr
+  license:
+    name: utilisation strictement réservée aux ayants droits, voir https://sgserver.geoapi.fr/termsofservice.php
 servers:
   - description: Serveur de production
     url: 'https://sgserver.geoapi.fr/index.php'
@@ -111,18 +116,23 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+    parameters:
+      - in: query
+        name: version
+        description: |
+          Version de ce point d'entrée de l'API  
+          En version=0 (ou paramètre absent) la carte 8053 n'est pas transmise.  
+          En version=1, la liste de toutes les cartes sont transmises.
+        required: false
+        schema:
+          type: number
+          minimum: 0
+          maximum: 1
   /maps/{numCarte}.7z:
     description: retourne l'archive 7z correspondant à la dernière version disponible de la carte {numCarte}
     get:
       operationId: getMapArchive
       summary: retourne l'archive 7z de la carte
-      parameters:
-        - in: path
-          name: numCarte
-          description: numéro de la carte
-          required: true
-          schema:
-            type: string
       responses:
         200:
           description: archive 7z de la dernière version disponible de la carte
@@ -144,18 +154,18 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+    parameters:
+      - in: path
+        name: numCarte
+        description: numéro de la carte
+        required: true
+        schema:
+          type: string
   /maps/{numCarte}.json:
     description: liste l'ensemble des versions disponibles pour la carte {numCarte}
     get:
       operationId: getMapVersions
       summary: accès à la liste des versions disponibles
-      parameters:
-        - in: path
-          name: numCarte
-          description: numéro de la carte
-          required: true
-          schema:
-            type: string
       responses:
         200:
           description: liste des versions disponibles
@@ -177,24 +187,18 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+    parameters:
+      - in: path
+        name: numCarte
+        description: numéro de la carte
+        required: true
+        schema:
+          type: string
   /maps/{numCarte}-{version}.7z:
     description: retourne l'archive 7z correspondant à la version {version} de la carte {numCarte}
     get:
       operationId: getMapVersionArchive
       summary: retourne l'archive 7z de la version de la carte
-      parameters:
-        - in: path
-          name: numCarte
-          description: numéro de la carte
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: version
-          description: version de la carte
-          required: true
-          schema:
-            type: string
       responses:
         200:
           description: archive 7z de la version {version} de la carte
@@ -216,24 +220,24 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+    parameters:
+      - in: path
+        name: numCarte
+        description: numéro de la carte
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: version
+        description: version de la carte
+        required: true
+        schema:
+          type: string
   /maps/{numCarte}-{version}.png:
     description: retourne la vignette de la version {version} de la carte {numCarte}
     get:
       operationId: getMapVersionThumbnail
       summary: retourne la vignette de la version de la carte
-      parameters:
-        - in: path
-          name: numCarte
-          description: numéro de la carte
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: version
-          description: version de la carte
-          required: true
-          schema:
-            type: string
       responses:
         200:
           description: vignette de la version {version} de la carte
@@ -255,6 +259,19 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+    parameters:
+      - in: path
+        name: numCarte
+        description: numéro de la carte
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: version
+        description: version de la carte
+        required: true
+        schema:
+          type: string
 components:
   schemas:
     dateIso8601:
