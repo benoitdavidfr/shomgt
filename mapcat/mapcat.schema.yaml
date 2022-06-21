@@ -1,5 +1,5 @@
 title: schema JSON du catalogue des cartes Shom
-$id: http://geoapi.fr/shomgt/cat2/mapcat.schema
+$id: https://sgserver.geoapi.fr/index.php/cat/schema
 modified: '2022-06-12'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.

@@ -162,24 +162,19 @@ if (!is_dir($INCOMING_PATH))
 //date_default_timezone_set('UTC');
 
 if (!($_SERVER['PATH_INFO'] ?? null)) {
-  echo "Menu:<br>\n";
-  echo " - <a href='index.php/cat.json'>cat.json</a><br>\n";
-  echo date(DATE_ATOM),"<br>\n";
-  $date = urlencode(date(DATE_ATOM));
-  $url = "index.php/cat/$date.json";
-  echo " - <a href='$url'>$url</a><br>\n";
+  echo "<h2>Serveur de cartes du Shom au format 7z</h2>\n";
+  echo "<b>Menu:</b><ul>\n";
+  echo "<li><a href='index.php/api.json'>Documentation de l'API conforme aux spécifications OpanAPI 3</a></li>\n";
+  echo "<li><a href='index.php/cat.json'>Catalogue de cartes</a></li>\n";
+  echo "<li><a href='index.php/cat/schema.json'>Schéma du catalogue de cartes</a></li>\n";
+  echo "<li><a href='index.php/maps.json'>Liste des cartes exposées par le serveur</a></li>\n";
 
-  $error = error_get_last();
-  print_r($error);
-
-  $url = "index.php/maps/6969.7z";
-  echo " - <a href='$url'>$url</a><br>\n";
-  $url = "index.php/maps/6969-2021c0.7z";
-  echo " - <a href='$url'>$url</a><br>\n";
-  $url = "index.php/maps/6969-2020c9.7z";
-  echo " - <a href='$url'>$url</a><br>\n";
-  $url = "index.php/maps/7330-undefined.7z";
-  echo " - <a href='$url'>$url</a><br>\n";
+  echo "<li><a href='index.php/maps/6969.7z'>Exemple de téléchargement de la dernière version de la carte no 6969</a></li>\n";
+  echo "<li><a href='index.php/maps/6969.json'>Exemple de la liste des versions de la carte no 6969</a></li>\n";
+  echo "<li><a href='index.php/maps/6969-2016c7.7z'>Exemple de téléchargement la version 2016c7 de la carte 6969</a></li>\n";
+  echo "<li><a href='index.php/maps/6969-2016c7.png'>Exemple de vignette de la version 2016c7 de la carte 6969</a></li>\n";
+  echo "<li><a href='index.php/maps/7330-undefined.7z'>Exemple de téléchargement de la carte 7330 non versionnée</a></li>\n";
+  echo "</ul>\n";
   die();
 }
 
@@ -202,6 +197,15 @@ if ($_SERVER['PATH_INFO'] == '/cat.json') { // envoi de mapcat
     Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml'),
     JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
   logRecord(['done'=> "ok - mapcat.json"]);
+  die();
+}
+
+if (in_array($_SERVER['PATH_INFO'], ['/cat/schema', '/cat/schema.json'])) { // envoi du schema de mapcat 
+  header('Content-type: application/json; charset="utf-8"');
+  echo json_encode(
+    Yaml::parseFile(__DIR__.'/../mapcat/mapcat.schema.yaml'),
+    JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+  logRecord(['done'=> "ok - mapcat/schema.json"]);
   die();
 }
 
@@ -277,6 +281,7 @@ class MapVersion {
   // et {dateStamp} est la date de dernière modification du fichier des MD de la carte
   // Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.
   static function getFrom7z(string $pathOf7z): array {
+    //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
     $archive = new SevenZipArchive($pathOf7z);
     foreach ($archive as $entry) {
       if (preg_match('!^\d+/CARTO_GEOTIFF_[^.]+\.xml$!', $entry['Name'])) {
@@ -458,11 +463,11 @@ if (preg_match('!^/maps/(\d\d\d\d)-((\d\d\d\dc\d+)|(undefined))\.(7z|png)$!', $_
       //echo "* $delivery<br>\n";
       foreach (new DirectoryIterator("$INCOMING_PATH/$delivery") as $map7z)  {
         if (($map7z->getType() == 'file') && ($map7z->getExtension()=='7z') && ($map7z->getBasename('.7z') == $qmapnum)) {
-          $version = getMapVersionFrom7z($map7z->getPathname());
-          if ($version == $qversion) {
+          $version = MapVersion::getFrom7z($map7z->getPathname());
+          if ($version['version'] == $qversion) {
             $pathOf7z = realpath("$INCOMING_PATH/$delivery/$map7z");
             if ($qformat == '7z') {
-              if (defined(DEBUG))
+              if (defined('DEBUG'))
                 echo "Simulation de téléchargement de $pathOf7z\n";
               else {
                 header('Content-type: application/x-7z-compressed');

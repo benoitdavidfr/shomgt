@@ -36,7 +36,7 @@ paths:
                 description: message d'erreur
                 type: string
   /api.json:
-    description: documentation de l'API
+    description: documentation de l'API conforme aux spécifications OpanAPI 3
     get:
       operationId: getApiDoc
       summary: accès à la documentation de l'API
@@ -73,8 +73,27 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+  /cat/schema.json:
+    description: schema JSON du catalogue de cartes conforme à http://json-schema.org/draft-06/schema#
+    get:
+      operationId: getCatSchema
+      summary: accès au schema du catalogue de cartes
+      responses:
+        200:
+          description: schéma JSON du catalogue de cartes
+          content:
+            application/json:
+              schema:
+                type: object
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
   /maps.json:
-    description: liste l'ensemble des cartes disponibles indexées par leur numéro
+    description: liste des cartes disponibles indexées par leur numéro
     get:
       operationId: getMapList
       summary: accès à la liste des cartes
@@ -118,8 +137,15 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+        404:
+          description: erreur carte non trouvée
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
   /maps/{numCarte}.json:
-    description: liste en JSON l'ensemble des versions disponibles
+    description: liste l'ensemble des versions disponibles pour la carte {numCarte}
     get:
       operationId: getMapVersions
       summary: accès à la liste des versions disponibles
@@ -143,6 +169,13 @@ paths:
             text/plain:
               schema:
                 description: 'message d''erreur'
+                type: string
+        404:
+          description: erreur carte non trouvée
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
                 type: string
   /maps/{numCarte}-{version}.7z:
     description: retourne l'archive 7z correspondant à la version {version} de la carte {numCarte}
@@ -176,6 +209,13 @@ paths:
               schema:
                 description: message d'erreur
                 type: string
+        404:
+          description: erreur version de carte non trouvée
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
   /maps/{numCarte}-{version}.png:
     description: retourne la vignette de la version {version} de la carte {numCarte}
     get:
@@ -203,6 +243,13 @@ paths:
                 type: string
         401:
           description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+        404:
+          description: erreur version de carte non trouvée
           content:
             text/plain:
               schema:
