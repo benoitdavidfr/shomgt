@@ -2,28 +2,108 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes présentes sur sgserver'
 $id: 'https://geoapi.fr/shomgt3/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt3/dashboard/gans
-valid: 2022-06-12/2022-06-12
+valid: 2022-06-22/2022-06-22
 gans:
   '0101':
-    valid: '2022-06-12'
+    valid: '2022-06-22'
   6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu'
     spatial:
       SW: '42°39,94''N — 009°00,94''E'
       NE: '43°08,94''N — 009°28,64''E'
-    ganEdition: 'Edition n°4 - 2021'
-    valid: '2022-06-12'
+    edition: 'Edition n°4 - 2021'
+    valid: '2022-06-22'
+  7159:
+    groupTitle: 'Iles Anglo-Normandes'
+    title: 'De Guernsey, Herm et Sark à Alderney'
+    spatial:
+      SW: '49°20,64''N — 002°43,74''W'
+      NE: '49°49,04''N — 002°13,48''W'
+    edition: 'Edition n°2 - 2008'
+    corrections:
+      - { num: 10, semaineAvis: 2109-35 }
+      - { num: 11, semaineAvis: 2123-45 }
+      - { num: 12, semaineAvis: 2149-41 }
+    valid: '2022-06-22'
   7283:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
     spatial:
       SW: '16°30,00''S — 172°47,00''W'
       NE: '09°40,56''S — 177°00,00''E'
-    ganEdition: 'Publication 1992'
-    valid: '2022-06-12'
+    edition: 'Publication 1992'
+    valid: '2022-06-22'
   7330:
-    valid: '2022-06-12'
+    valid: '2022-06-22'
+  7353:
+    groupTitle: 'Iles Marquises (Fenua Enata)'
+    title: 'Ua-Pou et Ua-Huka'
+    inSets:
+      - { title: 'Cartouche: A - Ua-Pou', spatial: { SW: '09°34,50''S — 140°13,50''W', NE: '09°15,38''S — 139°55,80''W' } }
+      - { title: 'Cartouche: B - Ua-Pou - Baie d''Haakuti', spatial: { SW: '09°22,83''S — 140°07,83''W', NE: '09°22,08''S — 140°07,11''W' } }
+      - { title: 'Cartouche: C - Ua-Pou - Baie d''Hakahetau', spatial: { SW: '09°21,87''S — 140°06,87''W', NE: '09°20,78''S — 140°05,82''W' } }
+      - { title: 'Cartouche: D - Ua-Pou - Baie d''Hakahau', spatial: { SW: '09°21,75''S — 140°03,18''W', NE: '09°21,20''S — 140°02,47''W' } }
+      - { title: 'Cartouche: E - Ua-Pou - Baie de Vaiehu', spatial: { SW: '09°24,10''S — 140°08,20''W', NE: '09°22,80''S — 140°07,48''W' } }
+      - { title: 'Cartouche: F - Ua-Pou - Baie d''Hakamaii', spatial: { SW: '09°25,58''S — 140°07,20''W', NE: '09°24,73''S — 140°06,48''W' } }
+      - { title: 'Cartouche: G - Ua-Pou - Baie d''Hakatao', spatial: { SW: '09°27,31''S — 140°05,80''W', NE: '09°26,51''S — 140°05,08''W' } }
+      - { title: 'Cartouche: H - Ua-Huka', spatial: { SW: '09°04,00''S — 139°41,50''W', NE: '08°46,13''S — 139°24,33''W' } }
+      - { title: 'Cartouche: I - Ua-Huka - Baie Haavei', spatial: { SW: '08°57,68''S — 139°36,60''W', NE: '08°55,78''S — 139°35,35''W' } }
+      - { title: 'Cartouche: J - Ua-Huka - Baie de Vaipaee (Baie Invisible)', spatial: { SW: '08°57,44''S — 139°34,54''W', NE: '08°56,17''S — 139°33,86''W' } }
+      - { title: 'Cartouche: K - Ua-Huka - Baie d''Hane', spatial: { SW: '08°56,67''S — 139°32,31''W', NE: '08°55,40''S — 139°31,50''W' } }
+    edition: 'Publication 1995'
+    corrections:
+      - { num: 11, semaineAvis: 1649-207 }
+      - { num: 12, semaineAvis: 1919-229 }
+      - { num: 13, semaineAvis: 1932-229 }
+      - { num: 14, semaineAvis: 2024-230 }
+      - { num: 15, semaineAvis: 2044-230 }
+      - { num: 16, semaineAvis: 2107-230 }
+    valid: '2022-06-22'
+  7354:
+    groupTitle: 'Îles Marquises (Fenua Enata)'
+    title: 'Fatu-Hiva, Baies de Hiva-Oa et de Tahuata'
+    inSets:
+      - { title: 'Cartouche: A - Hiva-Oa - Baie Hanamenu', spatial: { SW: '09°46,19''S — 139°09,00''W', NE: '09°44,76''S — 139°08,04''W' } }
+      - { title: 'Cartouche: B - Hiva-Oa - Baie Hanaiapa', spatial: { SW: '09°43,39''S — 139°01,44''W', NE: '09°41,96''S — 139°00,55''W' } }
+      - { title: 'Cartouche: C - Hiva-Oa - Baie Puamau', spatial: { SW: '09°46,10''S — 138°53,25''W', NE: '09°44,67''S — 138°51,93''W' } }
+      - { title: 'Cartouche: D - Hiva-Oa - Baie Taaoa', spatial: { SW: '09°51,80''S — 139°04,30''W', NE: '09°47,43''S — 138°58,60''W' } }
+      - { title: 'Cartouche: E - Hiva-Oa - Baie Hanatekuua', spatial: { SW: '09°42,28''S — 139°00,10''W', NE: '09°41,72''S — 138°59,18''W' } }
+      - { title: 'Cartouche: F - Hiva-Oa - Baie Tahauku', spatial: { SW: '09°48,81''S — 139°02,59''W', NE: '09°47,97''S — 139°01,67''W' } }
+      - { title: 'Cartouche: G - Fatu-Hiva - Baie Hanavavae', spatial: { SW: '10°28,34''S — 138°40,80''W', NE: '10°27,50''S — 138°39,69''W' } }
+      - { title: 'Cartouche: H - Fatu-Hiva - Baie d''Omoa', spatial: { SW: '10°31,04''S — 138°41,91''W', NE: '10°30,48''S — 138°40,80''W' } }
+      - { title: 'Cartouche: I - Tahuata - Baies du Nord-Ouest', spatial: { SW: '09°55,12''S — 139°06,90''W', NE: '09°54,14''S — 139°06,02''W' } }
+      - { title: 'Cartouche: J - Tahuata - Baie Motopu', spatial: { SW: '09°54,43''S — 139°04,30''W', NE: '09°53,45''S — 139°03,33''W' } }
+      - { title: 'Cartouche: K - Tahuata - Baie Vaitahu', spatial: { SW: '09°56,57''S — 139°07,38''W', NE: '09°55,86''S — 139°06,50''W' } }
+      - { title: 'Cartouche: L - Tahuata - Baie Hanatetena', spatial: { SW: '09°57,93''S — 139°04,86''W', NE: '09°57,04''S — 139°03,89''W' } }
+      - { title: 'Cartouche: M - Tahuata - Baie Hapatoni', spatial: { SW: '09°58,33''S — 139°07,90''W', NE: '09°57,26''S — 139°07,02''W' } }
+      - { title: 'Cartouche: N - Tahuata - Baie Hanateio', spatial: { SW: '09°59,77''S — 139°06,60''W', NE: '09°58,88''S — 139°05,63''W' } }
+      - { title: 'Cartouche: O - Fatu-Hiva', spatial: { SW: '10°39,75''S — 138°46,50''W', NE: '10°19,55''S — 138°31,89''W' } }
+    edition: 'Edition n°2 - 2017'
+    valid: '2022-06-22'
+  7420:
+    groupTitle: 'Côte Nord de France'
+    title: 'Ports en Baie de Seine'
+    inSets:
+      - { title: 'Cartouche: A - Port de Grandcamp-Maisy', spatial: { SW: '49°23,19''N — 001°04,04''W', NE: '49°24,42''N — 001°01,66''W' } }
+      - { title: 'Cartouche: B - Port de Port-en-Bessin', spatial: { SW: '49°20,62''N — 000°46,58''W', NE: '49°21,75''N — 000°44,35''W' } }
+      - { title: 'Cartouche: C - Port de Courseulles-sur-Mer', spatial: { SW: '49°19,81''N — 000°28,50''W', NE: '49°21,34''N — 000°26,65''W' } }
+      - { title: 'Cartouche: E - Port de Caen', spatial: { SW: '49°10,65''N — 000°21,58''W', NE: '49°14,64''N — 000°16,28''W' } }
+      - { title: 'Cartouche: D - Rade de Caen - Port de Ouistreham', spatial: { SW: '49°13,94''N — 000°16,88''W', NE: '49°21,12''N — 000°09,31''W' } }
+      - { title: 'Cartouche: F - Port de Dives-sur-Mer - Port Guillaume', spatial: { SW: '49°17,48''N — 000°06,48''W', NE: '49°18,90''N — 000°05,03''W' } }
+      - { title: 'Cartouche: H - Port de Honfleur', spatial: { SW: '49°24,95''N — 000°12,80''E', NE: '49°26,15''N — 000°15,18''E' } }
+      - { title: 'Cartouche: G - Port de Deauville - Trouville', spatial: { SW: '49°21,45''N — 000°03,22''E', NE: '49°22,87''N — 000°05,45''E' } }
+    edition: 'Edition n°4 - 2019'
+    corrections:
+      - { num: 1, semaineAvis: 1942-38 }
+      - { num: 2, semaineAvis: 2010-36 }
+      - { num: 3, semaineAvis: 2029-37 }
+      - { num: 4, semaineAvis: 2043-35 }
+      - { num: 5, semaineAvis: 2131-38 }
+      - { num: 6, semaineAvis: 2142-41 }
+      - { num: 7, semaineAvis: 2203-40 }
+      - { num: 8, semaineAvis: 2209-36 }
+    valid: '2022-06-22'
   8509:
-    valid: '2022-06-12'
+    valid: '2022-06-22'
 eof: null

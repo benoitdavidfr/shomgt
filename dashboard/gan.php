@@ -32,6 +32,7 @@ journal: |
 includes: [../lib/config.inc.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../sgserver/lib/mapversion.inc.php';
 //require_once __DIR__.'/../lib/config.inc.php';
 //require_once __DIR__.'/mapcat.php';
 
@@ -73,7 +74,7 @@ function httpContext() { // fabrique un context Http si un proxy est défini, si
 function maps(): array { // liste les cartes actives du portefeuille 
   if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')))
     throw new Exception("Variable d'env. SHOMGT3_INCOMING_PATH non définie");
-  $maps = json_decode(file_get_contents("$INCOMING_PATH/../maps.json"), true);
+  $maps = MapVersion::allAsArray($INCOMING_PATH);
   foreach ($maps as $num => $map) {
     //var_dump($num);
     if (($map['status'] <> 'ok') || !(is_int($num) || ctype_digit($num)))
