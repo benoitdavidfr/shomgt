@@ -29,6 +29,8 @@ USER www-data:www-data
 # Installation dans /var/www de vendor avec le module Yaml de Symphony
 RUN cd /var/www && composer require symfony/yaml:6
 
+# copie des fichiers GeoJSON dans /var/www/html/geojson/
+ADD --chown=www-data ./geojson /var/www/html/geojson/
 # copie des fichiers Leaflet dans /var/www/html/leaflet/
 ADD --chown=www-data ./leaflet /var/www/html/leaflet/
 # copie des fichiers Php includes dans /var/www/html/lib/
