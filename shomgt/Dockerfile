@@ -1,7 +1,8 @@
-# Dockerfile pour ShomGt3/geotiff - 18/4-10/6/2022
+# Dockerfile pour ShomGt3/geotiff - 18/4-22/6/2022
 # 1/5/2022 - chgt chemin des cartes
 # 6/5/2022 - chgt instructions de copie des fichiers
-FROM php:8.1.5-apache
+# 22/6/2022 - passage à Php 8.1.7
+FROM php:8.1.7-apache
 
 # install 7zip + gdal
 RUN apt-get update \
