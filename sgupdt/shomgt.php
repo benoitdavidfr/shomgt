@@ -127,6 +127,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected int $zorder; // z-order issu du catalogue de cartes
   protected array $deleted; // zones effacées dans le GéoTiff
   protected ?string $layer; // nom de la couche pour les cartes spéciales, null sinon
+  protected array $borders=[]; // bordures au cas où le GéoTiff n'est pas géoréférencé
 
   static array $all=[]; // contenu de shomgt.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
 
@@ -169,6 +170,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     $this->deleted = $info['toDelete'] ?? [];
     unset($this->deleted['geotiffname']);
     $this->layer = $info['layer'] ?? LayerDef::getFromScaleDen($this->scaleDen);
+    $this->borders = $info['borders'];
     //echo 'info='; print_r($info);
     //echo 'ShomGt='; print_r($this);
   }
@@ -219,6 +221,8 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     ];
     if ($this->deleted)
       $array['deleted'] = $this->deleted;
+    if ($this->borders)
+      $array['borders'] = $this->borders;
     return $array;
   }
 };

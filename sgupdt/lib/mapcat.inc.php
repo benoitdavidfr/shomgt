@@ -51,7 +51,14 @@ class MapCat {
     return new self("inset $no of $this->name", $this->map['insetMaps'][$no]);
   }
   
-  // fabrique ['title'=> {title}, 'spatial'=> {spatial}, 'scaleDen'=> {scaleDen}]
+  /*fabrique [
+      'title'=> {title},
+      'spatial'=> {spatial},
+      'scaleDen'=> {scaleDen},
+      'layer'=> {layer}|null,
+      'toDelete'=> {toDelete}|[],
+      'borders'=> {borders}|[],
+    ]*/
   function gtInfo(): array {
     return [
       'title'=> $this->map['title'],
@@ -59,6 +66,7 @@ class MapCat {
       'scaleDen'=> $this->scaleDen(),
       'layer'=> $this->map['layer'] ?? null,
       'toDelete'=> $this->map['toDelete'] ?? [],
+      'borders'=> $this->map['borders'] ?? [],
     ];
   }
     

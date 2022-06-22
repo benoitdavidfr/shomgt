@@ -191,6 +191,15 @@ var onEachFeatureZee = function (feature, layer) {
   layer.bindTooltip(feature.properties.title);
 }
 
+// affichage des caractéristiques de chaque polygone de SAR
+var onEachFeatureSar = function (feature, layer) {
+  layer.bindPopup(
+    '<b>ZEE et frontières</b><br>'
+    +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
+  );
+  layer.bindTooltip(feature.properties.nom_fr);
+}
+
 // affichage des caractéristiques de chaque polygone de GT
 var onEachFeatureGt = function (feature, layer) {
   layer.bindPopup(
@@ -259,13 +268,12 @@ var overlays = {
       {style: {color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
     )
   ]),
-  "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'cat2/france.php', {
+*/
+  "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'geojson/frzee.geojson', {
     style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),
-*/
-
-  "ShomGt" : new L.GeoJSON.AJAX(shomgturl+'../shomft/ft.php/collections/gt/items', {
-    style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureGt
+  "SAR-SRR" : new L.GeoJSON.AJAX(shomgturl+'geojson/sar_2019.geojson', {
+    style: { color: 'green'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureSar
   }),
 
 <?php
