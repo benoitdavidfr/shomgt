@@ -182,6 +182,15 @@ var onEachPointFeature = function (feature, layer) {
   layer.bindTooltip(feature.properties.latLonDM);
 }
 
+// affichage des caractéristiques des limites maritimes
+var onEachFeatureDelmar = function (feature, layer) {
+  layer.bindPopup(
+    '<b>ZEE et frontières</b><br>'
+    +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
+  );
+  layer.bindTooltip(feature.properties.type);
+}
+
 // affichage des caractéristiques de chaque polygone de ZEE
 var onEachFeatureZee = function (feature, layer) {
   layer.bindPopup(
@@ -269,6 +278,9 @@ var overlays = {
     )
   ]),
 */
+  "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'geojson/delmar.geojson', {
+    style: { color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureDelmar
+  }),
   "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'geojson/frzee.geojson', {
     style: { color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee
   }),

@@ -25,7 +25,7 @@ class MapCat {
     if (($option=='download') || !is_file(self::MAPCAT_TEMP_PATH)) {
       $url = EnvVar::val('SHOMGT3_SERVER_URL').'/cat.json';
       if (!is_dir(__DIR__.'/../temp')) mkdir(__DIR__.'/temp');
-      $httpCode = download($url, self::MAPCAT_TEMP_PATH, 0);
+      $httpCode = download($url, self::MAPCAT_TEMP_PATH, 1);
       if ($httpCode <> 200)
         throw new Exception("Erreur de download de cat.json");
     }

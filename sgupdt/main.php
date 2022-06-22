@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  22/6/2022:
+    - correction d'un bug
   20/6/2022:
     - correction d'un bug
   19/6/2022:
@@ -90,12 +92,14 @@ $TEMP = realpath($TEMP);
   or throw new Exception("erreur dans rm -r $TEMP/*");
 
 // __DIR__.'/temp' est de répertoire dans lequel sont téléchrgées maps.json et cat.json
-if (!@is_dir(__DIR__.'/temp')) 
+if (!@is_dir(__DIR__.'/temp')) {
   if (!@mkdir(__DIR__.'/temp'))
     throw new Exception("Erreur de création du répertoire ".__DIR__.'/temp');
-else
+}
+else {
   !execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
     or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
+}
 
 
 if (0) { // Test 

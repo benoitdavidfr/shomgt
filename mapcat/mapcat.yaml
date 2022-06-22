@@ -831,6 +831,9 @@ maps:
       SW: '32°45,00''N - 006°44,00''W'
       NE: '45°52,22''N - 019°40,48''E'
     references: 'Fac similé carte IT n°340 (édition 1983).'
+    toDelete:
+      bboxes:
+        - {SW: "40°N - 6°42,92'W", NE: "45°51,47'N - 0°56,08'W"} # coin NW de la carte avec notamment le cartouche
   FR6767:
     groupTitle: 'Côte Sud de France'
     title: 'De Fos-sur-Mer à Marseille'

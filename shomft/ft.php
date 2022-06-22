@@ -91,11 +91,30 @@ class FtServer {
         'gtaem'=> 'GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table',
       ],
     ],
+    'delmar'=> [
+      'title'=> "Délimitations martimes",
+      'url'=> '',
+      'shomIds'=> [
+        'baseline'=> 'DELMAR_BDD_WFS:au_baseline',
+        'agreedmaritimeboundary'=> 'DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary',
+        'contiguouszone'=> 'DELMAR_BDD_WFS:au_maritimeboundary_contiguouszone',
+        'continentalshelf'=> 'DELMAR_BDD_WFS:au_maritimeboundary_continentalshelf',
+        'economicexclusivezone'=> 'DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone',
+        'nonagreedmaritimeboundary'=> 'DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary',
+        'territorialsea'=> 'DELMAR_BDD_WFS:au_maritimeboundary_territorialsea',
+      ],
+    ],
   ];
   
-  function getGt(): void { // lit les GT dans ShomWfs et les copie dans gt.json, si erreur envoi Exception
+  static function readFeatureTypes(): void {
     $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
-    //echo json_encode($shomFt->collections());
+    echo json_encode($shomFt->collections());
+  }
+  
+  // lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
+  // et les copie dans $colName.json, si erreur envoi Exception
+  function get(string $colName): void {
+    $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
     
     if (0) { // affiche les FeatureTypes
       $cols = [];
@@ -108,7 +127,7 @@ class FtServer {
     }
     else {
       $features = []; // liste des features à construire
-      foreach (self::$collections['gt']['shomIds'] as $sid => $shomId) {
+      foreach (self::$collections[$colName]['shomIds'] as $sid => $shomId) {
         $startindex = 0;
         $count = 1000;
         $numberReturned = 0;
@@ -139,7 +158,7 @@ class FtServer {
           $startindex += $count;
         }
       }
-      file_put_contents(__DIR__."/gt.json",
+      file_put_contents(__DIR__."/$colName.json",
         json_encode(
           ['type'=>'FeatureCollection', 'features'=> $features],
           JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
@@ -169,14 +188,14 @@ class FtServer {
   }
   
   function items(string $colName) {
-    if ($colName <> 'gt') {
+    if (!isset(self::$collections[$colName])) {
       sendHttpCode(400, "collection non prévue");
     }
-    elseif (!is_file(__DIR__.'/gt.json')) {
-      $this->getGt();
+    elseif (!is_file(__DIR__."/$colName.json")) {
+      $this->get($colName);
     }
     header('Content-type: application/json; charset="utf-8"');
-    fpassthru(fopen(__DIR__.'/gt.json',  'r'));
+    fpassthru(fopen(__DIR__."/$colName.json",  'r'));
     die();
   }
   
@@ -200,6 +219,8 @@ class FtServer {
       sendHttpCode(400, "commande non prévue");
   }
 };
+
+//FtServer::readFeatureTypes(); die();
 
 $server = new FtServer;
 $server->run($_SERVER['PATH_INFO'] ?? null);
