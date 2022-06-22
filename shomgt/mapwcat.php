@@ -154,7 +154,7 @@ var onEachFeature = function (feature, layer) {
   popupContent += "<li><a href='https://www.shom.fr/qr/gan/FR"+num+"/"+ganWeek+"' target='GAN'>"
     +"Corrections (GAN) non prises en compte.</a></li>\n";  
   popupContent += '</ul>';
-  layer.bindPopup(popupContent);
+  layer.bindPopup(popupContent, {maxWidth: 600});
   layer.bindTooltip(feature.properties.title);
 }
 
@@ -184,17 +184,34 @@ var onEachPointFeature = function (feature, layer) {
 
 // affichage des caractéristiques des limites maritimes
 var onEachFeatureDelmar = function (feature, layer) {
-  layer.bindPopup(
-    '<b>ZEE et frontières</b><br>'
-    +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
-  );
+  var popupContent = '<b>Délimitations maritimes, source Shom, 2022 (extrait WFS)</b><br><table>';
+  popupContent += '<tr><td>type</td><td>'+feature.properties.type+"</td></tr>\n";
+  popupContent += '<tr><td>nature</td><td>'+feature.properties.nature+"</td></tr>\n";
+  popupContent += '<tr><td>description</td><td>'+feature.properties.description+"</td></tr>\n";
+  popupContent += '<tr><td>reference</td><td>'+feature.properties.reference+"</td></tr>\n";
+  popupContent += '<tr><td>layerName</td><td>'+feature.properties.layerName+"</td></tr>\n";
+  popupContent += '<tr><td>inspireId</td><td>'+feature.properties.inspireId+"</td></tr>\n";
+  popupContent += "</table>\n";
+  layer.bindPopup(popupContent, {maxWidth: 600});
   layer.bindTooltip(feature.properties.type);
 }
-
+/*{
+  "layerName": "DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary",
+  "description": "Délimitation de la mer territoriale, de la zone contiguë et du plateau continental entre la France et l'Espagne dans le Golfe de Gascogne",
+  "country": "FR",
+  "nature": "Délimitation maritime avec accord entre Etats ou décision de juridiction internationale",
+  "type": "marbdy_accord",
+  "agency": "Shom",
+  "reference": "Décret n° 75-1127 du 9 décembre 1975 (Accord de Paris du 29 janvier 1974)",
+  "territory": "France métropolitaine",
+  "beginLifespanVersion": "1975-12-09T00:00:00+02:00",
+  "inspireId": "http://www.shom.fr/BDML/DELMAR/FR000018605400003",
+  "neighbor": "ES"
+}*/
 // affichage des caractéristiques de chaque polygone de ZEE
 var onEachFeatureZee = function (feature, layer) {
   layer.bindPopup(
-    '<b>ZEE et frontières</b><br>'
+    '<b>ZEE simplifiées</b><br>'
     +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
   );
   layer.bindTooltip(feature.properties.title);
@@ -203,7 +220,7 @@ var onEachFeatureZee = function (feature, layer) {
 // affichage des caractéristiques de chaque polygone de SAR
 var onEachFeatureSar = function (feature, layer) {
   layer.bindPopup(
-    '<b>ZEE et frontières</b><br>'
+    '<b>Zones SRR (SAR), source Shom 2019</b><br>'
     +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
   );
   layer.bindTooltip(feature.properties.nom_fr);
