@@ -125,12 +125,12 @@ echo "<pre>\n";
 if (1) { // Test sur tous les GéoTiffs
   print_r(geotiffs());
   foreach (geotiffs() as $gtname) {
-    $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname));
+    $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname, false));
     echo Yaml::dump([$gtname => $gdalInfo->asArray()]);
   }
 }
 else {
   $gtname = '6670_pal300';
-  $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname));
+  $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname, false));
   echo Yaml::dump([$gtname => $gdalInfo->asArray()]);
 }

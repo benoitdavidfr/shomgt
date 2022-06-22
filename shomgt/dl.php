@@ -30,7 +30,7 @@ if (is_file(EnvVar::val('SHOMGT3_MAPS_DIR_PATH')."/$mapnum.7z")) {
   error("A développer");
 }
 else {
-  $gdalinfo = new GdalInfo(GdalInfo::filepath($gtname));
+  $gdalinfo = new GdalInfo(GdalInfo::filepath(gtname: $gtname, temp: false));
   $size = $gdalinfo->size();
   //print_r($size);
   
