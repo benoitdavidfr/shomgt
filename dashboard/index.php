@@ -1,12 +1,15 @@
 <?php
 // dashboard/index.php
 
-require_once __DIR__.'/lib/gegeom.inc.php';
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../sgserver/lib/mapversion.inc.php';
+require_once __DIR__.'/lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard</title></head><body>\n";
+//echo "SHOMGT3_INCOMING_PATH=",getenv('SHOMGT3_INCOMING_PATH'),"<br>\n";
+
 if (!isset($_GET['a'])) {
   echo "<h2>Menu:</h2><ul>\n";
   echo "<li><a href='?a=listOfInterest'>listOfInterest</li>\n";
@@ -103,8 +106,9 @@ class Portfolio { // Portefeuille des cartes exposées sur ShomGt
   static array $all; // contenu du fichier maps.json
   
   static function init(): void {
-    $INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH');
-    self::$all = json_decode(file_get_contents("$INCOMING_PATH/../maps.json"), true);
+    if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')))
+      throw new Exception("Variable d'env. SHOMGT3_INCOMING_PATH non définie");
+    self::$all = MapVersion::allAsArray($INCOMING_PATH);
   }
   
   static function isActive(string $mapnum): bool {
