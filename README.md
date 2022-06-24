@@ -13,11 +13,6 @@ Par rapport à la [version précédente](https://github.com/benoitdavidfr/shomgt
 de mettre en place un serveur local, de l'approvisionner avec les cartes du Shom, puis de mettre à jour ces cartes,
 de manière simple en utilisant docker-compose.
 
-Par rapport à la [version précédente](https://github.com/benoitdavidfr/shomgt), cette version améliore la possibilité
-de mettre en place un serveur local, de l'approvisionner avec les cartes du Shom, puis de mettre à jour ces cartes,
-de manière simple en utilisant docker-compose.
-
-
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
