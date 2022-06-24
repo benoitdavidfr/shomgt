@@ -20,8 +20,7 @@ services:
     volumes:
       - sg3data:/var/www/data
     environment:
-      SHOMGT3_UPDATE_DURATION: 2
-      #SHOMGT3_UPDATE_DURATION: 28
+      SHOMGT3_UPDATE_DURATION: 28
       #SHOMGT3_SERVER_URL: https://{login}:{passwd}@php81/geoapi/shomgt3/sgserver/index.php # url du serveur de cartes
       #HTTP_PROXY: http://100.78.40.201:8080/
       #HTTPS_PROXY: http://100.78.40.201:8080/

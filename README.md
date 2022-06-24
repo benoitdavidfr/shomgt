@@ -43,18 +43,23 @@ Ce projet ce décompose en 6 sous-projets:
     - les nouvelles cartes à prendre en compte
 
 ## Déploiement Docker
-Avec cette version , les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
+Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
 Des images sont proposées sur https://hub.docker.com/r/benoitdavid/shomgt3.
 Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](docker-compose.yml).
+
+**Attention, à ne déployer ces conteneurs que sur un serveur auquel il n'est pas possible d'accéder pdepuis Internet !**
 
 A partir d'un serveur sur le réseau de l'Etat ou d'un EPA,
 le conteneur sgupdt se connecte au serveur sgserver pour télécharger les cartes du Shom.  
 Si un proxy doit être utilisé, il doit être défini en s'inspirant des exemples
 du fichier [docker-compose.yml](docker-compose.yml).  
-En dehors de ce réseau, l'accès au serveur nécessite une authentification et la variable d'environnement
-`SHOMGT3_SERVER_URL` doit être définie avec l'URL `http://{login}:{passwd}@sgserver.geoapi.fr/index.php`
-en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.
+En dehors du réseau de l'Etat ou des EPA, l'accès au serveur nécessite une authentification qui peut être défini grâce
+à la variable d'environnement `SHOMGT3_SERVER_URL` doit contenir l'URL `http://{login}:{passwd}@sgserver.geoapi.fr/index.php`
+en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.  
+Par ailleurs, la mise à jour régulière des cartes peut être activée en définissant la variable d'environnement
+`SHOMGT3_UPDATE_DURATION` qui doit contenir le nombre de jours entre 2 actualisations.
+Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
 ## Avancement du développement
 Le 11/6/2022, une première version est utilisable et utilisée par certains services du ministère.
