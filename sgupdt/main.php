@@ -304,13 +304,15 @@ while (true) {
       execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
   }
 
+  echo "Fin Ok de mise à jour des cartes\n";
   if (!$UPDATE_DURATION) {
-    echo "Fin Ok de mise à jour des cartes\n";
     die(0);
   }
   else {
-    //sleep($UPDATE_DURATION * 24 * 3600); // en jours
-    sleep($UPDATE_DURATION * 60); // enn minutes
+    echo "Endormissement pendant $UPDATE_DURATION jours à compter de ",date(DATE_ATOM),"\n";
+    sleep($UPDATE_DURATION * 24 * 3600); // en jours
+    //sleep($UPDATE_DURATION * 60); // enn minutes pour tests
+    echo "Réveil à ",date(DATE_ATOM),"\n";
   }
 }
 
