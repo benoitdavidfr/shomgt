@@ -1,4 +1,4 @@
-# ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom - en cours de développement
+# ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
 Ce projet correspond à une nouvelle version de ShomGT dont l'objectif est d'exposer sous la forme de web-services le contenu des
 [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
 couvrant les zones sous juridiction française pour permettre aux services du [MTECT](http://www.ecologie.gouv.fr),
@@ -62,5 +62,7 @@ Par ailleurs, la mise à jour régulière des cartes peut être activée en déf
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
 ## Avancement du développement
-Le 11/6/2022, une première version est utilisable et utilisée par certains services du ministère.
+Depuis le 11/6/2022, une version est utilisée par certains services du ministère.  
+Des améliorations sont régulièrement apportées à ce projet.
+
 
