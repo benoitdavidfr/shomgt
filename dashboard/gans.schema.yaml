@@ -2,8 +2,8 @@ title: schema JSON de la synthèse des GANs sur les cartes du catalogue
 description: |
   Ce schéma définit la structure de la synthèse des GANS sur les cartes du catalogue.
   version ShomGt3
-$id: http://geoapi.fr/shomgt/cat/gans.schema
-modified: '2022-06-12'
+$id: http://geoapi.fr/shomgt3/dashboard/gans.schema
+modified: '2022-06-24'
 $schema: http://json-schema.org/schema#
 definitions:
   dateIso8601:
@@ -32,7 +32,7 @@ definitions:
     examples:
       - "44°09,00'N - 002°36,00'W"
       - "45°49,00'N - 001°00,00'W"
-  bboxDM:
+  spatial:
     description: boite englobante définie par ses 2 coins SW et NE, en degrés, minutes en WGS84
     type: object
     required: [SW, NE]
@@ -64,9 +64,9 @@ properties:
     patternProperties:
       ^\d\d\d\d:
         description: |
-          infos issues des GANs par carte, notamment les corrections depuis la date de dernière correction de la carte
-          définie dans le catalogue. Un objet vide signfie qu'il y a aucune correction depuis cette date.
-          Certaines corrections peuvent déjà être définies dans le catalogue.
+          infos issues des GANs par carte, notamment les corrections depuis la date de dernière modification de la carte
+          approximée par la date de modification de ses métadonnées. 
+          Un objet vide signfie qu'il y a aucune correction depuis cette date.
         type: object
         additionalProperties: false
         properties:
@@ -84,7 +84,7 @@ properties:
             type: string
             examples:
               - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
-          ganEdition:
+          edition:
             description: édition de la carte issue du GAN
             type: string
             examples:
@@ -94,7 +94,7 @@ properties:
             description: |
               boite englobante de l'espace principal de la carte en degrés, minutes en WGS84,
               Champ absent ssi la carte ne comporte pas d'espace principal.
-            $ref: '#/definitions/bboxDM'
+            $ref: '#/definitions/spatial'
           inSets:
             description: liste éventuelle de cartouches
             type: array
@@ -109,7 +109,7 @@ properties:
                   type: string
                 spatial:
                   description: boite englobante du cartouche en degrés, minutes en WGS84
-                  $ref: '#/definitions/bboxDM'
+                  $ref: '#/definitions/spatial'
           corrections:
             description: liste des corrections définies dans les GAN
             type: array
@@ -132,12 +132,6 @@ properties:
                   pattern: '^\d\d\d\d-\d+$'
                   examples:
                     - 1905-252
-          age:
-            description: |
-              note reflétant la nécessité de mettre à jour la carte
-              calculée en fonction du chgt d'édition, du nbre de corrections et du territoire
-              -1 ssi erreur de moissonnage, 0 ssi pas de mise à jour nécessaire
-            type: number
   eof:
     description: propriété marquant la fin du fichier
     type: 'null'
