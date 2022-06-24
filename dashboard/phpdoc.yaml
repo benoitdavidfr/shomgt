@@ -6,13 +6,18 @@ doc: |
       - les cartes les plus périmées pour les remplacer
       - les cartes obsolètes pour les marquer comme telle
       - les nouvelles cartes pour les ajouter au portefeuille
-  Voir conception.yaml pour la conception du module
+  Voir ../conception.yaml#/dashboard pour la conception du module
 journal: |
+  23/6/2022:
+    - adaptation aux évols de sgserver
   12/6/2022:
     - création du module
 submodules:
+  - /geoapi/shomgt3/dashboard/lib
 phpScripts:
+  - /geoapi/shomgt3/dashboard/index.php
   - /geoapi/shomgt3/dashboard/gan.php
 phpIncludes:
 htmlFiles:
-  - /geoapi/shomgt3/dashboard/conception.yaml
+  - /geoapi/shomgt3/dashboard/gans.yaml
+  - /geoapi/shomgt3/dashboard/gans.schema.yaml
