@@ -10,6 +10,8 @@ name: SExcept
 title: class SExcept extends Exception - Exception avec code string
 doc: |
 */
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
 class SExcept extends Exception {
   private $scode; // code sous forme d'une chaine de caractères
   

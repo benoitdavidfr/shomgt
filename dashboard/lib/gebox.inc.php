@@ -266,19 +266,6 @@ class GBox extends BBox {
   
   function dLon(): ?float  { return $this->min ? $this->max[0] - $this->min[0] : null; }
   function dLat(): ?float  { return $this->min ? $this->max[1] - $this->min[1] : null; }
-  
-  static function posFromGeoCoords(string $geocoords): array { // décode un point en coords géo. degré minutes
-    if (!preg_match('!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!', $geocoords, $matches))
-      throw new SExcept("No match in GBox::posFromGeoCoords($geocoords)", self::ErrorParamInFromShomGt);
-    //echo "<pre>matches="; print_r($matches); echo "</pre>\n";
-    $lat = ($matches[6]=='N' ? 1 : -1) * 
-      ($matches[1] + (($matches[3] ? $matches[3] : 0) + ($matches[5] ? ".$matches[5]" : 0))/60);
-    //echo "lat=$lat";
-    $lon = ($matches[12]=='E' ? 1 : -1) * 
-      ($matches[7] + (($matches[9] ? $matches[9] : 0) + ($matches[11] ? ".$matches[11]" : 0))/60);
-    //echo ", lon=$lon";
-    return [$lon, $lat];
-  }
  
   // Crée un GBox à partir d'un rect tel que défini dans shomgt.yaml, voir les tests
   static function fromShomGt(array $rect): self {
@@ -286,7 +273,7 @@ class GBox extends BBox {
       if (!isset($rect[$c]))
         throw new SExcept("Paramètre $c non défini dans GBox::fromShomGt()", self::ErrorParamInFromShomGt);
       if (is_string($rect[$c])) {
-        $rect[$c] = self::posFromGeoCoords($rect[$c]);
+        $rect[$c] = Pos::fromGeoCoords($rect[$c]);
       }
       elseif (!is_array($rect[$c]))
         throw new SExcept("Paramètre $c mal défini dans GBox::fromShomGt()", self::ErrorParamInFromShomGt);

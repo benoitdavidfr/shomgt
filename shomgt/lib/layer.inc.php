@@ -218,7 +218,7 @@ class TiffLayer extends Layer {
   const ErrorBadGeoCoords = 'Layer::ErrorBadGeoCoords';
   const WOM_BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
   
-  protected array $geotiffs=[]; // dictionnaire [gtname => ['title'=>string, 'spatial'=>EBox, 'borders'=>{borders}?]]
+  protected array $geotiffs=[]; // dictionnaire [gtname => ['title'=>string, 'spatial'=>EBox, 'deleted'=> {deleted}, borders'=>{borders}?]]
   
   function __construct(string $lyrName, array $dictOfGT) {
     //echo "lyrName=$lyrName<br>\n";
@@ -230,6 +230,7 @@ class TiffLayer extends Layer {
         'title'=> $gt['title'],
         'spatial'=> GBox::fromShomGt($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
         'borders'=> $gt['borders'] ?? null,
+        'deleted' => $gt['deleted'] ?? null,
       ];
     }
   }
@@ -361,6 +362,52 @@ class TiffLayer extends Layer {
       }
     }
     return $eboxes;
+  }
+
+  // retourne le Feature correspondant au zones effacées du GeoTiff
+  private function deletedZonesForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
+    //echo "<pre>gt="; print_r($gt);
+    $mpolygon = [];
+    foreach ($gt['deleted']['bboxes'] ?? [] as $bbox) {
+      if (isset($bbox['SW'])) {
+        $gbox = GBox::fromShomGt($bbox);
+        $mpolygon[] = $gbox->polygon();
+      }
+      else
+        throw new Exception("TODO");
+    }
+    foreach($gt['deleted']['polygons'] ?? [] as $polygon) {
+      foreach ($polygon as &$pos) {
+        if (is_string($pos))
+          $pos = Pos::fromGeoCoords($pos);
+      }
+      $mpolygon[] = [$polygon];
+    }
+    return [
+      'type'=> 'Feature',
+      'properties'=> [
+        'layer'=> $lyrname,
+        'name'=> $gtname,
+        'title'=> $gt['title'] ?? "titre inconnu",
+      ],
+      'geometry'=> [
+        'type'=> 'MultiPolygon',
+        'coordinates'=> $mpolygon,
+      ],
+    ];
+  }
+
+  // retourne un array de Features correspondant aux zones effacées des GéoTiffs
+  function deletedZones(string $lyrname, ?GBox $qgbox): array {
+    $features = [];
+    foreach($this->geotiffs as $gtname => $gt) {
+      if (!$gt['deleted']) continue;
+      $gbox = $gt['spatial']->geo('WorldMercator'); // transf spatial en c. Géo.
+      if (!$qgbox || $qgbox->inters($gbox)) {
+        $features[] = $this->deletedZonesForGeoTiff($lyrname, $gtname, $gt, $gbox);
+      }
+    }
+    return $features;
   }
 };
 

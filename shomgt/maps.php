@@ -8,6 +8,8 @@ doc: |
   test:
     http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
 journal: |
+  25/6/2022:
+    - ajout deletedZones
   30/5/2022:
     - modif initialisation Layer
   29/4/2022:
@@ -102,7 +104,9 @@ class Maps {
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');
     //header('Content-type: text/plain; charset="utf8"');
-    die(json_encode(array_keys(Layer::layers()), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+    die(json_encode(
+      array_keys(Layer::layers()),
+      JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
   }
   
   static function describeLayer(string $lyrname): void {
@@ -165,7 +169,7 @@ class Maps {
     imagepng($grImage->image());
   }
 
-  static function items(array $lyrnames): void {
+  static function items(array $lyrnames): void { // silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
       $bbox = new GBox($bbox); // en coord. géo.
@@ -188,7 +192,7 @@ class Maps {
     die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
   }
   
-  static function corners(array $lyrnames): void {
+  static function corners(array $lyrnames): void { // coins des silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
       $bbox = new GBox($bbox); // en coord. géo.
@@ -204,6 +208,29 @@ class Maps {
         'features'=> $features,
       ],
       $bbox ? ['bbox'=> $bbox->asGeoJsonBbox()] : []
+    );
+    header('Access-Control-Allow-Origin: *');
+    header('Content-type: application/json; charset="utf8"');
+    die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
+  }
+  
+  static function deletedZones(array $lyrnames): void { // coins des silhouettes des GéoTiffs
+    $features = [];
+    if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
+      $bbox = new GBox($bbox); // en coord. géo.
+    }
+    foreach ($lyrnames as $lyrname) {
+      if (!($layer = Layer::layers()[$lyrname] ?? null))
+        self::error(404, "$lyrname not found");
+      $features = array_merge($features, $layer->deletedZones($lyrname, $bbox));
+    }
+    $fc = array_merge(
+      [
+        'type'=> 'FeatureCollection',
+        'features'=> $features,
+      ],
+      $bbox ? ['bbox'=> $bbox->asGeoJsonBbox()] : [],
+      //['bboxParam'=> $_GET['bbox'] ?? $_POST['bbox'] ?? null]
     );
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');
@@ -300,6 +327,10 @@ try {
 
   if (preg_match('!^/collections/([^/]+)/corners$!', $_SERVER['PATH_INFO'], $matches)) { // coins des GeoTiff en GeoJSON
     Maps::corners(explode(',', $matches[1]));
+  }
+
+  if (preg_match('!^/collections/([^/]+)/deletedZones$!', $_SERVER['PATH_INFO'], $matches)) { // zones effacées des GeoTiff en GeoJSON
+    Maps::deletedZones(explode(',', $matches[1]));
   }
 
   // Test de /collections/{collectionId}/map par affichage d'un formulaire de saisie des paramètres

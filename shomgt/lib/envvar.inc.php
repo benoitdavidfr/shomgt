@@ -12,9 +12,10 @@ class EnvVar {
   const DEFAULTS = [
     'SHOMGT3_SERVER_URL' => 'https://sgserver.geoapi.fr/index.php',
     'SHOMGT3_MAPS_DIR_PATH' => __DIR__.'/../../data/maps',
+    'SHOMGT3_UPDATE_DURATION'=> '0',
   ];
   
-  static function val(string $name): string {
+  static function val(string $name): ?string {
     if ($val = getenv($name))
       return $val;
     else

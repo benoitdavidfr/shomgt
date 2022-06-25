@@ -164,7 +164,7 @@ var onEachFeature = function (feature, layer) {
   layer.bindTooltip(feature.properties.title);
 }
 
-// affichage des coins des GeoTiffs
+// options d'affichage des coins des sihouettes des GeoTiffs
 var geojsonMarkerOptions = {
     radius: 3,
     fillColor: "#0000ff", // blue
@@ -293,6 +293,10 @@ var overlays = {
          "       new L.UGeoJSONLayer({\n", // la couche des rectangles
          "         endpoint: shomgturl+'maps.php/collections/gt$sd/items',\n",
          "         minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature\n",
+         "       }),\n",
+         "       new L.UGeoJSONLayer({\n", // la couche des zones effacées
+         "         endpoint: shomgturl+'maps.php/collections/gt$sd/deletedZones',\n",
+         "         style: { color: 'red'}, minZoom: 0, maxZoom: 18, usebbox: true\n",
          "       }),\n",
          "       new L.UGeoJSONLayer({\n", // la couche des coins des rectangles pour afficher leurs coordonnées
          "         endpoint: shomgturl+'maps.php/collections/gt$sd/corners',\n",

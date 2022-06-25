@@ -37,9 +37,26 @@ if (0) { // Tests unitaires
 }
 
 class Pos {
+  const GEOCOORDS_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
+  
+  const ErrorParamInFromGeoCoords = 'Pos::ErrorParamInFromGeoCoords';
+  
   // teste si une variable correspond à une position
   static function is($pos): bool {
     return is_array($pos) && in_array(count($pos),[2,3]) && is_numeric($pos[0] ?? null) && is_numeric($pos[1] ?? null);
+  }
+  
+  static function fromGeoCoords(string $geocoords): array { // décode un point en coords géo. degré minutes
+    if (!preg_match(self::GEOCOORDS_PATTERN, $geocoords, $matches))
+      throw new SExcept("No match in Pos::fromGeoCoords($geocoords)", self::ErrorParamInFromGeoCoords);
+    //echo "<pre>matches="; print_r($matches); echo "</pre>\n";
+    $lat = ($matches[6]=='N' ? 1 : -1) * 
+      ($matches[1] + (($matches[3] ? $matches[3] : 0) + ($matches[5] ? ".$matches[5]" : 0))/60);
+    //echo "lat=$lat";
+    $lon = ($matches[12]=='E' ? 1 : -1) * 
+      ($matches[7] + (($matches[9] ? $matches[9] : 0) + ($matches[11] ? ".$matches[11]" : 0))/60);
+    //echo ", lon=$lon";
+    return [$lon, $lat];
   }
 };
 
