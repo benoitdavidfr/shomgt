@@ -164,6 +164,17 @@ var onEachFeature = function (feature, layer) {
   layer.bindTooltip(feature.properties.title);
 }
 
+// affichage des caractéristiques de chaque GeoTiff / partie effacée
+var onEachFeatureDeleted = function (feature, layer) {
+  var popupContent = "<pre><b>Partie effacée</b>\n";
+  popupContent += '<u><i>couche</i></u>: '+feature.properties.layer+"\n";
+  popupContent += '<u><i>titre</i></u>: '+feature.properties.title+"\n";
+  popupContent += '<u><i>nom</i></u>: '+feature.properties.name+"\n";
+  popupContent += "</pre>\n";
+  layer.bindPopup(popupContent, {maxWidth: 600});
+  layer.bindTooltip(feature.properties.title);
+}
+
 // options d'affichage des coins des sihouettes des GeoTiffs
 var geojsonMarkerOptions = {
     radius: 3,
@@ -296,7 +307,8 @@ var overlays = {
          "       }),\n",
          "       new L.UGeoJSONLayer({\n", // la couche des zones effacées
          "         endpoint: shomgturl+'maps.php/collections/gt$sd/deletedZones',\n",
-         "         style: { color: 'red'}, minZoom: 0, maxZoom: 18, usebbox: true\n",
+         "         style: { color: 'red'}, minZoom: 0, maxZoom: 18, usebbox: true,\n",
+         "         onEachFeature: onEachFeatureDeleted\n",
          "       }),\n",
          "       new L.UGeoJSONLayer({\n", // la couche des coins des rectangles pour afficher leurs coordonnées
          "         endpoint: shomgturl+'maps.php/collections/gt$sd/corners',\n",

@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
-title: readmapversion.php - extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
-name: index.php
+title: readmapversion.inc.php - extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
+name: readmapversion.inc..php
 doc: |
   La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
   Le retour est un dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}]

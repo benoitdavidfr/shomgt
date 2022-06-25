@@ -235,9 +235,9 @@ if (0) { // Test de ShomGt::sortwzorder()
   ShomGt::addGt('6822_pal300');
   ShomGt::addGt('6823_pal300');
   ShomGt::addGt('6969_pal300');
-  print_r(ShomGt::$shomgt['gt50k']);
+  print_r(ShomGt::$all['gt50k']);
   ShomGt::sortwzorder();
-  print_r(ShomGt::$shomgt['gt50k']);
+  print_r(ShomGt::$all['gt50k']);
   die("Fin ligne ".__LINE__."\n");
 }
 

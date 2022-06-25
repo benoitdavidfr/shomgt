@@ -522,10 +522,7 @@ maps:
     title: De La Manche au Détroit de Gibraltar et à l'archipel des Açores
     mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: 2.770.000
-    spatial:
-      SW: '34°49,13''N - 034°15,00''W'
-      NE: '50°30,00''N - 000°55,00''W'
-    z-order: 1 # > 6757_pal300
+    spatial: {SW: "34°49,13'N - 034°15,00'W", NE: "50°30,00'N - 000°55,00'W"}
   FR6643:
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
@@ -823,13 +820,9 @@ maps:
   FR6757:
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
-    mapsFrance:
-      - FX-Atl
-      - FX-Med
+    mapsFrance: [FX-Atl, FX-Med]
     scaleDenominator: 2.250.000
-    spatial:
-      SW: '32°45,00''N - 006°44,00''W'
-      NE: '45°52,22''N - 019°40,48''E'
+    spatial: {SW: "32°45,00'N - 006°44,00'W", NE: "45°52,22'N - 019°40,48'E"}
     references: 'Fac similé carte IT n°340 (édition 1983).'
     toDelete:
       bboxes:
@@ -2579,17 +2572,13 @@ maps:
   FR7166:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Océan Pacifique Sud - Partie Ouest'
-    mapsFrance:
-      - NC
-      - WF
-      - PF
+    mapsFrance: [NC, WF, PF]
     scaleDenominator: 10.000.000
-    spatial:
-      SW: '51°05,44''S - 163°30,00''E'
-      NE: '02°45,00''S - 108°28,11''W'
+    spatial: {SW: "51°05,44'S - 163°30,00'E", NE: "02°45,00'S - 108°28,11'W"}
     replaces: '(remplace 5037,5038,5361)'
     references: 'Fac similé Carte NZ n°14061 publiée en 1986.'
     badGan: GAN faux, bords Est et Ouest inversés
+    z-order: -1 # en dessous de 7023 et 6964
   FR7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)'
@@ -3452,12 +3441,12 @@ maps:
   FR7347:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tuamotu aux Îles Australes'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: 1.500.000
-    spatial:
-      SW: '29°04,00''S - 149°40,00''W'
-      NE: '14°06,00''S - 138°42,00''W'
+    spatial: {SW: "29°04,00'S - 149°40,00'W", NE: "14°06,00'S - 138°42,00'W"}
+    toDelete:
+      bboxes:
+        - {SW: "29°04'S - 149°40'W", NE: "27°S - 147°30'W"} # coin SW
   FR7349:
     groupTitle: 'Océan Indien'
     title: 'De la Réunion à Maurice (Mauritius) - Ile Tromelin'
@@ -3694,31 +3683,31 @@ maps:
   FR7369:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: 1.500.000
-    spatial:
-      SW: '24°24,00''S - 163°30,00''W'
-      NE: '14°00,00''S - 147°26,00''W'
+    spatial: {SW: "24°24,00'S - 163°30,00'W", NE: "14°00,00'S - 147°26,00'W"}
+    toDelete:
+      bboxes:
+        - {SW: "24°24'S - 163°30'W", NE: "22°30'S - 161°W"} # coin SW
   FR7370:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Mururoa à Ducie Island'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: 1.500.000
-    spatial:
-      SW: '26°30,00''S - 140°00,00''W'
-      NE: '16°16,00''S - 124°00,00''W'
+    spatial: {SW: "26°30,00'S - 140°00,00'W", NE: "16°16,00'S - 124°00,00'W"}
     replaces: '(remplace 6000)'
+    toDelete:
+      bboxes:
+        - {SW: "18°30'S - 126°30'W", NE: "16°16'S - 124°W"} # coin NE
   FR7371:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Tahiti aux Îles Marquises'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: 1.580.000
-    spatial:
-      SW: '18°06,00''S - 153°00,00''W'
-      NE: '07°22,00''S - 136°56,00''W'
+    spatial: {SW: "18°06,00'S - 153°00,00'W", NE: "07°22,00'S - 136°56,00'W"}
+    toDelete:
+      bboxes:
+        - {SW: "18°06,00'S - 153°00,00'W", NE:  "07°22,00'S - 150°55,08'W"} # bord West
   FR7372:
     groupTitle: 'Archipel des Tuamotu'
     title: Fakarava
