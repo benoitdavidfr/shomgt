@@ -9,8 +9,8 @@ La principale plus-value de ShomGT est de permettre de consulter le contenu des 
 afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
 comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
-Par rapport à la version précédente, cette version améliore la possibilité de mettre en place un serveur local,
-de l'approvisionner avec les cartes du Shom, puis de mettre à jour ces cartes, de manière simple en utilisant docker-compose.
+Par rapport à la version précédente, cette version simplifie la mise en place un serveur local, son approvisionnement avec
+les cartes du Shom, puis la mise à jour de ces cartes en utilisant docker-compose.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
@@ -34,7 +34,7 @@ Ce projet ce décompose en 6 sous-projets:
     les extensions spatiales des cartes et de leurs cartouches.
     Il est consultable au travers de *sgserver*.
   
-  - **shomft** constitue un proxy du serveur WFS du Shom pour les cartes GéoTiff et permet de connaître ls nouvelles cartes.
+  - **shomft** constitue un proxy du serveur WFS du Shom pour les cartes GéoTiff et permet de connaître les nouvelles cartes.
     Il expose aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes concernées.
   
   - **dashboard** expose un tableau de bord permettant d'identifier
@@ -62,7 +62,7 @@ Par ailleurs, la mise à jour régulière des cartes peut être activée en déf
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
 ## Avancement du développement
-Depuis le 11/6/2022, une version est utilisée par certains services du ministère.  
+Depuis le 11/6/2022, cette version est utilisée par certains services du ministère.  
 Des améliorations sont régulièrement apportées à ce projet.
 
 
