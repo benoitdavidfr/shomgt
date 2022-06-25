@@ -25,8 +25,18 @@ includes:
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/lib/layer.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
+
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+
+//print_r($_GET); die("map.php");
+if (Access::cntrlFor('wms') && !Access::cntrl()) {
+  header('HTTP/1.1 403 Forbidden');
+  header('Content-type: text/plain; charset="utf-8"');
+  die("Accès interdit");
+}
 
 function coordDM(float $coord): string { // affichage en degrés minutes décimales avec 2 chiffres significatifs
   $coord = sprintf("%0d°%.2f'", floor($coord), ($coord-floor($coord))*60);

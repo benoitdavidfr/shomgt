@@ -61,7 +61,7 @@ includes:
   - lib/wmsserver.inc.php
   - lib/layer.inc.php
 */
-//require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 require_once __DIR__.'/lib/coordsys.inc.php';
 require_once __DIR__.'/lib/gebox.inc.php';
 require_once __DIR__.'/lib/wmsserver.inc.php';
@@ -69,7 +69,7 @@ require_once __DIR__.'/lib/layer.inc.php';
 
 // Mécanisme de contrôle d'accès sur l'IP et le login / mdp
 // Si le contrôle est activé et s'il est refusé alors demande d'authentification
-/*try {
+try {
   if (Access::cntrlFor('wms') && !Access::cntrl(null,true)) {
     // Si la requete ne comporte pas d'utilisateur, alors renvoie d'une demande d'authentification 401
     if (!isset($_SERVER['PHP_AUTH_USER'])) {
@@ -99,7 +99,7 @@ require_once __DIR__.'/lib/layer.inc.php';
 // notamment si les paramètres MySQL sont corrects mais que la base MySql correspondante n'existe pas
 catch (Exception $e) {
   WmsServer::exception(500, "Erreur dans le contrôle d'accès ", '', $e->getMessage());
-}*/
+}
 
 // écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
 WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");

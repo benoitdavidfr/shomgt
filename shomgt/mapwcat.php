@@ -46,11 +46,17 @@ includes: [ lib/accesscntrl.inc.php ]
   header('Content-type: text/plain; charset="utf-8"');
   die("Accès interdit");
 }*/
+require_once __DIR__.'/lib/accesscntrl.inc.php';
+
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
-/*$request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
-  : (isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']
-  : (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : 'http'));*/
+//print_r($_GET); die("map.php");
+if (Access::cntrlFor('mapwcat') && !Access::cntrl()) {
+  header('HTTP/1.1 403 Forbidden');
+  header('Content-type: text/plain; charset="utf-8"');
+  die("Accès interdit");
+}
+
 $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
   : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
 $dirname = dirname($_SERVER['SCRIPT_NAME']);
@@ -195,19 +201,7 @@ var onEachFeatureDelmar = function (feature, layer) {
   layer.bindPopup(popupContent, {maxWidth: 600});
   layer.bindTooltip(feature.properties.type);
 }
-/*{
-  "layerName": "DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary",
-  "description": "Délimitation de la mer territoriale, de la zone contiguë et du plateau continental entre la France et l'Espagne dans le Golfe de Gascogne",
-  "country": "FR",
-  "nature": "Délimitation maritime avec accord entre Etats ou décision de juridiction internationale",
-  "type": "marbdy_accord",
-  "agency": "Shom",
-  "reference": "Décret n° 75-1127 du 9 décembre 1975 (Accord de Paris du 29 janvier 1974)",
-  "territory": "France métropolitaine",
-  "beginLifespanVersion": "1975-12-09T00:00:00+02:00",
-  "inspireId": "http://www.shom.fr/BDML/DELMAR/FR000018605400003",
-  "neighbor": "ES"
-}*/
+
 // affichage des caractéristiques de chaque polygone de ZEE
 var onEachFeatureZee = function (feature, layer) {
   layer.bindPopup(
@@ -280,21 +274,6 @@ var baseLayers = {
 map.addLayer(baseLayers["Pyramide GéoTIFF"]);
 
 var overlays = {
-/*  'frontières+ZEE' : L.layerGroup([
-    new L.GeoJSON.AJAX( // agreedmaritimeboundary
-      shomgturl+'cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary/items?f=json',
-      {style: {color: 'blue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
-    ),
-    new L.GeoJSON.AJAX( // nonagreedmaritimeboundary
-      shomgturl+'cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary/items?f=json',
-      {style: {color: 'blue', dashArray: '3,6'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
-    ),
-    new L.GeoJSON.AJAX( // economicexclusivezone
-      shomgturl+'cat2/shomwfs.php/collections/DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone/items?f=json',
-      {style: {color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureZee}
-    )
-  ]),
-*/
   "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'geojson/delmar.geojson', {
     style: { color: 'SteelBlue'}, minZoom: 0, maxZoom: 18, onEachFeature: onEachFeatureDelmar
   }),
