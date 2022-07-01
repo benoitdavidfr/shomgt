@@ -163,7 +163,7 @@ class PyrLayer extends Layer {
 
 /*PhpDoc: classes
 title: class LabelLayer - couche d'étiquettes
-name: PyrLayer
+name: LabelLayer
 doc: |
   Permet de dessiner les étiquettes associées aux GéoTiffs
 */
@@ -207,7 +207,8 @@ class LabelLayer extends Layer {
 title: class LayerTiff - couche correspondant à un ensemble de GéoTiff juxtaposés
 name: LayerTiff
 doc: |
-  Chaque couche est définie comme un dictionnaire [gtname -> ['spatial'=> EBoxEnWoM, 'borders'=>({borders}|null)]]
+  Chaque couche est définie comme un dictionnaire
+    [gtname -> ['title'=>string, 'spatial'=>EBoxEnWoM, 'deleted'=> {deleted}, borders'=>{borders}?]]
   où {borders} est un array des taille des bords à supprimer pour 'right', 'bottom', 'left' et 'top'
   La méthode map() recopie dans l'image géoréférencée passée en paramètre l'extrait des GéoTiffs d'une couche en effacant
   leurs bords. L'image est géoréférencée dans le système de coordonnées WorldMercator.

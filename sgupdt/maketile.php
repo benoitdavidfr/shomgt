@@ -12,6 +12,8 @@ doc: |
   limites:
     - Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
 journal: |
+  1/7/2022:
+    - correction bug
   20/6/2022:
     - ajout d'un die(0) à la fin du script pour s'assurer du renvoi du code 0
   17/6/2022:
@@ -104,7 +106,7 @@ if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
     $polygon = [];
     foreach ($polygonToDelete as $i => $pos) {
       if (is_string($pos))
-        $pos = GBox::posFromGeoCoords($pos);
+        $pos = Pos::fromGeoCoords($pos);
       $polygon[$i] = WorldMercator::proj($pos);
     }
     $gri->filledpolygon($polygon, $transparent);
