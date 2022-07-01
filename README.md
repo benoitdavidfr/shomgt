@@ -10,18 +10,19 @@ afin de passer d'une carte à l'autre sans couture et d'intégrer ces données d
 comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
 Par rapport à la version précédente, cette version simplifie la mise en place d'un serveur local, son approvisionnement avec
-les cartes du Shom, puis la mise à jour de ces cartes ; cette version utilise docker-compose.
+les cartes du Shom, puis la mise à jour de ces cartes ;
+cette simplification s'appuie sur l'utilisation de docker-compose.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
-Ce projet ce décompose en 6 sous-projets:
+Ce projet ce décompose en 6 modules:
 
   - **shomgt** expose les services suivants de consultation des cartes:
     - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
     - un autre conforme au protocole [WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
     - un service GeoJSON exposant les silhouettes des GéoTiffs ainsi que certaines de leurs caractéristiques,
-    - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs.
+    - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
     *shomgt* peut être déployé comme conteneur Docker.
     
@@ -37,7 +38,7 @@ Ce projet ce décompose en 6 sous-projets:
   - **shomft** constitue un proxy du serveur WFS du Shom pour les cartes GéoTiff et permet de connaître les nouvelles cartes.
     Il expose aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes concernées.
   
-  - **dashboard** expose un tableau de bord permettant d'identifier
+  - **dashboard** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
     - les cartes obsolètes à marquer comme telle
     - les nouvelles cartes à prendre en compte
@@ -45,8 +46,9 @@ Ce projet ce décompose en 6 sous-projets:
 ## Déploiement Docker
 Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
-Des images sont proposées sur https://hub.docker.com/r/benoitdavid/shomgt3.
-Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](docker-compose.yml).
+Des images sont proposées pour cela sur https://hub.docker.com/r/benoitdavid/shomgt3.
+Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](docker-compose.yml)
+en adaptant les variables d'environnement selon le besoin.
 
 **Attention, à ne déployer ces conteneurs que sur un serveur auquel il n'est pas possible d'accéder depuis Internet !**
 

@@ -1,27 +1,29 @@
-# config docker-compose de référence pour shomgt3 - 11/6/2022
+# config docker-compose de référence pour shomgt3 - 1/7/2022
 # lance 2 containers:
 #   - shomgt expose les GéoTiffs
 #   - sgupdt construit les données par téléchargement à partir du serveur de cartes 7z
 # Les 2 conteneurs partagent le volume sg3data dans lequel sgupdt construit les données et shomgt les consomme
-# Des variables d'environnement doivent être utilisées si un proxy est nécessaire ou si une authentification sur le serveur
-# de cartes est nécessaire.
+# Des variables d'environnement doivent être utilisées 
+#  - si un proxy est nécessaire pour accéder au serveur de cartes
+#  - si une authentification sur le serveur de cartes est nécessaire
+#  - si on souhaite actualiser les cartes automatiquement et régulièrement
 
 version: '3'
 services:
   shomgt:
-    image: benoitdavid/shomgt3:shomgt-v0.6
+    image: benoitdavid/shomgt3:shomgt-v0.9
     hostname: shomgt
     ports: ["80:80"]
     volumes:
       - sg3data:/var/www/data
   sgupdt:
-    image: benoitdavid/shomgt3:sgupdt-v0.6
+    image: benoitdavid/shomgt3:sgupdt-v0.9
     hostname: sgupdt
     volumes:
       - sg3data:/var/www/data
     environment:
-      SHOMGT3_UPDATE_DURATION: 28
-      #SHOMGT3_SERVER_URL: https://{login}:{passwd}@php81/geoapi/shomgt3/sgserver/index.php # url du serveur de cartes
+      SHOMGT3_UPDATE_DURATION: 28 # nombre de jours entre 2 tentatives d'actualisation
+      #SHOMGT3_SERVER_URL: https://{login}:{passwd}@sgserver.geoapi.fr/index.php # url du serveur de cartes, remplacer {login} et {passwd}
       #HTTP_PROXY: http://100.78.40.201:8080/
       #HTTPS_PROXY: http://100.78.40.201:8080/
       #http_proxy: http://100.78.40.201:8080/
