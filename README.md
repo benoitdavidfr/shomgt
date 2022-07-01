@@ -9,8 +9,8 @@ La principale plus-value de ShomGT est de permettre de consulter le contenu des 
 afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
 comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
-Par rapport à la version précédente, cette version simplifie la mise en place un serveur local, son approvisionnement avec
-les cartes du Shom, puis la mise à jour de ces cartes en utilisant docker-compose.
+Par rapport à la version précédente, cette version simplifie la mise en place d'un serveur local, son approvisionnement avec
+les cartes du Shom, puis la mise à jour de ces cartes ; cette version utilise docker-compose.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
