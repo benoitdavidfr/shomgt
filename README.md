@@ -31,6 +31,11 @@ Ce projet ce décompose en 6 modules:
     
   - **sgserver** expose les données du Shom à *sgupdt*. Il est mis à jour régulièrement grâce à *dashboard*.
   
+  - **dashboard** expose un tableau de bord permettant d'identifier:
+    - les cartes les plus périmées à remplacer
+    - les cartes obsolètes à marquer comme telle
+    - les nouvelles cartes à prendre en compte
+
   - **mapcat** est un catalogue des cartes Shom couvrant les zones sous juridiction française. Il décrit notamment
     les extensions spatiales des cartes et de leurs cartouches.
     Il est consultable au travers de *sgserver*.
@@ -38,11 +43,6 @@ Ce projet ce décompose en 6 modules:
   - **shomft** constitue un proxy du serveur WFS du Shom pour les cartes GéoTiff et permet de connaître les nouvelles cartes.
     Il expose aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes concernées.
   
-  - **dashboard** expose un tableau de bord permettant d'identifier:
-    - les cartes les plus périmées à remplacer
-    - les cartes obsolètes à marquer comme telle
-    - les nouvelles cartes à prendre en compte
-
 ## Déploiement Docker
 Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
