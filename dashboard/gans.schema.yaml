@@ -3,9 +3,15 @@ description: |
   Ce schéma définit la structure de la synthèse des GANS sur les cartes du catalogue.
   version ShomGt3
 $id: http://geoapi.fr/shomgt3/dashboard/gans.schema
-modified: '2022-06-24'
+modified: '2022-07-02'
 $schema: http://json-schema.org/schema#
 definitions:
+  scale:
+    description: "échelle sous la forme 1 : dd ddd"
+    type: string
+    pattern: '^1 : \d{1,3}( \d{3})*$'
+    examples:
+      - '1 : 1 008 000'
   dateIso8601:
     description: date au format ISO 8601 limité aux cas les plus fréquents
     type: string
@@ -84,6 +90,9 @@ properties:
             type: string
             examples:
               - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
+          scale:
+            description: "échelle sous la forme 1 : dd ddd"
+            $ref: '#/definitions/scale'
           edition:
             description: édition de la carte issue du GAN
             type: string
@@ -107,6 +116,9 @@ properties:
                 title:
                   description: titre du cartouche
                   type: string
+                scale:
+                  description: "échelle sous la forme 1 : dd ddd"
+                  $ref: '#/definitions/scale'
                 spatial:
                   description: boite englobante du cartouche en degrés, minutes en WGS84
                   $ref: '#/definitions/spatial'

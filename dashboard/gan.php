@@ -5,8 +5,13 @@ title: cat2/gan.php - gestion des gan
 classes:
 functions:
 doc: |
-  L'objectif est de moissonner les GAN des cartes définies dans $INCOMIN_PATH/../maps.json
+  L'objectif est de moissonner les GAN des cartes définies dans $INCOMING_PATH/../maps.json
   et de fabriquer un fichier gans.yaml/pser de synthèse
+
+  $INCOMING_PATH est:
+    - soit $SHOMGT3_DASHBOARD_INCOMING_PATH s'il est défini
+    - soit $SHOMGT3_INCOMING_PATH s'il est défini
+    - sinon erreur
 
   Le script propose en CLI:
     - de moissonner les GANs de manière incrémentale, cad uniq. les GAN absents
@@ -23,8 +28,16 @@ doc: |
     status code: 404
     Exception Message: N/A
 
-  Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../lib/secretconfig.inc.php
+  Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../secrets/secretconfig.inc.php
+
+  Tests de analyzeHtml() sur qqs cartes types (incomplet):
+    - 6616 - carte avec 2 cartouches et une correction
+    - 7330 - carte sans GAN
+
 journal: |
+  2/7/2022:
+    - ajout de la var;env. SHOMGT3_DASHBOARD_INCOMING_PATH qui permet de référencer des cartes différentes de sgserver
+    - ajout dans le GAN du champ scale
   12/6/2022:
     - fork dans ShomGt3
   31/5/2022:
@@ -33,8 +46,6 @@ includes: [../lib/config.inc.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../sgserver/lib/mapversion.inc.php';
-//require_once __DIR__.'/../lib/config.inc.php';
-//require_once __DIR__.'/mapcat.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -72,8 +83,9 @@ function httpContext() { // fabrique un context Http si un proxy est défini, si
 }
 
 function maps(): array { // liste les cartes actives du portefeuille 
-  if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')))
-    throw new Exception("Variable d'env. SHOMGT3_INCOMING_PATH non définie");
+  ($INCOMING_PATH = getenv('SHOMGT3_DASHBOARD_INCOMING_PATH'))
+    or ($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH'))
+      or throw new Exception("Variables d'env. SHOMGT3_DASHBOARD_INCOMING_PATH et SHOMGT3_INCOMING_PATH non définies");
   $maps = MapVersion::allAsArray($INCOMING_PATH);
   foreach ($maps as $num => $map) {
     //var_dump($num);
@@ -149,6 +161,7 @@ title: class GanInSet - description d'un cartouche dans la synthèse d'une carte
 */
 class GanInSet {
   protected string $title;
+  protected ?string $scale=null; // échelle
   protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
   
   function __construct(string $html) {
@@ -159,9 +172,12 @@ class GanInSet {
     $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
   }
   
+  function setScale(string $scale) { $this->scale = $scale; }
+  
   function asArray(): array {
     return [
       'title'=> $this->title,
+      'scale'=> $this->scale,
       'spatial'=> $this->spatial,
     ];
   }
@@ -188,6 +204,7 @@ class Gan {
   protected string $mapnum;
   protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title=''; // titre
+  protected ?string $scale=null; // échelle
   protected ?string $edition=null; // edition
   protected array $corrections=[]; // liste des corrections
   protected array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
@@ -230,7 +247,7 @@ class Gan {
         if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
           //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
           $url = "https://gan.shom.fr/diffusion/qr/gan/$mapnum/$ganWeek";
-          echo "url=$url\n";
+          //echo "url=$url\n";
           if (($contents = file_get_contents($url, false, httpContext())) === false) {
             $message = "Erreur ".(isset($http_response_header) ? http_error_code($http_response_header) : 'non définie')
               ." de lecture de $url";
@@ -260,18 +277,26 @@ class Gan {
     $record = [];
     $html = preg_replace('!(<font [^>]*>|</font>|<b>|</b>)!', '', $html);
 
+    //echo $html;
+    
+    // lit les cellules de la colonne scale du tableau du haut
+    $pattern = '!<td class="column-scale align-top">([^<]*)</td>!';
+    while (preg_match($pattern, $html, $matches)) {
+      if (!isset($record['scale']))
+        $record['scale'] = [];
+      $record['scale'][] = $matches[1];
+      $html = preg_replace($pattern, '', $html, 1);
+    }
+      
     // lit la colonne title du tableau du haut qui contient titre, cartouches, édition, coordonnées
     $pattern = '!<td class="column-title align-top">(([^<]*|<div|</div)*)</td>!';
     while (preg_match($pattern, $html, $matches)) {
-      if (!isset($record['title'])) {
-        $record['title'] = [str_replace(['<','>'], ['{','}'], $matches[1])];
-      }
-      else {
-        $record['title'][] = str_replace(['<','>'], ['{','}'], $matches[1]);
-      }
+      if (!isset($record['title']))
+        $record['title'] = [];
+      $record['title'][] = str_replace(['<','>'], ['{','}'], $matches[1]);
       $html = preg_replace($pattern, '', $html, 1);
     }
-    if ($record['title'] ?? null)
+    if (isset($record['title']))
       $record['edition'] = array_pop($record['title']);
   
     // modèle de no de correction + semaineAvis
@@ -334,6 +359,29 @@ class Gan {
     return $record;
   }
   
+  // pour mise au point effectue l'analyse du GAN pour une carte
+  static function analyzeHtmlOfMap(string $mapnum): void {
+    $map = maps()[$mapnum];
+    echo 'map='; print_r($map);
+    $ganWeek = Gan::week($map['modified']);
+    if (isset($errors["$mapnum-$ganWeek"])) {
+      echo $errors["$mapnum-$ganWeek"];
+    }
+    elseif (!file_exists(self::GAN_DIR."/$mapnum-$ganWeek.html")) {
+      echo "moisson $mapid-$ganWeek absente à moissonner\n";
+    }
+    else {
+      $mtime = filemtime(self::GAN_DIR."/$mapnum-$ganWeek.html");
+      $html = file_get_contents(self::GAN_DIR."/$mapnum-$ganWeek.html");
+      $analyze = self::analyzeHtml($html);
+      echo 'analyzeHtml='; print_r($analyze);
+      //echo 'analyzeHtml='; var_dump($analyze);
+      //echo Yaml::dump(['analyzeHtml'=> $analyze], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+      $gan = new self($mapnum, $analyze, $map, $mtime);
+      echo Yaml::dump(['gan'=> $gan->asArray()], 4, 2);
+    }
+  }
+  
   /*PhpDoc: methods
   name: build
   title: static function build() - construit la synhèse des GAN de la moisson existante
@@ -376,6 +424,7 @@ class Gan {
   
   // record est le résultat de l'analyse du fichier Html, $map est l'enregistrement de maps.json
   function __construct(string $mapnum, array $record, array $map, int $mtime=null) {
+    echo "mapnum=$mapnum\n";
     //echo '$record='; print_r($record);
     //echo '$mapa='; print_r($mapa);
     $this->mapnum = $mapnum;
@@ -386,6 +435,15 @@ class Gan {
     else { // cas où il existe des corrections
       $this->postProcessTitle($record['title']);
       $this->edition = $record['edition'];
+    }
+    
+    // transfert des infos sur l'échelle es différents espaces
+    if (isset($record['scale'][0])) {
+      $this->scale = $record['scale'][0];
+      array_shift($record['scale']);
+    }
+    foreach ($this->inSets ?? [] as $i => $inSet) {
+      $inSet->setScale($record['scale'][$i]);
     }
     
     $this->corrections = $record['corrections'] ?? [];
@@ -448,6 +506,7 @@ class Gan {
     return
       ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
     + ($this->title ? ['title'=> $this->title] : [])
+    + ($this->scale ? ['scale'=> $this->scale] : [])
     + ($this->spatial ? ['spatial'=> $this->spatial] : [])
     + ($this->inSets ?
         ['inSets'=> array_map(function (GanInSet $inset): array { return $inset->asArray(); }, $this->inSets)]
@@ -480,7 +539,8 @@ class Gan {
 
 
 // Utilisation de la classe Gan
-if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__))) return;
+if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__)))
+  return;
 
 
 if (php_sapi_name() == 'cli') {
@@ -492,21 +552,15 @@ if (php_sapi_name() == 'cli') {
     echo "  - newHarvest - Moissonne les Gan en réinitialisant au péalable\n";
     echo "  - showHarvest - Affiche la moisson en Yaml\n";
     echo "  - storeHarvest - Enregistre la moisson en Yaml/pser\n";
+    echo "  - analyzeHtml {mapNum} - Analyse le GAN de la carte {mapNum}\n";
     die();
   }
   else
     $a = $argv[1];
 }
 else { // non CLI
-  $a = $_GET['a'] ?? null; // si $a vaut null alors action d'afficher dans le format $f
-  $f = $_GET['f'] ?? 'html';
-  if ($a) {
-    if (!Access::roleAdmin()) {
-      header('HTTP/1.1 403 Forbidden');
-      die("Action interdite réservée aux administrateurs.");
-    }
-  }
-  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body>\n";
+  $a = $_GET['a'] ?? 'showHarvest'; // si $a vaut null alors action d'afficher dans le format $f
+  echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body><pre>\n";
 }
 
 if ($a == 'menu') { // menu 
@@ -520,35 +574,33 @@ if ($a == 'menu') { // menu
   die();
 }
 
-if ($a == 'harvest') { // moisson des GAN depuis le Shom en repartant de 0 
+elseif ($a == 'harvest') { // moisson des GAN depuis le Shom en repartant de 0 
   //echo "Harvest ligne ",__LINE__,"\n";
   Gan::harvest();
   die();
 }
 
-if ($a == 'newHarvest') { // moisson des GAN depuis le Shom réinitialisant au préalable 
+elseif ($a == 'newHarvest') { // moisson des GAN depuis le Shom réinitialisant au préalable 
   //echo "fullHarvest ligne ",__LINE__,"\n";
   Gan::harvest(['reinit'=> true]);
   die();
 }
 
-if ($a == 'showHarvest') { // Affiche la moisson en Yaml 
-  if (php_sapi_name() <> 'cli') 
-    echo "<pre>\n";
+elseif ($a == 'showHarvest') { // Affiche la moisson en Yaml 
   Gan::build();
   //print_r(Gan::$gans);
   echo Yaml::dump(Gan::allAsArray(), 4, 2);
   die();
 }
 
-if ($a == 'storeHarvest') { // Enregistre la moisson en Yaml/pser 
+elseif ($a == 'storeHarvest') { // Enregistre la moisson en Yaml/pser 
   Gan::build();
   file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
   Gan::storeAsPser();
   die("Enregistrement des fichiers Yaml et pser ok\n");
 }
 
-if ($a == 'harvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+elseif ($a == 'harvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
   Gan::harvest();
   Gan::build();
   file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
@@ -556,7 +608,7 @@ if ($a == 'harvestAndStore') { // moisson des GAN depuis le Shom puis enregistre
   die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
 }
 
-if ($a == 'fullHarvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+elseif ($a == 'fullHarvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
   Gan::harvest(['reinit'=> true]);
   Gan::build();
   file_put_contents(Gan::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
@@ -564,40 +616,8 @@ if ($a == 'fullHarvestAndStore') { // moisson des GAN depuis le Shom puis enregi
   die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
 }
 
-$gandir = __DIR__.'/gan';
-
-if ($a == 'listMaps') { // Affiche en Html les cartes avec synthèse moisson et lien vers Gan
-  $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
-  echo "<table border=1>\n",
-       "<th>",implode('</th><th>', ['mapid','title','FR','lastUpdt','gan','harvest','analyze','dp']),"</th>\n";
-  foreach (Mapcat::maps() as $mapid => $map) {
-    $mapa = $map->asArray();
-    $ganHref = null; // href vers le Shom
-    if (isset($mapa['modified'])) {
-      $ganWeek = Gan::week($mapa['modified']);
-      $url = "https://www.shom.fr/qr/gan/$mapid/$ganWeek";
-      $ganHref = "<a href='$url'>$ganWeek</a>";
-    }
-    $ganHHref = null; // href local
-    $ganAnalyze = Gan::gans($mapid); // résultat de l'analyse
-    $age = $ganAnalyze['perempt'] ?? null;
-    $ganAnalyze = (isset($ganAnalyze['edition']) ? ['edition'=> $ganAnalyze['edition']] : [])
-      + (isset($ganAnalyze['corrections']) ? ['corrections'=> $ganAnalyze['corrections']] : []);
-    if (file_exists("$gandir/$mapid-$ganWeek.html")) {
-      $ganHHref = "<a href='gan/$mapid-$ganWeek.html'>$ganWeek</a>";
-    }
-    elseif ($errors["$mapid-$ganWeek"] ?? null) {
-      $ganHHref = 'error';
-    }
-    echo "<tr><td>$mapid</td><td>$mapa[title]<br>",$mapa['edition'] ?? "édition indéfinie","</td>",
-          "<td>",implode(', ', $mapa['mapsFrance']) ?? 'indéfini',"</td>",
-          "<td>",$mapa['lastUpdate'] ?? 'indéfini',"</td>",
-          "<td>",$ganHref ?? 'indéfini',"</td>",
-          "<td>",$ganHHref ?? 'indéfini',"</td>\n",
-          "<td><pre>",$ganAnalyze ? Yaml::dump($ganAnalyze) : '',"</pre></td>",
-          "<td>",$age ?? 'indéfini',"</td>",
-          "</tr>\n";
-  }
-  echo "</table>\n";
-  die();
+elseif ($a == 'analyzeHtml') { // analyse l'Html du GAn d'une carte particulière 
+  ($mapNum = $argv[2] ?? null)
+    or throw new Exception("argument mapNum absent");
+  Gan::analyzeHtmlOfMap($mapNum);
 }

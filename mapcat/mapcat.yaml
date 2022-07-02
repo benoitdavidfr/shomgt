@@ -9,6 +9,14 @@ description: |
   Notamment, la structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
   qui n'est pas toujours identique à celle du GAN.
   
+  xxxxx
+  
+  Le traitement dans le GAN des excroissances de cartes est hétérogène.
+  Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
+  J'adopte le principe suivant:
+    - en première approche j'aligne l'extension spatiale dans mapcat sur le GAN
+      - sauf s'il y a une erreur manifeste dans le GAN que j'indique dans badGan
+  
   Journal:
     - duplication du fichier pour ShomGt3 en avril-mai 2022
       - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
@@ -21,13 +29,17 @@ description: |
       - j'essaie de gérer dans ce fichier les extensions spatiales indépendamment d'un choix de visualisation
       - toutefois je structure dans ce fichier les cartes en fonction de la structure des GéoTiffs
       - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
-        - et dns ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
+        - et dans ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
       - suppression des champs spatial et replacement du champ bboxDM par spatial
     - 11/6/2022 - correction de FR6966 badGan
     - 13/6/2022 - transmission erreurs au Shom
     - 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
-    - 15/6/2022 - ajout 2 nouvelles cartes
+    - 15/6/2022 - ajout de 2 nouvelles cartes
     - 17/6/2022 - intégration des paramètres d'affichage et des noms de couche et de fichier pour les cartes spéciales
+    - 2/7/2022
+      - prise en compte des corrections du GAN par le Shom à la suite de mon message
+      - je supprime plusieurs excroissances de cartes qui expliquent des écarts au GAN
+        - et qui sont trop complexes à gérer en première approche
 $id: 'http://geoapi.fr/shomgt/cat2/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
@@ -58,8 +70,7 @@ maps:
   FR4232:
     groupTitle: 'Océan Pacifique'
     title: 'Îles Australes - Île de Rapa - Îles Morotiri'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '30.000'
     insetMaps:
       - title: 'A - Île de Rapa'
@@ -70,19 +81,19 @@ maps:
         spatial: { SW: '27°55,56''S - 143°31,62''W', NE: '27°51,86''S - 143°28,04''W' }
       - title: 'C - Île de Rapa - Baie d''Ha''urei (Ahurei)'
         scaleDenominator: '10.000'
-        spatial: { SW: '27°37,38''S - 144°20,20''W', NE: '27°36,15''S - 144°17,31''W' }
+        spatial: { SW: '27°37,38''S - 144°20,15''W', NE: '27°36,15''S - 144°17,31''W' }
+        noteCatalog: une petite surface cartographiée est en dehors du bbox
       - title: 'D - Île de Rapa - Baie Anarua'
         scaleDenominator: '10.000'
         spatial: { SW: '27°36,53''S - 144°23,47''W', NE: '27°35,83''S - 144°22,41''W' }
   FR4233:
     groupTitle: 'Côte Nord de France'
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
-    mapsFrance:
-      - FX-Atl
+    mapsFrance: [FX-Atl]
     scaleDenominator: '15.000'
     spatial:
       SW: '48°30,89''N - 002°03,53''W'
-      NE: '48°38,56''N - 001°56,22''W'
+      NE: '48°38,46''N - 001°56,22''W'
     insetMaps:
       - title: 'Du Chêne Vert à l''écluse du Châtelier'
         scaleDenominator: '15.000'
@@ -145,7 +156,7 @@ maps:
     scaleDenominator: '80.000'
     spatial:
       SW: '46°35,00''N - 056°38,95''W'
-      NE: '47°17,00''N - 055°57,25''W'
+      NE: '47°17,00''N - 055°57,95''W'
   FR6165:
     groupTitle: 'Polynésie française - Iles Australes'
     title: Rurutu
@@ -165,8 +176,7 @@ maps:
   FR6176:
     groupTitle: 'Polynésie française - Iles de la Société'
     title: 'Maupihaa (Mopelia)'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     noteCatalog: La structuration des GéoTiffs correspond à 3 cartouches sans zone principale
     badGan: GAN incomplet
     insetMaps:
@@ -284,7 +294,7 @@ maps:
       - PF
     scaleDenominator: '175.000'
     spatial:
-      SW: '15°53,82''S - 148°44,86''W'
+      SW: '15°52,81''S - 148°44,86''W'
       NE: '14°49,81''S - 147°09,36''W'
   FR6421:
     groupTitle: 'Polynésie Française - Iles Tuamotu - Iles Palliser'
@@ -398,12 +408,11 @@ maps:
   FR6540:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'Baie de Saint-Vincent'
-    mapsFrance:
-      - NC
+    mapsFrance: [NC]
     scaleDenominator: '25.000'
     spatial:
       SW: '22°06,34''S - 165°59,70''E'
-      NE: '21°53,14''S - 166°09,51''E'
+      NE: '21°53,14''S - 166°09,35''E'
   FR6553:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Kouaoua'
@@ -499,6 +508,9 @@ maps:
     spatial:
       SW: '43°02,67''N - 006°20,90''E'
       NE: '43°11,76''N - 006°39,03''E'
+    ganspatial:
+      SW: '43°02,67''N — 006°20,90''E'
+      NE: '43°09,50''N — 006°39,03''E'
     insetMaps:
       - title: 'A - Bormes-les-Mimosas'
         scaleDenominator: '7.500'
@@ -680,7 +692,6 @@ maps:
     spatial:
       SW: '49°25,14''N - 000°00,74''W'
       NE: '49°31,21''N - 000°12,92''E'
-    badGan: GAN faux, erreur de signe du bord Est
   FR6684:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
@@ -789,7 +800,6 @@ maps:
       informations relatives aux modifications des mesures d'organisation du trafic entrant en vigueur le 01 décembre 2012
       à 0000 UTC.
       Avant cette date, les navigateurs doivent utiliser la précédente édition de cette carte (édition n°6 - 2008).
-    badGan: GAN faux, signe erroné sur le bord Ouest.
   FR6738:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Sud (Spéciale P)'
@@ -919,7 +929,6 @@ maps:
       SW: '37°55,40''S - 171°34,30''E'
       NE: '07°30,00''S - 167°00,00''W'
     references: 'Fac similé carte NZ n° 14605 publiée en 1976 (édition juillet 2007).'
-    badGan: GAN faux, inversion bords Est et Ouest
   FR6820:
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''île Lifou - Baie du Santal'
@@ -1002,7 +1011,6 @@ maps:
       - title: 'Mer de Béring'
         scaleDenominator: 7.330.000
         spatial: { SW: '49°00,00''N - 170°15,00''E', NE: '65°00,00''N - 169°20,00''W' }
-    badGan: GAN faux, inversion des bords Est et Ouest de l'extension géo.
   FR6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
@@ -1098,7 +1106,6 @@ maps:
     spatial:
       SW: '49°10,74''N - 001°57,48''W'
       NE: '50°12,95''N - 000°23,52''E'
-    badGan: GAN faux, erreur de signe sur le bord Est
   FR6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
@@ -1317,14 +1324,7 @@ maps:
       - FX-Atl
       - FX-MMN
     scaleDenominator: '155.000'
-    spatial:  # saisis à partir de la carte
-      SW: "48°30,0'N - 003°05,3'W"
-      NE: "50°02,2'N - 001°29,3'W"
-    badGan: |
-      valeurs du GAN
-      spatial:
-        SW: '48°30,00''N - 003°06,82''W'
-        NE: '50°02,20''N - 001°27,82''W'
+    spatial: {SW: "48°30,00'N - 003°05,28'W", NE: "50°02,20'N - 001°29,28'W"}
   FR6968:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'
@@ -1335,7 +1335,6 @@ maps:
       SW: '49°53,93''N - 001°59,09''W'
       NE: '50°55,37''N - 000°21,96''E'
     references: 'Fac similé carte GB n°2450 publiée en 1977 (édition en février 2008).'
-    badGan: GAN faux, erreur de signe sur le bord Est
   FR6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu - Golfe de Saint-Florent'
@@ -1358,12 +1357,7 @@ maps:
     scaleDenominator: '7.080.000'
     spatial:
       SW: "22°13'N - 117°10'E"
-      NE: "62°00'N - 154°48,08'W"
-    noteCatalog: |
-      GAN faux
-      SW: "21°00,54'N - 165°59,55'E"
-      NE: "62°45,52'N - 161°00,01'W"
-    badGan: extension spatiale fausse
+      NE: "62°00'N - 154°48,13'W"
   FR6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
@@ -2769,8 +2763,7 @@ maps:
   FR7213:
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     noteCatalog: Les GéoTiffs sont structurés sans partie principale avec 2 cartouches
     badGan: Le GAN n'est pas structuré comme les GéoTiffs
     insetMaps:
@@ -4590,8 +4583,7 @@ maps:
   FR7463:
     groupTitle: 'Polynésie Française - Iles Tuamotu'
     title: Katiu
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '50.000'
     spatial:
       SW: '16°35,30''S - 144°38,50''W'
@@ -4599,7 +4591,7 @@ maps:
     insetMaps:
       - title: 'A - Passe Pakata'
         scaleDenominator: '5.000'
-        spatial: { SW: '16°22,35''S - 144°21,50''W', NE: '16°21,75''S - 144°20,95''W' }
+        spatial: { SW: '16°22,35''S - 144°21,57''W', NE: '16°21,75''S - 144°20,95''W' }
   FR7466:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
@@ -5001,8 +4993,7 @@ maps:
   FR7643:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Port de Nouméa'
-    mapsFrance:
-      - NC
+    mapsFrance: [NC]
     scaleDenominator: '10.000'
     spatial:
       SW: '22°19,15''S - 166°22,80''E'

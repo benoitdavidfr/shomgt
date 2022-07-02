@@ -1,7 +1,16 @@
 <?php
 /*PhpDoc:
 title: cmpgan.php - confrontation des données de localisation de mapcat avec celles du GAN
+doc: |
+  L'objectif est d'identifier les écarts entre mapcat et le GAN pour
+    - s'assurer que mapcat est correct
+    - marquer dans mapcat dans le champ badGan l'écart
+
+  Le traitement dans le GAN des excroissances de cartes est hétérogène.
+  Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
 journal: |
+  2/7/2022:
+    - reprise après correction des GAN par le Shom à la suite de mon message
   24/6/2022:
     - migration 
 */
@@ -30,18 +39,21 @@ class MapCat {
     echo "<table border=1><th>mapid</th><th>badGan</th><th>inset</th><th>cat'SW</th><th>gan'SW</th><th>ok?</th>",
       "<th>x</th><th>cat'NE</th><th>gan'NE</th><th>ok?</th>\n";
     foreach (self::$maps as $mapid => $map) {
+      //echo "<pre>"; print_r($map); echo "</pre>";
       $gan = Gan::$gans[substr($mapid, 2)];
-      if (isset($map->map['bboxDM']) && isset($gan->bbox['SW']) && $gan->bbox['SW'] && isset($gan->bbox['NE'])) {
-        $ganbbox = [
-          'SW' => str_replace('—', '-', $gan->bbox['SW']),
-          'NE' => str_replace('—', '-', $gan->bbox['NE']),
+      //echo "<pre>"; print_r($gan); echo "</pre>";
+      if (isset($map->map['spatial']) && isset($gan->spatial['SW']) && $gan->spatial['SW'] && isset($gan->spatial['NE'])) {
+        $ganspatial = [
+          'SW' => str_replace('—', '-', $gan->spatial['SW']),
+          'NE' => str_replace('—', '-', $gan->spatial['NE']),
         ];
+        $mapspatial = $map->map['spatial'];
         //echo "<pre>"; print_r($map); echo "</pre>";
-        if (($map->map['bboxDM']['SW'] <> $ganbbox['SW']) || ($map->map['bboxDM']['NE'] <> $ganbbox['NE'])) {
-          echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td></td><td>",$map->map['bboxDM']['SW'],"</td>";
-          echo "<td>$ganbbox[SW]</td><td>",($map->map['bboxDM']['SW'] == $ganbbox['SW']) ? 'ok' : '<b>KO</b',"</td>";
-          echo "<td></td><td>",$map->map['bboxDM']['NE'],"</td>";
-          echo "<td>$ganbbox[NE]</td><td>",($map->map['bboxDM']['NE'] == $ganbbox['NE']) ? 'ok' : '<b>KO</b',"</td>";
+        if (isset($map->map['badGan']) || ($mapspatial['SW'] <> $ganspatial['SW']) || ($mapspatial['NE'] <> $ganspatial['NE'])) {
+          echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td></td><td>",$mapspatial['SW'],"</td>";
+          echo "<td>$ganspatial[SW]</td><td>",($mapspatial['SW'] == $ganspatial['SW']) ? 'ok' : '<b>KO</b',"</td>";
+          echo "<td></td><td>",$mapspatial['NE'],"</td>";
+          echo "<td>$ganspatial[NE]</td><td>",($mapspatial['NE'] == $ganspatial['NE']) ? 'ok' : '<b>KO</b',"</td>";
           echo "</tr>\n";
         }
       }
@@ -122,7 +134,7 @@ class Gan {
   protected string $title=''; // titre
   protected ?string $edition=null; // edition
   protected array $corrections=[]; // liste des corrections
-  protected array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
+  public array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
   protected array $inSets=[]; // cartouches
   protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
   protected string $valid; // date de moissonnage du GAN en format ISO
@@ -167,6 +179,8 @@ class Gan {
     self::$gans = $contents['gans'];
   }
 };
+
+echo "<!DOCTYPE HTML><html><head><title>cmpgan</title></head><body>\n";
 
 Gan::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
 //echo '<pre>gans='; print_r(Gan::$gans);

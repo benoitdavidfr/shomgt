@@ -8,7 +8,6 @@ require_once __DIR__.'/lib/gegeom.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard</title></head><body>\n";
-//echo "SHOMGT3_INCOMING_PATH=",getenv('SHOMGT3_INCOMING_PATH'),"<br>\n";
 
 if (!isset($_GET['a'])) {
   echo "<h2>Menu:</h2><ul>\n";
@@ -106,8 +105,8 @@ class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu de maps.j
   static array $all; // contenu du fichier maps.json
   
   static function init(): void {
-    if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')))
-      throw new Exception("Variable d'env. SHOMGT3_INCOMING_PATH non définie");
+    if (!(($INCOMING_PATH = getenv('SHOMGT3_DASHBOARD_INCOMING_PATH')) || ($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH'))))
+      throw new Exception("Variables d'env. SHOMGT3_DASHBOARD_INCOMING_PATH et SHOMGT3_INCOMING_PATH non définies");
     self::$all = MapVersion::allAsArray($INCOMING_PATH);
   }
   
@@ -437,7 +436,7 @@ class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher
   }
 };
 
-if ($_GET['a'] == 'perempt') {
+if ($_GET['a'] == 'perempt') { // appel du croisement 
   Portfolio::init(); // initialisation à partir du portefeuille
   MapCat::init(); // chargement du fichier mapcat.yaml
   Gan::init(); // chargement de la synthèse des GANs
