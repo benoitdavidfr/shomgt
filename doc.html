@@ -1,0 +1,132 @@
+<!--PhpDoc:
+name: doc.html
+title: doc.html - doc plus détaillée
+doc: |
+journal: |
+  1/11/2019
+    nouvelle version
+  19/12/2018
+    évolution du téléchargement
+  2/7/2017
+    améliorations
+  18/6/2017
+    création
+-->
+<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>shomgt doc</title></head>
+<h1>Documentation technique détaillée de l'accès aux cartes du Shom</h1>
+
+<h2 id='layers'>1. Restructuration des cartes du Shom en couches</h2>
+Les images GéoTiff constituant les cartes sont regroupées en fonction de leur échelle et agrégées
+dans les 12 couches suivantes :<ul>
+<li><a href='tile.php/gt40M'>gt40M : planisphère SHOM au 1/40.000.000 à l'équateur</a>
+<li><a href='tile.php/gt10M'>gt10M : échelle comprise entre 1/14.000.000 et 1/6.000.000</a>
+<li><a href='tile.php/gt4M'>gt4M : échelle comprise entre 1/6.000.000 et 1/3.000.000</a>
+<li><a href='tile.php/gt2M'>gt2M : échelle comprise entre 1/3.000.000 et 1/1.400.000</a>
+<li><a href='tile.php/gt1M'>gt1M : échelle comprise entre 1/1.400.000 et 1/700.000</a>
+<li><a href='tile.php/gt500k'>gt500k : échelle comprise entre 1/700.000 et 1/380.000</a>
+<li><a href='tile.php/gt250k'>gt250k : échelle comprise entre 1/380.000 et 1/180.000</a>
+<li><a href='tile.php/gt100k'>gt100k : échelle comprise entre 1/180.000 et 1/90.000</a>
+<li><a href='tile.php/gt50k'>gt50k : échelle comprise entre 1/90.000 et 1/45.000</a>
+<li><a href='tile.php/gt25k'>gt25k : échelle comprise entre 1/45.000 et 1/22.000</a>
+<li><a href='tile.php/gt12k'>gt12k : échelle comprise entre 1/22.000 et 1/11.000</a>
+<li><a href='tile.php/gt5k'>gt5k : échelle supérieure au 1/11.000</a>
+</ul>
+
+<div id='pyr'>
+Une couche supplémentaire, appelée <a href='tile.php/gtpyr'>Pyramide (gtpyr)</a>,
+permet de naviguer dans les différentes images sans avoir à changer de couche.
+Son contenu s'adapte au niveau de zoom demandé.
+A chaque niveau de zoom est associée une des couches ci-dessus ;
+la correspondance entre niveau de zoom (au sens Leaflet) et couche est la suivante :
+<table border=1><th>zoom</th><th>couche</th>
+<tr><td>0-5</td><td>gt40M</td></tr>
+<tr><td>6</td><td>gt10M</td></tr>
+<tr><td>7</td><td>gt4M</td></tr>
+<tr><td>8</td><td>gt2M</td></tr>
+<tr><td>9</td><td>gt1M</td></tr>
+<tr><td>10</td><td>gt500k</td></tr>
+<tr><td>11</td><td>gt250k</td></tr>
+<tr><td>12</td><td>gt100k</td></tr>
+<tr><td>13</td><td>gt50k</td></tr>
+<tr><td>14</td><td>gt25k</td></tr>
+<tr><td>15</td><td>gt12k</td></tr>
+<tr><td>16-18</td><td>gt5k</td></tr>
+</table>
+<br>
+Si, pour un niveau donné, aucune carte n'existe alors les cartes à plus petites échelles sont affichées.<br>
+</div>
+</p>
+Enfin, les 3 couches spécifiques suivantes sont définies:<ul>
+  <li><a href='tile.php/gtaem'>gtaem : cartes de l'Action de l'Etat en mer</a>,
+  <li><a href='tile.php/gtZonMar'>gtZonMar : carte des zones maritimes</a>.
+  <li><a href='tile.php/gtMancheGrid'>gtMancheGrid : carte MancheGrid</a>.
+</ul>
+</div>
+
+<h2 id='mapwcat'>2. La carte Leaflet pour visualiser les couches et télécharger les cartes Shom</h2>
+Une <a href='mapwcat.php'>carte Leaflet</a> permet de visualiser les couches ci-dessus
+ainsi que des couches catalogues contenant pour chaque couche
+la silhouette des images de la couche permettant ainsi, en cliquant dessus, d'afficher :<ul>
+<li>le nom de la couche
+<li>le numéro, le titre, le nom informatique et l'échelle du géotiff
+<li>l'édition de la carte et la dernière correction prise en compte,
+<li>la date de modification des métadonnées de la carte,
+<li>une estimation de la date de dernière modification de la carte, exprimée sous la forme du no de semaine,
+  déduite de la date de modification des métadonnées de la carte,
+<li>2 liens pour accéder respectivement :<ul>
+  <li>au téléchargement du GéoTiff au format PNG, à ses MD XML, au GdalInfo en JSON et à la carte au format 7z,
+  <li>au Groupe d'avis aux navigateurs (GAN) pour la carte.
+  </ul>
+</ul>
+L'appel de la carte Leaflet peut être paramétré avec :<ul>
+<li>le centre sous la forme <code>center={lat},{lon}</code>
+<li>le niveau de zoom sous la forme <code>zoom={zoom}</code>
+</ul>
+Exemples :<ul>
+  <li><a href='mapwcat.php?center=14.6,-61.1&amp;zoom=11'>Martinique</a>
+  <li><a href='mapwcat.php?center=16.2,-61.5&amp;zoom=10'>Guadeloupe</a>
+  <li><a href='mapwcat.php?center=18,-62.9&amp;zoom=12'>St Barthémy et St Martin</a>
+  <li><a href='mapwcat.php?center=5.2,-53.0&amp;zoom=9'>Guyane</a>
+  <li><a href='mapwcat.php?center=-21.1,55.5&amp;zoom=11'>La Réunion</a>
+  <li><a href='mapwcat.php?center=-12.78,45.15&amp;zoom=12'>Mayotte</a>
+  <li><a href='mapwcat.php?center=-13.8,-177.3&amp;zoom=9'>Wallis et Futuna</a>
+  <li><a href='mapwcat.php?center=-18.5,-143.6&amp;zoom=6'>Polynésie Française</a>
+  <li><a href='mapwcat.php?center=-21.1,165.2&amp;zoom=7'>Nouvelle Calédonie</a>
+</ul>
+
+<h2>3. Les API</h2>
+
+<h3 id='tile'>3.1. L'API d'accès aux tuiles des cartes</h3>
+L'API d'accès aux tuiles est disponible à l'URL:
+<code><a href='tile.php' target='_blank'>https://geoapi.fr/shomgt/tile.php</a></code><br>
+qui fournit une documentation des différentes couches exposées.</p>
+
+Chaque couche est accessible à l'URL : <code>https://geoapi.fr/shomgt/tile.php/{layer}</code><br>
+où {layer} est le nom de la couche.<br>
+Les tuiles sont accessibles à l'URL :<br>
+<code>https://geoapi.fr/shomgt/tile.php/{layer}/{z}/{x}/{y}.png</code><br>
+où {z} est le niveau de zoom, et {x} et {y} les nos de colonne et de ligne de la tuile.</p>
+
+Chaque couche peut être intégrée dans une carte Leaflet en utilisant son URL.
+Pour un exemple, regarder le code source de la <a href='mapwcat.php' target='_blank'>carte Leaflet ici</a>.
+</p>
+
+
+<h3 id='wms'>3.2. Le service WMS d'accès aux cartes</h3>
+Un service WMS, exposé à l'adresse <a href='wms.php?SERVICE=WMS&amp;request=GetCapabilities' target='_blank'><code>https://geoapi.fr/shomgt/wms.php</code></a>,
+propose les différentes couches dans les 4 systèmes de coordonnées suivants :<ul>
+<li>Web Mercator (EPSG:3857)
+<li>WGS84 Mercator (EPSG:3395)
+<li>WGS84 lat,lon (EPSG:4326)
+<li>WGS84 lon,lat (CRS:84)
+</ul>
+<b>Attention, en EPSG:4326 et CRS:84 la carte est grossièrement déformée</b>.
+Il est donc recommandé d'utiliser l'un des 2 premiers systèmes de coordonnées.
+</p>
+A noter que l'API d'accès aux tuiles peut aussi être utilisée dans QGis et propose de meilleures performances
+que le service WMS.
+
+<h2>4. Auteur</h2>
+Ce site est réalisé par Benoit DAVID, MTECT/CGDD/SRI/Ecolab.<br>
+Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
+Mise à jour: 25/6/2022<br>
