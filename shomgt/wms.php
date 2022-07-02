@@ -87,8 +87,8 @@ try {
   }
   // Mécanisme de protection optionnel contre des requêtes abusives
   // Le code de cette protection est gardé secret
-  if (is_file(__DIR__.'/protect.inc.php')) {
-    require_once __DIR__.'/protect.inc.php';
+  if (is_file(__DIR__.'/../secrets/protect.inc.php')) {
+    require_once __DIR__.'/../secrets/protect.inc.php';
     if (Protect::limitExceeded()) {
       write_log(false);
       WmsServer::exception(509, "Bandwidth Limit Exceeded");

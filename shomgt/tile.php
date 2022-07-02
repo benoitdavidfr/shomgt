@@ -51,6 +51,9 @@ define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60); // nb secondes en cache pour le na
 define ('SERVER_TILECACHE', true); // mise en cache des tuiles sur le serveur
 //define ('SERVER_TILECACHE', false); // PAS de mise en cache des tuiles sur le serveur
 
+if (is_file(__DIR__.'/../secrets/tileaccess.inc.php')) {
+  require_once __DIR__.'/../secrets/tileaccess.inc.php';
+}
 write_log(true); // log en base selon la var. d'env. adhoc 
 
 // enregistrement d'un log temporaire pour afficher des infos, par ex. estimer les performances
