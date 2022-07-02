@@ -6,6 +6,9 @@ functions:
 doc: |
   fonction d'enregistrement d'un log
 journal: |
+  2/7/2022:
+    changement de logique
+    le log n'est plus paramétré dans config('mysqlParams') mais au travers de la var. d'env. SHOMGT3_LOG_MYSQL_URI
   5/5/2022:
     correction bug
   7/2/2022:
@@ -44,12 +47,12 @@ doc: |
 define ('COOKIE_NAME', 'shomusrpwd');
 
 function write_log(bool $access): bool {
-  // si les paramètres MySql ne sont pas définis pour HTTP_HOST alors le log est désactivé
-  if (!isset(config('mysqlParams')[$_SERVER['HTTP_HOST']]))
+  // si la variable d'env. n'est pas définie alors le log est désactivé
+  if (!($LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')))
     return $access;
+  
   try {
-    $mysqlParams = config('mysqlParams')[$_SERVER['HTTP_HOST']];
-    MySQL::open($mysqlParams);
+    MySQL::open($LOG_MYSQL_URI);
   }
   catch (SExcept $e) {
     throw new SExcept($e->getMessage(), $e->getCode());

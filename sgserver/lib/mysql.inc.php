@@ -10,6 +10,8 @@ doc: |
   Voir utilisation en fin de fichier
   Sur localhost si la base utilisée n'existe pas alors elle est créée.
 journal: |
+  1/7/2022:
+    - ajout d'un test pour que le fichier puisse être inclus dans une config où MySql n'est pas disponible
   16/4/2022:
     - correction d'un bug dans MySql::query()
   7-9/2/2022:
@@ -25,8 +27,11 @@ includes: [sexcept.inc.php]
 */
 require_once __DIR__.'/sexcept.inc.php';
 
+
 // Activation du rapport d'erreur - Lance une exception mysqli_sql_exception pour les erreurs, au lieu d'émettre des alertes 
-mysqli_report(MYSQLI_REPORT_STRICT);
+// Ne s'exécute que si la fonction existe ce qui permet d'inclure ce fichier si on n'utilise pas MySql
+if (function_exists('mysqli_report'))
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
 class MySql {
   const ErrorOpen = 'MySql::ErrorOpen';
