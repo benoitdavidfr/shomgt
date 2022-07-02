@@ -7,6 +7,8 @@ doc: |
   S'il existe, c'est lui qui est utilisé
   Sinon ce fichier contient une configuration par défaut
 journal: |
+  2/7/2022:
+    suppression de la rubrique mySqlParams transférée en var. d'env.
   27/12/2020:
     ajout rubrique admins
   23/5/2020:
@@ -61,12 +63,6 @@ else {
         'admin:admin',
       ],
     
-      // Paramétrage du serveur MySQL pour enregistrer les logs en fonction du serveur hébergeant l'application
-      // Le nom_du_serveur est défini par $_SERVER['HTTP_HOST']
-      'mysqlParams'=> [
-        'nom_du_serveur'=> 'mysql://{user}:{passwd}@{host}/{database}',
-      ],
-      
       // Paramétrage d'un éventuel proxy
       'proxy'=> 'http://172.17.0.8:3128',
     ];
