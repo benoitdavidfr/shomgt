@@ -19,8 +19,10 @@ doc: |
   Test:
     http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
+  2/7/2022:
+    - ajout du log
   6/6/2022:
-    - mise en constantes du débrayage des cachess
+    - mise en constantes du débrayage des caches
   30/5/2022:
     - modif initialisation Layer
   26/5/2022:
@@ -35,6 +37,7 @@ includes: [lib/gegeom.inc.php, ../lib/log.inc.php, ../lib/config.inc.php, geotif
 $start = ['time'=>  microtime(true), 'memory'=> memory_get_usage(true)];
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
+require_once __DIR__.'/lib/log.inc.php';
 require_once __DIR__.'/lib/gegeom.inc.php';
 require_once __DIR__.'/lib/layer.inc.php';
 require_once __DIR__.'/lib/cache.inc.php';
@@ -47,6 +50,8 @@ define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60); // nb secondes en cache pour le na
 //define ('NB_SECONDS_IN_CACHE', 0); // pas de mise en cache par le navigateur
 define ('SERVER_TILECACHE', true); // mise en cache des tuiles sur le serveur
 //define ('SERVER_TILECACHE', false); // PAS de mise en cache des tuiles sur le serveur
+
+write_log(true); // log en base selon la var. d'env. adhoc 
 
 // enregistrement d'un log temporaire pour afficher des infos, par ex. estimer les performances
 function logRecord(array $log): void {
