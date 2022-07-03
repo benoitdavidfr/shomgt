@@ -2,20 +2,23 @@ title: Catalogue des cartes Shom V3
 description: |
   Dans ShomGt3, mapcat.yaml constitue une référence indispensable pour construire shomgt.yaml dans sgupdt,
   où sont utilisés notamment l'extension spatiale et l'échelle des cartes et des cartouches.
-  La liste des bordures est aussi utilisée pour les GéoTiffs non ou mal géoréférencés.
-  Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques stables
-  des cartes. Il est constitué principalement par copie d'infos issues du GAN et détection des écarts.
-  Ces écarts au GAN existent et sont expliqués dans les champs noteCatalog et badGan.
-  Notamment, la structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
-  qui n'est pas toujours identique à celle du GAN.
+  La liste des bordures est utilisée pour les GéoTiffs non ou mal géoréférencés.
+  Les champs optionnels z-order et toDelete sont utilisés pour améliorer la superposition entre GéoTiffs.
+  Les champs layer et geotiffname sont utilisés pour les cartes spéciales ne respactant pas les specs des GéoTiffs.
   
-  xxxxx
+  Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques stables
+  des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.
+  Ces écarts au GAN existent et sont alors expliqués dans les champs noteCatalog et badGan.
+  
+  La structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
+  qui n'est pas toujours identique à celle du GAN.
   
   Le traitement dans le GAN des excroissances de cartes est hétérogène.
   Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
   J'adopte le principe suivant:
     - en première approche j'aligne l'extension spatiale dans mapcat sur le GAN
       - sauf s'il y a une erreur manifeste dans le GAN que j'indique dans badGan
+    - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
   Journal:
     - duplication du fichier pour ShomGt3 en avril-mai 2022
@@ -36,14 +39,14 @@ description: |
     - 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
     - 15/6/2022 - ajout de 2 nouvelles cartes
     - 17/6/2022 - intégration des paramètres d'affichage et des noms de couche et de fichier pour les cartes spéciales
-    - 2/7/2022
+    - 2-3/7/2022
       - prise en compte des corrections du GAN par le Shom à la suite de mon message
       - je supprime plusieurs excroissances de cartes qui expliquent des écarts au GAN
         - et qui sont trop complexes à gérer en première approche
-$id: 'http://geoapi.fr/shomgt/cat2/mapcat'
+$id: 'http://geoapi.fr/shomgt/shomgt/mapcat/mapcat'
 $schema: mapcat
 created: '2020-12-26T22:01:53+01:00'
-modified: '2022-06-15'
+modified: '2022-07-03'
 maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
@@ -505,12 +508,9 @@ maps:
     mapsFrance:
       - FX-Med
     scaleDenominator: '25.000'
-    spatial:
-      SW: '43°02,67''N - 006°20,90''E'
-      NE: '43°11,76''N - 006°39,03''E'
-    ganspatial:
-      SW: '43°02,67''N — 006°20,90''E'
-      NE: '43°09,50''N — 006°39,03''E'
+    spatial: {SW: "43°02,82'N - 006°20,90'E", NE: "43°11,76'N - 006°38,82'E"}
+    badGan: GAN faux, suppression des 2 excroissances
+    noteCatalog: suppression des 2 excroissances sur les bords Est et Sud
     insetMaps:
       - title: 'A - Bormes-les-Mimosas'
         scaleDenominator: '7.500'
@@ -642,13 +642,9 @@ maps:
   FR6671:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers du Corail et des Salomon - et mers adjacentes'
-    mapsFrance:
-      - NC
-      - WF
+    mapsFrance: [NC, WF]
     scaleDenominator: 3.500.000
-    spatial:
-      SW: '20°59,06''S - 146°40,00''E'
-      NE: '00°06,00''S - 180°00,00''E'
+    spatial: {SW: "20°59,06'S - 146°40,00'E", NE: "00°06,00'N - 180°00,00'E"}
     references: 'Fac similé carte AUS n°4604 publiée en 1973 (édition juin 2008).'
   FR6672:
     groupTitle: 'Océan Indien - Partie Ouest'
@@ -722,12 +718,9 @@ maps:
   FR6689:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (Partie Ouest) - De Tahiti à Rangiroa et Makemo'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '595.000'
-    spatial:
-      SW: '18°17,44''S - 150°00,00''W'
-      NE: '14°13,00''S - 143°53,50''W'
+    spatial: {SW: "18°13,99'S - 150°00,00'W", NE: "14°13,00'S - 143°53,50'W"}
   FR6690:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie centrale) - De Makemo à Tatakoto'
@@ -840,12 +833,9 @@ maps:
   FR6767:
     groupTitle: 'Côte Sud de France'
     title: 'De Fos-sur-Mer à Marseille'
-    mapsFrance:
-      - FX-Med
-    scaleDenominator: '49.900'
-    spatial:
-      SW: '43°07,64''N - 004°45,33''E'
-      NE: '43°27,84''N - 005°25,93''E'
+    mapsFrance: [FX-Med]
+    scaleDenominator: '50.000'
+    spatial: {SW: "43°07,64'N - 004°45,33'E", NE: "43°27,84'N - 005°25,93'E"}
   FR6768:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Sud) - Ile des Pins'
@@ -1060,7 +1050,7 @@ maps:
     title: 'Du Cabo Creus à Port-Barcarès'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '50.500'
     spatial:
       SW: '42°18,14''N - 002°57,53''E'
       NE: '42°48,14''N - 003°25,23''E'
@@ -1069,7 +1059,7 @@ maps:
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '50.200'
     spatial:
       SW: '42°43,64''N - 002°56,73''E'
       NE: '43°13,44''N - 003°24,43''E'
@@ -1102,7 +1092,7 @@ maps:
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
     mapsFrance:
       - FX-MMN
-    scaleDenominator: '150.000'
+    scaleDenominator: '154.200'
     spatial:
       SW: '49°10,74''N - 001°57,48''W'
       NE: '50°12,95''N - 000°23,52''E'
@@ -1190,7 +1180,7 @@ maps:
     title: 'Abords de Porto-Vecchio - De l''anse de Favone aux îles Lavezzi'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '51.300'
     spatial:
       SW: '41°19,94''N - 009°10,94''E'
       NE: '41°50,44''N - 009°38,64''E'
@@ -1200,7 +1190,7 @@ maps:
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    scaleDenominator: '150.000'
+    scaleDenominator: '156.300'
     spatial:
       SW: '48°29,94''N - 004°50,09''W'
       NE: '49°33,14''N - 002°29,08''W'
@@ -1209,7 +1199,7 @@ maps:
     title: 'De l''île Ouen à l''île des Pins - Passe de la Sarcelle (Spéciale P)'
     mapsFrance:
       - NC
-    scaleDenominator: '60.000'
+    scaleDenominator: '59.500'
     spatial:
       SW: '22°43,13''S - 166°49,70''E'
       NE: '22°19,03''S - 167°27,80''E'
@@ -1218,7 +1208,7 @@ maps:
     title: 'De Start Point à the Needles'
     mapsFrance:
       - FX-MMN
-    scaleDenominator: '150.000'
+    scaleDenominator: '152.476'
     spatial:
       SW: '49°42,82''N - 003°53,00''W'
       NE: '50°44,50''N - 001°32,00''W'
@@ -1239,7 +1229,7 @@ maps:
     title: 'De Punta d''Orchina au Cap Muro - Abords d''Ajaccio'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '51.000'
     spatial:
       SW: '41°40,94''N - 008°21,24''E'
       NE: '42°11,24''N - 008°48,94''E'
@@ -1330,7 +1320,7 @@ maps:
     title: 'De Anvil Point à Beachy Head'
     mapsFrance:
       - FX-MMN
-    scaleDenominator: '150.000'
+    scaleDenominator: '151.900'
     spatial:
       SW: '49°53,93''N - 001°59,09''W'
       NE: '50°55,37''N - 000°21,96''E'
@@ -1355,9 +1345,7 @@ maps:
     title: Océan Pacifique Nord - Partie Nord-Ouest
     mapsFrance: []
     scaleDenominator: '7.080.000'
-    spatial:
-      SW: "22°13'N - 117°10'E"
-      NE: "62°00'N - 154°48,13'W"
+    spatial: {SW: "22°13,00'N - 117°10,00'E", NE: "62°00,00'N - 154°48,13'W"}
   FR6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
@@ -1405,12 +1393,11 @@ maps:
   FR6990:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
-    mapsFrance:
-      - FX-Atl
-    scaleDenominator: '355.000'
+    mapsFrance: [FX-Atl]
+    scaleDenominator: '350.000'
     spatial:
-      SW: '45°28,34''N - 006°00,08''W'
-      NE: '47°55,42''N - 000°54,58''W'
+      SW: '45°30,43''N - 006°00,08''W'
+      NE: '47°53,44''N - 000°54,58''W'
   FR6991:
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
@@ -1512,7 +1499,6 @@ maps:
       SW: '13°00,00''S - 117°30,00''E'
       NE: '40°00,00''N - 154°20,00''W'
     references: 'Fac similé Carte JP n°4052 publiée en 1983.'
-    badGan: GAN faux, inversion des bords Est et Ouest de l'extension géo.
   FR7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'Océan Pacifique Est - De San Francisco à Lima'
@@ -1529,9 +1515,9 @@ maps:
     title: 'Bouches de Bonifacio'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '51.500'
     spatial:
-      SW: '41°07,60''N - 008°52,94''E'
+      SW: '41°07,94''N - 008°52,94''E'
       NE: '41°28,74''N - 009°33,54''E'
     insetMaps:
       - title: 'A - Golfo di Arzachena'
@@ -1580,14 +1566,10 @@ maps:
   FR7033:
     groupTitle: 'Côte Ouest de France'
     title: 'De Quiberon au Croisic (Spéciale P)'
-    mapsFrance:
-      - FX-Atl
+    mapsFrance: [FX-Atl]
     scaleDenominator: '50.000'
-    spatial: {SW: "47°15,4'N - 003°11,1'W", NE: "47°35,6'N - 002°27,3'W"}
-    noteCatalog: |
-      correction de bboxDM à partir de la carte le 26/12/2020
-      bboxDMGan: {SW: "47°15,12'N - 003°11,08'W", NE: "47°35,64'N - 002°27,30'W"}
-    badGan: GAN faux, le bord Sud est faux
+    spatial: {SW: "47°15,44'N - 003°11,08'W", NE: "47°35,64'N - 002°27,30'W"}
+    noteCatalog: GAN corrigé depuis entre le 26/12/2020 et le 2/7/2022
   FR7035:
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
@@ -1610,9 +1592,8 @@ maps:
   FR7041:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique - Partie Nord (Spéciale P)'
-    mapsFrance:
-      - MQ
-    scaleDenominator: '60.000'
+    mapsFrance: [MQ]
+    scaleDenominator: '59.900'
     spatial:
       SW: '14°34,30''N - 061°17,78''W'
       NE: '14°58,60''N - 060°41,08''W'
@@ -1664,7 +1645,7 @@ maps:
     title: 'De Calvi à Cargèse'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '50.700'
     spatial:
       SW: '42°07,34''N - 008°19,74''E'
       NE: '42°37,44''N - 008°47,44''E'
@@ -1699,7 +1680,7 @@ maps:
     title: 'De Sète à la Pointe de l''Espiguette'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '49.800'
     spatial:
       SW: '43°14,64''N - 003°38,93''E'
       NE: '43°34,74''N - 004°19,53''E'
@@ -1708,7 +1689,7 @@ maps:
     title: 'De l''embouchure de l''Aude à Sète'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '49.900'
     spatial:
       SW: '43°07,74''N - 003°13,33''E'
       NE: '43°27,94''N - 003°53,93''E'
@@ -1726,7 +1707,7 @@ maps:
     title: 'De l''île Vierge à la Pointe de Penmarc''h - Abords de Brest'
     mapsFrance:
       - FX-Atl
-    scaleDenominator: '150.000'
+    scaleDenominator: '158.800'
     spatial:
       SW: '47°39,94''N - 006°34,09''W'
       NE: '48°44,14''N - 004°13,09''W'
@@ -1742,36 +1723,28 @@ maps:
   FR7068:
     groupTitle: 'Côte Ouest de France'
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
-    mapsFrance:
-      - FX-Atl
-    scaleDenominator: '150.000'
+    mapsFrance: [FX-Atl]
+    scaleDenominator: '162.000'
     spatial:
-      SW: '46°28,90''N - 003°51,00''W'
+      SW: '46°30,00''N - 003°51,00''W'
       NE: '47°35,60''N - 001°30,00''W'
   FR7069:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre - Plateau de Rochebonne'
     mapsFrance:
       - FX-Atl
-    scaleDenominator: '150.000'
+    scaleDenominator: '164.800'
     spatial:
       SW: '45°41,20''N - 003°21,00''W'
       NE: '46°47,80''N - 001°00,00''W'
   FR7070:
     groupTitle: 'Côte Ouest de France'
     title: 'Du pertuis de Maumusson à Mimizan-Plage'
-    mapsFrance:
-      - FX-Atl
-    scaleDenominator: '167.000'
+    mapsFrance: [FX-Atl]
+    scaleDenominator: '168.000'
     spatial:
-      SW: '44°09,00''N - 002°36,00''W'
-      NE: '45°49,00''N - 001°00,00''W'
-    noteShom: |
-      Nota : Nouvelle édition avec changement de coupure en latitudes et changement de titre. Remplacer le cadre de la carte
-      7070 (INT 1804) sur les cartes 6990 et 6991 en prenant en compte les nouvelles coordonnées de la carte.
-      Remplacer la mention hors-cadre "Voir carte adjacente 6786" par "Voir carte adjacente 7070 (INT 1804)" sur la carte 7657.
-      Supprimer le cadre de la carte 6786 sur la carte 6991.'
-    noteCatalog: 'Titre faux ainsi que les bords Nord et Sud'
+      SW: "44°09,00'N - 002°36,00'W"
+      NE: "45°49,00'N - 001°00,00'W"
   FR7073:
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
@@ -2333,12 +2306,12 @@ maps:
   FR7142:
     groupTitle: 'Côte Ouest de France'
     title: Belle-Ile
-    mapsFrance:
-      - FX-Atl
+    mapsFrance: [FX-Atl]
     scaleDenominator: '25.000'
     spatial:
       SW: '47°14,89''N - 003°20,08''W'
-      NE: '47°24,94''N - 002°58,17''W'
+      NE: '47°24,94''N - 002°58,39''W'
+    noteCatalog: suppression de l'excroissance à l'Est
     insetMaps:
       - title: 'A - Sauzon'
         scaleDenominator: '7.500'
@@ -2402,9 +2375,8 @@ maps:
   FR7147:
     groupTitle: 'Côte Ouest de France'
     title: 'De la chaussée de Sein à la Pointe de Penmarc''h - Baie d''Audierne (Spéciale P)'
-    mapsFrance:
-      - FX-Atl
-    scaleDenominator: '50.000'
+    mapsFrance: [FX-Atl]
+    scaleDenominator: '49.600'
     spatial:
       SW: '47°44,54''N - 004°59,98''W'
       NE: '48°04,54''N - 004°16,28''W'
@@ -2417,7 +2389,7 @@ maps:
     title: 'Du Goulet de Brest à la Chaussée de Sein'
     mapsFrance:
       - FX-Atl
-    scaleDenominator: '50.000'
+    scaleDenominator: '49.300'
     spatial:
       SW: '47°56,34''N - 005°01,54''W'
       NE: '48°25,62''N - 004°31,69''W'
@@ -2514,7 +2486,7 @@ maps:
     title: 'Du Cap de Carteret au Cap de La Hague - Raz Blanchard'
     mapsFrance:
       - FX-MMN
-    scaleDenominator: '50.000'
+    scaleDenominator: '48.000'
     spatial:
       SW: '49°21,74''N - 002°17,88''W'
       NE: '49°49,54''N - 001°48,08''W'
@@ -2523,7 +2495,7 @@ maps:
     title: 'De Guernsey, Herm et Sark à Alderney - Bancs des Casquets'
     mapsFrance: [FX-MMN]
     scaleDenominator: '50.000'
-    spatial: {SW: "49°20,64'N - 002°43,74'W", NE: "49°49,04'N - 002°13,48'W" }
+    spatial: {SW: "49°20,64'N - 002°43,28'W", NE: "49°49,04'N - 002°13,48'W" }
     toDelete:
       polygons:
         -  # effacement du coin NW de la carte qui gène la lecture de la carte à plus petite échelle 
@@ -2535,7 +2507,7 @@ maps:
     title: 'De Jersey à Guernsey'
     mapsFrance:
       - FX-MMN
-    scaleDenominator: '50.000'
+    scaleDenominator: '48.300'
     spatial: {SW: "49°06,04'N - 002°42,08'W", NE: "49°25,54'N - 001°58,38'W"}
   FR7161:
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
@@ -2552,7 +2524,7 @@ maps:
     title: 'Du Cap Muro au Cap de Feno'
     mapsFrance:
       - FX-Med
-    scaleDenominator: '50.000'
+    scaleDenominator: '51.300'
     spatial:
       SW: '41°23,74''N - 008°27,34''E'
       NE: '41°44,54''N - 009°07,94''E'
@@ -2571,7 +2543,6 @@ maps:
     spatial: {SW: "51°05,44'S - 163°30,00'E", NE: "02°45,00'S - 108°28,11'W"}
     replaces: '(remplace 5037,5038,5361)'
     references: 'Fac similé Carte NZ n°14061 publiée en 1986.'
-    badGan: GAN faux, bords Est et Ouest inversés
     z-order: -1 # en dessous de 7023 et 6964
   FR7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
@@ -2776,11 +2747,10 @@ maps:
   FR7214:
     groupTitle: 'Côte Nord de France - Côte de Belgique'
     title: 'De Dunkerque à Oostende'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '60.000'
     spatial:
-      SW: '51°02,61''N - 002°04,92''E'
+      SW: '51°02,95''N - 002°04,92''E'
       NE: '51°27,25''N - 003°01,72''E'
     references: 'Fac similé carte BE n°102 publiée en 1987 (édition décembre 2018)'
     insetMaps:
@@ -3009,8 +2979,8 @@ maps:
       - PF
     scaleDenominator: '175.000'
     spatial:
-      SW: '17°31,17''S - 145°44,80''W'
-      NE: '16°18,07''S - 143°56,98''W'
+      SW: '17°30,00''S - 145°44,80''W'
+      NE: '16°19,24''S - 143°56,98''W'
   FR7262:
     groupTitle: 'Iles Tuamotu'
     title: 'De Makemo à Marutea Nord'
@@ -3061,13 +3031,12 @@ maps:
       NE: '02°36,26''S - 167°57,92''W'
     replaces: '(remplace 5356)'
     references: 'Fac similé Carte AU n°4060 publiée en 1987'
-    badGan: "GAN faux, bords Est et Ouest inversés"
   FR7273:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent (Spéciale P)'
     mapsFrance:
       - NC
-    scaleDenominator: '60.000'
+    scaleDenominator: '59.700'
     spatial:
       SW: '22°24,13''S - 165°54,00''E'
       NE: '21°59,93''S - 166°32,10''E'
@@ -3128,16 +3097,14 @@ maps:
       SW: '16°30,00''S - 177°00,00''E'
       NE: '09°40,56''S - 172°47,00''W'
     replaces: '(remplace 6067)'
-    badGan: "GAN faux, bords Est et Ouest inversés"
   FR7291:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
-    mapsFrance:
-      - FX-Med
+    mapsFrance: [FX-Med]
     scaleDenominator: '250.000'
     spatial:
-      SW: '41°28,00''N - 009°13,00''E'
-      NE: '43°08,25''N - 012°32,85''E'
+      SW: '41°28,04''N - 009°12,99''E'
+      NE: '43°08,29''N - 012°32,84''E'
     references: 'Fac similé carte IT n°913 publiée en 1990.'
   FR7292:
     groupTitle: 'Mer Méditerranée'
@@ -3146,8 +3113,8 @@ maps:
       - FX-Med
     scaleDenominator: 1.000.000
     spatial:
-      SW: '34°40,00''N - 008°00,00''E'
-      NE: '44°28,81''N - 016°19,19''E'
+      SW: '34°39,93''N - 007°59,95''E'
+      NE: '44°28,72''N - 016°19,13''E'
     references: 'Fac similé Carte IT n°434 publiée en 1990.'
   FR7293:
     groupTitle: 'Iles Tuamotu'
@@ -3208,7 +3175,7 @@ maps:
     mapsFrance:
       - FX-Atl
       - FX-MMN
-    scaleDenominator: '375.000'
+    scaleDenominator: '372.368'
     spatial:
       SW: '49°04,94''N - 003°00,08''W'
       NE: '51°35,45''N - 002°44,92''E'
@@ -3333,7 +3300,6 @@ maps:
       SW: '50°41,58''N - 000°50,12''E'
       NE: '51°11,63''N - 001°59,89''E'
     references: 'Fac similé carte GB n°1892 publiée en 1973 (édition novembre 2017)'
-    badGan: "GAN faux signe erroné bord le bord Ouest"
   FR7324:
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin - De la Baie du Lamentin à Port-Louis (Spéciale P)'
@@ -4004,7 +3970,7 @@ maps:
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron - Pertuis Breton et d''Antioche'
     mapsFrance:
       - FX-Atl
-    scaleDenominator: '51.200'
+    scaleDenominator: '50.000'
     spatial:
       SW: '46°00,34''N - 001°46,08''W'
       NE: '46°21,04''N - 001°02,38''W'
@@ -4140,33 +4106,27 @@ maps:
   FR7416:
     groupTitle: 'Côte Nord de France'
     title: 'Abords Sud de Boulogne-sur-Mer - Du Tréport à Boulogne-sur-Mer'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '75.000'
     spatial:
       SW: '50°01,45''N - 000°57,32''E'
       NE: '50°46,05''N - 001°44,92''E'
-    badGan: "GAN faux, signe erroné du bord Ouest"
   FR7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe - Du Cap d''Antifer à Dieppe'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '75.900'
     spatial:
       SW: '49°40,75''N - 000°09,62''E'
       NE: '50°11,45''N - 001°19,42''E'
-    badGan: GAN faux, erreur de signe sur le bord Ouest
   FR7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer - Embouchure de la Seine - De Ouistreham au Cap d''Antifer'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '60.000'
     spatial:
       SW: '49°15,00''N - 000°20,90''W'
       NE: '49°50,60''N - 000°16,60''E'
-    badGan: GAN faux, erreur de signe sur le bord Est
   FR7419:
     groupTitle: 'Côte Nord de France'
     title: 'La Seine'
@@ -4628,13 +4588,11 @@ maps:
   FR7472:
     groupTitle: 'Petites Antilles'
     title: 'Ports et mouillages de Saint-Martin (Sint Maarten) et de Saint-Barthélemy'
-    mapsFrance:
-      - BL
-      - MF
+    mapsFrance: [BL, MF]
     insetMaps:
       - title: 'A - Saint-Martin - Baie de Marigot'
         scaleDenominator: '15.000'
-        spatial: { SW: '18°03,21''N - 063°09,03''W', NE: '18°05,42''N - 063°04,67''W' }
+        spatial: { SW: '18°03,21''N - 063°09,03''W', NE: '18°05,42''N - 063°04,66''W' }
       - title: 'B - Saint-Martin - Baie de Grand-Case et Anse Marcel'
         scaleDenominator: '15.000'
         spatial: { SW: '18°05,90''N - 063°04,22''W', NE: '18°07,31''N - 063°02,17''W' }
@@ -4643,7 +4601,7 @@ maps:
         spatial: { SW: '18°03,00''N - 063°01,25''W', NE: '18°03,55''N - 063°00,31''W' }
       - title: 'D - Sint Maarten - Groot Baai - Philipsburg'
         scaleDenominator: '15.000'
-        spatial: { SW: '17°59,28''N - 063°04,19''W', NE: '18°01,63''N - 063°02,29''W' }
+        spatial: { SW: '17°59,28''N - 063°04,19''W', NE: '18°01,64''N - 063°02,30''W' }
       - title: 'E - Saint-Barthélemy - Port de Gustavia'
         scaleDenominator: '15.000'
         spatial: { SW: '17°53,43''N - 062°53,13''W', NE: '17°55,78''N - 062°50,78''W' }
@@ -4838,8 +4796,8 @@ maps:
       - FX-Med
     scaleDenominator: '250.000'
     spatial:
-      SW: '39°55,00''N - 008°50,00''E'
-      NE: '41°36,28''N - 012°05,37''E'
+      SW: '39°54,94''N - 008°49,94''E'
+      NE: '41°36,22''N - 012°05,31''E'
     references: 'Fac similé Carte IT n°912 publiée en 1995.'
   FR7591:
     groupTitle: 'Océan Indien - Océan Pacifique Sud - Antarctique'
@@ -5109,7 +5067,7 @@ maps:
     title: 'De Touho à Ponérihouen'
     mapsFrance:
       - NC
-    scaleDenominator: '60.200'
+    scaleDenominator: '60.203'
     spatial:
       SW: '21°06,90''S - 165°04,60''E'
       NE: '20°42,50''S - 165°42,70''E'

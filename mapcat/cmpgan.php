@@ -11,6 +11,7 @@ doc: |
 journal: |
   2/7/2022:
     - reprise après correction des GAN par le Shom à la suite de mon message
+    - ajout comparaison des échelles
   24/6/2022:
     - migration 
 */
@@ -35,8 +36,18 @@ class MapCat {
     }
   }
   
+  function scale(): ?string { // formatte l'échelle comme dans le GAN
+    return '1 : '.str_replace('.',' ',$this->map['scaleDenominator']);
+  }
+  
+  function insetScale(int $i): ?string { // formatte l'échelle comme dans le GAN
+    return '1 : '.str_replace('.',' ',$this->map['insetMaps'][$i]['scaleDenominator']);
+  }
+  
   static function cmpGans() {
-    echo "<table border=1><th>mapid</th><th>badGan</th><th>inset</th><th>cat'SW</th><th>gan'SW</th><th>ok?</th>",
+    echo "<table border=1><th>mapid</th><th>badGan</th><th>inset</th>",
+      "<th>cat'scale</th><th>gan'scale</th><th>ok?</th>",
+      "<th>cat'SW</th><th>gan'SW</th><th>ok?</th>",
       "<th>x</th><th>cat'NE</th><th>gan'NE</th><th>ok?</th>\n";
     foreach (self::$maps as $mapid => $map) {
       //echo "<pre>"; print_r($map); echo "</pre>";
@@ -49,31 +60,39 @@ class MapCat {
         ];
         $mapspatial = $map->map['spatial'];
         //echo "<pre>"; print_r($map); echo "</pre>";
-        if (isset($map->map['badGan']) || ($mapspatial['SW'] <> $ganspatial['SW']) || ($mapspatial['NE'] <> $ganspatial['NE'])) {
-          echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td></td><td>",$mapspatial['SW'],"</td>";
-          echo "<td>$ganspatial[SW]</td><td>",($mapspatial['SW'] == $ganspatial['SW']) ? 'ok' : '<b>KO</b',"</td>";
-          echo "<td></td><td>",$mapspatial['NE'],"</td>";
-          echo "<td>$ganspatial[NE]</td><td>",($mapspatial['NE'] == $ganspatial['NE']) ? 'ok' : '<b>KO</b',"</td>";
+        if (isset($map->map['badGan']) || ($map->scale() <> $gan->scale)
+            || ($mapspatial['SW'] <> $ganspatial['SW']) || ($mapspatial['NE'] <> $ganspatial['NE'])) {
+          echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td></td>";
+          echo "<td>",$map->scale(),"</td><td>",$gan->scale,"</td>",
+            "<td>",($map->scale() == $gan->scale) ? 'ok' : '<b>KO</b>',"</td>\n";
+          echo "<td>$mapspatial[SW]</td><td>$ganspatial[SW]</td>",
+            "<td>",($mapspatial['SW'] == $ganspatial['SW']) ? 'ok' : '<b>KO</b',"</td>";
+          echo "<td></td><td>$mapspatial[NE]</td><td>$ganspatial[NE]</td>",
+            "<td>",($mapspatial['NE'] == $ganspatial['NE']) ? 'ok' : '<b>KO</b',"</td>";
           echo "</tr>\n";
         }
       }
-      foreach ($map->map['insetMaps']  ?? [] as $insetMap) {
+      foreach ($map->map['insetMaps']  ?? [] as $i => $insetMap) {
         try {
           $ganpart = Gan::$gans[substr($mapid, 2)]->inSet(GBox::fromShomGt($insetMap['spatial']));
-          $ganpartbbox = [
+          $ganpartspatial = [
             'SW' => str_replace('—', '-', $ganpart->spatial['SW']),
             'NE' => str_replace('—', '-', $ganpart->spatial['NE']),
           ];
-          if (($ganpartbbox['SW'] <> $insetMap['spatial']['SW']) || ($ganpartbbox['SW'] <> $insetMap['spatial']['SW'])) {
+          if (($ganpart->scale <> $map->insetScale($i))
+             || ($ganpartspatial['SW'] <> $insetMap['spatial']['SW'])
+             || ($ganpartspatial['NE'] <> $insetMap['spatial']['NE'])) {
             echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td>$insetMap[title]</td>";
             //echo "<td><pre>"; print_r($insetMap); echo "</pre></td>";
+            echo "<td>",$map->insetScale($i),"</td><td>",$ganpart->scale,"</td>",
+              "<td>",($ganpart->scale == $map->insetScale($i)) ? 'ok' : '<b>KO</b>',"</td>";
             echo "<td>",$insetMap['spatial']['SW'],"\n";
             //echo "<td><pre>"; print_r($ganpart); echo "</pre></td>";
-            echo "<td>$ganpartbbox[SW]</td>",
-              "<td>",$ganpartbbox['SW'] == $insetMap['spatial']['SW'] ? 'ok' : '<b>KO</b>',"</td>";
+            echo "<td>$ganpartspatial[SW]</td>",
+              "<td>",$ganpartspatial['SW'] == $insetMap['spatial']['SW'] ? 'ok' : '<b>KO</b>',"</td>";
             echo "<td></td><td>",$insetMap['spatial']['NE'],"\n";
-            echo "<td>$ganpartbbox[NE]</td>",
-              "<td>",$ganpartbbox['NE'] == $insetMap['spatial']['NE'] ? 'ok' : '<b>KO</b>',"</td>";
+            echo "<td>$ganpartspatial[NE]</td>",
+              "<td>",$ganpartspatial['NE'] == $insetMap['spatial']['NE'] ? 'ok' : '<b>KO</b>',"</td>";
             echo "</tr>\n";
           }
         }
@@ -98,6 +117,7 @@ title: class GanInSet - description d'un cartouche dans la synthèse d'une carte
 */
 class GanInSet {
   protected string $title;
+  public string $scale;
   public array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
   
   function __construct(string $html) {
@@ -132,6 +152,7 @@ class Gan {
   protected string $mapnum;
   protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
   protected string $title=''; // titre
+  public ?string $scale=null; // échelle
   protected ?string $edition=null; // edition
   protected array $corrections=[]; // liste des corrections
   public array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]

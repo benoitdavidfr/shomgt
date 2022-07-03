@@ -91,10 +91,12 @@ properties:
             examples:
               - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
           scale:
-            description: "échelle sous la forme 1 : dd ddd"
+            description: |
+              échelle sous la forme 1 : dd ddd
+              Champ absent ssi la carte ne comporte pas d'espace principal.
             $ref: '#/definitions/scale'
           edition:
-            description: édition de la carte issue du GAN
+            description: édition de la carte
             type: string
             examples:
               - Édition n° 3 - 2018
@@ -111,7 +113,7 @@ properties:
             items:
               type: object
               additionalProperties: false
-              required: [title, spatial]
+              required: [title, scale, spatial]
               properties:
                 title:
                   description: titre du cartouche
@@ -139,7 +141,7 @@ properties:
                 semaineAvis:
                   description: |
                     numéro de semaine sur quatre chiffres et numéro d'avis pour cette semaine
-                    1905-252 signifie avis 252 du GAN de la semaine 05 de 2019
+                    Exemple, '1905-252' signifie avis 252 du GAN de la semaine 05 de 2019
                   type: string
                   pattern: '^\d\d\d\d-\d+$'
                   examples:

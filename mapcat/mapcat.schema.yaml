@@ -1,14 +1,15 @@
 title: schema JSON du catalogue des cartes Shom
 $id: https://sgserver.geoapi.fr/index.php/cat/schema
-modified: '2022-06-12'
+modified: '2022-07-03'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    3/7/2022: distinction entre bbox et spatial
     14/6/2022: suppression de plusieurs rubriques inutiles dans cette version.
     12/6/2022: suppression dcmi-box
     6/6/2022:
       - Ajout définition du champ badGan
-      - suppression des champs spatial et replacement du champ bboxDM par spatial
+      - suppression des champs spatial et remplacement du champ bboxDM par spatial
     9/1/2021: Ajout de la possibilité de stocker l'épaisseur du cadre pour les cartes non géo-référencées
     24/12/2020: Gestion des cartes obsolètes dans un dictionnaire à part.
 $schema: http://json-schema.org/schema#
@@ -43,20 +44,36 @@ definitions:
     counterexamples:
       - '1500'
       - '15.00'
+  latLonDM:
+    description: |
+      couple (latitude, longitude) en dégrés-minutes WGS84 dans une chaine  avec un formattage inspiré de celui utilisé
+      par le Shom notamment dans les coins des cartes.
+      Avec la virgule comme séparateur de la partie décimale des minutes.
+      La partie décimale des minutes peut être omise de même que la partie minute.
+    type: string
+    pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
+    examples:
+      - 42°39,93'N - 9°00,93'E
+      - 42°39'N - 9°00'E
+      - 42°N - 9°E
+      - 44°09,00'N - 002°36,00'W
+      - 45°49,00'N - 001°00,00'W
+  spatial:
+    description: Boite englobante définie par ses 2 coins SW et NE définis chacun comme latLonDM.
+    type: object
+    required: [SW, NE]
+    additionalProperties: false
+    properties:
+      SW:
+        description: position du coin SW
+        $ref: '#/definitions/latLonDM'
+      NE:
+        description: position du coin NE
+        $ref: '#/definitions/latLonDM'
   position:
     decription: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
     oneOf:
-      - description: |
-          position en dégrés-minutes dans une chaine avec le même formattage que celui utilisé par le Shom notamment
-          dans les coins des cartes.
-          Dans l'ordre latitude, longitude, avec la virgule comme séparateur de la partie décimale des minutes.
-          La partie décimale des minutes peut être omise de même que la partie minute.
-        type: string
-        pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
-        examples:
-          - 42°39,93'N - 9°00,93'E
-          - 42°39'N - 9°00'E
-          - 42°N - 9°E
+      - $ref: '#/definitions/latLonDM'
       - description: |
           position en degrés décimaux dans l'ordre longitude, latitude, définie par un array de 2 nombres, comme en GeoJSON
         type: array
@@ -66,7 +83,7 @@ definitions:
           type: number
   bbox:
     description: |
-      Boite englobante définie par ses 2 coins SW et NE.
+      Boite englobante définie par ses 2 coins SW et NE définis .
       Les latitudes sont comprises entre -90° et +90° et la latitude N est supérieure à la latitude S.
       Les longitudes sont sauf exceptions comprises entre -180° et +180°.
       La longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
@@ -82,6 +99,11 @@ definitions:
       NE:
         description: position du coin NE
         $ref: '#/definitions/position'
+  bboxes:
+    description: liste de boites
+    type: array
+    items:
+      $ref: '#/definitions/bbox'
   borders:
     description: |
       Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
@@ -130,43 +152,43 @@ definitions:
         - 44°57,81'N - 0°24,32'W
         - 45°05,44'N - 0°33,62'W
         - 45°11,40'N - 0°33,62'W
+  polygons:
+    description: liste de polygones
+    type: array
+    items:
+      $ref: '#/definitions/polygon'
   map:
     description: |
       Propriétés décrivant une carte.
       Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
       Une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
-      Lorsque l'info est différente de celle du GAN, le champ badGan doit être renseigné.
+      Lorsque l'info provenant du GAN est différente de celle du GAN, le champ badGan doit être renseigné.
     type: object
     additionalProperties: false
     required: [title, mapsFrance]
     properties:
       groupTitle:
-        description: sur-titre optionnel identifiant un ensemble de cartes
+        description: sur-titre optionnel identifiant un ensemble de cartes, issu du GAN
         type: string
         examples:
           - Océan Pacifique Sud
       title:
-        description: titre de la carte sans son numéro
+        description: titre de la carte sans son numéro, issu du GAN
         type: string
         examples:
           - Côte Ouest de Corse - Du Cap Corse au Golfe d'Ajaccio
       scaleDenominator:
         description: |
           dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
-          Champ absent ssi la carte ne comporte pas d'espace principal
+          Champ absent ssi la carte ne comporte pas d'espace principal. Issu du GAN.
         $ref: '#/definitions/scaleDenominator'
       spatial:
         description: |
           boite englobante de l'espace principal de la carte en degrés et minutes en WGS84,
-          ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
-          les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
           Champ absent ssi la carte ne comporte pas d'espace principal.
-        $ref: '#/definitions/bbox'
-      borders:
-        description: |
-          Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement lorsque
-          le GéoTiff ne l'est pas.
-        $ref: '#/definitions/borders'
+          Ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
+          les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
+        $ref: '#/definitions/spatial'
       mapsFrance:
         description: |
           Liste de codes résumant l'intersection de la carte avec la ZEE française, ce qui est le cas de la plupart des cartes.
@@ -179,40 +201,43 @@ definitions:
           type: string
           enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
       replaces:
-        description: identification de la carte remplacée par la carte courante, optionnel
+        description: identification de la carte remplacée par la carte courante, optionnel ; issu du GAN.
         type: string
       references:
-        description: référence de la carte étrangère reproduite ssi la carte est un fac-similé
+        description: référence de la carte étrangère reproduite ssi la carte est un fac-similé ; issu du GAN.
         type: string
       noteShom:
-        description: commentaire associé à la carte par le Shom
+        description: commentaire associé à la carte par le Shom ; issu du GAN.
         type: string
       noteCatalog:
         description: commentaire associé à la carte dans la gestion du catalogue
         type: string
       badGan:
         description: |
-          commentaire indiquant que l'info de ce catalogue est différente de celle du GAN ;
+          commentaire expliquant les écarts de l'info de ce catalogue par rapport à celle du GAN ;
           permet de lister rapidement les écarts au GAN.
         type: string
       z-order:
-        description: z-order de l'espace principal
+        description: z-order de l'espace principal, permettant de gérer les superpositions entre GéoTiffs de la même couche.
         $ref: '#/definitions/z-order'
       toDelete:
-        description: liste de zones à effacer dans le GéoTiff de l'espace principal
+        description: |
+          liste de zones à effacer dans le GéoTiff de l'espace principal,
+          permettant de gérer les superpositions entre GéoTiffs de couches différentes.
         type: object
         additionalProperties: false
         properties:
           polygons:
             description: zones à effacer définies comme polygones
-            type: array
-            items:
-              $ref: '#/definitions/polygon'
+            $ref: '#/definitions/polygons'
           bboxes:
             description: zones à effacer définies comme boites
-            type: array
-            items:
-              $ref: '#/definitions/bbox'
+            $ref: '#/definitions/bboxes'
+      borders:
+        description: |
+          Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement
+          lorsque le GéoTiff ne l'est pas.
+        $ref: '#/definitions/borders'
       layer:
         description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
         type: string
@@ -220,7 +245,10 @@ definitions:
         description: pour les cartes spéciales nom du fichier .tif sans l'extension .tif, dans l'archive 7z
         type: string
       insetMaps:
-        description: liste éventuelle de cartouches
+        description: |
+          liste éventuelle de cartouches issue du GAN.
+          La structuration d'une carte en espaces dans MapCat reflète la strcucturation adoptée dans l'archive de la carte
+          sauf l'ordre des cartouches qui est cekui du GAN et n'est pas a priori celui de l'archive.
         type: array
         minItems: 1
         items:
@@ -229,27 +257,25 @@ definitions:
           required: [title, scaleDenominator, spatial]
           properties:
             title:
-              description: titre du cartouche
+              description: titre du cartouche, issu du GAN
               type: string
             scaleDenominator:
-              description: dénominateur de l'échelle avec un . comme séparateur des milliers
+              description: dénominateur de l'échelle avec un . comme séparateur des milliers, issu du GAN
               $ref: '#/definitions/scaleDenominator'
             spatial:
-              description: boite englobante du cartouche
-              $ref: '#/definitions/bbox'
-            borders:
-              description: |
-                Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement lorsque
-                le GéoTiff ne l'est pas.
-              $ref: '#/definitions/borders'
+              description: boite englobante du cartouche, issu du GAN
+              $ref: '#/definitions/spatial'
             noteCatalog:
               description: commentaire associé au cartouche dans la gestion du catalogue
               type: string
             z-order:
-              description: z-order du cartouche
+              description: z-order du cartouche, permettant de gérer les superpositions entre GéoTiffs de la même couche.
               $ref: '#/definitions/z-order'
             toDelete:
-              description: liste de zones à effacer dans GéoTiff du cartouche
+              description: |
+                liste de zones à effacer dans GéoTiff du cartouche,
+                permettant de gérer les superpositions entre GéoTiffs de couches différentes.
+                Doit comporter le champ geotiffname identifiant le cartouche 
               type: object
               additionalProperties: false
               required: [geotiffname]
@@ -267,6 +293,11 @@ definitions:
                   type: array
                   items:
                     $ref: '#/definitions/bbox'
+            borders:
+              description: |
+                Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement
+                lorsque le GéoTiff ne l'est pas.
+              $ref: '#/definitions/borders'
 
 type: object
 required: [ title, $id, $schema, modified, maps ]
