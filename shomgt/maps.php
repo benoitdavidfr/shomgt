@@ -160,9 +160,9 @@ class Maps {
     $grImage->create($width, $height, true); // création d'une image GD transparente
   
     foreach ($lyrnames as $lyrname) {
-      $layer = $layers[$lyrname];
-      $layer->map($grImage, $debug);
+      $layers[$lyrname]->map($grImage, $debug);
     }
+    //die("ligne ".__LINE__."\n");
     $grImage->savealpha(true);
     if (!$debug)
       header('Content-type: image/png');

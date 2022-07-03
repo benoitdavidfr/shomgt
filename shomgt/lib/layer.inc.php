@@ -219,17 +219,24 @@ class TiffLayer extends Layer {
   const ErrorBadGeoCoords = 'Layer::ErrorBadGeoCoords';
   const WOM_BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
   
-  protected array $geotiffs=[]; // dictionnaire [gtname => ['title'=>string, 'spatial'=>EBox, 'deleted'=> {deleted}, borders'=>{borders}?]]
+  // dict. [gtname => ['title'=>string, 'spatial'=>EBox, 'outgrowth'=>[EBox], 'deleted'=> {deleted}, borders'=>{borders}?]]
+  protected array $geotiffs=[];
   
   function __construct(string $lyrName, array $dictOfGT) {
     //echo "lyrName=$lyrName<br>\n";
     //echo "dilate=$dilate<br>\n";
     foreach ($dictOfGT as $gtname => $gt) {
+      foreach ($gt['outgrowth'] ?? [] as $i => $outgrowth) {
+        // l'excroissance est dialtée pour compenser l'érosion sur la partie principale
+        $gt['outgrowth'][$i] = GBox::fromShomGt($outgrowth)->proj('WorldMercator')->dilate(-self::dilate($lyrName));
+      }
       foreach ($gt['borders'] ?? [] as $k => $b)
         $gt['borders'][$k] = eval("return $b;"); // si c'est une expression, l'évalue et stocke le résultat
       $this->geotiffs[$gtname] = [
         'title'=> $gt['title'],
+        // l'extension spatiale est légèrement errodée pour éviter d'affichier le trait noir du bord
         'spatial'=> GBox::fromShomGt($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
+        'outgrowth'=> $gt['outgrowth'] ?? [],
         'borders'=> $gt['borders'] ?? null,
         'deleted' => $gt['deleted'] ?? null,
       ];
@@ -272,8 +279,16 @@ class TiffLayer extends Layer {
       $gtif = null;
       $intEbox = $qebox->intersects($gt['spatial']); // intersection entre le rect. requêté et la z. cartographiée du GeoTiff
       if ($intEbox) {
+        //echo "$gtname -> "; print_r($gt);
         $gtif = new GeoTiff($gtname, $gt['spatial'], $gt['borders'], $debug);
         $gtif->copyImage($grImage, $intEbox, $debug);
+      }
+      foreach ($gt['outgrowth'] ?? [] as $i=> $outgrowth) {
+        $intEbox = $qebox->intersects($outgrowth); // intersection entre le rect. requêté et l'excroissance
+        if ($intEbox) {
+          $gtogth = new GeoTiff($gtname, $outgrowth, [], $debug);
+          $gtogth->copyImage($grImage, $intEbox, $debug);
+        }
       }
       // Si le GéoTiff intersecte l'anti-méridien alors il est dupliqué pour apparaitre aussi dans l'hémisphère Ouest
       $gbox = $gt['spatial']->geo('WorldMercator');
