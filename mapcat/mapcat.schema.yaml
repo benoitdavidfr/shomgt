@@ -188,7 +188,14 @@ definitions:
           Champ absent ssi la carte ne comporte pas d'espace principal.
           Ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
           les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
+          Ne comprend pas les excroissances éventuellement géres dans outgrowth.
         $ref: '#/definitions/spatial'
+      outgrowth:
+        description: liste d'excroissances (en test)
+        type: array
+        items:
+          description: chaque excroissance est définie comme une boite
+          $ref: '#/definitions/spatial'
       mapsFrance:
         description: |
           Liste de codes résumant l'intersection de la carte avec la ZEE française, ce qui est le cas de la plupart des cartes.

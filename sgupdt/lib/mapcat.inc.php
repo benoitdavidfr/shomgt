@@ -45,6 +45,7 @@ class MapCat {
   function scaleDen(): ?int {
     return isset($this->map['scaleDenominator']) ? str_replace('.', '', $this->map['scaleDenominator']) : null;
   }
+  
   function insetMaps(): array { return $this->map['insetMaps'] ?? []; }
   
   function insetMap(int $no): self {
@@ -55,6 +56,7 @@ class MapCat {
     return [
       'title'=> $this->map['title'],
       'spatial'=> $this->map['spatial'] ?? [],
+      'outgrowth'=> $this->map['outgrowth'] ?? [],
       'scaleDen'=> $this->scaleDen(),
       'layer'=> $this->map['layer'] ?? null,
       'toDelete'=> $this->map['toDelete'] ?? [],
@@ -85,19 +87,18 @@ class MapCat {
     $map = self::$cat["FR$mapnum"] ?? null;
     if (!$map)
       return null;
-    if (preg_match('!^\d+_\d+_gtw!', $gtname)) { // cartouche 
-      if (count($map->insetMaps())==1) {
-        return $map->insetMap(0);
-      }
-      else {
-        $gtinfopath = GdalInfo::filepath($gtname, $temp);
-        $gdalinfo = new GdalInfo($gtinfopath);
-        $georefrect = $gdalinfo->ebox()->geo('WorldMercator');
-        return $map->insetMapFromRect($georefrect);
-      }
-    }
-    else { // espace principal de carte standard ou carte spéciale 
+    elseif (!preg_match('!^\d+_\d+_gtw!', $gtname)) { // espace principal de carte standard ou carte spéciale 
       return $map;
+    }
+    // si non cartouche 
+    elseif (count($map->insetMaps())==1) { // cartouche unique
+      return $map->insetMap(0);
+    }
+    else {
+      $gtinfopath = GdalInfo::filepath($gtname, $temp);
+      $gdalinfo = new GdalInfo($gtinfopath);
+      $georefrect = $gdalinfo->ebox()->geo('WorldMercator');
+      return $map->insetMapFromRect($georefrect);
     }
   }
   

@@ -2496,6 +2496,8 @@ maps:
     mapsFrance: [FX-MMN]
     scaleDenominator: '50.000'
     spatial: {SW: "49°20,64'N - 002°43,28'W", NE: "49°49,04'N - 002°13,48'W" }
+    outgrowth:
+      - {SW: "49°25,42'N - 2°43,7'W", NE: "49°27,45'N - 002°43,28'W"} # excroissance sur le bord Ouest
     toDelete:
       polygons:
         -  # effacement du coin NW de la carte qui gène la lecture de la carte à plus petite échelle 

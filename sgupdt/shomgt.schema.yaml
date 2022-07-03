@@ -28,9 +28,8 @@ definitions:
       Rectangle géographique défini par les positions respectives des coordonnées SW et NE.
       Les latitudes sont comprises entre -90 et 90 et la latitude N est supérieure à la latitude S.
       Les longitudes sont sauf exceptions comprises entre -180 et +180.
-      Normalement la longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
-      Par exception, pour les quelques cartes dont l'extension en longitude est supérieure à 360°, la longitude E est
-      supérieure à 180°.
+      Par exception, la longitude E est supérieure à 180° pour les quelques cartes dont l'extension en longitude
+      est supérieure à 360°.
     type: object
     required: [SW, NE]
     properties:
@@ -93,8 +92,14 @@ patternProperties:
             description: titre du GéoTiff
             type: string
           spatial:
-            description: zone cartographiée dans le GéoTiff défini par un rectangle
+            description: zone cartographiée dans le GéoTiff défini par une boite
             $ref: '#/definitions/bbox'
+          outgrowth:
+            description: liste d'excroissances (en test)
+            type: array
+            items:
+              description: chaque excroissance est définie comme une boite
+              $ref: '#/definitions/bbox'
           borders:
             type: object
             additionalProperties: false

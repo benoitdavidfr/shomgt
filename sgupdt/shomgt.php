@@ -64,11 +64,8 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/schema/jsonschema.inc.php';
-#require_once __DIR__.'/lib/envvar.inc.php';
-#require_once __DIR__.'/lib/execdl.inc.php';
 require_once __DIR__.'/lib/geotiffs.inc.php';
 require_once __DIR__.'/lib/mapcat.inc.php';
-#require_once __DIR__.'/lib/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -123,6 +120,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected string $gtname;
   protected string $title; // titre issu du catalogue de cartes
   protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du catalogue de cartes
+  protected array $outgrowth; // liste d'excroissances sous la forme [['SW'=> {pos}, 'NE'=> {pos}]]
   protected int $scaleDen; // dénominateur de l'échelle issu du catalogue de cartes
   protected int $zorder; // z-order issu du catalogue de cartes
   protected array $deleted; // zones effacées dans le GéoTiff
@@ -143,6 +141,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   static function addGt(string $gtname): void { // ajoute un GT par son nom
     //echo "ShomGt::addGt($gtname)\n";
     $map = MapCat::fromGtname($gtname, false);
+    //echo "map="; print_r($map);
     if (!$map) {
       fprintf(STDERR, "Alerte: le GéoTiff $gtname n'existe pas dans le catalogue, il n'apparaitra donc pas dans shomgt.yaml\n");
       return;
@@ -165,6 +164,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     $this->gtname = $gtname;
     $this->title = $info['title'];
     $this->spatial = $info['spatial'];
+    $this->outgrowth = $info['outgrowth'];
     $this->scaleDen = $info['scaleDen'];
     $this->zorder = $info['z-order'] ?? 0;
     $this->deleted = $info['toDelete'] ?? [];
@@ -219,6 +219,8 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
       'title'=> "$mapnum - $this->title",
       'spatial'=> $this->spatial,
     ];
+    if ($this->outgrowth)
+      $array['outgrowth'] = $this->outgrowth;
     if ($this->deleted)
       $array['deleted'] = $this->deleted;
     if ($this->borders)
@@ -229,7 +231,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
 ShomGt::init(); //print_r(ShomGt::$shomgt); die();
 
 // lecture du fichier mapcat.json
-MapCat::init();
+MapCat::init(); //print_r(MapCat::$cat); die();
 
 if (0) { // Test de ShomGt::sortwzorder()
   ShomGt::addGt('6822_pal300');
