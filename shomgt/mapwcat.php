@@ -113,6 +113,15 @@ $zoom = $_GET['zoom'] ?? 6;
   <!-- styles et src de Leaflet -->
   <link rel="stylesheet" href='leaflet/leaflet.css'/>
   <script src='leaflet/leaflet.js'></script>
+  <!-- chgt du curseur -->
+  <style>
+  .leaflet-grab {
+     cursor: auto;
+  }
+  .leaflet-dragging .leaflet-grab{
+     cursor: move;
+  }
+  </style> 
   <!-- Include the edgebuffer plugin -->
   <script src="leaflet/leaflet.edgebuffer.js"></script>
   <!-- Include the Control.Coordinates plugin -->
