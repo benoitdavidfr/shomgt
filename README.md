@@ -36,7 +36,7 @@ Ce projet ce décompose en 6 modules:
     - les cartes obsolètes à marquer comme telle
     - les nouvelles cartes à prendre en compte
 
-  - **mapcat** est un catalogue des cartes Shom couvrant les zones sous juridiction française. Il décrit notamment
+  - **[mapcat](/mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française. Il décrit notamment
     les extensions spatiales des cartes et de leurs cartouches.
     Il est consultable au travers de *sgserver*.
   
