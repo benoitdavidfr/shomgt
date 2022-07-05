@@ -5,27 +5,17 @@ Son schéma JSON est défini dans le fichier [mapcat.schema.yaml](mapcat.schema.
 
 Ce catalogue constitue une référence indispensable pour que sgupdt et shomgt puisse fonctionner:
 
-- l'extension spatiale (champ spatial) et l'échelle (champ scaleDenominator) sont utilisés dans sgupdt et shomgt
-  pour visualiser les cartes,
-  
-  
+- l'extension spatiale (champ `spatial`) et l'échelle (champ `scaleDenominator`) des cartes et de leurs cartouches sont utilisés
+  dans sgupdt et shomgt pour visualiser les cartes,
+- les bordures (champ `borders`) sont nécessaires lors le fichier GéoTiff n'est pas géoréférencé,
+- le champ `title` est utilisé pour afficher le titre des GéoTiff dans la carte Leaflet,
+- les champs `layer` et `geotiffname` sont nécessaire pour gérer les cartes spéciales (cartes AEM, MancheGrid, ...),
+- les champs `z-order`, `toDelete` et `outgrowth` permettent d'améliorer l'affichage des GéoTiff dans le service WMS
+  et la carte Leaflet,
+- les champs `noteCatalog` et `badGan` permettent de mémoriser les choix effectués dans le gestion de ce catalogue.
 
-construire shomgt.yaml dans ,
-où sont utilisés notamment l'extension spatiale et l'échelle des cartes et des cartouches.
-La liste des bordures est utilisée pour les GéoTiffs non ou mal géoréférencés.
-Les champs optionnels z-order et toDelete sont utilisés pour améliorer la superposition entre GéoTiffs.
-Les champs layer et geotiffname sont utilisés pour les cartes spéciales ne respactant pas les specs des GéoTiffs.
+Ce catalogue est transmis aux copies de ShomGt réparties lors de la mise à jour des cartes.
+Ainsi son amélioration bénéficiera à toutes les instance de ShomGt.
 
-Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques stables
-des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.
-Ces écarts au GAN existent et sont alors expliqués dans les champs noteCatalog et badGan.
-
-La structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
-qui n'est pas toujours identique à celle du GAN.
-
-Le traitement dans le GAN des excroissances de cartes est hétérogène.
-Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
-J'adopte le principe suivant:
-  - en première approche j'aligne l'extension spatiale dans mapcat sur le GAN
-    - sauf s'il y a une erreur manifeste dans le GAN que j'indique dans badGan
-  - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
+Si vous souhaitez améliorer ce catalogue, notamment les champs `z-order`, `toDelete` et `outgrowth` pour améliorer
+l'affichage des GéoTiff, proposez des pull requests sur le fichier mapcat.yaml.
