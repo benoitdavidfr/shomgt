@@ -1,5 +1,7 @@
 # Catalogue des cartes MapCat
 
+TEST
+
 Le catalogue des cartes est contenu dans le fichier [mapcat.yaml](mapcat.yaml) ;
 Son schéma JSON est défini dans le fichier [mapcat.schema.yaml](mapcat.schema.yaml).
 
