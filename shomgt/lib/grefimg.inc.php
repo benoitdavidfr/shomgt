@@ -35,6 +35,32 @@ class Http {
   }
 };
 
+// Style de représentation des objets vecteurs 
+class Style {
+  protected string $title; // titre du style
+  protected ?int $color; // couleur de trait comme array RVB, si absent pas de couleur de trait
+  protected int $weight; // épaissur du trait, 1 par défaut
+  protected ?int $fillColor; // couleur de remplissage comme array RVB, si absent pas de remplissage
+
+  function __construct(array $style, GeoRefImage $grImage) {
+    $this->title = $style['title'] ?? "No title";
+    $this->color = isset($style['color']) ? $grImage->colorallocate($style['color']) : null;
+    $this->weight = $style['weight'] ?? 1;
+    if (!isset($style['fillColor'])) {
+      $this->fillColor = null;
+    }
+    else {
+      $alpha = round((1 - ($style['fillOpacity'] ?? 0.2)) * 127);
+      $style['fillColor'][3] = $alpha;
+      $this->fillColor = $grImage->colorallocatealpha($style['fillColor']);
+    }
+  }
+  
+  function weight(): int { return $this->weight; }
+  function color(): ?int { return $this->color; }
+  function fillColor(): ?int { return $this->fillColor; }
+};
+
 /*PhpDoc: classes
 name: GeoRefImage
 title: class GeoRefImage - représente une image géo-référencée
@@ -50,6 +76,8 @@ class GeoRefImage {
   const ErrorColorAllocate = 'GeoRefImage::ErrorColorAllocate';
   const ErrorFilledRectangle = 'GeoRefImage::ErrorFilledRectangle';
   const ErrorRectangle = 'GeoRefImage::ErrorRectangle';
+  const ErrorPolyline = 'GeoRefImage::ErrorPolyline';
+  const ErrorPolygon = 'GeoRefImage::ErrorPolygon';
   const ErrorFilledPolygon = 'GeoRefImage::ErrorFilledPolygon';
   const ErrorDrawString = 'GeoRefImage::ErrorDrawString';
   const ErrorSaveAlpha = 'GeoRefImage::ErrorSaveAlpha';
@@ -64,8 +92,8 @@ class GeoRefImage {
 
   // création d'une image vide avec un fond soit transparent soit blanc
   function create(int $width, int $height, bool $transparent): void {
-    $this->image = @imagecreate($width, $height)
-      or throw new SExcept("Erreur dans imagecreate() pour GeoRefImage::imagecreate($width, $height)", self::ErrorCreate);
+    $this->image = @imagecreatetruecolor($width, $height)
+      or throw new SExcept("Erreur dans imagecreatetruecolor() pour GeoRefImage::create($width, $height)", self::ErrorCreate);
     if ($transparent) {
       @imagealphablending($this->image, false)
         or throw new SExcept("Erreur dans imagealphablending(false) pour GeoRefImage::imagecreate()", self::ErrorCreate);
@@ -160,6 +188,14 @@ class GeoRefImage {
       throw new SExcept("Erreur dans imagecolorallocate(image, $rvb[0], $rvb[1], $rvb[2])", self::ErrorColorAllocate);
     return $color;
   }
+
+  // Alloue une couleur avec alpha pour l'image
+  function colorallocatealpha(array $rvba): int {
+    $color = @imagecolorallocatealpha($this->image, $rvba[0], $rvba[1], $rvba[2], $rvba[3]);
+    if ($color === false)
+      throw new SExcept("Erreur dans imagecolorallocate(i, $rvba[0], $rvba[1], $rvba[2], $rvba[3])", self::ErrorColorAllocate);
+    return $color;
+  }
   
   function savealpha(bool $enable): void {
     @imagesavealpha($this->image, $enable)
@@ -182,17 +218,46 @@ class GeoRefImage {
       or throw new SExcept("erreur de imagerectangle()", self::ErrorRectangle);
   }
 
-  // Dessine le polygone défini par une liste de positions en le remplissant avec la couleur
-  function filledpolygon(array $lpos, int $color): void {
+  /*function setbrush(): void {
+    $brush = imagecreate(3, 3);
+    $black = imagecolorallocate($brush, 255, 0, 0);
+    imagefilledrectangle($brush, 0, 0, 3, 3, $black);
+    imagesetbrush($this->image, $brush);
+  }*/
+  
+  // Dessine dans le style une polyligne définie par une liste de positiions
+  function polyline(array $lpos, Style $style): void {
+    if (($color = $style->color()) === null)
+      return;
+    imagesetthickness($this->image, $style->weight());
+    foreach ($lpos as $i => $pos) {
+      $pos = $this->toImgPos($pos, '');
+      if ($i <> 0) {
+        @imageline($this->image, $precpos[0], $precpos[1], $pos[0], $pos[1], $color)
+          or throw new SExcept("erreur de imageline()", self::ErrorPolyline);
+      }
+      $precpos = $pos;
+    }
+  }
+  
+  // Dessine dans la couleur le polygone défini par une liste de positions
+  function polygon(array $lpos, Style $style): void {
     foreach ($lpos as $i => $pos) {
       $pos = $this->toImgPos($pos, '');
       $points[2*$i] = $pos[0];
       $points[2*$i+1] = $pos[1];
     }
-    @imagefilledpolygon($this->image, $points, $color)
-      or throw new SExcept("erreur de imagefilledpolygon()", self::ErrorFilledPolygon);
+    if (($fcolor = $style->fillColor()) !== null) {
+      @imagefilledpolygon($this->image, $points, $fcolor)
+        or throw new SExcept("erreur de imagefilledpolygon()", self::ErrorFilledPolygon);
+    }
+    if (($color = $style->color()) !== null) {
+      imagesetthickness($this->image, $style->weight());
+      @imagepolygon($this->image, $points, $color)
+        or throw new SExcept("erreur de imagepolygon()", self::ErrorPolygon);
+    }
   }
-
+  
   // Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
   // et avec une couleur de fond $bg_color
   function string(GdFont|int $font, array $pos, string $string, int $text_color, int $bg_color, bool $debug): void {
@@ -211,3 +276,32 @@ class GeoRefImage {
       or throw new SExcept("erreur de imagestring()", self::ErrorDrawString);
   }
 };
+
+
+// Code de test unitaire de cette classe
+if (basename(__FILE__)<>basename($_SERVER['PHP_SELF'])) return;
+
+
+$gtImg = new GeoRefImage(new EBox([[0,0],[1000,1000]]));
+$gtImg->create(1200, 600, false);
+$gtImg->polygon(
+  [[50,50],[50,500],[500,500]],
+  new Style(['color'=> [255, 64, 64], 'weight'=> 2, 'fillColor'=> [255, 0, 0], 'fillOpacity'=> 0.3], $gtImg)
+);
+$gtImg->polygon(
+  [[100,100],[50,500],[800,200]],
+  new Style(['color'=> [0, 0, 255], 'weight'=> 2, 'fillColor'=> [0, 0, 255], 'fillOpacity'=> 0.3], $gtImg)
+);
+/*$gtImg->polygon(
+  [[100,100],[50,500],[800,200]],
+  new Style(['fillColor'=> [0, 0, 255], 'fillOpacity'=> 0.1], $gtImg)
+);
+$gtImg->polygon(
+  [[100,100],[50,500],[800,200]],
+  new Style(['color'=> [0, 0, 255], 'weight'=> 2], $gtImg)
+);*/
+
+// génération de l'image
+$gtImg->savealpha(true);
+header('Content-type: image/png');
+imagepng($gtImg->image());

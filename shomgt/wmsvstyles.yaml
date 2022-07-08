@@ -1,0 +1,120 @@
+title: Styles utilisés dans le serveru WMS-V
+$schema:
+  $id: xx
+  definitions:
+    color:
+      description: couleur comme array RVB
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: integer
+        minimum: 0
+        maximum: 255
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      description: titre du document
+      type: string
+    $schema:
+      description: schema JSON du document
+      oneOf:
+        - $ref: http://json-schema.org/schema#
+        - type: string
+    colors:
+      description: dictionaire de couleurs
+      additionalProperties: false
+      patternProperties:
+        '^[a-zA-Z]+$':
+          description: définition de la couleur comme array RVB
+          $ref: '#/definitions/color'
+    styles:
+      description: dictionaire de styles
+      additionalProperties: false
+      patternProperties:
+        '^[_a-zA-Z0-9]+$':
+          description: définition d'un style
+          type: object
+          additionalProperties: false
+          properties:
+            title:
+              description: titre du style
+              type: string
+            description:
+              description: commentaire sur le style
+              type: string
+            color:
+              description: couleur de trait, si absent pas de trait
+              oneOf:
+                - description: couleur définie par son nom
+                  type: string
+                - description: couleur définie par son code RVB
+                  $ref: '#/definitions/color'
+            weight:
+              description: épaisseur du trait, 1 si absent
+              type: integer
+              minimum: 1
+            fillColor:
+              description: couleur de remplissage, si absent pas de remplissage
+              oneOf:
+                - description: couleur définie par son nom
+                  type: string
+                - description: couleur définie par son code RVB
+                  $ref: '#/definitions/color'
+            fillOpacity:
+              description: degré d'opacité entre 0 et 1, par défaut 0.2
+              type: number
+              minimum: 0
+              maximum: 1
+
+colors:
+  black: [0, 0, 0]
+  grey: [128, 128, 128]
+  green: [0, 128, 0]
+  steelblue: [70, 130, 180]
+  
+styles:
+  default:
+    title: Style par défaut, trait gris, épaisseur 2, remplissage gris à 30%
+    color: grey
+    weight: 2
+    fillColor: grey
+    fillOpacity: 0.3
+  sar_2019:
+    title: Style de la couche sar_2019, trait vert, épaisseur 2, remplissage vert à 30%
+    color: green
+    weight: 2
+    fillColor: green
+    fillOpacity: 0.3
+  
+  black:
+    title: Style trait noir, épaisseur 2, remplissage noir à 30%
+    color: black
+    weight: 2
+    fillColor: black
+    fillOpacity: 0.3
+  white:
+    title: Style trait gris, épaisseur 2, remplissage gris à 30%
+    color: [255, 255, 255]
+    weight: 2
+    fillColor: [64, 64, 64]
+    fillOpacity: 0.3
+  red:
+    title: Style rouge, trait rouge, épaisseur 2, remplissage rouge à 30%
+    color: [255, 0, 0]
+    weight: 2
+    fillColor: [255, 0, 0]
+    fillOpacity: 0.3
+  green:
+    title: Style vert, trait vert, épaisseur 2, remplissage vert à 30%
+    color: [0, 128, 0]
+    weight: 2
+    fillColor: [0, 128, 0]
+    fillOpacity: 0.3
+  blue:
+    title: Style bleu, trait bleu, épaisseur 2, remplissage bleu à 30%
+    color: [0, 0, 255]
+    weight: 2
+    fillColor: [0, 0, 255]
+    fillOpacity: 0.3

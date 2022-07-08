@@ -19,6 +19,8 @@ doc: |
   En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
   Ce dernier mécanisme est notamment utilisé par QGis
 journal: |
+  8/7/2022:
+    - modif paramètres de getMap() pour ajouter styles
   11/6/2022:
     - augmentation à 10 du repport de tooSmallScale() que je trouve trop faible
   8-10/6/2022:
@@ -182,7 +184,7 @@ class WmsShomGt extends WmsServer {
   }
   
   // méthode GetMap du serveur WMS Shomgt
-  function getMap(string $version, array $lyrnames, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor) {
+  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void {
     if (($width < 100) || ($width > 2048) || ($height < 100) || ($height > 2048))
       WmsServer::exception(400, "Erreur, paramètre WIDTH ou HEIGHT incorrect", 'InvalidRequest');
     //    echo "bbox="; print_r($bbox); //die();
@@ -215,7 +217,9 @@ class WmsShomGt extends WmsServer {
     $grImage->create($width, $height, true); // création d'une image GD transparente
   
     foreach ($lyrnames as $lyrname) { // dessin des couches demandées ou de la couche gt40M si échelle inappropriée
-      Layer::layers()[$lyrname]->map($grImage, $debug, $zoom);
+      if (!($layer = Layer::layers()[$lyrname] ?? null))
+        WmsServer::exception(404, "Erreur, la couche $lyrname est absente");
+      $layer->map($grImage, $debug, $zoom);
     }
     
     // Si échelle inappropriée alors dessin des silhouettes des GéoTiffs de la 1ère couche demandée ainsi que leur numéro

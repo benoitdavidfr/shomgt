@@ -75,6 +75,10 @@ class LElts {
   }
 }
 
+function distanceBetween2Pos(array $a, array $b): float {
+  return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));
+}
+
 {/*PhpDoc: classes
 name: Geometry
 title: abstract class Geometry - Gestion d'une Geometry GeoJSON et de quelques opérations
@@ -279,7 +283,7 @@ class Point extends Geometry {
     name:  scalarProduct
     title: "function scalarProduct(Point $v): float - produit scalaire $this par $v en 2D"
     */
-    return $this->coords[0] * $v->coords[0] + $this->coords[1] * $v->coord[1];
+    return $this->coords[0] * $v->coords[0] + $this->coords[1] * $v->coords[1];
   }
   static function A_ADAPTER_test_pscal() {
     foreach ([
@@ -298,6 +302,8 @@ class Point extends Geometry {
 
   // multiplication de $this considéré comme un vecteur par un scalaire
   function scalMult(float $scal): Point { return new Point([$this->coords[0] * $scal, $this->coords[1] * $scal]); }
+
+  function norm(): float { return sqrt($this->scalarProduct($this)); }
 }
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe Point
@@ -387,6 +393,69 @@ class Segment {
       echo "$a ->intersects($b) -> ",my_json_encode($a->intersects($b)), " / ", $test['result']?'true':'false',"<br>\n";
     }
   }
+
+  // projection d'une position sur la ligne définie par le segment
+  // retourne u / P' = A + u * (B-A).
+  function projPosOnLine(array $pos): float {
+    $ab = $this->vector();
+    $ap = new Point([$pos[0]-$this->tab[0][0], $pos[1]-$this->tab[0][1]]);
+    return $ab->scalarProduct($ap) / $ab->scalarProduct($ab);
+  }
+  static function test_projPosOnLine(): void {
+    $seg = new self([0,0], [1,0]);
+    foreach ([[0,0], [1,0], [2, 0], [0.5, 5]] as $pos)
+      echo "projPosOnLine($seg, [$pos[0],$pos[1]])-> ",$seg->projPosOnLine($pos),"\n";
+    $seg = new self([0,0], [2,1]);
+    foreach ([[0,0], [1,0], [2, 0], [0.5, 5]] as $pos)
+      echo "projPosOnLine($seg, [$pos[0],$pos[1]])-> ",$seg->projPosOnLine($pos),"\n";
+  }
+  
+  function distancePosToLine(array $pos): float {
+    {/*PhpDoc: methods
+    name:  distancePosToLine
+    title: "distancePosToLine(array $pos): float - distance signée de $pos à la droite définie par le segment"
+    doc: |
+      distance signée de la position $pos à la droite définie par les 2 positions $a et $b"
+      La distance est positive si le point est à gauche de la droite AB et négative s'il est à droite
+      # Distance signee d'un point P a une droite orientee definie par 2 points A et B
+      # la distance est positive si P est a gauche de la droite AB et negative si le point est a droite
+      # Les parametres sont les 3 points P, A, B
+      # La fonction retourne cette distance.
+      # --------------------
+      sub DistancePointDroite
+      # --------------------
+      { my @ab = (@_[4] - @_[2], @_[5] - @_[3]); # vecteur B-A
+        my @ap = (@_[0] - @_[2], @_[1] - @_[3]); # vecteur P-A
+        return pvect (@ab, @ap) / Norme(@ab);
+      }
+    */}
+    $ab = $this->vector();
+    $ap = new Point([$pos[0]-$this->tab[0][0], $pos[1]-$this->tab[0][1]]);
+    if ($ab->norm() == 0)
+      throw new Exception("Erreur dans distancePosToLine : Points A et B confondus et donc droite non définie");
+    return $ab->vectorProduct($ap) / $ab->norm();
+  }
+  static function test_distancePosToLine() {
+    $seg = new self([0,0], [1,0]);
+    foreach ([[0,0], [1,0], [2, 0], [0.5, 5], [0.5, -5]] as $pos)
+      echo "distancePosToLine($seg, [$pos[0],$pos[1]])-> ",$seg->distancePosToLine($pos),"\n";
+  }
+  
+  // distance d'une position au segment
+  function distanceToPos(array $pos): float {
+    $u = $this->projPosOnLine($pos);
+    if ($u < 0)
+      return distanceBetween2Pos($pos, $this->tab[0]);
+    elseif ($u > 1)
+      return distanceBetween2Pos($pos, $this->tab[1]);
+    else
+      return abs($this->distancePosToLine($pos));
+  }
+  static function test_distanceToPos(): void {
+    $seg = new self([0,0], [1,0]);
+    foreach ([[0,0], [1,0], [2, 0], [0.5, 5], [0.5, -5], [5,4]] as $pos)
+      echo "distanceToPos($seg, [$pos[0],$pos[1]])-> ",$seg->distanceToPos($pos),"\n";
+  }
 };
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe Segment
@@ -394,9 +463,13 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "<a href='?test=Segment'>Test unitaire de la classe Segment</a><br>\n";
   elseif ($_GET['test']=='Segment') {
     Segment::test_intersects();
+    Segment::test_projPosOnLine();
+    echo "\n";
+    Segment::test_distancePosToLine();
+    echo "\n";
+    Segment::test_distanceToPos();
   }
 }
-
 
 {/*PhpDoc: classes
 name: Point
@@ -473,7 +546,7 @@ class LineString extends Geometry {
   
   /*PhpDoc: methods
   name:  pointInPolygon
-  title: "pointInPolygon(Point $pt): bool - teste si une position pos est dans le polygone formé par la ligne fermée"
+  title: "pointInPolygon(array $p): bool - teste si une position pos est dans le polygone formé par la ligne fermée"
   */
   function pointInPolygon(array $p): bool {
     {/*  Code de référence en C:
@@ -532,6 +605,24 @@ class LineString extends Geometry {
     }
     return $segs;
   }
+  
+  /*PhpDoc: methods
+  name:  distanceToPos
+  title: "distanceToPos(array $pos): float - calcule la distance d'une LineString à une position"
+  */
+  function distanceToPos(array $pos): float {
+    foreach ($this->segs() as $seg) {
+      $d = $seg->distanceToPos($pos);
+      if (!isset($dmin) || ($d < $dmin))
+        $dmin = $d;
+    }
+    return $dmin;
+  }
+  static function test_distanceToPos(): void {
+    $ls = ['type'=>'LineString', 'coordinates'=> [[0,0],[1,0],[2,2]]];
+    foreach ([[0,0],[2,2],[1,1],[1,-1],[-1,-1]] as $pos)
+      echo json_encode($ls),"->distanceToPos([$pos[0],$pos[1]])-> ",Geometry::fromGeoJSON($ls)->distanceToPos($pos),"\n";
+  }
 }
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe LineString
@@ -542,6 +633,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "ls=$ls<br>\n";
     echo "ls->center()=",json_encode($ls->center()),"<br>\n";
     LineString::test_pointInPolygon();
+    LineString::test_distanceToPos();
   }
 }
 
@@ -870,6 +962,17 @@ class MultiPolygon extends Geometry {
     foreach($this->geom as $polygon)
       $area += $polygon->area();
     return $area;
+  }
+  
+  /*PhpDoc: methods
+  name:  pointInPolygon
+  title: "pointInPolygon(array $pos): bool - teste si une position est dans un des polygones"
+  */
+  function pointInPolygon(array $pos): bool {
+    foreach ($this->geoms() as $polygon)
+      if ($polygon->pointInPolygon($pos))
+        return true;
+    return false;
   }
   
   /*PhpDoc: methods

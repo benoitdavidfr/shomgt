@@ -79,7 +79,11 @@ EOT;
   
   abstract function getCapabilities(string $version='');
   
-  abstract function getMap(string $version, array $layers, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor);
+  abstract function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void;
+  
+  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount): void {
+    die('');
+  }
   
   // traite une requête WMS
   function process(array $params) {
@@ -99,11 +103,21 @@ EOT;
       $this->getCapabilities(isset($GET['VERSION']) ? $GET['VERSION'] : '');
       die();
     }
+    elseif (strtoupper($GET['REQUEST'])=='GETFEATUREINFO') {
+      foreach (['QUERY_LAYERS','CRS','BBOX','WIDTH','HEIGHT','INFO_FORMAT'] as $param)
+        if (!isset($GET[$param]))
+          self::exception(400, "Parametre $param non defini", 'MissingParameter');
+      $bbox = explode(',', $GET['BBOX']);
+      $x = ($GET['I'] * ($bbox[2]-$bbox[0]) / $GET['WIDTH']) + $bbox[0];
+      $y = $bbox[3] - ($GET['J'] * ($bbox[3]-$bbox[1]) / $GET['HEIGHT']);
+      $this->getFeatureInfo(explode(',', $GET['QUERY_LAYERS']), $GET['CRS'], [$x, $y], $GET['FEATURE_COUNT'] ?? 10);
+      die();
+    }
     elseif (strtoupper($GET['REQUEST'])<>'GETMAP')
       self::exception(400, "Parametre REQUEST doit valoir GetCapabilities ou GetMap", 'InvalidRequest');
 
-// Vérification des paramètres pour le GetMap
-    foreach (['VERSION','LAYERS','BBOX','WIDTH','HEIGHT','FORMAT'] as $param)
+    // Vérification des paramètres pour le GetMap
+    foreach (['VERSION','LAYERS','STYLES','BBOX','WIDTH','HEIGHT','FORMAT'] as $param)
       if (!isset($GET[$param]))
         self::exception(400, "Parametre $param non defini", 'MissingParameter');
     
@@ -116,10 +130,17 @@ EOT;
     if (!in_array($GET['FORMAT'],['image/png','image/jpeg']))
       self::exception(400, "FORMAT $GET[FORMAT] non acceptée", 'InvalidRequest');
     
-    $this->getMap($GET['VERSION'], explode(',',$GET['LAYERS']), explode(',',$GET['BBOX']),
-                  $GET[($GET['VERSION']=='1.3.0'?'CRS':'SRS')],
-                  $GET['WIDTH'], $GET['HEIGHT'], $GET['FORMAT'],
-                  $GET['TRANSPARENT'] ?? '', $GET['BGCOLOR'] ?? '');
+    $this->getMap(
+      version: $GET['VERSION'],
+      lyrnames: explode(',', $GET['LAYERS']),
+      styles: (isset($GET['STYLES']) && $GET['STYLES']) ? explode(',', $GET['STYLES']) : [],
+      bbox: explode(',',$GET['BBOX']),
+      crs: $GET[($GET['VERSION']=='1.3.0'?'CRS':'SRS')],
+      width: $GET['WIDTH'],
+      height: $GET['HEIGHT'],
+      format: $GET['FORMAT'],
+      transparent: $GET['TRANSPARENT'] ?? '',
+      bgcolor: $GET['BGCOLOR'] ?? '');
     die();
   }
 }
@@ -134,8 +155,8 @@ class WmsServerTest extends WmsServer {
     die("WmsServer::getCapabilities(version=$version)");
   }
   
-  function getMap($version, $layers, $bbox, $crs, $width, $height, $format, $transparent, $bgcolor) {
-    die("WmsServer::getMap(version=".$version.", layers=".implode(',',$layers).", bbox=".implode(',',$bbox) 
+  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void {
+    die("WmsServer::getMap(version=".$version.", lyrnames=".implode(',',$lyrnames).", bbox=".implode(',',$bbox) 
         .", crs=$crs, width=$width, height=$height, format=$format, transparent=$transparent)");
   }
 };
@@ -155,7 +176,6 @@ if (!isset($_GET['SERVICE'])) {
 <a href='?SERVICE=WMS&version=1.3.0&request=GetMap&layers=LAYER&bbox=838000,6661600,838150,6661690&srs=EPSG:2154&width=1000&height=600&format=image/png&styles='>GetMap CRS non défini</a><br>
 <a href='?SERVICE=WMS&version=1.3.0&request=GetMap&layers=LAYER&bbox=838000,6661600,838150,6661690&crs=EPSG:2154&width=1000&height=600&format=image/png&styles='>GetMap</a><br>
 <a href='?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=-180,-80,180,80&CRS=CRS:84&WIDTH=42718&HEIGHT=18986&LAYERS=gtpyr&STYLES=&FORMAT=image/png&DPI=96&MAP_RESOLUTION=96&FORMAT_OPTIONS=dpi:96&TRANSPARENT=TRUE'>width et height trop grands</a><br>
-
 EOT;
 } else {
   $server = new WmsServerTest;
