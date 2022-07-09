@@ -1,8 +1,12 @@
 title: Styles utilisés dans le serveru WMS-V
+description: |
+  Définition des styles d'affichage des couches vecteur dans le serveur WMS-V.
+  Par défaut chaque couche utilise un style portant le nom de la couche.
+  Un style différent du style par défaut peut être défini dans l'appel du service WMS en utilisant le paramètre styles.
 $schema:
-  $id: xx
+  $id: http://geoapi.fr/shomgt/shomgt/wmsvstyles.yaml#/$schema
   definitions:
-    color:
+    rvb:
       description: couleur comme array RVB
       type: array
       minItems: 3
@@ -11,11 +15,22 @@ $schema:
         type: integer
         minimum: 0
         maximum: 255
+    color:
+      description: couleur définie par son nom, clé dans le dictionnaire des couleurs, ou par son code RVB
+      oneOf:
+        - description: couleur définie par son nom
+          type: string
+        - description: couleur définie par son code RVB
+          $ref: '#/definitions/rvb'
+  
   type: object
   additionalProperties: false
   properties:
     title:
       description: titre du document
+      type: string
+    description:
+      description: commentaire du document
       type: string
     $schema:
       description: schema JSON du document
@@ -23,14 +38,14 @@ $schema:
         - $ref: http://json-schema.org/schema#
         - type: string
     colors:
-      description: dictionaire de couleurs
+      description: dictionaire des couleurs
       additionalProperties: false
       patternProperties:
         '^[a-zA-Z]+$':
-          description: définition de la couleur comme array RVB
-          $ref: '#/definitions/color'
+          description: définition de la couleur par son code RVB
+          $ref: '#/definitions/rvb'
     styles:
-      description: dictionaire de styles
+      description: dictionaire des styles
       additionalProperties: false
       patternProperties:
         '^[_a-zA-Z0-9]+$':
@@ -46,22 +61,14 @@ $schema:
               type: string
             color:
               description: couleur de trait, si absent pas de trait
-              oneOf:
-                - description: couleur définie par son nom
-                  type: string
-                - description: couleur définie par son code RVB
-                  $ref: '#/definitions/color'
+              $ref: '#/definitions/color'
             weight:
               description: épaisseur du trait, 1 si absent
               type: integer
               minimum: 1
             fillColor:
               description: couleur de remplissage, si absent pas de remplissage
-              oneOf:
-                - description: couleur définie par son nom
-                  type: string
-                - description: couleur définie par son code RVB
-                  $ref: '#/definitions/color'
+              $ref: '#/definitions/color'
             fillOpacity:
               description: degré d'opacité entre 0 et 1, par défaut 0.2
               type: number
@@ -69,9 +76,12 @@ $schema:
               maximum: 1
 
 colors:
+  white: [255, 255, 255]
   black: [0, 0, 0]
   grey: [128, 128, 128]
+  red: [255, 0, 0]
   green: [0, 128, 0]
+  blue: [0, 0, 255]
   steelblue: [70, 130, 180]
   
 styles:
@@ -87,6 +97,16 @@ styles:
     weight: 2
     fillColor: green
     fillOpacity: 0.3
+  delmar:
+    title: Style de la couche delmar, trait steelblue, épaisseur 2
+    color: steelblue
+    weight: 2
+  zeefr:
+    title: Style de la couche zeefr, trait bleu, épaisseur 2, remplissage bleu à 30%
+    color: blue
+    weight: 2
+    fillColor: blue
+    fillOpacity: 0.3
   
   black:
     title: Style trait noir, épaisseur 2, remplissage noir à 30%
@@ -95,26 +115,32 @@ styles:
     fillColor: black
     fillOpacity: 0.3
   white:
-    title: Style trait gris, épaisseur 2, remplissage gris à 30%
-    color: [255, 255, 255]
+    title: Style trait blanc, épaisseur 2, remplissage blanc à 30%
+    color: white
     weight: 2
-    fillColor: [64, 64, 64]
+    fillColor: white
+    fillOpacity: 0.3
+  grey:
+    title: Style trait gris, épaisseur 2, remplissage gris à 30%
+    color: grey
+    weight: 2
+    fillColor: grey
     fillOpacity: 0.3
   red:
     title: Style rouge, trait rouge, épaisseur 2, remplissage rouge à 30%
-    color: [255, 0, 0]
+    color: red
     weight: 2
-    fillColor: [255, 0, 0]
+    fillColor: red
     fillOpacity: 0.3
   green:
     title: Style vert, trait vert, épaisseur 2, remplissage vert à 30%
-    color: [0, 128, 0]
+    color: green
     weight: 2
-    fillColor: [0, 128, 0]
+    fillColor: green
     fillOpacity: 0.3
   blue:
     title: Style bleu, trait bleu, épaisseur 2, remplissage bleu à 30%
-    color: [0, 0, 255]
+    color: blue
     weight: 2
-    fillColor: [0, 0, 255]
+    fillColor: bluexx
     fillOpacity: 0.3

@@ -12,24 +12,50 @@ require_once __DIR__.'/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-abstract class Layer {
-  static array $styles; // dictionnaire des styles issu du fichier wmsvstyles.yaml
-  static array $layers = []; // dictionaire [{lyrName} => Layer]
+class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fichier yaml
+  const LIB_PATH = __DIR__.'/../wmsvstyles.yaml'; // chemin du fichier Yaml des styles
+
+  // dictionnaire des styles indexé par leur identifiant
+  // [{id} => ['title'=>{title}, 'color'=>{color}, 'weight'=<{weight}, 'fillColor'=>{fillColor}, 'fillOpacity'=>{fillOpacity}]]
+  static array $all;
   
-  static function init(): void { // initialisation de la liste des couches 
-    $yaml = Yaml::parseFile(__DIR__.'/../wmsvstyles.yaml');
+  // initialise les styles à partir du fichiet Yaml défini par LIB_PATH
+  static function init() {
+    $yaml = Yaml::parseFile(self::LIB_PATH);
     foreach ($yaml['styles'] as $sid => $style) {
+      // remplacement du nom de la couleur par sa définition RVB
       if (isset($style['color']) && is_string($style['color'])) {
         if (isset($yaml['colors'][$style['color']]))
           $style['color'] = $yaml['colors'][$style['color']];
       }
-      self::$styles[$sid] = $style;
       if (isset($style['fillColor']) && is_string($style['fillColor'])) {
         if (isset($yaml['colors'][$style['fillColor']]))
           $style['fillColor'] = $yaml['colors'][$style['fillColor']];
       }
-      self::$styles[$sid] = $style;
+      self::$all[$sid] = $style;
     }
+  }
+  
+  // retourne le style correspondant au nom demandé ou si'il n'existe pas le style par défaut
+  static function get(string $name): array { return self::$all[$name] ?? self::$all['default']; }
+  
+  // Publication de la liste des styles disponibles dans les capacités du serveur
+  static function asXml(): string {
+    $xml = '';
+    foreach (self::$all as $id => $style) {
+      $xml .= "<Style><Name>$id</Name>"
+        .(isset($style['title']) ? "<Title>$style[title]</Title>" : '')
+        ."</Style>";
+    }
+    return $xml;
+  }
+};
+
+abstract class Layer {
+  static array $layers = []; // dictionaire [{lyrName} => Layer]
+  
+  static function init(): void { // initialisation de la liste des couches 
+    StyleLib::init();
     foreach (new DirectoryIterator(__DIR__.'/../geojson') as $geojsonfile) {
       if (($geojsonfile->getType() == 'file') && ($geojsonfile->getExtension()=='geojson')) {
         $lyrname = $geojsonfile->getBasename('.geojson');
@@ -54,9 +80,7 @@ abstract class Layer {
 class VectorLayer extends Layer {
   protected string $pathname;
   
-  function __construct(string $pathname) {
-    $this->pathname = $pathname;
-  }
+  function __construct(string $pathname) { $this->pathname = $pathname; }
 
   // fournit une représentation de la couche comme array pour affichage
   function asArray(): array { return [$this->pathname]; }
@@ -69,7 +93,7 @@ class VectorLayer extends Layer {
 
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
   function map(GeoRefImage $grImage, string $style, bool $debug): void {
-    $style = new Style(Layer::$styles[$style] ?? Layer::$styles['default'], $grImage);
+    $style = new Style(StyleLib::get($style), $grImage);
     $geojson = json_decode(file_get_contents($this->pathname), true);
     foreach ($geojson['features'] as $feature) {
       $geometry = $feature['geometry'];
@@ -105,14 +129,22 @@ class VectorLayer extends Layer {
     }
   }
 
-  function featureInfo(array $geo, int $featureCount): array {
+  // retourne une liste de propriétés des features concernés
+  function featureInfo(array $geo, int $featureCount, float $resolution): array {
     $info = [];
+    $dmin = 10 * $resolution;
     $geojson = json_decode(file_get_contents($this->pathname), true);
     foreach ($geojson['features'] as $feature) {
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
         case 'LineString': {
           $geom = Geometry::fromGeoJSON($geometry);
+          $d = $geom->distanceToPos($geo);
+          if ($d < $dmin) {
+            $dmin = $d;
+            $info = [ $feature['properties'] ];
+          }
+          break;
         }
         case 'Polygon':
         case 'MultiPolygon': {

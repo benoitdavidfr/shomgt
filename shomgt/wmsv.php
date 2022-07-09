@@ -4,8 +4,16 @@ name: wmsv.php
 title: wmsv.php - service WMS-V de shomgt
 classes:
 doc: |
+  Ce service WMS est paramétré par
+    - le fichier wmsvcapabilities.xml qui contient
+      - la documentation sur le serveur (titre, résumé, mots-clés, contraintes d'accès, ...)
+      - la liste des couches exposées avec pour chacune son nom, son titre et son résumé
+      - la liste des systèmes de coordonnées autorisés et l'extension des coordonnées
+    - le fichier wmsvstyles.yaml qui définit un certain nombre de styles de représentation graphique utilisables
+      le contenu de ce fichier doit respecter le schéma JSON défini dans le fichier
 journal: |
-  8/7/2022: fork de wms.php
+  8-9/7/2022:
+    - fork de wms.php
 includes:
   - lib/coordsys.inc.php
   - lib/gebox.inc.php
@@ -38,11 +46,14 @@ class WmsvShomGt extends WmsServer {
   function getCapabilities(string $version='') {
     header('Content-Type: text/xml');
     $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
-    die(str_replace(
+    $cap = str_replace(
         '{OnlineResource}',
         "$request_scheme://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?",
         file_get_contents(__DIR__.'/wmsvcapabilities.xml')
-    ));
+    );
+    StyleLib::init();
+    $cap = str_replace('<Style><Name>DEFAUT</Name></Style>', StyleLib::asXml(), $cap);
+    die($cap);
   }
 
   private function wombox(string $crs, array $bbox): EBox { // calcul EBox en WorldMercator en fonction de crs 
@@ -126,19 +137,40 @@ class WmsvShomGt extends WmsServer {
     }
   }
   
-  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount): void {
-    echo "getFeatureInfo([",implode(', ', $lyrnames),"], [",implode(', ', $pos),"])<br>\n";
+  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): void {
+    //echo "getFeatureInfo([",implode(', ', $lyrnames),"], ",
+    //    "pos=[$pos[0],$pos[1]], pixelSize=[$pixelSize[0],$pixelSize[1]])<br>\n";
     $geo = $this->toGeo($crs, $pos);
-    echo "geo="; print_r($geo); echo "<br>\n";
+    $geo2 = $this->toGeo($crs, [$pos[0]+$pixelSize[0], $pos[1]+$pixelSize[1]]);
+    //echo "geo="; print_r($geo); echo "<br>\n";
+    //echo "geo2="; print_r($geo2); echo "<br>\n";
+    $resolution = max(abs($geo2[0]-$geo[0]), abs($geo2[1]-$geo[1]));
+    //echo "resolution=$resolution<br>\n";
     Layer::init(); // Initialisation
     $info = [];
     foreach ($lyrnames as $i => $lyrname) {
       if (!($layer = Layer::layers()[$lyrname] ?? null))
         WmsServer::exception(404, "Erreur, la couche $lyrname est absente");
-      $info[$lyrname] = $layer->featureInfo($geo, $featureCount);
+      $info = $layer->featureInfo($geo, $featureCount, $resolution);
     }
-    echo "<pre>",Yaml::dump($info, 4, 2),"</pre>\n";
-    die();
+    switch ($format) {
+      case 'text/html': {
+        echo "<pre>pos: ",Pos::formatInDMd($geo, $resolution),"</pre>\n";
+        echo "<pre>",Yaml::dump($info, 4, 2),"</pre>\n";
+        die();
+      }
+      case 'application/json': {
+        die(json_encode([
+          'pos'=> Pos::formatInDMd($geo, $resolution),
+          'info'=> $info,
+        ]));
+      }
+      default: {
+        echo "pos: ",Pos::formatInDMd($geo, $resolution),"\n";
+        echo Yaml::dump($info, 4, 2),"\n";
+        die();
+      }
+    }
   }
 };
 
@@ -203,6 +235,19 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'crs'=> 'CRS:84',
       'bbox'=> '-180,-80,180,80',
     ],
+   "Les 3 couches sur la métropole dans les styles red,black,green" => [
+     'service'=> 'WMS',
+     'version'=> '1.3.0',
+     'request'=> 'GetMap',
+     'layers'=> 'frzee,delmar,sar_2019',
+     'styles'=> 'red,black,green',
+     'format'=> 'image/png',
+     'transparent'=> 'true',
+     'height'=> '600',
+     'width'=> '1200',
+     'crs'=> 'CRS:84',
+     'bbox'=> '-10,35,20,55',
+   ],
     "Génère une exception de projection WorldMercator en raison des coordonnées de la requête" => [
       'service'=> 'WMS',
       'version'=> '1.3.0',

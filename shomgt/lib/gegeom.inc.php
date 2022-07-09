@@ -10,6 +10,8 @@ doc: |
   Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
   puis en apppelant la méthode Geometry::fromGeoJSON().
 journal: |
+  8/7/2022:
+    - ajout Segment::(projPosOnLine+distancePosToLine+distanceToPos) + LineString::distanceToPos
   7-10/2/2022:
     - ajout de code aux exceptions
     - décomposition du test unitaire de la classe Geometry dans les tests des sous-classes

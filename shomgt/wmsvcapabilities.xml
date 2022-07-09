@@ -8,9 +8,14 @@
   <Service>
     <Name>OGC:WMS</Name>
     <Title>Service WMS-V des couches vecteur de ShomGT</Title>
-    <Abstract>Service de mise à disposition de la couche vecteur SAR-SRR</Abstract>
+    <Abstract>Service de mise à disposition des couches vecteur de ShomGT</Abstract>
     <KeywordList>
-      <Keyword>SAR-SRR</Keyword>
+      <Keyword>Zones de recherches et sauvetage (SAR)</Keyword>
+      <Keyword>Zone économique exclusive</Keyword>
+      <Keyword>Délimitations maritimes</Keyword>
+      <Keyword>Ligne de base</Keyword>
+      <Keyword>Mer territoriale</Keyword>
+      <Keyword>plateau continental</Keyword>
     </KeywordList>
     <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="{OnlineResource}" />
     <ContactInformation>
@@ -63,8 +68,6 @@
       <GetFeatureInfo>
         <Format>text/plain</Format>
         <Format>text/html</Format>
-        <Format>text/xml</Format>
-        <Format>application/xml</Format>
         <Format>application/json</Format>
         <DCPType>
           <HTTP>
@@ -82,7 +85,7 @@
     </Exception>
     <Layer>
       <Title>Couches vecteur ShomGT</Title>
-      <Abstract>Service de mise à disposition des cartes GéoTIFF du Shom mis en oeuvre par MTE/CGDD/SRI/Ecolab.</Abstract>
+      <Abstract>Couches vecteur de ShomGT</Abstract>
       <CRS>EPSG:3857</CRS> <!-- Web Mercator -->
       <CRS>EPSG:3395</CRS> <!-- WGS84 World Mercator -->
       <CRS>EPSG:4326</CRS> <!-- WGS84 lat,lon -->
@@ -98,9 +101,7 @@
       <BoundingBox CRS="EPSG:3395" minx="-30056263" miny="-15496571" maxx="30056263" maxy="15496571"/><!-- WGS84 Wld Mercator -->
       <BoundingBox CRS="EPSG:4326" minx="-80.0" miny="-270.0" maxx="80.0" maxy="270.0"/><!-- WGS84 lat,lon -->
       <BoundingBox CRS="CRS:84" minx="-270.0" miny="-80.0" maxx="270.0" maxy="80.0"/><!-- WGS84 lon,lat -->
-      <Style>
-        <Name>DEFAUT</Name>
-      </Style>
+      <Style><Name>DEFAUT</Name></Style> <!-- Motif remplacé par le script par la liste des styles définis -->
       <MinScaleDenominator>2000</MinScaleDenominator>
       <MaxScaleDenominator>40000000</MaxScaleDenominator>
       <Layer queryable="1" opaque="0">
@@ -112,12 +113,12 @@ Données du produit Shom [Zones SAR (Search and Rescue)](https://diffusion.shom.
       <Layer queryable="1" opaque="0">
         <Name>delmar</Name>
         <Title>Délimitations maritimes</Title>
-        <Abstract></Abstract>
+        <Abstract>Délimitations maritimes (lignes de base, mer territoriale, zone contiguë, zone économique exclusive, plateau continental) extraites du serveur WFS du Shom en juin 2022 ; structurées sous la forme de lignes.</Abstract>
       </Layer>
       <Layer queryable="1" opaque="0">
         <Name>frzee</Name>
         <Title>ZEE simplifiée</Title>
-        <Abstract></Abstract>
+        <Abstract>ZEE simplifiée structurée sour forme de polygones en distinguant en métropole les façades maritimes. Renumérisée à partir des données du Shom.</Abstract>
       </Layer>
     </Layer>
   </Capability>

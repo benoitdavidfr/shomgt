@@ -81,7 +81,7 @@ EOT;
   
   abstract function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void;
   
-  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount): void {
+  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): void {
     die('');
   }
   
@@ -110,7 +110,14 @@ EOT;
       $bbox = explode(',', $GET['BBOX']);
       $x = ($GET['I'] * ($bbox[2]-$bbox[0]) / $GET['WIDTH']) + $bbox[0];
       $y = $bbox[3] - ($GET['J'] * ($bbox[3]-$bbox[1]) / $GET['HEIGHT']);
-      $this->getFeatureInfo(explode(',', $GET['QUERY_LAYERS']), $GET['CRS'], [$x, $y], $GET['FEATURE_COUNT'] ?? 10);
+      $this->getFeatureInfo(
+        lyrnames: explode(',', $GET['QUERY_LAYERS']),
+        crs: $GET['CRS'],
+        pos: [$x, $y],
+        featureCount: $GET['FEATURE_COUNT'] ?? 10,
+        pixelSize: [($bbox[2]-$bbox[0]) / $GET['WIDTH'], ($bbox[3]-$bbox[1]) / $GET['HEIGHT']],
+        format: $GET['INFO_FORMAT']
+      );
       die();
     }
     elseif (strtoupper($GET['REQUEST'])<>'GETMAP')
