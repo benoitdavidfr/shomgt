@@ -31,8 +31,8 @@ use Symfony\Component\Yaml\Yaml;
 //die("Fin ligne ".__LINE__."\n");
 
 // écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
-WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
-WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+//WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
+//WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
 /*PhpDoc: classes
 name: class WmsvShomGt
@@ -175,7 +175,7 @@ class WmsvShomGt extends WmsServer {
 };
 
 if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
-  echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>WMS shomgt</title></head><body>\n";
+  echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>WMS-V shomgt</title></head><body>\n";
   /*if (isset($_SERVER['PHP_AUTH_USER'])) {
     if (($_GET['action'] ?? null) == 'logout') {
       header('WWW-Authenticate: Basic realm="Authentification pour acces aux ressources du SHOM"');
@@ -195,6 +195,19 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'SERVICE'=> 'WMS',
       'VERSION'=> '1.3.0',
       'REQUEST'=> 'GetCapabilities',
+    ],
+    "Les 3 couches sur la métropole dans les styles red,black,green" => [
+      'service'=> 'WMS',
+      'version'=> '1.3.0',
+      'request'=> 'GetMap',
+      'layers'=> 'frzee,delmar,sar_2019',
+      'styles'=> 'red,black,green',
+      'format'=> 'image/png',
+      'transparent'=> 'true',
+      'height'=> '600',
+      'width'=> '1200',
+      'crs'=> 'CRS:84',
+      'bbox'=> '-11,38,11,52',
     ],
     'GetMap en EPSG:3857' => [
       'service'=> 'WMS',
@@ -235,19 +248,6 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'crs'=> 'CRS:84',
       'bbox'=> '-180,-80,180,80',
     ],
-   "Les 3 couches sur la métropole dans les styles red,black,green" => [
-     'service'=> 'WMS',
-     'version'=> '1.3.0',
-     'request'=> 'GetMap',
-     'layers'=> 'frzee,delmar,sar_2019',
-     'styles'=> 'red,black,green',
-     'format'=> 'image/png',
-     'transparent'=> 'true',
-     'height'=> '600',
-     'width'=> '1200',
-     'crs'=> 'CRS:84',
-     'bbox'=> '-10,35,20,55',
-   ],
     "Génère une exception de projection WorldMercator en raison des coordonnées de la requête" => [
       'service'=> 'WMS',
       'version'=> '1.3.0',

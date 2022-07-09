@@ -263,12 +263,22 @@ var baseLayers = {
   // gtDelMar
   "Zones maritimes" : new L.TileLayer(
     shomgturl+'tile.php/gtZonMar/{z}/{x}/{y}.png',
-    {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
+    {"format":"png","minZoom":0,"maxZoom":8,"detectRetina":false,"attribution":attrshom}
   ),
   // IGN
+  "Ortho IGN" : new L.TileLayer(
+    'https://wxs.ign.fr/essentiels/geoportail/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0'
+      +'&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&TILEMATRIXSET=PM&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}'
+      +'&STYLE=normal&FORMAT=image/jpeg',
+    { "format":"image/jpeg","minZoom":0,"maxZoom":21,"detectRetina":false,
+      "attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"
+    }
+  ),
   "Plan IGN" : new L.TileLayer(
-    'https://igngp.geoapi.fr/tile.php/plan-ignv2/{z}/{x}/{y}.png',
-    { "format":"image/jpeg","minZoom":0,"maxZoom":18,"detectRetina":false,
+    'https://wxs.ign.fr/essentiels/geoportail/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0'
+      +'&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIXSET=PM&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}'
+      +'&STYLE=normal&FORMAT=image/png',
+    { "format":"image/png","minZoom":0,"maxZoom":18,"detectRetina":false,
       "attribution":"&copy; <a href='http://www.ign.fr' target='_blank'>IGN</a>"
     }
   ),

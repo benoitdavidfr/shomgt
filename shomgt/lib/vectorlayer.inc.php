@@ -4,6 +4,9 @@ title: vectorlayer.inc.php
 name: vectorlayer.inc.php
 doc: |
   Affichage couche vecteur
+journal: |
+  8-9/7/2022:
+    - création sur le modèle de layer.inc.php
 */
 //die("Fin ligne ".__LINE__."\n");
 require_once __DIR__.'/../../vendor/autoload.php';
@@ -20,21 +23,7 @@ class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fich
   static array $all;
   
   // initialise les styles à partir du fichiet Yaml défini par LIB_PATH
-  static function init() {
-    $yaml = Yaml::parseFile(self::LIB_PATH);
-    foreach ($yaml['styles'] as $sid => $style) {
-      // remplacement du nom de la couleur par sa définition RVB
-      if (isset($style['color']) && is_string($style['color'])) {
-        if (isset($yaml['colors'][$style['color']]))
-          $style['color'] = $yaml['colors'][$style['color']];
-      }
-      if (isset($style['fillColor']) && is_string($style['fillColor'])) {
-        if (isset($yaml['colors'][$style['fillColor']]))
-          $style['fillColor'] = $yaml['colors'][$style['fillColor']];
-      }
-      self::$all[$sid] = $style;
-    }
-  }
+  static function init() { self::$all = Yaml::parseFile(self::LIB_PATH)['styles']; }
   
   // retourne le style correspondant au nom demandé ou si'il n'existe pas le style par défaut
   static function get(string $name): array { return self::$all[$name] ?? self::$all['default']; }
@@ -43,9 +32,7 @@ class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fich
   static function asXml(): string {
     $xml = '';
     foreach (self::$all as $id => $style) {
-      $xml .= "<Style><Name>$id</Name>"
-        .(isset($style['title']) ? "<Title>$style[title]</Title>" : '')
-        ."</Style>";
+      $xml .= "<Style><Name>$id</Name><Title>$style[title]</Title><Abstract>$style[description]</Abstract></Style>";
     }
     return $xml;
   }

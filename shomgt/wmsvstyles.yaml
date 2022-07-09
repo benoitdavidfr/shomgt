@@ -1,13 +1,17 @@
 title: Styles utilisés dans le serveru WMS-V
 description: |
   Définition des styles d'affichage des couches vecteur dans le serveur WMS-V.
-  Par défaut chaque couche utilise un style portant le nom de la couche.
-  Un style différent du style par défaut peut être défini dans l'appel du service WMS en utilisant le paramètre styles.
+  Les styles sont définis dans un dictionnaire dans le champ styles du document.
+  Ils utilisent pour les couleurs des ancres définies dans le dictionnaire des couleurs.
+  Par défaut chaque couche du serveur WMS-V utilise un style portant le nom de la couche, ou si le nom n'existe pas
+  alors le style 'default' qui est donc obligatoire dans le dictionnaire des styles.
+  Dans l'appel du service WMS, un style différent du style par défaut peut être défini en utilisant le paramètre styles.
+  Les champs title et description des styles sont obligatooires, ils sont exposés par le service WMS dans le GetCapabilities.
 $schema:
   $id: http://geoapi.fr/shomgt/shomgt/wmsvstyles.yaml#/$schema
   definitions:
-    rvb:
-      description: couleur comme array RVB
+    color:
+      description: couleur définie par son code RVB structuré comme array
       type: array
       minItems: 3
       maxItems: 3
@@ -15,14 +19,7 @@ $schema:
         type: integer
         minimum: 0
         maximum: 255
-    color:
-      description: couleur définie par son nom, clé dans le dictionnaire des couleurs, ou par son code RVB
-      oneOf:
-        - description: couleur définie par son nom
-          type: string
-        - description: couleur définie par son code RVB
-          $ref: '#/definitions/rvb'
-  
+
   type: object
   additionalProperties: false
   properties:
@@ -38,19 +35,21 @@ $schema:
         - $ref: http://json-schema.org/schema#
         - type: string
     colors:
-      description: dictionaire des couleurs
+      description: dictionaire des couleurs, sert à définir les ancres pour les couleurs définies dans les styles
       additionalProperties: false
       patternProperties:
         '^[a-zA-Z]+$':
           description: définition de la couleur par son code RVB
-          $ref: '#/definitions/rvb'
+          $ref: '#/definitions/color'
     styles:
-      description: dictionaire des styles
+      description: dictionaire des styles, les couleurs utilisent les ancres définies dans le dictionnaire des couleurs
+      required: [default]
       additionalProperties: false
       patternProperties:
         '^[_a-zA-Z0-9]+$':
           description: définition d'un style
           type: object
+          required: [title, description]
           additionalProperties: false
           properties:
             title:
@@ -76,71 +75,74 @@ $schema:
               maximum: 1
 
 colors:
-  white: [255, 255, 255]
-  black: [0, 0, 0]
-  grey: [128, 128, 128]
-  red: [255, 0, 0]
-  green: [0, 128, 0]
-  blue: [0, 0, 255]
-  steelblue: [70, 130, 180]
+  white: &white [255, 255, 255]
+  black: &black [0, 0, 0]
+  grey: &grey [128, 128, 128]
+  red: &red [255, 0, 0]
+  green: &green [0, 128, 0]
+  blue: &blue [0, 0, 255]
+  steelblue: &steelblue [70, 130, 180]
   
 styles:
   default:
-    title: Style par défaut, trait gris, épaisseur 2, remplissage gris à 30%
-    color: grey
+    title: Style par défaut
+    description: trait gris, épaisseur 2, remplissage gris à 30%
+    color: *grey
     weight: 2
-    fillColor: grey
+    fillColor: *grey
     fillOpacity: 0.3
   sar_2019:
-    title: Style de la couche sar_2019, trait vert, épaisseur 2, remplissage vert à 30%
-    color: green
+    title: Style de la couche sar_2019
+    description: trait vert, épaisseur 2, remplissage vert à 30%
+    color: *green
     weight: 2
-    fillColor: green
+    fillColor: *green
     fillOpacity: 0.3
   delmar:
-    title: Style de la couche delmar, trait steelblue, épaisseur 2
-    color: steelblue
+    title: Style de la couche delmar
+    description: trait steelblue, épaisseur 2
+    color: *steelblue
     weight: 2
   zeefr:
-    title: Style de la couche zeefr, trait bleu, épaisseur 2, remplissage bleu à 30%
-    color: blue
+    title: Style de la couche zeefr
+    description: trait bleu, épaisseur 2, remplissage bleu à 30%
+    color: *blue
     weight: 2
-    fillColor: blue
+    fillColor: *blue
     fillOpacity: 0.3
   
   black:
-    title: Style trait noir, épaisseur 2, remplissage noir à 30%
-    color: black
+    title: Style noir
+    description: trait noir, épaisseur 2, remplissage noir à 30%
+    color: *black
     weight: 2
-    fillColor: black
+    fillColor: *black
     fillOpacity: 0.3
   white:
-    title: Style trait blanc, épaisseur 2, remplissage blanc à 30%
-    color: white
+    title: Style blanc
+    description: trait blanc, épaisseur 2, remplissage blanc à 30%
+    color: *white
     weight: 2
-    fillColor: white
-    fillOpacity: 0.3
-  grey:
-    title: Style trait gris, épaisseur 2, remplissage gris à 30%
-    color: grey
-    weight: 2
-    fillColor: grey
+    fillColor: *white
     fillOpacity: 0.3
   red:
-    title: Style rouge, trait rouge, épaisseur 2, remplissage rouge à 30%
-    color: red
+    title: Style rouge
+    description: trait rouge, épaisseur 2, remplissage rouge à 30%
+    color: *red
     weight: 2
-    fillColor: red
+    fillColor: *red
     fillOpacity: 0.3
   green:
-    title: Style vert, trait vert, épaisseur 2, remplissage vert à 30%
-    color: green
+    title: Style vert
+    description: trait vert, épaisseur 2, remplissage vert à 30%
+    color: *green
     weight: 2
-    fillColor: green
+    fillColor: *green
     fillOpacity: 0.3
   blue:
-    title: Style bleu, trait bleu, épaisseur 2, remplissage bleu à 30%
-    color: blue
+    title: Style bleu
+    description: trait bleu, épaisseur 2, remplissage bleu à 30%
+    color: *blue
     weight: 2
-    fillColor: bluexx
+    fillColor: *blue
     fillOpacity: 0.3
