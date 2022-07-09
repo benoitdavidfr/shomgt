@@ -58,6 +58,41 @@ class Pos {
     //echo ", lon=$lon";
     return [$lon, $lat];
   }
+  
+  // Formate une coord. lat ou lon
+  static function formatCoordInDMd(float $coord, int $nbposMin): string {
+    $min = number_format(($coord-floor($coord))*60, $nbposMin, ','); // minutes formattées
+    //echo "min=$min<br>\n";
+    if ($nbposMin <> 0) {
+      if (preg_match('!^\d,!', $min)) // si il n'y a qu'un seul chiffre avant la virgule
+        $min = '0'.$min; // alors je rajoute un zéro avant
+    }
+    elseif (preg_match('!^\d$!', $min)) // si il n'y a qu'un seul chiffre avant la virgule
+      $min = '0'.$min; // alors je rajoute un zéro avant
+
+    $string = sprintf("%d°%s'", floor($coord), $min);
+    return $string;
+  }
+  
+  // Formate une position (lon,lat) en lat,lon degrés, minutes décimales
+  static function formatInDMd(array $pos, float $resolution): string {
+    //return sprintf("[%f, %f]",$pos[0], $pos[1]);
+    $lat = $pos[1];
+    $lon = $pos[0];
+    if ($lon > 180)
+      $lon -= 360;
+    
+    $resolution *= 60;
+    //echo "resolution=$resolution<br>\n";
+    //echo "log10=",log($resolution,10),"<br>\n";
+    $nbposMin = ceil(-log($resolution,10));
+    if ($nbposMin < 0)
+      $nbposMin = 0;
+    //echo "nbposMin=$nbposMin<br>\n";
+    
+    return self::formatCoordInDMd(abs($lat), $nbposMin).(($lat >= 0) ? 'N' : 'S')
+      .' - '.self::formatCoordInDMd(abs($lon), $nbposMin).(($lon >= 0) ? 'E' : 'W');
+  }
 };
 
 class LPos {
@@ -73,6 +108,8 @@ class LLPos {
 
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
 
+echo Pos::formatInDMd([0.5647, -12.5437], 1e-5),"<br><br>\n";
+echo Pos::formatInDMd([-4.095260926966, 47.215410583557], 0.04),"<br><br>\n";
 
 foreach ([
   "liste vide"=> [], 
