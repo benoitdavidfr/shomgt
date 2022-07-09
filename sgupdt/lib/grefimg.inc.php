@@ -5,6 +5,10 @@ title: grefimg.inc.php - Définition de la classe GeoRefImage gérant image géo
 doc: |
   Définition de la classe GeoRefImage.
 journal: |
+  8-9/7/2022:
+    - ajout classe Style
+    - suppression méthode GeoRefImage::filledpolygon()
+    - modification des paramètres des méthodes GeoRefImage::polygon() et GeoRefImage::polyline()
   10/6/2022:
     - revue de code
   27/4/2022:
@@ -217,13 +221,6 @@ class GeoRefImage {
     @imagerectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
       or throw new SExcept("erreur de imagerectangle()", self::ErrorRectangle);
   }
-
-  /*function setbrush(): void {
-    $brush = imagecreate(3, 3);
-    $black = imagecolorallocate($brush, 255, 0, 0);
-    imagefilledrectangle($brush, 0, 0, 3, 3, $black);
-    imagesetbrush($this->image, $brush);
-  }*/
   
   // Dessine dans le style une polyligne définie par une liste de positiions
   function polyline(array $lpos, Style $style): void {
@@ -240,7 +237,7 @@ class GeoRefImage {
     }
   }
   
-  // Dessine dans la couleur le polygone défini par une liste de positions
+  // Dessine dans le style le polygone défini par une liste de positions
   function polygon(array $lpos, Style $style): void {
     foreach ($lpos as $i => $pos) {
       $pos = $this->toImgPos($pos, '');

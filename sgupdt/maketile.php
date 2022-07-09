@@ -90,26 +90,31 @@ else {
 if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
   imagealphablending($image, false)
     or error("erreur de imagealphablending() ligne ".__LINE__);
-  $transparent = imagecolorallocatealpha($image, 0xFF, 0xFF, 0xFF, 0x7F);
   $gdalinfo = new GdalInfo(dirname($pngpath).'/'.basename($pngpath, '.png').'.info.json');
   //print_r($gdalinfo);
   $gri = new GeoRefImage($gdalinfo->ebox(), $image);
   
-  foreach ($listOfZonesToDelete['bboxes'] ?? [] as $bboxToDelete) {
-    echo "Effacement de:\n", Yaml::dump($bboxToDelete);
-    $gbox = GBox::fromShomGt($bboxToDelete); // interprétation du rectangle comme GBox
-    $gri->filledrectangle($gbox->proj('WorldMercator'), $transparent);
+  if (isset($listOfZonesToDelete['bboxes'])) {
+    $transparent = imagecolorallocatealpha($image, 0xFF, 0xFF, 0xFF, 0x7F); // couleur transparente
+    foreach ($listOfZonesToDelete['bboxes'] as $bboxToDelete) {
+      echo "Effacement de:\n", Yaml::dump($bboxToDelete);
+      $gbox = GBox::fromShomGt($bboxToDelete); // interprétation du rectangle comme GBox
+      $gri->filledrectangle($gbox->proj('WorldMercator'), $transparent);
+    }
   }
   
-  foreach ($listOfZonesToDelete['polygons'] ?? [] as $polygonToDelete) {
-    echo "Effacement de:\n", Yaml::dump($polygonToDelete);
-    $polygon = [];
-    foreach ($polygonToDelete as $i => $pos) {
-      if (is_string($pos))
-        $pos = Pos::fromGeoCoords($pos);
-      $polygon[$i] = WorldMercator::proj($pos);
+  if (isset($listOfZonesToDelete['polygons'])) {
+    $transparent = new Style(['fillColor'=>[0xFF, 0xFF, 0xFF], 'fillOpacity'=> 0], $gri); // couleur transparente
+    foreach ($listOfZonesToDelete['polygons'] ?? [] as $polygonToDelete) {
+      echo "Effacement de:\n", Yaml::dump($polygonToDelete);
+      $polygon = [];
+      foreach ($polygonToDelete as $i => $pos) {
+        if (is_string($pos))
+          $pos = Pos::fromGeoCoords($pos);
+        $polygon[$i] = WorldMercator::proj($pos);
+      }
+      $gri->polygon($polygon, $transparent);
     }
-    $gri->filledpolygon($polygon, $transparent);
   }
   $image = $gri->image();
   imagealphablending($image, true)
