@@ -1,9 +1,13 @@
 <?php
 {/*PhpDoc:
 name:  grefimg.inc.php
-title: grefimg.inc.php - Définition de la classe GeoRefImage gérant image géoréférencée
+title: grefimg.inc.php - Définition de la classe GeoRefImage gérant une image géoréférencée
 doc: |
-  Définition de la classe GeoRefImage.
+  Définition de la classe GeoRefImage gérant une image géoréférencée.
+  Ajout sur la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php)
+   - d'un espace en coordonnées utilisateurs, typiquement un système de coordonnées projeté comme WorldMercator
+   - d'une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
+  Il serait logique d'étendre cette notion de style aux écritures et aux rectangles.
 journal: |
   8-9/7/2022:
     - ajout classe Style
@@ -201,6 +205,8 @@ class GeoRefImage {
     return $color;
   }
   
+  // nécessaire pour conserver le canal alpha avant de générer l'image PNG avec le paramètre true ; 
+  // Le alphablending doit être désactivé (imagealphablending($im, false)) pour conserver le canal alpha en premier lieu. 
   function savealpha(bool $enable): void {
     @imagesavealpha($this->image, $enable)
       or throw new SExcept("Erreur imageSaveAlpha", self::ErrorSaveAlpha);
@@ -256,7 +262,7 @@ class GeoRefImage {
   }
   
   // Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
-  // et avec une couleur de fond $bg_color
+  // avec un cadre de fond de plan dans la couleur $bg_color
   function string(GdFont|int $font, array $pos, string $string, int $text_color, int $bg_color, bool $debug): void {
     $pos = $this->toImgPos($pos, false);
     
