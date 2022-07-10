@@ -23,8 +23,8 @@ class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fich
   // [{id} => ['title'=>{title}, 'color'=>{color}, 'weight'=<{weight}, 'fillColor'=>{fillColor}, 'fillOpacity'=>{fillOpacity}]]
   static array $all;
     
-  // retourne le style correspondant au nom demandé ou si'il n'existe pas le style par défaut
-  static function get(string $name): array { return self::$all[$name] ?? self::$all['default']; }
+  // retourne le style correspondant au nom demandé ou s'il n'existe pas []
+  static function get(string $name): array { return self::$all[$name] ?? []; }
   
   // Publication de la liste des styles disponibles dans les capacités du serveur
   // Le titre du style doit comporter le titre de la couche car le titre du style est utilisa dans QGis
