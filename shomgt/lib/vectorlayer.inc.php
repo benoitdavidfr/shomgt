@@ -106,7 +106,9 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
   function map(GeoRefImage $grImage, string $style): void {
-    $style = new Style($style ? StyleLib::get($style) : $this->style, $grImage);
+    if ($style) // si le paramètre $style est non vide 
+      $style = StyleLib::get($style); // J'essaie de récupérer le style dans la bibliothèque
+    $style = new Style($style ? $style : $this->style, $grImage); // si le style défini dans bib alors je l'utilise sinon défaut
     foreach ($this->items() as $feature) {
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
@@ -138,6 +140,10 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         }
         default: throw new Exception("Type de géométrie '$geometry[type] non prévu");
       }
+    }
+    if (substr($this->name, 0, 3)=='cat') {
+      $numLyrName = 'num'.substr($this->name,3);
+      Layer::layers()[$numLyrName]->map($grImage, false);
     }
   }
 

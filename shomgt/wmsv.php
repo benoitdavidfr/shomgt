@@ -106,7 +106,7 @@ class WmsvShomGt extends WmsServer {
     foreach ($lyrnames as $i => $lyrname) { // dessin des couches demandées
       if (!($layer = VectorLayer::layers()[$lyrname] ?? null))
         WmsServer::exception(404, "Erreur, la couche $lyrname est absente");
-      $layer->map($grImage, $styles[$i] ?? $lyrname, $debug);
+      $layer->map($grImage, $styles[$i] ?? '', $debug);
     }
     
     // génération de l'image

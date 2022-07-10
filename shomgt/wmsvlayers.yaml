@@ -64,7 +64,7 @@ $schema:
         path:
           description: chemin du fichier GeoJSON pour les couches définies par un tel fichier
         style:
-          description: couleur de trait, si absent pas de trait
+          description: style de représentation par défaut de la couche
           $ref: '#/definitions/style'
       
   type: object
