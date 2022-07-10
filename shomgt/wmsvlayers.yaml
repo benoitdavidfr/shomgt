@@ -1,0 +1,227 @@
+title: Styles utilisés dans le serveru WMS-V
+description: |
+  Définition des styles d'affichage des couches vecteur dans le serveur WMS-V.
+  Les styles sont définis dans un dictionnaire dans le champ styles du document.
+  Ils utilisent pour les couleurs des ancres définies dans le dictionnaire des couleurs.
+  Par défaut chaque couche du serveur WMS-V utilise un style portant le nom de la couche, ou si le nom n'existe pas
+  alors le style 'default' qui est donc obligatoire dans le dictionnaire des styles.
+  Dans l'appel du service WMS, un style différent du style par défaut peut être défini en utilisant le paramètre styles.
+  Les champs title et description des styles sont obligatooires, ils sont exposés par le service WMS dans le GetCapabilities.
+$schema:
+  $id: http://geoapi.fr/shomgt/shomgt/wmsvstyles.yaml#/$schema
+  definitions:
+    color:
+      description: couleur définie par son code RVB structuré comme array
+      type: array
+      minItems: 3
+      maxItems: 3
+      items:
+        type: integer
+        minimum: 0
+        maximum: 255
+    style:
+      description: définition d'un style
+      type: object
+      required: [title, description]
+      additionalProperties: false
+      properties:
+        title:
+          description: titre du style
+          type: string
+        description:
+          description: résumé du style
+          type: string
+        color:
+          description: couleur de trait, si absent pas de trait
+          $ref: '#/definitions/color'
+        weight:
+          description: épaisseur du trait, 1 si absent
+          type: integer
+          minimum: 1
+        fillColor:
+          description: couleur de remplissage, si absent pas de remplissage
+          $ref: '#/definitions/color'
+        fillOpacity:
+          description: degré d'opacité entre 0 et 1, par défaut 0.2
+          type: number
+          minimum: 0
+          maximum: 1
+    layer:
+      description: définition d'une couche vecteur
+      type: object
+      required: [title, description, style]
+      additionalProperties: false
+      properties:
+        note:
+          description: commentaire utilisé pour les modèles
+          type: string
+        title:
+          description: titre de la couche
+          type: string
+        description:
+          description: résumé de la couche
+          type: string
+        path:
+          description: chemin du fichier GeoJSON pour les couches définies par un tel fichier
+        style:
+          description: couleur de trait, si absent pas de trait
+          $ref: '#/definitions/style'
+      
+  type: object
+  additionalProperties: false
+  properties:
+    title:
+      description: titre du document
+      type: string
+    description:
+      description: commentaire du document
+      type: string
+    $schema:
+      description: schema JSON du document
+      oneOf:
+        - $ref: http://json-schema.org/schema#
+        - type: string
+    colors:
+      description: dictionaire des couleurs, sert à définir les ancres pour les couleurs définies dans les styles
+      type: object
+      additionalProperties: false
+      patternProperties:
+        '^[a-zA-Z]+$':
+          description: définition de la couleur par son code RVB
+          $ref: '#/definitions/color'
+    styles:
+      description: dictionaire des styles, les couleurs utilisent les ancres définies dans le dictionnaire des couleurs
+      type: object
+      required: [default]
+      additionalProperties: false
+      patternProperties:
+        '^[_a-zA-Z0-9]+$':
+          description: définition d'un style
+          $ref: '#/definitions/style'
+    vectorLayers:
+      description: dictionnaire des couches vecteur
+      type: object
+      additionalProperties: false
+      patternProperties:
+        '^[_a-zA-Z0-9]+$':
+          description: définition d'une couche vecteur
+          $ref: '#/definitions/layer'
+    vectorLayerModels:
+      description: dictionnaire des modèles de couches vecteur
+      type: object
+      required: [cat{sd}]
+      additionalProperties: false
+      patternProperties:
+        '^cat{sd}$':
+          description: définition d'un modèle de couche vecteur
+          $ref: '#/definitions/layer'
+
+    eof:
+      description: marque de fin de fichier
+      type: 'null'
+colors:
+  white: &white [255, 255, 255]
+  black: &black [0, 0, 0]
+  grey: &grey [128, 128, 128]
+  red: &red [255, 0, 0]
+  green: &green [0, 128, 0]
+  blue: &blue [0, 0, 255]
+  steelblue: &steelblue [70, 130, 180]
+  dodgerblue: &dodgerblue [30, 144, 255]
+styles:
+  default:
+    title: Style par défaut
+    description: trait gris, épaisseur 2, remplissage gris à 30%
+    color: *grey
+    weight: 2
+    fillColor: *grey
+    fillOpacity: 0.3
+  black: &sblack
+    title: Style noir
+    description: trait noir, épaisseur 2, remplissage noir à 30%
+    color: *black
+    weight: 2
+    fillColor: *black
+    fillOpacity: 0.3
+  white: &swhite
+    title: Style blanc
+    description: trait blanc, épaisseur 2, remplissage blanc à 30%
+    color: *white
+    weight: 2
+    fillColor: *white
+    fillOpacity: 0.3
+  red: &sred
+    title: Style rouge
+    description: trait rouge, épaisseur 2, remplissage rouge à 30%
+    color: *red
+    weight: 2
+    fillColor: *red
+    fillOpacity: 0.3
+  green: &sgreen
+    title: Style vert
+    description: trait vert, épaisseur 2, remplissage vert à 30%
+    color: *green
+    weight: 2
+    fillColor: *green
+    fillOpacity: 0.3
+  blue: &sblue
+    title: Style bleu
+    description: trait bleu, épaisseur 2, remplissage bleu à 30%
+    color: *blue
+    weight: 2
+    fillColor: *blue
+    fillOpacity: 0.3
+  steelblue: &ssteelblue
+    title: Style bleu acier
+    description: trait steelblue, épaisseur 2, remplissage steelblue à 30%
+    color: *steelblue
+    weight: 2
+    fillColor: *steelblue
+    fillOpacity: 0.3
+  dodgerblue: &sdodgerblue
+    title: Style bleu Dodger
+    description: trait dodgerblue, épaisseur 2, remplissage dodgerblue à 30%
+    color: *dodgerblue
+    weight: 2
+    fillColor: *dodgerblue
+    fillOpacity: 0.3
+
+vectorLayers:
+  sar_2019:
+    title: Zones de recherches et sauvetage (SAR)
+    description: |
+      Description des zones françaises de services de recherche et de sauvetage (SAR).  
+      Données du produit Shom [Zones SAR (Search and Rescue)](https://diffusion.shom.fr/pro/amenagement/zones-sar.html)
+      mis à jour en eoctobre 2019. Les données sont issues de la circulaire de l'Organisation Maritime Internationale
+      (OMI n° SAR.8/Circ.4 du 1er décembre 2012).
+    path: geojson/sar_2019.geojson
+    style: *sgreen
+  delmar:
+    title: Délimitations maritimes
+    description: |
+      Délimitations maritimes (lignes de base, mer territoriale, zone contiguë, zone économique exclusive, plateau continental)
+      extraites du serveur WFS du Shom en juin 2022 ; structurées sous la forme de lignes.
+    path: geojson/delmar.geojson
+    style: *ssteelblue
+  frzee:
+    title: ZEE simplifiée
+    description: |
+      ZEE simplifiée structurée sour forme de polygones en distinguant en métropole les façades maritimes.
+      Renumérisée à partir des données du Shom.
+    path: geojson/frzee.geojson
+    style: *sblue
+  cataem:
+    title: Catalogue des cartes AEM
+    description: Silhouettes des cartes SHOM Action de l'Etat en Mer (AEM)
+    style: *sdodgerblue
+  catMancheGrid:
+    title: Catalogue de la carte Manche-grid
+    description: Silhouette de la carte Shom du carroyage MANCHEGRID à utiliser dans l'application du MANCHEPLAN
+    style: *sdodgerblue
+vectorLayerModels:
+  cat{sd}:
+    note: entrée paramétrée par le dénominateur de l'échelle {sd}
+    title: Catalogue des GeoTIFF SHOM 1/{sd}
+    description: Silhouettes des cartes GéoTIFF du Shom au 1/{sd}
+    style: *sdodgerblue
+eof:
