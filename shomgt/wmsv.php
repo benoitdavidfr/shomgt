@@ -7,11 +7,12 @@ doc: |
   Ce service WMS est paramétré par
     - le fichier wmsvcapabilities.xml qui contient
       - la documentation sur le serveur (titre, résumé, mots-clés, contraintes d'accès, ...)
-      - la liste des couches exposées avec pour chacune son nom, son titre et son résumé
       - la liste des systèmes de coordonnées autorisés et l'extension des coordonnées
-    - le fichier wmsvstyles.yaml qui définit un certain nombre de styles de représentation graphique utilisables
+    - le fichier wmsvlayers.yaml qui définit les couches et les styles de représentation graphique utilisables
       le contenu de ce fichier doit respecter le schéma JSON défini dans le fichier
 journal: |
+  10/7/2022:
+    - ajout des couches catalogues des cartes raster
   8-9/7/2022:
     - fork de wms.php
 includes:
@@ -31,8 +32,8 @@ use Symfony\Component\Yaml\Yaml;
 //die("Fin ligne ".__LINE__."\n");
 
 // écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
-//WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
-//WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
+WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
 /*PhpDoc: classes
 name: class WmsvShomGt
@@ -51,8 +52,9 @@ class WmsvShomGt extends WmsServer {
         "$request_scheme://$_SERVER[SERVER_NAME]$_SERVER[PHP_SELF]?",
         file_get_contents(__DIR__.'/wmsvcapabilities.xml')
     );
-    StyleLib::init();
+    VectorLayer::initVectorLayers(__DIR__.'/wmsvlayers.yaml'); // Initialisation des couches
     $cap = str_replace('<Style><Name>DEFAUT</Name></Style>', StyleLib::asXml(), $cap);
+    $cap = str_replace('<Layer>LAYER</Layer>', VectorLayer::allAsXml(), $cap);
     die($cap);
   }
 
@@ -96,13 +98,13 @@ class WmsvShomGt extends WmsServer {
     $wombox = $this->wombox($crs, $bbox); // calcul en World Mercator du rectangle de la requête
     // dx() est en mètres, $width est un nbre de pixels, 0.00028 est la taille std du pixel pour WMS
     
-    Layer::init(); // Initialisation
+    VectorLayer::initVectorLayers(__DIR__.'/wmsvlayers.yaml'); // Initialisation des couches
     $debug = $_GET['debug'] ?? false;
     $grImage = new GeoRefImage($wombox); // création de l'image Géoréférencée
     $grImage->create($width, $height, true); // création d'une image GD transparente
     
     foreach ($lyrnames as $i => $lyrname) { // dessin des couches demandées
-      if (!($layer = Layer::layers()[$lyrname] ?? null))
+      if (!($layer = VectorLayer::layers()[$lyrname] ?? null))
         WmsServer::exception(404, "Erreur, la couche $lyrname est absente");
       $layer->map($grImage, $styles[$i] ?? $lyrname, $debug);
     }
@@ -146,10 +148,10 @@ class WmsvShomGt extends WmsServer {
     //echo "geo2="; print_r($geo2); echo "<br>\n";
     $resolution = max(abs($geo2[0]-$geo[0]), abs($geo2[1]-$geo[1]));
     //echo "resolution=$resolution<br>\n";
-    Layer::init(); // Initialisation
+    VectorLayer::initVectorLayers(__DIR__.'/wmsvlayers.yaml'); // Initialisation des couches
     $info = [];
     foreach ($lyrnames as $i => $lyrname) {
-      if (!($layer = Layer::layers()[$lyrname] ?? null))
+      if (!($layer = VectorLayer::layers()[$lyrname] ?? null))
         WmsServer::exception(404, "Erreur, la couche $lyrname est absente");
       $info = $layer->featureInfo($geo, $featureCount, $resolution);
     }
@@ -235,19 +237,32 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'crs'=> 'EPSG:4326',
       'bbox'=> '43,-3,46,3',
     ],
-   'La Terre on 500x500' => [
-      'service'=> 'WMS',
-      'version'=> '1.3.0',
-      'request'=> 'GetMap',
-      'layers'=> 'sar_2019',
-      'styles'=> '',
-      'format'=> 'image/png',
-      'transparent'=> 'true',
-      'height'=> '500',
-      'width'=> '500',
-      'crs'=> 'CRS:84',
-      'bbox'=> '-180,-80,180,80',
-    ],
+    'sar_2019 sur la Terre on 500x500' => [
+       'service'=> 'WMS',
+       'version'=> '1.3.0',
+       'request'=> 'GetMap',
+       'layers'=> 'sar_2019',
+       'styles'=> '',
+       'format'=> 'image/png',
+       'transparent'=> 'true',
+       'height'=> '500',
+       'width'=> '500',
+       'crs'=> 'CRS:84',
+       'bbox'=> '-180,-80,180,80',
+     ],
+     'cat1M sur la Terre on 500x500' => [
+        'service'=> 'WMS',
+        'version'=> '1.3.0',
+        'request'=> 'GetMap',
+        'layers'=> 'cat1M',
+        'styles'=> '',
+        'format'=> 'image/png',
+        'transparent'=> 'true',
+        'height'=> '500',
+        'width'=> '500',
+        'crs'=> 'CRS:84',
+        'bbox'=> '-180,-80,180,80',
+      ],
     "Génère une exception de projection WorldMercator en raison des coordonnées de la requête" => [
       'service'=> 'WMS',
       'version'=> '1.3.0',

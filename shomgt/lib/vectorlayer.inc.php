@@ -3,28 +3,26 @@
 title: vectorlayer.inc.php
 name: vectorlayer.inc.php
 doc: |
-  Affichage couche vecteur
+  Affichage des couches vecteur
 journal: |
+  10/7/2022:
+    - rajout des couches de catalogue en réutilisant le code de layer.inc.php
   8-9/7/2022:
     - création sur le modèle de layer.inc.php
 */
 //die("Fin ligne ".__LINE__."\n");
-require_once __DIR__.'/../../vendor/autoload.php';
-require_once __DIR__.'/grefimg.inc.php';
+//require_once __DIR__.'/../../vendor/autoload.php';
+//require_once __DIR__.'/grefimg.inc.php';
+require_once __DIR__.'/layer.inc.php';
 require_once __DIR__.'/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
 class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fichier yaml
-  const LIB_PATH = __DIR__.'/../wmsvstyles.yaml'; // chemin du fichier Yaml des styles
-
   // dictionnaire des styles indexé par leur identifiant
   // [{id} => ['title'=>{title}, 'color'=>{color}, 'weight'=<{weight}, 'fillColor'=>{fillColor}, 'fillOpacity'=>{fillOpacity}]]
   static array $all;
-  
-  // initialise les styles à partir du fichiet Yaml défini par LIB_PATH
-  static function init() { self::$all = Yaml::parseFile(self::LIB_PATH)['styles']; }
-  
+    
   // retourne le style correspondant au nom demandé ou si'il n'existe pas le style par défaut
   static function get(string $name): array { return self::$all[$name] ?? self::$all['default']; }
   
@@ -36,38 +34,50 @@ class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fich
     }
     return $xml;
   }
-};
+}
 
-abstract class Layer {
-  static array $layers = []; // dictionaire [{lyrName} => Layer]
+class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couches
+  protected string $name;
+  protected string $title;
+  protected string $description;
+  protected ?string $path;
+  protected array $style;
   
-  static function init(): void { // initialisation de la liste des couches 
-    StyleLib::init();
-    foreach (new DirectoryIterator(__DIR__.'/../geojson') as $geojsonfile) {
-      if (($geojsonfile->getType() == 'file') && ($geojsonfile->getExtension()=='geojson')) {
-        $lyrname = $geojsonfile->getBasename('.geojson');
-        self::$layers[$lyrname] = new VectorLayer($geojsonfile->getPathname());
+  static array $all = []; // dictionaire [{lyrName} => VectorLayer]
+
+  static function initVectorLayers(string $filename): void {
+    Layer::initFromShomGt(__DIR__.'/../../data/shomgt'); // Initialisation des couches raster à partir du fichier shomgt.yaml
+    $yaml = Yaml::parseFile($filename);
+    foreach ($yaml['vectorLayers'] as $name => $vectorLayer) {
+      self::$all[$name] = new self($name, $vectorLayer);
+    }
+    // La modèle de couche cat{sd} est un prototype des couches cat{sd}
+    // il est appliqué aux couches gt{sd} où {sd} est le dénominateur de l'échelle
+    $catsd = $yaml['vectorLayerModels']['cat{sd}'];
+    foreach (array_keys(Layer::layers()) as $rLyrName) {
+      if (substr($rLyrName, 0, 2)=='gt') {
+        $sd = substr($rLyrName, 2);
+        if (!ctype_digit(substr($sd, 0, 1))) continue;
+        self::$all["cat$sd"] = new self("cat$sd", [
+          'title'=> str_replace('{sd}', $sd, $catsd['title']),
+          'description'=> str_replace('{sd}', $sd, $catsd['description']),
+          'style'=> $catsd['style'],
+        ]);
       }
     }
+    StyleLib::$all = $yaml['styles'];
   }
   
   // retourne le dictionnaire des couches
-  static function layers() { return self::$layers; }
-  
-  // fournit une représentation de la couche comme array pour affichage
-  abstract function asArray(): array;
+  static function layers() { return self::$all; }
 
-  // calcul de l'extension spatiale de la couche en WoM
-  abstract function ebox(): EBox;
-
-  // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
-  abstract function map(GeoRefImage $grImage, string $style, bool $debug): void;
-};
-
-class VectorLayer extends Layer {
-  protected string $pathname;
-  
-  function __construct(string $pathname) { $this->pathname = $pathname; }
+  function __construct(string $name, array $vectorLayer) {
+    $this->name = $name;
+    $this->title = $vectorLayer['title'];
+    $this->description = $vectorLayer['description'];
+    $this->path = $vectorLayer['path'] ?? null;
+    $this->style = $vectorLayer['style'];
+  }
 
   // fournit une représentation de la couche comme array pour affichage
   function asArray(): array { return [$this->pathname]; }
@@ -78,11 +88,26 @@ class VectorLayer extends Layer {
     return $gbox->proj('WorldMercator');
   }
 
+  // retourne un array de Features structurés comme array Php
+  private function items(): array {
+    if ($this->path) {
+      return json_decode(file_get_contents(__DIR__.'/../'.$this->path), true)['features'];
+    }
+    elseif (substr($this->name, 0, 3)=='cat') {
+      $rasterLayerName = 'gt'.substr($this->name, 3);
+      if (!($rasterLayer = Layer::layers()[$rasterLayerName] ?? null))
+        throw new Exception("couche $rasterLayerName non trouvée");
+      return $rasterLayer->items($rasterLayerName, null);
+    }
+    else {
+      throw new Exception("Cas non prévu");
+    }
+  }
+  
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
-  function map(GeoRefImage $grImage, string $style, bool $debug): void {
-    $style = new Style(StyleLib::get($style), $grImage);
-    $geojson = json_decode(file_get_contents($this->pathname), true);
-    foreach ($geojson['features'] as $feature) {
+  function map(GeoRefImage $grImage, string $style): void {
+    $style = new Style($style ? StyleLib::get($style) : $this->style, $grImage);
+    foreach ($this->items() as $feature) {
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
         case 'LineString': {
@@ -120,8 +145,7 @@ class VectorLayer extends Layer {
   function featureInfo(array $geo, int $featureCount, float $resolution): array {
     $info = [];
     $dmin = 10 * $resolution;
-    $geojson = json_decode(file_get_contents($this->pathname), true);
-    foreach ($geojson['features'] as $feature) {
+    foreach ($this->items() as $feature) {
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
         case 'LineString': {
@@ -144,5 +168,23 @@ class VectorLayer extends Layer {
       }
     }
     return $info;
+  }
+  
+  // Génère l'extrait XML de la couche pour les capacités
+  private function asXml(): string {
+    return
+      '<Layer queryable="1" opaque="0">'
+        ."<Name>$this->name</Name>"
+        ."<Title>$this->title</Title>"
+        ."<Abstract>$this->description</Abstract>"
+      .'</Layer>';
+  }
+  
+  // Génère l'extrait XML des couches pour les capacités
+  static function allAsXml(): string {
+    $xml = '';
+    foreach(self::$all as $name => $layer)
+      $xml .= $layer->asXml();
+    return $xml;
   }
 };

@@ -1,5 +1,8 @@
 {
     "require": {
         "symfony/yaml": "6.0.3"
+    },
+    "require-dev": {
+        "overtrue/phplint": "^5.2"
     }
 }

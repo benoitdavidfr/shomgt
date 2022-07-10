@@ -104,22 +104,8 @@
       <Style><Name>DEFAUT</Name></Style> <!-- Motif remplacé par le script par la liste des styles définis -->
       <MinScaleDenominator>2000</MinScaleDenominator>
       <MaxScaleDenominator>40000000</MaxScaleDenominator>
-      <Layer queryable="1" opaque="0">
-        <Name>sar_2019</Name>
-        <Title>Zones de recherches et sauvetage (SAR)</Title>
-        <Abstract>Description des zones françaises de services de recherche et de sauvetage (SAR). 
-Données du produit Shom [Zones SAR (Search and Rescue)](https://diffusion.shom.fr/pro/amenagement/zones-sar.html) mis à jour en eoctobre 2019. Les données sont issues de la circulaire de l'Organisation Maritime Internationale (OMI n° SAR.8/Circ.4 du 1er décembre 2012).</Abstract>
-      </Layer>
-      <Layer queryable="1" opaque="0">
-        <Name>delmar</Name>
-        <Title>Délimitations maritimes</Title>
-        <Abstract>Délimitations maritimes (lignes de base, mer territoriale, zone contiguë, zone économique exclusive, plateau continental) extraites du serveur WFS du Shom en juin 2022 ; structurées sous la forme de lignes.</Abstract>
-      </Layer>
-      <Layer queryable="1" opaque="0">
-        <Name>frzee</Name>
-        <Title>ZEE simplifiée</Title>
-        <Abstract>ZEE simplifiée structurée sour forme de polygones en distinguant en métropole les façades maritimes. Renumérisée à partir des données du Shom.</Abstract>
-      </Layer>
+      <Layer>LAYER</Layer> <!-- Motif remplacé par le script par la liste des couches définies -->
     </Layer>
+    
   </Capability>
 </WMS_Capabilities>
