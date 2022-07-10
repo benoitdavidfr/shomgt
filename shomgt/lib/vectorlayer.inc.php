@@ -27,10 +27,13 @@ class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fich
   static function get(string $name): array { return self::$all[$name] ?? self::$all['default']; }
   
   // Publication de la liste des styles disponibles dans les capacités du serveur
-  static function asXml(): string {
+  // Le titre du style doit comporter le titre de la couche car le titre du style est utilisa dans QGis
+  // pour définir le titre de la couche stylée
+  static function asXml(string $lyrTitle): string {
     $xml = '';
-    foreach (self::$all as $id => $style) {
-      $xml .= "<Style><Name>$id</Name><Title>$style[title]</Title><Abstract>$style[description]</Abstract></Style>";
+    foreach (self::$all as $styleId => $style) {
+      $xml .= "<Style><Name>$styleId</Name><Title>$lyrTitle - $style[title]</Title>"
+        ."<Abstract>$style[description]</Abstract></Style>";
     }
     return $xml;
   }
@@ -105,10 +108,11 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
   
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
-  function map(GeoRefImage $grImage, string $style): void {
-    if ($style) // si le paramètre $style est non vide 
-      $style = StyleLib::get($style); // J'essaie de récupérer le style dans la bibliothèque
-    $style = new Style($style ? $style : $this->style, $grImage); // si le style défini dans bib alors je l'utilise sinon défaut
+  function map(GeoRefImage $grImage, string $styleStr): void {
+    // si le paramètre $style est non vide alors J'essaie de récupérer le style dans la bibliothèque
+    $styleArray = $styleStr ? StyleLib::get($styleStr) : [];
+    // si le style est défini dans la bib alors je l'utilise sinon j'utilise le style par défaut défini pour la couche
+    $style = new Style($styleArray ? $styleArray : $this->style, $grImage);
     foreach ($this->items() as $feature) {
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
@@ -141,7 +145,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         default: throw new Exception("Type de géométrie '$geometry[type] non prévu");
       }
     }
-    if (substr($this->name, 0, 3)=='cat') {
+    if (substr($this->name, 0, 3)=='cat') { // pour les catalogues, j'ajoute la couche des numéros de cartes
       $numLyrName = 'num'.substr($this->name,3);
       Layer::layers()[$numLyrName]->map($grImage, false);
     }
@@ -183,6 +187,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         ."<Name>$this->name</Name>"
         ."<Title>$this->title</Title>"
         ."<Abstract>$this->description</Abstract>"
+        .StyleLib::asXml($this->title)
       .'</Layer>';
   }
   

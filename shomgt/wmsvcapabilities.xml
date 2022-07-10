@@ -101,7 +101,6 @@
       <BoundingBox CRS="EPSG:3395" minx="-30056263" miny="-15496571" maxx="30056263" maxy="15496571"/><!-- WGS84 Wld Mercator -->
       <BoundingBox CRS="EPSG:4326" minx="-80.0" miny="-270.0" maxx="80.0" maxy="270.0"/><!-- WGS84 lat,lon -->
       <BoundingBox CRS="CRS:84" minx="-270.0" miny="-80.0" maxx="270.0" maxy="80.0"/><!-- WGS84 lon,lat -->
-      <Style><Name>DEFAUT</Name></Style> <!-- Motif remplacé par le script par la liste des styles définis -->
       <MinScaleDenominator>2000</MinScaleDenominator>
       <MaxScaleDenominator>40000000</MaxScaleDenominator>
       <Layer>LAYER</Layer> <!-- Motif remplacé par le script par la liste des couches définies -->

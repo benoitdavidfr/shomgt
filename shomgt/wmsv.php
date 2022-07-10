@@ -53,7 +53,6 @@ class WmsvShomGt extends WmsServer {
         file_get_contents(__DIR__.'/wmsvcapabilities.xml')
     );
     VectorLayer::initVectorLayers(__DIR__.'/wmsvlayers.yaml'); // Initialisation des couches
-    $cap = str_replace('<Style><Name>DEFAUT</Name></Style>', StyleLib::asXml(), $cap);
     $cap = str_replace('<Layer>LAYER</Layer>', VectorLayer::allAsXml(), $cap);
     die($cap);
   }

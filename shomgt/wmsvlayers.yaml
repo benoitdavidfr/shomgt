@@ -92,7 +92,6 @@ $schema:
     styles:
       description: dictionaire des styles, les couleurs utilisent les ancres définies dans le dictionnaire des couleurs
       type: object
-      required: [default]
       additionalProperties: false
       patternProperties:
         '^[_a-zA-Z0-9]+$':
@@ -129,13 +128,6 @@ colors:
   steelblue: &steelblue [70, 130, 180]
   dodgerblue: &dodgerblue [30, 144, 255]
 styles:
-  default:
-    title: Style par défaut
-    description: trait gris, épaisseur 2, remplissage gris à 30%
-    color: *grey
-    weight: 2
-    fillColor: *grey
-    fillOpacity: 0.3
   black: &sblack
     title: Style noir
     description: trait noir, épaisseur 2, remplissage noir à 30%
@@ -211,17 +203,17 @@ vectorLayers:
     path: geojson/frzee.geojson
     style: *sblue
   cataem:
-    title: Catalogue des cartes AEM
+    title: Cat. des cartes AEM
     description: Silhouettes des cartes SHOM Action de l'Etat en Mer (AEM)
     style: *sdodgerblue
   catMancheGrid:
-    title: Catalogue de la carte Manche-grid
+    title: Cat. de la carte Manche-grid
     description: Silhouette de la carte Shom du carroyage MANCHEGRID à utiliser dans l'application du MANCHEPLAN
     style: *sdodgerblue
 vectorLayerModels:
   cat{sd}:
     note: entrée paramétrée par le dénominateur de l'échelle {sd}
-    title: Catalogue des GeoTIFF SHOM 1/{sd}
+    title: Cat. des GeoTIFF SHOM 1/{sd}
     description: Silhouettes des cartes GéoTIFF du Shom au 1/{sd}
     style: *sdodgerblue
 eof:
