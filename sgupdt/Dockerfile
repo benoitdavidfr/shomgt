@@ -4,7 +4,7 @@
 
 # Use an official Php runtime as a parent image
 # J'utilise une sous-sous-version précise pour éviter le reconstructions itempestives
-FROM php:8.1.7-cli-bullseye
+FROM php:8.1.8-cli-bullseye
 
 # install 7zip + gdal + wget
 RUN apt-get update \

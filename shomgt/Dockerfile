@@ -1,8 +1,7 @@
 # Dockerfile pour ShomGt3/geotiff - 18/4-22/6/2022
 # 1/5/2022 - chgt chemin des cartes
 # 6/5/2022 - chgt instructions de copie des fichiers
-# 22/6/2022 - passage à Php 8.1.7
-FROM php:8.1.7-apache
+FROM php:8.1.8-apache
 
 # install 7zip + gdal
 RUN apt-get update \
@@ -38,6 +37,7 @@ ADD --chown=www-data ./leaflet /var/www/html/leaflet/
 ADD --chown=www-data ./lib /var/www/html/lib/
 # copie des scripts Php dans /var/www/html/
 ADD --chown=www-data ./maps.php ./tile.php ./dl.php ./mapwcat.php ./wms.php ./wmscapabilities.xml /var/www/html/
+ADD --chown=www-data ./wmsv.php ./wmsvcapabilities.xml ./wmsvlayers.yaml /var/www/html/
 
 EXPOSE 80
 ENTRYPOINT ["apache2-foreground"]
