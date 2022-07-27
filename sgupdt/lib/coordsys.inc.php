@@ -649,7 +649,8 @@ elseif ($_GET['test']=='ign') { // vérification des algos sur des points connus
       $zone = UTM::zone($cgeo);
       echo "\nUTM:\nzone=$zone\n";
       $cutm = UTM::proj($cgeo, $zone);
-      printf ("Coordonnées en UTM-$zone: %.2f / %.2f, %.2f / %.2f\n", $cutm[0], $ref['UTM-31N'][0], $cutm[1], $ref['UTM-31N'][1]);
+      printf ("Coordonnées en UTM-$zone: %.2f / %.2f, %.2f / %.2f\n",
+        $cutm[0], $ref['UTM-31N'][0], $cutm[1], $ref['UTM-31N'][1]);
       $verif = UTM::geo($cutm, $zone);
       echo "Verification du calcul inverse:\n";
       printf ("phi=%s / %s lambda=%s / %s\n",

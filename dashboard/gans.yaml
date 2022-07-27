@@ -2,10 +2,10 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes présentes sur sgserver'
 $id: 'https://geoapi.fr/shomgt3/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/dashboard/gans
-valid: 2022-07-10/2022-07-10
+valid: 2022-07-18/2022-07-18
 gans:
   '0101':
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   3127:
     groupTitle: 'Guadeloupe - Côte sous le vent'
     title: 'Abords de Basse-Terre'
@@ -14,7 +14,7 @@ gans:
       SW: '15°56,57''N — 061°44,97''W'
       NE: '16°00,70''N — 061°42,04''W'
     edition: 'Edition n°3 - 2009'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   4232:
     groupTitle: 'Océan Pacifique'
     title: 'Îles Australes'
@@ -27,7 +27,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2043-225 }
       - { num: 2, semaineAvis: 2139-234 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   4233:
     groupTitle: 'Côte Nord de France'
     title: 'La Rance - De Saint-Malo à l''écluse du Châtelier'
@@ -41,7 +41,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2012-39 }
       - { num: 6, semaineAvis: 2124-36 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   5417:
     groupTitle: 'Océan Atlantique Nord et Mers Boréales'
     title: 'Océan Atlantique Nord et mers boréales'
@@ -54,7 +54,7 @@ gans:
       - { num: 87, semaineAvis: 1739-267 }
       - { num: 88, semaineAvis: 1739-269 }
       - { num: 89, semaineAvis: 1741-266 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   5978:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
@@ -66,7 +66,7 @@ gans:
     edition: 'Edition n°3 - 2019'
     corrections:
       - { num: 1, semaineAvis: 1935-216 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6033:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Archipel de la Société'
@@ -79,7 +79,7 @@ gans:
       - { title: 'Cartouche: Maupihaa (Mopelia)', scale: '1 : 174 000', spatial: { SW: '16°53,97''S — 154°02,16''W', NE: '16°42,97''S — 153°53,16''W' } }
       - { title: 'Cartouche: Motu One (Bellingshausen)', scale: '1 : 174 000', spatial: { SW: '15°51,97''S — 154°35,16''W', NE: '15°44,97''S — 154°28,16''W' } }
     edition: 'Edition n°5 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6118:
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Iles Saint-Pierre et Miquelon'
@@ -94,7 +94,7 @@ gans:
       - { num: 6, semaineAvis: 2010-275 }
       - { num: 7, semaineAvis: 2017-275 }
       - { num: 8, semaineAvis: 2038-278 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6165:
     groupTitle: 'Polynésie française - Îles Australes'
     title: Rurutu
@@ -106,7 +106,7 @@ gans:
       - { title: 'Cartouche: A - Baie d''Avera', scale: '1 : 10 000', spatial: { SW: '22°29,99''S — 151°22,06''W', NE: '22°28,21''S — 151°21,03''W' } }
       - { title: 'Cartouche: B - Baie de Moerai', scale: '1 : 10 000', spatial: { SW: '22°27,33''S — 151°20,85''W', NE: '22°26,37''S — 151°19,40''W' } }
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6176:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles de la Société'
     title: 'Maupihaa (Mopelia)'
@@ -115,7 +115,7 @@ gans:
       - { title: 'Cartouche: Maupihaa (Mopelia)', scale: '1 : 30 000', spatial: { SW: '', NE: '' } }
       - { title: 'Cartouche: Maupihaa - Entrée du lagon et mouillage', scale: '1 : 10 000', spatial: { SW: '', NE: '' } }
     edition: 'Edition n°2 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6207:
     groupTitle: 'Polynésie Française - Îles Australes'
     title: 'Île Raivavae (Vavitu)'
@@ -123,7 +123,7 @@ gans:
       - { title: 'Cartouche: Île Raivavae (Vavitu)', scale: '1 : 30 000', spatial: { SW: '23°55,64''S — 147°44,95''W', NE: '23°49,14''S — 147°33,50''W' } }
       - { title: 'Cartouche: A - Passe Nord de l''île Raivavae', scale: '1 : 10 000', spatial: { SW: '23°52,39''S — 147°42,25''W', NE: '23°49,54''S — 147°38,41''W' } }
     edition: 'Edition n°5 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6279:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Îles Rimatara et Maria'
@@ -132,7 +132,7 @@ gans:
       - { title: 'Cartouche: Rimatara', scale: '1 : 30 000', spatial: { SW: '22°41,22''S — 152°53,06''W', NE: '22°35,92''S — 152°45,33''W' } }
       - { title: 'Cartouche: Maria', scale: '1 : 80 000', spatial: { SW: '21°51,39''S — 154°45,65''W', NE: '21°46,38''S — 154°39,65''W' } }
     edition: 'Edition n°3 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6280:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-Le-Vent'
     title: 'Partie Nord de Raiatea'
@@ -143,7 +143,7 @@ gans:
     edition: 'Edition n°5 - 2019'
     corrections:
       - { num: 1, semaineAvis: 1947-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6281:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-le-Vent'
     title: 'Partie Sud de Tahaa'
@@ -154,7 +154,7 @@ gans:
     edition: 'Edition n°4 - 2019'
     corrections:
       - { num: 1, semaineAvis: 1947-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6282:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Îles Sous-Le-Vent'
     title: 'Passes entre les Îles Raiatea et Tahaa'
@@ -163,7 +163,7 @@ gans:
       SW: '16°48,76''S — 151°35,55''W'
       NE: '16°37,96''S — 151°19,15''W'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6283:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française - Iles Sous-le-Vent'
     title: 'Ile Tahaa'
@@ -175,7 +175,7 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1744-210 }
       - { num: 9, semaineAvis: 1843-210 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6284:
     groupTitle: 'Polynésie Française - Îles Sous-le-Vent'
     title: 'Partie Sud de Raiatea'
@@ -184,7 +184,7 @@ gans:
       SW: '16°57,76''S — 151°33,15''W'
       NE: '16°46,96''S — 151°16,75''W'
     edition: 'Edition n°6 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6320:
     groupTitle: 'Iles Tuamotu'
     title: Makatea
@@ -199,7 +199,7 @@ gans:
       - { num: 1, semaineAvis: 1745-209 }
       - { num: 2, semaineAvis: 1815-213 }
       - { num: 3, semaineAvis: 1837-208 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6418:
     groupTitle: 'Iles Gambier'
     title: 'Ile Mangareva'
@@ -216,7 +216,7 @@ gans:
       - { num: 6, semaineAvis: 1944-233 }
       - { num: 7, semaineAvis: 2023-230 }
       - { num: 8, semaineAvis: 2023-231 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6420:
     groupTitle: 'Îles Tuamotu'
     title: 'De Mataiva à Rangiroa et Makatea'
@@ -227,7 +227,7 @@ gans:
     edition: 'Edition n°3 - 2020'
     corrections:
       - { num: 2, semaineAvis: 2208-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6421:
     groupTitle: 'Polynésie Française Îles Tuamotu - Îles Palliser'
     title: 'Îles Arutua, Apataki, Kaukura, Niau'
@@ -236,7 +236,7 @@ gans:
       SW: '16°35,00''S — 147°15,00''W'
       NE: '15°02,60''S — 146°10,00''W'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6424:
     groupTitle: 'Polynésie Française - Îles Australes'
     title: 'Île Tubuai'
@@ -244,7 +244,7 @@ gans:
       - { title: 'Cartouche: Île Tubuai', scale: '1 : 40 000', spatial: { SW: '23°27,57''S — 149°36,58''W', NE: '23°17,07''S — 149°21,02''W' } }
       - { title: 'Cartouche: A - Passes et mouillages de Tubuai', scale: '1 : 12 500', spatial: { SW: '23°22,55''S — 149°31,58''W', NE: '23°19,42''S — 149°26,72''W' } }
     edition: 'Edition n°3 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6434:
     groupTitle: 'Îles de la Société - Îles Sous-le-Vent'
     title: Huahine
@@ -258,7 +258,7 @@ gans:
     edition: 'Edition n°5 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2216-224 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6461:
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier'
@@ -272,7 +272,7 @@ gans:
       - { num: 18, semaineAvis: 2023-231 }
       - { num: 19, semaineAvis: 2026-230 }
       - { num: 20, semaineAvis: 2044-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6462:
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier'
@@ -285,7 +285,7 @@ gans:
       - { num: 1, semaineAvis: 1908-232 }
       - { num: 2, semaineAvis: 1944-233 }
       - { num: 3, semaineAvis: 2139-232 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6463:
     groupTitle: 'Îles Gambier'
     title: 'Île Mangareva'
@@ -302,7 +302,7 @@ gans:
       - { num: 5, semaineAvis: 2023-230 }
       - { num: 6, semaineAvis: 2023-231 }
       - { num: 7, semaineAvis: 2139-232 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6464:
     groupTitle: 'Îles Gambier'
     title: 'Îles Mangareva'
@@ -318,7 +318,7 @@ gans:
       - { num: 5, semaineAvis: 2023-230 }
       - { num: 6, semaineAvis: 2139-232 }
       - { num: 7, semaineAvis: 2218-224 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6497:
     groupTitle: 'Océan Indien - Archipel des Crozet - Groupe de l''Est'
     title: 'Île de la Possession, Île de l''Est'
@@ -329,7 +329,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Île de la Possession - Baie du Marin - Port Alfred', scale: '1 : 10 000', spatial: { SW: '46°26,08''S — 051°51,13''E', NE: '46°25,08''S — 051°53,13''E' } }
     edition: 'Edition n°5 - 2018'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6498:
     groupTitle: 'Océan Indien'
     title: 'Îles Crozet'
@@ -340,7 +340,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Île aux Cochons - Côte Est, Mouillage de la Meurthe', scale: '1 : 50 000', spatial: { SW: '46°09,20''S — 050°14,50''E', NE: '46°03,20''S — 050°21,50''E' } }
     edition: 'Edition n°5 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6525:
     groupTitle: 'Côte Sud de Tahiti'
     title: 'Abords de Port Phaeton'
@@ -354,7 +354,7 @@ gans:
       - { num: 2, semaineAvis: 2037-228 }
       - { num: 3, semaineAvis: 2141-227 }
       - { num: 4, semaineAvis: 2149-226 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6540:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'Baie de Saint-Vincent'
@@ -365,7 +365,7 @@ gans:
     edition: 'Edition n°4 - 2017'
     corrections:
       - { num: 2, semaineAvis: 1927-217 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6553:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Kouaoua'
@@ -377,7 +377,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1942-224 }
       - { num: 7, semaineAvis: 2009-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6554:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'Baie Chasseloup'
@@ -390,7 +390,7 @@ gans:
       - { num: 5, semaineAvis: 1942-215 }
       - { num: 6, semaineAvis: 1947-216 }
       - { num: 7, semaineAvis: 2007-216 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6589:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Baie de Canala'
@@ -399,7 +399,7 @@ gans:
       SW: '21°31,84''S — 165°54,60''E'
       NE: '21°21,29''S — 166°02,28''E'
     edition: 'Edition n°3 - 2019'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6604:
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
@@ -408,7 +408,7 @@ gans:
       SW: '22°24,95''S — 139°35,01''W'
       NE: '21°29,95''S — 138°10,01''W'
     edition: 'Edition n°4 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6605:
     groupTitle: 'Iles de la Société - Côte Nord-Est de Tahiti'
     title: 'De la Pointe Vénus à Mahaena'
@@ -421,7 +421,7 @@ gans:
       - { num: 4, semaineAvis: 1925-225 }
       - { num: 5, semaineAvis: 2044-230 }
       - { num: 6, semaineAvis: 2149-226 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6607:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie Sud-Est'
@@ -434,7 +434,7 @@ gans:
       - { num: 17, semaineAvis: 1919-233 }
       - { num: 18, semaineAvis: 2002-232 }
       - { num: 19, semaineAvis: 2046-231 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6610:
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié'
@@ -443,7 +443,7 @@ gans:
       SW: '42°58,94''N — 005°42,38''E'
       NE: '43°09,44''N — 005°52,14''E'
     edition: 'Edition n°6 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6612:
     groupTitle: 'Côte Sud de France'
     title: 'De Cassis à Bandol'
@@ -454,7 +454,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Port de La Ciotat', scale: '1 : 7 500', spatial: { SW: '43°09,86''N — 005°36,03''E', NE: '43°10,86''N — 005°37,13''E' } }
     edition: 'Edition n°5 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6615:
     groupTitle: 'Côte Sud de France'
     title: 'Îles de Port-Cros et du Levant'
@@ -465,7 +465,7 @@ gans:
     edition: 'Edition n°5 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2151-87 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6616:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Bénat au Cap Lardier'
@@ -479,7 +479,7 @@ gans:
     edition: 'Edition n°5 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2151-87 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6618:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Atterrages Ouest des Îles Britanniques'
@@ -488,7 +488,7 @@ gans:
       SW: '48°15,00''N — 034°15,00''W'
       NE: '60°38,00''N — 000°55,00''W'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6623:
     groupTitle: 'Océan Atlantique Nord'
     title: 'De La Manche au Détroit de Gibraltar et à l''archipel des Açores'
@@ -500,7 +500,7 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 2212-46 }
       - { num: 9, semaineAvis: 2215-70 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6643:
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
@@ -517,7 +517,7 @@ gans:
       - { num: 18, semaineAvis: 2037-188 }
       - { num: 19, semaineAvis: 2051-180 }
       - { num: 20, semaineAvis: 2140-178 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
@@ -529,7 +529,7 @@ gans:
     corrections:
       - { num: 45, semaineAvis: 2212-14 }
       - { num: 46, semaineAvis: 2223-33 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6657:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société - Île de Moorea'
     title: 'Baies de Cook et d''Opunohu'
@@ -541,7 +541,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2018-226 }
       - { num: 3, semaineAvis: 2103-232 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6658:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Île de Moorea - Côte Nord-Ouest de Tahiti'
@@ -558,7 +558,7 @@ gans:
       - { num: 3, semaineAvis: 2031-230 }
       - { num: 4, semaineAvis: 2044-230 }
       - { num: 5, semaineAvis: 2208-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6664:
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
@@ -572,7 +572,7 @@ gans:
       - { num: 6, semaineAvis: 1951-185 }
       - { num: 7, semaineAvis: 2012-182 }
       - { num: 8, semaineAvis: 2039-184 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6670:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers de Tasman et du Corail'
@@ -586,7 +586,7 @@ gans:
       - { num: 3, semaineAvis: 2036-225 }
       - { num: 4, semaineAvis: 2112-210 }
       - { num: 5, semaineAvis: 2140-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6671:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers du Corail et des Salomon et mers adjacentes'
@@ -601,7 +601,7 @@ gans:
       - { num: 6, semaineAvis: 2036-225 }
       - { num: 7, semaineAvis: 2140-230 }
       - { num: 8, semaineAvis: 2209-235 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6672:
     groupTitle: 'Océan Indien - Partie Ouest'
     title: 'De Maputo à Muqdisho - Madagascar'
@@ -610,7 +610,7 @@ gans:
       SW: '27°00,00''S — 032°00,00''E'
       NE: '05°28,85''N — 053°25,74''E'
     edition: 'Edition n°6 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6673:
     groupTitle: 'Océan Indien'
     title: 'De Chagos Archipelago à Madagascar'
@@ -619,7 +619,7 @@ gans:
       SW: '24°18,14''S — 044°27,00''E'
       NE: '03°30,00''S — 077°46,99''E'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6680:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Ile d''Ouessant à l''Ile de Batz'
@@ -630,7 +630,7 @@ gans:
     edition: 'Edition n°3 - 2003'
     corrections:
       - { num: 87, semaineAvis: 2223-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6683:
     groupTitle: 'Côte Nord de France'
     title: 'Port du Havre'
@@ -643,7 +643,7 @@ gans:
       - { num: 13, semaineAvis: 2130-40 }
       - { num: 14, semaineAvis: 2214-39 }
       - { num: 15, semaineAvis: 2223-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6684:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe et Port de Fos'
@@ -655,7 +655,7 @@ gans:
     corrections:
       - { num: 12, semaineAvis: 2203-89 }
       - { num: 13, semaineAvis: 2227-86 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6687:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Abords de Nouméa - Passes de Boulari et de Dumbéa'
@@ -675,7 +675,7 @@ gans:
       - { num: 8, semaineAvis: 2205-220 }
       - { num: 9, semaineAvis: 2209-222 }
       - { num: 10, semaineAvis: 2211-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6688:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles de la Société'
@@ -684,7 +684,7 @@ gans:
       SW: '18°40,00''S — 154°52,00''W'
       NE: '14°39,50''S — 148°45,50''W'
     edition: 'Edition n°4 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6689:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (Partie Ouest)'
@@ -693,7 +693,7 @@ gans:
       SW: '18°13,99''S — 150°00,00''W'
       NE: '14°13,00''S — 143°53,50''W'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6690:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie centrale)'
@@ -702,7 +702,7 @@ gans:
       SW: '18°42,00''S — 144°15,00''W'
       NE: '14°41,50''S — 138°08,50''W'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6691:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Îles Tuamotu (partie Est)'
@@ -711,7 +711,7 @@ gans:
       SW: '23°25,00''S — 142°00,00''W'
       NE: '17°40,00''S — 137°50,00''W'
     edition: 'Edition n°4 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6692:
     groupTitle: 'Océan Pacifique Sud - Polynésie Française'
     title: 'Des Îles Tuamotu aux Îles Gambier'
@@ -720,7 +720,7 @@ gans:
       SW: '24°20,00''S — 139°15,00''W'
       NE: '20°28,00''S — 133°08,30''W'
     edition: 'Edition n°4 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6693:
     groupTitle: 'Côte Sud de France'
     title: 'De Saintes-Maries-de-la-Mer à Port-Saint-Louis-du-Rhône'
@@ -732,7 +732,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 2203-89 }
       - { num: 7, semaineAvis: 2227-86 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6713:
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Nord-Est de la Corse'
@@ -746,7 +746,7 @@ gans:
       - { num: 2, semaineAvis: 2221-94 }
       - { num: 3, semaineAvis: 2227-93 }
       - { num: 4, semaineAvis: 2227-106 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6717:
     groupTitle: 'Île de Tahiti (Côte Sud) - Mouillages'
     title: 'Port Phaeton (Teauaa) - Tapuaeraha'
@@ -760,7 +760,7 @@ gans:
       - { num: 4, semaineAvis: 2037-228 }
       - { num: 5, semaineAvis: 2141-227 }
       - { num: 6, semaineAvis: 2215-227 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6735:
     groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
@@ -771,7 +771,7 @@ gans:
     edition: 'Edition n°7 - 2012'
     corrections:
       - { num: 144, semaineAvis: 2217-28 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6738:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique'
@@ -784,7 +784,7 @@ gans:
       - { num: 38, semaineAvis: 2118-261 }
       - { num: 39, semaineAvis: 2140-260 }
       - { num: 40, semaineAvis: 2221-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6740:
     groupTitle: 'Côte Ouest de Tahiti'
     title: 'De Maraa à Faaa'
@@ -799,7 +799,7 @@ gans:
       - { num: 6, semaineAvis: 2025-231 }
       - { num: 7, semaineAvis: 2045-230 }
       - { num: 8, semaineAvis: 2149-226 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6741:
     groupTitle: 'Océan Indien'
     title: 'Îles Kerguelen'
@@ -808,7 +808,7 @@ gans:
       SW: '50°10,50''S — 067°20,00''E'
       NE: '48°10,00''S — 071°50,50''E'
     edition: 'Edition n°3 - 2019'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6757:
     groupTitle: 'Mer Méditerranée'
     title: 'Du Détroit de Gibraltar au Canal de Sicile'
@@ -822,7 +822,7 @@ gans:
       - { num: 165, semaineAvis: 2129-75 }
       - { num: 166, semaineAvis: 2131-144 }
       - { num: 167, semaineAvis: 2215-70 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6767:
     groupTitle: 'Côte Sud de France'
     title: 'De Fos-sur-Mer à Marseille'
@@ -833,7 +833,7 @@ gans:
     edition: 'Edition n°5 - 2022'
     corrections:
       - { num: 1, semaineAvis: 2218-89 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6768:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Sud)'
@@ -849,7 +849,7 @@ gans:
       - { num: 14, semaineAvis: 1848-204 }
       - { num: 15, semaineAvis: 1930-220 }
       - { num: 16, semaineAvis: 2018-222 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6770:
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
     title: 'Abords Sud-Ouest de l''Île des Pins'
@@ -863,7 +863,7 @@ gans:
       - { num: 2, semaineAvis: 1842-204 }
       - { num: 3, semaineAvis: 2104-217 }
       - { num: 4, semaineAvis: 2135-217 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6797:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Loire'
@@ -875,7 +875,7 @@ gans:
     corrections:
       - { num: 29, semaineAvis: 2206-50 }
       - { num: 30, semaineAvis: 2225-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6808:
     groupTitle: 'Océan Atlantique Sud'
     title: 'Océan Atlantique Sud - Partie Est'
@@ -884,7 +884,7 @@ gans:
       SW: '57°10,00''S — 027°00,00''W'
       NE: '18°08,89''N — 029°35,57''E'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6809:
     groupTitle: 'Océan Indien'
     title: 'Océan Indien - Partie Sud'
@@ -898,7 +898,7 @@ gans:
       - { num: 2, semaineAvis: 1941-207 }
       - { num: 3, semaineAvis: 1951-185 }
       - { num: 4, semaineAvis: 2207-239 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6814:
     groupTitle: 'Océan Atlantique'
     title: 'Côte Nord-Est d''Amérique du Sud'
@@ -907,7 +907,7 @@ gans:
       SW: '08°00,00''S — 062°00,00''W'
       NE: '15°00,00''N — 028°00,00''W'
     edition: 'Edition n°2 - 1989'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6815:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Océan Atlantique Nord - Partie Est'
@@ -918,7 +918,7 @@ gans:
     edition: 'Edition n°5 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2207-165 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6817:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De la Nouvelle-Zélande aux Iles Fidji et Samoa'
@@ -931,7 +931,7 @@ gans:
       - { num: 1, semaineAvis: 1845-200 }
       - { num: 2, semaineAvis: 2011-215 }
       - { num: 3, semaineAvis: 2140-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6820:
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''Île Lifou - Baie du Santal'
@@ -946,7 +946,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1741-204 }
       - { num: 3, semaineAvis: 1749-204 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6821:
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Ouest de Corse'
@@ -959,7 +959,7 @@ gans:
       - { num: 15, semaineAvis: 2221-92 }
       - { num: 16, semaineAvis: 2221-94 }
       - { num: 17, semaineAvis: 2227-93 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6822:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Nord de Bastia'
@@ -970,7 +970,7 @@ gans:
     edition: 'Edition n°4 - 2021'
     corrections:
       - { num: 3, semaineAvis: 2214-94 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6823:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords Sud de Bastia'
@@ -982,7 +982,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 2214-94 }
       - { num: 5, semaineAvis: 2227-93 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6824:
     groupTitle: 'Côte Nord de France - Côte Sud d''Angleterre'
     title: 'La Manche - Du Cap d''Antifer au Cap Gris-Nez - De Newhaven à Dover'
@@ -994,7 +994,7 @@ gans:
     corrections:
       - { num: 159, semaineAvis: 2216-28 }
       - { num: 160, semaineAvis: 2225-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6827:
     groupTitle: 'Côte Sud de Nouvelle-Calédonie'
     title: 'Du Mont Dore à Port-Boisé'
@@ -1003,7 +1003,7 @@ gans:
       SW: '22°50,20''S — 166°34,10''E'
       NE: '22°14,90''S — 167°00,00''E'
     edition: 'Edition n°4 - 2018'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6828:
     groupTitle: 'Côte Sud-Ouest de Tahiti'
     title: 'De Atehiti à Maraa'
@@ -1016,7 +1016,7 @@ gans:
       - { num: 9, semaineAvis: 1724-206 }
       - { num: 10, semaineAvis: 2037-228 }
       - { num: 11, semaineAvis: 2149-226 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6835:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Est'
@@ -1029,7 +1029,7 @@ gans:
     edition: 'Edition n°2 - 1997'
     corrections:
       - { num: 78, semaineAvis: 2138-244 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël'
@@ -1042,7 +1042,7 @@ gans:
       - { title: 'Cartouche: B - Vieux Port - Saint-Raphaël', scale: '1 : 7 500', spatial: { SW: '43°25,20''N — 006°45,52''E', NE: '43°25,63''N — 006°46,07''E' } }
       - { title: 'Cartouche: C - Port Santa-Lucia - Saint-Raphaël', scale: '1 : 7 500', spatial: { SW: '43°24,41''N — 006°46,18''E', NE: '43°25,14''N — 006°47,07''E' } }
     edition: 'Edition n°5 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6839:
     groupTitle: 'Côte Sud de France'
     title: 'Étang de Thau'
@@ -1059,7 +1059,7 @@ gans:
     edition: 'Edition n°2 - 2006'
     corrections:
       - { num: 35, semaineAvis: 2227-84 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6843:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo Creus à Port-Barcarès'
@@ -1073,7 +1073,7 @@ gans:
       - { num: 15, semaineAvis: 2214-82 }
       - { num: 16, semaineAvis: 2227-82 }
       - { num: 17, semaineAvis: 2227-84 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6844:
     groupTitle: 'Côte Sud de France'
     title: 'De Port-Barcarès à l''embouchure de l''Aude'
@@ -1086,7 +1086,7 @@ gans:
       - { num: 20, semaineAvis: 2208-84 }
       - { num: 21, semaineAvis: 2223-90 }
       - { num: 22, semaineAvis: 2227-84 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6850:
     groupTitle: 'Côte Nord de Corse'
     title: 'Saint-Florent, Centuri et Macinaggio'
@@ -1097,7 +1097,7 @@ gans:
     edition: 'Edition n°4 - 2020'
     corrections:
       - { num: 3, semaineAvis: 2151-93 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6855:
     groupTitle: 'Côte Est de Corse'
     title: 'Du Phare d''Alistro à Solenzara'
@@ -1108,7 +1108,7 @@ gans:
     edition: 'Edition n°3 - 2015'
     corrections:
       - { num: 9, semaineAvis: 2221-94 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6857:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de la Hague à Fécamp - Baie de Seine'
@@ -1120,7 +1120,7 @@ gans:
     corrections:
       - { num: 83, semaineAvis: 2225-40 }
       - { num: 84, semaineAvis: 2225-43 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
@@ -1134,7 +1134,7 @@ gans:
     corrections:
       - { num: 13, semaineAvis: 2151-225 }
       - { num: 14, semaineAvis: 2219-223 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6880:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tonga aux Îles des Tuamotu'
@@ -1149,7 +1149,7 @@ gans:
       - { num: 3, semaineAvis: 2011-215 }
       - { num: 4, semaineAvis: 2025-229 }
       - { num: 5, semaineAvis: 2046-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6884:
     groupTitle: 'Océan Indien - Partie Nord'
     title: 'Océan Indien - Partie Nord'
@@ -1163,7 +1163,7 @@ gans:
       - { num: 2, semaineAvis: 1941-207 }
       - { num: 3, semaineAvis: 1951-185 }
       - { num: 4, semaineAvis: 2207-239 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6892:
     groupTitle: Martinique
     title: 'Baie de Fort-de-France'
@@ -1175,7 +1175,7 @@ gans:
     corrections:
       - { num: 13, semaineAvis: 2211-256 }
       - { num: 14, semaineAvis: 2221-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6898:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Mer des Antilles (Mer des Caraïbes)'
@@ -1186,7 +1186,7 @@ gans:
     edition: 'Edition n°5 - 2022'
     corrections:
       - { num: 1, semaineAvis: 2226-262 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6907:
     groupTitle: 'Côte Sud de France'
     title: 'Étang de Berre'
@@ -1197,7 +1197,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Canal de Caronte', scale: '1 : 12 500', spatial: { SW: '43°23,48''N — 004°58,67''E', NE: '43°24,54''N — 005°03,73''E' } }
     edition: 'Edition n°3 - 2016'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6911:
     groupTitle: 'Côte Est de Corse'
     title: 'Golfe de Porto-Vecchio'
@@ -1210,7 +1210,7 @@ gans:
       - { num: 9, semaineAvis: 2103-96 }
       - { num: 10, semaineAvis: 2112-96 }
       - { num: 11, semaineAvis: 2119-95 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6929:
     groupTitle: 'Côte Est de Corse'
     title: 'Abords de Porto-Vecchio'
@@ -1222,7 +1222,7 @@ gans:
     corrections:
       - { num: 19, semaineAvis: 2149-96 }
       - { num: 20, semaineAvis: 2221-94 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6930:
     groupTitle: 'Côte Nord de France'
     title: 'Des Roches de Portsall au Plateau des Roches Douvres'
@@ -1235,7 +1235,8 @@ gans:
       - { num: 69, semaineAvis: 2223-49 }
       - { num: 70, semaineAvis: 2223-50 }
       - { num: 71, semaineAvis: 2223-51 }
-    valid: '2022-07-10'
+      - { num: 72, semaineAvis: 2228-52 }
+    valid: '2022-07-18'
   6933:
     groupTitle: Nouvelle-Calédonie
     title: 'De l''Île Ouen à l''Île des Pins'
@@ -1244,7 +1245,7 @@ gans:
       SW: '22°43,13''S — 166°49,70''E'
       NE: '22°19,03''S — 167°27,80''E'
     edition: 'Edition n°5 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6940:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à The Needles'
@@ -1255,7 +1256,7 @@ gans:
     edition: 'Edition n°5 - 2011'
     corrections:
       - { num: 79, semaineAvis: 2202-42 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6941:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Lizard Point à Dartmouth'
@@ -1264,7 +1265,7 @@ gans:
       SW: '49°22,92''N — 005°13,57''W'
       NE: '50°25,03''N — 002°52,54''W'
     edition: 'Edition n°8 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6942:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta d''Orchina au Cap Muro'
@@ -1275,7 +1276,7 @@ gans:
     edition: 'Edition n°3 - 2015'
     corrections:
       - { num: 15, semaineAvis: 2227-93 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6948:
     groupTitle: Guadeloupe
     title: 'De Pointe-à-Pitre à Marie-Galante'
@@ -1289,7 +1290,7 @@ gans:
     corrections:
       - { num: 36, semaineAvis: 2211-260 }
       - { num: 37, semaineAvis: 2224-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6949:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'Abords de Thio'
@@ -1304,7 +1305,7 @@ gans:
       - { num: 15, semaineAvis: 1847-204 }
       - { num: 16, semaineAvis: 2002-217 }
       - { num: 17, semaineAvis: 2018-222 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6951:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Fos-sur-Mer à Capo Mele'
@@ -1316,7 +1317,7 @@ gans:
     corrections:
       - { num: 11, semaineAvis: 2114-87 }
       - { num: 12, semaineAvis: 2149-95 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6955:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea'
@@ -1325,7 +1326,7 @@ gans:
       SW: '18°04,52''S — 150°45,01''W'
       NE: '16°56,32''S — 148°57,21''W'
     edition: 'Edition n°5 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6956:
     groupTitle: 'Côte Est de Tahiti'
     title: 'De la Passe de Mahaena à la Baie de Taravao'
@@ -1340,7 +1341,7 @@ gans:
       - { num: 7, semaineAvis: 1919-231 }
       - { num: 8, semaineAvis: 2042-228 }
       - { num: 9, semaineAvis: 2114-232 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6957:
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
     title: 'De la Baie de Taravao à la Passe d''Aiurua'
@@ -1353,7 +1354,7 @@ gans:
       - { num: 4, semaineAvis: 1802-209 }
       - { num: 5, semaineAvis: 1907-220 }
       - { num: 6, semaineAvis: 2042-228 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6964:
     groupTitle: 'Océan Pacifique - Côte Ouest d''Amérique du Sud'
     title: 'De Panama au Cap Horn (Cabo de Hornos)'
@@ -1366,7 +1367,7 @@ gans:
       - { num: 58, semaineAvis: 1724-235 }
       - { num: 59, semaineAvis: 1943-246 }
       - { num: 60, semaineAvis: 2128-254 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6966:
     groupTitle: 'Côte Nord de France'
     title: 'Des Héaux-de-Bréhat au Cap Lévi'
@@ -1377,7 +1378,8 @@ gans:
     edition: 'Edition n°4 - 2015'
     corrections:
       - { num: 78, semaineAvis: 2223-49 }
-    valid: '2022-07-10'
+      - { num: 79, semaineAvis: 2228-46 }
+    valid: '2022-07-18'
   6968:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Anvil Point à Beachy Head'
@@ -1386,7 +1388,7 @@ gans:
       SW: '49°53,93''N — 001°59,09''W'
       NE: '50°55,37''N — 000°21,96''E'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6969:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Corse à la Punta di l''Acciolu'
@@ -1395,7 +1397,7 @@ gans:
       SW: '42°39,94''N — 009°00,94''E'
       NE: '43°08,94''N — 009°28,64''E'
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6970:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Punta di l''Acciolu à Capo Cavallo'
@@ -1406,7 +1408,7 @@ gans:
     edition: 'Edition n°3 - 2015'
     corrections:
       - { num: 12, semaineAvis: 2139-95 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6977:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Nord-Ouest'
@@ -1415,7 +1417,7 @@ gans:
       SW: '22°13,00''N — 117°10,00''E'
       NE: '62°00,00''N — 154°48,13''W'
     edition: 'Publication 1982'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
@@ -1426,7 +1428,7 @@ gans:
     edition: 'Edition n°4 - 2018'
     corrections:
       - { num: 8, semaineAvis: 2202-92 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6985:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Paagoumène à Ouaco'
@@ -1447,7 +1449,7 @@ gans:
       - { num: 12, semaineAvis: 2017-221 }
       - { num: 13, semaineAvis: 2025-225 }
       - { num: 14, semaineAvis: 2211-223 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6986:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De Port-Ounia au Cap Ndoua'
@@ -1465,7 +1467,7 @@ gans:
       - { num: 4, semaineAvis: 1930-222 }
       - { num: 5, semaineAvis: 1932-218 }
       - { num: 6, semaineAvis: 2104-217 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6990:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
@@ -1477,7 +1479,7 @@ gans:
     corrections:
       - { num: 33, semaineAvis: 2223-58 }
       - { num: 34, semaineAvis: 2225-52 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   6991:
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
@@ -1489,7 +1491,7 @@ gans:
     corrections:
       - { num: 29, semaineAvis: 2148-56 }
       - { num: 30, semaineAvis: 2217-64 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7003:
     groupTitle: 'Côte Sud de France'
     title: 'Le Cap d''Agde, Saint-Cyprien, Banyuls-sur-Mer et Gruissan'
@@ -1502,7 +1504,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2141-85 }
       - { num: 6, semaineAvis: 2227-82 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7004:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe d''Aigues-Mortes'
@@ -1517,7 +1519,7 @@ gans:
     edition: 'Edition n°2 - 2005'
     corrections:
       - { num: 23, semaineAvis: 2219-88 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7008:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cabo de San Sebastian à Fos-sur-Mer'
@@ -1529,7 +1531,7 @@ gans:
     corrections:
       - { num: 91, semaineAvis: 2212-78 }
       - { num: 92, semaineAvis: 2227-82 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7011:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De la Presqu''île Neuméni à Port-Ounia'
@@ -1543,7 +1545,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 1808-204 }
       - { num: 7, semaineAvis: 1932-218 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7014:
     groupTitle: 'Méditerranée Occidentale'
     title: 'Des Îles Baléares à la Corse et à la Sardaigne'
@@ -1557,7 +1559,7 @@ gans:
       - { num: 52, semaineAvis: 2131-144 }
       - { num: 53, semaineAvis: 2141-85 }
       - { num: 54, semaineAvis: 2206-75 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7015:
     groupTitle: 'Méditerranée Occidentale'
     title: 'De Gibraltar aux Iles Baléares'
@@ -1566,7 +1568,7 @@ gans:
       SW: '33°40,00''N — 005°22,00''W'
       NE: '43°50,00''N — 004°25,00''E'
     edition: 'Edition n°2 - 1998'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7021:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Sud-Ouest'
@@ -1579,7 +1581,7 @@ gans:
       - { num: 213, semaineAvis: 1910-235 }
       - { num: 214, semaineAvis: 1946-240 }
       - { num: 215, semaineAvis: 2025-244 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'De San Francisco à Lima'
@@ -1590,7 +1592,7 @@ gans:
     edition: 'Publication 1984'
     corrections:
       - { num: 107, semaineAvis: 2128-254 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7024:
     groupTitle: 'Mer Méditerranée'
     title: 'Bouches de Bonifacio'
@@ -1604,7 +1606,7 @@ gans:
     corrections:
       - { num: 51, semaineAvis: 2111-97 }
       - { num: 52, semaineAvis: 2146-98 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7025:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'Île de Corse'
@@ -1618,7 +1620,7 @@ gans:
       - { num: 15, semaineAvis: 2207-100 }
       - { num: 16, semaineAvis: 2221-92 }
       - { num: 17, semaineAvis: 2221-94 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7030:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Garonne'
@@ -1629,7 +1631,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Cours de la Garonne (suite de la carte)', scale: '1 : 20 000', spatial: { SW: '44°50,14''N — 000°34,78''W', NE: '44°58,10''N — 000°31,38''W' } }
     edition: 'Edition n°3 - 2016'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7031:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île de Penfret au Plateau des Birvideaux'
@@ -1640,7 +1642,7 @@ gans:
     edition: 'Edition n°4 - 2017'
     corrections:
       - { num: 25, semaineAvis: 2223-58 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7032:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île de Groix à Belle-Ile'
@@ -1651,7 +1653,7 @@ gans:
     edition: 'Edition n°4 - 2017'
     corrections:
       - { num: 26, semaineAvis: 2214-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7033:
     groupTitle: 'Côte Ouest de France'
     title: 'De Quiberon au Croisic'
@@ -1662,7 +1664,7 @@ gans:
     edition: 'Edition n°3 - 2002'
     corrections:
       - { num: 99, semaineAvis: 2217-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7035:
     groupTitle: 'Océan Indien'
     title: 'La Réunion'
@@ -1674,7 +1676,7 @@ gans:
     corrections:
       - { num: 47, semaineAvis: 2114-184 }
       - { num: 48, semaineAvis: 2223-183 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7040:
     title: 'La Manche'
     scale: '1 : 560 000'
@@ -1684,7 +1686,7 @@ gans:
     edition: 'Edition n°5 - 2020'
     corrections:
       - { num: 21, semaineAvis: 2223-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7041:
     groupTitle: 'Petites Antilles'
     title: 'La Martinique'
@@ -1697,7 +1699,7 @@ gans:
       - { num: 30, semaineAvis: 2104-259 }
       - { num: 31, semaineAvis: 2140-260 }
       - { num: 32, semaineAvis: 2206-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7043:
     groupTitle: 'Océan Atlantique Nord - Partie Ouest'
     title: 'Océan Atlantique Nord - Partie Ouest'
@@ -1708,7 +1710,7 @@ gans:
     edition: 'Edition n°2 - 2016'
     corrections:
       - { num: 20, semaineAvis: 2209-265 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7044:
     groupTitle: 'Océan Atlantique Sud'
     title: 'De la Terre de Feu au Vénézuéla'
@@ -1726,7 +1728,7 @@ gans:
       - { num: 6, semaineAvis: 2046-254 }
       - { num: 7, semaineAvis: 2127-170 }
       - { num: 8, semaineAvis: 2224-246 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7049:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Loyauté à l''île Hunter'
@@ -1743,7 +1745,7 @@ gans:
       - { num: 1, semaineAvis: 1731-203 }
       - { num: 2, semaineAvis: 1751-204 }
       - { num: 3, semaineAvis: 2036-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7050:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Calvi à Cargèse'
@@ -1754,7 +1756,7 @@ gans:
     edition: 'Edition n°3 - 2015'
     corrections:
       - { num: 15, semaineAvis: 2221-92 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7051:
     groupTitle: 'Côte Nord-Est de Nouvelle-Calédonie'
     title: 'Du Cap Colnett à Touho'
@@ -1769,7 +1771,7 @@ gans:
       - { num: 3, semaineAvis: 1825-207 }
       - { num: 4, semaineAvis: 1828-210 }
       - { num: 5, semaineAvis: 1838-205 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7052:
     groupTitle: Nouvelle-Calédonie
     title: 'De Nouméa à l''Île des Pins'
@@ -1787,7 +1789,7 @@ gans:
       - { num: 23, semaineAvis: 1930-220 }
       - { num: 24, semaineAvis: 1930-222 }
       - { num: 25, semaineAvis: 2016-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7053:
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'
@@ -1799,7 +1801,7 @@ gans:
     corrections:
       - { num: 14, semaineAvis: 2204-86 }
       - { num: 15, semaineAvis: 2227-84 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7054:
     groupTitle: 'Côte Sud de France'
     title: 'De l''embouchure de l''Aude à Sète'
@@ -1811,7 +1813,7 @@ gans:
     corrections:
       - { num: 15, semaineAvis: 2208-84 }
       - { num: 16, semaineAvis: 2227-84 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7057:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dunkerque'
@@ -1822,7 +1824,7 @@ gans:
     edition: 'Edition n°5 - 2019'
     corrections:
       - { num: 5, semaineAvis: 2223-33 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7066:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Île Vierge à la Pointe de Penmarc''h'
@@ -1833,7 +1835,7 @@ gans:
     edition: 'Edition n°5 - 2019'
     corrections:
       - { num: 20, semaineAvis: 2219-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7067:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à Belle-Île'
@@ -1844,7 +1846,7 @@ gans:
     edition: 'Edition n°4 - 2015'
     corrections:
       - { num: 50, semaineAvis: 2223-58 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7068:
     groupTitle: 'Côte Ouest de France'
     title: 'De la presqu''île de Quiberon aux Sables-d''Olonne'
@@ -1856,7 +1858,7 @@ gans:
     corrections:
       - { num: 38, semaineAvis: 2216-50 }
       - { num: 39, semaineAvis: 2225-52 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7069:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre'
@@ -1865,7 +1867,7 @@ gans:
       SW: '45°41,20''N — 003°21,00''W'
       NE: '46°47,80''N — 001°00,00''W'
     edition: 'Edition n°3 - 2018'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7070:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Pertuis de Maumusson à Mimizan-Plage'
@@ -1878,7 +1880,7 @@ gans:
       - { num: 19, semaineAvis: 2121-60 }
       - { num: 20, semaineAvis: 2148-56 }
       - { num: 21, semaineAvis: 2217-64 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7073:
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
@@ -1890,7 +1892,7 @@ gans:
       - { title: 'Cartouche: E - Baie de Port-Bouquet', scale: '1 : 25 000', spatial: { SW: '21°42,38''S — 166°19,63''E', NE: '21°38,29''S — 166°25,98''E' } }
       - { title: 'Cartouche: F - Baie de Ouinné', scale: '1 : 20 000', spatial: { SW: '21°59,33''S — 166°40,42''E', NE: '21°57,13''S — 166°45,51''E' } }
     edition: 'Edition n°3 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7076:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De Saint-Nazaire à Saint-Malo'
@@ -1901,7 +1903,8 @@ gans:
     edition: 'Edition n°3 - 2019'
     corrections:
       - { num: 48, semaineAvis: 2223-58 }
-    valid: '2022-07-10'
+      - { num: 49, semaineAvis: 2228-52 }
+    valid: '2022-07-18'
   7081:
     groupTitle: 'Mer Méditerranée et Mer Noire'
     title: 'Mer Méditerranée et Mer Noire'
@@ -1912,7 +1915,7 @@ gans:
     edition: 'Publication 1986'
     corrections:
       - { num: 140, semaineAvis: 2131-144 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7086:
     groupTitle: 'Côte Nord de France'
     title: 'Rade de Cherbourg'
@@ -1926,7 +1929,7 @@ gans:
       - { num: 3, semaineAvis: 2029-40 }
       - { num: 4, semaineAvis: 2117-40 }
       - { num: 5, semaineAvis: 2218-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7087:
     groupTitle: 'La Martinique'
     title: 'Havre de la Trinité et Baie du Galion'
@@ -1940,7 +1943,7 @@ gans:
       - { num: 7, semaineAvis: 1743-256 }
       - { num: 8, semaineAvis: 1908-261 }
       - { num: 9, semaineAvis: 2221-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7088:
     groupTitle: 'La Martinique'
     title: 'Havre du Robert et Baie du François'
@@ -1953,7 +1956,7 @@ gans:
     edition: 'Edition n°3 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2221-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7089:
     groupTitle: 'La Martinique'
     title: 'Saint-Pierre, Case-Pilote, Cul-de-Sac du Marin, Baie du Vauclin'
@@ -1965,7 +1968,7 @@ gans:
     edition: 'Edition n°3 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2221-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7090:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à Saint-Vaast-la-Hougue'
@@ -1979,7 +1982,7 @@ gans:
     edition: 'Edition n°3 - 2018'
     corrections:
       - { num: 11, semaineAvis: 2136-44 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7091:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Toulon'
@@ -1990,7 +1993,7 @@ gans:
     edition: 'Edition n°6 - 2018'
     corrections:
       - { num: 14, semaineAvis: 2149-92 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7092:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Nacqueville au Cap Lévi'
@@ -2002,7 +2005,7 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2117-40 }
       - { num: 4, semaineAvis: 2218-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7093:
     groupTitle: 'Côte Sud de France'
     title: 'Rade de Toulon'
@@ -2011,7 +2014,7 @@ gans:
       SW: '43°03,59''N — 005°52,54''E'
       NE: '43°07,64''N — 006°00,64''E'
     edition: 'Edition n°8 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7094:
     groupTitle: 'Côte Nord de France'
     title: 'Du Phare du Four à l''Île Vierge'
@@ -2026,7 +2029,7 @@ gans:
       - { num: 2, semaineAvis: 2019-44 }
       - { num: 3, semaineAvis: 2204-39 }
       - { num: 4, semaineAvis: 2212-42 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7095:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Morlaix'
@@ -2038,7 +2041,7 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 2206-42 }
       - { num: 10, semaineAvis: 2223-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7096:
     groupTitle: 'Côte Sud de Corse'
     title: 'Baie de Figari - Port de Bonifacio'
@@ -2046,7 +2049,7 @@ gans:
       - { title: 'Cartouche: A - Baie de Figari', scale: '1 : 10 000', spatial: { SW: '41°26,31''N — 009°01,34''E', NE: '41°28,76''N — 009°05,03''E' } }
       - { title: 'Cartouche: B - Port de Bonifacio', scale: '1 : 5 000', spatial: { SW: '41°22,83''N — 009°08,13''E', NE: '41°23,56''N — 009°09,97''E' } }
     edition: 'Edition n°3 - 2017'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7097:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Baie de Bourail - Coupée Mara et Baie de Moindou'
@@ -2056,7 +2059,7 @@ gans:
     edition: 'Edition n°2 - 2010'
     corrections:
       - { num: 1, semaineAvis: 1808-205 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7098:
     groupTitle: 'Côte Sud-Ouest de Nouvelle Calédonie'
     title: 'Baies d''Ouaraï et Chambeyron'
@@ -2067,7 +2070,7 @@ gans:
     edition: 'Edition n°2 - 2007'
     corrections:
       - { num: 3, semaineAvis: 2204-221 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7100:
     groupTitle: Guadeloupe
     title: 'Abords de Pointe-à-Pitre'
@@ -2080,7 +2083,7 @@ gans:
     edition: 'Edition n°4 - 2017'
     corrections:
       - { num: 7, semaineAvis: 2211-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7101:
     groupTitle: Guadeloupe
     title: 'Les Saintes'
@@ -2095,7 +2098,7 @@ gans:
       - { num: 4, semaineAvis: 1951-257 }
       - { num: 5, semaineAvis: 2042-267 }
       - { num: 6, semaineAvis: 2211-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7102:
     groupTitle: Guadeloupe
     title: 'Ports et mouillages de Grande-Terre, de Marie-Galante et de la Désirade'
@@ -2111,7 +2114,7 @@ gans:
       - { num: 2, semaineAvis: 1903-265 }
       - { num: 3, semaineAvis: 2042-267 }
       - { num: 4, semaineAvis: 2224-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7107:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
@@ -2122,7 +2125,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Rivière de Crac''h', scale: '1 : 20 000', spatial: { SW: '47°35,45''N — 003°01,90''W', NE: '47°37,40''N — 003°00,85''W' } }
     edition: 'Edition n°2 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7120:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Cherbourg'
@@ -2133,7 +2136,7 @@ gans:
     edition: 'Edition n°2 - 2008'
     corrections:
       - { num: 59, semaineAvis: 2218-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7121:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Douarnenez'
@@ -2145,7 +2148,7 @@ gans:
       - { title: 'Cartouche: A - Port de Morgat', scale: '1 : 10 000', spatial: { SW: '48°12,99''N — 004°30,48''W', NE: '48°13,84''N — 004°29,14''W' } }
       - { title: 'Cartouche: B - Port de Douarnenez', scale: '1 : 10 000', spatial: { SW: '48°04,84''N — 004°21,28''W', NE: '48°06,59''N — 004°18,93''W' } }
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7122:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu au phare du Four'
@@ -2160,7 +2163,7 @@ gans:
       - { num: 7, semaineAvis: 2103-45 }
       - { num: 8, semaineAvis: 2204-41 }
       - { num: 9, semaineAvis: 2219-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7123:
     groupTitle: 'Côte Ouest de France'
     title: 'Île Molène - Île d''Ouessant'
@@ -2171,7 +2174,7 @@ gans:
     edition: 'Edition n°6 - 2019'
     corrections:
       - { num: 4, semaineAvis: 2224-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7124:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Lannion'
@@ -2184,7 +2187,9 @@ gans:
       - { title: 'Cartouche: B - Port de Lannion (Le Léguer)', scale: '1 : 7 500', spatial: { SW: '48°43,78''N — 003°28,28''W', NE: '48°44,34''N — 003°27,43''W' } }
       - { title: 'Cartouche: C - Port de Trébeurden', scale: '1 : 7 500', spatial: { SW: '48°45,99''N — 003°35,65''W', NE: '48°46,42''N — 003°34,98''W' } }
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    corrections:
+      - { num: 1, semaineAvis: 2228-52 }
+    valid: '2022-07-18'
   7125:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Perros-Guirec - Les Sept Îles'
@@ -2199,7 +2204,7 @@ gans:
     edition: 'Edition n°4 - 2018'
     corrections:
       - { num: 12, semaineAvis: 2224-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7126:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île Balanec aux Héaux-de-Bréhat'
@@ -2213,7 +2218,7 @@ gans:
     corrections:
       - { num: 25, semaineAvis: 2202-40 }
       - { num: 26, semaineAvis: 2224-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7127:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de l''Île de Bréhat - Anse de Paimpol'
@@ -2227,7 +2232,7 @@ gans:
     edition: 'Edition n°4 - 2014'
     corrections:
       - { num: 29, semaineAvis: 2224-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7128:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (Partie Ouest)'
@@ -2241,7 +2246,8 @@ gans:
     edition: 'Edition n°3 - 2016'
     corrections:
       - { num: 19, semaineAvis: 2219-40 }
-    valid: '2022-07-10'
+      - { num: 20, semaineAvis: 2228-48 }
+    valid: '2022-07-18'
   7129:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à Saint-Briac-sur-Mer'
@@ -2252,7 +2258,7 @@ gans:
     edition: 'Edition n°3 - 2017'
     corrections:
       - { num: 10, semaineAvis: 2226-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7130:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Saint-Malo'
@@ -2265,7 +2271,7 @@ gans:
       - { num: 12, semaineAvis: 2122-40 }
       - { num: 13, semaineAvis: 2124-36 }
       - { num: 14, semaineAvis: 2226-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7131:
     groupTitle: 'Côte Nord de France'
     title: 'Du Havre de Rothéneuf à Cancale'
@@ -2279,7 +2285,7 @@ gans:
     corrections:
       - { num: 3, semaineAvis: 2226-49 }
       - { num: 4, semaineAvis: 2226-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7133:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de la Côte Ouest du Cotentin'
@@ -2296,7 +2302,7 @@ gans:
       - { num: 28, semaineAvis: 2121-38 }
       - { num: 29, semaineAvis: 2143-40 }
       - { num: 30, semaineAvis: 2212-43 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7134:
     groupTitle: 'Côte Nord de France'
     title: 'Îles Chausey'
@@ -2307,7 +2313,9 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Sound de Chausey', scale: '1 : 5 000', spatial: { SW: '48°51,90''N — 001°49,90''W', NE: '48°52,52''N — 001°48,59''W' } }
     edition: 'Edition n°5 - 2021'
-    valid: '2022-07-10'
+    corrections:
+      - { num: 4, semaineAvis: 2228-46 }
+    valid: '2022-07-18'
   7135:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Jacques à Damgan'
@@ -2318,7 +2326,7 @@ gans:
     edition: 'Edition n°2 - 2020'
     corrections:
       - { num: 3, semaineAvis: 2217-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7136:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Baie de Pont-Mahé à Piriac-sur-Mer'
@@ -2329,7 +2337,7 @@ gans:
     edition: 'Publication 2001'
     corrections:
       - { num: 17, semaineAvis: 2217-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7137:
     groupTitle: 'Côte Ouest de France'
     title: 'Golfe du Morbihan'
@@ -2344,7 +2352,7 @@ gans:
     edition: 'Edition n°2 - 2019'
     corrections:
       - { num: 10, semaineAvis: 2218-55 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7138:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et mouillages en Bretagne Sud'
@@ -2358,7 +2366,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 2110-56 }
       - { num: 5, semaineAvis: 2113-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7139:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Talut à la Pointe de Gâvres - Île de Groix'
@@ -2371,7 +2379,7 @@ gans:
     edition: 'Edition n°3 - 2016'
     corrections:
       - { num: 19, semaineAvis: 2221-48 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7140:
     groupTitle: 'Côte Ouest de France'
     title: 'Passes et Rade de Lorient'
@@ -2384,7 +2392,7 @@ gans:
     edition: 'Edition n°4 - 2019'
     corrections:
       - { num: 11, semaineAvis: 2224-55 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7141:
     groupTitle: 'Côte Ouest de France'
     title: 'Baie de Quiberon'
@@ -2397,7 +2405,7 @@ gans:
       - { num: 35, semaineAvis: 2110-45 }
       - { num: 36, semaineAvis: 2120-51 }
       - { num: 37, semaineAvis: 2214-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7142:
     groupTitle: 'Côte Ouest de France'
     title: Belle-Ile
@@ -2413,7 +2421,7 @@ gans:
       - { num: 26, semaineAvis: 2012-46 }
       - { num: 27, semaineAvis: 2202-56 }
       - { num: 28, semaineAvis: 2214-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7143:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords des Iles de Houat et de Hoëdic'
@@ -2425,7 +2433,7 @@ gans:
     corrections:
       - { num: 23, semaineAvis: 2205-51 }
       - { num: 24, semaineAvis: 2214-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7144:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Vilaine'
@@ -2440,7 +2448,7 @@ gans:
       - { num: 2, semaineAvis: 1951-56 }
       - { num: 3, semaineAvis: 2044-56 }
       - { num: 4, semaineAvis: 2150-56 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7145:
     groupTitle: 'Côte Ouest de France'
     title: 'De La Turballe à Pornichet'
@@ -2457,7 +2465,7 @@ gans:
     corrections:
       - { num: 32, semaineAvis: 2141-56 }
       - { num: 33, semaineAvis: 2209-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7146:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Pointe de Trévignon'
@@ -2468,7 +2476,7 @@ gans:
     edition: 'Edition n°3 - 2009'
     corrections:
       - { num: 68, semaineAvis: 2223-58 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7147:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à la Pointe de Penmarc''h'
@@ -2484,7 +2492,7 @@ gans:
       - { num: 47, semaineAvis: 2012-43 }
       - { num: 48, semaineAvis: 2044-54 }
       - { num: 49, semaineAvis: 2115-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7148:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à la Chaussée de Sein'
@@ -2496,7 +2504,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 2204-41 }
       - { num: 5, semaineAvis: 2219-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7149:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Goulet de Brest à Portsall'
@@ -2507,7 +2515,7 @@ gans:
     edition: 'Edition n°5 - 2020'
     corrections:
       - { num: 8, semaineAvis: 2224-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7150:
     groupTitle: 'Côte Nord de France'
     title: 'De Portsall à l''Anse de Kernic'
@@ -2518,7 +2526,7 @@ gans:
     edition: 'Edition n°3 - 2020'
     corrections:
       - { num: 2, semaineAvis: 2212-42 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7151:
     groupTitle: 'Côte Nord de France'
     title: 'De l''anse de Kernic à l''île Grande'
@@ -2530,7 +2538,8 @@ gans:
     corrections:
       - { num: 54, semaineAvis: 2223-50 }
       - { num: 55, semaineAvis: 2223-51 }
-    valid: '2022-07-10'
+      - { num: 56, semaineAvis: 2228-52 }
+    valid: '2022-07-18'
   7152:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île Grande à l''Île de Bréhat'
@@ -2541,7 +2550,8 @@ gans:
     edition: 'Edition n°3 - 2017'
     corrections:
       - { num: 22, semaineAvis: 2224-40 }
-    valid: '2022-07-10'
+      - { num: 23, semaineAvis: 2228-52 }
+    valid: '2022-07-18'
   7153:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île de Bréhat au Plateau des Roches Douvres'
@@ -2552,7 +2562,7 @@ gans:
     edition: 'Edition n°3 - 2018'
     corrections:
       - { num: 19, semaineAvis: 2219-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7154:
     groupTitle: 'Côte Nord de France'
     title: 'De l''Île de Bréhat au Cap Fréhel'
@@ -2565,7 +2575,8 @@ gans:
     edition: 'Edition n°3 - 2020'
     corrections:
       - { num: 17, semaineAvis: 2223-49 }
-    valid: '2022-07-10'
+      - { num: 18, semaineAvis: 2228-48 }
+    valid: '2022-07-18'
   7155:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Fréhel à la Pointe du Grouin'
@@ -2577,7 +2588,9 @@ gans:
     corrections:
       - { num: 33, semaineAvis: 2226-49 }
       - { num: 34, semaineAvis: 2226-50 }
-    valid: '2022-07-10'
+      - { num: 35, semaineAvis: 2228-46 }
+      - { num: 36, semaineAvis: 2228-48 }
+    valid: '2022-07-18'
   7156:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe du Grouin à la Pointe d''Agon'
@@ -2592,7 +2605,8 @@ gans:
       - { num: 11, semaineAvis: 2219-40 }
       - { num: 12, semaineAvis: 2226-49 }
       - { num: 13, semaineAvis: 2226-50 }
-    valid: '2022-07-10'
+      - { num: 14, semaineAvis: 2228-46 }
+    valid: '2022-07-18'
   7157:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe d''Agon au Cap de Carteret'
@@ -2603,7 +2617,8 @@ gans:
     edition: 'Edition n°4 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2212-43 }
-    valid: '2022-07-10'
+      - { num: 2, semaineAvis: 2228-46 }
+    valid: '2022-07-18'
   7158:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap de Carteret au Cap de la Hague'
@@ -2614,7 +2629,7 @@ gans:
     edition: 'Edition n°2 - 2008'
     corrections:
       - { num: 49, semaineAvis: 2107-44 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7159:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Guernsey, Herm et Sark à Alderney'
@@ -2627,7 +2642,7 @@ gans:
       - { num: 10, semaineAvis: 2109-35 }
       - { num: 11, semaineAvis: 2123-45 }
       - { num: 12, semaineAvis: 2149-41 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7160:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'De Jersey à Guernsey'
@@ -2640,7 +2655,7 @@ gans:
       - { num: 11, semaineAvis: 2036-52 }
       - { num: 12, semaineAvis: 2123-45 }
       - { num: 13, semaineAvis: 2214-43 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7161:
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
     title: 'Des îles Chausey à Jersey'
@@ -2651,7 +2666,8 @@ gans:
     edition: 'Edition n°3 - 2014'
     corrections:
       - { num: 24, semaineAvis: 2150-40 }
-    valid: '2022-07-10'
+      - { num: 25, semaineAvis: 2228-46 }
+    valid: '2022-07-18'
   7162:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Du Cap Muro au Cap de Feno'
@@ -2663,7 +2679,7 @@ gans:
       - { title: 'Cartouche: A - Mouillage de Porto Pollo', scale: '1 : 10 000', spatial: { SW: '41°41,54''N — 008°47,34''E', NE: '41°42,94''N — 008°48,94''E' } }
       - { title: 'Cartouche: B - Mouillage de Campomoro', scale: '1 : 10 000', spatial: { SW: '41°37,59''N — 008°48,14''E', NE: '41°38,84''N — 008°49,74''E' } }
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7166:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Océan Pacifique Sud - Partie Ouest'
@@ -2676,7 +2692,7 @@ gans:
       - { num: 175, semaineAvis: 1714-205 }
       - { num: 176, semaineAvis: 1845-200 }
       - { num: 177, semaineAvis: 2140-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara'
@@ -2688,7 +2704,7 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 1927-217 }
       - { num: 10, semaineAvis: 2204-221 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7168:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Bourail à la Passe de la Poya'
@@ -2705,7 +2721,7 @@ gans:
       - { num: 6, semaineAvis: 1818-204 }
       - { num: 7, semaineAvis: 1838-203 }
       - { num: 8, semaineAvis: 1942-218 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7170:
     groupTitle: 'Océan Indien'
     title: 'Îles Saint-Paul et Amsterdam'
@@ -2714,7 +2730,7 @@ gans:
       - { title: 'Cartouche: B - Île Amsterdam', scale: '1 : 30 000', spatial: { SW: '37°56,10''S — 077°27,20''E', NE: '37°44,34''S — 077°39,50''E' } }
       - { title: 'Cartouche: C - Mouillage de l''Île Saint-Paul', scale: '1 : 15 000', spatial: { SW: '38°43,75''S — 077°31,14''E', NE: '38°42,42''S — 077°33,44''E' } }
     edition: 'Edition n°3 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7171:
     groupTitle: 'Océan Indien'
     title: 'Approches des Îles Saint-Paul et Amsterdam'
@@ -2723,7 +2739,7 @@ gans:
       SW: '39°17,00''S — 076°30,00''E'
       NE: '36°53,50''S — 078°33,00''E'
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7172:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Mathieu à la Chaussée de Sein - Iroise'
@@ -2735,7 +2751,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2204-41 }
       - { num: 6, semaineAvis: 2219-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7183:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord'
@@ -2751,7 +2767,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2223-183 }
       - { num: 2, semaineAvis: 2226-184 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7200:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap d''Antibes au Cap Ferrat'
@@ -2767,7 +2783,7 @@ gans:
     edition: 'Edition n°4 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2209-89 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7203:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Des Îles Baléares (Islas Baleares) à Marseille'
@@ -2778,7 +2794,7 @@ gans:
     edition: 'Edition n°2 - 2006'
     corrections:
       - { num: 90, semaineAvis: 2212-78 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7204:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Marseille à l''île d''Elbe (Isola d''Elba) et aux Bouches de Bonifacio'
@@ -2787,7 +2803,7 @@ gans:
       SW: '41°06,00''N — 004°45,00''E'
       NE: '44°29,00''N — 011°30,00''E'
     edition: 'Publication 1989'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7205:
     groupTitle: 'Côte Sud de France'
     title: 'Golfe de La Napoule - Golfe Juan'
@@ -2805,7 +2821,7 @@ gans:
     edition: 'Edition n°4 - 2021'
     corrections:
       - { num: 2, semaineAvis: 2211-86 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7207:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
@@ -2815,7 +2831,7 @@ gans:
     edition: 'Edition n°3 - 2020'
     corrections:
       - { num: 3, semaineAvis: 2149-38 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7208:
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade'
@@ -2832,7 +2848,7 @@ gans:
       - { num: 15, semaineAvis: 1907-260 }
       - { num: 16, semaineAvis: 2042-267 }
       - { num: 17, semaineAvis: 2224-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7210:
     groupTitle: 'Océan Atlantique'
     title: 'Atterrages de l''entrée de La Manche'
@@ -2844,7 +2860,7 @@ gans:
     corrections:
       - { num: 5, semaineAvis: 2212-44 }
       - { num: 6, semaineAvis: 2212-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7211:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Golfe de Gascogne'
@@ -2855,7 +2871,7 @@ gans:
     edition: 'Edition n°6 - 2019'
     corrections:
       - { num: 15, semaineAvis: 2212-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7213:
     groupTitle: 'Polynésie Française - Îles de la Société - Îles Sous-Le-Vent'
     title: Maupiti
@@ -2866,7 +2882,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - De la Passe ''Onoiau au Village', scale: '1 : 10 000', spatial: { SW: '16°29,40''S — 152°15,69''W', NE: '16°26,61''S — 152°14,18''W' } }
     edition: 'Edition n°3 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7214:
     groupTitle: 'Côte Nord de France - Côte de Belgique'
     title: 'De Dunkerque à Oostende'
@@ -2880,7 +2896,7 @@ gans:
     edition: 'Edition n°9 - 2022'
     corrections:
       - { num: 1, semaineAvis: 2223-33 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7218:
     groupTitle: 'Îles Loyauté'
     title: 'Atolls d''Ouvéa et de Beautemps-Beaupré'
@@ -2897,7 +2913,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2111-218 }
       - { num: 3, semaineAvis: 2220-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7222:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Est'
@@ -2909,7 +2925,7 @@ gans:
     corrections:
       - { num: 8, semaineAvis: 1739-155 }
       - { num: 9, semaineAvis: 1951-188 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7229:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Nice à Piombino'
@@ -2921,7 +2937,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2207-100 }
       - { num: 2, semaineAvis: 2221-94 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7232:
     groupTitle: 'Côte Nord de France'
     title: 'Du Nez de Jobourg à la Pointe de Nacqueville'
@@ -2932,7 +2948,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Abords d''Omonville-La-Rogue', scale: '1 : 7 500', spatial: { SW: '49°42,07''N — 001°50,71''W', NE: '49°42,85''N — 001°49,18''W' } }
     edition: 'Edition n°2 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7234:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Îles Futuna et Alofi'
@@ -2949,7 +2965,7 @@ gans:
       - { num: 2, semaineAvis: 1838-206 }
       - { num: 3, semaineAvis: 1930-217 }
       - { num: 4, semaineAvis: 2144-223 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7246:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
@@ -2958,7 +2974,7 @@ gans:
       SW: '31°20,00''S — 166°40,00''W'
       NE: '04°00,00''S — 124°00,00''W'
     edition: 'Edition n°3 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7247:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Boulogne-sur-Mer'
@@ -2967,7 +2983,7 @@ gans:
       SW: '50°41,75''N — 001°30,75''E'
       NE: '50°47,68''N — 001°37,12''E'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7248:
     groupTitle: 'Iles Tuamotu'
     title: Apataki
@@ -2981,7 +2997,7 @@ gans:
       - { num: 4, semaineAvis: 2044-230 }
       - { num: 5, semaineAvis: 2103-234 }
       - { num: 6, semaineAvis: 2128-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7249:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et Mouillages en Finistère Sud'
@@ -2995,7 +3011,7 @@ gans:
     edition: 'Edition n°2 - 2016'
     corrections:
       - { num: 14, semaineAvis: 2151-46 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7250:
     groupTitle: 'Côte Ouest de France'
     title: 'De la pointe de la Torche à Loctudy'
@@ -3004,7 +3020,7 @@ gans:
       SW: '47°42,60''N — 004°25,10''W'
       NE: '47°50,70''N — 004°07,47''W'
     edition: 'Publication 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7251:
     groupTitle: 'Côte Ouest de France'
     title: 'De Loctudy à Concarneau'
@@ -3016,7 +3032,7 @@ gans:
     corrections:
       - { num: 14, semaineAvis: 2206-46 }
       - { num: 15, semaineAvis: 2217-47 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7252:
     groupTitle: 'Côte Ouest de France'
     title: 'Îles de Glénan'
@@ -3030,7 +3046,7 @@ gans:
       - { num: 5, semaineAvis: 2035-59 }
       - { num: 6, semaineAvis: 2133-49 }
       - { num: 7, semaineAvis: 2217-47 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7258:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Calais'
@@ -3043,7 +3059,7 @@ gans:
     edition: 'Edition n°5 - 2018'
     corrections:
       - { num: 11, semaineAvis: 2212-14 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7259:
     groupTitle: 'Iles Loyauté'
     title: 'Ile Maré'
@@ -3058,7 +3074,7 @@ gans:
     corrections:
       - { num: 16, semaineAvis: 1704-205 }
       - { num: 17, semaineAvis: 2101-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7260:
     groupTitle: 'Îles Tuamotu'
     title: 'De Apataki à Fakarava'
@@ -3069,7 +3085,7 @@ gans:
     edition: 'Edition n°2 - 2020'
     corrections:
       - { num: 2, semaineAvis: 2208-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7261:
     groupTitle: 'Archipel des Tuamotu'
     title: 'De Fakarava à Makemo'
@@ -3078,7 +3094,7 @@ gans:
       SW: '17°30,00''S — 145°44,80''W'
       NE: '16°19,24''S — 143°56,98''W'
     edition: 'Edition n°3 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7262:
     groupTitle: 'Îles Tuamotu'
     title: 'De Makemo à Marutea Nord'
@@ -3087,7 +3103,7 @@ gans:
       SW: '17°55,60''S — 144°05,40''W'
       NE: '16°12,00''S — 142°52,00''W'
     edition: 'Edition n°3 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7267:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Tropez'
@@ -3103,7 +3119,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2149-95 }
       - { num: 3, semaineAvis: 2227-86 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7268:
     groupTitle: 'Océan Pacifique Sud'
     title: Nouvelle-Calédonie
@@ -3121,7 +3137,7 @@ gans:
       - { num: 28, semaineAvis: 1829-206 }
       - { num: 29, semaineAvis: 1935-216 }
       - { num: 30, semaineAvis: 2036-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7271:
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
@@ -3132,7 +3148,7 @@ gans:
     edition: 'Publication 1990'
     corrections:
       - { num: 213, semaineAvis: 2207-239 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7273:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De Nouméa à la Baie de Saint-Vincent'
@@ -3150,7 +3166,7 @@ gans:
       - { num: 7, semaineAvis: 2205-220 }
       - { num: 8, semaineAvis: 2209-222 }
       - { num: 9, semaineAvis: 2211-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7280:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe d''Ajaccio'
@@ -3159,7 +3175,7 @@ gans:
       SW: '41°42,44''N — 008°34,79''E'
       NE: '41°57,29''N — 008°48,33''E'
     edition: 'Edition n°3 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7281:
     groupTitle: 'Polynésie française Îles Tuamotu'
     title: Hao
@@ -3173,7 +3189,7 @@ gans:
       - { title: 'Cartouche: C - Zone portuaire Nord', scale: '1 : 10 000', spatial: { SW: '18°04,45''S — 140°58,40''W', NE: '18°03,65''S — 140°57,40''W' } }
       - { title: 'Cartouche: D - Mouillages d''Otepa', scale: '1 : 10 000', spatial: { SW: '18°06,50''S — 140°56,60''W', NE: '18°04,85''S — 140°54,10''W' } }
     edition: 'Edition n°3 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7282:
     groupTitle: 'Côte Sud de France'
     title: 'Rade d''Hyères'
@@ -3188,7 +3204,7 @@ gans:
     corrections:
       - { num: 4, semaineAvis: 2205-91 }
       - { num: 5, semaineAvis: 2218-92 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7283:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
@@ -3197,7 +3213,7 @@ gans:
       SW: '16°30,00''S — 177°00,00''E'
       NE: '09°40,56''S — 172°47,00''W'
     edition: 'Publication 1992'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7291:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Piombino à Fiumicino et côte Est de Corse'
@@ -3209,7 +3225,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2221-94 }
       - { num: 2, semaineAvis: 2227-106 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7292:
     groupTitle: 'Mer Méditerranée'
     title: 'De la Corse à la Sicile (Sicilia) et au Cap Bon (Ras at Tib)'
@@ -3221,7 +3237,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2202-142 }
       - { num: 3, semaineAvis: 2222-108 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7293:
     groupTitle: 'Iles Tuamotu'
     title: Manihi
@@ -3234,7 +3250,7 @@ gans:
     edition: 'Edition n°2 - 2007'
     corrections:
       - { num: 4, semaineAvis: 2140-234 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7302:
     groupTitle: Guadeloupe
     title: 'De la Pointe des Châteaux à l''Ilet à Kahouanne'
@@ -3252,7 +3268,7 @@ gans:
       - { num: 18, semaineAvis: 1903-265 }
       - { num: 19, semaineAvis: 1943-263 }
       - { num: 20, semaineAvis: 2019-256 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7305:
     groupTitle: 'Tahiti - Presqu''île de Taiarapu'
     title: 'De la Passe d''Aiurua à la Passe Havae'
@@ -3265,7 +3281,7 @@ gans:
       - { num: 8, semaineAvis: 1806-211 }
       - { num: 9, semaineAvis: 2018-228 }
       - { num: 10, semaineAvis: 2149-226 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7310:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Est)'
@@ -3280,7 +3296,8 @@ gans:
     corrections:
       - { num: 9, semaineAvis: 2210-48 }
       - { num: 10, semaineAvis: 2219-40 }
-    valid: '2022-07-10'
+      - { num: 11, semaineAvis: 2228-48 }
+    valid: '2022-07-18'
   7311:
     title: 'La Manche (Partie Ouest)'
     scale: '1 : 375 000'
@@ -3290,7 +3307,8 @@ gans:
     edition: 'Edition n°4 - 2019'
     corrections:
       - { num: 45, semaineAvis: 2223-50 }
-    valid: '2022-07-10'
+      - { num: 46, semaineAvis: 2228-52 }
+    valid: '2022-07-18'
   7312:
     title: 'La Manche (Partie Est) - Des Casquets au Pas de Calais'
     scale: '1 : 372 368'
@@ -3301,7 +3319,7 @@ gans:
     corrections:
       - { num: 30, semaineAvis: 2218-25 }
       - { num: 31, semaineAvis: 2225-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7313:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la passe de Koné à Ouaco'
@@ -3316,7 +3334,7 @@ gans:
       - { num: 6, semaineAvis: 1947-216 }
       - { num: 7, semaineAvis: 2007-216 }
       - { num: 8, semaineAvis: 2025-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7314:
     groupTitle: IlesTuamotu
     title: Ahe
@@ -3329,7 +3347,7 @@ gans:
       - { num: 7, semaineAvis: 1947-233 }
       - { num: 8, semaineAvis: 2044-230 }
       - { num: 9, semaineAvis: 2210-224 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7316:
     groupTitle: 'Côte Ouest de Corse'
     title: 'Golfe de Sagone'
@@ -3338,7 +3356,7 @@ gans:
       SW: '41°56,21''N — 008°31,55''E'
       NE: '42°11,06''N — 008°45,14''E'
     edition: 'Edition n°2 - 2008'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7317:
     groupTitle: 'Côte Nord de France'
     title: 'Port de Dieppe'
@@ -3347,7 +3365,7 @@ gans:
       SW: '49°54,85''N — 001°00,47''E'
       NE: '49°58,31''N — 001°08,41''E'
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7318:
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De Poum à l''Île Pam'
@@ -3359,7 +3377,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1728-205 }
       - { num: 3, semaineAvis: 1827-205 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7319:
     groupTitle: 'Côte Nord de Nouvelle-Calédonie'
     title: 'De l''Ile Pam au Cap Colnett'
@@ -3376,7 +3394,7 @@ gans:
       - { num: 2, semaineAvis: 1814-207 }
       - { num: 3, semaineAvis: 1818-206 }
       - { num: 4, semaineAvis: 1827-205 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7320:
     groupTitle: 'Côte Nord-Ouest de Nouvelle-Calédonie'
     title: 'De Koumac à Poum'
@@ -3388,7 +3406,7 @@ gans:
       - { title: 'Cartouche: A - Mouillages de Poum', scale: '1 : 25 000', spatial: { SW: '20°14,13''S — 163°59,69''E', NE: '20°11,60''S — 164°03,19''E' } }
       - { title: 'Cartouche: B - Abords de Paagoumène', scale: '1 : 20 000', spatial: { SW: '20°31,00''S — 164°08,55''E', NE: '20°28,00''S — 164°11,54''E' } }
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7321:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Récifs Bampton à l''île Hunter'
@@ -3397,7 +3415,7 @@ gans:
       SW: '26°16,00''S — 157°00,00''E'
       NE: '16°00,00''S — 173°04,00''E'
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7322:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Muéo'
@@ -3409,7 +3427,7 @@ gans:
       - { title: 'Cartouche: A - Passe de Muéo', scale: '1 : 10 000', spatial: { SW: '21°24,16''S — 164°56,50''E', NE: '21°23,48''S — 164°58,57''E' } }
       - { title: 'Cartouche: B - Port de Muéo', scale: '1 : 10 000', spatial: { SW: '21°21,03''S — 164°58,49''E', NE: '21°19,63''S — 164°59,86''E' } }
     edition: 'Edition n°3 - 2019'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7323:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
@@ -3421,7 +3439,7 @@ gans:
     corrections:
       - { num: 21, semaineAvis: 2212-14 }
       - { num: 22, semaineAvis: 2217-28 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7324:
     groupTitle: Guadeloupe
     title: 'Grand Cul-de-Sac Marin'
@@ -3433,7 +3451,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2015-260 }
       - { num: 3, semaineAvis: 2019-256 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7328:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Sud'
@@ -3446,7 +3464,7 @@ gans:
     edition: 'Edition n°2 - 2012'
     corrections:
       - { num: 13, semaineAvis: 2144-183 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7329:
     groupTitle: 'Archipel des Tuamotu'
     title: Kauehi
@@ -3458,9 +3476,9 @@ gans:
     edition: 'Edition n°2 - 2003'
     corrections:
       - { num: 9, semaineAvis: 1932-226 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7330:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7337:
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
@@ -3475,7 +3493,7 @@ gans:
       - { num: 8, semaineAvis: 1941-254 }
       - { num: 9, semaineAvis: 1941-255 }
       - { num: 10, semaineAvis: 2043-251 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7341:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Granville'
@@ -3486,9 +3504,9 @@ gans:
     edition: 'Edition n°3 - 2018'
     corrections:
       - { num: 1, semaineAvis: 2113-39 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7344:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7345:
     groupTitle: 'Petites Antilles'
     title: Guadeloupe
@@ -3497,7 +3515,7 @@ gans:
       SW: '15°42,25''N — 062°12,24''W'
       NE: '16°42,85''N — 060°40,03''W'
     edition: 'Edition n°3 - 2010'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7346:
     groupTitle: 'Iles Tuamotu - Iles du roi Georges'
     title: 'Takaroa et Takapoto'
@@ -3511,7 +3529,7 @@ gans:
     corrections:
       - { num: 6, semaineAvis: 2044-230 }
       - { num: 7, semaineAvis: 2138-231 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7347:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tuamotu aux Îles Australes'
@@ -3520,7 +3538,7 @@ gans:
       SW: '29°04,00''S — 149°40,00''W'
       NE: '14°06,00''S — 138°42,00''W'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7349:
     groupTitle: 'Océan Indien'
     title: 'De la Réunion à Maurice (Mauritius) - Ile Tromelin'
@@ -3533,7 +3551,7 @@ gans:
     edition: 'Publication 1996'
     corrections:
       - { num: 30, semaineAvis: 2147-184 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7350:
     groupTitle: 'Canal du Mozambique'
     title: 'Récif du Geyser - Banc de la Zélée'
@@ -3545,7 +3563,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1938-184 }
       - { num: 3, semaineAvis: 2140-178 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7351:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Goyeta à la Passe de Koné'
@@ -3554,7 +3572,7 @@ gans:
       SW: '21°17,74''S — 164°41,20''E'
       NE: '21°02,83''S — 164°52,03''E'
     edition: 'Edition n°2 - 2010'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7352:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: Nuku-Hiva
@@ -3573,7 +3591,7 @@ gans:
       - { num: 15, semaineAvis: 1919-231 }
       - { num: 16, semaineAvis: 1925-231 }
       - { num: 17, semaineAvis: 1938-231 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7353:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Ua-Pou et Ua-Huka'
@@ -3597,7 +3615,7 @@ gans:
       - { num: 14, semaineAvis: 2024-230 }
       - { num: 15, semaineAvis: 2044-230 }
       - { num: 16, semaineAvis: 2107-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7354:
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Fatu-Hiva, Baies de Hiva-Oa et de Tahuata'
@@ -3625,7 +3643,7 @@ gans:
       - { num: 6, semaineAvis: 1919-231 }
       - { num: 7, semaineAvis: 2035-230 }
       - { num: 8, semaineAvis: 2045-234 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7355:
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Hiva-Oa, Tahuata et Mohotani'
@@ -3640,7 +3658,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1907-230 }
       - { num: 2, semaineAvis: 1919-229 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7356:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Eiao, Hatutaa et Motu One'
@@ -3651,7 +3669,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Eiao - Baie de Vaituha', scale: '1 : 10 000', spatial: { SW: '07°59,85''S — 140°43,50''W', NE: '07°58,95''S — 140°42,20''W' } }
     edition: 'Publication 2000'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7357:
     groupTitle: 'Océan Pacifique Sud - Polynésie française'
     title: 'Îles Marquises (Fenua Enata)'
@@ -3660,7 +3678,7 @@ gans:
       SW: '11°48,00''S — 141°18,00''W'
       NE: '06°50,00''S — 137°53,00''W'
     edition: 'Edition n°3 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7358:
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan'
@@ -3671,7 +3689,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Baie Greenland', scale: '1 : 35 800', spatial: { SW: '49°39,60''S — 070°08,21''E', NE: '49°36,80''S — 070°17,70''E' } }
     edition: 'Edition n°3 - 2017'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7359:
     groupTitle: 'Océan Indien - Îles Kerguelen'
     title: 'Golfe du Morbihan'
@@ -3683,9 +3701,9 @@ gans:
       - { title: 'Cartouche: A - Pointe Molloy', scale: '1 : 10 000', spatial: { SW: '49°22,20''S — 070°04,21''E', NE: '49°20,64''S — 070°06,20''E' } }
       - { title: 'Cartouche: B - Port-aux-Français', scale: '1 : 10 000', spatial: { SW: '49°22,20''S — 070°12,00''E', NE: '49°20,96''S — 070°14,30''E' } }
     edition: 'Edition n°2 - 2017'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7360:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7368:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Île Malden aux Îles de la Société'
@@ -3694,7 +3712,7 @@ gans:
       SW: '18°22,00''S — 161°52,00''W'
       NE: '02°30,00''S — 150°54,00''W'
     edition: 'Edition n°2 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7369:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Southern Cook Islands aux Îes de la Société et Australes'
@@ -3705,7 +3723,7 @@ gans:
     edition: 'Edition n°3 - 2020'
     corrections:
       - { num: 1, semaineAvis: 2208-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7370:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Mururoa à Ducie Island'
@@ -3714,7 +3732,7 @@ gans:
       SW: '26°30,00''S — 140°00,00''W'
       NE: '16°16,00''S — 124°00,00''W'
     edition: 'Edition n°2 - 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7371:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De Tahiti aux Îles Marquises'
@@ -3723,7 +3741,7 @@ gans:
       SW: '18°06,00''S — 153°00,00''W'
       NE: '07°22,00''S — 136°56,00''W'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7372:
     groupTitle: 'Archipel des Tuamotu'
     title: Fakarava
@@ -3736,7 +3754,7 @@ gans:
     corrections:
       - { num: 14, semaineAvis: 1941-230 }
       - { num: 15, semaineAvis: 2219-228 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7373:
     groupTitle: 'Archipel des Tuamotu'
     title: Rangiroa
@@ -3749,7 +3767,7 @@ gans:
       - { title: 'Cartouche: B - Passe d''Avatoru', scale: '1 : 10 000', spatial: { SW: '14°57,42''S — 147°43,05''W', NE: '14°55,82''S — 147°41,95''W' } }
       - { title: 'Cartouche: C - Passe de Tiputa', scale: '1 : 10 000', spatial: { SW: '14°59,27''S — 147°38,35''W', NE: '14°57,67''S — 147°37,35''W' } }
     edition: 'Edition n°2 - 2002'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7374:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'Côte de la Guyane française'
@@ -3761,7 +3779,8 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2145-255 }
       - { num: 2, semaineAvis: 2218-258 }
-    valid: '2022-07-10'
+      - { num: 3, semaineAvis: 2228-258 }
+    valid: '2022-07-18'
   7375:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Koné'
@@ -3777,7 +3796,7 @@ gans:
       - { num: 7, semaineAvis: 1942-218 }
       - { num: 8, semaineAvis: 1942-219 }
       - { num: 9, semaineAvis: 2213-222 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7376:
     groupTitle: 'Côte de Guyane'
     title: 'Embouchure du fleuve Maroni'
@@ -3788,7 +3807,7 @@ gans:
     edition: 'Edition n°2 - 2019'
     corrections:
       - { num: 1, semaineAvis: 2145-255 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7377:
     groupTitle: 'Côte de Guyane'
     title: 'Ports du Larivot et de Cayenne'
@@ -3800,7 +3819,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1905-252 }
       - { num: 2, semaineAvis: 1912-250 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7378:
     groupTitle: 'Côte de Guyane'
     title: 'Accès au Dégrad des Cannes'
@@ -3814,7 +3833,7 @@ gans:
       - { num: 2, semaineAvis: 2002-253 }
       - { num: 3, semaineAvis: 2024-250 }
       - { num: 4, semaineAvis: 2108-253 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7379:
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Cayenne'
@@ -3823,7 +3842,7 @@ gans:
       SW: '04°49,00''N — 052°30,00''W'
       NE: '05°09,30''N — 052°00,30''W'
     edition: 'Edition n°3 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7380:
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Kourou'
@@ -3834,7 +3853,8 @@ gans:
     edition: 'Edition n°3 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2221-257 }
-    valid: '2022-07-10'
+      - { num: 2, semaineAvis: 2228-258 }
+    valid: '2022-07-18'
   7381:
     groupTitle: 'Côte de Guyane Française'
     title: 'De Kourou à Cayenne'
@@ -3845,7 +3865,8 @@ gans:
     edition: 'Edition n°2 - 2013'
     corrections:
       - { num: 19, semaineAvis: 2221-257 }
-    valid: '2022-07-10'
+      - { num: 20, semaineAvis: 2228-258 }
+    valid: '2022-07-18'
   7390:
     groupTitle: 'Côte Sud de France'
     title: 'Port de Marseille'
@@ -3857,7 +3878,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2150-91 }
       - { num: 2, semaineAvis: 2218-89 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7391:
     groupTitle: 'Côte Sud de France'
     title: 'Abords Sud de Marseille'
@@ -3868,7 +3889,7 @@ gans:
     edition: 'Edition n°7 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2218-89 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7392:
     groupTitle: 'Côte Sud de France'
     title: 'Du Cap Couronne au Cap Croisette'
@@ -3883,7 +3904,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2204-88 }
       - { num: 2, semaineAvis: 2218-89 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7393:
     groupTitle: 'Côte Sud de France'
     title: 'Du port de La Pointe Rouge à Cassis'
@@ -3894,7 +3915,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Port de Cassis', scale: '1 : 5 000', spatial: { SW: '43°12,47''N — 005°31,83''E', NE: '43°12,96''N — 005°32,40''E' } }
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7394:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de Saint-Gildas au Goulet de Fromentine'
@@ -3911,7 +3932,7 @@ gans:
       - { num: 7, semaineAvis: 2221-50 }
       - { num: 8, semaineAvis: 2225-50 }
       - { num: 9, semaineAvis: 2225-52 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7395:
     groupTitle: 'Côte Ouest de France'
     title: 'Du Croisic à Noirmoutier'
@@ -3924,7 +3945,7 @@ gans:
       - { num: 38, semaineAvis: 2221-50 }
       - { num: 39, semaineAvis: 2225-50 }
       - { num: 40, semaineAvis: 2225-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7396:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
@@ -3936,7 +3957,7 @@ gans:
     edition: 'Edition n°2 - 2006'
     corrections:
       - { num: 29, semaineAvis: 2225-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7397:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (partie Sud)'
@@ -3947,7 +3968,7 @@ gans:
     edition: 'Edition n°5 - 2017'
     corrections:
       - { num: 16, semaineAvis: 2219-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7398:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest (partie Ouest)'
@@ -3959,7 +3980,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2204-46 }
       - { num: 2, semaineAvis: 2215-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7399:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de Brest'
@@ -3970,7 +3991,7 @@ gans:
     edition: 'Edition n°4 - 2019'
     corrections:
       - { num: 11, semaineAvis: 2220-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7400:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest'
@@ -3984,7 +4005,7 @@ gans:
     edition: 'Edition n°3 - 2018'
     corrections:
       - { num: 24, semaineAvis: 2219-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7401:
     groupTitle: 'Côte Ouest de France'
     title: 'Accès à la Rade de Brest'
@@ -3998,7 +4019,7 @@ gans:
     corrections:
       - { num: 23, semaineAvis: 2204-46 }
       - { num: 24, semaineAvis: 2215-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7402:
     groupTitle: 'Côte Ouest de France'
     title: 'De Saint-Jean-de-Monts aux Sables-d''Olonne'
@@ -4012,7 +4033,7 @@ gans:
     corrections:
       - { num: 32, semaineAvis: 2213-52 }
       - { num: 33, semaineAvis: 2221-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7403:
     groupTitle: 'Côte Ouest de France'
     title: 'Des Sables d''Olonne à l''Ile de Ré'
@@ -4028,7 +4049,7 @@ gans:
     corrections:
       - { num: 40, semaineAvis: 2149-56 }
       - { num: 41, semaineAvis: 2213-52 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7404:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Grouin du Cou à la Pointe de Chassiron'
@@ -4042,7 +4063,7 @@ gans:
     corrections:
       - { num: 27, semaineAvis: 2151-56 }
       - { num: 28, semaineAvis: 2208-47 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7405:
     groupTitle: 'Côte Ouest de France'
     title: 'De La Rochelle à la Pointe de La Coubre'
@@ -4059,7 +4080,7 @@ gans:
       - { num: 29, semaineAvis: 2151-55 }
       - { num: 30, semaineAvis: 2151-56 }
       - { num: 31, semaineAvis: 2208-47 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7406:
     groupTitle: 'Côte Sud de France'
     title: 'De Marseille à Toulon'
@@ -4068,7 +4089,7 @@ gans:
       SW: '42°57,74''N — 005°17,33''E'
       NE: '43°18,04''N — 005°58,04''E'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7407:
     groupTitle: 'Côte Sud de France'
     title: 'De Toulon à Cavalaire-sur-Mer'
@@ -4077,7 +4098,7 @@ gans:
       SW: '42°52,14''N — 005°51,44''E'
       NE: '43°12,44''N — 006°32,44''E'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7408:
     groupTitle: 'Côte Sud de France'
     title: 'De Cavalaire-sur-Mer à la Rade d''Agay'
@@ -4086,7 +4107,7 @@ gans:
       SW: '42°59,94''N — 006°29,24''E'
       NE: '43°29,64''N — 006°56,94''E'
     edition: 'Edition n°5 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7409:
     groupTitle: 'Côte Sud de France'
     title: 'De la Rade d''Agay à Monaco'
@@ -4095,7 +4116,7 @@ gans:
       SW: '43°23,34''N — 006°50,74''E'
       NE: '43°43,64''N — 007°31,34''E'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7410:
     groupTitle: 'Côte Ouest de France'
     title: 'Île d''Yeu'
@@ -4108,7 +4129,7 @@ gans:
     edition: 'Edition n°3 - 2022'
     corrections:
       - { num: 1, semaineAvis: 2221-50 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7411:
     groupTitle: 'Côte Ouest de France'
     title: 'Port des Sables-d''Olonne'
@@ -4121,7 +4142,7 @@ gans:
       - { num: 11, semaineAvis: 2135-52 }
       - { num: 12, semaineAvis: 2213-52 }
       - { num: 13, semaineAvis: 2221-51 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7412:
     groupTitle: 'Côte Ouest de France'
     title: 'Île de Ré'
@@ -4130,7 +4151,7 @@ gans:
       SW: '46°11,04''N — 001°30,98''W'
       NE: '46°17,11''N — 001°18,15''W'
     edition: 'Edition n°3 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7413:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords de La Rochelle'
@@ -4139,7 +4160,7 @@ gans:
       SW: '46°04,67''N — 001°19,29''W'
       NE: '46°10,74''N — 001°06,48''W'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7414:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''Ile d''Aix au Pertuis de Maumusson'
@@ -4154,7 +4175,7 @@ gans:
       - { num: 28, semaineAvis: 2151-55 }
       - { num: 29, semaineAvis: 2151-56 }
       - { num: 30, semaineAvis: 2208-47 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7415:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Charente'
@@ -4167,7 +4188,7 @@ gans:
       - { num: 11, semaineAvis: 2151-55 }
       - { num: 12, semaineAvis: 2151-56 }
       - { num: 13, semaineAvis: 2208-47 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7416:
     groupTitle: 'Côte Nord de France'
     title: 'Abords Sud de Boulogne-sur-Mer'
@@ -4179,7 +4200,7 @@ gans:
     corrections:
       - { num: 13, semaineAvis: 2024-33 }
       - { num: 14, semaineAvis: 2110-35 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe'
@@ -4191,7 +4212,7 @@ gans:
     corrections:
       - { num: 7, semaineAvis: 2220-40 }
       - { num: 8, semaineAvis: 2225-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer'
@@ -4202,7 +4223,7 @@ gans:
     edition: 'Edition n°3 - 2017'
     corrections:
       - { num: 26, semaineAvis: 2220-40 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7419:
     groupTitle: 'Côte Nord de France'
     title: 'La Seine - Du Havre à Rouen'
@@ -4215,7 +4236,7 @@ gans:
     edition: 'Edition n°3 - 2018'
     corrections:
       - { num: 10, semaineAvis: 2216-37 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7420:
     groupTitle: 'Côte Nord de France'
     title: 'Ports en Baie de Seine'
@@ -4231,7 +4252,7 @@ gans:
     edition: 'Edition n°4 - 2019'
     corrections:
       - { num: 8, semaineAvis: 2209-36 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7421:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
@@ -4243,7 +4264,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2214-41 }
       - { num: 3, semaineAvis: 2223-44 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7422:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de Barfleur à La Pointe de La Percée'
@@ -4254,7 +4275,7 @@ gans:
     edition: 'Edition n°2 - 2006'
     corrections:
       - { num: 58, semaineAvis: 2225-43 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7423:
     groupTitle: 'Côte Ouest de France'
     title: 'Raz de Sein'
@@ -4267,7 +4288,7 @@ gans:
     edition: 'Edition n°3 - 2016'
     corrections:
       - { num: 7, semaineAvis: 2012-43 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7424:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
@@ -4278,7 +4299,7 @@ gans:
     edition: 'Edition n°4 - 2018'
     corrections:
       - { num: 43, semaineAvis: 2223-33 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7425:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Gironde'
@@ -4293,7 +4314,7 @@ gans:
     corrections:
       - { num: 11, semaineAvis: 2208-47 }
       - { num: 12, semaineAvis: 2217-60 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7426:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe de la Coubre à la Pointe de la Négade'
@@ -4306,7 +4327,7 @@ gans:
     edition: 'Edition n°5 - 2019'
     corrections:
       - { num: 5, semaineAvis: 2217-60 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7427:
     groupTitle: 'Côte Ouest de France'
     title: 'La Gironde - La Garonne et La Dordogne'
@@ -4320,7 +4341,7 @@ gans:
     corrections:
       - { num: 10, semaineAvis: 2121-60 }
       - { num: 11, semaineAvis: 2141-60 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7428:
     groupTitle: 'Côte Ouest de France'
     title: 'Bassin d''Arcachon'
@@ -4333,7 +4354,7 @@ gans:
     edition: 'Edition n°2 - 2021'
     corrections:
       - { num: 1, semaineAvis: 2217-64 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7430:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords et Port de Bayonne'
@@ -4344,7 +4365,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Cours de l''Adour', scale: '1 : 10 000', spatial: { SW: '43°29,30''N — 001°29,80''W', NE: '43°30,50''N — 001°28,10''W' } }
     edition: 'Edition n°2 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7431:
     groupTitle: 'Côte Ouest de France'
     title: 'Baies de Fontarabie et de Saint-Jean-de-Luz'
@@ -4355,7 +4376,7 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 2210-65 }
       - { num: 2, semaineAvis: 2210-66 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7434:
     groupTitle: 'Côte Sud de France'
     title: 'Ports de Sète, Port-la-Nouvelle, Port-Vendres et Collioure'
@@ -4367,7 +4388,7 @@ gans:
     corrections:
       - { num: 30, semaineAvis: 2223-90 }
       - { num: 31, semaineAvis: 2227-84 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7436:
     groupTitle: 'Côtes Ouest et Est de Corse'
     title: 'Approches et Port de Bastia - Ports d''Ajaccio et de Propriano'
@@ -4378,7 +4399,7 @@ gans:
     edition: 'Edition n°2 - 2020'
     corrections:
       - { num: 5, semaineAvis: 2216-94 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7440:
     groupTitle: 'Côte Ouest de France'
     title: 'De Vieux Boucau à la Baie de Fontarabie'
@@ -4393,7 +4414,7 @@ gans:
       - { num: 27, semaineAvis: 2050-66 }
       - { num: 28, semaineAvis: 2106-60 }
       - { num: 29, semaineAvis: 2119-66 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7441:
     groupTitle: 'Principauté de Monaco - Côte Sud de France'
     title: 'Abords et Ports de Monaco'
@@ -4402,7 +4423,7 @@ gans:
       SW: '43°42,64''N — 007°23,54''E'
       NE: '43°45,67''N — 007°29,68''E'
     edition: 'Edition n°4 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7442:
     groupTitle: 'Côte Sud de France - Principauté de Monaco'
     title: 'De Villefranche-sur-Mer à Menton'
@@ -4415,7 +4436,7 @@ gans:
       - { num: 3, semaineAvis: 2220-90 }
       - { num: 4, semaineAvis: 2220-91 }
       - { num: 5, semaineAvis: 2227-86 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7443:
     groupTitle: 'Côtes de France et d''Italie - Principauté de Monaco'
     title: 'Du Cap Ferrat à Capo San Lorenzo'
@@ -4427,7 +4448,7 @@ gans:
     corrections:
       - { num: 32, semaineAvis: 2220-91 }
       - { num: 33, semaineAvis: 2227-86 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7444:
     groupTitle: 'Côte Nord de France'
     title: 'Du Cap Lévi à Barfleur'
@@ -4436,7 +4457,7 @@ gans:
       SW: '49°39,20''N — 001°30,00''W'
       NE: '49°47,28''N — 001°11,71''W'
     edition: 'Edition n°2 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7453:
     groupTitle: 'Archipel des Tuamotu'
     title: Makemo
@@ -4450,7 +4471,7 @@ gans:
     edition: 'Publication 1996'
     corrections:
       - { num: 11, semaineAvis: 2044-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7454:
     groupTitle: 'Iles Tuamotu'
     title: Faaite
@@ -4463,7 +4484,7 @@ gans:
     edition: 'Publication 1998'
     corrections:
       - { num: 9, semaineAvis: 2044-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7456:
     groupTitle: 'Archipel des Tuamotu'
     title: Toau
@@ -4477,7 +4498,7 @@ gans:
     edition: 'Publication 2002'
     corrections:
       - { num: 7, semaineAvis: 2144-232 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7457:
     groupTitle: 'Archipel des Tuamotu'
     title: 'Raroia et Takume'
@@ -4488,7 +4509,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Raroia - De la Passe Ngarue au Mouillage de Ngarumaoa', scale: '1 : 12 500', spatial: { SW: '16°03,00''S — 142°28,55''W', NE: '16°00,70''S — 142°25,85''W' } }
     edition: 'Publication 2003'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7458:
     groupTitle: 'Polynésie française Îles Tuamotu'
     title: Aratika
@@ -4498,7 +4519,7 @@ gans:
       - { title: 'Cartouche: B - Passe Fainukea', scale: '1 : 5 000', spatial: { SW: '15°30,52''S — 145°27,58''W', NE: '15°29,98''S — 145°26,54''W' } }
       - { title: 'Cartouche: C - Passe Tamaketa', scale: '1 : 10 000', spatial: { SW: '15°29,70''S — 145°35,12''W', NE: '15°28,62''S — 145°34,00''W' } }
     edition: 'Edition n°3 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7459:
     groupTitle: 'Îles Tuamotu'
     title: Tikehau
@@ -4512,7 +4533,7 @@ gans:
       - { num: 1, semaineAvis: 1929-232 }
       - { num: 2, semaineAvis: 2044-230 }
       - { num: 3, semaineAvis: 2208-225 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7460:
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De la Passe de Taapuna à la Passe d''Arue'
@@ -4522,7 +4543,7 @@ gans:
     edition: 'Edition n°4 - 2015'
     corrections:
       - { num: 27, semaineAvis: 2208-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7461:
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De Taapuna à la Pointe Vénus'
@@ -4540,7 +4561,7 @@ gans:
       - { num: 20, semaineAvis: 2045-230 }
       - { num: 21, semaineAvis: 2149-226 }
       - { num: 22, semaineAvis: 2208-230 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7463:
     groupTitle: 'Polynésie Française Îles Tuamotu'
     title: Katiu
@@ -4551,7 +4572,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Passe Pakata', scale: '1 : 5 000', spatial: { SW: '16°22,35''S — 144°21,57''W', NE: '16°21,75''S — 144°20,95''W' } }
     edition: 'Publication 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7466:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
@@ -4562,7 +4583,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Passe Teavanui', scale: '1 : 6 500', spatial: { SW: '16°29,96''S — 151°46,99''W', NE: '16°29,33''S — 151°46,46''W' } }
     edition: 'Edition n°3 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7470:
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Nevis'
@@ -4584,7 +4605,7 @@ gans:
       - { num: 13, semaineAvis: 2123-260 }
       - { num: 14, semaineAvis: 2140-262 }
       - { num: 15, semaineAvis: 2222-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7471:
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Saint-Barthélemy'
@@ -4593,7 +4614,7 @@ gans:
       SW: '17°49,00''N — 063°16,00''W'
       NE: '18°13,30''N — 062°38,70''W'
     edition: 'Edition n°4 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7472:
     groupTitle: 'Petites Antilles'
     title: 'Ports et mouillages de Saint-Martin (Sint Maarten) et de Saint-Barthélemy'
@@ -4612,7 +4633,7 @@ gans:
       - { num: 6, semaineAvis: 2043-264 }
       - { num: 7, semaineAvis: 2140-262 }
       - { num: 8, semaineAvis: 2222-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7475:
     groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
     title: 'De Puerto Rico à Trinidad'
@@ -4625,7 +4646,7 @@ gans:
       - { num: 73, semaineAvis: 2110-248 }
       - { num: 74, semaineAvis: 2110-256 }
       - { num: 75, semaineAvis: 2226-262 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7480:
     groupTitle: 'Côte de Guyane'
     title: 'Accès au fleuve Kourou'
@@ -4636,7 +4657,7 @@ gans:
     edition: 'Edition n°4 - 2020'
     corrections:
       - { num: 1, semaineAvis: 2221-257 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7481:
     groupTitle: 'Côte de Guyane'
     title: 'Approches de Kourou'
@@ -4649,7 +4670,8 @@ gans:
     edition: 'Edition n°4 - 2020'
     corrections:
       - { num: 1, semaineAvis: 2221-257 }
-    valid: '2022-07-10'
+      - { num: 2, semaineAvis: 2228-258 }
+    valid: '2022-07-18'
   7482:
     groupTitle: Guadeloupe
     title: 'De l''Ilet à Kahouanne aux Saintes'
@@ -4662,7 +4684,7 @@ gans:
       - { title: 'Cartouche: B - Anse de Malendure', scale: '1 : 15 000', spatial: { SW: '16°09,50''N — 061°47,90''W', NE: '16°10,55''N — 061°46,40''W' } }
       - { title: 'Cartouche: C - Anse à la Barque', scale: '1 : 10 000', spatial: { SW: '16°05,00''N — 061°46,75''W', NE: '16°05,60''N — 061°45,90''W' } }
     edition: 'Publication 2009'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7484:
     groupTitle: 'Océan Atlantique - Côtes du Suriname et de Guyane Française'
     title: 'De Paramaribo aux Iles du Salut'
@@ -4674,7 +4696,8 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 2145-255 }
       - { num: 3, semaineAvis: 2218-258 }
-    valid: '2022-07-10'
+      - { num: 4, semaineAvis: 2228-258 }
+    valid: '2022-07-18'
   7485:
     groupTitle: 'Océan Atlantique - Côtes de Guyane Française et du Brésil'
     title: 'Des Iles du Salut à Cabo Orange'
@@ -4683,7 +4706,9 @@ gans:
       SW: '04°20,00''N — 052°43,00''W'
       NE: '06°20,00''N — 049°45,00''W'
     edition: 'Edition n°3 - 2020'
-    valid: '2022-07-10'
+    corrections:
+      - { num: 1, semaineAvis: 2228-258 }
+    valid: '2022-07-18'
   7486:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Nord'
@@ -4696,7 +4721,7 @@ gans:
       - { num: 6, semaineAvis: 1816-152 }
       - { num: 7, semaineAvis: 2007-195 }
       - { num: 8, semaineAvis: 2140-178 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7487:
     groupTitle: 'Océan Indien'
     title: 'Approches Nord-Est de Madagascar'
@@ -4709,7 +4734,7 @@ gans:
       - { num: 1, semaineAvis: 1951-185 }
       - { num: 2, semaineAvis: 2031-184 }
       - { num: 3, semaineAvis: 2039-184 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7488:
     groupTitle: 'Océan Indien'
     title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
@@ -4723,7 +4748,7 @@ gans:
       - { num: 4, semaineAvis: 2012-182 }
       - { num: 5, semaineAvis: 2031-184 }
       - { num: 6, semaineAvis: 2039-184 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7489:
     groupTitle: 'Océan Indien'
     title: 'Approches Sud-Est de Madagascar'
@@ -4738,7 +4763,7 @@ gans:
       - { num: 4, semaineAvis: 2031-184 }
       - { num: 5, semaineAvis: 2039-184 }
       - { num: 6, semaineAvis: 2105-180 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7490:
     groupTitle: 'Océan Indien'
     title: 'Archipel des Comores'
@@ -4749,7 +4774,7 @@ gans:
     edition: 'Edition n°2 - 2019'
     corrections:
       - { num: 2, semaineAvis: 2140-178 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7491:
     groupTitle: 'Océan Indien - Canal du Mozambique - Côte Nord de Madagasikara (Madagascar)'
     title: 'De Nosy Bé à la Baie d''Antsiranana'
@@ -4761,7 +4786,7 @@ gans:
     corrections:
       - { num: 14, semaineAvis: 1938-184 }
       - { num: 15, semaineAvis: 1940-183 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7492:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Nord'
@@ -4777,7 +4802,7 @@ gans:
       - { num: 7, semaineAvis: 1729-152 }
       - { num: 8, semaineAvis: 1744-151 }
       - { num: 9, semaineAvis: 2002-179 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7493:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Est'
@@ -4792,7 +4817,7 @@ gans:
       - { num: 4, semaineAvis: 1707-152 }
       - { num: 5, semaineAvis: 1729-152 }
       - { num: 6, semaineAvis: 1942-178 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7494:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Ouest'
@@ -4805,7 +4830,7 @@ gans:
       - { num: 5, semaineAvis: 1736-151 }
       - { num: 6, semaineAvis: 1744-151 }
       - { num: 7, semaineAvis: 2002-179 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7507:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
@@ -4817,7 +4842,7 @@ gans:
     corrections:
       - { num: 121, semaineAvis: 2141-85 }
       - { num: 122, semaineAvis: 2212-78 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7510:
     groupTitle: 'Côte Nord-Est de Sardaigne'
     title: 'De Capo Bellavista aux Bouches de Bonifacio'
@@ -4826,7 +4851,7 @@ gans:
       SW: '39°54,94''N — 008°49,94''E'
       NE: '41°36,22''N — 012°05,31''E'
     edition: 'Edition n°2 - 2021'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7591:
     groupTitle: 'Océan Indien - Océan Pacifique Sud - Antarctique'
     title: 'De Cape Goodenough à Cape Adare'
@@ -4835,7 +4860,7 @@ gans:
       SW: '71°30,00''S — 122°30,00''E'
       NE: '57°40,00''S — 170°30,00''E'
     edition: 'Publication 2006'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7592:
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'Du Glacier Dibble au Glacier Mertz'
@@ -4844,7 +4869,7 @@ gans:
       SW: '67°25,00''S — 134°00,00''E'
       NE: '64°02,00''S — 146°06,00''E'
     edition: 'Publication 2004'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7593:
     groupTitle: 'Océan Antarctique - Terre Adélie'
     title: 'De l''Ile Hélène au Rocher du Débarquement'
@@ -4855,7 +4880,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Archipel de Pointe Géologie', scale: '1 : 7 500', spatial: { SW: '66°40,27''S — 139°58,90''E', NE: '66°39,18''S — 140°01,75''E' } }
     edition: 'Publication 2002'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7594:
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'De la Pointe Ebba au Cap de la Découverte'
@@ -4867,7 +4892,7 @@ gans:
       - { title: 'Cartouche: A - Archipel Max Douguet - Port-Martin', scale: '1 : 10 000', spatial: { SW: '66°49,40''S — 141°21,65''E', NE: '66°47,97''S — 141°24,35''E' } }
       - { title: 'Cartouche: B - Archipel Max Douguet', scale: '1 : 30 000', spatial: { SW: '66°50,90''S — 141°15,10''E', NE: '66°47,20''S — 141°26,00''E' } }
     edition: 'Publication 2003'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7604:
     groupTitle: 'Océan Indien (Partie Sud)'
     title: 'De Prince Edward Islands à Heard Island - Îles Crozet , Kerguelen et Amsterdam'
@@ -4878,7 +4903,7 @@ gans:
     edition: 'Edition n°3 - 2017'
     corrections:
       - { num: 1, semaineAvis: 2101-188 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7606:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports de Saint-Guénolé, du Guilvinec-Léchiagat et de Lesconil'
@@ -4887,7 +4912,7 @@ gans:
       - { title: 'Cartouche: B - Port du Guilvinec-Léchiagat', scale: '1 : 10 000', spatial: { SW: '47°45,14''N — 004°20,84''W', NE: '47°48,19''N — 004°16,12''W' } }
       - { title: 'Cartouche: C - Port de Lesconil', scale: '1 : 10 000', spatial: { SW: '47°46,18''N — 004°13,72''W', NE: '47°48,17''N — 004°09,74''W' } }
     edition: 'Publication 2019'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7620:
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
@@ -4902,7 +4927,7 @@ gans:
       - { num: 2, semaineAvis: 1907-266 }
       - { num: 3, semaineAvis: 1926-266 }
       - { num: 4, semaineAvis: 2123-260 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7625:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
@@ -4920,7 +4945,7 @@ gans:
       - { num: 26, semaineAvis: 2209-263 }
       - { num: 27, semaineAvis: 2215-254 }
       - { num: 28, semaineAvis: 2218-258 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7630:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie Nord'
@@ -4934,7 +4959,7 @@ gans:
       - { num: 17, semaineAvis: 2123-260 }
       - { num: 18, semaineAvis: 2140-262 }
       - { num: 19, semaineAvis: 2222-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7631:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie centrale'
@@ -4950,7 +4975,7 @@ gans:
       - { num: 5, semaineAvis: 2042-267 }
       - { num: 6, semaineAvis: 2146-262 }
       - { num: 7, semaineAvis: 2226-259 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7639:
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Abords et port de l''Île Saint-Pierre'
@@ -4958,7 +4983,9 @@ gans:
       - { title: 'Cartouche: A - Abords de l''Île Saint-Pierre', scale: '1 : 25 000', spatial: { SW: '46°42,85''N — 056°15,80''W', NE: '46°52,96''N — 056°04,95''W' } }
       - { title: 'Cartouche: B - Port de Saint-Pierre', scale: '1 : 7 500', spatial: { SW: '46°45,75''N — 056°10,68''W', NE: '46°48,78''N — 056°07,54''W' } }
     edition: 'Edition n°2 - 2022'
-    valid: '2022-07-10'
+    corrections:
+      - { num: 1, semaineAvis: 2228-274 }
+    valid: '2022-07-18'
   7640:
     groupTitle: 'Abords Sud de Terre-Neuve - Miquelon'
     title: 'Port et mouillages de l''Île Miquelon'
@@ -4967,7 +4994,7 @@ gans:
       - { title: 'Cartouche: B - Port de Miquelon', scale: '1 : 10 000', spatial: { SW: '47°05,55''N — 056°23,43''W', NE: '47°07,11''N — 056°20,88''W' } }
       - { title: 'Cartouche: C - Mouillages de l''Anse du Gouvernement', scale: '1 : 20 000', spatial: { SW: '46°53,06''N — 056°19,86''W', NE: '46°56,72''N — 056°11,64''W' } }
     edition: 'Edition n°2 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7643:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Port de Nouméa'
@@ -4978,7 +5005,8 @@ gans:
     edition: 'Edition n°4 - 2021'
     corrections:
       - { num: 4, semaineAvis: 2217-217 }
-    valid: '2022-07-10'
+      - { num: 5, semaineAvis: 2228-221 }
+    valid: '2022-07-18'
   7644:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Accès au Port de Nouméa'
@@ -4989,7 +5017,8 @@ gans:
     edition: 'Edition n°3 - 2017'
     corrections:
       - { num: 23, semaineAvis: 2211-220 }
-    valid: '2022-07-10'
+      - { num: 24, semaineAvis: 2228-221 }
+    valid: '2022-07-18'
   7645:
     groupTitle: 'Côte Sud-Est de Nouvelle-Calédonie'
     title: 'Canal de La Havannah et Canal Woodin'
@@ -5006,7 +5035,7 @@ gans:
       - { num: 4, semaineAvis: 1930-222 }
       - { num: 5, semaineAvis: 2104-217 }
       - { num: 6, semaineAvis: 2213-218 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7657:
     groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De Mimizan-Plage à Cabo de Ajo'
@@ -5017,7 +5046,7 @@ gans:
     edition: 'Publication 2012'
     corrections:
       - { num: 32, semaineAvis: 2210-65 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7663:
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'
@@ -5030,7 +5059,7 @@ gans:
       - { num: 25, semaineAvis: 2207-76 }
       - { num: 26, semaineAvis: 2210-79 }
       - { num: 27, semaineAvis: 2212-78 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7665:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne et de France'
     title: 'Du Cap Negre au Cap Cerbère'
@@ -5046,7 +5075,7 @@ gans:
       - { num: 2, semaineAvis: 2207-76 }
       - { num: 3, semaineAvis: 2210-79 }
       - { num: 4, semaineAvis: 2212-78 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7677:
     groupTitle: 'Océan Indien - Archipel des Comores'
     title: 'Île de Mayotte'
@@ -5055,7 +5084,7 @@ gans:
       SW: '13°17,60''S — 044°10,40''E'
       NE: '12°14,20''S — 045°45,00''E'
     edition: 'Edition n°2 - 2022'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7750:
     groupTitle: 'Océan Pacifique'
     title: 'Approches de l''Île Clipperton'
@@ -5066,7 +5095,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Île Clipperton', scale: '1 : 20 000', spatial: { SW: '10°15,50''N — 109°15,33''W', NE: '10°20,40''N — 109°11,00''W' } }
     edition: 'Publication 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7751:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Île Clipperton'
@@ -5075,7 +5104,7 @@ gans:
       SW: '05°00,00''N — 117°06,00''W'
       NE: '15°40,00''N — 101°18,00''W'
     edition: 'Edition n°2 - 2017'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7755:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Ponérihouen au Cap Dumoulin'
@@ -5096,7 +5125,7 @@ gans:
       - { num: 10, semaineAvis: 2009-220 }
       - { num: 11, semaineAvis: 2018-220 }
       - { num: 12, semaineAvis: 2027-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7756:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Touho à Ponérihouen'
@@ -5110,7 +5139,7 @@ gans:
     corrections:
       - { num: 2, semaineAvis: 1825-207 }
       - { num: 3, semaineAvis: 1925-221 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7758:
     groupTitle: Nouvelle-Calédonie
     title: 'Îles Belep'
@@ -5121,7 +5150,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Récifs d''Entrecasteaux - Île de la Surprise', scale: '1 : 40 000', spatial: { SW: '18°29,80''S — 163°03,20''E', NE: '18°27,80''S — 163°06,90''E' } }
     edition: 'Edition n°3 - 2018'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7760:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (partie Nord)'
@@ -5130,7 +5159,7 @@ gans:
       SW: '20°36,07''S — 162°32,30''E'
       NE: '17°36,60''S — 164°43,20''E'
     edition: 'Publication 2018'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7761:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Nord-Est)'
@@ -5139,7 +5168,7 @@ gans:
       SW: '21°00,00''S — 163°59,10''E'
       NE: '18°56,10''S — 167°11,58''E'
     edition: 'Publication 2018'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7762:
     groupTitle: 'Océan Pacifique'
     title: 'Nouvelle-Calédonie (Partie Ouest)'
@@ -5150,7 +5179,7 @@ gans:
     edition: 'Publication 2017'
     corrections:
       - { num: 1, semaineAvis: 1930-220 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7764:
     groupTitle: Nouvelle-Calédonie
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
@@ -5159,7 +5188,7 @@ gans:
       SW: '22°36,55''S — 167°16,62''E'
       NE: '22°26,40''S — 167°32,66''E'
     edition: 'Publication 2020'
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7797:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique'
@@ -5170,7 +5199,7 @@ gans:
     edition: 'Publication 2016'
     corrections:
       - { num: 2, semaineAvis: 2007-195 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   7798:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique'
@@ -5182,17 +5211,17 @@ gans:
     corrections:
       - { num: 1, semaineAvis: 1939-183 }
       - { num: 2, semaineAvis: 1951-185 }
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   8101:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   8502:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   8509:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   8510:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   8517:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
   8523:
-    valid: '2022-07-10'
+    valid: '2022-07-18'
 eof: null

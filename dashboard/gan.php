@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: gan.php
-title: cat2/gan.php - gestion des gan
+title: dashboard/gan.php - gestion des gan
 classes:
 functions:
 doc: |
