@@ -52,7 +52,7 @@ function write_log(bool $access): bool {
     return $access;
   
   try {
-    MySQL::open($LOG_MYSQL_URI);
+    MySql::open($LOG_MYSQL_URI);
   }
   catch (SExcept $e) {
     throw new SExcept($e->getMessage(), $e->getCode());

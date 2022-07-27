@@ -51,7 +51,7 @@ abstract class WmsServer {
   wmsErrorCode : code erreur à renvoyer dans l'Exception, si '' pas de code d'erreur
   mesSys : message système écrit dans le log s'il est différent du message destiné à l'utilisateur, sinon ''
   */
-  static function exception(int $httpErrorCode, string $mesUti, string $wmsErrorCode='', string $mesSys='') {
+  static function exception(int $httpErrorCode, string $mesUti, string $wmsErrorCode='', string $mesSys=''): never {
     static $httpErrorCodes = [
       400 => 'Bad Request', // paramètres en entrée incorrects
       401 => 'Unauthorized', // non utilisé

@@ -413,7 +413,6 @@ class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher
       $p->showAsRow();
     }
     echo "</table>\n";
-    
   }
   
   function showAsRow(): void { // Affichage d'une ligne du tableau des degrés de péremption

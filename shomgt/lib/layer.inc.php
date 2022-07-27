@@ -181,7 +181,7 @@ class LabelLayer extends Layer {
     }
   }
   
-  function asArray(): array { return $this->nw; }
+  function asArray(): array { return $this->nws; }
   
   function ebox(): EBox {
     $ebox = new EBox;
@@ -308,7 +308,7 @@ class TiffLayer extends Layer {
   // retourne le Feature correspondant au GeoTiff
   private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
     try {
-      $isoMd = IsoMD::read($gtname);
+      $isoMd = IsoMd::read($gtname);
       $errorMessage = '';
     }
     catch (SExcept $e) {

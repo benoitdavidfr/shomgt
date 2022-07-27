@@ -126,7 +126,8 @@ class GeoRefImage {
     if (!($image = @imagecreatefrompng($filename))) {
       if (preg_match('!^https?://!', $filename)) {
         $httpError = Http::getHttpError($filename);
-        $message = sprintf('Erreur sur "%s" : httpCode=%d, message="%s"', $url, $httpError['httpCode'], $httpError['message']);
+        $message = sprintf('Erreur sur "%s" : httpCode=%d, message="%s"',
+            $filename, $httpError['httpCode'], $httpError['message']);
         throw new SExcept($message, self::ErrorCreateFromPng);
       }
       else {

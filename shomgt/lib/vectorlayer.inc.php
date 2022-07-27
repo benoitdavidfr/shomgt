@@ -83,7 +83,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
 
   // fournit une représentation de la couche comme array pour affichage
-  function asArray(): array { return [$this->pathname]; }
+  function asArray(): array { return [$this->path]; }
 
   // calcul de l'extension spatiale de la couche en WoM
   function ebox(): EBox {

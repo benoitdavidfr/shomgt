@@ -36,6 +36,29 @@ if (0) { // Tests unitaires
   die();
 }
 
+
+{/*PhpDoc: classes
+name: LElts
+title: class LElts - Fonctions de gestion de liste d'éléments
+*/}
+class LElts {
+  // Nbre d'élts d'une liste de listes d'élts
+  static function LLcount(array $llelts) {
+    $nbElts = 0;
+    foreach ($llelts as $lelts)
+      $nbElts += count($lelts);
+    return $nbElts;
+  }
+  // Nbre d'élts d'une liste de listes de listes d'élts
+  static function LLLcount(array $lllelts) {
+    $nbElts = 0;
+    foreach ($lllelts as $llelts)
+      $nbElts += self::LLcount($llelts);
+    return $nbElts;
+  }
+}
+
+
 class Pos {
   const GEOCOORDS_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
   
@@ -92,6 +115,10 @@ class Pos {
     
     return self::formatCoordInDMd(abs($lat), $nbposMin).(($lat >= 0) ? 'N' : 'S')
       .' - '.self::formatCoordInDMd(abs($lon), $nbposMin).(($lon >= 0) ? 'E' : 'W');
+  }
+
+  static function distance(array $a, array $b): float {
+    return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));
   }
 };
 

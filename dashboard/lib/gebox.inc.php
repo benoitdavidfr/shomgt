@@ -87,11 +87,11 @@ abstract class BBox {
       else
         throw new SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
     }
-    elseif (Lpos::is($param)) { // $param est une liste de positions en cont. au moins une 
+    elseif (LPos::is($param)) { // $param est une liste de positions en cont. au moins une 
       foreach ($param as $pos)
         $this->bound($pos);
     }
-    elseif (LLpos::is($param)) { // $param est une liste de listes de positions en contenant au moins une
+    elseif (LLPos::is($param)) { // $param est une liste de listes de positions en contenant au moins une
       foreach ($param as $lpos)
         foreach ($lpos as $pos)
           $this->bound($pos);
@@ -131,7 +131,7 @@ abstract class BBox {
       ]);
   }
   
-  function asArray() { return ['min'=> $this->min, 'max'=> $this->max]; }
+  function asArray(): array { return ['min'=> $this->min, 'max'=> $this->max]; }
   
   // affiche la BBox avec des coord. arrondies
   function __toString(): string {

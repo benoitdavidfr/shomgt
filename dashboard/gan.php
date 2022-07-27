@@ -28,7 +28,7 @@ doc: |
     status code: 404
     Exception Message: N/A
 
-  Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../secrets/secretconfig.inc.php
+  Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../secrets/secretconfig.inc.php (non effectif)
 
   Tests de analyzeHtml() sur qqs cartes types (incomplet):
     - 6616 - carte avec 2 cartouches et une correction
@@ -40,6 +40,10 @@ journal: |
     - ajout dans le GAN du champ scale
   12/6/2022:
     - fork dans ShomGt3
+    - restriction fonctionnelle au moissonnage du GAN et à la construction des fichiers gans.yaml/pser
+      - le calcul du degré de péremption est transféré dans dashboard/index.php
+    - le lien avec la liste des cartes du portefuille est effectué par la fonction maps() qui lit la liste des cartes
+      exposées par sgserver
   31/5/2022:
     - désactivation de la vérification SSL
 includes: [../lib/config.inc.php, mapcat.php]
@@ -96,66 +100,6 @@ function maps(): array { // liste les cartes actives du portefeuille
 }
 
 /*PhpDoc: classes
-name: Territoire
-title: class Territoire - définit la doctrine d'importance des différents territoires pour la mise à jour
-doc: |
-  A chaque territoire, j'associe un statut et à chaque statut un coefficient d'importance des corrections.
-  Les statuts sont '', FX, DOM, COM et TOM
-    - '' indique inconnu
-    - FX pour la métropole
-    - DOM pour un DOM ou un pseudo-DOM dans lequel un service de l'Etat est en charge de questions maritimes
-    - COM pour un COM, cad que l'administration est de la responsabilité d'une collectivité territoriale
-    - TOM pour un territoire pour lequel il n'existe pas de collectivité
-  Le coeff vaut
-    - 1 pour FX ou ''
-    - 1/2 pour DOM ou TOM
-    - 1/4 pour COM
-    - 1/4 si aucun territoire n'est couvert
-*
-class Territoire {
-  // enum: [FR, FX, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
-  const STATUTS = [ // définition des statuts des territoires 
-    'FR'=> '',
-    'FX'=> 'FX',
-    'FX-Atl'=> 'FX',
-    'FX-MMN'=> 'FX',
-    'FX-Med'=> 'FX',
-    'GP'=> 'DOM',
-    'GF'=> 'DOM',
-    'MQ'=> 'DOM',
-    'YT'=> 'DOM',
-    'RE'=> 'DOM',
-    'PM'=> 'DOM', // géré comme un DOM <=> DDAM équiv. DEAL
-    'BL'=> 'COM',
-    'MF'=> 'COM',
-    'TF'=> 'TOM', // pas de collectivité
-    'PF'=> 'COM',
-    'WF'=> 'COM',
-    'NC'=> 'COM',
-    'CP'=> 'TOM', // pas de collectivité
-  ];
-  // ordre de priorité de mise à jour
-  // FX en premier car c'est là où j'ai constaté des utilisateurs
-  // DOM ensuite en raison de la présence des services déconcentrés de l'Etat
-  // TOM ensuite en raison de la responsabilité de l'Etat
-  // COM enfin en raison de l'autonomie de ces collectivités
-  // aucun territoire couvert
-  static function coeff(array $mapsFrance): float {
-    $statuts=[]; // [statut => 1]
-    foreach ($mapsFrance as $terr) {
-      $statuts[self::STATUTS[$terr]] = 1;
-    }
-    if (isset($statuts[''])) return 1;
-    if (isset($statuts['FX'])) return 1;
-    if (isset($statuts['DOM'])) return 1/2;
-    if (isset($statuts['TOM'])) return 1/2;
-    if (isset($statuts['COM'])) return 1/4;
-    return 1/4; // aucun territoire couvert
-  }
-};
-*/
-
-/*PhpDoc: classes
 name: GanInSet
 title: class GanInSet - description d'un cartouche dans la synthèse d'une carte
 */
@@ -188,10 +132,8 @@ name: Gan
 title: class Gan - synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
 methods:
 doc: |
-  Moisonne le GAN des cartes de MapCat non obsolètes et présentes dans ShomGt (et donc le champ modified est connu).
+  Moisonne le GAN des cartes du portefeuille non obsolètes (et donc le champ modified est connu).
   Analyse les fichiers Html moissonnés et en produit une synthèse.
-  Calcule pour chaque carte un indicateur, appelé degré de péremption, reflétant la nécessité de mettre à jour la carte.
-  Affiche le résultat pour permettre le choix des cartes à mettre à jour.
 */
 class Gan {
   const GAN_DIR = __DIR__.'/gan';
@@ -222,7 +164,7 @@ class Gan {
   name: harvest
   title: static function harvest(array $options=[]) - moissonne les GAN par carte dans le répertoire self::GAN_DIR
   doc: |
-    Les cartes interrogées sont celles de MapCat ayant un champ modified et n'étant pas obsolètes.
+    Les cartes interrogées sont celles de maps()
   */
   static function harvest(array $options=[]): void {
     //echo "Harvest ligne ",__LINE__,"\n";
@@ -364,11 +306,13 @@ class Gan {
     $map = maps()[$mapnum];
     echo 'map='; print_r($map);
     $ganWeek = Gan::week($map['modified']);
+    $gandir = self::GAN_DIR;
+    $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     if (isset($errors["$mapnum-$ganWeek"])) {
       echo $errors["$mapnum-$ganWeek"];
     }
     elseif (!file_exists(self::GAN_DIR."/$mapnum-$ganWeek.html")) {
-      echo "moisson $mapid-$ganWeek absente à moissonner\n";
+      echo "moisson $mapnum-$ganWeek absente à moissonner\n";
     }
     else {
       $mtime = filemtime(self::GAN_DIR."/$mapnum-$ganWeek.html");
@@ -384,9 +328,9 @@ class Gan {
   
   /*PhpDoc: methods
   name: build
-  title: static function build() - construit la synhèse des GAN de la moisson existante
+  title: "static function build(): void - construit la synhèse des GAN de la moisson existante"
   */
-  static function build() {
+  static function build(): void {
     $minvalid = null;
     $maxvalid = null;
 
@@ -398,7 +342,7 @@ class Gan {
         $ganWeek = Gan::week($map['modified']);
         if (isset($errors["$mapnum-$ganWeek"])) { }
         elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
-          echo "moisson $mapid-$ganWeek absente à moissonner\n";
+          echo "moisson $mapnum-$ganWeek absente à moissonner\n";
         }
         else {
           $mtime = filemtime("$gandir/$mapnum-$ganWeek.html");
@@ -417,7 +361,7 @@ class Gan {
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
       $mapid = substr($id, 0, 6);
-      if ($mapa = MapCat::maps($mapid))
+      if ($mapa = maps()[$mapid])
         self::$gans[$mapid] = new self($mapid, ['harvestError'=> $errorMessage], $mapa);
     }
   }
@@ -563,13 +507,13 @@ else { // non CLI
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body><pre>\n";
 }
 
-if ($a == 'menu') { // menu 
+if ($a == 'menu') { // menu non CLI
   echo "gan.php - Menu:<ul>\n";
   echo "<li>La moisson des GAN doit être effectuée en CLI</li>\n";
   echo "<li><a href='?a=showHarvest'>Affiche la moisson en Yaml</a></li>\n";
   echo "<li><a href='?a=storeHarvest'>Enregistre la moisson en Yaml/pser</a></li>\n";
-  echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
-  echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour les plus périmées d'abord</a></li>\n";
+  //echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
+  //echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour les plus périmées d'abord</a></li>\n";
   echo "</ul>\n";
   die();
 }
@@ -616,7 +560,7 @@ elseif ($a == 'fullHarvestAndStore') { // moisson des GAN depuis le Shom puis en
   die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
 }
 
-elseif ($a == 'analyzeHtml') { // analyse l'Html du GAn d'une carte particulière 
+elseif ($a == 'analyzeHtml') { // analyse l'Html du GAN d'une carte particulière 
   ($mapNum = $argv[2] ?? null)
     or throw new Exception("argument mapNum absent");
   Gan::analyzeHtmlOfMap($mapNum);

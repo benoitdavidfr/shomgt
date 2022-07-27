@@ -56,30 +56,6 @@ function my_json_encode($val): string {
   return json_encode(asArray($val), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 }
 
-{/*PhpDoc: classes
-name: LElts
-title: class LElts - Fonctions de gestion de liste d'éléments
-*/}
-class LElts {
-  // Nbre d'élts d'une liste de listes d'élts
-  static function LLcount(array $llelts) {
-    $nbElts = 0;
-    foreach ($llelts as $lelts)
-      $nbElts += count($lelts);
-    return $nbElts;
-  }
-  // Nbre d'élts d'une liste de listes de listes d'élts
-  static function LLLcount(array $lllelts) {
-    $nbElts = 0;
-    foreach ($lllelts as $llelts)
-      $nbElts += self::LLcount($llelts);
-    return $nbElts;
-  }
-}
-
-function distanceBetween2Pos(array $a, array $b): float {
-  return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));
-}
 
 {/*PhpDoc: classes
 name: Geometry
@@ -447,9 +423,9 @@ class Segment {
   function distanceToPos(array $pos): float {
     $u = $this->projPosOnLine($pos);
     if ($u < 0)
-      return distanceBetween2Pos($pos, $this->tab[0]);
+      return Pos::distance($pos, $this->tab[0]);
     elseif ($u > 1)
-      return distanceBetween2Pos($pos, $this->tab[1]);
+      return Pos::distance($pos, $this->tab[1]);
     else
       return abs($this->distancePosToLine($pos));
   }
@@ -498,7 +474,7 @@ class MultiPoint extends Geometry {
       throw new SExcept("Erreur: MultiPoint::aPos() sur une liste de positions vide", self::ErrorEmpty);
     return $this->coords[0];
   }
-  function bbox(): GBox { return GBox::bboxOfLPos($this->coords); }
+  function bbox(): GBox { return new GBox($this->coords); }
   function reproject(callable $reprojPos): Geometry { return new self(Geometry::reprojLPos($reprojPos, $this->coords)); }
   /*static function haggregate(array $elts) - NON UTILISE {
     $coords = [];
@@ -512,8 +488,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=MultiPoint'>Test unitaire de la classe MultiPoint</a><br>\n";
   elseif ($_GET['test']=='MultiPoint') {
-    $mpt = Geometry::create(['type'=>'MultiPoint', 'coordinates'=>[]]);
-    $mpt = Geometry::create(['type'=>'MultiPoint', 'coordinates'=>[[0,0],[1,1]]]);
+    $mpt = Geometry::fromGeoJSON(['type'=>'MultiPoint', 'coordinates'=>[]]);
+    $mpt = Geometry::fromGeoJSON(['type'=>'MultiPoint', 'coordinates'=>[[0,0],[1,1]]]);
     echo "$mpt ->center() = ",json_encode($mpt->center()),"<br>\n";
     echo "$mpt ->aPos() = ",json_encode($mpt->aPos()),"<br>\n";
     echo "$mpt ->bbox() = ",$mpt->bbox(),"<br>\n";
@@ -540,7 +516,7 @@ class LineString extends Geometry {
   function center(): array { return Geometry::centerOfLPos($this->coords); }
   function nbreOfPos(): int { return count($this->coords); }
   function aPos(): array { return $this->coords[0]; }
-  function bbox(): GBox { return GBox::bboxOfLPos($this->coords); }
+  function bbox(): GBox { return new GBox($this->coords); }
   
   function reproject(callable $reprojPos): Geometry {
     return new self(Geometry::reprojLPos($reprojPos, $this->coords));
@@ -959,12 +935,12 @@ class MultiPolygon extends Geometry {
     return new self($coords);
   }
   
-  function area(): float {
+  /*function area(): float {
     $area = 0.0;
     foreach($this->geom as $polygon)
       $area += $polygon->area();
     return $area;
-  }
+  }*/
   
   /*PhpDoc: methods
   name:  pointInPolygon
