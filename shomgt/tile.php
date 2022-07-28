@@ -19,6 +19,8 @@ doc: |
   Test:
     http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   2/7/2022:
     - ajout du log
   6/6/2022:
@@ -69,13 +71,12 @@ function logRecord(array $log): void {
   require_once __DIR__.'/tileaccess.inc.php';
 }*/
 
-if ($options = explode(',', $_GET['options'] ?? 'none')) {
-  foreach ($options as $option) {
-    if ($option == 'version') {
-      header('Content-type: application/json');
-      echo json_encode($VERSION);
-      die();
-    }
+$options = explode(',', $_GET['options'] ?? 'none');
+foreach ($options as $option) {
+  if ($option == 'version') {
+    header('Content-type: application/json');
+    echo json_encode($VERSION);
+    die();
   }
 }
 //write_log(true);
@@ -275,7 +276,7 @@ if (!isset($layers[$lyrname])) {
   die("Erreur: couche $lyrname inexistante, voir la liste des couches sur $url\n");
 }
 
-if (SERVER_TILECACHE && !$debug)
+if (SERVER_TILECACHE && !$debug) // @phpstan-ignore-line
   Cache::readAndSend($lyrname, $z, $x, $y);
 
 try {
@@ -296,7 +297,7 @@ try {
 }
 
 if (!$debug) {
-  if (NB_SECONDS_IN_CACHE) { // Mise en cache par le navigateur
+  if (NB_SECONDS_IN_CACHE) { // @phpstan-ignore-line // Mise en cache par le navigateur
     header('Cache-Control: max-age='.NB_SECONDS_IN_CACHE); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Expires: '.date('r', time() + NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Last-Modified: '.date('r'));
@@ -307,7 +308,7 @@ if (!$debug) {
   flush();
   //logRecord(['ellapsed_time'=> microtime(true)-$start['time'], 'memory_usage'=> memory_get_usage(true)-$start['memory']]);
   try {
-    if (SERVER_TILECACHE)
+    if (SERVER_TILECACHE) // @phpstan-ignore-line
       Cache::write($lyrname, $z, $x, $y, $grImage->image());
   } catch (Exception $e) {
     sendErrorTile("$lyrname/$z/$x/$y", $e->getMessage());

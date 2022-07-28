@@ -8,6 +8,8 @@ doc: |
   elle est indépendante des fonctionnalités du serveur de shomgt.
   Elle génère un fichier temporaire de log utile au déverminage
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   8/6/2022:
     - migration shomgt v3
     - modif. gestion du log
@@ -108,14 +110,16 @@ EOT;
         if (!isset($GET[$param]))
           self::exception(400, "Parametre $param non defini", 'MissingParameter');
       $bbox = explode(',', $GET['BBOX']);
-      $x = ($GET['I'] * ($bbox[2]-$bbox[0]) / $GET['WIDTH']) + $bbox[0];
-      $y = $bbox[3] - ($GET['J'] * ($bbox[3]-$bbox[1]) / $GET['HEIGHT']);
+      $x = (intval($GET['I']) * (floatval($bbox[2])-floatval($bbox[0])) / intval($GET['WIDTH'])) + floatval($bbox[0]);
+      $y = floatval($bbox[3]) - (intval($GET['J']) * (floatval($bbox[3])-floatval($bbox[1])) / intval($GET['HEIGHT']));
       $this->getFeatureInfo(
         lyrnames: explode(',', $GET['QUERY_LAYERS']),
         crs: $GET['CRS'],
         pos: [$x, $y],
         featureCount: $GET['FEATURE_COUNT'] ?? 10,
-        pixelSize: [($bbox[2]-$bbox[0]) / $GET['WIDTH'], ($bbox[3]-$bbox[1]) / $GET['HEIGHT']],
+        pixelSize: [
+          (floatval($bbox[2]) - floatval($bbox[0])) / $GET['WIDTH'],
+          (floatval($bbox[3]) - floatval($bbox[1])) / $GET['HEIGHT']],
         format: $GET['INFO_FORMAT']
       );
       die();

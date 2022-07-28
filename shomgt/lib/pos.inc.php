@@ -29,7 +29,7 @@ function roundToIntIfPossible(float $v): float|int { // arrondit si possible com
   else
     return $v;
 }
-if (0) { // Tests unitaires 
+if (0) { // @phpstan-ignore-line // Tests unitaires 
   echo "<pre>\n";
   var_dump(['15.00000001' => roundToIntIfPossible(15.00000001)]);
   var_dump(['0' => roundToIntIfPossible(0)]);
@@ -123,13 +123,40 @@ class Pos {
 };
 
 class LPos {
+  const ErrorCenterOfEmptyLPos = 'Pos::ErrorCenterOfEmptyLPos';
+
   // teste si une variable correspond à une liste d'au moins une position
   static function is($lpos): bool { return is_array($lpos) && Pos::is($lpos[0] ?? null); }
+
+  // calcule le centre d'une liste de positions, génère une exception si la liste est vide
+  static function center(array $lpos): array {
+    if (!$lpos)
+      throw new SExcept("Erreur: LPos::center() d'une liste de positions vide", self::ErrorCenterOfEmptyLPos);
+    $c = [0, 0];
+    $nbre = 0;
+    foreach ($lpos as $pos) {
+      $c[0] += $pos[0];
+      $c[1] += $pos[1];
+      $nbre++;
+    }
+    return [$c[0]/$nbre, $c[1]/$nbre];
+  }
+  
+  // reprojète une liste de positions et en retourne la liste
+  static function reproj(callable $reprojPos, array $lpos): array { return array_map($reprojPos, $lpos); }
 };
 
 class LLPos {
   // teste si une variable correspond à une liste de listes de positions dont la première en contient au moins une
   static function is($llpos): bool { return is_array($llpos) && LPos::is($llpos[0] ?? null); }
+
+  // reprojète une liste de liste de positions et en retourne la liste
+  static function reproj(callable $reprojPos, array $llpos): array {
+    $coords = [];
+    foreach ($llpos as $i => $lpos)
+      $coords[] = LPos::reproj($reprojPos, $lpos);
+    return $coords;
+  }
 };
 
 

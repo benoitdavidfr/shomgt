@@ -84,7 +84,7 @@ abstract class Layer {
   static function dilate(string $lyrName): float { // calcule le coeff de dilatation en fonction du nom de la couche
     $sd = substr($lyrName, 2);
     if (ctype_digit(substr($sd, 0, 1)) && ($sd <> '40M')) {
-      $sd = str_replace(['k','M'], ['000','000000'], $sd);
+      $sd = intval(str_replace(['k','M'], ['000','000000'], $sd));
       return self::DILATE * $sd;
     }
     else {

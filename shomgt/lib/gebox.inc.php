@@ -17,6 +17,8 @@ doc: |
   Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
   Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   22/5/2022:
     - correction d'un bug dans GBox::asGeoJsonBbox()
   29/4/2022:
@@ -27,7 +29,7 @@ journal: |
     - création
 includes: [coordsys.inc.php, pos.inc.php, zoom.inc.php, sexcept.inc.php]
 */}
-  $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
+$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/pos.inc.php';
@@ -62,7 +64,7 @@ abstract class BBox {
     $this->max = [];
     if (!$param)
       return;
-    if (is_array($param) && in_array(count($param), [2,3]) && is_numeric($param[0])) // 1 pos
+    elseif (is_array($param) && in_array(count($param), [2,3]) && is_numeric($param[0])) // 1 pos
       $this->bound($param);
     elseif (is_array($param) && (count($param)==4) && is_numeric($param[0])) { // 2 pos
       $this->bound([$param[0], $param[1]]);
@@ -118,17 +120,20 @@ abstract class BBox {
     return $this;
   }
 
-  // crée un nouvel objet de la classe appelée avec des coord. arrondies
+  // si $this est indéfini alors le renvoit
+  // sinon crée un nouvel objet de la classe appelée avec des coord. arrondies
   // en fonction de la $precision définie dans la classe appelée
-  function round() {
-    $called_class = get_called_class();
+  function round(): BBox {
     if (!$this->min)
-      return new $called_class;
-    else
-      return new $called_class([
-        round($this->min[0], $called_class::$precision), round($this->min[1], $called_class::$precision),
-        round($this->max[0], $called_class::$precision), round($this->max[1], $called_class::$precision)
+      return $this;
+    else {
+      $called_class = get_called_class();
+      $dixpprec = 10 ** $called_class::$precision;
+      return new $called_class([ // @phpstan-ignore-line
+        floor($this->min[0] * $dixpprec) / $dixpprec, floor($this->min[1] * $dixpprec) / $dixpprec, 
+        ceil($this->max[0] * $dixpprec) / $dixpprec,  ceil($this->max[1] * $dixpprec) / $dixpprec, 
       ]);
+    }
   }
   
   function asArray(): array { return ['min'=> $this->min, 'max'=> $this->max]; }
@@ -201,7 +206,7 @@ abstract class BBox {
     echo "BBox::intersects(b2=$b2)@$this -> ",$i ? 'true' : 'false',"<br>\n";
     return $i;
   }
-  function intersects(BBox $b2) {
+  function intersects(BBox $b2): ?BBox {
     if (!$this->min || !$b2->min)
       throw new SExcept("Erreur intersection avec une des BBox indéterminée", self::ErrorIntersectsWithUndefBBox);
     $xmin = max($b2->min[0], $this->min[0]);
@@ -210,7 +215,7 @@ abstract class BBox {
     $ymax = min($b2->max[1], $this->max[1]);
     $called_class = get_called_class();
     if (($xmax >= $xmin) && ($ymax >= $ymin))
-      return new $called_class([$xmin, $ymin, $xmax, $ymax]);
+      return new $called_class([$xmin, $ymin, $xmax, $ymax]); // @phpstan-ignore-line
     else
       return null;
   }
@@ -234,15 +239,6 @@ abstract class BBox {
   
   // version bouléenne de intersects()
   function inters(BBox $b2): bool { return $this->intersects($b2) ? true : false; }
-  
-  // dilate le rectangle de $dilate
-  function dilate(float $dilate): EBox {
-    $this->min[0] -= $dilate;
-    $this->min[1] -= $dilate;
-    $this->max[0] += $dilate;
-    $this->max[1] += $dilate;
-    return $this;
-  }
 };
 
 {/*PhpDoc: classes
@@ -316,7 +312,7 @@ class GBox extends BBox {
       ['SW'=> "42°39,93'N - 9°00,93'E", 'NE'=> "43°08,95'N - 9°28,64'E"],
       ['SW'=> "30°S - 153°E", 'NE'=> "8°S - 174°W"],
     ] as $rect) {
-      print_r($rect); echo " -> ",self::fromShomGt($rect)->intersectsAntiMeridian($rect) ? 'T' : 'F',"<br>\n";
+      print_r($rect); echo " -> ",self::fromShomGt($rect)->intersectsAntiMeridian() ? 'T' : 'F',"<br>\n";
       echo self::fromShomGt($rect)->translate360West(),"<br>\n";
     }
   }
@@ -465,11 +461,20 @@ class EBox extends BBox {
   function area(): float { return $this->dx() * $this->dy(); }
 
   // taux de couverture du Bbox $right par le Bbox $this
-  function covers(Bbox $right): float {
+  function covers(BBox $right): float {
     if (!($int = $this->intersects($right)))
       return 0;
     else
-      return $int->area()/$right->area();
+      return $int->area()/$right->area(); // @phpstan-ignore-line
+  }
+  
+  // dilate le rectangle de $dilate
+  function dilate(float $dilate): EBox {
+    $this->min[0] -= $dilate;
+    $this->min[1] -= $dilate;
+    $this->max[0] += $dilate;
+    $this->max[1] += $dilate;
+    return $this;
   }
   
   // calcule les coord.géo. d'un EBox en utilisant $proj qui doit être défini comme projection dans coordsys

@@ -233,7 +233,7 @@ class WmsShomGt extends WmsServer {
         $grImage->rectangle($ebox, $color);
     }
     
-    if (0) { // commentaire de debug
+    if (0) { // @phpstan-ignore-line // commentaire de debug
       if ($debug) echo "Debug ligne ",__LINE__,"<br>\n";
       $wombox2 = new EBox([
         $wombox->west(),

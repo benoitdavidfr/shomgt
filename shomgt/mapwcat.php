@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   1/6/2022:
     - ajout utilisation de la variable d'environnement SHOMGT3_MAPWCAT_FORCE_HTTPS
       - si elle vaut 'true' les appels générés sont en https même si l'appel de mapwcat.php est en http
@@ -66,33 +68,32 @@ function latestVersion(array $versions): array {
   return [$latest => $versions[$latest]];
 }
 
-if ($options = explode(',', $_GET['options'] ?? 'none')) {
-  foreach ($options as $option) {
-    switch ($option) {
-      case 'help': {
-        echo "Options de ce script:<ul>\n";
-        echo "<li>help : fournit cette aide</li>\n";
-        echo "<li>version : fournit les dates de modification des fichiers sources</li>\n";
-        echo "<li>center : fournit le centre de la carte sous la forme {lat},{lon}</li>\n";
-        // echo "<li>zoom : fournit le zoom de la carte sous la forme d'un entier</li>\n";
-        echo "</ul>\n";
-        die();
-      }
-      case 'version': {
-        $VERSION = array_merge(
-          $VERSION,
-          json_decode(file_get_contents("$shomgturl/tile.php?options=version"), true),
-          json_decode(file_get_contents("$shomgturl/maps.php?options=version"), true),
-        );
-        header('Content-type: application/json');
-        echo json_encode(['versions'=> $VERSION, 'latest'=> latestVersion($VERSION)]);
-        die();
-      }
-      case 'none': break;
-      default: {
-        echo "Attention, option '$option' non gérée<br>\n";
-        break;
-      }
+$options = explode(',', $_GET['options'] ?? 'none');
+foreach ($options as $option) {
+  switch ($option) {
+    case 'help': {
+      echo "Options de ce script:<ul>\n";
+      echo "<li>help : fournit cette aide</li>\n";
+      echo "<li>version : fournit les dates de modification des fichiers sources</li>\n";
+      echo "<li>center : fournit le centre de la carte sous la forme {lat},{lon}</li>\n";
+      // echo "<li>zoom : fournit le zoom de la carte sous la forme d'un entier</li>\n";
+      echo "</ul>\n";
+      die();
+    }
+    case 'version': {
+      $VERSION = array_merge(
+        $VERSION,
+        json_decode(file_get_contents("$shomgturl/tile.php?options=version"), true),
+        json_decode(file_get_contents("$shomgturl/maps.php?options=version"), true),
+      );
+      header('Content-type: application/json');
+      echo json_encode(['versions'=> $VERSION, 'latest'=> latestVersion($VERSION)]);
+      die();
+    }
+    case 'none': break;
+    default: {
+      echo "Attention, option '$option' non gérée<br>\n";
+      break;
     }
   }
 }

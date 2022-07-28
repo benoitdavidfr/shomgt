@@ -94,25 +94,25 @@ class Access {
     //$verbose = true;
     // Si $usrpwd alors vérification du login/mdp
     if ($usrpwd) {
-      if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__;
+      if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__; // @phpstan-ignore-line
       $access = in_array($usrpwd, config('loginPwds'));
       if (!$nolog) write_log($access);
       return $access;
     }
     // Vérification de l'accès par IP
     if (self::ipInWhiteList()) {
-      if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__;
+      if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__; // @phpstan-ignore-line
       if (!$nolog) write_log(true);
       return true;
     }
     // Cas d'utilisation de vérification de l'accès par login/mdp en cookie
     if (self::loginPwdInCookie()) {
-      if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__;
+      if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__; // @phpstan-ignore-line
       if (!$nolog) write_log(true);
       return true;
     }
     // refus d'accès
-    if (isset($verbose)) {
+    if (isset($verbose)) { // @phpstan-ignore-line
       echo "Fichier ",__FILE__,", ligne ",__LINE__,"<br>\n";
       echo "<pre>_SERVER="; print_r($_SERVER); echo "</pre>\n";
     }

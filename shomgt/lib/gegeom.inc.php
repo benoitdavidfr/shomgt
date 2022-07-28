@@ -10,6 +10,11 @@ doc: |
   Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
   puis en apppelant la méthode Geometry::fromGeoJSON().
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan
+    - suppression du style associé à une géométrie
+    - GeomtryCollection n'est plus une sous-classe de Geometry
+    - transfert de qqs méthodes dans Po, LPos et LLPos
   8/7/2022:
     - ajout Segment::(projPosOnLine+distancePosToLine+distanceToPos) + LineString::distanceToPos
   7-10/2/2022:
@@ -59,51 +64,44 @@ function my_json_encode($val): string {
 
 {/*PhpDoc: classes
 name: Geometry
-title: abstract class Geometry - Gestion d'une Geometry GeoJSON et de quelques opérations
+title: abstract class Geometry - Gestion d'une Geometry GeoJSON (hors collection) et de quelques opérations
 doc: |
   Les coordonnées sont conservées en array comme en GeoJSON et pas structurées avec des objets.
-  Chaque type de géométrie correspond à une sous-classe non abstraite.
+  Chaque type de géométrie correspond à une sous-classe concrète.
   Par défaut, la géométrie est en coordonnées géographiques mais les classes peuvent aussi être utilisées
   avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préfixées par e.
-  Un style peut être associé à une Geometry. Il s'inspire de https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0
 */}
 abstract class Geometry {
-  const ErrorFromGeoJSON = 'Geometry::ErrorFromGeoJSON';
-  const ErrorCenterOfEmptyLPos = 'Geometry::ErrorCenterOfEmptyLPos';
+  const ErrorFromGeoArray = 'Geometry::ErrorFromGeoArray';
   const HOMOGENEOUSTYPES = ['Point','LineString','Polygon','MultiPoint','MultiLineString','MultiPolygon'];
+  
   static int $precision = 6; // nbre de chiffres après la virgule à conserver pour les coord. géo.
   static int $ePrecision = 1; // nbre de chiffres après la virgule à conserver pour les coord. euclidiennes
-  protected array $coords; // coordonnées ou Positions, stockées comme array, array(array), ... en fonction de la sous-classe
-  protected array $style; // un style peut être associé à une géométrie, toujours un array, par défaut []
   
-  // crée une géométrie à partir du json_decode() du GeoJSON
-  static function fromGeoJSON(array $geom, array $style=[]): Geometry {
+  public readonly array $coords; // coordonnées ou Positions, stockées comme array, array(array), ... en fn de la sous-classe
+  
+  // crée une géométrie à partir du json_decode() d'une géométrie GeoJSON
+  static function fromGeoArray(array $geom, array $style=[]): Geometry|GeometryCollection {
     $type = $geom['type'] ?? null;
     if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
       return new $type($geom['coordinates']);
     elseif (($type=='GeometryCollection') && isset($geom['geometries'])) {
       $geoms = [];
       foreach ($geom['geometries'] as $g)
-        $geoms[] = self::fromGeoJSON($g);
+        $geoms[] = self::fromGeoArray($g);
       return new GeometryCollection($geoms);
     }
     else
-      throw new SExcept("Erreur de Geometry::fromGeoJSON(".json_encode($geom).")", self::ErrorFromGeoJSON);
+      throw new SExcept("Erreur de Geometry::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
   }
   
   // fonction d'initialisation valable pour toutes les géométries homogènes
-  function __construct(array $coords, array $style=[]) { $this->coords = $coords; $this->style = $style; }
+  function __construct(array $coords) { $this->coords = $coords; }
   
   // récupère le type
   function type(): string { return get_class($this); }
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
   abstract function eltTypes(): array;
-  // récupère les coordonnées
-  function coords() { return $this->coords; }
-  
-  // définit le style associé et le récupère
-  function setStyle(array $style=[]): void { $this->style = $style; }
-  function getStyle(): array { return $this->style; }
   
   // génère la réprésentation string GeoJSON
   function __toString(): string { return json_encode($this->asArray()); }
@@ -118,20 +116,6 @@ abstract class Geometry {
   
   // renvoie le centre d'une géométrie
   abstract function center(): array;
-    
-  // calcule le centre d'une liste de positions, génère une exception si la liste est vide
-  static function centerOfLPos(array $lpos): array {
-    if (!$lpos)
-      throw new SExcept("Erreur: Geometry::centerOfLPos() d'une liste de positions vide", self::ErrorCenterOfEmptyLPos);
-    $c = [0, 0];
-    $nbre = 0;
-    foreach ($lpos as $pos) {
-      $c[0] += $pos[0];
-      $c[1] += $pos[1];
-      $nbre++;
-    }
-    return [round($c[0]/$nbre, self::$precision), round($c[1]/$nbre, self::$precision)];
-  }
   
   abstract function nbreOfPos(): int;
   
@@ -139,26 +123,13 @@ abstract class Geometry {
   abstract function aPos(): array;
   
   // renvoie la GBox de la géométrie considérée comme géographique
-  abstract function bbox(): GBox;
+  abstract function gbox(): GBox;
+  
+  // distance min. d'une géométrie à une position
+  abstract function distanceToPos(array $pos): float;
   
   // reprojète ue géométrie, prend en paramètre une fonction de reprojection d'une position, retourne un objet géométrie
   abstract function reproject(callable $reprojPos): Geometry;
-
-  // reprojète une liste de positions et en retourne la liste
-  static function reprojLPos(callable $reprojPos, array $lpos): array {
-    $coords = [];
-    foreach ($lpos as $pos)
-      $coords[] = $reprojPos($pos);
-    return $coords;
-  }
-
-  // reprojète une liste de liste de positions et en retourne la liste
-  static function reprojLLPos(callable $reprojPos, array $llpos): array {
-    $coords = [];
-    foreach ($llpos as $i => $lpos)
-      $coords[] = Geometry::reprojLPos($reprojPos, $lpos);
-    return $coords;
-  }
   
   function dissolveCollection(): array { return [$this]; }
   
@@ -212,14 +183,16 @@ class Point extends Geometry {
   const ErrorBadParamInAdd = 'Point::ErrorBadParamInAdd';
   const ErrorBadParamInDiff = 'Point::ErrorBadParamInDiff';
   
-  // $coords contient une liste de 2 ou 3 nombres
+  public readonly array $coords; // contient une liste de 2 ou 3 nombres
   
+  function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return ['Point']; }
   function geoms(): array { return []; }
   function center(): array { return $this->coords; }
   function nbreOfPos(): int { return 1; }
   function aPos(): array { return $this->coords; }
-  function bbox(): GBox { return new GBox($this->coords); }
+  function gbox(): GBox { return new GBox($this->coords); }
+  function distanceToPos(array $pos): float { return Pos::distance($this->coords, $pos); }
   function reproject(callable $reprojPos): Geometry { return new Point($reprojPos($this->coords)); }
 
   function add($v): Point {
@@ -263,7 +236,7 @@ class Point extends Geometry {
     */
     return $this->coords[0] * $v->coords[0] + $this->coords[1] * $v->coords[1];
   }
-  static function A_ADAPTER_test_pscal() {
+  /*static function A_ADAPTER_test_pscal() {
     foreach ([
       ['POINT(15 20)','POINT(20 15)'],
       ['POINT(1 0)','POINT(0 1)'],
@@ -276,7 +249,7 @@ class Point extends Geometry {
       echo "($v0)->pvect($v1)=",$v0->pvect($v1),"\n";
       echo "($v0)->pscal($v1)=",$v0->pscal($v1),"\n";
     }
-  }
+  }*/
 
   // multiplication de $this considéré comme un vecteur par un scalaire
   function scalMult(float $scal): Point { return new Point([$this->coords[0] * $scal, $this->coords[1] * $scal]); }
@@ -288,7 +261,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=Point'>Test unitaire de la classe Point</a>\n";
   elseif ($_GET['test']=='Point') {
-    $pt = Geometry::fromGeoJSON(['type'=>'Point', 'coordinates'=> [0,0]]);
+    $pt = new Point ([0,0]);
     echo "pt=$pt<br>\n";
     echo "reproject(pt)=",$pt->reproject(function(array $pos) { return $pos; }),"\n";
     echo $pt->add([1,1]),"\n";
@@ -362,13 +335,13 @@ class Segment {
   static function test_intersects(): void {
     $a = new Segment([0,0], [10,0]);
     foreach ([
-      ['b'=> new Segment([0,-5],[10,5]), 'result'=> true],
+      ['b'=> new Segment([0,-5],[10,5]), 'result'=> 'true'],
       //['POINT(0 0)','POINT(10 0)','POINT(0 0)','POINT(10 5)'],
       //['POINT(0 0)','POINT(10 0)','POINT(0 -5)','POINT(10 -5)'],
       //['POINT(0 0)','POINT(10 0)','POINT(0 -5)','POINT(20 0)'],
     ] as $test) {
       $b = $test['b'];
-      echo "$a ->intersects($b) -> ",my_json_encode($a->intersects($b)), " / ", $test['result']?'true':'false',"<br>\n";
+      echo "$a ->intersects($b) -> ",my_json_encode($a->intersects($b)), " / $test[result]<br>\n";
     }
   }
 
@@ -456,8 +429,9 @@ title: class MultiPoint extends Geometry - Une liste de points, peut-être vide
 class MultiPoint extends Geometry {
   const ErrorEmpty = 'MultiPoint::ErrorEmpty';
   
-  // $coords contient une liste de listes de 2 ou 3 nombres
+  public readonly array $coords; // contient une liste de listes de 2 ou 3 nombres
   
+  function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return $this->coords ? ['Point'] : []; }
   
   function geoms(): array {
@@ -467,15 +441,26 @@ class MultiPoint extends Geometry {
     return $geoms;
   }
   
-  function center(): array { return Geometry::centerOfLPos($this->coords); }
+  function center(): array { return LPos::center($this->coords); }
   function nbreOfPos(): int { return count($this->coords); }
   function aPos(): array {
     if (!$this->coords)
       throw new SExcept("Erreur: MultiPoint::aPos() sur une liste de positions vide", self::ErrorEmpty);
     return $this->coords[0];
   }
-  function bbox(): GBox { return new GBox($this->coords); }
-  function reproject(callable $reprojPos): Geometry { return new self(Geometry::reprojLPos($reprojPos, $this->coords)); }
+  function gbox(): GBox { return new GBox($this->coords); }
+  
+  function distanceToPos(array $pos): float {
+    $dmin = INF;
+    foreach ($this->coords as $p) {
+      $d = Pos::distance($p, $pos);
+      if ($d < $dmin)
+        $dmin = $d;
+    }
+    return $dmin;
+  }
+  
+  function reproject(callable $reprojPos): self { return new self(LPos::reproj($reprojPos, $this->coords)); }
   /*static function haggregate(array $elts) - NON UTILISE {
     $coords = [];
     foreach ($elts as $elt)
@@ -488,11 +473,11 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=MultiPoint'>Test unitaire de la classe MultiPoint</a><br>\n";
   elseif ($_GET['test']=='MultiPoint') {
-    $mpt = Geometry::fromGeoJSON(['type'=>'MultiPoint', 'coordinates'=>[]]);
-    $mpt = Geometry::fromGeoJSON(['type'=>'MultiPoint', 'coordinates'=>[[0,0],[1,1]]]);
+    $mpt = new MultiPoint([]);
+    $mpt = new MultiPoint([[0,0],[1,1]]);
     echo "$mpt ->center() = ",json_encode($mpt->center()),"<br>\n";
     echo "$mpt ->aPos() = ",json_encode($mpt->aPos()),"<br>\n";
-    echo "$mpt ->bbox() = ",$mpt->bbox(),"<br>\n";
+    echo "$mpt ->gbox() = ",$mpt->gbox(),"<br>\n";
     echo "$mpt ->reproject() = ",$mpt->reproject(function(array $pos) { return $pos; }),"<br>\n";
   }
 }
@@ -503,7 +488,9 @@ name: LineString
 title: class LineString extends Geometry - contient au moins 2 positions
 */}
 class LineString extends Geometry {
-  // $coords contient une liste de listes de 2 ou 3 nombres
+  public readonly array $coords; // contient une liste de listes de 2 ou 3 nombres
+  
+  function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return ['LineString']; }
   
   function geoms(): array {
@@ -513,13 +500,13 @@ class LineString extends Geometry {
     return $geoms;
   }
   
-  function center(): array { return Geometry::centerOfLPos($this->coords); }
+  function center(): array { return LPos::center($this->coords); }
   function nbreOfPos(): int { return count($this->coords); }
   function aPos(): array { return $this->coords[0]; }
-  function bbox(): GBox { return new GBox($this->coords); }
+  function gbox(): GBox { return new GBox($this->coords); }
   
-  function reproject(callable $reprojPos): Geometry {
-    return new self(Geometry::reprojLPos($reprojPos, $this->coords));
+  function reproject(callable $reprojPos): LineString {
+    return new self(LPos::reproj($reprojPos, $this->coords));
   }
   
   /*PhpDoc: methods
@@ -589,17 +576,18 @@ class LineString extends Geometry {
   title: "distanceToPos(array $pos): float - calcule la distance d'une LineString à une position"
   */
   function distanceToPos(array $pos): float {
+    $dmin = INF;
     foreach ($this->segs() as $seg) {
       $d = $seg->distanceToPos($pos);
-      if (!isset($dmin) || ($d < $dmin))
+      if (($dmin == INF) || ($d < $dmin))
         $dmin = $d;
     }
     return $dmin;
   }
   static function test_distanceToPos(): void {
-    $ls = ['type'=>'LineString', 'coordinates'=> [[0,0],[1,0],[2,2]]];
+    $ls = new LineString([[0,0],[1,0],[2,2]]);
     foreach ([[0,0],[2,2],[1,1],[1,-1],[-1,-1]] as $pos)
-      echo json_encode($ls),"->distanceToPos([$pos[0],$pos[1]])-> ",Geometry::fromGeoJSON($ls)->distanceToPos($pos),"\n";
+      echo $ls,"->distanceToPos([$pos[0],$pos[1]])-> ",$ls->distanceToPos($pos),"\n";
   }
 }
 
@@ -607,7 +595,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=LineString'>Test unitaire de la classe LineString</a><br>\n";
   elseif ($_GET['test']=='LineString') {
-    $ls = Geometry::fromGeoJSON(['type'=>'LineString', 'coordinates'=> [[0,0],[1,1]]]);
+    $ls = new LineString([[0,0],[1,1]]);
     echo "ls=$ls<br>\n";
     echo "ls->center()=",json_encode($ls->center()),"<br>\n";
     LineString::test_pointInPolygon();
@@ -623,7 +611,10 @@ title: class MultiLineString extends Geometry - contient une liste de liste de p
 class MultiLineString extends Geometry {
   const ErrorCenterOfEmpty = 'MultiLineString::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'MultiLineString::ErrorPosOfEmpty';
-  // $coords contient une liste de listes de listes de 2 ou 3 nombres
+  
+  public readonly array $coords; // contient une liste de listes de listes de 2 ou 3 nombres
+  
+  function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return $this->coords ? ['LineString'] : []; }
   
   function geoms(): array {
@@ -656,10 +647,20 @@ class MultiLineString extends Geometry {
     return $this->coords[0][0];
   }
   
-  function bbox(): GBox { return new GBox($this->coords); }
+  function gbox(): GBox { return new GBox($this->coords); }
+  
+  function distanceToPos(array $pos): float {
+    $dmin = INF;
+    foreach ($this->geoms() as $ls) {
+      $d = $ls->distanceToPos($pos);
+      if ($d < $dmin)
+        $dmin = $d;
+    }
+    return $dmin;
+  }
   
   function reproject(callable $reprojPos): Geometry {
-    return new self(Geometry::reprojLLPos($reprojPos, $this->coords));
+    return new self(LLPos::reproj($reprojPos, $this->coords));
   }
   
   /*static function haggregate(array $elts) - NON UTILISE {
@@ -674,7 +675,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=MultiLineString'>Test unitaire de la classe MultiLineString</a><br>\n";
   elseif ($_GET['test']=='MultiLineString') {
-    $mls = Geometry::fromGeoJSON(['type'=>'MultiLineString', 'coordinates'=> [[[0,0],[1,1]]]]);
+    $mls = new MultiLineString([[[0,0],[1,1]]]);
     echo "mls=$mls<br>\n";
     echo "mls->center()=",json_encode($mls->center()),"<br>\n";
   }
@@ -692,8 +693,9 @@ doc: |
 class Polygon extends Geometry {
   const ErrorInters = 'Polygon::ErrorInters';
 
-  // $coords contient une liste de listes de listes de 2 ou 3 nombres
+  public readonly array $coords; // contient une liste de listes de listes de 2 ou 3 nombres
 
+  function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return ['Polygon']; }
   
   function geoms(): array {
@@ -703,13 +705,26 @@ class Polygon extends Geometry {
     return $geoms;
   }
   
-  function center(): array { return Geometry::centerOfLPos($this->coords[0]); }
+  function center(): array { return LPos::center($this->coords[0]); }
   function nbreOfPos(): int { return LElts::LLcount($this->coords); }
   function aPos(): array { return $this->coords[0][0]; }
-  function bbox(): GBox { return new GBox($this->coords); }
+  function gbox(): GBox { return new GBox($this->coords); }
+  function ebox(): EBox { return new EBox($this->coords); }
+  
+  function distanceToPos(array $pos): float {
+    if ($this->pointInPolygon($pos))
+      return 0;
+    $dmin = INF;
+    foreach ($this->geoms() as $g) {
+      $d = $g->distanceToPos($pos);
+      if ($d < $dmin)
+        $dmin = $d;
+    }
+    return $dmin;
+  }
   
   function reproject(callable $reprojPos): Geometry {
-    return new self(Geometry::reprojLLPos($reprojPos, $this->coords));
+    return new self(LLPos::reproj($reprojPos, $this->coords));
   }
   
   function area_A_ADAPTER () {
@@ -791,7 +806,7 @@ class Polygon extends Geometry {
   function inters(Geometry $geom, bool $verbose=false): bool {
     if (get_class($geom) == 'Polygon') {
       // Si les boites ne s'intersectent pas alors les polygones non plus
-      if (!$this->bbox()->inters($geom->bbox()))
+      if (!$this->ebox()->inters($geom->ebox()))
         return false;
       // si un point de $geom est dans $this alors il y a intersection
       foreach($geom->geoms() as $i=> $ls) {
@@ -840,19 +855,19 @@ class Polygon extends Geometry {
         'title'=> "cas d'un pol2 inclus dans pol1 ss que les rings ne s'intersectent",
         'pol1'=> new Polygon([[[0,0],[10,0],[10,10],[0,10],[0,0]]]), // carré 10x10 
         'pol2'=> new Polygon([[[1,1],[9,1],[9,9],[1,9],[1,1]]]),
-        'result'=> true,
+        'result'=> 'true',
       ],
       [
         'title'=> "cas d'un pol2 intersectant pol1 ss qu'aucun point de l'un ne soit dans l'autre mais que les rings s'intersectent",
         'pol1'=> new Polygon([[[0,0],[10,0],[10,10],[0,10],[0,0]]]), // carré 10x10 
         'pol2'=> new Polygon([[[-1,1],[11,1],[11,9],[-1,9],[-1,1]]]),
-        'result'=> true,
+        'result'=> 'true',
       ],
     ] as $test) {
       echo "<b>$test[title]</b><br>\n";
       echo "$test[pol1]->inters($test[pol2]):<br>\n",
           "-> ", ($test['pol1']->inters($test['pol2'], true)?'true':'false'),
-           " / ", ($test['result']?'true':'false'),"<br>\n";
+           " / $test[result]<br>\n";
     }
   }
 }
@@ -861,7 +876,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=Polygon'>Test unitaire de la classe Polygon</a><br>\n";
   elseif ($_GET['test']=='Polygon') {
-    $pol = Geometry::fromGeoJSON(['type'=>'Polygon', 'coordinates'=> [[[0,0],[1,0],[1,1],[0,0]]]]);
+    $pol = new Polygon([[[0,0],[1,0],[1,1],[0,0]]]);
     echo "pol=$pol<br>\n";
     echo "pol->center()=",json_encode($pol->center()),"<br>\n";
 
@@ -887,8 +902,9 @@ class MultiPolygon extends Geometry {
   const ErrorPosOfEmpty = 'MultiPolygon::ErrorPosOfEmpty';
   const ErrorInters = 'MultiPolygon::ErrorInters';
 
-  // $coords contient une liste de listes de listes de listes de 2 ou 3 nombres
+  public readonly array $coords; // contient une liste de listes de listes de listes de 2 ou 3 nombres
 
+  function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return $this->coords ? ['Polygon'] : []; }
   
   function geoms(): array { // liste des primitives contenues dans l'objet sous la forme d'une liste d'objets
@@ -921,17 +937,27 @@ class MultiPolygon extends Geometry {
     return $this->coords[0][0][0];
   }
   
-  function bbox(): GBox {
+  function gbox(): GBox {
     $bbox = new GBox;
     foreach ($this->coords as $llpos)
       $bbox->union(new GBox($llpos));
     return $bbox;
   }
   
+  function distanceToPos(array $pos): float {
+    $dmin = INF;
+    foreach ($this->geoms() as $ls) {
+      $d = $ls->distanceToPos($pos);
+      if ($d < $dmin)
+        $dmin = $d;
+    }
+    return $dmin;
+  }
+  
   function reproject(callable $reprojPos): Geometry {
     $coords = [];
     foreach ($this->coords as $llpos)
-      $coords[] = Geometry::reprojLLPos($reprojPos, $llpos);
+      $coords[] = LLPos::reproj($reprojPos, $llpos);
     return new self($coords);
   }
   
@@ -990,36 +1016,32 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=MultiPolygon'>Test unitaire de la classe MultiPolygon</a><br>\n";
   elseif ($_GET['test']=='MultiPolygon') {
-    $mpol = Geometry::fromGeoJSON(['type'=>'MultiPolygon', 'coordinates'=> [[[[0,0],[1,0],[1,1],[0,0]]]]]);
+    $mpol = new MultiPolygon([[[[0,0],[1,0],[1,1],[0,0]]]]);
     echo "mpol=$mpol<br>\n";
     echo "mpol->center()=",json_encode($mpol->center()),"<br>\n";
+    die();
   }
 }
 
 
 {/*PhpDoc: classes
 name: GeometryCollection
-title: class GeometryCollection extends Geometry - Liste d'objets géométriques
+title: class GeometryCollection - Liste d'objets géométriques
 methods:
 */}
-class GeometryCollection extends Geometry {
+class GeometryCollection {
   const ErrorCenterOfEmpty = 'GeometryCollection::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'GeometryCollection::ErrorPosOfEmpty';
 
-  private $geometries; // list of Geometry objects
+  public readonly array $geometries; // list of Geometry objects
   
   // prend en paramètre une liste d'objets Geometry
-  function __construct(array $geometries, array $style=[]) { $this->geometries = $geometries; $this->style = $style; }
+  function __construct(array $geometries) { $this->geometries = $geometries; }
   
-  // traduit les géométries en array Php
-  function geoms(): array {
-    $geoms = [];
-    foreach ($this->geometries as $geom)
-      $geoms[] = $geom->asArray();
-    return $geoms;
-  }
+  function asArray(): array { return ['type'=>'GeometryCollection', 'geometries'=> $this->geometries]; }
   
-  function asArray(): array { return ['type'=>'GeometryCollection', 'geometries'=> $this->geoms()]; }
+  // génère la réprésentation string GeoJSON
+  function __toString(): string { return json_encode($this->asArray()); }
   
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
   function eltTypes(): array {
@@ -1041,7 +1063,7 @@ class GeometryCollection extends Geometry {
       $c[1] += $pt[1];
       $nbre++;
     }
-    return [round($c[0]/$nbre, self::$precision), round($c[1]/$nbre, self::$precision)];    
+    return [$c[0]/$nbre, $c[1]/$nbre];
   }
   
   function nbreOfPos(): int {
@@ -1057,14 +1079,24 @@ class GeometryCollection extends Geometry {
     return $this->geometries[0]->aPos();
   }
   
-  function bbox(): GBox {
+  function gbox(): GBox {
     $bbox = new GBox;
     foreach ($this->geometries as $geom)
       $bbox->union($geom->bbox());
     return $bbox;
   }
   
-  function reproject(callable $reprojPos): Geometry {
+  function distanceToPos(array $pos): float {
+    $dmin = INF;
+    foreach ($this->geometries as $ls) {
+      $d = $ls->distanceToPos($pos);
+      if ($d < $dmin)
+        $dmin = $d;
+    }
+    return $dmin;
+  }
+  
+  function reproject(callable $reprojPos): GeometryCollection {
     $geoms = [];
     foreach ($this->geometries as $geom)
       $geoms[] = $geom->reproject($reprojPos);
@@ -1086,13 +1118,10 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   if (!isset($_GET['test']))
     echo "<a href='?test=GeometryCollection'>Test unitaire de la classe GeometryCollection</a><br>\n";
   elseif ($_GET['test']=='GeometryCollection') {
-    $ls = Geometry::fromGeoJSON(['type'=>'LineString', 'coordinates'=> [[0,0],[1,1]]]);
-    $mls = Geometry::fromGeoJSON(['type'=>'MultiLineString', 'coordinates'=> [[[0,0],[1,1]]]]);
-    $mpol = Geometry::fromGeoJSON(['type'=>'MultiPolygon', 'coordinates'=> [[[[0,0],[1,0],[1,1],[0,0]]]]]);
-    $gc = Geometry::fromGeoJSON([
-      'type'=>'GeometryCollection',
-      'geometries'=> [$ls->asArray(), $mls->asArray(), $mpol->asArray()]
-    ]);
+    $ls = new LineString([[0,0],[1,1]]);
+    $mls = new MultiLineString([[[0,0],[1,1]]]);
+    $mpol = new MultiPolygon([[[[0,0],[1,0],[1,1],[0,0]]]]);
+    $gc = new GeometryCollection([$ls, $mls, $mpol]);
     echo "gc=$gc<br>\n";
     echo "gc->center()=",json_encode($gc->center()),"<br>\n";
     echo "gc->reproject()=",$gc->reproject(function(array $pos) { return $pos; }),"<br>\n";
@@ -1108,10 +1137,10 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
         ],
       ]
     ] as $geom) {
-      echo json_encode($geom),' -> [',implode(',',Geometry::fromGeoJSON($geom)->decompose()),"]<br>\n";
+      echo json_encode($geom),' -> [',implode(',',Geometry::fromGeoArray($geom)->decompose()),"]<br>\n";
     }
 
-    $gc = Geometry::fromGeoJSON(['type'=>'GeometryCollection', 'geometries'=> []]);
+    $gc = Geometry::fromGeoArray(['type'=>'GeometryCollection', 'geometries'=> []]);
     echo "gc=$gc<br>\n";
     //echo "gc->center()=",json_encode($gc->center()),"<br>\n";
     echo "gc->reproject()=",$gc->reproject(function(array $pos) { return $pos; }),"<br>\n";

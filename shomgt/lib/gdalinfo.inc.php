@@ -122,7 +122,7 @@ use Symfony\Component\Yaml\Yaml;
 //echo "<pre>$info\n";
 echo "<pre>\n";
 
-if (1) { // Test sur tous les GéoTiffs
+if (1) {  // @phpstan-ignore-line // Test sur tous les GéoTiffs
   print_r(geotiffs());
   foreach (geotiffs() as $gtname) {
     $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname, false));

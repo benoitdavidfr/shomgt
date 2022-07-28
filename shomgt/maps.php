@@ -8,6 +8,8 @@ doc: |
   test:
     http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   25/6/2022:
     - ajout deletedZones
   30/5/2022:
@@ -244,7 +246,7 @@ class Maps {
       if (!isset($layers[$lyrname]))
         die("$lyrname not found<br>\n");
     }
-    $layer = $layers[$lyrname];
+    $layer = $layers[$lyrnames[0]];
 
     $crs = $_GET['crs'] ?? 'EPSG:3395';
     $bboxkm = $_GET['bbox'] ?? '';
@@ -295,16 +297,15 @@ class Maps {
 
 try {
   if (in_array($_SERVER['PATH_INFO'] ?? '', ['', '/'])) { // appel sans paramètre 
-    if ($options = explode(',', $_GET['options'] ?? 'none')) {
-      foreach ($options as $option) {
-        if ($option=='version') {
-          header('Content-type: application/json');
-          echo json_encode($VERSION);
-          die();
-        }
-      }
+    $options = explode(',', $_GET['options'] ?? '');
+    if (in_array('version', $options)) {
+      header('Content-type: application/json');
+      echo json_encode($VERSION);
+      die();
     }
-    Maps::landingPage();
+    else {
+      Maps::landingPage();
+    }
   }
 
   Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
@@ -344,4 +345,3 @@ catch (SExcept $e) {
 catch (Exception $e) {
   Maps::error(500, $e->getMessage());
 }
-

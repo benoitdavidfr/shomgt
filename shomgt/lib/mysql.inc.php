@@ -139,7 +139,7 @@ echo "<html><head><meta charset='UTF-8'><title>mysql</title></head><body><pre>";
 MySql::open(config('mysqlParams')['geoapi.fr']);
 $sql = "select * from log limit 10";
 //$sql = "describe log";
-if (0) {  // Test 2 rewind 
+if (0) { // @phpstan-ignore-line // Test 2 rewind 
   $result = MySql::query($sql);
   foreach ($result as $tuple) {
     print_r($tuple);
@@ -174,7 +174,7 @@ else {
       echo "$e\n";
     }
   }
-  foreach ($result as $tuple) {
+  foreach ($result as $tuple) { // @phpstan-ignore-line
     print_r($tuple);
   }
 }

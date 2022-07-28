@@ -9,6 +9,8 @@ doc: |
    - d'une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
   Il serait logique d'étendre cette notion de style aux écritures et aux rectangles.
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   8-9/7/2022:
     - ajout classe Style
     - suppression méthode GeoRefImage::filledpolygon()
@@ -234,9 +236,10 @@ class GeoRefImage {
     if (($color = $style->color()) === null)
       return;
     imagesetthickness($this->image, $style->weight());
+    $precpos = null;
     foreach ($lpos as $i => $pos) {
       $pos = $this->toImgPos($pos, '');
-      if ($i <> 0) {
+      if ($precpos) {
         @imageline($this->image, $precpos[0], $precpos[1], $pos[0], $pos[1], $color)
           or throw new SExcept("erreur de imageline()", self::ErrorPolyline);
       }
@@ -246,6 +249,7 @@ class GeoRefImage {
   
   // Dessine dans le style le polygone défini par une liste de positions
   function polygon(array $lpos, Style $style): void {
+    $points = [];
     foreach ($lpos as $i => $pos) {
       $pos = $this->toImgPos($pos, '');
       $points[2*$i] = $pos[0];

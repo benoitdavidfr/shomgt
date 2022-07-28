@@ -5,6 +5,8 @@ name: vectorlayer.inc.php
 doc: |
   Affichage des couches vecteur
 journal: |
+  28/7/2022:
+    - correction suite à analyse PhpStan level 4
   10/7/2022:
     - rajout des couches de catalogue en réutilisant le code de layer.inc.php
   8-9/7/2022:
@@ -159,7 +161,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
         case 'LineString': {
-          $geom = Geometry::fromGeoJSON($geometry);
+          $geom = new $geometry['type']($geometry['coordinates']);
           $d = $geom->distanceToPos($geo);
           if ($d < $dmin) {
             $dmin = $d;
@@ -169,7 +171,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         }
         case 'Polygon':
         case 'MultiPolygon': {
-          $geom = Geometry::fromGeoJSON($geometry);
+          $geom = new $geometry['type']($geometry['coordinates']);
           if ($geom->pointInPolygon($geo))
             $info[] = $feature['properties'];
           break;
