@@ -33,7 +33,7 @@ class IsoMd {
     elseif ($int < 1000)
       return sprintf('%d', $int);
     else
-      return self::addUndescoreForThousand(floor($int/1000)).'_'.sprintf('%03d', $int - 1000 * floor($int/1000));
+      return self::addUndescoreForThousand(intval(floor($int/1000))).'_'.sprintf('%03d', $int - 1000 * floor($int/1000));
   }
   
   /*static function addUndescoreForThousandDebug(int $int): string {
@@ -43,6 +43,7 @@ class IsoMd {
     return $s;
   }*/
   
+  /** @return array<string, string> */
   static function read(string $gtname): array {
     $mapNum = substr($gtname, 0, 4);
     if (!($xmlmd = @file_get_contents(EnvVar::val('SHOMGT3_MAPS_DIR_PATH')."/$mapNum/CARTO_GEOTIFF_$gtname.xml")))

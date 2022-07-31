@@ -11,7 +11,7 @@ journal: |
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 // en cas d'erreur dans la génération
-function error(string $message) { die($message); }
+function error(string $message): never { echo $message; die(1); }
 
 // Création et affichage d'une image d'erreur
 function sendErrorTile(string $tileid, string $message, string $symbol='undef', string $color='FF0000', int $width=128, int $height=128): never {
@@ -43,16 +43,20 @@ function sendErrorTile(string $tileid, string $message, string $symbol='undef', 
 
   if ($symbol=='circle') {
     // ombre grise transparente décalée
-    imagefilledellipse($im, $width*1.2, $height*1.3, $width, $height, $grey)
+    imagefilledellipse($im, intval(round($width*1.2)), intval(round($height*1.3)), $width, $height, $grey)
       or error("Erreur imagefilledellipse");
     imagefilledellipse($im, $width, $height, $width, $height, $color)
       or error("Erreur imagefilledellipse");
   }
   elseif ($symbol=='square') {
     // ombre grise transparente décalée
-    imagefilledrectangle($im, $width/2+$width*0.2, $height/2+$height*0.3, 3*$width/2+$width*0.3, 3*$height/2+$height*0.3, $grey)
+    imagefilledrectangle($im,
+        intval(round($width/2+$width*0.2)), intval(round($height/2+$height*0.3)),
+        intval(round(3*$width/2+$width*0.3)), intval(round(3*$height/2+$height*0.3)), $grey)
       or error("Erreur imagefilledrectangle");
-    imagefilledrectangle($im, $width/2, $height/2, 3*$width/2, 3*$height/2, $color)
+    imagefilledrectangle($im, 
+        intval(round($width/2)), intval(round($height/2)),
+        intval(round(3*$width/2)), intval(round(3*$height/2)), $color)
       or error("Erreur imagefilledrectangle");
   }
   elseif ($symbol=='diam') {
@@ -78,7 +82,7 @@ function sendErrorTile(string $tileid, string $message, string $symbol='undef', 
     imagerectangle($im, 0, 0, 2*$width-1, 2*$height-1, $frame_color)
       or error("Erreur imagerectangle");
     // ombre grise transparente décalée
-    imagefilledellipse($im, round($width*1.3), round($height*1.3), $width, $height, $grey)
+    imagefilledellipse($im, intval(round($width*1.3)), intval(round($height*1.3)), $width, $height, $grey)
       or error("Erreur imagefilledellipse");
     // grand rond opaque
     imagefilledellipse($im, $width, $height, $width, $height, $color)
@@ -86,7 +90,9 @@ function sendErrorTile(string $tileid, string $message, string $symbol='undef', 
     // petit rectangle blanc
     $white = imagecolorallocatealpha($im, 0xFF, 0xFF, 0xFF, 0)
       or error("Erreur sur imagecolorallocatealpha");
-    imagefilledrectangle($im, round(0.7*$width), round(0.9*$height), round(1.3*$width), round(1.1*$height), $white)
+    imagefilledrectangle($im,
+        intval(round(0.7*$width)), intval(round(0.9*$height)),
+        intval(round(1.3*$width)), intval(round(1.1*$height)), $white)
       or error("Erreur imagefilledrectangle");
   }
   $text_color = imagecolorallocate($im, 0, 0, 0);
@@ -97,7 +103,7 @@ function sendErrorTile(string $tileid, string $message, string $symbol='undef', 
     $i++;
   }
   // Affichage de l'image
-  imagealphablending($im, FALSE)
+  imagealphablending($im, FALSE) // @phpstan-ignore-line
     or error("erreur sur imagealphablending(FALSE)");
   imagesavealpha($im, TRUE)
     or error("erreur sur imagesavealpha(TRUE)");

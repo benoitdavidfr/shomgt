@@ -8,8 +8,8 @@ doc: |
   test:
     http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
 journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
   25/6/2022:
     - ajout deletedZones
   30/5/2022:
@@ -47,6 +47,7 @@ function coordDM(float $coord): string { // affichage en degrés minutes décima
   return str_replace('.', ',', $coord);
 }
 
+/** @param TPos $pos */
 function latLonDM(array $pos): string { // affichage lat,lon dans le format de l'exemple
   // example: 43°18,9'N - 10°07,9'E
   $latDM = coordDM(abs($pos[1])).($pos[1]<0 ? 'S' : 'N');
@@ -55,6 +56,10 @@ function latLonDM(array $pos): string { // affichage lat,lon dans le format de l
 }
 
 // extraction des coins des rectangles englobants définis dans un array de Features GeoJSON, renvoit un array de Features
+/**
+ * @param array<int, TGeoJsonFeature> $rects
+ * @return array<int, TGeoJsonFeature>
+*/
 function cornersOfRects(string $lyrname, array $rects): array {
   static $cornerString = ['SW','SE','NE','NW'];
   $ptsGeojson = [];
@@ -89,7 +94,7 @@ class Maps {
     500 => 'Internal Server Error',
   ];
 
-  static function error(int $httpCode, string $message, string $scode=''): void {
+  static function error(int $httpCode, string $message, string $scode=''): never {
     header(sprintf('HTTP/1.1 %d %s', $httpCode, self::HttpErrorMessage[$httpCode] ?? "Undefined for $httpCode"));
     header('Content-type: application/json; charset="utf8"');
     if (!$scode)
@@ -98,11 +103,11 @@ class Maps {
       die(json_encode(['code'=> $scode, 'message'=> $message], JSON_UNESCAPED_UNICODE));
   }
   
-  static function landingPage(): void {
+  static function landingPage(): never {
     die("Landing Page maps/index.php\n");
   }
   
-  static function listOfLayers(): void {
+  static function listOfLayers(): never {
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset="utf8"');
     //header('Content-type: text/plain; charset="utf8"');
@@ -111,7 +116,7 @@ class Maps {
       JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
   }
   
-  static function describeLayer(string $lyrname): void {
+  static function describeLayer(string $lyrname): never {
     $layers = Layer::layers();
     if (!isset($layers[$lyrname]))
       self::error(404, "$lyrname not found");
@@ -130,6 +135,7 @@ class Maps {
   }
   
   // envoie au navigateur l'image correspondant aux paramètres en GET et à la liste des couches passée en paramètre
+  /** @param array<int, string> $lyrnames */
   static function map(array $lyrnames): void {
     $layers = Layer::layers();
     foreach ($lyrnames as $lyrname) {
@@ -139,9 +145,9 @@ class Maps {
     //echo "<pre>"; print_r($layer); echo "</pre>\n";
     $crs = $_GET['crs'] ?? 'EPSG:3395'; // par défaut je considère que je suis en World Mercator
     if (isset($_GET['bbox']) && $_GET['bbox']) {
-      $ebox =  new EBox(explode(',', $_GET['bbox']));
       if (count(explode(',', $_GET['bbox'])) <> 4)
         self::error(400, "Le paramètre bbox ne définit pas 4 nombres");
+      $ebox =  new EBox($_GET['bbox']);
     }
     else {
       $ebox = new EBox;
@@ -171,6 +177,7 @@ class Maps {
     imagepng($grImage->image());
   }
 
+  /** @param array<int, string> $lyrnames */
   static function items(array $lyrnames): void { // silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
@@ -194,6 +201,7 @@ class Maps {
     die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
   }
   
+  /** @param array<int, string> $lyrnames */
   static function corners(array $lyrnames): void { // coins des silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
@@ -216,6 +224,7 @@ class Maps {
     die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
   }
   
+  /** @param array<int, string> $lyrnames */
   static function deletedZones(array $lyrnames): void { // coins des silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
@@ -240,6 +249,7 @@ class Maps {
   }
   
   // gère un formulaire HTML pour appeller map
+  /** @param array<int, string> $lyrnames */
   static function showmap(array $lyrnames): void {
     $layers = Layer::layers();
     foreach ($lyrnames as $lyrname) {

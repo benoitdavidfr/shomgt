@@ -5,8 +5,8 @@ name: vectorlayer.inc.php
 doc: |
   Affichage des couches vecteur
 journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
   10/7/2022:
     - rajout des couches de catalogue en réutilisant le code de layer.inc.php
   8-9/7/2022:
@@ -21,11 +21,13 @@ require_once __DIR__.'/gegeom.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fichier yaml
-  // dictionnaire des styles indexé par leur identifiant
+  // dictionnaire des styles indexés par leur identifiant
   // [{id} => ['title'=>{title}, 'color'=>{color}, 'weight'=<{weight}, 'fillColor'=>{fillColor}, 'fillOpacity'=>{fillOpacity}]]
+  /** @var array<string, array<string, mixed>> $all */
   static array $all;
     
   // retourne le style correspondant au nom demandé ou s'il n'existe pas []
+  /** @return array<string, mixed> $all */
   static function get(string $name): array { return self::$all[$name] ?? []; }
   
   // Publication de la liste des styles disponibles dans les capacités du serveur
@@ -46,8 +48,10 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   protected string $title;
   protected string $description;
   protected ?string $path;
+  /** @var array<string, mixed> $style */
   protected array $style;
   
+  /** @var array<string, VectorLayer> $all */
   static array $all = []; // dictionaire [{lyrName} => VectorLayer]
 
   static function initVectorLayers(string $filename): void {
@@ -74,8 +78,10 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
   
   // retourne le dictionnaire des couches
-  static function layers() { return self::$all; }
+  /** @return array<string, VectorLayer> */
+  static function layers(): array { return self::$all; }
 
+  /** @param array<string, mixed> $vectorLayer */
   function __construct(string $name, array $vectorLayer) {
     $this->name = $name;
     $this->title = $vectorLayer['title'];
@@ -85,6 +91,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
 
   // fournit une représentation de la couche comme array pour affichage
+  /** @return array<int, string> */
   function asArray(): array { return [$this->path]; }
 
   // calcul de l'extension spatiale de la couche en WoM
@@ -94,6 +101,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
 
   // retourne un array de Features structurés comme array Php
+  /** @return array<int, TGeoJsonFeature> */
   private function items(): array {
     if ($this->path) {
       return json_decode(file_get_contents(__DIR__.'/../'.$this->path), true)['features'];
@@ -110,11 +118,11 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
   
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
-  function map(GeoRefImage $grImage, string $styleStr): void {
+  function map(GeoRefImage $grImage, string $styleId): void {
     // si le paramètre $style est non vide alors J'essaie de récupérer le style dans la bibliothèque
-    $styleArray = $styleStr ? StyleLib::get($styleStr) : [];
+    $styleDef = $styleId ? StyleLib::get($styleId) : [];
     // si le style est défini dans la bib alors je l'utilise sinon j'utilise le style par défaut défini pour la couche
-    $style = new Style($styleArray ? $styleArray : $this->style, $grImage);
+    $style = new Style($styleDef ? $styleDef : $this->style, $grImage);
     foreach ($this->items() as $feature) {
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
@@ -154,6 +162,10 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   }
 
   // retourne une liste de propriétés des features concernés
+  /**
+  * @param TPos $geo
+  * @return array<int, TGeoJsonProperties>
+  */
   function featureInfo(array $geo, int $featureCount, float $resolution): array {
     $info = [];
     $dmin = 10 * $resolution;

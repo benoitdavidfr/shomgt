@@ -8,8 +8,8 @@ doc: |
   elle est indépendante des fonctionnalités du serveur de shomgt.
   Elle génère un fichier temporaire de log utile au déverminage
 journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
   8/6/2022:
     - migration shomgt v3
     - modif. gestion du log
@@ -28,10 +28,11 @@ title: abstract class WmsServer - classe abstraite WmsServer de gestion du dialo
 doc: |
 */
 abstract class WmsServer {
-  static $debug=0;
-  static $logfilename = __DIR__.'/wmsserver_logfile.txt'; // nom du fichier de logs par défaut
+  static int $debug=0;
+  static string $logfilename = __DIR__.'/wmsserver_logfile.txt'; // nom du fichier de logs par défaut
   
-  static function init(array $params) { // possibilité de modifier le nom du fichier de log
+  /** @param array<string, string> $params */
+  static function init(array $params): void { // possibilité de modifier le nom du fichier de log
     if (isset($params['logfilename']))
       self::$logfilename = $params['logfilename'];
   }
@@ -79,23 +80,34 @@ EOT;
     die(sprintf($format, $wmsErrorCode?' exceptionCode="'.$wmsErrorCode.'"' : '', $mesUti));
   }
   
-  abstract function getCapabilities(string $version='');
+  abstract function getCapabilities(string $version=''): never;
   
-  abstract function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void;
+  /**
+  * @param array<int, string> $lyrnames
+  * @param array<int, string> $styles
+  * @param array<int, string> $bbox
+  */
+  abstract function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): never;
   
-  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): void {
+  /**
+  * @param array<int, string> $lyrnames
+  * @param TPos $pos
+  * @param array<int, float> $pixelSize
+  */
+  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): never {
     die('');
   }
   
   // traite une requête WMS
-  function process(array $params) {
+  /** @param array<string, string> $params */
+  function process(array $params): never {
     // copie de _GET avec les noms des paramètres en majuscules
     $GET = [];
     foreach ($params as $k=>$v)
       $GET[strtoupper($k)] = $v;
 
     // Il s'agit d'un serveur WMS
-    if (!isset($GET['SERVICE']) || (strtoupper($GET['SERVICE']<>'WMS')))
+    if (!isset($GET['SERVICE']) || (strtoupper($GET['SERVICE']) <> 'WMS'))
       self::exception(400, "Le paramètre SERVICE doit valoir WMS", 'MissingParameter');
 
     // Toute requete doit au moins avoir un parametre REQUEST
@@ -103,7 +115,6 @@ EOT;
       self::exception(400, "Parametre REQUEST non defini", 'MissingParameter');
     elseif (strtoupper($GET['REQUEST'])=='GETCAPABILITIES') {
       $this->getCapabilities(isset($GET['VERSION']) ? $GET['VERSION'] : '');
-      die();
     }
     elseif (strtoupper($GET['REQUEST'])=='GETFEATUREINFO') {
       foreach (['QUERY_LAYERS','CRS','BBOX','WIDTH','HEIGHT','INFO_FORMAT'] as $param)
@@ -118,11 +129,10 @@ EOT;
         pos: [$x, $y],
         featureCount: $GET['FEATURE_COUNT'] ?? 10,
         pixelSize: [
-          (floatval($bbox[2]) - floatval($bbox[0])) / $GET['WIDTH'],
-          (floatval($bbox[3]) - floatval($bbox[1])) / $GET['HEIGHT']],
+          (floatval($bbox[2]) - floatval($bbox[0])) / intval($GET['WIDTH']),
+          (floatval($bbox[3]) - floatval($bbox[1])) / intval($GET['HEIGHT'])],
         format: $GET['INFO_FORMAT']
       );
-      die();
     }
     elseif (strtoupper($GET['REQUEST'])<>'GETMAP')
       self::exception(400, "Parametre REQUEST doit valoir GetCapabilities ou GetMap", 'InvalidRequest');
@@ -147,12 +157,11 @@ EOT;
       styles: (isset($GET['STYLES']) && $GET['STYLES']) ? explode(',', $GET['STYLES']) : [],
       bbox: explode(',',$GET['BBOX']),
       crs: $GET[($GET['VERSION']=='1.3.0'?'CRS':'SRS')],
-      width: $GET['WIDTH'],
-      height: $GET['HEIGHT'],
+      width: intval($GET['WIDTH']),
+      height: intval($GET['HEIGHT']),
       format: $GET['FORMAT'],
       transparent: $GET['TRANSPARENT'] ?? '',
       bgcolor: $GET['BGCOLOR'] ?? '');
-    die();
   }
 }
 
@@ -162,11 +171,11 @@ if (basename(__FILE__)<>basename($_SERVER['PHP_SELF'])) return;
 
 
 class WmsServerTest extends WmsServer {
-  function getCapabilities(string $version='') {
+  function getCapabilities(string $version=''): never {
     die("WmsServer::getCapabilities(version=$version)");
   }
   
-  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void {
+  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): never {
     die("WmsServer::getMap(version=".$version.", lyrnames=".implode(',',$lyrnames).", bbox=".implode(',',$bbox) 
         .", crs=$crs, width=$width, height=$height, format=$format, transparent=$transparent)");
   }
@@ -191,6 +200,5 @@ EOT;
 } else {
   $server = new WmsServerTest;
   $server->process($_GET);
-  die("OK ligne ".__LINE__);
 }
 ?>

@@ -45,6 +45,7 @@ class GeoTiff {
   
   protected string $name; // nom du GéoTiff, c'est le basename du fichier tiff.
   protected EBox $ebox; // rectangle englobant de géoréférencement du GéoTiff en WoM
+  /** @var array<string, int> $size */
   protected array $size; // width et height du GéoTiff
   
   /*PhpDoc: methods
@@ -54,6 +55,7 @@ class GeoTiff {
     Dans le cas où le GéoTiff n'est pas géoréférencé, calcule le rectangle de géoréférencement à partir du rectangle
     de la zone cartographiée en WoM et des tailles en pixels des bords à retirer et de la taille de l'image
   */
+  /** @param array<string, int> $borders */
   function deduceGeoRefFromBorders(EBox $spatial, array $borders): EBox {
     //echo "GeoTiff::deduceGeoRefFromBorders(spatial=$spatial, borders)\n"; print_r($borders);
     // Calcul de la taille du pixel
@@ -83,6 +85,7 @@ class GeoTiff {
     et des tailles en pixels des bords à retirer et de la taille de l'image. Dans ce second cas ces bords sont passés
     dans le tableau $borders qui est de la forme ['left'=> number, 'bottom'=> number, 'right'=> number, 'top'=> number]
   */
+  /** @param array<string, int>|null $borders */
   function __construct(string $name, EBox $spatial, ?array $borders, bool $debug) {
     if ($debug)
       echo "GeoTiff::__construct($name, $spatial,",json_encode($borders),")<br>\n";

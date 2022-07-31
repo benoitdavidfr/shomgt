@@ -15,6 +15,7 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/envvar.inc.php';
 
+/** @return array<int, string> */
 function geotiffs(): array { // liste des GeoTiffs 
   $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
   $gtiffs = [];

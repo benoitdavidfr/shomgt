@@ -4,8 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
   1/6/2022:
     - ajout utilisation de la variable d'environnement SHOMGT3_MAPWCAT_FORCE_HTTPS
       - si elle vaut 'true' les appels générés sont en https même si l'appel de mapwcat.php est en http
@@ -57,6 +57,10 @@ $dirname = dirname($_SERVER['SCRIPT_NAME']);
 $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
 //echo "<pre>"; print_r($_SERVER); die("shomgturl=$shomgturl\n");
 
+/**
+ * @param array<string, string> $versions
+ * @return array<string, string>
+*/
 function latestVersion(array $versions): array {
   $latest = null;
   foreach ($versions as $k => $version) {

@@ -11,6 +11,8 @@ doc: |
   On gère aussi une liste de positions comme array de positions
   et une liste de listes de positions comme array d'array de positions.
 journal: |
+  31/7/2022:
+    - ajout déclarations PhpStan pour level 6
   23/12/2020:
     - ajout roundToIntIfPossible()
   17/12/2020:
@@ -43,14 +45,17 @@ title: class LElts - Fonctions de gestion de liste d'éléments
 */}
 class LElts {
   // Nbre d'élts d'une liste de listes d'élts
-  static function LLcount(array $llelts) {
+  /** @param array<int, array<int, mixed>> $llelts */
+  static function LLcount(array $llelts): int {
     $nbElts = 0;
     foreach ($llelts as $lelts)
       $nbElts += count($lelts);
     return $nbElts;
   }
+
   // Nbre d'élts d'une liste de listes de listes d'élts
-  static function LLLcount(array $lllelts) {
+  /** @param array<int, array<int, array<int, mixed>>> $lllelts */
+  static function LLLcount(array $lllelts): int {
     $nbElts = 0;
     foreach ($lllelts as $llelts)
       $nbElts += self::LLcount($llelts);
@@ -65,11 +70,13 @@ class Pos {
   const ErrorParamInFromGeoCoords = 'Pos::ErrorParamInFromGeoCoords';
   
   // teste si une variable correspond à une position
-  static function is($pos): bool {
+  static function is(mixed $pos): bool {
     return is_array($pos) && in_array(count($pos),[2,3]) && is_numeric($pos[0] ?? null) && is_numeric($pos[1] ?? null);
   }
   
-  static function fromGeoCoords(string $geocoords): array { // décode un point en coords géo. degré minutes
+  // décode une position en coords géo. degré minutes
+  /** @return TPos */
+  static function fromGeoCoords(string $geocoords): array {
     if (!preg_match(self::GEOCOORDS_PATTERN, $geocoords, $matches))
       throw new SExcept("No match in Pos::fromGeoCoords($geocoords)", self::ErrorParamInFromGeoCoords);
     //echo "<pre>matches="; print_r($matches); echo "</pre>\n";
@@ -98,6 +105,7 @@ class Pos {
   }
   
   // Formate une position (lon,lat) en lat,lon degrés, minutes décimales
+  /** @param TPos $pos */
   static function formatInDMd(array $pos, float $resolution): string {
     //return sprintf("[%f, %f]",$pos[0], $pos[1]);
     $lat = $pos[1];
@@ -117,6 +125,10 @@ class Pos {
       .' - '.self::formatCoordInDMd(abs($lon), $nbposMin).(($lon >= 0) ? 'E' : 'W');
   }
 
+  /**
+  * @param TPos $a
+  * @param TPos $b
+  */
   static function distance(array $a, array $b): float {
     return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));
   }
@@ -126,9 +138,13 @@ class LPos {
   const ErrorCenterOfEmptyLPos = 'Pos::ErrorCenterOfEmptyLPos';
 
   // teste si une variable correspond à une liste d'au moins une position
-  static function is($lpos): bool { return is_array($lpos) && Pos::is($lpos[0] ?? null); }
+  static function is(mixed $lpos): bool { return is_array($lpos) && Pos::is($lpos[0] ?? null); }
 
   // calcule le centre d'une liste de positions, génère une exception si la liste est vide
+  /**
+  * @param TLPos $lpos
+  * @return TPos
+  */
   static function center(array $lpos): array {
     if (!$lpos)
       throw new SExcept("Erreur: LPos::center() d'une liste de positions vide", self::ErrorCenterOfEmptyLPos);
@@ -143,14 +159,23 @@ class LPos {
   }
   
   // reprojète une liste de positions et en retourne la liste
+  /**
+  * @param TLPos $lpos
+  * @return TLPos
+  */
   static function reproj(callable $reprojPos, array $lpos): array { return array_map($reprojPos, $lpos); }
 };
 
 class LLPos {
   // teste si une variable correspond à une liste de listes de positions dont la première en contient au moins une
-  static function is($llpos): bool { return is_array($llpos) && LPos::is($llpos[0] ?? null); }
+  static function is(mixed $llpos): bool { return is_array($llpos) && LPos::is($llpos[0] ?? null); }
 
   // reprojète une liste de liste de positions et en retourne la liste
+  // reprojète une liste de positions et en retourne la liste
+  /**
+  * @param TLLPos $llpos
+  * @return TLLPos
+  */
   static function reproj(callable $reprojPos, array $llpos): array {
     $coords = [];
     foreach ($llpos as $i => $lpos)

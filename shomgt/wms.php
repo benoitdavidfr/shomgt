@@ -19,6 +19,8 @@ doc: |
   En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
   Ce dernier mécanisme est notamment utilisé par QGis
 journal: |
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
   8/7/2022:
     - modif paramètres de getMap() pour ajouter styles
   11/6/2022:
@@ -122,7 +124,7 @@ class WmsShomGt extends WmsServer {
   const OUTLINE_COLOR = [0, 0, 0xFF]; // couleur des silhouettes sous la forme [R,V,B]
   
   // méthode GetCapabilities du serveur Shomgt
-  function getCapabilities(string $version='') {
+  function getCapabilities(string $version=''): never {
     header('Content-Type: text/xml');
     $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
     die(str_replace(
@@ -132,7 +134,9 @@ class WmsShomGt extends WmsServer {
     ));
   }
 
+  /** @param array<int, string> $bbox */
   private function wombox(string $crs, array $bbox): EBox { // calcul EBox en WorldMercator en fonction de crs 
+    $bbox = [floatval($bbox[0]), floatval($bbox[1]), floatval($bbox[2]), floatval($bbox[3])];
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
         return new EBox([[$bbox[0], $bbox[1]], [$bbox[2], $bbox[3]]]);
@@ -184,7 +188,12 @@ class WmsShomGt extends WmsServer {
   }
   
   // méthode GetMap du serveur WMS Shomgt
-  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void {
+  /**
+  * @param array<int, string> $lyrnames
+  * @param array<int, string> $styles
+  * @param array<int, string> $bbox
+  */
+  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): never {
     if (($width < 100) || ($width > 2048) || ($height < 100) || ($height > 2048))
       WmsServer::exception(400, "Erreur, paramètre WIDTH ou HEIGHT incorrect", 'InvalidRequest');
     //    echo "bbox="; print_r($bbox); //die();
@@ -390,5 +399,4 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       }
     }
   }
-  die("OK ligne ".__LINE__);
 }

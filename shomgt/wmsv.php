@@ -44,7 +44,7 @@ doc: |
 */
 class WmsvShomGt extends WmsServer {
   // méthode GetCapabilities du serveur Shomgt
-  function getCapabilities(string $version='') {
+  function getCapabilities(string $version=''): never {
     header('Content-Type: text/xml');
     $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
     $cap = str_replace(
@@ -57,7 +57,9 @@ class WmsvShomGt extends WmsServer {
     die($cap);
   }
 
+  /** @param array<int, string> $bbox */
   private function wombox(string $crs, array $bbox): EBox { // calcul EBox en WorldMercator en fonction de crs 
+    $bbox = [floatval($bbox[0]), floatval($bbox[1]), floatval($bbox[2]), floatval($bbox[3])];
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
         return new EBox([[$bbox[0], $bbox[1]], [$bbox[2], $bbox[3]]]);
@@ -90,7 +92,12 @@ class WmsvShomGt extends WmsServer {
   }
   
   // méthode GetMap du serveur WMS Shomgt
-  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): void {
+  /**
+  * @param array<int, string> $lyrnames
+  * @param array<int, string> $styles
+  * @param array<int, string> $bbox
+  */
+  function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): never {
     if (($width < 100) || ($width > 2048) || ($height < 100) || ($height > 2048))
       WmsServer::exception(400, "Erreur, paramètre WIDTH ou HEIGHT incorrect", 'InvalidRequest');
     //    echo "bbox="; print_r($bbox); //die();
@@ -105,7 +112,7 @@ class WmsvShomGt extends WmsServer {
     foreach ($lyrnames as $i => $lyrname) { // dessin des couches demandées
       if (!($layer = VectorLayer::layers()[$lyrname] ?? null))
         WmsServer::exception(404, "Erreur, la couche $lyrname est absente");
-      $layer->map($grImage, $styles[$i] ?? '', $debug);
+      $layer->map($grImage, $styles[$i] ?? '');
     }
     
     // génération de l'image
@@ -119,6 +126,10 @@ class WmsvShomGt extends WmsServer {
     die();
   }
   
+  /**
+  * @param TPos $geo
+  * @return TPos
+  */
   private function toGeo(string $crs, array $geo): array {
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
@@ -138,7 +149,12 @@ class WmsvShomGt extends WmsServer {
     }
   }
   
-  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): void {
+  /**
+  * @param array<int, string> $lyrnames
+  * @param TPos $pos
+  * @param array<int, float> $pixelSize
+  */
+  function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): never {
     //echo "getFeatureInfo([",implode(', ', $lyrnames),"], ",
     //    "pos=[$pos[0],$pos[1]], pixelSize=[$pixelSize[0],$pixelSize[1]])<br>\n";
     $geo = $this->toGeo($crs, $pos);

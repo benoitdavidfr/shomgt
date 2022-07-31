@@ -53,8 +53,8 @@ title: static function readAndSend($layer, $z, $x, $y, $format) - Si la tuile es
       return;
     }
     //die("envoi de l'image");
-    header('Cache-Control: max-age='.self::NB_SECONDS_IN_CACHE); // mise en cache pour NB_SECONDS_IN_CACHE s
-    header('Expires: '.date('r', time() + self::NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
+    header('Cache-Control: max-age='.intval(self::NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
+    header('Expires: '.date('r', time() + intval(self::NB_SECONDS_IN_CACHE))); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Last-Modified: '.date('r'));
     header("Content-type: image/png");
     // envoi de l'image
@@ -63,9 +63,9 @@ title: static function readAndSend($layer, $z, $x, $y, $format) - Si la tuile es
   
 /*PhpDoc: methods
 name: Cache
-title: static function write($layer, $z, $x, $y, $image) - Si les conditions sont remplies alors stocke la tuile
+title: static function write(string $layer, int $z, int $x, int $y, GdImage $image): void - Si les conditions sont remplies alors stocke la tuile
 */
-  static function write(string $layer, int $z, int $x, int $y, $image) {
+  static function write(string $layer, int $z, int $x, int $y, GdImage $image): void {
     //echo "write($layer/$z/$x/$y)\n";
     if (!self::test($layer, $z, $x, $y)) return;
     $path = self::path();

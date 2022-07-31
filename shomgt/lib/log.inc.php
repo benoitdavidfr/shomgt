@@ -55,7 +55,7 @@ function write_log(bool $access): bool {
     MySql::open($LOG_MYSQL_URI);
   }
   catch (SExcept $e) {
-    throw new SExcept($e->getMessage(), $e->getCode());
+    throw new SExcept($e->getMessage(), $e->getSCode());
   }
 
 //  echo "<pre>"; print_r($_SERVER); die();
@@ -77,7 +77,7 @@ function write_log(bool $access): bool {
       MySql::query($sql);
     }
     else {
-      throw new SExcept($e->getMessage(), $e->getCode());
+      throw new SExcept($e->getMessage(), $e->getSCode());
     }
   }
   return $access;

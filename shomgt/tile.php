@@ -19,8 +19,8 @@ doc: |
   Test:
     http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
 journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
   2/7/2022:
     - ajout du log
   6/6/2022:
@@ -59,6 +59,7 @@ if (is_file(__DIR__.'/../secrets/tileaccess.inc.php')) {
 write_log(true); // log en base selon la var. d'env. adhoc 
 
 // enregistrement d'un log temporaire pour afficher des infos, par ex. estimer les performances
+/** @param array<mixed> $log */
 function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
   $flag_append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
@@ -298,8 +299,8 @@ try {
 
 if (!$debug) {
   if (NB_SECONDS_IN_CACHE) { // @phpstan-ignore-line // Mise en cache par le navigateur
-    header('Cache-Control: max-age='.NB_SECONDS_IN_CACHE); // mise en cache pour NB_SECONDS_IN_CACHE s
-    header('Expires: '.date('r', time() + NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
+    header('Cache-Control: max-age='.intval(NB_SECONDS_IN_CACHE)); // mise en cache pour NB_SECONDS_IN_CACHE s
+    header('Expires: '.date('r', time() + intval(NB_SECONDS_IN_CACHE))); // mise en cache pour NB_SECONDS_IN_CACHE s
     header('Last-Modified: '.date('r'));
   }
   header('Content-type: image/png');

@@ -13,6 +13,9 @@ doc: |
   La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
   Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
 journal: |
+  28-31/7/2022:
+    - correction suite à analyse PhpStan level 6
+    - la gestion dans Layer::$layers de couches de types différents limite les possibilités d'analyse statique du code !! 
   7/6/2022:
     - ajout d'une érosion des rectangles englobants des cartes d'une mesure définie sur la carte, ex 1mm
       pour s'assurer que le trait du bord de la carte est bien effacé
@@ -54,9 +57,11 @@ doc: |
   [{lyrName} => Layer] initialisé à partir du fichier shomgt.yaml par initFromShomGt()
 */
 abstract class Layer {
+  const ErrorUndef = 'Layer::ErrorUndef';
   const LAYERS_PSER_PATH = __DIR__.'/layers.pser';
   const DILATE = - 1e-3; // dilatation en mètres sur la carte
 
+  /** @var array<string, Layer> $layers */
   static array $layers=[]; // dictionaire [{lyrName} => Layer]
 
   // initialise le dictionnaire des couches à partir du fichier shomgt.yaml
@@ -93,9 +98,11 @@ abstract class Layer {
   }
 
   // retourne le dictionnaire des couches
-  static function layers() { return self::$layers; }
+  /** @return array<string, Layer> */
+  static function layers(): array { return self::$layers; }
   
   // fournit une représentation de la couche comme array pour affichage
+  /** @return array<string, mixed> */
   abstract function asArray(): array;
 
   // calcul de l'extension spatiale de la couche en WoM
@@ -105,6 +112,22 @@ abstract class Layer {
   // lorsqu'un élément intersecte l'anti-méridien, il est dupliqué dans les 2 hémisphères Ouest et Est
   // le paramètre zoom est uniquement utilisé dans la classe PyrLayer
   abstract function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void;
+
+  // utile pour éviter les erreurs d'analyse statique
+  /** @return array<int, TGeoJsonFeature> */
+  function items(string $lyrname, ?GBox $qgbox): array { throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef); }
+
+  // utile pour éviter les erreurs d'analyse statique
+  /** @return array<int, TGeoJsonFeature> */
+  function deletedZones(string $lyrname, ?GBox $qgbox): array {
+    throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
+  }
+
+  // utile pour éviter les erreurs d'analyse statique
+  /** @return array<int, EBox> */
+  function itemEBoxes(EBox $wombox): array {
+    throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
+  }
 };
 
 /*PhpDoc: classes
@@ -117,6 +140,7 @@ doc: |
 class PyrLayer extends Layer {
   const ErrorBadZoomValue = 'PyrLayer::ErrorBadZoomValue';
   
+  /** @return array<string, mixed> */
   function asArray(): array {
     return ['title'=> "Pyramide des cartes GéoTiff du 1/40M au 1/5k"];
   }
@@ -168,8 +192,11 @@ doc: |
   Permet de dessiner les étiquettes associées aux GéoTiffs
 */
 class LabelLayer extends Layer {
+  const ErrorUndef = 'LabelLayer::ErrorUndef';
+  /** @var array<string, TPos> $nws */
   protected array $nws=[]; // dictionnaire [gtname => coin NW du rectangle englobant du GéoTiff en coord. WorldMercator]
   
+  /** @param array<string, array<string, mixed>> $dictOfGT */
   function __construct(string $lyrName, array $dictOfGT) {
     foreach ($dictOfGT as $gtname => $gt) {
       $gbox = GBox::fromShomGt($gt['spatial']);
@@ -181,6 +208,7 @@ class LabelLayer extends Layer {
     }
   }
   
+  /** @return array<string, mixed> */
   function asArray(): array { return $this->nws; }
   
   function ebox(): EBox {
@@ -220,8 +248,10 @@ class TiffLayer extends Layer {
   const WOM_BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
   
   // dict. [gtname => ['title'=>string, 'spatial'=>EBox, 'outgrowth'=>[EBox], 'deleted'=> {deleted}, borders'=>{borders}?]]
+  /** @var array<string, array<string, mixed>> $geotiffs */
   protected array $geotiffs=[];
   
+  /** @param array<string, array<string, mixed>> $dictOfGT */
   function __construct(string $lyrName, array $dictOfGT) {
     //echo "lyrName=$lyrName<br>\n";
     //echo "dilate=$dilate<br>\n";
@@ -243,6 +273,7 @@ class TiffLayer extends Layer {
     }
   }
   
+  /** @return array<string, mixed> */
   function asArray(): array {
     $array = [];
     foreach($this->geotiffs as $gtname => $gt) {
@@ -306,6 +337,10 @@ class TiffLayer extends Layer {
   }
 
   // retourne le Feature correspondant au GeoTiff
+  /**
+  * @param array<string, mixed> $gt
+  * @return TGeoJsonFeature
+  */
   private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
     try {
       $isoMd = IsoMd::read($gtname);
@@ -344,7 +379,9 @@ class TiffLayer extends Layer {
     ];
   }
   
-  function items(string $lyrname, ?GBox $qgbox): array { // retourne un array de Features correspondant aux bbox des GéoTiffs
+  // retourne un array de Features correspondant aux bbox des GéoTiffs
+  /** @return array<int, TGeoJsonFeature> */
+  function items(string $lyrname, ?GBox $qgbox): array {
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {
       $gbox = $gt['spatial']->geo('WorldMercator'); // transf spatial en c. Géo.
@@ -366,6 +403,7 @@ class TiffLayer extends Layer {
   
   // retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle
   // Pour les GéoTiffs à cheval sur l'anti-méridien, les duplique à l'Ouest
+  /** @return array<int, EBox> */
   function itemEBoxes(EBox $wombox): array {
     $eboxes = [];
     foreach($this->geotiffs as $gtname => $gt) {
@@ -381,6 +419,10 @@ class TiffLayer extends Layer {
   }
 
   // retourne le Feature correspondant au zones effacées du GeoTiff
+  /**
+  * @param array<string, mixed> $gt
+  * @return TGeoJsonFeature
+  */
   private function deletedZonesForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
     //echo "<pre>gt="; print_r($gt);
     $mpolygon = [];
@@ -414,6 +456,7 @@ class TiffLayer extends Layer {
   }
 
   // retourne un array de Features correspondant aux zones effacées des GéoTiffs
+  /** @return array<int, TGeoJsonFeature> */
   function deletedZones(string $lyrname, ?GBox $qgbox): array {
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {

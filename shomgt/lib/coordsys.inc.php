@@ -108,6 +108,10 @@ interface iCoordSys {
   doc: |
     Le 2ème paramètre est utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone
   */
+  /**
+  * @param TPos $lonlat
+  * @return TPos
+  */
   static function proj(array $lonlat, ?string $proj=null): array;
 
   /*PhpDoc: methods
@@ -115,6 +119,10 @@ interface iCoordSys {
   title: "static function geo(array $xy, ?string $proj=null): array  - retourne [longitude, latitude] en degrés décimaux"
   doc: |
     Le 2ème paramètre est utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone
+  */
+  /**
+  * @param TPos $xy
+  * @return TPos
   */
   static function geo(array $xy, ?string $proj=null): array;
 };
@@ -205,6 +213,7 @@ class WebMercator extends IAG_GRS_1980 implements iCoordSys {
   const MaxLat =  85.051129;
   
   // couverture spatiale en degrés décimaux lon, lat
+  /** @return array<int, float> */
   static function spatial(): array { return [-180, self::MinLat, 180, self::MaxLat]; }
   
   static function proj(array $lonlat, ?string $proj=null): array {
@@ -293,7 +302,8 @@ class Ellipsoid implements iEllipsoid {
   static string $current = self::DEFAULT; // ellipsoide courant, par défaut IAG_GRS_1980
   
   // liste les ellipsoides proposés
-  static function available(): array { return self::PARAMS; }
+  /** @return array<int, string> */
+  static function available(): array { return array_keys(self::PARAMS); }
   
   // fournit l'ellipsoide courant
   static function current(): string { return self::$current; }
@@ -331,6 +341,7 @@ class WorldMercator extends Ellipsoid implements iCoordSys {
   const MaxLat =  85.08405905;
   
   // couverture spatiale en degrés décimaux lon, lat
+  /** @return array<int, float> */
   static function spatial(): array { return [-180, self::MinLat, 180, self::MaxLat]; }
 
   static function proj(array $lonlat, ?string $proj=null): array {
@@ -385,7 +396,7 @@ doc: |
 class UTM extends Ellipsoid implements iCoordSys {
   const k0 = 0.9996;
   
-  static function lambda0(int $nozone) { return (($nozone-30.5)*6)/180*pi(); } // en radians
+  static function lambda0(int $nozone): float { return (($nozone-30.5)*6)/180*pi(); } // en radians
   
   static function Xs(): float { return 500000; }
   static function Ys(string $NS): float { return $NS=='S'? 10000000 : 0; }
@@ -401,6 +412,7 @@ class UTM extends Ellipsoid implements iCoordSys {
            );
   }
   
+  /** @param TPos $pos */
   static function zone(array $pos): string {
     /*PhpDoc: methods
     name:  zone
@@ -538,7 +550,7 @@ doc: |
   sinon c'est la notation signee qui est utilisee
   dr est la precision de r
 */
-function radians2degresSexa(float $r, string $ptcardinal='', float $dr=0) {
+function radians2degresSexa(float $r, string $ptcardinal='', float $dr=0): string {
   $signe = '';
   if ($r < 0) {
     if ($ptcardinal) {
