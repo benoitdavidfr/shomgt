@@ -1,10 +1,10 @@
 <?php
 /*PhpDoc:
-title: gdalinfo.inc.php - Analyse une JSON fabriqué par GDAL INFO et en extrait les infos essentielles
+title: gdalinfo.inc.php - Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles
 name: gdalinfo.inc.php
 classes:
 doc: |
-  Les infos essentielles sur la taille size et si le fichier est géréférencé son ebox et son gbox
+  Les infos essentielles sur la taille size et si le fichier est géoréférencé son ebox et son gbox
 journal: |
   6/6/2022:
     - réécriture pour fonctionner à la fois en GDAL 2 et en GDAL3 ; utilise la sortie de gdalinfo -json
@@ -27,12 +27,14 @@ require_once __DIR__.'/sexcept.inc.php';
 require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/gebox.inc.php';
 
-class GeoJsonPolygon { /// GeoJSON Polygon
+class GeoJsonPolygon { // GeoJSON Polygon transformé en GBox 
   const ErrorBadType = 'Polygon::ErrorBadType';
-  protected $coordinates;
+  /** @var TLPos $coordinates */
+  protected array $coordinates;
   
+  /** @param array<string, mixed> $def */
   function __construct(array $def) {
-    if ($def['type']<>'Polygon')
+    if ($def['type'] <> 'Polygon')
       throw new SExcept("Erreur, type erroné", self::ErrorBadType);
     $this->coordinates = $def['coordinates'][0];
   }
@@ -56,6 +58,7 @@ class GdalInfo {
   const ErrorFileNotFound = 'GdalInfo::ErrorFileNotFound';
   const ErrorNoMatch = 'GdalInfo::ErrorNoMatch';
 
+  /** @var array<string, int> $size */
   protected array $size; // ['width'=>{width}, 'height'=> {height}]
   protected ?GBox $gbox=null; // le GBox issu du gdalinfo ou null si aucun gbox n'est défini
   protected ?EBox $ebox=null; // le EBox issu du gdalinfo
@@ -73,6 +76,7 @@ class GdalInfo {
       substr($gtname, 0, 4), $gtname);
   }
   
+  /** @return array<string, int> */
   function size(): array { return $this->size; }
   function ebox(): ?EBox { return $this->ebox; }
 
@@ -101,6 +105,7 @@ class GdalInfo {
     $this->gbox = $wgs84Extent->gbox();
   }
 
+  /** @return array<string, mixed> */
   function asArray(): array {
     return [
       'size'=> $this->size,

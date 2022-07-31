@@ -127,7 +127,7 @@ class Access {
     return $access;
   }
   
-  static function test() {
+  static function test(): void {
     echo "L'adresse IP est $_SERVER[REMOTE_ADDR]<br>\n";
     if (Access::ipInWhiteList())
       echo "Elle est dans la white list<br>\n";

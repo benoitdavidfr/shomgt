@@ -34,6 +34,7 @@ require_once __DIR__.'/gebox.inc.php';
 
 class Http {
   // retourne le code Http et le message d'erreur retourné
+  /** @return array<string, string> */
   static function getHttpError(string $url): array {
     $context = stream_context_create(['http'=> ['ignore_errors'=> true]]); 
     $message = file_get_contents($url, false, $context);
@@ -52,6 +53,7 @@ class Style {
   protected int $weight; // épaissur du trait, 1 par défaut
   protected ?int $fillColor; // couleur de remplissage comme array RVB, si absent pas de remplissage
 
+  /** @param array<string, int|float|array<int, int>> $style */
   function __construct(array $style, GeoRefImage $grImage) {
     $this->title = $style['title'] ?? "No title";
     $this->color = isset($style['color']) ? $grImage->colorallocate($style['color']) : null;
@@ -140,15 +142,23 @@ class GeoRefImage {
   }
 
   // transforme en coordonnées image une position en coordonnées utilisateur
-  function toImgPos(array $userPos, string $debug): array {
-    if ($debug) echo "GeoRefImage::toImgPos($userPos[0], $userPos[1])@$debug<br>\n";
+  /**
+  * @param TPos $uPos
+  * @return array<int, int>
+  */
+  function toImgPos(array $uPos, string $debug): array {
+    if ($debug) echo "GeoRefImage::toImgPos($uPos[0], $uPos[1])@$debug<br>\n";
     return [
-      round (($userPos[0] - $this->ebox->west()) / ($this->ebox->east() - $this->ebox->west()) * imagesx($this->image)),
-      round (($this->ebox->north() - $userPos[1]) / ($this->ebox->north() - $this->ebox->south()) * imagesy($this->image))
+      intval(round(($uPos[0] - $this->ebox->west()) / ($this->ebox->east() - $this->ebox->west()) * imagesx($this->image))),
+      intval(round(($this->ebox->north() - $uPos[1]) / ($this->ebox->north() - $this->ebox->south()) * imagesy($this->image)))
     ];
   }
 
   // transforme en coordonnées utilisateur une position en coordonnées image
+  /**
+  * @param array<int, int> $imgPos
+  * @return TPos
+  */
   function toUserPos(array $imgPos): array {
     return [
       $this->ebox->west() + $imgPos[0] / imagesx($this->image) * ($this->ebox->east() - $this->ebox->west()),
@@ -179,7 +189,7 @@ class GeoRefImage {
       $sw_dst[1] - $ne_dst[1], // int $dst_height,
       $ne_src[0] - $sw_src[0], // int $src_width,
       $sw_src[1] - $ne_src[1]) // int $src_height)
-        or throw new Exception("Erreur dans imagecopyresampled()", self::ErrorCopy);
+        or throw new SExcept("Erreur dans imagecopyresampled()", self::ErrorCopy);
   }
 
   // Utilisé pour debug
@@ -193,6 +203,7 @@ class GeoRefImage {
   }*/
   
   // Alloue une couleur pour l'image
+  /** @param array<int, int> $rvb */
   function colorallocate(array $rvb): int {
     $color = @imagecolorallocate($this->image, $rvb[0], $rvb[1], $rvb[2]);
     if ($color === false)
@@ -201,6 +212,7 @@ class GeoRefImage {
   }
 
   // Alloue une couleur avec alpha pour l'image
+  /** @param array<int, int> $rvba */
   function colorallocatealpha(array $rvba): int {
     $color = @imagecolorallocatealpha($this->image, $rvba[0], $rvba[1], $rvba[2], $rvba[3]);
     if ($color === false)
@@ -217,21 +229,22 @@ class GeoRefImage {
   
   // Dessine le rectangle en le remplissant avec la couleur
   function filledrectangle(EBox $rect, int $color): void {
-    $nw = $this->toImgPos([$rect->west(), $rect->north()], false);
-    $se = $this->toImgPos([$rect->east(), $rect->south()], false);
+    $nw = $this->toImgPos([$rect->west(), $rect->north()], '');
+    $se = $this->toImgPos([$rect->east(), $rect->south()], '');
     @imagefilledrectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
       or throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
   }
   
   // Dessine le rectangle dans la couleur
   function rectangle(EBox $rect, int $color): void {
-    $nw = $this->toImgPos([$rect->west(), $rect->north()], false);
-    $se = $this->toImgPos([$rect->east(), $rect->south()], false);
+    $nw = $this->toImgPos([$rect->west(), $rect->north()], '');
+    $se = $this->toImgPos([$rect->east(), $rect->south()], '');
     @imagerectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
       or throw new SExcept("erreur de imagerectangle()", self::ErrorRectangle);
   }
   
   // Dessine dans le style une polyligne définie par une liste de positiions
+  /** @param TLPos $lpos */
   function polyline(array $lpos, Style $style): void {
     if (($color = $style->color()) === null)
       return;
@@ -248,6 +261,7 @@ class GeoRefImage {
   }
   
   // Dessine dans le style le polygone défini par une liste de positions
+  /** @param TLPos $lpos */
   function polygon(array $lpos, Style $style): void {
     $points = [];
     foreach ($lpos as $i => $pos) {
@@ -268,8 +282,9 @@ class GeoRefImage {
   
   // Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
   // avec un cadre de fond de plan dans la couleur $bg_color
+  /** @param TPos $pos */
   function string(GdFont|int $font, array $pos, string $string, int $text_color, int $bg_color, bool $debug): void {
-    $pos = $this->toImgPos($pos, false);
+    $pos = $this->toImgPos($pos, '');
     
     $dx = strlen($string) * imagefontwidth($font) + 2;
     $dy = imagefontheight($font);

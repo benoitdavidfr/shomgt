@@ -13,12 +13,12 @@ doc: |
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 class SExcept extends Exception {
-  private $scode; // code sous forme d'une chaine de caractères
+  protected string $scode; // code sous forme d'une chaine de caractères
   
   public function __construct(string $message, string $scode='', Throwable $previous = null) {
     $this->scode = $scode;
     parent::__construct($message, 0, $previous);
   }
   
-  public function getSCode() { return $this->scode; }
+  public function getSCode(): string { return $this->scode; }
 };

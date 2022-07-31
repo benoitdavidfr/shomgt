@@ -4,6 +4,8 @@ name:  zoom.inc.php
 title: zoom.inc.php - définition de la classe Zoom regroupant l'intelligence autour du tuilage et des niveaux de zoom
 classes:
 journal: |
+  31/7/2022:
+    - correction suite à analyse PhpStan level 6
   10/2/2022:
     - transformation Exception en SExcept
   5/2/2022:
@@ -32,7 +34,7 @@ class Zoom {
   const Size0 = 20037508.3427892476320267 * 2;
   
   // taille du pixel en mètres en fonction du zoom
-  static function pixelSize(int $zoom) { return self::Size0 / 256 / pow(2, $zoom); }
+  static function pixelSize(int $zoom): float { return self::Size0 / 256 / pow(2, $zoom); }
   
   // niveau de zoom adapté à la visualisation d'une géométrie définie par la taille de son GBox
   static function zoomForGBoxSize(float $size): int {
@@ -46,7 +48,7 @@ class Zoom {
   }
   
   // taille d'un degré en mètres
-  static function sizeOfADegreeInMeters() { return self::Size0 / 360.0; }
+  static function sizeOfADegreeInMeters(): float { return self::Size0 / 360.0; }
   
   // calcule la EBox en coord. WebMercator. de la tuile (z,x,y)
   static function tileEBox(int $z, int $ix, int $iy): EBox {
@@ -62,6 +64,7 @@ class Zoom {
   
   // calcule les tuiles couvrant un GBox sous la forme d'une liste [['x'=>x, 'y'=>y, 'z'=>z]]
   // Lève une exception en cas d'erreur
+  /** @return array<int, array<string, int>> */
   static function gboxToTiles(GBox $gbox, int $width, int $height): array {
     //echo "gbox=$gbox\n";
     return self::wemboxToTiles($gbox->proj('WebMercator'), $width, $height);
@@ -69,6 +72,7 @@ class Zoom {
 
   // calcule les tuiles couvrant un EBox en coord. WebMercator sous la forme d'une liste [['x'=>x, 'y'=>y, 'z'=>z]]
   // Lève une exception en cas d'erreur
+  /** @return array<int, array<string, int>> */
   static function wemboxToTiles(EBox $ebox, int $width, int $height): array {
     //echo "ebox=$ebox, width=$width, height=$height\n";
     $pxSze = ($ebox->dx()/$width + $ebox->dy()/$height) / 2;
@@ -91,9 +95,9 @@ class Zoom {
       throw new SExcept (sprintf("trop de tuiles, %d en X et %d en Y", $xmax-$xmin, $ymax-$ymin), self::ErrorTooManyTiles);
     }
     $tiles = [];
-    for ($x = $xmin; $x <= $xmax; $x++) {
+    for ($x = intval($xmin); $x <= intval($xmax); $x++) {
       $x2 = $x % $nbtuiles;
-      for ($y = $ymin; $y <= $ymax; $y++) {
+      for ($y = intval($ymin); $y <= intval($ymax); $y++) {
         //echo "x=$x, y=$y\n";
         $tiles[] = ['x'=>$x2, 'y'=>$y, 'z'=>$zoom];
       }

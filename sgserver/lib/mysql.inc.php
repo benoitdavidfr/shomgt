@@ -10,6 +10,8 @@ doc: |
   Voir utilisation en fin de fichier
   Sur localhost si la base utilisée n'existe pas alors elle est créée.
 journal: |
+  31/7/2022:
+    - ajout déclarations PhpStan pour level 6
   1/7/2022:
     - ajout d'un test pour que le fichier puisse être inclus dans une config où MySql n'est pas disponible
   16/4/2022:
@@ -43,7 +45,7 @@ class MySql {
   static ?string $server=null; // serveur MySql
     
   // ouvre une connexion MySQL et enregistre le handle en variable de classe
-  static function open(string $mysqlParams) {
+  static function open(string $mysqlParams): void {
     if (!preg_match('!^mysql://([^:]+):([^@]+)@([^/]+)/(.*)$!', $mysqlParams, $matches))
       throw new SExcept("Erreur: dans MySql::open() params \"".$mysqlParams."\" incorrect", self::ErrorOpen);
     //print_r($matches);
@@ -87,7 +89,7 @@ class MySql {
   }
   
   // exécute une requête MySQL, soulève une exception en cas d'erreur, renvoie le résultat
-  static function query(string $sql) {
+  static function query(string $sql): bool|MySqlResult {
     if (!self::$mysqli)
       throw new SExcept("Erreur: dans MySql::query() mysqli non défini", self::ErrorQuery);
     if (!($result = self::$mysqli->query($sql, MYSQLI_USE_RESULT))) {
@@ -107,12 +109,14 @@ class MySql {
 };
 
 // la classe MySqlResult permet d'utiliser le résultat d'une requête comme un itérateur
+/** @implements Iterator<int, array<int, string>> */
 class MySqlResult implements Iterator {
   const ErrorRewind = 'MySqlResult::ErrorRewind';
 
-  private ?mysqli_result $result = null; // l'objet mysqli_result
-  private ?array $ctuple = null; // le tuple courant ou null
-  private bool $firstDone = false; // vrai ssi le first rewind a été effectué
+  protected ?mysqli_result $result = null; // l'objet mysqli_result
+  /** @var array<int, string>|null */
+  protected ?array $ctuple = null; // le tuple courant ou null
+  protected bool $firstDone = false; // vrai ssi le first rewind a été effectué
   
   function __construct(mysqli_result $result) { $this->result = $result; }
   
@@ -122,6 +126,7 @@ class MySqlResult implements Iterator {
     $this->firstDone = true;
     $this->next();
   }
+  /** @return array<int, string> */
   function current(): array { return $this->ctuple; }
   function key(): int { return 0; }
   function next(): void { $this->ctuple = $this->result->fetch_array(MYSQLI_ASSOC); }

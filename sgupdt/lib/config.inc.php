@@ -21,6 +21,7 @@ if (is_file(__DIR__.'/../../secrets/secretconfig.inc.php'))
   require_once __DIR__.'/../../secrets/secretconfig.inc.php';
 else {
   // Accès à une des rubriques du fichier de config
+  /** @return array<string>|string */
   function config(string $rubrique): array|string {
     static $config = [
       // controle activé au non par fonctionnalité

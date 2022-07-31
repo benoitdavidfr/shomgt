@@ -41,7 +41,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 
 // Prend une valeur et la transforme récursivement en aray Php pur sans objet, utile pour l'afficher avec json_encode
 // Les objets rencontrés doivent avoir une méthode asArray() qui décompose l'objet en array des propriétés exposées
-function asArray($val) {
+function asArray(mixed $val): mixed {
   //echo "AsArray(",json_encode($val),")<br>\n";
   if (is_array($val)) {
     foreach ($val as $k => $v) {
@@ -57,7 +57,7 @@ function asArray($val) {
 }
 
 // génère un json en traversant les objets qui savent se décomposer en array par asArray()
-function my_json_encode($val): string {
+function my_json_encode(mixed $val): string {
   return json_encode(asArray($val), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 }
 
@@ -78,10 +78,12 @@ abstract class Geometry {
   static int $precision = 6; // nbre de chiffres après la virgule à conserver pour les coord. géo.
   static int $ePrecision = 1; // nbre de chiffres après la virgule à conserver pour les coord. euclidiennes
   
+  /** @var TPos|TLPos|TLLPos|TLLLPos $coords */
   public readonly array $coords; // coordonnées ou Positions, stockées comme array, array(array), ... en fn de la sous-classe
   
   // crée une géométrie à partir du json_decode() d'une géométrie GeoJSON
-  static function fromGeoArray(array $geom, array $style=[]): Geometry|GeometryCollection {
+  /** @param array<string, string|TPos|TLPos|TLLPos|TLLLPos> $geom */
+  static function fromGeoArray(array $geom): Geometry|GeometryCollection {
     $type = $geom['type'] ?? null;
     if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
       return new $type($geom['coordinates']);
@@ -96,44 +98,54 @@ abstract class Geometry {
   }
   
   // fonction d'initialisation valable pour toutes les géométries homogènes
+  /** @param TPos|TLPos|TLLPos|TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   
   // récupère le type
   function type(): string { return get_class($this); }
+  
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
+  /** @return array<int, string> */
   abstract function eltTypes(): array;
   
   // génère la réprésentation string GeoJSON
   function __toString(): string { return json_encode($this->asArray()); }
   
   // génère la représentation Php du GeoJSON
-  function asArray(): array { return ['type'=>get_class($this), 'coordinates'=> $this->coords]; }
+  /** @return array<string, string|TPos|TLPos|TLLPos|TLLLPos> */
+  function asArray(): array { return ['type'=> get_class($this), 'coordinates'=> $this->coords]; }
   
   // Retourne la liste des primitives contenues dans l'objet sous la forme d'objets
   // Point -> [], MutiPoint->[Point], LineString->[Point], MultiLineString->[LineString], Polygon->[LineString],
-  // MutiPolygon->[Polygon], GeometryCollection->GeometryCollection
+  // MutiPolygon->[Polygon]
+  /** @return array<int, object> */
   abstract function geoms(): array;
   
   // renvoie le centre d'une géométrie
+  /** @return TPos */
   abstract function center(): array;
   
   abstract function nbreOfPos(): int;
   
   // retourne un point de la géométrie
+  /** @return TPos */
   abstract function aPos(): array;
   
   // renvoie la GBox de la géométrie considérée comme géographique
   abstract function gbox(): GBox;
   
+  // renvoie la EBox de la géométrie considérée comme euclidienne
+  abstract function ebox(): EBox;
+  
   // distance min. d'une géométrie à une position
+  /** @param TPos $pos */
   abstract function distanceToPos(array $pos): float;
   
   // reprojète ue géométrie, prend en paramètre une fonction de reprojection d'une position, retourne un objet géométrie
   abstract function reproject(callable $reprojPos): Geometry;
   
-  function dissolveCollection(): array { return [$this]; }
-  
   // Décompose une géométrie en un array de géométries élémentaires (Point/LineString/Polygon)
+  /** @return array<int, object> */
   function decompose(): array {
     $transfos = ['MultiPoint'=>'Point', 'MultiLineString'=>'LineString', 'MultiPolygon'=>'Polygon'];
     if (isset($transfos[$this->type()])) {
@@ -183,8 +195,10 @@ class Point extends Geometry {
   const ErrorBadParamInAdd = 'Point::ErrorBadParamInAdd';
   const ErrorBadParamInDiff = 'Point::ErrorBadParamInDiff';
   
-  public readonly array $coords; // contient une liste de 2 ou 3 nombres
+  /** @var TPos $coords */
+  public readonly array $coords; // contient une Pos
   
+  /** @param TPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return ['Point']; }
   function geoms(): array { return []; }
@@ -192,13 +206,15 @@ class Point extends Geometry {
   function nbreOfPos(): int { return 1; }
   function aPos(): array { return $this->coords; }
   function gbox(): GBox { return new GBox($this->coords); }
+  function ebox(): EBox { return new EBox($this->coords); }
   function distanceToPos(array $pos): float { return Pos::distance($this->coords, $pos); }
   function reproject(callable $reprojPos): Geometry { return new Point($reprojPos($this->coords)); }
 
-  function add($v): Point {
+  /** @param Point|TPos $v */
+  function add(Point|array $v): Point {
     /*PhpDoc: methods
     name:  add
-    title: "function add($v): Point - $this + $v en 2D, $v peut être un Point ou une position"
+    title: "function add(Point|array $v): Point - $this + $v en 2D, $v peut être un Point ou une position"
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] + $v[0], $this->coords[1] + $v[1]]);
@@ -208,10 +224,11 @@ class Point extends Geometry {
       throw new SExcept("Erreur dans Point:add(), paramètre ni position ni Point", self::ErrorBadParamInAdd);
   }
   
-  function diff($v): Point {
+  /** @param Point|TPos $v */
+  function diff(Point|array $v): Point {
     /*PhpDoc: methods
     name:  diff
-    title: "function diff(Point $v): Point - $this - $v en 2D"
+    title: "function diff(Point|array $v): Point - $this - $v en 2D"
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] - $v[0], $this->coords[1] - $v[1]]);
@@ -267,7 +284,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo $pt->add([1,1]),"\n";
     echo $pt->add(new Point([1,1])),"\n";
     try {
-      echo $pt->add([[1,1]]),"\n";
+      echo $pt->add([[1,1]]),"\n"; // @phpstan-ignore-line
     }
     catch(SExcept $e) {
       echo "Exception $e\nscode=",$e->getSCode(),"\n";
@@ -285,8 +302,13 @@ doc: |
   Cela signifie que la première position appartient au segment mais pas la seconde.
 */}
 class Segment {
-  private $tab; // 2 positions: [[number]]
+  /** @var TLPos */
+  protected array $tab; // 2 positions: [[number]]
   
+  /**
+  * @param TPos $pos0
+  * @param TPos $pos1
+  */
   function __construct(array $pos0, array $pos1) { $this->tab = [$pos0, $pos1]; }
   
   function __toString(): string { return json_encode($this->tab); }
@@ -307,6 +329,7 @@ class Segment {
       ['pos'=> l'intersection comme Point, 'u'=> l'abscisse sur le premier segment, 'v'=> l'abscisse sur le second]
     Si les 2 segments sont parallèles, alors retourne [] même s'ils sont partiellement confondus
   */
+  /** @return array<string, mixed> */
   function intersects(Segment $seg): array {
     $a = $this->tab;
     $b = $seg->tab;
@@ -347,6 +370,7 @@ class Segment {
 
   // projection d'une position sur la ligne définie par le segment
   // retourne u / P' = A + u * (B-A).
+  /** @param TPos $pos */
   function projPosOnLine(array $pos): float {
     $ab = $this->vector();
     $ap = new Point([$pos[0]-$this->tab[0][0], $pos[1]-$this->tab[0][1]]);
@@ -361,6 +385,7 @@ class Segment {
       echo "projPosOnLine($seg, [$pos[0],$pos[1]])-> ",$seg->projPosOnLine($pos),"\n";
   }
   
+  /** @param TPos $pos */
   function distancePosToLine(array $pos): float {
     {/*PhpDoc: methods
     name:  distancePosToLine
@@ -386,13 +411,14 @@ class Segment {
       throw new Exception("Erreur dans distancePosToLine : Points A et B confondus et donc droite non définie");
     return $ab->vectorProduct($ap) / $ab->norm();
   }
-  static function test_distancePosToLine() {
+  static function test_distancePosToLine(): void {
     $seg = new self([0,0], [1,0]);
     foreach ([[0,0], [1,0], [2, 0], [0.5, 5], [0.5, -5]] as $pos)
       echo "distancePosToLine($seg, [$pos[0],$pos[1]])-> ",$seg->distancePosToLine($pos),"\n";
   }
   
   // distance d'une position au segment
+  /** @param TPos $pos */
   function distanceToPos(array $pos): float {
     $u = $this->projPosOnLine($pos);
     if ($u < 0)
@@ -429,8 +455,10 @@ title: class MultiPoint extends Geometry - Une liste de points, peut-être vide
 class MultiPoint extends Geometry {
   const ErrorEmpty = 'MultiPoint::ErrorEmpty';
   
-  public readonly array $coords; // contient une liste de listes de 2 ou 3 nombres
+  /** @var TLPos $coords */
+  public readonly array $coords; // contient une liste de Pos
   
+  /** @param TLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return $this->coords ? ['Point'] : []; }
   
@@ -449,6 +477,7 @@ class MultiPoint extends Geometry {
     return $this->coords[0];
   }
   function gbox(): GBox { return new GBox($this->coords); }
+  function ebox(): EBox { return new EBox($this->coords); }
   
   function distanceToPos(array $pos): float {
     $dmin = INF;
@@ -488,8 +517,10 @@ name: LineString
 title: class LineString extends Geometry - contient au moins 2 positions
 */}
 class LineString extends Geometry {
+  /** @var TLPos $coords */
   public readonly array $coords; // contient une liste de listes de 2 ou 3 nombres
   
+  /** @param TLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return ['LineString']; }
   
@@ -504,6 +535,7 @@ class LineString extends Geometry {
   function nbreOfPos(): int { return count($this->coords); }
   function aPos(): array { return $this->coords[0]; }
   function gbox(): GBox { return new GBox($this->coords); }
+  function ebox(): EBox { return new EBox($this->coords); }
   
   function reproject(callable $reprojPos): LineString {
     return new self(LPos::reproj($reprojPos, $this->coords));
@@ -513,6 +545,7 @@ class LineString extends Geometry {
   name:  pointInPolygon
   title: "pointInPolygon(array $p): bool - teste si une position pos est dans le polygone formé par la ligne fermée"
   */
+  /** @param TPos $p */
   function pointInPolygon(array $p): bool {
     {/*  Code de référence en C:
     int pnpoly(int npol, float *xp, float *yp, float x, float y)
@@ -537,7 +570,7 @@ class LineString extends Geometry {
     }
     return $c;
   }
-  static function test_pointInPolygon() {
+  static function test_pointInPolygon(): void {
     $p0 = [0, 0];
     foreach ([ // liste de polyligne non fermées
       ['coords'=> [[1, 0],[0, 1],[-1, 0],[0, -1]], 'result'=> true],
@@ -557,6 +590,7 @@ class LineString extends Geometry {
   name:  segs
   title: "segs(): array - liste des segments constituant la polyligne"
   */
+  /** @return array<int, object> */
   function segs(): array {
     $segs = [];
     $posPrec = null;
@@ -575,6 +609,7 @@ class LineString extends Geometry {
   name:  distanceToPos
   title: "distanceToPos(array $pos): float - calcule la distance d'une LineString à une position"
   */
+  /** @param TPos $pos */
   function distanceToPos(array $pos): float {
     $dmin = INF;
     foreach ($this->segs() as $seg) {
@@ -612,8 +647,10 @@ class MultiLineString extends Geometry {
   const ErrorCenterOfEmpty = 'MultiLineString::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'MultiLineString::ErrorPosOfEmpty';
   
-  public readonly array $coords; // contient une liste de listes de listes de 2 ou 3 nombres
+  /** @var TLLPos $coords */
+  public readonly array $coords; // contient une LLPos
   
+  /** @param TLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return $this->coords ? ['LineString'] : []; }
   
@@ -648,6 +685,7 @@ class MultiLineString extends Geometry {
   }
   
   function gbox(): GBox { return new GBox($this->coords); }
+  function ebox(): EBox { return new EBox($this->coords); }
   
   function distanceToPos(array $pos): float {
     $dmin = INF;
@@ -693,8 +731,10 @@ doc: |
 class Polygon extends Geometry {
   const ErrorInters = 'Polygon::ErrorInters';
 
-  public readonly array $coords; // contient une liste de listes de listes de 2 ou 3 nombres
+  /** @var TLLPos $coords */
+  public readonly array $coords; // contient une LLPos
 
+  /** @param TLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return ['Polygon']; }
   
@@ -727,7 +767,7 @@ class Polygon extends Geometry {
     return new self(LLPos::reproj($reprojPos, $this->coords));
   }
   
-  function area_A_ADAPTER () {
+  function area_A_ADAPTER (): void {
     /*PhpDoc: methods
     name:  area
     title: "function area($options=[]): float - renvoie la surface dans le système de coordonnées courant"
@@ -765,6 +805,7 @@ class Polygon extends Geometry {
   name:  pointInPolygon
   title: "pointInPolygon(array $pos): bool - teste si une position est dans le polygone"
   */
+  /** @param TPos $pos */
   function pointInPolygon(array $pos): bool {
     $c = false;
     foreach ($this->geoms() as $ring)
@@ -772,7 +813,7 @@ class Polygon extends Geometry {
         $c = !$c;
     return $c;
   }
-  static function test_pointInPolygon() {
+  static function test_pointInPolygon(): void {
     $p0 = [0, 0];
     foreach ([ // liste de polyligne non fermées
       ['coords'=> [[1, 0],[0, 1],[-1, 0],[0, -1]], 'result'=> true],
@@ -792,6 +833,7 @@ class Polygon extends Geometry {
   name:  segs
   title: "segs(): array - liste des segments constituant le polygone"
   */
+  /** @return array<int, Object> */
   function segs(): array {
     $segs = [];
     foreach ($this->geoms() as $ls)
@@ -849,7 +891,7 @@ class Polygon extends Geometry {
         "Erreur d'appel de Polygon::inters() avec en paramètre un objet de ".get_class($geom),
         self::ErrorInters);
   }
-  static function test_inters() {
+  static function test_inters(): void {
     foreach([
       [
         'title'=> "cas d'un pol2 inclus dans pol1 ss que les rings ne s'intersectent",
@@ -902,8 +944,10 @@ class MultiPolygon extends Geometry {
   const ErrorPosOfEmpty = 'MultiPolygon::ErrorPosOfEmpty';
   const ErrorInters = 'MultiPolygon::ErrorInters';
 
-  public readonly array $coords; // contient une liste de listes de listes de listes de 2 ou 3 nombres
+  /** @var TLLLPos $coords */
+  public readonly array $coords; // contient une LLLPos
 
+  /** @param TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   function eltTypes(): array { return $this->coords ? ['Polygon'] : []; }
   
@@ -944,6 +988,13 @@ class MultiPolygon extends Geometry {
     return $bbox;
   }
   
+  function ebox(): EBox {
+    $bbox = new EBox;
+    foreach ($this->coords as $llpos)
+      $bbox->union(new EBox($llpos));
+    return $bbox;
+  }
+  
   function distanceToPos(array $pos): float {
     $dmin = INF;
     foreach ($this->geoms() as $ls) {
@@ -972,6 +1023,7 @@ class MultiPolygon extends Geometry {
   name:  pointInPolygon
   title: "pointInPolygon(array $pos): bool - teste si une position est dans un des polygones"
   */
+  /** @param TPos $pos */
   function pointInPolygon(array $pos): bool {
     foreach ($this->geoms() as $polygon)
       if ($polygon->pointInPolygon($pos))
@@ -1033,17 +1085,26 @@ class GeometryCollection {
   const ErrorCenterOfEmpty = 'GeometryCollection::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'GeometryCollection::ErrorPosOfEmpty';
 
+  /** @var array<int, Object> $geometries */
   public readonly array $geometries; // list of Geometry objects
   
   // prend en paramètre une liste d'objets Geometry
+  /** @param array<int, Object> $geometries */
   function __construct(array $geometries) { $this->geometries = $geometries; }
   
-  function asArray(): array { return ['type'=>'GeometryCollection', 'geometries'=> $this->geometries]; }
+  /** @return array<string, string|array<int, array<string, string|TPos|TLPos|TLLPos|TLLLPos>>> */
+  function asArray(): array {
+    return [
+      'type'=> 'GeometryCollection',
+      'geometries'=> array_map(function(Geometry $g) { return $g->asArray(); }, $this->geometries),
+    ];
+  }
   
   // génère la réprésentation string GeoJSON
   function __toString(): string { return json_encode($this->asArray()); }
   
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
+  /** @return array<int, string> */
   function eltTypes(): array {
     $allEltTypes = [];
     foreach ($this->geometries as $geom)
@@ -1052,6 +1113,7 @@ class GeometryCollection {
     return array_keys($allEltTypes);
   }
 
+  /** @return TPos */
   function center(): array {
     if (!$this->geometries)
       throw new SExcept("Erreur: GeometryCollection::center() sur une liste vide", self::ErrorCenterOfEmpty);
@@ -1073,6 +1135,7 @@ class GeometryCollection {
     return $nbreOfPos;
   }
   
+  /** @return TPos */
   function aPos(): array {
     if (!$this->geometries)
       throw new SExcept("Erreur: GeometryCollection::aPos() sur une liste vide", self::ErrorPosOfEmpty);
@@ -1082,10 +1145,18 @@ class GeometryCollection {
   function gbox(): GBox {
     $bbox = new GBox;
     foreach ($this->geometries as $geom)
-      $bbox->union($geom->bbox());
+      $bbox->union($geom->gbox());
     return $bbox;
   }
   
+  function ebox(): EBox {
+    $bbox = new EBox;
+    foreach ($this->geometries as $geom)
+      $bbox->union($geom->ebox());
+    return $bbox;
+  }
+  
+  /** @param TPos $pos */
   function distanceToPos(array $pos): float {
     $dmin = INF;
     foreach ($this->geometries as $ls) {
@@ -1103,9 +1174,8 @@ class GeometryCollection {
     return new GeometryCollection($geoms);
   }
   
-  function dissolveCollection(): array { return $this->geometries; }
-  
   // Décompose une géométrie en un array de géométries élémentaires (Point/LineString/Polygon)
+  /** @return array<int, object> */
   function decompose(): array {
     $elts = [];
     foreach ($this->geometries as $g)
