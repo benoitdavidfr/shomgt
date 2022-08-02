@@ -5,6 +5,8 @@ name: mapcat.inc.php
 classes:
 doc: |
 journal: |
+  1/8/2022:
+    - correction suite à analyse PhpStan level 6
   17-18/6/2022:
     - création
 */
@@ -15,8 +17,10 @@ require_once __DIR__.'/gdalinfo.inc.php';
 class MapCat {
   const MAPCAT_TEMP_PATH = __DIR__.'/../temp/mapcat.json';
   protected string $name; // le nom de la carte
+  /** @var array<string, mixed> $map */
   protected array $map; // les caractéristiques de la carte correspondant au fichier mapcat.yaml
   
+  /** @var array<string, MapCat> $cat */
   static array $cat; // catalogue [{mapName} => MapCat]
   
   // si $option == 'download' ou si le fichier mapcat.json n'existe pas alors télécharge mapcat.json depuis $SHOMGT3_SERVER_URL
@@ -35,6 +39,7 @@ class MapCat {
     }
   }
   
+  /** @param array<string, mixed> $map */
   function __construct(string $name, array $map) {
     $this->name = $name;
     $this->map = $map;
@@ -43,15 +48,17 @@ class MapCat {
   //function title(): string { return $this->map['title']; }
   //function spatial(): array { return $this->map['spatial'] ?? []; }
   function scaleDen(): ?int {
-    return isset($this->map['scaleDenominator']) ? str_replace('.', '', $this->map['scaleDenominator']) : null;
+    return isset($this->map['scaleDenominator']) ? intval(str_replace('.', '', $this->map['scaleDenominator'])) : null;
   }
   
+  /** @return array<int, array<string, mixed>> */
   function insetMaps(): array { return $this->map['insetMaps'] ?? []; }
   
   function insetMap(int $no): self {
     return new self("inset $no of $this->name", $this->map['insetMaps'][$no]);
   }
   
+  /** @return array<string, mixed> */
   function gtInfo(): array {
     return [
       'title'=> $this->map['title'],
@@ -66,17 +73,20 @@ class MapCat {
   }
     
   // sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet MapCat
-  private function insetMapFromRect(GBox $georefrect): self {
+  private function insetMapFromRect(GBox $georefrect): ?self {
+    $distmin = INF;
     $best = -1;
     foreach ($this->map['insetMaps'] as $no => $insetMap) {
       //echo "insetMaps[$no]="; print_r($insetMap);
       $dist = GBox::fromShomGt($insetMap['spatial'])->distance($georefrect);
       //echo "distance=$dist\n";
-      if (($best == -1) || ($dist < $distmin)) {
+      if ($dist < $distmin) {
         $best = $no;
         $distmin = $dist;;
       }
     }
+    if ($best == -1)
+      return null;
     //  echo "best="; print_r($this->map['insetMaps'][$best]);
     return new self("inset $best of $this->name", $this->map['insetMaps'][$best]);
   }
@@ -104,6 +114,7 @@ class MapCat {
   
   // extrait de MapCat ceux ayant un champ toDelete
   // et retourne un array [{gtname}=> {toDelete}] / {toDelete} défini par mapcat.schema.yaml
+  /** @return array<string, array<string, array<int, mixed>>> */
   static function allZonesToDelete(): array {
     $toDelete = [];
     foreach (self::$cat as $mapid => $mapcat) {
@@ -120,6 +131,7 @@ class MapCat {
   }
   
   // retourne pour la carte $mapid les champs toDelete par gtname ou [] s'il n'y en a pas
+  /** @return array<string, array<string, array<int, mixed>>> */
   static function toDeleteByGtname(string $mapid): array {
     $toDelete = []; // [{gtname}=> {toDelete}]
     $mapcat = self::$cat[$mapid];
@@ -149,5 +161,5 @@ echo "<pre>";
 //print_r(MapCat::fromGtname('7420_4_gtw', true));
 //print_r(MapCat::fromGtname('8509_pal300', false));
 
-print_r(MapCat::toDelete());
+print_r(MapCat::allZonesToDelete());
 

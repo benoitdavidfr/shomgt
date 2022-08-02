@@ -5,8 +5,12 @@ name: readmapversion.inc..php
 doc: |
   La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
   Le retour est un dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}]
+journal: |
+  1/8/2022:
+    - ajout déclarations PhpStan pour level 6
 */
 
+/** @return array<string, string> */
 function readMapVersion(string $path): array {
   if (!($xmlmd = @file_get_contents($path)))
     throw new Exception("Fichier de MD non trouvé pour path=$path");

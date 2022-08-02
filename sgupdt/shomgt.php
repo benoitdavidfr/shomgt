@@ -37,6 +37,8 @@ doc: |
   La classe ShomGt contient une représentation de shomgt.yaml qui se construit progressivement.
 
 journal: |
+  2/8/2022:
+    - corrections suites à PhpStan level 6
   17/6/2022:
     - adaptation au transfert de update.yaml dans mapcat.yaml
   6/6/2022:
@@ -82,9 +84,12 @@ elseif ($argc == 2) {
   elseif (!($fout = fopen($argv[1], 'w')))
     throw new Exception("Erreur d'ouverture du fichier $argv[1]");
 }
+else
+  throw new Exception("Cas non prévu argc=$argc");
 
 // Définit les couches std et spéciales, permet de savoir à laquelle un GéoTiff appartient
 class LayerDef {
+  const ErrorScaleDenNotFound = 'LayerDef::ErrorScaleDenNotFound';
   // liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d'échelle des GéoTiff
   // contenus dans la couche
   const LAYERS_SCALE_DEN_MAX = [
@@ -113,20 +118,26 @@ class LayerDef {
       if ($scaleDen <= $scaleDenMax)
         return "gt$lyrId";
     }
+    throw new SExcept("ScaleDen $scaleDen non trouvée", self::ErrorScaleDenNotFound);
   }
 };
 
 class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected string $gtname;
   protected string $title; // titre issu du catalogue de cartes
+  /** @var array<string, TPos> $spatial */
   protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du catalogue de cartes
+  /** @var array<int, array<string, TPos>> $outgrowth */
   protected array $outgrowth; // liste d'excroissances sous la forme [['SW'=> {pos}, 'NE'=> {pos}]]
   protected int $scaleDen; // dénominateur de l'échelle issu du catalogue de cartes
   protected int $zorder; // z-order issu du catalogue de cartes
+  /** @var array<string, array<int, mixed>> $deleted */
   protected array $deleted; // zones effacées dans le GéoTiff
   protected ?string $layer; // nom de la couche pour les cartes spéciales, null sinon
+  /** @var array<int, int|string> $borders */
   protected array $borders=[]; // bordures au cas où le GéoTiff n'est pas géoréférencé
 
+  /** @var array<string, array<string, ShomGt>> $all */
   static array $all=[]; // contenu de shomgt.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
 
   static function init(): void {
@@ -160,6 +171,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     self::$all[$gt->layer][$gtname] = $gt;
   }
   
+  /** @param array<string, mixed> $info */
   function __construct(string $gtname, array $info) {
     $this->gtname = $gtname;
     $this->title = $info['title'];
@@ -197,6 +209,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     }
   }
   
+  /** @return array<string, array<string, array<string, mixed>>|string>  */
   static function allAsArray(): array { // génère la représentation Yaml de tous les ShomGt dans un string
     $array = [
       'title'=> "liste de GéoTiffs préparée pour le container shomgt",
@@ -213,6 +226,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     return $array;
   }
   
+  /** @return array<string, mixed> */
   function asArray(): array { // génère la représentation Yaml d'un ShomGt dans un array
     $mapnum = substr($this->gtname, 0, 4);
     $array = [
@@ -233,7 +247,7 @@ ShomGt::init(); //print_r(ShomGt::$shomgt); die();
 // lecture du fichier mapcat.json
 MapCat::init(); //print_r(MapCat::$cat); die();
 
-if (0) { // Test de ShomGt::sortwzorder()
+if (0) { // @phpstan-ignore-line // Test de ShomGt::sortwzorder()
   ShomGt::addGt('6822_pal300');
   ShomGt::addGt('6823_pal300');
   ShomGt::addGt('6969_pal300');
@@ -254,6 +268,7 @@ foreach (geotiffs() as $gtname) {
     $geotiffs[$mapnum]['tif'][$gtname] = 1;  
 }
 
+/** @return array<int, string> */
 function obsoleteMaps(): array { // Lecture dans maps.json de la liste des nums des cartes obsolètes
   $obsoleteMaps = [];
   if (($maps = @file_get_contents(__DIR__.'/temp/maps.json')) === false) {

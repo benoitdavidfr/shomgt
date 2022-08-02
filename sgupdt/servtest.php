@@ -3,7 +3,7 @@
 
 $test = $_GET['test'] ?? null;
 
-function menu() {
+function menu(): void {
   if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']))
     echo "Non authentifié<br>\n";
   else

@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  1/8/2022:
+    - ajout déclarations PhpStan pour level 6
   22/6/2022:
     - correction d'un bug
   20/6/2022:
@@ -110,8 +112,11 @@ if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version
 
  
 class Maps { // stocke les informations téléchargées de ${SHOMGT3_SERVER_URL}/maps.json
+  /** @var array<string, string> $validMaps */
   static array $validMaps=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json avec leur version
+  /** @var array<int, string> $obsoleteMaps */
   static array $obsoleteMaps=[]; // liste des numéros de cartes obsolètes trouvés dans maps.json
+  /** @var array<int, string> $downloaded */
   static array $downloaded=[]; // liste des numéros de cartes effectivement téléchargées
   
   static function init(string $SERVER_URL): void {
@@ -135,6 +140,7 @@ class Maps { // stocke les informations téléchargées de ${SHOMGT3_SERVER_URL}
 
 // lit dans le fichier shomgt.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml
 class ShomGtDelZone {
+  /** @var array<string, array<string, array<string, mixed>>> $deleted */
   static array $deleted=[]; // [{mapnum} => [{gtname} => {toDel}]]
   
   static function init(): void { // lit le fichier et structure les zones à effacer par mapnum et gtname
@@ -154,6 +160,7 @@ class ShomGtDelZone {
   }
   
   // retourne pour un mapnum la définition par gtname des zones effacées de shomgt.yaml ou [] si aucune zone n'est définie
+  /** @return array<string, array<string, array<string, mixed>>> */
   static function deleted(string $mapnum): array {
     if (isset(self::$deleted[$mapnum])) {
       $deleted = self::$deleted[$mapnum];
@@ -192,7 +199,7 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   return 'undefined';
 }
 
-function expand(string $map7zpath) { // expansion d'une carte téléchargée comme 7z au path indiqué
+function expand(string $map7zpath): void { // expansion d'une carte téléchargée comme 7z au path indiqué
   echo "expand($map7zpath)\n";
   $mapdir = dirname($map7zpath);
   $mapbasename = basename($map7zpath);
@@ -226,7 +233,7 @@ function expand(string $map7zpath) { // expansion d'une carte téléchargée com
 }
 
 // télécharge la carte, l'expanse et l'installe dans le répertoire courant, retourne le libellé du code http
-function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string {
+function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string|never {
   $url = "$SERVER_URL/maps/$mapnum.7z";
   //echo "\$url=$url\n";
   switch ($httpCode = download($url, "$TEMP/$mapnum.7z", CMDE_VERBOSE)) {
@@ -254,7 +261,9 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
       echo "La carte $mapnum.7z n'a pas été téléchargée car elle n'a pas été trouvée sur le serveur\n";
       return 'Not Found';
     }
+    default: return '';
   }
+  
 }
 
 while (true) {
@@ -310,7 +319,7 @@ while (true) {
   }
   else {
     echo "Endormissement pendant $UPDATE_DURATION jours à compter de ",date(DATE_ATOM),"\n";
-    sleep($UPDATE_DURATION * 24 * 3600); // en jours
+    sleep(intval($UPDATE_DURATION) * 24 * 3600); // en jours
     //sleep($UPDATE_DURATION * 60); // enn minutes pour tests
     echo "Réveil à ",date(DATE_ATOM),"\n";
   }

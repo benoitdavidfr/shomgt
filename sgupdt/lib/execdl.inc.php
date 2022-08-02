@@ -14,14 +14,17 @@ journal: |
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
-/*PhpDoc: functions
-title: execCmde - exécute une commande Linux - enrobage de exec()
-name: execCmde
-doc: |
-  exécute une cmde Linux, $verbose est le degré de verbosité
-  retourne [] ssi tout est ok, cad le retour d'exec() !== false && $result_code == 0
-  sinon retourne ['result_code'=> {result_code}, 'output'=> {output}]
-*/
+/**
+ * execCmde - exécute une commande Linux - enrobage de exec()
+ *
+ * exécute une cmde Linux, $verbose est le degré de verbosité
+ * retourne [] ssi tout est ok, cad le retour d'exec() !== false && $result_code == 0
+ * sinon retourne ['result_code'=> {result_code}, 'output'=> {output}]
+ *
+ * @param string $cmde
+ * @param int $verbose
+ * @return array<string, string|int>
+ */
 function execCmde(string $cmde, int $verbose): array {
   //echo "execCmde($cmde)\n";
   if ($verbose >= 1)

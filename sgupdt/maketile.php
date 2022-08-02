@@ -12,6 +12,8 @@ doc: |
   limites:
     - Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
 journal: |
+  1/8/2022:
+    - ajout déclarations PhpStan pour level 6
   1/7/2022:
     - correction bug
   20/6/2022:
@@ -47,7 +49,7 @@ header('Content-type: text/plain; charset="utf8"');
 ini_set('memory_limit', '2G'); // pour 7330_2016.png 512M, 1G insuffisant ; 2G ok
 
 
-function error(string $message) { echo "$message\n"; die(1); }
+function error(string $message): never { echo "$message\n"; die(1); }
   
 //echo "argc=$argc\n";
 if ($argc <> 2) {
@@ -81,7 +83,7 @@ if (is_file(__DIR__.'/temp/todelete.pser')
 }
 else {
   MapCat::init(); 
-  $toDelete = Mapcat::allZonesToDelete(); // [{gtname}=> ['polygons'=> [{polygon}, 'bboxes'=> [{bbox}]]]]
+  $toDelete = MapCat::allZonesToDelete(); // [{gtname}=> ['polygons'=> [{polygon}, 'bboxes'=> [{bbox}]]]]
   file_put_contents(__DIR__.'/temp/todelete.pser', serialize($toDelete));
 }
 
@@ -125,8 +127,8 @@ if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
 $dalle = @imagecreate(1024, 1024)
   or error("erreur de imagecreate() ligne ".__LINE__);
 
-$imax = floor($width/1024);
-$jmax = floor($height/1024);
+$imax = intval(floor($width/1024));
+$jmax = intval(floor($height/1024));
 for ($i=0; $i<$imax; $i++) {
   for ($j=0; $j<$jmax; $j++) {
     imagecopy($dalle, $image, 0, 0, $i*1024, $j*1024, 1024, 1024)
@@ -144,7 +146,7 @@ imagedestroy($dalle);
 // la colonne supplémentaire i=floor($width/1024)
 $i = $imax;
 $w = $width - 1024 * $i;
-if ($w) {
+if ($w <> 0) {
   //echo "création de la colonne $i\n";
   //echo "w=$w<br>\n";
   $dalle = @imagecreate($w, 1024)
