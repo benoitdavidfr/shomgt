@@ -940,6 +940,7 @@ title: class MultiPolygon extends Geometry - Chaque polygone respecte les contra
 methods:
 */}
 class MultiPolygon extends Geometry {
+  const ErrorFromGeoArray = 'MultiPolygon::ErrorFromGeoArray';
   const ErrorCenterOfEmpty = 'MultiPolygon::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'MultiPolygon::ErrorPosOfEmpty';
   const ErrorInters = 'MultiPolygon::ErrorInters';
@@ -949,6 +950,19 @@ class MultiPolygon extends Geometry {
 
   /** @param TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
+  
+  // crée un MultiPolygon à partir du json_decode() d'une géométrie GeoJSON de type MultiPolygon ou Polygon
+  /** @param array<string, string|TLLPos|TLLLPos> $geom */
+  static function fromGeoArray(array $geom): self {
+    $type = $geom['type'] ?? null;
+    if (($type == 'MultiPolygon') && isset($geom['coordinates']))
+      return new MultiPolygon($geom['coordinates']);
+    else if (($type == 'Polygon') && isset($geom['coordinates']))
+      return new MultiPolygon([$geom['coordinates']]);
+    else
+      throw new SExcept("Erreur de MultiPolygon::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
+  }
+  
   function eltTypes(): array { return $this->coords ? ['Polygon'] : []; }
   
   function geoms(): array { // liste des primitives contenues dans l'objet sous la forme d'une liste d'objets

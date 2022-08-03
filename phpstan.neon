@@ -1,0 +1,30 @@
+parameters:
+  level: 6
+  typeAliases:
+    TPos: 'array<int, float>'
+    TLPos: 'array<int, array<int, float>>'
+    TLLPos: 'array<int, array<int, array<int, float>>>'
+    TLLLPos: 'array<int, array<int, array<int, array<int, float>>>>'
+    TGeoJsonProperties: 'array<string, mixed>'
+    TGeoJsonGeometry: 'array<string, string|TPos|TLPos|TLLPos|TLLLPos>'
+    TGeoJsonFeature: 'array<string, string|TGeoJsonProperties|TGeoJsonGeometry>'
+    TGeoJsonFeatureList: 'array<int, TGeoJsonFeature>'
+    TGeoJsonFeatureCollection: 'array<string, string|int|TGeoJsonFeatureList>'
+  paths:
+    - index.php
+    - index2.php 
+    - login.php
+    - mapwcat.php
+    - tile.php
+    - wms.php
+    - lib
+    - shomgt
+    - sgupdt
+    - sgserver
+    - secrets
+    - dashboard
+    - mapcat
+    - shomft
+  excludePaths:
+    analyse:
+      - lib/SevenZipArchive.php

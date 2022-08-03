@@ -31,6 +31,8 @@ doc: |
   Les 7z sont stockés dans le répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH avec un répertoire par livraison
   nommé avec un nom commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
 journal: |
+  2/8/2022:
+    - corrections indiquées par PhpStan level 6
   20/6/2022:
     - réécriture du calcul des versions des cartes pour
       - décomposer le calcul par livraison et ainsi accélérer le calcul global pour une nouvelle livraison
@@ -79,6 +81,7 @@ require_once __DIR__.'/lib/accesscntrl.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 // enregistrement d'un log temporaire pour aider au déverminage
+/** @param array<mixed> $log */
 function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est effacé
   if (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60))

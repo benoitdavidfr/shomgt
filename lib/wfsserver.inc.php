@@ -1,15 +1,17 @@
 <?php
 /*PhpDoc:
-name: wfsserver.inc.php
-title: lib/wfsserver.inc.php - fonctionnalités communes au serveur WFS Gml et au serveur WFS GeoJSON
+name: wfsserver2.inc.php
+title: lib/wfsserver2.inc.php - fonctionnalités communes au serveur WFS Gml et au serveur WFS GeoJSON
 functions:
 doc: |
   Code repris de YamlDoc
   Définition de 3 classes:
     - WfsServer - classe abstraite des fonctionnalités communes Gml et GeoJSON
-    - WfsGeoJson - serveur WFS retournat du GeoJSON comme ceux du Shom ou de l'IGN
+    - WfsGeoJson - serveur WFS retournant du GeoJSON comme ceux du Shom ou de l'IGN
     - FeaturesApi - interface Feature API d'un serveur WfsGeoJson
 journal: |
+  3/8/2022:
+    - simplification pour retirer les bugs
   28/12/2020:
     - reprise de YamlDoc
 */
@@ -23,16 +25,19 @@ abstract class WfsServer {
   const CAP_CACHE = __DIR__.'/wfscapcache'; // nom du répertoire dans lequel sont stockés les fichiers XML
                                             // de capacités ainsi que les DescribeFeatureType en json
   protected string $serverUrl; // URL du serveur
+  /** @var array<string, mixed> $options */
   protected array $options; // sous la forme ['option'=> valeur]
   
+  /** @param array<string, mixed> $options */
   function __construct(string $serverUrl, array $options=[]) {
     $this->serverUrl = $serverUrl;
     $this->options = $options;
   }
   
   // construit l'URL de la requête à partir des paramètres
+  /** @param array<string, mixed> $params */
   function url(array $params): string {
-    if (self::LOG) { // log
+    if (self::LOG) { // @phpstan-ignore-line // log
       file_put_contents(
           self::LOG,
           Yaml::dump([
@@ -47,13 +52,14 @@ abstract class WfsServer {
     $url .= ((strpos($url, '?') === false) ? '?' : '&').'SERVICE=WFS';
     foreach($params as $key => $value)
       $url .= "&$key=$value";
-    if (self::LOG) { // log
+    if (self::LOG) { // @phpstan-ignore-line // log
       file_put_contents(self::LOG, Yaml::dump(['url'=> $url]), FILE_APPEND);
     }
     return $url;
   }
   
   // envoi une requête et récupère la réponse sous la forme d'un texte
+  /** @param array<string, mixed> $params */
   function query(array $params): string {
     $url = $this->url($params);
     $context = null;
@@ -66,7 +72,7 @@ abstract class WfsServer {
         $httpOptions['proxy'] = $proxy;
       }
       if ($httpOptions) {
-        if (self::LOG) { // log
+        if (self::LOG) { // @phpstan-ignore-line // log
           file_put_contents(
               self::LOG,
               Yaml::dump([
@@ -81,7 +87,7 @@ abstract class WfsServer {
       }
     }
     if (($result = @file_get_contents($url, false, $context)) === false) {
-      if (isset($http_response_header)) {
+      if (isset($http_response_header)) { // @phpstan-ignore-line
         echo "http_response_header="; var_dump($http_response_header);
       }
       throw new Exception("Erreur dans WfsServer::query() : sur url=$url");
@@ -117,7 +123,8 @@ abstract class WfsServer {
   }
 
   // liste les couches exposées evt filtré par l'URL des MD
-  function featureTypeList(string $metadataUrl=null) {
+  /** @return array<string, array<string, string>> */
+  function featureTypeList(string $metadataUrl=null): array {
     //echo "WfsServerJson::featureTypeList()<br>\n";
     $cap = $this->getCapabilities();
     $cap = str_replace(['xlink:href'], ['xlink_href'], $cap);
@@ -125,7 +132,7 @@ abstract class WfsServer {
     $cap = new SimpleXMLElement($cap);
     foreach ($cap->FeatureTypeList->FeatureType as $featureType) {
       $name = (string)$featureType->Name;
-      if (!$metadataUrl || ($featureTypeRec['MetadataURL'] == $metadataUrl))
+      if (!$metadataUrl || ($featureType['MetadataURL'] == $metadataUrl))
         $featureTypeList[$name] = [
           'Title'=> (string)$featureType->Title,
           'MetadataURL'=> (string)$featureType->MetadataURL['xlink_href'],
@@ -135,19 +142,26 @@ abstract class WfsServer {
     return $featureTypeList;
   }
   
+  /** @return array<string, mixed> */
   abstract function describeFeatureType(string $typeName): array;
   
   abstract function geomPropertyName(string $typeName): ?string;
   
-  abstract function getNumberMatched(string $typename, array $bbox=[], string $where=''): int;
+  abstract function getNumberMatched(string $typename, string $where=''): int;
   
-  abstract function getFeature(string $typename, array $bbox=[], int $zoom=-1, string $where='', int $count=100, int $startindex=0): string;
+  abstract function getFeature(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): string;
 
-  abstract function printAllFeatures(string $typename, array $bbox=[], int $zoom=-1, string $where=''): void;
+  // retourne le résultat de la requête en GeoJSON encodé en array Php
+  /** @return TGeoJsonFeatureCollection */
+  abstract function getFeatureAsArray(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): array;
+  
+  abstract function printAllFeatures(string $typename, int $zoom=-1, string $where=''): void;
 };
+
 
 class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur WFS retournant du GeoJSON
 
+  /** @return array<string, mixed> */
   function describeFeatureType(string $typeName): array {
     $filepath = self::CAP_CACHE.'/wfs'.md5($this->serverUrl."/$typeName").'-ft.json';
     if (is_file($filepath)) {
@@ -168,7 +182,6 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
     return $featureType;
   }
   
-  
   // nom de la propriété géométrique du featureType
   function geomPropertyName(string $typeName): ?string {
     $featureType = $this->describeFeatureType($typeName);
@@ -183,7 +196,7 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
   }
     
   // retourne le nbre d'objets correspondant au résultat de la requête
-  function getNumberMatched(string $typename, array $bbox=[], string $where=''): int {
+  function getNumberMatched(string $typename, string $where=''): int {
     $geomPropertyName = $this->geomPropertyName($typename);
     $request = [
       'VERSION'=> '2.0.0',
@@ -192,17 +205,10 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
       'SRSNAME'=> 'CRS:84', // système de coordonnées nécessaire pour du GeoJSON
       'RESULTTYPE'=> 'hits',
     ];
-    $cql_filter = '';
-    if ($bbox) {
-      $bboxwkt = self::bboxWktCrs($bbox, $this->defaultCrs($typename));
-      $cql_filter = "Intersects($geomPropertyName,$bboxwkt)";
-    }
     if ($where) {
-      $where = utf8_decode($where); // expérimentalement les requêtes doivent être encodées en ISO-8859-1
-      $cql_filter .= ($cql_filter ? ' AND ':'').$where;
+      // expérimentalement les requêtes doivent être encodées en ISO-8859-1
+      $request['CQL_FILTER'] = urlencode(utf8_decode($where));
     }
-    if ($cql_filter)
-      $request['CQL_FILTER'] = urlencode($cql_filter);
     $result = $this->query($request);
     if (!preg_match('! numberMatched="(\d+)" !', $result, $matches)) {
       //echo "result=",$result,"\n";
@@ -212,7 +218,7 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
   }
   
   // retourne le résultat de la requête en GeoJSON
-  function getFeature(string $typename, array $bbox=[], int $zoom=-1, string $where='', int $count=100, int $startindex=0): string {
+  function getFeature(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): string {
     $geomPropertyName = $this->geomPropertyName($typename);
     $request = [
       'VERSION'=> '2.0.0',
@@ -223,32 +229,26 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
       'COUNT'=> $count,
       'STARTINDEX'=> $startindex,
     ];
-    $cql_filter = '';
-    if ($bbox) {
-      $bboxwkt = self::bboxWktCrs($bbox, $this->defaultCrs($typename));
-      $cql_filter = "Intersects($geomPropertyName,$bboxwkt)";
-    }
     if ($where) {
-      $where = utf8_decode($where); // expérimentalement les requêtes doivent être encodées en ISO-8859-1
-      $cql_filter .= ($cql_filter ? ' AND ':'').$where;
+      // expérimentalement les requêtes doivent être encodées en ISO-8859-1
+      $request['CQL_FILTER'] = urlencode(utf8_decode($where));
     }
-    if ($cql_filter)
-      $request['CQL_FILTER'] = urlencode($cql_filter);
     return $this->query($request);
   }
   
   // retourne le résultat de la requête en GeoJSON encodé en array Php
-  function getFeatureAsArray(string $typename, array $bbox=[], int $zoom=-1, string $where='', int $count=100, int $startindex=0): array {
-    $result = $this->getFeature($typename, $bbox, $zoom, $where, $count, $startindex);
+  /** @return TGeoJsonFeatureCollection */
+  function getFeatureAsArray(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): array {
+    $result = $this->getFeature($typename, $zoom, $where, $count, $startindex);
     return json_decode($result, true);
   }
   
   // affiche le résultat de la requête en GeoJSON
-  function printAllFeatures(string $typename, array $bbox=[], int $zoom=-1, string $where=''): void {
+  function printAllFeatures(string $typename, int $zoom=-1, string $where=''): void {
     //echo "WfsServerJson::printAllFeatures()<br>\n";
-    $numberMatched = $this->getNumberMatched($typename, $bbox, $where);
+    $numberMatched = $this->getNumberMatched($typename, $where);
     if ($numberMatched <= 100) {
-      echo $this->getFeature($typename, $bbox, $zoom, $where);
+      echo $this->getFeature($typename, $zoom, $where);
       return;
     }
     //$numberMatched = 12; POUR TESTS
@@ -256,7 +256,7 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
     $startindex = 0;
     $count = 100;
     while ($startindex < $numberMatched) {
-      $fc = $this->getFeature($typename, $bbox, $zoom, $where, $count, $startindex);
+      $fc = $this->getFeature($typename, $zoom, $where, $count, $startindex);
       $fc = json_decode($fc, true);
       foreach ($fc['features'] as $nof => $feature) {
         if (($startindex <> 0) || ($nof <> 0))
@@ -269,9 +269,64 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
   }
 };
 
+if (!isset($_SERVER['PATH_INFO'])) { // Test de WfsGeoJson sur le serveur WFS du Shom
+  $wfsShom = new WfsGeoJson('https://services.data.shom.fr/INSPIRE/wfs');
+  switch ($_GET['a'] ?? null) {
+    case null: {
+      echo "Menu test WfsGeoJson:<br>\n";
+      echo " - <a href='?a=getCapabilities'>getCapabilities</a><br>\n";
+      echo " - <a href='?a=featureTypeList'>featureTypeList</a><br>\n";
+      break;
+    }
+    case 'getCapabilities': {
+      header('Content-type: text/xml; charset="utf8"');
+      echo $wfsShom->getCapabilities();
+      die();
+    }
+    case 'featureTypeList': {
+      echo '<pre>';
+      foreach ($wfsShom->featureTypeList() as $ftname => $ft) {
+        echo Yaml::dump([$ftname => $ft]);
+        echo " - <a href='?a=describeFeatureType&amp;ftname=$ftname'>describeFeatureType</a>\n";
+        echo " - <a href='?a=geomPropertyName&amp;ftname=$ftname'>geomPropertyName</a>\n";
+        echo " - <a href='?a=getNumberMatched&amp;ftname=$ftname'>getNumberMatched</a>\n";
+        echo " - <a href='?a=getFeatureAsArray&amp;ftname=$ftname'>getFeatureAsArray</a>\n";
+        echo " - <a href='?a=printAllFeatures&amp;ftname=$ftname'>printAllFeatures</a>\n\n";
+      }
+      die();
+    }
+    case 'describeFeatureType': {
+      echo '<pre>';
+      echo Yaml::dump($wfsShom->describeFeatureType($_GET['ftname']), 5, 2),"\n";
+      die();
+    }
+    case 'geomPropertyName': {
+      echo '<pre>';
+      echo Yaml::dump($wfsShom->geomPropertyName($_GET['ftname'])),"\n";
+      die();
+    }
+    case 'getNumberMatched': {
+      echo '<pre>';
+      echo Yaml::dump($wfsShom->getNumberMatched($_GET['ftname'])),"\n";
+      die();
+    }
+    case 'getFeatureAsArray': {
+      echo '<pre>';
+      echo Yaml::dump($wfsShom->getFeatureAsArray($_GET['ftname']), 4, 2),"\n";
+      die();
+    }
+    case 'printAllFeatures': {
+      echo '<pre>';
+      $wfsShom->printAllFeatures($_GET['ftname']);
+      die();
+    }
+  }
+}
+
 
 class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Features
   
+  /** @return array<int, array<string, string>> */
   function collections(): array { // retourne la liste des collections
     $collections = [];
     foreach ($this->featureTypeList() as $typeId => $type) {
@@ -283,15 +338,16 @@ class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Featu
     return $collections;
   }
   
+  /** @return array<string, mixed> */
   function collection(string $id): array { // retourne la description du FeatureType de la collection
     return $this->describeFeatureType($id);
   }
   
   // retourne les items de la collection comme array Php
-  function items(string $collId, array $bbox=[], int $count=100, int $startindex=0): array {
+  /** @return TGeoJsonFeatureCollection */
+  function items(string $collId, int $count=100, int $startindex=0): array {
     $items = $this->getFeatureAsArray(
       typename: $collId,
-      bbox: $bbox,
       count: $count,
       startindex: $startindex
     );
@@ -299,10 +355,12 @@ class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Featu
   }
   
   // génère un affichage en JSON ou Yaml en fonction du paramètre $f
-  static function output(string $f, array $array, int $levels=3) {
+  /** @param array<mixed> $array */
+  static function output(string $f, array $array, int $levels=3): never {
     switch ($f) {
       case 'yaml': die(Yaml::dump($array, $levels, 2));
       case 'json': die(json_encode($array, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
+      default: die("ni Yaml ni JSON");
     }
   }
 };
@@ -341,7 +399,7 @@ if (!preg_match('!^/collections(/([^/]+))?(/items)?$!', $_SERVER['PATH_INFO'], $
 $collId = $matches[2] ?? null;
 $items = $matches[3] ?? null;
 
-$wfsOptions = ($proxy = config('proxy')) ? ['proxy'=> str_replace('http://', 'tcp://', $proxy)] : [];
+$wfsOptions = []; // ($proxy = config('proxy')) ? ['proxy'=> str_replace('http://', 'tcp://', $proxy)] : [];
 $shomWfs = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs', $wfsOptions);
 
 if (!$collId) { // /collections
@@ -354,7 +412,6 @@ else { // /collections/{collId}/items
   FeaturesApi::output($f,
     $shomWfs->items(
       collId: $collId,
-      bbox: $_GET['bbox'] ?? [],
       count: $_GET['count'] ?? 100,
       startindex: $_GET['startindex'] ?? 0
     ), 6

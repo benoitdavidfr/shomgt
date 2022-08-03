@@ -111,7 +111,7 @@ if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version
 }
 
  
-class Maps { // stocke les informations téléchargées de ${SHOMGT3_SERVER_URL}/maps.json
+class UpdtMaps { // stocke les informations téléchargées de ${SHOMGT3_SERVER_URL}/maps.json
   /** @var array<string, string> $validMaps */
   static array $validMaps=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json avec leur version
   /** @var array<int, string> $obsoleteMaps */
@@ -171,11 +171,11 @@ class ShomGtDelZone {
       return [];
   }
 
-  // Teste si pour un $mapnum les zones à effacer de MapCat sont ou non identiques aux zones effacées de shomgt.yaml
+  // Teste si pour un $mapnum les zones à effacer de TempMapCat sont ou non identiques aux zones effacées de shomgt.yaml
   static function sameDelZones(string $mapnum): bool {
     //echo "ShomGtDelZone::deleted="; print_r(ShomGtDelZone::deleted($mapnum));
-    //echo "MapCat::toDeleteByGtname="; print_r(MapCat::toDeleteByGtname("FR$mapnum"));
-    return MapCat::toDeleteByGtname("FR$mapnum") == ShomGtDelZone::deleted($mapnum);
+    //echo "TempMapCat::toDeleteByGtname="; print_r(TempMapCat::toDeleteByGtname("FR$mapnum"));
+    return TempMapCat::toDeleteByGtname("FR$mapnum") == ShomGtDelZone::deleted($mapnum);
   }
 };
 
@@ -274,12 +274,12 @@ while (true) {
   !execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
     or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
   
-  Maps::init($SERVER_URL); // télécharge ${SHOMGT3_SERVER_URL}/maps.json et stocke les informations
-  MapCat::init(); // lit le fichier mapcat.yaml en le téléchargeant s'il n'existe pas
+  UpdtMaps::init($SERVER_URL); // télécharge ${SHOMGT3_SERVER_URL}/maps.json et stocke les informations
+  TempMapCat::init(); // lit le fichier mapcat.yaml en le téléchargeant s'il n'existe pas
   ShomGtDelZone::init(); // lit dans le fichier shomgt.yaml les zones effacées pour les comparer avec celles à effacer
   
   // téléchargement des cartes et transfert au fur et à mesure dans SHOMGT3_MAPS_DIR_PATH
-  foreach (Maps::$validMaps as $mapnum => $mapVersion) {
+  foreach (UpdtMaps::$validMaps as $mapnum => $mapVersion) {
     echo "mapnum=$mapnum\n";
     $currentVersion = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
     if ($currentVersion == $mapVersion) {
@@ -293,7 +293,7 @@ while (true) {
       }
     }
     if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
-      Maps::$downloaded[] = $mapnum;
+      UpdtMaps::$downloaded[] = $mapnum;
   }
 
   // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
@@ -308,7 +308,7 @@ while (true) {
   }
 
   // effacement des cartes obsolètes
-  foreach (Maps::$obsoleteMaps as $mapnum) {
+  foreach (UpdtMaps::$obsoleteMaps as $mapnum) {
     if (is_dir("$MAPS_DIR_PATH/$mapnum"))
       execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
   }

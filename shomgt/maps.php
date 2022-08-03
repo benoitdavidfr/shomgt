@@ -85,9 +85,9 @@ function cornersOfRects(string $lyrname, array $rects): array {
 }
 
 // classe regroupant qqs méthodes statiques
-class Maps {
-  const ErrorUnknownCRS = 'Maps::ErrorUnknownCRS';
-  const ErrorImageSaveAlpha = 'Maps::ErrorImageSaveAlpha';
+class GtMaps {
+  const ErrorUnknownCRS = 'GtMaps::ErrorUnknownCRS';
+  const ErrorImageSaveAlpha = 'GtMaps::ErrorImageSaveAlpha';
   const HttpErrorMessage = [
     400 => 'Bad Request',
     404 => 'Not Found',
@@ -155,7 +155,7 @@ class Maps {
         $ebox->union($layers[$lyrname]->ebox());
     }
     //echo $ebox;
-    $ebox = Maps::eboxToWoM($crs, $ebox); // l'ebox est transformé en World Mercator
+    $ebox = GtMaps::eboxToWoM($crs, $ebox); // l'ebox est transformé en World Mercator
   
     $width = (isset($_GET['width']) && $_GET['width']) ? intval($_GET['width']) : 1200;
     if (($width < 10) || ($width > 4096))
@@ -314,44 +314,44 @@ try {
       die();
     }
     else {
-      Maps::landingPage();
+      GtMaps::landingPage();
     }
   }
 
   Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
 
   if ($_SERVER['PATH_INFO'] == '/collections') { // liste des couches 
-    Maps::listOfLayers();
+    GtMaps::listOfLayers();
   }
 
   if (preg_match('!^/collections/([^/]+)$!', $_SERVER['PATH_INFO'], $matches)) { // définition d'une couche 
-    Maps::describeLayer($matches[1]);
+    GtMaps::describeLayer($matches[1]);
   }
 
   if (preg_match('!^/collections/([^/]+)/map$!', $_SERVER['PATH_INFO'], $matches)) { // affichage d'un extrait de la/des couche(s)
-    Maps::map(explode(',', $matches[1]));
+    GtMaps::map(explode(',', $matches[1]));
   }
 
   if (preg_match('!^/collections/([^/]+)/items$!', $_SERVER['PATH_INFO'], $matches)) { // rectangles des GeoTiff en GeoJSON
-    Maps::items(explode(',', $matches[1]));
+    GtMaps::items(explode(',', $matches[1]));
   }
 
   if (preg_match('!^/collections/([^/]+)/corners$!', $_SERVER['PATH_INFO'], $matches)) { // coins des GeoTiff en GeoJSON
-    Maps::corners(explode(',', $matches[1]));
+    GtMaps::corners(explode(',', $matches[1]));
   }
 
   if (preg_match('!^/collections/([^/]+)/deletedZones$!', $_SERVER['PATH_INFO'], $matches)) { // zones effacées des GeoTiff en GeoJSON
-    Maps::deletedZones(explode(',', $matches[1]));
+    GtMaps::deletedZones(explode(',', $matches[1]));
   }
 
   // Test de /collections/{collectionId}/map par affichage d'un formulaire de saisie des paramètres
   if (preg_match('!^/collections/([^/]+)/showmap$!', $_SERVER['PATH_INFO'], $matches)) {
-    Maps::showmap(explode(',', $matches[1]));
+    GtMaps::showmap(explode(',', $matches[1]));
   }
 }
 catch (SExcept $e) {
-  Maps::error(500, $e->getMessage(), $e->getSCode());
+  GtMaps::error(500, $e->getMessage(), $e->getSCode());
 }
 catch (Exception $e) {
-  Maps::error(500, $e->getMessage());
+  GtMaps::error(500, $e->getMessage());
 }

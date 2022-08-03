@@ -151,7 +151,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   
   static function addGt(string $gtname): void { // ajoute un GT par son nom
     //echo "ShomGt::addGt($gtname)\n";
-    $map = MapCat::fromGtname($gtname, false);
+    $map = TempMapCat::fromGtname($gtname, false);
     //echo "map="; print_r($map);
     if (!$map) {
       fprintf(STDERR, "Alerte: le GéoTiff $gtname n'existe pas dans le catalogue, il n'apparaitra donc pas dans shomgt.yaml\n");
@@ -245,7 +245,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
 ShomGt::init(); //print_r(ShomGt::$shomgt); die();
 
 // lecture du fichier mapcat.json
-MapCat::init(); //print_r(MapCat::$cat); die();
+TempMapCat::init(); //print_r(TempMapCat::$cat); die();
 
 if (0) { // @phpstan-ignore-line // Test de ShomGt::sortwzorder()
   ShomGt::addGt('6822_pal300');

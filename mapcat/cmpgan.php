@@ -9,6 +9,8 @@ doc: |
   Le traitement dans le GAN des excroissances de cartes est hétérogène.
   Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
 journal: |
+  3/8/2022:
+    - corrections listée par PhpStan level 6
   2/7/2022:
     - reprise après correction des GAN par le Shom à la suite de mon message
     - ajout comparaison des échelles
@@ -17,22 +19,26 @@ journal: |
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../sgupdt/lib/gebox.inc.php';
+require_once __DIR__.'/../dashboard/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
 // Classe stockant le contenu du fichier mapcat.yaml telquel et définissant de la méthode cmpGans
-class MapCat {
+class CmpMapCat {
   protected string $mapid;
+  /** @var array<string, mixed> $map */
   protected array $map;
-  static array $maps=[]; // [$mapid => MapCat]
+  /** @var array<string, CmpMapCat> $maps */
+  static array $maps=[]; // [$mapid => CmpMapCat]
   
+  /** @param array<string, mixed> $mapcat */
   static function init(array $mapcat): void {
     foreach ($mapcat['maps'] as $mapid => $map) {
       //echo "<pre>$mapid -> "; print_r($map);
       //if ($mapid=='FR7133')
       //if ($mapid=='FR7052')
       //if ($mapid=='FR6835')
-      self::$maps[$mapid] = new MapCat($mapid, $map);
+      self::$maps[$mapid] = new self($mapid, $map);
     }
   }
   
@@ -44,7 +50,7 @@ class MapCat {
     return '1 : '.str_replace('.',' ',$this->map['insetMaps'][$i]['scaleDenominator']);
   }
   
-  static function cmpGans() {
+  static function cmpGans(): void {
     echo "<table border=1><th>mapid</th><th>badGan</th><th>inset</th>",
       "<th>cat'scale</th><th>gan'scale</th><th>ok?</th>",
       "<th>cat'SW</th><th>gan'SW</th><th>ok?</th>",
@@ -53,18 +59,18 @@ class MapCat {
       //echo "<pre>"; print_r($map); echo "</pre>";
       $gan = Gan::$gans[substr($mapid, 2)];
       //echo "<pre>"; print_r($gan); echo "</pre>";
-      if (isset($map->map['spatial']) && isset($gan->spatial['SW']) && $gan->spatial['SW'] && isset($gan->spatial['NE'])) {
+      if (isset($map->map['spatial']) && isset($gan->spatial()['SW']) && $gan->spatial()['SW'] && isset($gan->spatial()['NE'])) {
         $ganspatial = [
-          'SW' => str_replace('—', '-', $gan->spatial['SW']),
-          'NE' => str_replace('—', '-', $gan->spatial['NE']),
+          'SW' => str_replace('—', '-', $gan->spatial()['SW']),
+          'NE' => str_replace('—', '-', $gan->spatial()['NE']),
         ];
         $mapspatial = $map->map['spatial'];
         //echo "<pre>"; print_r($map); echo "</pre>";
-        if (isset($map->map['badGan']) || ($map->scale() <> $gan->scale)
+        if (isset($map->map['badGan']) || ($map->scale() <> $gan->scale())
             || ($mapspatial['SW'] <> $ganspatial['SW']) || ($mapspatial['NE'] <> $ganspatial['NE'])) {
           echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td></td>";
-          echo "<td>",$map->scale(),"</td><td>",$gan->scale,"</td>",
-            "<td>",($map->scale() == $gan->scale) ? 'ok' : '<b>KO</b>',"</td>\n";
+          echo "<td>",$map->scale(),"</td><td>",$gan->scale(),"</td>",
+            "<td>",($map->scale() == $gan->scale()) ? 'ok' : '<b>KO</b>',"</td>\n";
           echo "<td>$mapspatial[SW]</td><td>$ganspatial[SW]</td>",
             "<td>",($mapspatial['SW'] == $ganspatial['SW']) ? 'ok' : '<b>KO</b',"</td>";
           echo "<td></td><td>$mapspatial[NE]</td><td>$ganspatial[NE]</td>",
@@ -76,16 +82,16 @@ class MapCat {
         try {
           $ganpart = Gan::$gans[substr($mapid, 2)]->inSet(GBox::fromShomGt($insetMap['spatial']));
           $ganpartspatial = [
-            'SW' => str_replace('—', '-', $ganpart->spatial['SW']),
-            'NE' => str_replace('—', '-', $ganpart->spatial['NE']),
+            'SW' => str_replace('—', '-', $ganpart->spatial()['SW']),
+            'NE' => str_replace('—', '-', $ganpart->spatial()['NE']),
           ];
-          if (($ganpart->scale <> $map->insetScale($i))
+          if (($ganpart->scale() <> $map->insetScale($i))
              || ($ganpartspatial['SW'] <> $insetMap['spatial']['SW'])
              || ($ganpartspatial['NE'] <> $insetMap['spatial']['NE'])) {
             echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td>$insetMap[title]</td>";
             //echo "<td><pre>"; print_r($insetMap); echo "</pre></td>";
-            echo "<td>",$map->insetScale($i),"</td><td>",$ganpart->scale,"</td>",
-              "<td>",($ganpart->scale == $map->insetScale($i)) ? 'ok' : '<b>KO</b>',"</td>";
+            echo "<td>",$map->insetScale($i),"</td><td>",$ganpart->scale(),"</td>",
+              "<td>",($ganpart->scale() == $map->insetScale($i)) ? 'ok' : '<b>KO</b>',"</td>";
             echo "<td>",$insetMap['spatial']['SW'],"\n";
             //echo "<td><pre>"; print_r($ganpart); echo "</pre></td>";
             echo "<td>$ganpartspatial[SW]</td>",
@@ -103,19 +109,20 @@ class MapCat {
     echo "</table>\n";
   }
   
+  /** @param array<string, mixed> $map */
   function __construct(string $mapid, array $map) {
     $this->mapid = $mapid;
     $this->map = $map;
   }
 };
-MapCat::init(Yaml::parseFile(__DIR__.'/mapcat.yaml'));
+CmpMapCat::init(Yaml::parseFile(__DIR__.'/mapcat.yaml'));
 //echo '<pre>maps='; print_r(MapCat::$maps);
 
 /*PhpDoc: classes
 name: GanInSet
 title: class GanInSet - description d'un cartouche dans la synthèse d'une carte
 */
-class GanInSet {
+/*class GanInSet {
   protected string $title;
   public string $scale;
   public array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
@@ -134,14 +141,14 @@ class GanInSet {
       'spatial'=> $this->spatial,
     ];
   }
-};
+};*/
 
 /*PhpDoc: classes
 name: Gan
 title: class Gan - synthèse des GAN par carte à la date de moisson des GAN ou indication d'erreur d'interrogation des GAN
 doc: |
 */
-class Gan {
+/*class Gan {
   const GAN_DIR = __DIR__.'/gan';
   const PATH = __DIR__.'/../dashboard/gans.'; // chemin sans extension des fichiers stockant la synthèse en pser ou en yaml,
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
@@ -166,44 +173,12 @@ class Gan {
     return substr(date('o', $time), 2) . date('W', $time);
   }
   
-  // retourne le cartouche correspondant au qgbox
-  function inSet(GBox $qgbox): GanInSet {
-    //echo "<pre>"; print_r($this);
-    $dmin = 9e999;
-    $pmin = -1;
-    foreach ($this->inSets as $pnum => $part) {
-      //try {
-        $pgbox = GBox::fromShomGt([
-          'SW'=> str_replace('—','-', $part->spatial['SW']),
-          'NE'=> str_replace('—','-', $part->spatial['NE'])]);
-      /*}
-      catch (SExcept $e) {
-        echo "<pre>SExcept::message: ",$e->getMessage(),"\n";
-        //print_r($this);
-        return null;
-      }*/
-      $d = $qgbox->distance($pgbox);
-      //echo "pgbox=$pgbox, dist=$d\n";
-      if ($d < $dmin) {
-        $dmin = $d;
-        $pmin = $pnum;
-      }
-    }
-    if ($pmin == -1)
-      throw new SExcept("Aucun Part");
-    return $this->inSets[$pmin];
-  }
     
-  static function loadFromPser() { // charge les données depuis le pser 
-    $contents = unserialize(file_get_contents(self::PATH_PSER));
-    self::$hvalid = $contents['valid'];
-    self::$gans = $contents['gans'];
-  }
-};
+};*/
 
 echo "<!DOCTYPE HTML><html><head><title>cmpgan</title></head><body>\n";
 
-Gan::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
+GanStatic::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
 //echo '<pre>gans='; print_r(Gan::$gans);
 
-MapCat::cmpGans();
+CmpMapCat::cmpGans();

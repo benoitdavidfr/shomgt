@@ -68,10 +68,6 @@ function logRecord(array $log): void {
     $flag_append|LOCK_EX);
 }
 
-/*if (is_file(__DIR__.'/tileaccess.inc.php')) { // possibilité de restreindre l'accès dans certains cas 
-  require_once __DIR__.'/tileaccess.inc.php';
-}*/
-
 $options = explode(',', $_GET['options'] ?? 'none');
 foreach ($options as $option) {
   if ($option == 'version') {

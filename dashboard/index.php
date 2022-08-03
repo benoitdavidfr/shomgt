@@ -2,8 +2,9 @@
 // dashboard/index.php - 24/6/2022
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../sgserver/lib/mapversion.inc.php';
-require_once __DIR__.'/lib/gegeom.inc.php';
+require_once __DIR__.'/../lib/mapversion.inc.php';
+require_once __DIR__.'/gan.inc.php';
+require_once __DIR__.'/../lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -26,21 +27,24 @@ function addUndescoreForThousand(?int $scaleden): string {
   elseif ($scaleden < 1000)
     return sprintf('%d', $scaleden);
   else
-    return addUndescoreForThousand(floor($scaleden/1000)).'_'.sprintf('%03d', $scaleden - 1000 * floor($scaleden/1000));
+    return addUndescoreForThousand(intval(floor($scaleden/1000)))
+      .'_'.sprintf('%03d', $scaleden - 1000 * floor($scaleden/1000));
 }
 
-class Zee { // liste de polygones de la ZEE chacun associé à une zoneid
+class Zee { // liste des polygones de la ZEE chacun associé à une zoneid
   protected string $id;
   protected Polygon $polygon;
+  /** @var array<int, Zee> $all */
   static array $all=[]; // [ Zee ]
   
+  /** @param TGeoJsonFeature $ft */
   static function add(array $ft): void { // ajoute un feature
     if ($ft['geometry']['type'] == 'Polygon')
-      self::$all[] = new self($ft['properties']['zoneid'], Geometry::fromGeoJSON($ft['geometry']));
+      self::$all[] = new self($ft['properties']['zoneid'], new Polygon($ft['geometry']['coordinates']));
     else { // MultiPolygon
       foreach ($ft['geometry']['coordinates'] as $pol) {
-        self::$all[] = new self($ft['properties']['zoneid'], Geometry::fromGeoJSON(['type'=>'Polygon', 'coordinates'=>$pol]));
-       }
+        self::$all[] = new self($ft['properties']['zoneid'], new Polygon($pol));
+      }
     }
   }
   
@@ -56,12 +60,13 @@ class Zee { // liste de polygones de la ZEE chacun associé à une zoneid
     $this->polygon = $polygon;
   }
   
-  static function inters(Geometry $geom): array { // retourne la liste des zoneid des polygones intersectant la géométrie
+  /** @return array<int, string> */
+  static function inters(MultiPolygon $mpol): array { // retourne la liste des zoneid des polygones intersectant la géométrie
     if (!self::$all)
-      die("Erreur, Zee doit être initialisé\n");  
+      throw new Exception("Erreur, Zee doit être initialisé\n");  
     $result = [];
     foreach (self::$all as $zee) {
-      if ($geom->inters($zee->polygon))
+      if ($mpol->inters($zee->polygon))
         $result[$zee->id] = 1;
     }
     ksort($result);
@@ -69,39 +74,58 @@ class Zee { // liste de polygones de la ZEE chacun associé à une zoneid
   }
 };
 
+/**
+ * MapFromWfs - liste des cartes définies dans le WFS 
+ *
+ * Chaque carte est définie par ses propriétés et sa géométrie
+ * La liste des cartes est fournie dans la variable $fts indexée sur la propriété carte_id
+ */
 class MapFromWfs {
-  static array $fts; // liste des features indexés sur carte_id
+  /** @var array<string, string> $prop */
+  protected array $prop;
+  protected MultiPolygon $mpol;
+  
+  /** @var array<string, MapFromWfs> $fts */
+  static array $fts; // liste des MapFromWfs indexés sur carte_id
   
   static function init(): void {
     $fc = json_decode(file_get_contents(__DIR__.'/../shomft/gt.json'), true);
-    foreach ($fc['features'] as $gmap)
-      self::$fts[$gmap['properties']['carte_id']] = $gmap;
+    foreach ($fc['features'] as $gmap) {
+      self::$fts[$gmap['properties']['carte_id']] = new self($gmap);
+    }
+  }
+  
+  /** @param TGeoJsonFeature $gmap */
+  function __construct(array $gmap) {
+    $this->prop = $gmap['properties'];
+    $this->mpol = MultiPolygon::fromGeoArray($gmap['geometry']);
   }
   
   static function show(): void { // affiche le statut de chaque carte Wfs
     foreach (self::$fts as $gmap) {
       //print_r($gmap);
-      if ($gmap['properties']['scale'] > 6e6)
-        echo '"',$gmap['properties']['name'],"\" est à petite échelle<br>\n";
-      elseif ($mapsFr = Zee::inters(Geometry::fromGeoJSON($gmap['geometry'])))
-        echo '"',$gmap['properties']['name'],"\" intersecte ",implode(',',$mapsFr),"<br>\n";
+      if ($gmap->prop['scale'] > 6e6)
+        echo '"',$gmap->prop['name'],"\" est à petite échelle<br>\n";
+      elseif ($mapsFr = Zee::inters($gmap->mpol))
+        echo '"',$gmap->prop['name'],"\" intersecte ",implode(',',$mapsFr),"<br>\n";
       else
-        echo '"',$gmap['properties']['name'],"\" N'intersecte PAS la ZEE<br>\n";
+        echo '"',$gmap->prop['name'],"\" N'intersecte PAS la ZEE<br>\n";
     }
   }
   
+  /** @return array<int, string> */
   static function interest(): array { // liste des cartes d'intérêt
     $list = [];
-    foreach (self::$fts as $gmap) {
-      if ((isset($gmap['properties']['scale']) && ($gmap['properties']['scale'] > 6e6))
-          || Zee::inters(Geometry::fromGeoJSON($gmap['geometry'])))
-        $list[] = $gmap['properties']['carte_id'];
+    foreach (self::$fts as $id => $gmap) {
+      if ((isset($gmap->prop['scale']) && ($gmap->prop['scale'] > 6e6)) || Zee::inters($gmap->mpol))
+        $list[] = $gmap->prop['carte_id'];
     }
     return $list;
   }
 };
 
 class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu de maps.json
+  /** @var array<string, string|array<string, int|string>> $all */
   static array $all; // contenu du fichier maps.json
   
   static function init(): void {
@@ -114,6 +138,7 @@ class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu de maps.j
     return isset(self::$all[$mapnum]) && (self::$all[$mapnum]['status']=='ok');
   }
   
+  /** @return array<string, string|array<string, int|string>> */
   static function actives(): array { // sélection des cartes actives 
     $actives = [];
     foreach (self::$all as $mapnum => $map) {
@@ -175,124 +200,30 @@ if ($_GET['a'] == 'newObsoleteMaps') { // détecte de nouvelles cartes à ajoute
   }
 }
 
-class GanInSet { // cartouche d'une carte 
+class DbMapCat { // chargement d'un extrait de mapcat.yaml
   protected string $title;
-  protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  
-  function __construct(string $html) {
-    //echo "html=$html\n";
-    if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $html, $matches))
-      throw new Exception("Erreur de construction de GanInSet sur '$html'");
-    $this->title = trim($matches[1]);
-    $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
-  }
-  
-  function asArray(): array {
-    return [
-      'title'=> $this->title,
-      'spatial'=> $this->spatial,
-    ];
-  }
-};
-
-class Gan { // chargement de la synthèse des GANs par carte 
-  const GAN_DIR = __DIR__.'/gan';
-  const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
-  const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
-  const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
-  // le champ édition du GAN comporte des erreurs qui perturbent le TdB, ci-dessous corrections
-  // Il se lit {{num}=> [{edACorriger}=> {edCorrigée}]}
-  // Liste d'écarts transmise le 15/6/2022 au Shom
-  // Les écarts ci-dessous sont ceux restants après corrections du Shom
-  const CORRECTIONS = [
-    '6942'=> ["Edition n°3 - 2015"=> "Edition n°3 - 2016"],
-    '7143'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
-    '7268'=> ["Publication 1992"=> "Publication 1993"],
-    '7411'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
-    '7414'=> ["Edition n°3 - 2013"=> "Edition n°3 - 2014"],
-    '7507'=> ["Publication 1995"=> "Publication 1996"],
-    '7593'=> ["Publication 2002"=> "Publication 2003"],
-    '7755'=> ["Publication 2015"=> "Publication 2016"],
-  ];
-
-  static string $hvalid=''; // intervalles des dates de la moisson des GAN
-  static array $gans=[]; // dictionnaire [$mapnum => Gan]
-  
-  protected string $mapnum;
-  protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
-  protected string $title; // titre
-  protected ?string $edition=''; // edition
-  protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  protected array $inSets; // cartouches
-  public readOnly array $corrections; // liste des corrections
-  protected array $analyzeErrors; // erreurs éventuelles d'analyse du résultat du moissonnage
-  protected string $valid; // date de moissonnage du GAN en format ISO
-  protected string $harvestError; // erreur éventuelle du moissonnage
-
-  static function week(string $modified): string { // transforme une date en semaine sur 4 caractères comme utilisé par le GAN 
-    $time = strtotime($modified);
-    return substr(date('o', $time), 2) . date('W', $time);
-  }
-  
-  static function init(): void {
-    $contents = unserialize(file_get_contents(self::PATH_PSER));
-    self::$hvalid = $contents['valid'];
-    self::$gans = $contents['gans'];
-  }
-  
-  static function item(string $mapnum): ?self { return self::$gans[$mapnum] ?? null; }
-  
-  function version(): string { // calcule la version sous la forme {anneeEdition}c{noCorrection}
-    // COORECTIONS DU GAN
-    if (isset(self::CORRECTIONS[$this->mapnum][$this->edition]))
-      $this->edition = self::CORRECTIONS[$this->mapnum][$this->edition];
-
-    if (!$this->edition && !$this->corrections)
-      return 'undefined';
-    if (preg_match('!^Edition n°\d+ - (\d+)$!', $this->edition, $matches)) {
-      $anneeEdition = $matches[1];
-      // "anneeEdition=$anneeEdition<br>\n";
-    }
-    elseif (preg_match('!^Publication (\d+)$!', $this->edition, $matches)) {
-      $anneeEdition = $matches[1];
-      //echo "anneeEdition=$anneeEdition<br>\n";
-    }
-    else {
-      throw new Exception("No match pour version edition='$this->edition'");
-    }
-    if (!$this->corrections) {
-      return $anneeEdition.'c0';
-    }
-    else {
-      $lastCorrection = $this->corrections[count($this->corrections)-1];
-      $num = $lastCorrection['num'];
-      return $anneeEdition.'c'.$num;
-    }
-    echo "mapnum=$this->mapnum, edition=$this->edition<br>\n";
-    echo "<pre>corrections = "; print_r($this->corrections); echo "</pre>";
-  }
-};
-
-class Mapcat { // chargement d'un extrait de mapcat.yaml
-  protected string $title;
+  /** @var array<int, string> $mapsFrance */
   protected array $mapsFrance;
   
-  static array $all; // [mapNum => MapCat]
+  /** @var array<string, DbMapCat> $all */
+  static array $all; // [mapNum => DbMapCat]
   
-  static function init() {
+  static function init(): void {
     $mapcat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
     foreach ($mapcat['maps'] as $mapid => $map) {
       $mapNum = substr($mapid, 2);
-      self::$all[$mapNum] = new self($mapNum, $map);
+      self::$all[$mapNum] = new self($map);
     }
   }
   
   static function item(string $mapNum): ?self { return self::$all[$mapNum] ?? null; }
   
   function title(): string { return $this->title; }
+  /** @return array<int, string> */
   function mapsFrance(): array { return $this->mapsFrance; }
   
-  function __construct(string $mapNum, array $map) {
+  /** @param array<string, mixed> $map */
+  function __construct(array $map) {
     $this->title = $map['title'];
     $this->mapsFrance = $map['mapsFrance'];
   }
@@ -313,13 +244,16 @@ class Mapcat { // chargement d'un extrait de mapcat.yaml
   }
 };
 
-class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher le tableau des degrés de péremption
+class Perempt { // croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption
   protected string $mapNum;
   protected string $pfVersion; // info du portefeuille 
   protected string $pfModified; // info du portefeuille 
   protected string $ganVersion=''; // info du GAN 
+  /** @var array<int, array<string, string>> $ganCorrections */
   protected array $ganCorrections=[]; // info du GAN
   protected float $degree; // degré de péremption
+  
+  /** @var array<string, Perempt> $all */
   static array $all; // [mapNum => Perempt]
 
   static function init(): void { // construction à partir du portefeuille 
@@ -329,6 +263,7 @@ class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher
     }
   }
   
+  /** @param array<string, string> $map */
   function __construct(string $mapNum, array $map) {
     //echo "<pre>"; print_r($map);
     $this->mapNum = $mapNum;
@@ -338,17 +273,18 @@ class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher
   
   function setGan(Gan $gan): void { // Mise à jour de perempt à partir du GAN
     $this->ganVersion = $gan->version();
-    $this->ganCorrections = $gan->corrections;
+    $this->ganCorrections = $gan->corrections();
     $this->degree = $this->degree();
   }
 
-  function title(): string { return MapCat::item($this->mapNum)->title(); }
-  function mapsFrance(): array { return MapCat::item($this->mapNum)->mapsFrance(); }
+  function title(): string { return DbMapCat::item($this->mapNum)->title(); }
+  /** @return array<int, string> */
+  function mapsFrance(): array { return DbMapCat::item($this->mapNum)->mapsFrance(); }
     
   function degree(): float { // calcul du degré de péremption 
     if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undefined'))
       return -1;
-    $spc = MapCat::item($this->mapNum)->spatialCoeff();
+    $spc = DbMapCat::item($this->mapNum)->spatialCoeff();
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
       $pfYear = $matches[1];
       $pfNCor = $matches[2];
@@ -421,7 +357,7 @@ class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher
     echo "<td>",implode(', ', $this->mapsFrance()),"</td>";
     echo "<td>$this->pfModified</td>";
     echo "<td>$this->pfVersion</td>";
-    $ganWeek = Gan::week($this->pfModified);
+    $ganWeek = GanStatic::week($this->pfModified);
     $href = "https://gan.shom.fr/diffusion/qr/gan/$this->mapNum/$ganWeek";
     echo "<td><a href='$href' target='_blank'>$this->ganVersion</a></td>";
     printf("<td>%.2f</td>", $this->degree);
@@ -437,13 +373,12 @@ class Perempt { // croisement entre le portfeuille et les GANs en vue d'afficher
 
 if ($_GET['a'] == 'perempt') { // appel du croisement 
   Portfolio::init(); // initialisation à partir du portefeuille
-  MapCat::init(); // chargement du fichier mapcat.yaml
-  Gan::init(); // chargement de la synthèse des GANs
-  //echo "<pre>Gan="; print_r(Gan::$gans);
+  DbMapCat::init(); // chargement du fichier mapcat.yaml
+  GanStatic::loadFromPser(); // chargement de la synthèse des GANs
   Perempt::init(); // construction à partir du portefeuille
   // Mise à jour de perempt à partir du GAN
   foreach (Perempt::$all as $mapNum => $perempt) {
-    if (!($gan = Gan::item($mapNum)))
+    if (!($gan = GanStatic::item($mapNum)))
       echo "Erreur, Gan absent pour carte $mapNum\n";
     else
       $perempt->setGan($gan);

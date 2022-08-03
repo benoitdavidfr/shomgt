@@ -4,7 +4,7 @@ title: mapversion.inc.php - gère les versions des cartes du portefeuille
 name: mapversion.inc.php
 doc: |
 */
-require_once __DIR__.'/../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/SevenZipArchive.php';
 require_once __DIR__.'/readmapversion.inc.php';
 
@@ -20,6 +20,7 @@ class MapVersion {
   protected ?string $modified=null; // date de dernière modification de la dernière version (issue du champ dateStamp des MD)
   protected ?string $lastDelivery=null; // nom du répertoire de livraison correspondant à la version
   
+  /** @return array<int, string> */
   static function deliveries(string $INCOMING_PATH): array { // liste des livraisons triées 
     $deliveries = []; // liste des livraisons qu'il est nécessaire de trier 
     foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
@@ -33,6 +34,7 @@ class MapVersion {
   
   // fabrique un objet à partir soit du status 'ok' et de l'info ['version'=> {version}, 'dateStamp'=> {dateStamp}]
   // retournée par self::getFrom7z(), soit du status 'obsolete'
+  /** @param array<string, string> $mapVersion */
   private function __construct(string $status, array $mapVersion=[]) {
     if ($status == 'obsolete')
       $this->status = 'obsolete';
@@ -58,6 +60,7 @@ class MapVersion {
     //print_r($this);
   }
   
+  /** @return array<string, string|int> */
   private function asArray(string $mapnum): array { // fabrique un array pour allAsArray()
     $https = (($_SERVER['HTTPS'] ?? '') == 'on') ? 'https' : 'http';
     return [
@@ -73,6 +76,7 @@ class MapVersion {
   // le dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}] où {version} est le libellé de la version
   // et {dateStamp} est la date de dernière modification du fichier des MD de la carte
   // Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.
+  /** @return array<string, string> */
   static function getFrom7z(string $pathOf7z): array {
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
     $archive = new SevenZipArchive($pathOf7z);
@@ -96,6 +100,7 @@ class MapVersion {
   }
 
   // construit si nécessaire et enregistre les versions de carte pour la livraison
+  /** @return array<string, MapVersion> */
   private static function buildForADelivery(string $deliveryPath): array {
     //echo "buildForADelivery($deliveryPath)<br>\n";
     if (is_file("$deliveryPath/mapversions.pser") && (filemtime("$deliveryPath/mapversions.pser") > filemtime($deliveryPath))) {
@@ -126,6 +131,7 @@ class MapVersion {
   }
   
   // construit si nécessaire et enregistre les versions de cartes pour toutes les livraisons
+  /** @return array<string, MapVersion> */
   private static function buildAll(string $INCOM_PATH): array {
     if (is_file("$INCOM_PATH/mapversions.pser") && (filemtime("$INCOM_PATH/mapversions.pser") > filemtime($INCOM_PATH))) {
       return unserialize(file_get_contents("$INCOM_PATH/mapversions.pser"));
@@ -148,6 +154,7 @@ class MapVersion {
   }
   
   // construit l'array à fournir pour maps.json
+  /** @return array<string|int, array<string, string|int>> */
   static function allAsArray(string $INCOMING_PATH): array {
     $allAsArray = [];
     $mapVersions = self::buildAll($INCOMING_PATH);

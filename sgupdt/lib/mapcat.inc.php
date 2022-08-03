@@ -14,14 +14,14 @@ require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/execdl.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
-class MapCat {
+class TempMapCat {
   const MAPCAT_TEMP_PATH = __DIR__.'/../temp/mapcat.json';
   protected string $name; // le nom de la carte
   /** @var array<string, mixed> $map */
   protected array $map; // les caractéristiques de la carte correspondant au fichier mapcat.yaml
   
-  /** @var array<string, MapCat> $cat */
-  static array $cat; // catalogue [{mapName} => MapCat]
+  /** @var array<string, TempMapCat> $cat */
+  static array $cat; // catalogue [{mapName} => TempMapCat]
   
   // si $option == 'download' ou si le fichier mapcat.json n'existe pas alors télécharge mapcat.json depuis $SHOMGT3_SERVER_URL
   // puis initialise self::$cat à partir du fichier 
@@ -72,7 +72,7 @@ class MapCat {
     ];
   }
     
-  // sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet MapCat
+  // sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet TempMapCat
   private function insetMapFromRect(GBox $georefrect): ?self {
     $distmin = INF;
     $best = -1;
@@ -112,7 +112,7 @@ class MapCat {
     }
   }
   
-  // extrait de MapCat ceux ayant un champ toDelete
+  // extrait de TempMapCat ceux ayant un champ toDelete
   // et retourne un array [{gtname}=> {toDelete}] / {toDelete} défini par mapcat.schema.yaml
   /** @return array<string, array<string, array<int, mixed>>> */
   static function allZonesToDelete(): array {
@@ -153,13 +153,13 @@ class MapCat {
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire
 
 
-//MapCat::init('download');
-MapCat::init();
+//TempMapCat::init('download');
+TempMapCat::init();
 echo "<pre>";
-//print_r(MapCat::fromGtname('6969_pal300', false));
-//print_r(MapCat::fromGtname('7420_4_gtw', false));
-//print_r(MapCat::fromGtname('7420_4_gtw', true));
-//print_r(MapCat::fromGtname('8509_pal300', false));
+//print_r(TempMapCat::fromGtname('6969_pal300', false));
+//print_r(TempMapCat::fromGtname('7420_4_gtw', false));
+//print_r(TempMapCat::fromGtname('7420_4_gtw', true));
+//print_r(TempMapCat::fromGtname('8509_pal300', false));
 
-print_r(MapCat::allZonesToDelete());
+print_r(TempMapCat::allZonesToDelete());
 

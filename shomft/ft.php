@@ -28,6 +28,7 @@ require_once __DIR__.'/lib/wfsserver.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 // enregistrement d'un log temporaire pour aider au déverminage
+/** @param array<mixed> $log */
 function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
   $append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
@@ -79,7 +80,8 @@ function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): vo
 function self(): string { return "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; }
 
 class FtServer {
-  static $collections = [
+  /** @var array<string, array<string, string|array<string, string>>> $collections */
+  static array $collections = [
     'gt'=> [
       'title'=> "Silhouettes des GéoTiffs",
       'url'=> '',
@@ -92,7 +94,7 @@ class FtServer {
       ],
     ],
     'delmar'=> [
-      'title'=> "Délimitations martimes",
+      'title'=> "Délimitations maritimes",
       'url'=> '',
       'shomIds'=> [
         'baseline'=> 'DELMAR_BDD_WFS:au_baseline',
@@ -116,7 +118,7 @@ class FtServer {
   function get(string $colName): void {
     $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
     
-    if (0) { // affiche les FeatureTypes
+    if (0) { // @phpstan-ignore-line // affiche les FeatureTypes
       $cols = [];
       foreach (self::$collections['gt']['shomIds'] as $shomId) {
         $cols[$shomId] = $shomFt->collection($shomId);
@@ -132,7 +134,7 @@ class FtServer {
         $count = 1000;
         $numberReturned = 0;
         while (1) {
-          $items = $shomFt->items($shomId, [], $count, $startindex);
+          $items = $shomFt->items($shomId, $count, $startindex);
           //$gt[$sid][$startindex] = $items;
           foreach ($items['features'] as $ft) {
             if ($sid == 'gtaem') { // adaptaion des propriétés des cartes spéciales 
@@ -153,7 +155,7 @@ class FtServer {
             ];
           }
           $numberReturned += $items['numberReturned'];
-          if ($numberReturned >= $items['totalFeatures'])
+          if ($numberReturned >= $items['totalFeatures']) // @phpstan-ignore-line
             break;
           $startindex += $count;
         }
@@ -165,7 +167,7 @@ class FtServer {
     }
   }
   
-  function collections() {
+  function collections(): never {
     foreach (self::$collections as $colName => &$coll) {
       $coll['url'] = self()."/$colName";
     }
@@ -177,7 +179,7 @@ class FtServer {
     die();
   }
   
-  function collection(string $colName) {
+  function collection(string $colName): never {
     self::$collections[$colName]['url'] = self()."/items";
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode(
@@ -187,7 +189,7 @@ class FtServer {
     die();
   }
   
-  function items(string $colName) {
+  function items(string $colName): never {
     if (!isset(self::$collections[$colName])) {
       sendHttpCode(400, "collection non prévue");
     }
@@ -199,13 +201,13 @@ class FtServer {
     die();
   }
   
-  function home() {
+  function home(): never {
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode(['collections'=> self().'/collections']);
     die();
   }
   
-  function run(?string $path_info) {
+  function run(?string $path_info): void {
     if (!$path_info)
       $this->home();
     elseif ($path_info == '/collections') {
