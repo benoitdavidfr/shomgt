@@ -90,7 +90,7 @@ journal: |
 includes:
   - jsonschfrg.inc.php
 */
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/jsonschfrg.inc.php';
 
 use Symfony\Component\Yaml\Yaml;

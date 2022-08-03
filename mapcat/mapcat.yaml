@@ -4795,13 +4795,10 @@ maps:
         spatial: { SW: '12°47,50''S - 045°13,90''E', NE: '12°45,30''S - 045°17,00''E' }
   FR7494:
     groupTitle: 'Archipel des Comores'
-    title: 'Île de Mayotte - Partie Ouest, De Chissioua Mbouini à la Baie d''Acoua'
-    mapsFrance:
-      - YT
+    title: "Île de Mayotte - Partie Ouest, De Chissioua Mbouini à la Baie d'Acoua"
+    mapsFrance: [YT]
     scaleDenominator: '35.000'
-    spatial:
-      SW: '13°04,00''S - 044°55,40''E'
-      NE: '12°43,10''S - 045°10,23''E'
+    spatial: { SW: "13°04,00'S - 044°55,40'E", NE: "12°43,10'S - 045°10,00'E" }
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 7494 au cours de l''édition n°3 concernent principalement la mise à jour de délimitations maritimes.'
   FR7507:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'

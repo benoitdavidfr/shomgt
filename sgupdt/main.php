@@ -233,7 +233,7 @@ function expand(string $map7zpath): void { // expansion d'une carte télécharg�
 }
 
 // télécharge la carte, l'expanse et l'installe dans le répertoire courant, retourne le libellé du code http
-function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string|never {
+function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string {
   $url = "$SERVER_URL/maps/$mapnum.7z";
   //echo "\$url=$url\n";
   switch ($httpCode = download($url, "$TEMP/$mapnum.7z", CMDE_VERBOSE)) {
