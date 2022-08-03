@@ -269,7 +269,8 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
   }
 };
 
-if (!isset($_SERVER['PATH_INFO'])) { // Test de WfsGeoJson sur le serveur WFS du Shom
+// Test de WfsGeoJson sur le serveur WFS du Shom
+if (!isset($_SERVER['PATH_INFO']) && ((__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']) || (($argv[0] ?? '') == basename(__FILE__)))) {
   $wfsShom = new WfsGeoJson('https://services.data.shom.fr/INSPIRE/wfs');
   switch ($_GET['a'] ?? null) {
     case null: {
