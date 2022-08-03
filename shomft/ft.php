@@ -80,6 +80,7 @@ function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): vo
 function self(): string { return "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; }
 
 class FtServer {
+  // définition des collections de ce serveur à partir de celles du serveur WFS du Shom
   /** @var array<string, array<string, string|array<string, string>>> $collections */
   static array $collections = [
     'gt'=> [
