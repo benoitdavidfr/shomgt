@@ -1,0 +1,11 @@
+date: '2022-08-03T15:05:01+00:00'
+appel: 'WfsServer::url'
+params:
+    VERSION: 2.0.0
+    REQUEST: GetFeature
+    TYPENAMES: 'DELMAR_BDD_WFS:au_baseline'
+    OUTPUTFORMAT: application/json
+    SRSNAME: 'CRS:84'
+    COUNT: 100
+    STARTINDEX: 0
+url: 'https://services.data.shom.fr/INSPIRE/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=DELMAR_BDD_WFS:au_baseline&OUTPUTFORMAT=application/json&SRSNAME=CRS:84&COUNT=100&STARTINDEX=0'
