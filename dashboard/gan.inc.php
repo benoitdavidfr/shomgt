@@ -229,7 +229,7 @@ class Gan {
     $pmin = -1;
     foreach ($this->inSets as $pnum => $part) {
       //try {
-        $pgbox = GBox::fromShomGt([
+        $pgbox = GBox::fromGeoDMd([
           'SW'=> str_replace('—','-', $part->spatial()['SW']),
           'NE'=> str_replace('—','-', $part->spatial()['NE'])]);
       /*}

@@ -279,12 +279,12 @@ class GBox extends BBox {
  
   // Crée un GBox à partir d'un rect tel que défini dans shomgt.yaml, voir les tests
   /** @param array<string, string> $rect */
-  static function fromShomGt(array $rect): self {
+  static function fromGeoDMd(array $rect): self {
     foreach(['SW','NE'] as $c) {
       if (!isset($rect[$c]))
         throw new SExcept("Paramètre $c non défini dans GBox::fromShomGt()", self::ErrorParamInFromShomGt);
       if (is_string($rect[$c])) {
-        $rect[$c] = Pos::fromGeoCoords($rect[$c]);
+        $rect[$c] = Pos::fromGeoDMd($rect[$c]);
       }
       elseif (!is_array($rect[$c]))
         throw new SExcept("Paramètre $c mal défini dans GBox::fromShomGt()", self::ErrorParamInFromShomGt);
@@ -295,7 +295,7 @@ class GBox extends BBox {
     return new GBox([$rect['SW'][0], $rect['SW'][1], $rect['NE'][0], $rect['NE'][1]]);
   }
   
-  static function fromShomGtTest(): void {
+  static function fromGeoDMdTest(): void {
     echo "<table border=1><th></th><th>paramètre</th><th>résultat</th>";
     foreach ([
       ['SW'=> "42°39,93'N - 9°00,93'E", 'NE'=> "43°08,95'N - 9°28,64'E", 'descr'=> "ok DM"],
@@ -308,7 +308,7 @@ class GBox extends BBox {
     ] as $rect) {
       echo "<tr><td>";
       try {
-        $gbox = self::fromShomGt($rect);
+        $gbox = self::fromGeoDMd($rect);
       }
       catch(SExcept $e) {
         echo "SExcept: {c: ",$e->getSCode(),", m: '",$e->getMessage(),"'}";
@@ -327,8 +327,8 @@ class GBox extends BBox {
       ['SW'=> "42°39,93'N - 9°00,93'E", 'NE'=> "43°08,95'N - 9°28,64'E"],
       ['SW'=> "30°S - 153°E", 'NE'=> "8°S - 174°W"],
     ] as $rect) {
-      print_r($rect); echo " -> ",self::fromShomGt($rect)->intersectsAntiMeridian() ? 'T' : 'F',"<br>\n";
-      echo self::fromShomGt($rect)->translate360West(),"<br>\n";
+      print_r($rect); echo " -> ",self::fromGeoDMd($rect)->intersectsAntiMeridian() ? 'T' : 'F',"<br>\n";
+      echo self::fromGeoDMd($rect)->translate360West(),"<br>\n";
     }
   }
   
@@ -415,8 +415,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     BBox::intersectsTest();
     echo "<b>Test de GBox::dist</b><br>\n";
     GBox::distTest();
-    echo "<b>Test de GBox::fromShomGt</b><br>\n";
-    //GBox::fromShomGtTest();
+    echo "<b>Test de GBox::fromGeoDMd</b><br>\n";
+    GBox::fromGeoDMdTest();
     echo "<b>Test de GBox::intersectsAntiMeridian</b><br>\n";
     GBox::intersectsAntiMeridianTest();
   }

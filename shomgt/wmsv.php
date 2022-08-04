@@ -172,18 +172,18 @@ class WmsvShomGt extends WmsServer {
     }
     switch ($format) {
       case 'text/html': {
-        echo "<pre>pos: ",Pos::formatInDMd($geo, $resolution),"</pre>\n";
+        echo "<pre>pos: ",Pos::formatInGeoDMd($geo, $resolution),"</pre>\n";
         echo "<pre>",Yaml::dump($info, 4, 2),"</pre>\n";
         die();
       }
       case 'application/json': {
         die(json_encode([
-          'pos'=> Pos::formatInDMd($geo, $resolution),
+          'pos'=> Pos::formatInGeoDMd($geo, $resolution),
           'info'=> $info,
         ]));
       }
       default: {
-        echo "pos: ",Pos::formatInDMd($geo, $resolution),"\n";
+        echo "pos: ",Pos::formatInGeoDMd($geo, $resolution),"\n";
         echo Yaml::dump($info, 4, 2),"\n";
         die();
       }

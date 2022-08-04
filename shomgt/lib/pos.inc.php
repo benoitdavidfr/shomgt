@@ -65,9 +65,9 @@ class LElts {
 
 
 class Pos {
-  const GEOCOORDS_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
+  const GEODMD_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
   
-  const ErrorParamInFromGeoCoords = 'Pos::ErrorParamInFromGeoCoords';
+  const ErrorParamInFromGeoDMd = 'Pos::ErrorParamInFromGeoDMd';
   
   // teste si une variable correspond à une position
   static function is(mixed $pos): bool {
@@ -76,9 +76,9 @@ class Pos {
   
   // décode une position en coords géo. degré minutes
   /** @return TPos */
-  static function fromGeoCoords(string $geocoords): array {
-    if (!preg_match(self::GEOCOORDS_PATTERN, $geocoords, $matches))
-      throw new SExcept("No match in Pos::fromGeoCoords($geocoords)", self::ErrorParamInFromGeoCoords);
+  static function fromGeoDMd(string $geoDMd): array {
+    if (!preg_match(self::GEODMD_PATTERN, $geoDMd, $matches))
+      throw new SExcept("No match in Pos::fromGeoDMd($geoDMd)", self::ErrorParamInFromGeoDMd);
     //echo "<pre>matches="; print_r($matches); echo "</pre>\n";
     $lat = ($matches[6]=='N' ? 1 : -1) * 
       ($matches[1] + (($matches[3] ? $matches[3] : 0) + ($matches[5] ? ".$matches[5]" : 0))/60);
@@ -89,7 +89,7 @@ class Pos {
     return [$lon, $lat];
   }
   
-  // Formate une coord. lat ou lon
+  // Formatte une coord. lat ou lon
   static function formatCoordInDMd(float $coord, int $nbposMin): string {
     $min = number_format(($coord-floor($coord))*60, $nbposMin, ','); // minutes formattées
     //echo "min=$min<br>\n";
@@ -105,8 +105,9 @@ class Pos {
   }
   
   // Formate une position (lon,lat) en lat,lon degrés, minutes décimales
+  // $resolution est la résolution de la position en degrés à conserver
   /** @param TPos $pos */
-  static function formatInDMd(array $pos, float $resolution): string {
+  static function formatInGeoDMd(array $pos, float $resolution): string {
     //return sprintf("[%f, %f]",$pos[0], $pos[1]);
     $lat = $pos[1];
     $lon = $pos[0];
@@ -187,8 +188,8 @@ class LLPos {
 
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
 
-echo Pos::formatInDMd([0.5647, -12.5437], 1e-5),"<br><br>\n";
-echo Pos::formatInDMd([-4.095260926966, 47.215410583557], 0.04),"<br><br>\n";
+echo Pos::formatInGeoDMd([0.5647, -12.5437], 1e-5),"<br><br>\n";
+echo Pos::formatInGeoDMd([-4.095260926966, 47.215410583557], 0.04),"<br><br>\n";
 
 foreach ([
   "liste vide"=> [], 

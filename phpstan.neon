@@ -17,7 +17,7 @@ parameters:
     - mapwcat.php
     - tile.php
     - wms.php
-    - lib
+    - main
     - shomgt
     - sgupdt
     - sgserver
@@ -27,4 +27,4 @@ parameters:
     - shomft
   excludePaths:
     analyse:
-      - lib/SevenZipArchive.php
+      - main/lib/SevenZipArchive.php

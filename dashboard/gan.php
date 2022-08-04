@@ -51,7 +51,7 @@ journal: |
 includes: [../lib/config.inc.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../lib/mapversion.inc.php';
+require_once __DIR__.'/../main/lib/mapversion.inc.php';
 require_once __DIR__.'/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;

@@ -80,7 +80,7 @@ class CmpMapCat {
       }
       foreach ($map->map['insetMaps']  ?? [] as $i => $insetMap) {
         try {
-          $ganpart = Gan::$gans[substr($mapid, 2)]->inSet(GBox::fromShomGt($insetMap['spatial']));
+          $ganpart = Gan::$gans[substr($mapid, 2)]->inSet(GBox::fromGeoDMd($insetMap['spatial']));
           $ganpartspatial = [
             'SW' => str_replace('—', '-', $ganpart->spatial()['SW']),
             'NE' => str_replace('—', '-', $ganpart->spatial()['NE']),

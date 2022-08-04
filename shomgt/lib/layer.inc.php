@@ -199,7 +199,7 @@ class LabelLayer extends Layer {
   /** @param array<string, array<string, mixed>> $dictOfGT */
   function __construct(string $lyrName, array $dictOfGT) {
     foreach ($dictOfGT as $gtname => $gt) {
-      $gbox = GBox::fromShomGt($gt['spatial']);
+      $gbox = GBox::fromGeoDMd($gt['spatial']);
       $nw = WorldMercator::proj([$gbox->west(), $gbox->north()]);
       $dilate = self::dilate($lyrName);
       $nw[0] -= $dilate;
@@ -258,14 +258,14 @@ class TiffLayer extends Layer {
     foreach ($dictOfGT as $gtname => $gt) {
       foreach ($gt['outgrowth'] ?? [] as $i => $outgrowth) {
         // l'excroissance est dialtée pour compenser l'érosion sur la partie principale
-        $gt['outgrowth'][$i] = GBox::fromShomGt($outgrowth)->proj('WorldMercator')->dilate(-self::dilate($lyrName));
+        $gt['outgrowth'][$i] = GBox:: fromGeoDMd($outgrowth)->proj('WorldMercator')->dilate(-self::dilate($lyrName));
       }
       foreach ($gt['borders'] ?? [] as $k => $b)
         $gt['borders'][$k] = eval("return $b;"); // si c'est une expression, l'évalue et stocke le résultat
       $this->geotiffs[$gtname] = [
         'title'=> $gt['title'],
         // l'extension spatiale est légèrement errodée pour éviter d'affichier le trait noir du bord
-        'spatial'=> GBox::fromShomGt($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
+        'spatial'=> GBox:: fromGeoDMd($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
         'outgrowth'=> $gt['outgrowth'] ?? [],
         'borders'=> $gt['borders'] ?? null,
         'deleted' => $gt['deleted'] ?? null,
@@ -428,7 +428,7 @@ class TiffLayer extends Layer {
     $mpolygon = [];
     foreach ($gt['deleted']['bboxes'] ?? [] as $bbox) {
       if (isset($bbox['SW'])) {
-        $gbox = GBox::fromShomGt($bbox);
+        $gbox = GBox:: fromGeoDMd($bbox);
         $mpolygon[] = $gbox->polygon();
       }
       else
@@ -437,7 +437,7 @@ class TiffLayer extends Layer {
     foreach($gt['deleted']['polygons'] ?? [] as $polygon) {
       foreach ($polygon as &$pos) {
         if (is_string($pos))
-          $pos = Pos::fromGeoCoords($pos);
+          $pos = Pos::fromGeoDMd($pos);
       }
       $mpolygon[] = [$polygon];
     }

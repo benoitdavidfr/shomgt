@@ -78,7 +78,7 @@ class TempMapCat {
     $best = -1;
     foreach ($this->map['insetMaps'] as $no => $insetMap) {
       //echo "insetMaps[$no]="; print_r($insetMap);
-      $dist = GBox::fromShomGt($insetMap['spatial'])->distance($georefrect);
+      $dist = GBox::fromGeoDMd($insetMap['spatial'])->distance($georefrect);
       //echo "distance=$dist\n";
       if ($dist < $distmin) {
         $best = $no;

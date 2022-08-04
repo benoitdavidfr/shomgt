@@ -76,7 +76,7 @@ journal: |
 define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service en V0 car incompatble avec sgupdt v0.6
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/../main/lib/accesscntrl.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -229,9 +229,9 @@ if ($_SERVER['PATH_INFO'] == '/logout') { // action complémentaire pour raz le 
   sendHttpCode(401, isset($_SERVER['PHP_AUTH_USER']) ? "Logout, user: $_SERVER[PHP_AUTH_USER]" : 'Logout, no user');
 }
 
-require_once __DIR__.'/../lib/SevenZipArchive.php';
-require_once __DIR__.'/../lib/readmapversion.inc.php';
-require_once __DIR__.'/../lib/mapversion.inc.php';
+require_once __DIR__.'/../main/lib/SevenZipArchive.php';
+require_once __DIR__.'/../main/lib/readmapversion.inc.php';
+require_once __DIR__.'/../main/lib/mapversion.inc.php';
 
 if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
   $mapVersions = MapVersion::allAsArray($INCOMING_PATH);
