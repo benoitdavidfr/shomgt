@@ -182,6 +182,9 @@ Ce site est expérimental propose différents mécanismes d'accès au contenu de
 <li><a href='index.php/cat.json'>Catalogue des cartes ShomGT</a></li>
 <li><a href='index.php/cat/schema.json'>Schéma du catalogue de cartes</a></li>
 <li><a href='index.php/maps.json'>Liste des cartes exposées par le serveur</a></li>
+<li><a href='index.php/deliveries'>Liste des livraisons exposées par le serveur
+  puis pour chaque livraison liste des versions de cartes avec identification de la version</a></li>
+<li><a href='index.php/duplicates'>Versions dupliquées entre livraisons</a></li>
 
 <li><a href='index.php/maps/6969.7z'>Exemple de téléchargement de la dernière version de la carte no 6969</a></li>
 <li><a href='index.php/maps/6969.json'>Exemple de la liste des versions de la carte no 6969</a></li>
@@ -247,6 +250,55 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
   header('Content-type: application/json');
   echo json_encode($mapVersions, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
   logRecord(['done'=> "OK - maps.json transmis"]);
+  die();
+}
+
+if ($_SERVER['PATH_INFO'] == '/deliveries') { // liste des livraisons avec pour chacune liens vers les versions de la livraison
+  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
+    if ($delivery->isDot()) continue;
+    if ($delivery->getType() == 'dir') {
+      echo "* <a href='$_SERVER[SCRIPT_NAME]/deliveries/$delivery'>$delivery</a><br>\n";
+    }
+  }
+  die();
+}
+
+if (preg_match('!^/deliveries/(.*)$!', $_SERVER['PATH_INFO'], $matches)) { // versions de la livraison
+  $delivery = $matches[1];
+  $mapVersions = unserialize(file_get_contents("$INCOMING_PATH/$delivery/mapversions.pser"));
+  foreach($mapVersions as $mapnum => $mapVersion) {
+    $allAsArray[$mapnum] = $mapVersion->asArray($mapnum);
+  }
+  header('Content-type: application/json');
+  echo json_encode($allAsArray);
+  die();
+}
+
+if ($_SERVER['PATH_INFO'] == '/duplicates') { // Versions dupliquées entre livraisons
+  $duplicates = []; // [{mapNum} => [{version}=> [{delivery}]]]
+  echo "<pre>";
+  foreach (new DirectoryIterator($INCOMING_PATH) as $delivery) {
+    if ($delivery->isDot() || ($delivery->getType() <> 'dir')) continue;
+    $mapVersions = unserialize(file_get_contents("$INCOMING_PATH/$delivery/mapversions.pser"));
+    foreach($mapVersions as $mapnum => $mapVersion) {
+      $mapVersion = $mapVersion->asArray($mapnum);
+      if ($mapVersion['status'] <> 'ok') continue;
+      //print_r($mapVersion);
+      $v = $mapVersion['lastVersion'].'('.$mapVersion['modified'].')';
+      if (!isset($duplicates[$mapnum][$v]))
+        $duplicates[$mapnum][$v] = [$delivery->getFilename()];
+      else
+        $duplicates[$mapnum][$v][] = $delivery->getFilename();
+    }
+  }
+  foreach ($duplicates as $mapnum => &$v_dels) {
+    foreach ($v_dels as $v => $dels)
+      if (count($dels) == 1)
+        unset($v_dels[$v]);
+    if (!$v_dels)
+      unset($duplicates[$mapnum]);
+  }
+  echo Yaml::dump($duplicates);
   die();
 }
 

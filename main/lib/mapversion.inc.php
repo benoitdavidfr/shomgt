@@ -61,7 +61,7 @@ class MapVersion {
   }
   
   /** @return array<string, string|int> */
-  private function asArray(string $mapnum): array { // fabrique un array pour allAsArray()
+  function asArray(string $mapnum): array { // fabrique un array pour allAsArray()
     $https = (($_SERVER['HTTPS'] ?? '') == 'on') ? 'https' : 'http';
     return [
       'status'=> $this->status,
@@ -172,4 +172,3 @@ class MapVersion {
       return '';
   }
 };
-
