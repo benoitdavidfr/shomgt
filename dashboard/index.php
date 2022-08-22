@@ -82,8 +82,8 @@ class Zee { // liste des polygones de la ZEE chacun associé à une zoneid
  */
 class MapFromWfs {
   /** @var array<string, string> $prop */
-  protected array $prop;
-  protected MultiPolygon $mpol;
+  public readonly array $prop;
+  public readonly MultiPolygon $mpol;
   
   /** @var array<string, MapFromWfs> $fts */
   static array $fts; // liste des MapFromWfs indexés sur carte_id
@@ -179,7 +179,7 @@ if ($_GET['a'] == 'newObsoleteMaps') { // détecte de nouvelles cartes à ajoute
   else {
     echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
     foreach ($newMaps as $mapid) {
-      $map = MapFromWfs::$fts[$mapid]['properties'];
+      $map = MapFromWfs::$fts[$mapid]->prop;
       echo "- $map[name] (1/",addUndescoreForThousand($map['scale'] ?? null),")<br>\n";
     }
   }

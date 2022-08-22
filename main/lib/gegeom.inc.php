@@ -852,7 +852,7 @@ class Polygon extends Geometry {
         return false;
       // si un point de $geom est dans $this alors il y a intersection
       foreach($geom->geoms() as $i=> $ls) {
-        foreach ($ls->coords() as $j=> $pos) {
+        foreach ($ls->coords as $j=> $pos) {
           if ($this->pointInPolygon($pos)) {
             if ($verbose)
               echo "Point $i/$j de geom dans this<br>\n";
@@ -862,7 +862,7 @@ class Polygon extends Geometry {
       }
       // Si un point de $this est dans $geom alors il y a intersection
       foreach ($this->geoms() as $i=> $ls) {
-        foreach ($ls->coords() as $j=> $pos) {
+        foreach ($ls->coords as $j=> $pos) {
           if ($geom->pointInPolygon($pos)) {
             if ($verbose)
               echo "Point $i/$j de this dans geom<br>\n";
