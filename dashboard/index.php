@@ -1,5 +1,9 @@
 <?php
-// dashboard/index.php - 24/6/2022
+/**
+ * dashboard/index.php - 22/8/2022
+ *
+ * 22/8/2022: correction bug
+ */
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../main/lib/mapversion.inc.php';
