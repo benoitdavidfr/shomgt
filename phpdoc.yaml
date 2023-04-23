@@ -18,6 +18,8 @@ doc: |
   Voir le fichier filetree.yaml pour l'arborescence des fichiers, les mapping dans les conteneurs et les vars d'environnement
 
 journal: |
+  13/1/2023:
+    - nlle version de sgserver en raison modif readmapversion.inc.php en raison d'un nouveau format de l'édition dans les MD XML
   12/6/2022:
     - création du module map
   11/6/2022:

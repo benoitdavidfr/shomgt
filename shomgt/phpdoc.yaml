@@ -68,6 +68,8 @@ doc: |
     docker exec -it --user=www-data shomgt3_maps_1 /bin/bash
     
 journal: |
+  21/4/2023:
+    - ajout catalogue Shom en option dans mapwcat pour faciliter l'identification de cartes manquantes
   8-9/6/2022:
     - ajout serveur WMS
   7/6/2022:

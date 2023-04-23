@@ -1,7 +1,22 @@
 <?php
 /**
- * dashboard/index.php - 22/8/2022
+ * dashboard/index.php - 23/4/2023
  *
+ * Tableau de bord de mise à jour des cartes.
+ * Affiche:
+ *  1) les cartes manquantes ou en excès dans le portefeuille par rapport au flux WFS du Shom
+ *  2) le degré de péremption des différentes cartes du portefeuille
+ *
+ * Une carte du flux WFS est d'intérêt ssi
+ *  - soit elle est à petite échelle (< 1/6M)
+ *  - soit elle intersecte la ZEE
+ * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
+ *
+ * 23/4/2023: ajout aux cartes manquantes la ZEE intersectée pour facilier leur localisation
+ * 21/4/2023:
+ *  - prise en compte évol de ../shomft sur la définition du périmètre de gt.json
+ *  - modif fonction spatialCoeff() pour mettre à niveau les COM à la suite mail D. Bon
+ * 6/1/2023: modif fonction spatialCoeff()
  * 22/8/2022: correction bug
  */
 
@@ -93,8 +108,9 @@ class MapFromWfs {
   static array $fts; // liste des MapFromWfs indexés sur carte_id
   
   static function init(): void {
-    $fc = json_decode(file_get_contents(__DIR__.'/../shomft/gt.json'), true);
-    foreach ($fc['features'] as $gmap) {
+    $gt = json_decode(file_get_contents(__DIR__.'/../shomft/gt.json'), true);
+    $aem = json_decode(file_get_contents(__DIR__.'/../shomft/aem.json'), true);
+    foreach (array_merge($gt['features'], $aem['features']) as $gmap) {
       self::$fts[$gmap['properties']['carte_id']] = new self($gmap);
     }
   }
@@ -108,7 +124,9 @@ class MapFromWfs {
   static function show(): void { // affiche le statut de chaque carte Wfs
     foreach (self::$fts as $gmap) {
       //print_r($gmap);
-      if ($gmap->prop['scale'] > 6e6)
+      if (!isset($gmap->prop['scale']))
+        echo '"',$gmap->prop['name'],"\" n'a pas d' échelle<br>\n";
+      elseif ($gmap->prop['scale'] > 6e6)
         echo '"',$gmap->prop['name'],"\" est à petite échelle<br>\n";
       elseif ($mapsFr = Zee::inters($gmap->mpol))
         echo '"',$gmap->prop['name'],"\" intersecte ",implode(',',$mapsFr),"<br>\n";
@@ -117,12 +135,14 @@ class MapFromWfs {
     }
   }
   
-  /** @return array<int, string> */
-  static function interest(): array { // liste des cartes d'intérêt
+  /** @return array<string, array<int, string>> */
+  static function interest(): array { // liste des cartes d'intérêt sous la forme [carte_id => ZeeIds]
     $list = [];
     foreach (self::$fts as $id => $gmap) {
-      if ((isset($gmap->prop['scale']) && ($gmap->prop['scale'] > 6e6)) || Zee::inters($gmap->mpol))
-        $list[] = $gmap->prop['carte_id'];
+      if (isset($gmap->prop['scale']) && ($gmap->prop['scale'] > 6e6))
+        $list[$gmap->prop['carte_id']] = ['SmallScale'];
+      elseif ($zeeIds = Zee::inters($gmap->mpol))
+        $list[$gmap->prop['carte_id']] = $zeeIds;
     }
     return $list;
   }
@@ -171,9 +191,9 @@ if ($_GET['a'] == 'newObsoleteMaps') { // détecte de nouvelles cartes à ajoute
   $listOfInterest = MapFromWfs::interest();
   //echo count($list)," / ",count(MapFromWfs::$fc['features']),"\n";
   $newMaps = [];
-  foreach ($listOfInterest as $mapid) {
+  foreach ($listOfInterest as $mapid => $zeeIds) {
     if (!Portfolio::isActive($mapid)) {
-      $newMaps[] = $mapid;
+      $newMaps[$mapid] = $zeeIds;
       //echo "$mapid dans WFS et pas dans sgserver<br>\n";
       //echo "<pre>"; print_r(MapFromWfs::$fts[$mapid]['properties']); echo "</pre>\n"; 
     }
@@ -182,15 +202,15 @@ if ($_GET['a'] == 'newObsoleteMaps') { // détecte de nouvelles cartes à ajoute
     echo "<h2>Toutes les cartes d'intérêt du flux WFS sont dans le portefeuille</h2>>\n";
   else {
     echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
-    foreach ($newMaps as $mapid) {
+    foreach ($newMaps as $mapid => $zeeIds) {
       $map = MapFromWfs::$fts[$mapid]->prop;
-      echo "- $map[name] (1/",addUndescoreForThousand($map['scale'] ?? null),")<br>\n";
+      echo "- $map[name] (1/",addUndescoreForThousand($map['scale'] ?? null),") intersecte ",implode(',', $zeeIds),"<br>\n";
     }
   }
   
   $obsoletes = [];
   foreach (Portfolio::actives() as $mapid => $map) {
-    if (!in_array($mapid, $listOfInterest))
+    if (!isset($listOfInterest[$mapid]))
       $obsoletes[] = $mapid;
   }
   if (!$obsoletes)
@@ -232,19 +252,22 @@ class DbMapCat { // chargement d'un extrait de mapcat.yaml
     $this->mapsFrance = $map['mapsFrance'];
   }
   
+  // coeff. de péremption en fonction de la zone
+  // modif 6/1/2023 - coeff DOM à 1 suite à utilisation de ShomGt par les Cross Réunion et Antilles-Guyane
   function spatialCoeff(): int {
-    if (in_array('FR', $this->mapsFrance)) return 1;
+    /*if (in_array('FR', $this->mapsFrance)) return 1;
     if (in_array('FX-Med', $this->mapsFrance)) return 1;
     if (in_array('FX-Atl', $this->mapsFrance)) return 1;
     if (in_array('FX-MMN', $this->mapsFrance)) return 1;
-    if (in_array('GP', $this->mapsFrance)) return 2;
-    if (in_array('GF', $this->mapsFrance)) return 2;
-    if (in_array('MQ', $this->mapsFrance)) return 2;
-    if (in_array('YT', $this->mapsFrance)) return 2;
-    if (in_array('RE', $this->mapsFrance)) return 2;
+    if (in_array('GP', $this->mapsFrance)) return 1;
+    if (in_array('GF', $this->mapsFrance)) return 1;
+    if (in_array('MQ', $this->mapsFrance)) return 1;
+    if (in_array('YT', $this->mapsFrance)) return 1;
+    if (in_array('RE', $this->mapsFrance)) return 1;
     if (in_array('PM', $this->mapsFrance)) return 2;
     if (in_array('TF', $this->mapsFrance)) return 2;
-    return 4;
+    return 4;*/
+    return 1;
   }
 };
 
@@ -288,7 +311,11 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   function degree(): float { // calcul du degré de péremption 
     if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undefined'))
       return -1;
-    $spc = DbMapCat::item($this->mapNum)->spatialCoeff();
+    $mapcatItem = DbMapCat::item($this->mapNum);
+    if (!$mapcatItem) {
+      die("Erreur la carte $this->mapNum n'est pas décrite dans mapcat.yaml");
+    }
+    $spc = $mapcatItem->spatialCoeff();
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
       $pfYear = $matches[1];
       $pfNCor = $matches[2];

@@ -72,7 +72,7 @@ class MapVersion {
     ];
   }
   
-  // Renvoit pour la carte formattée comme archive 7z située à $pathOf7zun
+  // Renvoit pour la carte formattée comme archive 7z située à $pathOf7z
   // le dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}] où {version} est le libellé de la version
   // et {dateStamp} est la date de dernière modification du fichier des MD de la carte
   // Renvoit ['version'=> 'undefined'] si la carte ne comporte pas de MDISO et donc pas de version.

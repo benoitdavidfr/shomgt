@@ -16,9 +16,16 @@ doc: |
     - ft.php/collections/{coll} - décrit la collection {coll}
     - ft.php/collections/{coll}/items - retourne le contenu GéoJSON de la collection {coll}
 
+  Si le fichier json n'existe pas alors les données sont téléchargées depuis le serveur WFS du Shom
+  et le fichier json est créé.
+  Si le fichier existe déjà les données sont récupérées dans le fichier json.
+     
   Pb - très peu d'info dans le serveur WFS du Shom, notamment a priori pas le numéro de la carte ni l'échelle !!!
   Probablement garder le découpage d'échelles du Shom
 journal: |
+  21/4/2023:
+    - ajout des cartes par intervalle d'échelles (EN COURS)
+    - modif du contenu du fichier gt.json
   13/6/2022:
     - création
 */
@@ -84,13 +91,19 @@ class FtServer {
   /** @var array<string, array<string, string|array<string, string>>> $collections */
   static array $collections = [
     'gt'=> [
-      'title'=> "Silhouettes des GéoTiffs",
+      'title'=> "Silhouettes des GéoTiffs hors AEM",
       'url'=> '',
       'shomIds'=> [
         'gt800'=> 'CARTES_MARINES_GRILLE:grille_geotiff_800',
         'gt300-800'=> 'CARTES_MARINES_GRILLE:grille_geotiff_300_800',
         'gt30-300'=> 'CARTES_MARINES_GRILLE:grille_geotiff_30_300',
         'gt30'=> 'CARTES_MARINES_GRILLE:grille_geotiff_30',
+      ],
+    ],
+    'aem'=> [
+      'title'=> "Silhouettes des cartes AEM",
+      'url'=> '',
+      'shomIds'=> [
         'gtaem'=> 'GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table',
       ],
     ],
@@ -109,13 +122,28 @@ class FtServer {
     ],
   ];
   
+  // liste des ids de couche avec dénom. d'échelle max associé
+  static array $sdmax = [
+    'gt10M'=>  14e6, // échelle comprise entre 1/14.000.000 et 1/6.000.000
+    'gt4M'=>    6e6, // échelle comprise entre 1/6.000.000 et 1/3.000.000
+    'gt2M'=>    3e6, // échelle comprise entre 1/3.000.000 et 1/1.400.000
+    'gt1M'=>  1.4e6, // échelle comprise entre 1/1.400.000 et 1/700.000
+    'gt500k'=>700e3, // échelle comprise entre 1/700.000 et 1/380.000
+    'gt250k'=>380e3, // échelle comprise entre 1/380.000 et 1/180.000
+    'gt100k'=>180e3, // échelle comprise entre 1/180.000 et 1/90.000
+    'gt50k'=>  90e3, // échelle comprise entre 1/90.000 et 1/45.000
+    'gt25k'=>  45e3, // échelle comprise entre 1/45.000 et 1/22.000
+    'gt12k'=>  22e3, // échelle comprise entre 1/22.000 et 1/11.000
+    'gt5k'=>   11e3, // échelle supérieure au 1/11.000
+  ];
+  
   static function readFeatureTypes(): void {
     $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
     echo json_encode($shomFt->collections());
   }
   
   // lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
-  // et les copie dans $colName.json, si erreur envoi Exception
+  // et les copie dans le fichier $colName.json, si erreur envoi Exception
   function get(string $colName): void {
     $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
     
@@ -138,7 +166,7 @@ class FtServer {
           $items = $shomFt->items($shomId, $count, $startindex);
           //$gt[$sid][$startindex] = $items;
           foreach ($items['features'] as $ft) {
-            if ($sid == 'gtaem') { // adaptaion des propriétés des cartes spéciales 
+            if ($sid == 'gtaem') { // adaptation des propriétés des cartes spéciales 
               $ft['properties'] = [
                 'name'=> $ft['properties']['name'],
                 'id_md'=> $ft['properties']['id_md'],
@@ -169,8 +197,18 @@ class FtServer {
   }
   
   function collections(): never {
+    // Les collections provenant du serveur WFS du Shom
     foreach (self::$collections as $colName => &$coll) {
       $coll['url'] = self()."/$colName";
+    }
+    // Ajout de collections dérivées slon les échelles
+    foreach (array_keys(self::$sdmax) as $i => $colName) {
+      $imin = ($i <> count(self::$sdmax) - 1) ? $i + 1 : -1;
+      $sdmin = ($imin == -1) ? 0 : (array_values(self::$sdmax))[$imin];
+      self::$collections[$colName] = [
+        'title'=> "Silhouettes des GéoTiffs aux échelles comprises entre ".self::$sdmax[$colName]." et ".$sdmin,
+        'url'=> self()."/$colName",
+      ];
     }
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode(
@@ -191,14 +229,43 @@ class FtServer {
   }
   
   function items(string $colName): never {
-    if (!isset(self::$collections[$colName])) {
-      sendHttpCode(400, "collection non prévue");
+    if (isset(self::$collections[$colName])) {
+      if (!is_file(__DIR__."/$colName.json")) {
+        $this->get($colName);
+      }
+      header('Content-type: application/json; charset="utf-8"');
+      fpassthru(fopen(__DIR__."/$colName.json",  'r'));
     }
-    elseif (!is_file(__DIR__."/$colName.json")) {
-      $this->get($colName);
+    elseif (isset(self::$sdmax[$colName])) {
+      foreach (array_keys(self::$sdmax) as $i => $cname) {
+        if ($cname == $colName) break;
+      }
+      $imin = ($i <> count(self::$sdmax) - 1) ? $i + 1 : -1;
+      $sdmin = ($imin == -1) ? 0 : (array_values(self::$sdmax))[$imin];
+      $sdmax = self::$sdmax[$colName];
+      //echo "sdmin=$sdmin, sdmax=$sdmax<br>\n";
+      if (!is_file(__DIR__."/gt.json")) {
+        $this->get('gt');
+      }
+      $gtFc = json_decode(file_get_contents(__DIR__."/gt.json"), true);
+      $result = [];
+      foreach ($gtFc['features'] as $feature) {
+        if (($feature['properties']['scale'] <= $sdmax) && ($feature['properties']['scale'] > $sdmin)) {
+          $result[] = $feature;
+          //echo "scale = ",$feature['properties']['scale']," -> IN<br>\n";
+        }
+        else {
+          //echo "scale = ",$feature['properties']['scale']," -> OUT<br>\n";
+        }
+      }
+      header('Content-type: application/json; charset="utf-8"');
+      echo json_encode(
+        ['type'=> 'FeatureCollection', 'features'=> $result],
+        JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
     }
-    header('Content-type: application/json; charset="utf-8"');
-    fpassthru(fopen(__DIR__."/$colName.json",  'r'));
+    else {
+      sendHttpCode(400, "collection $colName non prévue");
+    }
     die();
   }
   

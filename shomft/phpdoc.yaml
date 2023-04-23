@@ -23,6 +23,9 @@ doc: |
   
   ft.php interroge le serveur WFS du Shom et enregistre en cache les données.
 journal: |
+  21/4/2023:
+    - modif du périmètre du fichier gt.json
+    - accès au travers ft.php aux collections gt{xx}
   13/6/2022:
     - création du module
 submodules:

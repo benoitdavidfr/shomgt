@@ -4,6 +4,10 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  21/4/2023:
+    - ajout de l'affichage en option des silhouettes du catalogue Shom exposé en WFS
+  19/4/2023:
+    - correction de l'URL des HAN dans la carte Leaflet
   28-31/7/2022:
     - correction suite à analyse PhpStan level 6
   1/6/2022:
@@ -72,6 +76,7 @@ function latestVersion(array $versions): array {
   return [$latest => $versions[$latest]];
 }
 
+$option_wfs = false;
 $options = explode(',', $_GET['options'] ?? 'none');
 foreach ($options as $option) {
   switch ($option) {
@@ -79,6 +84,7 @@ foreach ($options as $option) {
       echo "Options de ce script:<ul>\n";
       echo "<li>help : fournit cette aide</li>\n";
       echo "<li>version : fournit les dates de modification des fichiers sources</li>\n";
+      echo "<li>wfs : affiche les silhouettes des cartes du catalogue Shom exposé en WFS</li>\n";
       echo "<li>center : fournit le centre de la carte sous la forme {lat},{lon}</li>\n";
       // echo "<li>zoom : fournit le zoom de la carte sous la forme d'un entier</li>\n";
       echo "</ul>\n";
@@ -93,6 +99,10 @@ foreach ($options as $option) {
       header('Content-type: application/json');
       echo json_encode(['versions'=> $VERSION, 'latest'=> latestVersion($VERSION)]);
       die();
+    }
+    case 'wfs': {
+      $option_wfs = true;
+      break;
     }
     case 'none': break;
     default: {
@@ -163,7 +173,7 @@ var onEachFeature = function (feature, layer) {
   ganWeek = feature.properties.ganWeek;
   popupContent += "\n<b>Liens:</b><ul>\n";
   popupContent += "<li><a href='"+shomgturl+"dl.php/"+feature.properties.name+"' target='_blank'>téléchargements</a></li>\n";
-  popupContent += "<li><a href='https://www.shom.fr/qr/gan/FR"+num+"/"+ganWeek+"' target='GAN'>"
+  popupContent += "<li><a href='https://gan.shom.fr/diffusion/qr/gan/"+num+"/"+ganWeek+"' target='GAN'>"
     +"Corrections (GAN) non prises en compte.</a></li>\n";  
   popupContent += '</ul>';
   layer.bindPopup(popupContent, {maxWidth: 600});
@@ -235,6 +245,15 @@ var onEachFeatureSar = function (feature, layer) {
     +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
   );
   layer.bindTooltip(feature.properties.nom_fr);
+}
+
+// affichage des caractéristiques de chaque polygone de WFS
+var onEachFeatureWfs = function (feature, layer) {
+  layer.bindPopup(
+    '<b>WFS</b><br>'
+    +'<pre>'+JSON.stringify(feature.properties,null,' ')+'</pre>'
+  );
+  layer.bindTooltip(feature.properties.fid);
 }
 
 // affichage des caractéristiques de chaque polygone de GT
@@ -336,11 +355,22 @@ var overlays = {
          "         {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}\n",
          "       ),\n",
          "    ]),\n";
+    if ($option_wfs)
+    echo "    \"WFS 1/$sd\" : new L.UGeoJSONLayer({\n", // la couche des WFS
+         "         endpoint: shomgturl+'../shomft/ft.php/collections/gt$sd/items',\n",
+         "         style: { color: 'orange'}, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeatureWfs\n",
+         "     }),\n";
     echo "    \"GéoTIFF 1/$sd\" : new L.TileLayer(\n", // le contenu des GéoTiffs
          "       shomgturl+'tile.php/gt$sd/{z}/{x}/{y}.png',\n",
          "       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false,'attribution':attrshom}\n",
          "    ),\n";
   }
+
+  if ($option_wfs)
+    echo "    \"WFS cartes spéciales\" : new L.UGeoJSONLayer({\n", // la couche des WFS
+         "         endpoint: shomgturl+'../shomft/ft.php/collections/aem/items',\n",
+         "         style: { color: 'orange'}, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeatureWfs\n",
+         "     }),\n";
 ?>
  
 // gtaem
@@ -354,6 +384,7 @@ var overlays = {
       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}
     )
   ]),
+
   "Cartes AEM" : new L.TileLayer(
     shomgturl+'tile.php/gtaem/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}

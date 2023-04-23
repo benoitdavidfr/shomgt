@@ -6,6 +6,10 @@ doc: |
   La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
   Le retour est un dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}]
 journal: |
+  13/1/2023:
+    - modif format de l'édition dans le XML -> 'Publication 1989 - Dernière correction : 149 - GAN : 2250'
+  17/10/2022:
+    - modif format de l'édition dans le XML
   1/8/2022:
     - ajout déclarations PhpStan pour level 6
 */
@@ -30,13 +34,15 @@ function readMapVersion(string $path): array {
   $edition = $matches[1];
   
   // ex: Edition n° 4 - 2015 - Dernière correction : 12
-  if (preg_match('!^[^-]*- (\d+) - [^\d]*(\d+)$!', $edition, $matches)
+  // ou: Edition n° 4 - 2022 - Dernière correction : 0 - GAN : 2241
+  if (preg_match('!^[^-]*- (\d+) - [^\d]*(\d+)( - GAN : \d+)?$!', $edition, $matches)
   // ex: Publication 1984 - Dernière correction : 101
-   || preg_match('!^[^\d]*(\d+) - [^\d]*(\d+)$!', $edition, $matches)) { 
+  // ou: Publication 1989 - Dernière correction : 149 - GAN : 2250
+   || preg_match('!^[^\d]*(\d+) - [^\d]*(\d+)( - GAN : \d+)?$!', $edition, $matches)) { 
     $anneeEdition = $matches[1];
     $lastUpdate = $matches[2];
     return ['version'=> "${anneeEdition}c${lastUpdate}", 'dateStamp'=> $dateStamp];
   }
   else
-    throw new Exception("Format de l'édition inconnu pour $edition");
+    throw new Exception("Format de l'édition inconnu pour \"$edition\"");
 }

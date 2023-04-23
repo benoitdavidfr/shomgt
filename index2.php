@@ -38,6 +38,9 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Actualité</h3>
 <ul>
+  <li>18/4/2023 : actualisation d'environ 30 cartes les moins à jour,</li>
+  <li>8/3/2023 : actualisation d'environ 70 cartes les moins à jour,</li>
+  <li>13/1/2023 : actualisation d'environ 50 cartes les moins à jour,</li>
   <li>25/6/2022 : nouvelle version de shomgt ; 
       réécriture du code et publication sur <a href='https://github.com/benoitdavidfr/shomgt3' target='_blank'>Github</a> ;
       ce nouveau code restructuré simplifie grandement l'installation d'un serveur local et la mise à jour automatique
@@ -174,11 +177,11 @@ ShomGt comporte plus de 400 cartes et des corrections y sont apportées chaque s
 Il n'est pas envisageable d'effectuer un remplacement à chaque correction.</p>
 
 Le principe retenu est de mettre à jour les cartes ayant eu le plus de corrections depuis leur acquisition auprès du Shom.
-Cela est effectué en consultant régulièrement le <a href='https://diffusion.shom.fr/gan' target='_blank'>GAN</a>.
+Cela est effectué en consultant régulièrement le <a href='https://gan.shom.fr/diffusion/home' target='_blank'>GAN</a>.
 Toutefois, ayant constaté peu d'utilisation outre-mer, les cartes en métropole sont privilégiées,
 par rapport à celles dans les DOM, et enfin celles dans les COM et autres territoires outre-mer.<br>
-L'objectif est d'essayer de mettre à jour les cartes ayant plus de 5 corrections en métropole,
-plus de 10 corrections dans les DOM, et plus de 20 corrections dans les COM.</p>
+L'objectif est d'essayer de mettre à jour les cartes ayant plus de 5 corrections en métropole
+et plus de 20 corrections dans les COM.</p>
 
 Le tableau de bord de mise à jour, utilisé pour choisir les cartes à actualiser,
 est <a href='dashboard' target='_blank'>disponible ici (encore en béta)</a>.
@@ -197,4 +200,4 @@ Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 <h3>Auteur</h3>
 Ce site est réalisé par Benoit DAVID, MTECT/CGDD/SRI/Ecolab.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 25/6/2022<br>
+Mise à jour: 13/1/2023<br>

@@ -416,16 +416,6 @@ maps:
     spatial:
       SW: '22°06,34''S - 165°59,70''E'
       NE: '21°53,14''S - 166°09,35''E'
-  FR6553:
-    groupTitle: 'Côte Est de Nouvelle-Calédonie'
-    title: 'Baie de Kouaoua'
-    mapsFrance:
-      - NC
-    scaleDenominator: '20.000'
-    spatial:
-      SW: '21°25,34''S - 165°48,00''E'
-      NE: '21°18,11''S - 165°53,20''E'
-    noteShom: 'Nota : Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
   FR6554:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'Baie Chasseloup - Anse Vavouto'
@@ -435,15 +425,6 @@ maps:
     spatial:
       SW: '21°01,33''S - 164°32,20''E'
       NE: '20°54,16''S - 164°43,43''E'
-  FR6589:
-    groupTitle: 'Côte Est de Nouvelle-Calédonie'
-    title: 'Baie de Canala'
-    mapsFrance:
-      - NC
-    scaleDenominator: '20.000'
-    spatial:
-      SW: '21°31,84''S - 165°54,60''E'
-      NE: '21°21,29''S - 166°02,28''E'
   FR6604:
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
@@ -846,15 +827,6 @@ maps:
       SW: '23°33,84''S - 165°00,20''E'
       NE: '21°32,33''S - 168°12,20''E'
     noteShom: 'Nota : Les modifications effectuées sur la carte n° 6786 au cours de l''édition n° 3 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
-  FR6770:
-    groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
-    title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
-    mapsFrance:
-      - NC
-    scaleDenominator: '25.000'
-    spatial:
-      SW: '22°43,13''S - 167°16,80''E'
-      NE: '22°36,18''S - 167°27,90''E'
   FR6797:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Loire - Port de Saint-Nazaire'
@@ -5097,6 +5069,19 @@ maps:
       - title: 'A - Accès à Touho'
         scaleDenominator: '15.000'
         spatial: { SW: '20°47,04''S - 165°13,02''E', NE: '20°45,44''S - 165°15,43''E' }
+  FR7757:
+    groupTitle: 'Côte Est de Nouvelle-Calédonie'
+    title: 'Baie de Kouaoua et Baie de Canala'
+    mapsFrance:
+      - NC
+    insetMaps:
+      - title: 'Cartouche: A - Baie de Kouaoua'
+        scaleDenominator: '20.000'
+        spatial: { SW: '21°25,47''S - 165°47,33''E', NE: '21°17,35''S - 165°53,61''E' }
+      - title: 'Cartouche: B - Baie de Canala'
+        scaleDenominator: '20.000'
+        spatial: { SW: '21°30,58''S - 165°54,60''E', NE: '21°22,46''S - 166°00,88''E' }
+    replaces: remplace 6553 et 6589
   FR7758:
     groupTitle: Nouvelle-Calédonie
     title: 'Îles Belep'
@@ -5145,6 +5130,14 @@ maps:
       NE: '19°56,50''S - 165°12,00''E'
     replaces: '(remplace 1946.CA, 2799.CA)'
     noteShom: 'Nota : Remplacer le renvoi hors cadre "Voir carte adjacente 2799" par "Voir carte adjacente 7762 (INT6842)" sur la carte 3972 (au Sud), rayer le renvoi hors cadre "Voir carte adjacente 1946" sur la carte 6768 (au Nord-Ouest), rayer le renvoi hors cadre "VC 2799" sur la carte 6686 (au Nord-Ouest), rayer les limites de cartes et légendes "1946" et "2799" sur la carte 7268, porter un renvoi hors cadre "Voir carte adjacente 7762 (INT6842)" sur la carte 6768 (à l''Ouest), porter un renvoi hors cadre "VC 7762 (INT6842)" sur la carte 6686 (à l''Ouest), porter le cadre de la carte et la légende "7762 (INT6842)" sur la carte 7268.'
+  FR7763:
+    groupTitle: 'Océan Pacifique - Nouvelle Calédonie - Île des Pins'
+    title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
+    mapsFrance:
+      - NC
+    scaleDenominator: '25.000'
+    spatial: { SW: '22°45,65''S - 167°15,00''E', NE: '22°35,50''S - 167°31,00''E' }
+    replaces: remplace 6770
   FR7764:
     title: 'Abords Nord-Ouest de l''Île des Pins - Baie de Gadji et mouillage de Uapan'
     mapsFrance:
@@ -5251,6 +5244,29 @@ obsoleteMaps:
         Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
         On pourrait améliorer les corrections mais cela évite un affichage très moche.
       badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
+  FR6553:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Kouaoua'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°25,34''S - 165°48,00''E'
+        NE: '21°18,11''S - 165°53,20''E'
+      noteShom: 'Nota : Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+      noteCatalog: remplacée par FR7757
+  FR6589:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Canala'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°31,84''S - 165°54,60''E'
+        NE: '21°21,29''S - 166°02,28''E'
+      noteCatalog: remplacée par FR7757
   FR6608:
     '2022-04-06':
       title: 'Mer du Nord'
@@ -5295,6 +5311,17 @@ obsoleteMaps:
       spatial:
         SW: '47°45,12''N - 004°19,24''W'
         NE: '47°48,76''N - 004°11,20''W'
+  FR6770:
+    '2023-01-10':
+      groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
+      title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
+      mapsFrance:
+        - NC
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '22°43,13''S - 167°16,80''E'
+        NE: '22°36,18''S - 167°27,90''E'
+      noteCatalog: remplacée par FR7763
   FR6903:
     '2022-04-06':
       groupTitle: 'Îles Anglo-Normandes'
