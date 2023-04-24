@@ -2,7 +2,7 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes présentes sur sgserver'
 $id: 'https://geoapi.fr/shomgt3/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/dashboard/gans
-valid: 2023-04-22/2023-04-22
+valid: 2023-04-22/2023-04-24
 gans:
   '0101':
     valid: '2023-04-22'
@@ -87,14 +87,7 @@ gans:
       SW: '46°35,00''N — 056°38,95''W'
       NE: '47°17,00''N — 055°57,95''W'
     edition: 'Edition n°5 - 2017'
-    corrections:
-      - { num: 4, semaineAvis: 1913-279 }
-      - { num: 5, semaineAvis: 1916-277 }
-      - { num: 6, semaineAvis: 2010-275 }
-      - { num: 7, semaineAvis: 2017-275 }
-      - { num: 8, semaineAvis: 2038-278 }
-      - { num: 9, semaineAvis: 2235-275 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6165:
     groupTitle: 'Polynésie française - Îles Australes'
     title: Rurutu
@@ -192,11 +185,7 @@ gans:
     inSets:
       - { title: 'Cartouche: Port de Temao', scale: '1 : 10 000', spatial: { SW: '15°49,92''S — 148°17,24''W', NE: '15°49,07''S — 148°16,34''W' } }
     edition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 1, semaineAvis: 1745-209 }
-      - { num: 2, semaineAvis: 1815-213 }
-      - { num: 3, semaineAvis: 1837-208 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6418:
     groupTitle: 'Iles Gambier'
     title: 'Ile Mangareva'
@@ -205,15 +194,7 @@ gans:
       SW: '23°08,82''S — 134°58,50''W'
       NE: '23°06,19''S — 134°56,56''W'
     edition: 'Edition n°5 - 2010'
-    corrections:
-      - { num: 2, semaineAvis: 1709-209 }
-      - { num: 3, semaineAvis: 1731-208 }
-      - { num: 4, semaineAvis: 1829-217 }
-      - { num: 5, semaineAvis: 1908-233 }
-      - { num: 6, semaineAvis: 1944-233 }
-      - { num: 7, semaineAvis: 2023-230 }
-      - { num: 8, semaineAvis: 2023-231 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6420:
     groupTitle: 'Îles Tuamotu'
     title: 'De Mataiva à Rangiroa et Makatea'
@@ -266,12 +247,7 @@ gans:
       SW: ''
       NE: ''
     edition: 'Edition n°2 - 1992'
-    corrections:
-      - { num: 17, semaineAvis: 1944-233 }
-      - { num: 18, semaineAvis: 2023-231 }
-      - { num: 19, semaineAvis: 2026-230 }
-      - { num: 20, semaineAvis: 2044-230 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6462:
     groupTitle: 'Polynésie Française'
     title: 'Îles Gambier'
@@ -280,11 +256,7 @@ gans:
       SW: '23°18,50''S — 135°07,25''W'
       NE: '23°07,71''S — 134°50,13''W'
     edition: 'Edition n°3 - 2017'
-    corrections:
-      - { num: 1, semaineAvis: 1908-232 }
-      - { num: 2, semaineAvis: 1944-233 }
-      - { num: 3, semaineAvis: 2139-232 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6463:
     groupTitle: 'Îles Gambier'
     title: 'Île Mangareva'
@@ -293,15 +265,7 @@ gans:
       SW: '23°09,07''S — 135°03,15''W'
       NE: '23°03,69''S — 134°54,60''W'
     edition: 'Edition n°4 - 2011'
-    corrections:
-      - { num: 1, semaineAvis: 1709-209 }
-      - { num: 2, semaineAvis: 1829-217 }
-      - { num: 3, semaineAvis: 1908-233 }
-      - { num: 4, semaineAvis: 1944-233 }
-      - { num: 5, semaineAvis: 2023-230 }
-      - { num: 6, semaineAvis: 2023-231 }
-      - { num: 7, semaineAvis: 2139-232 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6464:
     groupTitle: 'Îles Gambier'
     title: 'Îles Mangareva'
@@ -310,14 +274,7 @@ gans:
       SW: '23°08,87''S — 134°58,73''W'
       NE: '23°03,49''S — 134°50,10''W'
     edition: 'Edition n°4 - 2012'
-    corrections:
-      - { num: 2, semaineAvis: 1829-217 }
-      - { num: 3, semaineAvis: 1908-233 }
-      - { num: 4, semaineAvis: 1944-233 }
-      - { num: 5, semaineAvis: 2023-230 }
-      - { num: 6, semaineAvis: 2139-232 }
-      - { num: 7, semaineAvis: 2218-224 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6497:
     groupTitle: 'Océan Indien - Archipel des Crozet - Groupe de l''Est'
     title: 'Île de la Possession, Île de l''Est'
@@ -349,13 +306,8 @@ gans:
       NE: '17°41,42''S — 149°14,81''W'
     edition: 'Edition n°5 - 2017'
     corrections:
-      - { num: 1, semaineAvis: 2018-228 }
-      - { num: 2, semaineAvis: 2037-228 }
-      - { num: 3, semaineAvis: 2141-227 }
-      - { num: 4, semaineAvis: 2149-226 }
-      - { num: 5, semaineAvis: 2242-228 }
       - { num: 6, semaineAvis: 2302-224 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6540:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'Baie de Saint-Vincent'
@@ -376,11 +328,7 @@ gans:
       SW: '21°01,33''S — 164°32,20''E'
       NE: '20°54,16''S — 164°43,43''E'
     edition: 'Edition n°3 - 2012'
-    corrections:
-      - { num: 5, semaineAvis: 1942-215 }
-      - { num: 6, semaineAvis: 1947-216 }
-      - { num: 7, semaineAvis: 2007-216 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6604:
     groupTitle: 'Iles Tuamotu'
     title: 'De Mururoa à Fangataufa'
@@ -398,11 +346,7 @@ gans:
       SW: '17°35,02''S — 149°30,01''W'
       NE: '17°26,04''S — 149°16,27''W'
     edition: 'Edition n°2 - 2009'
-    corrections:
-      - { num: 4, semaineAvis: 1925-225 }
-      - { num: 5, semaineAvis: 2044-230 }
-      - { num: 6, semaineAvis: 2149-226 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6607:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie Sud-Est'
@@ -411,11 +355,7 @@ gans:
       SW: '28°15,00''S — 153°30,00''W'
       NE: '07°30,00''S — 120°00,00''W'
     edition: 'Edition n°3 - 2004'
-    corrections:
-      - { num: 17, semaineAvis: 1919-233 }
-      - { num: 18, semaineAvis: 2002-232 }
-      - { num: 19, semaineAvis: 2046-231 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6610:
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié'
@@ -498,13 +438,8 @@ gans:
       - { title: 'Cartouche: E - Iles Glorieuses', scale: '1 : 150 000', spatial: { SW: '', NE: '' } }
     edition: 'Edition n°2 - 1991'
     corrections:
-      - { num: 16, semaineAvis: 1938-184 }
-      - { num: 17, semaineAvis: 1945-184 }
-      - { num: 18, semaineAvis: 2037-188 }
-      - { num: 19, semaineAvis: 2051-180 }
-      - { num: 20, semaineAvis: 2140-178 }
       - { num: 21, semaineAvis: 2315-196 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
@@ -524,11 +459,7 @@ gans:
       SW: '17°31,22''S — 149°52,71''W'
       NE: '17°27,74''S — 149°47,34''W'
     edition: 'Edition n°4 - 2017'
-    corrections:
-      - { num: 2, semaineAvis: 2018-226 }
-      - { num: 3, semaineAvis: 2103-232 }
-      - { num: 4, semaineAvis: 2237-228 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6658:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Île de Moorea - Côte Nord-Ouest de Tahiti'
@@ -539,14 +470,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Baie de Vaiare', scale: '1 : 15 000', spatial: { SW: '17°32,02''S — 149°47,01''W', NE: '17°30,42''S — 149°45,15''W' } }
     edition: 'Edition n°4 - 2018'
-    corrections:
-      - { num: 1, semaineAvis: 1940-228 }
-      - { num: 2, semaineAvis: 2018-226 }
-      - { num: 3, semaineAvis: 2031-230 }
-      - { num: 4, semaineAvis: 2044-230 }
-      - { num: 5, semaineAvis: 2208-230 }
-      - { num: 6, semaineAvis: 2237-228 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6664:
     groupTitle: 'Océan Indien'
     title: 'De Port Elisabeth à Mauritius'
@@ -564,12 +488,7 @@ gans:
       SW: '35°17,40''S — 146°40,00''E'
       NE: '16°00,00''S — 180°00,00''E'
     edition: 'Edition n°5 - 2017'
-    corrections:
-      - { num: 2, semaineAvis: 1935-216 }
-      - { num: 3, semaineAvis: 2036-225 }
-      - { num: 4, semaineAvis: 2112-210 }
-      - { num: 5, semaineAvis: 2140-230 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6671:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mers du Corail et des Salomon et mers adjacentes'
@@ -579,13 +498,8 @@ gans:
       NE: '00°06,00''N — 180°00,00''E'
     edition: 'Edition n°4 - 2017'
     corrections:
-      - { num: 4, semaineAvis: 1935-216 }
-      - { num: 5, semaineAvis: 2012-222 }
-      - { num: 6, semaineAvis: 2036-225 }
-      - { num: 7, semaineAvis: 2140-230 }
-      - { num: 8, semaineAvis: 2209-235 }
       - { num: 9, semaineAvis: 2314-220 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6672:
     groupTitle: 'Océan Indien - Partie Ouest'
     title: 'De Maputo à Muqdisho - Madagascar'
@@ -728,14 +642,8 @@ gans:
       - { title: 'Cartouche: B - Tapuaeraha', scale: '1 : 10 000', spatial: { SW: '17°49,06''S — 149°19,56''W', NE: '17°46,28''S — 149°17,47''W' } }
     edition: 'Edition n°3 - 2017'
     corrections:
-      - { num: 2, semaineAvis: 1725-207 }
-      - { num: 3, semaineAvis: 1728-210 }
-      - { num: 4, semaineAvis: 2037-228 }
-      - { num: 5, semaineAvis: 2141-227 }
-      - { num: 6, semaineAvis: 2215-227 }
-      - { num: 7, semaineAvis: 2242-228 }
       - { num: 8, semaineAvis: 2302-224 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6735:
     groupTitle: 'Côte Nord de France - Côte de Belgique - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
@@ -766,14 +674,7 @@ gans:
       SW: '17°46,18''S — 149°40,51''W'
       NE: '17°33,02''S — 149°31,11''W'
     edition: 'Edition n°3 - 2009'
-    corrections:
-      - { num: 4, semaineAvis: 1838-210 }
-      - { num: 5, semaineAvis: 1923-230 }
-      - { num: 6, semaineAvis: 2025-231 }
-      - { num: 7, semaineAvis: 2045-230 }
-      - { num: 8, semaineAvis: 2149-226 }
-      - { num: 9, semaineAvis: 2229-229 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6741:
     groupTitle: 'Océan Indien'
     title: 'Îles Kerguelen'
@@ -813,15 +714,7 @@ gans:
       SW: '23°33,84''S — 165°00,20''E'
       NE: '21°32,33''S — 168°12,20''E'
     edition: 'Edition n°3 - 2010'
-    corrections:
-      - { num: 11, semaineAvis: 1720-204 }
-      - { num: 12, semaineAvis: 1741-204 }
-      - { num: 13, semaineAvis: 1807-204 }
-      - { num: 14, semaineAvis: 1848-204 }
-      - { num: 15, semaineAvis: 1930-220 }
-      - { num: 16, semaineAvis: 2018-222 }
-      - { num: 17, semaineAvis: 2237-218 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6797:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Loire'
@@ -884,11 +777,7 @@ gans:
       SW: '37°55,40''S — 171°34,30''E'
       NE: '07°30,00''S — 167°00,00''W'
     edition: 'Edition n°3 - 2016'
-    corrections:
-      - { num: 1, semaineAvis: 1845-200 }
-      - { num: 2, semaineAvis: 2011-215 }
-      - { num: 3, semaineAvis: 2140-230 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6820:
     groupTitle: 'Îles Loyauté'
     title: 'Mouillages de l''Île Lifou - Baie du Santal'
@@ -901,11 +790,8 @@ gans:
       - { title: 'Cartouche: A - Baie de Doking', scale: '1 : 20 000', spatial: { SW: '20°43,64''S — 167°05,83''E', NE: '20°41,30''S — 167°10,33''E' } }
     edition: 'Edition n°3 - 2015'
     corrections:
-      - { num: 2, semaineAvis: 1741-204 }
-      - { num: 3, semaineAvis: 1749-204 }
-      - { num: 4, semaineAvis: 2304-224 }
       - { num: 5, semaineAvis: 2312-225 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6821:
     groupTitle: 'Mer Méditerranée'
     title: 'Côte Ouest de Corse'
@@ -992,10 +878,8 @@ gans:
       - { title: 'Cartouche: Mer de Béring', scale: '1 : 7 330 000', spatial: { SW: '49°00,00''N — 170°15,00''E', NE: '65°00,00''N — 169°20,00''W' } }
     edition: 'Edition n°2 - 1997'
     corrections:
-      - { num: 78, semaineAvis: 2138-244 }
-      - { num: 79, semaineAvis: 2304-244 }
       - { num: 80, semaineAvis: 2311-244 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël'
@@ -1098,11 +982,8 @@ gans:
       - { title: 'Cartouche: A - Iles Wallis', scale: '1 : 100 000', spatial: { SW: '13°31,00''S — 176°23,01''W', NE: '13°07,23''S — 176°01,26''W' } }
     edition: 'Edition n°3 - 2012'
     corrections:
-      - { num: 13, semaineAvis: 2151-225 }
-      - { num: 14, semaineAvis: 2219-223 }
-      - { num: 15, semaineAvis: 2233-224 }
       - { num: 16, semaineAvis: 2310-220 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6880:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des Îles Tonga aux Îles des Tuamotu'
@@ -1111,13 +992,7 @@ gans:
       SW: '27°54,39''S — 175°20,00''W'
       NE: '07°30,00''S — 142°00,00''W'
     edition: 'Edition n°3 - 2017'
-    corrections:
-      - { num: 1, semaineAvis: 1919-233 }
-      - { num: 2, semaineAvis: 2002-232 }
-      - { num: 3, semaineAvis: 2011-215 }
-      - { num: 4, semaineAvis: 2025-229 }
-      - { num: 5, semaineAvis: 2046-230 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6884:
     groupTitle: 'Océan Indien - Partie Nord'
     title: 'Océan Indien - Partie Nord'
@@ -1259,14 +1134,7 @@ gans:
       SW: '21°41,93''S — 165°52,20''E'
       NE: '21°17,63''S — 166°30,30''E'
     edition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 13, semaineAvis: 1715-212 }
-      - { num: 14, semaineAvis: 1831-205 }
-      - { num: 15, semaineAvis: 1847-204 }
-      - { num: 16, semaineAvis: 2002-217 }
-      - { num: 17, semaineAvis: 2018-222 }
-      - { num: 18, semaineAvis: 2237-218 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6951:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
     title: 'De Fos-sur-Mer à Capo Mele'
@@ -1276,10 +1144,8 @@ gans:
       NE: '43°59,94''N — 008°11,94''E'
     edition: 'Edition n°4 - 2018'
     corrections:
-      - { num: 11, semaineAvis: 2114-87 }
-      - { num: 12, semaineAvis: 2149-95 }
       - { num: 13, semaineAvis: 2250-87 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6955:
     groupTitle: 'Océan Pacifique Sud - Îles de la Société'
     title: 'Approches des Îles de Tahiti et de Moorea'
@@ -1299,13 +1165,7 @@ gans:
       SW: '17°45,42''S — 149°21,01''W'
       NE: '17°32,26''S — 149°11,65''W'
     edition: 'Edition n°3 - 2010'
-    corrections:
-      - { num: 5, semaineAvis: 1721-207 }
-      - { num: 6, semaineAvis: 1902-230 }
-      - { num: 7, semaineAvis: 1919-231 }
-      - { num: 8, semaineAvis: 2042-228 }
-      - { num: 9, semaineAvis: 2114-232 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6957:
     groupTitle: 'Polynésie Française - Tahiti - Presqu''île de Taiarapu'
     title: 'De la Baie de Taravao à la Passe d''Aiurua'
@@ -1314,11 +1174,7 @@ gans:
       SW: '17°50,18''S — 149°17,01''W'
       NE: '17°41,22''S — 149°03,27''W'
     edition: 'Edition n°2 - 2006'
-    corrections:
-      - { num: 4, semaineAvis: 1802-209 }
-      - { num: 5, semaineAvis: 1907-220 }
-      - { num: 6, semaineAvis: 2042-228 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6964:
     groupTitle: 'Océan Pacifique - Côte Ouest d''Amérique du Sud'
     title: 'De Panama au Cap Horn (Cabo de Hornos)'
@@ -1408,16 +1264,7 @@ gans:
       - { title: 'Cartouche: A - Mouillage de Karembé', scale: '1 : 20 000', spatial: { SW: '20°37,83''S — 164°16,19''E', NE: '20°34,70''S — 164°19,29''E' } }
       - { title: 'Cartouche: B - Mouillage de Théoudié', scale: '1 : 20 000', spatial: { SW: '20°46,74''S — 164°19,29''E', NE: '20°44,23''S — 164°22,74''E' } }
     edition: 'Edition n°3 - 2011'
-    corrections:
-      - { num: 7, semaineAvis: 1704-206 }
-      - { num: 8, semaineAvis: 1823-204 }
-      - { num: 9, semaineAvis: 1849-203 }
-      - { num: 10, semaineAvis: 1851-200 }
-      - { num: 11, semaineAvis: 1929-219 }
-      - { num: 12, semaineAvis: 2017-221 }
-      - { num: 13, semaineAvis: 2025-225 }
-      - { num: 14, semaineAvis: 2211-223 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6986:
     groupTitle: 'Nouvelle Calédonie'
     title: 'De Port-Ounia au Cap Ndoua'
@@ -1429,16 +1276,8 @@ gans:
       - { title: 'Cartouche: Baie de Yaté', scale: '1 : 20 000', spatial: { SW: '22°09,83''S — 166°55,31''E', NE: '22°08,59''S — 166°57,52''E' } }
     edition: 'Edition n°3 - 2017'
     corrections:
-      - { num: 1, semaineAvis: 1808-204 }
-      - { num: 2, semaineAvis: 1811-204 }
-      - { num: 3, semaineAvis: 1830-207 }
-      - { num: 4, semaineAvis: 1930-222 }
-      - { num: 5, semaineAvis: 1932-218 }
-      - { num: 6, semaineAvis: 2104-217 }
-      - { num: 7, semaineAvis: 2230-224 }
-      - { num: 8, semaineAvis: 2240-220 }
       - { num: 9, semaineAvis: 2304-224 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   6990:
     groupTitle: 'Océan Atlantique - Côte Ouest de France'
     title: 'De la Pointe de Penmarc''h à la Gironde'
@@ -1499,11 +1338,8 @@ gans:
       NE: '43°39,94''N — 005°12,93''E'
     edition: 'Edition n°2 - 2005'
     corrections:
-      - { num: 96, semaineAvis: 2305-84 }
-      - { num: 97, semaineAvis: 2311-72 }
-      - { num: 98, semaineAvis: 2313-86 }
       - { num: 99, semaineAvis: 2315-85 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7011:
     groupTitle: Nouvelle-Calédonie
     title: 'De la Presqu''île Neuméni à Port-Ounia'
@@ -1546,11 +1382,8 @@ gans:
       NE: '40°00,00''N — 154°20,00''W'
     edition: 'Edition n°2 - 1991'
     corrections:
-      - { num: 213, semaineAvis: 1910-235 }
-      - { num: 214, semaineAvis: 1946-240 }
-      - { num: 215, semaineAvis: 2025-244 }
       - { num: 216, semaineAvis: 2308-240 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7023:
     groupTitle: 'Océan Pacifique Est'
     title: 'De San Francisco à Lima'
@@ -1639,10 +1472,8 @@ gans:
       NE: '20°30,80''S — 056°32,60''E'
     edition: 'Edition n°2 - 1998'
     corrections:
-      - { num: 47, semaineAvis: 2114-184 }
-      - { num: 48, semaineAvis: 2223-183 }
       - { num: 49, semaineAvis: 2310-184 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7040:
     title: 'La Manche'
     scale: '1 : 560 000'
@@ -1699,13 +1530,7 @@ gans:
       - { title: 'Cartouche: B - Île Matthew', scale: '1 : 25 000', spatial: { SW: '22°21,60''S — 171°20,51''E', NE: '22°19,40''S — 171°22,21''E' } }
       - { title: 'Cartouche: C - Île Hunter', scale: '1 : 25 000', spatial: { SW: '22°24,70''S — 172°04,41''E', NE: '22°22,50''S — 172°05,91''E' } }
     edition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 1, semaineAvis: 1731-203 }
-      - { num: 2, semaineAvis: 1751-204 }
-      - { num: 3, semaineAvis: 2036-225 }
-      - { num: 4, semaineAvis: 2232-220 }
-      - { num: 5, semaineAvis: 2240-220 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7050:
     groupTitle: 'Côte Ouest de Corse'
     title: 'De Calvi à Cargèse'
@@ -1727,12 +1552,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Baie de Hienghène', scale: '1 : 15 000', spatial: { SW: '20°41,68''S — 164°55,85''E', NE: '20°40,13''S — 164°57,70''E' } }
     edition: 'Edition n°3 - 2013'
-    corrections:
-      - { num: 3, semaineAvis: 1825-207 }
-      - { num: 4, semaineAvis: 1828-210 }
-      - { num: 5, semaineAvis: 1838-205 }
-      - { num: 6, semaineAvis: 2229-225 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7052:
     groupTitle: Nouvelle-Calédonie
     title: 'De Nouméa à l''Île des Pins'
@@ -1742,16 +1562,8 @@ gans:
       NE: '22°13,23''S — 167°58,00''E'
     edition: 'Edition n°2 - 2009'
     corrections:
-      - { num: 18, semaineAvis: 1720-204 }
-      - { num: 19, semaineAvis: 1830-207 }
-      - { num: 20, semaineAvis: 1848-204 }
-      - { num: 21, semaineAvis: 1905-215 }
-      - { num: 22, semaineAvis: 1911-216 }
-      - { num: 23, semaineAvis: 1930-220 }
-      - { num: 24, semaineAvis: 1930-222 }
-      - { num: 25, semaineAvis: 2016-220 }
       - { num: 26, semaineAvis: 2249-218 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7053:
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'
@@ -1796,11 +1608,8 @@ gans:
       NE: '48°44,14''N — 004°13,09''W'
     edition: 'Edition n°5 - 2019'
     corrections:
-      - { num: 20, semaineAvis: 2219-50 }
-      - { num: 21, semaineAvis: 2246-48 }
-      - { num: 22, semaineAvis: 2306-50 }
       - { num: 23, semaineAvis: 2310-45 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7067:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Chaussée de Sein à Belle-Île'
@@ -1821,12 +1630,9 @@ gans:
       NE: '47°35,60''N — 001°30,00''W'
     edition: 'Edition n°3 - 2018'
     corrections:
-      - { num: 40, semaineAvis: 2230-55 }
-      - { num: 41, semaineAvis: 2230-60 }
-      - { num: 42, semaineAvis: 2242-53 }
       - { num: 43, semaineAvis: 2311-50 }
       - { num: 44, semaineAvis: 2311-53 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7069:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre'
@@ -2066,11 +1872,7 @@ gans:
       - { title: 'Cartouche: E - Grande Anse', scale: '1 : 10 000', spatial: { SW: '16°17,22''N — 061°04,81''W', NE: '16°18,51''N — 061°03,70''W' } }
       - { title: 'Cartouche: F - Grand-Bourg', scale: '1 : 10 000', spatial: { SW: '15°51,85''N — 061°19,71''W', NE: '15°53,14''N — 061°18,63''W' } }
     edition: 'Edition n°3 - 2018'
-    corrections:
-      - { num: 2, semaineAvis: 1903-265 }
-      - { num: 3, semaineAvis: 2042-267 }
-      - { num: 4, semaineAvis: 2224-259 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7107:
     groupTitle: 'Côte Ouest de France'
     title: 'Port de La Trinité-Sur-Mer, Port du Crouesty'
@@ -2313,11 +2115,7 @@ gans:
       - { title: 'Cartouche: D - Embouchure de la Laïta', scale: '1 : 10 000', spatial: { SW: '47°44,94''N — 003°32,89''W', NE: '47°47,18''N — 003°31,18''W' } }
       - { title: 'Cartouche: E - Rivière d''Étel', scale: '1 : 10 000', spatial: { SW: '47°36,89''N — 003°14,88''W', NE: '47°40,94''N — 003°11,08''W' } }
     edition: 'Edition n°3 - 2016'
-    corrections:
-      - { num: 4, semaineAvis: 2110-56 }
-      - { num: 5, semaineAvis: 2113-50 }
-      - { num: 6, semaineAvis: 2239-47 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7139:
     groupTitle: 'Côte Ouest de France'
     title: 'De la Pointe du Talut à la Pointe de Gâvres - Île de Groix'
@@ -2583,11 +2381,7 @@ gans:
       SW: '49°06,04''N — 002°42,08''W'
       NE: '49°25,54''N — 001°58,38''W'
     edition: 'Edition n°3 - 2014'
-    corrections:
-      - { num: 11, semaineAvis: 2036-52 }
-      - { num: 12, semaineAvis: 2123-45 }
-      - { num: 13, semaineAvis: 2214-43 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7161:
     groupTitle: 'Côte Nord de France - Iles Anglo-Normandes'
     title: 'Des îles Chausey à Jersey'
@@ -2635,10 +2429,8 @@ gans:
       NE: '21°42,13''S — 166°09,70''E'
     edition: 'Edition n°2 - 2010'
     corrections:
-      - { num: 9, semaineAvis: 1927-217 }
-      - { num: 10, semaineAvis: 2204-221 }
       - { num: 11, semaineAvis: 2241-218 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7168:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Bourail à la Passe de la Poya'
@@ -2649,13 +2441,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Coupée du Cap Goulvain', scale: '1 : 20 000', spatial: { SW: '21°33,20''S — 165°13,31''E', NE: '21°30,08''S — 165°16,51''E' } }
     edition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 4, semaineAvis: 1741-204 }
-      - { num: 5, semaineAvis: 1807-204 }
-      - { num: 6, semaineAvis: 1818-204 }
-      - { num: 7, semaineAvis: 1838-203 }
-      - { num: 8, semaineAvis: 1942-218 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7170:
     groupTitle: 'Océan Indien'
     title: 'Îles Saint-Paul et Amsterdam'
@@ -2892,12 +2678,15 @@ gans:
       - { title: 'Cartouche: A - Ava Leava (Anse de Sigave)', scale: '1 : 10 000', spatial: { SW: '14°18,10''S — 178°10,22''W', NE: '14°17,30''S — 178°09,37''W' } }
       - { title: 'Cartouche: B - Chenal Vasia', scale: '1 : 20 000', spatial: { SW: '14°20,00''S — 178°04,68''W', NE: '14°18,35''S — 178°02,99''W' } }
     edition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 1, semaineAvis: 1824-206 }
-      - { num: 2, semaineAvis: 1838-206 }
-      - { num: 3, semaineAvis: 1930-217 }
-      - { num: 4, semaineAvis: 2144-223 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
+  7240:
+    groupTitle: 'Océan Indien'
+    title: 'Îles Glorieuses'
+    inSets:
+      - { title: 'Cartouche: Îles Glorieuses', scale: '1 : 50 000', spatial: { SW: '11°35,92''S — 047°14,95''E', NE: '11°25,74''S — 047°29,08''E' } }
+      - { title: 'Cartouche: A- Abords Nord de l''Île Glorieuse', scale: '1 : 15 000', spatial: { SW: '11°35,07''S — 047°15,92''E', NE: '11°32,12''S — 047°20,19''E' } }
+    edition: 'Publication 2022'
+    valid: '2023-04-24'
   7246:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
@@ -2925,11 +2714,7 @@ gans:
       - { title: 'Cartouche: C - Passe Pakaka (Haniuru) - Quai de Niutahi', scale: '1 : 10 000', spatial: { SW: '15°34,50''S — 146°25,68''W', NE: '15°33,52''S — 146°22,70''W' } }
       - { title: 'Cartouche: D - Lagon Ouest - De la Passe Tehere à la Passe Pakaka', scale: '1 : 40 000', spatial: { SW: '15°34,50''S — 146°27,09''W', NE: '15°18,05''S — 146°22,73''W' } }
     edition: 'Edition n°2 - 2010'
-    corrections:
-      - { num: 4, semaineAvis: 2044-230 }
-      - { num: 5, semaineAvis: 2103-234 }
-      - { num: 6, semaineAvis: 2128-230 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7249:
     groupTitle: 'Côte Ouest de France'
     title: 'Ports et Mouillages en Finistère Sud'
@@ -3062,17 +2847,8 @@ gans:
       NE: '17°43,00''S — 169°06,00''E'
     edition: 'Publication 1992'
     corrections:
-      - { num: 23, semaineAvis: 1720-204 }
-      - { num: 24, semaineAvis: 1720-205 }
-      - { num: 25, semaineAvis: 1731-203 }
-      - { num: 26, semaineAvis: 1749-204 }
-      - { num: 27, semaineAvis: 1751-204 }
-      - { num: 28, semaineAvis: 1829-206 }
-      - { num: 29, semaineAvis: 1935-216 }
-      - { num: 30, semaineAvis: 2036-225 }
-      - { num: 31, semaineAvis: 2229-223 }
       - { num: 32, semaineAvis: 2251-225 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7271:
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
@@ -3199,12 +2975,8 @@ gans:
       NE: '17°48,51''S — 149°03,30''W'
     edition: 'Edition n°2 - 2010'
     corrections:
-      - { num: 8, semaineAvis: 1806-211 }
-      - { num: 9, semaineAvis: 2018-228 }
-      - { num: 10, semaineAvis: 2149-226 }
-      - { num: 11, semaineAvis: 2302-224 }
       - { num: 12, semaineAvis: 2315-225 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7310:
     groupTitle: 'Côte Nord de France'
     title: 'Baie de Saint-Brieuc (partie Est)'
@@ -3250,14 +3022,7 @@ gans:
       SW: '21°09,00''S — 164°15,00''E'
       NE: '20°44,60''S — 164°53,10''E'
     edition: 'Edition n°2 - 2012'
-    corrections:
-      - { num: 4, semaineAvis: 1823-204 }
-      - { num: 5, semaineAvis: 1930-220 }
-      - { num: 6, semaineAvis: 1947-216 }
-      - { num: 7, semaineAvis: 2007-216 }
-      - { num: 8, semaineAvis: 2025-225 }
-      - { num: 9, semaineAvis: 2237-218 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7314:
     groupTitle: 'Polynésie française Îles Tuamotu'
     title: Ahe
@@ -3311,12 +3076,7 @@ gans:
       - { title: 'Cartouche: B - Havre de Balade', scale: '1 : 25 000', spatial: { SW: '20°18,30''S — 164°27,57''E', NE: '20°15,00''S — 164°30,50''E' } }
       - { title: 'Cartouche: C - Port de Pouébo et Baie de Tchevit', scale: '1 : 25 000', spatial: { SW: '20°24,70''S — 164°34,55''E', NE: '20°21,70''S — 164°38,00''E' } }
     edition: 'Edition n°2 - 2014'
-    corrections:
-      - { num: 2, semaineAvis: 1814-207 }
-      - { num: 3, semaineAvis: 1818-206 }
-      - { num: 4, semaineAvis: 1827-205 }
-      - { num: 5, semaineAvis: 2229-225 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7320:
     groupTitle: 'Côte Nord-Ouest de Nouvelle-Calédonie'
     title: 'De Koumac à Poum'
@@ -3377,10 +3137,8 @@ gans:
       NE: '16°26,35''N — 061°29,61''W'
     edition: 'Edition n°3 - 2017'
     corrections:
-      - { num: 2, semaineAvis: 2015-260 }
-      - { num: 3, semaineAvis: 2019-256 }
       - { num: 4, semaineAvis: 2242-258 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7328:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Sud'
@@ -3484,10 +3242,8 @@ gans:
       NE: '11°49,60''S — 047°11,80''E'
     edition: 'Edition n°2 - 2008'
     corrections:
-      - { num: 2, semaineAvis: 1938-184 }
-      - { num: 3, semaineAvis: 2140-178 }
       - { num: 4, semaineAvis: 2315-196 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7351:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Goyeta à la Passe de Koné'
@@ -3508,14 +3264,7 @@ gans:
       - { title: 'Cartouche: D - Baie du Contrôleur', scale: '1 : 20 000', spatial: { SW: '08°56,00''S — 140°03,61''W', NE: '08°52,38''S — 140°00,49''W' } }
       - { title: 'Cartouche: E - Baie de Taioa', scale: '1 : 15 000', spatial: { SW: '08°58,54''S — 140°10,45''W', NE: '08°55,82''S — 140°08,94''W' } }
     edition: 'Publication 1995'
-    corrections:
-      - { num: 12, semaineAvis: 1742-210 }
-      - { num: 13, semaineAvis: 1902-230 }
-      - { num: 14, semaineAvis: 1919-229 }
-      - { num: 15, semaineAvis: 1919-231 }
-      - { num: 16, semaineAvis: 1925-231 }
-      - { num: 17, semaineAvis: 1938-231 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7353:
     groupTitle: 'Iles Marquises (Fenua Enata)'
     title: 'Ua-Pou et Ua-Huka'
@@ -3533,14 +3282,8 @@ gans:
       - { title: 'Cartouche: K - Ua-Huka - Baie d''Hane', scale: '1 : 10 000', spatial: { SW: '08°56,67''S — 139°32,31''W', NE: '08°55,40''S — 139°31,50''W' } }
     edition: 'Publication 1995'
     corrections:
-      - { num: 11, semaineAvis: 1649-207 }
-      - { num: 12, semaineAvis: 1919-229 }
-      - { num: 13, semaineAvis: 1932-229 }
-      - { num: 14, semaineAvis: 2024-230 }
-      - { num: 15, semaineAvis: 2044-230 }
-      - { num: 16, semaineAvis: 2107-230 }
       - { num: 17, semaineAvis: 2247-229 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7354:
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Fatu-Hiva, Baies de Hiva-Oa et de Tahuata'
@@ -3562,14 +3305,8 @@ gans:
       - { title: 'Cartouche: O - Fatu-Hiva', scale: '1 : 70 000', spatial: { SW: '10°39,75''S — 138°46,50''W', NE: '10°19,55''S — 138°31,89''W' } }
     edition: 'Edition n°2 - 2017'
     corrections:
-      - { num: 3, semaineAvis: 1902-230 }
-      - { num: 4, semaineAvis: 1907-230 }
-      - { num: 5, semaineAvis: 1919-229 }
-      - { num: 6, semaineAvis: 1919-231 }
-      - { num: 7, semaineAvis: 2035-230 }
-      - { num: 8, semaineAvis: 2045-234 }
       - { num: 9, semaineAvis: 2242-232 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7355:
     groupTitle: 'Îles Marquises (Fenua Enata)'
     title: 'Hiva-Oa, Tahuata et Mohotani'
@@ -3714,16 +3451,8 @@ gans:
       NE: '21°05,43''S — 165°09,20''E'
     edition: 'Edition n°2 - 2012'
     corrections:
-      - { num: 4, semaineAvis: 1741-204 }
-      - { num: 5, semaineAvis: 1818-204 }
-      - { num: 6, semaineAvis: 1906-218 }
-      - { num: 7, semaineAvis: 1942-218 }
-      - { num: 8, semaineAvis: 1942-219 }
-      - { num: 9, semaineAvis: 2213-222 }
-      - { num: 10, semaineAvis: 2230-224 }
-      - { num: 11, semaineAvis: 2237-218 }
       - { num: 12, semaineAvis: 2241-220 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7376:
     groupTitle: 'Côte de Guyane'
     title: 'Embouchure du fleuve Maroni'
@@ -3755,12 +3484,7 @@ gans:
       SW: '04°50,40''N — 052°17,70''W'
       NE: '04°56,50''N — 052°08,78''W'
     edition: 'Edition n°6 - 2019'
-    corrections:
-      - { num: 1, semaineAvis: 1930-255 }
-      - { num: 2, semaineAvis: 2002-253 }
-      - { num: 3, semaineAvis: 2024-250 }
-      - { num: 4, semaineAvis: 2108-253 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7379:
     groupTitle: 'Côte de Guyane'
     title: 'Abords de Cayenne'
@@ -3915,11 +3639,8 @@ gans:
       NE: '48°23,89''N — 004°25,39''W'
     edition: 'Edition n°4 - 2019'
     corrections:
-      - { num: 11, semaineAvis: 2220-50 }
-      - { num: 12, semaineAvis: 2233-41 }
-      - { num: 13, semaineAvis: 2248-48 }
       - { num: 14, semaineAvis: 2304-46 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7400:
     groupTitle: 'Côte Ouest de France'
     title: 'Rade de Brest'
@@ -4223,10 +3944,8 @@ gans:
       - { title: 'Cartouche: A - Port de Sein', scale: '1 : 10 000', spatial: { SW: '48°01,84''N — 004°51,29''W', NE: '48°02,84''N — 004°50,24''W' } }
     edition: 'Edition n°3 - 2016'
     corrections:
-      - { num: 7, semaineAvis: 2012-43 }
-      - { num: 8, semaineAvis: 2246-48 }
       - { num: 9, semaineAvis: 2309-50 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7424:
     groupTitle: 'Côte Nord de France - Côte Sud-Est d''Angleterre'
     title: 'Pas de Calais'
@@ -4236,12 +3955,8 @@ gans:
       NE: '51°24,94''N — 002°26,89''E'
     edition: 'Edition n°4 - 2018'
     corrections:
-      - { num: 47, semaineAvis: 2249-29 }
-      - { num: 48, semaineAvis: 2249-36 }
-      - { num: 49, semaineAvis: 2304-25 }
-      - { num: 50, semaineAvis: 2307-37 }
       - { num: 51, semaineAvis: 2315-31 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7425:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Gironde'
@@ -4337,7 +4052,7 @@ gans:
     edition: 'Edition n°3 - 2022'
     corrections:
       - { num: 1, semaineAvis: 2314-96 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7440:
     groupTitle: 'Côte Ouest de France'
     title: 'De Vieux Boucau à la Baie de Fontarabie'
@@ -4490,17 +4205,18 @@ gans:
       SW: '17°37,20''S — 149°41,84''W'
       NE: '17°27,00''S — 149°26,30''W'
     edition: 'Publication 2009'
-    corrections:
-      - { num: 15, semaineAvis: 1724-205 }
-      - { num: 16, semaineAvis: 1838-208 }
-      - { num: 17, semaineAvis: 1923-230 }
-      - { num: 18, semaineAvis: 2025-231 }
-      - { num: 19, semaineAvis: 2031-230 }
-      - { num: 20, semaineAvis: 2045-230 }
-      - { num: 21, semaineAvis: 2149-226 }
-      - { num: 22, semaineAvis: 2208-230 }
-      - { num: 23, semaineAvis: 2229-229 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
+  7462:
+    groupTitle: 'Polynésie Française Îles Tuamotu'
+    title: Amanu
+    scale: '1 : 60 000'
+    spatial:
+      SW: '18°05,40''S — 141°00,50''W'
+      NE: '17°29,70''S — 140°35,10''W'
+    inSets:
+      - { title: 'Cartouche: A - Passes Fafameru et Teikariki - Village Ikitake', scale: '1 : 10 000', spatial: { SW: '17°51,47''S — 140°51,80''W', NE: '17°49,41''S — 140°49,50''W' } }
+    edition: 'Publication 2022'
+    valid: '2023-04-24'
   7463:
     groupTitle: 'Polynésie Française Îles Tuamotu'
     title: Katiu
@@ -4512,6 +4228,28 @@ gans:
       - { title: 'Cartouche: A - Passe Pakata', scale: '1 : 5 000', spatial: { SW: '16°22,35''S — 144°21,57''W', NE: '16°21,75''S — 144°20,95''W' } }
     edition: 'Publication 2021'
     valid: '2023-04-22'
+  7464:
+    groupTitle: 'Polynésie Française Îles Tuamotu'
+    title: 'Motutunga et Tepoto Sud'
+    scale: '1 : 50 000'
+    spatial:
+      SW: '17°17,80''S — 144°35,00''W'
+      NE: '16°48,00''S — 144°13,90''W'
+    inSets:
+      - { title: 'Cartouche: A - Motutunga - Passe Nord-Ouest', scale: '1 : 5 000', spatial: { SW: '17°04,17''S — 144°24,49''W', NE: '17°03,51''S — 144°23,70''W' } }
+    edition: 'Publication 2022'
+    valid: '2023-04-24'
+  7465:
+    groupTitle: 'Îles Tuamotu'
+    title: Tahanea
+    scale: '1 : 50 000'
+    spatial:
+      SW: '17°03,20''S — 145°01,90''W'
+      NE: '16°42,90''S — 144°31,00''W'
+    inSets:
+      - { title: 'Cartouche: A - Passes Motupuapua, Teavatapu et Otao', scale: '1 : 15 000', spatial: { SW: '16°52,01''S — 144°42,80''W', NE: '16°49,83''S — 144°39,10''W' } }
+    edition: 'Publication 2022'
+    valid: '2023-04-24'
   7466:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
@@ -4533,20 +4271,7 @@ gans:
       SW: '16°55,00''N — 063°21,80''W'
       NE: '18°23,40''N — 062°19,00''W'
     edition: 'Edition n°2 - 2017'
-    corrections:
-      - { num: 4, semaineAvis: 1851-258 }
-      - { num: 5, semaineAvis: 1908-264 }
-      - { num: 6, semaineAvis: 1926-266 }
-      - { num: 7, semaineAvis: 1941-262 }
-      - { num: 8, semaineAvis: 1945-262 }
-      - { num: 9, semaineAvis: 2003-262 }
-      - { num: 10, semaineAvis: 2009-263 }
-      - { num: 11, semaineAvis: 2012-260 }
-      - { num: 12, semaineAvis: 2026-266 }
-      - { num: 13, semaineAvis: 2123-260 }
-      - { num: 14, semaineAvis: 2140-262 }
-      - { num: 15, semaineAvis: 2222-259 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7471:
     groupTitle: 'Petites Antilles'
     title: 'D''Anguilla à Saint-Barthélemy'
@@ -4570,17 +4295,9 @@ gans:
       - { title: 'Cartouche: E - Saint-Barthélemy - Port de Gustavia', scale: '1 : 15 000', spatial: { SW: '17°53,43''N — 062°53,13''W', NE: '17°55,78''N — 062°50,78''W' } }
     edition: 'Edition n°3 - 2017'
     corrections:
-      - { num: 2, semaineAvis: 1941-262 }
-      - { num: 3, semaineAvis: 2003-262 }
-      - { num: 4, semaineAvis: 2008-262 }
-      - { num: 5, semaineAvis: 2012-260 }
-      - { num: 6, semaineAvis: 2043-264 }
-      - { num: 7, semaineAvis: 2140-262 }
-      - { num: 8, semaineAvis: 2222-259 }
-      - { num: 9, semaineAvis: 2242-260 }
       - { num: 10, semaineAvis: 2306-260 }
       - { num: 11, semaineAvis: 2314-260 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7475:
     groupTitle: 'Océan Atlantique Nord - Petites Antilles et Côte du Vénézuela'
     title: 'De Puerto Rico à Trinidad'
@@ -4661,11 +4378,7 @@ gans:
       SW: '16°20,00''S — 040°12,00''E'
       NE: '09°03,00''S — 051°18,00''E'
     edition: 'Edition n°3 - 2013'
-    corrections:
-      - { num: 6, semaineAvis: 1816-152 }
-      - { num: 7, semaineAvis: 2007-195 }
-      - { num: 8, semaineAvis: 2140-178 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7487:
     groupTitle: 'Océan Indien'
     title: 'Approches Nord-Est de Madagascar'
@@ -4674,11 +4387,7 @@ gans:
       SW: '21°35,00''S — 048°35,00''E'
       NE: '11°05,00''S — 056°00,00''E'
     edition: 'Publication 2018'
-    corrections:
-      - { num: 1, semaineAvis: 1951-185 }
-      - { num: 2, semaineAvis: 2031-184 }
-      - { num: 3, semaineAvis: 2039-184 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7488:
     groupTitle: 'Océan Indien'
     title: 'De l''Île de La Réunion à l''Île Rodrigues et à l''Île Tromelin'
@@ -4730,12 +4439,7 @@ gans:
     inSets:
       - { title: 'Cartouche: A - Baie de Longoni', scale: '1 : 10 000', spatial: { SW: '12°44,00''S — 045°08,57''E', NE: '12°42,40''S — 045°10,45''E' } }
     edition: 'Edition n°4 - 2014'
-    corrections:
-      - { num: 6, semaineAvis: 1723-152 }
-      - { num: 7, semaineAvis: 1729-152 }
-      - { num: 8, semaineAvis: 1744-151 }
-      - { num: 9, semaineAvis: 2002-179 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7493:
     groupTitle: 'Archipel des Comores'
     title: 'Île de Mayotte - Partie Est'
@@ -4759,11 +4463,7 @@ gans:
       SW: '13°04,00''S — 044°55,40''E'
       NE: '12°43,10''S — 045°10,00''E'
     edition: 'Edition n°3 - 2014'
-    corrections:
-      - { num: 5, semaineAvis: 1736-151 }
-      - { num: 6, semaineAvis: 1744-151 }
-      - { num: 7, semaineAvis: 2002-179 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7507:
     groupTitle: 'Mer Méditerranée - Côtes d''Espagne, de France et d''Italie'
     title: 'Du Golfe du Lion aux Bouches de Bonifacio'
@@ -4864,11 +4564,8 @@ gans:
       - { title: 'Cartouche: A - Sombrero Island', scale: '1 : 15 000', spatial: { SW: '18°34,40''N — 063°26,27''W', NE: '18°35,86''N — 063°24,99''W' } }
     edition: 'Edition n°2 - 2018'
     corrections:
-      - { num: 2, semaineAvis: 1907-266 }
-      - { num: 3, semaineAvis: 1926-266 }
-      - { num: 4, semaineAvis: 2123-260 }
       - { num: 5, semaineAvis: 2242-260 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7625:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
@@ -4957,15 +4654,8 @@ gans:
       - { title: 'Cartouche: A - Port de Prony', scale: '1 : 10 000', spatial: { SW: '22°22,30''S — 166°52,80''E', NE: '22°20,82''S — 166°54,15''E' } }
     edition: 'Edition n°5 - 2016'
     corrections:
-      - { num: 2, semaineAvis: 1814-205 }
-      - { num: 3, semaineAvis: 1830-207 }
-      - { num: 4, semaineAvis: 1930-222 }
-      - { num: 5, semaineAvis: 2104-217 }
-      - { num: 6, semaineAvis: 2213-218 }
-      - { num: 7, semaineAvis: 2240-220 }
-      - { num: 8, semaineAvis: 2249-218 }
       - { num: 9, semaineAvis: 2304-224 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7657:
     groupTitle: 'Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De Mimizan-Plage à Cabo de Ajo'
@@ -5041,16 +4731,7 @@ gans:
       - { title: 'Cartouche: A - Baie de Poro', scale: '1 : 15 000', spatial: { SW: '21°18,42''S — 165°42,12''E', NE: '21°15,84''S — 165°44,80''E' } }
       - { title: 'Cartouche: B - Baie Ugué', scale: '1 : 15 000', spatial: { SW: '21°09,22''S — 165°32,10''E', NE: '21°08,05''S — 165°34,62''E' } }
     edition: 'Publication 2016'
-    corrections:
-      - { num: 5, semaineAvis: 1744-204 }
-      - { num: 6, semaineAvis: 1748-205 }
-      - { num: 7, semaineAvis: 1838-205 }
-      - { num: 8, semaineAvis: 1842-208 }
-      - { num: 9, semaineAvis: 1942-224 }
-      - { num: 10, semaineAvis: 2009-220 }
-      - { num: 11, semaineAvis: 2018-220 }
-      - { num: 12, semaineAvis: 2027-220 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7756:
     groupTitle: 'Côte Est de Nouvelle-Calédonie'
     title: 'De Touho à Ponérihouen'
@@ -5120,10 +4801,8 @@ gans:
       NE: '19°56,50''S — 165°12,00''E'
     edition: 'Publication 2017'
     corrections:
-      - { num: 1, semaineAvis: 1930-220 }
-      - { num: 2, semaineAvis: 2237-218 }
       - { num: 3, semaineAvis: 2241-220 }
-    valid: '2023-04-22'
+    valid: '2023-04-24'
   7763:
     groupTitle: 'Océan Pacifique - Nouvelle Calédonie - Île des Pins'
     title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'

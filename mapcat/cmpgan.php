@@ -9,6 +9,9 @@ doc: |
   Le traitement dans le GAN des excroissances de cartes est hétérogène.
   Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
 journal: |
+  24/4/2023:
+    - prise en compte dans CmpMapCat::scale() de la possibilité que scaleDenominator ne soit pas défini
+    - prise en compte dans CmpMapCat::cmpGans() que la carte soit définie dans MapCat et absente du GAN
   3/8/2022:
     - corrections listée par PhpStan level 6
   2/7/2022:
@@ -43,7 +46,10 @@ class CmpMapCat {
   }
   
   function scale(): ?string { // formatte l'échelle comme dans le GAN
-    return '1 : '.str_replace('.',' ',$this->map['scaleDenominator']);
+    if (!isset($this->map['scaleDenominator']))
+      return 'undef';
+    else
+      return '1 : '.str_replace('.',' ',$this->map['scaleDenominator']);
   }
   
   function insetScale(int $i): ?string { // formatte l'échelle comme dans le GAN
@@ -57,7 +63,11 @@ class CmpMapCat {
       "<th>x</th><th>cat'NE</th><th>gan'NE</th><th>ok?</th>\n";
     foreach (self::$maps as $mapid => $map) {
       //echo "<pre>"; print_r($map); echo "</pre>";
-      $gan = Gan::$gans[substr($mapid, 2)];
+      if (!($gan = Gan::$gans[substr($mapid, 2)] ?? null)) { // carte définie dans MapCat et absente du GAN
+        echo "<tr><td>$mapid</td><td>",$map->map['badGan'] ?? '',"</td><td></td>";
+        echo "<td>",$map->scale(),"</td><td colspan=9>Absente du GAN</td></tr>\n";
+        continue;
+      }
       //echo "<pre>"; print_r($gan); echo "</pre>";
       if (isset($map->map['spatial']) && isset($gan->spatial()['SW']) && $gan->spatial()['SW'] && isset($gan->spatial()['NE'])) {
         $ganspatial = [

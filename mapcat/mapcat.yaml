@@ -2826,6 +2826,17 @@ maps:
       - title: 'B - Chenal Vasia'
         scaleDenominator: '20.000'
         spatial: { SW: '14°20,00''S - 178°04,68''W', NE: '14°18,35''S - 178°02,99''W' }
+  FR7240:
+    title: Îles Glorieuses
+    mapsFrance: [TF]
+    scaleDenominator: '50.000'
+    spatial:
+      SW: "11°35,92'S - 047°14,95'E"
+      NE: "11°25,74'S - 047°29,08'E"
+    insetMaps:
+      - title: A - Abords Nord de l'Île Glorieuse
+        scaleDenominator: '15.000'
+        spatial: {SW: "11°35,07'S - 047°15,92'E", NE: "11°32,12'S - 047°20,19'E"}
   FR7246:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
@@ -4437,21 +4448,31 @@ maps:
   FR7454:
     groupTitle: 'Iles Tuamotu'
     title: Faaite
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '50.000'
     spatial:
-      SW: '16°51,90''S - 145°26,40''W'
-      NE: '16°38,00''S - 145°05,00''W'
+      SW: 16°51,90'S - 145°26,40'W
+      NE: 16°38,00'S - 145°05,00'W
     insetMaps:
       - title: 'A - Passe Teporioha'
         scaleDenominator: '7.500'
         spatial: { SW: '16°42,55''S - 145°21,60''W', NE: '16°41,78''S - 145°20,83''W' }
+  FR7455:
+    groupTitle: 'Archipel des Tuamotu'
+    title: Îles des Tuamotu - Passes et Mouillages
+    mapsFrance: [PF]
+    noteCatalog: |
+      carte très difficilement utilisable en l'état reçu le 24/4/2023.
+      Les différents cartouches ne correspondent pas à des fichiers GéoTiff.
+      Leur description n'apparait pas dans le GAN.
+      Les coordonnées des coins ne sont pas affichés.
+    insetMaps:
+      - title: K - Arutua - Passe Porofai
+        scaleDenominator: '10.000'
   FR7456:
     groupTitle: 'Archipel des Tuamotu'
     title: 'Toau - De Niau à Fakarava'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '75.000'
     spatial:
       SW: '16°13,40''S - 146°27,00''W'
@@ -4536,6 +4557,18 @@ maps:
       SW: '17°37,20''S - 149°41,84''W'
       NE: '17°27,00''S - 149°26,30''W'
     replaces: '(remplace 6598)'
+  FR7462:
+    groupTitle: Polynésie Française - Îles Tuamotu
+    title: Amanu
+    mapsFrance: [PF]
+    scaleDenominator: '60.000'
+    spatial:
+      SW: "18°05,40'S - 141°00,50'W"
+      NE: "17°29,70'S - 140°35,10'W"
+    insetMaps:
+      - title: A - Passes Fafameru et Teikariki - Village Ikitake
+        scaleDenominator: '10.000'
+        spatial: {SW: "17°51,47'S - 140°51,80'W", NE: "17°49,41'S - 140°49,50'W"}
   FR7463:
     groupTitle: 'Polynésie Française - Iles Tuamotu'
     title: Katiu
@@ -4548,6 +4581,30 @@ maps:
       - title: 'A - Passe Pakata'
         scaleDenominator: '5.000'
         spatial: { SW: '16°22,35''S - 144°21,57''W', NE: '16°21,75''S - 144°20,95''W' }
+  FR7464:
+    groupTitle: Polynésie Française - Îles Tuamotu
+    title: Motutunga et Tepoto Sud
+    mapsFrance: [PF]
+    scaleDenominator: '50.000'
+    spatial:
+      SW: "17°17,80'S - 144°35,00'W"
+      NE: "16°48,00'S - 144°13,90'W"
+    insetMaps:
+      - title: A - Motutunga - Passe Nord-Ouest
+        scaleDenominator: '5.000'
+        spatial: {SW: "17°04,17'S - 144°24,49'W", NE: "17°03,51'S - 144°23,70'W"}
+  FR7465:
+    groupTitle: Polynésie Française - Îles Tuamotu
+    title: Tahanea
+    mapsFrance: [PF]
+    scaleDenominator: '50.000'
+    spatial:
+      SW: "17°03,20'S - 145°01,90'W"
+      NE: "16°42,90'S - 144°31,00'W"
+    insetMaps:
+      - title: A - Passes Motupuapua, Teavatapu et Otao
+        scaleDenominator: '15.000'
+        spatial: {SW: "16°52,01'S - 144°42,80'W", NE: "16°49,83'S - 144°39,10'W"}
   FR7466:
     groupTitle: 'Archipel de la Société - Îles Sous-le-Vent'
     title: Bora-Bora
@@ -5169,7 +5226,7 @@ maps:
       NE: '20°33,00''S - 045°15,00''E'
     noteShom: 'Nota : Remplacer la légende Voir carte adjacente 1442 par Voir carte adjacente 7798 (INT7053) sur la carte 4177 (hors cadre). Porter en magenta une limite de carte et sa légende 7798 (INT7053) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
   FR8101:
-    title: 'MANCHEGRID - Carte générale'
+    title: MANCHEGRID - Carte générale
     mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: '880.000'
     spatial: {SW: "48°30,00'N - 006°30,00'W", NE: "51°35,00'N - 002°30,00'E"}
@@ -5177,13 +5234,19 @@ maps:
     layer: gtMancheGrid
     geotiffname: '8101'
   FR8502:
-    title: 'Action de l''Etat en Mer en ZMSOI'
+    title: Action de l'Etat en Mer en ZMSOI
     mapsFrance: [TF, RE, YT]
     scaleDenominator: 7.904.971
     spatial: {SW: "60°00,00'S - 030°00,00'E", NE: "05°00,00'N - 090°00,00'E"}
     noteCatalog: 'Carte spéciale absente du GAN'
     layer: gtaem
     geotiffname: '8502_2010'
+  FR8508:
+    title: 8508 CX - Carte d'usages et activités - en Manche et Mer du Nord
+    mapsFrance: [FX-MMN]
+    badGan: 'Carte spéciale absente du GAN'
+    note: description à compléter
+    layer: gtUsageActivites
   FR8509:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
     mapsFrance: [ NC, WF ]
@@ -5443,18 +5506,6 @@ obsoleteMaps:
         NE: '41°23,30''N - 004°50,00''E'
       references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
 cartesAyantUnIntérêtInsuffisant:
-  FR0101Q:
-     title: 0101Q - Planisphère des fuseaux horaires (axé sur 65° W)
-     scaleDenominator: '40.000.000'
-     reason: carte des fuseaux horaires inutile
-  FR5438:
-    title: 5438 - Océan Pacifique - Océan Pacifique
-    scaleDenominator: '27.000.000'
-    reason: carte ancienne, apport insuffisant par rapport au planisphère
-  FR6963:
-    title: 6963 - De San Rossore au Canale de Piombino - Isole d'Elba, Capraia et Gorgona
-    scaleDenominator: '100.000'
-    reason: n'intersecte pas assez la Corse
   FR7678:
     title: 7678 - Îles Anjouan et Mohéli
     scaleDenominator: '156.000'
