@@ -64,7 +64,9 @@ Par ailleurs, la mise à jour régulière des cartes peut être activée en déf
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
 ## Avancement du développement
-Depuis le 11/6/2022, cette version est utilisée par certains services du ministère.  
+Cette version est utilisée notamment par
+les [https://fr.wikipedia.org/wiki/Centre_r%C3%A9gional_op%C3%A9rationnel_de_surveillance_et_de_sauvetage](Centres régionaux
+opérationnels de surveillance et de sauvetage).  
 Des améliorations sont régulièrement apportées à ce projet.
 
 

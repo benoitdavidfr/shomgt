@@ -4,7 +4,7 @@ name: gan.inc.php
 title: dashboard/gan.inc.php - gestion des gan
 classes:
 doc: |
-  rstructuration des classes Gan et GanInSet pour fusionner les définitions de gan.php et index.php
+  restructuration des classes Gan et GanInSet pour fusionner les définitions de gan.php et index.php
 */
 use Symfony\Component\Yaml\Yaml;
 
@@ -304,6 +304,9 @@ class GanStatic {
             file_put_contents("$gandir/$mapnum-$ganWeek.html", $contents);
             echo "Lecture $url ok\n";
           }
+        }
+        elseif (0) { // déverminage 
+          echo "le fichier $gandir/$mapnum-$ganWeek.html existe || errors[$mapnum-$ganWeek]\n";
         }
       }
     }

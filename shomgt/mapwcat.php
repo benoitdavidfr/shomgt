@@ -4,6 +4,8 @@ name: mapwcat.php
 title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
 doc: |
 journal: |
+  9/5/2023:
+    - mise en https de https://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png
   21/4/2023:
     - ajout de l'affichage en option des silhouettes du catalogue Shom exposé en WFS
   19/4/2023:
@@ -356,7 +358,7 @@ var overlays = {
          "       ),\n",
          "    ]),\n";
     if ($option_wfs)
-    echo "    \"WFS 1/$sd\" : new L.UGeoJSONLayer({\n", // la couche des WFS
+    echo "    \"WFS 1/$sd\" : new L.UGeoJSONLayer({\n", // la couche des WFS (hors du container)
          "         endpoint: shomgturl+'../shomft/ft.php/collections/gt$sd/items',\n",
          "         style: { color: 'orange'}, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeatureWfs\n",
          "     }),\n";
@@ -418,7 +420,7 @@ var overlays = {
     
 // affichage d'une couche debug
   "debug" : new L.TileLayer(
-    'http://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png',
+    'https://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png',
     {"format":"image/png","minZoom":0,"maxZoom":21,"detectRetina":false}
   )
 };

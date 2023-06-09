@@ -245,7 +245,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
 ShomGt::init(); //print_r(ShomGt::$shomgt); die();
 
 // lecture du fichier mapcat.json
-TempMapCat::init(); //print_r(TempMapCat::$cat); die();
+TempMapCat::init(); // print_r(TempMapCat::$cat); die();
 
 if (0) { // @phpstan-ignore-line // Test de ShomGt::sortwzorder()
   ShomGt::addGt('6822_pal300');

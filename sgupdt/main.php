@@ -91,7 +91,7 @@ if (!@is_dir($TEMP))
     throw new Exception("Erreur de création du répertoire $TEMP");
 $TEMP = realpath($TEMP);
 
-// __DIR__.'/temp' est le répertoire dans lequel sont téléchrgées maps.json et cat.json
+// __DIR__.'/temp' est le répertoire dans lequel sont téléchargées maps.json et cat.json
 if (!@is_dir(__DIR__.'/temp')) {
   if (!@mkdir(__DIR__.'/temp'))
     throw new Exception("Erreur de création du répertoire ".__DIR__.'/temp');
@@ -263,10 +263,9 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
     }
     default: return '';
   }
-  
 }
 
-while (true) {
+while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec une attente de UPDATE_DURATION
   // efface le contenu du répertoire $TEMP
   !execCmde("rm -rf $TEMP/*", CMDE_VERBOSE)
     or throw new Exception("erreur dans rm -r $TEMP/*");

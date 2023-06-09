@@ -38,6 +38,9 @@ if (Access::cntrlFor('homePage') && !Access::cntrl()) {
 <h2>Accès aux cartes du Shom</h2>
 <h3>Actualité</h3>
 <ul>
+  <li>9/5/2023 : actualisation des 5 cartes les moins à jour,</li>
+  <li>24/4/2023 : mise à niveau sur l'outre-mer hors DOM pour que ShomGT soit utilisable notamment en Polynésie,
+    ajout de 4 cartes dans l'OM et actualisation d'environ 70 cartes les moins à jour,</li>
   <li>18/4/2023 : actualisation d'environ 30 cartes les moins à jour,</li>
   <li>8/3/2023 : actualisation d'environ 70 cartes les moins à jour,</li>
   <li>13/1/2023 : actualisation d'environ 50 cartes les moins à jour,</li>
@@ -103,8 +106,8 @@ propose différents mécanismes d'accès au contenu des cartes du Shom, notammen
 <b>L'utilisation de ce site est réservé aux agents de l'Etat et de ses Etablissements publics à caractère Administratif (EPA) pour leurs missions de service public et un usage interne.</b>
 
 L'utilisation est soumise aux <b>conditions générales d’utilisation des produits numériques, services et prestations du Shom</b>
-que vous trouverez en annexe 1 du 
-<a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf' target='repertoire'>Répertoire des principaux documents dans lesquels figurent les informations publiques produites par le Shom disponible ici page 52</a>.
+que vous trouverez dans le  
+<a href='https://diffusion.shom.fr/repertoire' target='repertoire'>Répertoire des principaux documents dans lesquels figurent les informations publiques produites par le Shom disponible ici</a>.
 <b>En utilisant ce site ou l'une de ses API, <u>vous acceptez ces conditions d'utilisation</u></b>.</p>
 
 L'API d'accès aux tuiles a été conçue pour être facilement utilisable dans une carte Leaflet,
@@ -127,10 +130,10 @@ Depuis le 1er janvier 2017, en application de la
 <a href='https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte' target='LRN'>loi pour une République Numérique</a>,
 les données publiques du Shom sont communiquées gratuitement à l'Etat et à ses EPA.
 Parmi ces données, les 
-<a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf' target='repertoire'>Images numériques géoréférencées des cartes marines</a>,
+<a href='https://diffusion.shom.fr/searchproduct/product/configure/id/208' target='cartes'>Cartes marines numériques raster (images)</a>,
 aussi appelées cartes GéoTIFF, sont issues de la numérisation des cartes marines traditionnelles du Shom.<br>
 Le Shom propose aussi une API d'accès à ses cartes
-(<a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf' target='repertoire'>nommées RasterMARINE</a>)
+(<a href='https://diffusion.shom.fr/services-numeriques/geoservices.html' target='geoservices'>nommées RasterMARINE</a>)
 mais la considère comme des données privées dont l'utilisation reste donc payante.<br>
 
 L'objectif de ce site est de simplifier l'accès au contenu des cartes GéoTIFF du Shom
@@ -173,25 +176,21 @@ Si ce type de contrôle ne convient pas, un contrôle d'accès au moyen d'un log
 
 <h3>Mise à jour des cartes</h3>
 Les cartes sont régulièrement mises à jour dans la mesure du possible.<br>
-ShomGt comporte plus de 400 cartes et des corrections y sont apportées chaque semaine.
+ShomGt comporte environ 430 cartes et des corrections y sont apportées chaque semaine.
 Il n'est pas envisageable d'effectuer un remplacement à chaque correction.</p>
 
 Le principe retenu est de mettre à jour les cartes ayant eu le plus de corrections depuis leur acquisition auprès du Shom.
 Cela est effectué en consultant régulièrement le <a href='https://gan.shom.fr/diffusion/home' target='_blank'>GAN</a>.
-Toutefois, ayant constaté peu d'utilisation outre-mer, les cartes en métropole sont privilégiées,
-par rapport à celles dans les DOM, et enfin celles dans les COM et autres territoires outre-mer.<br>
-L'objectif est d'essayer de mettre à jour les cartes ayant plus de 5 corrections en métropole
-et plus de 20 corrections dans les COM.</p>
+L'objectif est d'essayer de mettre à jour les cartes ayant plus de 5 corrections en métropole ou outre-mer.</p>
 
 Le tableau de bord de mise à jour, utilisé pour choisir les cartes à actualiser,
 est <a href='dashboard' target='_blank'>disponible ici (encore en béta)</a>.
-Il liste les cartes en indiquant pour chaque carte un degré de péremption défini par le nombre de corrections non prises en compte,
-divisé par 2 pour les DOM et par 4 pour les COM.
+Il liste les cartes en indiquant pour chaque carte un degré de péremption défini par le nombre de corrections non prises en compte.
 Dans le tableau, les cartes sont triées des plus périmées au moins périmées.
 La date de référence du tableau est la date de consultation des GAN indiquée au dessus du tableau.
 La colonne de droite du tableau indique les corrections détectées dans le GAN et non encore prises en compte dans ShomGt.<br>
 Certaines cartes n'apparaissent pas dans le GAN et il n'est donc pas possible de calculer un degré de péremption,
-qui vaut alors -1.<br>
+qui vaut alors -1. A priori ces cartes sont des cartes spéciales qui ne sont pas actualisées.<br>
 </p>
 
 Vos retours sont indispensables pour améliorer ce site.<br>
@@ -200,4 +199,4 @@ Merci aussi de m'indiquer les cartes Shom absentes qui vous seraient utiles.
 <h3>Auteur</h3>
 Ce site est réalisé par Benoit DAVID, MTECT/CGDD/SRI/Ecolab.<br>
 Contact: <a href='mailto:contact@geoapi.fr'>contact@geoapi.fr</a><br>
-Mise à jour: 13/1/2023<br>
+Mise à jour: 24/4/2023<br>
