@@ -10,6 +10,10 @@ doc: |
   Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
   puis en apppelant la méthode Geometry::fromGeoJSON().
 journal: |
+  10/6/2023:
+    - corrections pour mise à niveau Php 8.2
+      - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 590
+      - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 833
   22/8/2022:
     - correction bug
   28/7/2022:
@@ -583,7 +587,7 @@ class LineString extends Geometry {
       $coords = $test['coords'];
       $coords[] = $coords[0]; // fermeture de la polyligne
       $ls = new LineString($coords);
-      echo "${ls}->pointInPolygon([$p0[0],$p0[1]])=",($ls->pointInPolygon($p0)?'true':'false'),
+      echo $ls,"->pointInPolygon([$p0[0],$p0[1]])=",($ls->pointInPolygon($p0)?'true':'false'), // correction Php 8.2
            " / ",($test['result']?'true':'false'),"<br>\n";
     }
   }
@@ -826,7 +830,7 @@ class Polygon extends Geometry {
       $coords = $test['coords'];
       $coords[] = $coords[0]; // fermeture de la polyligne
       $pol = new Polygon([$coords]);
-      echo "${pol}->pointInPolygon([$p0[0],$p0[1]])=",($pol->pointInPolygon($p0)?'true':'false'),
+      echo $pol,"->pointInPolygon([$p0[0],$p0[1]])=",($pol->pointInPolygon($p0)?'true':'false'), // correctin Php 8.2
            " / ",($test['result']?'true':'false'),"<br>\n";
     }
   }
