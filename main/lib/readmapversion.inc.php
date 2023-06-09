@@ -6,6 +6,8 @@ doc: |
   La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
   Le retour est un dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}]
 journal: |
+  10/6/2023:
+    - corrections passage Php8.2 - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 46
   13/1/2023:
     - modif format de l'édition dans le XML -> 'Publication 1989 - Dernière correction : 149 - GAN : 2250'
   17/10/2022:
@@ -41,7 +43,7 @@ function readMapVersion(string $path): array {
    || preg_match('!^[^\d]*(\d+) - [^\d]*(\d+)( - GAN : \d+)?$!', $edition, $matches)) { 
     $anneeEdition = $matches[1];
     $lastUpdate = $matches[2];
-    return ['version'=> "${anneeEdition}c${lastUpdate}", 'dateStamp'=> $dateStamp];
+    return ['version'=> $anneeEdition.'c'.$lastUpdate, 'dateStamp'=> $dateStamp];
   }
   else
     throw new Exception("Format de l'édition inconnu pour \"$edition\"");
