@@ -1,19 +1,24 @@
 <?php
 {/*PhpDoc:
-title: pfm.php - gestionnaire de portefeuille
+title: pfm.php - gestionnaire de portefeuille - 10/6/2022
 doc: |
-  abstract:
-    J'appelle portefeuille l'ensemble des cartes gérées avec leurs versions sur le principe d'avoir:
-      - cartes courantes exposées dans le répertoire current
-      - livraisons stockées chacune dans un répertoire archives/{YYYYMMDD} (ou au moins triables alphanumériquement)
-      - en local
-        - conservation des livraisons précédentes dans archives
-        - création dans current de liens symboliques vers les cartes adhoc des archives
-        - possibilité de reconstruire current si nécessaire en utilisant les MD index.yaml
-      - sur geoapi.fr, stockage des versions en cours dans current, et pas de stockage des archives
-      - le code de sgserver est le même dans les 2 environnements
-      - simplifier sgserver en excluant l'utilisation des archives
+  glossaire:
+    portefeuille: l'ensemble des cartes gérées avec leurs versions
+    portefeuilleCourant: version plus récente des cartes gérées à l'exclusion des cartes retirées
+    carteRetirée: carte retirée du catalogue par le Shom
+    livraison: ensemble de cartes livrées à une date donnée + fichier de métadonnées de la livraison
+  principes:
+    - cartes courantes exposées dans le répertoire current
+    - livraisons stockées chacune dans un répertoire archives/{YYYYMMDD} (ou au moins commençant par YYYYMMDD)
+    - en local
+      - conservation des livraisons précédentes dans archives
+      - création dans current de liens symboliques vers les cartes adhoc des archives
+      - possibilité de reconstruire current si nécessaire en utilisant les MD index.yaml
+    - sur geoapi.fr, stockage des versions en cours dans current, et pas de stockage des archives
+    - le code de sgserver est le même dans les 2 environnements
+    - simplifier sgserver en excluant l'utilisation des archives
   pourquoi:
+    - les versions précédentes des cartes ne sont utiles que pour la gestion du portefeuille
     - complexité de la structure pour le serveur avec les fichiers mapversions.pser
     - complexité du code de gestion des versions de carte
     - nécessité de purge régulière sur geoapi
@@ -26,11 +31,11 @@ doc: |
   
   nouvelleStructure:
     ~/shomgeotiff/current:
-      - contient les cartes courantes cad ni remplacées ni annulées
+      - contient les cartes courantes cad ni remplacées ni retirées
       - soit
         - en local un lien symbolique par carte vers la carte dans archives, nommé par le no suivi de .7z
         - sur geoapi stockage de la carte nommée par le no suivi de .7z
-    ~/shomgeotiff/deliveries/{YYYYMMDD}:
+    ~/shomgeotiff/incoming/{YYYYMMDD}:
       - un répertoire par livraison à effectuer, nommé par la date de livraison
         - ou au moins qu'un ls donne le bon ordre (tri alphabétique)
       - dans chaque répertoire de livraison les cartes de la livraison, chacune comme fichier 7z
@@ -45,15 +50,11 @@ doc: |
     inconvénients:
       - nécessité de scripts de gestion du portefeuille en local uniquement
       - vérifier comment se passe le téléchargement sur geoapi.fr
-        - soit copier l'archive et détruire si nécessaire les cartes annulées (peu fréquent)
+        - soit copier l'archive et détruire si nécessaire les cartes retirées (peu fréquent)
         - soit copier current en fonction des dates de création des liens
   opérations:
     add:
     cancel:
-      - annule l'ajout de la dernière livraison uniquement en local
-        - déplace la dernière livraison de archives vers deliveries
-        - supprime les liens de current
-        - ajoute chaque livraison de deliveries dans l'ordre chronologique
     purge:
       - supprime les archives avant strictement une certaine livraison
         - pour chaque archive avant strictement une certaine livraison
@@ -81,6 +82,7 @@ if ($argc == 1) {
   echo "  - ls - liste les cartes courantes du PF (portefeuille)\n";
   echo "  - lsa - liste les archives et leurs cartes\n";
   echo "  - lsd - liste les cartes des livraisons\n";
+  echo "  - lsdm - liste les cartes des livraisons et leurs cartes\n";
   echo "  - add [{répertoire de livraison}] - ajoute au PF les cartes de la livraison indiquée\n";
   echo "  - cancel - annule le dernier ajout et place les cartes retirées dans un répertoire new{date} où {date} est la date de l'ajout retiré\n";
   echo "  - purge [{date}] - supprime définitivement les versions archivées antérieures à la date indiquée\n";
@@ -88,14 +90,15 @@ if ($argc == 1) {
 }
 
 function addDelivery(string $PF_PATH, string $deliveryName): void { // ajoute la livraison en paramètre 
-  rename("$PF_PATH/deliveries/$deliveryName", "$PF_PATH/archives/$deliveryName");
+  rename("$PF_PATH/incoming/$deliveryName", "$PF_PATH/archives/$deliveryName");
   echo "renommage de $deliveryName dans archives\n";
   if (!($deliveryDir = @dir("$PF_PATH/archives/$deliveryName")))
     die("Erreur d'ouverture de PORTFOLIO_PATH/archives/$deliveryName\n");
   while (false !== ($mapname = $deliveryDir->read())) { // traitement de cahque carte de la livraison
-    if (stdEntry($mapname)) continue;
-    if (in_array($mapname, ['index.yaml'])) continue;
-    echo "fichier $mapname\n";
+    //if (stdEntry($mapname)) continue;
+    //if (in_array($mapname, ['index.yaml'])) continue;
+    if (substr($mapname, -3) <> '.7z') continue;
+    //echo "fichier $mapname\n";
     if (is_file("$PF_PATH/current/$mapname"))
       unlink("$PF_PATH/current/$mapname");
     symlink("../archives/$deliveryName/$mapname", "$PF_PATH/current/$mapname");
@@ -107,22 +110,32 @@ function addDelivery(string $PF_PATH, string $deliveryName): void { // ajoute la
     //echo 'toDelete='; print_r($toDelete);
     foreach ($toDelete as $mapName) {
       $mapName = substr($mapName, 2); // suppression du 'FR'
-      echo "Suppression de $mapName\n";
-      unlink("$PF_PATH/current/$mapName");
+      if (is_file("$PF_PATH/current/$mapName.7z")) {
+        echo "Retrait de de $mapName\n";
+        unlink("$PF_PATH/current/$mapName.7z");
+      }
+      else {
+        echo "Erreur de retrait de $mapName, carte retirée dans $deliveryName mais absente\n";
+      }
     }
   }
 }
 
-function lsad(string $path): void { // liste les archives ou les livraisons
+function lsad(string $path, bool $maps=true): void { // liste les archives ou les livraisons
   if (!($dir = @dir($path)))
     die("Erreur d'ouverture de $path\n");
   while (false !== ($ad = $dir->read())) {
     if (stdEntry($ad)) continue;
-    echo "$ad:\n";
-    $adDir = @dir("$path/$ad");
-    while (false !== ($entry = $adDir->read())) {
-      if (stdEntry($entry)) continue;
-      echo "  $entry\n";
+    if ($maps) {
+      echo "$ad:\n";
+      $adDir = @dir("$path/$ad");
+      while (false !== ($entry = $adDir->read())) {
+        if (stdEntry($entry)) continue;
+        echo "  $entry\n";
+      }
+    }
+    else {
+      echo "$ad\n";
     }
   }
 }
@@ -143,13 +156,16 @@ switch ($argv[0]) {
     lsad("$PF_PATH/archives");
     break;
   }
-  case 'lsd': { // liste les archives et leurs cartes
-    lsad("$PF_PATH/deliveries");
+  case 'lsd': { // liste les livraisons 
+    lsad("$PF_PATH/incoming", false);
     break;
   }
-  case 'add': {
-    {/* ajout d'un ou plusieurs répertoires de livraison nommé deliveries/{YYYYMMDD}
-        - renommer le répertoire deliveries/{YYYYMMDD} en archives/{YYYYMMDD}
+  case 'lsdm': { // liste les livraisons et leurs cartes
+    lsad("$PF_PATH/incoming");
+    break;
+  }
+  case 'add': { // ajout d'un ou plusieurs répertoires de livraison nommé incoming/{YYYYMMDD}
+    {/* - renommer le répertoire incoming/{YYYYMMDD} en archives/{YYYYMMDD}
         - pour chaque carte de la livraison
           - si la carte existe déjà dans current
             - alors suppression du lien symbolique dans current
@@ -162,11 +178,19 @@ switch ($argv[0]) {
     }
     break;
   }
-  case 'cancel': {
-    {/* annule l'ajout de la dernière livraison uniquement en local
-        - déplace la dernière livraison de archives vers deliveries
+  case 'addAll': {
+    if (!($deliveryDir = @dir("$PF_PATH/incoming")))
+      die("Erreur d'ouverture de $PF_PATH/incoming\n");
+    while (false !== ($delivery = $deliveryDir->read())) {
+      if (stdEntry($delivery)) continue;
+      addDelivery($PF_PATH, $delivery);
+    }
+    break;
+  }
+  case 'cancel': { // annule l'ajout de la dernière livraison uniquement en local
+    {/* - déplace la dernière livraison de archives vers incoming
         - supprime tous les liens de current
-        - ajoute chaque livraison de deliveries dans l'ordre chronologique
+        - ajoute chaque livraison de incoming dans l'ordre chronologique
     */}
     if (!($archivesDir = @dir("$PF_PATH/archives")))
       die("Erreur d'ouverture de archivesDir $PF_PATH/archives\n");
@@ -178,7 +202,7 @@ switch ($argv[0]) {
     if (!$lastArchive)
       die("Erreur aucune archive");
     echo "Transfert de $lastArchive des archives vers les livraisons\n";
-    rename("$PF_PATH/archives/$lastArchive", "$PF_PATH/deliveries/$lastArchive");
+    rename("$PF_PATH/archives/$lastArchive", "$PF_PATH/incoming/$lastArchive");
     
     // effacement du contenu de current
     if (!($currentDir = @dir("$PF_PATH/current")))
@@ -188,11 +212,11 @@ switch ($argv[0]) {
       @unlink("$PF_PATH/current/$mapname");
     }
     
-    // ajoute chaque livraison de deliveries dans l'ordre chronologique
+    // ajoute chaque livraison de incoming dans l'ordre chronologique
     $archivesDir->rewind();
     while (false !== ($archive = $archivesDir->read())) {
       if (stdEntry($archive)) continue;
-      rename("$PF_PATH/archives/$archive", "$PF_PATH/deliveries/$archive");
+      rename("$PF_PATH/archives/$archive", "$PF_PATH/incoming/$archive");
       addDelivery($PF_PATH, $archive);
     }
     break;
