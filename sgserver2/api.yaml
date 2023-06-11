@@ -1,0 +1,444 @@
+openapi: 3.0.0
+info:
+  version: '2.0'
+  title: Serveur de cartes Shom GéoTiff dans le format d'archive 7z tel que livré par le Shom
+  description: |
+    Ce serveur permet de télécharger
+    les [cartes Shom GéoTiff](https://diffusion.shom.fr/pro/navigation/cartes-marines/cartes-marines-geotiff.html)
+    dans le format d'archive 7z tel que livré par le Shom.  
+    Il permet en outre de connaitre la liste des cartes disponibles et le catalogue des cartes.
+    Les versions des cartes sont identifiées par une chaine respectant le motif '{année}c{correction}' où
+    {année} est l'année d'édition de la carte et {correction} est le numéro de la dernière correction apportée
+    à la carte ; quelques cartes ne sont pas versionnées et la version est alors 'undefined'.
+  termsOfService: https://sgserver.geoapi.fr/termsofservice.php
+  contact:
+    name: 'Benoit DAVID - MTE/CGDD'
+    email: contact@geoapi.fr
+  license:
+    name: utilisation strictement réservée aux ayants droits, voir https://sgserver.geoapi.fr/termsofservice.php
+servers:
+  - description: Serveur de production
+    url: 'https://sgserver.geoapi.fr/index.php'
+paths:
+  /:
+    description: page d'accueil utilisée pour proposer des URL de tests
+    get:
+      operationId: getHomePage
+      summary: accès à la page d'accueil
+      responses:
+        200:
+          description: page d'accueil
+          content:
+            text/html:
+              schema:
+                type: string
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+  /api.json:
+    description: documentation de l'API conforme aux spécifications OpanAPI 3
+    get:
+      operationId: getApiDoc
+      summary: accès à la documentation de l'API
+      responses:
+        200:
+          description: documentation de l'API
+          content:
+            application/json:
+              schema:
+                type: object
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+  /cat.json:
+    description: catalogue de cartes
+    get:
+      operationId: getCat
+      summary: accès au catalogue de cartes
+      responses:
+        200:
+          description: catalogue de cartes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/catalogOfMaps'
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+  /cat/schema.json:
+    description: schema JSON du catalogue de cartes conforme à http://json-schema.org/draft-06/schema#
+    get:
+      operationId: getCatSchema
+      summary: accès au schema du catalogue de cartes
+      responses:
+        200:
+          description: schéma JSON du catalogue de cartes
+          content:
+            application/json:
+              schema:
+                type: object
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+  /maps.json:
+    description: liste des cartes disponibles indexées par leur numéro
+    get:
+      operationId: getMapList
+      summary: accès à la liste des cartes
+      responses:
+        200:
+          description: liste des cartes exposées par le serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapList'
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+    parameters:
+      - in: query
+        name: version
+        description: |
+          Version de ce point d'entrée de l'API  
+          En version=0 (ou paramètre absent) la carte 8053 n'est pas transmise.  
+          En version=1, la liste de toutes les cartes sont transmises.
+        required: false
+        schema:
+          type: number
+          minimum: 0
+          maximum: 1
+  /maps/{numCarte}.7z:
+    description: retourne l'archive 7z correspondant à la dernière version disponible de la carte {numCarte}
+    get:
+      operationId: getMapArchive
+      summary: retourne l'archive 7z de la carte
+      responses:
+        200:
+          description: archive 7z de la dernière version disponible de la carte
+          content:
+            application/x-7z-compressed:
+              schema:
+                type: string
+        401:
+          description: erreur d'authentification
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+        404:
+          description: erreur carte non trouvée
+          content:
+            text/plain:
+              schema:
+                description: message d'erreur
+                type: string
+    parameters:
+      - in: path
+        name: numCarte
+        description: numéro de la carte
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    dateIso8601:
+      description: date au format ISO 8601 limité aux cas les plus fréquents
+      type: string
+      pattern: '^\d\d\d\d-\d\d-\d\d(T\d\d:\d\d(:\d\d(\.\d+)?)?)?([+-]\d\d:\d\d|Z)?$'
+    scaleDenominator:
+      description: dénominateur de l'échelle avec . comme séparateur des milliers
+      type: string
+      pattern: '^\d{1,3}(\.\d{3})*$'
+    position:
+      description: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
+      oneOf:
+        - description: |
+            position en dégrés-minutes dans une chaine avec le même formattage que celui utilisé par le Shom notamment
+            dans les coins des cartes.
+            Dans l'ordre latitude, longitude, avec la virgule comme séparateur de la partie décimale des minutes.
+            La partie décimale des minutes peut être omise de même que la partie minute.
+          type: string
+          pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
+        - description: |
+            position en degrés décimaux dans l'ordre longitude, latitude, définie par un array de 2 nombres, comme en GeoJSON
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            type: number
+    bbox:
+      description: |
+        Boite englobante définie par ses 2 coins SW et NE.
+        Les latitudes sont comprises entre -90° et +90° et la latitude N est supérieure à la latitude S.
+        Les longitudes sont sauf exceptions comprises entre -180° et +180°.
+        La longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
+        Par exception, pour les quelques cartes dont l'extension en longitude est supérieure à 360°,
+        -180° <= west < 180° < east < 540° (360+180).
+      type: object
+      required: [SW, NE]
+      additionalProperties: false
+      properties:
+        SW:
+          description: position du coin SW
+          $ref: '#/components/schemas/position'
+        NE:
+          description: position du coin NE
+          $ref: '#/components/schemas/position'
+    borders:
+      description: |
+        Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
+        à celle de la boite englobante permet de déterminer ce géoréférencement.
+      type: object
+      required: [left, bottom, right, top]
+      additionalProperties: false
+      properties:
+        left:
+          description: nbre de pixels du bord gauche
+          $ref: '#/components/schemas/nbrePixels'
+        bottom:
+          description: nbre de pixels du bord bas
+          $ref: '#/components/schemas/nbrePixels'
+        right:
+          description: nbre de pixels du bord droite
+          $ref: '#/components/schemas/nbrePixels'
+        top:
+          description: nbre de pixels du bord haut
+          $ref: '#/components/schemas/nbrePixels'
+    nbrePixels:
+      description: Définition d'un nbre de pixels soit comme entier positif ou nul soit comme soustraction
+      oneOf:
+        - type: integer
+          minimum: 0
+        - type: string
+          pattern: '^\d+-\d+$'
+    z-order:
+      description: |
+        Par défaut dans chaque couche les GéoTiffs sont ordonnés par leur nom, ce qui signifie que celui
+        ayant le plus grand numéro s'affiche au dessus des autres. Le z-order permet de modifier cet ordre.
+        Un GéoTiff ayant un z-order supérieur à celui d'un autre s'affichera au-dessus de ce dernier.
+      type: integer
+      minimum: -99
+      maximum: 99
+    polygon:
+      description: Polygone défini par une liste de positions
+      type: array
+      items:
+        $ref: '#/components/schemas/position'
+    mapOfCatalog:
+      description: |
+        Propriétés décrivant une carte.
+        Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
+        Une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
+        Lorsque l'info est différente de celle du GAN, le champ badGan doit être renseigné.
+      type: object
+      additionalProperties: false
+      required: [title, mapsFrance]
+      properties:
+        groupTitle:
+          description: sur-titre optionnel identifiant un ensemble de cartes
+          type: string
+        title:
+          description: titre de la carte sans son numéro
+          type: string
+        scaleDenominator:
+          description: |
+            dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers,
+            Champ absent ssi la carte ne comporte pas d'espace principal
+          $ref: '#/components/schemas/scaleDenominator'
+        spatial:
+          description: |
+            boite englobante de l'espace principal de la carte en degrés et minutes en WGS84,
+            ces coordonnées sont celles indiquées dans le GAN et sur la carte dans les coins SW et NE ;
+            les coordonnées indiquées sur la carte sont souvent moins précises que celles du GAN.
+            Champ absent ssi la carte ne comporte pas d'espace principal.
+          $ref: '#/components/schemas/bbox'
+        borders:
+          description: |
+            Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement lorsque
+            le GéoTiff ne l'est pas.
+          $ref: '#/components/schemas/borders'
+        mapsFrance:
+          description: |
+            Liste de codes résumant l'intersection de la carte avec la ZEE française, ce qui est le cas de la plupart des cartes.
+            Quelques cartes ne l'intersecte pas, ce sont des cartes petite échelle (< 1/6M) facilitant la navigation.
+            Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med'
+            pour la facade de Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche
+            et de la mer du Nord.
+          type: array
+          items:
+            type: string
+            enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
+        replaces:
+          description: identification de la carte remplacée par la carte courante, optionnel
+          type: string
+        references:
+          description: référence de la carte étrangère reproduite ssi la carte est un fac-similé
+          type: string
+        noteShom:
+          description: commentaire associé à la carte par le Shom
+          type: string
+        noteCatalog:
+          description: commentaire associé à la carte dans la gestion du catalogue
+          type: string
+        badGan:
+          description: |
+            commentaire indiquant que l'info de ce catalogue est différente de celle du GAN ;
+            permet de lister rapidement les écarts au GAN.
+          type: string
+        z-order:
+          description: z-order de l'espace principal
+          $ref: '#/components/schemas/z-order'
+        toDelete:
+          description: liste de zones à effacer dans le GéoTiff de l'espace principal
+          type: object
+          additionalProperties: false
+          properties:
+            polygons:
+              description: zones à effacer définies comme polygones
+              type: array
+              items:
+                $ref: '#/components/schemas/polygon'
+            bboxes:
+              description: zones à effacer définies comme boites
+              type: array
+              items:
+                $ref: '#/components/schemas/bbox'
+        layer:
+          description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
+          type: string
+        geotiffname:
+          description: pour les cartes spéciales nom du fichier .tif sans l'extension .tif, dans l'archive 7z
+          type: string
+        insetMaps:
+          description: liste éventuelle de cartouches
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: false
+            required: [title, scaleDenominator, spatial]
+            properties:
+              title:
+                description: titre du cartouche
+                type: string
+              scaleDenominator:
+                description: dénominateur de l'échelle avec un . comme séparateur des milliers
+                $ref: '#/components/schemas/scaleDenominator'
+              spatial:
+                description: boite englobante du cartouche
+                $ref: '#/components/schemas/bbox'
+              borders:
+                description: |
+                  Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement lorsque
+                  le GéoTiff ne l'est pas.
+                $ref: '#/components/schemas/borders'
+              noteCatalog:
+                description: commentaire associé au cartouche dans la gestion du catalogue
+                type: string
+              z-order:
+                description: z-order du cartouche
+                $ref: '#/components/schemas/z-order'
+              toDelete:
+                description: liste de zones à effacer dans GéoTiff du cartouche
+                type: object
+                additionalProperties: false
+                required: [geotiffname]
+                properties:
+                  geotiffname:
+                    description: nom du fichier .tif du cartouche sans l'extension .tif
+                    type: string
+                  polygons:
+                    description: zones à effacer définies comme polygones
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/polygon'
+                  bboxes:
+                    description: zones à effacer définies comme boites
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/bbox'
+    catalogOfMaps:
+      description: |
+        Définition de la structure du catalogue de cartes et des écarts voulus par rapport aux sources du Shom.
+      type: object
+      required: [ title, $id, $schema, modified, maps ]
+      additionalProperties: false
+      properties:
+        title: { description: 'titre du document', type: string }
+        description: { description: "commentaires sur le document", type: string}
+        $id: { description: 'identifiant du document', type: string , format: uri }
+        $schema:
+          description: 'schema JSON du document'
+          oneOf:
+            - $ref: http://json-schema.org/schema#
+            - type: string
+        created: { description: 'date de création initiale du document', $ref: '#/components/schemas/dateIso8601' }
+        modified: { description: 'date de dernière modification du document', $ref: '#/components/schemas/dateIso8601' }
+        maps:
+          description: dictionnaire des cartes non obsolètes indexées sur leur numéro précédé de 'FR'
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/mapOfCatalog'
+        obsoleteMaps:
+          description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur suppression
+          type: object
+          additionalProperties:
+            description: pour chaque carte la liste des suppressions indexées par la date de suppression
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/mapOfCatalog'
+        cartesAyantUnIntérêtInsuffisant:
+          description: |
+            Liste les cartes dont l'intérêt est insuffisant pour décrire les espaces sur lesquels la France exerce ses droits.
+          type: object
+          additionalProperties:
+            description: description de la carte
+            type: object
+            additionalProperties: false
+            required: [title, scaleDenominator, reason]
+            properties:
+              title: { description: 'titre de la carte préfixé par son numéro', type: string }
+              scaleDenominator:
+                description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
+                $ref: '#/components/schemas/scaleDenominator'
+              reason: { description: motif de l'insuffisance, type: string }
+    mapList:
+      description: dictionnaire des cartes disponibles indexé sur le numéro de carte
+      type: object
+      additionalProperties:
+        description: Description d'une carte
+        type: object
+        additionalProperties: false
+        required: [status, nbre, lastVersion, modified, url]
+        properties:
+          status:
+            description: statut de la carte. Toujours 'ok'
+            type: string
+            enum: [ok]
+          lastVersion:
+            description: |
+              identification de la dernière version disponible soit sous la forme '{année}c{correction}'
+              où {année} est l'année de l'édition et {correction} est le numéro de la correction, soit la valeur 'undefined'
+            type: string
+            pattern: ^(\d{4}c\d+|undefined)$
