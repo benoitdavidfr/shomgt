@@ -1,6 +1,6 @@
 <?php
 {/*PhpDoc:
-title: pfm.php - gestionnaire de portefeuille - 10/6/2022
+title: pfm.php - gestionnaire de portefeuille - 11/6/2022
 doc: |
   glossaire:
     portefeuille: l'ensemble des cartes gérées avec leurs versions
@@ -11,12 +11,12 @@ doc: |
     - cartes courantes exposées dans le répertoire current
     - livraisons stockées chacune dans un répertoire archives/{YYYYMMDD} (ou au moins commençant par YYYYMMDD)
     - en local
-      - conservation des livraisons précédentes dans archives
+      - conservation des livraisons effectuées dans archives
       - création dans current de liens symboliques vers les cartes adhoc des archives
-      - possibilité de reconstruire current si nécessaire en utilisant les MD index.yaml
-    - sur geoapi.fr, stockage des versions en cours dans current, et pas de stockage des archives
-    - le code de sgserver est le même dans les 2 environnements
-    - associer à chaque .7z un fichier .md.json avec les MD de la carte
+      - possibilité de reconstruire current si nécessaire en utilisant les MD de livraison/archive index.yaml
+    - sur geoapi.fr, stockage des versions en cours dans current, et pas de stockage dans archives
+    - le code de sgserver reste le même dans les 2 environnements
+    - à chaque .7z est associé un fichier .md.json avec les MD de la carte
     - simplifier sgserver en excluant l'utilisation des archives
   pourquoi:
     - les versions précédentes des cartes ne sont utiles que pour la gestion du portefeuille
@@ -34,14 +34,16 @@ doc: |
     ~/shomgeotiff/current:
       - contient les cartes courantes cad ni remplacées ni retirées, chacune avec un fichier .7z et un .md.json
       - soit
-        - en local un lien symbolique par carte vers la carte dans archives, nommé par le no suivi de .7z et .md.json
-        - sur geoapi stockage de la carte nommée par le no suivi de .7z et .md.json
+        - en local 2 liens symboliques par carte vers la carte dans archives, nommés par le no suivi de .7z et .md.json
+        - sur geoapi stockage de la carte et ses MD nommées par le no suivi de .7z et .md.json
     ~/shomgeotiff/incoming/{YYYYMMDD}:
       - un répertoire par livraison à effectuer, nommé par la date de livraison
         - ou au moins qu'un ls donne le bon ordre (tri alphabétique)
       - dans chaque répertoire de livraison les cartes de la livraison, chacune comme fichier 7z
+      - plus normalement un fichier index.yaml de MD de livraison
+        - indispensable ssi la livraison comorte des retraits
     ~/shomgeotiff/archives/{YYYYMMDD}:
-      - quand une livraison est déposée, son répertoire est déplacé dans archives
+      - en local quand une livraison est déposée, son répertoire est déplacé dans archives
       - dans chaque répertoire d'archive les cartes de la livraison
         - chacune nommée par le no suivi de .7z
         - chacune associée à un .md.json
@@ -49,9 +51,10 @@ doc: |
       - proche de la version actuelle
       - pas de redondance
       - plus performante que la version actuelle, 1 seul répertoire à ouvrir en Php (à vérifier)
+        - plus besoin de fichier à regénérer à la volée
       - possibilité de code Php identique en local et sur geoapi
     inconvénients:
-      - nécessité de scripts de gestion du portefeuille en local uniquement
+      - nécessité des scripts de gestion du portefeuille en local uniquement
       - vérifier comment se passe le téléchargement sur geoapi.fr
         - soit copier l'archive et détruire si nécessaire les cartes retirées (peu fréquent)
         - soit copier current en fonction des dates de création des liens
@@ -372,7 +375,10 @@ switch ($argv[0]) { // les différents traitements en fonction de l'action deman
     echo Yaml::dump($maps);
     break;
   }
-  default: {
+  case 'purge': { // TO BE IMPLEMENTED 
+    throw new Exception("TO BE IMPLEMENTED");
+  }
+  default: { // Erreur, aucune action 
     die("Ereur, $argv[0] ne correspond à aucune action\n"); 
   }
 }

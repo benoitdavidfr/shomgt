@@ -6,25 +6,25 @@ doc: |
   Le serveur expose les cartes disponibles sous la forme d'archives 7z ainsi que le catalogue mapcat.yaml
   selon l'API définie ci-dessous.
     
-  La variable d'environnement SHOMGT3_INCOMING_PATH est utilisée pour définir un serveur pour les tests ne contenant
-  que quelques cartes.
+  La variable d'environnement SHOMGT3_PORTFOLIO_PATH est utilisée pour définir le portefeuille.
   
   api:
     /: page d'accueil utilisée pour proposer des URL de tests
-    /api: retourne la description de l'api (à faire)
+    /api: retourne la description de l'api
     /cat.json: retourne mapcat.json 
     /maps.json: liste en JSON l'ensemble des cartes disponibles indexées par leur numéro et avec les informations suivantes
-      status: 'ok' | 'obsolete'
+      status: 'ok'
       lastVersion: identifiant de la dernière version 
     /maps/{numCarte}.7z: retourne le 7z de la carte dans sa dernière version
     
   Utilisation du code Http de retour pour gérer les erreurs pour cat et newer:
     - 200 - Ok - il existe bien un document et le voici
     - 400 - Bad Request - requête incorrecte
+    - 401 - Unauthorized - authentification nécessaire
     - 404 - Not Found - le document demandé n'a pas été trouvé
 
-  Les 7z sont stockés dans le répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH avec un répertoire par livraison
-  nommé avec un nom commencant par la date de livraison sous la forme YYYYMM et idéalement un fichier index.yaml
+  Les cartes 7z sont stockées dans le sous répertoire current du répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH.
+  A chaque carte est associé un fichier .md.json qui contient en JSON la propriété version.
 journal: |
   11/6/2023:
     - nouvelle version simplifiée correspondant à la restructuration de shomgeotiff
@@ -112,7 +112,7 @@ define ('HTTP_ERROR_CODES', [
   410 => 'Gone', // La ressource n'est plus disponible et aucune adresse de redirection n’est connue
   500 => 'Internal Server Error', // erreur interne du serveur
 ]
-);
+); // liste des codes d'erreur et de leur label 
 
 // Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys
 function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): void {
@@ -154,10 +154,10 @@ catch (Exception $e) {
   sendHttpCode(500, "Erreur dans le contrôle d'accès", $e->getMessage());
 }
 
-if (!($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH')))
-  throw new Exception("Erreur, variable d'env. SHOMGT3_INCOMING_PATH non définie");
-if (!is_dir($INCOMING_PATH))
-  throw new Exception("Erreur, SHOMGT3_INCOMING_PATH ne correspond pas au chemin d'un répertoire");
+if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+  throw new Exception("Erreur, variable d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+if (!is_dir($PF_PATH))
+  throw new Exception("Erreur, SHOMGT3_PORTFOLIO_PATH ne correspond pas au chemin d'un répertoire");
 
 //date_default_timezone_set('UTC');
 
@@ -174,7 +174,7 @@ En utilisant ce site ou l'une de ses API, vous acceptez ces conditions d'utilisa
 
 Ce site est expérimental propose l'accès au contenu des cartes du Shom.</p>
 
-SHOMGT3_INCOMING_PATH=<?php echo "$INCOMING_PATH"; ?>
+SHOMGT3_PORTFOLIO_PATH=<?php echo "$PF_PATH"; ?>
 
 <h3>Exemples d'utilisation du serveur:</h3><ul>
 <li><a href='index.php/api.json'>Documentation de l'API conforme aux spécifications OpenAPI 3</a></li>
@@ -183,7 +183,6 @@ SHOMGT3_INCOMING_PATH=<?php echo "$INCOMING_PATH"; ?>
 <li><a href='index.php/maps.json'>Liste des cartes exposées par le serveur</a></li>
 
 <li><a href='index.php/maps/6969.7z'>Exemple de téléchargement de la dernière version de la carte no 6969</a></li>
-<li><a href='index.php/maps/7330-undefined.7z'>Exemple de téléchargement de la carte 7330 non versionnée</a></li>
 </ul>
 <?php
   die();
@@ -230,28 +229,31 @@ if ($_SERVER['PATH_INFO'] == '/logout') { // action complémentaire pour raz le 
 #require_once __DIR__.'/../main/lib/mapversion.inc.php';
 
 if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
-  /*$mapVersions = MapVersion::allAsArray();
-  foreach (new DirectoryIterator("$INCOMING_PATH/current") as $entry) {
-  switch ($_GET['version'] ?? 0) {
-    case 0: {
-      foreach (EXCLUDED_MAPS as $em)
-        unset($mapVersions[$em]);
-      break;
-    }
-    case 1: break;
+  //echo '<pre>'; print_r($_SERVER); die();
+  $scriptUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+  //echo "<pre>scriptUrl=$scriptUrl\n"; die();
+  $maps = [];
+  foreach (new DirectoryIterator("$PF_PATH/current") as $map) {
+    if (substr($map, -8) <> '.md.json') continue;
+    $mapMd = json_decode(file_get_contents("$PF_PATH/current/$map"), true);
+    $maps[substr($map, 0, -8)] = [
+      'status'=> 'ok',
+      'lastVersion'=> $mapMd['version'],
+      'url'=> "$scriptUrl/maps/".substr($map, 0, -8).'.7z',
+    ];
   }
-  //echo '<pre>$mapVersions='; print_r($mapVersions); die();
+  ksort($maps, SORT_STRING);
   header('Content-type: application/json');
-  echo json_encode($mapVersions, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  logRecord(['done'=> "OK - maps.json transmis"]);*/
+  echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+  logRecord(['done'=> "OK - maps.json transmis"]);
   die();
 }
 
 // /maps/{numCarte}.7z: retourne le 7z de la dernière version de la carte
-if (preg_match('!^/maps/(\d\d\d\d)\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
+if (preg_match('!^/maps/(\d{4})\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
   $mapnum = $matches[1];
   
-  $mappath = "$INCOMING_PATH/current/$mapnum/.7z";
+  $mappath = "$PF_PATH/current/$mapnum.7z";
   //echo "mappath=$mappath<br>\n"; die();
   if (!is_file($mappath)) {
     sendHttpCode(404, "Carte $mapnum non trouvée");
