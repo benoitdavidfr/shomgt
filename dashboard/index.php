@@ -1,6 +1,6 @@
 <?php
 /**
- * dashboard/index.php - 23/4/2023
+ * dashboard/index.php - 12/6/2023
  *
  * Tableau de bord de mise à jour des cartes.
  * Affiche:

@@ -1,10 +1,11 @@
 <?php
 /*PhpDoc:
-name: wfsserver2.inc.php
-title: lib/wfsserver2.inc.php - fonctionnalités communes au serveur WFS Gml et au serveur WFS GeoJSON
+name: wfsserver.inc.php
+title: wfsserver.inc.php - classes facilitant l'utilisation du serveur WFS du Shom
 functions:
 doc: |
-  Code repris de YamlDoc
+  La classe WfsGeoJson facilite l'utilisation du serveur WFS du Shom
+
   Définition de 3 classes:
     - WfsServer - classe abstraite des fonctionnalités communes Gml et GeoJSON
     - WfsGeoJson - serveur WFS retournant du GeoJSON comme ceux du Shom ou de l'IGN
@@ -16,7 +17,6 @@ journal: |
     - reprise de YamlDoc
 */
 require_once __DIR__.'/../../vendor/autoload.php';
-//require_once __DIR__.'/../config.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -326,7 +326,6 @@ if (!isset($_SERVER['PATH_INFO']) && ((__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_S
 
 
 class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Features
-  
   /** @return array<int, array<string, string>> */
   function collections(): array { // retourne la liste des collections
     $collections = [];

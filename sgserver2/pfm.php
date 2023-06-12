@@ -71,7 +71,7 @@ doc: |
 use Symfony\Component\Yaml\Yaml;
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../main/lib/SevenZipArchive.php';
+require_once __DIR__.'/SevenZipArchive.php';
 
 define('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
 

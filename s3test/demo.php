@@ -1,6 +1,7 @@
 <?php
-// demo.php - Test du SDK AWS Php avec OVH - BD - 17/8/2022
-
+/*PhpDoc:
+title: demo.php - Test du SDK AWS Php avec OVH - BD - 17/8/2022
+*/
 require __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;

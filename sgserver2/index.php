@@ -174,8 +174,6 @@ En utilisant ce site ou l'une de ses API, vous acceptez ces conditions d'utilisa
 
 Ce site est expérimental propose l'accès au contenu des cartes du Shom.</p>
 
-SHOMGT3_PORTFOLIO_PATH=<?php echo "$PF_PATH"; ?>
-
 <h3>Exemples d'utilisation du serveur:</h3><ul>
 <li><a href='index.php/api.json'>Documentation de l'API conforme aux spécifications OpenAPI 3</a></li>
 <li><a href='index.php/cat.json'>Catalogue des cartes ShomGT</a></li>

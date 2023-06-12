@@ -1,10 +1,3 @@
 <?php
-// comparaison des sous-répertoires lib 2 à 2
-define ('LIBS', ['shomgt', 'sgupdt', 'sgserver', 'main']);
-foreach (LIBS as $i => $libi) {
-  foreach (LIBS as $j => $libj) {
-    if ($j <= $i) continue;
-    echo "diff -r $libi/lib $libj/lib\n";
-  }
-}
-  
+// comparaison des sous-répertoires lib, cmde à piper avec un sh
+echo "diff -r shomgt/lib sgupdt/lib\n";

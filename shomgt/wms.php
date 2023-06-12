@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: wms.php
-title: wms.php - service WMS de shomgt (avec authentification - pas dans cette version)
+title: wms.php - service WMS de shomgt avec authentification
 classes:
 doc: |
   QGis essaie par défaut d'afficher les couches dans leur extension maximum.
@@ -12,7 +12,7 @@ doc: |
   Il existe des cas particuliers où ce mécanisme n'est pas mis en oeuvre mais l'important est qu'il fonctionne dans le
   cas général généré par QGis.
 
-  **Contrôle d'accès NON ACTIVé
+  **Contrôle d'accès
   Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
   qui teste l'adresse IP de provenance et l'existence d'un cookie adhoc.
   Pour un serveur WMS, le cookie n'est pas utilisé par les clients lourds.
