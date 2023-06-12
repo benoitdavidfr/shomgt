@@ -1,0 +1,39 @@
+title: ShomGt3/mapcat - gestion du catalogue de cartes
+path: /geoapi/shomgt/mapcat
+doc: |
+  Dans ShomGt3, le catalogue de cartes est réparti en 2:
+    - dans MapCat la gestion des caractéristiques intemporelles des cartes, cad celles qui évoluent peu,
+    - dans le serveur de cartes la gestion des versions des cartes, effectuée notamment dans maps.json
+  Dans les 2 cas les cartes sont identifiées par leur numéro.
+  
+  Le catalogue MapCat est contenu dans le fichier mapcat.yaml géré au moyen d'un éditeur de texte.
+  Il doit être conforme au schéma mapcat.schema.yaml
+  
+  Les informations contenues dans MapCat sont de 4 ordres:
+    - l'identification des cartes et donc la liste des numéros de cartes,
+      cette liste est issue et confrontée dans le dashboard à la liste des cartes exposées par le serveur WFS du Shom
+    - un certain nombre de champs identifiés dans le schéma sont normalement issus du GAN ;
+      pour ces champs, on effectue régulièrement une confrontation au GAN pour vérifier leur exactitude ;
+      des écarts sont autorisés à condition qu'ils soient expliqués dans le champ badGan
+    - le champ mapsFrance est déduit de l'intersection avec la couche des ZEE
+    - des champs complémentaires sont ajoutés pour différentes raisons:
+      - 'noteCatalog' et 'badGan' ajoutent des commentaires, notamment sur les écarts au GAN
+      - 'toDelete' et 'z-order' permettent d'améliorer la visualisation de l'agrégation des GéoTiffs
+      - 'borders', 'geotiffname' et 'layer' permettent de gérer les cartes qui ne respectent pas les specs des GéoTiffs
+  
+  cmpgan.php permet de confronter mapcat au GAN et de s'assurer que chaque écart est expliqué dans badGan
+  
+  Certaines cartes comportent des excroissances qui débordent du cadre interne de la carte.
+  Le GAN semble incohérent sur la prise en compte ou non de ces excroissances dans l'extension spatiale de la carte.
+  
+  Dans ShomGt3 la doctrine est la suivante:
+    - par défaut mapcat reprend les infos du GAN
+    - si cela soulève une difficulté pour la visualisation des cartes, ces infos sont corrigées
+      et cette correction est indiquée dans badGan
+journal: |
+phpScripts:
+  - /geoapi/shomgt/mapcat/cmpgan.php
+phpIncludes:
+htmlFiles:
+  - /geoapi/shomgt/mapcat/mapcat.yml
+  - /geoapi/shomgt/mapcat/mapcat.schema.yml
