@@ -1,0 +1,27 @@
+# config docker-compose de shomgt3 pour Dominique Bon - 2/6/2022
+# fichier dans /Users/benoit/Sites/geoapi/shomgt3
+# lance 2 containers:
+#   - shomgt expose les GéoTiffs
+#   - sgupdt construit les données par téléchargement à partir du serveur de cartes 7z
+# Les 2 conteneurs partagent le volume sg3data dans lequel sgupdt construit les données et shomgt les consomme
+
+version: '3'
+services:
+  shomgt:
+    image: benoitdavid/shomgt3:shomgt-v0.3
+    hostname: shomgt
+    ports: ["80:80"]
+    volumes:
+      - sg3data:/var/www/data
+  sgupdt:
+    image: benoitdavid/shomgt3:sgupdt-v0.3
+    hostname: sgupdt
+    volumes:
+      - sg3data:/var/www/data
+    environment:
+      HTTP_PROXY: http://100.78.40.201:8080/
+      HTTPS_PROXY: http://100.78.40.201:8080/
+      http_proxy: http://100.78.40.201:8080/
+      https_proxy: http://100.78.40.201:8080/
+volumes:
+  sg3data:

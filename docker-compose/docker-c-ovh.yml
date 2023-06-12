@@ -1,0 +1,17 @@
+# docker-compose 10/6/2022
+#
+version: '3'
+services:
+  shomgt:
+    image: benoitdavid/shomgt3:shomgt-v0.5
+    hostname: shomgt
+    ports: ["80:80"]
+    volumes:
+      - sg3data:/var/www/data
+  sgupdt:
+    image: benoitdavid/shomgt3:sgupdt-v0.5
+    hostname: sgupdt
+    volumes:
+      - sg3data:/var/www/data
+volumes:
+  sg3data:
