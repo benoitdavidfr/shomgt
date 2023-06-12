@@ -1,11 +1,13 @@
 <?php
 /*PhpDoc:
 name: gan.inc.php
-title: dashboard/gan.inc.php - gestion des gan
+title: dashboard/gan.inc.php - définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN
 classes:
 doc: |
   restructuration des classes Gan et GanInSet pour fusionner les définitions de gan.php et index.php
 */
+require_once __DIR__.'/portfolio.inc.php';
+
 use Symfony\Component\Yaml\Yaml;
 
 /*PhpDoc: classes
@@ -258,14 +260,21 @@ class GanStatic {
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
   
   static function week(string $modified): string { // transforme une date en semaine sur 4 caractères comme utilisé par le GAN 
+    // Il y a des dates avant 2000 qui font planter le GAN
+    if ($modified < '2017-01-01') { // Si la date est avant le 1/1/2017
+      //echo "modified = $modified\n";
+      return '1701'; // alors je démarre à la semaine 1 de 2017
+    }
     $time = strtotime($modified);
-    return substr(date('o', $time), 2) . date('W', $time);
+    $ganWeek = substr(date('o', $time), 2) . date('W', $time);
+    //echo "week($modified) -> $ganWeek\n";
+    return $ganWeek;
   }
   
   /**
    * function harvest() - moissonne les GAN par carte dans le répertoire self::GAN_DIR
    *
-   * Les cartes interrogées sont celles de maps()
+   * Les cartes interrogées sont celles de Portfolio::$all
    *
    * @param array<string, bool> $options
    */
@@ -275,20 +284,17 @@ class GanStatic {
     if (!file_exists(self::GAN_DIR))
       mkdir(self::GAN_DIR);
     elseif ($options['reinit'] ?? false) { // suppression des fichiers existants
-      if (!$dh = opendir(self::GAN_DIR))
-        die("Ouverture de $gandir impossible");
-      while (($filename = readdir($dh)) !== false) {
+      foreach (new DirectoryIterator(self::GAN_DIR) as $filename) {
         if (!in_array($filename, ['.','..']))
           unlink("$gandir/$filename");
       }
     }
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     //print_r($errors);
-    //print_r(maps());
-    foreach (maps() as $mapnum => $map) {
+    foreach (Portfolio::$all as $mapnum => $map) {
       //echo "mapnum=$mapnum\n"; print_r($map);
-      if (isset($map['modified'])) {
-        $ganWeek = GanStatic::week($map['modified']);
+      if ($modified = $map['revision'] ?? $map['creation'] ?? null) {
+        $ganWeek = GanStatic::week($modified);
         if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
           //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
           $url = "https://gan.shom.fr/diffusion/qr/gan/$mapnum/$ganWeek";
@@ -411,7 +417,7 @@ class GanStatic {
   
   // pour mise au point effectue l'analyse du GAN pour une carte
   static function analyzeHtmlOfMap(string $mapnum): void {
-    $map = maps()[$mapnum];
+    $map = Portfolio::$all[$mapnum];
     echo 'map='; print_r($map);
     $ganWeek = GanStatic::week($map['modified']);
     $gandir = self::GAN_DIR;
@@ -445,9 +451,9 @@ class GanStatic {
     // Ce code permet de détecter les fichiers Html manquants nécessitant une moisson
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
-    foreach (maps() as $mapnum => $map) {
-      if (isset($map['modified'])) {
-        $ganWeek = GanStatic::week($map['modified']);
+    foreach (Portfolio::$all as $mapnum => $map) {
+      if ($modified = $map['revision'] ?? $map['creation'] ?? null) {
+        $ganWeek = GanStatic::week($modified);
         if (isset($errors["$mapnum-$ganWeek"])) { }
         elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
           echo "moisson $mapnum-$ganWeek absente à moissonner\n";
@@ -469,7 +475,7 @@ class GanStatic {
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
       $mapid = substr($id, 0, 6);
-      if ($mapa = maps()[$mapid])
+      if ($mapa = Portfolio::$all[$mapid])
         Gan::$gans[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
     }
   }
@@ -489,32 +495,3 @@ class GanStatic {
   
   static function item(string $mapnum): ?Gan { return Gan::$gans[$mapnum] ?? null; }
 };
-
-/*
-----
-  provient de index.php
-----
-
-class Gan { // chargement de la synthèse des GANs par carte 
-  const GAN_DIR = __DIR__.'/gan';
-  const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
-  const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
-  const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
-
-  static string $hvalid=''; // intervalles des dates de la moisson des GAN
-  static array $gans=[]; // dictionnaire [$mapnum => Gan]
-  
-  protected string $mapnum;
-  protected ?string $groupTitle; // sur-titre optionnel identifiant un ensemble de cartes
-  protected string $title; // titre
-  protected ?string $edition=''; // edition
-  protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  protected array $inSets; // cartouches
-  public readOnly array $corrections; // liste des corrections
-  protected array $analyzeErrors; // erreurs éventuelles d'analyse du résultat du moissonnage
-  protected string $valid; // date de moissonnage du GAN en format ISO
-  protected string $harvestError; // erreur éventuelle du moissonnage
-  
-  
-  
-};*/

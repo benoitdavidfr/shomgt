@@ -1,16 +1,16 @@
 <?php
 /*PhpDoc:
 name: gan.php
-title: dashboard/gan.php - gestion des gan
+title: dashboard/gan.php - IHM de gestion des GAN
 classes:
 functions:
 doc: |
-  L'objectif est de moissonner les GAN des cartes définies dans $INCOMING_PATH/../maps.json
+  L'objectif est de moissonner les GAN des cartes définies dans le portefeuille
   et de fabriquer un fichier gans.yaml/pser de synthèse
 
-  $INCOMING_PATH est:
-    - soit $SHOMGT3_DASHBOARD_INCOMING_PATH s'il est défini
-    - soit $SHOMGT3_INCOMING_PATH s'il est défini
+  Le chemin du portefeuille est défini par:
+    - la var. d'env. SHOMGT3_DASHBOARD_PORTFOLIO_PATH si elle est définie
+    - sinon la var. d'env. SHOMGT3_PORTFOLIO_PATH si elle est définie
     - sinon erreur
 
   Le script propose en CLI:
@@ -35,6 +35,8 @@ doc: |
     - 7330 - carte sans GAN
 
 journal: |
+  12/6/2023:
+    - prise en compte de la restructuration du portefeuille
   2/8/2022:
     - corrections suite à PhpStan level 6
   2/7/2022:
@@ -51,7 +53,6 @@ journal: |
 includes: [../lib/config.inc.php, mapcat.php]
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../main/lib/mapversion.inc.php';
 require_once __DIR__.'/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -90,20 +91,6 @@ function httpContext(): mixed { // fabrique un context Http
   ]);*/
 }
 
-/** @return array<string, array<string, mixed>> */
-function maps(): array { // liste les cartes actives du portefeuille 
-  ($INCOMING_PATH = getenv('SHOMGT3_DASHBOARD_INCOMING_PATH'))
-    or ($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH'))
-      or throw new Exception("Variables d'env. SHOMGT3_DASHBOARD_INCOMING_PATH et SHOMGT3_INCOMING_PATH non définies");
-  $maps = MapVersion::allAsArray($INCOMING_PATH);
-  foreach ($maps as $num => $map) {
-    //var_dump($num);
-    if (($map['status'] <> 'ok') || !(is_int($num) || ctype_digit($num)))
-      unset($maps[$num]);
-  }
-  return $maps;
-}
-
 
 // Utilisation de la classe Gan
 if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__)))
@@ -130,60 +117,63 @@ else { // non CLI
   echo "<!DOCTYPE HTML><html>\n<head><meta charset='UTF-8'><title>gan</title></head><body><pre>\n";
 }
 
-if ($a == 'menu') { // menu non CLI
-  echo "gan.php - Menu:<ul>\n";
-  echo "<li>La moisson des GAN doit être effectuée en CLI</li>\n";
-  echo "<li><a href='?a=showHarvest'>Affiche la moisson en Yaml</a></li>\n";
-  echo "<li><a href='?a=storeHarvest'>Enregistre la moisson en Yaml/pser</a></li>\n";
-  //echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
-  //echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour les plus périmées d'abord</a></li>\n";
-  echo "</ul>\n";
-  die();
+switch ($a) {
+  case 'menu': { // menu non CLI
+    echo "gan.php - Menu:<ul>\n";
+    echo "<li>La moisson des GAN doit être effectuée en CLI</li>\n";
+    echo "<li><a href='?a=showHarvest'>Affiche la moisson en Yaml</a></li>\n";
+    echo "<li><a href='?a=storeHarvest'>Enregistre la moisson en Yaml/pser</a></li>\n";
+    //echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
+    //echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour les plus périmées d'abord</a></li>\n";
+    echo "</ul>\n";
+    die();
+  }
+  case 'harvest': { // moisson des GAN depuis le Shom en repartant de 0 
+    //echo "Harvest ligne ",__LINE__,"\n";
+    Portfolio::init();
+    GanStatic::harvest();
+    die();
+  }
+  case 'newHarvest': { // moisson des GAN depuis le Shom réinitialisant au préalable 
+    //echo "fullHarvest ligne ",__LINE__,"\n";
+    Portfolio::init();
+    GanStatic::harvest(['reinit'=> true]);
+    die();
+  }
+  case 'showHarvest': { // Affiche la moisson en Yaml 
+    GanStatic::build();
+    echo Yaml::dump(Gan::allAsArray(), 4, 2);
+    die();
+  }
+  case 'storeHarvest': { // Enregistre la moisson en Yaml/pser 
+    Portfolio::init();
+    GanStatic::build();
+    file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
+    GanStatic::storeAsPser();
+    die("Enregistrement des fichiers Yaml et pser ok\n");
+  }
+  case 'harvestAndStore': { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+    Portfolio::init();
+    GanStatic::harvest();
+    GanStatic::build();
+    file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
+    GanStatic::storeAsPser();
+    die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
+  }
+  case 'fullHarvestAndStore': { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+    Portfolio::init();
+    GanStatic::harvest(['reinit'=> true]);
+    GanStatic::build();
+    file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
+    GanStatic::storeAsPser();
+    die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
+  }
+  case 'analyzeHtml': { // analyse l'Html du GAN d'une carte particulière 
+    ($mapNum = $argv[2] ?? null)
+      or throw new Exception("argument mapNum absent");
+    GanStatic::analyzeHtmlOfMap($mapNum);
+    die();
+  }
+  default: die("Action $a inconnue");
 }
 
-elseif ($a == 'harvest') { // moisson des GAN depuis le Shom en repartant de 0 
-  //echo "Harvest ligne ",__LINE__,"\n";
-  GanStatic::harvest();
-  die();
-}
-
-elseif ($a == 'newHarvest') { // moisson des GAN depuis le Shom réinitialisant au préalable 
-  //echo "fullHarvest ligne ",__LINE__,"\n";
-  GanStatic::harvest(['reinit'=> true]);
-  die();
-}
-
-elseif ($a == 'showHarvest') { // Affiche la moisson en Yaml 
-  GanStatic::build();
-  echo Yaml::dump(Gan::allAsArray(), 4, 2);
-  die();
-}
-
-elseif ($a == 'storeHarvest') { // Enregistre la moisson en Yaml/pser 
-  GanStatic::build();
-  file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
-  GanStatic::storeAsPser();
-  die("Enregistrement des fichiers Yaml et pser ok\n");
-}
-
-elseif ($a == 'harvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
-  GanStatic::harvest();
-  GanStatic::build();
-  file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
-  GanStatic::storeAsPser();
-  die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
-}
-
-elseif ($a == 'fullHarvestAndStore') { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
-  GanStatic::harvest(['reinit'=> true]);
-  GanStatic::build();
-  file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
-  GanStatic::storeAsPser();
-  die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
-}
-
-elseif ($a == 'analyzeHtml') { // analyse l'Html du GAN d'une carte particulière 
-  ($mapNum = $argv[2] ?? null)
-    or throw new Exception("argument mapNum absent");
-  GanStatic::analyzeHtmlOfMap($mapNum);
-}

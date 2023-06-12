@@ -12,28 +12,35 @@
  *  - soit elle intersecte la ZEE
  * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
  *
- * 23/4/2023: ajout aux cartes manquantes la ZEE intersectée pour facilier leur localisation
+ * 12/6/2023:
+ *  - réécriture de l'interface avec le portefeuille à la suite de sa réorganisation
+ * 23/4/2023:
+ *  - ajout aux cartes manquantes la ZEE intersectée pour facilier leur localisation
  * 21/4/2023:
  *  - prise en compte évol de ../shomft sur la définition du périmètre de gt.json
  *  - modif fonction spatialCoeff() pour mettre à niveau les COM à la suite mail D. Bon
  * 6/1/2023: modif fonction spatialCoeff()
  * 22/8/2022: correction bug
  */
+/*PhpDoc:
+title: dashboard/index.php - Tableau de bord de mise à jour des cartes - 23/4/2023
+*/
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../main/lib/mapversion.inc.php';
 require_once __DIR__.'/gan.inc.php';
-require_once __DIR__.'/../main/lib/gegeom.inc.php';
+require_once __DIR__.'/portfolio.inc.php';
+require_once __DIR__.'/../shomgt/lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard</title></head><body>\n";
 
-if (!isset($_GET['a'])) {
+if (!isset($_GET['a'])) { // menu 
   echo "<h2>Menu:</h2><ul>\n";
-  //echo "<li><a href='?a=listOfInterest'>listOfInterest</li>\n";
   echo "<li><a href='?a=newObsoleteMaps'>Nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
   echo "<li><a href='?a=perempt'>Degrés de péremption des cartes du portefeuille</li>\n";
+  echo "<li><a href='?a=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
+  echo "<li><a href='?a=listWfs'>liste des cartes du serveur WFS du Shom avec degré d'intérêt</li>\n";
   echo "</ul>\n";
   die();
 }
@@ -101,8 +108,8 @@ class Zee { // liste des polygones de la ZEE chacun associé à une zoneid
  */
 class MapFromWfs {
   /** @var array<string, string> $prop */
-  public readonly array $prop;
-  public readonly MultiPolygon $mpol;
+  public readonly array $prop; // properties 
+  public readonly MultiPolygon $mpol; // géométrie comme MultiPolygon
   
   /** @var array<string, MapFromWfs> $fts */
   static array $fts; // liste des MapFromWfs indexés sur carte_id
@@ -122,17 +129,23 @@ class MapFromWfs {
   }
   
   static function show(): void { // affiche le statut de chaque carte Wfs
+    $maps = [];
     foreach (self::$fts as $gmap) {
-      //print_r($gmap);
+      //echo '<pre>gmap = '; print_r($gmap); echo "</pre>\n";
+      $array = ['title'=> $gmap->prop['name']];
+      
       if (!isset($gmap->prop['scale']))
-        echo '"',$gmap->prop['name'],"\" n'a pas d' échelle<br>\n";
+        $array['status'] = 'sans échelle';
       elseif ($gmap->prop['scale'] > 6e6)
-        echo '"',$gmap->prop['name'],"\" est à petite échelle<br>\n";
+        $array['status'] = 'à petite échelle (< 1/6M)';
       elseif ($mapsFr = Zee::inters($gmap->mpol))
-        echo '"',$gmap->prop['name'],"\" intersecte ",implode(',',$mapsFr),"<br>\n";
+        $array['status'] = 'intersecte '.implode(',',$mapsFr);
       else
-        echo '"',$gmap->prop['name'],"\" N'intersecte PAS la ZEE<br>\n";
+        $array['status'] = "Hors ZEE française";
+      $maps[$gmap->prop['carte_id']] = $array;
     }
+    ksort($maps);
+    echo '<pre>',Yaml::dump(array_values($maps));
   }
   
   /** @return array<string, array<int, string>> */
@@ -147,82 +160,6 @@ class MapFromWfs {
     return $list;
   }
 };
-
-class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu de maps.json
-  /** @var array<string, string|array<string, int|string>> $all */
-  static array $all; // contenu du fichier maps.json
-  
-  static function init(): void {
-    if (!(($INCOMING_PATH = getenv('SHOMGT3_DASHBOARD_INCOMING_PATH')) || ($INCOMING_PATH = getenv('SHOMGT3_INCOMING_PATH'))))
-      throw new Exception("Variables d'env. SHOMGT3_DASHBOARD_INCOMING_PATH et SHOMGT3_INCOMING_PATH non définies");
-    self::$all = MapVersion::allAsArray($INCOMING_PATH);
-  }
-  
-  static function isActive(string $mapnum): bool {
-    return isset(self::$all[$mapnum]) && (self::$all[$mapnum]['status']=='ok');
-  }
-  
-  /** @return array<string, string|array<string, int|string>> */
-  static function actives(): array { // sélection des cartes actives 
-    $actives = [];
-    foreach (self::$all as $mapnum => $map) {
-      if ($map['status']=='ok')
-        $actives[$mapnum] = $map;
-    }
-    return $actives;
-  }
-};
-
-if ($_GET['a'] == 'listOfInterest') { // vérification de la liste des cartes d'intérêt 
-  MapFromWfs::init();
-  Zee::init();
-  $listOfInterest = MapFromWfs::interest();
-  echo "<pre>listOfInterest="; print_r($listOfInterest); echo "</pre>\n";
-  MapFromWfs::show();
-  die();
-}
-
-if ($_GET['a'] == 'newObsoleteMaps') { // détecte de nouvelles cartes à ajouter au portefeuille et les cartes obsolètes 
-  //echo "<pre>";
-  Zee::init();
-  MapFromWfs::init();
-  Portfolio::init();
-  //MapFromWfs::show();
-  $listOfInterest = MapFromWfs::interest();
-  //echo count($list)," / ",count(MapFromWfs::$fc['features']),"\n";
-  $newMaps = [];
-  foreach ($listOfInterest as $mapid => $zeeIds) {
-    if (!Portfolio::isActive($mapid)) {
-      $newMaps[$mapid] = $zeeIds;
-      //echo "$mapid dans WFS et pas dans sgserver<br>\n";
-      //echo "<pre>"; print_r(MapFromWfs::$fts[$mapid]['properties']); echo "</pre>\n"; 
-    }
-  }
-  if (!$newMaps)
-    echo "<h2>Toutes les cartes d'intérêt du flux WFS sont dans le portefeuille</h2>>\n";
-  else {
-    echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
-    foreach ($newMaps as $mapid => $zeeIds) {
-      $map = MapFromWfs::$fts[$mapid]->prop;
-      echo "- $map[name] (1/",addUndescoreForThousand($map['scale'] ?? null),") intersecte ",implode(',', $zeeIds),"<br>\n";
-    }
-  }
-  
-  $obsoletes = [];
-  foreach (Portfolio::actives() as $mapid => $map) {
-    if (!isset($listOfInterest[$mapid]))
-      $obsoletes[] = $mapid;
-  }
-  if (!$obsoletes)
-    echo "<h2>Toutes les cartes du portefeuille sont présentes dans le flux WFS</h2>\n";
-  else {
-    echo "<h2>Cartes du portefeuille absentes du flux WFS</h2>\n";
-    foreach (Portfolio::actives() as $mapid => $map) {
-      if (!in_array($mapid, $listOfInterest))
-        echo "- $mapid<br>\n";
-    }
-  }
-}
 
 class DbMapCat { // chargement d'un extrait de mapcat.yaml
   protected string $title;
@@ -251,41 +188,22 @@ class DbMapCat { // chargement d'un extrait de mapcat.yaml
     $this->title = $map['title'];
     $this->mapsFrance = $map['mapsFrance'];
   }
-  
-  // coeff. de péremption en fonction de la zone
-  // modif 6/1/2023 - coeff DOM à 1 suite à utilisation de ShomGt par les Cross Réunion et Antilles-Guyane
-  function spatialCoeff(): int {
-    /*if (in_array('FR', $this->mapsFrance)) return 1;
-    if (in_array('FX-Med', $this->mapsFrance)) return 1;
-    if (in_array('FX-Atl', $this->mapsFrance)) return 1;
-    if (in_array('FX-MMN', $this->mapsFrance)) return 1;
-    if (in_array('GP', $this->mapsFrance)) return 1;
-    if (in_array('GF', $this->mapsFrance)) return 1;
-    if (in_array('MQ', $this->mapsFrance)) return 1;
-    if (in_array('YT', $this->mapsFrance)) return 1;
-    if (in_array('RE', $this->mapsFrance)) return 1;
-    if (in_array('PM', $this->mapsFrance)) return 2;
-    if (in_array('TF', $this->mapsFrance)) return 2;
-    return 4;*/
-    return 1;
-  }
 };
 
 class Perempt { // croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption
   protected string $mapNum;
   protected string $pfVersion; // info du portefeuille 
-  protected string $pfModified; // info du portefeuille 
+  protected ?string $pfRevision; // info du portefeuille 
   protected string $ganVersion=''; // info du GAN 
   /** @var array<int, array<string, string>> $ganCorrections */
   protected array $ganCorrections=[]; // info du GAN
-  protected float $degree; // degré de péremption
+  protected float $degree; // degré de péremption déduit de la confrontation entre portefeuille et GAN
   
   /** @var array<string, Perempt> $all */
   static array $all; // [mapNum => Perempt]
 
   static function init(): void { // construction à partir du portefeuille 
     foreach (Portfolio::$all as $mapnum => $map) {
-      if ($map['status'] <> 'ok') continue;
       self::$all[$mapnum] = new self($mapnum, $map);
     }
   }
@@ -294,8 +212,8 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   function __construct(string $mapNum, array $map) {
     //echo "<pre>"; print_r($map);
     $this->mapNum = $mapNum;
-    $this->pfVersion = $map['lastVersion'];
-    $this->pfModified = substr($map['modified'], 0, 10);
+    $this->pfVersion = $map['version'];
+    $this->pfRevision = $map['revision'] ?? $map['creation'] ?? null;
   }
   
   function setGan(Gan $gan): void { // Mise à jour de perempt à partir du GAN
@@ -315,26 +233,25 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     if (!$mapcatItem) {
       die("Erreur la carte $this->mapNum n'est pas décrite dans mapcat.yaml");
     }
-    $spc = $mapcatItem->spatialCoeff();
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
       $pfYear = $matches[1];
       $pfNCor = $matches[2];
     }
     else
-      return 100 / $spc;
+      return 100;
     if (preg_match('!^(\d+)c(\d+)$!', $this->ganVersion, $matches)) {
       $ganYear = $matches[1];
       $ganNCor = $matches[2];
     }
     else
-      return 100 / $spc;
+      return 100;
     if ($pfYear == $ganYear) {
       $d = $ganNCor - $pfNCor;
       if ($d < 0) $d = 0;
-      return $d / $spc;
+      return $d;
     }
     else
-      return 100 / $spc;
+      return 100;
   }
 
   static function showAll(): void { // Affichage du tableau des degrés de péremption
@@ -357,8 +274,8 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "<tr><td><b>#</b></td><td>numéro de la carte</td></tr>\n";
     echo "<tr><td><b>titre</b></td><td>titre de la carte</td></tr>\n";
     echo "<tr><td><b>zone géo.</b></td><td>zone géographique dans laquelle se situe la carte</td></tr>\n";
-    echo "<tr><td><b>modif.</b></td><td>date de mise à jour de la dernière version de la carte dans le portefeuille,",
-      " approximée par la date de modification des métadonnées ISO de cette version</td></tr>\n";
+    echo "<tr><td><b>revision</b></td><td>date de création ou de révision de la carte du portefeuille,",
+      " issue des MD ISO associée à la carte</td></tr>\n";
     echo "<tr><td><b>v. Pf</b></td><td>version de la carte dans le portefeuille, identifiée par l'année d'édition de la carte",
       " suivie du caractère 'c' et du numéro de la dernière correction apportée à la carte</td></tr>\n";
     echo "<tr><td><b>v. GAN</b></td><td>version de la carte trouvée dans les GANs à la date de validité ci-dessus ;",
@@ -374,7 +291,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "<p>Attention, certains écarts de version sont dus à des informations incomplètes ou incorrectes",
       " sur les sites du Shom</p>\n";
     echo "<table border=1>",
-         "<th>#</th><th>titre</th><th>zone géo.</th><th>modif.</th><th>v. Pf</th>",
+         "<th>#</th><th>titre</th><th>zone géo.</th><th>revision</th><th>v. Pf</th>",
          "<th>v. GAN</th><th>degré</th><th>corrections</th>\n";
     foreach (Perempt::$all as $p) {
       $p->showAsRow();
@@ -386,10 +303,9 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "<tr><td>$this->mapNum</td>";
     echo "<td>",$this->title(),"</td>";
     echo "<td>",implode(', ', $this->mapsFrance()),"</td>";
-    echo "<td>$this->pfModified</td>";
+    echo "<td>$this->pfRevision</td>";
     echo "<td>$this->pfVersion</td>";
-    $ganWeek = GanStatic::week($this->pfModified);
-    $href = "https://gan.shom.fr/diffusion/qr/gan/$this->mapNum/$ganWeek";
+    $href = "https://gan.shom.fr/diffusion/qr/gan/$this->mapNum";
     echo "<td><a href='$href' target='_blank'>$this->ganVersion</a></td>";
     printf("<td>%.2f</td>", $this->degree);
     echo "<td><table border=1>";
@@ -402,17 +318,79 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   }
 };
 
-if ($_GET['a'] == 'perempt') { // appel du croisement 
-  Portfolio::init(); // initialisation à partir du portefeuille
-  DbMapCat::init(); // chargement du fichier mapcat.yaml
-  GanStatic::loadFromPser(); // chargement de la synthèse des GANs
-  Perempt::init(); // construction à partir du portefeuille
-  // Mise à jour de perempt à partir du GAN
-  foreach (Perempt::$all as $mapNum => $perempt) {
-    if (!($gan = GanStatic::item($mapNum)))
-      echo "Erreur, Gan absent pour carte $mapNum\n";
-    else
-      $perempt->setGan($gan);
+switch ($_GET['a']) {
+  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec degré d'intérêt
+    echo "<h2>Liste des cartes du serveur WFS du Shom avec degré d'intérêt</h2>\n";
+    MapFromWfs::init();
+    Zee::init();
+    MapFromWfs::show();
+    die();
   }
-  Perempt::showAll(); // Affichage du tableau des degrés de péremption
+  case 'listOfInterest': { // liste des cartes d'intérêt 
+    MapFromWfs::init();
+    Zee::init();
+    $listOfInterest = MapFromWfs::interest();
+    ksort($listOfInterest);
+    //echo "<pre>listOfInterest="; print_r($listOfInterest); echo "</pre>\n";
+    echo "<h2>Liste des cartes d'inérêt</h2><pre>\n",Yaml::dump($listOfInterest, 1),"</pre>\n";
+    die();
+  }
+  case 'newObsoleteMaps': { // détecte de nouvelles cartes à ajouter au portefeuille et les cartes obsolètes
+    //echo "<pre>";
+    Zee::init();
+    MapFromWfs::init();
+    Portfolio::init();
+    //MapFromWfs::show();
+    $listOfInterest = MapFromWfs::interest();
+    //echo count($list)," / ",count(MapFromWfs::$fc['features']),"\n";
+    $newMaps = [];
+    foreach ($listOfInterest as $mapid => $zeeIds) {
+      if (!Portfolio::exists($mapid)) {
+        $newMaps[$mapid] = $zeeIds;
+        //echo "$mapid dans WFS et pas dans sgserver<br>\n";
+        //echo "<pre>"; print_r(MapFromWfs::$fts[$mapid]['properties']); echo "</pre>\n"; 
+      }
+    }
+    if (!$newMaps)
+      echo "<h2>Toutes les cartes d'intérêt du flux WFS sont dans le portefeuille</h2>>\n";
+    else {
+      echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
+      foreach ($newMaps as $mapid => $zeeIds) {
+        $map = MapFromWfs::$fts[$mapid]->prop;
+        echo "- $map[name] (1/",addUndescoreForThousand($map['scale'] ?? null),") intersecte ",implode(',', $zeeIds),"<br>\n";
+      }
+    }
+  
+    $obsoletes = [];
+    foreach (Portfolio::$all as $mapid => $map) {
+      if (!isset($listOfInterest[$mapid]))
+        $obsoletes[] = $mapid;
+    }
+    if (!$obsoletes)
+      echo "<h2>Toutes les cartes du portefeuille sont présentes dans le flux WFS</h2>\n";
+    else {
+      echo "<h2>Cartes du portefeuille absentes du flux WFS</h2>\n";
+      foreach (Portfolio::actives() as $mapid => $map) {
+        if (!in_array($mapid, $listOfInterest))
+          echo "- $mapid<br>\n";
+      }
+    }
+    die();
+  }
+  case 'perempt': { // construction puis affichage des degrés de péremption 
+    Portfolio::init(); // initialisation à partir du portefeuille
+    DbMapCat::init(); // chargement du fichier mapcat.yaml
+    GanStatic::loadFromPser(); // chargement de la synthèse des GANs
+    Perempt::init(); // construction à partir du portefeuille
+    // Mise à jour de perempt à partir du GAN
+    foreach (Perempt::$all as $mapNum => $perempt) {
+      if (!($gan = GanStatic::item($mapNum)))
+        echo "Erreur, Gan absent pour carte $mapNum\n";
+      else
+        $perempt->setGan($gan);
+    }
+    Perempt::showAll(); // Affichage du tableau des degrés de péremption
+    die();
+  }
+  default: { die("Action $_GET[a] non définie\n"); }
 }

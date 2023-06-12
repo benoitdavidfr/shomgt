@@ -1,16 +1,15 @@
 openapi: 3.0.0
 info:
-  version: '1.0'
+  version: '2.0'
   title: Serveur de cartes Shom GéoTiff dans le format d'archive 7z tel que livré par le Shom
   description: |
     Ce serveur permet de télécharger
     les [cartes Shom GéoTiff](https://diffusion.shom.fr/pro/navigation/cartes-marines/cartes-marines-geotiff.html)
     dans le format d'archive 7z tel que livré par le Shom.  
-    Il permet en outre de connaitre la liste des cartes disponibles, de télécharger la dernière version disponible d'une carte,
-    de lister les différentes versions disponibles d'une carte et de télécharger chacune de ces versions.  
+    Il permet en outre de connaitre la liste des cartes disponibles avec leur version ainsi que le catalogue des cartes.
     Les versions des cartes sont identifiées par une chaine respectant le motif '{année}c{correction}' où
-    {année} est l'année d'édition de la carte et {correction} est le numéro de la dernière correction apportée
-    à la carte ; quelques cartes ne sont pas versionnées et la version est alors 'undefined'.
+    {année} est l'année d'édition de la carte au format YYYY et {correction} est le numéro de la dernière correction
+    apportée à la carte ; quelques cartes ne sont pas versionnées et la version est alors 'undefined'.
   termsOfService: https://sgserver.geoapi.fr/termsofservice.php
   contact:
     name: 'Benoit DAVID - MTE/CGDD'
@@ -22,7 +21,7 @@ servers:
     url: 'https://sgserver.geoapi.fr/index.php'
 paths:
   /:
-    description: page d'accueil utilisée pour proposer des URL de tests
+    description: page d'accueil HTML utilisée pour proposer des URL de tests
     get:
       operationId: getHomePage
       summary: accès à la page d'accueil
@@ -60,7 +59,7 @@ paths:
                 description: message d'erreur
                 type: string
   /cat.json:
-    description: catalogue de cartes
+    description: catalogue de cartes, cad description des cartes indépendamment de leur version
     get:
       operationId: getCat
       summary: accès au catalogue de cartes
@@ -158,117 +157,6 @@ paths:
       - in: path
         name: numCarte
         description: numéro de la carte
-        required: true
-        schema:
-          type: string
-  /maps/{numCarte}.json:
-    description: liste l'ensemble des versions disponibles pour la carte {numCarte}
-    get:
-      operationId: getMapVersions
-      summary: accès à la liste des versions disponibles
-      responses:
-        200:
-          description: liste des versions disponibles
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/mapVersionList'
-        401:
-          description: erreur d'authentification
-          content:
-            text/plain:
-              schema:
-                description: 'message d''erreur'
-                type: string
-        404:
-          description: erreur carte non trouvée
-          content:
-            text/plain:
-              schema:
-                description: message d'erreur
-                type: string
-    parameters:
-      - in: path
-        name: numCarte
-        description: numéro de la carte
-        required: true
-        schema:
-          type: string
-  /maps/{numCarte}-{version}.7z:
-    description: retourne l'archive 7z correspondant à la version {version} de la carte {numCarte}
-    get:
-      operationId: getMapVersionArchive
-      summary: retourne l'archive 7z de la version de la carte
-      responses:
-        200:
-          description: archive 7z de la version {version} de la carte
-          content:
-            application/x-7z-compressed:
-              schema:
-                type: string
-        401:
-          description: erreur d'authentification
-          content:
-            text/plain:
-              schema:
-                description: message d'erreur
-                type: string
-        404:
-          description: erreur version de carte non trouvée
-          content:
-            text/plain:
-              schema:
-                description: message d'erreur
-                type: string
-    parameters:
-      - in: path
-        name: numCarte
-        description: numéro de la carte
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: version
-        description: version de la carte
-        required: true
-        schema:
-          type: string
-  /maps/{numCarte}-{version}.png:
-    description: retourne la vignette de la version {version} de la carte {numCarte}
-    get:
-      operationId: getMapVersionThumbnail
-      summary: retourne la vignette de la version de la carte
-      responses:
-        200:
-          description: vignette de la version {version} de la carte
-          content:
-            application/x-7z-compressed:
-              schema:
-                type: string
-        401:
-          description: erreur d'authentification
-          content:
-            text/plain:
-              schema:
-                description: message d'erreur
-                type: string
-        404:
-          description: erreur version de carte non trouvée
-          content:
-            text/plain:
-              schema:
-                description: message d'erreur
-                type: string
-    parameters:
-      - in: path
-        name: numCarte
-        description: numéro de la carte
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: version
-        description: version de la carte
         required: true
         schema:
           type: string
@@ -542,71 +430,19 @@ components:
         description: Description d'une carte
         type: object
         additionalProperties: false
-        required: [status, nbre, lastVersion, modified, url]
+        required: [status, lastVersion, url]
         properties:
           status:
-            description: |
-              statut de la carte.
-              'ok' signifie que la dernière version de la carte est valide.
-              'obsolete' signifie que la carte a été retirée du catalogue du Shom et que la dernière version n'est donc
-                plus valide.
+            description: statut de la carte. Toujours 'ok'
             type: string
-            enum: [ok, obsolete]
-          nbre:
-            description: nombre de versions disponibles
-            type: integer
-            minimum: 1
+            enum: [ok]
           lastVersion:
             description: |
               identification de la dernière version disponible soit sous la forme '{année}c{correction}'
               où {année} est l'année de l'édition et {correction} est le numéro de la correction, soit la valeur 'undefined'
             type: string
             pattern: ^(\d{4}c\d+|undefined)$
-          modified:
-            description: |
-              date de dernière modification de la version de la carte approximée par la date de modification
-              de ses métadonnées. Je fait l'hypothèse que les MD sont produites lors de la publication de la carte.
-            type: string
-            pattern: ^\d{4}-\d\d-\d\d
           url:
-            description: URL d'accès au document listant les différentes versions de la carte
+            description: URL d'accès au 7z de la carte
             type: string
-    mapVersionList:
-      description: liste des versions disponibles pour une carte
-      type: object
-      required: [num, status, lastVersion, versions]
-      properties:
-        num:
-          description: numéro de la carte
-        status:
-          description: |
-            statut de la carte.
-            'ok' signifie que la dernière version de la carte est valide.
-            'obsolete' signifie que la carte a été retirée du catalogue du Shom et que la dernière version n'est donc
-              plus valide.
-          type: string
-          enum: [ok, obsolete]
-        lastVersion:
-          description: URL de téléchargement de la dernière version de la carte
-          type: string
-        versions:
-          description: liste des versions indexées par l'identifiant de la version
-          type: object
-          additionalProperties:
-            description: description de la version
-            type: object
-            additionalProperties: false
-            required: [archive, modified, thumbnail]
-            properties:
-              archive:
-                description: URL de l'archive 7z de la version
-                type: string
-              modified:
-                description: |
-                  date de dernière modification de la version de la carte approximée par la date de modification
-                  de ses métadonnées. Je fait l'hypothèse que les MD sont produites lors de la publication de la carte.
-                type: string
-                pattern: ^\d{4}-\d\d-\d\d
-              thumbnail:
-                description: URL de l'imagette de la version
-                type: string
+            pattern: '^https?://'

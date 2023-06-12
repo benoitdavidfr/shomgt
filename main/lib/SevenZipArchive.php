@@ -571,5 +571,4 @@ class SevenZipArchive implements Countable, Iterator {
 	public function valid(): bool {
 		return is_array($this->entries) && ($this->key >= 0) && ($this->key < count($this->entries));
 	}
-
 }
