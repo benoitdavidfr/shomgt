@@ -26,10 +26,10 @@ ShomGT ce décompose dans 7 modules suivants:
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
     *shomgt* peut être déployé comme conteneur Docker.
-    [Plus d'infos ici](shomgt)
+    [Plus d'infos ici](shomgt).
     
   - **sgupdt** construit et met à jour les fichiers nécessaires à *shomgt* en interrogeant *sgserver*. 
-    Ces fichiers sont stockés dans un répertoire data [décrit dans ici](/data).
+    Ces fichiers sont stockés dans un répertoire data [décrit dans ici](data).
     Il peut être déployé comme conteneur Docker et partage alors un volume avec *shomgt*.
     
   - **sgserver** expose les données du Shom à *sgupdt*. Il est mis à jour régulièrement grâce à *dashboard*.

@@ -8,7 +8,7 @@ doc: |
     - une interface API Maps (à la OGC) pour laquelle les collections sont les couches ShomGt et les couches de numéros,
     - une interface de téléchargement dl.php
   
-  Ce module peut être mis en oeuvre par un conteneur Docker ou intégré à ShonGt3.
+  Ce module peut être mis en oeuvre par un conteneur Docker ou intégré à ShomGt3.
   Il lit les GéoTiffs dans le répertoire défini par la variable d'environnement SHOMGT3_MAPS_DIR_PATH
   
   L'imaeg du conteneur doit être construire par:
