@@ -2,62 +2,15 @@
 {/*PhpDoc:
 title: pfm.php - gestionnaire de portefeuille - 12/6/2023
 doc: |
-  glossaire:
-    portefeuille: l'ensemble des cartes gérées avec leurs versions
-    portefeuilleCourant: version plus récente des cartes gérées à l'exclusion des cartes retirées
-    carteRetirée: carte retirée du catalogue par le Shom
-    livraison: ensemble de cartes livrées à une date donnée + fichier de métadonnées de la livraison
-  principes:
-    - cartes courantes exposées dans le répertoire current
-    - livraisons stockées chacune dans un répertoire archives/{YYYYMMDD} (ou au moins commençant par YYYYMMDD)
-    - en local
-      - conservation des livraisons effectuées dans archives
-      - création dans current de liens symboliques vers les cartes adhoc des archives
-      - possibilité de reconstruire current si nécessaire en utilisant les MD de livraison/archive index.yaml
-    - sur geoapi.fr, stockage des versions en cours dans current, et pas de stockage dans archives
-    - le code de sgserver reste le même dans les 2 environnements
-    - à chaque .7z est associé un fichier .md.json avec les MD de la carte
-    - simplifier sgserver en excluant l'utilisation des archives
-  pourquoi:
-    - les versions précédentes des cartes ne sont utiles que pour la gestion du portefeuille
-    - complexité de la structure pour le serveur avec les fichiers mapversions.pser
-    - complexité du code de gestion des versions de carte
-    - nécessité de purge régulière sur geoapi
-    - inutilité de stocker les archives sur geoapi
-  objectif:
-    - avoir la même code Php de shomgt en local et sur geoapi
-    - possibilité d'annuler le dépôt d'une livraison en local
-    - être compatible avec le client actuel
-    - être efficace pour sgserver
+  Implémente un gestionnaire de portefeuille mettant en oeuvre la structure du portefeuille
+  notamment pour ajouter une nouvelle livraison.
+  La structuration du portefeuille est définie dans phpdoc.yaml
   
-  nouvelleStructure:
-    ~/shomgeotiff/current:
-      - contient les cartes courantes cad ni remplacées ni retirées, chacune avec un fichier .7z et un .md.json
-      - soit
-        - en local 2 liens symboliques par carte vers la carte dans archives, nommés par le no suivi de .7z et .md.json
-        - sur geoapi stockage de la carte et ses MD nommées par le no suivi de .7z et .md.json
-    ~/shomgeotiff/incoming/{YYYYMMDD}:
-      - un répertoire par livraison à effectuer, nommé par la date de livraison
-        - ou au moins qu'un ls donne le bon ordre (tri alphabétique)
-      - dans chaque répertoire de livraison les cartes de la livraison, chacune comme fichier 7z
-      - plus normalement un fichier index.yaml de MD de livraison
-        - indispensable ssi la livraison comorte des retraits
-    ~/shomgeotiff/archives/{YYYYMMDD}:
-      - en local quand une livraison est déposée, son répertoire est déplacé dans archives
-      - dans chaque répertoire d'archive les cartes de la livraison
-        - chacune nommée par le no suivi de .7z
-        - chacune associée à un .md.json
-    avantages:
-      - proche de la version actuelle
-      - pas de redondance
-      - plus performante que la version actuelle, 1 seul répertoire à ouvrir en Php (à vérifier)
-        - plus besoin de fichier à regénérer à la volée
-      - possibilité de code Php identique en local et sur geoapi
-    inconvénients:
-      - nécessité des scripts de gestion du portefeuille en local uniquement
-      - vérifier comment se passe le téléchargement sur geoapi.fr
-        - soit copier l'archive et détruire si nécessaire les cartes retirées (peu fréquent)
-        - soit copier current en fonction des dates de création des liens
+  Utilisé en CLI.
+  
+  La classe MapMetadata regoupe des méthodes pour récupérer des MD essentielles dans le fichier ISO 19139 de la carte
+  y compris en allant le chercher dans le fichier 7z
+  
   opérations:
     add:
     cancel:

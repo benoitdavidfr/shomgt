@@ -1,8 +1,8 @@
 # ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
 Ce projet correspond à une nouvelle version de ShomGT, dont l'objectif est d'exposer sous la forme de web-services
 le contenu des [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
-couvrant les zones sous juridiction française, pour permettre aux services du [MTECT](http://www.ecologie.gouv.fr),
-du [MTE](http://www.ecologie.gouv.fr/) et du [secrétariat d'Etat à la mer](https://mer.gouv.fr/)
+couvrant les zones sous juridiction française, pour permettre aux services du pôle ministériel
+du [MTECT/MTE](http://www.ecologie.gouv.fr) et du [secrétariat d'Etat à la mer](https://mer.gouv.fr/)
 d'assurer leurs missions de service public.
 
 La principale plus-value de ShomGT est de permettre de consulter le contenu des cartes en supprimant leur cadre
@@ -11,38 +11,44 @@ comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
 Par rapport à la version précédente, cette version simplifie la mise en place d'un serveur local, son approvisionnement avec
 les cartes du Shom, puis la mise à jour de ces cartes ;
-cette simplification s'appuie sur l'utilisation de docker-compose.
+cette simplification s'appuie sur l'utilisation de conteneurs Docker et de docker-compose.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
-Ce projet ce décompose en 6 modules:
+## Décomposition en modules
+ShomGT ce décompose dans 7 modules suivants:
 
-  - **shomgt** expose les services suivants de consultation des cartes:
+  - **shomgt** expose différents services de consultation des cartes:
     - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
     - un autre conforme au protocole [WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
     - un service GeoJSON exposant les silhouettes des GéoTiffs ainsi que certaines de leurs caractéristiques,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
     *shomgt* peut être déployé comme conteneur Docker.
+    [Plus d'infos ici](shomgt)
     
   - **sgupdt** construit et met à jour les fichiers nécessaires à *shomgt* en interrogeant *sgserver*. 
-    Il doit être déployé comme conteneur Docker et partager un volume avec *shomgt*.
+    Ces fichiers sont stockés dans un répertoire data [décrit dans ici](/data).
+    Il peut être déployé comme conteneur Docker et partage alors un volume avec *shomgt*.
     
   - **sgserver** expose les données du Shom à *sgupdt*. Il est mis à jour régulièrement grâce à *dashboard*.
+    sgserver exploite un répertoire des cartes appelé shomgeotiff (décrit ici)[doc/shomgeotiff.md].
+    sgserver [est décrit ici](/sgserver)
   
   - **dashboard** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
     - les cartes obsolètes à marquer comme telle
     - les nouvelles cartes à prendre en compte
 
-  - **[mapcat](/mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française. Il décrit notamment
-    les extensions spatiales des cartes et de leurs cartouches.
+  - **[mapcat](/mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
+    Il décrit des informations intemporelles sur les cartes.
     Il est consultable au travers de *sgserver*.
   
-  - **shomft** constitue un proxy du serveur WFS du Shom pour les cartes GéoTiff et permet de connaître les nouvelles cartes.
-    Il expose aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes concernées.
-  
+  - **shomft** expose différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
+    Il expose notamment une version simplifiée des zones sous juridiction française afin d'identifier les cartes
+    d'intérêt pour ShomGT.
+
 ## Déploiement Docker
 Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.

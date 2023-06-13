@@ -36,13 +36,13 @@ class Cache {
   
 /*PhpDoc: methods
 name: test
-title: static function test($layer, $z, $x, $y) - définit les conditions de mise en cache
+title: "static function test($layer, $z, $x, $y) - définit les conditions de mise en cache"
 */
   static function test(string $layer, int $z, int $x, int $y): bool { return (($layer=='gtpyr') && ($z<10)); }
   
 /*PhpDoc: methods
 name: readAndSend
-title: static function readAndSend($layer, $z, $x, $y, $format) - Si la tuile est présente alors l'affiche
+title: "static function readAndSend($layer, $z, $x, $y, $format) - Si la tuile est présente alors l'affiche"
 */
   static function readAndSend(string $layer, int $z, int $x, int $y): void {
     //echo "Cache::readAndSend($layer, $z, $x, $y, $format)<br>\n";
@@ -63,7 +63,7 @@ title: static function readAndSend($layer, $z, $x, $y, $format) - Si la tuile es
   
 /*PhpDoc: methods
 name: Cache
-title: static function write(string $layer, int $z, int $x, int $y, GdImage $image): void - Si les conditions sont remplies alors stocke la tuile
+title: "static function write(string $layer, int $z, int $x, int $y, GdImage $image): void - Si les conditions sont remplies alors stocke la tuile"
 */
   static function write(string $layer, int $z, int $x, int $y, GdImage $image): void {
     //echo "write($layer/$z/$x/$y)\n";

@@ -1,6 +1,7 @@
 <?php
 /*PhpDoc:
 title: cmpgan.php - confrontation des données de localisation de mapcat avec celles du GAN
+classes:
 doc: |
   L'objectif est d'identifier les écarts entre mapcat et le GAN pour
     - s'assurer que mapcat est correct

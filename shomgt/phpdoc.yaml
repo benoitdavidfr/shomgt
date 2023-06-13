@@ -1,14 +1,14 @@
-title: ShomGt3/shomgt - définition du micro-service shomgt d'exposition des cartes
-path: /geoapi/shomgt3/shomgt
+title: ShomGt3/shomgt - conteneur shomgt d'exposition des cartes sous forme d'un WMS et de tuiles
+path: /geoapi/shomgt/shomgt
 doc: |
-  Ce module contient le code définissant le micro-service stockant et exposant un ensemble de GéoTiffs au travers:
-    - une interface API Maps (à la OGC) pour laquelle les collections sont les couches ShomGt et les couches de numéros,
-    - une interface Tile XYZ,
+  Ce module contient le code définissant le conteneur stockant et exposant un ensemble de GéoTiffs au travers:
     - une interface WMS
-    - une interface de téléchargement dl.php
+    - une interface Tile XYZ,
     - une carte Leaflet permettant la visualisation des tuiles et du catalogue des GéoTiffs et l'appel de dl.php
+    - une interface API Maps (à la OGC) pour laquelle les collections sont les couches ShomGt et les couches de numéros,
+    - une interface de téléchargement dl.php
   
-  Ce micro-service peut être mis en oeuvre par un conteneur Docker.
+  Ce module peut être mis en oeuvre par un conteneur Docker ou intégré à ShonGt3.
   Il lit les GéoTiffs dans le répertoire défini par la variable d'environnement SHOMGT3_MAPS_DIR_PATH
   
   L'imaeg du conteneur doit être construire par:
@@ -23,49 +23,10 @@ doc: |
   
   ou au moyen de la conf. docker-compose dans le répertoire ..
   
-  Le code peut aussi être exécuté dans le container global Php8.1
+  Le code peut aussi être exécuté dans le container global Php8.2
   en définissant la variable SHOMGT3_MAPS_DIR_PATH à /var/www/html/geoapi/shomgt3/data/current
   
-  Ce module est stocké dans un projet Git synchronisé avec le GitLab MTE.
-  
-  Pour pousser l'image sur le GitLab:
-    docker login registry.gitlab-forge.din.developpement-durable.gouv.fr
-      user: gitlab-ci-token
-      passwd: glpat-cHPYxRCTmirW5DPymAQd
-    docker build -t registry.gitlab-forge.din.developpement-durable.gouv.fr/benoit.david/shomgt3 .
-    docker push registry.gitlab-forge.din.developpement-durable.gouv.fr/benoit.david/shomgt3
-  
-  A faire:
-    - développer le service WMS
-    - implémenter une page alphanum temporal.php donnant, en html, JSON ou Yaml, la liste des cartes exposées
-      triées sur leur numéro avec pour chacune
-      - numéro
-      - titre,
-      - scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
-      - couverture spatiale,
-      - mdDate: date de modification des métadonnées
-      - edition: édition de la carte, example: Edition n° 3 - 2016
-      - lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
-    - modifier dl.php pour permettre le téléchargement des MD ISO
-    
-  périmé:
-    cmdesDocker(Périmé avec l'utilisation de docker-compose):
-    docker build -t maps .
-    # sans montage, mode normal mais impose de relancer le container pour toute modification du code
-    docker run --name maps -p 8082:80 --network=shomgt3 --rm maps
-    # avec montage, mieux adapté au développement car permet de modifier le code sans relancer le container
-    docker run --name maps -p 8082:80 --volume "$PWD":/var/www/html --network=shomgt3 --rm maps
-    # avec montage et mode detach
-    docker run --name maps -p 8082:80 --volume "$PWD":/var/www/html --network=shomgt3 --rm -d maps
-
-    # pour arrêter le container s'il est lancé en mode detach
-    docker stop maps
-    # affiche les logs
-    docker logs maps
-    
-    # accès dans un bash au container existant, soit comme root, soit comme www-data
-    docker exec -it shomgt3_maps_1 /bin/bash
-    docker exec -it --user=www-data shomgt3_maps_1 /bin/bash
+  Ce module est stocké dans un projet Git.
     
 journal: |
   21/4/2023:
@@ -102,13 +63,15 @@ journal: |
   18/4/2022:
     - création Dockerfile pour test du mécanisme d'expansion
 submodules:
-  - /geoapi/shomgt3/maps/lib
+  - /geoapi/shomgt/shomgt/lib
 phpScripts:
-  - /geoapi/shomgt3/maps/maps.php
-  - /geoapi/shomgt3/maps/mapwcat.php
-  - /geoapi/shomgt3/maps/tile.php
-  - /geoapi/shomgt3/maps/showtiles.php
+  - /geoapi/shomgt/shomgt/maps.php
+  - /geoapi/shomgt/shomgt/mapwcat.php
+  - /geoapi/shomgt/shomgt/tile.php
+  - /geoapi/shomgt/shomgt/wms.php
+  - /geoapi/shomgt/shomgt/wmsv.php
+  - /geoapi/shomgt/shomgt/showtiles.php
 htmlFiles:
-  - /geoapi/shomgt3/maps/api.yaml
-  - /geoapi/shomgt3/maps/shomgt.yaml
-  - /geoapi/shomgt3/maps/shomgt.schema.yaml
+  - /geoapi/shomgt/shomgt/api.yaml
+  - /geoapi/shomgt/shomgt/shomgt.schema.yaml
+  - /geoapi/shomgt/shomgt/wmsvlayers.yaml

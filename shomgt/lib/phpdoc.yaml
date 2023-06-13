@@ -1,14 +1,28 @@
-title: ShomGt3/Maps/lib - bibliothèque du micro-service maps
-path: /geoapi/shomgt3/maps/lib
+title: ShomGt3/shomgt/lib - bibliothèque du conteneur shomgt
+path: /geoapi/shomgt/shomgt/lib
 doc: |
 journal: |
   24/4/2022:
     - première version ok
 phpIncludes:
-  - /geoapi/shomgt3/maps/lib/sexcept.inc.php
-  - /geoapi/shomgt3/maps/lib/pos.inc.php
-  - /geoapi/shomgt3/maps/lib/coordsys.inc.php
-  - /geoapi/shomgt3/maps/lib/gebox.inc.php
-  - /geoapi/shomgt3/maps/lib/grefimg.inc.php
-  - /geoapi/shomgt3/maps/lib/geotiffs.inc.php
-  - /geoapi/shomgt3/maps/lib/gdalinfo.inc.php
+  - /geoapi/shomgt/shomgt/lib/accesscntrl.inc.php
+  - /geoapi/shomgt/shomgt/lib/cache.inc.php
+  - /geoapi/shomgt/shomgt/lib/config.inc.php
+  - /geoapi/shomgt/shomgt/lib/coordsys.inc.php
+  - /geoapi/shomgt/shomgt/lib/envvar.inc.php
+  - /geoapi/shomgt/shomgt/lib/errortile.inc.php
+  - /geoapi/shomgt/shomgt/lib/gdalinfo.inc.php
+  - /geoapi/shomgt/shomgt/lib/gebox.inc.php
+  - /geoapi/shomgt/shomgt/lib/gegeom.inc.php
+  - /geoapi/shomgt/shomgt/lib/geotiff.inc.php
+  - /geoapi/shomgt/shomgt/lib/geotiffs.inc.php
+  - /geoapi/shomgt/shomgt/lib/grefimg.inc.php
+  - /geoapi/shomgt/shomgt/lib/isomd.inc.php
+  - /geoapi/shomgt/shomgt/lib/layer.inc.php
+  - /geoapi/shomgt/shomgt/lib/log.inc.php
+  - /geoapi/shomgt/shomgt/lib/mysql.inc.php
+  - /geoapi/shomgt/shomgt/lib/pos.inc.php
+  - /geoapi/shomgt/shomgt/lib/sexcept.inc.php
+  - /geoapi/shomgt/shomgt/lib/vectorlayer.inc.php
+  - /geoapi/shomgt/shomgt/lib/wmsserver.inc.php
+  - /geoapi/shomgt/shomgt/lib/zoom.inc.php

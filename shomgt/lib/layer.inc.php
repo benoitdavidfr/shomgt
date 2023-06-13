@@ -36,8 +36,10 @@ journal: |
   25/4/2022:
     - scission de maps.php
 includes:
-  - lib/grefimg.inc.php
-  - lib/geotiff.inc.php
+  - grefimg.inc.php
+  - geotiff.inc.php
+  - zoom.inc.php
+  - isomd.inc.php
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

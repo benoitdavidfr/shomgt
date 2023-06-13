@@ -1,23 +1,23 @@
-title: ShomGt3 - reconception de ShomGt restreignant la partie à héberger
-path: /geoapi/shomgt3
+title: ShomGt3 - version de ShomGt améliorant la distribution du code sous la forme de conteneurs Docker
+path: /geoapi/shomgt
 doc: |
   Nouvelle version de ShomGT axée sur l'amélioration de la distribution du code sous la forme de conteneurs Docker.
   L'idée principale est de distribuer ShomGT aux CROSS sous la forme:
     - un docker-compose lancant 2 conteneurs
       - le conteneur shomgt qui expose les services de tuiles et WMS à partir des données de cartes expansées
       - le conteneur sgupdt qui construit les données de cartes expansées à partir d'un serveur de cartes
-    - un serveur de cartes sgserver qui est centralisé et mis à jour régulièrement
-  Enfin, il est nécessaire d'utiliser le module cat2 de shomgt2 pour récupérer certains paramètres des GéoTiffs.
+    - un serveur de cartes sgserver centralisé et mis à jour régulièrement
   
-  Les modules shomgt et sgupdt peuvent fonctionner soit en conteneur spécifique, soit dans le conteneur général.
+  Les modules shomgt et sgupdt peuvent fonctionner soit en conteneur spécifique, soit sans conteneur.
   shomgt consome le répertoire data contenant les données de cartes expansées et le fichier shomgt.yaml,
   qui est construit et mis à jour par sgupdt.
-  
-  Les 2 conteneurs et le serveur sgserver devraient pouvoir être hébergés sur l'offre Compose d'ECO.
-  
-  Voir le fichier filetree.yaml pour l'arborescence des fichiers, les mapping dans les conteneurs et les vars d'environnement
 
 journal: |
+  12/6/2023:
+    - restructuration de shomgeotif
+    - réécriture de sgserver en sgserver2
+    - adaptation de dashboard en conséquence
+    - recopie en test sur geoapi.fr dans le répertoire sgserver2
   13/1/2023:
     - nlle version de sgserver en raison modif readmapversion.inc.php en raison d'un nouveau format de l'édition dans les MD XML
   12/6/2022:
@@ -83,12 +83,13 @@ journal: |
   5/4/2022:
     - création
 submodules:
-  - /geoapi/shomgt3/shomgt
-  - /geoapi/shomgt3/sgupdt
-  - /geoapi/shomgt3/sgserver
-  - /geoapi/shomgt3/mapcat
-  - /geoapi/shomgt3/shomft
-  - /geoapi/shomgt3/dashboard
+  - /geoapi/shomgt/shomgt
+  - /geoapi/shomgt/sgupdt
+  - /geoapi/shomgt/sgserver2
+  - /geoapi/shomgt/mapcat
+  - /geoapi/shomgt/shomft
+  - /geoapi/shomgt/dashboard
+  - /geoapi/shomgt/secrets
 phpScripts:
 phpIncludes:
 htmlFiles:

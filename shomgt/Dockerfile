@@ -1,4 +1,4 @@
-# Dockerfile pour ShomGt3/geotiff - 18/4-22/6/2022
+# Dockerfile pour ShomGt3/shomgt - 18/4-22/6/2022
 # 1/5/2022 - chgt chemin des cartes
 # 6/5/2022 - chgt instructions de copie des fichiers
 FROM php:8.1.8-apache

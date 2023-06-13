@@ -17,7 +17,8 @@ journal: |
   25/4/2022:
     - scission de maps.php
 includes:
-  - lib/gdalinfo.inc.php
+  - envvar.inc.php
+  - gdalinfo.inc.php
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

@@ -34,7 +34,12 @@ journal: |
     - correction du code affichant la version
   1/5/2022:
     création par copie de la version de shomgt2
-includes: [lib/gegeom.inc.php, ../lib/log.inc.php, ../lib/config.inc.php, geotiff.inc.php, cache.inc.php, errortile.inc.php]
+includes:
+  - lib/log.inc.php
+  - lib/gegeom.inc.php
+  - lib/layer.inc.php
+  - lib/cache.inc.php
+  - lib/errortile.inc.php
 */
 $start = ['time'=>  microtime(true), 'memory'=> memory_get_usage(true)];
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
