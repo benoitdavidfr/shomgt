@@ -30,18 +30,21 @@ ShomGT ce décompose dans 7 modules suivants:
     
   - **sgupdt** construit et met à jour les fichiers nécessaires à *shomgt* en interrogeant *sgserver*. 
     Ces fichiers sont stockés dans un répertoire data [décrit dans ici](data).
-    Il peut être déployé comme conteneur Docker et partage alors un volume avec *shomgt*.
+    Lorsqu'il est déployé comme conteneur Docker, ce répertoire data constitue un volume partagé avec *shomgt*.
+    sgupdt [est décrit ici](sgupdt).
     
   - **sgserver** expose les données du Shom à *sgupdt*. Il est mis à jour régulièrement grâce à *dashboard*.
     sgserver exploite un répertoire des cartes appelé shomgeotiff (décrit ici)[doc/shomgeotiff.md].
-    sgserver [est décrit ici](/sgserver)
+    sgserver [est décrit ici](sgserver).
   
   - **dashboard** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
     - les cartes obsolètes à marquer comme telle
     - les nouvelles cartes à prendre en compte
+    
+    dashboard [est décrit ici][dashboard].
 
-  - **[mapcat](/mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
+  - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes.
     Il est consultable au travers de *sgserver*.
   
