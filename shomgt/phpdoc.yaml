@@ -11,7 +11,7 @@ doc: |
   Ce module peut être mis en oeuvre par un conteneur Docker ou intégré à ShomGt3.
   Il lit les GéoTiffs dans le répertoire défini par la variable d'environnement SHOMGT3_MAPS_DIR_PATH
   
-  L'imaeg du conteneur doit être construire par:
+  L'image du conteneur doit être construire par:
     $ docker build -t shomgt .
       
   Le conteneur doit être soit exécuté par:
@@ -20,14 +20,11 @@ doc: |
       --name shomgt -h shomgt --volume ${PWD}/../data:/var/www/data --volume ${PWD}:/var/www/cli \
       --network=dockerc_default -it --rm sgupdt
 
-  
   ou au moyen de la conf. docker-compose dans le répertoire ..
   
   Le code peut aussi être exécuté dans le container global Php8.2
   en définissant la variable SHOMGT3_MAPS_DIR_PATH à /var/www/html/geoapi/shomgt3/data/current
-  
-  Ce module est stocké dans un projet Git.
-    
+      
 journal: |
   21/4/2023:
     - ajout catalogue Shom en option dans mapwcat pour faciliter l'identification de cartes manquantes

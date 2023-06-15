@@ -17,7 +17,7 @@ Pour utiliser ces web-services, des cartes Shom doivent être intégrées au ser
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## Décomposition en modules
-ShomGT ce décompose dans 7 modules suivants:
+ShomGT ce décompose dans 6 modules suivants:
 
   - **[shomgt](shomgt)** expose différents services de consultation des cartes:
     - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
@@ -25,27 +25,31 @@ ShomGT ce décompose dans 7 modules suivants:
     - un service GeoJSON exposant les silhouettes des GéoTiffs ainsi que certaines de leurs caractéristiques,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt* en interrogeant *sgserver*. 
-    Ces fichiers sont stockés dans un répertoire data [décrit ici](data).
+  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt*, stockés dans un répertoire
+    data [décrit ici](data), en interrogeant *sgserver*. 
     
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
-    un volume partagé.
+    un volume partagé entre les 2 conteneurs.
     
-  - **[sgserver](sgserver2)** expose les données du Shom à *sgupdt*. Il est mis à jour régulièrement grâce à *dashboard*.
-    sgserver exploite un répertoire des cartes appelé [shomgeotiff décrit ici](docs/shomgeotiff.md).
+  - **[sgserver](sgserver2)** expose  à *sgupdt* les cartes du Shom gérées dans un répertoire
+    appelé [shomgeotiff décrit ici](docs/shomgeotiff.md). Il est mis à jour régulièrement grâce à *dashboard*.
   
   - **(dashboard)[dashboard]** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
     - les cartes obsolètes à marquer comme telle
     - les nouvelles cartes à prendre en compte
     
+    *dashboard* confronte les versions des cartes de *shomgeotiff* aux informations d'actualité des cartes
+    issues du [GAN du Shom](docs/gan.md). Il exploite aussi la liste des cartes du Shom diffusé par le Shom
+    dans son serveur WFS.
+    
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes.
-    Il est consultable au travers de *sgserver*.
+    Il est utilisé par *sgupdt* et consultable au travers de *sgserver*.
   
-  - **[shomft](shomft)** expose différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
-    Il expose notamment une version simplifiée des zones sous juridiction française afin d'identifier les cartes
-    d'intérêt pour ShomGT.
+  - **[shomft](shomft)** gère différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
+    Il gère aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
+    d'intérêt pour ShomGT dans *dashboard*.
 
 ## Déploiement Docker
 Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
@@ -67,9 +71,8 @@ Par ailleurs, la mise à jour régulière des cartes peut être activée en déf
 `SHOMGT3_UPDATE_DURATION` qui doit contenir le nombre de jours entre 2 actualisations.
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
-## Avancement du développement
-Cette version est utilisée notamment par
-les [Centres régionaux opérationnels de surveillance et de sauvetage](https://fr.wikipedia.org/wiki/Centre_r%C3%A9gional_op%C3%A9rationnel_de_surveillance_et_de_sauvetage).  
+## Déploiement de cette version
+Cette version est utilisée notamment par les [Centres régionaux opérationnels de surveillance et de sauvetage](https://fr.wikipedia.org/wiki/Centre_r%C3%A9gional_op%C3%A9rationnel_de_surveillance_et_de_sauvetage).  
 Des améliorations sont régulièrement apportées à ce projet.
 
 
