@@ -71,8 +71,6 @@ Par ailleurs, la mise à jour régulière des cartes peut être activée en déf
 `SHOMGT3_UPDATE_DURATION` qui doit contenir le nombre de jours entre 2 actualisations.
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
-## Déploiement de cette version
-Cette version est utilisée notamment par les [Centres régionaux opérationnels de surveillance et de sauvetage](https://fr.wikipedia.org/wiki/Centre_r%C3%A9gional_op%C3%A9rationnel_de_surveillance_et_de_sauvetage).  
-Des améliorations sont régulièrement apportées à ce projet.
-
-
+## Utilisation sans Docker
+Le code de ShomGT3 peut aussi être utilisé de manière plus conventionnelle en hébergeant les différents modules
+sur le même site.
