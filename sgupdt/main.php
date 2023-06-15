@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: main.php
+title: main.php - procédure principale de mise à jour des cartes
 name: main.php
 doc: |
   Variable_d'Environnement:
