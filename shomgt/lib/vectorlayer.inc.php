@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: vectorlayer.inc.php
+title: vectorlayer.inc.php - gestion de couches d'objets vecteur
 name: vectorlayer.inc.php
 doc: |
   Affichage des couches vecteur
@@ -12,9 +12,6 @@ journal: |
   8-9/7/2022:
     - création sur le modèle de layer.inc.php
 */
-//die("Fin ligne ".__LINE__."\n");
-//require_once __DIR__.'/../../vendor/autoload.php';
-//require_once __DIR__.'/grefimg.inc.php';
 require_once __DIR__.'/layer.inc.php';
 require_once __DIR__.'/gegeom.inc.php';
 
