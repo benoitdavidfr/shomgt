@@ -34,7 +34,7 @@ ShomGT ce décompose dans 6 modules suivants:
   - **[sgserver](sgserver2)** expose  à *sgupdt* les cartes du Shom gérées dans un répertoire
     appelé [shomgeotiff décrit ici](docs/shomgeotiff.md). Il est mis à jour régulièrement grâce à *dashboard*.
   
-  - **(dashboard)[dashboard]** expose un tableau de bord permettant d'identifier:
+  - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
     - les cartes obsolètes à marquer comme telle
     - les nouvelles cartes à prendre en compte
