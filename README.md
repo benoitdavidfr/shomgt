@@ -63,6 +63,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   chaque zone corespond dans la livraison à un fichier géoréférencé
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF) ; l'image est ainsi appelée **GéoTiff**.
   Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
+  Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
 - **version** : une carte est livrée dans une certaine version.
   Le Shom gère 2 niveaux de version pour chaque carte:
   - l'année d'édition ou de publication de la carte,

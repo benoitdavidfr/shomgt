@@ -1,22 +1,23 @@
 # Organisation des fichiers dans data
 **data** est un sous-répertoire du répertoire principal de ShomGT qui contient les données exploitées
 par [le composant shomgt](../shomgt) et produites par le [composant sgupdt](../sgupdt).
-Lorsque ces composant sont déployés comme conteneur Docker, *data* est un volume partagé entre ces conteneurs.
+Lorsque ces composant sont déployés comme conteneurs Docker, *data* est un volume partagé entre ces conteneurs.
 
 Outre ce fichier de documentation, *data* contient le [fichier shomgt.yaml](shomgt.yaml) et 3 sous-répertoires.
 
 ## Le fichier shomgt.yaml
-Le fichier shomgt.yaml est structuré selon le schéma JSON défini [shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
-Il est produit par le [composant sgupdt](../sgupdt).
-Le fichier shomgt.yaml définit chaque couche de GéoTiffs par son nom et la liste des GéoTiffs qu'elle contient.
-Chaque GéoTiff est à son tour défini par au moins son nom, son titre et l'extension géographique de la zone cartographiée
-à l'intérieur de son cadre.
-Un GéoTiff peut en outre porter les propriétés suivantes:
+Le fichier shomgt.yaml est structuré conformément au [schéma JSON shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
+Il est produit
+par le [script shomgt.php du composant sgupdt](../sgupdt#shomgtphp---g%C3%A9n%C3%A9ration-du-fichier-shomgtyaml).
+Le fichier shomgt.yaml définit chaque couche de GéoTiffs par son identifiant et la liste des GéoTiffs qu'elle contient.
+Chaque GéoTiff est à son tour défini par au moins son identifiant, son titre et l'extension géographique
+de la zone cartographiée à l'intérieur de son cadre.
+Un GéoTiff peut en outre comporter les propriétés suivantes:
 
 - `outgrowth`: liste d'excroissances de la carte si elle en comporte,
 - `borders`: pour les GéoTiffs qui ne sont pas géoréférencés (notamment dans le cas des cartes spéciales),
-  nbre de pixels des bords haut, bas, droite et gauche à supprimer.
-- `deleted`: liste de zones effacées dans le GéoTiff
+  nbre de pixels des bords haut, bas, droite et gauche à masquer,
+- `deleted`: liste de zones effacées dans le GéoTiff.
 
 ## Le sous-répertoire maps
 Le sous-répertoire `maps` contient un sous-répertoire par carte portant comme nom le no de la carte
@@ -27,7 +28,11 @@ et contenant pour chaque GéoTiff de la carte:
 - un fichier JSON avec les informations de géoréférencement du GéoTiff,
 - un fichier XML avec les métadonnées ISO 19139 du GéoTiff.
 
-En outre, le sous-répertoire de carte contient un fichier PNG qui est une miniature de la carte.
+En outre, chaque sous-répertoire de carte contient un fichier PNG qui est une miniature de la carte.
+
+Il existe des exceptions à cette structuration pour les cartes spéciales dont le l'image n'est souvent pas géoréférencée.
+Dans ce cas cette information de géoréférencement est absente et doit être remplacée par la propriété `borders` dans shomgt.yaml.
+De même les livraisons des cartes spéciales ne comportent généralement pas de métadonnées ISO.
 
 ## Le sous-répertoire tilecache
 Le sous-répertoire tilecache constitue un cache des tuiles de la couche gtpyr des niveaux 0 à 9.
