@@ -12,6 +12,9 @@ Ce module propose les services suivants :
   - les zones SAR-SRR,
 - un service de téléchargement des GéoTiffs avec des infos associées.
 
+L'utilisation de tuiles a l'avantage sur l'utilisation du service WMS d'utiliser des caches de tuiles
+à plusieurs niveaux: sur le serveur mais aussi sur le réseau.
+
 ## Liste des fichiers Php et principales classes et fonctions du module
 Certains fichiers sont dupliqués entre shomgt et sgupdt afin que les modules puissent être déployés indépendamment
 comme conteneurs Docker.
@@ -24,17 +27,28 @@ facile à utiliser dans une carte Leaflet.
 
 Les points d'accès sont:
 
-  - /tile.php - affichage de la documentation du service
-  - /tile.php/{layer} - affichage de la documentation de la couche
+  - /tile.php - affiche la documentation du service
+  - /tile.php/{layer} - affiche la documentation de la couche {layer}
   - /tile.php/{layer}/{z}/{x}/{y}.png - retourne la tuile du niveau de zoom {z}, colonne {x} et ligne {y}
+  
+Exemple:
+
+  - /tile.php/gtpyr/10/538/381.png
 #### inclus
         - lib/log.inc.php
         - lib/gegeom.inc.php
         - lib/layer.inc.php
         - lib/cache.inc.php
         - lib/errortile.inc.php
-        - ../vendor/autoload.php
         - ../secrets/tileaccess.inc.php
+        - ../vendor/autoload.php
+#### fichier inclus particulier
+Le fichier ../secrets/tileaccess.inc.php n'est inclus que s'il existe.
+Il permet de blacklister certaines adresses IP abusives, par exemple à partir de laquelle
+quelqu'un cherche à recopier l'ensemble des tuiles.
+Ces adresses IP black listées dans le fichier ../secrets/secretconfig.inc.php
+
+Le fichier ../vendor/autoload.php permet de charger les [composants externes](../docs/composantexterne.md).
 
 ### wms.php - service WMS de shomgt avec authentification
 #### inclus
@@ -44,14 +58,18 @@ Les points d'accès sont:
         - lib/wmsserver.inc.php
         - lib/layer.inc.php
         - ../secrets/protect.inc.php
+#### fichier inclus particulier
+Le fichier ../secrets/protect.inc.php n'est inclus que s'il existe.
+Il permet d'interdire l'accès au service en cas d'abus,
+par exemple à partir de laquelle quelqu'un cherche à recopier l'ensemble des tuiles.
 
 ### wmsv.php - service WMS pour les couches vecteur de ShomGT
 #### inclus
-        - ../vendor/autoload.php
+        - lib/wmsserver.inc.php
         - lib/coordsys.inc.php
         - lib/gebox.inc.php
-        - lib/wmsserver.inc.php
         - lib/vectorlayer.inc.php
+        - ../vendor/autoload.php
 
 ### mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE, ...
 #### inclus
@@ -91,6 +109,12 @@ Elle génère un fichier temporaire de log utile au déverminage.
         - lib/envvar.inc.php
 
 ### lib/grefimg.inc.php  - Définition de la classe GeoRefImage gérant une image géoréférencée'
+La classe GeoRefImage propose différentes méthodes sur une image géoréférencée
+en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php) avec:
+
+   - la définition d'un espace en coordonnées utilisateurs comme EBox,
+     typiquement un système de coordonnées projeté comme WorldMercator
+   - une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
 #### identique à
         - ../sgupdt/lib/grefimg.inc.php
 #### inclus
@@ -118,7 +142,7 @@ Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
         - lib/layer.inc.php
         - lib/gegeom.inc.php
 
-### lib/geotiff.inc.php - définition de la classe GeoTiff
+### lib/geotiff.inc.php - définition de la classe GeoTiff implémentant des méthodes sur un GéoTiff
 #### inclus
         - lib/envvar.inc.php
         - lib/gdalinfo.inc.php
@@ -145,7 +169,7 @@ La classe EBox définit un bbox en coordonnées euclidiennes projetées.
 Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
 qui permet de construire les primitives géométriques.
 Ainsi:
-  - une position est stockée comme une liste de 2 ou 3 nombres
+  - une position est stockée en Php comme une liste de 2 ou 3 nombres
     et la classe Pos regroupe des méthodes statiques qui s'appliquent à une position,
   - la classe LPos regroupe des méthodes statiques qui s'appliquent à une liste de positions, et
   - la classe LLPos regroupe des méthodes statiques qui s'appliquent à une liste de listes de positions.
