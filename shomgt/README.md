@@ -130,6 +130,8 @@ La classe abstraite Layer définit les couches du serveur de cartes.
 La classe TiffLayer correspond aux couches agrégeant des GéoTiff.  
 La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.  
 Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.  
+
+Les listes de couches sont initialisées notamment à partir du [fichier shomgt.yaml](../data#le-fichier-shomgtyaml).
 #### inclus
         - ../vendor/autoload.php
         - lib/grefimg.inc.php
