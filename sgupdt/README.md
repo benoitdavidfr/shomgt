@@ -12,15 +12,16 @@ stockés dans un répertoire [data](../data), en interrogeant [sgserver](../sgse
 
 ## Liste des fichiers Php et principales classes et fonctions du module
 ### main.php - script principal de mise à jour des cartes
-Main.php est le script de mise à jour des cartes.  
-Il détecte les cartes qui ont besoin d'être téléchargée et si c'est le cas
-  - les télécharge depuis sgserver,
-  - dézippe l'archive téléchargée
+Main.php est le script principal de mise à jour des cartes.  
+Il détecte les cartes qui ont besoin d'être téléchargées et pour chaque carte dont c'est le cas:
+
+  - la télécharge depuis sgserver,
+  - dézippe l'archive téléchargée,
   - puis pour chaque fichier GéoTiff
-    - extrait les informations de géoréférencement
-    - transforme l'image en PNG
+    - extrait les informations de géoréférencement,
+    - transforme l'image en PNG,
     - découpe avec maketile.php l'image en dalles 1024x1024 pour faciliter l'utilisation des images
-Et enfin génère fichier shomgt.yaml qui conserve un certain nombre de paramètres avec shomgt.php.
+Et enfin génère avec shomgt.php le fichier shomgt.yaml qui conserve un certain nombre de paramètres.
 La conformité du fichier shomgt.yaml par rapport à son schéma JSON est vérifiée.
 
 En fonction de la variable `SHOMGT3_UPDATE_DURATION`, le script suspend son exécution et se relance plus tard de manière 
@@ -28,24 +29,24 @@ En fonction de la variable `SHOMGT3_UPDATE_DURATION`, le script suspend son exé
 
 `main.php` est utilisé en mode CLI.
 #### inclus
-        - /sgupdt/lib/envvar.inc.php
-        - /sgupdt/lib/execdl.inc.php
-        - /sgupdt/lib/readmapversion.inc.php
-        - /sgupdt/lib/mapcat.inc.php
-        - /vendor/autoload.php
+        - lib/envvar.inc.php
+        - lib/execdl.inc.php
+        - lib/readmapversion.inc.php
+        - lib/mapcat.inc.php
+        - ../vendor/autoload.php
 
 ### maketile.php - découpe un PNG en dalles de 1024 X 1024 + effacement de zones définies dans mapcat.yaml
-Découpe les PNG correspondant au cartes et efface les zones spécifiées dans mapcat.yaml
+Découpe un PNG correspondant à un GéoTiff et efface les zones spécifiées dans mapcat.yaml
 #### inclus
-        - /vendor/autoload.php
-        - /sgupdt/lib/mapcat.inc.php
-        - /sgupdt/lib/gdalinfo.inc.php
-        - /sgupdt/lib/gebox.inc.php
-        - /sgupdt/lib/grefimg.inc.php
+        - ../vendor/autoload.php
+        - lib/mapcat.inc.php
+        - lib/gdalinfo.inc.php
+        - lib/gebox.inc.php
+        - lib/grefimg.inc.php
 
-### shomgt.php - génération du fichier shomgt.yaml
-Génère le fichier shomgt.yaml dans [data](../data/) et vérifie sa conformité à son schéma JSON défini dans shomgt.schema.yaml
-avant de le déplacer dans [data](../data).
+### shomgt.php - génère le fichier shomgt.yaml
+Génère le fichier shomgt.yaml dans [data](../data/) après avoir vérifié sa conformité à son schéma JSON
+défini dans shomgt.schema.yaml.
 #### inclus
         - schema/jsonschema.inc.php
         - lib/geotiffs.inc.php
