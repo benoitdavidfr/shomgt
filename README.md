@@ -17,7 +17,7 @@ Pour utiliser ces web-services, des cartes Shom doivent être intégrées au ser
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## 1. Décomposition en modules
-ShomGT ce décompose dans 6 modules suivants:
+ShomGT ce décompose dans les 6 modules suivants:
 
   - **[shomgt](shomgt)** expose différents services de consultation des cartes:
     - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
@@ -25,8 +25,8 @@ ShomGT ce décompose dans 6 modules suivants:
     - un service GeoJSON exposant les silhouettes des GéoTiffs ainsi que certaines de leurs caractéristiques,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt*, stockés dans un répertoire
-    data [décrit ici](data), en interrogeant *sgserver*. 
+  - **[sgupdt](sgupdt)** construit et met à jour en interrogeant *sgserver* les fichiers nécessaires à *shomgt*,
+    stockés dans un répertoire data [décrit ici](data),. 
     
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
     un volume partagé entre les 2 conteneurs.
@@ -97,18 +97,18 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Le nom de chacune de ses couches est composé de **gt** suivi du dénominateur d'échelle.  
   De plus:
     - la couche **gt20M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
-    - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus en fonction du niveau de zoom
-      défini par l'appel,
+    - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus
+      en fonction du niveau de zoom défini par l'appel,
     - la couche **gtaem** contient les cartes Action de l'Etat en Mer (AEM)
     - la couche **gtMancheGrid** contient la carte MancheGrid,
-    - de plus à chacune des 15 couches définies ci-dessus est associée une couche des de leur numéro,
+    - de plus à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
       permettant de repérer une carte par son numéro.
   
   Par ailleurs, ShomGT met à disposition quelques couches d'objets vecteur:
     - la [ZEE](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive) française simplifiée,
     - les [délimitations maritimes définies
       par le Shom](https://www.shom.fr/fr/nos-activites-diffusion/cellule-delimitations-maritimes),
-    - les [zones SAR-SRR](https://fr.wikipedia.org/wiki/Recherche_et_sauvetage) 
+    - les [zones SAR-SRR](https://diffusion.shom.fr/donnees/limites-maritimes/zones-sar.html) 
 
 ## 3. Déploiement avec Docker
 Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
