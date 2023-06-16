@@ -73,7 +73,7 @@ Extrait des infos utiles du fichier JSON fabriqué par [gdalinfo](https://gdal.o
         - lib/geotiffs.inc.php
         - ../vendor/autoload.php
 
-### lib/pos.inc.php - définition des classes statiques Pos, LPos, LLPos'
+### lib/pos.inc.php - définition des classes statiques Pos, LPos, LLPos
 #### identique à
         - /shomgt/lib/pos.inc.php
 
@@ -88,7 +88,7 @@ La classe EBox définit un bbox en coordonnées euclidiennes projetées.
         - lib/sexcept.inc.php
         - lib/zoom.inc.php
 
-### lib/zoom.inc.php - définition de la classe Zoom regroupant l''intelligence autour du tuilage et des niveaux de zoom
+### lib/zoom.inc.php - définition de la classe Zoom regroupant l'intelligence autour du tuilage et des niveaux de zoom
 #### identique à
         - /shomgt/lib/zoom.inc.php
 #### inclus
@@ -142,5 +142,5 @@ Simplifie l'utilisation des commandes d'exécution d'un autre script et de tél�
 
 ### lib/sexcept.inc.php - Exception avec code string
 #### identique à
-        - ../lib/sexcept.inc.php
+        - ../shomgt/lib/sexcept.inc.php
 

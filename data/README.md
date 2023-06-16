@@ -8,7 +8,7 @@ Outre ce fichier de documentation, *data* contient le shomgt.yaml et 3 sous-rép
 ## Le fichier shomgt.yaml
 Le fichier [fichier shomgt.yaml](shomgt.yaml) est structuré conformément au [schéma JSON shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
 Il est produit
-par le [script shomgt.php du module sgupdt](../sgupdt#shomgtphp---g%C3%A9n%C3%A9ration-du-fichier-shomgtyaml).
+par le [script shomgt.php du module sgupdt](../sgupdt#shomgtphp---g%C3%A9n%C3%A8re-le-fichier-shomgtyaml).
 Le fichier shomgt.yaml définit chaque couche de GéoTiffs par son identifiant et la liste des GéoTiffs qu'elle contient.
 Chaque GéoTiff est à son tour défini par au moins son identifiant, son titre et l'extension géographique
 de la zone cartographiée à l'intérieur de son cadre.
