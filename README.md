@@ -76,7 +76,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     au format GéoTIFF ; le format de livraison de ces cartes est bien défini ;
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html),
     principalement les cartes d'action de l'Etat en mer, dont le format de livraison est mal défini.
--- **<a id='anchortext'>GAN</a>**: le GAN est le dispositif du Shom pour diffuser les actualisations de ses documents, notamment de ses cartes.
+-- **<a id='gan'>GAN</a>**: le GAN est le dispositif du Shom pour diffuser les actualisations de ses documents, notamment de ses cartes.
   Le GAN est diffusé en numérique sur le site https://gan.shom.fr/diffusion/home ; il s'agit d'un site HTML et
   les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
   Dans ShomGT on scrappe ce site pour retrouver l'édition et la version courantes d'une carte et les comparer 
