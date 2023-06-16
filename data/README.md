@@ -3,9 +3,13 @@
 par [le composant shomgt](../shomgt) et produites par le [composant sgupdt](../sgupdt).
 Lorsque ces composant sont déployés comme conteneur Docker, *data* est un volume partagé entre ces conteneurs.
 
-Outre ce fichier de documentation, *data* contient un fichier et 3 sous-répertoires:
+Outre ce fichier de documentation, *data* contient le [fichier shomgt.yaml](shomgt.yaml) et 3 sous-répertoires.
 
-- le [fichier shomgt.yaml](shomgt.yaml)
-- le sous-répertoire maps
-- le sous-répertoire tilecache
-- le sous-répertoire temp
+## Le fichier shomgt.yaml
+
+
+## Le sous-répertoire maps
+
+## Le sous-répertoire tilecache
+
+## Le sous-répertoire temp

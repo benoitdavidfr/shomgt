@@ -26,7 +26,7 @@ ShomGT se décompose dans les 6 modules suivants:
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
   - **[sgupdt](sgupdt)** construit et met à jour, en interrogeant *sgserver*, les fichiers nécessaires à *shomgt*,
-    stockés dans un répertoire data [décrit ici](data),. 
+    stockés dans un [répertoire data décrit ici](data),. 
     
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
     un volume partagé entre les 2 conteneurs.
@@ -100,8 +100,9 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     - la couche **gt20M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
     - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus
       en fonction du niveau de zoom défini par l'appel,
-    - la couche **gtaem** contient les cartes Action de l'Etat en Mer (AEM)
+    - la couche **gtaem** contient les 7 cartes Action de l'Etat en Mer (AEM)
     - la couche **gtMancheGrid** contient la carte MancheGrid,
+    - la couche **gtZonMar** contient la carte de délimitation des zones maritimes.
   
   De plus à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
       permettant de repérer une carte par son numéro.
