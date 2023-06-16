@@ -1,5 +1,5 @@
 # ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
-Ce projet correspond à une nouvelle version de ShomGT, dont l'objectif est d'exposer sous la forme de web-services
+Ce dépôt correspond à une nouvelle version de ShomGT, dont l'objectif est d'exposer sous la forme de web-services
 le contenu des [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
 couvrant les zones sous juridiction française, pour permettre aux services du pôle ministériel
 du [MTECT/MTE](http://www.ecologie.gouv.fr) et du [secrétariat d'Etat à la mer](https://mer.gouv.fr/)
