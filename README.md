@@ -78,9 +78,9 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     principalement les cartes d'action de l'Etat en mer, dont le format de livraison est mal défini.
 - **<a name='gan'>GAN</a>**: le GAN est le dispositif du Shom pour diffuser les actualisations de ses documents,
   notamment de ses cartes.
-  Le GAN est diffusé en numérique sur le site https://gan.shom.fr/diffusion/home ; il s'agit d'un site HTML et
+  Il est diffusé en numérique sur le site https://gan.shom.fr/ qui est un site HTML ;
   les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
-  Dans ShomGT on scrappe ce site pour retrouver l'édition et la version courantes d'une carte et les comparer 
+  Dans ShomGT ce site est scrappé pour retrouver l'édition et la version courantes d'une carte et les comparer 
   avec celles de la carte détenue.
 - **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
@@ -102,7 +102,8 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
       en fonction du niveau de zoom défini par l'appel,
     - la couche **gtaem** contient les cartes Action de l'Etat en Mer (AEM)
     - la couche **gtMancheGrid** contient la carte MancheGrid,
-    - de plus à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
+  
+  De plus à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
       permettant de repérer une carte par son numéro.
   
   Par ailleurs, ShomGT met à disposition quelques couches d'objets vecteur:
