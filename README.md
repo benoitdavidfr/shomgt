@@ -25,7 +25,7 @@ ShomGT se décompose dans les 6 modules suivants:
     - un service GeoJSON exposant les silhouettes des GéoTiffs ainsi que certaines de leurs caractéristiques,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour en interrogeant *sgserver* les fichiers nécessaires à *shomgt*,
+  - **[sgupdt](sgupdt)** construit et met à jour, en interrogeant *sgserver*, les fichiers nécessaires à *shomgt*,
     stockés dans un répertoire data [décrit ici](data),. 
     
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
@@ -36,12 +36,12 @@ ShomGT se décompose dans les 6 modules suivants:
   
   - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
-    - les cartes obsolètes à marquer comme telle
+    - les cartes obsolètes à retirer
     - les nouvelles cartes à prendre en compte
     
     *dashboard* confronte les versions des cartes de *shomgeotiff* aux informations d'actualité des cartes
-    issues du [GAN du Shom](docs/gan.md). Il exploite aussi la liste des cartes du Shom diffusé par le Shom
-    dans son serveur WFS.
+    issues du [GAN du Shom](#gan).
+    Il exploite aussi la liste des cartes du Shom diffusé par le Shom dans son serveur WFS.
     
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes.
@@ -76,7 +76,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     au format GéoTIFF ; le format de livraison de ces cartes est bien défini ;
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html),
     principalement les cartes d'action de l'Etat en mer, dont le format de livraison est mal défini.
--- **GAN**: le GAN est le dispositif du Shom pour diffuser les actualisations de ses documents, notamment de ses cartes.
+-- **<a id='anchortext'>GAN</a>**: le GAN est le dispositif du Shom pour diffuser les actualisations de ses documents, notamment de ses cartes.
   Le GAN est diffusé en numérique sur le site https://gan.shom.fr/diffusion/home ; il s'agit d'un site HTML et
   les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
   Dans ShomGT on scrappe ce site pour retrouver l'édition et la version courantes d'une carte et les comparer 
