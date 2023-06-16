@@ -1,12 +1,12 @@
 # Organisation des fichiers dans data
-**data** est un sous-répertoire du répertoire principal de ShomGT qui contient les données exploitées
-par [le composant shomgt](../shomgt) et produites par le [composant sgupdt](../sgupdt).
+**data** est un sous-répertoire du répertoire principal de ShomGT qui contient les données
+ produites par le [composant sgupdt](../sgupdt) et exploitées par [le composant shomgt](../shomgt).
 Lorsque ces composant sont déployés comme conteneurs Docker, *data* est un volume partagé entre ces conteneurs.
 
-Outre ce fichier de documentation, *data* contient le [fichier shomgt.yaml](shomgt.yaml) et 3 sous-répertoires.
+Outre ce fichier de documentation, *data* contient le shomgt.yaml et 3 sous-répertoires.
 
 ## Le fichier shomgt.yaml
-Le fichier shomgt.yaml est structuré conformément au [schéma JSON shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
+Le fichier [fichier shomgt.yaml](shomgt.yaml) est structuré conformément au [schéma JSON shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
 Il est produit
 par le [script shomgt.php du composant sgupdt](../sgupdt#shomgtphp---g%C3%A9n%C3%A9ration-du-fichier-shomgtyaml).
 Le fichier shomgt.yaml définit chaque couche de GéoTiffs par son identifiant et la liste des GéoTiffs qu'elle contient.
@@ -20,7 +20,8 @@ Un GéoTiff peut en outre comporter les propriétés suivantes:
 - `deleted`: liste de zones effacées dans le GéoTiff.
 
 ## Le sous-répertoire maps
-Le sous-répertoire `maps` contient un sous-répertoire par carte portant comme nom le no de la carte
+Le sous-répertoire `maps`contient principalement les images des GéoTiff et leur métadonnées ISO 19139 organisés par carte.   
+Il contient en effet un sous-répertoire par carte portant comme nom le no de la carte
 et contenant pour chaque GéoTiff de la carte:
 
 - un sous-répertoire contenant les fichiers PNG découpant l'image en dalles de taille maximum 1024 x 1024 ;
