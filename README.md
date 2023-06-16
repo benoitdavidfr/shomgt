@@ -17,7 +17,7 @@ Pour utiliser ces web-services, des cartes Shom doivent être intégrées au ser
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## 1. Décomposition en modules
-ShomGT ce décompose dans les 6 modules suivants:
+ShomGT se décompose dans les 6 modules suivants:
 
   - **[shomgt](shomgt)** expose différents services de consultation des cartes:
     - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
