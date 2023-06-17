@@ -18,7 +18,7 @@ Le répertoire shomgeotiff contient 3 sous-répertoires:
 
 - `ìncoming` qui contient un sous-répertoire par livraison de cartes à intégrer dans le portfeuille ;
   chacun de ces répertoires de livraison contient:
-  - d'une part les cartes livrées chacune sous la forme d'une archive 7z nommée par le numéro de carte et le suffize .7z
+  - d'une part les cartes livrées chacune sous la forme d'une archive `{num}.7z` où `{num}` est le numéro de la carte
   - d'autre part un fichier `index.yaml` qui documente la livraison et qui peut contenir une propriété `toDelete` contenant
     la liste des cartes à supprimer dans le portefeuille, chacune identifiée par son numéro précédé de 'FR'
 - `archives` qui contient un sous-répertoire par livraison de cartes intégrée dans le portefeuille
