@@ -31,15 +31,15 @@ ShomGT se décompose dans les 6 modules suivants:
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
     un volume partagé entre les 2 conteneurs.
     
-  - **[sgserver](sgserver2)** expose  à *sgupdt* les cartes du Shom gérées dans un répertoire
-    appelé [shomgeotiff décrit ici](docs/shomgeotiff.md). Il est mis à jour régulièrement grâce à *dashboard*.
+  - **[sgserver](sgserver2)** expose à *sgupdt* les cartes du Shom.
+    Il est mis à jour régulièrement grâce à *dashboard*.
   
   - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
     - les cartes obsolètes à retirer
     - les nouvelles cartes à prendre en compte
     
-    *dashboard* confronte les versions des cartes de *shomgeotiff* aux informations d'actualité des cartes
+    *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
     issues du [GAN du Shom](#gan).
     Il exploite aussi la liste des cartes du Shom diffusé par le Shom dans son serveur WFS.
     
@@ -127,7 +127,8 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
       par le Shom](https://www.shom.fr/fr/nos-activites-diffusion/cellule-delimitations-maritimes),
     - les [zones SAR-SRR](https://diffusion.shom.fr/donnees/limites-maritimes/zones-sar.html) 
 
-## 3. Déploiement avec Docker
+## 3. Configuration
+### 3.1 Déploiement décentralisé
 Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
 Des images sont proposées pour cela sur https://hub.docker.com/r/benoitdavid/shomgt3.
@@ -147,6 +148,15 @@ Par ailleurs, la mise à jour régulière des cartes peut être activée en déf
 `SHOMGT3_UPDATE_DURATION` qui doit contenir le nombre de jours entre 2 actualisations.
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
-## 4. Utilisation sans Docker
+Ce déploiement décentralisé nécessite aussi un déploiement central pour agir comme serveur de cartes.
+### 3.2 Déploiement centralisé
 Le code de ShomGT3 peut aussi être utilisé de manière plus conventionnelle en hébergeant les différents modules
-sur le même site.
+sur un même site.
+
+Si le site est exposé sur internet, il est nécessaire de gérer le [contrôle d'accès](docs/accesscontrol.md).
+
+### 3.3 Composants externes
+ShomGT3 utilise différents [composants externes décrits ici](docs/composantexterne.md).
+
+### 3.4 Version Php
+ShomGT3 utilise Php 8 et a été testé avec Php 8.2.
