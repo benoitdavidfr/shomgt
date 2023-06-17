@@ -17,24 +17,25 @@ et minimiser le stockage sur la machine de production.
 Le répertoire shomgeotiff contient 3 sous-répertoires:
 
 - `ìncoming` qui contient un sous-répertoire par livraison de cartes à intégrer dans le portfeuille ;
+  chaque sous-répertoire de livrason doit être nommé par la date de livraison en format `YYYYMMDD` ;
   chacun de ces répertoires de livraison contient:
-  - d'une part les cartes livrées chacune sous la forme d'une archive `{num}.7z` où `{num}` est le numéro de la carte
+  - d'une part les cartes livrées chacune sous la forme d'une archive `{num}.7z`, où `{num}` est le numéro de la carte
   - d'autre part un fichier `index.yaml` qui documente la livraison et qui peut contenir une propriété `toDelete` contenant
     la liste des cartes à supprimer dans le portefeuille, chacune identifiée par son numéro précédé de 'FR'
 - `archives` qui contient un sous-répertoire par livraison de cartes intégrée dans le portefeuille
-  avec les mêmes informations que le répertoire de livraison de incoming
-  plus associé à chaque archive {num}.7z de carte un fichier {num}.md.json qui contient quelques champs de métadonnées
-  extraits des MD ISO 19139 de la carte spécifiés ci-dessous
+  avec les mêmes informations que le répertoire de livraison de `incoming`,
+  plus, associé à chaque archive `{num}.7z` de carte un fichier `{num}.md.json`
+  qui contient quelques champs de métadonnées, spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
 - `current` qui contient pour chaque carte dans sa dernière version valide 2 liens symboliques:
   - d'une part vers l'archive 7z de cette dernière version
   - d'autre part vers le fichier de MD simplifié de cette dernière version
   
 #### 2.1.1 Spécification du fichier `{num}.md.json`
-Le fichier `{num}.md.json` dontient les champs suivants extraits des MD ISO 19138 de la carte:
+Le fichier `{num}.md.json` dontient les champs suivants extraits des MD ISO 19139 de la carte:
 
 - `title` : titre de la carte extrait de `//gmd:identificationInfo/*/gmd:citation/*/gmd:title/*`
 - `alternate` : titre alternatif éventuel ou '', extrait de //gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle/*
-- `version` : version de la carte sous la forme {annee}c{noDeCorrection}
+- `version` : version de la carte sous la forme `{annee}c{noDeCorrection}` déduit du champ `edition`
 - `edition` : recopie du champ `//gmd:identificationInfo/*/gmd:citation/*/gmd:edition/*`
 - `ganWeek` : si présent dans le champ ci-dessus, la semaine GAN de mise à jour de la carte, sinon ''
 - `ganDate` : si `ganWeek` présente, traduction en date ISO dans le format `YYYY-MM-DD`
@@ -79,6 +80,54 @@ Exemple d'un fichier pour lequel le champ `alternate` est défini
     }
 
 ### 2.2 Dépôt shomgeotiff minimisant le volume de stockage
+[[[TO DO]]]
+
+### 2.3 Problème rencontré avec les dates de validité des cartes
+Dans certains cas, la date de révision indiquée dans les MS ISO 19139 est manifestement fausse.
+
+Par exemple, la carte 7259 (Ile Maré) livré en juin 2017 mentionne:
+
+    {
+        "title": "7259 - Ile Maré",
+        "alternate": "",
+        "version": "1995c16",
+        "edition": "Publication 1995 - Dernière correction : 16",
+        "ganWeek": "",
+        "ganDate": "",
+        "revision": "1995-07-31"
+    }
+
+Or le GAN mentionne que la correction 16 a été publiée semaine 1704 soit le 26/1/2017 ce qui est cohérent
+avec la date de livraison.  
+On peut penser que la date de révision mentionnée est celle de la publication initiale de la carte avant corrections.
+Ainsi dans ce cas il n'est pas possible de connaître la vraie date de révision de la carte à partir des MD ISO 19139.
+
+D'autres cas similaires peuvent être mentionnés :
+
+Carte 7271, correction 212, publiée selon le GAN semaine 1504:
+
+    {
+        "title": "7271 - Australasie et mers adjacentes",
+        "alternate": "fac-similé de la carte AU 4060",
+        "version": "1990c212",
+        "edition": "Publication 1990 - Dernière correction : 212",
+        "ganWeek": "",
+        "ganDate": "",
+        "revision": "1990-07-03"
+    }
+
+Carte 7349, correction 29, publiée selon le GAN semaine 2039
+
+    {
+        "title": "7349 - De la Réunion à Maurice (Mauritius) - Ile Tromelin",
+        "alternate": "",
+        "version": "1996c29",
+        "edition": "Publication 1996 - Dernière correction : 29",
+        "ganWeek": "",
+        "ganDate": "",
+        "revision": "1996-10-21"
+    }
+
 [[[TO DO]]]
 
 ## 3. Serveur sgserver
