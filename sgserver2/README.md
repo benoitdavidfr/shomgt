@@ -58,32 +58,32 @@ Exemple d'un fichier pour lequel le champ `ganWeek` est défini
 Exemple d'un fichier pour lequel le champ `ganWeek` n'est pas défini
 
     {
-        "title": "6619 - Côte Sud-Est de l'Amérique du Nord, Bahamas et Grandes Antilles",
-        "alternate": "fac-similé de la carte carte US n°108 publiée en 1972 (édition décembre 1984).",
-        "version": "1988c197",
-        "edition": "Edition n° 3 - 1988 - Dernière correction : 197",
+        "title": "6680 - De l'Ile d'Ouessant à l'Ile de Batz",
+        "alternate": "",
+        "version": "2003c87",
+        "edition": "Edition n° 3 - 2003 - Dernière correction : 87",
         "ganWeek": "",
         "ganDate": "",
-        "revision": "1988-01-01"
+        "revision": "2003-05-01"
     }
 #### 2.1.4 Exemple du fichier `7291.md.json`
 Exemple d'un fichier pour lequel le champ `alternate` est défini
 
     {
         "title": "7291 - De Piombino à Fiumicino et côte Est de Corse",
-        "alternate": "fac-similé de la carte carte IT n°913 publiée en 1990.",
-        "version": "2018c18",
-        "edition": "Edition n° 2 - 2018 - Dernière correction : 18",
-        "ganWeek": "",
-        "ganDate": "",
-        "revision": "2018-03-23"
+        "alternate": "fac-similé de la carte carte IT n°913 publiée en 1990 (édition février 2020)",
+        "version": "2021c4",
+        "edition": "Edition n° 3 - 2021 - Dernière correction : 4 - GAN : 2249",
+        "ganWeek": "2249",
+        "ganDate": "2022-12-07",
+        "revision": "2022-12-07"
     }
 
 ### 2.2 Dépôt shomgeotiff minimisant le volume de stockage
 [[[TO DO]]]
 
 ### 2.3 Problème rencontré avec les dates de validité des cartes
-Dans certains cas, la date de révision indiquée dans les MS ISO 19139 est manifestement fausse.
+Dans certains cas, la date de révision indiquée dans les MD ISO 19139 est manifestement fausse.
 
 Par exemple, la carte 7259 livrée en juin 2017 mentionne:
 
@@ -104,7 +104,9 @@ Ainsi dans ce cas il n'est pas possible de connaître la vraie date de révision
 
 D'autres cas similaires peuvent être mentionnés :
 
-Carte 7271, correction 212, publiée selon le GAN semaine 1504:
+- Carte 6680, correction 87, mentionnée ci-dessus, publiée selon le GAN semaine 2223
+
+- Carte 7271, correction 212, publiée selon le GAN semaine 1504:
 
     {
         "title": "7271 - Australasie et mers adjacentes",
@@ -116,7 +118,7 @@ Carte 7271, correction 212, publiée selon le GAN semaine 1504:
         "revision": "1990-07-03"
     }
 
-Carte 7349, correction 29, publiée selon le GAN semaine 2039
+- Carte 7349, correction 29, publiée selon le GAN semaine 2039
 
     {
         "title": "7349 - De la Réunion à Maurice (Mauritius) - Ile Tromelin",
