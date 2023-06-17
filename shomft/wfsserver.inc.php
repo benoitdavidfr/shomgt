@@ -16,7 +16,7 @@ journal: |
   28/12/2020:
     - reprise de YamlDoc
 */
-require_once __DIR__.'/../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 

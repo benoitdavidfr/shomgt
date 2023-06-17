@@ -1,6 +1,6 @@
 # Module sgupdt de ShomGT3
-Ce module permet de construire et mettre à jour les fichiers nécessaires à [shomgt](../shomgt),
-stockés dans un répertoire [data](../data), en interrogeant [sgserver](../sgserver2) en http.  
+L'objectif de ce module est, en interrogeant [sgserver](../sgserver2) en http, de construire et mettre à jour 
+les fichiers nécessaires à [shomgt](../shomgt), stockés dans un répertoire [data](../data).  
 
 ### Variables d'environnement
 
@@ -12,17 +12,21 @@ stockés dans un répertoire [data](../data), en interrogeant [sgserver](../sgse
 
 ## Liste des fichiers Php et principales classes et fonctions du module
 ### main.php - script principal de mise à jour des cartes
-Main.php est le script principal de mise à jour des cartes.  
-Il détecte les cartes qui ont besoin d'être téléchargées et pour chaque carte dont c'est le cas:
+L'algorithme de mise à jour des cartes est le suivant:
 
-  - la télécharge depuis sgserver,
+- télécharge depuis sgserver le catalogue mapcat.yaml
+- télécharge depuis sgserver la liste des cartes exposées et la version correspondante (maps.json)
+- pour chaque carte exposé par sgserver
+  - si la version n'a pas changé
+    - alors passage à la carte suivante
+  - télécharge la carte depuis sgserver,
   - dézippe l'archive téléchargée,
   - puis pour chaque fichier GéoTiff
-    - extrait les informations de géoréférencement,
+    - extrait les informations de géoréférencement du GéoTiff dans le fichier {gtname}.info.json
     - transforme l'image en PNG,
     - découpe avec maketile.php l'image en dalles 1024x1024 pour faciliter l'utilisation des images
-Et enfin génère avec shomgt.php le fichier shomgt.yaml qui conserve un certain nombre de paramètres.
-La conformité du fichier shomgt.yaml par rapport à son schéma JSON est vérifiée.
+Et enfin génère avec shomgt.php le [fichier shomgt.yaml](../data#le-fichier-shomgtyaml)
+après avoir vérifié sa conformité à son schéma JSON.
 
 En fonction de la variable `SHOMGT3_UPDATE_DURATION`, le script suspend son exécution et se relance plus tard de manière 
 éternelle.
@@ -63,7 +67,9 @@ Code utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma 
 Utilisé par schema/jsonschema.inc.php.
 
 ### lib/gdalinfo.inc.php - Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles
-Extrait des infos utiles du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html).
+Extrait du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html)
+les infos essentielles qui sont la taille de l'image en nombre de pixels et si le fichier est géoréférencé 
+son extension en coordonnées World Mercator et en coordonnées géographiques.
 #### identique à
         - ../shomgt/lib/gdalinfo.inc.php
 #### inclus
@@ -92,8 +98,8 @@ La classe EBox définit un bbox en coordonnées euclidiennes projetées.
 #### identique à
         - /shomgt/lib/zoom.inc.php
 #### inclus
-        - /sgupdt/lib/sexcept.inc.php
-        - /sgupdt/lib/gebox.inc.php
+        - lib/sexcept.inc.php
+        - lib/gebox.inc.php
 
 ### lib/coordsys.inc.php (v3) - changement simple de projection a priori sur l'ellipsoide IAG_GRS_1980
 Code utilisé pour changer des coordonnées de système de coordonnées entre World Mercator (la projection des cartes),

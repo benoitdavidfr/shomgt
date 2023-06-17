@@ -227,6 +227,9 @@ Simplifie l'utilisation des variables d'environnement.
 
 ### lib/gdalinfo.inc.php - Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles
 Extrait des infos utiles du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html).
+Extrait du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html)
+les infos essentielles qui sont la taille de l'image en nombre de pixels et si le fichier est géoréférencé 
+son extension en coordonnées World Mercator et en coordonnées géographiques.
 #### identique à
         - ../sgupdt/lib/gdalinfo.inc.php
 #### inclus
