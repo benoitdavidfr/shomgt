@@ -17,7 +17,7 @@ Pour utiliser ces web-services, des cartes Shom doivent être intégrées au ser
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## 1. Décomposition en modules
-ShomGT se décompose dans les 6 modules suivants:
+ShomGT3 se décompose dans les 6 modules suivants:
 
   - **[shomgt](shomgt)** expose différents services de consultation des cartes:
     - un service de tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
@@ -73,7 +73,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
 - **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
   - l'année d'édition ou de publication de la carte,
-  - le numéro de correction sur l'édition
+  - le numéro de correction sur l'édition.
     Historiquement, lorsqu'une correction était publiée, les détenteurs d'une carte devait la reporter sur la carte.  
   
   Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
@@ -90,7 +90,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   des actualisations de ses documents, notamment de ses cartes.
   Il prend la forme du site https://gan.shom.fr/ qui est un site HTML mais
   les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
-  Dans ShomGT ce site est scrappé pour retrouver l'édition et la version courantes d'une carte et les comparer 
+  Dans ShomGT3 ce site est scrappé pour retrouver l'édition et la version courantes d'une carte et les comparer 
   avec celles de la carte du portefeuille.
 - **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis par le Shom
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
@@ -121,7 +121,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Enfin, à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
       permettant de repérer une carte par son numéro.
   
-  Par ailleurs, ShomGT met à disposition les couches vecteur suivantes :
+  Par ailleurs, ShomGT3 met à disposition les couches vecteur suivantes :
     - la [ZEE](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive) française simplifiée,
     - les [délimitations maritimes définies
       par le Shom](https://www.shom.fr/fr/nos-activites-diffusion/cellule-delimitations-maritimes),
@@ -159,4 +159,4 @@ Si le site est exposé sur internet, il est nécessaire de gérer le [contrôle 
 ShomGT3 utilise différents [composants externes décrits ici](docs/composantexterne.md).
 
 ### 3.4 Version Php
-ShomGT3 utilise Php 8 et a été testé avec Php 8.2.
+ShomGT3 utilise Php 8 et a été validé avec Php 8.2.

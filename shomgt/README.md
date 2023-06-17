@@ -11,8 +11,9 @@ Ce module propose les services suivants :
   - les périmètres simplifiés des ZEE,
   - les délimitations maritimes,
   - les zones SAR-SRR,
+- un service WMS exposant les couches vecteur,
 - un service de téléchargement des cartes,
-- une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
+- une carte Leaflet de visualisation des tuiles et des couches GeoJSON et permettant de télécharger les cartes.
 
 L'utilisation de tuiles, par rapport à l'utilisation du service WMS, offre de meilleures performances
 car il permet une meilleure gestion du cache tant sur le serveur, que sur le réseau et sur le poste client.
@@ -261,3 +262,9 @@ son extension en coordonnées World Mercator et en coordonnées géographiques.
 #### identique à
         - ../sgupdt/lib/sexcept.inc.php
 
+## Autres fichiers
+### Répertoire leaflet
+[[[TO DO]]]
+
+### Répertoire geojson
+[[[TO DO]]]
