@@ -20,9 +20,9 @@ Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 ShomGT se décompose dans les 6 modules suivants:
 
   - **[shomgt](shomgt)** expose différents services de consultation des cartes:
-    - un service de tuiles au [format XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
-    - un autre conforme au protocole [WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
-    - un service GeoJSON exposant les silhouettes des GéoTiffs ainsi que certaines de leurs caractéristiques,
+    - un service de tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
+    - un autre conforme au [protocole WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
+    - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
   - **[sgupdt](sgupdt)** construit et met à jour, en interrogeant *sgserver*, les fichiers nécessaires à *shomgt*,
@@ -51,52 +51,65 @@ ShomGT se décompose dans les 6 modules suivants:
     Il gère aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
     d'intérêt pour ShomGT dans *dashboard*.
 
-## 2. Termes et concepts utilisés
+## 2. Termes et concepts utilisés dans ce projet
 Dans ce projet sont utilisés différents termes et concepts définis ci-dessous:
 
+- **portefeuille de cartes**: c'est l'ensemble des cartes gérées par ShomGT,
+- **carte d'intérêt (pour ShommGT)**: est une carte ayant vocation à être dans le portefeuille.  
+  Il s'agit:
+    - des cartes intersectant la ZEE française
+      - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement
+    - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre
+- **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive)
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
-  chaque carte porte un numéro sur 4 chiffres qui l'identifie ; ce numéro est parfois précédé des lettres FR
-  pour indiquer qu'il s'agit d'un numéro français.
-  La livraison est effectuée comme archive 7z.
-- **GéoTiff** : chaque carte est numérisée sous la forme d'images géoréférencées
-  correspondant à des zones géographiques, souvent une zone principale et des cartouches,
-  chaque zone corespond dans la livraison à un fichier géoréférencé
+  chaque carte est identifiée par un numéro sur 4 chiffres ;
+  ce numéro est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
+  La livraison d'une carte est effectuée par le Shom sous la forme d'une archive 7z.
+- **GéoTiff** : la numérisation d'une carte produit des images géoréférencées
+  correspondant aux différentes zones géographiques de la carte, souvent une zone principale et des cartouches,
+  chaque zone corespond dans la livraison à une image géoréférencée
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF) ; l'image est ainsi appelée **GéoTiff**.
   Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
   Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
 - **version** : une carte est livrée dans une certaine version.
-  Le Shom gère 2 niveaux de version pour chaque carte:
+  Le Shom gère pour une carte 2 niveaux de version :
   - l'année d'édition ou de publication de la carte,
   - le numéro de correction sur l'édition
-  Historiquement, lorsqu'une correction était publiée, les détenteurs d'une carte devait reporter la correction
-  indiquée sur la carte.  
+  Historiquement, lorsqu'une correction était publiée, les détenteurs d'une carte devait la reporter sur la carte.  
   Dans ShomGT, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
-  de la carte et {correction} est le numéro de correction de cette édition.
-- **carte spéciale** : dans ShomGT, on distingue souvent:
-  - les [Cartes marines numériques raster (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
-    au format GéoTIFF ; le format de livraison de ces cartes est bien défini ;
+  de la carte et {correction} est le numéro de correction sur cette édition.
+- **carte spéciale** : dans ShomGT, on distingue :
+  - les cartes normales, c'est à dire les [Cartes marines numériques raster
+    (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
+    dont le [format de livraison
+    est bien défini](https://services.data.shom.fr/static/specifications/Descriptif_Contenu_geotiff.pdf) ;
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html),
-    principalement les cartes d'action de l'Etat en mer, dont le format de livraison est mal défini.
-- **<a name='gan'>GAN</a>**: le GAN est le dispositif du Shom pour diffuser les actualisations de ses documents,
-  notamment de ses cartes.
-  Il est diffusé en numérique sur le site https://gan.shom.fr/ qui est un site HTML ;
+    principalement les cartes d'action de l'Etat en mer, dont le format de livraison n'est pas fixé 
+    et varie d'une carte à l'autre.
+- **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
+  des actualisations de ses documents, notamment de ses cartes.
+  Il prend la forme du site https://gan.shom.fr/ qui est un site HTML mais
   les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
   Dans ShomGT ce site est scrappé pour retrouver l'édition et la version courantes d'une carte et les comparer 
-  avec celles de la carte détenue.
-- **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis
+  avec celles de la carte du portefeuille.
+- **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis par le Shom
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
   ce système de coordonnées est aussi appelé **World Mercator**.  
   Les coordonnées, par exemple dans le GAN, ne sont pas fournies en World Mercator mais en coordonnées géographiques,
   en dégrés et minutes décimales en WGS84.  
-  Les logiciels web de cartographie utilisent généralement de leur côté
+  Le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) utilise de son côté
   le [système de coordonnées Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection)
   popularisé par Google et son produit Google Maps.  
   Il est donc souvent nécessaire de changer une position d'un système de coordonnées à un autre.  
-- **couches de données**: les GéoTiffs sont répartis dans des couches a peu près homogènes du point de l'échelle du GéoTiff.
+- **niveau de zoom**: le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) définit ce concept
+  de niveau de zoom où:
+  - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
+  - puis le niveau de zoom n+1 correspond à une décomposition en 4 de chaque tuile du niveau de zomm n.
+- **couches de données**: les GéoTiffs sont répartis dans des couches image d'échelle homogène.
   Les dénominateurs des échelles retenus pour ces couches sont les suivants,
-  avec entre parenthèses le ou les niveaux de zoom correspondants:
+  avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
   5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6).  
-  Le nom de chacune de ses couches est composé de **gt** suivi du dénominateur d'échelle.  
+  Chacune de ses couches est identifiée par la chaine **gt** suivie du dénominateur de l'échelle.  
   De plus:
     - la couche **gt20M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
     - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus
@@ -105,10 +118,10 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     - la couche **gtMancheGrid** contient la carte MancheGrid,
     - la couche **gtZonMar** contient la carte de délimitation des zones maritimes.
   
-  De plus à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
+  Enfin, à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
       permettant de repérer une carte par son numéro.
   
-  Par ailleurs, ShomGT met à disposition quelques couches d'objets vecteur:
+  Par ailleurs, ShomGT met à disposition les couches vecteur suivantes :
     - la [ZEE](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive) française simplifiée,
     - les [délimitations maritimes définies
       par le Shom](https://www.shom.fr/fr/nos-activites-diffusion/cellule-delimitations-maritimes),

@@ -15,7 +15,7 @@ journal: |
     ajout du contrôle IPv6
   9/11/2019
     amélioration du controle d'accès
-includes: [secretconfig.inc.php]
+includes: [../../secrets/secretconfig.inc.php]
 */
 if (is_file(__DIR__.'/../../secrets/secretconfig.inc.php'))
   require_once __DIR__.'/../../secrets/secretconfig.inc.php';

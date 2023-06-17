@@ -9,20 +9,24 @@ Ce module propose les services suivants :
 - un service GeoJSON exposant :
   - les silhouettes des GéoTiffs,
   - les périmètres simplifiés des ZEE,
+  - les délimitations maritimes,
   - les zones SAR-SRR,
-- un service de téléchargement des GéoTiffs avec des infos associées.
+- un service de téléchargement des cartes,
+- une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
 
-L'utilisation de tuiles a l'avantage sur l'utilisation du service WMS de permettre un meilleur cache à plusieurs niveaux,
-sur le serveur mais aussi sur le réseau, et donc de meilleures performances.
+L'utilisation de tuiles, par rapport à l'utilisation du service WMS, offre de meilleures performances
+car il permet une meilleure gestion du cache tant sur le serveur, que sur le réseau et sur le poste client.
 
 ### Variables d'environnement
 
-- `SHOMGT3_LOG_MYSQL_URI`: une URL définissant le serveur et la base MySql utilisés pour stocker les logs.
+Ce module utilise les variables d'environnement suivantes:
+
+- `SHOMGT3_LOG_MYSQL_URI`: URL définissant le serveur et la base MySql utilisés pour enregistrer les logs.
   si non définie alors le log est désactivé.
   L'URL prend la forme suivante: `mysql://{login}:{passwd}@{server}/{base}` où:
   - `{login}` est le login dans la base MySql,
   - `{passwd}` est le mot de passe associé au login,
-  - `{server}` est le nom du serveur de bases MySql,
+  - `{server}` est l'adresse du serveur de bases MySql,
   - `{base}` est le nom de la base.
 - `SHOMGT3_MAPWCAT_FORCE_HTTPS`: si `true` alors https est forcé dans mapwcat ;
   cette variable est nécessaire par exemple pour utiliser shomgt derrière un proxy inverse Traefik
