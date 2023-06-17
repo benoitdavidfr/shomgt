@@ -26,7 +26,7 @@ ShomGT se décompose dans les 6 modules suivants:
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
   - **[sgupdt](sgupdt)** construit et met à jour, en interrogeant *sgserver*, les fichiers nécessaires à *shomgt*,
-    stockés dans un [répertoire data décrit ici](data),. 
+    stockés dans un [répertoire data décrit ici](data). 
     
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
     un volume partagé entre les 2 conteneurs.
@@ -55,28 +55,28 @@ ShomGT se décompose dans les 6 modules suivants:
 Dans ce projet sont utilisés différents termes et concepts définis ci-dessous:
 
 - **portefeuille de cartes**: c'est l'ensemble des cartes gérées par ShomGT,
-- **carte d'intérêt (pour ShommGT)**: est une carte ayant vocation à être dans le portefeuille.  
+- **carte d'intérêt (pour ShomGT)**: est une carte ayant vocation à être dans le portefeuille.  
   Il s'agit:
     - des cartes intersectant la ZEE française
       - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement
     - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre
 - **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive)
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
-  chaque carte est identifiée par un numéro sur 4 chiffres ;
-  ce numéro est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
-  La livraison d'une carte est effectuée par le Shom sous la forme d'une archive 7z.
+  chaque carte est identifiée par un numéro sur 4 chiffres
+  qui est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
+  La livraison par le Shom d'une carte prend la forme d'une archive 7z.
 - **GéoTiff** : la numérisation d'une carte produit des images géoréférencées
   correspondant aux différentes zones géographiques de la carte, souvent une zone principale et des cartouches,
   chaque zone corespond dans la livraison à une image géoréférencée
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF) ; l'image est ainsi appelée **GéoTiff**.
   Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
   Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
-- **version** : une carte est livrée dans une certaine version.
-  Le Shom gère pour une carte 2 niveaux de version :
+- **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
   - l'année d'édition ou de publication de la carte,
   - le numéro de correction sur l'édition
-  Historiquement, lorsqu'une correction était publiée, les détenteurs d'une carte devait la reporter sur la carte.  
-  Dans ShomGT, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
+    Historiquement, lorsqu'une correction était publiée, les détenteurs d'une carte devait la reporter sur la carte.  
+  
+  Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
 - **carte spéciale** : dans ShomGT, on distingue :
   - les cartes normales, c'est à dire les [Cartes marines numériques raster
