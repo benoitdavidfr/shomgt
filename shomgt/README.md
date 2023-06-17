@@ -68,6 +68,8 @@ Ces adresses IP black listées dans le fichier ../secrets/secretconfig.inc.php
 Le fichier ../vendor/autoload.php permet de charger les [composants externes](../docs/composantexterne.md).
 
 ### wms.php - service WMS de shomgt avec authentification
+Ce script expose un certain les différentes couches image sous la forme d'un serveur WMS.  
+Il utilise le fichier `wmscapabilities.xml` qui définit les capacités du serveur.
 #### inclus
         - lib/accesscntrl.inc.php
         - lib/coordsys.inc.php
@@ -81,6 +83,11 @@ Il permet d'interdire l'accès au service en cas d'abus,
 par exemple à partir de laquelle quelqu'un cherche à recopier l'ensemble des tuiles.
 
 ### wmsv.php - service WMS pour les couches vecteur de ShomGT
+Ce script expose un certain nombre de couches vecteur sous la forme d'un serveur WMS.  
+Il utilise:
+
+  - le fichier `wmsvlayers.yaml` qui définit les couches vecteur et les styles à appliquer dans leur dessin,
+  - le fichier `wmsvcapabilities.xml` qui définit les capacités du serveur.
 #### inclus
         - lib/wmsserver.inc.php
         - lib/coordsys.inc.php
@@ -89,11 +96,35 @@ par exemple à partir de laquelle quelqu'un cherche à recopier l'ensemble des t
         - ../vendor/autoload.php
 
 ### mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE, ...
+Ce script génère une carte [Leaflet](https://leafletjs.com/) qui:
+
+- utilise les fichiers du répertoire `leaflet` qui contient notamment:
+  - le code JavaScript de Leaflet
+  - le [plug-in Leaflet uGeoJSON](https://github.com/BenjaminVadant/leaflet-ugeojson)
+    qui permet de créer des couches GeoJSON personnalisée,
+  - le [plug-in Leaflet Coordinates Control](https://github.com/zimmicz/Leaflet-Coordinates-Control)
+    qui permet d'afficher les coordonnées d'un lieu en cliquant dessus,
+  - le [plug-in Leaflet Leaflet.EdgeBuffer](https://github.com/TolonUK/Leaflet.EdgeBuffer)
+    qui prend en charge le préchargement des tuiles en dehors de la fenêtre d'affichage.
+  
+- appelle l'API maps.php pour afficher:
+  - les silhouettes des GéoTiffs,
+  - les coins des silhouettes pour afficher leurs coordonnées,
+  - les zones effacées dans les GéoTiffs,
+  - les étiquettes avec le numéro des cartes.
+
+- propose d'afficher les fichiers GeoJSON suivants stockés dans le répertoire `geojson` :
+  - frzee.geojson - la ZEE française simplifiée produite par Benoit DAVID,
+  - delmar.geojson - les délimitations maritimes produites par le Shom,
+  - sar_2019.geojson - les zones SAR-SRR produites par le Shom.
+
+  Les 2 derniers fichiers sont téléchargés depuis le serveur WFS du Shom en utilisant le [module shomft](../shomft).
+
 #### inclus
         - lib/accesscntrl.inc.php
 
 ### maps.php - point d'accès de l'API de maps
-API d'affichage des cartes Shom s'inspirant de l'API OGC Maps.
+API d'affichage des cartes Shom s'inspirant de l'API OGC Maps appelée par mapwcat.php.
 
 Les points d'accès sont:
 
@@ -261,10 +292,3 @@ son extension en coordonnées World Mercator et en coordonnées géographiques.
 ### lib/sexcept.inc.php - Exception avec code string
 #### identique à
         - ../sgupdt/lib/sexcept.inc.php
-
-## Autres fichiers
-### Répertoire leaflet
-[[[TO DO]]]
-
-### Répertoire geojson
-[[[TO DO]]]
