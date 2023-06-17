@@ -44,13 +44,13 @@ facile à utiliser dans une carte Leaflet.
 
 Les points d'accès sont:
 
-  - /tile.php - affiche la documentation du service
-  - /tile.php/{layer} - affiche la documentation de la couche {layer}
-  - /tile.php/{layer}/{z}/{x}/{y}.png - retourne la tuile du niveau de zoom {z}, colonne {x} et ligne {y}
+        - /tile.php - affiche la documentation du service
+        - /tile.php/{layer} - affiche la documentation de la couche {layer}
+        - /tile.php/{layer}/{z}/{x}/{y}.png - retourne la tuile du niveau de zoom {z}, colonne {x} et ligne {y}
   
 Exemple:
 
-  - /tile.php/gtpyr/10/538/381.png
+        - /tile.php/gtpyr/10/538/381.png
 #### inclus
         - lib/log.inc.php
         - lib/gegeom.inc.php
@@ -59,16 +59,17 @@ Exemple:
         - lib/errortile.inc.php
         - ../secrets/tileaccess.inc.php
         - ../vendor/autoload.php
-#### fichier inclus particulier
-Le fichier ../secrets/tileaccess.inc.php n'est inclus que s'il existe.
-Il permet de blacklister certaines adresses IP abusives, par exemple à partir de laquelle
-quelqu'un cherche à recopier l'ensemble des tuiles.
-Ces adresses IP black listées dans le fichier ../secrets/secretconfig.inc.php
+#### fichiers inclus particuliers
+- Le fichier `../secrets/tileaccess.inc.php` n'est inclus que s'il existe.
+  Il permet de blacklister certaines adresses IP abusives, par exemple à partir de laquelle
+  quelqu'un cherche à aspirer l'ensemble des tuiles.
+  Ces adresses IP black listées dans le fichier ../secrets/secretconfig.inc.php
 
-Le fichier ../vendor/autoload.php permet de charger les [composants externes](../docs/composantexterne.md).
+- Le fichier `../vendor/autoload.php` charger le [composant externe](../docs/composantexterne.md)
+  intégré avec l'utilitaire composer.
 
 ### wms.php - service WMS de shomgt avec authentification
-Ce script expose un certain les différentes couches image sous la forme d'un serveur WMS.  
+Ce script expose les différentes couches image sous la forme d'un serveur WMS.  
 Il utilise le fichier `wmscapabilities.xml` qui définit les capacités du serveur.
 #### inclus
         - lib/accesscntrl.inc.php
@@ -119,7 +120,6 @@ Ce script génère une carte [Leaflet](https://leafletjs.com/) qui:
   - sar_2019.geojson - les zones SAR-SRR produites par le Shom.
 
   Les 2 derniers fichiers sont téléchargés depuis le serveur WFS du Shom en utilisant le [module shomft](../shomft).
-
 #### inclus
         - lib/accesscntrl.inc.php
 
@@ -150,25 +150,6 @@ La classe abstraite **WmsServer** gère de manière minimum les protocole WMS 1.
 elle est indépendante des fonctionnalités du serveur de shomgt.
 Elle génère un fichier temporaire de log utile au déverminage.
 
-### lib/geotiffs.inc.php - liste les GeoTiffs
-#### identique à
-        - ../sgupdt/lib/geotiffs.inc.php
-#### inclus
-        - lib/envvar.inc.php
-
-### lib/grefimg.inc.php  - Définition de la classe GeoRefImage gérant une image géoréférencée'
-La classe GeoRefImage propose différentes méthodes sur une image géoréférencée
-en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php) avec:
-
-   - la définition d'un espace en coordonnées utilisateurs comme EBox,
-     typiquement un système de coordonnées projeté comme WorldMercator
-   - une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
-#### identique à
-        - ../sgupdt/lib/grefimg.inc.php
-#### inclus
-        - lib/sexcept.inc.php
-        - lib/gebox.inc.php
-
 ### lib/layer.inc.php  - Définition des classes Layer, PyrLayer, LabelLayer et TiffLayer
 Les 4 classes Layer, PyrLayer, LabelLayer et TiffLayer permettent de construire à partir de shomgt.yaml la structuration
 en couches et de l'exploiter au travers des méthodes map() qui recopie dans une image GD l'extrait de la couche
@@ -192,14 +173,45 @@ Les listes de couches sont initialisées notamment à partir du [fichier shomgt.
         - lib/layer.inc.php
         - lib/gegeom.inc.php
 
+### lib/geotiffs.inc.php - liste les GeoTiffs
+#### identique à
+        - ../sgupdt/lib/geotiffs.inc.php
+#### inclus
+        - lib/envvar.inc.php
+
 ### lib/geotiff.inc.php - définition de la classe GeoTiff implémentant des méthodes sur un GéoTiff
 #### inclus
         - lib/envvar.inc.php
         - lib/gdalinfo.inc.php
 
+### lib/grefimg.inc.php  - Définition de la classe GeoRefImage gérant une image géoréférencée'
+La classe GeoRefImage propose différentes méthodes sur une image géoréférencée
+en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php) avec:
+
+   - la définition d'un espace en coordonnées utilisateurs formalisé par un rectangle englobant dans
+     un système de coordonnées projeté comme WorldMercator,
+   - une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones.
+#### identique à
+        - ../sgupdt/lib/grefimg.inc.php
+#### inclus
+        - lib/sexcept.inc.php
+        - lib/gebox.inc.php
+
+### lib/gegeom.inc.php - package géométrique utilisant des coordonnées géographiques ou euclidiennes
+Ce fichier définit la classe abstraite Geometry, des sous-classes
+par type de [géométrie GeoJSON](https://tools.ietf.org/html/rfc7946)
+ainsi qu'une classe Segment utilisé pour certains calculs.
+Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
+puis en apppelant la méthode Geometry::fromGeoJSON().
+#### inclus
+        - lib/coordsys.inc.php
+        - lib/zoom.inc.php
+        - lib/gebox.inc.php
+        - lib/sexcept.inc.php
+
 ### lib/gebox.inc.php - définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes
 La classe GBox définit un bbox en coordonnées géographiques.  
-La classe EBox définit un bbox en coordonnées euclidiennes projetées.
+La classe EBox définit un bbox en coordonnées euclidiennes projetées (World Mercator ou WebMercator).
 #### identique à
         - ../sgupdt/lib/gebox.inc.php
 #### inclus
@@ -207,13 +219,6 @@ La classe EBox définit un bbox en coordonnées euclidiennes projetées.
         - lib/pos.inc.php
         - lib/sexcept.inc.php
         - lib/zoom.inc.php
-
-### lib/gegeom.inc.php - package géométrique utilisant des coordonnées géographiques ou euclidiennes
-#### inclus
-        - lib/coordsys.inc.php
-        - lib/zoom.inc.php
-        - lib/gebox.inc.php
-        - lib/sexcept.inc.php
 
 ### lib/pos.inc.php - Définition des classes statiques Pos, LPos, LLPos
 Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
@@ -254,13 +259,6 @@ Ainsi:
 #### inclus
         - ../secrets/secretconfig.inc.php
 
-### lib/envvar.inc.php - envvar.inc.php - gestion des variables d'environnement et de leur valeur par défaut
-Simplifie l'utilisation des variables d'environnement.
-#### identique à
-        - ../sgupdt/lib/envvar.inc.php
-
-### lib/errortile.inc.php - Génération d'une image d'erreur contenant le message d'erreur et l'identifiant de la tuile
-
 ### lib/gdalinfo.inc.php - Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles
 Extrait des infos utiles du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html).
 Extrait du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html)
@@ -274,6 +272,13 @@ son extension en coordonnées World Mercator et en coordonnées géographiques.
         - lib/gebox.inc.php
         - ../vendor/autoload.php
         - lib/geotiffs.inc.php
+
+### lib/envvar.inc.php - envvar.inc.php - gestion des variables d'environnement et de leur valeur par défaut
+Simplifie l'utilisation des variables d'environnement.
+#### identique à
+        - ../sgupdt/lib/envvar.inc.php
+
+### lib/errortile.inc.php - Génération d'une image d'erreur contenant le message d'erreur et l'identifiant de la tuile
 
 ### lib/isomd.inc.php - Récupération de MD ISO d'un GéoTiff'
 #### inclus
