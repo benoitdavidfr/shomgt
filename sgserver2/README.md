@@ -85,7 +85,7 @@ Exemple d'un fichier pour lequel le champ `alternate` est défini
 ### 2.3 Problème rencontré avec les dates de validité des cartes
 Dans certains cas, la date de révision indiquée dans les MS ISO 19139 est manifestement fausse.
 
-Par exemple, la carte 7259 (Ile Maré) livré en juin 2017 mentionne:
+Par exemple, la carte 7259 livrée en juin 2017 mentionne:
 
     {
         "title": "7259 - Ile Maré",
@@ -97,8 +97,8 @@ Par exemple, la carte 7259 (Ile Maré) livré en juin 2017 mentionne:
         "revision": "1995-07-31"
     }
 
-Or le GAN mentionne que la correction 16 a été publiée semaine 1704 soit le 26/1/2017 ce qui est cohérent
-avec la date de livraison.  
+Or le GAN mentionne que la correction 16 a été publiée semaine 1704, soit le 26/1/2017,
+ce qui est cohérent avec la date de livraison.  
 On peut penser que la date de révision mentionnée est celle de la publication initiale de la carte avant corrections.
 Ainsi dans ce cas il n'est pas possible de connaître la vraie date de révision de la carte à partir des MD ISO 19139.
 
@@ -127,8 +127,6 @@ Carte 7349, correction 29, publiée selon le GAN semaine 2039
         "ganDate": "",
         "revision": "1996-10-21"
     }
-
-[[[TO DO]]]
 
 ## 3. Serveur sgserver
 [[[TO DO]]]
