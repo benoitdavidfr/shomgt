@@ -21,14 +21,10 @@ Le répertoire shomgeotiff contient 3 sous-répertoires:
   - d'une part les cartes livrées chacune sous la forme d'une archive 7z nommée par le numéro de carte et le suffize .7z
   - d'autre part un fichier `index.yaml` qui documente la livraison et qui peut contenir une propriété `toDelete` contenant
     la liste des cartes à supprimer dans le portefeuille, chacune identifiée par son numéro précédé de 'FR'
-- `archives` qui contient un sous-répertoire par livraison de cartes intégrée dans le portfeuille ;
-  chacun de ces répertoires de livraison contient:
-  - d'une part les cartes livrées chacune sous la forme
-    - d'une part de l'archive 7z nommée par le numéro de carte et le suffize .7z
-    - d'autre part d'un fichier {num}.md.json où {num} est le no de carte qui contient quelques champs de métadonnées
-      extraits des MD ISO 19138 de la carte spécifiés ci-dessous
-  - d'autre part le fichier `index.yaml` qui documente la livraison et qui peut contenir une propriété `toDelete` contenant
-    la liste des cartes à supprimer dans le portefeuille, chacune identifiée par son numéro précédé de 'FR'
+- `archives` qui contient un sous-répertoire par livraison de cartes intégrée dans le portefeuille
+  avec les mêmes informations que le répertoire de livraison de incoming
+  plus associé à chaque archive {num}.7z de carte un fichier {num}.md.json qui contient quelques champs de métadonnées
+  extraits des MD ISO 19139 de la carte spécifiés ci-dessous
 - `current` qui contient pour chaque carte dans sa dernière version valide 2 liens symboliques:
   - d'une part vers l'archive 7z de cette dernière version
   - d'autre part vers le fichier de MD simplifié de cette dernière version
