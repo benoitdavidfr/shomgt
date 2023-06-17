@@ -108,27 +108,27 @@ D'autres cas similaires peuvent être mentionnés :
 
 - Carte 7271, correction 212, publiée selon le GAN semaine 1504:
 
-    {
-        "title": "7271 - Australasie et mers adjacentes",
-        "alternate": "fac-similé de la carte AU 4060",
-        "version": "1990c212",
-        "edition": "Publication 1990 - Dernière correction : 212",
-        "ganWeek": "",
-        "ganDate": "",
-        "revision": "1990-07-03"
-    }
+      {
+          "title": "7271 - Australasie et mers adjacentes",
+          "alternate": "fac-similé de la carte AU 4060",
+          "version": "1990c212",
+          "edition": "Publication 1990 - Dernière correction : 212",
+          "ganWeek": "",
+          "ganDate": "",
+          "revision": "1990-07-03"
+      }
 
 - Carte 7349, correction 29, publiée selon le GAN semaine 2039
 
-    {
-        "title": "7349 - De la Réunion à Maurice (Mauritius) - Ile Tromelin",
-        "alternate": "",
-        "version": "1996c29",
-        "edition": "Publication 1996 - Dernière correction : 29",
-        "ganWeek": "",
-        "ganDate": "",
-        "revision": "1996-10-21"
-    }
+      {
+          "title": "7349 - De la Réunion à Maurice (Mauritius) - Ile Tromelin",
+          "alternate": "",
+          "version": "1996c29",
+          "edition": "Publication 1996 - Dernière correction : 29",
+          "ganWeek": "",
+          "ganDate": "",
+          "revision": "1996-10-21"
+      }
 
 ## 3. Serveur sgserver
 [[[TO DO]]]
