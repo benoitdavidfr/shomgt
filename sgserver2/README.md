@@ -54,7 +54,7 @@ Exemple d'un fichier pour lequel le champ `ganWeek` est défini
         "ganDate": "2023-05-10",
         "revision": "2023-05-10"
     }
-#### 2.1.3 Exemple du fichier `6619.md.json`
+#### 2.1.3 Exemple du fichier `6680.md.json`
 Exemple d'un fichier pour lequel le champ `ganWeek` n'est pas défini
 
     {
@@ -80,7 +80,8 @@ Exemple d'un fichier pour lequel le champ `alternate` est défini
     }
 
 ### 2.2 Dépôt shomgeotiff minimisant le volume de stockage
-[[[TO DO]]]
+Pour minimiser le volume de stockage, le répertoire `current` contient les réels fichiers `{num}.7z`
+et `{num}.md.json` au lieu des liens symboliques. Le répertoire `archives` n'est alors plus nécessaire.
 
 ### 2.3 Problème rencontré avec les dates de validité des cartes
 Dans certains cas, la date de révision indiquée dans les MD ISO 19139 est manifestement fausse.
@@ -131,10 +132,11 @@ D'autres cas similaires peuvent être mentionnés :
       }
 
 ## 3. Serveur sgserver
-[[[TO DO]]]
+Le serveur de carte est implémenté par le script `index.php` qui inclue le fichier `SevenZipArchive.7z`.  
+L'API du serveur est défini dans le [fichier api.yaml](api.yaml).  
+Le serveur se fonde sur les fichiers présents dans le répertoire `current` de shomgeotiff,
+que ce soient de réels fichiers ou des liens vers les fichiers stockés dans `archives`.
+Le contenu des fichiers `{num}.md.json` permet de remplir le champ `lastVersion` du point d'accès `/maps.json`.
 
 ## 4. Gestionnaire du portefeuille
-[[[TO DO]]]
-
-## 5. Cartes particulières
 [[[TO DO]]]

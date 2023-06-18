@@ -96,7 +96,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
   ce système de coordonnées est aussi appelé **World Mercator**.  
   Les coordonnées, par exemple dans le GAN, ne sont pas fournies en World Mercator mais en coordonnées géographiques,
-  en dégrés et minutes décimales en WGS84.  
+  en dégrés et minutes décimales en WGS84 ; par exemple "41°28,00'N - 010°30,00'W".  
   Le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) utilise de son côté
   le [système de coordonnées Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection)
   popularisé par Google et son produit Google Maps.  
@@ -111,7 +111,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6).  
   Chacune de ses couches est identifiée par la chaine **gt** suivie du dénominateur de l'échelle.  
   De plus:
-    - la couche **gt20M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
+    - la couche **gt40M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
     - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus
       en fonction du niveau de zoom défini par l'appel,
     - la couche **gtaem** contient les 7 cartes Action de l'Etat en Mer (AEM)
