@@ -1,10 +1,10 @@
 # Dockerfile - /geoapi/shomgt3/sgupdt - conteneur de mise à jour des cartes Shom pour le conteneur shomgt
-# Benoit DAVID - 17/5/2022
+# Benoit DAVID - 18/6/2023
 # A ce stade l'image doit être créée dans ce répertoire par "docker build -t sgupdt ." et non par le docker-compose
 
 # Use an official Php runtime as a parent image
 # J'utilise une sous-sous-version précise pour éviter le reconstructions itempestives
-FROM php:8.1.8-cli-bullseye
+FROM php:8.2.7-cli-bullseye
 
 # install 7zip + gdal + wget
 RUN apt-get update \
@@ -38,8 +38,8 @@ RUN cd /var/www && composer require symfony/yaml:6
 # copie des fichiers de vérification de schema dans /var/www/cli/schema/
 ADD --chown=www-data ./schema /var/www/cli/schema/
 
-# copie des fichiers Php includes dans /var/www/cli/lib/
-ADD --chown=www-data ../lib /var/www/lib/
+# copie des fichiers Php includes dans /var/www/lib/
+ADD --chown=www-data lib /var/www/lib/
 
 # copie des scripts Sh et Php dans /var/www/cli/
 ADD --chown=www-data ./main.php ./maketile.php ./shomgt.php ./shomgt.schema.yaml /var/www/cli/

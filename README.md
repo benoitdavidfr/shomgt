@@ -158,5 +158,11 @@ Si le site est exposé sur internet, il est nécessaire de gérer le [contrôle 
 ### 3.3 Composants externes
 ShomGT3 utilise différents [composants externes décrits ici](docs/composantexterne.md).
 
-### 3.4 Version Php
+### 3.4 Bibliothèque commune
+[Une bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
+
+### 3.5 Système de log
+[Un système de log est documenté ici](docs/log.md).
+
+### 3.6 Version Php
 ShomGT3 utilise Php 8 et a été validé avec Php 8.2.

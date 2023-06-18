@@ -13,6 +13,8 @@ doc: |
   qui est construit et mis à jour par sgupdt.
 
 journal: |
+  18/6/2023:
+    - fusion de shomgt/lib et sgupdt/lib dans lib
   12/6/2023:
     - restructuration de shomgeotif
     - réécriture de sgserver en sgserver2
@@ -85,6 +87,7 @@ journal: |
 submodules:
   - /geoapi/shomgt/shomgt
   - /geoapi/shomgt/sgupdt
+  - /geoapi/shomgt/lib
   - /geoapi/shomgt/sgserver2
   - /geoapi/shomgt/mapcat
   - /geoapi/shomgt/shomft

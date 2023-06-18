@@ -1,6 +1,4 @@
-# Dockerfile pour ShomGt3/shomgt - 18/4-22/6/2022
-# 1/5/2022 - chgt chemin des cartes
-# 6/5/2022 - chgt instructions de copie des fichiers
+# Dockerfile pour ShomGt3/shomgt - Benoit DAVID - 18/6/2023
 FROM php:8.2.7-apache
 
 # install 7zip + gdal
@@ -34,7 +32,7 @@ ADD --chown=www-data ./geojson /var/www/html/geojson/
 # copie des fichiers Leaflet dans /var/www/html/leaflet/
 ADD --chown=www-data ./leaflet /var/www/html/leaflet/
 # copie des fichiers Php includes dans /var/www/lib/
-ADD --chown=www-data ../lib /var/www/lib/
+ADD --chown=www-data lib /var/www/lib/
 # copie des scripts Php dans /var/www/html/
 ADD --chown=www-data ./maps.php ./tile.php ./dl.php ./mapwcat.php ./wms.php ./wmscapabilities.xml /var/www/html/
 ADD --chown=www-data ./wmsv.php ./wmsvcapabilities.xml ./wmsvlayers.yaml /var/www/html/
