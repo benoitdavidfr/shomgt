@@ -15,7 +15,7 @@ Cela permet d'effectuer des commandes au Shom tous les 3 à 4 mois.
 Pour constituer ce tableau de bord, 2 sources du Shom sont consultées:
 
 1. le service WFS permet de détecter de nouvelles cartes ; sa consultation est effectuée dans le [module shomft](../shomft).
-2. le site du permet de détecter des mises à jour et des retraits de cartes existantes ;
+2. le site du GAN permet de détecter des mises à jour et des retraits de cartes existantes ;
    le GAN prenant la forme d'un site Web, il est donc nécessaire de le scrapper pour en extraire les informations souhaitées.
 
 Le scrapping du GAN est effectué par la commande `php gan.php newHarvest` qui interroge le GAN pour chaque carte
@@ -30,11 +30,16 @@ ce qui permet:
 1. de passer les commandes de cartes nécessaires au Shom dans sa boutique https://diffusion.shom.fr/
 2. de déterminer dans le fichier `index.yaml` de la livraison la liste des cartes à retirer.
 
-## Point d'attention
-L'algorithme de scrapping peut être invalidé par une modification des pages Html du site du GAN.
-Ainsi:
+## Points d'attention
+1. L'algorithme de scrapping peut être invalidé par une modification des pages Html du site du GAN.
+   Ainsi:
 
-1. le code d'analyse du Html est concentrée dans la méthode statique `analyzeHtml(string $html): array`
-   de la classe `GanStatic` définie dans le fichier `gan.inc.php`.  
-2. Cette analyse peut être testée au moyen de la commande `php gan.php analyzeHtml {mapNum}`
-   où `{mapNum}` est le numéro de la carte à analyser.
+   1. le code d'analyse du Html est concentrée dans la méthode statique `analyzeHtml(string $html): array`
+      de la classe `GanStatic` définie dans le fichier `gan.inc.php`.  
+   2. Cette analyse peut être testée au moyen de la commande `php gan.php analyzeHtml {mapNum}`
+      où `{mapNum}` est le numéro de la carte à analyser.
+      
+2. Du fait du [problème rencontré avec les dates de validité
+   des cartes](../sgserver2#23-probl%C3%A8me-rencontr%C3%A9-avec-les-dates-de-validit%C3%A9-des-cartes)
+   la date de révision des cartes dans le portefeuille mentionnée dans le tableau de bord est souvent fausse.
+   
