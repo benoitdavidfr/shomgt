@@ -16,16 +16,16 @@ journal: |
   8-9/7/2022:
     - fork de wms.php
 includes:
-  - lib/coordsys.inc.php
-  - lib/gebox.inc.php
-  - lib/wmsserver.inc.php
-  - lib/vectorlayer.inc.php
+  - ../lib/coordsys.inc.php
+  - ../lib/gebox.inc.php
+  - ../lib/wmsserver.inc.php
+  - ../lib/vectorlayer.inc.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/lib/coordsys.inc.php';
-require_once __DIR__.'/lib/gebox.inc.php';
-require_once __DIR__.'/lib/wmsserver.inc.php';
-require_once __DIR__.'/lib/vectorlayer.inc.php';
+require_once __DIR__.'/../lib/coordsys.inc.php';
+require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/../lib/wmsserver.inc.php';
+require_once __DIR__.'/../lib/vectorlayer.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 

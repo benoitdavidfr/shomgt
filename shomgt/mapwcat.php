@@ -44,9 +44,9 @@ journal: |
     - adaptation à la nouvelle version
   10/4/2019:
     - ajout des numéros de carte Shom
-includes: [ lib/accesscntrl.inc.php ]
+includes: [ ../lib/accesscntrl.inc.php ]
 */
-require_once __DIR__.'/lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

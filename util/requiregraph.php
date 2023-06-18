@@ -1,8 +1,6 @@
 <?php
 /*PhpDoc:
 title: requiregraph.php - construction de la liste des inclusions require et requi_once - 11/6/2023
-bugs:
-  - /main/lib/mapversion includes /main/lib/SevenZipArchive.php
 */
 require_once __DIR__.'/../vendor/autoload.php';
 

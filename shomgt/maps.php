@@ -24,12 +24,13 @@ journal: |
   22/4/2022:
     - création
 includes:
-  - lib/layer.inc.php
+  - ../lib/layer.inc.php
+  - ../lib/accesscntrl.inc.php
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
-require_once __DIR__.'/lib/layer.inc.php';
-require_once __DIR__.'/lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/layer.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 

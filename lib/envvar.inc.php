@@ -11,7 +11,7 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 class EnvVar {
   const DEFAULTS = [
     'SHOMGT3_SERVER_URL' => 'https://sgserver.geoapi.fr/index.php',
-    'SHOMGT3_MAPS_DIR_PATH' => __DIR__.'/../../data/maps',
+    'SHOMGT3_MAPS_DIR_PATH' => __DIR__.'/../data/maps',
     'SHOMGT3_UPDATE_DURATION'=> '0',
   ];
   

@@ -10,9 +10,9 @@ journal: |
   3/6/2022:
     - correction d'un bug sur SHOMGT3_MAPS_DIR_PATH
 */
-require_once __DIR__.'/lib/envvar.inc.php';
-require_once __DIR__.'/lib/gdalinfo.inc.php';
-require_once __DIR__.'/lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/envvar.inc.php';
+require_once __DIR__.'/../lib/gdalinfo.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 if (!Access::cntrl()) {
   header('HTTP/1.1 403 Forbidden');

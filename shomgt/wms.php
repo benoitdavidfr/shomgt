@@ -59,17 +59,17 @@ journal: |
   17/6/2017
     Reprise du serveur de cadastre et évolutions
 includes:
-  - lib/accesscntrl.inc.php
-  - lib/coordsys.inc.php
-  - lib/gebox.inc.php
-  - lib/wmsserver.inc.php
-  - lib/layer.inc.php
+  - ../lib/accesscntrl.inc.php
+  - ../lib/coordsys.inc.php
+  - ../lib/gebox.inc.php
+  - ../lib/wmsserver.inc.php
+  - ../lib/layer.inc.php
 */
-require_once __DIR__.'/lib/accesscntrl.inc.php';
-require_once __DIR__.'/lib/coordsys.inc.php';
-require_once __DIR__.'/lib/gebox.inc.php';
-require_once __DIR__.'/lib/wmsserver.inc.php';
-require_once __DIR__.'/lib/layer.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/coordsys.inc.php';
+require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/../lib/wmsserver.inc.php';
+require_once __DIR__.'/../lib/layer.inc.php';
 
 // Mécanisme de contrôle d'accès sur l'IP et le login / mdp
 // Si le contrôle est activé et s'il est refusé alors demande d'authentification
