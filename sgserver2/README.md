@@ -132,7 +132,7 @@ D'autres cas similaires peuvent être mentionnés :
       }
 
 ## 3. Serveur sgserver
-Le serveur de carte est implémenté par le script `index.php` qui inclue le fichier `SevenZipArchive.7z`.  
+Le serveur de carte est implémenté par le script `index.php` qui inclue le fichier `SevenZipArchive.php`.  
 L'API du serveur est défini dans le [fichier api.yaml](api.yaml).  
 Le serveur se fonde sur les fichiers présents dans le répertoire `current` de shomgeotiff,
 que ce soient de réels fichiers ou des liens vers les fichiers stockés dans `archives`.
@@ -152,3 +152,9 @@ La procédure consiste à:
    - mettre à jour les liens dans `current`
 
 L'utilitaire pfm.php permet aussi par exemple de tracer les changements de version et retrait éventuel des cartes.
+
+## 5. Erreurs rencontrées avec l'année d'édition des cartes
+Dans certains cas, l'année d'édition mentionnée dans les MD ISO 19139 est fausse.
+Il est donc utile de vérifier cette année en la comparant à celle indiquée sur la carte et si nécessaire de la corriger
+avec un éditeur de texte.
+
