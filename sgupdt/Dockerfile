@@ -39,7 +39,7 @@ RUN cd /var/www && composer require symfony/yaml:6
 ADD --chown=www-data ./schema /var/www/cli/schema/
 
 # copie des fichiers Php includes dans /var/www/cli/lib/
-ADD --chown=www-data ./lib /var/www/cli/lib/
+ADD --chown=www-data ../lib /var/www/lib/
 
 # copie des scripts Sh et Php dans /var/www/cli/
 ADD --chown=www-data ./main.php ./maketile.php ./shomgt.php ./shomgt.schema.yaml /var/www/cli/
