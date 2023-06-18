@@ -4462,10 +4462,34 @@ maps:
     title: Îles des Tuamotu - Passes et Mouillages
     mapsFrance: [PF]
     noteCatalog: |
-      carte très difficilement utilisable en l'état reçu le 24/4/2023.
+      carte reçue le 24/4/2023 très difficilement utilisable en l'état.
       Les différents cartouches ne correspondent pas à des fichiers GéoTiff.
       Leur description n'apparait pas dans le GAN.
-      Les coordonnées des coins ne sont pas affichés.
+      Les coordonnées des coins ne sont pas affichées.
+      Ci-dessous réponse du Shom à mes questions.
+      réponse: |
+        Objet:	Re: [2023-0484-bp]_Re: utilisation de cartes GéoTIFF du Shom par le MTECT
+        Date:	25/04/2023 10:20
+        De:	bureau.prestations (par Internet) <bureau.prestations@shom.fr>
+        À:	benoit.david@developpement-durable.gouv.fr
+        Répondre à:	bureau.prestations <bureau.prestations@shom.fr>
+
+
+        En réponse à votre remontée d'information concernant la carte 7455 je vous retransmets les éléments qui m'ont été communiqués :
+
+
+        1/ comme indiqué au catalogue, la carte 7455 ne comporte plus qu'un seul cartouche en service, les autres ayant été rayés et remplacés par des cartes plus récentes
+        (7459 (Tikehau), 7463 (Katiu), 7464 (Motutunga), 7465 (Tahanea)). Un projet carto est en cours pour fusionner les cartouches toujours en service des cartes 7455 et 5878 sur une nouvelle publication à paraitre prochainement :
+
+        2/ La carte 7455 n'est pas aux normes internationales mais aux normes anciennes, les coordonnées des coins (du cartouche) n'y figurent donc pas.
+
+        3/ Et pour finir, mais sans certitude, même réponse pour le point 2 : 1 cartouche aux normes anciennes, donc les coordonnées n'apparaissent pas au GAN.
+
+        En espérant avoir répondu à votre attente,
+
+        Cordialement,
+
+        Odile LEMOINE
     insetMaps:
       - title: K - Arutua - Passe Porofai
         scaleDenominator: '10.000'
@@ -4501,8 +4525,7 @@ maps:
   FR7458:
     groupTitle: 'Iles Tuamotu'
     title: Aratika
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     insetMaps:
       - title: Aratika
         scaleDenominator: '50.000'
@@ -4519,8 +4542,7 @@ maps:
   FR7459:
     groupTitle: 'Îles Tuamotu'
     title: Tikehau
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     noteShom: 'Nota : Porter la mention hors-cadre "Voir carte adjacente 7459" sur la carte 7373 (à l''ouest). Porter le cadre de la carte 7459 et la mention "7459" sur la carte 6420. Rayer le cadre du cartouche D de la carte 7455 et la mention "7455 D" sur la carte 6420. Barrer les cartouches B, D et E de la carte 7455.'
     insetMaps:
       - title: Tikehau
@@ -4538,10 +4560,9 @@ maps:
   FR7460:
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De la Passe de Taapuna à la Passe d''Arue'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     insetMaps:
-      - title: '1'
+      - title: '1 - De la Passe de Taapuna à la pointe Nuutere'
         scaleDenominator: '10.000'
         spatial: { SW: '17°36,53''S - 149°37,95''W', NE: '17°32,46''S - 149°35,00''W' }
       - title: '2 - Port de Papeete'
@@ -4550,8 +4571,7 @@ maps:
   FR7461:
     groupTitle: 'Îles de la Société - Côte Nord-Ouest de Tahiti'
     title: 'De Taapuna à la Pointe Vénus'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '25.000'
     spatial:
       SW: '17°37,20''S - 149°41,84''W'

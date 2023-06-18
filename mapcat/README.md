@@ -21,7 +21,7 @@ Si vous souhaitez améliorer ce catalogue, notamment les champs `z-order`, `toDe
 l'affichage des GéoTiff, proposez des pull requests sur le fichier mapcat.yaml.
 
 ## Cartes particulières
-Dans cette section on décrit quelques cas particuliers de cartes.
+Cette section décrit quelques cas particuliers de cartes.
 
 ### Carte sans zone principale
 Certaines cartes sont composées uniquement de cartouches, le fichier `{num}_pal300.tif` n'est alors pas géoréférencé.  
@@ -76,12 +76,12 @@ Ce cas est illustré par la carte 7330 dont l'extrait dans le catalogue figure c
       layer: gtaem
       geotiffname: '7330_2016'
 
-### Carte spéciale n'ayant pas de TIFF mais uniquement un PDF
+### Carte spéciale n'ayant pas de TIFF mais uniquement un PDF non géoréférencé
 Parmi les cartes spéciales, certaines ne comportent pas de fichiers TIFF mais uniquement un fichier PDF.
 La description de ce type de carte dans le catalogue comprend un champ `geotiffname` qui indique le nom du PDF
 avec l'extension `.pdf`.
 Le fichier PDF n'étant pas géoréférencé, le champ `borders` permet de déduire le géoréférencement du fichier
-du champ `spatial`.
+de l'extension spatiale.
 Ce cas est illustré par la carte 7509 dont l'extrait dans le catalogue figure ci-dessous :
 
     FR8509:
@@ -142,6 +142,7 @@ L'extension du GéoTiff correspondant est le suivant:
 ### Carte ayant une extension en latitude supérieure à 360°
 Les 2 cartes 0101 et 8510, dont les extraits dans le catalogue figurent ci-dessous,
 ont une extension en latitude supérieure à 360° et doivent donc être traitées de manière particulière.
+Par convention dans ce cas la latitude du bord Est prend une valeur supérieure à 180°.
 
     FR0101:
       groupTitle: 'Planisphère terrestre'
