@@ -154,11 +154,11 @@ if ($argc == 1) { // Menu
   echo "  - lsa - liste les archives et leurs cartes\n";
   echo "  - lsd - liste les cartes des livraisons\n";
   echo "  - lsdm - liste les cartes des livraisons et leurs cartes\n";
-  echo "  - add [{répertoire de livraison}] - ajoute au PF les cartes de la livraison indiquée\n";
+  echo "  - add {répertoire de livraison} ... {répertoire de livraison} - ajoute au PF les cartes des livraisons indiquées\n";
   echo "  - addAll - ajoute au PF les cartes de toutes les livraisons\n";
   echo "  - cancel - annule le dernier ajout et place les cartes dans son répertoire de livraison\n";
   echo "  - cancelAll - annule tous les ajouts et replace les cartes dans les répertoires de livraison\n";
-  echo "  - purge [{date}] - supprime définitivement les versions archivées antérieures à la date indiquée\n";
+  //echo "  - purge [{date}] - supprime définitivement les versions archivées antérieures à la date indiquée\n";
   echo "  - trace - indique pour chaque carte les évènements recensés\n";
   die();
 }

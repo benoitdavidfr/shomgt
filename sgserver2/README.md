@@ -146,7 +146,7 @@ La procédure consiste à:
 
 1. préparer dans `incoming` un répertoire de livraison ayant comme nom la date de livraison sous la forme `YYYYMMDD`
    et contenant les différentes cartes livrées ainsi que le fichier index.yaml cité en 2.1,
-2. exécuter la commande `php pfm.php {nomDuRépertoireDeLivraison}` qui va:
+2. exécuter la commande `php pfm.php add {nomDuRépertoireDeLivraison}` qui va:
    - déplacer le répertoire dans `archives`,
    - générer les fichiers .md.json,
    - mettre à jour les liens dans `current`
