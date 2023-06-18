@@ -119,7 +119,7 @@ class GdalInfo {
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire
 
 
-require_once __DIR__.'/../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/geotiffs.inc.php';
 
 use Symfony\Component\Yaml\Yaml;

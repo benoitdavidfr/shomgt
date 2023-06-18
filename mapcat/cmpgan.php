@@ -22,7 +22,7 @@ journal: |
     - migration 
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../sgupdt/lib/gebox.inc.php';
+require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../dashboard/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
