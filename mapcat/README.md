@@ -12,13 +12,17 @@ Ce catalogue constitue une référence indispensable pour le fonctionnement de s
 - les champs `layer` et `geotiffname` sont nécessaires pour gérer les cartes spéciales (cartes AEM, MancheGrid, ...),
 - les champs `z-order`, `toDelete` et `outgrowth` permettent d'améliorer l'affichage des GéoTiff dans le service WMS
   et la carte Leaflet,
-- enfin, les champs `noteCatalog` et `badGan` permettent de mémoriser les choix effectués dans le gestion de ce catalogue.
+- enfin, le champ `noteCatalog` permet de mémoriser les choix effectués dans le gestion de ce catalogue
+  et le champ `badGan` mentionne plus particulièrement les écarts souhaités au GAN.
 
 Ce catalogue est téléchargé par les copies réparties de ShomGt lors de la mise à jour des cartes.
 Ainsi son amélioration bénéficie à toutes les instance de ShomGt.
 
 Si vous souhaitez améliorer ce catalogue, notamment les champs `z-order`, `toDelete` et `outgrowth` pour améliorer
 l'affichage des GéoTiff, proposez des pull requests sur le fichier mapcat.yaml.
+
+## Utilitaire cmpgan.php
+Cet utilitaire compare le catalogue au GAN pour détecter des incohérences non souhaitées.
 
 ## Cartes particulières
 Cette section décrit quelques cas particuliers de cartes.
@@ -82,7 +86,7 @@ La description de ce type de carte dans le catalogue comprend un champ `geotiffn
 avec l'extension `.pdf`.
 Le fichier PDF n'étant pas géoréférencé, le champ `borders` permet de déduire le géoréférencement du fichier
 de l'extension spatiale.
-Ce cas est illustré par la carte 7509 dont l'extrait dans le catalogue figure ci-dessous :
+Ce cas est illustré par la carte 8509 dont l'extrait dans le catalogue figure ci-dessous :
 
     FR8509:
       title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
@@ -109,15 +113,14 @@ C'est le cas de la carte 7283 dont l'extrait dans le catalogue figure ci-dessous
         NE: '09°40,56''S - 172°47,00''W'
       replaces: '(remplace 6067)'
 
-### Carte dont un GéoTiff est à cheval sur l'anti-méridien mais pas la zone cartographiée
-Certaines cartes ont un GéoTiff à cheval sur l'anti-méridien mais pas la zone cartographiée.
+### Carte dont un GéoTiff est à cheval sur l'anti-méridien sans que la zone cartographiée le soit
+Certaines cartes ont un GéoTiff à cheval sur l'anti-méridien sans que la zone cartographiée le soit.
 C'est le cas de la carte 6670 dont l'extrait dans le catalogue figure ci-dessous :
 
     FR6670:
       groupTitle: 'Océan Pacifique Sud'
       title: 'Mers de Tasman et du Corail - De l''Australie à la Nouvelle-Zélande et  aux Îles Fidji (Fiji)'
-      mapsFrance:
-        - NC
+      mapsFrance: []NC
       scaleDenominator: 3.500.000
       spatial:
         SW: '35°17,40''S - 146°40,00''E'

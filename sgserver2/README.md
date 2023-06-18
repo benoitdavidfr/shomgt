@@ -139,4 +139,16 @@ que ce soient de réels fichiers ou des liens vers les fichiers stockés dans `a
 Le contenu des fichiers `{num}.md.json` permet de remplir le champ `lastVersion` du point d'accès `/maps.json`.
 
 ## 4. Gestionnaire du portefeuille
-[[[TO DO]]]
+Lorsque shomgeotiff conserve l'historique des livraisons de carte, la gestion du portefeuille peut être réalisée
+avec l'utilitaire pfm.php en mode CLI.
+
+La procédure consiste à:
+
+1. préparer dans `incoming` un répertoire de livraison ayant comme nom la date de livraison sous la forme `YYYYMMDD`
+   et contenant les différentes cartes livrées ainsi que le fichier index.yaml cité en 2.1,
+2. exécuter la commande `php pfm.php {nomDuRépertoireDeLivraison}` qui va:
+   a) déplacer le répertoire dans `archives`,
+   b) générer les fichiers .md.json,
+   c) mettre à jour les liens dans `current`
+
+L'utilitaire pfm.php permet aussi par exemple de tracer les changements de version et retrait éventuel des cartes.
