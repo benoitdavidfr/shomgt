@@ -26,7 +26,7 @@ journal: |
     création
 includes: [ lib/accesscntrl.inc.php ]
 */
-require_once __DIR__.'/shomgt/lib/accesscntrl.inc.php';
+require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 class Login {
   const COOKIE_NAME = 'shomusrpwd'; // le nom du cookie utilisé pour enregistrer le login/passwd

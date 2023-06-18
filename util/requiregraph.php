@@ -44,6 +44,7 @@ class PhpFile {
   
   function __construct(string $path) { // crée un fichier 
     $this->path = substr($path, strlen(self::ROOT));
+    //echo "file_get_contents($path)\n";
     $src = file_get_contents($path);
     //echo "$path:\n", htmlspecialchars($src); die();
     $this->title = preg_match('!title: ([^\n]*)\n!', $src, $matches) ? $matches[1] : null;

@@ -29,7 +29,7 @@ title: dashboard/index.php - Tableau de bord de mise à jour des cartes - 23/4/2
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/gan.inc.php';
 require_once __DIR__.'/portfolio.inc.php';
-require_once __DIR__.'/../shomgt/lib/gegeom.inc.php';
+require_once __DIR__.'/../lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
