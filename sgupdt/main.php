@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  18/6/2023:
+    - déplacement lib dans ../lib
   1/8/2022:
     - ajout déclarations PhpStan pour level 6
   22/6/2022:
@@ -62,10 +64,10 @@ journal: |
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
-require_once __DIR__.'/lib/envvar.inc.php';
-require_once __DIR__.'/lib/execdl.inc.php';
-require_once __DIR__.'/lib/readmapversion.inc.php';
-require_once __DIR__.'/lib/mapcat.inc.php';
+require_once __DIR__.'/../lib/envvar.inc.php';
+require_once __DIR__.'/../lib/execdl.inc.php';
+require_once __DIR__.'/../lib/readmapversion.inc.php';
+require_once __DIR__.'/../lib/mapcat.inc.php';
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;

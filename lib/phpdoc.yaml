@@ -1,28 +1,30 @@
-title: ShomGt3/shomgt/lib - bibliothèque du conteneur shomgt
-path: /geoapi/shomgt/shomgt/lib
+title: ShomGt3/lib - bibliothèque commune
+path: /geoapi/shomgt/lib
 doc: |
 journal: |
+  18/6/2023:
+    - fusion de shomgt/lib et sgupdt/lib dans lib
   24/4/2022:
     - première version ok
 phpIncludes:
-  - /geoapi/shomgt/shomgt/lib/accesscntrl.inc.php
-  - /geoapi/shomgt/shomgt/lib/cache.inc.php
-  - /geoapi/shomgt/shomgt/lib/config.inc.php
-  - /geoapi/shomgt/shomgt/lib/coordsys.inc.php
-  - /geoapi/shomgt/shomgt/lib/envvar.inc.php
-  - /geoapi/shomgt/shomgt/lib/errortile.inc.php
-  - /geoapi/shomgt/shomgt/lib/gdalinfo.inc.php
-  - /geoapi/shomgt/shomgt/lib/gebox.inc.php
-  - /geoapi/shomgt/shomgt/lib/gegeom.inc.php
-  - /geoapi/shomgt/shomgt/lib/geotiff.inc.php
-  - /geoapi/shomgt/shomgt/lib/geotiffs.inc.php
-  - /geoapi/shomgt/shomgt/lib/grefimg.inc.php
-  - /geoapi/shomgt/shomgt/lib/isomd.inc.php
-  - /geoapi/shomgt/shomgt/lib/layer.inc.php
-  - /geoapi/shomgt/shomgt/lib/log.inc.php
-  - /geoapi/shomgt/shomgt/lib/mysql.inc.php
-  - /geoapi/shomgt/shomgt/lib/pos.inc.php
-  - /geoapi/shomgt/shomgt/lib/sexcept.inc.php
-  - /geoapi/shomgt/shomgt/lib/vectorlayer.inc.php
-  - /geoapi/shomgt/shomgt/lib/wmsserver.inc.php
-  - /geoapi/shomgt/shomgt/lib/zoom.inc.php
+  - /geoapi/shomgt/lib/accesscntrl.inc.php
+  - /geoapi/shomgt/lib/cache.inc.php
+  - /geoapi/shomgt/lib/config.inc.php
+  - /geoapi/shomgt/lib/coordsys.inc.php
+  - /geoapi/shomgt/lib/envvar.inc.php
+  - /geoapi/shomgt/lib/errortile.inc.php
+  - /geoapi/shomgt/lib/gdalinfo.inc.php
+  - /geoapi/shomgt/lib/gebox.inc.php
+  - /geoapi/shomgt/lib/gegeom.inc.php
+  - /geoapi/shomgt/lib/geotiff.inc.php
+  - /geoapi/shomgt/lib/geotiffs.inc.php
+  - /geoapi/shomgt/lib/grefimg.inc.php
+  - /geoapi/shomgt/lib/isomd.inc.php
+  - /geoapi/shomgt/lib/layer.inc.php
+  - /geoapi/shomgt/lib/log.inc.php
+  - /geoapi/shomgt/lib/mysql.inc.php
+  - /geoapi/shomgt/lib/pos.inc.php
+  - /geoapi/shomgt/lib/sexcept.inc.php
+  - /geoapi/shomgt/lib/vectorlayer.inc.php
+  - /geoapi/shomgt/lib/wmsserver.inc.php
+  - /geoapi/shomgt/lib/zoom.inc.php

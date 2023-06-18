@@ -37,10 +37,10 @@ journal: |
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/lib/mapcat.inc.php';
-require_once __DIR__.'/lib/gdalinfo.inc.php';
-require_once __DIR__.'/lib/gebox.inc.php';
-require_once __DIR__.'/lib/grefimg.inc.php';
+require_once __DIR__.'/../lib/mapcat.inc.php';
+require_once __DIR__.'/../lib/gdalinfo.inc.php';
+require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/../lib/grefimg.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 

@@ -73,7 +73,7 @@ journal: |
 define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service en V0 car incompatble avec sgupdt v0.6
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../shomgt/lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 

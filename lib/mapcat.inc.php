@@ -15,7 +15,7 @@ require_once __DIR__.'/execdl.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
 class TempMapCat {
-  const MAPCAT_TEMP_PATH = __DIR__.'/../temp/mapcat.json';
+  const MAPCAT_TEMP_PATH = __DIR__.'/../sgupdt/temp/mapcat.json';
   protected string $name; // le nom de la carte
   /** @var array<string, mixed> $map */
   protected array $map; // les caractéristiques de la carte correspondant au fichier mapcat.yaml
