@@ -192,9 +192,13 @@ function addDelivery(string $PF_PATH, string $deliveryName): void { // ajoute la
       $mapName = substr($mapName, 2); // suppression du 'FR'
       if (is_file("$PF_PATH/current/$mapName.7z")) {
         echo "Retrait de de $mapName\n";
+        // création d'un fichier .md.json avec obsolete dans la livraison
+        file_put_contents("$PF_PATH/archives/$deliveryName/$mapName.md.json", json_encode(['status'=>'obsolete'], JSON_OPTIONS));
+        // suppression des 2 liens
         unlink("$PF_PATH/current/$mapName.7z");
         @unlink("$PF_PATH/current/$mapName.md.json");
-        file_put_contents("$PF_PATH/current/$mapName.md.json", json_encode(['status'=>'obsolete'], JSON_OPTIONS));
+        // création d'un lien vers le fichier .md.json obsolete
+        symlink("../archives/$deliveryName/$mapName.md.json", "$PF_PATH/current/$mapName.md.json");
       }
       else {
         echo "Erreur de retrait de $mapName dans $deliveryName car absente\n";

@@ -24,11 +24,16 @@ Le répertoire shomgeotiff contient 3 sous-répertoires:
     la liste des cartes à supprimer dans le portefeuille, chacune identifiée par son numéro précédé de 'FR'
 - `archives` qui contient un sous-répertoire par livraison de cartes intégrée dans le portefeuille
   avec les mêmes informations que le répertoire de livraison de `incoming`,
-  plus, associé à chaque archive `{num}.7z` de carte un fichier `{num}.md.json`
-  qui contient quelques champs de métadonnées, spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
-- `current` qui contient pour chaque carte dans sa dernière version valide 2 liens symboliques:
-  - d'une part vers l'archive 7z de cette dernière version
-  - d'autre part vers le fichier de MD simplifié de cette dernière version
+  plus:
+  - d'une part associé à chaque archive `{num}.7z` de carte un fichier `{num}.md.json`
+    qui contient quelques champs de métadonnées, spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
+  - d'autre part pour chaque carte à supprimer un fichier `{num}.md.json` contenant `{"status": "obsolete"}`
+- `current` qui contient
+  - d'une part pour chaque carte dans sa dernière version valide 2 liens symboliques:
+    - vers l'archive 7z de cette dernière version
+    - vers le fichier de MD simplifié de cette dernière version
+  - d'autre part pour chaque carte ayant été supprimée 1 lien symbolique vers le le fichier `{num}.md.json`
+    de cette carte dans la livraison pour laquelle la carte a été supprimée
   
 #### 2.1.1 Spécification du fichier `{num}.md.json`
 Le fichier `{num}.md.json` dontient les champs suivants extraits des MD ISO 19139 de la carte:
