@@ -6,9 +6,6 @@ Lorsque ces modules sont déployés comme conteneurs Docker, *data* est un volum
 Outre ce fichier de documentation, *data* contient le shomgt.yaml et 3 sous-répertoires.
 
 ## Le fichier shomgt.yaml
-Le fichier fichier shomgt.yaml est structuré conformément au [schéma JSON shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
-Il est produit
-par le [script shomgt.php du module sgupdt](../sgupdt#shomgtphp---g%C3%A9n%C3%A8re-le-fichier-shomgtyaml).
 Le fichier shomgt.yaml définit les couches de GéoTiffs par leur identifiant et les GéoTiffs qu'elles contiennent.
 Chaque GéoTiff est à son tour défini par au moins son identifiant, son titre et l'extension géographique
 de la zone cartographiée à l'intérieur de son cadre.
@@ -16,8 +13,12 @@ Un GéoTiff peut en outre comporter les propriétés suivantes:
 
 - `outgrowth`: liste d'excroissances de la carte si elle en comporte,
 - `borders`: pour les GéoTiffs qui ne sont pas géoréférencés (notamment dans le cas des cartes spéciales),
-  nbre de pixels des bords haut, bas, droite et gauche à masquer,
-- `deleted`: liste de zones effacées dans le GéoTiff.
+  nbre de pixels des bords haut, bas, droite et gauche hors cadre à masquer,
+- `deleted`: liste des zones effacées dans le GéoTiff.
+
+Le fichier fichier shomgt.yaml est structuré conformément au [schéma JSON shomgt.schema.yaml](../sgupdt/shomgt.schema.yaml).
+Il est produit
+par le [script shomgt.php du module sgupdt](../sgupdt#shomgtphp---g%C3%A9n%C3%A8re-le-fichier-shomgtyaml).
 
 ## Le sous-répertoire maps
 Le sous-répertoire `maps`contient principalement les images des GéoTiff et leur métadonnées ISO 19139 organisés par carte.   
@@ -33,7 +34,7 @@ En outre, chaque sous-répertoire de carte contient un fichier PNG qui est une m
 
 Il existe des exceptions à cette structuration pour les cartes spéciales dont le l'image n'est souvent pas géoréférencée.
 Dans ce cas cette information de géoréférencement est absente et doit être remplacée par la propriété `borders` dans shomgt.yaml.
-De même les livraisons des cartes spéciales ne comportent généralement pas de métadonnées ISO.
+De même les livraisons des cartes spéciales ne comportent généralement pas de métadonnées ISO 19139.
 
 ## Le sous-répertoire tilecache
 Le sous-répertoire tilecache constitue un cache des tuiles de la couche gtpyr des niveaux 0 à 9.

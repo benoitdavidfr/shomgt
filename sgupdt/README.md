@@ -1,5 +1,5 @@
 # Module sgupdt de ShomGT3
-L'objectif de ce module est, en interrogeant [sgserver](../sgserver2) en http, de construire et mettre à jour 
+L'objectif de ce module est, en interrogeant [sgserver](../sgserver) en http, de construire et mettre à jour 
 les fichiers nécessaires à [shomgt](../shomgt), stockés dans un répertoire [data](../data).  
 
 ### Variables d'environnement
@@ -14,19 +14,19 @@ les fichiers nécessaires à [shomgt](../shomgt), stockés dans un répertoire [
 ### main.php - script principal de mise à jour des cartes
 L'algorithme de mise à jour des cartes est le suivant:
 
-- télécharge depuis sgserver le catalogue mapcat.yaml
+- télécharge depuis sgserver le catalogue MapCat
 - télécharge depuis sgserver la liste des cartes exposées et la version correspondante (maps.json)
 - pour chaque carte exposé par sgserver
-  - si la version n'a pas changé
+  - si ni la version ni la zone à effacer n'ont changée
     - alors passage à la carte suivante
-  - télécharge la carte depuis sgserver,
-  - dézippe l'archive téléchargée,
+  - télécharge la carte depuis sgserver et la dézippe,
   - puis pour chaque fichier GéoTiff
     - extrait les informations de géoréférencement du GéoTiff dans le fichier {gtname}.info.json
-    - transforme l'image en PNG,
+    - transforme l'image TIFF en PNG,
     - découpe avec maketile.php l'image en dalles 1024x1024 pour faciliter l'utilisation des images
-Et enfin génère avec shomgt.php le [fichier shomgt.yaml](../data#le-fichier-shomgtyaml)
-après avoir vérifié sa conformité à son schéma JSON.
+      et applique les effacements définis dans le catalogue MapCat
+- enfin génère avec shomgt.php le [fichier shomgt.yaml](../data#le-fichier-shomgtyaml)
+  après avoir vérifié sa conformité à son schéma JSON défini dans [shomgt.schema.yaml](shomgt.schema.yaml).
 
 En fonction de la variable `SHOMGT3_UPDATE_DURATION`, le script suspend son exécution et se relance plus tard de manière 
 éternelle.
@@ -50,7 +50,7 @@ Découpe un PNG correspondant à un GéoTiff et efface les zones spécifiées da
 
 ### shomgt.php - génère le fichier shomgt.yaml
 Génère le fichier shomgt.yaml dans [data](../data/) après avoir vérifié sa conformité à son schéma JSON
-défini dans shomgt.schema.yaml.
+défini dans [shomgt.schema.yaml](shomgt.schema.yaml).
 #### inclus
         - schema/jsonschema.inc.php
         - lib/geotiffs.inc.php

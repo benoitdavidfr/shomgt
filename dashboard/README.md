@@ -40,6 +40,6 @@ ce qui permet:
       où `{mapNum}` est le numéro de la carte à analyser.
       
 2. Du fait du [problème rencontré avec les dates de validité
-   des cartes](../sgserver2#23-probl%C3%A8me-rencontr%C3%A9-avec-les-dates-de-validit%C3%A9-des-cartes)
+   des cartes](../sgserver#23-probl%C3%A8me-rencontr%C3%A9-avec-les-dates-de-validit%C3%A9-des-cartes)
    la date de révision des cartes dans le portefeuille mentionnée dans le tableau de bord est souvent fausse.
    

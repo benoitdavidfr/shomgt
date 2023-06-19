@@ -36,7 +36,7 @@ Les listes de couches sont initialisées notamment à partir du [fichier shomgt.
         - gdalinfo.inc.php
         - envvar.inc.php
 
-### grefimg.inc.php  - Définition de la classe GeoRefImage gérant une image géoréférencée'
+### grefimg.inc.php  - Définition de la classe GeoRefImage gérant une image géoréférencée
 La classe GeoRefImage propose différentes méthodes sur une image géoréférencée
 en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php) avec:
 

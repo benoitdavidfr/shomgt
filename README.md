@@ -31,7 +31,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
     un volume partagé entre les 2 conteneurs.
     
-  - **[sgserver](sgserver2)** expose à *sgupdt* les cartes du Shom.
+  - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom.
     Il est mis à jour régulièrement grâce à *dashboard*.
   
   - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
@@ -108,18 +108,17 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
 - **couches de données**: les GéoTiffs sont répartis dans des couches image d'échelle homogène.
   Les dénominateurs des échelles retenus pour ces couches sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
-  5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6).  
+  5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6), 40M (0-5).  
   Chacune de ses couches est identifiée par la chaine **gt** suivie du dénominateur de l'échelle.  
   De plus:
-    - la couche **gt40M** correspond au planisphère terrestre (carte 0101) et aux niveaux de zoom 0 à 5,
     - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus
       en fonction du niveau de zoom défini par l'appel,
     - la couche **gtaem** contient les 7 cartes Action de l'Etat en Mer (AEM)
     - la couche **gtMancheGrid** contient la carte MancheGrid,
     - la couche **gtZonMar** contient la carte de délimitation des zones maritimes.
   
-  Enfin, à chacune des 15 couches définies ci-dessus est associée une couche de leur numéro,
-      permettant de repérer une carte par son numéro.
+  Enfin, à chacune des 16 couches définies ci-dessus est associée une couche de leur numéro,
+  permettant de repérer une carte par son numéro.
   
   Par ailleurs, ShomGT3 met à disposition les couches vecteur suivantes :
     - la [ZEE](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive) française simplifiée,
@@ -155,14 +154,11 @@ sur un même site.
 
 Si le site est exposé sur internet, il est nécessaire de gérer le [contrôle d'accès](docs/accesscontrol.md).
 
-### 3.3 Composants externes
+### 3.3 Divers
 ShomGT3 utilise différents [composants externes décrits ici](docs/composantexterne.md).
 
-### 3.4 Bibliothèque commune
-[Une bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
+La [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
 
-### 3.5 Système de log
-[Un système de log est documenté ici](docs/log.md).
+Le [système de log est documenté ici](docs/log.md).
 
-### 3.6 Version Php
 ShomGT3 utilise Php 8 et a été validé avec Php 8.2.
