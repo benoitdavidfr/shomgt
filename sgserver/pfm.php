@@ -1,6 +1,6 @@
 <?php
 {/*PhpDoc:
-title: pfm.php - gestionnaire de portefeuille - 12/6/2023
+title: pfm.php - gestionnaire de portefeuille - 19/6/2023
 doc: |
   Implémente un gestionnaire de portefeuille mettant en oeuvre la structure du portefeuille
   notamment pour ajouter une nouvelle livraison.
@@ -183,7 +183,7 @@ function addDelivery(string $PF_PATH, string $deliveryName): void { // ajoute la
     symlink("../archives/$deliveryName/$mapMdName", "$PF_PATH/current/$mapMdName");
   }
   
-  // supprimer les cartes retirées
+  // supprimer les cartes retirées et marquer le retrait par un md.json avec {status: obsolete}
   if (is_file("$PF_PATH/archives/$deliveryName/index.yaml")) {
     $params = Yaml::parse(file_get_contents("$PF_PATH/archives/$deliveryName/index.yaml"));
     $toDelete = array_keys($params['toDelete'] ?? []);
@@ -194,9 +194,10 @@ function addDelivery(string $PF_PATH, string $deliveryName): void { // ajoute la
         echo "Retrait de de $mapName\n";
         unlink("$PF_PATH/current/$mapName.7z");
         @unlink("$PF_PATH/current/$mapName.md.json");
+        file_put_contents("$PF_PATH/current/$mapName.md.json", json_encode(['status'=>'obsolete'], JSON_OPTIONS));
       }
       else {
-        echo "Erreur de retrait de $mapName, carte retirée dans $deliveryName mais absente\n";
+        echo "Erreur de retrait de $mapName dans $deliveryName car absente\n";
       }
     }
   }

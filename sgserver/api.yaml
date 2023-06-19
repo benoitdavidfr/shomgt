@@ -6,10 +6,11 @@ info:
     Ce serveur permet de télécharger
     les [cartes Shom GéoTiff](https://diffusion.shom.fr/pro/navigation/cartes-marines/cartes-marines-geotiff.html)
     dans le format d'archive 7z tel que livré par le Shom.  
-    Il permet en outre de connaitre la liste des cartes disponibles avec leur version ainsi que le catalogue des cartes.
+    Il permet en outre de connaitre la liste des cartes disponibles avec leur version, la liste des cartes retirées,
+    ainsi que le catalogue des cartes.
     Les versions des cartes sont identifiées par une chaine respectant le motif '{année}c{correction}' où
     {année} est l'année d'édition de la carte au format YYYY et {correction} est le numéro de la dernière correction
-    apportée à la carte ; quelques cartes ne sont pas versionnées et la version est alors 'undefined'.
+    apportée à la carte ; les cartes spéciales ne sont pas versionnées et la version est alors 'undefined'.
   termsOfService: https://sgserver.geoapi.fr/termsofservice.php
   contact:
     name: 'Benoit DAVID - MTE/CGDD'
@@ -430,19 +431,25 @@ components:
         description: Description d'une carte
         type: object
         additionalProperties: false
-        required: [status, lastVersion, url]
+        required: [status]
         properties:
           status:
-            description: statut de la carte. Toujours 'ok'
+            description: |
+              statut de la carte.
+              'ok' signifie que la dernière version de la carte est valide.
+              'obsolete' signifie que la carte a été retirée du catalogue du Shom.
             type: string
-            enum: [ok]
+            enum: [ok, obsolete]
           lastVersion:
             description: |
               identification de la dernière version disponible soit sous la forme '{année}c{correction}'
-              où {année} est l'année de l'édition et {correction} est le numéro de la correction, soit la valeur 'undefined'
+              où {année} est l'année de l'édition et {correction} est le numéro de la correction, soit la valeur 'undefined'.
+              Champ présent ssi status='ok'
             type: string
             pattern: ^(\d{4}c\d+|undefined)$
           url:
-            description: URL d'accès au 7z de la carte
+            description: |
+              URL d'accès au 7z de la carte
+              Champ présent ssi status='ok'
             type: string
             pattern: '^https?://'

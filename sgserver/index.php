@@ -12,9 +12,13 @@ doc: |
     /: page d'accueil utilisée pour proposer des URL de tests
     /api: retourne la description de l'api
     /cat.json: retourne mapcat.json 
-    /maps.json: liste en JSON l'ensemble des cartes disponibles indexées par leur numéro et avec les informations suivantes
-      status: 'ok'
-      lastVersion: identifiant de la dernière version 
+    /maps.json: liste en JSON l'ensemble des cartes ayant été disponibles indexées par leur numéro et avec les infos suivantes
+      si la carte est valide:
+        status: 'ok'
+        lastVersion: identifiant de la dernière version
+        url: URL d'accès à la carte
+      si la carte a été retirée:
+        status: 'obsolete'
     /maps/{numCarte}.7z: retourne le 7z de la carte dans sa dernière version
     
   Utilisation du code Http de retour pour gérer les erreurs pour cat et newer:
@@ -26,6 +30,8 @@ doc: |
   Les cartes 7z sont stockées dans le sous répertoire current du répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH.
   A chaque carte est associé un fichier .md.json qui contient en JSON la propriété version.
 journal: |
+  19/6/2023:
+    - prise en compte des cartes retirées (status obsolete)
   11/6/2023:
     - nouvelle version simplifiée correspondant à la restructuration de shomgeotiff
   2/8/2022:
@@ -230,11 +236,10 @@ if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des car
   foreach (new DirectoryIterator("$PF_PATH/current") as $map) {
     if (substr($map, -8) <> '.md.json') continue;
     $mapMd = json_decode(file_get_contents("$PF_PATH/current/$map"), true);
-    $maps[substr($map, 0, -8)] = [
-      'status'=> 'ok',
-      'lastVersion'=> $mapMd['version'],
-      'url'=> "$scriptUrl/maps/".substr($map, 0, -8).'.7z',
-    ];
+    $mapNum = substr($map, 0, -8);
+    $maps[$mapNum] = (($mapMd['status'] ?? '') == 'obsolete') ?
+        [ 'status'=> 'obsolete' ]
+      : [ 'status'=> 'ok', 'lastVersion'=> $mapMd['version'], 'url'=> "$scriptUrl/maps/$mapNum.7z"];
   }
   ksort($maps, SORT_STRING);
   header('Content-type: application/json');

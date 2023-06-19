@@ -113,7 +113,7 @@ if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version
 }
 
  
-class UpdtMaps { // stocke les informations téléchargées de ${SHOMGT3_SERVER_URL}/maps.json
+class UpdtMaps { // stocke les informations téléchargées de $SERVER_URL/maps.json
   /** @var array<string, string> $validMaps */
   static array $validMaps=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json avec leur version
   /** @var array<int, string> $obsoleteMaps */
