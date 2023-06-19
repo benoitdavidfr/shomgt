@@ -3,7 +3,7 @@ path: /geoapi/shomgt3/shomft
 doc: |
   Les objectifs de ce module sont
     - d'exposer les silhouettes des cartes et les délimitations maritimes provenant du serveur WFS du Shom
-    - de compléter ce serveur avec des cartes qui en sont abssentes
+    - de compléter ce serveur avec des cartes qui en sont absentes
     - d'exposer les contours simplifiés de la ZEE
 
   Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.

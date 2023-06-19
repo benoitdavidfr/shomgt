@@ -5,8 +5,9 @@ name: ft.php
 doc: |
   Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.
   Les collections suivantes sont définies:
-    - gt qui regroupe toutes les cartes
-    - gt{xx} qui reprennent les noms des couches de shomgt et qui correspondent aux silhouettes des cartes
+    - gt qui regroupe toutes les cartes GT normales
+    - ae qui regroupe les cartes AEM
+    - delmar - délimitations maritimes
     - delmar - délimitations maritimes
     - frzee - ZEE française simplifiée et sous la forme de polygones
   
