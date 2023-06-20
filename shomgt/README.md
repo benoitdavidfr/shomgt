@@ -80,7 +80,7 @@ Il permet d'interdire l'accès au service en cas d'abus,
 par exemple si quelqu'un cherche à recopier l'ensemble des tuiles.
 
 ### wmsv.php - service WMS pour les couches vecteur de ShomGT
-Ce script expose un certain nombre de couches vecteur sous la forme d'un serveur WMS.  
+Ce script expose les couches vecteur sous la forme d'un serveur WMS.  
 Il utilise:
 
   - le fichier `wmsvlayers.yaml` qui définit les couches vecteur et les styles à appliquer dans leur dessin,
@@ -115,9 +115,9 @@ Ce script génère une carte [Leaflet](https://leafletjs.com/) qui:
 - propose d'afficher les fichiers GeoJSON suivants stockés dans le répertoire `geojson` :
   - frzee.geojson - la ZEE française simplifiée produite dans le cadre de ce projet,
   - delmar.geojson - les délimitations maritimes produites par le Shom,
-  - sar_2019.geojson - les zones SAR-SRR produites par le Shom.
-
-  Les 2 derniers fichiers sont téléchargés depuis le serveur WFS du Shom en utilisant le [module shomft](../shomft).
+    téléchargées depuis le serveur WFS du Shom en utilisant le [module shomft](../shomft).
+  - sar_2019.geojson - les zones SAR-SRR produites par le Shom,
+    téléchargées depuis https://diffusion.shom.fr/zones-sar.html.
 
 - propose pour un GéoTiff les téléchargements proposés par dl.php. 
 #### inclus

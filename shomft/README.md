@@ -1,8 +1,8 @@
 # Module shomft de ShomGT3
-L'objectif principal de ce module est de mettre à disposition différentes couches vecteur:
+L'objectif principal de ce module est de mettre à disposition dans le projet les couches vecteur suivantes:
 
-- définition simplifiée de la ZEE française (`frzee.geojson`) produit dans le cadre du projet,
-  d'une part sous la forme de polygones et, d'autres part, on ditinguant les zones suivantes:
+- définition simplifiée de la ZEE française (`frzee.geojson`) produit dans le cadre du projet
+  sous la forme de polygones en ditinguant les zones suivantes:
   - métropole - zone Manche-Mer du Nord (FX-MMN)
   - métropole - zone Atlantique (FX-Atl)
   - métropole - zone Méditerranée (FX-Med)
