@@ -74,7 +74,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
 - **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
   - l'année d'édition ou de publication de la carte,
   - le numéro de correction sur l'édition.
-    Historiquement, lorsqu'une correction était publiée, les détenteurs d'une carte devait la reporter sur la carte.  
+    Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devait la reporter sur la carte.  
   
   Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
@@ -88,27 +88,29 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     et varie d'une carte à l'autre.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.
-  Il prend la forme du site https://gan.shom.fr/ qui est un site HTML mais
-  les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
+  Il prend la forme du site https://gan.shom.fr/ qui est un site HTML 
+  et les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
   Dans ShomGT3 ce site est scrappé pour retrouver l'édition et la version courantes d'une carte et les comparer 
-  avec celles de la carte du portefeuille.
+  avec celles de la carte du portefeuille.  
+  Seules les cartes normales sont mentionnées dans le GAN, à l'exception de la carte 0101 qui est le planisphère terrestre.
 - **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis par le Shom
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
   ce système de coordonnées est aussi appelé **World Mercator**.  
   Les coordonnées, par exemple dans le GAN, ne sont pas fournies en World Mercator mais en coordonnées géographiques,
   en dégrés et minutes décimales en WGS84 ; par exemple "41°28,00'N - 010°30,00'W".  
-  Le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) utilise de son côté
+  Pour permettre de superposer de multiples couches,
+  le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) utilise de son côté
   le [système de coordonnées Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection)
   popularisé par Google et son produit Google Maps.  
   Il est donc souvent nécessaire de changer une position d'un système de coordonnées à un autre.  
 - **niveau de zoom**: le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) définit ce concept
   de niveau de zoom où:
   - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
-  - puis le niveau de zoom n+1 correspond à une décomposition en 4 de chaque tuile du niveau de zomm n.
-- **couches de données**: les GéoTiffs sont répartis dans des couches image d'échelle homogène.
+  - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zomm n-1.
+- **couches de données**: les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
   Les dénominateurs des échelles retenus pour ces couches sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
-  5k (16-18), 12k (15), 25k (14), 50k (13), 100k (12), 250k (11), 500k (10), 1M (9), 2M (8), 4M (7), 10M (6), 40M (0-5).  
+  40M (0-5), 10M (6), 4M (7), 2M (8), 1M (9),  500k (10), 250k (11), 100k (12), 50k (13), 25k (14), 12k (15), 5k (16-18).  
   Chacune de ses couches est identifiée par la chaine **gt** suivie du dénominateur de l'échelle.  
   De plus:
     - la couche **gtpyr** sélectionne la couche la plus apropriée parmi les 12 couches ci-dessus

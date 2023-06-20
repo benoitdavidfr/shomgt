@@ -1,7 +1,8 @@
 # Module shomft de ShomGT3
-L'objectif principal de ce module est de mettre à disposition dans le projet les couches vecteur suivantes:
+L'objectif principal de ce module est de simplifier l'utilisation du serveur WFS du Shom
+et de mettre à disposition dans le projet les couches vecteur GeoJSON suivantes:
 
-- définition simplifiée de la ZEE française (`frzee.geojson`) produit dans le cadre du projet
+- définition simplifiée de la ZEE française (`frzee.geojson`) produite dans le cadre du projet
   sous la forme de polygones en ditinguant les zones suivantes:
   - métropole - zone Manche-Mer du Nord (FX-MMN)
   - métropole - zone Atlantique (FX-Atl)
@@ -14,9 +15,10 @@ L'objectif principal de ce module est de mettre à disposition dans le projet le
   - St Pierre et Miquelon (PM)
   - St Barthélemy (BL)
   - St Martin (MF)
-  - Wallis + Futuna (WF) en 2 polygones, l'un à l'Est de l'anti-méridien, et l'autre à l'Ouest
+  - Wallis + Futuna (WF) en 2 polygones de chaque côté de l'anti-méridien
   - Polynésie (PF)
   - Nouvelle Calédonie (NC)
+  - Clipperton (CP)
   - les TAAF (TF) en distinguant
     - Glorieuses
     - Tromelin
@@ -25,8 +27,7 @@ L'objectif principal de ce module est de mettre à disposition dans le projet le
     - Iles Crozet
     - Iles Kerguelen
     - Saint Paul + Amsterdam
-  - Clipperton (CP)
-  - Terre Adélie (TF), même si cette zone n'a pas le même statut
+    - Terre Adélie, même si cette zone n'a pas le même statut
   
 - liste des cartes GéoTiff (`gt.json`) extraite du WFS du Shom par agrégation des couches
   - `CARTES_MARINES_GRILLE:grille_geotiff_800`
@@ -52,7 +53,7 @@ L'objectif principal de ce module est de mettre à disposition dans le projet le
 - liste des cartes spéciales (`aem.json`) extraite du WFS du Shom
   de la couche `GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table`
 
-- délimitations maritimes (`delmar.json`) extraites du WFS du Shom des couches:
+- délimitations maritimes (`delmar.json`) extraites du WFS du Shom pae agrégation des couches:
   - `DELMAR_BDD_WFS:au_baseline` : lignes de base droites
   - `DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary` : délimitation établie par un accord entre Etats
   - `DELMAR_BDD_WFS:au_maritimeboundary_contiguouszone` : limite extérieure de la zone contiguë
@@ -61,5 +62,5 @@ L'objectif principal de ce module est de mettre à disposition dans le projet le
   - `DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary` : limite d'espace maritime revendiqué par la France sans accord
   - `DELMAR_BDD_WFS:au_maritimeboundary_territorialsea` : limite extérieure de la mer territoriale
 
-Pour les actualiser les fichiers `gt.json`, `aem.json` et `delmar.json`, il suffit de les supprimer
+Pour actualiser les fichiers `gt.json`, `aem.json` et `delmar.json`, il suffit de les supprimer
 et d'appeler /ft.php/{collection}/items où {collection} est respectivement `gt`, `aem` ou `delmar`.
