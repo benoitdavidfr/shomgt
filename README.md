@@ -54,7 +54,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
 ## 2. Termes et concepts utilisés dans ce projet
 Dans ce projet sont utilisés différents termes et concepts définis ci-dessous:
 
-- **portefeuille de cartes**: l'ensemble des cartes gérées par ShomGT,
+- **portefeuille de cartes**: l'ensemble des cartes gérées par ShomGT, chacune dans une certaine version,
 - **carte d'intérêt (pour ShomGT)**: carte ayant vocation à être dans le portefeuille.  
   Il s'agit:
     - des cartes intersectant la ZEE française
@@ -73,8 +73,6 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html),
     principalement les cartes d'action de l'Etat en mer (AEM), dont le format de livraison n'est pas fixé 
     et varie d'une carte à l'autre.
-- **carte obsolète** : carte que le Shom a retiré de son catalogue,
-- **carte périmée** : carte remplacée par une nouvelle version,
 - **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
   - l'année d'édition ou de publication de la carte,
   - le numéro de correction sur l'édition.
@@ -82,6 +80,10 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   
   Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
+- **carte obsolète** : carte que le Shom a retiré de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
+- **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
+  une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
+  du nombre de corrections apportées.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.
   Les actualisations sont publiées chaque semaine et datée par un nombre correspondant sur les 2 premiers chiffres à l'année,
