@@ -41,7 +41,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
     
     *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
     issues du [GAN du Shom](#gan).
-    Il exploite aussi la liste des cartes du Shom diffusé par le Shom dans son serveur WFS.
+    Il exploite aussi pour détecter de nouvelles cartes la liste des cartes diffusée par le Shom dans son serveur WFS.
     
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes.
