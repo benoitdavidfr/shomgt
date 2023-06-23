@@ -117,7 +117,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zomm n-1.
   
-  ShomGT utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
+  ShomGT3 utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
 - **couches de données**: dans ShomGT3 les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
   Les dénominateurs des échelles retenus pour ces couches sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
