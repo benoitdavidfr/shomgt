@@ -31,7 +31,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
     un volume partagé entre les 2 conteneurs.
     
-  - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom.
+  - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
     Il est mis à jour régulièrement grâce à *dashboard*.
   
   - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
@@ -44,7 +44,8 @@ ShomGT3 se décompose dans les 6 modules suivants:
     Il exploite aussi pour détecter de nouvelles cartes la liste des cartes diffusée par le Shom dans son serveur WFS.
     
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
-    Il décrit des informations intemporelles sur les cartes.
+    Il décrit des informations intemporelles sur les cartes comme le titre de la carte, sa couverture spatiale,
+    la liste de ses cartouches, ....
     Il est utilisé par *sgupdt* et consultable au travers de *sgserver*.
   
   - **[shomft](shomft)** gère différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
@@ -115,6 +116,8 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   de niveau de zoom où:
   - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zomm n-1.
+  
+  ShomGT utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
 - **couches de données**: dans ShomGT3 les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
   Les dénominateurs des échelles retenus pour ces couches sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
