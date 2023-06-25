@@ -3,7 +3,7 @@
  produites par le [module sgupdt](../sgupdt) et exploitées par [le module shomgt](../shomgt).
 Lorsque ces modules sont déployés comme conteneurs Docker, *data* est un volume partagé entre ces conteneurs.
 
-Outre ce fichier de documentation, *data* contient le shomgt.yaml et 3 sous-répertoires.
+Outre ce fichier de documentation, *data* contient le fichier `shomgt.yaml` et 3 sous-répertoires.
 
 ## Le fichier shomgt.yaml
 Le fichier `shomgt.yaml` définit les couches de GéoTiffs par leur identifiant et les GéoTiffs qu'elles contiennent.

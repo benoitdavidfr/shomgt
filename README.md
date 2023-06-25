@@ -1,5 +1,5 @@
 # ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
-Ce dépôt correspond à une nouvelle version de ShomGT, dont l'objectif est d'exposer sous la forme de web-services
+L'objectif de ShomGT est d'exposer sous la forme de web-services
 le contenu des [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
 couvrant les zones sous juridiction française, pour permettre aux services du pôle ministériel
 du [MTECT/MTE](http://www.ecologie.gouv.fr) et du [secrétariat d'Etat à la mer](https://mer.gouv.fr/)
@@ -9,8 +9,8 @@ La principale plus-value de ShomGT est de permettre de consulter le contenu des 
 afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
 comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
-Par rapport à la version précédente, cette version simplifie la mise en place d'un serveur local, son approvisionnement avec
-les cartes du Shom, puis la mise à jour de ces cartes ;
+Ce dépôt correspond la version 3 de ShomGT qui, par rapport à la version précédente, simplifie la mise en place
+d'un serveur local, son approvisionnement avec les cartes du Shom, puis la mise à jour de ces cartes ;
 cette simplification s'appuie sur l'utilisation de conteneurs Docker et de docker-compose.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
@@ -52,6 +52,8 @@ ShomGT3 se décompose dans les 6 modules suivants:
     Il gère aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
     d'intérêt pour ShomGT dans *dashboard*.
 
+Chacun de ces modules correspond à un répertoire ;
+en plus de ces 6 modules, une [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
 ## 2. Termes et concepts utilisés dans ce projet
 Dans ce projet sont utilisés différents termes et concepts définis ci-dessous:
 
@@ -169,8 +171,6 @@ Si le site est exposé sur internet, il est nécessaire de gérer le [contrôle 
 
 ### 3.3 Divers
 ShomGT3 utilise différents [composants externes décrits ici](docs/composantexterne.md).
-
-La [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
 
 Le [système de log est documenté ici](docs/log.md).
 

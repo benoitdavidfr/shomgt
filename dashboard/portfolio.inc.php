@@ -12,12 +12,16 @@ class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu des fichi
       throw new Exception("Variables d'env. SHOMGT3_DASHBOARD_PORTFOLIO_PATH et SHOMGT3_PORTFOLIO_PATH non définies");
     foreach (new DirectoryIterator("$PF_PATH/current") as $entry) {
       if (substr($entry, -8) <> '.md.json') continue;
-      self::$all[substr($entry, 0, -8)] = json_decode(file_get_contents("$PF_PATH/current/$entry"), true);
+      $map = json_decode(file_get_contents("$PF_PATH/current/$entry") , true);
+      if (($map['status'] ?? '') == 'obsolete') continue;
+      $id = substr($entry, 0, -8);
+      self::$all[$id] = $map;
     }
     //echo '<pre>'; print_r(self::$all);
   }
   
   static function exists(string $mapnum): bool {
+    //if ($mapnum == '0101') return false;
     return isset(self::$all[$mapnum]);
   }
 };

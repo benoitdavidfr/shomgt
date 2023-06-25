@@ -14,7 +14,7 @@ Par exemple, on peut souhaiter conserver l'historique sur la machine de dévelop
 et minimiser le stockage sur la machine de production.
 
 ### 2.1 Dépôt shomgeotiff conservant l'historique des livraisons de cartes
-Le répertoire shomgeotiff contient 3 sous-répertoires:
+Dans cette configuration le répertoire shomgeotiff contient 3 sous-répertoires:
 
 - `ìncoming` qui contient un sous-répertoire par livraison de cartes à intégrer dans le portfeuille ;
   chaque sous-répertoire de livrason doit être nommé par la date de livraison en format `YYYYMMDD` ;
@@ -85,8 +85,9 @@ Exemple d'un fichier pour lequel le champ `alternate` est défini
     }
 
 ### 2.2 Dépôt shomgeotiff minimisant le volume de stockage
-Pour minimiser le volume de stockage, le répertoire `current` contient les réels fichiers `{num}.7z`
-et `{num}.md.json` au lieu des liens symboliques. Le répertoire `archives` n'est alors plus nécessaire.
+Dans cette 2nd configuration, pour minimiser le volume de stockage, le répertoire `current` contient
+les réels fichiers `{num}.7z` et `{num}.md.json` au lieu des liens symboliques.
+Le répertoire `archives` n'est alors plus nécessaire.
 
 ### 2.3 Problème rencontré avec les dates de validité des cartes
 Dans certains cas, la date de révision indiquée dans les MD ISO 19139 est manifestement fausse.

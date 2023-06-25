@@ -1,15 +1,17 @@
 <?php
 /*PhpDoc:
 name: mapwcat.php
-title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE
+title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE, delmar, ...
 doc: |
 journal: |
+  24/6/2023:
+    - mise en https d'OSM
   9/5/2023:
     - mise en https de https://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png
   21/4/2023:
     - ajout de l'affichage en option des silhouettes du catalogue Shom exposé en WFS
   19/4/2023:
-    - correction de l'URL des HAN dans la carte Leaflet
+    - correction de l'URL des GAN dans la carte Leaflet
   28-31/7/2022:
     - correction suite à analyse PhpStan level 6
   1/6/2022:
@@ -310,7 +312,7 @@ var baseLayers = {
   ),
   // OSM
   "OSM" : new L.TileLayer(
-    'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
     {"attribution":"&copy; <a href='https://www.openstreetmap.org/copyright' target='_blank'>les contributeurs d’OpenStreetMap</a>"}
   ),
   // Fond blanc

@@ -12,6 +12,8 @@
  *  - soit elle intersecte la ZEE
  * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
  *
+ * 25/6/2023:
+ *  - ajout de l'affichage de la disponibilité de la carte dans la boutique
  * 12/6/2023:
  *  - réécriture de l'interface avec le portefeuille à la suite de sa réorganisation
  * 23/4/2023:
@@ -23,7 +25,7 @@
  * 22/8/2022: correction bug
  */
 /*PhpDoc:
-title: dashboard/index.php - Tableau de bord de mise à jour des cartes - 23/4/2023
+title: dashboard/index.php - Tableau de bord de mise à jour des cartes - 25/6/2023
 */
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -118,8 +120,10 @@ class MapFromWfs {
     $gt = json_decode(file_get_contents(__DIR__.'/../shomft/gt.json'), true);
     $aem = json_decode(file_get_contents(__DIR__.'/../shomft/aem.json'), true);
     foreach (array_merge($gt['features'], $aem['features']) as $gmap) {
+      //if ($gmap['properties']['carte_id'] == '0101') continue; // Pour test du code
       self::$fts[$gmap['properties']['carte_id']] = new self($gmap);
     }
+    ksort(self::$fts);
   }
   
   /** @param TGeoJsonFeature $gmap */
@@ -128,24 +132,39 @@ class MapFromWfs {
     $this->mpol = MultiPolygon::fromGeoArray($gmap['geometry']);
   }
   
-  static function show(): void { // affiche le statut de chaque carte Wfs
-    $maps = [];
-    foreach (self::$fts as $gmap) {
-      //echo '<pre>gmap = '; print_r($gmap); echo "</pre>\n";
-      $array = ['title'=> $gmap->prop['name']];
-      
-      if (!isset($gmap->prop['scale']))
-        $array['status'] = 'sans échelle';
-      elseif ($gmap->prop['scale'] > 6e6)
-        $array['status'] = 'à petite échelle (< 1/6M)';
-      elseif ($mapsFr = Zee::inters($gmap->mpol))
-        $array['status'] = 'intersecte '.implode(',',$mapsFr);
-      else
-        $array['status'] = "Hors ZEE française";
-      $maps[$gmap->prop['carte_id']] = $array;
+  function mawwcatUrl(): string { // construction de l'URL vers mapwcat.php bien centré et avec le bon niveau de zoom
+    $center = $this->mpol->center();
+    $center = "center=$center[1],$center[0]";
+    
+    if (isset($this->prop['scale'])) {
+      $zoom = round(log(1e7 / $this->prop['scale'], 2));
+      if ($zoom < 3) $zoom = 3;
     }
-    ksort($maps);
-    echo '<pre>',Yaml::dump(array_values($maps));
+    else {
+      $zoom = 6;
+    }
+    return "../mapwcat.php?options=wfs&zoom=$zoom&$center";
+  }
+  
+  function showOne(): void { // affiche une carte 
+    //echo '<pre>gmap = '; print_r($gmap); echo "</pre>\n";
+    $array = [
+      'title'=> '{a}'.$this->prop['name'].'{/a}',
+      'scale'=> isset($this->prop['scale']) ? '1:'.addUndescoreForThousand($this->prop['scale']) : 'undef',
+    ];
+    
+    if (!isset($this->prop['scale']))
+      $array['status'] = 'sans échelle';
+    elseif ($this->prop['scale'] > 6e6)
+      $array['status'] = 'à petite échelle (< 1/6M)';
+    elseif ($mapsFr = Zee::inters($this->mpol))
+      $array['status'] = 'intersecte '.implode(',',$mapsFr);
+    else
+      $array['status'] = "Hors ZEE française";
+    
+    $url = $this->mawwcatUrl();
+    //echo "<a href='$url'>lien zoom=$zoom</a>\n";
+    echo str_replace(["-\n ",'{a}','{/a}'], ['-',"<a href='$url'>","</a>"], Yaml::dump([$array]));
   }
   
   /** @return array<string, array<int, string>> */
@@ -287,12 +306,16 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
       " le numéro de la correction et, dans la seconde colonne, avant le tiret, le no de semaine de la correction",
       " (année sur 2 caractères et no de semmaine sur 2 caractères)",
       " et après le tiret le numéro d'avis dans le GAN de cette semaine.</td></tr>\n";
+    if (AvailOnTheShop::exists())
+      echo "<tr><td><b>boutique</b></td><td>disponibilité sur la boutique du Shom avec info de mise à jour</td></tr>\n";
     echo "</table></p>\n";
     echo "<p>Attention, certains écarts de version sont dus à des informations incomplètes ou incorrectes",
       " sur les sites du Shom</p>\n";
     echo "<table border=1>",
          "<th>#</th><th>titre</th><th>zone géo.</th><th>revision</th><th>v. Pf</th>",
          "<th>v. GAN</th><th>degré</th><th>corrections</th>\n";
+    if (AvailOnTheShop::exists())
+      echo "<th>boutique</th>\n";
     foreach (Perempt::$all as $p) {
       $p->showAsRow();
     }
@@ -313,17 +336,50 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
       echo "<tr><td>$c[num]</td><td>$c[semaineAvis]</td></tr>";
     }
     echo "</table></td>\n";
+    if (AvailOnTheShop::exists())
+      echo "<td>",AvailOnTheShop::maj($this->mapNum),"</td>\n";
     //echo "<td><pre>"; print_r($this); echo "</pre></td>";
     echo "</tr>\n";
   }
 };
 
+class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique
+  const FILE_NAME = __DIR__.'/disponible.tsv';
+  const MAX_DURATION = 2*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
+  //const MAX_DURATION = 60; // Pour test
+  static array $all=[]; // [{mapNum} => {maj}]
+  
+  static function exists(): bool { return (self::$all <> []); } // indique s'il existe au moins une carte disponible 
+  
+  static function init(): void {
+    // si le fichier n'existe pas ou s'il date de plus de 2 jours alors abandon 
+    if (!is_file(self::FILE_NAME) || (time() - filemtime(self::FILE_NAME) > self::MAX_DURATION))
+      return;
+    $ftsv = fopen(self::FILE_NAME, 'r');
+    while ($record = fgetcsv($ftsv, 256, "\t")) {
+      //print_r($record);
+      //var_dump($record);
+      if ($record[0] == 'Commande ') continue;
+      if (!preg_match('! - (\d{4}) !', $record[1], $matches))
+        die("No match on $record[1]\n");
+      $mapnum = $matches[1];
+      self::$all[$mapnum] = $record[2];
+    }
+    fclose($ftsv);
+  }
+  
+  // retourne le champ 'Informations de mise à jour ' pour la carte de numéro $mapNum
+  static function maj(string $mapNum): string { return self::$all[$mapNum] ?? ''; }
+};
+
 switch ($_GET['a']) {
-  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec degré d'intérêt
-    echo "<h2>Liste des cartes du serveur WFS du Shom avec degré d'intérêt</h2>\n";
+  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3
+    echo "<h2>Liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3</h2><pre>\n";
     MapFromWfs::init();
     Zee::init();
-    MapFromWfs::show();
+    foreach (MapFromWfs::$fts as $gmap) {
+      $gmap->showOne();
+    }
     die();
   }
   case 'listOfInterest': { // liste des cartes d'intérêt 
@@ -370,9 +426,9 @@ switch ($_GET['a']) {
       echo "<h2>Toutes les cartes du portefeuille sont présentes dans le flux WFS</h2>\n";
     else {
       echo "<h2>Cartes du portefeuille absentes du flux WFS</h2>\n";
-      foreach (Portfolio::actives() as $mapid => $map) {
-        if (!in_array($mapid, $listOfInterest))
-          echo "- $mapid<br>\n";
+      //echo "<pre>"; print_r($listOfInterest); echo "</pre>\n";
+      foreach ($obsoletes as $mapid) {
+        echo "- $mapid<br>\n";
       }
     }
     die();
@@ -381,6 +437,7 @@ switch ($_GET['a']) {
     Portfolio::init(); // initialisation à partir du portefeuille
     DbMapCat::init(); // chargement du fichier mapcat.yaml
     GanStatic::loadFromPser(); // chargement de la synthèse des GANs
+    AvailOnTheShop::init();
     Perempt::init(); // construction à partir du portefeuille
     // Mise à jour de perempt à partir du GAN
     foreach (Perempt::$all as $mapNum => $perempt) {
@@ -390,6 +447,11 @@ switch ($_GET['a']) {
         $perempt->setGan($gan);
     }
     Perempt::showAll(); // Affichage du tableau des degrés de péremption
+    die();
+  }
+  case 'availOnShop': { // Test de AvailOnTheShop::init();
+    echo "<pre>";
+    AvailOnTheShop::init();
     die();
   }
   default: { die("Action $_GET[a] non définie\n"); }
