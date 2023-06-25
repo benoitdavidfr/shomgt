@@ -31,7 +31,7 @@ define('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_U
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
   $date = new DateTimeImmutable();
   // public DateTimeImmutable::setISODate(int $year, int $week, int $dayOfWeek = 1): DateTimeImmutable
-  $newDate = $date->setISODate('20'.substr($ganWeek,0,2), substr($ganWeek, 2), 3);
+  $newDate = $date->setISODate((int)('20'.substr($ganWeek,0,2)), (int)substr($ganWeek, 2), 3);
   return $newDate->format('Y-m-d');
 }
 
@@ -40,6 +40,7 @@ function stdEntry(string $entry): bool { return in_array($entry, ['.','..','.DS_
 
 class MapMetadata { // construit les MD d'une carte à partir des MD ISO dans le 7z 
   // La date de revision n'est pas celle de la correction mais ed l'édition de la carte
+  /** @return array<string, string> */
   static function extractFromIso19139(string $mdpath): array { // lit les MD dans le fichier ISO 19138
     if (!($xmlmd = @file_get_contents($mdpath)))
       throw new Exception("Fichier de MD non trouvé pour mdpath=$mdpath");
@@ -79,6 +80,7 @@ class MapMetadata { // construit les MD d'une carte à partir des MD ISO dans le
     return $md;
   }
 
+  /** @return array<string, string> */
   static function getFrom7z(string $pathOf7z): array { // retourne les MD ISO à partir du chemin de la carte en 7z 
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
     $creation = [];
@@ -112,22 +114,22 @@ class MapMetadata { // construit les MD d'une carte à partir des MD ISO dans le
   }
   
   static function test(string $PF_PATH): void { // Test de la classe 
-    if (0) { // Test sur une carte 
+    if (0) { // @phpstan-ignore-line // Test sur une carte 
       $md = self::getFrom7z("$PF_PATH/current/7107.7z");
       echo "getMapVersionFrom7z()-> ",json_encode($md, JSON_OPTIONS),"\n";
     }
-    elseif (1) { // Test d'une carte spéciale 
+    elseif (1) { // @phpstan-ignore-line // Test d'une carte spéciale 
       $md = self::getFrom7z("$PF_PATH/current/7330.7z");
       echo "getMapVersionFrom7z()-> ",json_encode($md, JSON_OPTIONS),"\n";
     }
-    elseif (0) { // test de toutes les cartes de current 
+    elseif (0) { // @phpstan-ignore-line // test de toutes les cartes de current 
       foreach (new DirectoryIterator("$PF_PATH/current") as $entry) {
         if (substr($entry, -3) <> '.7z') continue;
         $md = self::getFrom7z("$PF_PATH/current/$entry");
         echo "getMapVersionFrom7z($entry)-> ",json_encode($md, JSON_OPTIONS),"\n";
       }
     }
-    elseif (0) { // Test de ttes les cartes de archives
+    elseif (0) { // @phpstan-ignore-line // Test de ttes les cartes de archives
       foreach (new DirectoryIterator("$PF_PATH/archives") as $archive) {
         if (stdEntry($archive)) continue;
         foreach (new DirectoryIterator("$PF_PATH/archives/$archive") as $entry) {

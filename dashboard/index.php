@@ -137,7 +137,7 @@ class MapFromWfs {
     $center = "center=$center[1],$center[0]";
     
     if (isset($this->prop['scale'])) {
-      $zoom = round(log(1e7 / $this->prop['scale'], 2));
+      $zoom = round(log(1e7 / (int)$this->prop['scale'], 2));
       if ($zoom < 3) $zoom = 3;
     }
     else {
@@ -150,7 +150,7 @@ class MapFromWfs {
     //echo '<pre>gmap = '; print_r($gmap); echo "</pre>\n";
     $array = [
       'title'=> '{a}'.$this->prop['name'].'{/a}',
-      'scale'=> isset($this->prop['scale']) ? '1:'.addUndescoreForThousand($this->prop['scale']) : 'undef',
+      'scale'=> isset($this->prop['scale']) ? '1:'.addUndescoreForThousand((int)$this->prop['scale']) : 'undef',
     ];
     
     if (!isset($this->prop['scale']))
@@ -347,6 +347,8 @@ class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
   const FILE_NAME = __DIR__.'/disponible.tsv';
   const MAX_DURATION = 2*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
   //const MAX_DURATION = 60; // Pour test
+  
+  /** @var array<string, string> $all */
   static array $all=[]; // [{mapNum} => {maj}]
   
   static function exists(): bool { return (self::$all <> []); } // indique s'il existe au moins une carte disponible 
@@ -413,7 +415,8 @@ switch ($_GET['a']) {
       echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
       foreach ($newMaps as $mapid => $zeeIds) {
         $map = MapFromWfs::$fts[$mapid]->prop;
-        echo "- $map[name] (1/",addUndescoreForThousand($map['scale'] ?? null),") intersecte ",implode(',', $zeeIds),"<br>\n";
+        $scale = '1/'.addUndescoreForThousand(isset($map['scale']) ? (int)$map['scale'] : null);
+        echo "- $map[name] ($scale) intersecte ",implode(',', $zeeIds),"<br>\n";
       }
     }
   

@@ -311,7 +311,7 @@ class GanStatic {
             echo "Lecture $url ok\n";
           }
         }
-        elseif (0) { // déverminage 
+        elseif (0) { // @phpstan-ignore-line // déverminage 
           echo "le fichier $gandir/$mapnum-$ganWeek.html existe || errors[$mapnum-$ganWeek]\n";
         }
       }

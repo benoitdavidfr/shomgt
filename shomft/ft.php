@@ -124,6 +124,7 @@ class FtServer {
   ];
   
   // liste des ids de couche avec dénom. d'échelle max associé
+  /** @var array<string, float> $sdmax */
   static array $sdmax = [
     'gt10M'=>  14e6, // échelle comprise entre 1/14.000.000 et 1/6.000.000
     'gt4M'=>    6e6, // échelle comprise entre 1/6.000.000 et 1/3.000.000
