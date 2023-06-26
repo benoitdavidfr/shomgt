@@ -6,8 +6,8 @@ description: |
   Les champs optionnels z-order et toDelete sont utilisés pour améliorer la superposition entre GéoTiffs.
   Les champs layer et geotiffname sont utilisés pour les cartes spéciales ne respactant pas les specs des GéoTiffs.
   
-  Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques stables
-  des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.
+  Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques
+  stables des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.
   Ces écarts au GAN existent et sont alors expliqués dans les champs noteCatalog et badGan.
   
   La structuration des cartouches (sauf leur ordre dans la carte) est gérée conformément à celle des GéoTiffs
@@ -21,6 +21,7 @@ description: |
     - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
   Journal:
+    - 26/6/2023 - remplacement de la carte 6118 par la carte 7638 (au 24/05/2023 (GAN  2321))
     - duplication du fichier pour ShomGt3 en avril-mai 2022
       - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
     - 5-6/6/2022
@@ -151,15 +152,6 @@ maps:
       - title: 'Motu One (Bellingshausen)'
         scaleDenominator: '174.000'
         spatial: { SW: '15°51,97''S - 154°35,16''W', NE: '15°44,97''S - 154°28,16''W' }
-  FR6118:
-    groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
-    title: 'Iles Saint-Pierre et Miquelon'
-    mapsFrance:
-      - PM
-    scaleDenominator: '80.000'
-    spatial:
-      SW: '46°35,00''N - 056°38,95''W'
-      NE: '47°17,00''N - 055°57,95''W'
   FR6165:
     groupTitle: 'Polynésie française - Iles Australes'
     title: Rurutu
@@ -4988,11 +4980,18 @@ maps:
     spatial:
       SW: '13°40,00''N - 062°20,00''W'
       NE: '16°41,54''N - 060°13,00''W'
+  FR7638:
+    groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
+    title: "Archipel de Saint-Pierre-et-Miquelon"
+    mapsFrance: [PM]
+    scaleDenominator: '80.000'
+    spatial:
+      SW: "46°32,40'N - 056°40,72'W"
+      NE: "47°19,20'N - 055°54,00'W"
   FR7639:
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Abords et port de l''Île Saint-Pierre'
-    mapsFrance:
-      - PM
+    mapsFrance: [PM]
     noteShom: 'Nota : La carte 982 sera supprimée à la publication de la carte 7640. Porter le cadre du cartouche A et la légende "7639 A (INT 4636)" sur la carte 6118. Rayer le cadre de la carte 982 et la légende "982" sur la carte 6118.'
     insetMaps:
       - title: 'A - Abords de l''Île Saint-Pierre'
@@ -5004,8 +5003,7 @@ maps:
   FR7640:
     groupTitle: 'Abords Sud de Terre-Neuve - Miquelon'
     title: 'Port et mouillages de l''Île Miquelon'
-    mapsFrance:
-      - PM
+    mapsFrance: [PM]
     replaces: '(remplace carte 982.CA)'
     noteShom: 'Nota : Porter le cadre du cartouche A et la légende "7640 A (INT 4637)" sur la carte 6118. Porter le cadre du cartouche C et la légende "7640 C (INT 4637)" sur la carte 6118. Rayer la légende "VC 982" dans l''anse de Miquelon sur la carte 6118.'
     insetMaps:
@@ -5327,6 +5325,13 @@ obsoleteMaps:
         Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
         On pourrait améliorer les corrections mais cela évite un affichage très moche.
       badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
+  FR6118:
+    '2023-06-26':
+      groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
+      title: 'Iles Saint-Pierre et Miquelon'
+      mapsFrance: [PM]
+      scaleDenominator: '80.000'
+      spatial: { SW: "46°35,00'N - 056°38,95'W", NE: "47°17,00'N - 055°57,95'W" }
   FR6553:
     '2023-01-10':
       groupTitle: 'Côte Est de Nouvelle-Calédonie'

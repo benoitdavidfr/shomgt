@@ -25,11 +25,12 @@ ShomGT3 se décompose dans les 6 modules suivants:
     - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour, en interrogeant *sgserver*, les fichiers nécessaires à *shomgt*,
-    stockés dans un [répertoire data décrit ici](data). 
+  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt*
+    et les stocke dans un [répertoire data décrit ici](data) ;
+    pour cela il interroge *sgserver*.
     
     *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
-    un volume partagé entre les 2 conteneurs.
+    un volume partagé entre ces 2 conteneurs.
     
   - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
     Il est mis à jour régulièrement grâce à *dashboard*.
@@ -41,7 +42,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
     
     *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
     issues du [GAN du Shom](#gan).
-    Il exploite aussi pour détecter de nouvelles cartes la liste des cartes diffusée par le Shom dans son serveur WFS.
+    Il exploite aussi, pour détecter de nouvelles cartes, la liste des cartes diffusée par le Shom dans son serveur WFS.
     
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes comme le titre de la carte, sa couverture spatiale,
@@ -61,13 +62,13 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
 - **carte d'intérêt (pour ShomGT)**: carte ayant vocation à être dans le portefeuille.  
   Il s'agit:
     - des cartes intersectant la ZEE française
-      - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement
+      - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement dans le catalogue MapCat
     - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre
 - **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive)
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
   chaque carte est identifiée par un numéro sur 4 chiffres
   qui est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
-  La livraison par le Shom d'une carte prend la forme d'une archive 7z.
+  La livraison par le Shom d'une carte correspond à une version particulière et prend la forme d'une archive 7z.
 - **carte spéciale** : dans ShomGT, on distingue :
   - les cartes normales, c'est à dire les [Cartes marines numériques raster
     (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
@@ -83,6 +84,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   
   Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
+  Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.
 - **carte obsolète** : carte que le Shom a retiré de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
 - **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
   une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
@@ -139,7 +141,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
     - la [ZEE](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive) française simplifiée,
     - les [délimitations maritimes définies
       par le Shom](https://www.shom.fr/fr/nos-activites-diffusion/cellule-delimitations-maritimes),
-    - les [zones SAR-SRR](https://diffusion.shom.fr/donnees/limites-maritimes/zones-sar.html) 
+    - les [zones SAR-SRR](https://diffusion.shom.fr/donnees/limites-maritimes/zones-sar.html).
 
 ## 3. Configuration
 ### 3.1 Déploiement décentralisé
