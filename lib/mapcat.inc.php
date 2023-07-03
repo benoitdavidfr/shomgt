@@ -5,6 +5,9 @@ name: mapcat.inc.php
 classes:
 doc: |
 journal: |
+  2/7/2023:
+    - correction d'un bug en lien avec la carte 7620
+    - correction d'un bug sur la création du répertoire temp
   1/8/2022:
     - correction suite à analyse PhpStan level 6
   17-18/6/2022:
@@ -28,7 +31,7 @@ class TempMapCat {
   static function init(string $option=''): void {
     if (($option=='download') || !is_file(self::MAPCAT_TEMP_PATH)) {
       $url = EnvVar::val('SHOMGT3_SERVER_URL').'/cat.json';
-      if (!is_dir(__DIR__.'/../temp')) mkdir(__DIR__.'/temp');
+      if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
       $httpCode = download($url, self::MAPCAT_TEMP_PATH, 1);
       if ($httpCode <> 200)
         throw new Exception("Erreur de download de cat.json");
@@ -97,7 +100,9 @@ class TempMapCat {
     $map = self::$cat["FR$mapnum"] ?? null;
     if (!$map)
       return null;
-    elseif (!preg_match('!^\d+_\d+_gtw!', $gtname)) { // espace principal de carte standard ou carte spéciale 
+    //elseif (!preg_match('!^\d+_\d+_gtw!', $gtname)) { // espace principal de carte standard ou carte spéciale 
+    // correction bug 2/7/2023
+    elseif (!preg_match('!^\d+_[^_]+_gtw$!', $gtname)) { // espace principal de carte standard ou carte spéciale 
       return $map;
     }
     // si non cartouche 

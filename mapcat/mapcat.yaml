@@ -21,6 +21,7 @@ description: |
     - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
   Journal:
+    - 2/7/2023 - gestion du pb de géoréférencement de 7620 en ajoutant les bordures
     - 26/6/2023 - remplacement de la carte 6118 par la carte 7638 (au 24/05/2023 (GAN  2321))
     - duplication du fichier pour ShomGt3 en avril-mai 2022
       - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
@@ -4650,6 +4651,7 @@ maps:
     spatial:
       SW: '17°49,00''N - 063°16,00''W'
       NE: '18°13,30''N - 062°38,70''W'
+    z-order: 0 # au-dessus de 7620
   FR7472:
     groupTitle: 'Petites Antilles'
     title: 'Ports et mouillages de Saint-Martin (Sint Maarten) et de Saint-Barthélemy'
@@ -4939,13 +4941,17 @@ maps:
   FR7620:
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
-    mapsFrance:
-      - MF
+    mapsFrance: [MF]
     scaleDenominator: '50.000'
     spatial:
       SW: '18°05,30''N - 063°20,96''W'
       NE: '18°22,92''N - 062°52,05''W'
+    borders: { left: 893, bottom: 1032, right: 888, top: 1213 }
+    # L=13819 x H=9922
     references: 'Fac similé carte GB n°2047 publiée en 1985 (édition mars 2018)'
+    noteCatalog: |
+      Problème d'affichage semble lié au géoréférencement, fourniture des bordures pour le résoudre.
+    z-order: -1 # en-dessous de 7471
     insetMaps:
       - title: 'A - Sombrero Island'
         scaleDenominator: '15.000'
@@ -4953,8 +4959,7 @@ maps:
   FR7625:
     groupTitle: 'Océan Atlantique - Côte d''Amérique du Sud'
     title: 'De Trinidad à Cabo Orange'
-    mapsFrance:
-      - GF
+    mapsFrance: [GF]
     scaleDenominator: 1.010.000
     spatial:
       SW: '03°55,00''N - 061°05,00''W'
@@ -4962,10 +4967,7 @@ maps:
   FR7630:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie Nord - De Anguilla à la Guadeloupe'
-    mapsFrance:
-      - BL
-      - GP
-      - MF
+    mapsFrance: [GP, BL, MF]
     scaleDenominator: '300.000'
     spatial:
       SW: '15°47,00''N - 063°27,00''W'
@@ -4973,9 +4975,7 @@ maps:
   FR7631:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie centrale'
-    mapsFrance:
-      - MQ
-      - GP
+    mapsFrance: [MQ, GP]
     scaleDenominator: '304.400'
     spatial:
       SW: '13°40,00''N - 062°20,00''W'

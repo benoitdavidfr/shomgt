@@ -12,6 +12,11 @@
  *  - soit elle intersecte la ZEE
  * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
  *
+ * 2/7/2023:
+ *  - correction lecture AvailOnTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin
+ * 28/6/2023:
+ *  - **BUG** Attention, l'action perempt plante lorsqu'une nouvelle carte est ajoutée dans le patrimoine
+ *    sans que le GAN soit moissonné sur cette carte
  * 25/6/2023:
  *  - ajout de l'affichage de la disponibilité de la carte dans la boutique
  * 12/6/2023:
@@ -359,9 +364,10 @@ class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
       return;
     $ftsv = fopen(self::FILE_NAME, 'r');
     while ($record = fgetcsv($ftsv, 256, "\t")) {
-      //print_r($record);
-      //var_dump($record);
+      //echo "<pre>"; print_r($record); echo "</pre>\n";
+      //echo "<pre>"; var_dump($record); echo "</pre>\n";
       if ($record[0] == 'Commande ') continue;
+      if ($record[0] == null) break; // ligne vide à la fin du fichier
       if (!preg_match('! - (\d{4}) !', $record[1], $matches))
         die("No match on $record[1]\n");
       $mapnum = $matches[1];

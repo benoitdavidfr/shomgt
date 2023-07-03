@@ -95,8 +95,8 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   et sur 2 autres chiffres à la semaine dans l'année.
   Le GAN prend la forme du site https://gan.shom.fr/ qui est un site HTML 
   et les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
-  Dans ShomGT3 ce site est scrappé pour retrouver l'édition et la version courantes d'une carte et les comparer 
-  avec celles de la carte du portefeuille.  
+  Dans ShomGT3 ce site est scrappé pour retrouver la version courante d'une carte et la comparer 
+  avec celle de la carte du portefeuille.  
   Seules les cartes normales sont mentionnées dans le GAN, à l'exception de la carte 0101 qui est le planisphère terrestre.
   Les cartes spéciales ne sont pas mentionnées dans le GAN.
 - **GéoTiff** : la numérisation d'une carte produit des images géoréférencées
@@ -105,7 +105,9 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF) ; l'image est ainsi appelée **GéoTiff**.
   Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
   Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
-  Dans certains cas un GéoTiff peut ne pas être géoréférencé.
+  Dans certains cas un GéoTiff peut ne pas être géoréférencé ; principalement dans 2 cas :
+  - lorsqu'une carte ne comporte pas de zone principale alors le GéoTiff de la carte globale n'est pas géoréférencé,
+  - plusieurs cartes spéciales ne sont pas géoréférencées.
 - **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis par le Shom
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
   ce système de coordonnées est aussi appelé **World Mercator**.  
@@ -119,7 +121,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
 - **niveau de zoom**: le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) définit ce concept
   de niveau de zoom où:
   - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
-  - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zomm n-1.
+  - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zoom n-1.
   
   ShomGT3 utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
 - **couches de données**: dans ShomGT3 les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.

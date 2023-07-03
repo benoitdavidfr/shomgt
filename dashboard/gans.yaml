@@ -2,7 +2,7 @@ title: 'Synthèse du résultat du moissonnage des GAN des cartes du catalogue'
 description: 'Seules sont présentes les cartes non obsolètes présentes sur sgserver'
 $id: 'https://geoapi.fr/shomgt3/cat2/gans'
 $schema: /var/www/html/geoapi/shomgt/dashboard/gans
-valid: 2023-06-25/2023-06-25
+valid: 2023-06-25/2023-06-28
 gans:
   '0101':
     valid: '2023-06-25'
@@ -79,8 +79,6 @@ gans:
     edition: 'Edition n°5 - 2020'
     corrections:
       - { num: 1, semaineAvis: 2315-221 }
-    valid: '2023-06-25'
-  6118:
     valid: '2023-06-25'
   6165:
     groupTitle: 'Polynésie française - Îles Australes'
@@ -435,9 +433,8 @@ gans:
       - { title: 'Cartouche: E - Iles Glorieuses', scale: '1 : 150 000', spatial: { SW: '', NE: '' } }
     edition: 'Edition n°2 - 1991'
     corrections:
-      - { num: 21, semaineAvis: 2315-196 }
       - { num: 22, semaineAvis: 2318-179 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
@@ -700,10 +697,9 @@ gans:
       NE: '14°41,10''N — 060°40,78''W'
     edition: 'Edition n°2 - 2009'
     corrections:
-      - { num: 42, semaineAvis: 2313-260 }
       - { num: 43, semaineAvis: 2319-263 }
       - { num: 44, semaineAvis: 2324-260 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   6740:
     groupTitle: 'Côte Ouest de Tahiti'
     title: 'De Maraa à Faaa'
@@ -920,12 +916,8 @@ gans:
       NE: '51°10,35''N — 001°35,92''E'
     edition: 'Edition n°4 - 2006'
     corrections:
-      - { num: 169, semaineAvis: 2316-24 }
-      - { num: 170, semaineAvis: 2316-33 }
-      - { num: 171, semaineAvis: 2316-35 }
-      - { num: 172, semaineAvis: 2320-30 }
       - { num: 173, semaineAvis: 2325-39 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   6827:
     groupTitle: 'Côte Sud de Nouvelle-Calédonie'
     title: 'Du Mont Dore à Port-Boisé'
@@ -1055,12 +1047,9 @@ gans:
       NE: '50°12,95''N — 000°23,52''E'
     edition: 'Edition n°4 - 2012'
     corrections:
-      - { num: 91, semaineAvis: 2248-45 }
-      - { num: 92, semaineAvis: 2302-24 }
-      - { num: 93, semaineAvis: 2313-37 }
       - { num: 94, semaineAvis: 2316-35 }
       - { num: 95, semaineAvis: 2324-46 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   6876:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Iles Wallis - Accès à Mata Utu et Halalo'
@@ -1401,9 +1390,8 @@ gans:
       NE: '47°53,44''N — 000°54,58''W'
     edition: 'Edition n°5 - 2019'
     corrections:
-      - { num: 43, semaineAvis: 2315-51 }
       - { num: 44, semaineAvis: 2325-47 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   6991:
     groupTitle: 'Océan Atlantique - Côte Ouest de France - Côte Nord d''Espagne'
     title: 'De la Gironde à Cabo Peñas'
@@ -1480,9 +1468,8 @@ gans:
       NE: '43°39,94''N — 005°12,93''E'
     edition: 'Edition n°2 - 2005'
     corrections:
-      - { num: 99, semaineAvis: 2315-85 }
       - { num: 100, semaineAvis: 2322-90 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7011:
     groupTitle: Nouvelle-Calédonie
     title: 'De la Presqu''île Neuméni à Port-Ounia'
@@ -1688,10 +1675,9 @@ gans:
       NE: '14°58,60''N — 060°41,08''W'
     edition: 'Edition n°3 - 2022'
     corrections:
-      - { num: 1, semaineAvis: 2319-263 }
       - { num: 2, semaineAvis: 2321-259 }
       - { num: 3, semaineAvis: 2324-260 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7043:
     groupTitle: 'Océan Atlantique Nord - Partie Ouest'
     title: 'Océan Atlantique Nord - Partie Ouest'
@@ -1701,27 +1687,8 @@ gans:
       NE: '62°00,00''N — 030°00,00''W'
     edition: 'Edition n°2 - 2016'
     corrections:
-      - { num: 2, semaineAvis: 1701-261 }
-      - { num: 3, semaineAvis: 1701-264 }
-      - { num: 4, semaineAvis: 1710-269 }
-      - { num: 5, semaineAvis: 1721-262 }
-      - { num: 6, semaineAvis: 1737-269 }
-      - { num: 7, semaineAvis: 1739-267 }
-      - { num: 8, semaineAvis: 1741-266 }
-      - { num: 9, semaineAvis: 1802-261 }
-      - { num: 10, semaineAvis: 1824-10 }
-      - { num: 11, semaineAvis: 1827-266 }
-      - { num: 12, semaineAvis: 1837-266 }
-      - { num: 13, semaineAvis: 1908-262 }
-      - { num: 14, semaineAvis: 1913-278 }
-      - { num: 15, semaineAvis: 1923-267 }
-      - { num: 16, semaineAvis: 1923-274 }
-      - { num: 17, semaineAvis: 1943-275 }
-      - { num: 18, semaineAvis: 2008-269 }
-      - { num: 19, semaineAvis: 2038-276 }
-      - { num: 20, semaineAvis: 2209-265 }
       - { num: 21, semaineAvis: 2248-277 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7044:
     groupTitle: 'Océan Atlantique Sud'
     title: 'De la Terre de Feu au Vénézuéla'
@@ -1888,10 +1855,8 @@ gans:
       NE: '47°35,60''N — 001°30,00''W'
     edition: 'Edition n°3 - 2018'
     corrections:
-      - { num: 43, semaineAvis: 2311-50 }
-      - { num: 44, semaineAvis: 2311-53 }
       - { num: 45, semaineAvis: 2325-47 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7069:
     groupTitle: 'Côte Ouest de France'
     title: 'De l''île d''Yeu à la Pointe de la Coubre'
@@ -1912,9 +1877,8 @@ gans:
       NE: '45°49,00''N — 001°00,00''W'
     edition: 'Edition n°3 - 2018'
     corrections:
-      - { num: 23, semaineAvis: 2311-53 }
       - { num: 24, semaineAvis: 2325-53 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7073:
     groupTitle: Nouvelle-Calédonie
     title: 'Ports et mouillages de la côte Sud-Est'
@@ -2052,9 +2016,8 @@ gans:
       NE: '43°07,64''N — 006°00,64''E'
     edition: 'Edition n°8 - 2022'
     corrections:
-      - { num: 2, semaineAvis: 2311-87 }
       - { num: 3, semaineAvis: 2318-89 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7094:
     groupTitle: 'Côte Nord de France'
     title: 'Du Phare du Four à l''Île Vierge'
@@ -2335,10 +2298,8 @@ gans:
       NE: '48°42,89''N — 001°58,21''W'
     edition: 'Edition n°4 - 2018'
     corrections:
-      - { num: 17, semaineAvis: 2307-49 }
-      - { num: 18, semaineAvis: 2316-39 }
       - { num: 19, semaineAvis: 2323-39 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7131:
     groupTitle: 'Côte Nord de France'
     title: 'Du Havre de Rothéneuf à Cancale'
@@ -3937,7 +3898,7 @@ gans:
       SW: '04°47,60''N — 052°50,00''W'
       NE: '05°28,00''N — 051°50,60''W'
     edition: 'Edition n°3 - 2023'
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7390:
     groupTitle: 'Côte Sud de France'
     title: 'Port de Marseille'
@@ -4010,9 +3971,8 @@ gans:
       NE: '47°20,24''N — 002°06,48''W'
     edition: 'Edition n°3 - 2016'
     corrections:
-      - { num: 46, semaineAvis: 2311-50 }
       - { num: 47, semaineAvis: 2325-44 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7396:
     groupTitle: 'Côte Ouest de France'
     title: 'Cours de la Loire'
@@ -4346,11 +4306,8 @@ gans:
       NE: '50°46,05''N — 001°44,92''E'
     edition: 'Edition n°4 - 2016'
     corrections:
-      - { num: 16, semaineAvis: 2247-30 }
-      - { num: 17, semaineAvis: 2316-33 }
-      - { num: 18, semaineAvis: 2320-30 }
       - { num: 19, semaineAvis: 2325-39 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7417:
     groupTitle: 'Côte Nord de France'
     title: 'Abords de Fécamp et de Dieppe'
@@ -4360,12 +4317,8 @@ gans:
       NE: '50°11,45''N — 001°19,42''E'
     edition: 'Edition n°3 - 2021'
     corrections:
-      - { num: 13, semaineAvis: 2302-24 }
-      - { num: 14, semaineAvis: 2313-37 }
-      - { num: 15, semaineAvis: 2316-33 }
-      - { num: 16, semaineAvis: 2316-35 }
       - { num: 17, semaineAvis: 2324-34 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7418:
     groupTitle: 'Côte Nord de France'
     title: 'Abords du Havre et d''Antifer'
@@ -4409,12 +4362,8 @@ gans:
       - { title: 'Cartouche: G - Port de Deauville - Trouville', scale: '1 : 10 000', spatial: { SW: '49°21,45''N — 000°03,22''E', NE: '49°22,87''N — 000°05,45''E' } }
     edition: 'Edition n°4 - 2019'
     corrections:
-      - { num: 10, semaineAvis: 2247-39 }
-      - { num: 11, semaineAvis: 2313-40 }
-      - { num: 12, semaineAvis: 2318-36 }
-      - { num: 13, semaineAvis: 2320-33 }
       - { num: 14, semaineAvis: 2323-35 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7421:
     groupTitle: 'Côte Nord de France'
     title: 'De la Pointe de La Percée à Ouistreham'
@@ -4461,9 +4410,8 @@ gans:
       NE: '51°24,94''N — 002°26,89''E'
     edition: 'Edition n°4 - 2018'
     corrections:
-      - { num: 51, semaineAvis: 2315-31 }
       - { num: 52, semaineAvis: 2323-21 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7425:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Gironde'
@@ -5027,10 +4975,9 @@ gans:
       NE: '44°00,00''N — 009°45,00''E'
     edition: 'Publication 1995'
     corrections:
-      - { num: 127, semaineAvis: 2313-86 }
       - { num: 128, semaineAvis: 2322-90 }
       - { num: 129, semaineAvis: 2322-92 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7510:
     groupTitle: 'Côte Nord-Est de Sardaigne'
     title: 'De Capo Bellavista aux Bouches de Bonifacio'
@@ -5125,10 +5072,8 @@ gans:
       NE: '10°47,00''N — 050°59,00''W'
     edition: 'Edition n°2 - 2018'
     corrections:
-      - { num: 30, semaineAvis: 2311-252 }
-      - { num: 31, semaineAvis: 2311-253 }
       - { num: 32, semaineAvis: 2317-253 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7630:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie Nord'
@@ -5138,10 +5083,8 @@ gans:
       NE: '18°46,00''N — 061°20,00''W'
     edition: 'Edition n°4 - 2017'
     corrections:
-      - { num: 20, semaineAvis: 2242-258 }
-      - { num: 21, semaineAvis: 2323-258 }
       - { num: 22, semaineAvis: 2325-258 }
-    valid: '2023-06-25'
+    valid: '2023-06-28'
   7631:
     groupTitle: 'Océan Atlantique'
     title: 'Petites Antilles - Partie centrale'
@@ -5154,6 +5097,15 @@ gans:
       - { num: 9, semaineAvis: 2242-258 }
       - { num: 10, semaineAvis: 2323-258 }
     valid: '2023-06-25'
+  7638:
+    groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
+    title: 'Archipel de Saint-Pierre-et-Miquelon'
+    scale: '1 : 80 000'
+    spatial:
+      SW: '46°32,40''N — 056°40,72''W'
+      NE: '47°19,20''N — 055°54,00''W'
+    edition: 'Publication 2023'
+    valid: '2023-06-28'
   7639:
     groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
     title: 'Abords et port de l''Île Saint-Pierre'

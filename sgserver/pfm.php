@@ -166,6 +166,9 @@ if ($argc == 1) { // Menu
 }
 
 function addDelivery(string $PF_PATH, string $deliveryName): void { // ajoute la livraison en paramètre 
+  if (!is_dir("$PF_PATH/incoming/$deliveryName")) {
+    die("Erreur, la livraison $deliveryName n'existe pas\n");
+  }
   echo "renommage de $deliveryName dans archives\n";
   rename("$PF_PATH/incoming/$deliveryName", "$PF_PATH/archives/$deliveryName");
   foreach (new DirectoryIterator("$PF_PATH/archives/$deliveryName") as $mapname) { // traitement de chaque carte de la livraison
