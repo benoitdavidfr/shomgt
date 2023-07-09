@@ -22,16 +22,22 @@ Les listes de couches sont initialisées notamment à partir du [fichier shomgt.
         - zoom.inc.php
         - isomd.inc.php
 
-### vectorlayer.inc.php - gestion de couches d'objets vecteur
+### vectorlayer.inc.php - Définition de la classe VectorLayer gérant les couches d'objets vecteur
+La classe VectorLayer gère une couche d'objets vecteur et est utilisé par ../shomgt/wmsv.php qui implémente
+un serveur WMS pour les couches vecteur.
 #### inclus
         - layer.inc.php
         - gegeom.inc.php
 
 ### geotiffs.inc.php - liste les GeoTiffs
+Ce script définit la fonction geotiffs() qui tretourne la liste des GéoTiffs dans SHOMGT3_MAPS_DIR_PATH.
 #### inclus
         - envvar.inc.php
 
-### geotiff.inc.php - définition de la classe GeoTiff implémentant des méthodes sur un GéoTiff
+### geotiff.inc.php - Définition de la classe GeoTiff implémentant des méthodes sur un GéoTiff
+La classe GeoTiff définit plusieurs méthodes sur un GéoTiff,
+notamment la méthode copyImage() qui recopie dans un GeoRefImage la partie du GéoTiff
+qui correspond à une boite en coordonnées WorldMercator.
 #### inclus
         - gdalinfo.inc.php
         - envvar.inc.php
@@ -40,8 +46,8 @@ Les listes de couches sont initialisées notamment à partir du [fichier shomgt.
 La classe GeoRefImage propose différentes méthodes sur une image géoréférencée
 en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php) avec:
 
-   - la définition d'un espace en coordonnées utilisateurs formalisé par un rectangle englobant dans
-     un système de coordonnées projeté comme WorldMercator,
+   - la définition d'un espace en coordonnées utilisateurs formalisé par une boite englobante
+     dans un système de coordonnées projeté comme WorldMercator,
    - une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones.
 #### inclus
         - gebox.inc.php
@@ -60,8 +66,8 @@ puis en apppelant la méthode Geometry::fromGeoJSON().
         - sexcept.inc.php
 
 ### gebox.inc.php - définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes
-La classe GBox définit un bbox en coordonnées géographiques.  
-La classe EBox définit un bbox en coordonnées euclidiennes projetées (World Mercator ou WebMercator).
+La classe GBox définit une boite en coordonnées géographiques.  
+La classe EBox définit une boite en coordonnées euclidiennes projetées (World Mercator ou WebMercator).
 #### inclus
         - pos.inc.php
         - zoom.inc.php
