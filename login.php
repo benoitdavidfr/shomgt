@@ -52,7 +52,7 @@ class Login {
     // 3 cas d'appels:
     // 1.1) appel sans paramètre de login -> affichage du formulaire
     // 1.2) appel avec paramètres de login et login non conforme -> affichage d'un message d'erreur et du formulaire
-    // 1.3) appel avec paramètres de login et login conforme -> xxxx
+    // 1.3) appel avec paramètres de login et login conforme -> création du cookie et renvoi vers la page index.php
     // cas d'appel 1.1: appel sans paramètre de login -> affichage du formulaire
     if (!isset($_POST['login']) || !isset($_POST['password']))
       die("Site à accès restreint, veuillez vous loguer".self::FORM);

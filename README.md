@@ -25,12 +25,12 @@ ShomGT3 se décompose dans les 6 modules suivants:
     - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt*
-    et les stocke dans un [répertoire data décrit ici](data) ;
-    pour cela il interroge *sgserver*.
+  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt*,
+    en interrogeant *sgserver*,
+    et les stocke dans un [répertoire data décrit ici](data).  
     
-    *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker, dans ce cas le répertoire data constitue
-    un volume partagé entre ces 2 conteneurs.
+    *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker,
+    dans ce cas le répertoire data constitue un volume partagé entre ces 2 conteneurs.
     
   - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
     Il est mis à jour régulièrement grâce à *dashboard*.
@@ -49,7 +49,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
     la liste de ses cartouches, ....
     Il est utilisé par *sgupdt* et consultable au travers de *sgserver*.
   
-  - **[shomft](shomft)** gère différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
+  - **[shomft](shomft)** expose différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
     Il gère aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
     d'intérêt pour ShomGT dans *dashboard*.
 
@@ -160,10 +160,11 @@ le conteneur sgupdt se connecte au serveur sgserver pour télécharger les carte
 Si un proxy doit être utilisé, il doit être défini en s'inspirant des exemples
 du fichier [docker-compose.yml](docker-compose.yml).  
 En dehors du réseau de l'Etat ou des EPA, l'accès au serveur nécessite une authentification qui peut être défini grâce
-à la variable d'environnement `SHOMGT3_SERVER_URL` doit contenir l'URL `http://{login}:{passwd}@sgserver.geoapi.fr/index.php`
+à la variable d'environnement `SHOMGT3_SERVER_URL`
+contenant l'URL `http://{login}:{passwd}@sgserver.geoapi.fr/index.php`
 en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.  
 Par ailleurs, la mise à jour régulière des cartes peut être activée en définissant la variable d'environnement
-`SHOMGT3_UPDATE_DURATION` qui doit contenir le nombre de jours entre 2 actualisations.
+`SHOMGT3_UPDATE_DURATION` contenant le nombre de jours entre 2 actualisations.
 Les cartes n'étant pas actualisées très fréquemment, cette durée peut être fixée par exemple à 28 jours.
 
 Ce déploiement décentralisé nécessite aussi un déploiement central pour agir comme serveur de cartes.
