@@ -4,7 +4,7 @@ description: |
   où sont utilisés notamment l'extension spatiale et l'échelle des cartes et des cartouches.
   La liste des bordures est utilisée pour les GéoTiffs non ou mal géoréférencés.
   Les champs optionnels z-order et toDelete sont utilisés pour améliorer la superposition entre GéoTiffs.
-  Les champs layer et geotiffname sont utilisés pour les cartes spéciales ne respactant pas les specs des GéoTiffs.
+  Les champs layer et geotiffname sont utilisés pour les cartes spéciales ne respectant pas les specs des GéoTiffs.
   
   Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques
   stables des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.

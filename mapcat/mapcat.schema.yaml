@@ -1,9 +1,10 @@
 title: schema JSON du catalogue des cartes Shom
 $id: https://sgserver.geoapi.fr/index.php/cat/schema
-modified: '2022-07-03'
+modified: '2022-07-12'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    12/7/2023: amélioration de la doc
     3/7/2022: distinction entre bbox et spatial
     14/6/2022: suppression de plusieurs rubriques inutiles dans cette version.
     12/6/2022: suppression dcmi-box
@@ -46,7 +47,7 @@ definitions:
       - '15.00'
   latLonDM:
     description: |
-      couple (latitude, longitude) en dégrés-minutes WGS84 dans une chaine  avec un formattage inspiré de celui utilisé
+      couple (latitude, longitude) en dégrés-minutes WGS84 dans une chaine avec un formattage inspiré de celui utilisé
       par le Shom notamment dans les coins des cartes.
       Avec la virgule comme séparateur de la partie décimale des minutes.
       La partie décimale des minutes peut être omise de même que la partie minute.
@@ -83,7 +84,8 @@ definitions:
           type: number
   bbox:
     description: |
-      Boite englobante définie par ses 2 coins SW et NE définis .
+      Boite englobante définie par ses 2 coins SW et NE définis soit en LatLon en degrés minutes décimales,
+      soit en LonLat en degrés décimaux.
       Les latitudes sont comprises entre -90° et +90° et la latitude N est supérieure à la latitude S.
       Les longitudes sont sauf exceptions comprises entre -180° et +180°.
       La longitude E est supérieure à la longitude W sauf lorsque le rectangle intersecte l'anti-méridien.
@@ -161,8 +163,10 @@ definitions:
     description: |
       Propriétés décrivant une carte.
       Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
-      Une carte ne comportant pas d'espace principal doit obligatoirement comporter au moins un cartouche.
+      Une carte n'en comportant pas doit obligatoirement comporter au moins un cartouche.
       Lorsque l'info provenant du GAN est différente de celle du GAN, le champ badGan doit être renseigné.
+      Les cartes spéciales doivent définir les champs layer et geotiffname.
+      Si le GéoTiff de l'espace principal est non ou mal géoréférencé, le champ borders doit être rensigné.
     type: object
     additionalProperties: false
     required: [title, mapsFrance]
@@ -225,12 +229,13 @@ definitions:
           permet de lister rapidement les écarts au GAN.
         type: string
       z-order:
-        description: z-order de l'espace principal, permettant de gérer les superpositions entre GéoTiffs de la même couche.
+        description: z-order de l'espace principal, permettant de gérer les superpositions entre GéoTiffs d'une même couche.
         $ref: '#/definitions/z-order'
       toDelete:
         description: |
           liste de zones à effacer dans le GéoTiff de l'espace principal,
-          permettant de gérer les superpositions entre GéoTiffs de couches différentes.
+          permettant de gérer les superpositions entre GéoTiffs de couches différentes
+          exprimées soit par une liste de polygones soit par une liste de boites.
         type: object
         additionalProperties: false
         properties:
@@ -242,20 +247,22 @@ definitions:
             $ref: '#/definitions/bboxes'
       borders:
         description: |
-          Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement
-          lorsque le GéoTiff ne l'est pas.
+          Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer le géoréférencement
+          d'un GéoTiff qui ne l'est pas.
         $ref: '#/definitions/borders'
       layer:
         description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
         type: string
       geotiffname:
-        description: pour les cartes spéciales nom du fichier .tif sans l'extension .tif, dans l'archive 7z
+        description: |
+          pour les cartes spéciales nom du fichier .tif dans l'archive 7z, sans l'extension .tif,
+          ou si un fichier PDF doit être utilisé, nom de ce fichier PDF avec son extension .pdf
         type: string
       insetMaps:
         description: |
           liste éventuelle de cartouches issue du GAN.
           La structuration d'une carte en espaces dans MapCat reflète la strcucturation adoptée dans l'archive de la carte
-          sauf l'ordre des cartouches qui est cekui du GAN et n'est pas a priori celui de l'archive.
+          sauf l'ordre des cartouches qui est celui du GAN et n'est pas toujours celui de l'archive.
         type: array
         minItems: 1
         items:
@@ -280,8 +287,9 @@ definitions:
               $ref: '#/definitions/z-order'
             toDelete:
               description: |
-                liste de zones à effacer dans GéoTiff du cartouche,
-                permettant de gérer les superpositions entre GéoTiffs de couches différentes.
+                liste de zones à effacer dans le GéoTiff du cartouche,
+                permettant de gérer les superpositions entre GéoTiffs de couches différentes,
+                exprimées soit par une liste de polygones soit par une liste de boites.
                 Doit comporter le champ geotiffname identifiant le cartouche 
               type: object
               additionalProperties: false

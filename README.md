@@ -85,14 +85,15 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.
-- **carte obsolète** : carte que le Shom a retiré de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
+- **carte obsolète** : carte que le Shom a retirée de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
 - **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
   une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
   du nombre de corrections apportées.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.
-  Les actualisations sont publiées chaque semaine et datée par un nombre correspondant sur les 2 premiers chiffres à l'année,
-  et sur 2 autres chiffres à la semaine dans l'année.
+  Les actualisations sont publiées chaque semaine (le jeudi) et datée par une chaîne de 4 chiffres correspondant
+  sur les 2 premiers chiffres aux 2 derniers chiffres de l'année, et sur 2 autres chiffres à la semaine dans l'année
+  conformément à [la définition ISO](https://fr.wikipedia.org/wiki/Num%C3%A9rotation_ISO_des_semaines).
   Le GAN prend la forme du site https://gan.shom.fr/ qui est un site HTML 
   et les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
   Dans ShomGT3 ce site est scrappé pour retrouver la version courante d'une carte et la comparer 
@@ -106,28 +107,33 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
   Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
   Dans certains cas un GéoTiff peut ne pas être géoréférencé ; principalement dans 2 cas :
-  - lorsqu'une carte ne comporte pas de zone principale alors le GéoTiff de la carte globale n'est pas géoréférencé,
+  - certaines cartes ne comporte pas de zone principale mais sont uniquement composées de cartouches ;
+    dans ce cas le GéoTiff de la carte globale n'est pas géoréférencé,
   - plusieurs cartes spéciales ne sont pas géoréférencées.
-- **système de coordonnées**: Tous les fichiers GéoTIFF sont fournis par le Shom
-  en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator) dans le système géodésique WGS84,
+  De plus quelques GéoTiffs sont référencés mais leur référencement est erroné
+  et ne peut être interprété par certains logiciels.
+- **système de coordonnées**: Tous les fichiers GéoTIFF utilisés dans ShomGT sont fournis par le Shom
+  en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator)
+  dans le [système géodésique WGS84](https://fr.wikipedia.org/wiki/WGS_84),
   ce système de coordonnées est aussi appelé **World Mercator**.  
   Les coordonnées, par exemple dans le GAN, ne sont pas fournies en World Mercator mais en coordonnées géographiques,
-  en dégrés et minutes décimales en WGS84 ; par exemple "41°28,00'N - 010°30,00'W".  
+  en dégrés et minutes décimales en WGS84 ;
+  par exemple "41°28,00'N - 010°30,00'W" signifie latitude 41° et 28,00 minutes Nord, et longitude 10° et 30,00 minutes Ouest.  
   De son côté, pour permettre de superposer de multiples couches,
   le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) utilise
   le [système de coordonnées Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection)
-  popularisé par Google et son produit Google Maps.  
+  (différent de World Mercator) popularisé par Google et son produit Google Maps.  
   Il est donc souvent nécessaire de changer une position d'un système de coordonnées à un autre.  
 - **niveau de zoom**: le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) définit ce concept
-  de niveau de zoom où:
+  de niveau de zoom par:
   - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zoom n-1.
   
   ShomGT3 utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
 - **couches de données**: dans ShomGT3 les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
-  Les dénominateurs des échelles retenus pour ces couches sont les suivants,
+  dont les dénominateurs sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
-  40M (0-5), 10M (6), 4M (7), 2M (8), 1M (9),  500k (10), 250k (11), 100k (12), 50k (13), 25k (14), 12k (15), 5k (16-18).  
+  40M (0-5), 10M (6), 4M (7), 2M (8), 1M (9), 500k (10), 250k (11), 100k (12), 50k (13), 25k (14), 12k (15), 5k (16-18).  
   Chacune de ses couches est identifiée par la chaine **gt** suivie du dénominateur de l'échelle.  
   De plus:
     - la couche **gtpyr** sélectionne la couche la plus appropriée parmi les 12 couches ci-dessus

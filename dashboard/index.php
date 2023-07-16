@@ -350,7 +350,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
 
 class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique
   const FILE_NAME = __DIR__.'/disponible.tsv';
-  const MAX_DURATION = 2*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
+  const MAX_DURATION = 7*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
   //const MAX_DURATION = 60; // Pour test
   
   /** @var array<string, string> $all */

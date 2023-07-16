@@ -11,10 +11,10 @@ doc: |
     Quelques cartes ne contiennent pas de MD ISO, notamment les cartes spéciales (AEM, MANCHEGRID et limites).
     Dans ce cas, le libellé de la version est 'undefined'.
     Ainsi:
-      - la carte sera initialement téléchargée et ne sera jamais mise à jour
-       - il est possible de forcer une mise à jour on ajoutant cette version
-         par exemple sous la forme d'un fichier mdcarte.yaml à spécifier
-         Il faudra alors de lire ce fichier dans sgupdt/findCurrentMapVersion() et dans sgserver/findMapVersionIn7z()
+     - la carte sera initialement téléchargée et ne sera jamais mise à jour
+     - il est possible de forcer une mise à jour on ajoutant cette version
+       par exemple sous la forme d'un fichier mdcarte.yaml à spécifier
+       Il faudra alors de lire ce fichier dans sgupdt/findCurrentMapVersion() et dans sgserver/findMapVersionIn7z()
   
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
