@@ -1,0 +1,182 @@
+title: conception de ShomGt4
+abstract: |
+  Nouvelle version de ShomGT dont les principes sont
+  - permettre une gestion collaborative de ShomGT
+    - permettre à plusieurs personnes d'effectuer les mises à jour de manière concurrente
+      - -> mettre à jour des cartes entièrement en mode web sans nécessiter de gérer une copie locale comme en V3
+    - permettre à un nouvel utilisateur de s'ouvrir lui-même un compte sous réserve de son domaine mail
+    - gestion d'un forum entre utilisateurs
+    - avoir qqs admins pour réguler le fonctionnement
+      - annuler les livraisons dégradant le service
+      - banir les utilisateurs indélicats
+      - gérer la liste des domaines mails autorisés
+      - gérer la liste des adresses IP autorisées
+  - mettre en oeuvre une stratégie de conservation limitée des données pour éviter la saturation du stockage
+    - utilisation d'un compte dédié d'Alwaysdata avec 20 Go de stockage
+  - migration vers des environnements (Alwaysdata et github) indépendants de moi
+  - automatisation de certaines tâches régulières
+    - mettre en oeuvre par cron d'un script sunday.php tous les dimanche vers 4h
+    - mettre en oeuvre la stratégie de conservation des données
+      - notamment suppression des cartes remplacées depuis longtemps
+    - mettre à jour le GAN
+  - mise en base des infos stockées en V3 dans des fichiers Yaml et mises à jour concurremment en V4
+forum:
+  phpbb: https://www.phpbb.com/about/
+alwaysdata:
+  - créer un compte shomgt indépendant de bdavid que je puisse céder à quelqu'un
+github:
+  - création d'une branch shomgt4
+  - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4
+conservation:
+  title: stratégie de conservation des données
+  cartes:
+    principes:
+      - je garde pour chaque carte ttes les versions qui date de moins d'un an
+      - ainsi que la version la plus récente qui a plus d'un an
+      - et je jette donc les autres versions qui ont plus d'un an
+      - cela permet pendant un an d'annuler le dépôt d'une carte dégradant le service
+    réf:
+      - shomgeotiff complet pèse environ 9 Go
+      - je peux en supprimer un peu moins de la moitié en appliquant les principes ci-dessus
+      - je peux probablement me satisfaire de 10 Go pour le stockage des cartes
+    commentFaire:
+      - dans le script sunday.php
+      - voir script bo/purge.php
+  logsDeConnexion:
+    - faire des synthèses des logs ttes les semaines
+    - les logs détaillés pèsent environ 140 Mo pour 6 mois
+    - supprimer les logs détaillés au bout d'un an
+miseEnBase:
+  description: mise en base de certaines informations pour la V4
+  user:
+    description: compte utilisateur créé par vérification de l'adresse email
+    attributs:
+      num:
+        type: int
+        description: numéro d'ordre du compte auto incrémenté
+        clé: primaire
+      login:
+        type: string
+        description: adresse email
+        clé: secondaire unique
+      epasswd:
+        type: string
+        description: mot de passe encrypté
+      role:
+        type: string
+        description: rôle de l'utilisateur
+        enum:
+          admin: administrateur ayant notamment le droit de changer les rôles des utilisateurs
+          normal: utilisateur normal ayant le droit d'ajouter et supprimer des cartes
+          restricted: utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer
+          banned: utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte
+          suspended: utilisateur suspendu, l'utilisateur n'a plus aucun droit jusqu'à ce qu'il réactive son compte
+          temp: utilisateur en cours de création dont la validité n'a pas été vérifiée
+      secret:
+        type: string
+        description: clé secrète envoyée par email pour vérifier l'adresse email
+      sent:
+        type: date+time
+        description: date et heure d'envoi du dernier mail de vérification
+      create:
+        type: date+time
+        description: date et heure de création du compte ou de son dernier renouvellement
+  mapcat:
+    description: catalogue des cartes obsolètes ou non avec un n-uplet par carte
+    attributs:
+      mapnum:
+        type: string
+        description: numéro de carte sur 4 chiffres
+      title:
+        type: string
+        description: titre de la carte sans le numéro en tête
+      delete:
+        type: date ou null
+        description: date de suppression pour les cartes obsolètes ou null si la carte n'est pas obsolète
+      interest:
+        type: string
+        description: 'N' pour les cartes d'intérêt insuffisant, 'Y' pour les autres cartes
+      content:
+        type: JSON
+        description: enregistrement conforme au schéma JSON
+      bbox:
+        type: polygon
+        description: boite engobante de la carte
+  trace:
+    description: |
+      traces des ajouts et suppressions de cartes et de l'annulation éventuelle de l'action
+      L'action peut être
+       - ajout d'une nouvelle carte
+       - remplacement d'une carte par une nouvelle version
+       - suppression d'une carte obsolète
+    attributs:
+      mapnum:
+        description: numéro de la carte ajoutée, remplacée ou supprimée
+      version:
+        description: version de la carte ajoutée, null pour une carte supprimée
+      user:
+        description: utilisateur ayant réalisé l'action
+      action:
+        description: type d'action
+        enum:
+          add: ajout d'une nouvelle carte
+          replacement: remplacement d'une carte par une nouvelle version
+          delete: suppression d'une carte obsolète
+      dt:
+        description: date et heure de l'action
+      canceldt:
+        description: date et heure de l'annulation ou null si l'action n'a pas été annulée
+      canceluser:
+        description: admin ayant annulé l'action ou null si l'action n'a pas été annulée
+      path:
+        description: chemin vers l'archive 7z de la version remplacée ou de la carte supprimée, null pour une nouvelle carte
+  maildomain:
+    description: liste des domaines mails autorisés pour les utilisateurs, gérée par un admin
+  ipaddress:
+    description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
+  gan:
+    description: stockage des infos du GAN mises à jour régulièrement par cron
+admin:
+  title: interface admin
+  fonctionnalités:
+    - gestion de
+      - la liste des domaines autorisés
+      - la liste des adresses IP autorisées
+    - annulation d'une livraison
+    - modification du rôle d'un utilisateur
+bo:
+  title: créer un BO pour les utilisateurs authentifiés
+  fonctionnalités:
+    - se loguer / créer un compte
+    - déposer une livraison de cartes et la vérifier
+      - créer une nouvelle livraison
+      - déposer une carte dans la livraison
+      - marquer comme obsolète une carte existante dans le portefeuille
+      - vérifier la livraison
+        - visualiser chaque carte
+        - structure de chaque carte
+        - cohérence de chaque carte / catalogue & portefeuille
+    - modifier le catalogue pour
+      - ajouter une nouvelle carte
+      - modifier une carte existante
+    - intégrer la livraison dans le portefeuille
+  gestionDeComptes:
+    - initialement un compte admin est créé avec un mot de passe
+    - pour créer un nouveau compte
+      - un utilisateur indique son adresse et son mot de passe
+      - un enregistrement est créé dans la table user avec le rôle 'temp' et une clé secrète aléatoire
+      - un mail lui est envoyé avec la clé secrète intégrée dans un lien
+      - l'utilisateur doit activer le lien envoyé ce qui valide son compte et le fait passer en rôle 'normal'
+    - si un utilisateur perd son mot de passe
+      - il donne son adresse
+      - une nouvelle clé secrète aléatoire est générée
+      - un mail lui est envoyé avec la clé secrète intégrée dans un lien
+      - le lien permet de saisir un nouveau mot de passe
+    - un compte créé/renouvellé depuis plus d'un an doit être renouvellé
+      - l'idée est d'interdire l'accès aux personnes dont l'adresse mail n'est plus valide
+      - une nouvelle clé secrète aléatoire est générée
+      - un mail est envoyé avec un lien demandant de renouveller le compte
+      - si le compte n'est pas renouvellé dans un délai de 8 jours alors le compte est suspendu (rôle 'suspended')
+      - un compte suspendu depuis plus de 6 mois est supprimé
+      - pour réactiver un compte suspendu, c'est le même process que pour créer un compte
+        - mais sans demander un nouveau mot de passe
