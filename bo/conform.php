@@ -1,5 +1,5 @@
 <?php
-/* Validation d'une carte 
+/* bo/conform.php - Validation d'une carte 
  * Benoit DAVID - 11-13/7/2023
  * La validation des cartes est définie d'une part par sa conformité à sa spécification
  * et, d'autre part, par sa cohérence avec MapCat.

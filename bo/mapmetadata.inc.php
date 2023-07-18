@@ -1,4 +1,6 @@
 <?php
+// bo/mapmetadata.inc.php - déf. de la classe MapMetadata et de la fonction ganWeek2iso()
+
 require_once __DIR__.'/../sgserver/SevenZipArchive.php';
 
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 

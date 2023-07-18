@@ -1,5 +1,7 @@
 <?php
-// Test upload
+// bo/addmaps.php - ajout et vérification de nouvelles cartes dans le BO
+
+require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';
 
 define ('SHOMGEOTIFF', '/var/www/html/shomgeotiff');
@@ -15,7 +17,7 @@ function button(string $submitValue='submit', array $hiddenValues=[], string $ac
 
 //echo "upload_max_filesize=",ini_get('upload_max_filesize'),"<br>\n";
 //echo "post_max_size=",ini_get('post_max_size'),"<br>\n";
-$login = 'benoit.david@free.fr';
+$login = Login::login();
 
 echo "<!DOCTYPE html><html><body>\n";
 echo "<h2>Intégration de nouvelles versions de cartes au portefeuille</h2>\n";

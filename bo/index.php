@@ -1,7 +1,6 @@
 <?php
 // shomgt/bo/index.php - BO de ShomGT - Benoit DAVID - 17/7/2023
 
-require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/login.inc.php';
 
 define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>shomgt-bo</title></head><body>\n");

@@ -1,4 +1,7 @@
 <?php
+// bo/login.inc.php - classe Login - 19/7/2023
+
+require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 class Login { // Fonctionnalités de login 
   const COOKIE_NAME = 'shomusrpwd'; // le nom du cookie utilisé pour enregistrer le login/passwd
