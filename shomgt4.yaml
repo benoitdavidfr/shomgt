@@ -1,8 +1,8 @@
 title: conception de ShomGt4
 abstract: |
   Nouvelle version de ShomGT dont les principes sont
-  - permettre une gestion collaborative de ShomGT
-    - permettre à plusieurs personnes d'effectuer les mises à jour de manière concurrente
+  - gestion collaborative de ShomGT
+    - notamment permettre à plusieurs personnes d'effectuer les mises à jour de manière concurrente
       - -> mettre à jour des cartes entièrement en mode web sans nécessiter de gérer une copie locale comme en V3
     - permettre à un nouvel utilisateur de s'ouvrir lui-même un compte sous réserve de son domaine mail
     - gestion d'un forum entre utilisateurs
@@ -17,24 +17,35 @@ abstract: |
   - automatisation de certaines tâches régulières
     - mettre en oeuvre par cron d'un script sunday.php tous les dimanche vers 4h
     - mettre en oeuvre la stratégie de conservation des données
-      - notamment suppression des cartes remplacées depuis longtemps
+      - notamment suppression des versions de cartes remplacées depuis longtemps
     - mettre à jour le GAN
   - mise en base des infos stockées en V3 dans des fichiers Yaml et mises à jour concurremment en V4
+  - évols plus limitées
+    - permettre la mise à jour des cartes spéciales par le client
 forum:
   phpbb: https://www.phpbb.com/about/
 alwaysdata:
-  - créer un compte shomgt indépendant de bdavid que je puisse céder à quelqu'un
+  - créer un compte shomgt (ou geoapi) indépendant de bdavid que je puisse céder à quelqu'un
+  - avec gestion du nom de domaine geoapi
+  - avec une version préprod -> https://geoapi.fr/shomgtpp -> ~/www/shomgtpp
+  - la version de prod -> https://geoapi.fr/shomgt -> ~/www/shomgt
+  - stockage de shomgeotiff dans ~/shomgeotiff
 github:
-  - création d'une branch shomgt4
+  - créer une branch shomgt4 (FAIT)
   - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4
+batchRégulierDEntretien:
+  - batch chaque Dimanche à 4h
+  - mise à jour du GAN
+  - mise en oeuvre de la stratégie de conservation des cartes et des logs
+  - suppression des dépôts en attente non validés
 conservation:
   title: stratégie de conservation des données
   cartes:
     principes:
-      - je garde pour chaque carte ttes les versions qui date de moins d'un an
-      - ainsi que la version la plus récente qui a plus d'un an
-      - et je jette donc les autres versions qui ont plus d'un an
-      - cela permet pendant un an d'annuler le dépôt d'une carte dégradant le service
+      - je garde pour chaque carte ttes les versions qui datent de moins d'un an
+      - ainsi que la version la plus récente qui date de plus d'un an
+      - et je jette donc les autres versions qui datent de plus d'un an
+      - cela permet pendant un an d'annuler le dépôt d'une nouvelle version dégradant le service
     réf:
       - shomgeotiff complet pèse environ 9 Go
       - je peux en supprimer un peu moins de la moitié en appliquant les principes ci-dessus
@@ -136,47 +147,64 @@ miseEnBase:
     description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
   gan:
     description: stockage des infos du GAN mises à jour régulièrement par cron
+cartesSpéciales:
+  - Une archive 7z ayant un seul .tif ou pas de .tif et un seul .pdf n'a pas besoin du champ geotiffname
+  - le champ geotiffname reste nécessaire dans les autres cas
+  - dans le serveur de cartes, je gère une version 4 de la liste des cartes avec
+    - pour les cartes spéciales la version n'est plus undefined mais le geotiffname éventuellement déduit
 admin:
   title: interface admin
   fonctionnalités:
     - gestion de
       - la liste des domaines autorisés
       - la liste des adresses IP autorisées
-    - annulation d'une livraison
+    - annulation du dépôt d'une carte, restitution de la version précédente
     - modification du rôle d'un utilisateur
 bo:
   title: créer un BO pour les utilisateurs authentifiés
   fonctionnalités:
     - se loguer / créer un compte
-    - déposer une livraison de cartes et la vérifier
-      - créer une nouvelle livraison
-      - déposer une carte dans la livraison
-      - marquer comme obsolète une carte existante dans le portefeuille
-      - vérifier la livraison
-        - visualiser chaque carte
-        - structure de chaque carte
-        - cohérence de chaque carte / catalogue & portefeuille
-    - modifier le catalogue pour
-      - ajouter une nouvelle carte
-      - modifier une carte existante
-    - intégrer la livraison dans le portefeuille
+    - déposer une carte, la vérifier,
+    - marquer une carte comme obsolète,
+    - modifier le catalogue
+    - intégrer une carte déposée dans le portefeuille (cad dans le serveur de cartes)
+    - mettre à jour les services ShomGt avec les nouvelles versions de cartes
   gestionDeComptes:
-    - initialement un compte admin est créé avec un mot de passe
+    - initialement un compte admin est créé avec une adresse email et un mot de passe
     - pour créer un nouveau compte
       - un utilisateur indique son adresse et son mot de passe
-      - un enregistrement est créé dans la table user avec le rôle 'temp' et une clé secrète aléatoire
-      - un mail lui est envoyé avec la clé secrète intégrée dans un lien
+      - un enregistrement est créé dans la table user avec le rôle 'temp' et un secret généré aléatoirement
+      - un mail lui est envoyé avec le secret intégré dans un lien
       - l'utilisateur doit activer le lien envoyé ce qui valide son compte et le fait passer en rôle 'normal'
     - si un utilisateur perd son mot de passe
       - il donne son adresse
-      - une nouvelle clé secrète aléatoire est générée
-      - un mail lui est envoyé avec la clé secrète intégrée dans un lien
-      - le lien permet de saisir un nouveau mot de passe
+      - un nouveau secret aléatoire est généré
+      - un mail lui est envoyé avec le secret intégré dans un lien
+      - le lien permet de saisir un nouveau mot de passe interactivement
     - un compte créé/renouvellé depuis plus d'un an doit être renouvellé
       - l'idée est d'interdire l'accès aux personnes dont l'adresse mail n'est plus valide
-      - une nouvelle clé secrète aléatoire est générée
+      - un nouveau secret aléatoire est généré
       - un mail est envoyé avec un lien demandant de renouveller le compte
       - si le compte n'est pas renouvellé dans un délai de 8 jours alors le compte est suspendu (rôle 'suspended')
       - un compte suspendu depuis plus de 6 mois est supprimé
       - pour réactiver un compte suspendu, c'est le même process que pour créer un compte
         - mais sans demander un nouveau mot de passe
+  dépôt/vérifDUnecarte:
+    - l'utilisateur authentifié demande à déposer une nouvelle archive de carte
+    - l'archive est stockée dans un répertoire uniquement accessible à l'utilisateur
+    - l'utilisateur voit la liste de ses cartes en attente
+    - il peut vérifier une carte
+  modifCatalogue:
+    - il peut modifier le catalogue (ce qui peut être nécessaire pour valider une carte)
+  intégrerAuPortfeuille:
+    - si la vérif est ok
+      - alors il peut intégrer la carte au portefeuille
+      - sinon il peut effacer l'archive déposée
+    - les cartes en attente non intégrées dans le portefeuille sont effacées par le script d'entretien
+    - une fois intégrée au portefeuille les cartes n'"appartiennent" plus à l'utilisateur mais au système
+      - il ne peut plus y toucher
+  déclarerCarteObsolète:
+    - il peut déclarer qu'une carte est obsolète
+  mettreAJourServicesShomGt:
+    - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
+    
