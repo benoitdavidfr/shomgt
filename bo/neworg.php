@@ -1,21 +1,25 @@
 <?php
-/* bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff
+/ * bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff
   Principes
     - 3 sous-répertoires de ~/shomgeotiff
     - archives
-      - un répertoire par carte, nommé par le num. de la carte
+      - avec un répertoire par carte, nommé par le num. de la carte
       - dans ce répertoire de carte
         - 2 fichiers .7z et .md.json par version
-          - en utilisant un nom de base de la forme {mapnum}-{shomWeek}
-          - où {shomWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
+          - en utilisant un nom de base de la forme {mapnum}-{GanWeek}
+          - où {GanWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
             - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
             - 2 derniers chiffres correspondant à la semaine
           - quand la semaine de publication est inconnue on utilise la semaine de dépôt de la carte
-        - éventuellement un fichier {mapnum}-{shomWeek}.md.json indiquant l'obsolescence de la carte
+        - éventuellement un fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
+          - où {GanWeek} est la semaine Shom de parution du retrait de la carte
+          - ou si cette semaine n'est pas connue la semaine de fourniture de l'info
     - current
-      - pour chaque carte active 2 liens vers archives
-        - {mapnum}.7z
-        - {mapnum}.md.json
+      - pour chaque carte active 2 liens vers la dernière version de la carte dans archives nommés respectivement
+        - {mapnum}.7z pour le contenu de la carte
+        - {mapnum}.md.json pour les métadonnées associées
+      - pour chaque carte obsolète un lien nommé {mapnum}.md.json
+        - vers le fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
     - users
       - un répertoire par utilisateur nommé avec son adresse email
       - contenant les cartes en cours de dépôt

@@ -1,6 +1,6 @@
 <?php
 /* bo/conform.php - Validation d'une carte 
- * Benoit DAVID - 11-13/7/2023
+ * Benoit DAVID - 11-19/7/2023
  * La validation des cartes est définie d'une part par sa conformité à sa spécification
  * et, d'autre part, par sa cohérence avec MapCat.
  *
@@ -139,22 +139,27 @@ class Gdalinfo {
 
 class Map { // analyse des fichiers et restructuration
   protected string $incomingPath;
-  protected string $mapNum;
+  protected string $mapId; // id soit {num}, soit {num}-{ganWeek}
+  protected string $mapNum; // no sur 4 chiffres
   protected ?string $thumbnail=null;
   protected array $main=[]; // ['tif'=> {fileName}, 'xml'=>{filename}, 'georef'=>('ok'|'KO'|null) 'gbox'=>?GBox]
   protected array $insets=[]; // [{name}=> ['tif'=> {fileName}, 'xml'=>{filename}]]
   protected array $suppls=[]; // liste de noms de fichiers hors specs
   
-  function __construct(string $incomingPath, string $mapNum) {
+  function __construct(string $incomingPath, string $mapId) {
     $this->incomingPath = $incomingPath;
+    $this->mapId = $mapId;
+    $mapNum = substr($mapId, 0, 4);
     $this->mapNum = $mapNum;
-    if (!is_dir("$incomingPath/$mapNum")) {
-      $cmde = "7z x -o$incomingPath $incomingPath/$mapNum.7z";
+    if (!is_dir("$incomingPath/$mapId")) {
+      $cmde = "7z x -o$incomingPath/{$mapId}_temp $incomingPath/$mapId.7z";
       //echo "$cmde<br>\n";
       exec($cmde, $output, $retval);
       //echo "<pre>"; print_r($output); echo "retval=$retval</pre>\n";
+      rename("$incomingPath/{$mapId}_temp/$mapNum", "$incomingPath/$mapId");
+      rmdir("$incomingPath/{$mapId}_temp");
     }
-    foreach (new DirectoryIterator("$incomingPath/$mapNum") as $fileName) {
+    foreach (new DirectoryIterator("$incomingPath/$mapId") as $fileName) {
       if (in_array($fileName, ['.','..','.DS_Store'])) continue;
       if ($fileName == "$mapNum.png")
         $this->thumbnail = $fileName;
@@ -170,7 +175,7 @@ class Map { // analyse des fichiers et restructuration
         $this->suppls[] = (string)$fileName;
     }
     if (isset($this->main['tif'])) {
-      $gdalinfo = new GdalInfo("$incomingPath/$mapNum/".$this->main['tif']);
+      $gdalinfo = new GdalInfo("$incomingPath/$mapId/".$this->main['tif']);
       $georef = $gdalinfo->georef();
       $this->main['georef'] =  $georef;
       $this->main['gbox'] = $georef ? $gdalinfo->gbox() : null;
@@ -303,14 +308,11 @@ class Map { // analyse des fichiers et restructuration
   }
   
   function showAsHtml(string $incomingPath, string $mapNum, array $mapCat): void {
-    echo "<h2>Carte $_GET[map] de la livraison ",substr($_GET['path'], strlen(SHOMGEOTIFF)),"</h2>\n";
-    //echo "incomingPath=$incomingPath<br>\n";
-    $incoming = substr($incomingPath, strlen('/var/www/html/'));
-    //echo "incoming=$incoming<br>\n";
+    echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
     echo "<table border=1>";
     echo "<tr><td>cat</td><td><pre>",Yaml::dump($mapCat, 6),"</td></tr>\n";
     if ($this->thumbnail) {
-      $thumbnailUrl = "http://localhost/$incoming/$mapNum/".$this->thumbnail;
+      $thumbnailUrl = "http://localhost/shomgeotiff/$_GET[path]/".$this->mapId.'/'.$this->thumbnail;
       echo "<tr><td>miniature</td><td><a href='$thumbnailUrl'><img src='$thumbnailUrl'></a></td></tr>\n";
     }
     else {

@@ -68,25 +68,44 @@ conservation:
     - faire des synthèses des logs ttes les semaines
     - les logs détaillés pèsent environ 140 Mo pour 6 mois
     - supprimer les logs détaillés au bout d'un an
-organisationArchives:
+orgShomgeotiff:
   - organisation de ~/shomgeotiff
   - 3 sous-répertoires de ~/shomgeotiff
-    - current
-      - pour chaque carte active 2 liens vers archives
-        - {mapnum}.7z
-        - {mapnum}.md.json
     - archives
-      - un répertoire par carte nommé par le num. de la carte
+      - avec un répertoire par carte, nommé par le num. de la carte
       - dans ce répertoire de carte
         - 2 fichiers .7z et .md.json par version
-        - en utilisant un nom de la forme {mapnum}-{shomWeek}
-        - où {shomWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
-          - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
-          - 2 derniers chiffres correspondant à la semaine
-        - quand la semaine de publication est inconnue on utilise la semaine de dépôt de la carte
+          - en utilisant un nom de base de la forme {mapnum}-{GanWeek}
+          - où {GanWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
+            - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
+            - 2 derniers chiffres correspondant à la semaine
+          - quand la semaine de publication est inconnue on utilise la semaine de dépôt de la carte
+        - éventuellement un fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
+          - où {GanWeek} est la semaine Shom de parution du retrait de la carte
+          - ou si cette semaine n'est pas connue la semaine de fourniture de l'info
+    - current
+      - pour chaque carte active 2 liens vers la dernière version de la carte dans archives nommés respectivement
+        - {mapnum}.7z pour le contenu de la carte
+        - {mapnum}.md.json pour les métadonnées associées
+      - pour chaque carte obsolète un lien nommé {mapnum}.md.json
+        - vers le fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
     - users
       - un répertoire par utilisateur nommé avec son adresse email
       - contenant les cartes en cours de dépôt
+  - les fichiers .md.json des cartes normales contiennent
+    - title: titre de la carte
+    - alternate: titre alternatif
+    - version: version sous la forme 'YYYYcN', eg "2005c29"
+    - edition: édition telque présente dans les MD XML, exemple "Edition n° 3 - 2005 - Dernière correction : 29",
+    - ganWeek: semaine GAN sur 4 chiffres
+    - ganDate: date de parution
+    - creation/revision: date de mise à jour définie dans le fichier de MD XML
+  - les fichiers .md.json des cartes spéciales contiennent
+    - version: undefined
+    - creation: date de mise à jour définie dans le fichier de MD XML
+  - les fichiers .md.json d'obsolescence contiennent
+    - status: obsolete
+
 miseEnBase:
   description: mise en base de certaines informations pour la V4
   user:

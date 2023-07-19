@@ -53,7 +53,7 @@ if (!isset($_GET['path'])) { // affichage de la liste des livraisons
     echo "$title:<ul>\n";
     foreach (new DirectoryIterator(SHOMGEOTIFF.$gname) as $incoming) {
       if (in_array($incoming, ['.','..','.DS_Store'])) continue;
-      echo "<li><a href='?path=",SHOMGEOTIFF,"$gname/$incoming'>$incoming</a></li>\n";
+      echo "<li><a href='?path=$gname/$incoming'>$incoming</a></li>\n";
     }
     echo "</ul>\n";
   }
@@ -63,15 +63,29 @@ if (!isset($_GET['path'])) { // affichage de la liste des livraisons
 
 if (!isset($_GET['map'])) { // affichage du contenu de la livraison 
   echo HTML_HEAD;
-  echo "<h2>Livraison $_GET[path]</h2><ul>\n";
-  foreach (new DirectoryIterator($_GET['path']) as $map) {
-    if (substr($map, -3) == '.7z') {
-      $md = MapMetadata::getFrom7z("$_GET[path]/$map");
-      //echo "<li>"; print_r($md); echo "</li>";
+  echo "<h2>Répertoire $_GET[path]</h2>\n";
+  if (substr($_GET['path'], 0, 8) <> 'archives')
+    echo "<ul>\n";
+  $first = true;
+  foreach (new DirectoryIterator(SHOMGEOTIFF.$_GET['path']) as $map) {
+    if (substr($map, -3) <> '.7z') continue;
+    //echo "<li>"; print_r($md); echo "</li>";
+    if (substr($_GET['path'], 0, 8) == 'archives') { // cas d'une archive de carte
+      $md = MapMetadata::getFrom7z(SHOMGEOTIFF."$_GET[path]/$map");
+      if ($first) {
+        echo $md['title'] ?? $map,"<ul>\n";
+        $first = false;
+      }
+      $mapid = substr($map, 0, -3);
+      echo "<li><a href='?path=$_GET[path]&map=$mapid'>",$md['edition'] ?? $mapid,"</li>\n";
+    }
+    else { // cas d'une livraison
+      $md = MapMetadata::getFrom7z(SHOMGEOTIFF."$_GET[path]/$map");
       $mapnum = substr($map, 0, -3);
       echo "<li><a href='?path=$_GET[path]&map=$mapnum'>",$md['title'] ?? $mapnum,"</a></li>\n";
     }
   }
+  echo "</ul>\n";
   die();
 }
 
@@ -79,23 +93,22 @@ switch ($_GET['action'] ?? null) {
   case null: { // affichage des caractéristiques de la carte
     echo HTML_HEAD;
     MapCat::init();
-    $map = new Map($_GET['path'], $_GET['map']);
-    $map->showAsHtml($_GET['path'], $_GET['map'], MapCat::get($_GET['map']));
+    $map = new Map(SHOMGEOTIFF.$_GET['path'], $_GET['map']);
+    $map->showAsHtml(SHOMGEOTIFF.$_GET['path'], $_GET['map'], MapCat::get(substr($_GET['map'], 0, 4)));
     die();
   }
   case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
-    $gdalinfo = new GdalInfo("$_GET[path]/$_GET[map]/$_GET[tif]");
+    $gdalinfo = new GdalInfo(SHOMGEOTIFF."$_GET[path]/$_GET[map]/$_GET[tif]");
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode($gdalinfo->asArray(), JSON_OPTIONS);
     die();
   }
   case 'viewtiff': { // affichage des tiff de la carte dans Leaflet
-    $incoming = substr($_GET['path'], strlen('/var/www/html/'));
     $tifs = [];
-    $map = new Map($_GET['path'], $_GET['map']);
+    $map = new Map(SHOMGEOTIFF.$_GET['path'], $_GET['map']);
     foreach ($map->gtiffs() as $fileName) {
       echo "$fileName<br>\n";
-      $tifs[substr($fileName, 5, -4)] = "http://localhost/$incoming/$_GET[map]/$fileName";
+      $tifs[substr($fileName, 5, -4)] = "http://localhost/shomgeotiff/$_GET[path]/$_GET[map]/$fileName";
     }
     echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
     $bounds = ($gbox = $map->gbox()) ? $gbox->latLngBounds() : [];
