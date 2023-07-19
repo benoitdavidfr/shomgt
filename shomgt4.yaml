@@ -22,16 +22,27 @@ abstract: |
   - mise en base des infos stockées en V3 dans des fichiers Yaml et mises à jour concurremment en V4
   - évols plus limitées
     - permettre la mise à jour des cartes spéciales par le client
+    - meilleure gestion en production de l'affichage des erreurs
+    - restructuration des archives de cartes
+      - suppression de la notion de livraison qui n'est plus pertinente
+      - conservation de l'utilisateur ayant déposé la carte
 forum:
   phpbb: https://www.phpbb.com/about/
+  sympa:
+    avantages:
+      - plus simple à mettre en oeuvre qu'un forum
+      - gérable depuis l'extérieur de l'intranet
+      - affichage de la responsabilité du ministère (nom de domaine)
 alwaysdata:
   - créer un compte shomgt (ou geoapi) indépendant de bdavid que je puisse céder à quelqu'un
   - avec gestion du nom de domaine geoapi
-  - avec une version préprod -> https://geoapi.fr/shomgtpp -> ~/www/shomgtpp
   - la version de prod -> https://geoapi.fr/shomgt -> ~/www/shomgt
+    - ou https://shomgt.alwaysdata.net/
+  - avec une version préprod -> https://geoapi.fr/shomgtpp -> ~/www/shomgtpp
   - stockage de shomgeotiff dans ~/shomgeotiff
 github:
   - créer une branch shomgt4 (FAIT)
+    - je ne sais pas la copier sur github
   - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4
 batchRégulierDEntretien:
   - batch chaque Dimanche à 4h
@@ -57,6 +68,25 @@ conservation:
     - faire des synthèses des logs ttes les semaines
     - les logs détaillés pèsent environ 140 Mo pour 6 mois
     - supprimer les logs détaillés au bout d'un an
+organisationArchives:
+  - organisation de ~/shomgeotiff
+  - 3 sous-répertoires de ~/shomgeotiff
+    - current
+      - pour chaque carte active 2 liens vers archives
+        - {mapnum}.7z
+        - {mapnum}.md.json
+    - archives
+      - un répertoire par carte nommé par le num. de la carte
+      - dans ce répertoire de carte
+        - 2 fichiers .7z et .md.json par version
+        - en utilisant un nom de la forme {mapnum}-{shomWeek}
+        - où {shomWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
+          - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
+          - 2 derniers chiffres correspondant à la semaine
+        - quand la semaine de publication est inconnue on utilise la semaine de dépôt de la carte
+    - users
+      - un répertoire par utilisateur nommé avec son adresse email
+      - contenant les cartes en cours de dépôt
 miseEnBase:
   description: mise en base de certaines informations pour la V4
   user:
