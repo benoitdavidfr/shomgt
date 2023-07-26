@@ -1,11 +1,11 @@
 <?php
-/ * bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff
+/* bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff
   Principes
-    - 3 sous-répertoires de ~/shomgeotiff
+    - 3 sous-répertoires de shomgeotiff
     - archives
       - avec un répertoire par carte, nommé par le num. de la carte
       - dans ce répertoire de carte
-        - 2 fichiers .7z et .md.json par version
+        - 2 fichiers .7z et .md.json par version de carte
           - en utilisant un nom de base de la forme {mapnum}-{GanWeek}
           - où {GanWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
             - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
@@ -15,7 +15,7 @@
           - où {GanWeek} est la semaine Shom de parution du retrait de la carte
           - ou si cette semaine n'est pas connue la semaine de fourniture de l'info
     - current
-      - pour chaque carte active 2 liens vers la dernière version de la carte dans archives nommés respectivement
+      - pour chaque carte non obsolète 2 liens vers la dernière version de la carte dans archives nommés respectivement
         - {mapnum}.7z pour le contenu de la carte
         - {mapnum}.md.json pour les métadonnées associées
       - pour chaque carte obsolète un lien nommé {mapnum}.md.json
@@ -24,11 +24,16 @@
       - un répertoire par utilisateur nommé avec son adresse email
       - contenant les cartes en cours de dépôt
 */
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/mapmetadata.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
+
 define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-define ('SHOMGEOTIFF', '/var/www/html/shomgeotiff');
+//define ('SHOMGEOTIFF', '/var/www/html/shomgeotiff');
 
 // déduit la semaine GAN d'un nom de livraison
-function ganWeek(string $archiveName): string {
+/*function ganWeek(string $archiveName): string {
   if (!preg_match('!^(\d{4})(\d{2})!', $archiveName, $matches))
     throw new Exception("archiveName=$archiveName inadapté");
   $year = $matches[1];
@@ -38,7 +43,7 @@ function ganWeek(string $archiveName): string {
   $newDate = $date->setDate($year, $month, $day);
   //print_r($newDate);
   return $newDate->format('oW');
-}
+}*/
 
 /* copie de la partie archives
 if (!is_dir(SHOMGEOTIFF."/newarchives"))
@@ -100,7 +105,7 @@ foreach (new DirectoryIterator(SHOMGEOTIFF."/archives") as $archiveName) {
 }*/
 
 // différence entre maps.json
-if (1) {
+/*if (0) {
   $geoapi = json_decode(file_get_contents('geoapi-maps.json'), true);
   $local = json_decode(file_get_contents('local-maps.json'), true);
   foreach ($local as $mapNum => $localMap) {
@@ -128,5 +133,35 @@ if (1) {
           'geoapi'=> $oldMap,
         ]],
         JSON_OPTIONS),"\n";
+  }
+}*/
+
+if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+
+$mapCat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
+
+// reconstruction des md.json
+foreach (new DirectoryIterator("$PF_PATH/archives") as $mapNum) {
+  if (in_array($mapNum, ['.','..','.DS_Store'])) continue;
+  $mapCatOfMap = $mapCat['maps']["FR$mapNum"] ?? []; // non défini pour les cartes obsolètes
+  foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mdName) {
+    if (substr($mdName, -8) <> '.md.json') continue;
+    $nameOf7z = substr($mdName, 0, -8).'.7z';
+    if (is_file("$PF_PATH/archives/$mapNum/$nameOf7z")) { // MD de carte non obsolète
+      echo "mdName=$mdName -> NON obsolete\n";
+      $md = MapMetadata::getFrom7z("$PF_PATH/archives/$mapNum/$nameOf7z", '', $mapCatOfMap['geotiffNames'] ?? []);
+      file_put_contents("$PF_PATH/archives/$mapNum/$mdName", json_encode($md, JSON_OPTIONS));
+    }
+    else {
+      echo "fichier $PF_PATH/archives/$mapNum/$nameOf7z absent\n";
+      echo "mdName=$mdName -> obsolete\n";
+      $ganWeek = substr($mdName, 5, 4);
+      $md = [
+        'status'=> 'obsolete',
+        'date'=> ['value'=> ganWeek2iso($ganWeek)],
+      ];
+      file_put_contents("$PF_PATH/archives/$mapNum/$mdName", json_encode($md, JSON_OPTIONS));
+    }
   }
 }

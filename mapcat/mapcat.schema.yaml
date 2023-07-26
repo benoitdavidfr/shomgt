@@ -4,6 +4,9 @@ modified: '2022-07-03'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    23/7/2023:
+      - modification du traitement des cartes spéciales
+      - remplacement du champ geotiffname pour les cartes spéciales par geotiffnames
     3/7/2022: distinction entre bbox et spatial
     14/6/2022: suppression de plusieurs rubriques inutiles dans cette version.
     12/6/2022: suppression dcmi-box
@@ -203,6 +206,7 @@ definitions:
           Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med'
           pour la facade de Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche
           et de la mer du Nord.
+          Prend la valeur 'FR' ssi la carte intersecte toute la ZEE française.
         type: array
         items:
           type: string
@@ -243,14 +247,19 @@ definitions:
       borders:
         description: |
           Définition de l'épaisseur du cadre de l'espace principal, permet de déterminer son géoréférencement
-          lorsque le GéoTiff ne l'est pas.
+          lorsque le GéoTiff n'est pas géoréférencé ou l'est mal.
         $ref: '#/definitions/borders'
       layer:
-        description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
+        description: |
+          défini uniquement pour les cartes spéciales et indique alors nom de la couche à laquelle le GéoTiff est affecté
         type: string
-      geotiffname:
-        description: pour les cartes spéciales nom du fichier .tif sans l'extension .tif, dans l'archive 7z
-        type: string
+      geotiffNames:
+        description: |
+          pour les cartes spéciales, liste de noms de fichiers .tif ou .pdf possibles dans l'archive 7z.
+          Utilisé lorsqu'il n'est pas possible de déterminer autrement le nom du fichier contenant l'image principale
+        type: array
+        items:
+          type: string
       insetMaps:
         description: |
           liste éventuelle de cartouches issue du GAN.

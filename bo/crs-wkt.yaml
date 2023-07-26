@@ -1,0 +1,129 @@
+title: CRS-WKT
+abstract: |
+  Sur Alwaysdata, gdalinfo est en version 'GDAL 2.4.0, released 2018/12/14'
+  Sur php82, gdalinfo est en version 'GDAL 3.6.2, released 2023/01/02'
+  
+  Le WKT du CRS en version 3.6.2 (2023/01/02) respecte le standard OGC 2.0.6 (document OGC 18-010r7 et ISO 19162:2019).
+  Ce standard est dit WKT 2 (2019).
+  Le WKT du CRS en version 2.4.0 (2018/12/14) respecte le standard OGC 1.0   (document OGC 12-063r5 et ISO 19162:2015).
+  Ce standard est dit WKT.
+  
+exampleOgc1.0: |
+  PROJCS["WGS 84 / World Mercator",
+    GEOGCS["WGS 84",
+      DATUM["WGS_1984",
+        SPHEROID["WGS 84",6378137,298.257223563, AUTHORITY["EPSG","7030"]],
+        AUTHORITY["EPSG","6326"]],
+      PRIMEM["Greenwich",0],
+      UNIT["degree",0.0174532925199433],
+      AUTHORITY["EPSG","4326"]],
+    PROJECTION["Mercator_1SP"],
+    PARAMETER["central_meridian",0],
+    PARAMETER["scale_factor",1],
+    PARAMETER["false_easting",0],
+    PARAMETER["false_northing",0],
+    UNIT["metre",1, AUTHORITY["EPSG","9001"]],
+    AUTHORITY["EPSG","3395"]
+  ]  
+  
+exampleOgc2.0.6:
+  worldMercator: |
+    PROJCRS["WGS 84 / World Mercator",
+      BASEGEOGCRS["WGS 84",
+        DATUM["World Geodetic System 1984", ELLIPSOID["WGS 84",6378137,298.257223563, LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0, ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4326]],
+      CONVERSION["Mercator (variant A)",
+        METHOD["Mercator (variant A)", ID["EPSG",9804]],
+        PARAMETER["Latitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",1, SCALEUNIT["unity",1], ID["EPSG",8805]],
+        PARAMETER["False easting",0, LENGTHUNIT["metre",1], ID["EPSG",8806]],
+        PARAMETER["False northing",0, LENGTHUNIT["metre",1], ID["EPSG",8807]]],
+      CS[Cartesian,2],
+      AXIS["easting",east, ORDER[1], LENGTHUNIT["metre",1]],
+      AXIS["northing",north, ORDER[2], LENGTHUNIT["metre",1]],
+      ID["EPSG",3395]
+    ]
+  lambert93: |
+    PROJCRS["RGF93 v1 / Lambert-93",
+      BASEGEOGCRS["RGF93 v1",
+        DATUM["Reseau Geodesique Francais 1993 v1", ELLIPSOID["GRS 1980",6378137,298.257222101, LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0, ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4171]],
+      CONVERSION["Lambert-93",
+        METHOD["Lambert Conic Conformal (2SP)", ID["EPSG",9802]],
+        PARAMETER["Latitude of false origin",46.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],
+        PARAMETER["Longitude of false origin",3,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],
+        PARAMETER["Latitude of 1st standard parallel",49,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],
+        PARAMETER["Latitude of 2nd standard parallel",44,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],
+        PARAMETER["Easting at false origin",700000,LENGTHUNIT["metre",1],ID["EPSG",8826]],
+        PARAMETER["Northing at false origin",6600000,LENGTHUNIT["metre",1],ID["EPSG",8827]]
+      ],
+      CS[Cartesian,2],
+      AXIS["easting (X)",east,ORDER[1],LENGTHUNIT["metre",1]],
+      AXIS["northing (Y)",north,ORDER[2],LENGTHUNIT["metre",1]],
+      USAGE[
+        SCOPE["Engineering survey, topographic mapping."],
+        AREA["France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica)."],
+        BBOX[41.15,-9.86,51.56,10.38]
+      ],
+      ID["EPSG",2154]
+    ]
+  lambert93enYaml:
+    PROJCRS:
+      - "RGF93 v1 / Lambert-93"
+      -
+        BASEGEOGCRS:
+          - "RGF93 v1"
+          - DATUM:
+              - Reseau Geodesique Francais 1993 v1
+              - ELLIPSOID: ["GRS 1980", 6378137, 298.257222101, {LENGTHUNIT: [metre, 1]}]
+          - PRIMEM: [Greenwich, 0, {ANGLEUNIT: ["degree", 0.0174532925199433]}]
+          - ID: [EPSG, 4171]
+      - 
+        CONVERSION:
+          - "Lambert-93"
+          - METHOD:
+            - Lambert Conic Conformal (2SP)
+            - ID: [EPSG, 9802]
+          - PARAMETER:
+            - "Latitude of false origin"
+            - 46.5
+            - ANGLEUNIT: [degree, 0.0174532925199433]
+            - ID: ["EPSG", 8821]
+          - PARAMETER:
+            - "Longitude of false origin"
+            - 3
+            - ANGLEUNIT: [degree, 0.0174532925199433]
+            - ID: ["EPSG", 8822]
+          - PARAMETER:
+            - "Latitude of 1st standard parallel"
+            - 49
+            - ANGLEUNIT: [degree, 0.0174532925199433]
+            - ID: ["EPSG", 8823]
+          - PARAMETER:
+            - "Latitude of 2nd standard parallel"
+            - 44
+            - ANGLEUNIT: [degree, 0.0174532925199433]
+            - ID: ["EPSG", 8824]
+          - PARAMETER:
+            - "Easting at false origin"
+            - 700000
+            - LENGTHUNIT: ["metre", 1]
+            - ID: ["EPSG", 8826]],
+          - PARAMETER:
+            - "Northing at false origin"
+            - 6600000
+            - LENGTHUNIT: ["metre", 1]
+            - ID: ["EPSG", 8827]
+      - CS: [Cartesian, 2]
+      - AXIS: ["easting (X)", east, {ORDER: 1}, {LENGTHUNIT: ["metre",1]}]
+      - AXIS: ["northing (Y)", north, {ORDER: 2}, {LENGTHUNIT: ["metre",1]}],
+      -
+         USAGE:
+          SCOPE: "Engineering survey, topographic mapping."
+          AREA: "France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica)."
+          BBOX: [41.15,-9.86,51.56,10.38]
+      - ID: ["EPSG", 2154]
+eof:

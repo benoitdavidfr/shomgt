@@ -5,7 +5,7 @@ abstract: |
     - notamment permettre à plusieurs personnes d'effectuer les mises à jour de manière concurrente
       - -> mettre à jour des cartes entièrement en mode web sans nécessiter de gérer une copie locale comme en V3
     - permettre à un nouvel utilisateur de s'ouvrir lui-même un compte sous réserve de son domaine mail
-    - gestion d'un forum entre utilisateurs
+    - gestion d'un forum entre utilisateurs ou liste d'échange
     - avoir qqs admins pour réguler le fonctionnement
       - annuler les livraisons dégradant le service
       - banir les utilisateurs indélicats
@@ -21,11 +21,177 @@ abstract: |
     - mettre à jour le GAN
   - mise en base des infos stockées en V3 dans des fichiers Yaml et mises à jour concurremment en V4
   - évols plus limitées
-    - permettre la mise à jour des cartes spéciales par le client
+    - amélioration de la gestion des cartes spéciales, notamment
+      - permettre la mise à jour des cartes spéciales par le client
     - meilleure gestion en production de l'affichage des erreurs
     - restructuration des archives de cartes
       - suppression de la notion de livraison qui n'est plus pertinente
       - conservation de l'utilisateur ayant déposé la carte
+méthodeDeDécoupageEnComposants:
+  - chaque composant est soit de type Web, soit de type CLI, soit de type stockage
+  - un composant Web expose une interface web mais n'autorise que de courtes exécutions (de l'ordre de 30 s)
+  - à l'inverse un composant CLI permet des traitements longs mais ne peut pas exposer d'interface Web
+  - un composant stockage est passif, il stocke des données structurées d'une certaine manière
+  - si un composant nécessite de longues exécutions une exposition web, il doit être découpé en 2
+    avec si nécessaire un partage de données dans un disque partagé
+  - ajouter les fonctions transverses
+  - ajouter le stockage en base PgSql
+découpageEnComposantsV4:
+  shomgt:
+    objet: expose les 2 services WMS, ainsi que les flux Tile et GeoJSON et une carte Leaflet utilisant ces 2 derniers flux
+    mode: Web
+    offreA:
+      extérieur: 2 services WMS, flux Tile et GeoJSON, et code JavaScript de visualisation
+    utiliseDe:
+      sgupdt: les données construites par sgupdt et stockées dans data
+    note:
+      - dockerisable
+      - fichiers geojson à actualiser régulièrement
+        - delmar.geojson, copié de shomft
+        - frzee.geojson, copié de shomft
+        - sar_2019.geojson, copié de diffusion.shom.fr
+  data:
+    objet: répertoire ou volume partagé contenant les données pour shomgt
+    mode: stockage
+    note: éventuellement volume partagé docker
+  sgupdt:
+    objet: construit ou met à jour à partir de sgserver les données data nécessaires à shomgt
+    mode: CLI
+    offreA:
+      shomgt: les données construites pour shomgt dans data
+    utiliseDe:
+      sgserver: les données exposées par sgserver
+    note: dockerisable
+  sgserver:
+    objet: expose la dernière version de chaque carte, le libellé de cette version, les cartes retirées, et mapcat
+    mode: Web
+    offreA:
+      sgupt: la dernière version de chaque carte, le libellé de cette version, les cartes retirées, et mapcat
+    utiliseDe:
+      portfolio:
+        - les dernières versions stockées sous forme d'archives 7z et les md.json avec comme contraintes
+          - les cartes 7z sont stockées dans le sous-répertoire current du portefeuille
+          - à chaque carte 7z est associé un fichier .md.json contenant en JSON
+            la propriété 'version' indiquant la version de la carte.
+          - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
+            la propriété 'status' contenant la valeur 'obsolete'
+      mapcat: le catalogue mapcat.yaml
+  mapcat:
+    objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par sgupdt
+    offreATous: le contenu du catalogue comme fichier Yaml
+    utiliseDe:
+      gan: la dernière version de la synthèse des GANs pour comparaison au contenu du catalogue et corrections éventuelles
+    note: géré par des comparaisons avec le GAN et des mises à jour dans l'éditeur de texte
+  portfolio:
+    objet: stocke les versions des cartes du portefeuille ainsi qu'un éventuel statut de retrait d'une carte
+    mode: stockage
+    offreA:
+      sgserver: les dernières versions des cartes associée au libellé de la version, ainsi que la liste des cartes retirées
+      dashboard: les dernières versions des cartes associée au libellé de la version ainsi que la date de mise à jour
+    miseAJourPar:
+      bo: dépose de nlles versions de cartes, marque une carte comme retirée, fabrique les md.json
+    structure: voir '#/structurePortfolio'
+  shomft:
+    objet: |
+      expose
+        - les sihouettes des cartes normales et spéciales, provenant du serveur WFS du Shom
+        - les délimitations maritimes provenant du serveur WFS du Shom
+        - les contours simplifiés de la ZEE édités avec QGis
+    mode: mixte
+    offreA:
+      dashboard: les silhouettes des cartes et les contours simplifiés de la ZEE
+    utiliseDe:
+      shomWfs: le serveur WFS du Shom
+  dashboard:
+    objet: |
+      - expose un tableau de bord permettant d'identifier dans le portefeuille
+        - les cartes les plus périmées à remplacer
+        - les cartes obsolètes à marquer comme telle
+        - les nouvelles cartes à ajouter au portefeuille
+    mode: Web
+    offreA:
+      cmdeShom: cartes à commander
+      bo: cartes à marquer obsolètes
+    utiliseDe:
+      mapcat: le catalogue des cartes avec les infos stables
+      portfolio:
+        label: la liste des cartes 7z du portefeuille avec leur version et leur date de modification
+        donnéesUtilisées:
+          - fichiers md.json des cartes non obsolètes
+          - champ status pour vérifier que la carte n'est pas obsolète
+          - champ 'version'
+          - champ 'revision' ou si non défini champ 'creation' (PAS COMPATIBLE !!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+      shomft: les silhouettes des cartes et les contours simplifiés de la ZEE
+  gan:
+    objet: moissonne le site GAN du Shom et stocke le résultat pour l'exposer
+    mode: CLI
+    offreA:
+      dashboard: infos GAN restructurées par carte conformément au schema gans.schema.yaml
+      mapcat: infos GAN restructurées par carte conformément au schema gans.schema.yaml
+    utiliseDe:
+      gan.shom.fr: le site GAN du Shom
+  bo:
+    objet: mettre à jour le portefeuille et mapcat
+    mode: Web
+    metAJour:
+      portfolio:
+        - dépôt d'une nouvelle version de carte,
+        - modification du lien de current vers archives
+        - marque une carte comme obsolète,
+        - fabrique les md.json
+      mapcat: modification de l'entrée du catalogue pour une carte
+    utiliseDe:
+      cmdeShom: cartes obtenues du Shom
+      dashboard: numéros des cartes à marquer comme obsolètes
+  cmdeShom:
+    objet: commande manuelle des cartes au Shom à partir des infos du dashboard
+    offreA:
+      bo: dépôt des cartes obtenues
+    utiliseDe:
+      dashboard: liste des cartes à actualiser et des nlles cartes
+      bureau.prestations@shom.fr: commande par mail à <bureau.prestations@shom.fr>
+      diffusion.shom.fr: téléchargement sur le site
+interfacesImportantesEntreComposants:
+  portfolio:
+phasage:
+  stratégie:
+    - ajouter progressivement les nouvelles fonctionnalités
+    - garder pour le moment shomgt sur le compte bdavid
+  organisation:
+    - synchroniser shomgt -> sgpp au moyen d'un lien symbolique sgpp -> shomgt en local
+  sprint1:
+    objectfs:
+      - réorganisation de shomgeotiff
+      - évolution de la structure des md.json
+        - mise à jour des md.json existants / ok
+      - mise en place de la préprod avec ces évolutions
+      - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
+      - adaptation de sgserver si nécessaire
+      - adaptation de dashboard (champs creation/revision remplacés par le chap date)
+    apportsFonctionnels:
+      - dépôt des cartes en mode web
+  sprint2:
+    objectfs:
+      - adaptation du client sgupdt pour utiliser version 4 de sgserver
+    apportsFonctionnels:
+      - mise à jour des cartes spéciales
+  sprint3:
+    objectifs:
+      - création de comptes
+      - bannissement utilisateur
+      - gestion noms de domaines et IP
+      - mise en base user, domaines et adresses IP
+    apportsFonctionnels:
+      - création de comptes
+  sprint4:
+    - automatisation de la maj du GAN et de la purge des cartes
+  sprint5:
+    - annulation dépôt de cartes
+  sprint6:
+    - meilleure gestion en production de l'affichage des erreurs
+  sprint7:
+    - ajout gestion du catalogue dans le BO
+    - mise en base de MapCat
 forum:
   phpbb: https://www.phpbb.com/about/
   sympa:
@@ -49,6 +215,14 @@ batchRégulierDEntretien:
   - mise à jour du GAN
   - mise en oeuvre de la stratégie de conservation des cartes et des logs
   - suppression des dépôts en attente non validés
+preprod:
+  - mettre en oeuvre une préprod
+  - https://sgpp.geoapi.fr/
+    - avec des  var. d'env. différentes
+  - mettre en oeuvre un filtre sur sgserver pour faire des tests
+    - var. d'env. avec la liste des cartes exposées uniquement actif sur pprod
+    - ou un shomgeotiff spécifique
+      
 conservation:
   title: stratégie de conservation des données
   cartes:
@@ -68,23 +242,25 @@ conservation:
     - faire des synthèses des logs ttes les semaines
     - les logs détaillés pèsent environ 140 Mo pour 6 mois
     - supprimer les logs détaillés au bout d'un an
-orgShomgeotiff:
-  - organisation de ~/shomgeotiff
-  - 3 sous-répertoires de ~/shomgeotiff
+structurePortfolio:
+  title: organisation du portefeuille dans shomgeotiff
+  chemin: le chemin de shomgeotiff est défini dans la var. d'env. SHOMGT3_INCOMING_PATH
+  subDirectories:
+    - le répertoire contient au moins les 3 sous-répertoires suivants
     - archives
       - avec un répertoire par carte, nommé par le num. de la carte
       - dans ce répertoire de carte
-        - 2 fichiers .7z et .md.json par version
+        - 2 fichiers .7z et .md.json par version de la carte
           - en utilisant un nom de base de la forme {mapnum}-{GanWeek}
           - où {GanWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
             - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
-            - 2 derniers chiffres correspondant à la semaine
+            - 2 derniers chiffres correspondant au no de la semaine dans l'année
           - quand la semaine de publication est inconnue on utilise la semaine de dépôt de la carte
         - éventuellement un fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
           - où {GanWeek} est la semaine Shom de parution du retrait de la carte
           - ou si cette semaine n'est pas connue la semaine de fourniture de l'info
     - current
-      - pour chaque carte active 2 liens vers la dernière version de la carte dans archives nommés respectivement
+      - pour chaque carte non obsolète 2 liens vers la dernière version de la carte dans archives nommés respectivement
         - {mapnum}.7z pour le contenu de la carte
         - {mapnum}.md.json pour les métadonnées associées
       - pour chaque carte obsolète un lien nommé {mapnum}.md.json
@@ -92,20 +268,23 @@ orgShomgeotiff:
     - users
       - un répertoire par utilisateur nommé avec son adresse email
       - contenant les cartes en cours de dépôt
-  - les fichiers .md.json des cartes normales contiennent
-    - title: titre de la carte
-    - alternate: titre alternatif
-    - version: version sous la forme 'YYYYcN', eg "2005c29"
-    - edition: édition telque présente dans les MD XML, exemple "Edition n° 3 - 2005 - Dernière correction : 29",
-    - ganWeek: semaine GAN sur 4 chiffres
-    - ganDate: date de parution
-    - creation/revision: date de mise à jour définie dans le fichier de MD XML
-  - les fichiers .md.json des cartes spéciales contiennent
-    - version: undefined
-    - creation: date de mise à jour définie dans le fichier de MD XML
-  - les fichiers .md.json d'obsolescence contiennent
-    - status: obsolete
+  structureFichiersMdJson: définie par le schema bo/md.schema.yaml
 
+cartesSpéciales:
+  - le portefeuille comporte quelques cartes spéciales ne respectant pas les specs des cartes normales
+    - chacune est identifiée dans MapCat par le champ layer qui identifie la couche à laquelle elle est affectée
+  - si l'archive 7z comporte un seul .tif ou pas de .tif et un seul .pdf
+    - alors je considère que ce fichier constitue l'image principale de la carte
+    - sinon s'il existe un champ geotiffnames dans MapCat et si un des geotiffnames correspond à une entrée dans l'archive 7z
+      - alors je considère que ce fichier constitue l'image principale de la carte
+      - sinon ERREUR
+  - pour les MD, si l'archive comprend un et un seul fichier XML
+    - alors je considère que c'est le fichier de MD
+    - sinon je construit des MD simplifiées dans lesquelles la version est le nm du fichier .tif ou .pdf
+  
+sgserver:
+  - dans le serveur de cartes, je gère une version 4 de la liste des cartes avec
+    - pour les cartes spéciales la version n'est plus undefined mais le geotiffname éventuellement déduit
 miseEnBase:
   description: mise en base de certaines informations pour la V4
   user:
@@ -196,11 +375,6 @@ miseEnBase:
     description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
   gan:
     description: stockage des infos du GAN mises à jour régulièrement par cron
-cartesSpéciales:
-  - Une archive 7z ayant un seul .tif ou pas de .tif et un seul .pdf n'a pas besoin du champ geotiffname
-  - le champ geotiffname reste nécessaire dans les autres cas
-  - dans le serveur de cartes, je gère une version 4 de la liste des cartes avec
-    - pour les cartes spéciales la version n'est plus undefined mais le geotiffname éventuellement déduit
 admin:
   title: interface admin
   fonctionnalités:
@@ -256,4 +430,4 @@ bo:
     - il peut déclarer qu'une carte est obsolète
   mettreAJourServicesShomGt:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
-    
+eof:

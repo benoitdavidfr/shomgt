@@ -1,0 +1,103 @@
+title: bug de la carte 7620-2242
+constat:
+  - sans définition des borders la carte 7620-2242 ne s'affiche pas
+  - avec définition des borders elle s'affiche
+  - par rapport à la carte 7620-1903 le gdalinfo
+    - comporte un champ coordinateSystem.wkt assez différent
+    - comporte un champ cornerCoordinates radicalement différent
+    - comporte un champ wgs84Extent différent mais assez proche
+  - or shomgt utilise le champ cornerCoordinates
+  - le critère de mauvais géoréférencement devrait plutot être fondé sur l'exactitude de cornerCoordinates
+7620-2242:
+  gdalinfo:
+    coordinateSystem.wkt: |
+      PROJCRS["unnamed",
+        BASEGEOGCRS["unknown",
+          DATUM["unnamed",
+            ELLIPSOID["unnamed",6378137,298.257223120008,
+              LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]],
+          PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433,
+              ID["EPSG",9122]]]
+        ],
+        CONVERSION["Transverse Mercator",
+          METHOD["Transverse Mercator", ID["EPSG",9807]],
+          PARAMETER["Latitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8801]],
+          PARAMETER["Longitude of natural origin",-63.1, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8802]],
+          PARAMETER["Scale factor at natural origin",1, SCALEUNIT["unity",1], ID["EPSG",8805]],
+          PARAMETER["False easting",500000, LENGTHUNIT["metre",1], ID["EPSG",8806]],
+          PARAMETER["False northing",0, LENGTHUNIT["metre",1], ID["EPSG",8807]]
+        ],
+        CS[Cartesian,2],
+        AXIS["(E)",east, ORDER[1], LENGTHUNIT["metre",1, ID["EPSG",9001]]],
+        AXIS["(N)",north,ORDER[2], LENGTHUNIT["metre",1, ID["EPSG",9001]]]
+      ]
+    cornerCoordinates:
+      upperLeft:  [469855.913, 2038395.711]
+      lowerLeft:  [469853.988, 1996392.577]
+      lowerRight: [528354.421, 1996389.896]
+      upperRight: [528356.346, 2038393.03]
+      center:     [499105.167, 2017392.804]
+    wgs84Extent:
+      type: Polygon
+      coordinates:
+        -
+          - [-63.3853289, 18.4281607]
+          - [-63.3847288, 18.0486755]
+          - [-62.8321927, 18.0486754]
+          - [-62.8315929, 18.4281612]
+          - [-63.3853289, 18.4281607]
+7620-1903:
+  gdalinfo:
+    coordinateSystem.wkt: |
+      PROJCRS["WGS 84 / World Mercator",
+          BASEGEOGCRS["WGS 84",
+              DATUM["World Geodetic System 1984",
+                  ELLIPSOID["WGS 84",6378137,298.257223563,
+                      LENGTHUNIT["metre",1]]],
+              PRIMEM["Greenwich",0,
+                  ANGLEUNIT["degree",0.0174532925199433]],
+              ID["EPSG",4326]],
+          CONVERSION["Mercator (variant A)",
+              METHOD["Mercator (variant A)",
+                  ID["EPSG",9804]],
+              PARAMETER["Latitude of natural origin",0,
+                  ANGLEUNIT["degree",0.0174532925199433],
+                  ID["EPSG",8801]],
+              PARAMETER["Longitude of natural origin",0,
+                  ANGLEUNIT["degree",0.0174532925199433],
+                  ID["EPSG",8802]],
+              PARAMETER["Scale factor at natural origin",1,
+                  SCALEUNIT["unity",1],
+                  ID["EPSG",8805]],
+              PARAMETER["False easting",0,
+                  LENGTHUNIT["metre",1],
+                  ID["EPSG",8806]],
+              PARAMETER["False northing",0,
+                  LENGTHUNIT["metre",1],
+                  ID["EPSG",8807]]],
+          CS[Cartesian,2],
+              AXIS["easting",east,
+                  ORDER[1],
+                  LENGTHUNIT["metre",1]],
+              AXIS["northing",north,
+                  ORDER[2],
+                  LENGTHUNIT["metre",1]],
+          ID["EPSG",3395]]
+    cornerCoordinates:
+      upperLeft:  [-7052384.761, 2069168.524],
+      lowerLeft:  [-7052384.761, 2034307.095],
+      lowerRight: [-6998020.716, 2034307.095],
+      upperRight: [-6998020.716, 2069168.524],
+      center:     [-7025202.739, 2051737.809]
+    wgs84Extent:
+      type: Polygon
+      coordinates:
+        -
+          - [-63.3526502, 18.3847999],
+          - [-63.3526502, 18.0855536],
+          - [-62.8642897, 18.0855536],
+          - [-62.8642897, 18.3847999],
+          - [-63.3526502, 18.3847999]
+eof:

@@ -217,7 +217,7 @@ class DbMapCat { // chargement d'un extrait de mapcat.yaml
 class Perempt { // croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption
   protected string $mapNum;
   protected string $pfVersion; // info du portefeuille 
-  protected ?string $pfRevision; // info du portefeuille 
+  protected ?string $pfDate; // info du portefeuille 
   protected string $ganVersion=''; // info du GAN 
   /** @var array<int, array<string, string>> $ganCorrections */
   protected array $ganCorrections=[]; // info du GAN
@@ -237,7 +237,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     //echo "<pre>"; print_r($map);
     $this->mapNum = $mapNum;
     $this->pfVersion = $map['version'];
-    $this->pfRevision = $map['revision'] ?? $map['creation'] ?? null;
+    $this->pfDate = $map['date']['value'];
   }
   
   function setGan(Gan $gan): void { // Mise à jour de perempt à partir du GAN
@@ -295,30 +295,31 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "<table border=1><tr><td><b>Validité du GAN</b></td><td>",Gan::$hvalid,"</td></tr></table>\n";
     echo "<h3>Signification des colonnes du tableau ci-dessous</h3>\n";
     echo "<table border=1>\n";
-    echo "<tr><td><b>#</b></td><td>numéro de la carte</td></tr>\n";
-    echo "<tr><td><b>titre</b></td><td>titre de la carte</td></tr>\n";
-    echo "<tr><td><b>zone géo.</b></td><td>zone géographique dans laquelle se situe la carte</td></tr>\n";
-    echo "<tr><td><b>revision</b></td><td>date de création ou de révision de la carte du portefeuille,",
-      " issue des MD ISO associée à la carte</td></tr>\n";
-    echo "<tr><td><b>v. Pf</b></td><td>version de la carte dans le portefeuille, identifiée par l'année d'édition de la carte",
-      " suivie du caractère 'c' et du numéro de la dernière correction apportée à la carte</td></tr>\n";
-    echo "<tr><td><b>v. GAN</b></td><td>version de la carte trouvée dans les GANs à la date de validité ci-dessus ;",
-      " le lien permet de consulter les GANs du Shom pour cette carte</td></tr>\n";
-    echo "<tr><td><b>degré</b></td><td>degré de péremption de la carte exprimant l'écart entre les 2 versions ci-dessus ;",
-      " la table ci-dessous est triée par degré décroissant ; ",
-      " l'objectif de gestion est d'éviter les degrés supérieurs ou égaux à 5</td></tr>\n";
-    echo "<tr><td><b>corrections</b></td><td>liste des corrections reconnues dans les GANs, avec en première colonne ",
-      " le numéro de la correction et, dans la seconde colonne, avant le tiret, le no de semaine de la correction",
-      " (année sur 2 caractères et no de semmaine sur 2 caractères)",
-      " et après le tiret le numéro d'avis dans le GAN de cette semaine.</td></tr>\n";
+    $headers = [
+      '#'=> "numéro de la carte",
+      'titre'=> "titre de la carte",
+      'zone ZEE'=> "zone de la ZEE intersectant la carte",
+      'date Pf'=> "date de création ou de révision de la carte du portefeuille, issue des MD ISO associée à la carte",
+      'version Pf'=> "version de la carte dans le portefeuille, identifiée par l'année d'édition de la carte"
+          ." suivie du caractère 'c' et du numéro de la dernière correction apportée à la carte",
+      'version GAN'=> "version de la carte trouvée dans les GANs à la date de validité ci-dessus ;"
+          ." le lien permet de consulter les GANs du Shom pour cette carte",
+      'degré'=> "degré de péremption de la carte exprimant l'écart entre les 2 versions ci-dessus ;"
+          ." la table ci-dessous est triée par degré décroissant ; "
+          ." l'objectif de gestion est d'éviter les degrés supérieurs ou égaux à 5",
+      'corrections'=> "liste des corrections reconnues dans les GANs, avec en première colonne "
+          ." le numéro de la correction et, dans la seconde colonne, avant le tiret, le no de semaine de la correction"
+          ." (année sur 2 caractères et no de semmaine sur 2 caractères)"
+          ." et après le tiret le numéro d'avis dans le GAN de cette semaine.",
+    ];
+    foreach ($headers as $name => $label)
+        echo "<tr><td><b>$name</b></td><td>$label</td></tr>\n";
     if (AvailOnTheShop::exists())
       echo "<tr><td><b>boutique</b></td><td>disponibilité sur la boutique du Shom avec info de mise à jour</td></tr>\n";
     echo "</table></p>\n";
     echo "<p>Attention, certains écarts de version sont dus à des informations incomplètes ou incorrectes",
       " sur les sites du Shom</p>\n";
-    echo "<table border=1>",
-         "<th>#</th><th>titre</th><th>zone géo.</th><th>revision</th><th>v. Pf</th>",
-         "<th>v. GAN</th><th>degré</th><th>corrections</th>\n";
+    echo "<table border=1><th>",implode('</th><th>', array_keys($headers)),"</th>\n";
     if (AvailOnTheShop::exists())
       echo "<th>boutique</th>\n";
     foreach (Perempt::$all as $p) {
@@ -331,7 +332,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "<tr><td>$this->mapNum</td>";
     echo "<td>",$this->title(),"</td>";
     echo "<td>",implode(', ', $this->mapsFrance()),"</td>";
-    echo "<td>$this->pfRevision</td>";
+    echo "<td>$this->pfDate</td>";
     echo "<td>$this->pfVersion</td>";
     $href = "https://gan.shom.fr/diffusion/qr/gan/$this->mapNum";
     echo "<td><a href='$href' target='_blank'>$this->ganVersion</a></td>";
@@ -427,7 +428,7 @@ switch ($_GET['a']) {
     }
   
     $obsoletes = [];
-    foreach (Portfolio::$all as $mapid => $map) {
+    foreach (array_keys(Portfolio::$all) as $mapid) {
       if (!isset($listOfInterest[$mapid]))
         $obsoletes[] = $mapid;
     }

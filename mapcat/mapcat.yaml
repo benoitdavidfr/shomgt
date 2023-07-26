@@ -4,7 +4,7 @@ description: |
   où sont utilisés notamment l'extension spatiale et l'échelle des cartes et des cartouches.
   La liste des bordures est utilisée pour les GéoTiffs non ou mal géoréférencés.
   Les champs optionnels z-order et toDelete sont utilisés pour améliorer la superposition entre GéoTiffs.
-  Les champs layer et geotiffname sont utilisés pour les cartes spéciales ne respactant pas les specs des GéoTiffs.
+  Les champs layer et geotiffnames sont utilisés pour les cartes spéciales ne respectant pas les specs des GéoTiffs.
   
   Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques
   stables des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.
@@ -21,8 +21,12 @@ description: |
     - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
   Journal:
+    - 23/7/2023 - passage à ShomGt4, suppression des geotiffname des cartes spéciales
     - 2/7/2023 - gestion du pb de géoréférencement de 7620 en ajoutant les bordures
     - 26/6/2023 - remplacement de la carte 6118 par la carte 7638 (au 24/05/2023 (GAN  2321))
+    - 24/4/2023
+      - intégration de la carte 7455 de manière incomplète qui génère une erreur de conformité au schéma
+      - intégration de la carte 8508 de manière incomplète qui génère une erreur de conformité au schéma
     - duplication du fichier pour ShomGt3 en avril-mai 2022
       - les mises à jour sur ShomGt2 ne sont plus gérées dans ce fichier
     - 5-6/6/2022
@@ -35,7 +39,7 @@ description: |
       - toutefois je structure dans ce fichier les cartes en fonction de la structure des GéoTiffs
       - en effet certaines cartes n'ont pas de partie principale, pafois de manière arbitraire
         - et dans ce cas j'aligne la structure de ce fichier sur la structuration des GéoTiffs
-      - suppression des champs spatial et replacement du champ bboxDM par spatial
+      - suppression des champs spatial et remplacement du champ bboxDM par spatial
     - 11/6/2022 - correction de FR6966 badGan
     - 13/6/2022 - transmission erreurs au Shom
     - 14/6/2022 - définition de la nouvelle doctrine pour ShomGt3 et corrections importantes d'alignement
@@ -53,8 +57,7 @@ maps:
   FR0101:
     groupTitle: 'Planisphère terrestre'
     title: 'Planisphère terrestre (axé sur 65° Ouest)'
-    mapsFrance:
-      - FR
+    mapsFrance: [FR]
     scaleDenominator: 40.000.000
     spatial:
       SW: '79°00,00''S - 100°00,00''E'
@@ -3346,13 +3349,17 @@ maps:
     mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: 1.070.000
     spatial: {SW: "41°28,00'N - 010°30,00'W", NE: "52°00,00'N - 000°00,00'E"}
+    borders:
+      left: 148
+      top: 126
+      right: 148
+      bottom: 151
     layer: gtaem
-    geotiffname: '7330_2016'
+    #geotiffname: '7330_2016'
   FR7337:
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
-    mapsFrance:
-      - GF
+    mapsFrance: [GF]
     scaleDenominator: '80.000'
     spatial:
       SW: '04°12,00''N - 051°55,00''W'
@@ -3374,7 +3381,7 @@ maps:
     scaleDenominator: '655.000'
     spatial: {SW: "47°30,00'N - 007°00,00'W", NE: "51°55,00'N - 003°00,00'E"}
     layer: gtaem
-    geotiffname: '7344_2016'
+    #geotiffname: '7344_2016'
   FR7345:
     groupTitle: 'Petites Antilles'
     title: 'Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)'
@@ -3629,7 +3636,7 @@ maps:
     scaleDenominator: '700.000'
     spatial: {SW: "39°57,00'N - 001°30,00'E", NE: "44°40,00'N - 010°50,00'E"}
     layer: gtaem
-    geotiffname: '7360_2016'
+    #geotiffname: '7360_2016'
   FR7368:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Ile Malden aux Iles de la Société'
@@ -4425,8 +4432,7 @@ maps:
   FR7453:
     groupTitle: 'Archipel des Tuamotu'
     title: Makemo
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '75.000'
     spatial:
       SW: '16°47,50''S - 144°04,30''W'
@@ -4504,8 +4510,7 @@ maps:
   FR7457:
     groupTitle: 'Archipel des Tuamotu'
     title: 'Raroia et Takume'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '75.000'
     spatial:
       SW: '16°21,50''S - 142°35,60''W'
@@ -4946,8 +4951,7 @@ maps:
     spatial:
       SW: '18°05,30''N - 063°20,96''W'
       NE: '18°22,92''N - 062°52,05''W'
-    borders: { left: 893, bottom: 1032, right: 888, top: 1213 }
-    # L=13819 x H=9922
+    #borders: { left: 893, bottom: 1032, right: 888, top: 1213 }
     references: 'Fac similé carte GB n°2047 publiée en 1985 (édition mars 2018)'
     noteCatalog: |
       Problème d'affichage semble lié au géoréférencement, fourniture des bordures pour le résoudre.
@@ -5236,8 +5240,7 @@ maps:
   FR7798:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie Sud'
-    mapsFrance:
-      - TF
+    mapsFrance: [TF]
     scaleDenominator: 1.008.000
     spatial:
       SW: '27°22,00''S - 034°21,00''E'
@@ -5250,7 +5253,7 @@ maps:
     spatial: {SW: "48°30,00'N - 006°30,00'W", NE: "51°35,00'N - 002°30,00'E"}
     badGan: 'Carte spéciale absente du GAN'
     layer: gtMancheGrid
-    geotiffname: '8101'
+    #geotiffname: '8101'
   FR8502:
     title: Action de l'Etat en Mer en ZMSOI
     mapsFrance: [TF, RE, YT]
@@ -5258,7 +5261,7 @@ maps:
     spatial: {SW: "60°00,00'S - 030°00,00'E", NE: "05°00,00'N - 090°00,00'E"}
     noteCatalog: 'Carte spéciale absente du GAN'
     layer: gtaem
-    geotiffname: '8502_2010'
+    #geotiffname: '8502_2010'
   FR8508:
     title: 8508 CX - Carte d'usages et activités - en Manche et Mer du Nord
     mapsFrance: [FX-MMN]
@@ -5271,10 +5274,10 @@ maps:
     scaleDenominator: 3.158.760
     spatial: { SW: '30°S - 153°E', NE: '08°S - 174°W' }
     borders: { left: 292, bottom: 239, right: 299, top: 193 }
-    noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l''anti-méridien"
+    noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l'anti-méridien"
     badGan: "Carte spéciale absente du GAN"
     layer: gtaem
-    geotiffname: '8509_2015.pdf'
+    #geotiffname: '8509_2015.pdf'
   FR8510:
     title: 'Délimitations des zones maritimes'
     mapsFrance: [FR]
@@ -5284,7 +5287,7 @@ maps:
     noteCatalog: "Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°"
     badGan: "Carte spéciale absente du GAN"
     layer: gtZonMar
-    geotiffname: '8510_2015.pdf'
+    #geotiffname: '8510_2015.pdf'
   FR8517:
     title: 'Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton'
     mapsFrance: [PF]
@@ -5293,7 +5296,7 @@ maps:
     borders: { left: 326, bottom: 5020-4711, right: 7087-6834, top: 286 }
     noteCatalog: 'Carte spéciale absente du GAN et non géo-référencée, Clipperton est dans un cartouche non explicité'
     layer: gtaem
-    geotiffname: '8517_2015.pdf'
+    #geotiffname: '8517_2015.pdf'
   FR8523:
     title: Carte d'Action de l'État en Mer - Océan Atlantique Nord - Zone maritime Antilles-Guyane
     mapsFrance: [GP, MQ, GF, BL, MF]
@@ -5302,7 +5305,7 @@ maps:
     noteCatalog: "Carte spéciale absente du GAN, le tiff est géoréférencé"
     badGan: "Carte spéciale absente du GAN"
     layer: gtaem
-    geotiffname: '8523_2021'
+    geotiffNames: [8523_2021.tif]
 obsoleteMaps:
   FR5825:
     '2020-12-27T07:58:03+01:00':

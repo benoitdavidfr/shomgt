@@ -474,7 +474,7 @@ class GanStatic {
     $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
-      $mapid = substr($id, 0, 6);
+      $mapid = substr($id, 0, 4);
       if ($mapa = Portfolio::$all[$mapid])
         Gan::$gans[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
     }
