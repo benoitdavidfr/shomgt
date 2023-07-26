@@ -76,8 +76,9 @@ define ('TEST_MAPS', [
     "Cartes à cheval sur l'antiméridien" => [
       'path=/archives/6835&map=6835-2311'=> "6835-2311 - Océan Pacifique Nord - Partie Est",
       'path=/archives/6977&map=6977-2304'=> "6977-2304 - Océan Pacifique Nord - Partie Nord-Ouest",
+      'path=/archives/7021&map=7021-2308'=> "7021-2308 - Océan Pacifique Nord - Partie Sud-Ouest",
+      'path=/archives/7271&map=7271-1726'=> "7271-1726 - Australasie et mers adjacentes",
       /*
-      7021
       7271
       7166
       6671
@@ -91,7 +92,8 @@ define ('TEST_MAPS', [
     ],
   ]
 ); // cartes de tests 
-
+define ('MIN_FOR_DISPLAY_IN_COLS', 100);
+define ('NBCOLS_FOR_DISPLAY', 24);
 
 if (!($login = Login::login())) {
   die("Accès non autorisé\n");
@@ -101,21 +103,48 @@ if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
   throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
 if (!isset($_GET['path'])) { // affichage de la liste des livraisons 
-  echo HTML_HEAD;
+  echo HTML_HEAD,"<h2>Livraisons et archives</h2>\n";
   $groups = [
     '/incoming'=> "Livraisons",
     '/attente'=> "Livraisons en attente",
-    '/archives'=> "Archives",
+    '/archives'=> "Archives de cartes",
   ];
   foreach ($groups as $gname => $title) {
-    echo "<h3>$title</h3><ul>\n";
+    $incomings = [];
     foreach (new DirectoryIterator($PF_PATH.$gname) as $incoming) {
       if (in_array($incoming, ['.','..','.DS_Store'])) continue;
-      echo "<li><a href='?path=$gname/$incoming'>$incoming</a></li>\n";
+      $incomings[] = (string)$incoming;
     }
-    echo "</ul>\n";
+    if (count($incomings) < MIN_FOR_DISPLAY_IN_COLS) {
+      echo "<h3>$title</h3><ul>\n";
+      foreach ($incomings as $incoming) {
+        echo "<li><a href='?path=$gname/$incoming'>$incoming</a></li>\n";
+      }
+      echo "</ul>\n";
+    }
+    else {
+      $nbincomings = count($incomings);
+      //echo "nbincomings=$nbincomings<br>\n";
+      echo "<h3>$title</h3>\n";
+      echo "<table border=1><tr>\n";
+      $i = 0;
+      for ($nocol=0; $nocol < NBCOLS_FOR_DISPLAY; $nocol++) {
+        echo "<td valign='top'>\n";
+        //echo "max=",$nbincomings / NBCOLS_FOR_DISPLAY * ($nocol+1),"<br>\n";
+        //echo "floor(max)=",floor($nbincomings / NBCOLS_FOR_DISPLAY * ($nocol+1)),"<br>\n";
+        while ($i < round($nbincomings / NBCOLS_FOR_DISPLAY * ($nocol+1))) {
+          //echo "i=$i\n";
+          $incoming = $incomings[$i];
+          //echo "<li><a href='?path=$gname/$incoming'>$incoming</a></li>\n";
+          echo "&nbsp;<a href='?path=$gname/$incoming'>$incoming</a>&nbsp;<br>\n";
+          $i++;
+        }
+        echo "</td>\n";
+      }
+      echo "</tr></table>\n";
+    }
   }
-  echo "<a href='?path=tests&action=tests'>Cartes de tests</a>\n";
+  echo "</p><a href='?path=tests&action=tests'>Cartes de tests</a></p>\n";
   die();
 }
 

@@ -86,8 +86,17 @@ journal: |
 
 define('EXCLUDED_MAPS_IN_V0', ['8523']); // cartes exclues du service en V0 car incompatible avec sgupdt v0.6
 
-define('TEST_MAPS', []); // PAS de restriction pour tests
-//define('TEST_MAPS', ['0101','7471','7620']); // restriction pour tests
+//define('TEST_MAPS', []); // PAS de restriction pour tests
+define('TEST_MAPS', [
+  '0101', // planisphère
+  '7471', // voisine de 7620
+  '7620', // carte mal géoréférencée
+  '6835', // à cheval sur l'antiméridien
+  '6977', // à cheval sur l'antiméridien
+  '8509', // Action de l'Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
+  '8510', // Délimitations des zones maritimes
+]
+); // restriction pour tests
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';

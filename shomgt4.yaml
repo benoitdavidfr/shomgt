@@ -167,15 +167,19 @@ phasage:
       - mise en place de la préprod avec ces évolutions
       - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
       - adaptation de sgserver si nécessaire
-      - adaptation de dashboard (champs creation/revision remplacés par le chap date)
+      - adaptation de dashboard (champs creation/revision remplacés par le chap date) / ok
     apportsFonctionnels:
       - dépôt des cartes en mode web
+    pb7620:
+      - comment traiter le cas de la 7620 ?
+      - la carte est mal géoréférencée, les coords. projetés sont fausses
+      - 2 possibilités
+        - ne pas utiliser les coordonnées projetées dans le composant shomgt
+          - avantage: le plus simple
+          - inconvénient: modifie le composant shomgt
+        - détecter dans bo l'erreur et exiger de renseigner les borders
+      - je choisis la 1ère solution car le composant shomgt existant reste très largement compatble avec la nlle version
   sprint2:
-    objectfs:
-      - adaptation du client sgupdt pour utiliser version 4 de sgserver
-    apportsFonctionnels:
-      - mise à jour des cartes spéciales
-  sprint3:
     objectifs:
       - création de comptes
       - bannissement utilisateur
@@ -183,13 +187,13 @@ phasage:
       - mise en base user, domaines et adresses IP
     apportsFonctionnels:
       - création de comptes
-  sprint4:
+  sprint3:
     - automatisation de la maj du GAN et de la purge des cartes
-  sprint5:
+  sprint4:
     - annulation dépôt de cartes
-  sprint6:
+  sprint5:
     - meilleure gestion en production de l'affichage des erreurs
-  sprint7:
+  sprint6:
     - ajout gestion du catalogue dans le BO
     - mise en base de MapCat
 forum:
