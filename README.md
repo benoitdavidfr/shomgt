@@ -1,3 +1,7 @@
+La branche shomgt4 correspond au début du développement de la version 4 de ShomGT.  
+[Plus d'infos ici](shomgt4.yaml).
+
+
 # ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
 L'objectif de ShomGT est d'exposer sous la forme de web-services
 le contenu des [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
