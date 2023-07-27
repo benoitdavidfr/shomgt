@@ -27,34 +27,10 @@
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/SevenZipArchive.php';
+require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
-
-class MapCat { // Un objet MapCat correspond à l'entrée du catalogue correspondant à une carte
-  protected array $cat; // contenu de l'entrée du catalogue correspondant à une carte
-  static array $maps=[]; // contenu du champ maps de MapCat
-  
-  // retourne l'entrée du catalogue correspondant à $mapNum sous la forme d'un objet MapCat
-  function __construct(string $mapNum) {
-    if (!self::$maps)
-      self::$maps = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml')['maps'];
-    $this->cat = self::$maps["FR$mapNum"] ?? [];
-  }
-  
-  function __get(string $property) { return $this->cat[$property] ?? null; }
-  
-  function asArray(): array { return $this->cat; }
-  
-  function spatials(): array { // retourne la liste des extensions spatiales sous la forme [nom => spatial]
-    $spatials = $this->spatial ? ['image principale de la carte'=> $this->spatial] : [];
-    //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
-    foreach ($this->insetMaps ?? [] as $i => $insetMap) {
-      $spatials[$insetMap['title']] = $insetMap['spatial'];
-    }
-    return $spatials;
-  }
-};
 
 class MapArchive { // analyse des fichiers d'une archive d'une carte
   protected string $type; // 'normal'|'special'

@@ -86,7 +86,7 @@ class Gdalinfo { //
    *  - null si non géoréférencé cad champ 'coordinateSystem' non défini
    *  - 'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' défini
    *  - 'KO' si géoréférencé incorrectement (NON UTILISE)
-     */
+   */
   function georef(): ?string {
     if (!isset($this->info['coordinateSystem']))
       return null;

@@ -3025,9 +3025,7 @@ maps:
   FR7271:
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
-    mapsFrance:
-      - NC
-      - WF
+    mapsFrance: [NC, WF]
     scaleDenominator: 10.000.000
     spatial:
       SW: '51°00,00''S - 104°00,00''E'
