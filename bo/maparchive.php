@@ -31,16 +31,28 @@ require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class MapCat { // chargement de MapCat 
-  static array $cat;
+class MapCat { // Un objet MapCat correspond à l'entrée du catalogue correspondant à une carte
+  protected array $cat; // contenu de l'entrée du catalogue correspondant à une carte
+  static array $maps=[]; // contenu du champ maps de MapCat
   
-  static function init() {
-    self::$cat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
-    //echo "<pre>"; print_r(self::$cat); echo "</pre>\n";
+  // retourne l'entrée du catalogue correspondant à $mapNum sous la forme d'un objet MapCat
+  function __construct(string $mapNum) {
+    if (!self::$maps)
+      self::$maps = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml')['maps'];
+    $this->cat = self::$maps["FR$mapNum"] ?? [];
   }
   
-  static function get(string $mapNum): array {
-    return self::$cat['maps']["FR$mapNum"] ?? [];
+  function __get(string $property) { return $this->cat[$property] ?? null; }
+  
+  function asArray(): array { return $this->cat; }
+  
+  function spatials(): array { // retourne la liste des extensions spatiales sous la forme [nom => spatial]
+    $spatials = $this->spatial ? ['image principale de la carte'=> $this->spatial] : [];
+    //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
+    foreach ($this->insetMaps ?? [] as $i => $insetMap) {
+      $spatials[$insetMap['title']] = $insetMap['spatial'];
+    }
+    return $spatials;
   }
 };
 
@@ -57,7 +69,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
   ** $mapNum est le numéro de la carte sur 4 chiffres
   ** $mapCat est l'entrée correspondant à la carte dans le catalogue
   */
-  function __construct(string $pathOf7z, string $mapNum, array $mapCat) {
+  function __construct(string $pathOf7z, string $mapNum, MapCat $mapCat) {
     //echo "pathOf7z=$pathOf7z, mapNum=$mapNum<br>\n";
     $this->pathOf7z = $pathOf7z;
     $this->mapNum = $mapNum;
@@ -103,8 +115,8 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         $this->main['xml'] = $entriesPerExt['xml'][0];
         unset($this->suppls[$entriesPerExt['xml'][0]]);
       }
-      if (!isset($this->main['tif']) && isset($mapCat['geotiffNames'])) {
-        foreach ($mapCat['geotiffNames'] as $geotiffName) {
+      if (!isset($this->main['tif']) && isset($mapCat->geotiffNames)) {
+        foreach ($mapCat->geotiffNames as $geotiffName) {
           foreach (array_keys($this->suppls) as $name)  {
             if ($name == "$mapNum/$geotiffName") {
               $this->main['tif'] = "$mapNum/$geotiffName";
@@ -165,14 +177,13 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     return null;
   }
   
-  
   /* Teste la conformité à la spec et au catalogue
    * retourne [] si la carte livrée est valide et conforme à sa description dans le catalogue
    * sinon un array comportant un au moins des 2 champs:
    *  - errors listant les erreurs
    *  - warnings listant les alertes
   */
-  function invalid(array $mapCat): array {
+  function invalid(MapCat $mapCat): array {
     if (!$mapCat)
       return ['errors'=> ["La carte n'existe pas dans le catalogue MapCat"]];
     $errors = [];
@@ -190,20 +201,20 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     // Partie Géoréférencement
     switch ($this->main['georef']) {
       case 'ok': {
-        if (!isset($mapCat['scaleDenominator']) || !isset($mapCat['spatial']))
+        if (!$mapCat->scaleDenominator || !$mapCat->spatial)
           $errors[] = "Le fichier GéoTiff principal est géoréférencé alors que le catalogue indique qu'il ne l'est pas";
         break;
       }
       case null: { // Fichier principal non géoréférencé, 2 possibilités
         // carte normale composée uniquement de cartouches => ok ssi c'est indiqué comme telle dans le catalogue
         if ($this->type == 'normal') {
-          if (isset($mapCat['scaleDenominator']) || isset($mapCat['spatial']))
+          if ($mapCat->scaleDenominator || $mapCat->spatial)
             $errors[] = "Le fichier GéoTiff principal n'est pas géoréférencé alors que le catalogue indique qu'il l'est";
           else
             $warnings[] = "Le fichier GéoTiff principal n'est pas géoréférencé ce qui est conforme au catalogue";
         }
         else { // carte spéciale géoréférencée par l'ajout de borders dans le catalogue => ok ssi borders présentes
-          if (!isset($mapCat['borders']))
+          if (!$mapCat->borders)
             $errors[] = "Le fichier GéoTiff principal de la carte spéciale n'est pas géoréférencé"
               ." et le catalogue ne fournit pas l'information nécessaire à son géoréférencement";
           else
@@ -213,10 +224,10 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         break;
       }
       case 'KO': { // Fichier principal mal géoréférencé, carte normale
-        if (!isset($mapCat['scaleDenominator']) || !isset($mapCat['spatial']))
+        if (!$mapCat->scaleDenominator || !$mapCat->spatial)
           $errors[] = "Le fichier GéoTiff principal est mal géoréférencé"
             ." alors que le catalogue indique qu'il n'est pas géoréférencé";
-        elseif (!isset($mapCat['borders']))
+        elseif (!$mapCat->borders)
           $errors[] = "Le fichier GéoTiff principal est mal géoréférencé"
             ." et le catalogue ne fournit pas l'information nécessaire à son géoréférencement";
         else
@@ -226,9 +237,9 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       }
     }
     // Partie cartouches
-    if (count($this->insets) <> count($mapCat['insetMaps'] ?? []))
+    if (count($this->insets) <> count($mapCat->insetMaps ?? []))
       $errors[] = "L'archive contient ".count($this->insets)." cartouches"
-        ." alors que le catalogue en mentionne ".count($mapCat['insetMaps'] ?? []);
+        ." alors que le catalogue en mentionne ".count($mapCat->insetMaps ?? []);
     foreach ($this->insets as $name => $inset) {
       if (!isset($inset['tif']))
         $errors[] = "Le fichier GéoTiff du cartouche $name est absent";
@@ -242,10 +253,10 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
   
-  function showAsHtml(array $mapCat): void {
+  function showAsHtml(MapCat $mapCat): void {
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
     echo "<table border=1>";
-    echo "<tr><td>cat</td><td><pre>",Yaml::dump($mapCat, 6),"</td></tr>\n";
+    echo "<tr><td>cat</td><td><pre>",Yaml::dump($mapCat->asArray(), 6),"</td></tr>\n";
     if ($this->thumbnail) {
       $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
       if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
@@ -319,7 +330,6 @@ if ((php_sapi_name() == 'cli') && ($argv[0]=='maparchive.php')) {
   if (!isset($argv[1]))
     die("usage: $argv[0] ('archives'|'incoming') [{incoming}]\n");
   $group = $argv[1];
-  MapCat::init();
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
     throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
   if (isset($argv[2])) {

@@ -1,10 +1,16 @@
 <?php
-/* bo/viewtiff.php - Visualisation et validation d'une livraison utilisant georaster-layer-for-leaflet
- * Benoit DAVID - 11-22/7/2023
+/* bo/viewtiff.php - Visualisation pour validation d'une carte Shom 7z
+ * Benoit DAVID - 11-27/7/2023
+ * Utilisé de 2 manières:
+ *  - en autonome propose de visualiser les livraisons et les archives
+ *  - appelé par maparchive.php pour visualiser une carte 7z
+ *
+ * Utilise georaster-layer-for-leaflet pour visualiser des tif dans une carte Leaflet
+ * Permet aussi de visualiser les extensions spatiales fournies dans MapCat
+ *
  * paramètres GET
  *  - path - chemin du répertoire contenant des 7z de cartes
  *  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
- *  - tif  - entrée du .tif dans l'archive 7z
  *
  * Faire des tests de viewtiff avec:
  *  - 2 cartes normales standard sans cartouches
@@ -95,6 +101,78 @@ define ('TEST_MAPS', [
 define ('MIN_FOR_DISPLAY_IN_COLS', 100); // nbre min d'objets pour affichage en colonnes
 define ('NBCOLS_FOR_DISPLAY', 24); // nbre de colonnes si affichage en colonnes
 
+class Spatial { // transforme une extension spatiale dans le format MapCat en objet L.geoJSON pour Leaflet 
+  const LGEOJSON_STYLE = ['color'=>'blue', 'weight'=> 2, 'opacity'=> 0.3]; // style passé à l'appel de L.geoJSON()
+  protected array $sw; // position SW en LonLatDD
+  protected array $ne; // position NE en LonLatDD
+  
+  static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
+    if (!preg_match("!^(\d+)°((\d\d(,\d+)?)')?(N|S) - (\d+)°((\d\d(,\d+))?')?(E|W)$!", $latLonDM, $matches))
+      throw new Exception("Erreur match sur $latLonDM");
+    //echo "<pre>matches = "; print_r($matches); echo "</pre>\n";
+    $lat = $matches[1] + str_replace(',','.', $matches[3])/60;
+    if ($matches[5]=='S') $lat = - $lat;
+    if (!preg_match('!^0+([1-9]\d*)$!', $matches[6], $matches2))
+      throw new Exception("Erreur match sur $matches[6]");
+    $lon = $matches2[1] + str_replace(',','.', $matches[8])/60;;
+    if ($matches[10]=='W') $lon = - $lon;
+    //echo "lat=$lat, lon=$lon<br>\n";
+    return [$lon, $lat];
+  }
+  
+  function __construct(array $spatial) {
+    $this->sw = self::LatLonDM2LonLatDD($spatial['SW']);
+    $this->ne = self::LatLonDM2LonLatDD($spatial['NE']);
+  }
+  
+  function nw(): array { return [$this->sw[0], $this->ne[1]]; }
+  function se(): array { return [$this->ne[0], $this->sw[1]]; }
+  
+  // A linear ring MUST follow the right-hand rule with respect to the area it bounds,
+  // i.e., exterior rings are clockwise, and holes are counterclockwise.
+  function multiPolygon(): array { // génère un MultiPolygone GeoJSON 
+    $extRing = [$this->nw(), $this->ne, $this->se(), $this->sw, $this->nw()]; // liste de positions
+    return [
+      'type'=> 'MultiPolygon',
+      'coordinates'=> [[ $extRing ]],
+    ];
+  }
+  
+  function layer(string $popupContent): array { // génère une FeatureCollection GeoJson contenant le multiPolygone
+    return [
+      'type'=> 'FeatureCollection',
+      'features'=> [[
+        'type'=> 'Feature',
+        'geometry'=> $this->multiPolygon(),
+        'properties'=> [
+          'popupContent'=> $popupContent,
+        ],
+      ]],
+    ];
+  }
+  
+  function lgeoJSON0(): string { // génère un objet L.geoJSON - modèle avec constante
+    return <<<EOT
+  L.geoJSON(
+          { "type": "MultiPolygon",
+            "coordinates": [
+               [[[ 180.0,-90.0 ],[ 180.1,-90.0 ],[ 180.1,90.0],[ 180.0,90.0 ],[ 180.0,-90.0 ] ] ],
+               [[[-180.0,-90.0 ],[-180.1,-90.0 ],[-180.1,90.0],[-180.0,90.0 ],[-180.0,-90.0 ] ] ]
+            ]
+          },
+          { style: { "color": "red", "weight": 2, "opacity": 0.65 } });
+
+EOT;
+  }
+  function lgeoJSON(string $popupContent): string { // génère l'objet L.geoJSON
+    return
+      sprintf('L.geoJSON(%s,{style: %s, onEachFeature: onEachFeature});',
+        json_encode($this->layer($popupContent)),
+        json_encode(self::LGEOJSON_STYLE))
+      ."\n";
+  }
+};
+  
 if (!($login = Login::login())) {
   die("Accès non autorisé\n");
 }
@@ -193,10 +271,10 @@ if (!is_file("$PF_PATH$_GET[path]/$_GET[map].7z"))
 switch ($_GET['action'] ?? null) {
   case null: { // affichage des caractéristiques de la carte
     echo HTML_HEAD;
-    MapCat::init();
     $mapNum = substr($_GET['map'], 0, 4);
-    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum, MapCat::get($mapNum));
-    $map->showAsHtml(MapCat::get(substr($_GET['map'], 0, 4)));
+    $mapCat = new MapCat($mapNum);
+    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum, $mapCat);
+    $map->showAsHtml($mapCat);
     die();
   }
   case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
@@ -210,23 +288,33 @@ switch ($_GET['action'] ?? null) {
     die();
   }
   case 'viewtiff': { // affichage des tiff de la carte dans Leaflet
-    MapCat::init();
-    $tifs = [];
     $mapNum = substr($_GET['map'], 0, 4);
-    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum, MapCat::get($mapNum));
+    $mapCat = new MapCat($mapNum);
+    $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
+    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum, $mapCat);
+    // prefix d'URL vers le répertoire courant
+    $serverUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF']);
     foreach ($map->gtiffs() as $fileName) {
       echo "$fileName<br>\n";
-      $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
-      $tifs[substr($fileName, 5, -4)] = "$shomgeotiffUrl$_GET[path]/$_GET[map].7z/$fileName";
+      $tifs[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
+      $spatials[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
     }
     echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
+    $spatials = []; // liste des URL des extensions spatiales des GéoTiffs utilisant spatial.php [name => url]
+    foreach ($mapCat->spatials() as $title => $spatial) {
+      $title = str_replace('"', '\"', $title);
+      $spatial = new Spatial($spatial);
+      //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";
+      $spatials[$title] = $spatial->lgeoJSON($title);
+    }
+    //echo "<pre>spatials = "; print_r($spatials); echo "</pre>\n"; //die("Ok ligne ".__LINE__);
     $bounds = ($gbox = $map->gbox()) ? $gbox->latLngBounds() : [];
     echo "<pre>bounds = "; print_r($bounds); echo "</pre>\n";
     if (!$tifs)
       die("Affichage impossible car aucun GéoTiff à afficher\n");
     if (!$bounds)
       die("Affichage impossible car impossible de déterminer l'extension à afficher\n");
-    //die("Ok");
+    //die("Ok ligne ".__LINE__);
     break;
   }
 }
@@ -247,12 +335,20 @@ switch ($_GET['action'] ?? null) {
     </style>
   </head>
   <body>
-    <div id="map"></div>
+    <div id="map" style="height: 100%; width: 100%"></div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/georaster"></script>
     <script src="https://unpkg.com/proj4"></script>
     <script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
     <script>
+      // si le Feature contient une propriété popupContent alors le popUp est affiché lorsque le Feature est clické
+      function onEachFeature(feature, layer) {
+          // does this feature have a property named popupContent?
+          if (feature.properties && feature.properties.popupContent) {
+              layer.bindPopup(feature.properties.popupContent);
+          }
+      }
+      
       // initalize leaflet map
       var map = L.map('map').fitBounds(<?php echo json_encode($bounds); ?>);
       var baseLayers = {
@@ -268,6 +364,12 @@ switch ($_GET['action'] ?? null) {
         )
       };
       var overlays = {};
+      
+      // affichage des extensions spatiales
+<?php foreach ($spatials as $title => $spatial) { ?>
+      overlays[<?php echo "\"$title\""; ?>] = <?php echo $spatial; ?>
+      map.addLayer(overlays[<?php echo "\"$title\""; ?>]);
+<?php } ?>
       
 <?php foreach ($tifs as $name => $path) { ?>
       fetch(<?php echo "'$path'"; ?>)

@@ -6,7 +6,7 @@
 **  - de l'entrée dans le fichier 7z
 */
 
-require_once __DIR__.'/../sgserver/SevenZipArchive.php';
+require_once __DIR__.'/SevenZipArchive.php';
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
   throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
