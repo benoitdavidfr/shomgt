@@ -27,6 +27,7 @@ abstract: |
     - restructuration des archives de cartes
       - suppression de la notion de livraison qui n'est plus pertinente
       - conservation de l'utilisateur ayant déposé la carte
+    - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 méthodeDeDécoupageEnComposants:
   - chaque composant est soit de type Web, soit de type CLI, soit de type stockage
   - un composant Web expose une interface web mais n'autorise que de courtes exécutions (de l'ordre de 30 s)
@@ -168,17 +169,10 @@ phasage:
       - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
       - adaptation de sgserver si nécessaire
       - adaptation de dashboard (champs creation/revision remplacés par le chap date) / ok
+      - correction bug 7620
     apportsFonctionnels:
       - dépôt des cartes en mode web
-    pb7620:
-      - comment traiter le cas de la 7620 ?
-      - la carte est mal géoréférencée, les coords. projetés sont fausses
-      - 2 possibilités
-        - ne pas utiliser les coordonnées projetées dans le composant shomgt
-          - avantage: le plus simple
-          - inconvénient: modifie le composant shomgt
-        - détecter dans bo l'erreur et exiger de renseigner les borders
-      - je choisis la 1ère solution car le composant shomgt existant reste très largement compatble avec la nlle version
+      - correction bug 7620
   sprint2:
     objectifs:
       - création de comptes
@@ -196,6 +190,18 @@ phasage:
   sprint6:
     - ajout gestion du catalogue dans le BO
     - mise en base de MapCat
+bug7620:
+  - la carte 7620-2242 présente un bug de géoréférencement
+  - en exécutant gdalinfo sur 7620_pal300.tif on constate que
+    - le champ coordinateSystem.wkt est bizarre
+    - le champ cornerCoordinates censé donner les coordonnées des coins en WorldMercator est faux
+  - pour traiter ce bug, j'ai choisi de modifier le fichier lib/gdalinfo.inc.php
+    - de ne plus utiliser cornerCoordinates
+    - mais de recalculer la projection WorldMercator de wgs84Extent
+  - l'inconvénient de cette solution est de modifier le composant shomgt
+  - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
+  - l'incovénient est faible car l'ancien composant shomgt fonctionnera toujours
+    - la seule limite est que la carte buggée ne s'affiche pas
 forum:
   phpbb: https://www.phpbb.com/about/
   sympa:
@@ -282,13 +288,13 @@ cartesSpéciales:
     - sinon s'il existe un champ geotiffnames dans MapCat et si un des geotiffnames correspond à une entrée dans l'archive 7z
       - alors je considère que ce fichier constitue l'image principale de la carte
       - sinon ERREUR
-  - pour les MD, si l'archive comprend un et un seul fichier XML
-    - alors je considère que c'est le fichier de MD
-    - sinon je construit des MD simplifiées dans lesquelles la version est le nm du fichier .tif ou .pdf
+  - pour les MD
+    - si l'archive comprend un et un seul fichier XML
+      - alors je considère que c'est le fichier de MD
+      - sinon je construis des MD simplifiées dans lesquelles la version est le nom du fichier .tif ou .pdf
+        - en effet je constate que le nom du tif/pdf change à chaque version de la carte
+        - c'est donc un bon moyen de gérer la version des cartes spéciales sans fichier MD ISO
   
-sgserver:
-  - dans le serveur de cartes, je gère une version 4 de la liste des cartes avec
-    - pour les cartes spéciales la version n'est plus undefined mais le geotiffname éventuellement déduit
 miseEnBase:
   description: mise en base de certaines informations pour la V4
   user:
@@ -325,7 +331,9 @@ miseEnBase:
         type: date+time
         description: date et heure de création du compte ou de son dernier renouvellement
   mapcat:
-    description: catalogue des cartes obsolètes ou non avec un n-uplet par carte
+    description: |
+      catalogue des cartes obsolètes ou non avec un n-uplet par carte
+      IL FAUT ARCHIVER LES ANCIENNES VERSIONS POUR POUVOIR LES RESTAURER
     attributs:
       mapnum:
         type: string
@@ -345,7 +353,7 @@ miseEnBase:
       bbox:
         type: polygon
         description: boite engobante de la carte
-  trace:
+  trace(PAS_NECESSAIRE):
     description: |
       traces des ajouts et suppressions de cartes et de l'annulation éventuelle de l'action
       L'action peut être
@@ -373,11 +381,11 @@ miseEnBase:
         description: admin ayant annulé l'action ou null si l'action n'a pas été annulée
       path:
         description: chemin vers l'archive 7z de la version remplacée ou de la carte supprimée, null pour une nouvelle carte
-  maildomain:
+  maildomain(PAS_NECESSAIRE):
     description: liste des domaines mails autorisés pour les utilisateurs, gérée par un admin
-  ipaddress:
+  ipaddress(PAS_NECESSAIRE):
     description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
-  gan:
+  gan(PAS_NECESSAIRE):
     description: stockage des infos du GAN mises à jour régulièrement par cron
 admin:
   title: interface admin

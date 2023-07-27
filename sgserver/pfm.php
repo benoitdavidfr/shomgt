@@ -1,4 +1,5 @@
 <?php
+die("Script obsolète en V4\n");
 {/*PhpDoc:
 title: pfm.php - gestionnaire de portefeuille - 19/6/2023
 doc: |

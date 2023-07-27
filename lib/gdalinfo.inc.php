@@ -8,7 +8,7 @@ doc: |
 journal: |
   26/7/2023:
     - le code pour calculer le gbox est faux lorsque le GéoTiff intersecte l'antiméridien
-    - modification du code de calcul de GdalInfo::$ebox pour contourner les erreurs sur coordinateSystem
+    - modification du calcul de GdalInfo::$ebox pour contourner les erreurs sur coordinateSystem
   6/6/2022:
     - réécriture pour fonctionner à la fois en GDAL 2 et en GDAL3 ; utilise la sortie de gdalinfo -json
   22/5/2022:
@@ -102,7 +102,6 @@ class GdalInfo {
 
     /* 26/7/2023 - Suppression de l'utilisation de cornerCoordinates qui dans certains cas (comme 7620-2242) est faux
      * Cela évite d'avoir à tester et à gérer cette erreur
-     */
     $this->ebox = new EBox([
       $info['cornerCoordinates']['lowerLeft'][0],
       $info['cornerCoordinates']['lowerLeft'][1],
@@ -111,7 +110,7 @@ class GdalInfo {
     ]);
     /*A la place ebox est déduit de gbox
     */
-    //$this->ebox = $this->gbox->proj('WorldMercator');
+    $this->ebox = $this->gbox->proj('WorldMercator');
   }
 
   /** @return array<string, mixed> */

@@ -1,5 +1,5 @@
 <?php
-// gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 23/7/2023
+// gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 27/7/2023
 
 {/*PhpDoc: classes
 name: GBox
@@ -60,25 +60,16 @@ class GBox {
   }
 };
 
-class Gdalinfo { // contenu du gdalinfo d'un fichier .tif ou .pdf
-  const CRS_WKT_PATTERN =
-    '!^PROJCRS{"WGS 84 / World Mercator",\s*'
-      .'BASEGEOGCRS{"WGS 84",\s*'
-        .'DATUM{"World Geodetic System 1984",\s*ELLIPSOID{"WGS 84",6378137,298.2572\d*,\s*LENGTHUNIT{"metre",1}}},\s*'
-        .'PRIMEM{"Greenwich",0,\s*ANGLEUNIT{"degree",0.0174532925199433}},\s*'
-        .'ID{"EPSG",4326}},\s*'
-      .'CONVERSION{"Mercator \(variant [AB]\)",\s*'
-        .'METHOD{"Mercator \(variant [AB]\)",\s*ID{"EPSG",980[45]}},\s*'
-        .'PARAMETER{"Latitude of [^"]*",0,\s*ANGLEUNIT{"degree",0.0174532925199433},\s*ID{"EPSG",\d*}},\s*'
-        .'PARAMETER{"Longitude of natural origin",0,\s*ANGLEUNIT{"degree",0.0174532925199433},\s*ID{"EPSG",8802}},\s*'
-        .'(PARAMETER{"Scale factor at natural origin",1,\s*SCALEUNIT{"unity",1},\s*ID{"EPSG",8805}},\s*)?'
-        .'PARAMETER{"False easting",0,\s*LENGTHUNIT{"metre",1},\s*ID{"EPSG",8806}},\s*'
-        .'PARAMETER{"False northing",0,\s*LENGTHUNIT{"metre",1],\s*ID{"EPSG",8807}}},\s*'
-      .'CS{Cartesian,2},\s*'
-      .'AXIS{"easting",east,\s*ORDER{1},\s*LENGTHUNIT{"metre",1}},\s*'
-      .'AXIS{"northing",north,\s*ORDER{2},\s*LENGTHUNIT{"metre",1}},\s*'
-      .'ID{"EPSG",3395}}\s*'
-    .'$!';
+/* Gdalinfo - contenu du gdalinfo d'un fichier .tif ou .pdf
+ * Un fichier peut être géoréférencé, non géoréférencé ou mal géoréférencé.
+ * Il est géoréférencé ssi les champs coordinateSystem, cornerCoordinates et wgs84Extent sont définis.
+ * Il est mal géoréférencé ssi son géoréférencement est erroné.
+ * Cela peut se traduire par un coordinateSystem/wkt invalide
+ * ou des coordonnées cornerCoordinates différentes de la projection de wgs84Extent.
+ * Dans cette version, je considère que coordinateSystem/wkt et cornerCoordinates ne sont pas utilisés
+ * et que donc un fichier n'est jamais mal géoréférencé
+*/
+class Gdalinfo { // 
   protected array $info; // contenu du gdalinfo
   
   function __construct(string $path) {
@@ -91,17 +82,16 @@ class Gdalinfo { // contenu du gdalinfo d'un fichier .tif ou .pdf
   
   function asArray(): array { return $this->info; }
   
-  // indique si le géoréférencement est absent, correct ou incorrect, retourne
-  //  - null si non géoréférencé cad champ 'coordinateSystem' non défini
-  //  - 'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' correspond au motif
-  //  - 'KO' si géoréférencé incorrectement cad champ 'coordinateSystem/wkt' ne correspond pas au motif
+  /* indique si le géoréférencement est absent, correct ou incorrect, retourne
+   *  - null si non géoréférencé cad champ 'coordinateSystem' non défini
+   *  - 'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' défini
+   *  - 'KO' si géoréférencé incorrectement (NON UTILISE)
+     */
   function georef(): ?string {
     if (!isset($this->info['coordinateSystem']))
       return null;
-    $pattern = str_replace(['{','}'], ['\[','\]'], self::CRS_WKT_PATTERN);
-    $georef = preg_match($pattern, $this->info['coordinateSystem']['wkt']) ? 'ok' : 'KO';
-    //echo "georef=$georef\n";
-    return $georef;
+    else
+      return 'ok';
   }
   
   function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo

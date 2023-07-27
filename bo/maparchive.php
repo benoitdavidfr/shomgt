@@ -1,6 +1,5 @@
 <?php
-/* bo/maparchive.php - Validation d'une carte 
- * Benoit DAVID - 11-19/7/2023
+/* bo/maparchive.php - Validation d'une carte - Benoit DAVID - 11-27/7/2023
  * La validation des cartes est définie d'une part par sa conformité à sa spécification
  * et, d'autre part, par sa cohérence avec MapCat.
  *
@@ -15,22 +14,19 @@
  *  - si un géoréférencement est absent ou incorrect alors il est remplacé par la définition du champ borders dans Mapcat
  *
  * Pour les cartes spéciales j'utilise la spécification suivante:
- *  - la carte est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
+ *  - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
+ *  - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
  *  - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
  *    ALORS ce fichier .tif ou .pdf contient la carte géoréférencée ou non
- *    SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffname
- *  - si le fichier n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
- *  - l'enregistrement MapCat doit comporter un champ layer
+ *    SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
+ *  - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
+ *  - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
  * 
  * Pour les 2 types de carte:
  *  - un .tif est considéré comme géoréférencé ssi son gdalinfo contient un champ coordinateSystem
- *  - le géoréférencement est incorrect si le wkt du coordinateSystem de son gdalinfo n'est pas conforme
- *    au motif défini dans COORDINATESYSTEM_WKT_PATTERN
- *
- * AMELIORER le test de conformité Map::conforms()
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../sgserver/SevenZipArchive.php';
+require_once __DIR__.'/SevenZipArchive.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -47,15 +43,6 @@ class MapCat { // chargement de MapCat
     return self::$cat['maps']["FR$mapNum"] ?? [];
   }
 };
-
-/*class My7zArchive extends SevenZipArchive {
-  
-  function __construct(string $file) {
-    
-  }
-  
-  
-};*/
 
 class MapArchive { // analyse des fichiers d'une archive d'une carte
   protected string $type; // 'normal'|'special'
@@ -80,9 +67,8 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       if ($entry['Attr'] <> '....A') continue; // pas un fichier
       if ($entry['Name'] == "$mapNum/$mapNum.png")
         $this->thumbnail = $entry['Name'];
-      elseif ($entry['Name'] == "$mapNum/{$mapNum}_pal300.tif") {
+      elseif ($entry['Name'] == "$mapNum/{$mapNum}_pal300.tif")
         $this->main['tif'] = $entry['Name'];
-      }
       elseif ($entry['Name'] == "$mapNum/CARTO_GEOTIFF_{$mapNum}_pal300.xml")
         $this->main['xml'] = $entry['Name'];
       elseif (preg_match("!^$mapNum/{$mapNum}_((\d+|[A-Z]+)_gtw)\.tif$!", $entry['Name'], $matches))

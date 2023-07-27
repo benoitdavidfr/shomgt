@@ -2,7 +2,7 @@
 // bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 26/7/2023
 // déf. de la classe MapMetadata et de la fonction ganWeek2iso()
 
-require_once __DIR__.'/../sgserver/SevenZipArchive.php';
+require_once __DIR__.'/SevenZipArchive.php';
 
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
   $date = new DateTimeImmutable();

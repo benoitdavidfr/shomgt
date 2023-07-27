@@ -92,8 +92,8 @@ define ('TEST_MAPS', [
     ],
   ]
 ); // cartes de tests 
-define ('MIN_FOR_DISPLAY_IN_COLS', 100);
-define ('NBCOLS_FOR_DISPLAY', 24);
+define ('MIN_FOR_DISPLAY_IN_COLS', 100); // nbre min d'objets pour affichage en colonnes
+define ('NBCOLS_FOR_DISPLAY', 24); // nbre de colonnes si affichage en colonnes
 
 if (!($login = Login::login())) {
   die("Accès non autorisé\n");
@@ -110,22 +110,22 @@ if (!isset($_GET['path'])) { // affichage de la liste des livraisons
     '/archives'=> "Archives de cartes",
   ];
   foreach ($groups as $gname => $title) {
-    $incomings = [];
+    echo "<h3>$title</h3>\n";
+    $incomings = []; // liste des livraisonw ou archives
     foreach (new DirectoryIterator($PF_PATH.$gname) as $incoming) {
       if (in_array($incoming, ['.','..','.DS_Store'])) continue;
       $incomings[] = (string)$incoming;
     }
-    if (count($incomings) < MIN_FOR_DISPLAY_IN_COLS) {
-      echo "<h3>$title</h3><ul>\n";
+    $nbincomings = count($incomings);
+    if ($nbincomings < MIN_FOR_DISPLAY_IN_COLS) { // affichage sans colonne
+      echo "<ul>\n";
       foreach ($incomings as $incoming) {
         echo "<li><a href='?path=$gname/$incoming'>$incoming</a></li>\n";
       }
       echo "</ul>\n";
     }
-    else {
-      $nbincomings = count($incomings);
+    else { // affichage en colonnes
       //echo "nbincomings=$nbincomings<br>\n";
-      echo "<h3>$title</h3>\n";
       echo "<table border=1><tr>\n";
       $i = 0;
       for ($nocol=0; $nocol < NBCOLS_FOR_DISPLAY; $nocol++) {
