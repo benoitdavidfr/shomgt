@@ -215,6 +215,19 @@ switch ($_GET['action'] ?? null) {
     $archive->remove($path);
     die();
   }
+  case 'insetMapping': {
+    $mapNum = substr($_GET['map'], 0, 4);
+    $mapCat = new MapCat($mapNum);
+    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
+    $mappingInsetsWithMapCat = $map->mappingInsetsWithMapCat(true);
+    echo "<pre>mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
+    sort($mappingInsetsWithMapCat);
+    echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
+    echo "insetTitlesSorted = "; print_r($mapCat->insetTitlesSorted());
+    if ($mappingInsetsWithMapCat <> $mapCat->insetTitlesSorted())
+      echo "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
+    die();
+  }
   case 'viewtiff': { // affichage des tiff de la carte dans Leaflet
     $mapNum = substr($_GET['map'], 0, 4);
     $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
@@ -243,6 +256,9 @@ switch ($_GET['action'] ?? null) {
       die("Affichage impossible car impossible de déterminer l'extension à afficher\n");
     //die("Ok ligne ".__LINE__);
     break;
+  }
+  default: {
+    die("Action $_GET[action] inconnue\n");
   }
 }
 ?>

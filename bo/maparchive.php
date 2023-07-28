@@ -90,24 +90,29 @@ class Inset { // Cartouche dans l'archive
   
   // Recherche pour ce cartouche défini dans l'archive le meilleur cartouche correspondant défini dans le catalogue
   // retourne le titre de ce meilleur cartouche
-  function bestInsetMapOfCat(array $insetMapsOfCat): ?string {
+  function bestInsetMapOfCat(array $insetMapsOfCat, bool $show=false): ?string {
     $bests = []; // liste des cartouches de MapCat correspondant au cartouche de l'archive
     foreach ($insetMapsOfCat as $insetMapOfCat) {
       $spatial = new Spatial($insetMapOfCat['spatial']);
       $gbox = GBox::createFromDcmiBox($spatial->dcmiBox());
-      if ($this->georefBox->includes($gbox))
+      if ($this->georefBox->includes($gbox, $show))
         $bests[] = ['title'=> $insetMapOfCat['title'], 'gbox'=> $gbox];
     }
-    //echo "<pre>bests for ",$this->title(), "="; print_r($bests); echo "</pre>\n";
     if (count($bests)==0) {
+      if ($show)
+        echo "<pre>Aucun cartouche du catalogue correspond au cartouche ",$this->title(),"</pre>\n";
       return null;
     }
     if (count($bests)==1) {
-      //echo "<pre>bests for ",$this->title(), " = ",$bests[0]['title'],"</pre>\n";
+      if ($show)
+        echo "<pre>bests for ",$this->title(), " = ",$bests[0]['title'],"</pre>\n";
       return $bests[0]['title'];
     }
     $maxArea = 0;
     $best = null;
+    if ($show) {
+      echo "<pre>bests for ",$this->title(), "="; print_r($bests); echo "</pre>\n";
+    }
     foreach ($bests as $i => $insetOfMapCat) {
       $area = $insetOfMapCat['gbox']->area();
       if ($area > $maxArea) {
@@ -115,7 +120,8 @@ class Inset { // Cartouche dans l'archive
         $best = $insetOfMapCat;
       }
     }
-    //echo "<pre>best for ",$this->title(), " = ",$best['title'],"</pre>\n";
+    if ($show)
+      echo "<pre>best for ",$this->title(), " = ",$best['title'],"</pre>\n";
     return $best['title'];
   }
 };
@@ -234,11 +240,12 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
   // construit la correspondance des cartouches de l'archive avec ceux de MapCat
   // Le résultat est un array avec en clés les noms des cartouches dans l'archive
   // et en valeurs les titres des cartouches dans MapCat
-  function mappingInsetsWithMapCat(MapCat $mapCat): array {
+  function mappingInsetsWithMapCat(bool $show=false): array {
+    $mapCat = new MapCat($this->mapNum);
     $mappingGeoTiffWithMapCat = [];
     foreach ($this->insets as $name => $inset) {
       if ($inset->tif()) {
-        $mappingGeoTiffWithMapCat[$name] = $inset->bestInsetMapOfCat($mapCat->insetMaps);
+        $mappingGeoTiffWithMapCat[$name] = $inset->bestInsetMapOfCat($mapCat->insetMaps, $show);
       }
     }
     return $mappingGeoTiffWithMapCat;
@@ -315,7 +322,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         if (!$inset->xml())
           $warnings[] = "Le fichier de métadonnées XML du cartouche $name est absent";
       }
-      $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat($mapCat);
+      $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
       //echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
       sort($mappingInsetsWithMapCat);
       //echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
@@ -362,6 +369,12 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       $title = $inset->title() ?? 'NO metadata';
       $gdalinfo = "?path=$_GET[path]&map=$_GET[map]&tif=".$inset->tif()."&action=gdalinfo";
       echo "<tr><td><a href='$gdalinfo'>$name</a></td><td>$title</td></tr>\n";
+    }
+    if (count($this->insets) > 1) {
+      $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
+      $action = "?path=$_GET[path]&map=$_GET[map]&action=insetMapping";
+      echo "<tr><td><a href='$action'>inset Mapping<br>archive -> MapCat</a></td>";
+      echo "<td><pre>"; print_r($mappingInsetsWithMapCat); echo "</pre></td></tr>\n";
     }
     if ($this->suppls) {
       echo "<tr><td>fichiers hors spec</td><td><ul>\n";

@@ -68,10 +68,11 @@ class GBox {
     return $union;
   }
   
-  function includes(GBox $small): bool { // teste si $small est inclus dans $this
+  function includes(GBox $small, bool $show=false): bool { // teste si $small est inclus dans $this
     $result = ($this->min[0] < $small->min[0]) && ($this->min[1] < $small->min[1])
            && ($this->max[0] > $small->max[0]) && ($this->max[1] > $small->max[1]);
-    //echo $this,($result ? " includes " : " NOT includes "),$small,"<br>\n";
+    if ($show)
+      echo $this,($result ? " includes " : " NOT includes "),$small,"<br>\n";
     return $result;
   }
   
