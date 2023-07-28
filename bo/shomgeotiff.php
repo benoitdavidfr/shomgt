@@ -5,14 +5,13 @@
 **  - du caractère '/' et
 **  - de l'entrée dans le fichier 7z
 */
-
-require_once __DIR__.'/SevenZipArchive.php';
+require_once __DIR__.'/my7zarchive.inc.php';
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
   throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
 // Teste si $fileName est une entrée de $archive
-function entryInArchive(string $fileName, SevenZipArchive $archive): bool {
+function entryInArchive(string $fileName, My7zArchive $archive): bool {
   foreach ($archive as $entry) {
     //print_r($entry);
     if ($entry['Name'] == $fileName)
@@ -32,7 +31,7 @@ if (!is_file($pathOf7z)) {
   die();
 }
 
-$archive = new SevenZipArchive($pathOf7z);
+$archive = new My7zArchive($pathOf7z);
 $fileName = substr($_SERVER['PATH_INFO'], $pos+4);
 //echo "fileName=$fileName\n";
 
@@ -43,10 +42,7 @@ if (!entryInArchive($fileName, $archive)) {
   die();
 }
 
-if (!is_dir(__DIR__.'/temp'))
-  if (!mkdir(__DIR__.'/temp'))
-    throw new Exception("Erreur de création du répertoire __DIR__/temp");
-$archive->extractTo(__DIR__.'/temp', $fileName);
+$path = $archive->extract($fileName);
 
 define ('MIME_TYPES', [
   '.png'=> 'image/png',
@@ -59,7 +55,6 @@ define ('MIME_TYPES', [
 if (isset(MIME_TYPES[substr($fileName, -4)])) {
   header("Content-type: ".MIME_TYPES[substr($fileName, -4)]);
 }
-$stream = fopen(__DIR__.'/temp/'.$fileName, 'r');
+$stream = fopen($path, 'r');
 fpassthru($stream);
-unlink(__DIR__.'/temp/'.$fileName);
-rmdir(__DIR__.'/temp/'.dirname($fileName));
+$archive->remove($path);

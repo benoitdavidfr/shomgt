@@ -202,26 +202,23 @@ switch ($_GET['action'] ?? null) {
   case null: { // affichage des caractéristiques de la carte
     echo HTML_HEAD;
     $mapNum = substr($_GET['map'], 0, 4);
-    $mapCat = new MapCat($mapNum);
-    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum, $mapCat);
-    $map->showAsHtml($mapCat);
+    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
+    $map->showAsHtml();
     die();
   }
   case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
-    $archive = new SevenZipArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
-    $archive->extractTo(__DIR__.'/temp', $_GET['tif']);
-    $gdalinfo = new GdalInfo(__DIR__.'/temp/'.$_GET['tif']);
+    $archive = new My7zArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
+    $path = $archive->extract($_GET['tif']);
+    $gdalinfo = new GdalInfo($path);
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode($gdalinfo->asArray(), JSON_OPTIONS);
-    unlink(__DIR__.'/temp/'.$_GET['tif']);
-    rmdir(__DIR__.'/temp/'.dirname($_GET['tif']));
+    $archive->remove($path);
     die();
   }
   case 'viewtiff': { // affichage des tiff de la carte dans Leaflet
     $mapNum = substr($_GET['map'], 0, 4);
-    $mapCat = new MapCat($mapNum);
     $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
-    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum, $mapCat);
+    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
     // prefix d'URL vers le répertoire courant
     $serverUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF']);
     foreach ($map->gtiffs() as $fileName) {
@@ -231,13 +228,14 @@ switch ($_GET['action'] ?? null) {
     }
     echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
     $spatials = []; // liste des couches Leaflet représentant les ext. spat. des GéoTiffs [title => code JS créant un L.geoJSON]
+    $mapCat = new MapCat($mapNum);
     foreach ($mapCat->spatials() as $title => $spatial) {
       $title = str_replace('"', '\"', $title);
       //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";
       $spatials[$title] = $spatial->lgeoJSON(LGEOJSON_STYLE, $title);
     }
     //echo "<pre>spatials = "; print_r($spatials); echo "</pre>\n"; //die("Ok ligne ".__LINE__);
-    $bounds = ($gbox = $map->gbox()) ? $gbox->latLngBounds() : [];
+    $bounds = ($georefBox = $map->georefBox()) ? $georefBox->latLngBounds() : [];
     echo "<pre>bounds = "; print_r($bounds); echo "</pre>\n";
     if (!$tifs)
       die("Affichage impossible car aucun GéoTiff à afficher\n");

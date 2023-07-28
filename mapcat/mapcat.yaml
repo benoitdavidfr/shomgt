@@ -21,7 +21,9 @@ description: |
     - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
   Journal:
-    - 27/7/2023 - correction de l'emprise spatiale du cartouche B de la carte 7090
+    - 27/7/2023
+      - correction de l'emprise spatiale du cartouche B de la carte 7090
+      - correction de l'emprise spatiale du cartouche B de la carte 7207
     - 26/7/2023 - suppression des bordures de la carte 7620 grâce à une modif. de shomgt
     - 23/7/2023 - passage à ShomGt4, suppression des geotiffname des cartes spéciales
     - 2/7/2023 - gestion du pb de géoréférencement de 7620 en ajoutant les bordures
@@ -81,7 +83,6 @@ maps:
     groupTitle: 'Océan Pacifique'
     title: 'Îles Australes - Île de Rapa - Îles Morotiri'
     mapsFrance: [PF]
-    scaleDenominator: '30.000'
     insetMaps:
       - title: 'A - Île de Rapa'
         scaleDenominator: '30.000'
@@ -123,9 +124,7 @@ maps:
   FR5978:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Mer de Corail - Îles et récifs Épars'
-    mapsFrance:
-      - NC
-    scaleDenominator: '150.000'
+    mapsFrance: [NC]
     insetMaps:
       - title: 'A - Îles Chesterfield - Mouillage de l''île Longue'
         scaleDenominator: '20.000'
@@ -193,9 +192,7 @@ maps:
   FR6207:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Raivavae (Vavitu)'
-    mapsFrance:
-      - PF
-    scaleDenominator: '30.000'
+    mapsFrance: [PF]
     noteShom: "Nota : Les modifications effectuées sur la carte n° 6207 au cours de l''édition n° 4 concernent principalement le\nchangement de système géodésique. Cette carte est désormais établie en WGS84.\n"
     insetMaps:
       - title: 'Île Raivavae (Vavitu)'
@@ -207,9 +204,7 @@ maps:
   FR6279:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Iles Rimatara et Maria'
-    mapsFrance:
-      - PF
-    scaleDenominator: '80.000'
+    mapsFrance: [PF]
     insetMaps:
       - title: 'Mouillages au Nord de Rimatara'
         scaleDenominator: '10.000'
@@ -291,8 +286,7 @@ maps:
   FR6420:
     groupTitle: 'Iles Tuamotu'
     title: 'De Mataiva à Rangiroa et Makatea'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '175.000'
     spatial:
       SW: '15°52,81''S - 148°44,86''W'
@@ -300,8 +294,7 @@ maps:
   FR6421:
     groupTitle: 'Polynésie Française - Iles Tuamotu - Iles Palliser'
     title: 'Îles Arutua, Apataki, Kaukura, Niau'
-    mapsFrance:
-      - PF
+    mapsFrance: [PF]
     scaleDenominator: '175.017'
     spatial:
       SW: '16°35,00''S - 147°15,00''W'
@@ -309,9 +302,7 @@ maps:
   FR6424:
     groupTitle: 'Polynésie Française - Iles Australes'
     title: 'Île Tubuai'
-    mapsFrance:
-      - PF
-    scaleDenominator: '40.000'
+    mapsFrance: [PF]
     insetMaps:
       - title: 'Île Tubuai'
         scaleDenominator: '40.000'
@@ -517,9 +508,7 @@ maps:
   FR6643:
     groupTitle: 'Océan Indien'
     title: 'Iles et récifs du canal de Mozambique'
-    mapsFrance:
-      - TF
-    scaleDenominator: '150.000'
+    mapsFrance: [TF]
     noteCatalog: |
       Corrections des bboxDM effectuées le 17/3/2019 sur la moisson du GAN du 8/3/2019.
       Les coordonnées indiquées sur la carte ne semblent pas correctes.
@@ -569,8 +558,7 @@ maps:
   FR6651:
     groupTitle: 'Côte Nord de France'
     title: 'De Calais à Dunkerque'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '43.100'
     spatial:
       SW: '50°56,50''N - 001°44,20''E'
@@ -748,9 +736,7 @@ maps:
   FR6717:
     groupTitle: 'Île de Tahiti (Côte Sud) - Mouillages'
     title: 'Port Phaeton (Teauaa) - Tapuaeraha'
-    mapsFrance:
-      - PF
-    scaleDenominator: '10.000'
+    mapsFrance: [PF]
     insetMaps:
       - title: 'A - Port Phaeton (Teauaa)'
         scaleDenominator: '10.000'
@@ -1829,6 +1815,7 @@ maps:
       - title: 'B - Port de Saint-Vaast-la-Hougue'
         scaleDenominator: '7.500'
         spatial: { SW: '49°34,84''N - 001°16,13''W', NE: '49°35,49''N - 001°15,08''W' }
+    badGan: correction de l'emprise spatiale du cartouche B fausse dans le GAN
   FR7091:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Toulon'
@@ -2680,15 +2667,15 @@ maps:
   FR7207:
     groupTitle: 'Côte Nord de France'
     title: 'Ports de Fécamp et du Tréport'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     insetMaps:
-      - title: 'Ports de Fécamp et du Tréport'
+      - title: 'A - Le Tréport'
         scaleDenominator: '12.500'
         spatial: { SW: "50°02,50'N - 001°16,86'E", NE: "50°06,37'N - 001°24,72'E" }
       - title: 'B - Fécamp'
         scaleDenominator: '12.500'
-        spatial: { SW: "50°02,50'N - 001°16,86'E", NE: "50°06,37'N - 001°24,72'E" }
+        spatial: { SW: "49°44,20'N - 000°15,81'E", NE: "49°47,65'N - 000°23,62'E" }
+    badGan: correction de l'emprise spatiale du cartouche B
   FR7208:
     groupTitle: Guadeloupe
     title: 'De Marie-Galante à la Désirade (Spéciale P)'
@@ -2825,14 +2812,14 @@ maps:
   FR7240:
     title: Îles Glorieuses
     mapsFrance: [TF]
-    scaleDenominator: '50.000'
-    spatial:
-      SW: "11°35,92'S - 047°14,95'E"
-      NE: "11°25,74'S - 047°29,08'E"
     insetMaps:
+      - title: Îles Glorieuses
+        scaleDenominator: '50.000'
+        spatial: {SW: "11°35,92'S - 047°14,95'E", NE: "11°25,74'S - 047°29,08'E"}
       - title: A - Abords Nord de l'Île Glorieuse
         scaleDenominator: '15.000'
         spatial: {SW: "11°35,07'S - 047°15,92'E", NE: "11°32,12'S - 047°20,19'E"}
+    noteCatalog: la structure de l'archive ne correspond pas au GAN et n'est pas logique
   FR7246:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Polynésie française'
@@ -4273,7 +4260,7 @@ maps:
         spatial: { SW: '45°32,33''N - 000°57,28''W', NE: '45°33,64''N - 000°55,37''W' }
   FR7427:
     groupTitle: 'Côte Ouest de France'
-    title: 'La Gironde - La Garonne et La Dordogne'
+    title: "La Gironde - De Mortagne-sur-Gironde au Bec d'Ambès - La Garonne et La Dordogne jusqu'à Bordeaux et Libourne"
     mapsFrance:
       - FX-Atl
     noteCatalog: 'Correction des titres des cartouches, pas de partie principale'

@@ -7,7 +7,7 @@ class Spatial { // transforme une extension spatiale dans le format MapCat en un
   protected array $sw; // position SW en LonLatDD
   protected array $ne; // position NE en LonLatDD
   
-  static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
+  private static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
     if (!preg_match("!^(\d+)°((\d\d(,\d+)?)')?(N|S) - (\d+)°((\d\d(,\d+)?)')?(E|W)$!", $latLonDM, $matches))
       throw new Exception("Erreur match sur $latLonDM");
     //echo "<pre>matches = "; print_r($matches); echo "</pre>\n";
@@ -31,21 +31,30 @@ class Spatial { // transforme une extension spatiale dans le format MapCat en un
     }
   }
   
-  function nw(): array { return [$this->sw[0], $this->ne[1]]; }
-  function se(): array { return [$this->ne[0], $this->sw[1]]; }
+  function dcmiBox(): array { // export utilisant les champs définis par le Dublin Core
+    return [
+      'westlimit' => $this->sw[0],
+      'southlimit'=> $this->sw[1],
+      'eastlimit' => $this->ne[0],
+      'northlimit'=> $this->ne[1],
+    ];
+  }
   
-  function shift(float $dlon): self { // créée une nouvelle boite décalée de $dlon
+  private function nw(): array { return [$this->sw[0], $this->ne[1]]; }
+  private function se(): array { return [$this->ne[0], $this->sw[1]]; }
+  
+  private function shift(float $dlon): self { // créée une nouvelle boite décalée de $dlon
     $shift = clone $this;
     $shift->sw[0] += $dlon;
     $shift->ne[0] += $dlon;
     return $shift;
   }
   
-  function ring(): array { return [$this->nw(), $this->ne, $this->se(), $this->sw, $this->nw()]; } // liste de positions
+  private function ring(): array { return [$this->nw(), $this->ne, $this->se(), $this->sw, $this->nw()]; } // liste de positions
   
   // A linear ring MUST follow the right-hand rule with respect to the area it bounds,
   // i.e., exterior rings are clockwise, and holes are counterclockwise.
-  function multiPolygon(): array { // génère un MultiPolygone GeoJSON 
+  private function multiPolygon(): array { // génère un MultiPolygone GeoJSON 
     if ($this->ne[0] < 180) { // cas standard
       return [
         'type'=> 'MultiPolygon',
@@ -61,7 +70,7 @@ class Spatial { // transforme une extension spatiale dans le format MapCat en un
     }
   }
   
-  function layer(string $popupContent): array { // génère une FeatureCollection GeoJson contenant le multiPolygone
+  private function layer(string $popupContent): array { // génère une FeatureCollection GeoJson contenant le multiPolygone
     return [
       'type'=> 'FeatureCollection',
       'features'=> [[
@@ -140,5 +149,15 @@ class MapCat { // Un objet MapCat correspond à l'entrée du catalogue correspon
       $spatials[$insetMap['title']] = new Spatial($insetMap['spatial']);
     }
     return $spatials;
+  }
+
+  function insetTitlesSorted(): array { // retourne la liste des titres des cartouches triés
+    if (!$this->insetMaps) return [];
+    $insetTitles = [];
+    foreach ($this->insetMaps as $insetMap) {
+      $insetTitles[] = $insetMap['title'];
+    }
+    sort($insetTitles);
+    return $insetTitles;
   }
 };

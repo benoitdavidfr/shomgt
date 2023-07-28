@@ -2,7 +2,7 @@
 // bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 26/7/2023
 // déf. de la classe MapMetadata et de la fonction ganWeek2iso()
 
-require_once __DIR__.'/SevenZipArchive.php';
+require_once __DIR__.'/my7zarchive.inc.php';
 
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
   $date = new DateTimeImmutable();
@@ -90,7 +90,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
   /** @return array<string, string> */
   static function getFrom7z(string $pathOf7z, string $mdName='', array $geotiffNames=[]): array { 
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
-    $archive = new SevenZipArchive($pathOf7z);
+    $archive = new My7zArchive($pathOf7z);
     if (!$mdName) { // Si $mdName n'est pas défini, je cherche dans l'archive les MD du fichier principal
       foreach ($archive as $entry) {
         if (preg_match('!^\d{4}/CARTO_GEOTIFF_\d{4}_pal300\.xml$!', $entry['Name'])) { // CARTO_GEOTIFF_7107_pal300.xml
@@ -111,13 +111,9 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     }
     
     if ($mdName) { // Si $mdName est défini alors j'extraie le fichier de l'archive puis j'extraie les MD du fichier 
-      if (!is_dir(__DIR__.'/temp') && !mkdir(__DIR__.'/temp'))
-          throw new Exception("Erreur de création du répertoire __DIR__/temp");
-      $archive->extractTo(__DIR__.'/temp', $mdName);
-      $mdPath = __DIR__."/temp/$mdName";
+      $mdPath = $archive->extract($mdName);
       $md = self::extractFromIso19139($mdPath);
-      unlink($mdPath);
-      rmdir(dirname($mdPath));
+      $archive->remove($mdPath);
       //echo "getMapVersionFrom7z()-> ",json_encode($md, JSON_OPTIONS),"\n";
       return $md;
     }

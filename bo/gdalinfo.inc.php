@@ -31,7 +31,20 @@ class GBox {
       $this->max = $lpos[3];
     }
   }
-    
+  
+  static function createFromDcmiBox(array $dcmiBox): self {
+    $gbox = new GBox;
+    $gbox->min = [$dcmiBox['westlimit'], $dcmiBox['southlimit']];
+    $gbox->max = [$dcmiBox['eastlimit'], $dcmiBox['northlimit']];
+    return $gbox;
+  }
+  
+  function __toString(): string {
+    return sprintf('[%f, %f, %f, %f]', $this->min[0], $this->min[1], $this->max[0], $this->max[1]);
+  }
+  
+  function area(): float { return ($this->max[0]-$this->min[0]) * ($this->max[1]-$this->min[1]); }
+  
   function bound(array $pos): void { // agrandit le bbox avec la position $pos en LonLat
     if (!$this->min) {
       $this->min = $pos;
@@ -55,6 +68,13 @@ class GBox {
     return $union;
   }
   
+  function includes(GBox $small): bool { // teste si $small est inclus dans $this
+    $result = ($this->min[0] < $small->min[0]) && ($this->min[1] < $small->min[1])
+           && ($this->max[0] > $small->max[0]) && ($this->max[1] > $small->max[1]);
+    //echo $this,($result ? " includes " : " NOT includes "),$small,"<br>\n";
+    return $result;
+  }
+  
   function latLngBounds(): array { // retourne un array de 2 positions en LatLng pour LeafLet
     return [[$this->min[1], $this->min[0]], [$this->max[1], $this->max[0]]];
   }
@@ -69,6 +89,8 @@ class GBox {
  * Dans cette version, je considère que coordinateSystem/wkt et cornerCoordinates ne sont pas utilisés
  * et que donc un fichier n'est jamais mal géoréférencé
 */
+require_once __DIR__.'/my7zarchive.inc.php';
+
 class Gdalinfo { // 
   protected array $info; // contenu du gdalinfo
   
@@ -102,18 +124,18 @@ class Gdalinfo { //
   }
 
   static function test(string $path7z, string $entry): void {
-    $archive = new SevenZipArchive($path7z);
-    $archive->extractTo(__DIR__.'/temp', $entry);
-    $gdalInfo = new GdalInfo(__DIR__."/temp/$entry");
+    $archive = new My7zArchive($path7z);
+    $gdalInfo = new GdalInfo($path = $archive->extract($entry));
+    $archive->remove($path);
     //print_r($gdalInfo);
-    echo $gdalInfo->georef(),"\n";
+    echo 'georef = ',$gdalInfo->georef(),"\n";
   }
 };
 
 if ((php_sapi_name() == 'cli') && ($argv[0]=='gdalinfo.inc.php')) {
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
     throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-  if (0)
+  if (1)
     GdalInfo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
   elseif (1)
     GdalInfo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif');
