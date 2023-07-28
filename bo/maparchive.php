@@ -43,12 +43,11 @@ class MainImage {
   
   function setTif(string $tif, My7zArchive $archive): void {
     $this->tif = $tif;
-    $archive->extractTo(__DIR__.'/temp', $tif);
-    $gdalinfo = new GdalInfo(__DIR__."/temp/$tif");
+    $tifPath = $archive->extract($tif);
+    $gdalinfo = new GdalInfo($tifPath);
     $this->georef = $gdalinfo->georef();
     $this->georefBox = $this->georef ? $gdalinfo->gbox() : null;
-    unlink(__DIR__."/temp/$tif");
-    rmdir(__DIR__.'/temp/'.dirname($tif));
+    $archive->remove($tifPath);
   }
   
   function setXml(string $xml, string $pathOf7z): void {
@@ -73,11 +72,10 @@ class Inset { // Cartouche dans l'archive
   function __construct(string $pathOf7z, My7zArchive $archive, string $name, ?string $tif, ?string $xml) {
     $this->tif = $tif;
     if ($tif) {
-      $archive->extractTo(__DIR__.'/temp', $tif);
-      $gdalinfo = new GdalInfo(__DIR__."/temp/$tif");
+      $tifPath = $archive->extract($tif);
+      $gdalinfo = new GdalInfo($tifPath);
       $this->georefBox = $gdalinfo->gbox();
-      unlink(__DIR__."/temp/$tif");
-      rmdir(__DIR__.'/temp/'.dirname($tif));
+      $archive->remove($tifPath);
     }
     $this->xml = $xml;
     $this->md = $this->xml ? MapMetadata::getFrom7z($pathOf7z, $this->xml) : [];

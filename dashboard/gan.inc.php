@@ -293,7 +293,7 @@ class GanStatic {
     //print_r($errors);
     foreach (Portfolio::$all as $mapnum => $map) {
       //echo "mapnum=$mapnum\n"; print_r($map);
-      if ($modified = $map['revision'] ?? $map['creation'] ?? null) {
+      if ($modified = $map['date']['value']) {
         $ganWeek = GanStatic::week($modified);
         if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
           //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
