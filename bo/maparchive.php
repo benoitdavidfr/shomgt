@@ -187,7 +187,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         foreach ($mapCat->geotiffNames as $geotiffName) {
           foreach (array_keys($this->suppls) as $name)  {
             if ($name == "$mapNum/$geotiffName") {
-              $this->main->setTif("$mapNum/$geotiffName");
+              $this->main->setTif("$mapNum/$geotiffName", $archive);
               unset($this->suppls[$name]);
               break 2;
             }
