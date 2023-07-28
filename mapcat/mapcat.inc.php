@@ -1,4 +1,6 @@
 <?php
+/* mapcat/mapcat.inc.php - accès au catalogue MapCat
+*/
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -126,14 +128,26 @@ EOT;
 //Spatial::test();
 
 class MapCat { // Un objet MapCat correspond à l'entrée du catalogue correspondant à une carte
-  protected array $cat; // contenu de l'entrée du catalogue correspondant à une carte
+  protected array $cat=[]; // contenu de l'entrée du catalogue correspondant à une carte
   static array $maps=[]; // contenu du champ maps de MapCat
+  static array $obsoleteMaps=[]; // contenu du champ obsoleteMaps de MapCat
   
   // retourne l'entrée du catalogue correspondant à $mapNum sous la forme d'un objet MapCat
-  function __construct(string $mapNum) {
-    if (!self::$maps)
-      self::$maps = Yaml::parseFile(__DIR__.'/mapcat.yaml')['maps'];
+  function __construct(string $mapNum, bool $obsolete=true) {
+    if (!self::$maps) {
+      $mapCat = self::$maps = Yaml::parseFile(__DIR__.'/mapcat.yaml');
+      self::$maps = $mapCat['maps'];
+      self::$obsoleteMaps = $mapCat['obsoleteMaps'];
+    }
     $this->cat = self::$maps["FR$mapNum"] ?? [];
+    if (!$this->cat && $obsolete) { // Je cherche la carte dans les cartes obsolètes
+      $cat = self::$obsoleteMaps["FR$mapNum"] ?? [];
+      if ($cat) {
+        //print_r($cat);
+        $obsoleteDate = array_keys($cat)[count($cat)-1];
+        $this->cat = array_merge(['obsoleteDate'=> $obsoleteDate], $cat[$obsoleteDate]);
+      }
+    }
   }
   
   function empty(): bool { return ($this->cat == []); }

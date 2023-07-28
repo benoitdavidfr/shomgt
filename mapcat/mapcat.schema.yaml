@@ -338,17 +338,17 @@ properties:
         description: Description d'une carte.
         $ref: '#/definitions/map'
   obsoleteMaps:
-    description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur suppression
+    description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur retrait
     type: object
     additionalProperties: false
     patternProperties:
       ^FR\d\d\d\d:
-        description: pour chaque carte la liste des suppressions indexées par la date de suppression
+        description: pour chaque carte la liste des retraits indexés par la date de retrait
         type: object
         additionalProperties: false
         patternProperties:
           ^\d\d\d\d-\d\d-\d\d:
-            description: propriétés de chaque carte
+            description: propriétés de chaque carte retirée
             type: object
             $ref: '#/definitions/map'
   cartesAyantUnIntérêtInsuffisant:

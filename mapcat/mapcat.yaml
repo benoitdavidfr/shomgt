@@ -5294,15 +5294,14 @@ maps:
     geotiffNames: [8523_2021.tif]
 obsoleteMaps:
   FR5825:
-    '2020-12-27T07:58:03+01:00':
+    '2020-12-27':
       groupTitle: 'Océan Pacifique'
       title: 'Ilot Clipperton'
-      mapsFrance:
-        - CP
-      scaleDenominator: '20.000'
-      spatial:
-        SW: '10°15,53''N - 109°15,27''W'
-        NE: '10°20,33''N - 109°11,18''W'
+      mapsFrance: [CP]
+      insetMaps:
+        - title: 'Ilot Clipperton'
+          scaleDenominator: '20.000'
+          spatial: { SW: '10°15,53''N - 109°15,27''W', NE: '10°20,33''N - 109°11,18''W' }
   FR6015:
     '2022-06-16':
       groupTitle: 'Canada - Groenland - Islande'

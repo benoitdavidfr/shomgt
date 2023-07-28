@@ -244,7 +244,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     $mapCat = new MapCat($this->mapNum);
     $mappingGeoTiffWithMapCat = [];
     foreach ($this->insets as $name => $inset) {
-      if ($inset->tif()) {
+      if ($inset->tif() && $mapCat->insetMaps) {
         $mappingGeoTiffWithMapCat[$name] = $inset->bestInsetMapOfCat($mapCat->insetMaps, $show);
       }
     }
