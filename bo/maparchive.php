@@ -33,8 +33,13 @@ require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-// ['tif'=> {fileName}, 'xml'=>{filename}, 'georef'=>('ok'|'KO'|null) 'gbox'=>?GBox]
-class MainImage {
+function YamlDump($data, int $level=3, int $indentation=2): string {
+  $dump = Yaml::dump($data, $level, $indentation);
+  return preg_replace('!-\n *!', '- ', $dump);
+}
+      
+class Image { // Image principale ou cartouche
+  //protected string $name=''; // nom du cartouche de la forme (\d+|[A-Z]+)_gtw, '' pour l'image principale
   protected ?string $tif=null; // nom du tif dans l'archive
   protected ?string $georef; // ('ok'|'KO'|null)
   protected ?GBox $georefBox=null; // gbox de géoréférencement de l'image
@@ -52,38 +57,21 @@ class MainImage {
   
   function setXml(string $xml, string $pathOf7z): void {
     $this->xml = $xml;
-    $this->md = MapMetadata::getFrom7z($pathOf7z);
+    $this->md = MapMetadata::getFrom7z($pathOf7z, $xml);
   }
 
   function tif(): ?string { return $this->tif; }
   function georef(): ?string { return $this->georef; }
+  function georefLabel() { // label associé au georef
+    return match ($this->georef()) {
+      null => "image non géoréférencée",
+      'ok' => "image géoréférencée",
+      'KO' => "image mal géoréférencée",
+    };
+  }
   function georefBox(): ?GBox { return $this->georefBox; }
   function xml(): ?string { return $this->xml; }
   function md(): array { return $this->md; }
-};
-
-class Inset { // Cartouche dans l'archive
-  protected string $name; // nom du cartouche de la forme (\d+|[A-Z]+)_gtw
-  protected ?string $tif; // nom du tif de l'inset dans l'archive
-  protected ?GBox $georefBox=null; // gbox de géoréférencement du cartouche
-  protected string $xml; // nom de l'xml de l'inset dans l'archive
-  protected array $md=[]; // MD synthéttiques
-  
-  function __construct(string $pathOf7z, My7zArchive $archive, string $name, ?string $tif, ?string $xml) {
-    $this->tif = $tif;
-    if ($tif) {
-      $tifPath = $archive->extract($tif);
-      $gdalinfo = new GdalInfo($tifPath);
-      $this->georefBox = $gdalinfo->gbox();
-      $archive->remove($tifPath);
-    }
-    $this->xml = $xml;
-    $this->md = $this->xml ? MapMetadata::getFrom7z($pathOf7z, $this->xml) : [];
-  }
-  
-  function tif(): ?string { return $this->tif; }
-  function georefBox(): ?GBox { return $this->georefBox; }
-  function xml(): ?string { return $this->xml; }
   function title(): ?string { return $this->md['title'] ?? null; }
   
   // Recherche pour ce cartouche défini dans l'archive le meilleur cartouche correspondant défini dans le catalogue
@@ -129,8 +117,8 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
   protected string $pathOf7z; // chemin chemin du fichier .7z
   protected string $mapNum; // no sur 4 chiffres
   protected ?string $thumbnail=null; // nom de la miniature dans l'archive
-  protected MainImage $main; // les caractéristiques de l'image principale et les MD de la carte
-  protected array $insets=[]; // les cartouches [{name}=> Inset]
+  protected Image $main; // les caractéristiques de l'image principale et les MD de la carte
+  protected array $insets=[]; // les cartouches [{name}=> Image]
   protected array $suppls=[]; // liste de noms de fichiers hors specs sous la forme [{name} => 1]
   
   /* $pathOf7z est le chemin du fichier .7z
@@ -145,7 +133,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     if (!is_file($pathOf7z))
       throw new Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $archive = new My7zArchive($pathOf7z);
-    $this->main = new MainImage;
+    $this->main = new Image;
     foreach ($archive as $entry) {
       //echo "<pre>"; print_r($entry); echo "</pre>\n";
       if ($entry['Attr'] <> '....A') continue; // pas un fichier
@@ -155,10 +143,16 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         $this->main->setTif($entry['Name'], $archive);
       elseif ($entry['Name'] == "$mapNum/CARTO_GEOTIFF_{$mapNum}_pal300.xml")
         $this->main->setXml($entry['Name'], $pathOf7z);
-      elseif (preg_match("!^$mapNum/{$mapNum}_((\d+|[A-Z]+)_gtw)\.tif$!", $entry['Name'], $matches))
-        $this->insets[$matches[1]]['tif'] = $entry['Name'];
-      elseif (preg_match("!^$mapNum/CARTO_GEOTIFF_{$mapNum}_((\d+|[A-Z]+)_gtw)\.xml$!", $entry['Name'], $matches))
-        $this->insets[$matches[1]]['xml'] = $entry['Name'];
+      elseif (preg_match("!^$mapNum/(CARTO_GEOTIFF_)?{$mapNum}_((\d+|[A-Z]+)_gtw)\.(tif|xml)$!", $entry['Name'], $matches)) {
+        $name = $matches[2];
+        $ext = $matches[4];
+        if (!isset($this->insets[$name]))
+          $this->insets[$name] = new Image;
+        if ($ext == 'tif')
+          $this->insets[$name]->setTif($entry['Name'], $archive);
+        else // $ext == 'xml'
+          $this->insets[$name]->setXml($entry['Name'], $pathOf7z);
+      }
       elseif (!preg_match('!\.(gt|tfw|prj)$!', $entry['Name']))
         $this->suppls[$entry['Name']] = 1;
     }
@@ -198,9 +192,6 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
           }
         }
       }
-    }
-    foreach ($this->insets as $name => &$inset) {
-      $inset = new Inset($this->pathOf7z, $archive, $name, $inset['tif'] ?? null, $inset['xml'] ?? null);
     }
   }
   
@@ -339,7 +330,10 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
     $mapCat = new MapCat($this->mapNum);
     echo "<table border=1>";
-    echo "<tr><td>cat</td><td><pre>",Yaml::dump($mapCat->asArray(), 6),"</td></tr>\n";
+    // entrée du catalogue
+    echo "<tr><td>catalogue</td><td><pre>",YamlDump($mapCat->asArray(), 3, 2),"</td></tr>\n";
+    // miniature
+    echo "<tr><td>miniature</td>";
     if ($this->thumbnail) {
       $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
       if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
@@ -347,32 +341,35 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
       //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
       $thumbnailUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/$this->thumbnail";
-      echo "<tr><td>miniature</td><td><a href='$thumbnailUrl'><img src='$thumbnailUrl'></a></td></tr>\n";
+      echo "<td><a href='$thumbnailUrl'><img src='$thumbnailUrl'></a></td></tr>\n";
     }
     else {
-      echo "<tr><td>miniature</td><td>absente</td></tr>\n";
+      echo "<td>absente</td></tr>\n";
     }
-    if ($this->main->tif()) {
-      $gdalinfo = "?path=$_GET[path]&map=$_GET[map]&tif=".$this->main->tif()."&action=gdalinfo";
-      echo "<tr><td><a href='$gdalinfo'>principal</a></td>";
-    }
-    else {
-      echo "<tr><td>principal</td>";
-    }
-    $md = $this->main->md();
-    if (!$md)
+    // caractéristiques de l'image principale
+    echo "<tr><td>image<br>principale</td>";
+    if (!($md = $this->main->md()))
       $md = 'No Metadata';
-    echo "<td><pre>"; print_r($md); echo "</pre></td></tr>\n";
+    echo "<td><pre>",Yaml::dump($md, 1, 2),"</pre>";
+    if ($this->main->tif()) {
+      $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$this->main->tif()."&action=gdalinfo";
+      $label = $this->main->georefLabel();
+      echo "<a href='$path'>$label</a>";
+    }
+    echo "</td></tr>\n";
+    // caractéristiques de chaque cartouche
     foreach ($this->insets as $name => $inset) {
       $title = $inset->title() ?? 'NO metadata';
-      $gdalinfo = "?path=$_GET[path]&map=$_GET[map]&tif=".$inset->tif()."&action=gdalinfo";
-      echo "<tr><td><a href='$gdalinfo'>$name</a></td><td>$title</td></tr>\n";
+      $label = $inset->georefLabel();
+      $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$inset->tif()."&action=gdalinfo";
+      echo "<tr><td>Cart. $name</a></td>",
+           "<td>$title (<a href='$path'>$label</a>)</td></tr>\n";
     }
     if (count($this->insets) > 1) {
       $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
       $action = "?path=$_GET[path]&map=$_GET[map]&action=insetMapping";
-      echo "<tr><td><a href='$action'>inset Mapping<br>archive -> MapCat</a></td>";
-      echo "<td><pre>"; print_r($mappingInsetsWithMapCat); echo "</pre></td></tr>\n";
+      echo "<tr><td>Corresp.<br>cartouches<br>(archive<br>-> MapCat)</td>";
+      echo "<td><pre><a href='$action'>",Yaml::dump($mappingInsetsWithMapCat),"</a></pre></td></tr>\n";
     }
     if ($this->suppls) {
       echo "<tr><td>fichiers hors spec</td><td><ul>\n";
