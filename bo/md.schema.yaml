@@ -126,9 +126,10 @@ examples:
     version: 2019c0
     edition: 'Edition n° 4 - 2019 - Dernière correction : 0'
     gan:
-    date:
+    dateMD:
       role: revision
       value: '2019-07-23'
+    dateArchive: '2019-07-23'
   - title: 6735 - Pas de Calais - De Boulogne-sur-Mer à Zeebrugge - Estuaire de la Tamise (Thames)
     alternate: ''
     version: 2012c154
@@ -136,12 +137,11 @@ examples:
     gan:
       week: '2315'
       date: '2023-04-12'
-    date:
+    dateMD:
       role: revision
       value: '2023-04-12'
+    dateArchive: '2023-04-12'
   - version: 7330_2016.tif
-    date:
-      value: '2016-01-19'
+    dateArchive: '2016-01-19'
   - status: obsolete
-    date:
-      value: '2016-01-19'
+    date: '2016-01-19'

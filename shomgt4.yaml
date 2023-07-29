@@ -266,6 +266,7 @@ structurePortfolio:
             - sinon le nom du fichier tif ou pdf
           - il vaut mieux utiliser la version qu'une date car pour les anciennes cartes je n'ai pas de bonne date
             alors que la version est mieux définie
+          - si j'ai plusieurs archives pour une même version alors je suffixe le nom de base par une lettre
         - éventuellement un fichier {mapnum}-{date}.md.json indiquant l'obsolescence de la carte
           - où {date} est la date de parution du retrait de la carte
           - ou si cette date n'est pas connue la date de fourniture de l'info
@@ -274,7 +275,7 @@ structurePortfolio:
         - {mapnum}.7z pour le contenu de la carte
         - {mapnum}.md.json pour les métadonnées associées
       - pour chaque carte obsolète un lien nommé {mapnum}.md.json
-        - vers le fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
+        - vers le fichier {mapnum}-{date}.md.json indiquant l'obsolescence de la carte
     - users
       - un répertoire par utilisateur nommé avec son adresse email
       - contenant les cartes en cours de dépôt

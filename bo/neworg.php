@@ -25,12 +25,13 @@
       - contenant les cartes en cours de dépôt
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
 define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-//define ('SHOMGEOTIFF', '/var/www/html/shomgeotiff');
+define ('SHOMGEOTIFF', '/var/www/html/shomgeotiff');
 
 // déduit la semaine GAN d'un nom de livraison
 /*function ganWeek(string $archiveName): string {
@@ -105,9 +106,9 @@ foreach (new DirectoryIterator(SHOMGEOTIFF."/archives") as $archiveName) {
 }*/
 
 // différence entre maps.json
-/*if (0) {
-  $geoapi = json_decode(file_get_contents('geoapi-maps.json'), true);
-  $local = json_decode(file_get_contents('local-maps.json'), true);
+if (1) {
+  $geoapi = json_decode(file_get_contents('maps-geoapi.json'), true);
+  $local = json_decode(file_get_contents('maps-local.json'), true);
   foreach ($local as $mapNum => $localMap) {
     $geoapiMap = $geoapi[$mapNum] ?? 'undef';
     if ($geoapiMap == 'undef')
@@ -134,34 +135,179 @@ foreach (new DirectoryIterator(SHOMGEOTIFF."/archives") as $archiveName) {
         ]],
         JSON_OPTIONS),"\n";
   }
-}*/
+}
 
-if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+if (0) { // script de chgt de md.json et de noms qui s'est planté le 28/7/2023 17:15 
+  if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  $PF_PATH = SHOMGEOTIFF;
 
-$mapCat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
-
-// reconstruction des md.json
-foreach (new DirectoryIterator("$PF_PATH/archives") as $mapNum) {
-  if (in_array($mapNum, ['.','..','.DS_Store'])) continue;
-  $mapCatOfMap = $mapCat['maps']["FR$mapNum"] ?? []; // non défini pour les cartes obsolètes
-  foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mdName) {
-    if (substr($mdName, -8) <> '.md.json') continue;
-    $nameOf7z = substr($mdName, 0, -8).'.7z';
-    if (is_file("$PF_PATH/archives/$mapNum/$nameOf7z")) { // MD de carte non obsolète
-      echo "mdName=$mdName -> NON obsolete\n";
-      $md = MapMetadata::getFrom7z("$PF_PATH/archives/$mapNum/$nameOf7z", '', $mapCatOfMap['geotiffNames'] ?? []);
-      file_put_contents("$PF_PATH/archives/$mapNum/$mdName", json_encode($md, JSON_OPTIONS));
-    }
-    else {
-      echo "fichier $PF_PATH/archives/$mapNum/$nameOf7z absent\n";
-      echo "mdName=$mdName -> obsolete\n";
-      $ganWeek = substr($mdName, 5, 4);
-      $md = [
-        'status'=> 'obsolete',
-        'date'=> ['value'=> ganWeek2iso($ganWeek)],
-      ];
-      file_put_contents("$PF_PATH/archives/$mapNum/$mdName", json_encode($md, JSON_OPTIONS));
+  // reconstruction des md.json et changement des noms
+  foreach (new DirectoryIterator("$PF_PATH/archives") as $mapNum) {
+    if (in_array($mapNum, ['.','..','.DS_Store'])) continue;
+    $mapCatOfMap = new MapCat($mapNum); // non défini pour les cartes obsolètes
+    foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mdName) {
+      if (substr($mdName, -8) <> '.md.json') continue;
+      $nameOf7z = substr($mdName, 0, -8).'.7z';
+      if (is_file("$PF_PATH/archives/$mapNum/$nameOf7z")) { // MD de carte non obsolète
+        echo "mdName=$mdName -> NON obsolete\n";
+        $md = MapMetadata::getFrom7z("$PF_PATH/archives/$mapNum/$nameOf7z", '', $mapCatOfMap->geotiffNames ?? []);
+        // suppression de l'ancien fichier .md.json
+        unlink("$PF_PATH/archives/$mdName");
+        // création du nouveau fichier md.json
+        $version = $md['version'];
+        if (!is_file("$PF_PATH/archives/$mapNum/$mapNum-$version.md.json"))
+          file_put_contents("$PF_PATH/archives/$mapNum/$mapNum-$version.md.json", json_encode($md, JSON_OPTIONS));
+        else
+          echo "Le fichier $mapNum-$version.md.json existe, il n'est pas écrasé\n";
+        // chgt du nom du 7z
+        if (!is_file("$PF_PATH/archives/$mapNum/$mapNum-$version.7z"))
+          rename("$PF_PATH/archives/$mapNum/$nameOf7z", "$PF_PATH/archives/$mapNum/$mapNum-$version.7z");
+        else
+          echo "Le fichier $mapNum/$mapNum-$version.7z existe, le fichier $mapNum/$nameOf7z n'est pas renommé\n";
+      }
+      else {
+        echo "fichier $PF_PATH/archives/$mapNum/$nameOf7z absent\n";
+        echo "mdName=$mdName -> obsolete\n";
+        // passage de ganWeek à date
+        $ganWeek = substr($mdName, 5, 4);
+        $isodate = ganWeek2iso($ganWeek);
+        $md = [
+          'status'=> 'obsolete',
+          'date'=> $isodate,
+        ];
+        // suppression de l'ancien fichier .md.json
+        //unlink("$PF_PATH/archives/$mdName");
+        // création du nouveau fichier md.json
+        file_put_contents("$PF_PATH/archives/$mapNum/$mapNum-$isodate.md.json", json_encode($md, JSON_OPTIONS));
+      }
     }
   }
 }
+
+if (0) { // géréation des nouveaux noms des md.json des versions obsolètes - 29/7/2023
+  if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  $PF_PATH = SHOMGEOTIFF;
+
+  foreach (new DirectoryIterator("$PF_PATH/archives") as $mapNum) {
+    if (in_array($mapNum, ['.','..','.DS_Store'])) continue;
+    $mapCatOfMap = new MapCat($mapNum); // non défini pour les cartes obsolètes
+    foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mdName) {
+      if (substr($mdName, -8) <> '.md.json') continue;
+      $md = json_decode(file_get_contents("$PF_PATH/archives/$mapNum/$mdName"), true);
+      if (($md['status'] ?? null) == 'obsolete') {
+        echo "$mdName obsolete\n";
+        if (preg_match('!^(\d{4})-(\d{4})\.md\.json$!', $mdName, $matches)) { // ancien nom avec ganWeek
+          if (0) {
+            $mapNum = $matches[1];
+            $ganWeek = $matches[2];
+            $isodate = ganWeek2iso($ganWeek);
+            if (is_file("$PF_PATH/archives/$mapNum/$mapNum-$isodate.md.json"))
+              echo "Le fichier $mapNum/$mapNum-$isodate.md.json existe déjà\n";
+            else {
+              file_put_contents(
+                "$PF_PATH/archives/$mapNum/$mapNum-$isodate.md.json",
+                json_encode(
+                  [ 'status'=> 'obsolete', 'date'=> $isodate ],
+                  JSON_OPTIONS
+                )
+              );
+              echo "Le fichier $mapNum/$mapNum-$isodate.md.json est généré\n";
+            }
+          }
+          echo "effacement du fichier $PF_PATH/archives/$mapNum/$mdName\n";
+          unlink("$PF_PATH/archives/$mapNum/$mdName");
+        }
+      }
+    }
+  }
+}
+
+if (0) { // reconstruction des md.json et changement des noms des .7z - 29/7/2023
+  if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  $PF_PATH = SHOMGEOTIFF;
+
+  foreach (new DirectoryIterator("$PF_PATH/archives") as $mapNum) {
+    if (in_array($mapNum, ['.','..','.DS_Store'])) continue;
+    $mapCatOfMap = new MapCat($mapNum); // non défini pour les cartes obsolètes
+    foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $nameOf7z) {
+      if (preg_match('!^\d{4}-\d{4}\.md\.json$!', $nameOf7z)) {
+        unlink("$PF_PATH/archives/$mapNum/$nameOf7z");
+        continue;
+      }
+      if (substr($nameOf7z, -3) <> '.7z') continue;
+      echo "Traitement de $nameOf7z\n";
+      $md = MapMetadata::getFrom7z("$PF_PATH/archives/$mapNum/$nameOf7z", '', $mapCatOfMap->geotiffNames ?? []);
+      // création du nouveau fichier md.json
+      $version = $md['version'];
+      file_put_contents("$PF_PATH/archives/$mapNum/$mapNum-$version.md.json", json_encode($md, JSON_OPTIONS));
+      // chgt du nom du 7z
+      if (!is_file("$PF_PATH/archives/$mapNum/$mapNum-$version.7z")) {
+        echo "   $mapNum/$nameOf7z -> $mapNum/$mapNum-$version.7z\n";
+        rename("$PF_PATH/archives/$mapNum/$nameOf7z", "$PF_PATH/archives/$mapNum/$mapNum-$version.7z");
+      }
+      else
+        echo "  Le fichier $mapNum/$mapNum-$version.7z existe, le fichier $mapNum/$nameOf7z n'est pas renommé\n";
+    }
+  }
+}
+
+/*if (0) { // Mise à jour de current - 29/7/2023 
+  /* Le principe de l'algorithme est:
+     j'efface les fichiers dans current
+     POUR chaque carte
+       POUR chaque balayer les md.json
+         construire un tableau Php avec comme clé la version recodée sur YYYYcCCCC et comme valeur le nom du fchier
+         si j'ai un md.json d'obsolescence alors je met la clé 9999c9999
+         si j'ai une version hors format je met la version 0000c0000
+       FIN_POUR
+       je trie le tableau Php sur la clé
+       la dernière clé correspond à la version la plus récente
+       j'effectue les liens dans current vers cette dernière version
+     FIN_POUR
+  *//*
+  $PF_PATH = SHOMGEOTIFF;
+  
+  //if (0)
+  foreach (new DirectoryIterator("$PF_PATH/current") as $filename) {
+    if (in_array($filename, ['.','..'])) continue;
+    unlink("$PF_PATH/current/$filename");
+  }
+  
+  foreach (new DirectoryIterator("$PF_PATH/archives") as $mapNum) {
+    if (in_array($mapNum, ['.','..','.DS_Store'])) continue;
+    $versions = []; // [version => nom]
+    foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mdName) {
+      if (substr($mdName, -8) <> '.md.json') continue;
+      elseif (preg_match('!^\d{4}-\d{4}-\d{2}-\d{2}\.md\.json$!', $mdName)) { // MD d'obsolescence
+        $versions['Y9999c9999'] = (string)$mdName;
+        break;
+      }
+      elseif (preg_match('!^(\d{4})-(\d{4})c(\d+)\.md\.json$!', $mdName, $matches)) { // carte active avec version std
+        $versions['Y'.$matches[2].sprintf('c%04d', $matches[3])] = (string)$mdName;
+      }
+      else {
+        if ($versions)
+          die("Erreur, plusieurs versions non conformes pour $mapNum/$mdName\n");
+        $versions['Y0000c0000'] = (string)$mdName;
+      }
+    }
+    echo Yaml::dump([(string)$mapNum => $versions]);
+    if (count($versions) > 1)
+      ksort($versions); // tri sur YYYYcCCCC
+    $lastKey = array_keys($versions)[count($versions)-1];
+    $lastName = $versions[$lastKey];
+    echo "$mapNum: last=$lastName\n";
+    
+    // symlink(string $target, string $link): bool
+    echo "  symlink(../archives/$mapNum/$lastName, $PF_PATH/current/$mapNum.md.json)\n";
+    symlink("../archives/$mapNum/$lastName", "$PF_PATH/current/$mapNum.md.json");
+    if ($lastKey <> 'Y9999c9999') {
+      $lastName = substr($lastName, 0, -8).'.7z';
+      echo "  symlink(../archives/$mapNum/$lastName, $PF_PATH/current/$mapNum.7z)\n";
+      symlink("../archives/$mapNum/$lastName", "$PF_PATH/current/$mapNum.7z");
+    }
+  }
+}*/
