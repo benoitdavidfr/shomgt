@@ -1,14 +1,14 @@
 <?php
-/* bo/maparchive.php - Validation d'une carte - Benoit DAVID - 11-27/7/2023
+/* bo/maparchive.php - Affichage et validation d'une carte - Benoit DAVID - 11-29/7/2023
  * La validation des cartes est définie d'une part par sa conformité à sa spécification
  * et, d'autre part, par sa cohérence avec MapCat.
  *
  * Les cartes normales sont spécifiées par le Shom.
  * J'y ajoute la cohérence suivante avec MapCat:
- *  - chaque carte 7z correspond à une entrée dans les cartes non obsolètes de MapCat
+ *  - chaque carte 7z correspond à une entrée dans les cartes obsolètes ou non de MapCat
  *  - ssi la zone principale pal300 est géoréférencée alors
  *    - la carte comporte les champs spatial et scaleDenominator et
- *    - son géoréférencement contient l'extension spatiale définie dans MapCat
+ *    - son géoréférencement contient géographiquement l'extension spatiale définie dans MapCat
  *  - il y a bijection entre les GéoTiffs de cartouche de l'archive et les cartouches de MapCat
  *  - le géoréférencement du GéoTiff contient l'extension spatiale correspondante dans MapCat
  *  - si un géoréférencement est absent ou incorrect alors il est remplacé par la définition du champ borders dans Mapcat
@@ -17,13 +17,15 @@
  *  - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
  *  - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
  *  - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
- *    ALORS ce fichier .tif ou .pdf contient la carte géoréférencée ou non
+ *    ALORS ce fichier .tif ou .pdf contient l'image géoréférencée ou non
  *    SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
  *  - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
  *  - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
  * 
  * Pour les 2 types de carte:
  *  - un .tif est considéré comme géoréférencé ssi son gdalinfo contient un champ coordinateSystem
+ *
+ * Le script peut être soit utilisé appelé par addmaps.php soit en CLI pour tester un ensemble de cartes.
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
@@ -33,12 +35,23 @@ require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-function YamlDump($data, int $level=3, int $indentation=2): string {
-  $dump = Yaml::dump($data, $level, $indentation);
+// supprime les - suivis d'un retour à la ligne dans Yaml::dump()
+function YamlDump($data, int $level=3, int $indentation=2, int $options=0): string {
+  $dump = Yaml::dump($data, $level, $indentation, $options);
   return preg_replace('!-\n *!', '- ', $dump);
 }
-      
-class Image { // Image principale ou cartouche
+
+// affiche un boutton HTML
+function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
+  $form =  "<form action='$action' method='$method'>";
+  foreach ($hiddenValues as $name => $value)
+    $form .= "  <input type='hidden' name='$name' value='$value' />";
+  return $form
+    ."  <input type='submit' value='$submitValue'>"
+    ."</form>";
+}
+
+class Image { // Image principale ou cartouche de la carte 
   //protected string $name=''; // nom du cartouche de la forme (\d+|[A-Z]+)_gtw, '' pour l'image principale
   protected ?string $tif=null; // nom du tif dans l'archive
   protected ?string $georef; // ('ok'|'KO'|null)
@@ -66,9 +79,9 @@ class Image { // Image principale ou cartouche
   
   function georefLabel() { // label associé au georef
     return match ($this->georef()) {
-      null => "image non géoréférencée",
-      'ok' => "image géoréférencée",
-      'KO' => "image mal géoréférencée",
+      null => "Image non géoréférencée",
+      'ok' => "Image géoréférencée",
+      'KO' => "Image mal géoréférencée",
     }
     . (($this->georefBox && $this->georefBox->astrideTheAntimeridian()) ? " à cheval sur l'antiméridien" : '');
   }
@@ -337,8 +350,12 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
     $mapCat = new MapCat($this->mapNum);
     echo "<table border=1>";
-    // entrée du catalogue
-    echo "<tr><td>catalogue</td><td><pre>",YamlDump($mapCat->asArray(), 3, 2),"</td></tr>\n";
+    
+    // affichage de l'entrée du catalogue
+    echo "<tr><td>catalogue</td><td><pre>",
+        YamlDump($mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),
+        "</td></tr>\n";
+    
     // miniature
     echo "<tr><td>miniature</td>";
     if ($this->thumbnail) {
@@ -350,21 +367,24 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     else {
       echo "<td>absente</td></tr>\n";
     }
-    // caractéristiques de l'image principale
-    echo "<tr><td>image<br>principale</td>";
-    if (!($md = $this->main->md()))
-      $md = 'No Metadata';
-    echo "<td><pre>",Yaml::dump($md, 1, 2),"</pre>";
-    if ($this->main->tif()) {
-      $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$this->main->tif()."&action=gdalinfo";
-      $label = $this->main->georefLabel();
-      echo "<a href='$path'>$label</a> / ";
-      $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
-      //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
-      $imageUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/".substr($this->main->tif(),0, -4).'.png';
-      echo "<a href='$imageUrl'>Afficher l'image</a>";
+    
+    { // caractéristiques de l'image principale
+      echo "<tr><td>image<br>principale</td>";
+      if (!($md = $this->main->md()))
+        $md = 'No Metadata';
+      echo "<td><pre>",Yaml::dump($md, 1, 2),"</pre>";
+      if ($this->main->tif()) {
+        $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$this->main->tif()."&action=gdalinfo";
+        $label = $this->main->georefLabel();
+        echo "<a href='$path'>$label</a> / ";
+        $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
+        //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
+        $imageUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/".substr($this->main->tif(),0, -4).'.png';
+        echo "<a href='$imageUrl'>Afficher l'image</a>";
+      }
+      echo "</td></tr>\n";
     }
-    echo "</td></tr>\n";
+    
     // caractéristiques de chaque cartouche
     foreach ($this->insets as $name => $inset) {
       $title = $inset->title() ?? 'NO metadata';
@@ -374,24 +394,44 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       echo "<tr><td>Cart. $name</a></td>",
            "<td>$title (<a href='$gdalinfo'>$georefLabel</a> / <a href='$imageUrl'>Afficher l'image</a>)</td></tr>\n";
     }
+    
+    // Correspcartouches
     if (count($this->insets) > 1) {
       $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
       $action = "?path=$_GET[path]&map=$_GET[map]&action=insetMapping";
       echo "<tr><td>Corresp.<br>cartouches<br>(archive<br>-> MapCat)</td>";
       echo "<td><pre><a href='$action'>",Yaml::dump($mappingInsetsWithMapCat),"</a></pre></td></tr>\n";
     }
+    
+    // fichiers hors spec
     if ($this->suppls) {
       echo "<tr><td>fichiers hors spec</td><td><ul>\n";
       foreach (array_keys($this->suppls) as $suppl)
         echo "<li>$suppl</li>\n";
       echo "</ul></td></tr>\n";
     }
-    echo "<tr><td>erreurs</td><td><pre>",
+    
+    // erreurs et alertes
+    echo "<tr><td>erreurs &<br>&nbsp; alertes</td><td><pre>",
          Yaml::dump(($invalid = $this->invalid()) ? $invalid : 'aucun'),
          "</pre></td></tr>\n";
+    
+    // Affichage de la carte Leaflet, de l'appel du dump et du boutton de validation
+    echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=viewtiff'>",
+      "Affichage d'une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
+    echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
+      "Dump de l'objet Php</a></td></tr>\n";
+    echo "<tr><td colspan=2><center>",
+         button(
+          "Valider la carte et la déposer",
+          [ 'action'=> 'validateMap',
+            'path' => $_GET['path'],
+            'map'=> $_GET['map'].'.7z',
+          ],
+          'addmaps.php', 'get'),
+         "</center></td></tr>\n";
+    
     echo "</table>\n";
-    echo "<a href='?path=$_GET[path]&map=$_GET[map]&action=viewtiff'>Affichage des TIFF avec Leaflet</a><br>\n";
-    echo "<pre>"; print_r($this); echo "</pre>";
   }
   
   function showAsYaml(): void {

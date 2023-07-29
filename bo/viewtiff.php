@@ -215,9 +215,9 @@ switch ($_GET['action'] ?? null) {
     $archive->remove($path);
     die();
   }
-  case 'insetMapping': {
+  case 'insetMapping': { // affiche le détail de la correspondance entre cartouches 
     $mapNum = substr($_GET['map'], 0, 4);
-    $mapCat = new MapCat($mapNum);
+    //$mapCat = new MapCat($mapNum);
     $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
     $mappingInsetsWithMapCat = $map->mappingInsetsWithMapCat(true);
     echo "<pre>mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
@@ -228,7 +228,13 @@ switch ($_GET['action'] ?? null) {
       echo "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
     die();
   }
-  case 'viewtiff': { // affichage des tiff de la carte dans Leaflet
+  case 'dumpPhp': { // affiche 
+    $mapNum = substr($_GET['map'], 0, 4);
+    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
+    echo "<pre>"; print_r($map); echo "</pre>";
+    die();
+  }
+  case 'viewtiff': { // affiche une carte dans Leaflet avec les images
     $mapNum = substr($_GET['map'], 0, 4);
     $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
     $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);

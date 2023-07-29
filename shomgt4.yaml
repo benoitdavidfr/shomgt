@@ -261,14 +261,14 @@ structurePortfolio:
       - avec un répertoire par carte, nommé par le num. de la carte
       - dans ce répertoire de carte
         - 2 fichiers .7z et .md.json par version de la carte
-          - en utilisant un nom de base de la forme {mapnum}-{GanWeek}
-          - où {GanWeek} est la semaine Shom de publication de la version constituée de 4 chiffres
-            - 2 premiers chiffres correspondant aux 2 derniers chiffres de l'année
-            - 2 derniers chiffres correspondant au no de la semaine dans l'année
-          - quand la semaine de publication est inconnue on utilise la semaine de dépôt de la carte
-        - éventuellement un fichier {mapnum}-{GanWeek}.md.json indiquant l'obsolescence de la carte
-          - où {GanWeek} est la semaine Shom de parution du retrait de la carte
-          - ou si cette semaine n'est pas connue la semaine de fourniture de l'info
+          - en utilisant un nom de base de la forme {mapNum}-{version}
+          - où {version} est la version sous la forme YYYYcN qd il existe un fichier .xml
+            - sinon le nom du fichier tif ou pdf
+          - il vaut mieux utiliser la version qu'une date car pour les anciennes cartes je n'ai pas de bonne date
+            alors que la version est mieux définie
+        - éventuellement un fichier {mapnum}-{date}.md.json indiquant l'obsolescence de la carte
+          - où {date} est la date de parution du retrait de la carte
+          - ou si cette date n'est pas connue la date de fourniture de l'info
     - current
       - pour chaque carte non obsolète 2 liens vers la dernière version de la carte dans archives nommés respectivement
         - {mapnum}.7z pour le contenu de la carte
@@ -442,4 +442,230 @@ bo:
     - il peut déclarer qu'une carte est obsolète
   mettreAJourServicesShomGt:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
+
+crsWkt:
+  title: CRS-WKT
+  abstract: |
+    Sur Alwaysdata, gdalinfo est en version 'GDAL 2.4.0, released 2018/12/14'
+    Sur php82, gdalinfo est en version 'GDAL 3.6.2, released 2023/01/02'
+  
+    Le WKT du CRS en version 3.6.2 (2023/01/02) respecte le standard OGC 2.0.6 (document OGC 18-010r7 et ISO 19162:2019).
+    Ce standard est dit WKT 2 (2019).
+    Le WKT du CRS en version 2.4.0 (2018/12/14) respecte le standard OGC 1.0   (document OGC 12-063r5 et ISO 19162:2015).
+    Ce standard est dit WKT.
+  
+  exampleOgc1.0: |
+    PROJCS["WGS 84 / World Mercator",
+      GEOGCS["WGS 84",
+        DATUM["WGS_1984",
+          SPHEROID["WGS 84",6378137,298.257223563, AUTHORITY["EPSG","7030"]],
+          AUTHORITY["EPSG","6326"]],
+        PRIMEM["Greenwich",0],
+        UNIT["degree",0.0174532925199433],
+        AUTHORITY["EPSG","4326"]],
+      PROJECTION["Mercator_1SP"],
+      PARAMETER["central_meridian",0],
+      PARAMETER["scale_factor",1],
+      PARAMETER["false_easting",0],
+      PARAMETER["false_northing",0],
+      UNIT["metre",1, AUTHORITY["EPSG","9001"]],
+      AUTHORITY["EPSG","3395"]
+    ]  
+  
+  exampleOgc2.0.6:
+    worldMercator: |
+      PROJCRS["WGS 84 / World Mercator",
+        BASEGEOGCRS["WGS 84",
+          DATUM["World Geodetic System 1984", ELLIPSOID["WGS 84",6378137,298.257223563, LENGTHUNIT["metre",1]]],
+          PRIMEM["Greenwich",0, ANGLEUNIT["degree",0.0174532925199433]],
+          ID["EPSG",4326]],
+        CONVERSION["Mercator (variant A)",
+          METHOD["Mercator (variant A)", ID["EPSG",9804]],
+          PARAMETER["Latitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8801]],
+          PARAMETER["Longitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8802]],
+          PARAMETER["Scale factor at natural origin",1, SCALEUNIT["unity",1], ID["EPSG",8805]],
+          PARAMETER["False easting",0, LENGTHUNIT["metre",1], ID["EPSG",8806]],
+          PARAMETER["False northing",0, LENGTHUNIT["metre",1], ID["EPSG",8807]]],
+        CS[Cartesian,2],
+        AXIS["easting",east, ORDER[1], LENGTHUNIT["metre",1]],
+        AXIS["northing",north, ORDER[2], LENGTHUNIT["metre",1]],
+        ID["EPSG",3395]
+      ]
+    lambert93: |
+      PROJCRS["RGF93 v1 / Lambert-93",
+        BASEGEOGCRS["RGF93 v1",
+          DATUM["Reseau Geodesique Francais 1993 v1", ELLIPSOID["GRS 1980",6378137,298.257222101, LENGTHUNIT["metre",1]]],
+          PRIMEM["Greenwich",0, ANGLEUNIT["degree",0.0174532925199433]],
+          ID["EPSG",4171]],
+        CONVERSION["Lambert-93",
+          METHOD["Lambert Conic Conformal (2SP)", ID["EPSG",9802]],
+          PARAMETER["Latitude of false origin",46.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],
+          PARAMETER["Longitude of false origin",3,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],
+          PARAMETER["Latitude of 1st standard parallel",49,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],
+          PARAMETER["Latitude of 2nd standard parallel",44,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],
+          PARAMETER["Easting at false origin",700000,LENGTHUNIT["metre",1],ID["EPSG",8826]],
+          PARAMETER["Northing at false origin",6600000,LENGTHUNIT["metre",1],ID["EPSG",8827]]
+        ],
+        CS[Cartesian,2],
+        AXIS["easting (X)",east,ORDER[1],LENGTHUNIT["metre",1]],
+        AXIS["northing (Y)",north,ORDER[2],LENGTHUNIT["metre",1]],
+        USAGE[
+          SCOPE["Engineering survey, topographic mapping."],
+          AREA["France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica)."],
+          BBOX[41.15,-9.86,51.56,10.38]
+        ],
+        ID["EPSG",2154]
+      ]
+    lambert93enYaml:
+      PROJCRS:
+        - "RGF93 v1 / Lambert-93"
+        -
+          BASEGEOGCRS:
+            - "RGF93 v1"
+            - DATUM:
+                - Reseau Geodesique Francais 1993 v1
+                - ELLIPSOID: ["GRS 1980", 6378137, 298.257222101, {LENGTHUNIT: [metre, 1]}]
+            - PRIMEM: [Greenwich, 0, {ANGLEUNIT: ["degree", 0.0174532925199433]}]
+            - ID: [EPSG, 4171]
+        - 
+          CONVERSION:
+            - "Lambert-93"
+            - METHOD:
+              - Lambert Conic Conformal (2SP)
+              - ID: [EPSG, 9802]
+            - PARAMETER:
+              - "Latitude of false origin"
+              - 46.5
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8821]
+            - PARAMETER:
+              - "Longitude of false origin"
+              - 3
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8822]
+            - PARAMETER:
+              - "Latitude of 1st standard parallel"
+              - 49
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8823]
+            - PARAMETER:
+              - "Latitude of 2nd standard parallel"
+              - 44
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8824]
+            - PARAMETER:
+              - "Easting at false origin"
+              - 700000
+              - LENGTHUNIT: ["metre", 1]
+              - ID: ["EPSG", 8826]],
+            - PARAMETER:
+              - "Northing at false origin"
+              - 6600000
+              - LENGTHUNIT: ["metre", 1]
+              - ID: ["EPSG", 8827]
+        - CS: [Cartesian, 2]
+        - AXIS: ["easting (X)", east, {ORDER: 1}, {LENGTHUNIT: ["metre",1]}]
+        - AXIS: ["northing (Y)", north, {ORDER: 2}, {LENGTHUNIT: ["metre",1]}],
+        -
+           USAGE:
+            SCOPE: "Engineering survey, topographic mapping."
+            AREA: "France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica)."
+            BBOX: [41.15,-9.86,51.56,10.38]
+        - ID: ["EPSG", 2154]
+  eof:
+arbreEnYaml:
+  description: |
+    Un noeud est représenté par un objet atant une structure qqc et un champ particulier contenant les feuilles (leafs ici)
+    Une feuille est ici représentée par une chaine de caractères mais pourrait aussi être représentée par une structure
+    quelconque n'ayant pas de feuille.
+    Tout dépend de l'info que l'on veut stocker dans le noeud et la feuille.
+  arbre:
+    - label: étiquette du noeud 1
+      leafs:
+        - feuille 1.1
+        - feuille 1.2
+    - label: étiquette d'un second noeud
+      leafs:
+        - feuille 2.1
+    - feuille 3
+
+bugsDétectésDansLesCartes:
+  title: bugs détectés dans les cartes à l'occasion du test de conformié des cartes
+  note: |
+    - le nombre de cartouches peut varier au fur et à mesure des versions
+    - dans d'autres cas l'absence de cartouche semble plutôt correspondre à un oubli du Shom
+    - la gestion des cartes obsolètes n'est pas aussi rigoureuse que celle des cartes vivantes
+  cartesEnErreur:
+    FR5978:
+      - dans la version 5978-1903 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
+      - version 5978-1938 ok
+    FR7003:
+      - un cartouche a été rajouté dans l'édition de 2019 (7003-1938)
+      - les versions antérieures génèrent donc une erreur
+    FR7052:
+      - Dans la version 7052-2249 le cartouche est manquant alors qu'il est présent dans la version 7052-1726
+    FR7205: Dans la version 7205-2215 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
+    FR7656: Carte obsolète dont l'extension spatiale n'a pas été conservée dans MapCat
+    FR7665: 
+      - dans le version 7665-1722, pas de bijection entre les cartouches définis dans l''archive et ceux définis dans MapCat
+      - dans les autres Ok
+
+  cartesInexistantesDansLeCatalogueYComprisDansLesObsolètes:
+    0982:
+      title: 0982 - Abords Sud de Terre-Neuve - Ile Saint-Pierre - Port de Saint-Pierre - Ile Miquelon - Port de Miquelon
+      remplacéePar: 7638, 7639 et 7640
+    5438:
+      title: 5438 - Océan Pacifique
+      note: carte à très petite échelle, assez moche, pas utile
+    6725:
+      title: 6725 - Estuaire de la Tamise - Partie Sud
+      note: Fac-similé de la carte GB 1607, n'intersecte pas la France
+    6774:
+      title: 6774 - Puerto de Bilbao
+      note: fac-similé de la carte ES 3941, n'intersecte pas la France
+    6851:
+      title: 6851 - Ports d'Ajaccio et de Propriano
+      note: remplacée par FR7436
+    6856:
+      title: 6856 - Abords et Port de Bastia
+      note: remplacée par FR7436
+    7019:
+      title: 7019 - De Imperia à Portofino
+      note: fac-similé de la carte IT 2, n'intersecte pas la France
+    7037:
+      title: 7037 - De Dover à North Foreland
+      note: fac-similé de la carte Carte GB n°1828, n'intersecte pas la France
+    7046:
+      title: 7046 - Puerto de Barcelona
+      note: fac-similé de la carte ES 4891, n'intersecte pas la France
+    7047:
+      title: 7047 - Puerto de Tarragona
+      note: fac-similé de la carte ES 4871, n'intersecte pas la France
+    7181:
+      title: 7181 - De Harwich à North Foreland (Estuaire de la Tamise)
+      note: fac-similé de la carte GB 1183, n'intersecte pas la France
+    7182:
+      title: 7182 - Approches de l'Estuaire de la Tamise
+      note: fac-similé de la carte GB 1610, 1:150_000, intersecte la France mais inutile
+    7189:
+      title: 7189 - Golfes d'Olbia et d'Aranci - Iles Tavolara et Molara
+      note: fac-similé de la carte IT 322 et IT 318, Sicile, n'intersecte pas la France
+    7190:
+      title: 7190 - Golfe de Congianus - De Capo Ferro à Capo Figari
+      note: fac-similé de la carte IT 323, Sicile, n'intersecte pas la France
+    7191:
+      title: 7191 - Archipel de la Maddalena
+      note: fac-similé de la carte IT 324, Sicile, n'intersecte pas la France
+    7212:
+      title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
+      note: fac-similé de la carte Carte PT n° 21101, n'intersecte pas la France
+    7239:
+      title: 7239 - Port de Santander
+      note: fac-similé de la carte ES 4011, n'intersecte pas la France
+    7656:
+      title: 7656 - De Santona à Gijon
+      note: n'intersecte pas la France et retirée du catalogue du Shom (est dans le catalogue mais sans extension)
+    7623:
+      title: 7623 - Approches Nord-Ouest de Saint Lucia
+      note: fac-similé de la carte GB 197, n'intersecte pas la France
 eof:

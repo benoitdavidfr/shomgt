@@ -2,7 +2,10 @@
 // bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 26/7/2023
 // déf. de la classe MapMetadata et de la fonction ganWeek2iso()
 
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/my7zarchive.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
   $date = new DateTimeImmutable();
@@ -64,14 +67,14 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
       
     if (!($date = (string)$citation->gmd_date->gmd_CI_Date->gmd_date->gco_Date))
       $date = (string)$citation->gmd_date->gmd_CI_Date->gmd_date->gco_DateTime;
-    $md['date'] = [
+    $md['dateMD'] = [
       'type'=> (string)$citation->gmd_date->gmd_CI_Date->gmd_dateType->gmd_CI_DateTypeCode['codeListValue'], 
       'value'=> $date,
     ];
     
     return $md;
   }
-
+  
   /* SI $mdName n'est pas défini et le fichier XML standard existe ALORS
   **   retourne les MD ISO à partir du nom d'entrée standard des MD // MD d'une carte normale
   ** SINON_SI $mdName est défini ALORS
@@ -91,23 +94,28 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
   static function getFrom7z(string $pathOf7z, string $mdName='', array $geotiffNames=[]): array { 
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
     $archive = new My7zArchive($pathOf7z);
+    $dateArchive = null;
     if (!$mdName) { // Si $mdName n'est pas défini, je cherche dans l'archive les MD du fichier principal
       foreach ($archive as $entry) {
         if (preg_match('!^\d{4}/CARTO_GEOTIFF_\d{4}_pal300\.xml$!', $entry['Name'])) { // CARTO_GEOTIFF_7107_pal300.xml
           $mdName = $entry['Name'];
-          break;
+        }
+        elseif (preg_match('!^\d{4}/\d{4}_pal300\.tif$!', $entry['Name'])) {
+          $dateArchive = substr($entry['DateTime'], 0, 10);
         }
       }
     }
     
     if (!$mdName) { // carte spéciale avec fichier XML
       // Je cherche s'il existe un et un seul fichier XML
+      $mdNames = [];
       foreach ($archive as $entry) {
         if (substr($entry['Name'], -4) == '.xml') {
-          $mdName = $entry['Name'];
-          break;
+          $mdNames[] = $entry['Name'];
         }
       }
+      if (count($mdNames) == 1)
+        $mdName = $mdNames[0];
     }
     
     if ($mdName) { // Si $mdName est défini alors j'extraie le fichier de l'archive puis j'extraie les MD du fichier 
@@ -115,58 +123,78 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
       $md = self::extractFromIso19139($mdPath);
       $archive->remove($mdPath);
       //echo "getMapVersionFrom7z()-> ",json_encode($md, JSON_OPTIONS),"\n";
-      return $md;
+      
+      // Ici j'ai récupéré $md qd il y a un fichier MD ISO
+      if (!$dateArchive) { // Je cherche une dateArchive
+        $entriesPerExt = ['tif'=>[], 'pdf'=>[]];
+        foreach ($archive as $entry) { // recherche des .tif et des .pdf
+          //print_r($entry);
+          if (in_array(substr($entry['Name'], -4), ['.tif','.pdf'])) {
+            $entriesPerExt[substr($entry['Name'], -3)][] = $entry;
+          }
+        }
+        //echo '$entriesPerExt = '; print_r($entriesPerExt);
+        if (count($entriesPerExt['tif']) > 0) { // Il existe au moins 1 .tif
+          $dateArchive = substr($entriesPerExt['tif'][0]['DateTime'], 0, 10); // je prends le premier
+        }
+        elseif ((count($entriesPerExt['pdf']) > 0) && (count($entriesPerExt['pdf']) == 1)) { // Il existe au moins un .pdf
+          $dateArchive = substr($entriesPerExt['pdf'][0]['DateTime'], 0, 10); // je prends le premier
+        }
+      }
+      if (!$dateArchive)
+        throw new Exception("Cas non prévu dans MapMetadata::getFrom7z()");
+      return array_merge($md, ['dateArchive'=> $dateArchive]);
     }
     
+    
     // génération de MD limitées pour une carte spéciale n'ayant pas de MD ISO
-    // 1er sous-cas: il existe un seul .tif ou pas de .tif et un seul .pdf
+    // 1er cas: il existe un seul .tif ou pas de .tif et un seul .pdf
     $entriesPerExt = ['tif'=>[], 'pdf'=>[]];
     foreach ($archive as $entry) { // recherche des .tif et des .pdf
       //print_r($entry);
-      if (preg_match('!\.(tif|pdf)$!', $entry['Name'], $matches)) {
-        $entriesPerExt[$matches[1]][] = $entry;
+      if (in_array(substr($entry['Name'], -4), ['.tif','.pdf'])) {
+        $entriesPerExt[substr($entry['Name'], -3)][] = $entry;
       }
     }
-    $entry = null;
     //echo '$entriesPerExt = '; print_r($entriesPerExt);
     if (count($entriesPerExt['tif']) == 1) { // Il existe un et un seul .tif
-      $entry = $entriesPerExt['tif'][0];
+      return [
+        'version'=> basename($entriesPerExt['tif'][0]['Name']),
+        'dateArchive'=> substr($entriesPerExt['tif'][0]['DateTime'], 0, 10),
+      ];
     }
     elseif ((count($entriesPerExt['tif']) == 0) && (count($entriesPerExt['pdf']) == 1)) { // Il existe un et un seul .pdf
-      $entry = $entriesPerExt['pdf'][0];
-    }
-    if ($entry) {
       return [
-        'version'=> basename($entry['Name']),
-        'date'=> ['value'=> substr($entry['DateTime'], 0, 10)],
+        'version'=> basename($entriesPerExt['pdf'][0]['Name']),
+        'dateArchive'=> substr($entriesPerExt['pdf'][0]['DateTime'], 0, 10),
       ];
     }
     
-    // 2ème sous cas - impossible d'identifier un .tif ou un .pdf et $geotiffNames est défini
+    // 2ème cas - impossible d'identifier un .tif ou un .pdf et $geotiffNames est défini
     if ($geotiffNames) {
       foreach ($archive as $entry) {
         foreach ($geotiffNames as $geotiffName) {
           if (preg_match("!/$geotiffName$!", $entry['Name'])) {
             return [
               'version'=> $geotiffName,
-              'date'=> ['value'=> substr($entry['DateTime'], 0, 10)],
+              'dateArchive'=> substr($entry['DateTime'], 0, 10),
             ];
           }
         }
       }
     }
-
+    
     // cas d'erreur
     return [];
   }
   
   static function test(string $PF_PATH): void { // Test de la classe 
     define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-    if (0) { // @phpstan-ignore-line // Test sur une carte 
+    if (0) { // @phpstan-ignore-line // Test sur une carte normale 
       $md = self::getFrom7z("$PF_PATH/current/7107.7z");
       echo "getMapVersionFrom7z()-> ",json_encode($md, JSON_OPTIONS),"\n";
     }
-    elseif (1) { // @phpstan-ignore-line // Test sur les anciennes cartes spéciales 
+    elseif (0) { // @phpstan-ignore-line // Test sur les anciennes cartes spéciales 
       foreach (['7330','7344','7360','8101','8502','8509','8510','8517','8523'] as $mapNum)
         echo "getMapVersionFrom7z($mapNum)-> ",json_encode(self::getFrom7z("$PF_PATH/current/$mapNum.7z"), JSON_OPTIONS),"\n";
     }
@@ -174,12 +202,12 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
       echo "getMapVersionFrom7z(7330)-> ",
         json_encode(self::getFrom7z("$PF_PATH/incoming/20230628aem/7330.7z"), JSON_OPTIONS),"\n";
     }
-    elseif (1) { // @phpstan-ignore-line // Test sur les nouvelles cartes spéciales 7344 et 7360
+    elseif (0) { // @phpstan-ignore-line // Test sur les nouvelles cartes spéciales 7344 et 7360
       foreach (['7344','7360'] as $mapNum)
         echo "getMapVersionFrom7z($mapNum)-> ",
           json_encode(self::getFrom7z("$PF_PATH/doublons/20230626/$mapNum.7z"), JSON_OPTIONS),"\n";
     }
-    elseif (1) { // @phpstan-ignore-line // Test sur les nouvelles cartes spéciales 
+    elseif (0) { // @phpstan-ignore-line // Test sur les nouvelles cartes spéciales 
       foreach (['8502','8509','8510','8517','8523'] as $mapNum)
         echo "getMapVersionFrom7z($mapNum)-> ",
           json_encode(self::getFrom7z("$PF_PATH/attente/20230628aem/$mapNum.7z"), JSON_OPTIONS),"\n";
@@ -188,7 +216,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
       foreach (new DirectoryIterator("$PF_PATH/current") as $entry) {
         if (substr($entry, -3) <> '.7z') continue;
         $md = self::getFrom7z("$PF_PATH/current/$entry");
-        echo "getMapVersionFrom7z($entry)-> ",json_encode($md, JSON_OPTIONS),"\n";
+        echo Yaml::dump(["getMapVersionFrom7z($entry)"=> $md]);
       }
     }
     elseif (1) { // @phpstan-ignore-line // Test de ttes les cartes de archives
@@ -197,15 +225,16 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
         foreach (new DirectoryIterator("$PF_PATH/archives/$archive") as $entry) {
           if (substr($entry, -3) <> '.7z') continue;
           $md = self::getFrom7z("$PF_PATH/archives/$archive/$entry");
-          echo "getMapVersionFrom7z($archive/$entry)-> ",json_encode($md, JSON_OPTIONS),"\n";
+          echo Yaml::dump(["getMapVersionFrom7z($archive/$entry)"=> $md]);
         }
       }
     }
   }
 };
 
-if ((php_sapi_name() == 'cli') && ($argv[0]=='mapmetadata.inc.php')) {
+if ((php_sapi_name() == 'cli') && ($argv[0]=='mapmetadata.inc.php')) { // Test sur certaines cartes 
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
     throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  $PF_PATH = '/var/www/html/shomgeotiff';
   MapMetadata::test($PF_PATH);
 }

@@ -10,7 +10,7 @@ $schema: http://json-schema.org/schema#
 oneOf:
   - description: MD normales extraites du fichier ISO 19139 associé
     type: object
-    required: [title, alternate, version, edition, gan, date]
+    required: [title, alternate, version, edition, gan, dateMD, dateArchive]
     additionalProperties: false
     properties:
       title:
@@ -54,7 +54,7 @@ oneOf:
                 description: date YYYY-MM-DD traduisant le no de la semaine
                 type: string
                 pattern: ^\d{4}-\d{2}-\d{2}$
-      date:
+      dateMD:
         description: date de creation/revision définie dans le fichier de MD ISO (souvent fausse pour les cartes anciennes)
         type: object
         required: [role, value]
@@ -69,30 +69,40 @@ oneOf:
             description: valeur de la date sous la forme YYYY-MM-DD
             type: string
             pattern: ^\d{4}-\d{2}-\d{2}$
-      user:
-        description: email de l'utilisateur ayant ajouté cette version de carte au portefeuille
+      dateArchive:
+        description: date du fichier tif/pdf principal dans l'archive, dans de nombreux cas la meilleure estimation de date
         type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
+      user:
+        description: |
+          email de l'utilisateur ayant ajouté cette version de carte au portefeuille
+          Si absent cela signifie que l'ajout a été effectué par un processus d'administration.
+        type: string
+      dateUpload:
+        description: date du dépôt de la carte dans la plateforme
+        type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
   - description: MD limitées des cartes spéciales n'ayant pas de fichier ISO 19139 associé
     type: object
-    required: [version, date]
+    required: [version, dateArchive]
     additionalProperties: false
     properties:
       version:
         description: le nom du fichier tif ou pdf contenant la carte
         type: string
-      date:
-        description: date du fichier tif/pdf dans l'archive
-        type: object
-        required: [value]
-        additionalProperties: false
-        properties:
-          value:
-            description: valeur de la date sous la forme YYYY-MM-DD
-            type: string
-            pattern: ^\d{4}-\d{2}-\d{2}$
-      user:
-        description: email de l'utilisateur ayant ajouté cette version de carte au portefeuille
+      dateArchive:
+        description: date du fichier tif/pdf dans l'archive, la seule date disponible en l'absence de MD ISO
         type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
+      user:
+        description: |
+          email de l'utilisateur ayant ajouté cette version de carte au portefeuille
+          Si absent cela signifie que l'ajout a été effectué par un processus d'administration.
+        type: string
+      dateUpload:
+        description: date du dépôt de la carte dans la plateforme
+        type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
   - description: MD indiquant une carte obsolète
     type: object
     required: [status, date]
@@ -102,17 +112,13 @@ oneOf:
         description: valeur constante indiquant l'obsolescence
         const: obsolete
       date:
-        description: date à laquelle la carte a été mentionné comme obsolète
-        type: object
-        required: [value]
-        additionalProperties: false
-        properties:
-          value:
-            description: valeur de la date sous la forme YYYY-MM-DD
-            type: string
-            pattern: ^\d{4}-\d{2}-\d{2}$
+        description: date à laquelle la carte a été mentionnée comme obsolète (par le Shom ou par un utilisateur)
+        type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
       user:
-        description: email de l'utilisateur ayant indiqué que cette carte est obsolète
+        description: |
+          email de l'utilisateur ayant indiqué que cette carte est obsolète.
+          Si absent cela signifie que l'ajout a été effectué par un processus d'administration.
         type: string
 examples:
   - title: '6281 - Partie Sud de Tahaa'

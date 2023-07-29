@@ -63,7 +63,7 @@ switch ($_GET['action'] ?? null) {
       echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
-    echo "<li><a href='addmaps.php'>Intégrer de nouvelles versions de cartes au portefeuille</li>\n";
+    echo "<li><a href='addmaps.php'>Déposer de nouvelles versions de cartes dans le portefeuille</li>\n";
     echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
     echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
     echo "</ul>\n";
