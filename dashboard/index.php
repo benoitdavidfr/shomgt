@@ -216,7 +216,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     $this->mapNum = $mapNum;
     $this->mapCat = new MapCat($mapNum);
     $this->pfVersion = $map['version'];
-    $this->pfDate = $map['date']['value'];
+    $this->pfDate = $map['dateMD']['value'];
   }
   
   function setGan(Gan $gan): void { // Mise à jour de perempt à partir du GAN
