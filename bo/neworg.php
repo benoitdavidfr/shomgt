@@ -105,8 +105,8 @@ foreach (new DirectoryIterator(SHOMGEOTIFF."/archives") as $archiveName) {
     echo "No .7z\n";
 }*/
 
-// différence entre maps.json
-if (1) {
+
+if (0) { // différence entre maps.json
   $geoapi = json_decode(file_get_contents('maps-geoapi.json'), true);
   $local = json_decode(file_get_contents('maps-local.json'), true);
   foreach ($local as $mapNum => $localMap) {
@@ -311,3 +311,27 @@ if (0) { // reconstruction des md.json et changement des noms des .7z - 29/7/202
     }
   }
 }*/
+
+if (0) { // gestion du cas particulier de la carte 0101 pour laquelle j'ai 2 fois la même version  - 29/7/2023 
+  $PF_PATH = SHOMGEOTIFF;
+  $mapNum = '0101';
+  $nameOf7z = '0101-2123.7z';
+  $md = MapMetadata::getFrom7z("$PF_PATH/archives/$mapNum/$nameOf7z");
+  $version = $md['version'];
+  file_put_contents("$PF_PATH/archives/$mapNum/$mapNum-{$version}a.md.json", json_encode($md, JSON_OPTIONS));
+  rename("$PF_PATH/archives/$mapNum/$nameOf7z", "$PF_PATH/archives/$mapNum/$mapNum-{$version}a.7z");
+  unlink("$PF_PATH/current/0101.md.json");
+  unlink("$PF_PATH/current/0101.7z");
+  // symlink(string $target, string $link): bool
+  symlink("../archives/$mapNum/$mapNum-{$version}a.md.json", "$PF_PATH/current/$mapNum.md.json");
+  symlink("../archives/$mapNum/$mapNum-{$version}a.7z", "$PF_PATH/current/$mapNum.7z");
+}
+
+if (0) { // gestion du cas particulier de la carte 0101 pour laquelle j'ai 2 fois la même version - PARTIE II - 29/7/2023 
+  $PF_PATH = SHOMGEOTIFF;
+  $mapNum = '0101';
+  $nameOf7z = '0101-2016c0.7z';
+  $md = MapMetadata::getFrom7z("$PF_PATH/archives/$mapNum/$nameOf7z");
+  $version = $md['version'];
+  file_put_contents("$PF_PATH/archives/$mapNum/$mapNum-{$version}.md.json", json_encode($md, JSON_OPTIONS));
+}
