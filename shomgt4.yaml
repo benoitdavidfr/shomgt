@@ -168,7 +168,7 @@ phasage:
       - mise en place de la préprod avec ces évolutions
       - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
       - adaptation de sgserver si nécessaire
-      - adaptation de dashboard (champs creation/revision remplacés par le chap date) / ok
+      - adaptation de dashboard (champs creation/revision remplacés par le chap dateMD) / ok
       - correction bug 7620
     apportsFonctionnels:
       - dépôt des cartes en mode web

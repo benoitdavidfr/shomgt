@@ -10,6 +10,7 @@ class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu des fichi
   static function init(): void {
     if (!(($PF_PATH = getenv('SHOMGT3_DASHBOARD_PORTFOLIO_PATH')) || ($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))))
       throw new Exception("Variables d'env. SHOMGT3_DASHBOARD_PORTFOLIO_PATH et SHOMGT3_PORTFOLIO_PATH non définies");
+    //echo "PF_PATH=$PF_PATH<br>\n";
     foreach (new DirectoryIterator("$PF_PATH/current") as $entry) {
       if (substr($entry, -8) <> '.md.json') continue;
       $map = json_decode(file_get_contents("$PF_PATH/current/$entry") , true);

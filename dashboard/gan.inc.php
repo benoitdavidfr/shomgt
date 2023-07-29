@@ -293,7 +293,7 @@ class GanStatic {
     //print_r($errors);
     foreach (Portfolio::$all as $mapnum => $map) {
       //echo "mapnum=$mapnum\n"; print_r($map);
-      if ($modified = $map['dateMD']['value']) {
+      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
         $ganWeek = GanStatic::week($modified);
         if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
           //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
@@ -452,7 +452,7 @@ class GanStatic {
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     foreach (Portfolio::$all as $mapnum => $map) {
-      if ($modified = $map['dateMD']['value']) {
+      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
         $ganWeek = GanStatic::week($modified);
         if (isset($errors["$mapnum-$ganWeek"])) { }
         elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
