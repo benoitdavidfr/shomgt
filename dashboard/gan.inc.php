@@ -452,7 +452,7 @@ class GanStatic {
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     foreach (Portfolio::$all as $mapnum => $map) {
-      if ($modified = $map['revision'] ?? $map['creation'] ?? null) {
+      if ($modified = $map['date']['value']) {
         $ganWeek = GanStatic::week($modified);
         if (isset($errors["$mapnum-$ganWeek"])) { }
         elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
