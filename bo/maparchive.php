@@ -62,14 +62,17 @@ class Image { // Image principale ou cartouche
 
   function tif(): ?string { return $this->tif; }
   function georef(): ?string { return $this->georef; }
+  function georefBox(): ?GBox { return $this->georefBox; }
+  
   function georefLabel() { // label associé au georef
     return match ($this->georef()) {
       null => "image non géoréférencée",
       'ok' => "image géoréférencée",
       'KO' => "image mal géoréférencée",
-    };
+    }
+    . (($this->georefBox && $this->georefBox->astrideTheAntimeridian()) ? " à cheval sur l'antiméridien" : '');
   }
-  function georefBox(): ?GBox { return $this->georefBox; }
+  
   function xml(): ?string { return $this->xml; }
   function md(): array { return $this->md; }
   function title(): ?string { return $this->md['title'] ?? null; }
@@ -327,6 +330,10 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
   }
   
   function showAsHtml(): void {
+    if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+      throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+    $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
+    
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
     $mapCat = new MapCat($this->mapNum);
     echo "<table border=1>";
@@ -335,9 +342,6 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     // miniature
     echo "<tr><td>miniature</td>";
     if ($this->thumbnail) {
-      $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
-      if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-        throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
       $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
       //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
       $thumbnailUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/$this->thumbnail";
@@ -354,16 +358,21 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     if ($this->main->tif()) {
       $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$this->main->tif()."&action=gdalinfo";
       $label = $this->main->georefLabel();
-      echo "<a href='$path'>$label</a>";
+      echo "<a href='$path'>$label</a> / ";
+      $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
+      //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
+      $imageUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/".substr($this->main->tif(),0, -4).'.png';
+      echo "<a href='$imageUrl'>Afficher l'image</a>";
     }
     echo "</td></tr>\n";
     // caractéristiques de chaque cartouche
     foreach ($this->insets as $name => $inset) {
       $title = $inset->title() ?? 'NO metadata';
-      $label = $inset->georefLabel();
-      $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$inset->tif()."&action=gdalinfo";
+      $georefLabel = $inset->georefLabel();
+      $gdalinfo = "?path=$_GET[path]&map=$_GET[map]&tif=".$inset->tif()."&action=gdalinfo";
+      $imageUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/".substr($inset->tif(),0, -4).'.png';
       echo "<tr><td>Cart. $name</a></td>",
-           "<td>$title (<a href='$path'>$label</a>)</td></tr>\n";
+           "<td>$title (<a href='$gdalinfo'>$georefLabel</a> / <a href='$imageUrl'>Afficher l'image</a>)</td></tr>\n";
     }
     if (count($this->insets) > 1) {
       $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();

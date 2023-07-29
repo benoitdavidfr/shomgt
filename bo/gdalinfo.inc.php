@@ -43,6 +43,8 @@ class GBox {
     return sprintf('[%f, %f, %f, %f]', $this->min[0], $this->min[1], $this->max[0], $this->max[1]);
   }
   
+  function astrideTheAntimeridian(): bool { return ($this->max[0] > 180); }
+    
   function area(): float { return ($this->max[0]-$this->min[0]) * ($this->max[1]-$this->min[1]); }
   
   function bound(array $pos): void { // agrandit le bbox avec la position $pos en LonLat
