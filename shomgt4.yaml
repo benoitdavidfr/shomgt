@@ -742,6 +742,11 @@ suppressionDeCartes(30/7/2023):
   7623:
     title: 7623 - Approches Nord-Ouest de Saint Lucia
     note: fac-similé de la carte GB 197, n'intersecte pas la France, 1:25.000
+  FR7656:
+    '2022-06-23':
+      title: 7656 - De Santoña à Gijón
+      noteCatalog: n'intersecte pas la France et retirée du catalogue du Shom, redondante avec 6991
+      mapsFrance: []
 listeCartesObsoletes(40):
   FR6608:
     '2022-04-06':
@@ -900,12 +905,6 @@ listeCartesObsoletes(40):
         - title: 'B - Woodbridge Bay et Roseau Roads'
           scaleDenominator: '12.500'
           spatial: { SW: '15°17,26''N - 061°23,92''W', NE: '15°19,35''N - 061°22,45''W' }
- A_VERIFIER:
-  FR7656:
-    '2022-06-23':
-      title: 7656 - De Santoña à Gijón
-      noteCatalog: n'intersecte pas la France et retirée du catalogue du Shom, redondante avec 6991
-      mapsFrance: []
   FR7661:
     '2022-04-06':
       groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
