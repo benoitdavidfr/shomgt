@@ -42,21 +42,30 @@ function notFound(string $fileName): void {
   die();
 }
 
+// Si je demande du .png, qu'il est absent et qu'il existe un .tif ou un .pdf avec le même nom de base
+// alors je fais la conversion de ce dernier fichier en .png
+$fileName2 = null;
 if (entryInArchive($fileName, $archive))
   $fileName2 = $fileName;
-elseif ((substr($fileName, -4) == '.png') && entryInArchive(substr($fileName, 0, -4).'.tif', $archive))
-  $fileName2 = substr($fileName, 0, -4).'.tif';
-else
+elseif (substr($fileName, -4) == '.png') {
+  foreach (['.tif','.pdf'] as $ext) {
+    if (entryInArchive(substr($fileName, 0, -4).$ext, $archive)) {
+      $fileName2 = substr($fileName, 0, -4).$ext;
+      break;
+    }
+  }
+}
+if (!$fileName2)
   notFound($fileName);
 
 $path = $archive->extract($fileName2);
 
-if ($fileName2 <> $fileName) { // conversion .tif -> .png
+if ($fileName2 <> $fileName) { // conversion .tif/pdf -> .png
   $path2 = substr($path, 0, -4).'.png';
   $cmde = "gdal_translate -of PNG $path $path2";
   exec($cmde, $output, $retval);
 }
-else {
+else { // pas de conversion
   $path2 = $path;
 }
 

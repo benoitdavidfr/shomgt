@@ -4450,10 +4450,11 @@ maps:
     title: Îles des Tuamotu - Passes et Mouillages
     mapsFrance: [PF]
     noteCatalog: |
-      carte reçue le 24/4/2023 très difficilement utilisable en l'état.
-      Les différents cartouches ne correspondent pas à des fichiers GéoTiff.
-      Leur description n'apparait pas dans le GAN.
-      Les coordonnées des coins ne sont pas affichées.
+      carte reçue le 24/4/2023 difficilement utilisable. Un seul cartouche est en service.
+      La carte n'est pas aux normes internationales mais aux normes anciennes, les coordonnées des coins (du cartouche)
+      n'y figurent donc pas et les coordonnées n'apparaissent pas au GAN.
+      Pour calculer l'extension spatiale, j'ai repris les coordonnées du géoréférencement, les ai converties en DMD (georefBBox)
+      et j'ai rogné sur le géoréférencement de 0,04', que j'ai estimé à vue sur la carte.
       Ci-dessous réponse du Shom à mes questions.
       réponse: |
         Objet:	Re: [2023-0484-bp]_Re: utilisation de cartes GéoTIFF du Shom par le MTECT
@@ -4481,6 +4482,8 @@ maps:
     insetMaps:
       - title: K - Arutua - Passe Porofai
         scaleDenominator: '10.000'
+        #georefBBox: {SW: "15°22,39'S - 146°38,05'W", NE: "15°21,02'S - 146°36,77'W"}
+        spatial: {SW: "15°22,35'S - 146°38,01'W", NE: "15°21,07'S - 146°36,81'W"}
   FR7456:
     groupTitle: 'Archipel des Tuamotu'
     title: 'Toau - De Niau à Fakarava'
@@ -5218,9 +5221,7 @@ maps:
   FR7797:
     groupTitle: 'Océan Indien'
     title: 'Canal du Mozambique - Partie centrale'
-    mapsFrance:
-      - TF
-      - YT
+    mapsFrance: [TF, YT]
     scaleDenominator: 1.000.000
     spatial:
       SW: '21°30,00''S - 033°56,00''E'
@@ -5236,6 +5237,59 @@ maps:
       SW: '27°22,00''S - 034°21,00''E'
       NE: '20°33,00''S - 045°15,00''E'
     noteShom: 'Nota : Remplacer la légende Voir carte adjacente 1442 par Voir carte adjacente 7798 (INT7053) sur la carte 4177 (hors cadre). Porter en magenta une limite de carte et sa légende 7798 (INT7053) sur les cartes 6664 et 6672. Rayer la limite de carte et sa légende 1442 sur les cartes 6664 et 6672.'
+  FR7828:
+    groupTitle: Îles Kerguelen
+    title: Mouillages et abris des Îles Kerguelen
+    mapsFrance: [TF]
+    insetMaps:
+      - title: A-Baie de l'Oiseau (port Christmas)
+        scaleDenominator: '20.000'
+        spatial: {SW: "48°42,00'S - 069°01,29'E", NE: "48°39,97'S - 069°04,89'E"}
+      - title: B-Port Edmond Perrier et Anse de l'Excursion
+        scaleDenominator: '25.000'
+        spatial: {SW: "48°53,07'S - 068°53,63'E", NE: "48°50,54'S - 068°58,11'E"}
+      - title: C-Anse du Jardin
+        scaleDenominator: '25.000'
+        spatial: {SW: "48°51,52'S - 068°59,69'E", NE: "48°48,30'S - 069°02,00'E"}
+      - title: D-Baie du Brise-Lames
+        scaleDenominator: '25.000'
+        spatial: {SW: "48°50,81'S - 069°05,53'E", NE: "48°47,60'S - 069°09,18'E"}
+      - title: E-Port Matha
+        scaleDenominator: '25.000'
+        spatial: {SW: "48°57,02'S - 069°01,69'E", NE: "48°55,60'S - 069°04,44'E"}
+      - title: F-Port Jules Girard
+        scaleDenominator: '25.000'
+        spatial: {SW: "49°05,57'S - 069°25,86'E", NE: "49°04,36'S - 069°28,62'E"}
+      - title: G-Ports Fallières et Fuller
+        scaleDenominator: '25.000'
+        spatial: {SW: "48°54,38'S - 069°24,18'E", NE: "48°52,44'S - 069°30,43'E"}
+      - title: H-Côte Nord-Est de la presqu'île Joffre
+        scaleDenominator: '30.000'
+        spatial: { SW: "49°03,84'S - 069°32,68'E", NE: "48°54,17'S - 069°43,49'E"}
+      - title: I-Baie du Hopeful (mouillage bon-abri)
+        scaleDenominator: '10.000'
+        spatial: {SW: "49°05,95'S - 069°33,95'E", NE: "49°05,15'S - 069°35,24'E"}
+      - title: J-Baie du Hopeful (cascade Lozère)
+        scaleDenominator: '10.000'
+        spatial: {SW: "49°05,43'S - 069°36,30'E", NE: "49°04,63'S - 069°37,34'E"}
+      - title: K-Baie du Yacht-Club
+        scaleDenominator: '25.000'
+        spatial: {SW: "49°10,00'S - 069°24,29'E", NE: "49°08,01'S - 069°26,93'E"}
+      - title: L-Baie Doumergue
+        scaleDenominator: '25.000'
+        spatial: {SW: "49°11,90'S - 069°37,39'E", NE: "49°09,11'S - 069°43,68'E"}
+      - title: M-Port d'Hiver
+        scaleDenominator: '25.000'
+        spatial: {SW: "49°14,99'S - 069°25,82'E", NE: "49°13,31'S - 069°32,11'E"}
+      - title: N-Port Elisabeth
+        scaleDenominator: '20.000'
+        spatial: {SW: "49°13,13'S - 069°50,66'E", NE: "49°11,52'S - 069°54,08'E"}
+      - title: P-Fjord des Portes Noires
+        scaleDenominator: '20.000'
+        spatial: {SW: "49°30,10'S - 069°07,00'E", NE: "49°28,81'S - 069°12,06'E"}
+      - title: O-Port Jeanne D'Arc
+        scaleDenominator: '10.000'
+        spatial: {SW: "49°33,34'S - 069°48,42'E", NE: "49°32,53'S - 069°50,23'E"}  
   FR8101:
     title: MANCHEGRID - Carte générale
     mapsFrance: [FX-Atl, FX-MMN]
@@ -5255,8 +5309,9 @@ maps:
   FR8508:
     title: 8508 CX - Carte d'usages et activités - en Manche et Mer du Nord
     mapsFrance: [FX-MMN]
-    badGan: 'Carte spéciale absente du GAN'
-    note: description à compléter
+    spatial: {SW: "48°30'N - 4°10'W", NE: "51°35'N - 2°40'E"}
+    borders: { left: 100, bottom: 100, right: 100, top: 100 }
+    noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée"
     layer: gtUsageActivites
   FR8509:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
@@ -5297,56 +5352,6 @@ maps:
     layer: gtaem
     geotiffNames: [8523_2021.tif]
 obsoleteMaps:
-  FR5825:
-    '2020-12-27':
-      groupTitle: 'Océan Pacifique'
-      title: 'Ilot Clipperton'
-      mapsFrance: [CP]
-      insetMaps:
-        - title: 'Ilot Clipperton'
-          scaleDenominator: '20.000'
-          spatial: { SW: '10°15,53''N - 109°15,27''W', NE: '10°20,33''N - 109°11,18''W' }
-  FR6015:
-    '2022-06-16':
-      groupTitle: 'Canada - Groenland - Islande'
-      title: 'Des passages du Nord-Ouest à la Mer du Groenland'
-      mapsFrance: []
-      scaleDenominator: 4.660.000
-      spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
-      noteCatalog: |
-        Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
-        On pourrait améliorer les corrections mais cela évite un affichage très moche.
-      badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
-  FR6118:
-    '2023-06-26':
-      groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
-      title: 'Iles Saint-Pierre et Miquelon'
-      mapsFrance: [PM]
-      scaleDenominator: '80.000'
-      spatial: { SW: "46°35,00'N - 056°38,95'W", NE: "47°17,00'N - 055°57,95'W" }
-  FR6553:
-    '2023-01-10':
-      groupTitle: 'Côte Est de Nouvelle-Calédonie'
-      title: 'Baie de Kouaoua'
-      mapsFrance:
-        - NC
-      scaleDenominator: '20.000'
-      spatial:
-        SW: '21°25,34''S - 165°48,00''E'
-        NE: '21°18,11''S - 165°53,20''E'
-      noteShom: 'Nota : Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
-      noteCatalog: remplacée par FR7757
-  FR6589:
-    '2023-01-10':
-      groupTitle: 'Côte Est de Nouvelle-Calédonie'
-      title: 'Baie de Canala'
-      mapsFrance:
-        - NC
-      scaleDenominator: '20.000'
-      spatial:
-        SW: '21°31,84''S - 165°54,60''E'
-        NE: '21°21,29''S - 166°02,28''E'
-      noteCatalog: remplacée par FR7757
   FR6608:
     '2022-04-06':
       title: 'Mer du Nord'
@@ -5358,6 +5363,7 @@ obsoleteMaps:
         SW: '48°10,00''N - 004°20,00''W'
         NE: '62°50,00''N - 012°36,00''E'
       references: 'Fac similé carte NO n° 301 publiée en 1972 (édition 2009 - réimpression janvier 2015).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
   FR6619:
     '2022-04-06':
       groupTitle: 'Océan Atlantique Nord'
@@ -5371,37 +5377,6 @@ obsoleteMaps:
         SW: '17°00,00''N - 082°00,00''W'
         NE: '45°00,00''N - 060°30,00''W'
       references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
-  FR6645:
-    '2020-12-27T07:58:14+01:00':
-      groupTitle: 'Côte Ouest de France'
-      title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
-      mapsFrance:
-        - FX-Atl
-      scaleDenominator: '15.000'
-      spatial:
-        SW: '47°45,66''N - 004°26,36''W'
-        NE: '47°49,30''N - 004°18,32''W'
-  FR6646:
-    '2020-12-27T07:58:18+01:00':
-      groupTitle: 'Côte Ouest de France '
-      title: 'Abords et Ports du Guilvinec et de Lesconil'
-      mapsFrance:
-        - FX-Atl
-      scaleDenominator: '15.000'
-      spatial:
-        SW: '47°45,12''N - 004°19,24''W'
-        NE: '47°48,76''N - 004°11,20''W'
-  FR6770:
-    '2023-01-10':
-      groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
-      title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
-      mapsFrance:
-        - NC
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '22°43,13''S - 167°16,80''E'
-        NE: '22°36,18''S - 167°27,90''E'
-      noteCatalog: remplacée par FR7763
   FR6903:
     '2022-04-06':
       groupTitle: 'Îles Anglo-Normandes'
@@ -5413,6 +5388,7 @@ obsoleteMaps:
         SW: '49°23,40''N - 002°46,75''W'
         NE: '49°32,00''N - 002°26,50''W'
       references: 'Fac similé carte GB n°807 publiée en 1979 (édition février 2016).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
       insetMaps:
         - title: 'A - Beaucette Marina'
           scaleDenominator: '15.000'
@@ -5428,6 +5404,7 @@ obsoleteMaps:
         SW: '49°23,34''N - 002°36,08''W'
         NE: '49°31,94''N - 002°15,83''W'
       references: 'Fac similé carte GB n°808 publiée en 1979 (édition février 2016).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
       insetMaps:
         - title: 'A - Beaucette Marina'
           scaleDenominator: '15.000'
@@ -5443,6 +5420,7 @@ obsoleteMaps:
         SW: '49°38,50''N - 002°26,60''W'
         NE: '49°46,98''N - 002°06,25''W'
       references: 'Fac similé carte GB n°60 publiée en 1974 (édition mai 2004).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
   FR6937:
     '2022-04-06':
       groupTitle: 'Iles Anglo-Normandes'
@@ -5454,6 +5432,7 @@ obsoleteMaps:
         SW: '49°13,30''N - 002°18,20''W'
         NE: '49°21,80''N - 001°58,01''W'
       references: 'Fac similé carte GB n°1136 publiée en 1974 (édition mai 2004).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
   FR6938:
     '2022-04-06':
       groupTitle: 'Îles Anglo-Normandes - Jersey'
@@ -5465,6 +5444,7 @@ obsoleteMaps:
         SW: '49°06,23''N - 002°21,51''W'
         NE: '49°14,71''N - 002°01,38''W'
       references: 'Fac similé carte GB n°1137 publiée en 1974 (édition décembre 2017)'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
   FR6939:
     '2022-04-06':
       groupTitle: 'Îles Anglo-Normandes'
@@ -5476,17 +5456,38 @@ obsoleteMaps:
         SW: '49°06,90''N - 002°02,90''W'
         NE: '49°15,40''N - 001°53,45''W'
       references: 'Fac similé carte GB n°1138 publiée en 1974 (édition décembre 2018)'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
   FR7016:
     '2022-04-06':
       groupTitle: 'Mer Méditerranée'
       title: 'Mer Méditerranée - Bassin oriental'
-      mapsFrance:
-        - FX-Med
+      mapsFrance: [FX-Med]
       scaleDenominator: 2.250.000
       spatial:
         SW: '30°05,00''N - 009°55,00''E'
         NE: '43°39,25''N - 036°19,50''E'
       references: 'Fac similé carte IT n°350 publiée en 1982 (édition 1997).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR7181:
+    '2018-11-28':
+      title: 7181 - De Harwich à North Foreland (Estuaire de la Tamise)
+      mapsFrance: []
+      scaleDenominator: '100.000'
+      spatial:
+        SW: "51°21,60'N - 000°32,80'E"
+        NE: "51°56,67'N - 002°01,26'E"
+      references: fac-similé de la carte GB 1183 - édition novembre 2013
+      noteCatalog: n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR7212:
+    '2020-12-23':
+      title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
+      mapsFrance: []
+      scaleDenominator: 1.000.000
+      spatial:
+        SW: "33°30'N - 14°W"
+        NE: "43°30'N - 5°15'W"
+      references: 'fac-similé de la carte Carte PT n° 21101 publiée en 1980 (édition avril 2002).'
+      noteCatalog: n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
   FR7616:
     '2022-04-06':
       groupTitle: 'Petites Antilles'
@@ -5499,6 +5500,7 @@ obsoleteMaps:
         NE: '15°41,50''N - 061°11,60''W'
       replaces: '(remplace 3775)'
       references: 'Fac similé Carte GB n°697 publiée en 1992.'
+      noteCatalog: Pas très utile mais proche de la Guadeloupe
       insetMaps:
         - title: 'A - Prince Rupert Bay et Douglas Bay'
           scaleDenominator: '30.000'
@@ -5506,11 +5508,6 @@ obsoleteMaps:
         - title: 'B - Woodbridge Bay et Roseau Roads'
           scaleDenominator: '12.500'
           spatial: { SW: '15°17,26''N - 061°23,92''W', NE: '15°19,35''N - 061°22,45''W' }
-  FR7656:
-    '2022-06-23':
-      title: 7656 - De Santoña à Gijón
-      noteCatalog: n'intersecte pas la France et retirée du catalogue du Shom
-      mapsFrance: []
   FR7661:
     '2022-04-06':
       groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
@@ -5527,6 +5524,14 @@ cartesAyantUnIntérêtInsuffisant:
     title: 7678 - Îles Anjouan et Mohéli
     scaleDenominator: '156.000'
     reason: la faible intersection avec la France est couverte par FR7677 à la même échelle
+  FR8102:
+    title: 8102 XG - Carte MancheGrid - Partie Ouest
+    mapsFrance: [FX-Atl,FX-MMN]
+    reason: peu d'intérêt par rapport à la carte 8101
+  FR8103:
+    title: 8103 XG - Carte MancheGrid - Partie Est
+    mapsFrance: [FX-Atl,FX-MMN]
+    reason: peu d'intérêt par rapport à la carte 8101
   FR9999:
     title: 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier
     scaleDenominator: '50.000'

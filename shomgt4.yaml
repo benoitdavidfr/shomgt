@@ -226,6 +226,15 @@ batchRégulierDEntretien:
   - mise en oeuvre de la stratégie de conservation des cartes et des logs
   - suppression des dépôts en attente non validés
 preprod:
+  - shomgeotiff pèse 8,8 Go en local, 4,4 Go sur geoapi
+  - j'utilise 16,8 Go / 20 Go sur Alwaysdata
+  - comment mettre en preprod effectivement avec un portefeuille séparé ?
+    - -> passer Alwaysdata à 50 Go au moins temporairement
+  - purger en local ? selon quelle stratégie ?
+  
+  
+  
+  
   - mettre en oeuvre une préprod
   - https://sgpp.geoapi.fr/
     - avec des  var. d'env. différentes
@@ -590,6 +599,325 @@ arbreEnYaml:
         - feuille 2.1
     - feuille 3
 
+suppressionDeCartes(30/7/2023):
+  0982:
+    title: 0982 - Abords Sud de Terre-Neuve - Ile Saint-Pierre - Port de Saint-Pierre - Ile Miquelon - Port de Miquelon
+    remplacéePar: 7638, 7639 et 7640
+  5438:
+    title: 5438 - Océan Pacifique
+    note: carte à très petite échelle, assez moche, pas utile
+  5825:
+    '2020-12-27':
+      groupTitle: 'Océan Pacifique'
+      title: 'Ilot Clipperton'
+      mapsFrance: [CP]
+      insetMaps:
+        - title: 'Ilot Clipperton'
+          scaleDenominator: '20.000'
+          spatial: { SW: '10°15,53''N - 109°15,27''W', NE: '10°20,33''N - 109°11,18''W' }
+      note: remplacée par 7750 et 7751
+  6015:
+    '2022-06-16':
+      groupTitle: 'Canada - Groenland - Islande'
+      title: 'Des passages du Nord-Ouest à la Mer du Groenland'
+      mapsFrance: []
+      scaleDenominator: 4.660.000
+      spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
+      noteCatalog: |
+        Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
+        On pourrait améliorer les corrections mais cela évite un affichage très moche.
+      badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
+      note: redondante avec la carte au 1:10M plus générale
+  6118:
+    '2023-06-26':
+      groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
+      title: 'Iles Saint-Pierre et Miquelon'
+      mapsFrance: [PM]
+      scaleDenominator: '80.000'
+      spatial: { SW: "46°35,00'N - 056°38,95'W", NE: "47°17,00'N - 055°57,95'W" }
+      note: remplacée par des cartes plus récentes
+  FR6553:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Kouaoua'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°25,34''S - 165°48,00''E'
+        NE: '21°18,11''S - 165°53,20''E'
+      noteShom: 'Nota : Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+      noteCatalog: remplacée par FR7757
+  FR6589:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Canala'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°31,84''S - 165°54,60''E'
+        NE: '21°21,29''S - 166°02,28''E'
+      noteCatalog: remplacée par FR7757
+  FR6645:
+    '2020-12-27T07:58:14+01:00':
+      groupTitle: 'Côte Ouest de France'
+      title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
+      mapsFrance:
+        - FX-Atl
+      scaleDenominator: '15.000'
+      spatial:
+        SW: '47°45,66''N - 004°26,36''W'
+        NE: '47°49,30''N - 004°18,32''W'
+      noteCatalogue: remplacée par 7250
+  FR6646:
+    '2020-12-27T07:58:18+01:00':
+      groupTitle: 'Côte Ouest de France '
+      title: 'Abords et Ports du Guilvinec et de Lesconil'
+      mapsFrance:
+        - FX-Atl
+      scaleDenominator: '15.000'
+      spatial:
+        SW: '47°45,12''N - 004°19,24''W'
+        NE: '47°48,76''N - 004°11,20''W'
+      noteCatalogue: remplacée par 7250
+  6725:
+    title: 6725 - Estuaire de la Tamise - Partie Sud
+    note: Fac-similé de la carte GB 1607, n'intersecte pas la France, redondante avec 6735
+  FR6770:
+    '2023-01-10':
+      groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
+      title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
+      mapsFrance:
+        - NC
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '22°43,13''S - 167°16,80''E'
+        NE: '22°36,18''S - 167°27,90''E'
+      noteCatalog: remplacée par FR7763
+  6774:
+    title: 6774 - Puerto de Bilbao
+    note: fac-similé de la carte ES 3941, n'intersecte pas la France
+  6786:
+    title: 6786 - De Biscarrosse à San Sebastian
+    scaleDenominator: '130.000'
+    note: redondante avec 7070 (1:168.000) et 7657 (1:175.000)
+  6851:
+    title: 6851 - Ports d'Ajaccio et de Propriano
+    note: remplacée par FR7436
+  6856:
+    title: 6856 - Abords et Port de Bastia
+    note: remplacée par FR7436
+  7019:
+    title: 7019 - De Imperia à Portofino
+    note: fac-similé de la carte IT 2, n'intersecte pas la France, redondante avec 7229
+  7037:
+    title: 7037 - De Dover à North Foreland
+    scaleDenominator: '37.500'
+    note: fac-similé de la carte Carte GB n°1828, n'intersecte pas la France, redondante avec 7424
+  7046:
+    title: 7046 - Puerto de Barcelona
+    note: fac-similé de la carte ES 4891, n'intersecte pas la France
+  7047:
+    title: 7047 - Puerto de Tarragona
+    note: fac-similé de la carte ES 4871, n'intersecte pas la France
+  7182:
+    title: 7182 - Approches de l'Estuaire de la Tamise
+    note: fac-similé de la carte GB 1610, 1:150_000, intersecte la France mais inutile, redondante
+  7189:
+    title: 7189 - Golfes d'Olbia et d'Aranci - Iles Tavolara et Molara
+    note: fac-similé de la carte IT 322 et IT 318, Sicile, n'intersecte pas la France
+  7190:
+    title: 7190 - Golfe de Congianus - De Capo Ferro à Capo Figari
+    note: fac-similé de la carte IT 323, Sicile, n'intersecte pas la France
+  7191:
+    title: 7191 - Archipel de la Maddalena
+    note: fac-similé de la carte IT 324, Sicile, n'intersecte pas la France
+  7239:
+    title: 7239 - Port de Santander
+    note: fac-similé de la carte ES 4011, n'intersecte pas la France
+  7622:
+    title: 7622 - Ports de Saint Lucia
+    note: cartes grandes échelle n'intersectant pas la France
+  7623:
+    title: 7623 - Approches Nord-Ouest de Saint Lucia
+    note: fac-similé de la carte GB 197, n'intersecte pas la France, 1:25.000
+listeCartesObsoletes(40):
+  FR6608:
+    '2022-04-06':
+      title: 'Mer du Nord'
+      mapsFrance:
+        - FX-Atl
+        - FX-MMN
+      scaleDenominator: 1.500.000
+      spatial:
+        SW: '48°10,00''N - 004°20,00''W'
+        NE: '62°50,00''N - 012°36,00''E'
+      references: 'Fac similé carte NO n° 301 publiée en 1972 (édition 2009 - réimpression janvier 2015).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR6619:
+    '2022-04-06':
+      groupTitle: 'Océan Atlantique Nord'
+      title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
+      mapsFrance:
+        - BL
+        - GP
+        - MF
+      scaleDenominator: 3.500.000
+      spatial:
+        SW: '17°00,00''N - 082°00,00''W'
+        NE: '45°00,00''N - 060°30,00''W'
+      references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR6903:
+    '2022-04-06':
+      groupTitle: 'Îles Anglo-Normandes'
+      title: 'Guernsey et Herm'
+      mapsFrance:
+        - FX-MMN
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '49°23,40''N - 002°46,75''W'
+        NE: '49°32,00''N - 002°26,50''W'
+      references: 'Fac similé carte GB n°807 publiée en 1979 (édition février 2016).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+      insetMaps:
+        - title: 'A - Beaucette Marina'
+          scaleDenominator: '15.000'
+          spatial: { SW: '49°29,94''N - 002°30,49''W', NE: '49°30,57''N - 002°28,98''W' }
+  FR6904:
+    '2022-04-06':
+      groupTitle: 'Îles Anglo-Normandes'
+      title: 'Guernsey Est, Herm et Sark'
+      mapsFrance:
+        - FX-MMN
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '49°23,34''N - 002°36,08''W'
+        NE: '49°31,94''N - 002°15,83''W'
+      references: 'Fac similé carte GB n°808 publiée en 1979 (édition février 2016).'
+      insetMaps:
+        - title: 'A - Beaucette Marina'
+          scaleDenominator: '15.000'
+          spatial: { SW: '49°29,94''N - 002°30,49''W', NE: '49°30,57''N - 002°28,98''W' }
+  FR6934:
+    '2022-04-06':
+      groupTitle: 'Iles Anglo-Normandes'
+      title: 'Alderney (Aurigny) et les Casquets'
+      mapsFrance:
+        - FX-MMN
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '49°38,50''N - 002°26,60''W'
+        NE: '49°46,98''N - 002°06,25''W'
+      references: 'Fac similé carte GB n°60 publiée en 1974 (édition mai 2004).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR6937:
+    '2022-04-06':
+      groupTitle: 'Iles Anglo-Normandes'
+      title: 'Jersey - Côte Nord'
+      mapsFrance:
+        - FX-MMN
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '49°13,30''N - 002°18,20''W'
+        NE: '49°21,80''N - 001°58,01''W'
+      references: 'Fac similé carte GB n°1136 publiée en 1974 (édition mai 2004).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR6938:
+    '2022-04-06':
+      groupTitle: 'Îles Anglo-Normandes - Jersey'
+      title: 'Abords de Saint Hélier'
+      mapsFrance:
+        - FX-MMN
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '49°06,23''N - 002°21,51''W'
+        NE: '49°14,71''N - 002°01,38''W'
+      references: 'Fac similé carte GB n°1137 publiée en 1974 (édition décembre 2017)'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR6939:
+    '2022-04-06':
+      groupTitle: 'Îles Anglo-Normandes'
+      title: 'Jersey - Côte Est'
+      mapsFrance:
+        - FX-MMN
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '49°06,90''N - 002°02,90''W'
+        NE: '49°15,40''N - 001°53,45''W'
+      references: 'Fac similé carte GB n°1138 publiée en 1974 (édition décembre 2018)'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR7016:
+    '2022-04-06':
+      groupTitle: 'Mer Méditerranée'
+      title: 'Mer Méditerranée - Bassin oriental'
+      mapsFrance:
+        - FX-Med
+      scaleDenominator: 2.250.000
+      spatial:
+        SW: '30°05,00''N - 009°55,00''E'
+        NE: '43°39,25''N - 036°19,50''E'
+      references: 'Fac similé carte IT n°350 publiée en 1982 (édition 1997).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR7181:
+    '2018-11-28':
+      title: 7181 - De Harwich à North Foreland (Estuaire de la Tamise)
+      mapsFrance: []
+      scaleDenominator: '100.000'
+      spatial:
+        SW: "51°21,60'N - 000°32,80'E"
+        NE: "51°56,67'N - 002°01,26'E"
+      references: fac-similé de la carte GB 1183 - édition novembre 2013
+      noteCatalog: n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR7212:
+    '2020-12-23':
+      title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
+      mapsFrance: []
+      scaleDenominator: 1.000.000
+      spatial:
+        SW: "33°30'N - 14°W"
+        NE: "43°30'N - 5°15'W"
+      references: 'fac-similé de la carte Carte PT n° 21101 publiée en 1980 (édition avril 2002).'
+      noteCatalog: n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
+  FR7616:
+    '2022-04-06':
+      groupTitle: 'Petites Antilles'
+      title: Dominica
+      mapsFrance:
+        - GP
+      scaleDenominator: '60.000'
+      spatial:
+        SW: '15°09,00''N - 061°34,07''W'
+        NE: '15°41,50''N - 061°11,60''W'
+      replaces: '(remplace 3775)'
+      references: 'Fac similé Carte GB n°697 publiée en 1992.'
+      noteCatalog: Pas très utile mais proche de la Guadeloupe
+      insetMaps:
+        - title: 'A - Prince Rupert Bay et Douglas Bay'
+          scaleDenominator: '30.000'
+          spatial: { SW: '15°32,00''N - 061°29,25''W', NE: '15°36,50''N - 061°27,23''W' }
+        - title: 'B - Woodbridge Bay et Roseau Roads'
+          scaleDenominator: '12.500'
+          spatial: { SW: '15°17,26''N - 061°23,92''W', NE: '15°19,35''N - 061°22,45''W' }
+ A_VERIFIER:
+  FR7656:
+    '2022-06-23':
+      title: 7656 - De Santoña à Gijón
+      noteCatalog: n'intersecte pas la France et retirée du catalogue du Shom, redondante avec 6991
+      mapsFrance: []
+  FR7661:
+    '2022-04-06':
+      groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
+      title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
+      mapsFrance:
+        - FX-Med
+      scaleDenominator: '425.000'
+      spatial:
+        SW: '38°36,90''N - 000°30,00''W'
+        NE: '41°23,30''N - 004°50,00''E'
+      references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
+  
 bugsDétectésDansLesCartes:
   title: bugs détectés dans les cartes à l'occasion du test de conformié des cartes
   note: |

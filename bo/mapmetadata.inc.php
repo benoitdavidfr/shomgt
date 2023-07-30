@@ -44,7 +44,8 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     }
     // ex: Edition n° 4 - 2015 - Dernière correction : 12
     // ou: Edition n° 4 - 2022 - Dernière correction : 0 - GAN : 2241
-    elseif (preg_match('!^Edition [^-]*- (\d+) - Dernière correction : (\d+)( - GAN : (\d+))?$!', $edition, $matches)) {
+    // ou: Edition n° 2 - 2016 - Dernière correction :  - GAN : 2144
+    elseif (preg_match('!^Edition [^-]*- (\d+) - Dernière correction : (\d+)?( - GAN : (\d+))?$!', $edition, $matches)) {
       $anneeEdition = $matches[1];
       $lastUpdate = $matches[2];
       $gan = $matches[4] ?? '';

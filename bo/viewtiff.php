@@ -260,7 +260,7 @@ switch ($_GET['action'] ?? null) {
       die("Affichage impossible car aucun GéoTiff à afficher\n");
     if (!$bounds)
       die("Affichage impossible car impossible de déterminer l'extension à afficher\n");
-    //die("Ok ligne ".__LINE__);
+   //die("Ok ligne ".__LINE__);
     break;
   }
   default: {

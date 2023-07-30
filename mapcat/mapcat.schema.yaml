@@ -4,6 +4,10 @@ modified: '2022-07-03'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    30/7/2023:
+      - modification du schéma de la propriété cartesAyantUnIntérêtInsuffisant
+        - suppression du caractère obligatoire de la propriété scaleDenominator car l'échelle est souvent indéfinie
+        - ajout de la propriété mapsFrance
     23/7/2023:
       - modification du traitement des cartes spéciales
       - remplacement du champ geotiffname pour les cartes spéciales par geotiffnames
@@ -107,6 +111,18 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/bbox'
+  mapsFrance:
+    description: |
+      Liste de codes résumant l'intersection de la carte avec la ZEE française, ce qui est le cas de la plupart des cartes.
+      Quelques cartes ne l'intersecte pas, ce sont des cartes petite échelle (< 1/6M) facilitant la navigation.
+      Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med'
+      pour la facade de Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche
+      et de la mer du Nord.
+      Prend la valeur 'FR' ssi la carte intersecte toute la ZEE française.
+    type: array
+    items:
+      type: string
+      enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
   borders:
     description: |
       Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
@@ -200,17 +216,8 @@ definitions:
           description: chaque excroissance est définie comme une boite
           $ref: '#/definitions/spatial'
       mapsFrance:
-        description: |
-          Liste de codes résumant l'intersection de la carte avec la ZEE française, ce qui est le cas de la plupart des cartes.
-          Quelques cartes ne l'intersecte pas, ce sont des cartes petite échelle (< 1/6M) facilitant la navigation.
-          Les codes des zones sont les codes ISO 3166-1 alpha-2 avec remplacement du code 'FX' par les codes 'FX-Med'
-          pour la facade de Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche
-          et de la mer du Nord.
-          Prend la valeur 'FR' ssi la carte intersecte toute la ZEE française.
-        type: array
-        items:
-          type: string
-          enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
+        description: Liste de codes résumant l'intersection de la carte avec la ZEE française.
+        $ref: '#/definitions/mapsFrance'
       replaces:
         description: identification de la carte remplacée par la carte courante, optionnel ; issu du GAN.
         type: string
@@ -361,9 +368,12 @@ properties:
         description: description de la carte
         type: object
         additionalProperties: false
-        required: [title, scaleDenominator, reason]
+        required: [title, reason]
         properties:
           title: { description: 'titre de la carte préfixé par son numéro', type: string }
+          mapsFrance:
+            description: Liste de codes résumant l'intersection de la carte avec la ZEE française.
+            $ref: '#/definitions/mapsFrance'
           scaleDenominator:
             description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
             $ref: '#/definitions/scaleDenominator'
