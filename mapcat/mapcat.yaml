@@ -5377,6 +5377,7 @@ obsoleteMaps:
         SW: '17°00,00''N - 082°00,00''W'
         NE: '45°00,00''N - 060°30,00''W'
       references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
+      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
   FR6903:
     '2022-04-06':
       groupTitle: 'Îles Anglo-Normandes'
