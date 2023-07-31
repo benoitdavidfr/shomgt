@@ -47,14 +47,14 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     // ou: Edition n° 2 - 2016 - Dernière correction :  - GAN : 2144
     elseif (preg_match('!^Edition [^-]*- (\d+) - Dernière correction : (\d+)?( - GAN : (\d+))?$!', $edition, $matches)) {
       $anneeEdition = $matches[1];
-      $lastUpdate = $matches[2];
+      $lastUpdate = ($matches[2]<>'') ? $matches[2] : '0';
       $gan = $matches[4] ?? '';
     }
     // ex: Publication 1984 - Dernière correction : 101
     // ou: Publication 1989 - Dernière correction : 149 - GAN : 2250
     elseif (preg_match('!^Publication (\d+) - Dernière correction : (\d+)( - GAN : (\d+))?$!', $edition, $matches)) {
       $anneeEdition = $matches[1];
-      $lastUpdate = $matches[2];
+      $lastUpdate = ($matches[2]<>'') ? $matches[2] : '0';
       $gan = $matches[4] ?? '';
     }
     else
@@ -94,6 +94,9 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
   /** @return array<string, string> */
   static function getFrom7z(string $pathOf7z, string $mdName='', array $geotiffNames=[]): array { 
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
+    if (!is_file($pathOf7z)) {
+      throw new Exception("Archive $pathOf7z inexistante");
+    }
     $archive = new My7zArchive($pathOf7z);
     $dateArchive = null;
     if (!$mdName) { // Si $mdName n'est pas défini, je cherche dans l'archive les MD du fichier principal
@@ -233,9 +236,30 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
   }
 };
 
-if ((php_sapi_name() == 'cli') && ($argv[0]=='mapmetadata.inc.php')) { // Test sur certaines cartes 
-  if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-  $PF_PATH = '/var/www/html/shomgeotiff';
-  MapMetadata::test($PF_PATH);
+if ((php_sapi_name() == 'cli') && ($argv[0]=='mapmetadata.inc.php')) {
+  //echo "argc=$argc\n"; die();
+  if ($argc == 1) {
+    echo "usage: php $argv[0] ({fichier7z} [{mdName}])|(TEST)\n";
+    die();
+  }
+  elseif ($argv[1] == 'TEST') { // Test sur certaines cartes 
+    if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+      throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+    $PF_PATH = '/var/www/html/shomgeotiff';
+    MapMetadata::test($PF_PATH);
+    die();
+  }
+  elseif ($argc == 2) {
+    try {
+      echo Yaml::dump(MapMetadata::getFrom7z($argv[1]));
+    }
+    catch (Exception $e) {
+      die("Erreur: ".$e->getMessage()."\n");
+    }
+    die();
+  }
+  elseif ($argc == 3) {
+    echo Yaml::dump(MapMetadata::getFrom7z($argv[1], $argv[2]));
+    die();
+  }
 }

@@ -59,6 +59,16 @@ class Image { // Image principale ou cartouche de la carte
   protected ?string $xml=null; // nom de l'xml dans l'archive
   protected array $md=[]; // MD synthéttiques
   
+  function asArray(): array {
+    return [
+      'tif'=> $this->tif,
+      'georef'=> $this->georef,
+      'georefBox'=> $this->georefBox->__toString(),
+      'xml'=> $this->xml,
+      'md'=> $this->md,
+    ];
+  }
+  
   function setTif(string $tif, My7zArchive $archive): void {
     $this->tif = $tif;
     $tifPath = $archive->extract($tif);
@@ -434,7 +444,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     echo "</table>\n";
   }
   
-  function showAsYaml(): void {
+  function showAsYaml(array $options): void { // Affichage limité
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
     $mapCat = new MapCat($mapNum);
@@ -451,32 +461,88 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     //if (isset($invalid['errors']))
     //  print_r($this);
   }
+  
+  function showWithOptions(array $options): void {
+    if ($options['yaml'] ?? null) {
+      $mapCat = new MapCat($this->mapNum);
+      foreach ($this->insets as $name => $inset)
+        $insets[$name] = $inset->asArray();
+      echo Yaml::dump([$this->pathOf7z => [
+          'mapNum'=> $this->mapNum,
+          'MapCat'=> $mapCat->asArray(),
+          'type'=> $this->type,
+          'pathOf7z'=> $this->pathOf7z,
+          'thumbnail'=> $this->thumbnail,
+          'main'=> $this->main->asArray(),
+          'insets'=> $insets ?? [],
+          'suppls'=> array_keys($this->suppls),
+          'invalid'=> $this->invalid(),
+      ]], 9, 2);
+    }
+    if ($options['invalid'] ?? null) {
+      echo Yaml::dump([$this->pathOf7z => $this->invalid()], 9, 2);
+    }
+    if ($options['errors'] ?? null) {
+      echo Yaml::dump([$this->pathOf7z => ($this->invalid()['errors'] ?? [])], 9, 2);
+    }
+    if ($options['php'] ?? null) {
+      print_r([$this->pathOf7z => $this]);
+    }
+  }
+  
+  // Si $path est un fichier .7z appelle showAsYaml(), Si c'est un répertoire alors effectue un appel récursif sur chaque élément
+  static function check(string $path, array $options): void {
+    if (is_file($path)) {
+      if (substr($path, -3) == '.7z') {
+        $mapNum = substr(basename($path), 0, 4);
+        $map = new self($path, $mapNum);
+        if ($options)
+          $map->showWithOptions($options);
+        else
+          $map->showAsYaml();
+      }
+      elseif (substr($path, -8) <> '.md.json') {
+        echo "Alerte: Le fichier $path ne correspond pas à une carte car il ne possède pas l'extension .7z\n";
+      }
+    }
+    elseif (is_dir($path)) {
+      echo "**Répertoire $path**\n";
+      foreach (new DirectoryIterator($path) as $name) {
+        if (!in_array($name, ['.','..','.DS_Store']))
+          self::check("$path/$name", $options);
+      }
+    }
+    else {
+      die("Erreur: $path ni fichier ni répertoire\n");
+    }
+  }
 };
 
-function checkIncoming(string $path): void {
-  echo "**Livraison $path**\n";
-  foreach (new DirectoryIterator($path) as $map) {
-    if (substr($map, -3) <> '.7z') continue;
-    $mapNum = substr($map, 0, 4);
-    $map = new MapArchive("$path/$map", $mapNum);
-    $map->showAsYaml();
-    //die("Fin ok\n");
-  }
-}
 
 if ((php_sapi_name() == 'cli') && ($argv[0]=='maparchive.php')) {
-  if (!isset($argv[1]))
-    die("usage: $argv[0] ('archives'|'incoming') [{incoming}]\n");
-  $group = $argv[1];
-  if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-  if (isset($argv[2])) {
-    checkIncoming("$PF_PATH/$group/$argv[2]");
+  if (!isset($argv[1])) {
+    echo "usage: $argv[0] [-full] {chemin_d'un_répertoire_ou_d'un_fichier.7z}\n";
+    echo "Si le chemin correspond à un répertoire alors le parcours récursivement pour trouver les archives 7z\n"
+      ."et vérifier la validité de chaque archive 7z comme carte ShomGT.\n";
+    echo "Options:\n";
+    echo "  -yaml affiche l'objet MapArchive complètement en Yaml.\n";
+    echo "  -invalid affiche le résultat du test de validité de la carte.\n";
+    echo "  -errors affiche les erreurs retournées par le test de validité de la carte.\n";
+    echo "  -php affiche l'objet MapArchive avec print_r() de Php.\n";
+    die();
   }
-  else {
-    foreach(new DirectoryIterator("$PF_PATH/$group") as $incoming) {
-      if (in_array($incoming, ['.','..','.DS_Store'])) continue;
-      checkIncoming("$PF_PATH/$group/$incoming");
+  $options = [];
+  for($i=1; $i < $argc; $i++) {
+    switch ($argv[$i]) {
+      case '-yaml': { $options['yaml'] = true; break; }
+      case '-invalid': { $options['invalid'] = true; break; }
+      case '-errors': { $options['errors'] = true; break; }
+      case '-php': { $options['php'] = true; break; }
+      default: {
+        //echo "i=$i, argv[i]=",$argv[$i],"\n";
+        MapArchive::check($argv[$i], $options);
+        break;
+      }
     }
   }
 }

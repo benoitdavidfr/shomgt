@@ -199,7 +199,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   protected string $ganVersion=''; // info du GAN 
   /** @var array<int, array<string, string>> $ganCorrections */
   protected array $ganCorrections=[]; // info du GAN
-  protected float $degree; // degré de péremption déduit de la confrontation entre portefeuille et GAN
+  protected ?float $degree=null; // degré de péremption déduit de la confrontation entre portefeuille et GAN
   
   /** @var array<string, Perempt> $all */
   static array $all; // [mapNum => Perempt]
@@ -315,7 +315,10 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "<td>$this->pfVersion</td>";
     $href = "https://gan.shom.fr/diffusion/qr/gan/$this->mapNum";
     echo "<td><a href='$href' target='_blank'>$this->ganVersion</a></td>";
-    printf("<td>%.2f</td>", $this->degree);
+    if ($this->degree !== null)
+      printf('<td>%.2f</td>', $this->degree);
+    else
+      echo "<td>non défini</td>\n";
     echo "<td><table border=1>";
     foreach ($this->ganCorrections as $c) {
       echo "<tr><td>$c[num]</td><td>$c[semaineAvis]</td></tr>";

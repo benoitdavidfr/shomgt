@@ -169,6 +169,8 @@ if (($_GET['action'] ?? null) == 'tests') {
 
 if (!isset($_GET['map'])) { // affichage du contenu de la livraison ou du répertoire d'archives 
   echo HTML_HEAD;
+  if (!is_dir($PF_PATH.$_GET['path']))
+    die("<b>Erreur, le répertoire $_GET[path] n'existe pas<br>\n");
   echo "<h2>Répertoire $_GET[path]</h2>\n";
   if (substr($_GET['path'], 0, 9) <> '/archives')
     echo "<ul>\n";

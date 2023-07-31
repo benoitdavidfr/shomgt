@@ -40,7 +40,10 @@ class GBox {
   }
   
   function __toString(): string {
-    return sprintf('[%f, %f, %f, %f]', $this->min[0], $this->min[1], $this->max[0], $this->max[1]);
+    if (!$this->min)
+      return '[]';
+    else
+      return sprintf('[west: %f, south: %f, east: %f, north: %f]', $this->min[0], $this->min[1], $this->max[0], $this->max[1]);
   }
   
   function astrideTheAntimeridian(): bool { return ($this->max[0] > 180); }
@@ -108,16 +111,11 @@ class Gdalinfo { //
   function asArray(): array { return $this->info; }
   
   /* indique si le géoréférencement est absent, correct ou incorrect, retourne
-   *  - null si non géoréférencé cad champ 'coordinateSystem' non défini
-   *  - 'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' défini
+   *  - null si non géoréférencé cad champ 'coordinateSystem/wkt' non défini ou vide
+   *  - 'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' défini et non vide
    *  - 'KO' si géoréférencé incorrectement (NON UTILISE)
    */
-  function georef(): ?string {
-    if (!isset($this->info['coordinateSystem']))
-      return null;
-    else
-      return 'ok';
-  }
+  function georef(): ?string { return ($this->info['coordinateSystem']['wkt'] ?? null) ? 'ok' : null; }
   
   function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo
     if (!isset($this->info['wgs84Extent']))
