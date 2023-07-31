@@ -154,7 +154,7 @@ découpageEnComposantsV4:
       diffusion.shom.fr: téléchargement sur le site
 interfacesImportantesEntreComposants:
   portfolio:
-phasage:
+backlog:
   stratégie:
     - ajouter progressivement les nouvelles fonctionnalités
     - garder pour le moment shomgt sur le compte bdavid
@@ -166,62 +166,113 @@ phasage:
       - évolution de la structure des md.json
         - mise à jour des md.json existants / ok
       - mise en place de la préprod avec ces évolutions
+      - basculement de la gestion du portefeuille sur Alwaysdata
       - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
       - adaptation de sgserver si nécessaire
       - adaptation de dashboard (champs creation/revision remplacés par le chap dateMD) / ok
+      - tester sgupdt/shomgt sur préprod
       - correction bug 7620
     apportsFonctionnels:
       - dépôt des cartes en mode web
       - correction bug 7620
+    question:
+      - faut-il migrer la prod en fin de sprint1 ?
+    amélioration2023-07-31:
+      title: améliorations à apporter au 31/7
+      bo:
+        - lien du bo vers le dashboard
+        - lien de retour de addmaps vers bo
+      attention:
+        - le portefeuille devient géré sur la préprod
+          - => si je détruis la préprod, je perds le portefeuille
+          - c'est acceptable car j'ai une sauvegarde du portefeuille
+            - et que je peux aller rechercher les cartes actualisées
   sprint2:
     objectifs:
       - création de comptes
       - bannissement utilisateur
       - gestion noms de domaines et IP
-      - mise en base user, domaines et adresses IP
+      - mise en base user, domaines et adresses IP ?
     apportsFonctionnels:
       - création de comptes
-  sprint3:
+  horsSprint:
+    - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
+    - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
+    - tableau des utilisateurs (réservé admins) -> '#fonctionnalités/userdb'
+    - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
+      - var. d'env. sur sgupdt -> var. GET sur sgserver avec zone
     - automatisation de la maj du GAN et de la purge des cartes
-  sprint4:
     - annulation dépôt de cartes
-  sprint5:
     - meilleure gestion en production de l'affichage des erreurs
-  sprint6:
     - ajout gestion du catalogue dans le BO
-    - mise en base de MapCat
+      - mise en base de MapCat
+    - gestion des stats d'utilisation
+fonctionnalités:
+  admin:
+    - bo réservé aux admins
+    - tableau de bord du portefeuille -> '#pfdb'
+    - tableau de bord des utilisateurs -> '#userdb'
+  pfdb:
+    - tableau des cartes du portefeuille (réservé admins)
+      - liste des cartes du portefeuille
+        - avec plusieurs vues
+          - ramassée (comme viewtiff)
+          - plus développée (avec no, titre, échelle, mapsFrance)
+          - possibilité de tri sur l'échelle ou le no de carte, et de filtre sur mapsFrance
+        - possibilité d'accès à une carte avec
+          - MD esssentielles (issues de MapCat ?)
+          - imagette de la version courante et lien vers la carte dans mapwcat
+          - poids des fichiers pour aider à faire le ménage
+          - liste des versions avec le no de version
+          - possibilité d'accès à une version avec
+            - appel de viewtiff
+            - possibilité de la déplacer dans la poubelle
+      - liste des cartes obsolètes
+        - possibilité d'accès à une carte avec les mêmes fonctionnalités que les cartes non obsolètes
+      - poubelle
+        - voir son contenu
+        - annuler une suppression
+        - la vider
+  userdb:
+    - lister les utilisateurs
+    - lister les utilisateurs qui ont déposé une version
+      - pour un utilisateur lister les versions déposées
+        - accès à la version déposée
 bug7620:
-  - la carte 7620-2242 présente un bug de géoréférencement
-  - en exécutant gdalinfo sur 7620_pal300.tif on constate que
-    - le champ coordinateSystem.wkt est bizarre
-    - le champ cornerCoordinates censé donner les coordonnées des coins en WorldMercator est faux
-  - pour traiter ce bug, j'ai choisi de modifier le fichier lib/gdalinfo.inc.php
-    - de ne plus utiliser cornerCoordinates
-    - mais de recalculer la projection WorldMercator de wgs84Extent
-  - l'inconvénient de cette solution est de modifier le composant shomgt
-  - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
-  - l'incovénient est faible car l'ancien composant shomgt fonctionnera toujours
-    - la seule limite est que la carte buggée ne s'affiche pas
-forum:
-  phpbb: https://www.phpbb.com/about/
-  sympa:
-    avantages:
-      - plus simple à mettre en oeuvre qu'un forum
-      - gérable depuis l'extérieur de l'intranet
-      - affichage de la responsabilité du ministère (nom de domaine)
+  annulationDeLaCorrection:
+    - cette correction génère des effets de bords
+    - d'une part sur la carte 0101
+    - d'autre part sur les cartes intersectant l'antimeridien
+    - je l'annule donc provisoirement
+  correctionInitiale:
+    - la carte 7620-2242 présente un bug de géoréférencement
+    - en exécutant gdalinfo sur 7620_pal300.tif on constate que
+      - le champ coordinateSystem.wkt est bizarre
+      - le champ cornerCoordinates censé donner les coordonnées des coins en WorldMercator est faux
+    - pour traiter ce bug, j'ai choisi de modifier le fichier lib/gdalinfo.inc.php
+      - de ne plus utiliser cornerCoordinates
+      - mais de recalculer la projection WorldMercator de wgs84Extent
+    - l'inconvénient de cette solution est de modifier le composant shomgt
+    - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
+    - l'incovénient est faible car l'ancien composant shomgt fonctionnera toujours
+      - la seule limite est que la carte buggée ne s'affiche pas
+sympa:
+  avantages:
+    - plus simple à mettre en oeuvre qu'un forum
+    - gérable depuis l'extérieur de l'intranet
+    - affichage de la responsabilité du ministère (nom de domaine)
 alwaysdata:
-  - créer un compte shomgt (ou geoapi) indépendant de bdavid que je puisse céder à quelqu'un
-  - avec gestion du nom de domaine geoapi
-  - la version de prod -> https://geoapi.fr/shomgt -> ~/www/shomgt
-    - ou https://shomgt.alwaysdata.net/
-  - avec une version préprod -> https://geoapi.fr/shomgtpp -> ~/www/shomgtpp
-  - stockage de shomgeotiff dans ~/shomgeotiff
+  - créer un compte shomgt (ou geoapi) indépendant de bdavid que je puisse céder à quelqu'un (PAS FAIT)
+    - avec gestion du nom de domaine geoapi
+  - la version de prod -> https://shomgt.geoapi.fr/ -> ~/prod/geoapi/shomgt
+    - stockage de shomgeotiff dans ~/shomgeotiff
+  - avec une version préprod -> https://sgpp.geoapi.fr/ -> ~/prod/geoapi/sgpp
+    - stockage de shomgeotiff dans ~/shomgeotiffpp
 github:
   - créer une branch shomgt4 (FAIT)
-    - je ne sais pas la copier sur github
-  - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4
+  - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4 (PAS FAIT)
 batchRégulierDEntretien:
-  - batch chaque Dimanche à 4h
+  - batch chaque Samedi à 4h -> tâche pla­ni­fiée
   - mise à jour du GAN
   - mise en oeuvre de la stratégie de conservation des cartes et des logs
   - suppression des dépôts en attente non validés
@@ -229,13 +280,8 @@ preprod:
   - shomgeotiff pèse 8,8 Go en local, 4,4 Go sur geoapi
   - j'utilise 16,8 Go / 20 Go sur Alwaysdata
   - comment mettre en preprod effectivement avec un portefeuille séparé ?
-    - -> passer Alwaysdata à 50 Go au moins temporairement
-  - purger en local ? selon quelle stratégie ?
+    - -> passer Alwaysdata à 50 Go au moins temporairement (FAIT)
   
-  
-  
-  
-  - mettre en oeuvre une préprod
   - https://sgpp.geoapi.fr/
     - avec des  var. d'env. différentes
   - mettre en oeuvre un filtre sur sgserver pour faire des tests
