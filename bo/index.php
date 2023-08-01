@@ -64,9 +64,12 @@ switch ($_GET['action'] ?? null) {
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
     echo "<li><a href='addmaps.php'>Déposer de nouvelles versions de cartes dans le portefeuille</li>\n";
-    echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
-    echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
+    //echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
+    //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
     echo "</ul>\n";
+    echo "<h3>Fonctions d'administration</h3>\n";
+    echo "<ul>\n";
+    echo "<li><a href='pfm.php'>Gérer le portfeuille de cartes</a>\n";
     die();
   }
   case 'logout': {

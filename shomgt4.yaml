@@ -28,6 +28,26 @@ abstract: |
       - suppression de la notion de livraison qui n'est plus pertinente
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
+journal:
+  31/7/2023:
+    - v1 du BO ShomGT4 opérationnelle sur sgpp (sprint1 de ShomGT4)
+    - le bug 7620 n'a pas été réglé, je le transfère dans un autre sprint
+    - cette v1 du BO génère des bugs dans sgupdt
+  17/7/2023:
+    - création de la branche Git shomgt4
+  11/7/2023:
+    - début d'écriture du BO
+  18/6/2023:
+    - nlle version de shomgeotiff à la suite de la saturation stockage d'Alwaysdata
+    - abandon de la logique de stockage par livraison
+    - création d'un répertoire current avec des liens vers archives
+    - mise en place d'un appli pfm.php préfiguratrice du BO
+  finMai2023:
+    - point avec le Shom et refus de ce dernier de coopérer sur ShomGT
+    - réorientations des réflexions vers la mise en place d'une getion collaborative
+  26/4/2023:
+    - point avec Loic et Nicolas (DGAMPA) sur pérennisation
+    - début de réflexion sur V4 fondé sur l'utilisation de S3
 méthodeDeDécoupageEnComposants:
   - chaque composant est soit de type Web, soit de type CLI, soit de type stockage
   - un composant Web expose une interface web mais n'autorise que de courtes exécutions (de l'ordre de 30 s)
@@ -160,24 +180,33 @@ backlog:
     - garder pour le moment shomgt sur le compte bdavid
   organisation:
     - synchroniser shomgt -> sgpp au moyen d'un lien symbolique sgpp -> shomgt en local
-  sprint1:
+  sprint1(ok31/7/2023T11:00):
+    début: 11/7/2023
+    fin: 31/7/2023 11h
     objectfs:
       - réorganisation de shomgeotiff
       - évolution de la structure des md.json
         - mise à jour des md.json existants / ok
-      - mise en place de la préprod avec ces évolutions
+      - mise en place de la préprod avec ces évolutions / ok
       - basculement de la gestion du portefeuille sur Alwaysdata
       - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
-      - adaptation de sgserver si nécessaire
+      - adaptation de sgserver si nécessaire / PAS NECESSAIRE
       - adaptation de dashboard (champs creation/revision remplacés par le chap dateMD) / ok
-      - tester sgupdt/shomgt sur préprod
-      - correction bug 7620
+      - tester sgupdt/shomgt sur préprod / ok
+      - correction bug 7620 (ECHEC)
     apportsFonctionnels:
       - dépôt des cartes en mode web
       - correction bug 7620
     question:
       - faut-il migrer la prod en fin de sprint1 ?
-    amélioration2023-07-31:
+    bugs:
+      shomgt.yaml: |
+        Bug dans sgupt le 31/7 14h
+        Erreur, shomgt.yaml NON conforme à son schéma
+        Erreur propriété .gt50k.7620_CA interdite
+        Cela vient du fait de la présence dans l'archive d'un fichier tif anormal '7620/7620_CA.tif'
+        Il faut que j'impose des contraintes plus fortes dans le BO pour garantir que sgupt et shomgt ne plantent pas !
+    améliorationsNécessaires2023-07-31:
       title: améliorations à apporter au 31/7
       bo:
         - lien du bo vers le dashboard
@@ -188,6 +217,15 @@ backlog:
           - c'est acceptable car j'ai une sauvegarde du portefeuille
             - et que je peux aller rechercher les cartes actualisées
   sprint2:
+    début: 31/7/2023
+    objectifs:
+      - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus
+      - tests de sprint1
+      - bug 7620 - retour à la correction précédente, ie nécessité de borders
+        - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO
+      - mise en prod sur https://geopai.fr/shomgt/
+      - convergence de la branche avec main
+  sprint3:
     objectifs:
       - création de comptes
       - bannissement utilisateur
@@ -326,30 +364,97 @@ structurePortfolio:
           - où {date} est la date de parution du retrait de la carte
           - ou si cette date n'est pas connue la date de fourniture de l'info
     - current
-      - pour chaque carte non obsolète 2 liens vers la dernière version de la carte dans archives nommés respectivement
+      - pour chaque carte non obsolète 2 liens vers la version active de la carte dans archives nommés respectivement
         - {mapnum}.7z pour le contenu de la carte
         - {mapnum}.md.json pour les métadonnées associées
       - pour chaque carte obsolète un lien nommé {mapnum}.md.json
         - vers le fichier {mapnum}-{date}.md.json indiquant l'obsolescence de la carte
+      - les liens dans current peuvent ne pas être présents
     - users
       - un répertoire par utilisateur nommé avec son adresse email
       - contenant les cartes en cours de dépôt
   structureFichiersMdJson: définie par le schema bo/md.schema.yaml
 
-cartesSpéciales:
-  - le portefeuille comporte quelques cartes spéciales ne respectant pas les specs des cartes normales
-    - chacune est identifiée dans MapCat par le champ layer qui identifie la couche à laquelle elle est affectée
-  - si l'archive 7z comporte un seul .tif ou pas de .tif et un seul .pdf
-    - alors je considère que ce fichier constitue l'image principale de la carte
-    - sinon s'il existe un champ geotiffnames dans MapCat et si un des geotiffnames correspond à une entrée dans l'archive 7z
+specsDesCartes:
+  stratégie:
+    - vu que les composants shomgt et sgupdt peuvent être déconcentrés
+      - j'ai intérêt à garder simples ces composants et à reporter la complexité d'hétérogénéité en amont sur le BO
+    - cela veut dire qu'il faut que j'impose des spécifications plus contraignantes que celles du Shom
+    - je peux éventuellement effectuer des transformations dans le BO pour respecter les spécifications que j'impose
+      - cela veut dire qu'il faut que je distingue
+        - la spécification à respecter en interne, notamment dans le protocole sgserver et le stockage du portefeuille
+        - de la spécification externe à respecter pour charger une carte dans le BO
+    - les principaux problèmes de spécification sont
+      - sur les cartes spéciales qui par définition sont très peu spécifiées mais ne sont pas nombreuses
+        - au pire elles peuvent être restructurées à la main, ce que j'ai fait en ShomGT3
+      - sur les cartes facs-similés avec le nommage des fichiers et le géorérencement
+      - sur les cartes qui sont à cheval sur l'antiméridien pour lesquelles le format GéoTiff semble ambigu ou mal respecté
+  cartesNormales:
+    - Les cartes normales sont spécifiées par le Shom
+      - qui précise que la spec ne concerne pas les Fac-similé
+    - J'ajoute à la spec Shom la cohérence suivante avec MapCat
+      - chaque carte 7z correspond à une entrée dans les cartes obsolètes ou non de MapCat
+      - ssi la zone principale pal300 est géoréférencée alors
+        - la carte comporte les champs spatial et scaleDenominator et
+        - son géoréférencement contient géographiquement l'extension spatiale définie dans MapCat
+          - avec un cas particulier pour les cartes à cheval sur l'antiméridien et les cartes faisant plus du tour de la Terre
+      - il y a bijection entre les images des cartouches de l'archive et les cartouches définis dans MapCat
+      - le géoréférencement de l'image contient l'extension spatiale correspondante dans MapCat
+      - si un géoréférencement est absent ou incorrect alors le champ borders doit être défini dans Mapcat
+  
+    - Pour les cartes à cheval sur l'antiméridien
+      - l'encodage de l'extension spatiale permet de détecter cette caractéristique
+      - voir les coordonnées projetées dans le géoréférencement
+    
+  
+  
+    - Les cartes Fac-similé ne respectent pas exactement la spec
+      - pb éventuel de projection (ex 7620)
+      - les cartouches peuvent être numérotés par des lettres au lieu des nombres
+      - des fichiers en plus dans l'archive qui font planter sgupt
+    
+  cartesspéciales:
+     Pour les cartes spéciales j'utilise la spécification suivante:
+      - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
+      - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
+      - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
+        ALORS ce fichier .tif ou .pdf contient l'image géoréférencée ou non
+        SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
+      - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
+      - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
+   
+     Pour les 2 types de carte:
+      - un .tif est considéré comme géoréférencé ssi son gdalinfo contient un champ coordinateSystem
+  
+    - le portefeuille comporte quelques cartes spéciales ne respectant pas les specs des cartes normales
+    - Pour ces cartes j'utilise la spécification suivante
+      - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
+      - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
+      - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
+        ALORS ce fichier .tif ou .pdf contient l'image géoréférencée ou non
+        SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
+      - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
+      - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
+   
+
+  
+      - chacune est identifiée dans MapCat par le champ layer qui identifie la couche à laquelle elle est affectée
+    - si l'archive 7z comporte un seul .tif ou pas de .tif et un seul .pdf
       - alors je considère que ce fichier constitue l'image principale de la carte
-      - sinon ERREUR
-  - pour les MD
-    - si l'archive comprend un et un seul fichier XML
-      - alors je considère que c'est le fichier de MD
-      - sinon je construis des MD simplifiées dans lesquelles la version est le nom du fichier .tif ou .pdf
-        - en effet je constate que le nom du tif/pdf change à chaque version de la carte
-        - c'est donc un bon moyen de gérer la version des cartes spéciales sans fichier MD ISO
+      - sinon s'il existe un champ geotiffnames dans MapCat et si un des geotiffnames correspond à une entrée dans l'archive 7z
+        - alors je considère que ce fichier constitue l'image principale de la carte
+        - sinon ERREUR
+    - pour les MD
+      - si l'archive comprend un et un seul fichier XML
+        - alors je considère que c'est le fichier de MD
+        - sinon je construis des MD simplifiées dans lesquelles la version est le nom du fichier .tif ou .pdf
+          - en effet je constate que le nom du tif/pdf change à chaque version de la carte
+          - c'est donc un bon moyen de gérer la version des cartes spéciales sans fichier MD ISO
+  
+géoréférencement:
+  - dans ShomGT je vois le géoréférencement des images au travers de gdalinfo
+  - ShomGT doit pouvoir utiliser les versions GDAL 2 ou 3 qui utilisent respectivement les versions WKT 1 et 2
+  - lorqu'une image n'est pas géoréférencée, le WKT du CRS est vide.
   
 miseEnBase:
   description: mise en base de certaines informations pour la V4
@@ -451,6 +556,8 @@ admin:
       - la liste des adresses IP autorisées
     - annulation du dépôt d'une carte, restitution de la version précédente
     - modification du rôle d'un utilisateur
+  implémentées:
+    - gestion de la version courante d'une carte
 bo:
   title: créer un BO pour les utilisateurs authentifiés
   fonctionnalités:
@@ -499,6 +606,23 @@ bo:
   mettreAJourServicesShomGt:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
 
+GeoTiff:
+  v1: |
+    The GeoTIFF format was initially developed during the early 1990’s (N. Ritter & Ruth, 1997). 
+    The objective was to leverage a mature platform independent file format (TIFF) by adding metadata 
+    required for describing and using geographic image data. 
+    TIFF met the requirements for an underlying format, as it was – and still is (though JPEG compression was added) – 
+    lossless and extensible. 
+    In September 1994, SPOT Image Corp proposed a GeoTIFF structure that was limited to Universal Transverse Mercator 
+    (N. Ritter & Ruth, 1997). 
+    The proposed GeoTIFF specification was further augmented and formalized by Ritter and Ruth as Revision 1.0,
+    specification version 1.8.2 in November 1995 (N. Ritter & Ruth, 1995), with minor adjustments published in 2000, 
+    available at http://geotiff.maptools.org/spec/geotiffhome.html, which is the official GeoTIFF specification version 1.0.
+  v1.1:
+    title: OGC GeoTIFF Standard, Version 1.1
+    url: https://docs.ogc.org/is/19-008r4/19-008r4.html
+    id: http://www.opengis.net/doc/IS/GeoTIFF/1.1
+    published: 2019-09-14
 crsWkt:
   title: CRS-WKT
   abstract: |

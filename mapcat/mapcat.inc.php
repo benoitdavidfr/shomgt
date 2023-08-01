@@ -174,4 +174,20 @@ class MapCat { // Un objet MapCat correspond à l'entrée du catalogue correspon
     sort($insetTitles);
     return $insetTitles;
   }
+
+  // retourne si l'image principale est géoréférencée alors son scaleDenominator
+  // sinon le plus grand scaleDenominator des cartouches
+  function scaleDenominator(): string {
+    if ($this->scaleDenominator)
+      return $this->scaleDenominator;
+    else {
+      $scaleDenominators = [];
+      foreach ($this->insetMaps as $inset) {
+        $sd = $inset['scaleDenominator'];
+        $scaleDenominators[(int)str_replace('.','',$sd)] = $sd;
+      }
+      ksort($scaleDenominators, SORT_NUMERIC);
+      return array_values($scaleDenominators)[count($scaleDenominators)-1];
+    }
+  }
 };

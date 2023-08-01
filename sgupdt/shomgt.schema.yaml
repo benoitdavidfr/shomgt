@@ -135,6 +135,5 @@ patternProperties:
           layer:
             description: pour les cartes spéciales nom de la couche à laquelle le GéoTiff est affecté
             type: string
-          
           note:
             description: note

@@ -24,6 +24,7 @@ description: |
   Cependant plusieurs corrections sont apportées grâce au test de conformité mis en oeuvre en V4.
   
   Journal:
+    - 31/7/2023 - réactivation des bordures de la carte 7620
     - 28/7/2023 - plusieurs corrections d'erreurs détectée par l'exécution du test de conformité sur l'ensemble des cartes
     - 27/7/2023
       - correction de l'emprise spatiale du cartouche B de la carte 7090
@@ -4943,11 +4944,12 @@ maps:
     spatial:
       SW: '18°05,30''N - 063°20,96''W'
       NE: '18°22,92''N - 062°52,05''W'
-    #borders: { left: 893, bottom: 1032, right: 888, top: 1213 }
+    borders: { left: 893, bottom: 1032, right: 888, top: 1213 }
     references: 'Fac similé carte GB n°2047 publiée en 1985 (édition mars 2018)'
     noteCatalog: |
       Problème d'affichage lié au géoréférencement avec version shomgt de juin 2023, fourniture des bordures pour le résoudre.
       Modification de shomgt pour régler ce problème et suppression des bordures le 26/7/2023.
+      La modification ci-dessus crée un effet de bord, réactivation des bordures le 31/7/2023.
     z-order: -1 # en-dessous de 7471
     insetMaps:
       - title: 'A - Sombrero Island'
