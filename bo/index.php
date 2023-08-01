@@ -69,7 +69,8 @@ switch ($_GET['action'] ?? null) {
     echo "</ul>\n";
     echo "<h3>Fonctions d'administration</h3>\n";
     echo "<ul>\n";
-    echo "<li><a href='pfm.php'>Gérer le portfeuille de cartes</a>\n";
+    echo "<li><a href='pfm.php'>Gérer l'activation des cartes du portefeuille</a></li>\n";
+    echo "</ul>\n";
     die();
   }
   case 'logout': {
