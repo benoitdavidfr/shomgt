@@ -9,7 +9,7 @@ require_once __DIR__.'/maparchive.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+//define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
 
 //echo "upload_max_filesize=",ini_get('upload_max_filesize'),"<br>\n";
 //echo "post_max_size=",ini_get('post_max_size'),"<br>\n";
@@ -191,3 +191,4 @@ if ($maps) {
   }
   echo "</table>\n";
 }
+echo "<a href='index.php'>Retour au menu du BO</a><br>\n";

@@ -34,6 +34,7 @@ journal:
     - passage 7620 en version 2018c1
     - passage 7330 et 8502 en version antérieure
     - sgupdt et shomgt OK
+    - ajout possibilité de supprimer des versions de cartes dans la gestion du portefeuille
   31/7/2023:
     - v1 du BO ShomGT4 opérationnelle sur sgpp (sprint1 de ShomGT4)
     - le bug 7620 n'a pas été réglé, je le transfère dans un autre sprint
@@ -228,10 +229,15 @@ backlog:
   sprint2:
     début: 31/7/2023
     objectifs:
-      - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus
+      - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus (FAIT)
       - tests de sprint1
       - bug 7620 - retour à la correction précédente, ie nécessité de borders
         - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO
+        - considérer comme erreur l'existence d'un .tif non prévu
+      - revoir la spec des cartes spéciales pour la restreindre à ce qui est autorisé dans sgupdt
+        - cad
+          - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
+          - + éventuel fichier .xml
       - mise en prod sur https://geoapi.fr/shomgt/
       - convergence de la branche avec main
   sprint3:
@@ -290,7 +296,7 @@ bug7620:
     - cette correction génère des effets de bords
     - d'une part sur la carte 0101
     - d'autre part sur les cartes intersectant l'antimeridien
-    - je l'annule donc provisoirement
+    - je l'annule donc provisoirement le 31/7/2023
   correctionInitiale:
     - la carte 7620-2242 présente un bug de géoréférencement
     - en exécutant gdalinfo sur 7620_pal300.tif on constate que
@@ -301,7 +307,7 @@ bug7620:
       - mais de recalculer la projection WorldMercator de wgs84Extent
     - l'inconvénient de cette solution est de modifier le composant shomgt
     - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
-    - l'incovénient est faible car l'ancien composant shomgt fonctionnera toujours
+    - l'inconvénient est faible car l'ancien composant shomgt fonctionnera toujours
       - la seule limite est que la carte buggée ne s'affiche pas
 sympa:
   avantages:
@@ -323,18 +329,18 @@ batchRégulierDEntretien:
   - mise à jour du GAN
   - mise en oeuvre de la stratégie de conservation des cartes et des logs
   - suppression des dépôts en attente non validés
-preprod:
-  - shomgeotiff pèse 8,8 Go en local, 4,4 Go sur geoapi
-  - j'utilise 16,8 Go / 20 Go sur Alwaysdata
-  - comment mettre en preprod effectivement avec un portefeuille séparé ?
-    - -> passer Alwaysdata à 50 Go au moins temporairement (FAIT)
+preprodCode:
+  réflexions:
+    - shomgeotiff pèse 8,8 Go en local, 4,4 Go sur geoapi
+    - j'utilise 16,8 Go / 20 Go sur Alwaysdata
+    - comment mettre en preprod effectivement avec un portefeuille séparé ?
+      - -> passer Alwaysdata à 50 Go au moins temporairement (FAIT)
   
-  - https://sgpp.geoapi.fr/
-    - avec des  var. d'env. différentes
-  - mettre en oeuvre un filtre sur sgserver pour faire des tests
-    - var. d'env. avec la liste des cartes exposées uniquement actif sur pprod
-    - ou un shomgeotiff spécifique
-      
+    - https://sgpp.geoapi.fr/
+      - avec des  var. d'env. différentes
+    - mettre en oeuvre un filtre sur sgserver pour faire des tests
+      - var. d'env. avec la liste des cartes exposées uniquement actif sur pprod
+      - ou un shomgeotiff spécifique
 conservation:
   title: stratégie de conservation des données
   cartes:
@@ -457,7 +463,24 @@ structurePortfolio:
         appel: https://xx:xx@sgpp.geoapi.fr/sgserver/index.php
         site: sgpp.geoapi.fr
   
-optionPréProdData:
+optionPréProdDataSimplifiée:
+  idées:
+    - option plus simple de préProdData que '#optionPréProdDataV1'
+    - j'interdis d'utiliser concurrement sgupdt en prodData ou en préProdData
+      - dans le BO avant de lancer sgupdt/main.php
+        - si le fichier lockSgupdt.json existe
+          - alors il s'arrête en erreur en affichant ce fichier
+          - sinon il crée ce fichier avec l'email de l'utilisateur et la date et l'heure de démarrage
+      - après l'exécution de sgupdt/main.php par le BO ce fichier est supprimé
+    - avoir un env. unique en préProdData pour distinguer les fichiers de données dans sgupdt et shomgt
+    - dans la gestion de versions du BO distinguer la version courante en prodData de celle en préProdData
+    - je gère une copie de current pour la préProdData que je nomme preProdData
+    - j'ajoute dans sgserver une option 'preProdData' qui permet d'avoir les versions en préProdData
+    - dans sgupdt et shomgt j'utilise un SHOMGT3_MAPS_DIR_PATH différent pour distinguer préProddata de prodData
+    - dans le répertoire geoapi/shomgt création du ss-répertoire ppdata pour les données en préProdData
+    - dans sgupdt ajout d'une var. env. SHOMGT4_SERVER_OPTIONS contenant '{"preProdData"=> true}'
+
+optionPréProdDataV1:
   status: je suspends cette réflexion @3/8T09:14 car ca devient complexe et ce n'est pas l'urgence
   title: organisation des données dans l'option de mise en oeuvre d'un préProdData
   idées:
