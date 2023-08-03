@@ -314,7 +314,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
   
-  function showAsHtml(): void {
+  function showAsHtml(?string $button=null): void {
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
       throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
@@ -393,15 +393,25 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       "Affichage d'une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
       "Dump de l'objet Php</a></td></tr>\n";
-    echo "<tr><td colspan=2><center>",
-         button(
-          "Valider la carte et la déposer",
-          [ 'action'=> 'validateMap',
-            'path' => $_GET['path'],
-            'map'=> $_GET['map'].'.7z',
-          ],
-          'addmaps.php', 'get'),
-         "</center></td></tr>\n";
+    if ($button == 'validateMap') {
+      if (isset($invalid['errors'])) {
+        echo "<tr><td colspan=2><center>",
+             "<b>La carte ne peut pas être validée car elle n'est pas conforme</b>",
+             " <a href='addmaps.php'>Retour au menu de dépôt de cartes",
+             "</center></td></tr>\n";
+       }
+      else {
+        echo "<tr><td colspan=2><center>",
+             button(
+              "Valider la carte et la déposer",
+              [ 'action'=> 'validateMap',
+                'path' => $_GET['path'],
+                'map'=> $_GET['map'].'.7z',
+              ],
+              'addmaps.php', 'get'),
+             "</center></td></tr>\n";
+      }
+    }
     
     echo "</table>\n";
   }

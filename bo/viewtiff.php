@@ -205,7 +205,7 @@ switch ($_GET['action'] ?? null) {
     echo HTML_HEAD;
     $mapNum = substr($_GET['map'], 0, 4);
     $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
-    $map->showAsHtml();
+    $map->showAsHtml($_GET['button'] ?? null);
     die();
   }
   case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif

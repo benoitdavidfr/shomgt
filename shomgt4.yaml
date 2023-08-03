@@ -233,12 +233,12 @@ backlog:
       - tests de sprint1
       - bug 7620 - retour à la correction précédente, ie nécessité de borders
         - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO (FAIT)
-        - considérer comme erreur l'existence d'un .tif non prévu
-      - revoir la spec des cartes spéciales pour la restreindre à ce qui est autorisé dans sgupdt
+        - considérer comme erreur l'existence d'un .tif non prévu (FAIT)
+      - revoir la spec des cartes spéciales pour la restreindre à ce qui est autorisé dans sgupdt (FAIT)
         - cad
           - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
           - + éventuel fichier .xml
-      - mise en prod sur https://geoapi.fr/shomgt/
+      - mise en prod sde préProd ur https://geoapi.fr/shomgt/
       - convergence de la branche git avec main
   sprint3:
     objectifs:

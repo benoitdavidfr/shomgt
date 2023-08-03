@@ -183,9 +183,7 @@ if ($maps) {
     echo "<tr><td>",$md['title'] ?? $map,"</td>",
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
-         "<td>",
-           button('vérifier', ['path'=>"/users/$login",'map'=>substr($map, 0, -3)], 'viewtiff.php', 'get'),
-         "</td>",
+         "<td><a href='viewtiff.php?path=/users/$login&map=",substr($map, 0, -3),"&button=validateMap'>vérifier</a></td>",
          "<td>",button('supprimer', ['action'=>'delete','map'=>$map]),"</td>",
          "</tr>\n";
   }
