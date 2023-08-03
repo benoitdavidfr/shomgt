@@ -1,11 +1,27 @@
 <?php
-/* bo/shomgeotiff.php - accès aux fichiers de SHOMGEOTIFF à l'intérieur d'une archive 7z
+/* bo/shomgeotiff.php - accès aux fichiers de SHOMGEOTIFF à l'intérieur d'une archive 7z - 3/8/2023
 ** Le PATH_INFO est composé de la concaténation
 **  - du chemin du fichier 7z,
 **  - du caractère '/' et
 **  - de l'entrée dans le fichier 7z
+** Permet aussi de télécharger l'archive 7z
 */
+require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';
+
+define ('MIME_TYPES', [
+  '.png'=> 'image/png',
+  '.jpg'=> 'image/jpeg',
+  '.tif'=> 'image/tiff',
+  '.pdf'=> 'application/pdf',
+  '.xml'=> 'text/xml; charset="utf-8"',
+  '.7z' => 'application/x-7z-compressed',
+]
+);
+
+if (!($login = Login::login())) {
+  die("Accès non autorisé\n");
+}
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
   throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
@@ -20,6 +36,12 @@ function entryInArchive(string $fileName, My7zArchive $archive): bool {
   return false;
 }
 
+if (!isset($_SERVER['PATH_INFO'])) {
+  header('HTTP/1.1 400 Bad Request');
+  header('Content-type: text/plain; charset="utf-8"');
+  die("Syntaxe incorrecte\n");
+}
+
 $pos = strpos($_SERVER['PATH_INFO'], '.7z');
 //echo "pos=$pos\n";
 $pathOf7z = $PF_PATH.substr($_SERVER['PATH_INFO'], 0, $pos+3);
@@ -27,18 +49,24 @@ $pathOf7z = $PF_PATH.substr($_SERVER['PATH_INFO'], 0, $pos+3);
 if (!is_file($pathOf7z)) {
   header('HTTP/1.1 404 Not Found');
   header('Content-type: text/plain; charset="utf-8"');
-  echo "Fichier $pathOf7z non trouvé\n";
+  echo "Fichier '$pathOf7z' non trouvé\n";
+  die();
+}
+
+$fileName = substr($_SERVER['PATH_INFO'], $pos+4);
+if (!$fileName) {
+  header("Content-type: ".MIME_TYPES['.7z']);
+  fpassthru(fopen($pathOf7z, 'r'));
   die();
 }
 
 $archive = new My7zArchive($pathOf7z);
-$fileName = substr($_SERVER['PATH_INFO'], $pos+4);
 //echo "fileName=$fileName\n";
 
 function notFound(string $fileName): void {
   header('HTTP/1.1 404 Not Found');
   header('Content-type: text/plain; charset="utf-8"');
-  echo "Entrée $fileName non trouvé dans l'archive\n";
+  echo "Entrée '$fileName' non trouvée dans l'archive\n";
   die();
 }
 
@@ -68,15 +96,6 @@ if ($fileName2 <> $fileName) { // conversion .tif/pdf -> .png
 else { // pas de conversion
   $path2 = $path;
 }
-
-define ('MIME_TYPES', [
-  '.png'=> 'image/png',
-  '.jpg'=> 'image/jpeg',
-  '.tif'=> 'image/tiff',
-  '.pdf'=> 'application/pdf',
-  '.xml'=> 'text/xml; charset="utf-8"',
-]
-);
 
 if (isset(MIME_TYPES[substr($path2, -4)])) {
   header("Content-type: ".MIME_TYPES[substr($path2, -4)]);
