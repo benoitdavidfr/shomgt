@@ -29,6 +29,11 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  3/8/2023T9:36:
+    - dév. des fonc. BO de gestion du portefeuille
+    - passage 7620 en version 2018c1
+    - passage 7330 et 8502 en version antérieure
+    - sgupdt et shomgt OK
   31/7/2023:
     - v1 du BO ShomGT4 opérationnelle sur sgpp (sprint1 de ShomGT4)
     - le bug 7620 n'a pas été réglé, je le transfère dans un autre sprint
@@ -40,14 +45,18 @@ journal:
   18/6/2023:
     - nlle version de shomgeotiff à la suite de la saturation stockage d'Alwaysdata
     - abandon de la logique de stockage par livraison
-    - création d'un répertoire current avec des liens vers archives
+    - création en local d'un répertoire current avec des liens vers archives
+    - en distant recopie du répertoire current
     - mise en place d'un appli pfm.php préfiguratrice du BO
   finMai2023:
     - point avec le Shom et refus de ce dernier de coopérer sur ShomGT
     - réorientations des réflexions vers la mise en place d'une getion collaborative
   26/4/2023:
     - point avec Loic et Nicolas (DGAMPA) sur pérennisation
+    - décision d'améliorer la coopération avec le Shom
     - début de réflexion sur V4 fondé sur l'utilisation de S3
+  24/4/2023:
+    - message d'alerte à D. Bon sur pérennisation
 méthodeDeDécoupageEnComposants:
   - chaque composant est soit de type Web, soit de type CLI, soit de type stockage
   - un composant Web expose une interface web mais n'autorise que de courtes exécutions (de l'ordre de 30 s)
@@ -223,7 +232,7 @@ backlog:
       - tests de sprint1
       - bug 7620 - retour à la correction précédente, ie nécessité de borders
         - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO
-      - mise en prod sur https://geopai.fr/shomgt/
+      - mise en prod sur https://geoapi.fr/shomgt/
       - convergence de la branche avec main
   sprint3:
     objectifs:
@@ -329,11 +338,28 @@ preprod:
 conservation:
   title: stratégie de conservation des données
   cartes:
+    objectifs:
+      - connaitre l'état à une date antérieure (pas de cas d'usage !)
+      - revenir en arrière en cas de nouvelle version posant une difficulté d'intégration
+      - revenir en arrière en cas de nouvelles versions intentionnellement erronées
+        - dans une logique contributive il faut anticiper les actes mal intentionnés et prévoir des parades
     principes:
-      - je garde pour chaque carte ttes les versions qui datent de moins d'un an
-      - ainsi que la version la plus récente qui date de plus d'un an
-      - et je jette donc les autres versions qui datent de plus d'un an
-      - cela permet pendant un an d'annuler le dépôt d'une nouvelle version dégradant le service
+      - j'exclue le premier objectif en absence de cas d'usage
+      - le second objectif est assez simple à prendre en compte
+        - il suffirait de garder une version précédente valide qui peut être supprimée dès que la nouvelle version est validée
+      - le troisième objectif est plus difficile à traiter
+        - car il peut se passer du temps entre le dépôt d'une nouvelle version et la découverte du problème
+        - je fixe ce délai à 1 an
+    solution:
+      - double solution automatique et manuelle
+      - automatique:
+        - je garde pour chaque carte ttes les versions qui datent de moins d'un an
+        - ainsi que la version la plus récente qui date de plus d'un an
+        - et je jette donc les autres versions qui datent de plus d'un an
+        - cela permet pendant un an d'annuler le dépôt d'une nouvelle version dégradant le service
+      - manuelle:
+        - je prévois de purger manuellement une carte
+        - cad après avoir vérifié que tt va bien de ne conserver que la version la plus récente
     réf:
       - shomgeotiff complet pèse environ 9 Go
       - je peux en supprimer un peu moins de la moitié en appliquant les principes ci-dessus
@@ -346,34 +372,456 @@ conservation:
     - les logs détaillés pèsent environ 140 Mo pour 6 mois
     - supprimer les logs détaillés au bout d'un an
 structurePortfolio:
-  title: organisation du portefeuille dans shomgeotiff
-  chemin: le chemin de shomgeotiff est défini dans la var. d'env. SHOMGT3_INCOMING_PATH
+  title: organisation du portefeuille de cartes dans l'option sans préProdData
   subDirectories:
-    - le répertoire contient au moins les 3 sous-répertoires suivants
-    - archives
-      - avec un répertoire par carte, nommé par le num. de la carte
-      - dans ce répertoire de carte
-        - 2 fichiers .7z et .md.json par version de la carte
-          - en utilisant un nom de base de la forme {mapNum}-{version}
-          - où {version} est la version sous la forme YYYYcN qd il existe un fichier .xml
-            - sinon le nom du fichier tif ou pdf
-          - il vaut mieux utiliser la version qu'une date car pour les anciennes cartes je n'ai pas de bonne date
-            alors que la version est mieux définie
-          - si j'ai plusieurs archives pour une même version alors je suffixe le nom de base par une lettre
-        - éventuellement un fichier {mapnum}-{date}.md.json indiquant l'obsolescence de la carte
-          - où {date} est la date de parution du retrait de la carte
-          - ou si cette date n'est pas connue la date de fourniture de l'info
-    - current
-      - pour chaque carte non obsolète 2 liens vers la version active de la carte dans archives nommés respectivement
-        - {mapnum}.7z pour le contenu de la carte
-        - {mapnum}.md.json pour les métadonnées associées
-      - pour chaque carte obsolète un lien nommé {mapnum}.md.json
-        - vers le fichier {mapnum}-{date}.md.json indiquant l'obsolescence de la carte
-      - les liens dans current peuvent ne pas être présents
-    - users
-      - un répertoire par utilisateur nommé avec son adresse email
-      - contenant les cartes en cours de dépôt
+    - name: /var/www/html (@local) | /home/bdavid/prod (@distant)
+      description: description des répertoires et fichiers contenant le portefeuille de cartes
+      entries:
+        - name: shomgeotiff
+          description: |
+            répertoire de stockage des cartes 7z en prodCode, défini par SHOMGT3_PORTFOLIO_PATH
+            actuellement uniquement @local car @distant c'est l'ancienne version qui fonctionne
+          entries:
+            - name: archives
+              description: contenus des cartes et de leurs MD
+              entries:
+                - namePattern: {mapNum}
+                  description: un répertoire par carte portant comme nom le numéro de la carte
+                  entries:
+                    - {mapNum}-{version}.7z / chaque version {version} de la carte
+                    - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                    - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+            - name: current
+              description: répertoire des versions courantes des cartes
+              entries:
+                - lien {mapNum}.md.json vers le .md.json
+                  - de la version courante de la carte si version courante
+                  - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                - lien {mapNum}.7z vers le .7z de la version courante si version courante
+            - name: users
+              description: répertoire des cartes déposées par les utilisateurs
+              entries:
+                - namePattern: {userEmail}
+                  description: un répertoire par utilisateur portant comme nom son email
+                  entries:
+                    - {mapNum}.7z / carte en cours de dépôt portant comme nom le numéro de la carte suivi de l'ext. .7z
+        - name: shomgeotiffpp
+          description: |
+            répertoire de stockage de cartes en préProdCode, défini par SHOMGT3_PORTFOLIO_PATH
+            actuellement uniquement @distant car @local pas d'env. préProdCode
+            Organisé comme shomgeotiff
   structureFichiersMdJson: définie par le schema bo/md.schema.yaml
+  expositions:
+    appliShomgtActuelle@2/8T12:00:
+      description: URL de l'appli shomgt
+      prodCode:
+        appel: https://geoapi.fr/shomgt (URL diffusée)
+        site:
+          url: geoapi.fr
+          racine: /prod/geoapi/
+          envVars: |
+            SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+            SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+      préProdCode:
+        appel: https://sgpp.geoapi.fr/
+        site:
+          description: site nécessaire pour var. env.
+          url: sgpp.geoapi.fr
+          racine: /prod/geoapi/sgpp/
+          envVars: |
+            SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+            SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+    appliShomgtCible@2/8T12:00:
+      description: URL de l'appli shomgt
+      prodCode: idem '#appliShomgtActuelle@2/8T12:00' (URL diffusée)
+      préProdCode:
+        appel: https://sgtppc.geoapi.fr/
+        site:
+          url: sgtppc.geoapi.fr
+          racine: /prod/geoapi/sgtppc/
+          envVars: |
+            SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+            SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+    serviceSgserverActuel@2/8T12:00:
+      prodCode:
+        appel: https://sgserver.geoapi.fr (URL diffusée)
+        site:
+          url: sgserver.geoapi.fr
+          racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+          envVar: |
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+      préProCode:
+        appel: https://xx:xx@sgpp.geoapi.fr/sgserver/index.php
+        site: sgpp.geoapi.fr
+  
+optionPréProdData:
+  status: je suspends cette réflexion @3/8T09:14 car ca devient complexe et ce n'est pas l'urgence
+  title: organisation des données dans l'option de mise en oeuvre d'un préProdData
+  idées:
+    - distinguer pré-prod code de pré-prod data
+      - la pré-prod code (préProdCode) a pour objectif de vérifier avant de le passer en prod que le code fonctionne correctement
+      - la pré-prod data (préProdData) a pour objectif de vérifier avant sa mise en production qu'une carte ne génère pas de bug
+      - la préProdData est une fonctionnalité du code qui doit pouvoir fonctionner en prodCode comme en préProdCode
+    - partager de manière structurelle les fichiers 7z entre préProdData et prodData
+      - en distinguant les cartes courantes en prodData de celles en préProdData
+    - partager au moyen de liens les fichiers 7z entre préProdCode et prodCode
+    - réutiliser le code de sgupdt et shomgt entre prodData et préProdData
+      - pour préProdData ne pas utiliser sgserver pour transférer les fichiers
+    - ATTENTION, préProdData doit pouvoir être exécuté concurremment par différents utilisateurs
+      - il ne faut donc pas que 2 exécutions entre 2 utilisateurs partagent leurs données
+  miseEnOeuvre(réflexion):
+    architecture:
+      - c'est le BO qui pilote sgupdt en prodData comme en préProdData
+      - pour shomgt, le BO peut fournir un URL d'appel spécifique à préProdData
+      - les caractéristiques distinguantes entre prodData et préProdData peuvent être définies
+        - soit comme var. d'env.
+        - soit comme options d'appel
+    currentSubDirectories:
+      - name: /var/www/html (@localhost) | /home/bdavid/prod (@Alwaysdata)
+        description: description des répertoires et fichiers contenant des données
+        entries:
+          - name: shomgeotiff
+            description: répertoire de stockage des cartes 7z en prodCode, défini par SHOMGT4_PORTFOLIO_PATH
+            entries:
+              - name: archives
+                description: contenus des cartes et de leurs MD
+                entries:
+                  - namePattern: {mapNum}
+                    description: un répertoire par carte portant comme nom le numéro de la carte
+                    entries:
+                      - {mapNum}-{version}.7z / chaque version {version} de la carte
+                      - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                      - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+              - name: current
+                description: répertoire des versions courantes des cartes
+                entries:
+                  - lien {mapNum}.md.json vers le .md.json
+                    - de la version courante de la carte si version courante
+                    - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                  - lien {mapNum}.7z vers le .7z de la version courante si version courante
+              - name: users
+                description: répertoire des cartes déposées par les utilisateurs
+                entries:
+                  - namePattern: {userEmail}
+                    description: un répertoire par utilisateur portant comme nom son email
+                    entries:
+                      - {mapNum}.7z / carte en cours de dépôt portant comme nom le numéro de la carte suivi de l'ext. .7z
+          - name: geoapi
+            entries:
+              - name: shomgt
+                description: répertoire du code source de ShomGT
+                entries:
+                  - name: data
+                    description: répertoire des données formattées pour le composant shomgt
+                    entries:
+                      - shomgt.yaml généré par sgupdt pour le composant shomgt
+                      - name: maps
+                        description: répertoire des cartes formattées par sgupdt pour le composant shomgt
+                      - name: temp
+                        description: répertoire de données temporaires utilisé par sgupdt
+                      - name: tilecache
+                        description: répertoire du cache des tuiles généré par shomgt
+                  - name: lib
+                    description: bibliothèque de scripts utilisés par shomgt et sgupdt
+                    entries:
+                      - name: temp
+                        description: répertoire de données temporaires utilisé par plusiurs scripts
+                  - name: sgupdt
+                    description: code du composant éponyme
+                    entries:
+                      - name: temp
+                  - ...
+    cibleSubDirectories:
+      - name: /var/www/html (@localhost) | /home/bdavid/prod (@Alwaysdata)
+        entries:
+          - name: shomgeotiff
+            description: répertoire de stockage des cartes 7z en prodCode, défini par SHOMGT4_PORTFOLIO_PATH
+            entries:
+              - name: archives
+                description: contenus des cartes et de leurs MD
+                entries:
+                  - namePattern: {mapNum}
+                    description: un répertoire par carte portant comme nom le numéro de la carte
+                    entries:
+                      - {mapNum}-{version}.7z / chaque version {version} de la carte
+                      - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                      - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+              - name: current
+                description: répertoire des versions courantes des cartes
+                entries:
+                  - lien {mapNum}.md.json vers le .md.json
+                    - de la version courante de la carte si version courante
+                    - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                  - lien {mapNum}.7z vers le .7z de la version courante si version courante
+              - name: users
+                description: répertoire des cartes déposées par les utilisateurs
+                entries:
+                  - namePattern: {userEmail}
+                    description: un répertoire par utilisateur portant comme nom son email
+                    entries:
+                      - {mapNum}.7z / carte en cours de dépôt portant comme nom le numéro de la carte suivi de l'ext. .7z
+          - name: shomgtppc
+            description: |
+              répertoire de stockage des cartes 7z en préProdCode, virtuellement identique à shomgeotiff,
+              défini par SHOMGT4_PORTFOLIO_PATH
+            entries:
+              - name: archives
+                description: contenus des cartes et de leurs MD évt. partagés avec prodCode
+                  - entries:
+                    namePattern: {mapNum}
+                    description: un répertoire par carte portant comme nom le numéro de la carte
+                    oneOf:
+                      - lien vers ../../shomgeotiff/archives/{mapNum}
+                      - répertoires spécifiques si nécessaires en préProdCode
+              - name: current
+                description: rép. des versions courantes des cartes pour la préProdCode ayant même structure qu'en prodCode
+              - name: users
+                description: rép. des cartes déposées par les utilisateurs en préProdCode ayant même structure qu'en prodCode
+          - name: geoapi
+            entries:
+              - name: shomgt
+                description: répertoire du code source de ShomGT
+                entries:
+                  - name: data
+                    description: répertoire des données formattées pour le composant shomgt
+                    entries:
+                      - shomgt.yaml
+                      - name: maps
+                        description: répertoire des cartes formattées pour le composant shomgt
+                      - name: temp
+                        description: répertoire de données temporaires
+                      - name: tilecache
+                        description: répertoire du cache des tuiles
+                  
+    archive@3/8T07:00:
+      subDirectories:
+      name: /var/www (@localhost) | /home/bdavid/prod (@Alwaysdata)
+      entries:
+        - name: shomgeotiff
+          description: répertoire de stockage des cartes en prodCode
+          entries:
+            - name: archives
+              description: contenus des cartes et de leurs MD
+              entries:
+                - namePattern: {mapNum}
+                  description: un répertoire par carte portant comme nom le numéro de la carte
+                  entries:
+                    - {mapNum}-{version}.7z / chaque version {version} de la carte
+                    - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                    - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+            - name: current
+              entries:
+                - lien {mapNum}.md.json vers le .md.json
+                  - de la version courante de la carte si version courante
+                  - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                - lien {mapNum}.7z vers le .7z de la version courante si version courante
+        - name: shomgeotiff-ppdata
+          description: répertoire utilisé pour prodCode X préProdData
+          entries:
+            - name: current
+              description: versions courantes pour la pré-prod data ayant même structure que current en prod
+        - name: shomgtppc
+          description: répertoire de stockage des cartes en préProdCode
+          entries:
+            - name: archives
+              description: contenus des cartes et de leurs MD évt. partagés avec prod code
+                - entries:
+                  namePattern: {mapNum}
+                  description: un répertoire par carte portant comme nom le numéro de la carte
+                  oneOf:
+                    - liens vers ../../shomgeotiff/archives/{mapNum}-{version}.(7z|.md.json)
+                    - fichiers spécifiques si nécessaires en pré-prod code
+            - name: current
+              description: versions courantes pour la pré-prod code ayant même structure qu'en prod code
+        - name: shomgtppc-ppdata
+          description: répertoire de préProdData en préProdCode
+          entries:
+            - name: current
+              description: versions courantes pour la pré-prod data pré-prod code ayant même structure qu'en prod
+            - name: users
+              description: répertoire des cartes déposées par les utilisateurs en pré-prod code
+      logic:
+        enProdCode:
+          - en version prod du code
+          - un utilisateur charge sa carte dans shomgeotiff/users/{email}
+          - il l'active en préprod data en la transférant dans shomgeotiff/ppdata
+          - il vérifie en préprod data que sa mise en oeuvre est OK
+          - si c'est le cas il l'active en prod en la transférant dans shomgeotiff/current
+        enPréProdCode:
+          - idem prod code
+          - avec possibilité
+            - soit de partager le répertoire archives pour éviter de le dupliquer
+      code:
+        description: en local la distinction entre prod/pré-prod code se fait au moyen de branches Git
+        prodCode:
+          local: -> /var/www/geoapi/shomgt
+          adata: -> /home/bdavid/prod/geoapi/shomgt
+        préprodCode:
+          local: -> /var/www/geoapi/shomgt
+          adata: -> /home/bdavid/prod/geoapi/sgtppc
+      expositions:
+        appliShomgtActuelle@2/8T12:00:
+          description: URL de l'appli shomgt
+          prodCode:
+            appel: https://geoapi.fr/shomgt (URL diffusée)
+            site:
+              url: geoapi.fr
+              racine: /prod/geoapi/
+              envVars: |
+                SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+                SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          préProdCode:
+            appel: https://sgpp.geoapi.fr/
+            site:
+              description: site nécessaire pour var. env.
+              url: sgpp.geoapi.fr
+              racine: /prod/geoapi/sgpp/
+              envVars: |
+                SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+                SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+        appliShomgtCible@2/8T12:00:
+          description: URL de l'appli shomgt
+          prodCode: idem '#appliShomgtActuelle@2/8T12:00' (URL diffusée)
+          préProdCode:
+            appel: https://sgtppc.geoapi.fr/
+            site:
+              url: sgtppc.geoapi.fr
+              racine: /prod/geoapi/sgtppc/
+              envVars: |
+                SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+                SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+        serviceSgserverActuel@2/8T12:00:
+          prodCode:
+            appel: https://sgserver.geoapi.fr (URL diffusée)
+            site:
+              url: sgserver.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+              envVar: |
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          préProCode:
+            appel: https://xx:xx@sgpp.geoapi.fr/sgserver/index.php
+            site: sgpp.geoapi.fr
+        serviceSgserverCible@2/8T12:00:
+          decription: il existe 4 expositions du service sgserver s'appuyant sur 2 versions du code
+          prodCodeProdData:
+            decription: version prodCode X prodData
+            appel: https://sgserver.geoapi.fr (URL diffusée)
+            site: 
+              url: sgserver.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+                SHOMGT3_MAPS_DIR_PATH=/home/bdavid/prod/shomgt/data/maps
+          prodCodePréProdData:
+            decription: version prodCode X préProdData
+            appel: https://sgserver-ppdata.geoapi.fr
+            site:
+              url: sgserver-ppdata.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff-ppdata
+                SHOMGT3_MAPS_DIR_PATH=/home/bdavid/prod/shomgt/ppdata/maps
+          préProdCodeProdData:
+            decription: version préProdCode X prodData
+            appel: https://sgserver-ppcode.geoapi.fr
+            site:
+              url: sgserver-ppcode.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+          préProdCodePréProdData:
+            decription: version préProdCode X préProdData
+            site:
+              url: sgserver-ppcode-ppdata.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc-ppdata
+        synthèseSitesCible:
+          - description: appli en prodCode
+            url: geoapi.fr
+            racine: /prod/geoapi/
+            envVars: |
+              SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+              SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+              SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          - description: sgserver de prodData en prodCode
+            url: sgserver.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+            envVar: |
+              SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          - description: sgserver de préProdData en prodCode
+            url: sgserver-ppdata.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+            envVar: |
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff-ppdata
+          - description: appli en préProdCode
+            url: sgtppc.geoapi.fr
+            racine: /prod/geoapi/sgtppc/
+            envVars: |
+              SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+              SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+              SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+          - description: sgserver de prodData en préProdCode
+            url: sgserver-ppcode.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+            envVar: |
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+          - description: sgserver de préProdData en préProdCode
+            url: sgserver-ppcode-ppdata.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+            envVar: |
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc-ppdata
+    envVar:
+       - le chemin de shomgeotiff est défini dans la var. d'env. SHOMGT4_PORTFOLIO_PATH
+  structureFichiersMdJson: définie par le schema bo/md.schema.yaml
+
+envVars:
+  shomgt:
+    SHOMGT3_LOG_MYSQL_URI:
+      description: si absent, le log est désactivé, sinon URI de la base MySql utilisé pour stocker les logs
+      default: pas de défaut, vaut alors ''
+      valeursFonctionDuHost:
+        geoapi.fr: mysql://xx:yy@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+        localhost: mysql://xx:yy@mysqlserver/shomgt
+    SHOMGT3_MAPWCAT_FORCE_HTTPS:
+      description: si true alors https est forcé dans mapwcat
+      default: pas de défaut, vaut alors ''
+      note: indispensable pour utiliser shomgt derrière un Traefik gérant le certificat https
+    SHOMGT3_MAPS_DIR_PATH:
+      description: chemin du répertoire stockant les cartes expansées
+      note: devient indispensable en ShomGT4
+  sgupdt:
+    SHOMGT3_SERVER_URL: 
+      description: URL du serveur de cartes 7z; doit contenir le login/passwd si nécessaire
+      default: https://sgserver.geoapi.fr/index.php
+    http_proxy:
+    https_proxy: proxy à utiliser pour le serveur de cartes 7z, défaut absent
+    SHOMGT3_MAPS_DIR_PATH:
+      description: chemin du répertoire stockant les cartes expansées
+      note: devient indispensable en ShomGT4
+    SHOMGT3_UPDATE_DURATION: délai entre 2 mises à jour en jours (defaut 28)
+  sgserver:
+    SHOMGT3_PORTFOLIO_PATH:
+      description: chemin du répertoire shomgeotiff
+      geoapi.fr: /home/bdavid/prod/shomgeotiff
+      local: /var/www/html/shomgeotiff
+  bo:
+    SHOMGT3_PORTFOLIO_PATH:
+      description: chemin du répertoire shomgeotiff
+      geoapi.fr: /home/bdavid/prod/shomgeotiff
+      local: /var/www/html/shomgeotiff
+  dashboard:
+    SHOMGT3_DASHBOARD_PORTFOLIO_PATH:
+      description: chemin de shomgeotiff
+      geoapi.fr: /home/bdavid/prod/shomgeotiff
+      local: /var/www/html/shomgeotiff
 
 specsDesCartes:
   stratégie:
@@ -606,6 +1054,29 @@ bo:
   mettreAJourServicesShomGt:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
 
+appelSgUpdtDepuisLeBo:
+  title: appel de sgupdt depuis le BO
+  solution: |
+    modifier l'env. et effectuer 
+
+exec:
+  exec: |
+    exec — Exécute un programme externe
+    exec(string $command, array &$output = null, int &$result_code = null): string|false
+  
+  shell_exec: |
+    shell_exec — Exécute une commande via le Shell et retourne le résultat sous forme de chaîne
+  
+    exemple
+      $output = shell_exec('ls -lart');
+      echo "<pre>$output</pre>";
+    
+    $locale = 'fr_FR.UTF-8';
+    setlocale(LC_ALL, $locale);
+    putenv('LC_ALL='.$locale);
+  putenv: |
+    putenv — Fixe la valeur d'une variable d'environnement
+    putenv(string $assignment): bool
 GeoTiff:
   v1: |
     The GeoTIFF format was initially developed during the early 1990’s (N. Ritter & Ruth, 1997). 
@@ -755,19 +1226,21 @@ crsWkt:
   eof:
 arbreEnYaml:
   description: |
-    Un noeud est représenté par un objet atant une structure qqc et un champ particulier contenant les feuilles (leafs ici)
+    Un noeud est représenté par un objet atant une structure qqc et un champ particulier contenant les feuilles (children ici)
     Une feuille est ici représentée par une chaine de caractères mais pourrait aussi être représentée par une structure
     quelconque n'ayant pas de feuille.
     Tout dépend de l'info que l'on veut stocker dans le noeud et la feuille.
   arbre:
-    - label: étiquette du noeud 1
-      leafs:
-        - feuille 1.1
-        - feuille 1.2
-    - label: étiquette d'un second noeud
-      leafs:
-        - feuille 2.1
-    - feuille 3
+    label: racine
+    children:
+      - label: étiquette du noeud 1
+        children:
+          - feuille 1.1
+          - feuille 1.2
+      - label: étiquette d'un second noeud
+        children:
+          - feuille 2.1
+      - feuille 3 rattachée à la racine
 
 suppressionDeCartes(30/7/2023):
   0982:

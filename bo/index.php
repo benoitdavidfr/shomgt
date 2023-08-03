@@ -60,16 +60,17 @@ switch ($_GET['action'] ?? null) {
   case 'login':
   case 'menu': { // Menu après login
     if (!isset($_POST['login']))
-      echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+      echo HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGt ($login)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
-    echo "<li><a href='addmaps.php'>Déposer de nouvelles versions de cartes dans le portefeuille</li>\n";
+    echo "<li><a href='addmaps.php'>Déposer de nouvelles versions de cartes dans le portefeuille</a></li>\n";
     //echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
     echo "</ul>\n";
     echo "<h3>Fonctions d'administration</h3>\n";
     echo "<ul>\n";
-    echo "<li><a href='pfm.php'>Gérer l'activation des cartes du portefeuille</a></li>\n";
+    echo "<li><a href='pfcurrent.php'>Gérer l'activation des cartes du portefeuille</a></li>\n";
+    echo "<li><a href='pfweight.php'>Gérer le poids du portefeuille</a></li>\n";
     echo "</ul>\n";
     die();
   }

@@ -29,27 +29,12 @@
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
+require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
-
-// supprime les - suivis d'un retour à la ligne dans Yaml::dump()
-function YamlDump($data, int $level=3, int $indentation=2, int $options=0): string {
-  $dump = Yaml::dump($data, $level, $indentation, $options);
-  return preg_replace('!-\n *!', '- ', $dump);
-}
-
-// affiche un boutton HTML
-function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
-  $form =  "<form action='$action' method='$method'>";
-  foreach ($hiddenValues as $name => $value)
-    $form .= "  <input type='hidden' name='$name' value='$value' />";
-  return $form
-    ."  <input type='submit' value='$submitValue'>"
-    ."</form>";
-}
 
 class Image { // Image principale ou cartouche de la carte 
   //protected string $name=''; // nom du cartouche de la forme (\d+|[A-Z]+)_gtw, '' pour l'image principale

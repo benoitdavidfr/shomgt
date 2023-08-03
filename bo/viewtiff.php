@@ -24,7 +24,7 @@ require_once __DIR__.'/mapmetadata.inc.php';
 require_once __DIR__.'/maparchive.php';
 
 define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>viewtiff</title></head><body>\n");
-define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+//define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
 define ('TEST_MAPS', [
     "2 cartes normales sans cartouche" => [
       'path=/incoming/20230710&map=6735' =>
