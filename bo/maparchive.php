@@ -124,7 +124,7 @@ class Image { // Image principale ou cartouche de la carte
 };
 
 class MapArchive { // analyse des fichiers d'une archive d'une carte
-  protected string $type; // 'normal'|'special'
+  protected string $type='undefined'; // 'undefined'|'normal'|'special'
   protected string $pathOf7z; // chemin chemin du fichier .7z
   protected string $mapNum; // no sur 4 chiffres
   protected ?string $thumbnail=null; // nom de la miniature dans l'archive
@@ -150,8 +150,10 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       if ($entry['Attr'] <> '....A') continue; // pas un fichier
       if ($entry['Name'] == "$mapNum/$mapNum.png")
         $this->thumbnail = $entry['Name'];
-      elseif ($entry['Name'] == "$mapNum/{$mapNum}_pal300.tif")
+      elseif ($entry['Name'] == "$mapNum/{$mapNum}_pal300.tif") {
+        $this->type = 'normal';
         $this->main->setTif($entry['Name'], $archive);
+      }
       elseif ($entry['Name'] == "$mapNum/CARTO_GEOTIFF_{$mapNum}_pal300.xml")
         $this->main->setXml($entry['Name'], $pathOf7z);
       elseif (preg_match("!^$mapNum/(CARTO_GEOTIFF_)?{$mapNum}_((\d+|[A-Z]+)_gtw)\.(tif|xml)$!", $entry['Name'], $matches)) {
@@ -164,45 +166,16 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         else // $ext == 'xml'
           $this->insets[$name]->setXml($entry['Name'], $pathOf7z);
       }
-      elseif (!preg_match('!\.(gt|tfw|prj)$!', $entry['Name']))
+      elseif (preg_match("!^$mapNum/$mapNum(_\d+)?\.(tif|pdf)$!", $entry['Name'], $matches)) {
+        $this->type = 'special';
+        if (($matches[2] == 'tif') || !$this->main->tif()) { // le .tif a priorité sur le .pdf
+          $this->main->setTif($entry['Name'], $archive);
+        }
+      }
+      elseif (preg_match("!^$mapNum/[^/]+\.xml$!", $entry['Name']))
+        $this->main->setXml($entry['Name'], $pathOf7z);
+      elseif (preg_match("!^$mapNum/[^/]+$!", $entry['Name']) && !preg_match('!\.(gt|tfw|prj)$!', $entry['Name']))
         $this->suppls[$entry['Name']] = 1;
-    }
-    //echo "<pre>"; print_r($this); echo "</pre>\n";
-    if ($this->main->tif()) { // cas de carte normale
-      $this->type = 'normal';
-    }
-    else { // détection des images et MD pour une carte spéciale 
-      $this->type = 'special';
-      $entriesPerExt = ['tif'=>[], 'pdf'=>[], 'xml'=>[]];
-      foreach (array_keys($this->suppls) as $name) { // recherche des .tif, des .pdf et des .xml
-        if (preg_match('!\.(tif|pdf|xml)$!', $name, $matches)) {
-          $entriesPerExt[$matches[1]][] = $name;
-        }
-      }
-      //echo "<pre>"; print_r($entriesPerExt);
-      if (count($entriesPerExt['tif']) == 1) {
-        $this->main->setTif($entriesPerExt['tif'][0], $archive);
-        unset($this->suppls[$entriesPerExt['tif'][0]]);
-      }
-      elseif ((count($entriesPerExt['tif']) == 0) && (count($entriesPerExt['pdf'])) == 1) {
-        $this->main->setTif($entriesPerExt['pdf'][0], $archive);
-        unset($this->suppls[$entriesPerExt['pdf'][0]]);
-      }
-      if (count($entriesPerExt['xml']) == 1) {
-        $this->main->setXml($entriesPerExt['xml'][0], $pathOf7z);
-        unset($this->suppls[$entriesPerExt['xml'][0]]);
-      }
-      if (!$this->main->tif() && $mapCat->geotiffNames) {
-        foreach ($mapCat->geotiffNames as $geotiffName) {
-          foreach (array_keys($this->suppls) as $name)  {
-            if ($name == "$mapNum/$geotiffName") {
-              $this->main->setTif("$mapNum/$geotiffName", $archive);
-              unset($this->suppls[$name]);
-              break 2;
-            }
-          }
-        }
-      }
     }
   }
   
@@ -331,8 +304,12 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
         $errors[] = "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
     }
     if ($this->suppls) {
-      foreach(array_keys($this->suppls) as $suppl)
-        $warnings[] = "Le fichier $suppl n'est pas prévu par la spécification";
+      foreach(array_keys($this->suppls) as $suppl) {
+        if (substr($suppl, -4)=='.tif')
+          $errors[] = "Le fichier $suppl est interdit par la spécification";
+        else
+          $warnings[] = "Le fichier $suppl n'est pas prévu par la spécification";
+      }
     }
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
@@ -429,7 +406,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     echo "</table>\n";
   }
   
-  function showAsYaml(array $options): void { // Affichage limité
+  function showAsYaml(): void { // Affichage limité
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
     $mapCat = new MapCat($mapNum);
@@ -506,7 +483,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
 
 if ((php_sapi_name() == 'cli') && ($argv[0]=='maparchive.php')) {
   if (!isset($argv[1])) {
-    echo "usage: $argv[0] [-full] {chemin_d'un_répertoire_ou_d'un_fichier.7z}\n";
+    echo "usage: $argv[0] [{options}] {chemin_d'un_répertoire_ou_d'un_fichier.7z}\n";
     echo "Si le chemin correspond à un répertoire alors le parcours récursivement pour trouver les archives 7z\n"
       ."et vérifier la validité de chaque archive 7z comme carte ShomGT.\n";
     echo "Options:\n";

@@ -26,7 +26,7 @@ class GBox {
     */
     $lpos = $polygon['coordinates'][0]; // la liste des positions du polygone
     $this->min = $lpos[1];
-    if (($lpos[1][0] > 0) && ($lpos[2][0] < 0)) { // boite est à cheval sur l'antéméridien
+    if (($lpos[1][0] > 0) && ($lpos[2][0] < 0)) { // boite est à cheval sur l'antiméridien
       $this->max = [$lpos[3][0]+360, $lpos[3][1]];
     }
     else { // la boite n'est PAS à cheval sur l'antiméridien
@@ -51,8 +51,22 @@ class GBox {
       return sprintf('[west: %f, south: %f, east: %f, north: %f]', $this->min[0], $this->min[1], $this->max[0], $this->max[1]);
   }
   
-  function astrideTheAntimeridian(): bool { return ($this->max[0] > 180); }
-    
+  function astrideTheAntimeridian(): bool { return ($this->max[0] > 180); } // boite à cheval sur l'antiméridien
+  
+  function translate360West(): self { // retourne le GBox translaté de 360° vers l'ouest
+    $gbox = new GBox;
+    $gbox->min = [$this->min[0]-360, $this->min[1]];
+    $gbox->max = [$this->max[0]-360, $this->max[1]];
+    return $gbox;
+  }
+
+  function translateEastBound360East(): self { // retourne le GBox dont le bord Est est translaté de 360° vers l'est
+    $gbox = new GBox;
+    $gbox->min = [$this->min[0], $this->min[1]];
+    $gbox->max = [$this->max[0]+360, $this->max[1]];
+    return $gbox;
+  }
+  
   function area(): float { return ($this->max[0]-$this->min[0]) * ($this->max[1]-$this->min[1]); }
   
   function bound(array $pos): void { // agrandit le bbox avec la position $pos en LonLat
@@ -161,7 +175,7 @@ class Ebox {
 */
 require_once __DIR__.'/my7zarchive.inc.php';
 
-class Gdalinfo { // 
+class Gdalinfo { // info de géoréférencement d'une image fournie par gdalinfo
   protected array $info; // contenu du gdalinfo
   
   function __construct(string $path) {
@@ -187,28 +201,6 @@ class Gdalinfo { //
       return $this->goodGeoref() ? 'ok' : 'KO';
   }
   
-  // Test de georef correct fondé sur la comparaison entre cornerCoordinates et la projection en WorldMercator de wgs84Extent
-  function goodGeoref(bool $debug=false): bool { 
-    $gbox = $this->gbox();
-    if ($debug)
-      echo "  gbox=$gbox\n";
-    $proj = EBox::fromListOfPos([
-      WorldMercator::proj($gbox->min()),
-      WorldMercator::proj($gbox->max()),
-    ]);
-    if ($debug)
-      echo "  proj=$proj\n";
-    
-    $ebox = new EBox($this->info['cornerCoordinates']);
-    if ($debug)
-      echo "  ebox=$ebox\n";
-    $distance = $ebox->distance($proj);
-    if ($debug)
-      printf("  distance=%.0f\n", $distance);
-    
-    return ($distance < 1000);
-  }
-  
   function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo
     if (!isset($this->info['wgs84Extent']))
       return null;
@@ -216,6 +208,82 @@ class Gdalinfo { //
       return new GBox($this->info['wgs84Extent']);
   }
 
+  // Test de georef correct fondé sur la comparaison entre cornerCoordinates et la projection en WorldMercator de wgs84Extent
+  function goodGeoref(bool $debug=false): bool { 
+    $ebox = new EBox($this->info['cornerCoordinates']);
+    if ($debug)
+      echo "  ebox=$ebox\n";
+    if ($debug)
+      echo "  gbox=",$this->gbox(),"\n";
+
+    foreach(['std','AM+ccInTheWestHemisphere','bboxCoversMoreThan360°'] as $case) {
+      switch ($case) {
+        case 'std': { // cas standard
+          $gbox = $this->gbox();
+          break;
+        }
+        // Si non cela peut venir de la convention pour les images à cheval sur l'antimeridien
+        case 'AM+ccInTheWestHemisphere': { // cas particulier 1 où les cornerCoordinates sont définis dans l'hémisphère Ouest
+          //if (!$this->gbox()->astrideTheAntimeridian())
+          //  return false;
+
+          if ($debug)
+            echo "  boite à cheval sur AM\n";
+          $gbox = $this->gbox()->translate360West();
+          if ($debug)
+            echo "  translate360West=$gbox\n";
+          break;
+        }
+        case 'bboxCoversMoreThan360°': { // cas particulier 2 où la boite couvre une largeur de plus de 360° (cas 0101)
+          if ($debug)
+            echo "  Test boite couvrant une largeur de plus de 360°\n";
+          $gbox = $this->gbox()->translateEastBound360East();
+          if ($debug)
+            echo "  translateEastBound360East=$gbox\n";
+          break;
+        }
+      }
+      
+      $proj = EBox::fromListOfPos([
+        WorldMercator::proj($gbox->min()),
+        WorldMercator::proj($gbox->max()),
+      ]);
+      if ($debug)
+        echo "  proj=$proj\n";
+      
+      $distance = $ebox->distance($proj);
+      if ($debug)
+        printf("  distance=%.0f\n", $distance);
+    
+      if ($distance < 1000) // Si la distance est inférieure à 1 km alors géoréférencement ok
+        return true;
+    }
+    return false;
+  }
+  
+  static function testGoodGeoref(string $PF_PATH): void {
+    foreach ([
+        //"7620-2018c5 - Approches d'Anguilla"=> ['path7z'=> 'incoming/7620-2018c5/7620.7z', 'entry'=> '7620/7620_pal300.tif'],
+        //"7471-2021c3 - D'Anguilla à St-Barth"=> ['path7z'=> 'archives/7471/7471-2021c3.7z', 'entry'=> '7471/7471_pal300.tif'],
+        //"6977 - O. Pacif. N - P. NW /AM"=> ['path7z'=> 'archives/6977/6977-1982c169.7z', 'entry'=> '6977/6977_pal300.tif'],
+        //"6835 - Océan Pacifique N. - P. E. /AM"=> ['path7z'=> 'current/6835.7z', 'entry'=> '6835/6835_pal300.tif'],
+        "0101 - Planisphère"=> ['path7z'=> 'current/0101.7z', 'entry'=> '0101/0101_pal300.tif'],
+      ] as $title => $tif) {
+        echo "$title:\n";
+        $archive = new My7zArchive("$PF_PATH/$tif[path7z]");
+        $gdalInfo = new GdalInfo($path = $archive->extract($tif['entry']));
+        $archive->remove($path);
+        //print_r($gdalInfo);
+        $good = $gdalInfo->goodGeoref();
+        echo "  ",$good ? 'good' : 'bad',"\n";
+        if (!$good) {
+          $gdalInfo->goodGeoref(true);
+        }
+    }
+    $am = WorldMercator::proj([180, 0]);
+    printf("AM=[x: %.0f, y: %.0f]\n", $am[0],$am[1]);
+  }
+  
   static function test(string $path7z, string $entry): void {
     $archive = new My7zArchive($path7z);
     $gdalInfo = new GdalInfo($path = $archive->extract($entry));
@@ -235,23 +303,6 @@ if ((php_sapi_name() == 'cli') && ($argv[0]=='gdalinfo.inc.php')) {
     GdalInfo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif'); 
   }
   elseif (1) { // Test de goodGeoref
-    foreach ([
-        "7620-2018c5 - Approches d'Anguilla"=>
-          ['path7z'=> 'incoming/7620-2018c5/7620.7z', 'entry'=> '7620/7620_pal300.tif'],
-        "7471-2021c3 - D'Anguilla à Saint-Barthélemy"=>
-          ['path7z'=> 'archives/7471/7471-2021c3.7z', 'entry'=> '7471/7471_pal300.tif'],
-        "6977 - Océan Pacifique Nord - Partie Nord-Ouest (à cheval sur AM)"=>
-          ['path7z'=> 'archives/6977/6977-1982c169.7z', 'entry'=> '6977/6977_pal300.tif'],
-      ] as $title => $tif) {
-        echo "$title:\n";
-        $archive = new My7zArchive("$PF_PATH/$tif[path7z]");
-        $gdalInfo = new GdalInfo($path = $archive->extract($tif['entry']));
-        $archive->remove($path);
-        //print_r($gdalInfo);
-        $good = $gdalInfo->goodGeoref();
-        echo "  ",$good ? 'good' : 'bad',"\n";
-    }
-    $am = WorldMercator::proj([180, 0]);
-    printf("AM=[x: %.0f, y: %.0f]\n", $am[0],$am[1]);
+    GdalInfo::testGoodGeoref($PF_PATH);
   }
 }

@@ -232,14 +232,14 @@ backlog:
       - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus (FAIT)
       - tests de sprint1
       - bug 7620 - retour à la correction précédente, ie nécessité de borders
-        - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO
+        - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO (FAIT)
         - considérer comme erreur l'existence d'un .tif non prévu
       - revoir la spec des cartes spéciales pour la restreindre à ce qui est autorisé dans sgupdt
         - cad
           - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
           - + éventuel fichier .xml
       - mise en prod sur https://geoapi.fr/shomgt/
-      - convergence de la branche avec main
+      - convergence de la branche git avec main
   sprint3:
     objectifs:
       - création de comptes
@@ -850,77 +850,64 @@ specsDesCartes:
   stratégie:
     - vu que les composants shomgt et sgupdt peuvent être déconcentrés
       - j'ai intérêt à garder simples ces composants et à reporter la complexité d'hétérogénéité en amont sur le BO
-    - cela veut dire qu'il faut que j'impose des spécifications plus contraignantes que celles du Shom
-    - je peux éventuellement effectuer des transformations dans le BO pour respecter les spécifications que j'impose
+    - cela veut dire qu'il faut que j'impose dans certains cas particuliers des spécifications plus contraignantes
+      - que celles du Shom
+    - en contrepartie, je peux effectuer des transformations dans le BO pour respecter les spécifications que j'impose
       - cela veut dire qu'il faut que je distingue
         - la spécification à respecter en interne, notamment dans le protocole sgserver et le stockage du portefeuille
         - de la spécification externe à respecter pour charger une carte dans le BO
+    - dans un premier temps, pas de transformation et donc spec externe = spec interne
     - les principaux problèmes de spécification sont
       - sur les cartes spéciales qui par définition sont très peu spécifiées mais ne sont pas nombreuses
         - au pire elles peuvent être restructurées à la main, ce que j'ai fait en ShomGT3
       - sur les cartes facs-similés avec le nommage des fichiers et le géorérencement
-      - sur les cartes qui sont à cheval sur l'antiméridien pour lesquelles le format GéoTiff semble ambigu ou mal respecté
+      - sur les cartes à cheval sur l'antiméridien pour lesquelles le format GéoTiff semble ambigu ou mal respecté
+  
   cartesNormales:
     - Les cartes normales sont spécifiées par le Shom
-      - qui précise que la spec ne concerne pas les Fac-similé
+      - qui précise que la spec ne concerne pas les Fac-similés
     - J'ajoute à la spec Shom la cohérence suivante avec MapCat
       - chaque carte 7z correspond à une entrée dans les cartes obsolètes ou non de MapCat
       - ssi la zone principale pal300 est géoréférencée alors
         - la carte comporte les champs spatial et scaleDenominator et
         - son géoréférencement contient géographiquement l'extension spatiale définie dans MapCat
           - avec un cas particulier pour les cartes à cheval sur l'antiméridien et les cartes faisant plus du tour de la Terre
-      - il y a bijection entre les images des cartouches de l'archive et les cartouches définis dans MapCat
+      - chaque image de cartouche de l'archive correspond à un et un seul cartouche défini dans MapCat, et vice-versa
       - le géoréférencement de l'image contient l'extension spatiale correspondante dans MapCat
       - si un géoréférencement est absent ou incorrect alors le champ borders doit être défini dans Mapcat
   
     - Pour les cartes à cheval sur l'antiméridien
       - l'encodage de l'extension spatiale permet de détecter cette caractéristique
-      - voir les coordonnées projetées dans le géoréférencement
+      - les coordonnées projetées dans le géoréférencement ont
+        - un West dans les bornes normales de la proj. WorldMercator
+        - un East > 20.037.508, cad la coord. X de l'antiméridien dans WorldMercator
     
-  
-  
-    - Les cartes Fac-similé ne respectent pas exactement la spec
-      - pb éventuel de projection (ex 7620)
-      - les cartouches peuvent être numérotés par des lettres au lieu des nombres
-      - des fichiers en plus dans l'archive qui font planter sgupt
+    - Les cartes Fac-similés doivent respecter la même spec, à l'exception de
+      - les cartouches peuvent être numérotés par des lettres au lieu de nombres
+      
+    - les cartes normales ne doivent pas avoir dans le répertoire {mapNum} de fichier .tif en plus de ceux prévus par la spec
+      - cela permet de réorganiser une archive en sauvegardant l'archive d'origine dans un répertoire spécifique
     
-  cartesspéciales:
+  cartesSpéciales:
      Pour les cartes spéciales j'utilise la spécification suivante:
       - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
       - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
-      - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
-        ALORS ce fichier .tif ou .pdf contient l'image géoréférencée ou non
-        SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
-      - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
       - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
+      - l'archive doit contenir au moins
+        - soit un fichier {mapNum}/{mapNum}.(tif|pdf)
+        - soit un fichier {mapNum}/{mapNum}_{year}.(tif|pdf) où {year} est l'année de publication de la carte
+      - l'archive peut contenir un .tif et un .pdf ayant même nom de base
+      - le répertoire {mapNum} de l'archive ne doit pas contenir d'autre fichier .tif ou .pdf
+      - si l'archive contient un fichier .xml alors il est utilisé comme fichier de MD ISO
    
-     Pour les 2 types de carte:
-      - un .tif est considéré comme géoréférencé ssi son gdalinfo contient un champ coordinateSystem
-  
-    - le portefeuille comporte quelques cartes spéciales ne respectant pas les specs des cartes normales
-    - Pour ces cartes j'utilise la spécification suivante
-      - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
-      - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
-      - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
-        ALORS ce fichier .tif ou .pdf contient l'image géoréférencée ou non
-        SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
-      - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
-      - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
-   
-
-  
-      - chacune est identifiée dans MapCat par le champ layer qui identifie la couche à laquelle elle est affectée
-    - si l'archive 7z comporte un seul .tif ou pas de .tif et un seul .pdf
-      - alors je considère que ce fichier constitue l'image principale de la carte
-      - sinon s'il existe un champ geotiffnames dans MapCat et si un des geotiffnames correspond à une entrée dans l'archive 7z
-        - alors je considère que ce fichier constitue l'image principale de la carte
-        - sinon ERREUR
-    - pour les MD
-      - si l'archive comprend un et un seul fichier XML
-        - alors je considère que c'est le fichier de MD
-        - sinon je construis des MD simplifiées dans lesquelles la version est le nom du fichier .tif ou .pdf
-          - en effet je constate que le nom du tif/pdf change à chaque version de la carte
-          - c'est donc un bon moyen de gérer la version des cartes spéciales sans fichier MD ISO
+  géoréférencement:
+      - Pour les 2 types de carte un .tif est considéré comme non géoréférencé ssi
+        - le champ coordinateSystem/wkt de son gdalinfo est absent ou vide
+      - sinon il est bien géoréférencé ssi
+        - la projection WoldMercator du wgs84Extent est distante de moins de 1 km de cornerCoordinates
+      - sinon il est mal géoréférencé
+      - si le fichier .tif ou .pdf n'est pas ou est mal géoréféréncé
+        - alors l'enregistrement MapCat correspondant doit comporter un champ borders
   
 géoréférencement:
   - dans ShomGT je vois le géoréférencement des images au travers de gdalinfo
