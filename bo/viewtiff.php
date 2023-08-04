@@ -102,6 +102,7 @@ define ('MIN_FOR_DISPLAY_IN_COLS', 100); // nbre min d'objets pour affichage en 
 define ('NBCOLS_FOR_DISPLAY', 24); // nbre de colonnes si affichage en colonnes
 define ('LGEOJSON_STYLE', ['color'=>'blue', 'weight'=> 2, 'opacity'=> 0.3]); // style passé à l'appel de L.geoJSON()
 
+use Symfony\Component\Yaml\Yaml;
 
 if (!($login = Login::login())) {
   die("Accès non autorisé\n");
@@ -230,10 +231,18 @@ switch ($_GET['action'] ?? null) {
       echo "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
     die();
   }
-  case 'dumpPhp': { // affiche 
+  case 'show7zContents': { // affiche le contenu de l'archive
+    $archive = new My7zArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
+    echo HTML_HEAD,"<b>Contenu de l'archive $_GET[map].7z:</b><br>\n<pre>";
+    foreach ($archive as $entry) {
+      echo Yaml::dump([$entry]);
+    }
+    die();
+  }
+  case 'dumpPhp': { // affiche le print_r() Php
     $mapNum = substr($_GET['map'], 0, 4);
     $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
-    echo "<pre>"; print_r($map); echo "</pre>";
+    echo HTML_HEAD,"<pre>"; print_r($map); echo "</pre>";
     die();
   }
   case 'viewtiff': { // affiche une carte dans Leaflet avec les images

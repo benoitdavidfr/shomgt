@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: sgserver/index.php - serveur de carte 7z (v2 simplifiée)
+title: sgserver/index.php - serveur de carte 7z - ShomGTV4
 name: index.php
 doc: |
   Le serveur expose les cartes disponibles sous la forme d'archives 7z ainsi que le catalogue mapcat.yaml
@@ -34,6 +34,11 @@ doc: |
     - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
       la propriété 'status' contenant la valeur 'obsolete'
 journal: |
+  3-4/8/2023:
+    - passage en ShomGT4
+    - sgupdt en version 4 fait une requête avec le paramètre version=4
+    - pour être compatible avec sgupdt version 3, on garde un traitement spécifique quand le paramètre version=1
+      - qui consiste à fournir comme version des cartes spéciales la chaine 'undefined'
   25/7/2023:
     - amélioration du code en le structurant avec un switch()
     - réintroduction de l'exclusion de cartes en V0
@@ -41,7 +46,7 @@ journal: |
   19/6/2023:
     - prise en compte des cartes retirées (status obsolete)
   11/6/2023:
-    - nouvelle version simplifiée correspondant à la restructuration de shomgeotiff
+    - nouvelle version simplifiée correspondant à la restructuration de shomgeotiff (ShomGT3.1)
   2/8/2022:
     - corrections indiquées par PhpStan level 6
   20/6/2022:
@@ -85,9 +90,10 @@ journal: |
 //define ('DEBUG', true); // le mode DEBUG facilite le test interactif du serveur
 
 define('EXCLUDED_MAPS_IN_V0', ['8523']); // cartes exclues du service en V0 car incompatible avec sgupdt v0.6
-
-//define('TEST_MAPS', []); // PAS de restriction pour tests
-define('TEST_MAPS', [
+// cartes spéciales traitées spécialement en version < 4
+define('SPECIAL_MAPS', ['7330','7344','7360','8101','8502','8509','8510','8517','8523']); 
+define('TEST_MAPS', []); // PAS de restriction pour tests
+/*define('TEST_MAPS', [
   '0101', // planisphère
   '6835', // carte à cheval sur l'antiméridien
   '6977', // carte à cheval sur l'antiméridien
@@ -96,7 +102,7 @@ define('TEST_MAPS', [
   '8509', // Action de l'Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
   '8510', // Délimitations des zones maritimes
 ]
-); // restriction pour tests
+); // restriction pour tests*/
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
@@ -239,14 +245,23 @@ switch ($_SERVER['PATH_INFO'] ?? null) {
       if (TEST_MAPS && !in_array($mapnum, TEST_MAPS)) continue; // restriction éventuelle pour tests
       $mapMd = json_decode(file_get_contents("$PF_PATH/current/$map"), true);
       $mapNum = substr($map, 0, -8);
-      $maps[$mapNum] = (($mapMd['status'] ?? null) == 'obsolete') ?
-          [ 'status'=> 'obsolete' ]
-        : [ 'status'=> 'ok', 'lastVersion'=> $mapMd['version'], 'url'=> "$scriptUrl/maps/$mapNum.7z"];
+      if (($mapMd['status'] ?? null) == 'obsolete') {
+        $maps[$mapNum] = [ 'status'=> 'obsolete' ];
+      }
+      // en version 1 les cartes spéciales ont comme version 'undefined'
+      // c'est nécessaire pour être compatible avec la manière dont sgupdt en V3 déduit la version des cartes spéciales
+      // cela interdit la mise à jour des cartes spéciales
+      elseif (($version < 4) && in_array($mapnum, SPECIAL_MAPS)) {
+        $maps[$mapNum] = [ 'status'=> 'ok', 'lastVersion'=> 'undefined', 'url'=> "$scriptUrl/maps/$mapNum.7z"];
+      }
+      else {
+        $maps[$mapNum] = [ 'status'=> 'ok', 'lastVersion'=> $mapMd['version'], 'url'=> "$scriptUrl/maps/$mapNum.7z"];
+      }
     }
     ksort($maps, SORT_STRING);
     header('Content-type: application/json');
     echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-    logRecord(['done'=> "OK - maps.json transmis"]);
+    logRecord(['done'=> "OK - maps.json transmis en version $version"]);
     die();
   }
   default: { // /maps/{numCarte}.7z: retourne le 7z de la dernière version de la carte

@@ -19,6 +19,8 @@ doc: |
   A faire:
     - ajouter une synthèse du traitement à afficher à la fin
 journal: |
+  3/8/2023:
+    - chgt de la constante VERSION en '4' pour obtenir les vraies versions des cartes spéciales
   18/6/2023:
     - déplacement lib dans ../lib
   1/8/2022:
@@ -72,7 +74,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-define ('SGSERVER_VERSION', '1'); // no de version utilisée dans l'appel au serveur sgserver
+define ('SGSERVER_VERSION', '4'); // no de version utilisée dans l'appel au serveur sgserver
 define ('CMDE_VERBOSE', 1); // degré de verbosité de l'exécution des cmdes
 
 // phase d'initialisation
@@ -191,14 +193,49 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
     return '';
   }
   foreach (new DirectoryIterator("$MAPS_DIR_PATH/$mapnum") as $filename) {
-    if (preg_match('!^CARTO_GEOTIFF_\d+_[^.]+\.xml!', $filename)) {
-      //echo "$filename\n";
+    if ($filename == "CARTO_GEOTIFF_{$mapnum}_pal300.xml") {
+      echo "$filename\n";
       $currentMapVersion = readMapVersion("$MAPS_DIR_PATH/$mapnum/$filename");
-      //echo "currentMapVersion=$currentMapVersion\n";
+      echo "findCurrentMapVersion() returns $currentMapVersion[version]\n";
       return $currentMapVersion['version'];
     }
   }
-  return 'undefined';
+  // Cas où il n'existe pas de fichier de MD ISO standard
+  echo "il n'existe pas de fichier de MD ISO standard\n";
+  $fileNamePerType = [];
+  foreach (new DirectoryIterator("$MAPS_DIR_PATH/$mapnum") as $filename) {
+    echo "  filename=$filename\n";
+    if (in_array(substr($filename, -4), ['.xml','.tif','.pdf']) && (substr($filename, -12)<>'.png.aux.xml')) {
+      echo "$filename match condition\n";
+      $fileNamePerType[substr($filename, -3)][] = (string)$filename;
+    }
+  }
+  print_r($fileNamePerType);
+  // si il existe un seul fichier .xml je l'utilise
+  if (count($fileNamePerType['xml'] ?? []) == 1) {
+    echo "j'utilise le seul fichier .xml '$filename'\n";
+    $filename = $fileNamePerType['xml'][0];
+    $currentMapVersion = readMapVersion("$MAPS_DIR_PATH/$mapnum/$filename");
+    echo "findCurrentMapVersion() returns $currentMapVersion[version]\n";
+    return $currentMapVersion['version'];
+  }
+  // sinon, si il existe un seul fichier .tif
+  if (count($fileNamePerType['tif'] ?? []) == 1) {
+    $filename = $fileNamePerType['tif'][0];
+    echo "j'utilise le seul fichier .tif '$filename'\n";
+    $version = substr($filename, 0, -4); // je prends le nom du .tif sans l'extension
+    echo "findCurrentMapVersion() returns $version\n";
+    return $version;
+  }
+  // sinon, si il existe un seul fichier .pdf
+  if (count($fileNamePerType['pdf'] ?? []) == 1) {
+    $filename = $fileNamePerType['pdf'][0];
+    echo "j'utilise le seul fichier .pdf '$filename'\n";
+    echo "findCurrentMapVersion() returns $filename\n";
+    return $filename; // je prends le nom du .pdf AVEC l'extension
+  }
+  echo "findCurrentMapVersion() returns 'undefined'\n";
+  return 'undefined'; // sinon undefined
 }
 
 function expand(string $map7zpath): void { // expansion d'une carte téléchargée comme 7z au path indiqué
@@ -292,6 +329,9 @@ while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec u
       else {
         echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées donc la carte est rechargée\n";
       }
+    }
+    else {
+      echo "Pour la carte $mapnum.7z, la version présente est $currentVersion et la version proposée est $mapVersion\n";
     }
     if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
       UpdtMaps::$downloaded[] = $mapnum;

@@ -391,13 +391,14 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     // Affichage de la carte Leaflet, de l'appel du dump et du boutton de validation
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=viewtiff'>",
       "Affichage d'une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
+    echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=show7zContents'>",
+      "Afficher le contenu de l'archive 7z</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
       "Dump de l'objet Php</a></td></tr>\n";
     if ($button == 'validateMap') {
       if (isset($invalid['errors'])) {
         echo "<tr><td colspan=2><center>",
-             "<b>La carte ne peut pas être validée car elle n'est pas conforme</b>",
-             " <a href='addmaps.php'>Retour au menu de dépôt de cartes",
+             "<b>La carte ne peut pas être validée car elle n'est pas valide</b>",
              "</center></td></tr>\n";
        }
       else {
@@ -414,6 +415,10 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     }
     
     echo "</table>\n";
+    
+    if ($button == 'validateMap') {
+      echo "<a href='addmaps.php'>Retour au menu de dépôt de cartes</p>\n";
+    }
   }
   
   function showAsYaml(): void { // Affichage limité

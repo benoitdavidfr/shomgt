@@ -1,7 +1,9 @@
 <?php
 // shomgt/bo/index.php - BO de ShomGT - Benoit DAVID - 17/7/2023
-
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>shomgt-bo</title></head><body>\n");
 
@@ -73,6 +75,7 @@ switch ($_GET['action'] ?? null) {
     echo "<ul>\n";
     echo "<li><a href='pfcurrent.php'>Gérer l'activation des cartes du portefeuille</a></li>\n";
     echo "<li><a href='pfweight.php'>Gérer le poids du portefeuille</a></li>\n";
+    echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
     echo "</ul>\n";
     die();
   }
@@ -91,6 +94,93 @@ switch ($_GET['action'] ?? null) {
   case 'obsoleteMap': {
     echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
+  }
+  case 'upgrade1': { // Modification des versions des cartes spéciales - 3/8/2023
+    define('SPECIAL_MAPS', ['7330','7344','7360','8101','8502','8509','8510','8517','8523']); 
+    define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+    if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+      throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+    echo HTML_HEAD,"<pre>";
+    if (0) { // modif .md.json
+      foreach (SPECIAL_MAPS as $mapNum) {
+        foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mapVersion) {
+          if (!in_array(substr($mapVersion, -8), ['.md.json'])) continue;
+          $md = json_decode(file_get_contents("$PF_PATH/archives/$mapNum/$mapVersion"), true);
+          if (isset($md['title'])) continue;
+          echo "$mapNum/$mapVersion -> "; print_r($md);
+          if (substr($md['version'], -4) == '.tif') {
+            $md['version'] = substr($md['version'], 0, -4);
+            print_r($md);
+            file_put_contents("$PF_PATH/archives/$mapNum/$mapVersion", json_encode($md, JSON_OPTIONS));
+          }
+          if (substr($mapVersion, -12)=='.tif.md.json') {
+            $newMapVersion = "$mapNum-$md[version].md.json";
+            echo "newMapVersion=$newMapVersion\n";
+            rename("$PF_PATH/archives/$mapNum/$mapVersion", "$PF_PATH/archives/$mapNum/$newMapVersion");
+          }
+          else
+            $newMapVersion = $mapVersion;
+          unlink("$PF_PATH/current/$mapNum.md.json");
+          if (!symlink("../archives/$mapNum/$newMapVersion", "$PF_PATH/current/$mapNum.md.json"))
+            throw new Exception("Erreur sur symlink(../archives/$mapNum/$newMapVersion, $PF_PATH/current/$mapNum.md.json)");
+        }
+      }
+    }
+    elseif (0) { // renommage fichiers .tif.7z dans archives
+      foreach (SPECIAL_MAPS as $mapNum) {
+        foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mapVersion) {
+          if (substr($mapVersion, -7)=='.tif.7z') {
+            $newMapVersion = substr($mapVersion, 0, -7).'.7z';
+            echo "mapVersion=$mapVersion, newMapVersion=$newMapVersion\n";
+            rename("$PF_PATH/archives/$mapNum/$mapVersion", "$PF_PATH/archives/$mapNum/$newMapVersion");
+            echo "rename($PF_PATH/archives/$mapNum/$mapVersion, $PF_PATH/archives/$mapNum/$newMapVersion)\n";
+            //unlink("$PF_PATH/archives/$mapNum/$newMapVersion");
+            //echo "unlink($PF_PATH/archives/$mapNum/$newMapVersion);\n";
+          }
+        }
+      }
+    }
+    elseif (0) { // refaire les liens des .7z en fonction des versions
+      foreach (SPECIAL_MAPS as $mapNum) {
+        $md = json_decode(file_get_contents("$PF_PATH/current/$mapNum.md.json"), true);
+        if (isset($md['title'])) continue;
+        print_r($md);
+        if (is_file("$PF_PATH/current/$mapNum.7z")) {
+          unlink("$PF_PATH/current/$mapNum.7z");
+          echo "unlink($PF_PATH/current/$mapNum.7z);\n";
+        }
+        $target = "../archives/$mapNum/$mapNum-$md[version].7z";
+        if (!is_file("$PF_PATH/archives/$mapNum/$mapNum-$md[version].7z"))
+          throw new Exception("Erreur fichier $PF_PATH/archives/$mapNum/$mapNum-$md[version].7z absent");
+        $link = "$PF_PATH/current/$mapNum.7z";
+        if (!symlink($target, $link))
+          throw new Exception("Erreur sur symlink($target, $link)");
+      }
+    }
+    else { // controle
+      foreach (SPECIAL_MAPS as $mapNum) {
+        echo "$mapNum:\n";
+        echo "  archives:\n";
+        foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $entry) {
+          if (in_array($entry, ['.','..','.DS_Store'])) continue;
+          echo "    $entry\n";
+        }
+        echo "  current:\n";
+        foreach (['7z','md.json'] as $ext) {
+          if (!($link = readlink("$PF_PATH/current/$mapNum.$ext")))
+            throw new Exception("Erreur sur readlink($PF_PATH/current/$mapNum.$ext)");
+          echo "    $mapNum.$ext -> $link\n";
+        }
+      }
+      foreach (SPECIAL_MAPS as $mapNum) {
+        foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $entry) {
+          if (substr($entry, -8)<>'.md.json') continue;
+          $md[$mapNum][(string)$entry] = json_decode(file_get_contents("$PF_PATH/archives/$mapNum/$entry"), true);
+        }
+      }
+      echo Yaml::dump(['md.json'=> $md], 4, 2);
+    }
+    break;
   }
   default: {
     echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";

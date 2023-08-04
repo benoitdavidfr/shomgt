@@ -228,6 +228,11 @@ backlog:
             - et que je peux aller rechercher les cartes actualisées
   sprint2:
     début: 31/7/2023
+    bugs:
+      cartesSpéciales: |
+        Test 3/8T20:50
+        La version local des cartes spéciales reste undefined ce qui force le retéléchargement systématique
+        de chaque carte.
     objectifs:
       - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus (FAIT)
       - tests de sprint1
@@ -238,7 +243,8 @@ backlog:
         - cad
           - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
           - + éventuel fichier .xml
-      - mise en prod sde préProd ur https://geoapi.fr/shomgt/
+      - mise en prod de préProd sur https://geoapi.fr/shomgt/
+        - déplacer les cartes
       - convergence de la branche git avec main
   sprint3:
     objectifs:
@@ -324,6 +330,71 @@ alwaysdata:
 github:
   - créer une branch shomgt4 (FAIT)
   - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4 (PAS FAIT)
+garderUneV3:
+  - il faut que je garde une V3 opérationnelle pour tester l'utilisation de sgserver par des clients en V3
+  - sur Git créer une branche shomgt3 sur main avant de converger shomgt4 dans main
+  - sur Alwaysdata créer un répertoire ~/prod/geoapi/shomgt3 qui reste en V3
+contraintesV3:
+  - contraintes de sgupdt de la V3 sur la structure des cartes du portefeuille
+  - dans les md sgupdt utilise
+    - status=='ok' ? pour savoir si la carte est obsolete ou non
+    - lastVersion pour connaitre la version exposée
+  - puis findCurrentMapVersion() recherche la version de la carte stockée
+    - pour cela il cherche dans le répertoire {mapNum} un fichier dont le nom respecte le motif '!^CARTO_GEOTIFF_\d+_[^.]+\.xml!'
+      - s'il le trouve il en déduit la version en utilisant readMapVersion()
+      - sinon il retourne 'undefined'
+    - readMapVersion() extrait la version du champ edition du fichier .xml
+      - en utilisant
+        - le motif '!^[^-]*- (\d+) - [^\d]*(\d+)( - GAN : \d+)?$!' pour matcher les exemples
+          - Edition n° 4 - 2015 - Dernière correction : 12
+          - Edition n° 4 - 2022 - Dernière correction : 0 - GAN : 2241
+        - ou le motif  '!^[^\d]*(\d+) - [^\d]*(\d+)( - GAN : \d+)?$!' pour matcher les exemples
+          - Publication 1984 - Dernière correction : 101
+          - Publication 1989 - Dernière correction : 149 - GAN : 2250
+      - le champ edition des .xml des cartes spéciales
+        - est de la forme
+          - Edition 2 - 2023
+          - Publication 2015
+        - 'Edition 2 - 2023' ne matche pas le premier motif mais matche le second en donnant la version 2c2023
+        - 'Publication 2015' ne matche aucun des 2 motifs
+  - pour conserver une compatibilité avec sgupdtV3 de sgserver (version<4)
+    - option 1 - diffuser les cartes spéciales avec la version undefined
+      - => les cartes spéciales ne seront pas mises à jour
+    - option 2 - modifier le .xml des cartes spéciales pour que le champ edition respecte le format de celui des cartes normales
+      - => modifier le ;xml des cartes spéciales
+  - dans un premier temps je choisis l'option 1
+ 
+requêtesLog: |
+  SELECT * FROM `log`  
+  WHERE request_uri like '/shomgt/sgserver/index.php%'
+  ORDER BY `log`.`logdt`  DESC
+
+  /shomgt/sgserver/index.php/maps.json
+
+  SELECT * FROM `log`  
+  WHERE request_uri like '%/maps.json%'
+    and login is null
+    and user is null
+  ORDER BY `log`.`logdt`  DESC
+  
+  SELECT * FROM `log`  
+  WHERE request_uri like '%/maps.json%'
+    and login <> 'benoit.david@free.fr'
+    and user <> 'bd'
+  ORDER BY `log`.`logdt`  DESC
+  
+  SELECT * FROM `log`  
+  WHERE request_uri like '%/maps.json%'
+  ORDER BY `log`.`logdt`  DESC
+  
+  SELECT * FROM `log`  
+  WHERE login is null
+    and user is null
+    and access='T'
+    and request_uri not like '%/tile.php%'
+    and request_uri not like '%/wms.php%'
+  ORDER BY `log`.`logdt`  DESC
+  
 batchRégulierDEntretien:
   - batch chaque Samedi à 4h -> tâche pla­ni­fiée
   - mise à jour du GAN
