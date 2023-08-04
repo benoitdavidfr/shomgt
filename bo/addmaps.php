@@ -175,7 +175,9 @@ if ($maps) {
   echo "<h3>Cartes en cours de dépôt</h3>\n";
   echo "<table border=1><th>titre</th><th>v. exist.</th><th>v. dépôt</th>\n";
   foreach ($maps as $map) {
-    $md = MapMetadata::getFrom7z($PF_PATH."/users/$login/$map");
+    $md = MapMetadata::getFrom7z("$PF_PATH/users/$login/$map");
+    if (!isset($md['version']))
+      throw new Exception("Erreur md ne contient pas de champ version pour $PF_PATH/users/$login/$map");
     $newVersion = $md['version'];
     $existingVersion = existingVersion($PF_PATH, substr($map, 0, -3));
     if ($existingVersion == '0000c0')

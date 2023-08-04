@@ -1,5 +1,5 @@
 <?php
-// shomgt/bo/index.php - BO de ShomGT - Benoit DAVID - 17/7/2023
+// shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 4/8/2023
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
 
@@ -75,7 +75,7 @@ switch ($_GET['action'] ?? null) {
     echo "<ul>\n";
     echo "<li><a href='pfcurrent.php'>Gérer l'activation des cartes du portefeuille</a></li>\n";
     echo "<li><a href='pfweight.php'>Gérer le poids du portefeuille</a></li>\n";
-    echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
+    //echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
     echo "</ul>\n";
     die();
   }
@@ -95,7 +95,7 @@ switch ($_GET['action'] ?? null) {
     echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
   }
-  case 'upgrade1': { // Modification des versions des cartes spéciales - 3/8/2023
+  /*case 'upgrade1': { // Modification des versions des cartes spéciales - 3/8/2023
     define('SPECIAL_MAPS', ['7330','7344','7360','8101','8502','8509','8510','8517','8523']); 
     define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
@@ -181,7 +181,7 @@ switch ($_GET['action'] ?? null) {
       echo Yaml::dump(['md.json'=> $md], 4, 2);
     }
     break;
-  }
+  }*/
   default: {
     echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     echo "Erreur, action '$_GET[action]' non prévue<br>\n";

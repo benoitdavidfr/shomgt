@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: main.php - procédure principale de mise à jour des cartes
+title: main.php - procédure principale de mise à jour des cartes ShomGT V4 - 4/8/2023
 name: main.php
 doc: |
   Variable_d'Environnement:
@@ -21,6 +21,7 @@ doc: |
 journal: |
   3/8/2023:
     - chgt de la constante VERSION en '4' pour obtenir les vraies versions des cartes spéciales
+    - modif de findCurrentMapVersion() sur les cartes spéciales
   18/6/2023:
     - déplacement lib dans ../lib
   1/8/2022:
@@ -194,47 +195,48 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   }
   foreach (new DirectoryIterator("$MAPS_DIR_PATH/$mapnum") as $filename) {
     if ($filename == "CARTO_GEOTIFF_{$mapnum}_pal300.xml") {
-      echo "$filename\n";
+      //echo "$filename\n";
       $currentMapVersion = readMapVersion("$MAPS_DIR_PATH/$mapnum/$filename");
-      echo "findCurrentMapVersion() returns $currentMapVersion[version]\n";
+      //echo "findCurrentMapVersion() returns $currentMapVersion[version]\n";
       return $currentMapVersion['version'];
     }
   }
   // Cas où il n'existe pas de fichier de MD ISO standard
-  echo "il n'existe pas de fichier de MD ISO standard\n";
+  // j'utilise l'extension .tfw à la place de .tif car en local le .tif a été effacé
+  //echo "il n'existe pas de fichier de MD ISO standard\n";
   $fileNamePerType = [];
   foreach (new DirectoryIterator("$MAPS_DIR_PATH/$mapnum") as $filename) {
-    echo "  filename=$filename\n";
-    if (in_array(substr($filename, -4), ['.xml','.tif','.pdf']) && (substr($filename, -12)<>'.png.aux.xml')) {
-      echo "$filename match condition\n";
+    //echo "  filename=$filename\n";
+    if (in_array(substr($filename, -4), ['.xml','.tfw','.pdf']) && (substr($filename, -12)<>'.png.aux.xml')) {
+      //echo "$filename match condition\n";
       $fileNamePerType[substr($filename, -3)][] = (string)$filename;
     }
   }
-  print_r($fileNamePerType);
+  //print_r($fileNamePerType);
   // si il existe un seul fichier .xml je l'utilise
   if (count($fileNamePerType['xml'] ?? []) == 1) {
-    echo "j'utilise le seul fichier .xml '$filename'\n";
     $filename = $fileNamePerType['xml'][0];
+    //echo "j'utilise le seul fichier .xml '$filename'\n";
     $currentMapVersion = readMapVersion("$MAPS_DIR_PATH/$mapnum/$filename");
-    echo "findCurrentMapVersion() returns $currentMapVersion[version]\n";
+    //echo "findCurrentMapVersion() returns $currentMapVersion[version]\n";
     return $currentMapVersion['version'];
   }
   // sinon, si il existe un seul fichier .tif
-  if (count($fileNamePerType['tif'] ?? []) == 1) {
-    $filename = $fileNamePerType['tif'][0];
-    echo "j'utilise le seul fichier .tif '$filename'\n";
-    $version = substr($filename, 0, -4); // je prends le nom du .tif sans l'extension
-    echo "findCurrentMapVersion() returns $version\n";
+  if (count($fileNamePerType['tfw'] ?? []) == 1) {
+    $filename = $fileNamePerType['tfw'][0];
+    //echo "j'utilise le seul fichier .tfw '$filename'\n";
+    $version = substr($filename, 0, -4); // je prends le nom du .tfw sans l'extension
+    //echo "findCurrentMapVersion() returns $version\n";
     return $version;
   }
   // sinon, si il existe un seul fichier .pdf
   if (count($fileNamePerType['pdf'] ?? []) == 1) {
     $filename = $fileNamePerType['pdf'][0];
-    echo "j'utilise le seul fichier .pdf '$filename'\n";
-    echo "findCurrentMapVersion() returns $filename\n";
+    //echo "j'utilise le seul fichier .pdf '$filename'\n";
+    //echo "findCurrentMapVersion() returns $filename\n";
     return $filename; // je prends le nom du .pdf AVEC l'extension
   }
-  echo "findCurrentMapVersion() returns 'undefined'\n";
+  //echo "findCurrentMapVersion() returns 'undefined'\n";
   return 'undefined'; // sinon undefined
 }
 
@@ -329,6 +331,9 @@ while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec u
       else {
         echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées donc la carte est rechargée\n";
       }
+    }
+    elseif (!$currentVersion) {
+      echo "La carte $mapnum.7z est absente et la version proposée est $mapVersion\n";
     }
     else {
       echo "Pour la carte $mapnum.7z, la version présente est $currentVersion et la version proposée est $mapVersion\n";

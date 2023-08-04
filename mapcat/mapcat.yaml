@@ -20,10 +20,11 @@ description: |
       - sauf s'il y a une erreur manifeste dans le GAN que j'indique dans badGan
     - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
-  La structure du fichier ne chage pas à l'occasion du passage en V4.
+  La structure du fichier ne change pas à l'occasion du passage en V4.
   Cependant plusieurs corrections sont apportées grâce au test de conformité mis en oeuvre en V4.
   
   Journal:
+    - 4/8/2023 - ajout de la carte 6686
     - 31/7/2023 - réactivation des bordures de la carte 7620
     - 28/7/2023 - plusieurs corrections d'erreurs détectée par l'exécution du test de conformité sur l'ensemble des cartes
     - 27/7/2023
@@ -669,6 +670,14 @@ maps:
     spatial:
       SW: '43°17,04''N - 004°43,63''E'
       NE: '43°27,20''N - 005°04,00''E'
+  FR6686:
+    groupTitle: 'Océan Pacifique'
+    title: 'Nouvelle-Calédonie (partie Sud-Est)'
+    mapsFrance: [NC]
+    scaleDenominator: '303.000'
+    spatial:
+      SW: "22°12,81'S - 165°12,00'E"
+      NE: "20°10,00'S - 168°24,16'E"
   FR6687:
     groupTitle: 'Côte Sud-Ouest de Nouvelle-Calédonie'
     title: 'Abords de Nouméa - Passes de Boulari et de Dumbéa'

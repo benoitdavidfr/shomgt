@@ -233,10 +233,15 @@ switch ($_GET['action'] ?? null) {
   }
   case 'show7zContents': { // affiche le contenu de l'archive
     $archive = new My7zArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
-    echo HTML_HEAD,"<b>Contenu de l'archive $_GET[map].7z:</b><br>\n<pre>";
+    echo HTML_HEAD,
+         "<b>Contenu de l'archive $_GET[map].7z:</b><br>\n",
+         "<pre><table border=1><th>DateTime</th><th>Attr</th><th>Size</th><th>Compressed</th><th>Name</th>\n";
     foreach ($archive as $entry) {
-      echo Yaml::dump([$entry]);
+      //echo Yaml::dump([$entry]);
+      echo "<tr><td>$entry[DateTime]</td><td>$entry[Attr]</td><td align='right'>$entry[Size]</td>",
+           "<td align='right'>$entry[Compressed]</td><td>$entry[Name]</td></tr>\n";
     }
+    echo "</table></pre>";
     die();
   }
   case 'dumpPhp': { // affiche le print_r() Php

@@ -29,6 +29,12 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  4/8/2023T19:00:
+    - tout semble marcher sur sgpp
+    - fin du sprint2
+    - les liens dans ~/prod/shomgeotiffpp/current sont en partie abssolus et en partie relatifs
+      - ils devraient être tous être relatifs vers ../archives
+    - impossible de passer préProd en Prod
   3/8/2023T9:36:
     - dév. des fonc. BO de gestion du portefeuille
     - passage 7620 en version 2018c1
@@ -228,14 +234,17 @@ backlog:
             - et que je peux aller rechercher les cartes actualisées
   sprint2:
     début: 31/7/2023
+    fin: 4/8/2023T21:00
     bugs:
-      cartesSpéciales: |
+      cartesSpéciales(ok): |
         Test 3/8T20:50
-        La version local des cartes spéciales reste undefined ce qui force le retéléchargement systématique
+        La version locale des cartes spéciales reste undefined ce qui force le retéléchargement systématique
         de chaque carte.
+        Bug réglé
+        -> Modification de la définition des cartes spéciales, modification du calcul de la version dans sgupdt
     objectifs:
       - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus (FAIT)
-      - tests de sprint1
+      - tests de sprint1 (FAIT)
       - bug 7620 - retour à la correction précédente, ie nécessité de borders
         - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO (FAIT)
         - considérer comme erreur l'existence d'un .tif non prévu (FAIT)
@@ -243,6 +252,8 @@ backlog:
         - cad
           - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
           - + éventuel fichier .xml
+  sprint3:
+    objectifs:
       - mise en prod de préProd sur https://geoapi.fr/shomgt/
         - déplacer les cartes
       - convergence de la branche git avec main
@@ -266,6 +277,57 @@ backlog:
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
     - gestion des stats d'utilisation
+miseEnProd:
+  principes:
+    - préparer le déplacement de shomgeotiff
+      - SI ~/prod/shomtiffpp contient des liens vers ~/prod/shomtiff
+        - ALORS remplacer ces liens par une copie les fichiers pointés FIN_SI
+    - stocker la date de cette release {release-date} dans le fichier realease-date.json
+    - arrêter shomgt et affichage du site de maintenance
+      - SI ~/prod/geoapi/sgbacks n'existe pas ALORS le créer FIN_SI
+      - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date} où {release-date} est la date de la release
+      - déplacer ~/prod/geoapi/sgbacks/{release-date}/maintenance  -> ~/prod/geoapi/shomgt
+    - remplacer shomgeotiff par shomgeotiffpp
+      - SI ~/prod/shomgeotiff-backs n'existe pas ALORS le créer FIN_SI
+      - déplacer ~/prod/shomgeotiff -> ~/prod/shomgeotiff-backs/{release-date}
+      - déplacer ~/prod/shomgeotiffpp -> ~/prod/shomgeotiff
+    - remettre le nouveau site
+      - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date}/maintenance
+      - déplacer ~/prod/geoapi/sgpp -> ~/prod/geoapi/shomgt
+    - recréer ~/prod/geoapi/sgpp + ~/prod/shomgeotiffpp
+  miseEnOeuvre:
+    - écrire un script Php CLI dans ~/prod/geoapi/shomgt-maintenance/release.php
+  maintenance:
+    outils:
+      ~/prod/geoapi/shomgt-maintenance/release.php:
+        title: mise en prod de ~/prod/geoapi/sgpp et déplacement de shomgeotiffpp à la place de shomgeotiff
+      ~/prod/geoapi/shomgt-maintenance/startMaintenance.php:
+        title: remplacer le site par les panneaux de maintenance
+      ~/prod/geoapi/shomgt-maintenance/endMaintenance.php:
+        title: remplacer le site de maintenance par le site standard
+    répertoire:
+      - répertoire maintenance dans shomgt contenant les url de maintenance
+      - ces url de maintenance renvoient un message de maintenance et une erreur 503 sur chauqe point d'accès
+        - index.php -> garder le texte d'accueil
+        - mapwcat.php
+        - tile.php
+        - wms.php
+        - shomgt/tile.php -> message de maintenance dans une tuile
+        - shomgt/maps.php
+        - shomgt/dl.php
+        - sgserver/index.php
+  ptsAccèsOfficiels:
+    - https://geoapi.fr/shomgt/
+    - https://geoapi.fr/shomgt/mapwcat.php
+    - https://geoapi.fr/shomgt/tile.php
+    - https://geoapi.fr/shomgt/wms.php
+    - https://sgserver.geoapi.fr/index.php -> https://geoapi.fr/shomgt/sgserver/index.php
+  ptsAccèsCachés:
+    - https://geoapi.fr/shomgt/shomgt/dl.php
+    - https://geoapi.fr/shomgt/shomgt/tile.php
+    - https://geoapi.fr/shomgt/shomgt/maps.php
+    - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
+    - https://geoapi.fr/shomgt/shomgt/leaflet/*
 fonctionnalités:
   admin:
     - bo réservé aux admins
@@ -969,7 +1031,7 @@ specsDesCartes:
         - soit un fichier {mapNum}/{mapNum}_{year}.(tif|pdf) où {year} est l'année de publication de la carte
       - l'archive peut contenir un .tif et un .pdf ayant même nom de base
       - le répertoire {mapNum} de l'archive ne doit pas contenir d'autre fichier .tif ou .pdf
-      - si l'archive contient un fichier .xml alors il est utilisé comme fichier de MD ISO
+      - si le répertoire {mapNum} de l'archive contient un fichier .xml alors il est utilisé comme fichier de MD ISO
    
   géoréférencement:
       - Pour les 2 types de carte un .tif est considéré comme non géoréférencé ssi

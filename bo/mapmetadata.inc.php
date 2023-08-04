@@ -1,5 +1,5 @@
 <?php
-// bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 26/7/2023
+// bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 4/8/2023
 // déf. de la classe MapMetadata et de la fonction ganWeek2iso()
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -111,10 +111,10 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     }
     
     if (!$mdName) { // carte spéciale avec fichier XML
-      // Je cherche s'il existe un et un seul fichier XML
+      // Je cherche s'il existe un et un seul fichier XML dans le répertoire {mapNum}
       $mdNames = [];
       foreach ($archive as $entry) {
-        if (substr($entry['Name'], -4) == '.xml') {
+        if (preg_match('!^\d{4}/[^/]*\.xml$!', $entry['Name'])) {
           $mdNames[] = $entry['Name'];
         }
       }
