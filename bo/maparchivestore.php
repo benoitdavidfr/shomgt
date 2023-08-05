@@ -194,7 +194,7 @@ class MapArchiveStore {
           echo "Erreur symlink($relativeLinkTarget, $this->path/current/$entry)<br>\n";
         else
           echo "symlink($relativeLinkTarget, $this->path/current/$entry) ok<br>\n";
-        //return;
+        //return; // Explicitement quand correct s'est exécuté il enchaine sur wrongCurLinks
       }  
       case 'wrongCurLinks': {
         $wrongLinks = $this->wrongCurLinks();
@@ -291,9 +291,10 @@ elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
 echo "<!DOCTYPE html><html><head><title>mapArchiveStorage</title></head><body>\n";
 echo "<h2>Gestion des liens de $PF_PATH</h2>\n";
 
-$store = isset($_GET['pf']) ? new MapArchiveStore($_GET['pf']) : null;
-if ($store)
+if (isset($_GET['pf'])) {
+  $store = new MapArchiveStore($_GET['pf']);
   $store->action($_GET['action'] ?? null);
+}
 $bname = basename($PF_PATH);
 
 echo "<h3>Menu</h3><ul>\n";
