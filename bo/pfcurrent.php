@@ -69,7 +69,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
         "</tr>\n";
    }
   echo "</table>\n";
-  echo "<a href='index.php'>Retour menu du BO</a></p>\n";
+  echo "<a href='index.php'>Retour au menu du BO</a></p>\n";
 }
 else { // liste de versions pour la carte $_GET['map']
   $mapCat = new MapCat($_GET['map']);
