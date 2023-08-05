@@ -1,5 +1,5 @@
 <?php
-// shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 4/8/2023
+// shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 5/8/2023
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
 
@@ -66,8 +66,10 @@ switch ($_GET['action'] ?? null) {
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
-         "Consulter le tableau de bord du degré d'actualité du portefeuille</a></li>\n";
-    echo "<li><a href='addmaps.php'>Déposer de nouvelles versions de cartes dans le portefeuille</a></li>\n";
+         "Identifier les cartes à ajouter/supprimer/actualiser dans le portefeuille ShomGT</a></li>\n";
+    echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",
+         "Télécharger de nouvelles versions de cartes sur le site du Shom</a></li>\n";
+    echo "<li><a href='addmaps.php'>Déposer ces nouvelles versions de cartes dans le portefeuille</a></li>\n";
     //echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
     echo "</ul>\n";

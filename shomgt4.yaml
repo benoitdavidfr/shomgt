@@ -57,6 +57,7 @@ journal:
     - mise en place d'un appli pfm.php préfiguratrice du BO
   finMai2023:
     - point avec le Shom et refus de ce dernier de coopérer sur ShomGT
+    - décision d'abandon de ShomGT pour les CROSS
     - réorientations des réflexions vers la mise en place d'une getion collaborative
   26/4/2023:
     - point avec Loic et Nicolas (DGAMPA) sur pérennisation
@@ -236,6 +237,12 @@ backlog:
     début: 31/7/2023
     fin: 4/8/2023T21:00
     bugs:
+      liens: |
+        Les liens dans current sont pour certains relatifs et d'autres absolus.
+        Il devraient être tous relatfs.
+        -> écrire un script de reconstruction des liens dans current
+           l'objectif serait principalement de s'assurer que les liens sont relatifs
+           -> sprint 3
       cartesSpéciales(ok): |
         Test 3/8T20:50
         La version locale des cartes spéciales reste undefined ce qui force le retéléchargement systématique
@@ -253,11 +260,13 @@ backlog:
           - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
           - + éventuel fichier .xml
   sprint3:
+    début: 
+    fin: 
     objectifs:
       - mise en prod de préProd sur https://geoapi.fr/shomgt/
         - déplacer les cartes
       - convergence de la branche git avec main
-  sprint3:
+  sprint4:
     objectifs:
       - création de comptes
       - bannissement utilisateur
