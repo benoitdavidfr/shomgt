@@ -263,6 +263,7 @@ backlog:
     début: 
     fin: 
     objectifs:
+      - créer le site de maintenance
       - mise en prod de préProd sur https://geoapi.fr/shomgt/
         - déplacer les cartes
       - convergence de la branche git avec main
