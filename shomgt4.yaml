@@ -287,6 +287,37 @@ backlog:
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
     - gestion des stats d'utilisation
+fonctionnalités:
+  admin:
+    - bo réservé aux admins
+    - tableau de bord du portefeuille -> '#pfdb'
+    - tableau de bord des utilisateurs -> '#userdb'
+  pfdb:
+    - tableau des cartes du portefeuille (réservé admins)
+      - liste des cartes du portefeuille
+        - avec plusieurs vues
+          - ramassée (comme viewtiff)
+          - plus développée (avec no, titre, échelle, mapsFrance)
+          - possibilité de tri sur l'échelle ou le no de carte, et de filtre sur mapsFrance
+        - possibilité d'accès à une carte avec
+          - MD esssentielles (issues de MapCat ?)
+          - imagette de la version courante et lien vers la carte dans mapwcat
+          - poids des fichiers pour aider à faire le ménage
+          - liste des versions avec le no de version
+          - possibilité d'accès à une version avec
+            - appel de viewtiff
+            - possibilité de la déplacer dans la poubelle
+      - liste des cartes obsolètes
+        - possibilité d'accès à une carte avec les mêmes fonctionnalités que les cartes non obsolètes
+      - poubelle
+        - voir son contenu
+        - annuler une suppression
+        - la vider
+  userdb:
+    - lister les utilisateurs
+    - lister les utilisateurs qui ont déposé une version
+      - pour un utilisateur lister les versions déposées
+        - accès à la version déposée
 miseEnProd:
   principes:
     - préparer le déplacement de shomgeotiff
@@ -338,37 +369,6 @@ miseEnProd:
     - https://geoapi.fr/shomgt/shomgt/maps.php
     - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
     - https://geoapi.fr/shomgt/shomgt/leaflet/*
-fonctionnalités:
-  admin:
-    - bo réservé aux admins
-    - tableau de bord du portefeuille -> '#pfdb'
-    - tableau de bord des utilisateurs -> '#userdb'
-  pfdb:
-    - tableau des cartes du portefeuille (réservé admins)
-      - liste des cartes du portefeuille
-        - avec plusieurs vues
-          - ramassée (comme viewtiff)
-          - plus développée (avec no, titre, échelle, mapsFrance)
-          - possibilité de tri sur l'échelle ou le no de carte, et de filtre sur mapsFrance
-        - possibilité d'accès à une carte avec
-          - MD esssentielles (issues de MapCat ?)
-          - imagette de la version courante et lien vers la carte dans mapwcat
-          - poids des fichiers pour aider à faire le ménage
-          - liste des versions avec le no de version
-          - possibilité d'accès à une version avec
-            - appel de viewtiff
-            - possibilité de la déplacer dans la poubelle
-      - liste des cartes obsolètes
-        - possibilité d'accès à une carte avec les mêmes fonctionnalités que les cartes non obsolètes
-      - poubelle
-        - voir son contenu
-        - annuler une suppression
-        - la vider
-  userdb:
-    - lister les utilisateurs
-    - lister les utilisateurs qui ont déposé une version
-      - pour un utilisateur lister les versions déposées
-        - accès à la version déposée
 bug7620:
   annulationDeLaCorrection:
     - cette correction génère des effets de bords
