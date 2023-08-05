@@ -180,6 +180,7 @@ class MapArchiveStore {
         }
         $mapNum = $matches[1];
         $ext = $matches[2];
+        echo "path=$this->path/current/$entry<br>\n";
         $linkTarget = readlink("$this->path/current/$entry");
         list($targetPattern, $targetAbsPattern) = $this->targetPatterns($mapNum, $ext);
         if (!preg_match($targetAbsPattern, $linkTarget)) {
@@ -193,7 +194,7 @@ class MapArchiveStore {
           echo "Erreur symlink($relativeLinkTarget, $this->path/current/$entry)<br>\n";
         else
           echo "symlink($relativeLinkTarget, $this->path/current/$entry) ok<br>\n";
-        return;
+        //return;
       }  
       case 'wrongCurLinks': {
         $wrongLinks = $this->wrongCurLinks();
@@ -213,7 +214,7 @@ class MapArchiveStore {
               $linkTarget = readlink("$this->path/current/$entry");
               //echo "$entry -> $linkTarget\n";
               echo "<b>Erreur, le lien $entry -> $linkTarget est un lien absolu</b>,",
-                   " <a href='?action=correct&entry=$entry'>le corriger</a>\n";
+                   " <a href='?action=correct&pf=$this->path&entry=$entry'>le corriger</a>\n";
               break;
             }
             case 'targetDontMatchPattern': {
@@ -266,13 +267,21 @@ class MapArchiveStore {
   }
 };
 
+// retourne '' si ce n'est pas ce fichier qui est appelé (cad qu'il est inclus),
+// 'inWebMode' s'il est appelé en mode web, 'inCliMode' s'il est appelé en mode CLI
+function thisFileIsCalled(): string {
+  $documentRoot = $_SERVER['DOCUMENT_ROOT'];
+  if (substr($documentRoot, -1)=='/')
+    $documentRoot = substr($documentRoot, 0, -1);
+  $thisFileIsCalledInWebMode = (__FILE__ == $documentRoot.$_SERVER['SCRIPT_NAME']);
+  $thisFileIsCalledInCliMode = (($argv[0] ?? '') == basename(__FILE__));
+  //echo "thisFileIsCalledInWebMode=",$thisFileIsCalledInWebMode?'true':'false',"<br>\n";
+  //echo "thisFileIsCalledInCliMode=",$thisFileIsCalledInCliMode?'true':'false',"<br>\n";
+  return $thisFileIsCalledInWebMode ? 'inWebMode' : ($thisFileIsCalledInCliMode ? 'inCliMode' : '');
+}
+if (!thisFileIsCalled()) return; // n'exécute pas la suite si le fichier est inclus
 
-$thisFileIsCalledInWebMode = (__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME']);
-$thisFileIsCalledInCliMode = (($argv[0] ?? '') == basename(__FILE__));
-
-if (!$thisFileIsCalledInWebMode && !$thisFileIsCalledInCliMode) return;
-
-if (1) { // TEST 
+if (0) { // TEST 
   $PF_PATH = __DIR__.'/maparchivestore-test';
 }
 elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
@@ -282,8 +291,9 @@ elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
 echo "<!DOCTYPE html><html><head><title>mapArchiveStorage</title></head><body>\n";
 echo "<h2>Gestion des liens de $PF_PATH</h2>\n";
 
-$store = new MapArchiveStore($_GET['pf'] ?? null);
-$store->action($_GET['action'] ?? null);
+$store = isset($_GET['pf']) ? new MapArchiveStore($_GET['pf']) : null;
+if ($store)
+  $store->action($_GET['action'] ?? null);
 $bname = basename($PF_PATH);
 
 echo "<h3>Menu</h3><ul>\n";
