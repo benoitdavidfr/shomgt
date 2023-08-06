@@ -1,0 +1,1612 @@
+title: conception de ShomGt4
+abstract: |
+  Nouvelle version de ShomGT dont les principes sont
+  - gestion collaborative de ShomGT
+    - notamment permettre à plusieurs personnes d'effectuer les mises à jour de manière concurrente
+      - -> mettre à jour des cartes entièrement en mode web sans nécessiter de gérer une copie locale comme en V3
+    - permettre à un nouvel utilisateur de s'ouvrir lui-même un compte sous réserve de son domaine mail
+    - gestion d'un forum entre utilisateurs ou liste d'échange
+    - avoir qqs admins pour réguler le fonctionnement
+      - annuler les livraisons dégradant le service
+      - banir les utilisateurs indélicats
+      - gérer la liste des domaines mails autorisés
+      - gérer la liste des adresses IP autorisées
+  - mettre en oeuvre une stratégie de conservation limitée des données pour éviter la saturation du stockage
+    - utilisation d'un compte dédié d'Alwaysdata avec 20 Go de stockage
+  - migration vers des environnements (Alwaysdata et github) indépendants de moi
+  - automatisation de certaines tâches régulières
+    - mettre en oeuvre par cron d'un script sunday.php tous les dimanche vers 4h
+    - mettre en oeuvre la stratégie de conservation des données
+      - notamment suppression des versions de cartes remplacées depuis longtemps
+    - mettre à jour le GAN
+  - mise en base des infos stockées en V3 dans des fichiers Yaml et mises à jour concurremment en V4
+  - évols plus limitées
+    - amélioration de la gestion des cartes spéciales, notamment
+      - permettre la mise à jour des cartes spéciales par le client
+    - meilleure gestion en production de l'affichage des erreurs
+    - restructuration des archives de cartes
+      - suppression de la notion de livraison qui n'est plus pertinente
+      - conservation de l'utilisateur ayant déposé la carte
+    - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
+journal:
+  6/8/2023:
+    - 6h50 - mise en prod V4
+    - bug résolu sur vendor qui était dans sgpp un lien vers ../shomgt/vendor
+    - bug sur wms.php qui était absent dans sgpp
+    - bug sur tile.php qui était absent dans sgpp
+  5/8/2023:
+    - dev de shomgt-maintenance et bo/maparchivestore.php
+  4/8/2023T19:00:
+    - tout semble marcher sur sgpp
+    - fin du sprint2
+    - les liens dans ~/prod/shomgeotiffpp/current sont en partie abssolus et en partie relatifs
+      - ils devraient être tous être relatifs vers ../archives
+    - impossible de passer préProd en Prod
+  3/8/2023T9:36:
+    - dév. des fonc. BO de gestion du portefeuille
+    - passage 7620 en version 2018c1
+    - passage 7330 et 8502 en version antérieure
+    - sgupdt et shomgt OK
+    - ajout possibilité de supprimer des versions de cartes dans la gestion du portefeuille
+  31/7/2023:
+    - v1 du BO ShomGT4 opérationnelle sur sgpp (sprint1 de ShomGT4)
+    - le bug 7620 n'a pas été réglé, je le transfère dans un autre sprint
+    - cette v1 du BO génère des bugs dans sgupdt
+  17/7/2023:
+    - création de la branche Git shomgt4
+  11/7/2023:
+    - début d'écriture du BO
+  18/6/2023:
+    - nlle version de shomgeotiff à la suite de la saturation stockage d'Alwaysdata
+    - abandon de la logique de stockage par livraison
+    - création en local d'un répertoire current avec des liens vers archives
+    - en distant recopie du répertoire current
+    - mise en place d'un appli pfm.php préfiguratrice du BO
+  finMai2023:
+    - point avec le Shom et refus de ce dernier de coopérer sur ShomGT
+    - décision d'abandon de ShomGT pour les CROSS
+    - réorientations des réflexions vers la mise en place d'une getion collaborative
+  26/4/2023:
+    - point avec Loic et Nicolas (DGAMPA) sur pérennisation
+    - décision d'améliorer la coopération avec le Shom
+    - début de réflexion sur V4 fondé sur l'utilisation de S3
+  24/4/2023:
+    - message d'alerte à D. Bon sur pérennisation
+méthodeDeDécoupageEnComposants:
+  - chaque composant est soit de type Web, soit de type CLI, soit de type stockage
+  - un composant Web expose une interface web mais n'autorise que de courtes exécutions (de l'ordre de 30 s)
+  - à l'inverse un composant CLI permet des traitements longs mais ne peut pas exposer d'interface Web
+  - un composant stockage est passif, il stocke des données structurées d'une certaine manière
+  - si un composant nécessite de longues exécutions une exposition web, il doit être découpé en 2
+    avec si nécessaire un partage de données dans un disque partagé
+  - ajouter les fonctions transverses
+  - ajouter le stockage en base PgSql
+découpageEnComposantsV4:
+  shomgt:
+    objet: expose les 2 services WMS, ainsi que les flux Tile et GeoJSON et une carte Leaflet utilisant ces 2 derniers flux
+    mode: Web
+    offreA:
+      extérieur: 2 services WMS, flux Tile et GeoJSON, et code JavaScript de visualisation
+    utiliseDe:
+      sgupdt: les données construites par sgupdt et stockées dans data
+    note:
+      - dockerisable
+      - fichiers geojson à actualiser régulièrement
+        - delmar.geojson, copié de shomft
+        - frzee.geojson, copié de shomft
+        - sar_2019.geojson, copié de diffusion.shom.fr
+  data:
+    objet: répertoire ou volume partagé contenant les données pour shomgt
+    mode: stockage
+    note: éventuellement volume partagé docker
+  sgupdt:
+    objet: construit ou met à jour à partir de sgserver les données data nécessaires à shomgt
+    mode: CLI
+    offreA:
+      shomgt: les données construites pour shomgt dans data
+    utiliseDe:
+      sgserver: les données exposées par sgserver
+    note: dockerisable
+  sgserver:
+    objet: expose la dernière version de chaque carte, le libellé de cette version, les cartes retirées, et mapcat
+    mode: Web
+    offreA:
+      sgupt: la dernière version de chaque carte, le libellé de cette version, les cartes retirées, et mapcat
+    utiliseDe:
+      portfolio:
+        - les dernières versions stockées sous forme d'archives 7z et les md.json avec comme contraintes
+          - les cartes 7z sont stockées dans le sous-répertoire current du portefeuille
+          - à chaque carte 7z est associé un fichier .md.json contenant en JSON
+            la propriété 'version' indiquant la version de la carte.
+          - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
+            la propriété 'status' contenant la valeur 'obsolete'
+      mapcat: le catalogue mapcat.yaml
+  mapcat:
+    objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par sgupdt
+    offreATous: le contenu du catalogue comme fichier Yaml
+    utiliseDe:
+      gan: la dernière version de la synthèse des GANs pour comparaison au contenu du catalogue et corrections éventuelles
+    note: géré par des comparaisons avec le GAN et des mises à jour dans l'éditeur de texte
+  portfolio:
+    objet: stocke les versions des cartes du portefeuille ainsi qu'un éventuel statut de retrait d'une carte
+    mode: stockage
+    offreA:
+      sgserver: les dernières versions des cartes associée au libellé de la version, ainsi que la liste des cartes retirées
+      dashboard: les dernières versions des cartes associée au libellé de la version ainsi que la date de mise à jour
+    miseAJourPar:
+      bo: dépose de nlles versions de cartes, marque une carte comme retirée, fabrique les md.json
+    structure: voir '#/structurePortfolio'
+  shomft:
+    objet: |
+      expose
+        - les sihouettes des cartes normales et spéciales, provenant du serveur WFS du Shom
+        - les délimitations maritimes provenant du serveur WFS du Shom
+        - les contours simplifiés de la ZEE édités avec QGis
+    mode: mixte
+    offreA:
+      dashboard: les silhouettes des cartes et les contours simplifiés de la ZEE
+    utiliseDe:
+      shomWfs: le serveur WFS du Shom
+  dashboard:
+    objet: |
+      - expose un tableau de bord permettant d'identifier dans le portefeuille
+        - les cartes les plus périmées à remplacer
+        - les cartes obsolètes à marquer comme telle
+        - les nouvelles cartes à ajouter au portefeuille
+    mode: Web
+    offreA:
+      cmdeShom: cartes à commander
+      bo: cartes à marquer obsolètes
+    utiliseDe:
+      mapcat: le catalogue des cartes avec les infos stables
+      portfolio:
+        label: la liste des cartes 7z du portefeuille avec leur version et leur date de modification
+        donnéesUtilisées:
+          - fichiers md.json des cartes non obsolètes
+          - champ status pour vérifier que la carte n'est pas obsolète
+          - champ 'version'
+          - champ 'revision' ou si non défini champ 'creation' (PAS COMPATIBLE !!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+      shomft: les silhouettes des cartes et les contours simplifiés de la ZEE
+  gan:
+    objet: moissonne le site GAN du Shom et stocke le résultat pour l'exposer
+    mode: CLI
+    offreA:
+      dashboard: infos GAN restructurées par carte conformément au schema gans.schema.yaml
+      mapcat: infos GAN restructurées par carte conformément au schema gans.schema.yaml
+    utiliseDe:
+      gan.shom.fr: le site GAN du Shom
+  bo:
+    objet: mettre à jour le portefeuille et mapcat
+    mode: Web
+    metAJour:
+      portfolio:
+        - dépôt d'une nouvelle version de carte,
+        - modification du lien de current vers archives
+        - marque une carte comme obsolète,
+        - fabrique les md.json
+      mapcat: modification de l'entrée du catalogue pour une carte
+    utiliseDe:
+      cmdeShom: cartes obtenues du Shom
+      dashboard: numéros des cartes à marquer comme obsolètes
+  cmdeShom:
+    objet: commande manuelle des cartes au Shom à partir des infos du dashboard
+    offreA:
+      bo: dépôt des cartes obtenues
+    utiliseDe:
+      dashboard: liste des cartes à actualiser et des nlles cartes
+      bureau.prestations@shom.fr: commande par mail à <bureau.prestations@shom.fr>
+      diffusion.shom.fr: téléchargement sur le site
+interfacesImportantesEntreComposants:
+  portfolio:
+backlog:
+  stratégie:
+    - ajouter progressivement les nouvelles fonctionnalités
+    - garder pour le moment shomgt sur le compte bdavid
+  organisation:
+    - synchroniser shomgt -> sgpp au moyen d'un lien symbolique sgpp -> shomgt en local
+  sprint1(ok31/7/2023T11:00):
+    début: 11/7/2023
+    fin: 31/7/2023 11h
+    objectfs:
+      - réorganisation de shomgeotiff
+      - évolution de la structure des md.json
+        - mise à jour des md.json existants / ok
+      - mise en place de la préprod avec ces évolutions / ok
+      - basculement de la gestion du portefeuille sur Alwaysdata
+      - mise en place d'une 1ère version du BO avec le dépôt d'une nouvelle carte
+      - adaptation de sgserver si nécessaire / PAS NECESSAIRE
+      - adaptation de dashboard (champs creation/revision remplacés par le chap dateMD) / ok
+      - tester sgupdt/shomgt sur préprod / ok
+      - correction bug 7620 (ECHEC)
+    apportsFonctionnels:
+      - dépôt des cartes en mode web
+      - correction bug 7620
+    question:
+      - faut-il migrer la prod en fin de sprint1 ?
+    bugs:
+      shomgt.yaml: |
+        Bug dans sgupt le 31/7 14h
+        Erreur, shomgt.yaml NON conforme à son schéma
+        Erreur propriété .gt50k.7620_CA interdite
+        Cela vient du fait de la présence dans l'archive d'un fichier tif anormal '7620/7620_CA.tif'
+        Il faut que j'impose des contraintes plus fortes dans le BO pour garantir que sgupt et shomgt ne plantent pas !
+    améliorationsNécessaires2023-07-31:
+      title: améliorations à apporter au 31/7
+      bo:
+        - lien du bo vers le dashboard
+        - lien de retour de addmaps vers bo
+      attention:
+        - le portefeuille devient géré sur la préprod
+          - => si je détruis la préprod, je perds le portefeuille
+          - c'est acceptable car j'ai une sauvegarde du portefeuille
+            - et que je peux aller rechercher les cartes actualisées
+  sprint2:
+    début: 31/7/2023
+    fin: 4/8/2023T21:00
+    bugs:
+      liens: |
+        Les liens dans current sont pour certains relatifs et d'autres absolus.
+        Il devraient être tous relatfs.
+        -> écrire un script de reconstruction des liens dans current
+           l'objectif serait principalement de s'assurer que les liens sont relatifs
+           -> sprint 3
+      cartesSpéciales(ok): |
+        Test 3/8T20:50
+        La version locale des cartes spéciales reste undefined ce qui force le retéléchargement systématique
+        de chaque carte.
+        Bug réglé
+        -> Modification de la définition des cartes spéciales, modification du calcul de la version dans sgupdt
+    objectifs:
+      - consolider le sprint1 avec notamment les demandes d'améliorations notées ci-dessus (FAIT)
+      - tests de sprint1 (FAIT)
+      - bug 7620 - retour à la correction précédente, ie nécessité de borders
+        - nécessité aussi de détecter ce type d'erreur de géoréf. dans le BO (FAIT)
+        - considérer comme erreur l'existence d'un .tif non prévu (FAIT)
+      - revoir la spec des cartes spéciales pour la restreindre à ce qui est autorisé dans sgupdt (FAIT)
+        - cad
+          - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
+          - + éventuel fichier .xml
+  sprint3:
+    début: 
+    fin: 
+    objectifs:
+      - créer le site de maintenance
+      - mise en prod de préProd sur https://geoapi.fr/shomgt/
+        - déplacer les cartes
+      - convergence de la branche git avec main
+  sprint4:
+    objectifs:
+      - création de comptes
+      - bannissement utilisateur
+      - gestion noms de domaines et IP
+      - mise en base user, domaines et adresses IP ?
+    apportsFonctionnels:
+      - création de comptes
+  horsSprint:
+    - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
+    - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
+    - tableau des utilisateurs (réservé admins) -> '#fonctionnalités/userdb'
+    - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
+      - var. d'env. sur sgupdt -> var. GET sur sgserver avec zone
+    - automatisation de la maj du GAN et de la purge des cartes
+    - annulation dépôt de cartes
+    - meilleure gestion en production de l'affichage des erreurs
+    - ajout gestion du catalogue dans le BO
+      - mise en base de MapCat
+    - gestion des stats d'utilisation
+fonctionnalités:
+  admin:
+    - bo réservé aux admins
+    - tableau de bord du portefeuille -> '#pfdb'
+    - tableau de bord des utilisateurs -> '#userdb'
+  pfdb:
+    - tableau des cartes du portefeuille (réservé admins)
+      - liste des cartes du portefeuille
+        - avec plusieurs vues
+          - ramassée (comme viewtiff)
+          - plus développée (avec no, titre, échelle, mapsFrance)
+          - possibilité de tri sur l'échelle ou le no de carte, et de filtre sur mapsFrance
+        - possibilité d'accès à une carte avec
+          - MD esssentielles (issues de MapCat ?)
+          - imagette de la version courante et lien vers la carte dans mapwcat
+          - poids des fichiers pour aider à faire le ménage
+          - liste des versions avec le no de version
+          - possibilité d'accès à une version avec
+            - appel de viewtiff
+            - possibilité de la déplacer dans la poubelle
+      - liste des cartes obsolètes
+        - possibilité d'accès à une carte avec les mêmes fonctionnalités que les cartes non obsolètes
+      - poubelle
+        - voir son contenu
+        - annuler une suppression
+        - la vider
+  userdb:
+    - lister les utilisateurs
+    - lister les utilisateurs qui ont déposé une version
+      - pour un utilisateur lister les versions déposées
+        - accès à la version déposée
+miseEnProd:
+  principes:
+    - préparer le déplacement de shomgeotiff
+      - SI ~/prod/shomtiffpp contient des liens vers ~/prod/shomtiff
+        - ALORS remplacer ces liens par une copie les fichiers pointés FIN_SI
+    - stocker la date de cette release {release-date} dans le fichier realease-date.json
+    - arrêter shomgt et affichage du site de maintenance
+      - SI ~/prod/geoapi/sgbacks n'existe pas ALORS le créer FIN_SI
+      - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date} où {release-date} est la date de la release
+      - déplacer ~/prod/geoapi/sgbacks/{release-date}/maintenance  -> ~/prod/geoapi/shomgt
+    - remplacer shomgeotiff par shomgeotiffpp
+      - SI ~/prod/shomgeotiff-backs n'existe pas ALORS le créer FIN_SI
+      - déplacer ~/prod/shomgeotiff -> ~/prod/shomgeotiff-backs/{release-date}
+      - déplacer ~/prod/shomgeotiffpp -> ~/prod/shomgeotiff
+    - remettre le nouveau site
+      - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date}/maintenance
+      - déplacer ~/prod/geoapi/sgpp -> ~/prod/geoapi/shomgt
+    - recréer ~/prod/geoapi/sgpp + ~/prod/shomgeotiffpp
+  miseEnOeuvre:
+    - écrire un script Php CLI dans ~/prod/geoapi/shomgt-maintenance/release.php
+  maintenance:
+    outils:
+      ~/prod/geoapi/shomgt-maintenance/release.php:
+        title: mise en prod de ~/prod/geoapi/sgpp et déplacement de shomgeotiffpp à la place de shomgeotiff
+      ~/prod/geoapi/shomgt-maintenance/startMaintenance.php:
+        title: remplacer le site par les panneaux de maintenance
+      ~/prod/geoapi/shomgt-maintenance/endMaintenance.php:
+        title: remplacer le site de maintenance par le site standard
+    répertoire:
+      - répertoire maintenance dans shomgt contenant les url de maintenance
+      - ces url de maintenance renvoient un message de maintenance et une erreur 503 sur chauqe point d'accès
+        - index.php -> garder le texte d'accueil
+        - mapwcat.php
+        - tile.php
+        - wms.php
+        - shomgt/tile.php -> message de maintenance dans une tuile
+        - shomgt/maps.php
+        - shomgt/dl.php
+        - sgserver/index.php
+  ptsAccèsOfficiels:
+    - https://geoapi.fr/shomgt/
+    - https://geoapi.fr/shomgt/mapwcat.php
+    - https://geoapi.fr/shomgt/tile.php
+    - https://geoapi.fr/shomgt/wms.php
+    - https://sgserver.geoapi.fr/index.php -> https://geoapi.fr/shomgt/sgserver/index.php
+  ptsAccèsCachés:
+    - https://geoapi.fr/shomgt/shomgt/dl.php
+    - https://geoapi.fr/shomgt/shomgt/tile.php
+    - https://geoapi.fr/shomgt/shomgt/maps.php
+    - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
+    - https://geoapi.fr/shomgt/shomgt/leaflet/*
+miseEnProdGit:
+  cmdes: |
+    git checkout main
+    git merge shomgt4
+  résultat: |
+    www-data@php82:~/html/geoapi/shomgt$ git checkout main
+    Switched to branch 'main'
+    Your branch is up to date with 'origin/main'.
+    www-data@php82:~/html/geoapi/shomgt$ git merge shomgt4
+    Auto-merging README.md
+    CONFLICT (content): Merge conflict in README.md
+    Auto-merging dashboard/gans.yaml
+    CONFLICT (content): Merge conflict in dashboard/gans.yaml
+    Auto-merging dashboard/index.php
+    Auto-merging mapcat/mapcat.schema.yaml
+    CONFLICT (content): Merge conflict in mapcat/mapcat.schema.yaml
+    Auto-merging mapcat/mapcat.yaml
+    CONFLICT (content): Merge conflict in mapcat/mapcat.yaml
+    Auto-merging sgupdt/main.php
+    Auto-merging shomft/gt.json
+    CONFLICT (content): Merge conflict in shomft/gt.json
+    Automatic merge failed; fix conflicts and then commit the result.
+bug7620:
+  annulationDeLaCorrection:
+    - cette correction génère des effets de bords
+    - d'une part sur la carte 0101
+    - d'autre part sur les cartes intersectant l'antimeridien
+    - je l'annule donc provisoirement le 31/7/2023
+  correctionInitiale:
+    - la carte 7620-2242 présente un bug de géoréférencement
+    - en exécutant gdalinfo sur 7620_pal300.tif on constate que
+      - le champ coordinateSystem.wkt est bizarre
+      - le champ cornerCoordinates censé donner les coordonnées des coins en WorldMercator est faux
+    - pour traiter ce bug, j'ai choisi de modifier le fichier lib/gdalinfo.inc.php
+      - de ne plus utiliser cornerCoordinates
+      - mais de recalculer la projection WorldMercator de wgs84Extent
+    - l'inconvénient de cette solution est de modifier le composant shomgt
+    - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
+    - l'inconvénient est faible car l'ancien composant shomgt fonctionnera toujours
+      - la seule limite est que la carte buggée ne s'affiche pas
+sympa:
+  avantages:
+    - plus simple à mettre en oeuvre qu'un forum
+    - gérable depuis l'extérieur de l'intranet
+    - affichage de la responsabilité du ministère (nom de domaine)
+alwaysdata:
+  - créer un compte shomgt (ou geoapi) indépendant de bdavid que je puisse céder à quelqu'un (PAS FAIT)
+    - avec gestion du nom de domaine geoapi
+  - la version de prod -> https://shomgt.geoapi.fr/ -> ~/prod/geoapi/shomgt
+    - stockage de shomgeotiff dans ~/shomgeotiff
+  - avec une version préprod -> https://sgpp.geoapi.fr/ -> ~/prod/geoapi/sgpp
+    - stockage de shomgeotiff dans ~/shomgeotiffpp
+github:
+  - créer une branch shomgt4 (FAIT)
+  - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4 (PAS FAIT)
+garderUneV3:
+  - il faut que je garde une V3 opérationnelle pour tester l'utilisation de sgserver par des clients en V3
+  - sur Git créer une branche shomgt3 sur main avant de converger shomgt4 dans main
+  - sur Alwaysdata créer un répertoire ~/prod/geoapi/shomgt3 qui reste en V3
+contraintesV3:
+  - contraintes de sgupdt de la V3 sur la structure des cartes du portefeuille
+  - dans les md sgupdt utilise
+    - status=='ok' ? pour savoir si la carte est obsolete ou non
+    - lastVersion pour connaitre la version exposée
+  - puis findCurrentMapVersion() recherche la version de la carte stockée
+    - pour cela il cherche dans le répertoire {mapNum} un fichier dont le nom respecte le motif '!^CARTO_GEOTIFF_\d+_[^.]+\.xml!'
+      - s'il le trouve il en déduit la version en utilisant readMapVersion()
+      - sinon il retourne 'undefined'
+    - readMapVersion() extrait la version du champ edition du fichier .xml
+      - en utilisant
+        - le motif '!^[^-]*- (\d+) - [^\d]*(\d+)( - GAN : \d+)?$!' pour matcher les exemples
+          - Edition n° 4 - 2015 - Dernière correction : 12
+          - Edition n° 4 - 2022 - Dernière correction : 0 - GAN : 2241
+        - ou le motif  '!^[^\d]*(\d+) - [^\d]*(\d+)( - GAN : \d+)?$!' pour matcher les exemples
+          - Publication 1984 - Dernière correction : 101
+          - Publication 1989 - Dernière correction : 149 - GAN : 2250
+      - le champ edition des .xml des cartes spéciales
+        - est de la forme
+          - Edition 2 - 2023
+          - Publication 2015
+        - 'Edition 2 - 2023' ne matche pas le premier motif mais matche le second en donnant la version 2c2023
+        - 'Publication 2015' ne matche aucun des 2 motifs
+  - pour conserver une compatibilité avec sgupdtV3 de sgserver (version<4)
+    - option 1 - diffuser les cartes spéciales avec la version undefined
+      - => les cartes spéciales ne seront pas mises à jour
+    - option 2 - modifier le .xml des cartes spéciales pour que le champ edition respecte le format de celui des cartes normales
+      - => modifier le ;xml des cartes spéciales
+  - dans un premier temps je choisis l'option 1
+ 
+requêtesLog: |
+  SELECT * FROM `log`  
+  WHERE request_uri like '/shomgt/sgserver/index.php%'
+  ORDER BY `log`.`logdt`  DESC
+
+  /shomgt/sgserver/index.php/maps.json
+
+  SELECT * FROM `log`  
+  WHERE request_uri like '%/maps.json%'
+    and login is null
+    and user is null
+  ORDER BY `log`.`logdt`  DESC
+  
+  SELECT * FROM `log`  
+  WHERE request_uri like '%/maps.json%'
+    and login <> 'benoit.david@free.fr'
+    and user <> 'bd'
+  ORDER BY `log`.`logdt`  DESC
+  
+  SELECT * FROM `log`  
+  WHERE request_uri like '%/maps.json%'
+  ORDER BY `log`.`logdt`  DESC
+  
+  SELECT * FROM `log`  
+  WHERE login is null
+    and user is null
+    and access='T'
+    and request_uri not like '%/tile.php%'
+    and request_uri not like '%/wms.php%'
+  ORDER BY `log`.`logdt`  DESC
+  
+batchRégulierDEntretien:
+  - batch chaque Samedi à 4h -> tâche pla­ni­fiée
+  - mise à jour du GAN
+  - mise en oeuvre de la stratégie de conservation des cartes et des logs
+  - suppression des dépôts en attente non validés
+preprodCode:
+  réflexions:
+    - shomgeotiff pèse 8,8 Go en local, 4,4 Go sur geoapi
+    - j'utilise 16,8 Go / 20 Go sur Alwaysdata
+    - comment mettre en preprod effectivement avec un portefeuille séparé ?
+      - -> passer Alwaysdata à 50 Go au moins temporairement (FAIT)
+  
+    - https://sgpp.geoapi.fr/
+      - avec des  var. d'env. différentes
+    - mettre en oeuvre un filtre sur sgserver pour faire des tests
+      - var. d'env. avec la liste des cartes exposées uniquement actif sur pprod
+      - ou un shomgeotiff spécifique
+conservation:
+  title: stratégie de conservation des données
+  cartes:
+    objectifs:
+      - connaitre l'état à une date antérieure (pas de cas d'usage !)
+      - revenir en arrière en cas de nouvelle version posant une difficulté d'intégration
+      - revenir en arrière en cas de nouvelles versions intentionnellement erronées
+        - dans une logique contributive il faut anticiper les actes mal intentionnés et prévoir des parades
+    principes:
+      - j'exclue le premier objectif en absence de cas d'usage
+      - le second objectif est assez simple à prendre en compte
+        - il suffirait de garder une version précédente valide qui peut être supprimée dès que la nouvelle version est validée
+      - le troisième objectif est plus difficile à traiter
+        - car il peut se passer du temps entre le dépôt d'une nouvelle version et la découverte du problème
+        - je fixe ce délai à 1 an
+    solution:
+      - double solution automatique et manuelle
+      - automatique:
+        - je garde pour chaque carte ttes les versions qui datent de moins d'un an
+        - ainsi que la version la plus récente qui date de plus d'un an
+        - et je jette donc les autres versions qui datent de plus d'un an
+        - cela permet pendant un an d'annuler le dépôt d'une nouvelle version dégradant le service
+      - manuelle:
+        - je prévois de purger manuellement une carte
+        - cad après avoir vérifié que tt va bien de ne conserver que la version la plus récente
+    réf:
+      - shomgeotiff complet pèse environ 9 Go
+      - je peux en supprimer un peu moins de la moitié en appliquant les principes ci-dessus
+      - je peux probablement me satisfaire de 10 Go pour le stockage des cartes
+    commentFaire:
+      - dans le script sunday.php
+      - voir script bo/purge.php
+  logsDeConnexion:
+    - faire des synthèses des logs ttes les semaines
+    - les logs détaillés pèsent environ 140 Mo pour 6 mois
+    - supprimer les logs détaillés au bout d'un an
+structurePortfolio:
+  title: organisation du portefeuille de cartes dans l'option sans préProdData
+  subDirectories:
+    - name: /var/www/html (@local) | /home/bdavid/prod (@distant)
+      description: description des répertoires et fichiers contenant le portefeuille de cartes
+      entries:
+        - name: shomgeotiff
+          description: |
+            répertoire de stockage des cartes 7z en prodCode, défini par SHOMGT3_PORTFOLIO_PATH
+            actuellement uniquement @local car @distant c'est l'ancienne version qui fonctionne
+          entries:
+            - name: archives
+              description: contenus des cartes et de leurs MD
+              entries:
+                - namePattern: {mapNum}
+                  description: |
+                    un répertoire par carte portant comme nom le numéro de la carte
+                    les entrées peuvent être des vrais fichiers ou des liens vers un autre stockage
+                  entries:
+                    - {mapNum}-{version}.7z / chaque version {version} de la carte
+                    - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                    - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+            - name: current
+              description: répertoire des versions courantes des cartes
+              entries:
+                - lien {mapNum}.md.json vers le .md.json
+                  - de la version courante de la carte si version courante
+                  - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                - lien {mapNum}.7z vers le .7z de la version courante si version courante
+            - name: users
+              description: répertoire des cartes déposées par les utilisateurs
+              entries:
+                - namePattern: {userEmail}
+                  description: un répertoire par utilisateur portant comme nom son email
+                  entries:
+                    - {mapNum}.7z / carte en cours de dépôt portant comme nom le numéro de la carte suivi de l'ext. .7z
+        - name: shomgeotiffpp
+          description: |
+            répertoire de stockage de cartes en préProdCode, défini par SHOMGT3_PORTFOLIO_PATH
+            actuellement uniquement @distant car @local pas d'env. préProdCode
+            Organisé comme shomgeotiff
+  structureFichiersMdJson: définie par le schema bo/md.schema.yaml
+  expositions:
+    appliShomgtActuelle@2/8T12:00:
+      description: URL de l'appli shomgt
+      prodCode:
+        appel: https://geoapi.fr/shomgt (URL diffusée)
+        site:
+          url: geoapi.fr
+          racine: /prod/geoapi/
+          envVars: |
+            SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+            SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+      préProdCode:
+        appel: https://sgpp.geoapi.fr/
+        site:
+          description: site nécessaire pour var. env.
+          url: sgpp.geoapi.fr
+          racine: /prod/geoapi/sgpp/
+          envVars: |
+            SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+            SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+    appliShomgtCible@2/8T12:00:
+      description: URL de l'appli shomgt
+      prodCode: idem '#appliShomgtActuelle@2/8T12:00' (URL diffusée)
+      préProdCode:
+        appel: https://sgtppc.geoapi.fr/
+        site:
+          url: sgtppc.geoapi.fr
+          racine: /prod/geoapi/sgtppc/
+          envVars: |
+            SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+            SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+    serviceSgserverActuel@2/8T12:00:
+      prodCode:
+        appel: https://sgserver.geoapi.fr (URL diffusée)
+        site:
+          url: sgserver.geoapi.fr
+          racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+          envVar: |
+            SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+      préProCode:
+        appel: https://xx:xx@sgpp.geoapi.fr/sgserver/index.php
+        site: sgpp.geoapi.fr
+maparchivestore:
+  - je peux cloner le stockage des cartes sans consommer d'espace, par ex entre prod et pp
+  - à réfléchir !!
+  - il faut que je modifie le concept de clonage
+  - l'idée de cloner shomgeotiff est la suivante
+    - je déplace shomgeotiff dans shomgeotiff-back
+    - je crée dans shomgeotiff une copie de shomgeotiff-back
+      - dans laquelle chaque fichier .7z ou .json est remplacé par un lien vers le correspondant dans shomgeotiff-back
+    - je peux maintenant
+      - supprimer des fichiers dans shomgeotiff sans qu'ils soient réellement supprimés dans shomgeotiff-back
+      - changer current sans qu'il soit changé dans shomgeotiff-back
+    - par contre qd j'ajoute un nv fichier il n'est pas ajouté dans shomgeotiff-back
+    - il faut donc une opération particulière qui synchronise shomgeotiff-back avec shomgeotiff
+      - cela pourrait être fait à la mise en prod
+      - cela permet de travailler sur un shomgeotiff ss risque d'abimer l'original
+
+optionPréProdDataSimplifiée:
+  idées:
+    - option plus simple de préProdData que '#optionPréProdDataV1'
+    - j'interdis d'utiliser concurrement sgupdt en prodData ou en préProdData
+      - dans le BO avant de lancer sgupdt/main.php
+        - si le fichier lockSgupdt.json existe
+          - alors il s'arrête en erreur en affichant ce fichier
+          - sinon il crée ce fichier avec l'email de l'utilisateur et la date et l'heure de démarrage
+      - après l'exécution de sgupdt/main.php par le BO ce fichier est supprimé
+    - avoir un env. unique en préProdData pour distinguer les fichiers de données dans sgupdt et shomgt
+    - dans la gestion de versions du BO distinguer la version courante en prodData de celle en préProdData
+    - je gère une copie de current pour la préProdData que je nomme preProdData
+    - j'ajoute dans sgserver une option 'preProdData' qui permet d'avoir les versions en préProdData
+    - dans sgupdt et shomgt j'utilise un SHOMGT3_MAPS_DIR_PATH différent pour distinguer préProddata de prodData
+    - dans le répertoire geoapi/shomgt création du ss-répertoire ppdata pour les données en préProdData
+    - dans sgupdt ajout d'une var. env. SHOMGT4_SERVER_OPTIONS contenant '{"preProdData"=> true}'
+
+optionPréProdDataV1:
+  status: je suspends cette réflexion @3/8T09:14 car ca devient complexe et ce n'est pas l'urgence
+  title: organisation des données dans l'option de mise en oeuvre d'un préProdData
+  idées:
+    - distinguer pré-prod code de pré-prod data
+      - la pré-prod code (préProdCode) a pour objectif de vérifier avant de le passer en prod que le code fonctionne correctement
+      - la pré-prod data (préProdData) a pour objectif de vérifier avant sa mise en production qu'une carte ne génère pas de bug
+      - la préProdData est une fonctionnalité du code qui doit pouvoir fonctionner en prodCode comme en préProdCode
+    - partager de manière structurelle les fichiers 7z entre préProdData et prodData
+      - en distinguant les cartes courantes en prodData de celles en préProdData
+    - partager au moyen de liens les fichiers 7z entre préProdCode et prodCode
+    - réutiliser le code de sgupdt et shomgt entre prodData et préProdData
+      - pour préProdData ne pas utiliser sgserver pour transférer les fichiers
+    - ATTENTION, préProdData doit pouvoir être exécuté concurremment par différents utilisateurs
+      - il ne faut donc pas que 2 exécutions entre 2 utilisateurs partagent leurs données
+  miseEnOeuvre(réflexion):
+    architecture:
+      - c'est le BO qui pilote sgupdt en prodData comme en préProdData
+      - pour shomgt, le BO peut fournir un URL d'appel spécifique à préProdData
+      - les caractéristiques distinguantes entre prodData et préProdData peuvent être définies
+        - soit comme var. d'env.
+        - soit comme options d'appel
+    currentSubDirectories:
+      - name: /var/www/html (@localhost) | /home/bdavid/prod (@Alwaysdata)
+        description: description des répertoires et fichiers contenant des données
+        entries:
+          - name: shomgeotiff
+            description: répertoire de stockage des cartes 7z en prodCode, défini par SHOMGT4_PORTFOLIO_PATH
+            entries:
+              - name: archives
+                description: contenus des cartes et de leurs MD
+                entries:
+                  - namePattern: {mapNum}
+                    description: un répertoire par carte portant comme nom le numéro de la carte
+                    entries:
+                      - {mapNum}-{version}.7z / chaque version {version} de la carte
+                      - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                      - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+              - name: current
+                description: répertoire des versions courantes des cartes
+                entries:
+                  - lien {mapNum}.md.json vers le .md.json
+                    - de la version courante de la carte si version courante
+                    - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                  - lien {mapNum}.7z vers le .7z de la version courante si version courante
+              - name: users
+                description: répertoire des cartes déposées par les utilisateurs
+                entries:
+                  - namePattern: {userEmail}
+                    description: un répertoire par utilisateur portant comme nom son email
+                    entries:
+                      - {mapNum}.7z / carte en cours de dépôt portant comme nom le numéro de la carte suivi de l'ext. .7z
+          - name: geoapi
+            entries:
+              - name: shomgt
+                description: répertoire du code source de ShomGT
+                entries:
+                  - name: data
+                    description: répertoire des données formattées pour le composant shomgt
+                    entries:
+                      - shomgt.yaml généré par sgupdt pour le composant shomgt
+                      - name: maps
+                        description: répertoire des cartes formattées par sgupdt pour le composant shomgt
+                      - name: temp
+                        description: répertoire de données temporaires utilisé par sgupdt
+                      - name: tilecache
+                        description: répertoire du cache des tuiles généré par shomgt
+                  - name: lib
+                    description: bibliothèque de scripts utilisés par shomgt et sgupdt
+                    entries:
+                      - name: temp
+                        description: répertoire de données temporaires utilisé par plusiurs scripts
+                  - name: sgupdt
+                    description: code du composant éponyme
+                    entries:
+                      - name: temp
+                  - ...
+    cibleSubDirectories:
+      - name: /var/www/html (@localhost) | /home/bdavid/prod (@Alwaysdata)
+        entries:
+          - name: shomgeotiff
+            description: répertoire de stockage des cartes 7z en prodCode, défini par SHOMGT4_PORTFOLIO_PATH
+            entries:
+              - name: archives
+                description: contenus des cartes et de leurs MD
+                entries:
+                  - namePattern: {mapNum}
+                    description: un répertoire par carte portant comme nom le numéro de la carte
+                    entries:
+                      - {mapNum}-{version}.7z / chaque version {version} de la carte
+                      - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                      - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+              - name: current
+                description: répertoire des versions courantes des cartes
+                entries:
+                  - lien {mapNum}.md.json vers le .md.json
+                    - de la version courante de la carte si version courante
+                    - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                  - lien {mapNum}.7z vers le .7z de la version courante si version courante
+              - name: users
+                description: répertoire des cartes déposées par les utilisateurs
+                entries:
+                  - namePattern: {userEmail}
+                    description: un répertoire par utilisateur portant comme nom son email
+                    entries:
+                      - {mapNum}.7z / carte en cours de dépôt portant comme nom le numéro de la carte suivi de l'ext. .7z
+          - name: shomgtppc
+            description: |
+              répertoire de stockage des cartes 7z en préProdCode, virtuellement identique à shomgeotiff,
+              défini par SHOMGT4_PORTFOLIO_PATH
+            entries:
+              - name: archives
+                description: contenus des cartes et de leurs MD évt. partagés avec prodCode
+                  - entries:
+                    namePattern: {mapNum}
+                    description: un répertoire par carte portant comme nom le numéro de la carte
+                    oneOf:
+                      - lien vers ../../shomgeotiff/archives/{mapNum}
+                      - répertoires spécifiques si nécessaires en préProdCode
+              - name: current
+                description: rép. des versions courantes des cartes pour la préProdCode ayant même structure qu'en prodCode
+              - name: users
+                description: rép. des cartes déposées par les utilisateurs en préProdCode ayant même structure qu'en prodCode
+          - name: geoapi
+            entries:
+              - name: shomgt
+                description: répertoire du code source de ShomGT
+                entries:
+                  - name: data
+                    description: répertoire des données formattées pour le composant shomgt
+                    entries:
+                      - shomgt.yaml
+                      - name: maps
+                        description: répertoire des cartes formattées pour le composant shomgt
+                      - name: temp
+                        description: répertoire de données temporaires
+                      - name: tilecache
+                        description: répertoire du cache des tuiles
+                  
+    archive@3/8T07:00:
+      subDirectories:
+      name: /var/www (@localhost) | /home/bdavid/prod (@Alwaysdata)
+      entries:
+        - name: shomgeotiff
+          description: répertoire de stockage des cartes en prodCode
+          entries:
+            - name: archives
+              description: contenus des cartes et de leurs MD
+              entries:
+                - namePattern: {mapNum}
+                  description: un répertoire par carte portant comme nom le numéro de la carte
+                  entries:
+                    - {mapNum}-{version}.7z / chaque version {version} de la carte
+                    - {mapNum}-{version}.md.json / chaque version {version} de la carte
+                    - {mapNum}-{date}.md.json / les cartes obsolètes / {date} = date à laquelle la carte l'a été déclarée
+            - name: current
+              entries:
+                - lien {mapNum}.md.json vers le .md.json
+                  - de la version courante de la carte si version courante
+                  - ou vers {mapNum}-{date}.md.json si la carte est obsolète
+                - lien {mapNum}.7z vers le .7z de la version courante si version courante
+        - name: shomgeotiff-ppdata
+          description: répertoire utilisé pour prodCode X préProdData
+          entries:
+            - name: current
+              description: versions courantes pour la pré-prod data ayant même structure que current en prod
+        - name: shomgtppc
+          description: répertoire de stockage des cartes en préProdCode
+          entries:
+            - name: archives
+              description: contenus des cartes et de leurs MD évt. partagés avec prod code
+                - entries:
+                  namePattern: {mapNum}
+                  description: un répertoire par carte portant comme nom le numéro de la carte
+                  oneOf:
+                    - liens vers ../../shomgeotiff/archives/{mapNum}-{version}.(7z|.md.json)
+                    - fichiers spécifiques si nécessaires en pré-prod code
+            - name: current
+              description: versions courantes pour la pré-prod code ayant même structure qu'en prod code
+        - name: shomgtppc-ppdata
+          description: répertoire de préProdData en préProdCode
+          entries:
+            - name: current
+              description: versions courantes pour la pré-prod data pré-prod code ayant même structure qu'en prod
+            - name: users
+              description: répertoire des cartes déposées par les utilisateurs en pré-prod code
+      logic:
+        enProdCode:
+          - en version prod du code
+          - un utilisateur charge sa carte dans shomgeotiff/users/{email}
+          - il l'active en préprod data en la transférant dans shomgeotiff/ppdata
+          - il vérifie en préprod data que sa mise en oeuvre est OK
+          - si c'est le cas il l'active en prod en la transférant dans shomgeotiff/current
+        enPréProdCode:
+          - idem prod code
+          - avec possibilité
+            - soit de partager le répertoire archives pour éviter de le dupliquer
+      code:
+        description: en local la distinction entre prod/pré-prod code se fait au moyen de branches Git
+        prodCode:
+          local: -> /var/www/geoapi/shomgt
+          adata: -> /home/bdavid/prod/geoapi/shomgt
+        préprodCode:
+          local: -> /var/www/geoapi/shomgt
+          adata: -> /home/bdavid/prod/geoapi/sgtppc
+      expositions:
+        appliShomgtActuelle@2/8T12:00:
+          description: URL de l'appli shomgt
+          prodCode:
+            appel: https://geoapi.fr/shomgt (URL diffusée)
+            site:
+              url: geoapi.fr
+              racine: /prod/geoapi/
+              envVars: |
+                SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+                SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          préProdCode:
+            appel: https://sgpp.geoapi.fr/
+            site:
+              description: site nécessaire pour var. env.
+              url: sgpp.geoapi.fr
+              racine: /prod/geoapi/sgpp/
+              envVars: |
+                SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+                SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiffpp
+        appliShomgtCible@2/8T12:00:
+          description: URL de l'appli shomgt
+          prodCode: idem '#appliShomgtActuelle@2/8T12:00' (URL diffusée)
+          préProdCode:
+            appel: https://sgtppc.geoapi.fr/
+            site:
+              url: sgtppc.geoapi.fr
+              racine: /prod/geoapi/sgtppc/
+              envVars: |
+                SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+                SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+        serviceSgserverActuel@2/8T12:00:
+          prodCode:
+            appel: https://sgserver.geoapi.fr (URL diffusée)
+            site:
+              url: sgserver.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+              envVar: |
+                SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          préProCode:
+            appel: https://xx:xx@sgpp.geoapi.fr/sgserver/index.php
+            site: sgpp.geoapi.fr
+        serviceSgserverCible@2/8T12:00:
+          decription: il existe 4 expositions du service sgserver s'appuyant sur 2 versions du code
+          prodCodeProdData:
+            decription: version prodCode X prodData
+            appel: https://sgserver.geoapi.fr (URL diffusée)
+            site: 
+              url: sgserver.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+                SHOMGT3_MAPS_DIR_PATH=/home/bdavid/prod/shomgt/data/maps
+          prodCodePréProdData:
+            decription: version prodCode X préProdData
+            appel: https://sgserver-ppdata.geoapi.fr
+            site:
+              url: sgserver-ppdata.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff-ppdata
+                SHOMGT3_MAPS_DIR_PATH=/home/bdavid/prod/shomgt/ppdata/maps
+          préProdCodeProdData:
+            decription: version préProdCode X prodData
+            appel: https://sgserver-ppcode.geoapi.fr
+            site:
+              url: sgserver-ppcode.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+          préProdCodePréProdData:
+            decription: version préProdCode X préProdData
+            site:
+              url: sgserver-ppcode-ppdata.geoapi.fr
+              racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+              envVar: |
+                SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc-ppdata
+        synthèseSitesCible:
+          - description: appli en prodCode
+            url: geoapi.fr
+            racine: /prod/geoapi/
+            envVars: |
+              SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+              SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+              SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          - description: sgserver de prodData en prodCode
+            url: sgserver.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+            envVar: |
+              SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff
+          - description: sgserver de préProdData en prodCode
+            url: sgserver-ppdata.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/shomgt/sgserver
+            envVar: |
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgeotiff-ppdata
+          - description: appli en préProdCode
+            url: sgtppc.geoapi.fr
+            racine: /prod/geoapi/sgtppc/
+            envVars: |
+              SHOMGT3_LOG_MYSQL_URI=mysql://xx:xx@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+              SHOMGT3_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+              SHOMGT3_DASHBOARD_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+          - description: sgserver de prodData en préProdCode
+            url: sgserver-ppcode.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+            envVar: |
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc
+          - description: sgserver de préProdData en préProdCode
+            url: sgserver-ppcode-ppdata.geoapi.fr
+            racine: /home/bdavid/prod/geoapi/sgtppc/sgserver
+            envVar: |
+              SHOMGT4_PORTFOLIO_PATH=/home/bdavid/prod/shomgtppc-ppdata
+    envVar:
+       - le chemin de shomgeotiff est défini dans la var. d'env. SHOMGT4_PORTFOLIO_PATH
+  structureFichiersMdJson: définie par le schema bo/md.schema.yaml
+
+envVars:
+  shomgt:
+    SHOMGT3_LOG_MYSQL_URI:
+      description: si absent, le log est désactivé, sinon URI de la base MySql utilisé pour stocker les logs
+      default: pas de défaut, vaut alors ''
+      valeursFonctionDuHost:
+        geoapi.fr: mysql://xx:yy@mysql-bdavid.alwaysdata.net/bdavid_shomgt
+        localhost: mysql://xx:yy@mysqlserver/shomgt
+    SHOMGT3_MAPWCAT_FORCE_HTTPS:
+      description: si true alors https est forcé dans mapwcat
+      default: pas de défaut, vaut alors ''
+      note: indispensable pour utiliser shomgt derrière un Traefik gérant le certificat https
+    SHOMGT3_MAPS_DIR_PATH:
+      description: chemin du répertoire stockant les cartes expansées
+      note: devient indispensable en ShomGT4
+  sgupdt:
+    SHOMGT3_SERVER_URL: 
+      description: URL du serveur de cartes 7z; doit contenir le login/passwd si nécessaire
+      default: https://sgserver.geoapi.fr/index.php
+    http_proxy:
+    https_proxy: proxy à utiliser pour le serveur de cartes 7z, défaut absent
+    SHOMGT3_MAPS_DIR_PATH:
+      description: chemin du répertoire stockant les cartes expansées
+      note: devient indispensable en ShomGT4
+    SHOMGT3_UPDATE_DURATION: délai entre 2 mises à jour en jours (defaut 28)
+  sgserver:
+    SHOMGT3_PORTFOLIO_PATH:
+      description: chemin du répertoire shomgeotiff
+      geoapi.fr: /home/bdavid/prod/shomgeotiff
+      local: /var/www/html/shomgeotiff
+  bo:
+    SHOMGT3_PORTFOLIO_PATH:
+      description: chemin du répertoire shomgeotiff
+      geoapi.fr: /home/bdavid/prod/shomgeotiff
+      local: /var/www/html/shomgeotiff
+  dashboard:
+    SHOMGT3_DASHBOARD_PORTFOLIO_PATH:
+      description: chemin de shomgeotiff
+      geoapi.fr: /home/bdavid/prod/shomgeotiff
+      local: /var/www/html/shomgeotiff
+
+specsDesCartes:
+  stratégie:
+    - vu que les composants shomgt et sgupdt peuvent être déconcentrés
+      - j'ai intérêt à garder simples ces composants et à reporter la complexité d'hétérogénéité en amont sur le BO
+    - cela veut dire qu'il faut que j'impose dans certains cas particuliers des spécifications plus contraignantes
+      - que celles du Shom
+    - en contrepartie, je peux effectuer des transformations dans le BO pour respecter les spécifications que j'impose
+      - cela veut dire qu'il faut que je distingue
+        - la spécification à respecter en interne, notamment dans le protocole sgserver et le stockage du portefeuille
+        - de la spécification externe à respecter pour charger une carte dans le BO
+    - dans un premier temps, pas de transformation et donc spec externe = spec interne
+    - les principaux problèmes de spécification sont
+      - sur les cartes spéciales qui par définition sont très peu spécifiées mais ne sont pas nombreuses
+        - au pire elles peuvent être restructurées à la main, ce que j'ai fait en ShomGT3
+      - sur les cartes facs-similés avec le nommage des fichiers et le géorérencement
+      - sur les cartes à cheval sur l'antiméridien pour lesquelles le format GéoTiff semble ambigu ou mal respecté
+  
+  cartesNormales:
+    - Les cartes normales sont spécifiées par le Shom
+      - qui précise que la spec ne concerne pas les Fac-similés
+    - J'ajoute à la spec Shom la cohérence suivante avec MapCat
+      - chaque carte 7z correspond à une entrée dans les cartes obsolètes ou non de MapCat
+      - ssi la zone principale pal300 est géoréférencée alors
+        - la carte comporte les champs spatial et scaleDenominator et
+        - son géoréférencement contient géographiquement l'extension spatiale définie dans MapCat
+          - avec un cas particulier pour les cartes à cheval sur l'antiméridien et les cartes faisant plus du tour de la Terre
+      - chaque image de cartouche de l'archive correspond à un et un seul cartouche défini dans MapCat, et vice-versa
+      - le géoréférencement de l'image contient l'extension spatiale correspondante dans MapCat
+      - si un géoréférencement est absent ou incorrect alors le champ borders doit être défini dans Mapcat
+  
+    - Pour les cartes à cheval sur l'antiméridien
+      - l'encodage de l'extension spatiale permet de détecter cette caractéristique
+      - les coordonnées projetées dans le géoréférencement ont
+        - un West dans les bornes normales de la proj. WorldMercator
+        - un East > 20.037.508, cad la coord. X de l'antiméridien dans WorldMercator
+    
+    - Les cartes Fac-similés doivent respecter la même spec, à l'exception de
+      - les cartouches peuvent être numérotés par des lettres au lieu de nombres
+      
+    - les cartes normales ne doivent pas avoir dans le répertoire {mapNum} de fichier .tif en plus de ceux prévus par la spec
+      - cela permet de réorganiser une archive en sauvegardant l'archive d'origine dans un répertoire spécifique
+    
+  cartesSpéciales:
+     Pour les cartes spéciales j'utilise la spécification suivante:
+      - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
+      - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
+      - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
+      - l'archive doit contenir au moins
+        - soit un fichier {mapNum}/{mapNum}.(tif|pdf)
+        - soit un fichier {mapNum}/{mapNum}_{year}.(tif|pdf) où {year} est l'année de publication de la carte
+      - l'archive peut contenir un .tif et un .pdf ayant même nom de base
+      - le répertoire {mapNum} de l'archive ne doit pas contenir d'autre fichier .tif ou .pdf
+      - si le répertoire {mapNum} de l'archive contient un fichier .xml alors il est utilisé comme fichier de MD ISO
+   
+  géoréférencement:
+      - Pour les 2 types de carte un .tif est considéré comme non géoréférencé ssi
+        - le champ coordinateSystem/wkt de son gdalinfo est absent ou vide
+      - sinon il est bien géoréférencé ssi
+        - la projection WoldMercator du wgs84Extent est distante de moins de 1 km de cornerCoordinates
+      - sinon il est mal géoréférencé
+      - si le fichier .tif ou .pdf n'est pas ou est mal géoréféréncé
+        - alors l'enregistrement MapCat correspondant doit comporter un champ borders
+  
+géoréférencement:
+  - dans ShomGT je vois le géoréférencement des images au travers de gdalinfo
+  - ShomGT doit pouvoir utiliser les versions GDAL 2 ou 3 qui utilisent respectivement les versions WKT 1 et 2
+  - lorqu'une image n'est pas géoréférencée, le WKT du CRS est vide.
+  
+miseEnBase:
+  description: mise en base de certaines informations pour la V4
+  user:
+    description: compte utilisateur créé par vérification de l'adresse email
+    attributs:
+      num:
+        type: int
+        description: numéro d'ordre du compte auto incrémenté
+        clé: primaire
+      login:
+        type: string
+        description: adresse email
+        clé: secondaire unique
+      epasswd:
+        type: string
+        description: mot de passe encrypté
+      role:
+        type: string
+        description: rôle de l'utilisateur
+        enum:
+          admin: administrateur ayant notamment le droit de changer les rôles des utilisateurs
+          normal: utilisateur normal ayant le droit d'ajouter et supprimer des cartes
+          restricted: utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer
+          banned: utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte
+          suspended: utilisateur suspendu, l'utilisateur n'a plus aucun droit jusqu'à ce qu'il réactive son compte
+          temp: utilisateur en cours de création dont la validité n'a pas été vérifiée
+      secret:
+        type: string
+        description: clé secrète envoyée par email pour vérifier l'adresse email
+      sent:
+        type: date+time
+        description: date et heure d'envoi du dernier mail de vérification
+      create:
+        type: date+time
+        description: date et heure de création du compte ou de son dernier renouvellement
+  mapcat:
+    description: |
+      catalogue des cartes obsolètes ou non avec un n-uplet par carte
+      IL FAUT ARCHIVER LES ANCIENNES VERSIONS POUR POUVOIR LES RESTAURER
+    attributs:
+      mapnum:
+        type: string
+        description: numéro de carte sur 4 chiffres
+      title:
+        type: string
+        description: titre de la carte sans le numéro en tête
+      delete:
+        type: date ou null
+        description: date de suppression pour les cartes obsolètes ou null si la carte n'est pas obsolète
+      interest:
+        type: string
+        description: 'N' pour les cartes d'intérêt insuffisant, 'Y' pour les autres cartes
+      content:
+        type: JSON
+        description: enregistrement conforme au schéma JSON
+      bbox:
+        type: polygon
+        description: boite engobante de la carte
+  trace(PAS_NECESSAIRE):
+    description: |
+      traces des ajouts et suppressions de cartes et de l'annulation éventuelle de l'action
+      L'action peut être
+       - ajout d'une nouvelle carte
+       - remplacement d'une carte par une nouvelle version
+       - suppression d'une carte obsolète
+    attributs:
+      mapnum:
+        description: numéro de la carte ajoutée, remplacée ou supprimée
+      version:
+        description: version de la carte ajoutée, null pour une carte supprimée
+      user:
+        description: utilisateur ayant réalisé l'action
+      action:
+        description: type d'action
+        enum:
+          add: ajout d'une nouvelle carte
+          replacement: remplacement d'une carte par une nouvelle version
+          delete: suppression d'une carte obsolète
+      dt:
+        description: date et heure de l'action
+      canceldt:
+        description: date et heure de l'annulation ou null si l'action n'a pas été annulée
+      canceluser:
+        description: admin ayant annulé l'action ou null si l'action n'a pas été annulée
+      path:
+        description: chemin vers l'archive 7z de la version remplacée ou de la carte supprimée, null pour une nouvelle carte
+  maildomain(PAS_NECESSAIRE):
+    description: liste des domaines mails autorisés pour les utilisateurs, gérée par un admin
+  ipaddress(PAS_NECESSAIRE):
+    description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
+  gan(PAS_NECESSAIRE):
+    description: stockage des infos du GAN mises à jour régulièrement par cron
+admin:
+  title: interface admin
+  fonctionnalités:
+    - gestion de
+      - la liste des domaines autorisés
+      - la liste des adresses IP autorisées
+    - annulation du dépôt d'une carte, restitution de la version précédente
+    - modification du rôle d'un utilisateur
+  implémentées:
+    - gestion de la version courante d'une carte
+bo:
+  title: créer un BO pour les utilisateurs authentifiés
+  fonctionnalités:
+    - se loguer / créer un compte
+    - déposer une carte, la vérifier,
+    - marquer une carte comme obsolète,
+    - modifier le catalogue
+    - intégrer une carte déposée dans le portefeuille (cad dans le serveur de cartes)
+    - mettre à jour les services ShomGt avec les nouvelles versions de cartes
+  gestionDeComptes:
+    - initialement un compte admin est créé avec une adresse email et un mot de passe
+    - pour créer un nouveau compte
+      - un utilisateur indique son adresse et son mot de passe
+      - un enregistrement est créé dans la table user avec le rôle 'temp' et un secret généré aléatoirement
+      - un mail lui est envoyé avec le secret intégré dans un lien
+      - l'utilisateur doit activer le lien envoyé ce qui valide son compte et le fait passer en rôle 'normal'
+    - si un utilisateur perd son mot de passe
+      - il donne son adresse
+      - un nouveau secret aléatoire est généré
+      - un mail lui est envoyé avec le secret intégré dans un lien
+      - le lien permet de saisir un nouveau mot de passe interactivement
+    - un compte créé/renouvellé depuis plus d'un an doit être renouvellé
+      - l'idée est d'interdire l'accès aux personnes dont l'adresse mail n'est plus valide
+      - un nouveau secret aléatoire est généré
+      - un mail est envoyé avec un lien demandant de renouveller le compte
+      - si le compte n'est pas renouvellé dans un délai de 8 jours alors le compte est suspendu (rôle 'suspended')
+      - un compte suspendu depuis plus de 6 mois est supprimé
+      - pour réactiver un compte suspendu, c'est le même process que pour créer un compte
+        - mais sans demander un nouveau mot de passe
+  dépôt/vérifDUnecarte:
+    - l'utilisateur authentifié demande à déposer une nouvelle archive de carte
+    - l'archive est stockée dans un répertoire uniquement accessible à l'utilisateur
+    - l'utilisateur voit la liste de ses cartes en attente
+    - il peut vérifier une carte
+  modifCatalogue:
+    - il peut modifier le catalogue (ce qui peut être nécessaire pour valider une carte)
+  intégrerAuPortfeuille:
+    - si la vérif est ok
+      - alors il peut intégrer la carte au portefeuille
+      - sinon il peut effacer l'archive déposée
+    - les cartes en attente non intégrées dans le portefeuille sont effacées par le script d'entretien
+    - une fois intégrée au portefeuille les cartes n'"appartiennent" plus à l'utilisateur mais au système
+      - il ne peut plus y toucher
+  déclarerCarteObsolète:
+    - il peut déclarer qu'une carte est obsolète
+  mettreAJourServicesShomGt:
+    - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
+
+appelSgUpdtDepuisLeBo:
+  title: appel de sgupdt depuis le BO
+  solution: |
+    modifier l'env. et effectuer 
+
+exec:
+  exec: |
+    exec — Exécute un programme externe
+    exec(string $command, array &$output = null, int &$result_code = null): string|false
+  
+  shell_exec: |
+    shell_exec — Exécute une commande via le Shell et retourne le résultat sous forme de chaîne
+  
+    exemple
+      $output = shell_exec('ls -lart');
+      echo "<pre>$output</pre>";
+    
+    $locale = 'fr_FR.UTF-8';
+    setlocale(LC_ALL, $locale);
+    putenv('LC_ALL='.$locale);
+  putenv: |
+    putenv — Fixe la valeur d'une variable d'environnement
+    putenv(string $assignment): bool
+GeoTiff:
+  v1: |
+    The GeoTIFF format was initially developed during the early 1990’s (N. Ritter & Ruth, 1997). 
+    The objective was to leverage a mature platform independent file format (TIFF) by adding metadata 
+    required for describing and using geographic image data. 
+    TIFF met the requirements for an underlying format, as it was – and still is (though JPEG compression was added) – 
+    lossless and extensible. 
+    In September 1994, SPOT Image Corp proposed a GeoTIFF structure that was limited to Universal Transverse Mercator 
+    (N. Ritter & Ruth, 1997). 
+    The proposed GeoTIFF specification was further augmented and formalized by Ritter and Ruth as Revision 1.0,
+    specification version 1.8.2 in November 1995 (N. Ritter & Ruth, 1995), with minor adjustments published in 2000, 
+    available at http://geotiff.maptools.org/spec/geotiffhome.html, which is the official GeoTIFF specification version 1.0.
+  v1.1:
+    title: OGC GeoTIFF Standard, Version 1.1
+    url: https://docs.ogc.org/is/19-008r4/19-008r4.html
+    id: http://www.opengis.net/doc/IS/GeoTIFF/1.1
+    published: 2019-09-14
+crsWkt:
+  title: CRS-WKT
+  abstract: |
+    Sur Alwaysdata, gdalinfo est en version 'GDAL 2.4.0, released 2018/12/14'
+    Sur php82, gdalinfo est en version 'GDAL 3.6.2, released 2023/01/02'
+  
+    Le WKT du CRS en version 3.6.2 (2023/01/02) respecte le standard OGC 2.0.6 (document OGC 18-010r7 et ISO 19162:2019).
+    Ce standard est dit WKT 2 (2019).
+    Le WKT du CRS en version 2.4.0 (2018/12/14) respecte le standard OGC 1.0   (document OGC 12-063r5 et ISO 19162:2015).
+    Ce standard est dit WKT.
+  
+  exampleOgc1.0: |
+    PROJCS["WGS 84 / World Mercator",
+      GEOGCS["WGS 84",
+        DATUM["WGS_1984",
+          SPHEROID["WGS 84",6378137,298.257223563, AUTHORITY["EPSG","7030"]],
+          AUTHORITY["EPSG","6326"]],
+        PRIMEM["Greenwich",0],
+        UNIT["degree",0.0174532925199433],
+        AUTHORITY["EPSG","4326"]],
+      PROJECTION["Mercator_1SP"],
+      PARAMETER["central_meridian",0],
+      PARAMETER["scale_factor",1],
+      PARAMETER["false_easting",0],
+      PARAMETER["false_northing",0],
+      UNIT["metre",1, AUTHORITY["EPSG","9001"]],
+      AUTHORITY["EPSG","3395"]
+    ]  
+  
+  exampleOgc2.0.6:
+    worldMercator: |
+      PROJCRS["WGS 84 / World Mercator",
+        BASEGEOGCRS["WGS 84",
+          DATUM["World Geodetic System 1984", ELLIPSOID["WGS 84",6378137,298.257223563, LENGTHUNIT["metre",1]]],
+          PRIMEM["Greenwich",0, ANGLEUNIT["degree",0.0174532925199433]],
+          ID["EPSG",4326]],
+        CONVERSION["Mercator (variant A)",
+          METHOD["Mercator (variant A)", ID["EPSG",9804]],
+          PARAMETER["Latitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8801]],
+          PARAMETER["Longitude of natural origin",0, ANGLEUNIT["degree",0.0174532925199433], ID["EPSG",8802]],
+          PARAMETER["Scale factor at natural origin",1, SCALEUNIT["unity",1], ID["EPSG",8805]],
+          PARAMETER["False easting",0, LENGTHUNIT["metre",1], ID["EPSG",8806]],
+          PARAMETER["False northing",0, LENGTHUNIT["metre",1], ID["EPSG",8807]]],
+        CS[Cartesian,2],
+        AXIS["easting",east, ORDER[1], LENGTHUNIT["metre",1]],
+        AXIS["northing",north, ORDER[2], LENGTHUNIT["metre",1]],
+        ID["EPSG",3395]
+      ]
+    lambert93: |
+      PROJCRS["RGF93 v1 / Lambert-93",
+        BASEGEOGCRS["RGF93 v1",
+          DATUM["Reseau Geodesique Francais 1993 v1", ELLIPSOID["GRS 1980",6378137,298.257222101, LENGTHUNIT["metre",1]]],
+          PRIMEM["Greenwich",0, ANGLEUNIT["degree",0.0174532925199433]],
+          ID["EPSG",4171]],
+        CONVERSION["Lambert-93",
+          METHOD["Lambert Conic Conformal (2SP)", ID["EPSG",9802]],
+          PARAMETER["Latitude of false origin",46.5,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8821]],
+          PARAMETER["Longitude of false origin",3,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8822]],
+          PARAMETER["Latitude of 1st standard parallel",49,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8823]],
+          PARAMETER["Latitude of 2nd standard parallel",44,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8824]],
+          PARAMETER["Easting at false origin",700000,LENGTHUNIT["metre",1],ID["EPSG",8826]],
+          PARAMETER["Northing at false origin",6600000,LENGTHUNIT["metre",1],ID["EPSG",8827]]
+        ],
+        CS[Cartesian,2],
+        AXIS["easting (X)",east,ORDER[1],LENGTHUNIT["metre",1]],
+        AXIS["northing (Y)",north,ORDER[2],LENGTHUNIT["metre",1]],
+        USAGE[
+          SCOPE["Engineering survey, topographic mapping."],
+          AREA["France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica)."],
+          BBOX[41.15,-9.86,51.56,10.38]
+        ],
+        ID["EPSG",2154]
+      ]
+    lambert93enYaml:
+      PROJCRS:
+        - "RGF93 v1 / Lambert-93"
+        -
+          BASEGEOGCRS:
+            - "RGF93 v1"
+            - DATUM:
+                - Reseau Geodesique Francais 1993 v1
+                - ELLIPSOID: ["GRS 1980", 6378137, 298.257222101, {LENGTHUNIT: [metre, 1]}]
+            - PRIMEM: [Greenwich, 0, {ANGLEUNIT: ["degree", 0.0174532925199433]}]
+            - ID: [EPSG, 4171]
+        - 
+          CONVERSION:
+            - "Lambert-93"
+            - METHOD:
+              - Lambert Conic Conformal (2SP)
+              - ID: [EPSG, 9802]
+            - PARAMETER:
+              - "Latitude of false origin"
+              - 46.5
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8821]
+            - PARAMETER:
+              - "Longitude of false origin"
+              - 3
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8822]
+            - PARAMETER:
+              - "Latitude of 1st standard parallel"
+              - 49
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8823]
+            - PARAMETER:
+              - "Latitude of 2nd standard parallel"
+              - 44
+              - ANGLEUNIT: [degree, 0.0174532925199433]
+              - ID: ["EPSG", 8824]
+            - PARAMETER:
+              - "Easting at false origin"
+              - 700000
+              - LENGTHUNIT: ["metre", 1]
+              - ID: ["EPSG", 8826]],
+            - PARAMETER:
+              - "Northing at false origin"
+              - 6600000
+              - LENGTHUNIT: ["metre", 1]
+              - ID: ["EPSG", 8827]
+        - CS: [Cartesian, 2]
+        - AXIS: ["easting (X)", east, {ORDER: 1}, {LENGTHUNIT: ["metre",1]}]
+        - AXIS: ["northing (Y)", north, {ORDER: 2}, {LENGTHUNIT: ["metre",1]}],
+        -
+           USAGE:
+            SCOPE: "Engineering survey, topographic mapping."
+            AREA: "France - onshore and offshore, mainland and Corsica (France métropolitaine including Corsica)."
+            BBOX: [41.15,-9.86,51.56,10.38]
+        - ID: ["EPSG", 2154]
+  eof:
+arbreEnYaml:
+  description: |
+    Un noeud est représenté par un objet atant une structure qqc et un champ particulier contenant les feuilles (children ici)
+    Une feuille est ici représentée par une chaine de caractères mais pourrait aussi être représentée par une structure
+    quelconque n'ayant pas de feuille.
+    Tout dépend de l'info que l'on veut stocker dans le noeud et la feuille.
+  arbre:
+    label: racine
+    children:
+      - label: étiquette du noeud 1
+        children:
+          - feuille 1.1
+          - feuille 1.2
+      - label: étiquette d'un second noeud
+        children:
+          - feuille 2.1
+      - feuille 3 rattachée à la racine
+
+suppressionDeCartes(30/7/2023):
+  0982:
+    title: 0982 - Abords Sud de Terre-Neuve - Ile Saint-Pierre - Port de Saint-Pierre - Ile Miquelon - Port de Miquelon
+    remplacéePar: 7638, 7639 et 7640
+  5438:
+    title: 5438 - Océan Pacifique
+    note: carte à très petite échelle, assez moche, pas utile
+  5825:
+    '2020-12-27':
+      groupTitle: 'Océan Pacifique'
+      title: 'Ilot Clipperton'
+      mapsFrance: [CP]
+      insetMaps:
+        - title: 'Ilot Clipperton'
+          scaleDenominator: '20.000'
+          spatial: { SW: '10°15,53''N - 109°15,27''W', NE: '10°20,33''N - 109°11,18''W' }
+      note: remplacée par 7750 et 7751
+  6015:
+    '2022-06-16':
+      groupTitle: 'Canada - Groenland - Islande'
+      title: 'Des passages du Nord-Ouest à la Mer du Groenland'
+      mapsFrance: []
+      scaleDenominator: 4.660.000
+      spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
+      noteCatalog: |
+        Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
+        On pourrait améliorer les corrections mais cela évite un affichage très moche.
+      badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
+      note: redondante avec la carte au 1:10M plus générale
+  6118:
+    '2023-06-26':
+      groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
+      title: 'Iles Saint-Pierre et Miquelon'
+      mapsFrance: [PM]
+      scaleDenominator: '80.000'
+      spatial: { SW: "46°35,00'N - 056°38,95'W", NE: "47°17,00'N - 055°57,95'W" }
+      note: remplacée par des cartes plus récentes
+  FR6553:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Kouaoua'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°25,34''S - 165°48,00''E'
+        NE: '21°18,11''S - 165°53,20''E'
+      noteShom: 'Nota : Les modifications effectuées sur la carte n°6553 au cours de l''édition n°2 concernent principalement le changement de système géodésique. Cette carte est désormais établie en WGS84.'
+      noteCatalog: remplacée par FR7757
+  FR6589:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Canala'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°31,84''S - 165°54,60''E'
+        NE: '21°21,29''S - 166°02,28''E'
+      noteCatalog: remplacée par FR7757
+  FR6645:
+    '2020-12-27T07:58:14+01:00':
+      groupTitle: 'Côte Ouest de France'
+      title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
+      mapsFrance:
+        - FX-Atl
+      scaleDenominator: '15.000'
+      spatial:
+        SW: '47°45,66''N - 004°26,36''W'
+        NE: '47°49,30''N - 004°18,32''W'
+      noteCatalogue: remplacée par 7250
+  FR6646:
+    '2020-12-27T07:58:18+01:00':
+      groupTitle: 'Côte Ouest de France '
+      title: 'Abords et Ports du Guilvinec et de Lesconil'
+      mapsFrance:
+        - FX-Atl
+      scaleDenominator: '15.000'
+      spatial:
+        SW: '47°45,12''N - 004°19,24''W'
+        NE: '47°48,76''N - 004°11,20''W'
+      noteCatalogue: remplacée par 7250
+  6725:
+    title: 6725 - Estuaire de la Tamise - Partie Sud
+    note: Fac-similé de la carte GB 1607, n'intersecte pas la France, redondante avec 6735
+  FR6770:
+    '2023-01-10':
+      groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
+      title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
+      mapsFrance:
+        - NC
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '22°43,13''S - 167°16,80''E'
+        NE: '22°36,18''S - 167°27,90''E'
+      noteCatalog: remplacée par FR7763
+  6774:
+    title: 6774 - Puerto de Bilbao
+    note: fac-similé de la carte ES 3941, n'intersecte pas la France
+  6786:
+    title: 6786 - De Biscarrosse à San Sebastian
+    scaleDenominator: '130.000'
+    note: redondante avec 7070 (1:168.000) et 7657 (1:175.000)
+  6851:
+    title: 6851 - Ports d'Ajaccio et de Propriano
+    note: remplacée par FR7436
+  6856:
+    title: 6856 - Abords et Port de Bastia
+    note: remplacée par FR7436
+  7019:
+    title: 7019 - De Imperia à Portofino
+    note: fac-similé de la carte IT 2, n'intersecte pas la France, redondante avec 7229
+  7037:
+    title: 7037 - De Dover à North Foreland
+    scaleDenominator: '37.500'
+    note: fac-similé de la carte Carte GB n°1828, n'intersecte pas la France, redondante avec 7424
+  7046:
+    title: 7046 - Puerto de Barcelona
+    note: fac-similé de la carte ES 4891, n'intersecte pas la France
+  7047:
+    title: 7047 - Puerto de Tarragona
+    note: fac-similé de la carte ES 4871, n'intersecte pas la France
+  7182:
+    title: 7182 - Approches de l'Estuaire de la Tamise
+    note: fac-similé de la carte GB 1610, 1:150_000, intersecte la France mais inutile, redondante
+  7189:
+    title: 7189 - Golfes d'Olbia et d'Aranci - Iles Tavolara et Molara
+    note: fac-similé de la carte IT 322 et IT 318, Sicile, n'intersecte pas la France
+  7190:
+    title: 7190 - Golfe de Congianus - De Capo Ferro à Capo Figari
+    note: fac-similé de la carte IT 323, Sicile, n'intersecte pas la France
+  7191:
+    title: 7191 - Archipel de la Maddalena
+    note: fac-similé de la carte IT 324, Sicile, n'intersecte pas la France
+  7239:
+    title: 7239 - Port de Santander
+    note: fac-similé de la carte ES 4011, n'intersecte pas la France
+  7622:
+    title: 7622 - Ports de Saint Lucia
+    note: cartes grandes échelle n'intersectant pas la France
+  7623:
+    title: 7623 - Approches Nord-Ouest de Saint Lucia
+    note: fac-similé de la carte GB 197, n'intersecte pas la France, 1:25.000
+  FR7656:
+    '2022-06-23':
+      title: 7656 - De Santoña à Gijón
+      noteCatalog: n'intersecte pas la France et retirée du catalogue du Shom, redondante avec 6991
+      mapsFrance: []
+  
+bugsDétectésDansLesCartes:
+  title: bugs détectés dans les cartes à l'occasion du test de conformié des cartes
+  note: |
+    - le nombre de cartouches peut varier au fur et à mesure des versions
+    - dans d'autres cas l'absence de cartouche semble plutôt correspondre à un oubli du Shom
+    - la gestion des cartes obsolètes n'est pas aussi rigoureuse que celle des cartes vivantes
+  cartesEnErreur:
+    FR5978:
+      - dans la version 5978-1903 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
+      - version 5978-1938 ok
+    FR7003:
+      - un cartouche a été rajouté dans l'édition de 2019 (7003-1938)
+      - les versions antérieures génèrent donc une erreur
+    FR7052:
+      - Dans la version 7052-2249 le cartouche est manquant alors qu'il est présent dans la version 7052-1726
+    FR7205: Dans la version 7205-2215 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
+    FR7665: 
+      - dans le version 7665-1722, pas de bijection entre les cartouches définis dans l''archive et ceux définis dans MapCat
+      - dans les autres Ok
+eof:

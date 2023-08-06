@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: sgserver2/index.php - serveur de carte 7z (v2 simplifiée)
+title: sgserver/index.php - serveur de carte 7z - ShomGTV4
 name: index.php
 doc: |
   Le serveur expose les cartes disponibles sous la forme d'archives 7z ainsi que le catalogue mapcat.yaml
@@ -21,19 +21,32 @@ doc: |
         status: 'obsolete'
     /maps/{numCarte}.7z: retourne le 7z de la carte dans sa dernière version
     
-  Utilisation du code Http de retour pour gérer les erreurs pour cat et newer:
+  Utilisation du code Http de retour pour gérer les erreurs:
     - 200 - Ok - il existe bien un document et le voici
     - 400 - Bad Request - requête incorrecte
     - 401 - Unauthorized - authentification nécessaire
     - 404 - Not Found - le document demandé n'a pas été trouvé
-
-  Les cartes 7z sont stockées dans le sous répertoire current du répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH.
-  A chaque carte est associé un fichier .md.json qui contient en JSON la propriété version.
+  
+  Ce script nécessite que :
+    - les cartes 7z soient stockées dans le sous-répertoire current du répertoire défini par la var d'env. SHOMGT3_INCOMING_PATH
+    - à chaque carte 7z soit associé un fichier .md.json contenant en JSON
+      la propriété 'version' indiquant la version de la carte.
+    - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
+      la propriété 'status' contenant la valeur 'obsolete'
 journal: |
+  3-4/8/2023:
+    - passage en ShomGT4
+    - sgupdt en version 4 fait une requête avec le paramètre version=4
+    - pour être compatible avec sgupdt version 3, on garde un traitement spécifique quand le paramètre version=1
+      - qui consiste à fournir comme version des cartes spéciales la chaine 'undefined'
+  25/7/2023:
+    - amélioration du code en le structurant avec un switch()
+    - réintroduction de l'exclusion de cartes en V0
+    - possibilité de limiter les cartes pour tests
   19/6/2023:
     - prise en compte des cartes retirées (status obsolete)
   11/6/2023:
-    - nouvelle version simplifiée correspondant à la restructuration de shomgeotiff
+    - nouvelle version simplifiée correspondant à la restructuration de shomgeotiff (ShomGT3.1)
   2/8/2022:
     - corrections indiquées par PhpStan level 6
   20/6/2022:
@@ -76,7 +89,20 @@ journal: |
 */
 //define ('DEBUG', true); // le mode DEBUG facilite le test interactif du serveur
 
-define('EXCLUDED_MAPS', ['8523']); // cartes exclues du service en V0 car incompatble avec sgupdt v0.6
+define('EXCLUDED_MAPS_IN_V0', ['8523']); // cartes exclues du service en V0 car incompatible avec sgupdt v0.6
+// cartes spéciales traitées spécialement en version < 4
+define('SPECIAL_MAPS', ['7330','7344','7360','8101','8502','8509','8510','8517','8523']); 
+define('TEST_MAPS', []); // PAS de restriction pour tests
+/*define('TEST_MAPS', [
+  '0101', // planisphère
+  '6835', // carte à cheval sur l'antiméridien
+  '6977', // carte à cheval sur l'antiméridien
+  '7471', // carte normale voisine de 7620
+  '7620', // carte mal géoréférencée
+  '8509', // Action de l'Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
+  '8510', // Délimitations des zones maritimes
+]
+); // restriction pour tests*/
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
@@ -118,7 +144,7 @@ define ('HTTP_ERROR_CODES', [
   410 => 'Gone', // La ressource n'est plus disponible et aucune adresse de redirection n’est connue
   500 => 'Internal Server Error', // erreur interne du serveur
 ]
-); // liste des codes d'erreur et de leur label 
+); // liste de qqs codes d'erreur et de leur label 
 
 // Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys
 function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): void {
@@ -167,97 +193,85 @@ if (!is_dir($PF_PATH))
 
 //date_default_timezone_set('UTC');
 
-if (!($_SERVER['PATH_INFO'] ?? null)) {
-?>
-<h2>Serveur de cartes GéoTiff du Shom au format 7z</h2>
-L'utilisation de ce serveur est réservée aux agents de l'Etat et de ses Etablissements publics à caractère Administratif (EPA)
-pour leurs missions de service public et un usage interne.
-L'utilisation est soumise aux conditions générales d’utilisation des produits numériques, services et prestations du Shom
-que vous trouverez en annexe 1
-du <a href='http://diffusion.shom.fr/media/wysiwyg/catalogues/repertoire_2017_web.pdf'>Répertoire des principaux documents
-dans lesquels figurent les informations publiques produites par le Shom disponible ici page 52</a>.
-En utilisant ce site ou l'une de ses API, vous acceptez ces conditions d'utilisation.</p>
-
-Ce site est expérimental propose l'accès au contenu des cartes du Shom.</p>
-
-<h3>Exemples d'utilisation du serveur:</h3><ul>
-<li><a href='index.php/api.json'>Documentation de l'API conforme aux spécifications OpenAPI 3</a></li>
-<li><a href='index.php/cat.json'>Catalogue des cartes ShomGT</a></li>
-<li><a href='index.php/cat/schema.json'>Schéma du catalogue de cartes</a></li>
-<li><a href='index.php/maps.json'>Liste des cartes exposées par le serveur</a></li>
-
-<li><a href='index.php/maps/6969.7z'>Exemple de téléchargement de la dernière version de la carte no 6969</a></li>
-</ul>
-<?php
-  die();
-}
-
-if ($_SERVER['PATH_INFO'] == '/server') {
-  echo "<pre>\n"; print_r($_SERVER); die();
-}
-
-if (in_array($_SERVER['PATH_INFO'], ['/api','/api.json'])) { // envoi de de la doc de l'API 
-  header('Content-type: application/json; charset="utf-8"');
-  echo json_encode(
-    Yaml::parseFile(__DIR__.'/api.yaml'),
-    JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  logRecord(['done'=> "ok - api.json"]);
-  die();
-}
-
-if ($_SERVER['PATH_INFO'] == '/cat.json') { // envoi de mapcat 
-  header('Content-type: application/json; charset="utf-8"');
-  echo json_encode(
-    Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml'),
-    JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  logRecord(['done'=> "ok - mapcat.json"]);
-  die();
-}
-
-if ($_SERVER['PATH_INFO'] == '/cat/schema.json') { // envoi du schema de mapcat 
-  header('Content-type: application/json; charset="utf-8"');
-  echo json_encode(
-    Yaml::parseFile(__DIR__.'/../mapcat/mapcat.schema.yaml'),
-    JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  logRecord(['done'=> "ok - mapcat/schema.json"]);
-  die();
-}
-
-if ($_SERVER['PATH_INFO'] == '/logout') { // action complémentaire pour raz le login en interactif 
-  header('WWW-Authenticate: Basic realm="Authentification pour acces aux ressources du SHOM"');
-  sendHttpCode(401, isset($_SERVER['PHP_AUTH_USER']) ? "Logout, user: $_SERVER[PHP_AUTH_USER]" : 'Logout, no user');
-}
-
-if ($_SERVER['PATH_INFO'] == '/maps.json') { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
-  //echo '<pre>'; print_r($_SERVER); die();
-  $scriptUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
-  //echo "<pre>scriptUrl=$scriptUrl\n"; die();
-  $maps = [];
-  foreach (new DirectoryIterator("$PF_PATH/current") as $map) {
-    if (substr($map, -8) <> '.md.json') continue;
-    $mapMd = json_decode(file_get_contents("$PF_PATH/current/$map"), true);
-    $mapNum = substr($map, 0, -8);
-    $maps[$mapNum] = (($mapMd['status'] ?? '') == 'obsolete') ?
-        [ 'status'=> 'obsolete' ]
-      : [ 'status'=> 'ok', 'lastVersion'=> $mapMd['version'], 'url'=> "$scriptUrl/maps/$mapNum.7z"];
+switch ($_SERVER['PATH_INFO'] ?? null) {
+  case null: { // affichage du message d'accueil en HTML 
+    fpassthru(fopen(__DIR__.'/welcome.html', 'r'));
+    die();
   }
-  ksort($maps, SORT_STRING);
-  header('Content-type: application/json');
-  echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-  logRecord(['done'=> "OK - maps.json transmis"]);
-  die();
-}
-
-// /maps/{numCarte}.7z: retourne le 7z de la dernière version de la carte
-if (preg_match('!^/maps/(\d{4})\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
-  $mapnum = $matches[1];
-  
-  $mappath = "$PF_PATH/current/$mapnum.7z";
-  //echo "mappath=$mappath<br>\n"; die();
-  if (!is_file($mappath)) {
-    sendHttpCode(404, "Carte $mapnum non trouvée");
+  case '/server': { // affichage de $_SERVER
+    echo "<!DOCTYPE html>\n<html><head><title>sgserver</title></head><body>\n";
+    echo "<pre>\n"; print_r($_SERVER);
+    die();
   }
-  else {
+  case '/api':
+  case '/api.json': { // envoi de de la doc de l'API 
+    header('Content-type: application/json; charset="utf-8"');
+    echo json_encode(
+      Yaml::parseFile(__DIR__.'/api.yaml'),
+      JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+    logRecord(['done'=> "ok - api.json"]);
+    die();
+  }
+  case '/cat.json': { // envoi de mapcat 
+    header('Content-type: application/json; charset="utf-8"');
+    echo json_encode(
+      Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml'),
+      JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+    logRecord(['done'=> "ok - mapcat.json"]);
+    die();
+  }
+  case '/cat/schema.json': { // envoi du schema de mapcat 
+    header('Content-type: application/json; charset="utf-8"');
+    echo json_encode(
+      Yaml::parseFile(__DIR__.'/../mapcat/mapcat.schema.yaml'),
+      JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+    logRecord(['done'=> "ok - mapcat/schema.json"]);
+    die();
+  }
+  case '/logout': { // action complémentaire pour raz le login en interactif 
+    header('WWW-Authenticate: Basic realm="Authentification pour acces aux ressources du SHOM"');
+    sendHttpCode(401, isset($_SERVER['PHP_AUTH_USER']) ? "Logout, user: $_SERVER[PHP_AUTH_USER]" : 'Logout, no user');
+  }
+  case '/maps.json': { // liste en JSON l'ensemble des cartes avec un lien vers l'entrée suivante
+    //echo '<pre>'; print_r($_SERVER); die();
+    $scriptUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]";
+    //echo "<pre>scriptUrl=$scriptUrl\n"; die();
+    $version = $_GET['version'] ?? 0;
+    $maps = [];
+    foreach (new DirectoryIterator("$PF_PATH/current") as $map) {
+      if (substr($map, -8) <> '.md.json') continue;
+      $mapnum = substr($map, 0, 4);
+      if (($version == 0) && in_array($mapnum, EXCLUDED_MAPS_IN_V0)) continue; // cartes exclues en version 0
+      if (TEST_MAPS && !in_array($mapnum, TEST_MAPS)) continue; // restriction éventuelle pour tests
+      $mapMd = json_decode(file_get_contents("$PF_PATH/current/$map"), true);
+      $mapNum = substr($map, 0, -8);
+      if (($mapMd['status'] ?? null) == 'obsolete') {
+        $maps[$mapNum] = [ 'status'=> 'obsolete' ];
+      }
+      // en version 1 les cartes spéciales ont comme version 'undefined'
+      // c'est nécessaire pour être compatible avec la manière dont sgupdt en V3 déduit la version des cartes spéciales
+      // cela interdit la mise à jour des cartes spéciales
+      elseif (($version < 4) && in_array($mapnum, SPECIAL_MAPS)) {
+        $maps[$mapNum] = [ 'status'=> 'ok', 'lastVersion'=> 'undefined', 'url'=> "$scriptUrl/maps/$mapNum.7z"];
+      }
+      else {
+        $maps[$mapNum] = [ 'status'=> 'ok', 'lastVersion'=> $mapMd['version'], 'url'=> "$scriptUrl/maps/$mapNum.7z"];
+      }
+    }
+    ksort($maps, SORT_STRING);
+    header('Content-type: application/json');
+    echo json_encode($maps, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+    logRecord(['done'=> "OK - maps.json transmis en version $version"]);
+    die();
+  }
+  default: { // /maps/{numCarte}.7z: retourne le 7z de la dernière version de la carte
+    if (!preg_match('!^/maps/(\d{4})\.7z$!', $_SERVER['PATH_INFO'], $matches))
+      sendHttpCode(400, "Erreur, requête incorrecte");
+    $mapnum = $matches[1];
+    $mappath = "$PF_PATH/current/$mapnum.7z";
+    //echo "mappath=$mappath<br>\n"; die();
+    if (!is_file($mappath))
+      sendHttpCode(404, "Carte $mapnum non trouvée");
     header('Content-type: application/x-7z-compressed');
     fpassthru(fopen($mappath, 'r'));
     logRecord(['done'=> "OK - $mappath transmis"]);
@@ -266,4 +280,4 @@ if (preg_match('!^/maps/(\d{4})\.7z$!', $_SERVER['PATH_INFO'], $matches)) {
 }
 
 
-sendHttpCode(400, "Erreur, requête incorrecte");
+

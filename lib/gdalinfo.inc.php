@@ -6,6 +6,9 @@ classes:
 doc: |
   Les infos essentielles sur la taille size et si le fichier est géoréférencé son ebox et son gbox
 journal: |
+  26/7/2023:
+    - le code pour calculer le gbox est faux lorsque le GéoTiff intersecte l'antiméridien
+    - modification du calcul de GdalInfo::$ebox pour contourner les erreurs sur coordinateSystem
   6/6/2022:
     - réécriture pour fonctionner à la fois en GDAL 2 et en GDAL3 ; utilise la sortie de gdalinfo -json
   22/5/2022:
@@ -91,18 +94,25 @@ class GdalInfo {
     $this->size = ['width'=> $info['size'][0], 'height'=> $info['size'][1]];
   
     // si le champ coordinateSystem n'est pas défini alors le fichier n'est pas géoréférencé
-    if (!isset($info['coordinateSystem']) || !isset($info['coordinateSystem']['wkt']) || !$info['coordinateSystem']['wkt'])
+    if (!($info['coordinateSystem']['wkt'] ?? null))
       return;
 
+    $wgs84Extent = new GeoJsonPolygon($info['wgs84Extent']);
+    $this->gbox = $wgs84Extent->gbox();
+
+    /* 26/7/2023 - Suppression de l'utilisation de cornerCoordinates qui dans certains cas (comme 7620-2242) est faux
+     * Cela évite d'avoir à tester et à gérer cette erreur
+     * 31/7/2023 - cette modif génère des erreurs, je l'annule !
+    */
     $this->ebox = new EBox([
       $info['cornerCoordinates']['lowerLeft'][0],
       $info['cornerCoordinates']['lowerLeft'][1],
       $info['cornerCoordinates']['upperRight'][0],
       $info['cornerCoordinates']['upperRight'][1],
     ]);
-    
-    $wgs84Extent = new GeoJsonPolygon($info['wgs84Extent']);
-    $this->gbox = $wgs84Extent->gbox();
+    /*A la place ebox est déduit de gbox
+    $this->ebox = $this->gbox->proj('WorldMercator');
+    */
   }
 
   /** @return array<string, mixed> */
@@ -127,7 +137,12 @@ use Symfony\Component\Yaml\Yaml;
 //echo "<pre>$info\n";
 echo "<pre>\n";
 
-if (1) {  // @phpstan-ignore-line // Test sur tous les GéoTiffs
+if (1) { // @phpstan-ignore-line // Test sur le GéoTiffs 7620
+  $gtname = '7620_pal300';
+  $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname, false));
+  echo Yaml::dump([$gtname => $gdalInfo->asArray()]);
+}
+elseif (1) { // @phpstan-ignore-line // Test sur tous les GéoTiffs
   print_r(geotiffs());
   foreach (geotiffs() as $gtname) {
     $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname, false));

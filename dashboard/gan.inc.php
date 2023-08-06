@@ -293,7 +293,7 @@ class GanStatic {
     //print_r($errors);
     foreach (Portfolio::$all as $mapnum => $map) {
       //echo "mapnum=$mapnum\n"; print_r($map);
-      if ($modified = $map['revision'] ?? $map['creation'] ?? null) {
+      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
         $ganWeek = GanStatic::week($modified);
         if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
           //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
@@ -452,7 +452,7 @@ class GanStatic {
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     foreach (Portfolio::$all as $mapnum => $map) {
-      if ($modified = $map['revision'] ?? $map['creation'] ?? null) {
+      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
         $ganWeek = GanStatic::week($modified);
         if (isset($errors["$mapnum-$ganWeek"])) { }
         elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
@@ -474,7 +474,7 @@ class GanStatic {
     $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
-      $mapid = substr($id, 0, 6);
+      $mapid = substr($id, 0, 4);
       if ($mapa = Portfolio::$all[$mapid])
         Gan::$gans[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
     }

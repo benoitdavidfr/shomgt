@@ -1,3 +1,7 @@
+La branche shomgt4 correspond au début du développement de la version 4 de ShomGT.  
+[Plus d'infos ici](shomgt4.yaml).
+
+
 # ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
 L'objectif de ShomGT est d'exposer sous la forme de web-services
 le contenu des [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
@@ -85,7 +89,13 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.
+<<<<<<< HEAD
 - **carte obsolète** : carte que le Shom a retirée de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
+=======
+- **carte obsolète** : soit une carte que le Shom a retiré de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
+  soit une carte qui a été dans le portefeuille mais dont l'intérêt a été jugé insuffisant par la suite
+  et qui donc a été retirée du portefeuille même si elle reste une carte valide pour le Shom,
+>>>>>>> shomgt4
 - **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
   une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
   du nombre de corrections apportées.

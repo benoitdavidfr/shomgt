@@ -6,6 +6,8 @@ doc: |
   La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
   Le retour est un dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}]
 journal: |
+  3/8/3023:
+    - prise en compte du format de l'édition utilisée pour les cartes spéciales
   10/6/2023:
     - corrections passage Php8.2 - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 46
   13/1/2023:
@@ -34,7 +36,7 @@ function readMapVersion(string $path): array {
     throw new Exception("edition non trouvé pour $path");
   }
   $edition = $matches[1];
-  
+  /*
   // ex: Edition n° 4 - 2015 - Dernière correction : 12
   // ou: Edition n° 4 - 2022 - Dernière correction : 0 - GAN : 2241
   if (preg_match('!^[^-]*- (\d+) - [^\d]*(\d+)( - GAN : \d+)?$!', $edition, $matches)
@@ -47,4 +49,30 @@ function readMapVersion(string $path): array {
   }
   else
     throw new Exception("Format de l'édition inconnu pour \"$edition\"");
+  */
+  // ex: Edition 2 - 2023
+  // ex: Publication 2015
+  if (preg_match('!^(Edition \d+ - |Publication )(\d+)$!', $edition, $matches)) {
+    $anneeEdition = $matches[2];
+    $lastUpdate = 0;
+    return ['version'=> $anneeEdition.'c'.$lastUpdate, 'dateStamp'=> $dateStamp];
+  }
+  // ex: Edition n° 4 - 2015 - Dernière correction : 12
+  // ou: Edition n° 4 - 2022 - Dernière correction : 0 - GAN : 2241
+  // ou: Edition n° 2 - 2016 - Dernière correction :  - GAN : 2144
+  elseif (preg_match('!^Edition [^-]*- (\d+) - Dernière correction : (\d+)?( - GAN : (\d+))?$!', $edition, $matches)) {
+    $anneeEdition = $matches[1];
+    $lastUpdate = ($matches[2]<>'') ? $matches[2] : '0';
+    return ['version'=> $anneeEdition.'c'.$lastUpdate, 'dateStamp'=> $dateStamp];
+  }
+  // ex: Publication 1984 - Dernière correction : 101
+  // ou: Publication 1989 - Dernière correction : 149 - GAN : 2250
+  elseif (preg_match('!^Publication (\d+) - Dernière correction : (\d+)( - GAN : (\d+))?$!', $edition, $matches)) {
+    $anneeEdition = $matches[1];
+    $lastUpdate = ($matches[2]<>'') ? $matches[2] : '0';
+    return ['version'=> $anneeEdition.'c'.$lastUpdate, 'dateStamp'=> $dateStamp];
+  }
+  else
+     throw new Exception("Format de l'édition inconnu pour \"$edition\"");
+  
 }
