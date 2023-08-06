@@ -34,6 +34,7 @@ journal:
     - bug résolu sur vendor qui était dans sgpp un lien vers ../shomgt/vendor
     - bug sur wms.php qui était absent dans sgpp
     - bug sur tile.php qui était absent dans sgpp
+    - merge de la branche Git shomgt4
   5/8/2023:
     - dev de shomgt-maintenance et bo/maparchivestore.php
   4/8/2023T19:00:
