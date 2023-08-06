@@ -1,9 +1,10 @@
 <?php
 /* bo/viewtiff.php - Visualisation pour validation d'une carte Shom 7z
- * Benoit DAVID - 11-27/7/2023
- * Utilisé de 2 manières:
+ * Benoit DAVID - 11/7-6/8/2023
+ * Utilisé de 3 manières:
  *  - en autonome propose de visualiser les livraisons et les archives
- *  - appelé par maparchive.php pour visualiser une carte 7z
+ *  - appelé par addmaps.php pour visualiser et valider une carte 7z
+ *  - appelé par pfcurrent.php et pfweight.php pour visualiser une carte 7z
  *
  * Utilise georaster-layer-for-leaflet pour visualiser des tif dans une carte Leaflet
  * Permet aussi de visualiser les extensions spatiales fournies dans MapCat
@@ -108,8 +109,9 @@ if (!($login = Login::login())) {
   die("Accès non autorisé\n");
 }
 
-if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
+  
+}
 
 if (!isset($_GET['path'])) { // affichage de la liste des livraisons 
   echo HTML_HEAD,"<h2>Livraisons et archives</h2>\n";
@@ -173,28 +175,29 @@ if (!isset($_GET['map'])) { // affichage du contenu de la livraison ou du réper
   if (!is_dir($PF_PATH.$_GET['path']))
     die("<b>Erreur, le répertoire $_GET[path] n'existe pas<br>\n");
   echo "<h2>Répertoire $_GET[path]</h2>\n";
-  if (substr($_GET['path'], 0, 9) <> '/archives')
-    echo "<ul>\n";
-  $first = true;
+  echo "<ul>\n";
   foreach (new DirectoryIterator($PF_PATH.$_GET['path']) as $map) {
     if (substr($map, -3) <> '.7z') continue;
-    //echo "<li>"; print_r($md); echo "</li>";
-    if (substr($_GET['path'], 0, 9) == '/archives') { // cas d'une archive de carte
-      $md = MapMetadata::getFrom7z("$PF_PATH$_GET[path]/$map");
-      if ($first) {
-        echo $md['title'] ?? $map,"<ul>\n";
-        $first = false;
-      }
-      $mapid = substr($map, 0, -3);
-      echo "<li><a href='?path=$_GET[path]&map=$mapid'>",$md['edition'] ?? $mapid,"</li>\n";
-    }
-    else { // cas d'une livraison
-      $md = MapMetadata::getFrom7z("$PF_PATH$_GET[path]/$map");
-      $mapnum = substr($map, 0, -3);
-      echo "<li><a href='?path=$_GET[path]&map=$mapnum'>",$md['title'] ?? $mapnum,"</a></li>\n";
-    }
+    $mapNum = substr($map, 0, 4);
+    $md = MapMetadata::getFrom7z("$PF_PATH$_GET[path]/$map");
+    $label = $md['title'] ?? substr($map, 0, -3);
+    if (isset($md['version']))
+      $label .= " (version $md[version])";
+    echo "<li><a href='?path=$_GET[path]&map=$mapNum'>$label</a></li>\n";
   }
   echo "</ul>\n";
+  
+  $first = true;
+  foreach (new DirectoryIterator($PF_PATH.$_GET['path']) as $entry) {
+    //echo "$entry<br>\n";
+    if (in_array($entry, ['.','..','.DS_Store'])) continue;
+    if (!is_dir("$PF_PATH$_GET[path]/$entry")) continue;
+    if ($first) {
+      echo "<h3>Sous-répertoires</h3><ul>\n";
+      $first = false;
+    }
+    echo "<li><a href='?path=$_GET[path]/$entry'>$entry</li>\n";
+  }
   die();
 }
 

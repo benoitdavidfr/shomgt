@@ -728,31 +728,36 @@ maparchivestore:
     idées:
       - pour le clonage et résoudre le pb des liens symboliques qui bouclent sur eux-mêmes
         - utiliser un lien hard plutôt qu'un lien symbolique
-      - garder un journal des modifs ?
-        - fichier logs.yaml à la racine du mapArchiveStore
-        - possibilité d'ajout de logs par fopen()/fwrite() en mode append
-    journalExample:
-      - {date: 2023-08-06T11:53, action: 'création du MapArchiveStore'}
-      - {date: 2023-08-06T11:55, action: 'ajout de archives/7044/7044.7z et archives/7044/7044.md.json'}
-    schema:
-      type: array
-      items:
-        type: object
-        required: [date, action]
-        properties:
-          date:
-            description: date de l'action
-            type: string
-          action:
-            description: type de l'action
-            enum:
-              - createStore # crée le store
-              - addArchive # ajoute un 7z et un md.json dans archives
-              - deleteArchive # supprimme un 7z et un md.json dans archives
-              - setCurrentVersion # définit une version courante dans current
-          name:
-            description: nom de l'élément ajouté/supprimé ou de la version définie comme courante
-            type: string
+        - utiliser le même nom de fichier lors des liens ce qui permet de retrouver les différentes entrées
+      - garder un journal des modifs ? -> '#journal'
+    journal:
+      idée:
+        - garder un journal des modifs ?
+          - fichier logs.yaml à la racine du mapArchiveStore
+          - possibilité d'ajout de logs par fopen()/fwrite() en mode append
+      journalExample:
+        - {date: '2023-08-06T11:53', action: 'createStore'}
+        - {date: '2023-08-06T11:55', action: 'addArchive', name: 'archives/7044/7044-2023c4'}
+        - {date: '2023-08-06T11:55', action: 'setCurrentVersion', name: '7044-2023c4'}
+      schema:
+        type: array
+        items:
+          type: object
+          required: [date, action]
+          properties:
+            date:
+              description: date de l'action
+              type: string
+            action:
+              description: type de l'action
+              enum:
+                - createStore # crée le store
+                - addArchive # ajoute un 7z et un md.json dans archives
+                - deleteArchive # supprimme un 7z et un md.json dans archives
+                - setCurrentVersion # définit une version courante dans current
+            name:
+              description: nom de l'élément ajouté/supprimé ou de la version définie comme courante
+              type: string
     archive@6/8T11:44:
       - Je veux pouvoir cloner shomgeotiff dans shomgeotiffpp sans dupliquer les fichiers mais en faisant des liens
       - Il faut que dans shomgeotiffpp les entrées 7z et json d'archives soient des liens vers les mêmes entrées de shomgeotiff
@@ -763,7 +768,6 @@ maparchivestore:
             - inconvénient cela duplique l'espace de stockage
           - je peux transférer les fichiers réels cad
             - dans shomgeotiffpp/archives remplacer les liens par les fichiers
-          
 
 optionPréProdDataSimplifiée:
   idées:
@@ -1106,6 +1110,17 @@ optionPréProdDataSimplifiée:
       envVar:
          - le chemin de shomgeotiff est défini dans la var. d'env. SHOMGT4_PORTFOLIO_PATH
     structureFichiersMdJson: définie par le schema bo/md.schema.yaml
+
+poids@Alwaysdata:
+  ~/prod/shomgeotiff: 8,6 Go
+  ~/prod/shomgeotiff3:
+    total: 21,6 Go
+    tar: 17,2 Go
+    current: 2,2 Go
+    incoming: 2,2 Go	
+  ~/prod/geoapi/shomgt: 2,5 Go
+  ~/prod/geoapi/shomgt3: 2,5 Go -> 10,6 Mo -> 2,2 Mo
+
 
 envVars:
   shomgt:
