@@ -1,4 +1,4 @@
-# Module dashboard de ShomGT3
+# Module dashboard de ShomGT
 L'objectif de *dashboard* est d'identifier :
 
 - les nouvelles cartes à ajouter au portefeuille,

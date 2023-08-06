@@ -1,8 +1,4 @@
-La branche shomgt4 correspond au début du développement de la version 4 de ShomGT.  
-[Plus d'infos ici](shomgt4.yaml).
-
-
-# ShomGT3 - services de consultation des cartes raster GéoTIFF du Shom
+# ShomGT - services de consultation des cartes raster GéoTIFF du Shom
 L'objectif de ShomGT est d'exposer sous la forme de web-services
 le contenu des [cartes GéoTIFF du Shom](https://diffusion.shom.fr/loisirs/cartes-marines-geotiff.html)
 couvrant les zones sous juridiction française, pour permettre aux services du pôle ministériel
@@ -13,15 +9,20 @@ La principale plus-value de ShomGT est de permettre de consulter le contenu des 
 afin de passer d'une carte à l'autre sans couture et d'intégrer ces données dans les outils SIG habituels,
 comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
-Ce dépôt correspond la version 3 de ShomGT qui, par rapport à la version précédente, simplifie la mise en place
-d'un serveur local, son approvisionnement avec les cartes du Shom, puis la mise à jour de ces cartes ;
+Ce dépôt correspond la version 4 de ShomGT.
+La version 4 (en cours de développement) propose des outils en mode web pour gérer le portefeuille de cartes 
+(ajout/suppression d'une carte, ajout/suppression d'une version d'une une carte).
+Elle doit permettre une gestion collaborative du portefeuille de cartes.
+
+La version 3 avait pour objectif de simplifier la mise en place d'un serveur local, son approvisionnement
+avec les cartes du Shom, puis la mise à jour de ces cartes ;
 cette simplification s'appuie sur l'utilisation de conteneurs Docker et de docker-compose.
 
 Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## 1. Décomposition en modules
-ShomGT3 se décompose dans les 6 modules suivants:
+ShomGT4 se décompose dans les 7 modules suivants:
 
   - **[shomgt](shomgt)** expose différents services de consultation des cartes:
     - un service de tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
@@ -48,6 +49,9 @@ ShomGT3 se décompose dans les 6 modules suivants:
     issues du [GAN du Shom](#gan).
     Il exploite aussi, pour détecter de nouvelles cartes, la liste des cartes diffusée par le Shom dans son serveur WFS.
     
+  - **[BO](bo)** est le module de gestion du portefeuille de cartes exposé par sgserver.
+    Il permet notamment d'ajouter de nouvelles versions des cartes.
+  
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes comme le titre de la carte, sa couverture spatiale,
     la liste de ses cartouches, ....
@@ -58,7 +62,7 @@ ShomGT3 se décompose dans les 6 modules suivants:
     d'intérêt pour ShomGT dans *dashboard*.
 
 Chacun de ces modules correspond à un répertoire ;
-en plus de ces 6 modules, une [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
+en plus de ces 7 modules, une [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
 ## 2. Termes et concepts utilisés dans ce projet
 Dans ce projet sont utilisés différents termes et concepts définis ci-dessous:
 
@@ -86,12 +90,15 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   - le numéro de correction sur l'édition.
     Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devait la reporter sur la carte.  
   
-  Dans ShomGT3, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
+  Dans ShomGT4, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
   de la carte et {correction} est le numéro de correction sur cette édition.
-  Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.
-- **carte obsolète** : soit une carte que le Shom a retiré de son catalogue et qui doit donc être retirée du portefeuille ShomGT,
+  Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.  
+  Certaines cartes spéciales ont un identifiant spécifique de version de la forme {mapNum}_{année},
+  où {année} est l'année de la publication de la carte, ou simplement {mapNum} quand l'année n'est pas connue.
+- **carte obsolète** : soit une carte que le Shom a retirée de son catalogue
+  et qui doit donc être retirée du portefeuille ShomGT,
   soit une carte qui a été dans le portefeuille mais dont l'intérêt a été jugé insuffisant par la suite
-  et qui donc a été retirée du portefeuille même si elle reste une carte valide pour le Shom,
+  et qui donc a été retirée du portefeuille même si elle peut rester une carte valide pour le Shom,
 - **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
   une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
   du nombre de corrections apportées.
@@ -135,8 +142,8 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zoom n-1.
   
-  ShomGT3 utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
-- **couches de données**: dans ShomGT3 les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
+  ShomGT utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
+- **couches de données**: dans ShomGT les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
   dont les dénominateurs sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
   40M (0-5), 10M (6), 4M (7), 2M (8), 1M (9), 500k (10), 250k (11), 100k (12), 50k (13), 25k (14), 12k (15), 5k (16-18).  
@@ -151,7 +158,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   Enfin, à chacune des 16 couches définies ci-dessus est associée une couche de leur numéro,
   permettant de repérer une carte par son numéro.
   
-  Par ailleurs, ShomGT3 met à disposition les couches vecteur suivantes :
+  Par ailleurs, ShomGT met à disposition les couches vecteur suivantes :
     - la [ZEE](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive) française simplifiée,
     - les [délimitations maritimes définies
       par le Shom](https://www.shom.fr/fr/nos-activites-diffusion/cellule-delimitations-maritimes),
@@ -159,7 +166,7 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
 
 ## 3. Configuration
 ### 3.1 Déploiement décentralisé
-Avec cette version, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
+Depuis la version 3 de ShomGT, les conteneurs *shomgt* et *sgupdt* peuvent être déployés facilement sur un serveur local
 ou un poste local disposant des logiciels docker et docker-compose.
 Des images sont proposées pour cela sur https://hub.docker.com/r/benoitdavid/shomgt3.
 Pour effectuer un déploiement utiliser le fichier [docker-compose.yml](docker-compose.yml)
@@ -181,14 +188,14 @@ Les cartes n'étant pas actualisées très fréquemment, cette durée peut être
 
 Ce déploiement décentralisé nécessite aussi un déploiement central pour agir comme serveur de cartes.
 ### 3.2 Déploiement centralisé
-Le code de ShomGT3 peut aussi être utilisé de manière plus conventionnelle en hébergeant les différents modules
+Le code de ShomGT peut aussi être utilisé de manière plus conventionnelle en hébergeant les différents modules
 sur un même site.
 
 Si le site est exposé sur internet, il est nécessaire de gérer le [contrôle d'accès](docs/accesscontrol.md).
 
 ### 3.3 Divers
-ShomGT3 utilise différents [composants externes décrits ici](docs/composantexterne.md).
+ShomGT utilise différents [composants externes décrits ici](docs/composantexterne.md).
 
 Le [système de log est documenté ici](docs/log.md).
 
-ShomGT3 utilise Php 8 et a été validé avec Php 8.2.
+ShomGT utilise Php 8 et a été validé avec Php 8.2.
