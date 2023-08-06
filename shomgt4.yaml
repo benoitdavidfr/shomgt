@@ -35,6 +35,8 @@ journal:
     - bug sur wms.php qui était absent dans sgpp
     - bug sur tile.php qui était absent dans sgpp
     - merge de la branche Git shomgt4
+    - création de la branche 4.1 pour la suite du BO
+    - fin du sprint3
   5/8/2023:
     - dev de shomgt-maintenance et bo/maparchivestore.php
   4/8/2023T19:00:
@@ -268,8 +270,8 @@ backlog:
           - fichier {mapNum}-{year}.tif ou fichier {mapNum}-{year}.pdf
           - + éventuel fichier .xml
   sprint3:
-    début: 
-    fin: 
+    début: 4/8/2023T21:00
+    fin: 6/8/2023T08:00
     objectifs:
       - créer le site de maintenance
       - mise en prod de préProd sur https://geoapi.fr/shomgt/
@@ -377,28 +379,6 @@ miseEnProd:
     - https://geoapi.fr/shomgt/shomgt/maps.php
     - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
     - https://geoapi.fr/shomgt/shomgt/leaflet/*
-miseEnProdGit:
-  cmdes: |
-    git checkout main
-    git merge shomgt4
-  résultat: |
-    www-data@php82:~/html/geoapi/shomgt$ git checkout main
-    Switched to branch 'main'
-    Your branch is up to date with 'origin/main'.
-    www-data@php82:~/html/geoapi/shomgt$ git merge shomgt4
-    Auto-merging README.md
-    CONFLICT (content): Merge conflict in README.md
-    Auto-merging dashboard/gans.yaml
-    CONFLICT (content): Merge conflict in dashboard/gans.yaml
-    Auto-merging dashboard/index.php
-    Auto-merging mapcat/mapcat.schema.yaml
-    CONFLICT (content): Merge conflict in mapcat/mapcat.schema.yaml
-    Auto-merging mapcat/mapcat.yaml
-    CONFLICT (content): Merge conflict in mapcat/mapcat.yaml
-    Auto-merging sgupdt/main.php
-    Auto-merging shomft/gt.json
-    CONFLICT (content): Merge conflict in shomft/gt.json
-    Automatic merge failed; fix conflicts and then commit the result.
 bug7620:
   annulationDeLaCorrection:
     - cette correction génère des effets de bords
