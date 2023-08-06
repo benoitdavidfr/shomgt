@@ -1,13 +1,5 @@
 <?php
-/* bo/pfcurrent.php - gestion des versions courantes des cartes du portefeuille - 1/8/2023
- * La version courante d'une carte est la version de la carte diffusée par sgserver
- * Cela peut soit être un des versions conservées, soit par extension l'info que la carte est obsolète,
- * soit encore par extension la disparition de la carte dans sgserver.
- * Si la carte est marquée obsolète, le client sgupdt supprime la carte localement ;
- * si la carte n'apparait pas dans sgserver alors le client conserve la carte qu'il détient.
- * L'obsolescence peut être décidée soit par ce que la carte a été retirée par le Shom de son propre portefeuille,
- * soit par ce que on décide que la carte n'est plus d'intérêt pour ShomGT.
-*/
+// bo/pfweight.php - gestion du poids des cartes du portefeuille - 1/8/2023
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/login.inc.php';
@@ -17,7 +9,7 @@ require_once __DIR__.'/../mapcat/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-function dump(string $s): void {
+/*function dump(string $s): void {
   echo "<table border=1><tr>";
   for ($i = 0; $i < strlen($s); $i++) {
     $c = substr($s, $i, 1);
@@ -29,16 +21,17 @@ function dump(string $s): void {
     printf ("<td>%x</td>\n", ord($c));
   }
   echo "</tr></table>\n";
-}
+}*/
 
 if (!($login = Login::login())) {
   die("Accès non autorisé\n");
 }
 
-if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
+  die("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+}
 
-echo "<!DOCTYPE html><html><head><title>bo/activation</title></head><body>\n";
+echo "<!DOCTYPE html><html><head><title>bo/pfweight</title></head><body>\n";
 
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à réaliser
   case null: break; // pas d'action de modification à exécuter 
@@ -120,7 +113,7 @@ else { // liste de versions pour la carte $_GET['map']
   $currentVersion = '';
   if (is_file("$PF_PATH/current/$_GET[map].md.json")) {
     $currentVersion = basename(readlink("$PF_PATH/current/$_GET[map].md.json"),'.md.json');
-    echo "currentVersion=$currentVersion<br>\n";
+    //echo "currentVersion=$currentVersion<br>\n";
   }
   
   exec("du $PF_PATH/archives/$_GET[map]/*.7z", $output, $result_code);
@@ -132,6 +125,7 @@ else { // liste de versions pour la carte $_GET['map']
     $duMbs[$matches[2]] = $matches[1]/1024;
     $duMbSum += $matches[1]/1024;
   }
+  //echo "<pre>"; print_r($duMbs); echo "</pre>\n";
   
   echo "<table border=1>\n",
        "<tr><td></td><td>Total</td><td></td><td align='right'>",sprintf('%.1f Mb', $duMbSum),"</td></tr>\n";
@@ -139,12 +133,14 @@ else { // liste de versions pour la carte $_GET['map']
     $md = [];
     if (is_file("$PF_PATH/archives/$_GET[map]/$mapVersion.md.json"))
       $md = json_decode(file_get_contents("$PF_PATH/archives/$_GET[map]/$mapVersion.md.json"), true);
+    else
+      echo "$PF_PATH/archives/$_GET[map]/$mapVersion.md.json absent<br>\n";
     $bs = ($mapVersion == $currentVersion) ? '<b>' : '';
     $be = ($mapVersion == $currentVersion) ? '</b>' : '';
     $hiddenValues = ['action'=> 'deleteVersion', 'map'=> $_GET['map'], 'version'=> $mapVersion];
     echo "<tr><td><a href='viewtiff.php?path=/archives/$_GET[map]&map=$mapVersion'>$bs$mapVersion$be</a></td>",
          //"<td>",json_encode($md),"</td>",
-         "<td>",$md['edition'] ?? '.md.json absent',"</td>",
+         "<td>",$md['edition'] ?? 'edition non définie',"</td>",
          "<td>",$md['dateArchive'] ?? '',"</td>",
          "<td>",sprintf('%.1f Mb', $duMb),"</td>",
          "<td><a href='shomgeotiff.php/archives/$_GET[map]/$mapVersion.7z'>Télécharger l'archive 7z</a></td>",
