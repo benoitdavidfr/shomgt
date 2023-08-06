@@ -29,6 +29,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  5/8/2023:
+    - dev de shomgt-maintenance et bo/maparchivestore.php
   4/8/2023T19:00:
     - tout semble marcher sur sgpp
     - fin du sprint2
@@ -535,7 +537,9 @@ structurePortfolio:
               description: contenus des cartes et de leurs MD
               entries:
                 - namePattern: {mapNum}
-                  description: un répertoire par carte portant comme nom le numéro de la carte
+                  description: |
+                    un répertoire par carte portant comme nom le numéro de la carte
+                    les entrées peuvent être des vrais fichiers ou des liens vers un autre stockage
                   entries:
                     - {mapNum}-{version}.7z / chaque version {version} de la carte
                     - {mapNum}-{version}.md.json / chaque version {version} de la carte
@@ -605,7 +609,22 @@ structurePortfolio:
       préProCode:
         appel: https://xx:xx@sgpp.geoapi.fr/sgserver/index.php
         site: sgpp.geoapi.fr
-  
+maparchivestore:
+  - je peux cloner le stockage des cartes sans consommer d'espace, par ex entre prod et pp
+  - à réfléchir !!
+  - il faut que je modifie le concept de clonage
+  - l'idée de cloner shomgeotiff est la suivante
+    - je déplace shomgeotiff dans shomgeotiff-back
+    - je crée dans shomgeotiff une copie de shomgeotiff-back
+      - dans laquelle chaque fichier .7z ou .json est remplacé par un lien vers le correspondant dans shomgeotiff-back
+    - je peux maintenant
+      - supprimer des fichiers dans shomgeotiff sans qu'ils soient réellement supprimés dans shomgeotiff-back
+      - changer current sans qu'il soit changé dans shomgeotiff-back
+    - par contre qd j'ajoute un nv fichier il n'est pas ajouté dans shomgeotiff-back
+    - il faut donc une opération particulière qui synchronise shomgeotiff-back avec shomgeotiff
+      - cela pourrait être fait à la mise en prod
+      - cela permet de travailler sur un shomgeotiff ss risque d'abimer l'original
+
 optionPréProdDataSimplifiée:
   idées:
     - option plus simple de préProdData que '#optionPréProdDataV1'

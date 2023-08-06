@@ -102,6 +102,7 @@ class MapArchiveStore {
         echo "Erreur mkdir($clonePath/archives)<br>\n";
         return null;
       }
+      $bnameBack = basename($this->path).'-back';
       foreach (new DirectoryIterator("$this->path/archives") as $archive) {
         if (in_array($archive, ['.','..','.DS_Store'])) continue;
         if (!mkdir("$clonePath/archives/$archive"))
@@ -109,7 +110,7 @@ class MapArchiveStore {
         foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
           if (in_array($filename, ['.','..','.DS_Store'])) continue;
           $link = "$clonePath/archives/$archive/$filename";
-          $target = "$this->path/archives/$archive/$filename";
+          $target = "../../../$bnameBack/archives/$archive/$filename";
           if (!symlink($target, $link))
             echo "Erreur symlink($target, $link)<br>\n";
           else
@@ -263,6 +264,7 @@ class MapArchiveStore {
         $this->materialize();
         break;
       }
+      default: echo "Erreur, action $action inconnue<br>\n";
     }
   }
 };
@@ -301,7 +303,8 @@ echo "<h3>Menu</h3><ul>\n";
 echo "<li><a href='?action=wrongCurLinks&pf=$PF_PATH'>vérifie les liens dans current dans '$bname'</a></li>\n";
 echo "<li><a href='?action=delete&pf=$PF_PATH-clone'>supprime '$bname-clone'</a></li>\n";
 echo "<li><a href='?action=clone&pf=$PF_PATH'>clone '$bname' avec des liens pour les md.json et les 7z</a></li>\n";
-echo "<li><a href='?action=listLinks&pf=$PF_PATH-clone'>liste dans '$bname-clone' les liens dans les archives</a></li>\n";
+echo "<li><a href='?action=listLinksInArchives&pf=$PF_PATH-clone'>",
+      "liste dans '$bname-clone' les liens dans les archives</a></li>\n";
 echo "<li><a href='?action=materialize&pf=$PF_PATH-clone'>",
       "remplace dans les archives de '$bname-clone' les liens par les fichiers pointés</a></li>\n";
 echo "<li><a href='?action=none'>aucune action</a></li>\n";
