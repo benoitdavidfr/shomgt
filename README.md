@@ -10,7 +10,7 @@ afin de passer d'une carte à l'autre sans couture et d'intégrer ces données d
 comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
 Ce dépôt correspond la version 4 de ShomGT.
-La version 4 (en cours de développement) propose des outils en mode web pour gérer le portefeuille de cartes 
+Cette version, en cours de développement, propose des outils en mode web pour gérer le portefeuille de cartes 
 (ajout/suppression d'une carte, ajout/suppression d'une version d'une une carte).
 Elle doit permettre une gestion collaborative du portefeuille de cartes.
 
