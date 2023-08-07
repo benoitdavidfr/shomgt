@@ -29,6 +29,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  7/8/2023:
+    - amélioration du clonage de MapArchiveStore et dév. d'un diff
   6/8/2023:
     - 6h50 - mise en prod V4
     - bug résolu sur vendor qui était dans sgpp un lien vers ../shomgt/vendor
@@ -284,13 +286,14 @@ backlog:
       - convergence de la branche git avec main
   sprint4:
     début: 6/8
+    début: 7/8
     objectifs:
       - script shomgt/mapversion.php pour connaitre les versions des cartes dans shomgt/data (ok)
         - code adapté pour gérer la compatibilité V3+V4
       - tester sgupdt@ShomGT3 avec le sgserver@ShomGT4 (ok)
       - tester la gestion des cartes spéciales, notamment la rétro-compatibilité avec la V3 (ok)
-      - ajouter un log sur shomgeotiff
-      - remettre en place un sgpp et un shomgeotiffpp par clonage
+      - ajouter un log sur shomgeotiff (NON)
+      - remettre en place un sgpp et un shomgeotiffpp par clonage (ok)
   sprint5:
     objectifs:
       - finaliser la possibilité d'effectuer en mode web l'action la plus simple du pt de vue du BO

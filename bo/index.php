@@ -5,7 +5,7 @@ require_once __DIR__.'/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>shomgt-bo</title></head><body>\n");
+$HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 if (!($login = Login::login())) { // code en cas de non loggin
   switch ($_GET['action'] ?? null) {
@@ -13,25 +13,25 @@ if (!($login = Login::login())) { // code en cas de non loggin
     case 'login': 
     case 'logout': {
       if (!isset($_POST['login']) || !isset($_POST['password'])) {
-        echo HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
+        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
         echo "Site à accès restreint, veuillez vous loguer",Login::FORM,
              "</p>ou <a href='?action=signup'>créer un compte</a><br>\n";
         die();
       }
       // cas d'appel 1.2: appel avec paramètres de login et login non conforme -> affichage d'un message d'erreur et du formulaire
       elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
-        echo HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
+        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
         echo "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
              "</p>ou <a href='?action=signup'>créer un compte</a><br>\n";
         die();
       }
       elseif (setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]", time()+60*60*24*30)) {
-        echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($_POST[login])</h2>\n";
+        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($_POST[login])</h2>\n";
         echo "Login/mot de passe correct, vous êtes authentifiés pour 30 jours<br>\n";
         break;
       }
       else {
-        echo HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
+        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
         die("Erreur de création du cookie<br>\n");
       }
     }
@@ -62,7 +62,7 @@ switch ($_GET['action'] ?? null) {
   case 'login':
   case 'menu': { // Menu après login
     if (!isset($_POST['login']))
-      echo HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGt ($login)</h2>\n";
+      echo $HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGt ($login)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
@@ -84,18 +84,18 @@ switch ($_GET['action'] ?? null) {
   }
   case 'logout': {
     if (setcookie(Login::COOKIE_NAME, 'authorized', -3600)) {
-      echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+      echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
       die("Vous êtes bien délogué<br>\n<a href='?action=login'>Se reloguer ?<br>\n");
     }
     else
       die("Erreur de suppression du cookie<br>\n");
   }
   case 'mapcat': {
-    echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+    echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
   }
   case 'obsoleteMap': {
-    echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+    echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
   }
   /*case 'upgrade1': { // Modification des versions des cartes spéciales - 3/8/2023
@@ -103,7 +103,7 @@ switch ($_GET['action'] ?? null) {
     define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
       throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-    echo HTML_HEAD,"<pre>";
+    echo $HTML_HEAD,"<pre>";
     if (0) { // modif .md.json
       foreach (SPECIAL_MAPS as $mapNum) {
         foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $mapVersion) {
@@ -186,7 +186,7 @@ switch ($_GET['action'] ?? null) {
     break;
   }*/
   default: {
-    echo HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+    echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     echo "Erreur, action '$_GET[action]' non prévue<br>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
   }
