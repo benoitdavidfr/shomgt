@@ -13,7 +13,10 @@
 **  2) si un lien de current est absolu, le transformer en lien relatif
 **  3) cloner un MapArchiveStorage avec dans archives des liens durs pour les md.json et les 7z du storage d'origine
 */
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 if (!($login = Login::login())) {
   die("Accès non autorisé\n");
@@ -149,7 +152,124 @@ class MapArchiveStore {
     return new MapArchiveStore($clonePath);
   }
 
-  function action(?string $action): void {
+  private static function extension(string $filename): string {
+    if (substr($filename, -3)=='.7z')
+      return '.7z';
+    if (substr($filename, -8)=='.md.json')
+      return '.md.json';
+    throw new Exception("Pas d'extension pour $filename");
+  }
+  
+  private function listArchives(): array {
+    $list = []; // [bname => [ext => inode]]
+    foreach (new DirectoryIterator("$this->path/archives") as $archive) {
+      if (in_array($archive, ['.','..','.DS_Store'])) continue;
+      foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
+        if (in_array($filename, ['.','..','.DS_Store'])) continue;
+        if (($inode = fileinode("$this->path/archives/$archive/$filename")) === false)
+          echo "Erreur sur fileinode($this->path/archives/$archive/$filename)<br>\n";
+        else {
+          $ext = self::extension($filename);
+          $list[substr($filename, 0, -strlen($ext))][$ext] = $inode;
+        }
+      }
+    }
+    ksort($list);
+    return $list;
+  }
+  
+  private function listCurrents(): array {
+    $list = []; // [bname => [ext => target]]
+    foreach (new DirectoryIterator("$this->path/current") as $filename) {
+      if (in_array($filename, ['.','..','.DS_Store'])) continue;
+      $ext = self::extension($filename);
+      if (($target = readlink("$this->path/current/$filename")) === false)
+        echo "Erreur sur readlink($this->path/current/$filename)<br>\n";
+      else
+        $list[substr($filename, 0, -strlen($ext))][$ext] = substr($target, 0, -strlen($ext));
+    }
+    // fusion des 2 extensions lorsque c'est ok
+    foreach ($list as $bname => &$targetForExt) {
+      //echo '<pre>',json_encode([$bname => $targetForExt]),"</pre>\n";
+      if (!isset($targetForExt['.7z'])) {
+        $targetForExt = $targetForExt['.md.json'].'.md.json';
+      }
+      elseif ($targetForExt['.7z'] == $targetForExt['.md.json'])
+        $targetForExt = $targetForExt['.7z'];
+      else
+        throw new Exception("Erreur sur current: ".json_encode([$bname => $targetForExt]));
+    }
+    ksort($list);
+    //echo "<pre>listCurrents="; print_r($list); die();
+    return $list;
+  }
+  
+  function diff(self $pfb): array {
+    //echo "{$this->path}->diff($pfb->path)<br>\n";
+    $labelA = basename($this->path);
+    $labelB = basename($pfb->path);
+    $diffs = ['params'=> ['a'=> $labelA, 'b'=> $labelB]];
+    
+    { // comparaison archives
+      $diffsa = []; // [banme => [ ext => code]]
+      $inodes['a'] = $this->listArchives();
+      $inodes['b'] = $pfb->listArchives();
+      foreach ($inodes['a'] as $bname => $fext) {
+        foreach ($fext as $ext => $inodeA) {
+          $inodeB = $inodes['b'][$bname][$ext] ?? null;
+          if ($inodeB == $inodeA) {
+            //$diffs['archives'][$filename] = 'ok';
+            unset($inodes['b'][$bname][$ext]);
+          }
+          elseif ($inodeB === null) {
+            $diffsa[$bname][$ext] = "a && !b";
+            //unset($inodes['b'][$filename]);
+          }
+          else {
+            $diffsa[$bname][$ext] = "a <> b";
+            unset($inodes['b'][$bname][$ext]);
+          }
+        }
+      }
+      foreach ($inodes['b'] as $bname => $fext) {
+        foreach ($fext as $ext => $inodeB) {
+          $diffsa[$bname][$ext] = "!a && b";
+        }
+      }
+      foreach ($diffsa as $bname => &$codes) {
+        if ($codes['.7z'] == $codes['.md.json'])
+          $codes =  $codes['.7z'];
+      }
+      ksort($diffsa);
+      $diffs['archives'] = $diffsa;
+    }
+    
+    { // comparaison current 
+      $targets['a'] = $this->listCurrents();
+      $targets['b'] = $pfb->listCurrents();
+      foreach ($targets['a'] as $filename => $targetA) {
+        $targetB = $targets['b'][$filename] ?? null;
+        if ($targetB == $targetA) {
+          unset($targets['b'][$filename]);
+        }
+        elseif ($targetB === null) {
+          $diffs['current'][$filename] = ['a' => $targetA, 'b' => null];
+        }
+        else {
+          $diffs['current'][$filename] = ['a' => $targetA, 'b' => $targetB];
+          unset($targets['b'][$filename]);
+        }
+      }
+      foreach ($targets['b'] as $filename => $targetB) {
+        $diffs['current'][$filename] = ['a' => null, 'b' => $targetB];
+      }
+      ksort($diffs['current']);
+    }
+    echo "<pre>",Yaml::dump($diffs, 4, 2),"</pre>\n";
+    return $diffs;
+  }
+  
+  function action(?string $action, array $params): void {
     switch ($action) {
       case null: return;
       case 'correct': {
@@ -235,6 +355,10 @@ class MapArchiveStore {
         $this->clone("{$this->path}-clone");
         break;
       }
+      case 'diff': {
+        $this->diff($params['pfb']);
+        break;
+      }
       default: echo "Erreur, action $action inconnue<br>\n";
     }
   }
@@ -263,6 +387,12 @@ elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
 }
 $bname = basename($PF_PATH);
 
+if (substr($PF_PATH, -2)=='pp')
+  $PF_PATH2 = substr($PF_PATH, 0, -2);
+else
+  $PF_PATH2 = $PF_PATH.'pp';
+$bname2 = basename($PF_PATH2);
+
 echo "<!DOCTYPE html><html><head><title>mapArchiveStorage $bname@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo "<h2>Gestion des liens de $PF_PATH</h2>\n";
 
@@ -270,13 +400,14 @@ echo "<h2>Gestion des liens de $PF_PATH</h2>\n";
 
 if (isset($_GET['pf'])) {
   $store = new MapArchiveStore($_GET['pf']);
-  $store->action($_GET['action'] ?? null);
+  $store->action($_GET['action'] ?? null, isset($_GET['pfb']) ? ['pfb'=> new MapArchiveStore($_GET['pfb'])] : []);
 }
 
 echo "<h3>Menu</h3><ul>\n";
 echo "<li><a href='?action=wrongCurLinks&pf=$PF_PATH'>vérifie les liens dans current dans '$bname'</a></li>\n";
 echo "<li><a href='?action=delete&pf=$PF_PATH-clone'>supprime '$bname-clone'</a></li>\n";
 echo "<li><a href='?action=clone&pf=$PF_PATH'>clone '$bname' avec des liens pour les md.json et les 7z</a></li>\n";
+echo "<li><a href='?action=diff&pf=$PF_PATH&pfb=$PF_PATH2'>compare '$bname' avec '$bname2'</a></li>\n";
 echo "<li><a href='?action=none'>aucune action</a></li>\n";
 echo "<li><a href='index.php'>retourne au menu du BO</a></li>\n";
 echo "</ul>\n";
