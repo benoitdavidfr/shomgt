@@ -1,31 +1,13 @@
 <?php
-/* bo/maparchive.php - Affichage et validation d'une carte - Benoit DAVID - 11-29/7/2023
+/* bo/maparchive.php - Affichage et validation d'une archive 7z de carte - Benoit DAVID - 11/7-8/8/2023
  * La validation des cartes est définie d'une part par sa conformité à sa spécification
  * et, d'autre part, par sa cohérence avec MapCat.
  *
- * Les cartes normales sont spécifiées par le Shom.
- * J'y ajoute la cohérence suivante avec MapCat:
- *  - chaque carte 7z correspond à une entrée dans les cartes obsolètes ou non de MapCat
- *  - ssi la zone principale pal300 est géoréférencée alors
- *    - la carte comporte les champs spatial et scaleDenominator et
- *    - son géoréférencement contient géographiquement l'extension spatiale définie dans MapCat
- *  - il y a bijection entre les GéoTiffs de cartouche de l'archive et les cartouches de MapCat
- *  - le géoréférencement du GéoTiff contient l'extension spatiale correspondante dans MapCat
- *  - si un géoréférencement est absent ou incorrect alors il est remplacé par la définition du champ borders dans Mapcat
+ * Voir les critères de conformité des archives de cartes dans shomgt4.yaml
  *
- * Pour les cartes spéciales j'utilise la spécification suivante:
- *  - comme une carte normale, elle est livrée comme une archive 7z nommée par le numéro de la carte et l'extension .7z
- *  - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
- *  - SI l'archive contient un seul .tif ou pas de .tif et un seul .pdf
- *    ALORS ce fichier .tif ou .pdf contient l'image géoréférencée ou non
- *    SINON le nom du fichier .tif ou .pdf de la carte doit être défini dans MapCat dans le champ geotiffNames
- *  - si le fichier .tif ou .pdf n'est pas géoréféréncé alors l'enregistrement MapCat doit comporter un champ borders
- *  - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
- * 
- * Pour les 2 types de carte:
- *  - un .tif est considéré comme géoréférencé ssi son gdalinfo contient un champ coordinateSystem
- *
- * Le script peut être soit utilisé appelé par addmaps.php soit en CLI pour tester un ensemble de cartes.
+ * Le script est utilisé de 2 manières:
+ *  - soit inclus dans addmaps.php et viewtiff.php, lui-même appelé par différents autre scripts
+ *  - soit en CLI pour tester un ensemble de cartes.
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
@@ -123,8 +105,8 @@ class Image { // Image principale ou cartouche de la carte
   }
 };
 
-class MapArchive { // analyse des fichiers d'une archive d'une carte
-  const FORCE_VALIDATION = true; // utilisé pour forcer la validation d'une carte invalide
+class MapArchive { // analyse les fichiers d'une archive d'une carte pour évaluersa validité et afficher le contenu
+  const FORCE_VALIDATION = false; // utilisé pour forcer la validation d'une carte invalide
   protected string $type='undefined'; // 'undefined'|'normal'|'special'
   protected string $pathOf7z; // chemin chemin du fichier .7z
   protected string $mapNum; // no sur 4 chiffres
@@ -135,7 +117,6 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
   
   /* $pathOf7z est le chemin du fichier .7z
   ** $mapNum est le numéro de la carte sur 4 chiffres
-  ** // $mapCat est l'entrée correspondant à la carte dans le catalogue
   */
   function __construct(string $pathOf7z, string $mapNum) {
     //echo "MapArchive::__construct(pathOf7z=$pathOf7z, mapNum=$mapNum)<br>\n";
@@ -315,7 +296,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
   
-  function showAsHtml(?string $button=null): void {
+  function showAsHtml(?string $button=null): void { // affiche le contenu de l'archive en Html 
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
       throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
@@ -358,8 +339,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       echo "</td></tr>\n";
     }
     
-    // caractéristiques de chaque cartouche
-    foreach ($this->insets as $name => $inset) {
+    foreach ($this->insets as $name => $inset) { // caractéristiques de chaque cartouche
       $title = $inset->title() ?? 'NO metadata';
       $georefLabel = $inset->georefLabel();
       $gdalinfo = "?path=$_GET[path]&map=$_GET[map]&tif=".$inset->tif()."&action=gdalinfo";
@@ -368,8 +348,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
            "<td>$title (<a href='$gdalinfo'>$georefLabel</a> / <a href='$imageUrl'>Afficher l'image</a>)</td></tr>\n";
     }
     
-    // Correspcartouches
-    if (count($this->insets) > 1) {
+    if (count($this->insets) > 1) { // Correspondance des cartouches
       $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
       $action = "?path=$_GET[path]&map=$_GET[map]&action=insetMapping";
       echo "<tr><td>Corresp.<br>cartouches<br>(archive<br>-> MapCat)</td>";
@@ -384,19 +363,20 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
       echo "</ul></td></tr>\n";
     }
     
-    // erreurs et alertes
+    // Affichage des erreurs et alertes
     echo "<tr><td>erreurs &<br>&nbsp; alertes</td><td><pre>",
          Yaml::dump(($invalid = $this->invalid()) ? $invalid : 'aucun'),
          "</pre></td></tr>\n";
     
-    // Affichage de la carte Leaflet, de l'appel du dump et du boutton de validation
+    // Affichage de la carte Leaflet, du contenu de l'archive et de l'appel du dump
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=viewtiff'>",
       "Affichage d'une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=show7zContents'>",
       "Afficher le contenu de l'archive 7z</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
       "Dump de l'objet Php</a></td></tr>\n";
-    if ($button == 'validateMap') {
+    
+    if ($button == 'validateMap') { // ajout d'un bouton de validation si l'option correspondante est indiquée
       $validateButton = button(
           "Valider la carte et la déposer",
           [ 'action'=> 'validateMap',
@@ -404,15 +384,15 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
             'map'=> $_GET['map'].'.7z',
           ],
           'addmaps.php', 'get');
-      if (!isset($invalid['errors'])) {
+      if (!isset($invalid['errors'])) { // cas normal, pas d'erreur => proposition de validation
         echo "<tr><td colspan=2><center>$validateButton</center></td></tr>\n";
       }
-      elseif (self::FORCE_VALIDATION) {
+      elseif (self::FORCE_VALIDATION) { // cas particulier où il y a une erreur mais la validation peut être forcée
         echo "<tr><td colspan=2><center>",
                "<b>La carte n'est pas valide mais sa validation peut être forcée</b>",
                "$validateButton</center></td></tr>\n";
       }
-      else {
+      else { // cas d'erreur normale, la validation n'est pas possible
         echo "<tr><td colspan=2><center>",
              "<b>La carte ne peut pas être validée car elle n'est pas valide</b>",
              "</center></td></tr>\n";
@@ -426,7 +406,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     }
   }
   
-  function showAsYaml(): void { // Affichage limité
+  function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
     $mapCat = new MapCat($mapNum);
@@ -444,7 +424,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     //  print_r($this);
   }
   
-  function showWithOptions(array $options): void {
+  function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
     if ($options['yaml'] ?? null) {
       $mapCat = new MapCat($this->mapNum);
       foreach ($this->insets as $name => $inset)
@@ -472,6 +452,7 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     }
   }
   
+  // Utilisé en CLI
   // Si $path est un fichier .7z appelle showAsYaml(), Si c'est un répertoire alors effectue un appel récursif sur chaque élément
   static function check(string $path, array $options): void {
     if (is_file($path)) {
