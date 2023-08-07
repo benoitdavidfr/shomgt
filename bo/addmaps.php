@@ -23,8 +23,8 @@ if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
 
 echo "<!DOCTYPE html><html><head><title>addmaps</title></head><body>\n";
 echo "<h2>Dépôt de nouvelles versions de cartes dans le portefeuille</h2>\n";
-echo "<pre>_POST="; print_r($_POST); echo "</pre>\n";
-echo "<pre>_GET="; print_r($_GET); echo "</pre>\n";
+//echo "<pre>_POST="; print_r($_POST); echo "</pre>\n";
+//echo "<pre>_GET="; print_r($_GET); echo "</pre>\n";
 
 function existingVersion(string $PF_PATH, string $mapNum): string {
   if (!is_file("$PF_PATH/current/$mapNum.md.json"))
@@ -88,6 +88,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
   }
   case 'delete': { // suppression du fichier de la carte 
     unlink($PF_PATH."/users/$login/$_POST[map]");
+    echo "Suppresion de $_POST[map] confirmée<br>\n";
     break;
   }
   case 'validateMap': { // dépôt de la carte
@@ -107,7 +108,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
       }
     }
     
-    if (0) { // Deuxième condition: la carte doit être valide
+    if (1) { // Deuxième condition: la carte doit être valide
       $map = new MapArchive("$PF_PATH/users/$login/$_GET[map]", $mapNum);
       $invalid = $map->invalid();
       //echo "<pre>invalid = ",Yaml::dump($invalid),"</pre>\n";
@@ -137,9 +138,9 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
       unlink("$PF_PATH/current/$mapNum.7z");
     
     // Je crée des liens vers la nlle version
-    symlink("$PF_PATH/archives/$mapNum/$mapNum-$newVersion.7z", "$PF_PATH/current/$mapNum.7z");
-    symlink("$PF_PATH/archives/$mapNum/$mapNum-$newVersion.md.json", "$PF_PATH/current/$mapNum.md.json");
-    echo "<b>Dépôt de la carte $mapNum réalisée.</b><br>\n";
+    symlink("../archives/$mapNum/$mapNum-$newVersion.7z", "$PF_PATH/current/$mapNum.7z");
+    symlink("../archives/$mapNum/$mapNum-$newVersion.md.json", "$PF_PATH/current/$mapNum.md.json");
+    echo "<b>Dépôt de la carte $mapNum réalisé.</b><br>\n";
     break;
   }
   default: {
@@ -164,8 +165,12 @@ EOT;
 
 // Tableau des cartes chargées avec actions possibles
 $maps = [];
-if (!is_dir("$PF_PATH/users/$login") && !mkdir("$PF_PATH/users/$login"))
+if (!is_dir("$PF_PATH/users") && !mkdir("$PF_PATH/users")) {
+  die("Erreur de création de \"$PF_PATH/users\"\n");
+}
+if (!is_dir("$PF_PATH/users/$login") && !mkdir("$PF_PATH/users/$login")) {
   die("Erreur de création de \"$PF_PATH/users/$login\"\n");
+}
   
 foreach (new DirectoryIterator("$PF_PATH/users/$login") as $file) {
   if (substr($file, -3) == '.7z')

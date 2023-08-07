@@ -1,15 +1,17 @@
 <?php
-/* bo/maparchivestore.php - gère les stockage d'archives de cartes
+/* bo/maparchivestore.php - gère les stockage d'archives de cartes - 7/8/2023
 ** Un stockage d'archives de cartes (MapArchiveStore) est un répertoire qui contient
 **   - d'une part un sous-répertoire archives
-**   - d'autre part un sous-répertoire current
+**   - d'autre part un sous-répertoire current avec des liens symboliques vers les archives
 **
-** Ce script propose 5 fonctions:
+** La classe MapArchiveStore 
+** Chgt de logique le 7/8/2023, lors d'un clonage utilisation de liens hards.
+** Cela permet d'éviter les boucles infinies ou les liens invalides lorsque l'on déplace le stockage.
+**
+** Ce script propose 3 fonctions:
 **  1) vérifier la conformité des liens de current
 **  2) si un lien de current est absolu, le transformer en lien relatif
-**  3) cloner un MapArchiveStorage avec dans archives des liens pour les md.json et les 7z du storage d'origine
-**  4) tester si un MapArchiveStorage a des liens dans les archives
-**  3) remplacer dans un MapArchiveStorage les liens dans les archives par les fichiers pointés
+**  3) cloner un MapArchiveStorage avec dans archives des liens durs pour les md.json et les 7z du storage d'origine
 */
 require_once __DIR__.'/login.inc.php';
 
@@ -17,6 +19,7 @@ if (!($login = Login::login())) {
   die("Accès non autorisé\n");
 }
 
+// supprime un répertoire
 function rmdirRecursive(string $path): void {
   foreach (new DirectoryIterator($path) as $filename) {
     if (in_array($filename, ['.','..'])) continue;
@@ -28,7 +31,10 @@ function rmdirRecursive(string $path): void {
   }
 }
 
+// Répertoire contenant 2 sous-répertoires archives et current
 class MapArchiveStore {
+  const TEST = 0; // 1 <=> exécution en mode test sur un objet test
+  const DEBUG = 0; // 1 <=> affichage de messages de debug 
   protected ?string $path=null; // le chemin du répertoire
   
   function __construct(?string $path) { $this->path = $path; }
@@ -61,11 +67,10 @@ class MapArchiveStore {
     $ext = $matches[2];
     list($targetPattern, $targetAbsPattern) = $this->targetPatterns($mapNum, $ext);
     if (preg_match($targetAbsPattern, $linkTarget)) {
-      //echo "<b>Erreur, le lien $linkTarget est un lien absolu</b>, <a href='?action=correct&entry=$entry'>le corriger</a>\n";
       return 'targetIsAbsolute';
     }
-    elseif (!preg_match($targetPattern, $linkTarget)) {
-      //echo "<b>Erreur, le lien $linkTarget ne respecte pas le motif</b>\n";
+    //echo "linkTarget=$linkTarget dont match $targetAbsPattern<br>\n";
+    if (!preg_match($targetPattern, $linkTarget)) {
       return 'targetDontMatchPattern';
     }
     //echo "linkTarget=$linkTarget\n";
@@ -80,15 +85,18 @@ class MapArchiveStore {
   // Vérifie que les entrées de current sont des liens relatifs vers archives
   // Renvoie la liste des entrées qui ne le sont pas sous la forme [entrée => codeDErreur]
   function wrongCurLinks(): array {
+    if (!is_dir("$this->path/current"))
+      throw new Exception("Erreur, le répertoire $this->path/current n'existe pas");
     $errors = [];
-    foreach (new DirectoryIterator("$this->path/current", ) as $entry) {
+    foreach (new DirectoryIterator("$this->path/current") as $entry) {
       if (!in_array($entry, ['.','..','.DS_Store']) && ($error = $this->wrongCurLink($entry)))
         $errors[(string)$entry] = $error;
     }
     return $errors;
   }
   
-  function clone(string $clonePath): ?self { // clone un MapArchiveStore avec des liens pour les md.json et les 7z
+  // clone $this dans le chemin $clonePath avec des liens durs pour les md.json et les 7z des archives
+  function clone(string $clonePath): ?self {
     if (is_dir($clonePath)) {
       echo "Erreur $clonePath existe déjà<br>\n";
       return null;
@@ -102,7 +110,6 @@ class MapArchiveStore {
         echo "Erreur mkdir($clonePath/archives)<br>\n";
         return null;
       }
-      $bnameBack = basename($this->path).'-back';
       foreach (new DirectoryIterator("$this->path/archives") as $archive) {
         if (in_array($archive, ['.','..','.DS_Store'])) continue;
         if (!mkdir("$clonePath/archives/$archive"))
@@ -110,64 +117,36 @@ class MapArchiveStore {
         foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
           if (in_array($filename, ['.','..','.DS_Store'])) continue;
           $link = "$clonePath/archives/$archive/$filename";
-          $target = "../../../$bnameBack/archives/$archive/$filename";
-          if (!symlink($target, $link))
-            echo "Erreur symlink($target, $link)<br>\n";
-          else
-            echo "symlink($target, $link) ok<br>\n";
+          $target = "$this->path/archives/$archive/$filename";
+          if (!link($target, $link))
+            echo "Erreur link($target, $link)<br>\n";
+          elseif (self::DEBUG)
+            echo "link($target, $link) ok<br>\n";
         }
       }
     }
     { // clonage de current en créant des liens vers les archives du clone à condition que le lien initial soit valide 
-      if (!mkdir("{$this->path}-clone/current")) {
-        echo "Erreur mkdir({$this->path}-clone/current)<br>\n";
+      if (!mkdir("$clonePath/current")) {
+        echo "Erreur mkdir($clonePath/current)<br>\n";
         return null;
       }
       foreach (new DirectoryIterator("$this->path/current") as $filename) {
         if (in_array($filename, ['.','..','.DS_Store'])) continue;
         $target = readlink("$this->path/current/$filename");
-        if (!$this->wrongCurLink($filename)) {
-          echo "$filename -> $target<br>\n";
-          if (!symlink($target, "{$this->path}-clone/current/$filename"))
-            echo "Erreur symlink($target, {$this->path}-clone/current/$filename)\n";
-          else
-            echo "symlink($target, {$this->path}-clone/current/$filename) ok\n";
+        if ($this->wrongCurLink($filename)) {
+          echo "Alerte, $filename -> $target incorrect<br>\n";
+        }
+        else {
+          if (self::DEBUG)
+            echo "$filename -> $target<br>\n";
+          if (!symlink($target, "$clonePath/current/$filename"))
+            echo "Erreur symlink($target, $clonePath/current/$filename)<br>\n";
+          elseif (self::DEBUG)
+            echo "symlink($target, $clonePath/current/$filename) ok<br>\n";
         }
       }
     }
-    return new MapArchiveStore("{$this->path}-clone");
-  }
-
-  function listLinksInArchives(): void { // liste les liens dans les archives
-    foreach (new DirectoryIterator("$this->path/archives") as $archive) {
-      if (in_array($archive, ['.','..','.DS_Store'])) continue;
-      //echo "archive $archive<br>\n";
-      foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
-        if (in_array($filename, ['.','..','.DS_Store'])) continue;
-        // echo "&nbsp;&nbsp;fichier $filename<br>\n";
-        if (is_link("$this->path/archives/$archive/$filename")) {
-          $link = readlink("$this->path/archives/$archive/$filename");
-          echo "archives/$archive/$filename est un lien vers $link<br>\n";
-        }
-      }
-    }
-  }
-
-  function materialize(): void { // remplace dans les archives les liens par les fichiers pointés
-    foreach (new DirectoryIterator("$this->path/archives") as $archive) {
-      if (in_array($archive, ['.','..','.DS_Store'])) continue;
-      //echo "archive $archive<br>\n";
-      foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
-        if (in_array($filename, ['.','..','.DS_Store'])) continue;
-        //echo "&nbsp;&nbsp;fichier $filename<br>\n";
-        if (is_link("$this->path/archives/$archive/$filename")) {
-          $link = readlink("$this->path/archives/$archive/$filename");
-          unlink("$this->path/archives/$archive/$filename");
-          copy($link, "$this->path/archives/$archive/$filename");
-          echo "copy($link, $this->path/archives/$archive/$filename)<br>\n";
-        }
-      }
-    }
+    return new MapArchiveStore($clonePath);
   }
 
   function action(?string $action): void {
@@ -239,7 +218,7 @@ class MapArchiveStore {
         echo "</pre>\n";
         return;
       }
-      case 'delete': { // supprime $_GET['pf']
+      case 'delete': { // supprime $this
         if (!$this->path || !is_dir($this->path)) {
           echo "Erreur, '$this->path' n'existe pas<br>\n";
           return;
@@ -256,57 +235,48 @@ class MapArchiveStore {
         $this->clone("{$this->path}-clone");
         break;
       }
-      case 'listLinksInArchives': { // liste les liens dans les archives
-        $this->listLinksInArchives();
-        break;
-      }
-      case 'materialize': { // remplace dans les archives de $_GET['pf'] les liens par les fichiers pointés
-        $this->materialize();
-        break;
-      }
       default: echo "Erreur, action $action inconnue<br>\n";
     }
   }
 };
 
-// retourne '' si ce n'est pas ce fichier qui est appelé (cad qu'il est inclus),
-// 'inWebMode' s'il est appelé en mode web, 'inCliMode' s'il est appelé en mode CLI
-function thisFileIsCalled(): string {
+// Permet de distinguer si un script est inclus dans un autre ou est directement appelé en mode CLI ou Web
+// retourne '' si ce fichier n'a pas été directement appelé, cad qu'il est inclus dans un autre,
+//  'web' s'il est appelé en mode web, 'cli' s'il est appelé en mode CLI
+function callingThisFile(): string {
   $documentRoot = $_SERVER['DOCUMENT_ROOT'];
-  if (substr($documentRoot, -1)=='/')
+  if (substr($documentRoot, -1)=='/') // Sur Alwaysdata $_SERVER['DOCUMENT_ROOT'] se termine par un '/'
     $documentRoot = substr($documentRoot, 0, -1);
-  $thisFileIsCalledInWebMode = (__FILE__ == $documentRoot.$_SERVER['SCRIPT_NAME']);
-  $thisFileIsCalledInCliMode = (($argv[0] ?? '') == basename(__FILE__));
-  //echo "thisFileIsCalledInWebMode=",$thisFileIsCalledInWebMode?'true':'false',"<br>\n";
-  //echo "thisFileIsCalledInCliMode=",$thisFileIsCalledInCliMode?'true':'false',"<br>\n";
-  return $thisFileIsCalledInWebMode ? 'inWebMode' : ($thisFileIsCalledInCliMode ? 'inCliMode' : '');
+  $inWebMode = (__FILE__ == $documentRoot.$_SERVER['SCRIPT_NAME']);
+  $inCliMode = (($argv[0] ?? '') == basename(__FILE__));
+  //echo "thisFileIsCalledInWebMode=",$inWebMode?'true':'false',"<br>\n";
+  //echo "thisFileIsCalledInCliMode=",$inCliMode?'true':'false',"<br>\n";
+  return $inWebMode ? 'web' : ($inCliMode ? 'cli' : '');
 }
-if (!thisFileIsCalled()) return; // n'exécute pas la suite si le fichier est inclus
+if (!callingThisFile()) return; // n'exécute pas la suite si le fichier est inclus
 
-if (0) { // TEST 
+if (MapArchiveStore::TEST) { // TEST 
   $PF_PATH = __DIR__.'/maparchivestore-test';
 }
 elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
   die("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie\n");
 }
+$bname = basename($PF_PATH);
 
-echo "<!DOCTYPE html><html><head><title>mapArchiveStorage</title></head><body>\n";
+echo "<!DOCTYPE html><html><head><title>mapArchiveStorage $bname@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo "<h2>Gestion des liens de $PF_PATH</h2>\n";
+
+//echo '<pre>'; print_r($_SERVER); die();
 
 if (isset($_GET['pf'])) {
   $store = new MapArchiveStore($_GET['pf']);
   $store->action($_GET['action'] ?? null);
 }
-$bname = basename($PF_PATH);
 
 echo "<h3>Menu</h3><ul>\n";
 echo "<li><a href='?action=wrongCurLinks&pf=$PF_PATH'>vérifie les liens dans current dans '$bname'</a></li>\n";
 echo "<li><a href='?action=delete&pf=$PF_PATH-clone'>supprime '$bname-clone'</a></li>\n";
 echo "<li><a href='?action=clone&pf=$PF_PATH'>clone '$bname' avec des liens pour les md.json et les 7z</a></li>\n";
-echo "<li><a href='?action=listLinksInArchives&pf=$PF_PATH-clone'>",
-      "liste dans '$bname-clone' les liens dans les archives</a></li>\n";
-echo "<li><a href='?action=materialize&pf=$PF_PATH-clone'>",
-      "remplace dans les archives de '$bname-clone' les liens par les fichiers pointés</a></li>\n";
 echo "<li><a href='?action=none'>aucune action</a></li>\n";
 echo "<li><a href='index.php'>retourne au menu du BO</a></li>\n";
 echo "</ul>\n";
