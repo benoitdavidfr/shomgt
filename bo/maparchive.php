@@ -124,6 +124,7 @@ class Image { // Image principale ou cartouche de la carte
 };
 
 class MapArchive { // analyse des fichiers d'une archive d'une carte
+  const FORCE_VALIDATION = true; // utilisé pour forcer la validation d'une carte invalide
   protected string $type='undefined'; // 'undefined'|'normal'|'special'
   protected string $pathOf7z; // chemin chemin du fichier .7z
   protected string $mapNum; // no sur 4 chiffres
@@ -396,20 +397,24 @@ class MapArchive { // analyse des fichiers d'une archive d'une carte
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
       "Dump de l'objet Php</a></td></tr>\n";
     if ($button == 'validateMap') {
-      if (isset($invalid['errors'])) {
+      $validateButton = button(
+          "Valider la carte et la déposer",
+          [ 'action'=> 'validateMap',
+            'path' => $_GET['path'],
+            'map'=> $_GET['map'].'.7z',
+          ],
+          'addmaps.php', 'get');
+      if (!isset($invalid['errors'])) {
+        echo "<tr><td colspan=2><center>$validateButton</center></td></tr>\n";
+      }
+      elseif (self::FORCE_VALIDATION) {
         echo "<tr><td colspan=2><center>",
-             "<b>La carte ne peut pas être validée car elle n'est pas valide</b>",
-             "</center></td></tr>\n";
-       }
+               "<b>La carte n'est pas valide mais sa validation peut être forcée</b>",
+               "$validateButton</center></td></tr>\n";
+      }
       else {
         echo "<tr><td colspan=2><center>",
-             button(
-              "Valider la carte et la déposer",
-              [ 'action'=> 'validateMap',
-                'path' => $_GET['path'],
-                'map'=> $_GET['map'].'.7z',
-              ],
-              'addmaps.php', 'get'),
+             "<b>La carte ne peut pas être validée car elle n'est pas valide</b>",
              "</center></td></tr>\n";
       }
     }

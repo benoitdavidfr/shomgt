@@ -343,8 +343,10 @@ while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec u
   }
 
   // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
-  !execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)
-    or throw new Exception("Erreur dans la génération de shomgt.yaml");
+  if (execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)) {
+    echo "Erreur dans la génération de shomgt.yaml\n";
+    die(1);
+  }
   rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml")
     or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $MAPS_DIR_PATH/../shomgt.yaml)");
 
