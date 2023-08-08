@@ -108,23 +108,33 @@ if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version
   die();
 }
 
+/* Verrou d'utilisation pour garantir que le script n'est pas utilisé plusieurs fois simultanément
+** 3 opération:
+**  - locked() pour connaitre l'état du verrou
+**  - lock() pour le vérouiller
+**  - unlock() pour le dévérouiller
+*/
 class Lock {
   const LOCK_FILEPATH = __DIR__.'/LOCK.txt';
   
-  static function locked(): ?string { // Si le verrou existe alors renvoie le contenu du fichier
-    if (is_file(UpdtMaps::LOCK_FILEPATH))
-      return file_get_contents(UpdtMaps::LOCK_FILEPATH);
+  static function locked(): ?string { // Si le verrou existe alors renvoie le contenu du fichier avec la date de verrou
+    if (is_file(self::LOCK_FILEPATH))
+      return file_get_contents(self::LOCK_FILEPATH);
     else
       return null;
   }
   
   static function lock(): bool { // verouille, renvoie vrai si ok, false si le verrou existait déjà
-    if (is_file(UpdtMaps::LOCK_FILEPATH))
+    if (is_file(self::LOCK_FILEPATH))
       return false;
     else {
-      file_put_contents(UpdtMaps::LOCK_FILEPATH, "Verrou déposé le ".date('c')."\n");
+      file_put_contents(self::LOCK_FILEPATH, "Verrou déposé le ".date('c')."\n");
       return true;
     }
+  }
+  
+  static function unlock(): void {
+    unlink(self::LOCK_FILEPATH);
   }
 };
 
@@ -365,7 +375,7 @@ while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec u
       Lock::unlock();
       die(1);
     }
-    rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml"))
+    rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml")
       or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $MAPS_DIR_PATH/../shomgt.yaml)");
 
     // effacement du cache des tuiles s'il existe

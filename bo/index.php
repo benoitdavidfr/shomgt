@@ -8,7 +8,7 @@ use Symfony\Component\Yaml\Yaml;
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 
-if (!($login = Login::login())) { // code en cas d'utilisateur non loggué 
+if (!($login = Login::login())) { // code en cas d'utilisateur non loggué, continue en cas de login réussi 
   switch ($_GET['action'] ?? null) {
     case null:
     case 'login': 
@@ -30,7 +30,7 @@ if (!($login = Login::login())) { // code en cas d'utilisateur non loggué
       elseif (setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]", time()+60*60*24*30)) {
         echo $HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGT ($_POST[login])</h2>\n";
         echo "Login/mot de passe correct, vous êtes authentifiés pour 30 jours<br>\n";
-        break;
+        break; // Je suis logué, je continue le code après le switch()
       }
       else { // Erreur de création du cookie
         echo $HTML_HEAD,$HTML_TITLE;
@@ -55,11 +55,13 @@ if (!($login = Login::login())) { // code en cas d'utilisateur non loggué
   }
 }
 
-/*if (!$login) { // bizarre !!!
-  $login = $_POST['login'];
-}*/
-
 switch ($_GET['action'] ?? null) {
+  case 'deleteTempOutputSgupdt': { // revient de updatemaps.php et efface le fichier temporaire créé 
+    $filename = basename($_GET['filename']);
+    //echo "filename=$filename<br>\n";
+    unlink(__DIR__."/temp/$filename");
+    // Explicitement je continue sur le cas suivant
+  }
   case null:
   case 'login':
   case 'menu': { // Menu après login
@@ -74,8 +76,7 @@ switch ($_GET['action'] ?? null) {
     echo "<li><a href='addmaps.php'>Déposer cette nouvelle version de carte dans le portefeuille</a></li>\n";
     //echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
-    echo "<li><a href='updatemaps.php'>",
-          "Prendre en compte les nouvelles versions déposées dans la consultation des cartes</a></li>\n";
+    echo "<li><a href='updatemaps.php'>Prendre en compte les nouvelles versions dans la consultation des cartes</a></li>\n";
     echo "</ul>\n";
     echo "<h3>Fonctions d'administration</h3>\n";
     echo "<ul>\n";
