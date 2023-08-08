@@ -29,8 +29,11 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  8/8/2023:
+    - appel dans le BO en mode web de sgupdt/main.php
   7/8/2023:
     - amélioration du clonage de MapArchiveStore et dév. d'un diff.
+    - proto appel en mode web de sgupdt/main.php
   6/8/2023:
     - 6h50 - mise en prod V4
     - bug résolu sur vendor qui était dans sgpp un lien vers ../shomgt/vendor
@@ -296,12 +299,12 @@ backlog:
   sprint5:
     début: 7/8
     objectifs:
-      - finaliser la possibilité d'effectuer en mode web l'action la plus simple du pt de vue du BO
-        - qui est l'ajout d'une version suivie de la mise à jour des services de shomgt
-      - cela veut donc dire exécuter un sgupdt en mode web
+      - finaliser la possibilité d'effectuer en mode web l'action la plus simple du pt de vue du BO (ok)
+        - qui est l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
+      - cela veut donc dire exécuter un sgupdt en mode web (ok)
       - créer sgpp/data/maps par clonage de chaque carte de shomgt/data/maps
     apportsFonctionnels:
-      - effectuer en mode web l'ajout d'une version suivie de la mise à jour des services de shomgt
+      - effectuer en mode web l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
       - passer en dessous de 20 Go sur Alwaysdata
   sprint.x:
     objectifs:

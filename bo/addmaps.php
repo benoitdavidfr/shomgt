@@ -1,6 +1,5 @@
 <?php
 // bo/addmaps.php - ajout et vérification de nouvelles cartes dans le BO
-// 6735 + 7330
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
