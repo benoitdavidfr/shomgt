@@ -6,36 +6,38 @@ require_once __DIR__.'/login.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
+$HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 
-if (!($login = Login::login())) { // code en cas de non loggin
+if (!($login = Login::login())) { // code en cas d'utilisateur non loggué 
   switch ($_GET['action'] ?? null) {
     case null:
     case 'login': 
-    case 'logout': {
-      if (!isset($_POST['login']) || !isset($_POST['password'])) {
-        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
-        echo "Site à accès restreint, veuillez vous loguer",Login::FORM,
-             "</p>ou <a href='?action=signup'>créer un compte</a><br>\n";
+    case 'logout': { // affichage non logué
+      if (!isset($_POST['login']) || !isset($_POST['password'])) { // pas de paramètre de login
+        echo $HTML_HEAD,$HTML_TITLE,
+             "Site à accès restreint, veuillez vous loguer",Login::FORM,
+             "</p>ou <a href='?action=signup'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
         die();
       }
-      // cas d'appel 1.2: appel avec paramètres de login et login non conforme -> affichage d'un message d'erreur et du formulaire
+      // appel avec paramètres de login incorrects -> affichage d'un message d'erreur et du formulaire
       elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
-        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
-        echo "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
-             "</p>ou <a href='?action=signup'>créer un compte</a><br>\n";
+        echo $HTML_HEAD,$HTML_TITLE,
+             "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
+             "</p>ou <a href='?action=signup'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
         die();
       }
+      // appel avec paramètres de login corrects -> création d'un cookie et enchainement sur la suite de la page
       elseif (setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]", time()+60*60*24*30)) {
-        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($_POST[login])</h2>\n";
+        echo $HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGT ($_POST[login])</h2>\n";
         echo "Login/mot de passe correct, vous êtes authentifiés pour 30 jours<br>\n";
         break;
       }
-      else {
-        echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt</h2>\n";
+      else { // Erreur de création du cookie
+        echo $HTML_HEAD,$HTML_TITLE;
         die("Erreur de création du cookie<br>\n");
       }
     }
-    case 'signup': {
+    case 'signup': { // iscription 
       if (!isset($_POST['email'])) {
         echo "<form method='post'>
           adresse email:  <input type='text' size=80 name='email' /><br>
@@ -53,25 +55,27 @@ if (!($login = Login::login())) { // code en cas de non loggin
   }
 }
 
-if (!$login) {
+/*if (!$login) { // bizarre !!!
   $login = $_POST['login'];
-}
-  
+}*/
+
 switch ($_GET['action'] ?? null) {
   case null:
   case 'login':
   case 'menu': { // Menu après login
     if (!isset($_POST['login']))
-      echo $HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGt ($login)</h2>\n";
+      echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
          "Identifier les cartes à ajouter/supprimer/actualiser dans le portefeuille ShomGT</a></li>\n";
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",
-         "Télécharger de nouvelles versions de cartes sur le site du Shom</a></li>\n";
-    echo "<li><a href='addmaps.php'>Déposer ces nouvelles versions de cartes dans le portefeuille</a></li>\n";
+         "Télécharger une nouvelle version de cartes sur le site du Shom</a></li>\n";
+    echo "<li><a href='addmaps.php'>Déposer cette nouvelle version de carte dans le portefeuille</a></li>\n";
     //echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
+    echo "<li><a href='updatemaps.php'>",
+          "Prendre en compte les nouvelles versions déposées dans la consultation des cartes</a></li>\n";
     echo "</ul>\n";
     echo "<h3>Fonctions d'administration</h3>\n";
     echo "<ul>\n";
@@ -90,14 +94,14 @@ switch ($_GET['action'] ?? null) {
     else
       die("Erreur de suppression du cookie<br>\n");
   }
-  case 'mapcat': {
+  /*case 'mapcat': {
     echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
-  }
-  case 'obsoleteMap': {
+  }*/
+  /*case 'obsoleteMap': {
     echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     die("<a href='?action=menu'>Retour au menu</a>\n");
-  }
+  }*/
   /*case 'upgrade1': { // Modification des versions des cartes spéciales - 3/8/2023
     define('SPECIAL_MAPS', ['7330','7344','7360','8101','8502','8509','8510','8517','8523']); 
     define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);

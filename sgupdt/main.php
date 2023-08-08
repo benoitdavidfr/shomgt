@@ -7,18 +7,11 @@ doc: |
     SHOMGT3_SERVER_URL: url du serveur de cartes en 7z
     SHOMGT3_MAPS_DIR_PATH: répertoire dans lequel les cartes expansées doivent être copiées
 
-  cas particuliers:
-    Quelques cartes ne contiennent pas de MD ISO, notamment les cartes spéciales (AEM, MANCHEGRID et limites).
-    Dans ce cas, le libellé de la version est 'undefined'.
-    Ainsi:
-     - la carte sera initialement téléchargée et ne sera jamais mise à jour
-     - il est possible de forcer une mise à jour on ajoutant cette version
-       par exemple sous la forme d'un fichier mdcarte.yaml à spécifier
-       Il faudra alors de lire ce fichier dans sgupdt/findCurrentMapVersion() et dans sgserver/findMapVersionIn7z()
-  
   A faire:
-    - ajouter une synthèse du traitement à afficher à la fin
+    - afficher à la fin une synthèse du traitement
 journal: |
+  8/8/2023:
+    - ajout d'un verrou pour interdire des exécutions simultanées
   3/8/2023:
     - chgt de la constante VERSION en '4' pour obtenir les vraies versions des cartes spéciales
     - modif de findCurrentMapVersion() sur les cartes spéciales
@@ -115,7 +108,26 @@ if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version
   die();
 }
 
- 
+class Lock {
+  const LOCK_FILEPATH = __DIR__.'/LOCK.txt';
+  
+  static function locked(): ?string { // Si le verrou existe alors renvoie le contenu du fichier
+    if (is_file(UpdtMaps::LOCK_FILEPATH))
+      return file_get_contents(UpdtMaps::LOCK_FILEPATH);
+    else
+      return null;
+  }
+  
+  static function lock(): bool { // verouille, renvoie vrai si ok, false si le verrou existait déjà
+    if (is_file(UpdtMaps::LOCK_FILEPATH))
+      return false;
+    else {
+      file_put_contents(UpdtMaps::LOCK_FILEPATH, "Verrou déposé le ".date('c')."\n");
+      return true;
+    }
+  }
+};
+
 class UpdtMaps { // stocke les informations téléchargées de $SERVER_URL/maps.json
   /** @var array<string, string> $validMaps */
   static array $validMaps=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json avec leur version
@@ -307,68 +319,81 @@ function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $T
 }
 
 while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec une attente de UPDATE_DURATION
-  // efface le contenu du répertoire $TEMP
-  !execCmde("rm -rf $TEMP/*", CMDE_VERBOSE)
-    or throw new Exception("erreur dans rm -r $TEMP/*");
-  // efface le contenu du répertoire temp
-  !execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
-    or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
+  if ($lock = Lock::locked()) {
+    die("Exécution impossible, un autre utilisateur est en train d'utiliser ce script<br>\n$lock<br>\n");
+  }
+  Lock::lock();
+  try {
+    // efface le contenu du répertoire $TEMP
+    !execCmde("rm -rf $TEMP/*", CMDE_VERBOSE)
+      or throw new Exception("erreur dans rm -r $TEMP/*");
+    // efface le contenu du répertoire temp
+    !execCmde("rm -rf ".__DIR__."/temp/*", CMDE_VERBOSE)
+      or throw new Exception("erreur dans rm -r ".__DIR__."/temp/*");
   
-  UpdtMaps::init($SERVER_URL); // télécharge ${SHOMGT3_SERVER_URL}/maps.json et stocke les informations
-  TempMapCat::init(); // lit le fichier mapcat.yaml en le téléchargeant s'il n'existe pas
-  ShomGtDelZone::init(); // lit dans le fichier shomgt.yaml les zones effacées pour les comparer avec celles à effacer
+    UpdtMaps::init($SERVER_URL); // télécharge ${SHOMGT3_SERVER_URL}/maps.json et stocke les informations
+    TempMapCat::init(); // lit le fichier mapcat.yaml en le téléchargeant s'il n'existe pas
+    ShomGtDelZone::init(); // lit dans le fichier shomgt.yaml les zones effacées pour les comparer avec celles à effacer
   
-  // téléchargement des cartes et transfert au fur et à mesure dans SHOMGT3_MAPS_DIR_PATH
-  foreach (UpdtMaps::$validMaps as $mapnum => $mapVersion) {
-    echo "mapnum=$mapnum\n";
-    $currentVersion = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
-    if ($currentVersion == $mapVersion) {
-      if (ShomGtDelZone::sameDelZones($mapnum)) {
-        echo "  Pas de téléchargement pour la carte $mapnum.7z car la version $mapVersion est déjà présente",
-          " et les zones à effacer sont identiques\n";
-        continue;
+    // téléchargement des cartes et transfert au fur et à mesure dans SHOMGT3_MAPS_DIR_PATH
+    foreach (UpdtMaps::$validMaps as $mapnum => $mapVersion) {
+      echo "mapnum=$mapnum\n";
+      $currentVersion = findCurrentMapVersion($MAPS_DIR_PATH, $mapnum);
+      if ($currentVersion == $mapVersion) {
+        if (ShomGtDelZone::sameDelZones($mapnum)) {
+          echo "  Pas de téléchargement pour la carte $mapnum.7z car la version $mapVersion est déjà présente",
+            " et les zones à effacer sont identiques\n";
+          continue;
+        }
+        else {
+          echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées donc la carte est rechargée\n";
+        }
+      }
+      elseif (!$currentVersion) {
+        echo "La carte $mapnum.7z est absente et la version proposée est $mapVersion\n";
       }
       else {
-        echo "Les zones à effacer dans la carte $mapnum.7z ont été modifiées donc la carte est rechargée\n";
+        echo "Pour la carte $mapnum.7z, la version présente est $currentVersion et la version proposée est $mapVersion\n";
       }
+      if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
+        UpdtMaps::$downloaded[] = $mapnum;
     }
-    elseif (!$currentVersion) {
-      echo "La carte $mapnum.7z est absente et la version proposée est $mapVersion\n";
+
+    // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
+    if (execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)) {
+      echo "Erreur dans la génération de shomgt.yaml\n";
+      Lock::unlock();
+      die(1);
     }
-    else {
-      echo "Pour la carte $mapnum.7z, la version présente est $currentVersion et la version proposée est $mapVersion\n";
+    rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml"))
+      or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $MAPS_DIR_PATH/../shomgt.yaml)");
+
+    // effacement du cache des tuiles s'il existe
+    if (is_dir("$MAPS_DIR_PATH/../tilecache")) {
+      execCmde("rm -r $MAPS_DIR_PATH/../tilecache &", CMDE_VERBOSE);
     }
-    if (dlExpandInstallMap($SERVER_URL, $MAPS_DIR_PATH, $TEMP, $mapnum) == 'OK')
-      UpdtMaps::$downloaded[] = $mapnum;
-  }
 
-  // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
-  if (execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)) {
-    echo "Erreur dans la génération de shomgt.yaml\n";
-    die(1);
-  }
-  rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml")
-    or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $MAPS_DIR_PATH/../shomgt.yaml)");
+    // effacement des cartes obsolètes
+    foreach (UpdtMaps::$obsoleteMaps as $mapnum) {
+      if (is_dir("$MAPS_DIR_PATH/$mapnum"))
+        execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
+    }
 
-  // effacement du cache des tuiles s'il existe
-  if (is_dir("$MAPS_DIR_PATH/../tilecache")) {
-    execCmde("rm -r $MAPS_DIR_PATH/../tilecache &", CMDE_VERBOSE);
+    echo "Fin Ok de mise à jour des cartes\n";
+    Lock::unlock();
   }
-
-  // effacement des cartes obsolètes
-  foreach (UpdtMaps::$obsoleteMaps as $mapnum) {
-    if (is_dir("$MAPS_DIR_PATH/$mapnum"))
-      execCmde("rm -r $MAPS_DIR_PATH/$mapnum &", CMDE_VERBOSE);
+  catch (Exception $e) {
+    Lock::unlock();
+    throw $e;
   }
-
-  echo "Fin Ok de mise à jour des cartes\n";
+  
   if (!$UPDATE_DURATION) {
     die(0);
   }
   else {
     echo "Endormissement pendant $UPDATE_DURATION jours à compter de ",date(DATE_ATOM),"\n";
     sleep(intval($UPDATE_DURATION) * 24 * 3600); // en jours
-    //sleep($UPDATE_DURATION * 60); // enn minutes pour tests
+    //sleep($UPDATE_DURATION * 60); // en minutes pour tests
     echo "Réveil à ",date(DATE_ATOM),"\n";
   }
 }
