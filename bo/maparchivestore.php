@@ -210,7 +210,11 @@ class MapArchiveStore {
     //echo "{$this->path}->diff($pfb->path)<br>\n";
     $labelA = basename($this->path);
     $labelB = basename($pfb->path);
-    $diffs = ['params'=> ['a'=> $labelA, 'b'=> $labelB]];
+    $diffs = [
+      'params'=> ['a'=> $labelA, 'b'=> $labelB],
+      'archives'=> [],
+      'current'=>[]
+    ];
     
     { // comparaison archives
       $diffsa = []; // [banme => [ ext => code]]

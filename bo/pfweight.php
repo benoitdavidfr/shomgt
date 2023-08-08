@@ -31,7 +31,7 @@ if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
   die("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 }
 
-echo "<!DOCTYPE html><html><head><title>bo/pfweight</title></head><body>\n";
+echo "<!DOCTYPE html><html><head><title>bo/pfweight@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à réaliser
   case null: break; // pas d'action de modification à exécuter 
@@ -76,25 +76,36 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
   }
  
   exec("du -s $PF_PATH/archives/*", $output, $result_code);
-  $duMbs = []; // poids de chaque carte en Mo
-  $duMbSum = 0; // poids total
+  $maps = []; // [{maNum} => ['duMb'=> poids de la carte en Mo, 'nbVersions'=> nbre de versions]
+  $duMbSum = 0; // poids total des cartes
   foreach ($output as $outputl) {
     if (!preg_match("!^(\d+)\s$PF_PATH/archives/(\d+)$!", $outputl, $matches))
       throw new Exception("No match for $outputl");
-    $duMbs[$matches[2]] = $matches[1]/1024;
-    $duMbSum += $matches[1]/1024;
+    $duMb = $matches[1]/1024;
+    $mapNum = $matches[2];
+    $duMbSum += $duMb;
+    $maps[$mapNum] = ['duMb' => $duMb, 'nbVersions'=> 0];
+    foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $version) {
+      if (substr($version, -3)=='.7z')
+        $maps[$mapNum]['nbVersions']++;
+    }
   }
-  arsort($duMbs);
+  arsort($maps);
   echo "<table border=1>\n",
-       "<tr><td></td><td>Total</td><td align='right'>",sprintf('%.1f Mb', $duMbSum),"</td></tr>\n";
-  foreach ($duMbs as $mapNum => $duMb) {
+       "<tr><td></td><td align='right'>",sprintf('%.1f Mb', $duMbSum),"</td>",
+        "<td></td><td>Total des cartes</td></tr>\n",
+       "<tr><td></td><td align='right'>",sprintf('%.1f Mb', $duMbSum/count($maps)),"</td>",
+        "<td></td><td>Moyenne par carte</td></tr>\n",
+       "<th></th><th>Mb</th><th>#vers</th><th>Num et titre de la carte</th>\n";
+  foreach ($maps as $mapNum => $map) {
     $mapCat = new Mapcat($mapNum);
     $ss = $mapCat->obsoleteDate ? '<s>' : '';
     $se = $mapCat->obsoleteDate ? '</s>' : '';
     echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
+         "<td align='right'>",sprintf('%.1f Mb', $map['duMb']),"</td>",
+         "<td align='right'>$map[nbVersions]</td>",
          "<td>$ss<a href='?map=$mapNum'>$mapNum</a> - $mapCat->title$se</td>", //num, lien et titre
          //"<td align='right'>{$ss}1:",$mapCat->scaleDenominator(),"$se</td>", // échelle
-         "<td align='right'>",sprintf('%.1f Mb', $duMb),"</td>",
          //"<td>$ss",implode(', ',$mapCat->mapsFrance),"$se</td>", // zone ZEE
          //<td>$ss<pre>",Yaml::dump($mapCat->asArray()),"</pre>$se</td>",
          "</tr>\n";

@@ -31,6 +31,9 @@ abstract: |
 journal:
   8/8/2023:
     - appel dans le BO en mode web de sgupdt/main.php
+    - clonage de data/maps
+    - suppression de versions de cartes / passage de Alwaysdata en dessous de 20 Go
+    - fin sprint5
   7/8/2023:
     - amélioration du clonage de MapArchiveStore et dév. d'un diff.
     - proto appel en mode web de sgupdt/main.php
@@ -298,14 +301,15 @@ backlog:
       - remettre en place un sgpp et un shomgeotiffpp par clonage (ok)
   sprint5:
     début: 7/8
+    fin: 8/8
     objectifs:
       - finaliser la possibilité d'effectuer en mode web l'action la plus simple du pt de vue du BO (ok)
         - qui est l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
       - cela veut donc dire exécuter un sgupdt en mode web (ok)
-      - créer sgpp/data/maps par clonage de chaque carte de shomgt/data/maps
+      - créer sgpp/data/maps par clonage de chaque carte de shomgt/data/maps (ok)
     apportsFonctionnels:
       - effectuer en mode web l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
-      - passer en dessous de 20 Go sur Alwaysdata
+      - passer en dessous de 20 Go sur Alwaysdata (ok)
   sprint.x:
     objectifs:
       - création de comptes
