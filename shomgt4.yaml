@@ -301,7 +301,6 @@ backlog:
       - remettre en place un sgpp et un shomgeotiffpp par clonage (ok)
   sprint5:
     début: 7/8
-    fin: 8/8
     objectifs:
       - finaliser la possibilité d'effectuer en mode web l'action la plus simple du pt de vue du BO (ok)
         - qui est l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
