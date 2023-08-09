@@ -5,6 +5,8 @@ title: index.php - page d'accueil
 includes: [ lib/accesscntrl.inc.php ]
 doc: |
 journal: |
+  10/8/2023:
+    report dans Access du message lors du refus d'accès
   9/11/2019
     amélioration du controle d'accès
   1/11/2019
@@ -17,28 +19,16 @@ journal: |
 require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title></head>\n";
-//echo "<pre>config[cntrlFor]="; print_r(config('cntrlFor')); echo "</pre>";
 
+//echo "Fichier ",__FILE__,", ligne ",__LINE__,"<br>\n";
 try {
   if (Access::cntrlFor('homePage') && !Access::cntrl()) {
-    $adip = $_SERVER['REMOTE_ADDR'];
     header('HTTP/1.1 403 Forbidden');
-    die("<body>Bonjour,</p>
-      <b>Ce site est réservé aux agents de l'Etat et de ses Etablissements publics administratifs (EPA).</b><br>
-      L'accès s'effectue normalement au travers d'une adresse IP correspondant à un intranet de l'Etat
-      ou d'un de ses EPA (RIE, ...).<br>
-      Vous accédez actuellement à ce site au travers de l'adresse IP <b>$adip</b> qui n'est pas enregistrée
-      comme une telle adresse IP.<br>
-      Si vous souhaitez accéder à ce site et que vous appartenez à un service de l'Etat ou à un de ses EPA,
-      vous pouvez transmettre cette adresse IP à Benoit DAVID du MTE/CGDD (contact at geoapi.fr)
-      qui regardera la possibilité d'autoriser votre accès.</p>
-      Si vous avez un compte sur ce site,
-      vous pouvez <a href='bo/index.php' target='_parent'>y accéder en vous authentifiant ici</a>.  
-    ");
+    die(str_replace('{adip}', $_SERVER['REMOTE_ADDR'], Access::FORBIDDEN_ACCESS_MESSAGE));
   }
 }
 catch (Exception $e) {
-  //echo "<pre>e="; print_r($e);
+  echo "<pre>e="; print_r($e);
   die("Erreur dans le contrôle d'accès au serveur\n");
 }
 

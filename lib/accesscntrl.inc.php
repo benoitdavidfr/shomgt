@@ -9,7 +9,7 @@ doc: |
       les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
     2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
     3) authentification HTTP Basic, utilisé pour le service WMS.
-  Pour la vérification du cookie, la page login.php permet de stocker dans le cookie le login/mdp
+  Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
   Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
     - exploite le fichier de config
     - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
@@ -58,9 +58,19 @@ require_once __DIR__.'/config.inc.php';
 
 class Access {
   const COOKIENAME = 'shomusrpwd'; // nom du cookie utilisé pour stocker le login/mdp dans le navigateur
-  const USERS_IN_MYSQL = 1; // gestion des utilisateurs en base de données
-  //const USERS_IN_MYSQL = 0; // gestion des utilisateurs dans le fichier de config
-
+  const FORBIDDEN_ACCESS_MESSAGE = "<body>Bonjour,</p>
+      <b>Ce site est réservé aux agents de l'Etat et de ses Etablissements publics administratifs (EPA).</b><br>
+      L'accès s'effectue normalement au travers d'une adresse IP correspondant à un intranet de l'Etat
+      ou d'un de ses EPA (RIE, ...).<br>
+      Vous accédez actuellement à ce site au travers de l'adresse IP <b>{adip}</b> qui n'est pas enregistrée
+      comme une telle adresse IP.<br>
+      Si vous souhaitez accéder à ce site et que vous appartenez à un service de l'Etat ou à un de ses EPA,
+      vous pouvez transmettre cette adresse IP à Benoit DAVID du MTE/CGDD (contact at geoapi.fr)
+      qui regardera la possibilité d'autoriser votre accès.</p>
+      Si vous avez un compte sur ce site,
+      vous pouvez <a href='bo/index.php' target='_parent'>y accéder en vous authentifiant ici</a>.  
+  ";
+  
   // activation ou non du controle d'accès par fonctionnalité
   static function cntrlFor(string $what): bool {
     return config('cntrlFor')[$what] ?? true;
@@ -86,11 +96,28 @@ class Access {
     return false;
   }
   
-  private static function loginPwdInCookie(): bool {
-    return isset($_COOKIE[SELF::COOKIENAME]) && in_array($_COOKIE[SELF::COOKIENAME], config('loginPwds'));
+  private static function loginPwdInTable(string $usrpwd): bool {
+    $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
+      or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+    MySql::open($LOG_MYSQL_URI);
+    //echo "usrpwd=$usrpwd<br>\n";
+    $pos = strpos($usrpwd, ':');
+    $email = substr($usrpwd, 0, $pos);
+    $passwd = substr($usrpwd, $pos+1);
+    //echo "email=$email, passswd=$passwd<br>\n";
+    $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+    //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
+    $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);
+    //echo "access=",$access ? 'true' : 'false',"<br>\n";
+    //die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
+    return $access;
   }
   
-  // si $usrpwd est défini cntrl() teste s'il le couple est correct
+  private static function loginPwdInCookie(): bool {
+    return isset($_COOKIE[SELF::COOKIENAME]) && self::loginPwdInTable($_COOKIE[SELF::COOKIENAME]);
+  }
+  
+  // si $usrpwd est défini cntrl() teste si le couple est correct
   // s'il n'est pas défini alors teste l'accès par l'adresse IP, l'existence d'un cookie
   // si $nolog est passé à true alors pas de log de l'accès
   static function cntrl(string $usrpwd=null, bool $nolog=false): bool {
@@ -99,21 +126,7 @@ class Access {
     // Si $usrpwd alors vérification du login/mdp
     if ($usrpwd) {
       if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__; // @phpstan-ignore-line
-      if (!self::USERS_IN_MYSQL) {
-        $access = in_array($usrpwd, config('loginPwds'));
-      }
-      else {
-        //echo "usrpwd=$usrpwd<br>\n";
-        $pos = strpos($usrpwd, ':');
-        $email = substr($usrpwd, 0, $pos);
-        $passwd = substr($usrpwd, $pos+1);
-        //echo "email=$email, passswd=$passwd<br>\n";
-        $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
-        //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
-        $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);
-        //echo "access=",$access ? 'true' : 'false',"<br>\n";
-        //die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
-      }
+      $access = self::loginPwdInTable($usrpwd);
       if (!$nolog) write_log($access);
       return $access;
     }
