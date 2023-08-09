@@ -1648,6 +1648,9 @@ maps:
       - title: 'A - Mouillage de Uapan'
         scaleDenominator: '50.000'
         spatial: { SW: '22°33,83''S - 167°24,60''E', NE: '22°29,33''S - 167°30,40''E' }
+    noteCatalog: |
+      Dans la version 7052-2009c26(2022-12-07) le cartouche est manquant alors qu'il est présent dans la version 7052-2009c18.
+      Ne pas supprimer la version 7052-2009c18.
   FR7053:
     groupTitle: 'Côte Sud de France'
     title: 'De Sète à la Pointe de l''Espiguette'

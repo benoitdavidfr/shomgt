@@ -16,14 +16,14 @@ if (!($login = Login::login())) { // code en cas d'utilisateur non loggué, cont
       if (!isset($_POST['login']) || !isset($_POST['password'])) { // pas de paramètre de login
         echo $HTML_HEAD,$HTML_TITLE,
              "Site à accès restreint, veuillez vous loguer",Login::FORM,
-             "</p>ou <a href='?action=signup'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
+             "</p>ou <a href='user.php?action=register'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
         die();
       }
       // appel avec paramètres de login incorrects -> affichage d'un message d'erreur et du formulaire
       elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
         echo $HTML_HEAD,$HTML_TITLE,
              "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
-             "</p>ou <a href='?action=signup'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
+             "</p>ou <a href='user.php?action=register'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
         die();
       }
       // appel avec paramètres de login corrects -> création d'un cookie et enchainement sur la suite de la page
@@ -35,18 +35,6 @@ if (!($login = Login::login())) { // code en cas d'utilisateur non loggué, cont
       else { // Erreur de création du cookie
         echo $HTML_HEAD,$HTML_TITLE;
         die("Erreur de création du cookie<br>\n");
-      }
-    }
-    case 'signup': { // iscription 
-      if (!isset($_POST['email'])) {
-        echo "<form method='post'>
-          adresse email:  <input type='text' size=80 name='email' /><br>
-          <input type='submit' value='Envoi' />
-        </form>\n";
-        die();
-      }
-      else {
-        die("Création d'un compte avec $_POST[email]\n");
       }
     }
     default: {

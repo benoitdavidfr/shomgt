@@ -10,6 +10,8 @@ doc: |
   Voir utilisation en fin de fichier
   Sur localhost si la base utilisée n'existe pas alors elle est créée.
 journal: |
+  9/8/2023:
+    - ajout de la méthode MySql::getTuples()
   31/7/2022:
     - ajout déclarations PhpStan pour level 6
   1/7/2022:
@@ -105,6 +107,19 @@ class MySql {
       return TRUE;
     else
       return new MySqlResult($result);
+  }
+
+  static function getTuples(string $sql): array { // renvoie le résultat d'une requête sous la forme d'un array
+    /*PhpDoc: methods
+    name: getTuples
+    title: "static function getTuples(string $sql): array - renvoie le résultat d'une requête sous la forme d'un array"
+    doc: |
+      Plus adapté que query() quand on sait que le nombre de n-uplets retournés est faible
+    */
+    $tuples = [];
+    foreach (self::query($sql) as $tuple)
+      $tuples[] = $tuple;
+    return $tuples;
   }
 };
 

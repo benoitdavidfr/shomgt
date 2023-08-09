@@ -29,6 +29,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  9/8/2023:
+    - début sprint6
   8/8/2023:
     - appel dans le BO en mode web de sgupdt/main.php
     - clonage de data/maps
@@ -299,7 +301,7 @@ backlog:
       - tester sgupdt@ShomGT3 avec le sgserver@ShomGT4 (ok)
       - tester la gestion des cartes spéciales, notamment la rétro-compatibilité avec la V3 (ok)
       - remettre en place un sgpp et un shomgeotiffpp par clonage (ok)
-  sprint5:
+  sprint5(ok8/8T14:00):
     début: 7/8
     fin: 8/8
     objectifs:
@@ -310,15 +312,17 @@ backlog:
     apportsFonctionnels:
       - effectuer en mode web l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
       - passer en dessous de 20 Go sur Alwaysdata (ok)
-  sprint.x:
+  sprint6:
+    début: 9/8/2023
     objectifs:
       - création de comptes
-      - bannissement utilisateur
-      - gestion noms de domaines et IP
-      - mise en base user, domaines et adresses IP ?
+      - mise en base users
     apportsFonctionnels:
       - création de comptes
   horsSprint:
+    - mise en base domaines et adresses IP
+    - bannissement utilisateur
+    - gestion noms de domaines et IP
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
     - automatiser la maj du GAN et de la purge des cartes
@@ -362,6 +366,11 @@ fonctionnalités:
     - lister les utilisateurs qui ont déposé une version
       - pour un utilisateur lister les versions déposées
         - accès à la version déposée
+bugs:
+  7507@8/8/2023:
+    - pourquoi dashboard indique que la version GAN de la 7507 est la 1996c131
+      - alors que le fichier gans.yaml indique
+        - "edition: 'Publication 1995'"
 miseEnProd:
   principes:
     - préparer le déplacement de shomgeotiff
@@ -413,24 +422,35 @@ miseEnProd:
     - https://geoapi.fr/shomgt/shomgt/maps.php
     - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
     - https://geoapi.fr/shomgt/shomgt/leaflet/*
-bug7620:
-  annulationDeLaCorrection:
-    - cette correction génère des effets de bords
-    - d'une part sur la carte 0101
-    - d'autre part sur les cartes intersectant l'antimeridien
-    - je l'annule donc provisoirement le 31/7/2023
-  correctionInitiale:
-    - la carte 7620-2242 présente un bug de géoréférencement
-    - en exécutant gdalinfo sur 7620_pal300.tif on constate que
-      - le champ coordinateSystem.wkt est bizarre
-      - le champ cornerCoordinates censé donner les coordonnées des coins en WorldMercator est faux
-    - pour traiter ce bug, j'ai choisi de modifier le fichier lib/gdalinfo.inc.php
-      - de ne plus utiliser cornerCoordinates
-      - mais de recalculer la projection WorldMercator de wgs84Extent
-    - l'inconvénient de cette solution est de modifier le composant shomgt
-    - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
-    - l'inconvénient est faible car l'ancien composant shomgt fonctionnera toujours
-      - la seule limite est que la carte buggée ne s'affiche pas
+bugsCartesParticulières:
+  7507:
+    - téléchargement le 28/8 d'une version notée "1995c131 GAN 2331"
+      - dans le dashboard cette version est notée 1996c131
+      - ok sur la carte notée "Publication 1995" et "corr. 2023 3195 131"
+    - la carte dont je dispose est notée version 1996c129
+      - dans le dashboard, elle est notée 1996c129
+      - sur la carte elle est noté "Publication 1995" et "corr. 2023 2292 129"
+    - le GAN indique "Publication 1995"
+    - ce sont donc a priori les MD ISO de chaque carte avant la c131 qui sont fausses.
+    - J'ai corrigé le 8/8/2023 les MD ISO de la version 1995c129 et l'ai indiqué dans un fichier README dans l'archive 7z
+  7620:
+    annulationDeLaCorrection:
+      - cette correction génère des effets de bords
+      - d'une part sur la carte 0101
+      - d'autre part sur les cartes intersectant l'antimeridien
+      - je l'annule donc provisoirement le 31/7/2023
+    correctionInitiale:
+      - la carte 7620-2242 présente un bug de géoréférencement
+      - en exécutant gdalinfo sur 7620_pal300.tif on constate que
+        - le champ coordinateSystem.wkt est bizarre
+        - le champ cornerCoordinates censé donner les coordonnées des coins en WorldMercator est faux
+      - pour traiter ce bug, j'ai choisi de modifier le fichier lib/gdalinfo.inc.php
+        - de ne plus utiliser cornerCoordinates
+        - mais de recalculer la projection WorldMercator de wgs84Extent
+      - l'inconvénient de cette solution est de modifier le composant shomgt
+      - l'avantage est que je n'ai pas besoin de construire un contournement de ce bug
+      - l'inconvénient est faible car l'ancien composant shomgt fonctionnera toujours
+        - la seule limite est que la carte buggée ne s'affiche pas
 sympa:
   avantages:
     - plus simple à mettre en oeuvre qu'un forum
@@ -1217,36 +1237,60 @@ miseEnBase:
   user:
     description: compte utilisateur créé par vérification de l'adresse email
     attributs:
-      num:
-        type: int
-        description: numéro d'ordre du compte auto incrémenté
-        clé: primaire
-      login:
+      email:
         type: string
         description: adresse email
-        clé: secondaire unique
+        nul: jamais
+        clé: primaire
       epasswd:
         type: string
         description: mot de passe encrypté
+        nul: jamais
+      newepasswd:
+        type: string
+        description: nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe
+        nul: possible
       role:
         type: string
         description: rôle de l'utilisateur
         enum:
-          admin: administrateur ayant notamment le droit de changer les rôles des utilisateurs
           normal: utilisateur normal ayant le droit d'ajouter et supprimer des cartes
+          admin: administrateur ayant notamment le droit de changer les rôles des utilisateurs
           restricted: utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer
           banned: utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte
-          suspended: utilisateur suspendu, l'utilisateur n'a plus aucun droit jusqu'à ce qu'il réactive son compte
+          suspended: utilisateur suspendu, n'a plus aucun droit jusqu'à ce qu'il réactive son compte
           temp: utilisateur en cours de création dont la validité n'a pas été vérifiée
+        nul: jamais
       secret:
         type: string
-        description: clé secrète envoyée par email pour vérifier l'adresse email
+        description: secret envoyé par email pour vérifier l'adresse email
+        nul: possible, null ssi le lien reçu par email n'a pas été cliqué
+      create:
+        type: date+time
+        description: date et heure de création initiale du compte
+        nul: jamais
       sent:
         type: date+time
         description: date et heure d'envoi du dernier mail de vérification
-      create:
+        nul: jamais
+      valid:
         type: date+time
-        description: date et heure de création du compte ou de son dernier renouvellement
+        description: date et heure de la dernière validation du compte
+        nul: possible, null ssi le compte n'est pas valide
+      comment:
+        type: longtext
+        description: commentaire, notamment si l'utilisateur est banni
+    sqlSchema: |
+      drop table if exists user;
+      create table user (
+        email varchar(256) primary key comment "adresse email",
+        epasswd longtext comment "mot de passe encrypté",
+        role enum('admin','normal','restricted', 'banned','suspended','temp') comment "rôle de l'utilisateur'"
+        secret varchar(256) comment "secret envoyé par email et attendu en retour, null ssi l'enregistrement a été validé",
+        regdt datetime comment "date et heure d'enregistrement, null ssi l'enregistrement a été validé",
+        validt datetime comment "date et heure de validation, null ssi utilisateur non validé"
+      );
+      
   mapcat:
     description: |
       catalogue des cartes obsolètes ou non avec un n-uplet par carte
@@ -1270,40 +1314,41 @@ miseEnBase:
       bbox:
         type: polygon
         description: boite engobante de la carte
-  trace(PAS_NECESSAIRE):
-    description: |
-      traces des ajouts et suppressions de cartes et de l'annulation éventuelle de l'action
-      L'action peut être
-       - ajout d'une nouvelle carte
-       - remplacement d'une carte par une nouvelle version
-       - suppression d'une carte obsolète
-    attributs:
-      mapnum:
-        description: numéro de la carte ajoutée, remplacée ou supprimée
-      version:
-        description: version de la carte ajoutée, null pour une carte supprimée
-      user:
-        description: utilisateur ayant réalisé l'action
-      action:
-        description: type d'action
-        enum:
-          add: ajout d'une nouvelle carte
-          replacement: remplacement d'une carte par une nouvelle version
-          delete: suppression d'une carte obsolète
-      dt:
-        description: date et heure de l'action
-      canceldt:
-        description: date et heure de l'annulation ou null si l'action n'a pas été annulée
-      canceluser:
-        description: admin ayant annulé l'action ou null si l'action n'a pas été annulée
-      path:
-        description: chemin vers l'archive 7z de la version remplacée ou de la carte supprimée, null pour une nouvelle carte
-  maildomain(PAS_NECESSAIRE):
-    description: liste des domaines mails autorisés pour les utilisateurs, gérée par un admin
-  ipaddress(PAS_NECESSAIRE):
-    description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
-  gan(PAS_NECESSAIRE):
-    description: stockage des infos du GAN mises à jour régulièrement par cron
+  PAS_NECESSAIRE:
+    trace(PAS_NECESSAIRE):
+      description: |
+        traces des ajouts et suppressions de cartes et de l'annulation éventuelle de l'action
+        L'action peut être
+         - ajout d'une nouvelle carte
+         - remplacement d'une carte par une nouvelle version
+         - suppression d'une carte obsolète
+      attributs:
+        mapnum:
+          description: numéro de la carte ajoutée, remplacée ou supprimée
+        version:
+          description: version de la carte ajoutée, null pour une carte supprimée
+        user:
+          description: utilisateur ayant réalisé l'action
+        action:
+          description: type d'action
+          enum:
+            add: ajout d'une nouvelle carte
+            replacement: remplacement d'une carte par une nouvelle version
+            delete: suppression d'une carte obsolète
+        dt:
+          description: date et heure de l'action
+        canceldt:
+          description: date et heure de l'annulation ou null si l'action n'a pas été annulée
+        canceluser:
+          description: admin ayant annulé l'action ou null si l'action n'a pas été annulée
+        path:
+          description: chemin vers l'archive 7z de la version remplacée ou de la carte supprimée, null pour une nouvelle carte
+    maildomain(PAS_NECESSAIRE):
+      description: liste des domaines mails autorisés pour les utilisateurs, gérée par un admin
+    ipaddress(PAS_NECESSAIRE):
+      description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
+    gan(PAS_NECESSAIRE):
+      description: stockage des infos du GAN mises à jour régulièrement par cron
 admin:
   title: interface admin
   fonctionnalités:
@@ -1361,11 +1406,130 @@ bo:
     - il peut déclarer qu'une carte est obsolète
   mettreAJourServicesShomGt:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
-
-appelSgUpdtDepuisLeBo:
-  title: appel de sgupdt depuis le BO
-  solution: |
-    modifier l'env. et effectuer 
+register:
+  nomDuProcess:
+    github:
+      sign-in: se loguer
+      sign-up: s'enregistrer
+    dockerHub:
+      sign-in: se loguer
+      register: s'enregistrer
+  user:
+    description: table user, compte utilisateur créé par vérification de l'adresse email
+    attributs:
+      email:
+        type: string
+        description: adresse email
+        nul: jamais
+        clé: primaire
+      epasswd:
+        type: string
+        description: mot de passe encrypté
+        nul: jamais
+      newepasswd:
+        type: string
+        description: nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe
+        nul: possible
+      role:
+        type: string
+        description: rôle de l'utilisateur
+        enum:
+          normal: utilisateur normal ayant le droit d'ajouter et supprimer des cartes
+          admin: administrateur ayant notamment le droit de changer les rôles des utilisateurs
+          restricted: utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer
+          banned: utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte
+          suspended: utilisateur suspendu, n'a plus aucun droit jusqu'à ce qu'il réactive son compte
+          closed: |
+            utilisateur ayant demandé à fermer son compte et pouvant le réactiver en effectuant à nouveau
+            le process de création de compte
+          temp: utilisateur en cours de création dont la validité n'a pas été vérifiée
+        nul: jamais
+      secret:
+        type: string
+        description: secret envoyé par email pour vérifier l'adresse email
+        nul: possible, null ssi le lien reçu par email n'a pas été cliqué
+      createdt:
+        type: date+time
+        description: date et heure de création initiale du compte
+        nul: jamais
+      sent:
+        type: date+time
+        description: date et heure d'envoi du dernier mail de vérification
+        nul: jamais
+      valid:
+        type: date+time
+        description: date et heure de la dernière validation du compte
+        nul: possible, null ssi le compte n'est pas valide
+      comment:
+        type: longtext
+        description: commentaire, notamment si l'utilisateur est banni
+    sqlSchema: |
+      drop table if exists user;
+      create table user (
+        email varchar(256) primary key comment "adresse email",
+        epasswd longtext not null comment "mot de passe encrypté",
+        newepasswd longtext comment "nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe",
+        role enum('normal','admin','restricted', 'banned','suspended','closed','temp') not null comment "rôle de l'utilisateur",
+        secret varchar(256) comment "secret envoyé par email et attendu en retour, null ssi le compte a été validé",
+        createdt datetime not null comment "date et heure de création initiale du compte",
+        sent datetime comment "date et heure d'envoi du dernier mail de validation, null ssi le compte a été validé",
+        valid datetime comment "date et heure de dernière validation, null ssi compte non validé"
+      );
+  constantes:
+    noticeDelay:
+      value: 11 mois
+      description: délai après lequel une alerte est envoyée pour revalidation du compte
+    suspensionDelay:
+      value: 12 mois
+      description: délai après lequel un compte qui n'a pas été revalidé est suspendu
+  scénarios:
+    register:
+      - un utilisateur non logué demande à ouvrir un compte
+      - il fournit une adresse email et un mot de passe
+      - vérifications
+        - qu'il n'a pas déjà un compte ou que le compte est fermé
+        - que son adresse email est valide et correspond aux suffixes définis
+        - que son mot de passe est suffisamment long
+      - un secret est généré aléatoirement
+      - si le compte n'existe pas
+        - alors un enregistrement est créé dans la table user avec
+          - email, epasswd, newepasswd=null, role='temp', secret, create=now, sent=now, valid=null, comment=null
+      - sinonSi le role='closed' ou role='suspended'
+        - alors modification secret
+      - sinon erreur
+      - un email lui est envoyé avec un lien contenant le secret
+      - l'utilisateur clique sur le lien -> validateRegistration
+    validateRegistration:
+      - modification table valid=now, role='normal', secret=null / email+secret
+    closeAccount:
+      - un utilisateur loggué demande à fermer son compte
+      - un secret est généré aléatoirement
+      - modification user sent=now, secret / email
+      - l'utilisateur clique sur le lien -> validateCloseAccount
+    validateCloseAccount:
+      - modification user role='closed', valid=null, secret=null / email+secret
+    changePasswd:
+      - un utilisateur logué demande à changer son mot de passe
+      - il fournit le nouveau mot de passe souhaité
+      - un secret est généré aléatoirement
+      - modification user sent=now, secret, newEpasswd / email
+      - un email lui est envoyé avec un lien contenant le secret
+      - l'utilisateur clique sur le lien -> validatePasswdChange
+    validatePasswdChange:
+      - modification user valid=now, secret=null, epasswd=newepasswd, newepasswd=null / email+secret
+    reValidation:
+      - pour chaque utilisateur dont now-valid > noticeDelay
+        - génération secret
+        - modification user sent=now, secret / email
+        - envoi email avec lien contenant secret
+        - l'utilisateur clique sur le lien -> validateReValidation
+    validateReValidation:
+      - modification table valid=now, secret=null / email+secret
+    suspension:
+      - pour chaque utilisateur dont now-valid > suspensionDelay
+        - génération secret
+        - modification user sent=now, secret, role='suspended', valid=null / email
+        - envoi email avec lien contenant secret -> validateRegistration
 
 exec:
   exec: |
@@ -1707,15 +1871,16 @@ bugsDétectésDansLesCartes:
     - la gestion des cartes obsolètes n'est pas aussi rigoureuse que celle des cartes vivantes
   cartesEnErreur:
     FR5978:
-      - dans la version 5978-1903 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
-      - version 5978-1938 ok
-    FR7003:
-      - un cartouche a été rajouté dans l'édition de 2019 (7003-1938)
-      - les versions antérieures génèrent donc une erreur
+      - dans la version 1986c10 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
+      - version 5978-2019c1 ok
     FR7052:
-      - Dans la version 7052-2249 le cartouche est manquant alors qu'il est présent dans la version 7052-1726
-    FR7205: Dans la version 7205-2215 pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat
+      - Dans la version 7052-2009c26(2022-12-07) le cartouche est manquant
+      - alors qu'il est présent dans la version 7052-2009c18
+    FR7205:
+      - Dans la version 7205-2021c2 pas de bijection entre les cartouches archive / MapCat
+      - version 2021c5@2023-02-01 ok
     FR7665: 
-      - dans le version 7665-1722, pas de bijection entre les cartouches définis dans l''archive et ceux définis dans MapCat
-      - dans les autres Ok
+      - dans le version 7665-2021c2@2021-04-21, pas de bijection entre les cartouches archive / MapCat
+        - 6_gtw contient l'image de 'A - Port de Mandelieu-La Napoule' au lieu de 'F - Ports de Juan les Pins'
+      - 2021c5 Ok
 eof:
