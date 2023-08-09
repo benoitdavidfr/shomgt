@@ -25,14 +25,15 @@ try {
     header('HTTP/1.1 403 Forbidden');
     die("<body>Bonjour,</p>
       <b>Ce site est réservé aux agents de l'Etat et de ses Etablissements publics administratifs (EPA).</b><br>
-      L'accès s'effectue normalement au travers d'une adresse IP correspondant à un intranet de l'Etat ou d'un de ses EPA (RIE, ...).
+      L'accès s'effectue normalement au travers d'une adresse IP correspondant à un intranet de l'Etat
+      ou d'un de ses EPA (RIE, ...).<br>
       Vous accédez actuellement à ce site au travers de l'adresse IP <b>$adip</b> qui n'est pas enregistrée
-      comme une adresse IP d'un tel intranet.<br>
+      comme une telle adresse IP.<br>
       Si vous souhaitez accéder à ce site et que vous appartenez à un service de l'Etat ou à un de ses EPA,
       vous pouvez transmettre cette adresse IP à Benoit DAVID du MTE/CGDD (contact at geoapi.fr)
       qui regardera la possibilité d'autoriser votre accès.</p>
       Si vous avez un compte sur ce site,
-      vous pouvez <a href='login.php' target='_parent'>y accéder en vous authentifiant ici</a>.  
+      vous pouvez <a href='bo/index.php' target='_parent'>y accéder en vous authentifiant ici</a>.  
     ");
   }
 }

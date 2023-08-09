@@ -1,6 +1,5 @@
 <?php
 // bo/user.php - création de comptes et gestion de son compte par un utilisateur
-// Mettre en variable d'env. le passwd du premier utilisateur
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
@@ -29,17 +28,12 @@ create table user (
 EOT;
   MySql::query($query);
   // initialisation de la table des utilisateurs
-  foreach ([
-    'benoit.david@free.fr' => ['passwd'=> 'grqjr*kslth17:54!', 'role'=> 'admin'],
-    'oldUser' => ['passwd'=> 'oldUser', 'role'=> 'admin', 'valid'=> "'2022-09-01 19:57:10'"],
-    'veryOldUser' => ['passwd'=> 'veryOldUser', 'role'=> 'admin', 'valid'=> "'2020-09-01 19:57:10'"],
-  ] as $email => $user) {
+  foreach (config('loginPwds') as $email => $user) {
     $epasswd = password_hash($user['passwd'], PASSWORD_DEFAULT);
     $valid = $user['valid'] ?? 'now()';
     $query = "insert into user(email, epasswd, role, createdt, valid) "
              ."values('$email', '$epasswd', '$user[role]', now(), $valid)";
     MySql::query($query);
-    
   }
 }
 
