@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 
-createUserTable(); // pour réinitialiser la base en cas de bug
+//createUserTable(); // pour réinitialiser la base en cas de bug
 
 // Si loggé retourne le login, sinon propose de se loguer et si ! ok alors arrête l'exécuction et propose de s'enregistrer
 $login = Login::login($HTML_HEAD.$HTML_TITLE, 'user.php?action=register');
