@@ -2,6 +2,7 @@
 // shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 5/8/2023
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
+require_once __DIR__.'/user.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -21,7 +22,7 @@ switch ($_GET['action'] ?? null) {
   case null: { // Menu après login
     echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login)</h2>\n";
     echo "<ul>\n";
-    echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
+    echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
          "Identifier les cartes à ajouter/supprimer/actualiser dans le portefeuille ShomGT</a></li>\n";
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",
@@ -31,10 +32,14 @@ switch ($_GET['action'] ?? null) {
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
     echo "<li><a href='updatemaps.php'>Prendre en compte les nouvelles versions dans la consultation des cartes</a></li>\n";
     echo "</ul>\n";
+    $role = userRole($login);
+    echo "role=$role<br>\n";
+    if ($role <> 'admin') die();
     echo "<h3>Fonctions d'administration</h3>\n";
     echo "<ul>\n";
     echo "<li><a href='pfcurrent.php'>Gérer l'activation des cartes du portefeuille</a></li>\n";
     echo "<li><a href='pfweight.php'>Gérer le poids du portefeuille</a></li>\n";
+    echo "<li><a href='user.php'>Gérer les utilisateurs</a></li>\n";
     echo "<li><a href='maparchivestore.php'>Gèrer le stockage du portefeuille (liens, clone, ..)</a></li>\n";
     echo "<li><a href='clonedatamaps.php'>Créer dans sgpp/data/maps un clone de shomgt/data/maps</a></li>\n";
     //echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";

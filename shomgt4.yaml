@@ -1517,7 +1517,12 @@ register:
       - l'utilisateur clique sur le lien -> validatePasswdChange
     validatePasswdChange:
       - modification user valid=now, secret=null, epasswd=newepasswd, newepasswd=null / email+secret
-    reValidation:
+    reValidateByUser:
+      - génération secret
+      - modification user sent=now, secret / email
+      - envoi email avec lien contenant secret
+      - l'utilisateur clique sur le lien -> validateReValidation
+    reValidateAllUsers:
       - pour chaque utilisateur dont now-valid > noticeDelay
         - génération secret
         - modification user sent=now, secret / email
@@ -1525,7 +1530,7 @@ register:
         - l'utilisateur clique sur le lien -> validateReValidation
     validateReValidation:
       - modification table valid=now, secret=null / email+secret
-    suspension:
+    suspend:
       - pour chaque utilisateur dont now-valid > suspensionDelay
         - génération secret
         - modification user sent=now, secret, role='suspended', valid=null / email

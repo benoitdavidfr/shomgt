@@ -32,3 +32,18 @@ function button(string $submitValue='submit', array $hiddenValues=[], string $ac
     ."  <input type='submit' value='$submitValue'>"
     ."</form>";
 }
+
+// Permet de distinguer si un script est inclus dans un autre ou est directement appelé en mode CLI ou Web
+// retourne '' si ce fichier n'a pas été directement appelé, cad qu'il est inclus dans un autre,
+//  'web' s'il est appelé en mode web, 'cli' s'il est appelé en mode CLI
+function callingThisFile(string $file): string {
+  $documentRoot = $_SERVER['DOCUMENT_ROOT'];
+  if (substr($documentRoot, -1)=='/') // Sur Alwaysdata $_SERVER['DOCUMENT_ROOT'] se termine par un '/'
+    $documentRoot = substr($documentRoot, 0, -1);
+  $inWebMode = ($file == $documentRoot.$_SERVER['SCRIPT_NAME']);
+  //echo "'$file' == '$documentRoot$_SERVER[SCRIPT_NAME]' ? -> ",$inWebMode ? 'true' : 'false',"<br>\n";
+  $inCliMode = (($argv[0] ?? '') == basename(__FILE__));
+  //echo "thisFileIsCalledInWebMode=",$inWebMode?'true':'false',"<br>\n";
+  //echo "thisFileIsCalledInCliMode=",$inCliMode?'true':'false',"<br>\n";
+  return $inWebMode ? 'web' : ($inCliMode ? 'cli' : '');
+}
