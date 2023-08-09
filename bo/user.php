@@ -4,6 +4,10 @@
 require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../lib/sexcept.inc.php';
 
+if (!($LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI'))) {
+  die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+}
+
 function createTableUser(): void {
   MySql::query('drop table if exists user');
   $query = <<<EOT
@@ -15,18 +19,28 @@ create table user (
   secret varchar(256) comment "secret envoyé par email et attendu en retour, null ssi le compte a été validé",
   createdt datetime not null comment "date et heure de création initiale du compte",
   sent datetime comment "date et heure d'envoi du dernier mail de validation, null ssi le compte a été validé",
-  valid datetime comment "date et heure de dernière validation, null ssi compte non validé"
+  valid datetime comment "date et heure de dernière validation, null ssi compte non validé",
+  comment longtext comment "commentaire"
 );
 EOT;
   MySql::query($query);
+  $epasswd = password_hash('htpqrs28', PASSWORD_DEFAULT);
+  $query = <<<EOT
+insert into user(email, epasswd, role, createdt, valid)
+values('benoit.david@free.fr', '$epasswd', 'admin', now(), now())
+EOT;
+  MySql::query($query);
+}
+//MySql::open($LOG_MYSQL_URI); createTableUser();
+
+function sendMail(string $email, string $secret): void {
+  $encEmail = urlencode($email);
+  $link = "?action=validateRegistration&email=$encEmail&secret=$secret";
+  echo "mail to: $email, <a href='$link'>lien</a><br>\n";
 }
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo/user@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo $HTML_HEAD;
-
-if (!($LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI'))) {
-  die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-}
 
 switch($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case 'register': { // formulaire d'inscription 
@@ -45,8 +59,8 @@ switch($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     }
     MySql::open($LOG_MYSQL_URI);
     // vérifications
-    //  - que son adresse email est valide et correspond aux suffixes définis
-    //  - que son mot de passe est suffisamment long
+    //  - que l'adresse email est valide et correspond aux suffixes définis
+    //  - que le mot de passe est suffisamment long
     //  - qu'il n'a pas déjà un compte ou que le compte est fermé ou suspendu
     try {
       $users = MySql::getTuples("select * from user where email='$email'");
@@ -62,21 +76,49 @@ switch($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     }
     echo "<pre>"; print_r($users); echo "</pre>\n";
     if ($users && !in_array($users[0]['role'], ['closed','suspended'])) {
-      echo "Erreur, l'utilisateur '$email' exiset déjà et ne peut donc être créé<br>\n";
+      echo "Erreur, l'utilisateur '$email' existe déjà et ne peut donc être créé<br>\n";
       echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
+      die();
     }
-    /*
-    - un secret est généré aléatoirement
-    - si le compte n'existe pas
-      - alors un enregistrement est créé dans la table user avec
-        - email, epasswd, newepasswd=null, role='temp', secret, create=now, sent=now, valid=null, comment=null
-    - sinonSi le role='closed' ou role='suspended'
-      - alors modification secret
-    - sinon erreur
-    - un email lui est envoyé avec un lien contenant le secret
-    - l'utilisateur clique sur le lien -> validateRegistration
-    */
+    
+    // un secret est généré aléatoirement
+    $secret = random_int(0, 1000000);
+    
+    // création/mise à jour de l'enregistrement
+    $epasswd = password_hash($_POST['passwd'] ?? $_GET['passwd'], PASSWORD_DEFAULT);
+    if ($users) {
+      $query = "update user set secret='$secret', sent=now() where email='$email'";
+    }
+    else {
+      $query = "insert into user(email, epasswd, role, secret, createdt, sent)
+                      values('$email', '$epasswd', 'temp', '$secret', now(), now())";
+    }
+    MySql::query($query);
+    
+    // un email lui est envoyé avec un lien contenant le secret
+    sendMail($email, $secret);
+    echo "Un mail vous a été envoyé, cliquer sur l'URL pour valider votre enregistrement<br>\n";
     die();
   }
+  case 'validateRegistration': {
+    MySql::open($LOG_MYSQL_URI);
+    if (!isset($_GET['email']) || !isset($_GET['secret'])) {
+      echo "Appel incorrect, paramètres absents<br>\n";
+      echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
+      die();
+    }
+    // modification table valid=now, role='normal', secret=null / email+secret
+    $query = "update user set role='normal', valid=now(), secret=null where email='$_GET[email]' and secret='$_GET[secret]'";
+    MySql::query($query);
+    if (mysqli_affected_rows(MySql::$mysqli) == 1) {
+      echo "Enregistrement validé<br>\n";
+    }
+    else {
+      echo "Erreu, aucun enregistrement validé<br>\n";
+    }
+    echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
+    die();
+  }
+  
   default: echo "action '$action' inconnue<br>\n";
 }
