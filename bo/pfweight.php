@@ -23,7 +23,7 @@ use Symfony\Component\Yaml\Yaml;
   echo "</tr></table>\n";
 }*/
 
-if (!($login = Login::login())) {
+if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 

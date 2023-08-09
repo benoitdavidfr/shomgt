@@ -105,9 +105,7 @@ define ('LGEOJSON_STYLE', ['color'=>'blue', 'weight'=> 2, 'opacity'=> 0.3]); // 
 
 use Symfony\Component\Yaml\Yaml;
 
-if (!($login = Login::login())) {
-  die("Accès non autorisé\n");
-}
+$login = Login::loggedIn() or die("Accès non autorisé\n");
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
   

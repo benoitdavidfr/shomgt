@@ -19,7 +19,7 @@ define ('MIME_TYPES', [
 ]
 );
 
-if (!($login = Login::login())) {
+if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 

@@ -8,40 +8,8 @@ use Symfony\Component\Yaml\Yaml;
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 
-if (!($login = Login::login())) { // code en cas d'utilisateur non loggué, continue en cas de login réussi 
-  switch ($_GET['action'] ?? null) {
-    case null:
-    case 'login': 
-    case 'logout': { // affichage non logué
-      if (!isset($_POST['login']) || !isset($_POST['password'])) { // pas de paramètre de login
-        echo $HTML_HEAD,$HTML_TITLE,
-             "Site à accès restreint, veuillez vous loguer",Login::FORM,
-             "</p>ou <a href='user.php?action=register'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
-        die();
-      }
-      // appel avec paramètres de login incorrects -> affichage d'un message d'erreur et du formulaire
-      elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
-        echo $HTML_HEAD,$HTML_TITLE,
-             "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
-             "</p>ou <a href='user.php?action=register'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
-        die();
-      }
-      // appel avec paramètres de login corrects -> création d'un cookie et enchainement sur la suite de la page
-      elseif (setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]", time()+60*60*24*30)) {
-        echo $HTML_HEAD,"<h2>Interface Back Office (BO) de ShomGT ($_POST[login])</h2>\n";
-        echo "Login/mot de passe correct, vous êtes authentifiés pour 30 jours<br>\n";
-        break; // Je suis logué, je continue le code après le switch()
-      }
-      else { // Erreur de création du cookie
-        echo $HTML_HEAD,$HTML_TITLE;
-        die("Erreur de création du cookie<br>\n");
-      }
-    }
-    default: {
-      die("Erreur, action '$_GET[action]' non prévue\n");
-    }
-  }
-}
+// Si loggé retourne le login, sinon propose de se loguer et si ! ok alors arrête l'exécuction et propose de s'enregistrer
+$login = Login::login($HTML_HEAD.$HTML_TITLE, 'user.php?action=register');
 
 switch ($_GET['action'] ?? null) {
   case 'deleteTempOutputSgupdt': { // revient de updatemaps.php et efface le fichier temporaire créé 
@@ -50,11 +18,8 @@ switch ($_GET['action'] ?? null) {
     unlink(__DIR__."/temp/$filename");
     // Explicitement je continue sur le cas suivant
   }
-  case null:
-  case 'login':
-  case 'menu': { // Menu après login
-    if (!isset($_POST['login']))
-      echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login)</h2>\n";
+  case null: { // Menu après login
+    echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
@@ -79,7 +44,7 @@ switch ($_GET['action'] ?? null) {
   case 'logout': {
     if (setcookie(Login::COOKIE_NAME, 'authorized', -3600)) {
       echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
-      die("Vous êtes bien délogué<br>\n<a href='?action=login'>Se reloguer ?<br>\n");
+      die("Vous êtes bien délogué<br>\n<a href='index.php'>Se reloguer ?<br>\n");
     }
     else
       die("Erreur de suppression du cookie<br>\n");
@@ -182,6 +147,6 @@ switch ($_GET['action'] ?? null) {
   default: {
     echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     echo "Erreur, action '$_GET[action]' non prévue<br>\n";
-    die("<a href='?action=menu'>Retour au menu</a>\n");
+    die("<a href='index.php'>Retour au menu</a>\n");
   }
 }

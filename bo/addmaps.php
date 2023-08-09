@@ -12,7 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 
 //echo "upload_max_filesize=",ini_get('upload_max_filesize'),"<br>\n";
 //echo "post_max_size=",ini_get('post_max_size'),"<br>\n";
-if (!($login = Login::login())) {
+if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 

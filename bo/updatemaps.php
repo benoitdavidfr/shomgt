@@ -12,7 +12,7 @@ require_once __DIR__.'/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-if (!($login = Login::login())) {
+if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 
