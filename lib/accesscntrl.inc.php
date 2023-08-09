@@ -15,6 +15,8 @@ doc: |
     - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
     - expose la méthode cntrl() pour réaliser le contrôle 
 journal: |
+  10/8/2023:
+    - utilisation des logins, passwd et role en base de données
   19/5/2022:
     - adaptation pour sgserver de ShomGT3
   23/1/2022:
@@ -56,6 +58,8 @@ require_once __DIR__.'/config.inc.php';
 
 class Access {
   const COOKIENAME = 'shomusrpwd'; // nom du cookie utilisé pour stocker le login/mdp dans le navigateur
+  const USERS_IN_MYSQL = 1; // gestion des utilisateurs en base de données
+  //const USERS_IN_MYSQL = 0; // gestion des utilisateurs dans le fichier de config
 
   // activation ou non du controle d'accès par fonctionnalité
   static function cntrlFor(string $what): bool {
@@ -95,7 +99,21 @@ class Access {
     // Si $usrpwd alors vérification du login/mdp
     if ($usrpwd) {
       if (isset($verbose)) echo "Fichier ",__FILE__,", ligne ",__LINE__; // @phpstan-ignore-line
-      $access = in_array($usrpwd, config('loginPwds'));
+      if (!self::USERS_IN_MYSQL) {
+        $access = in_array($usrpwd, config('loginPwds'));
+      }
+      else {
+        //echo "usrpwd=$usrpwd<br>\n";
+        $pos = strpos($usrpwd, ':');
+        $email = substr($usrpwd, 0, $pos);
+        $passwd = substr($usrpwd, $pos+1);
+        //echo "email=$email, passswd=$passwd<br>\n";
+        $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+        //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
+        $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);
+        //echo "access=",$access ? 'true' : 'false',"<br>\n";
+        //die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
+      }
       if (!$nolog) write_log($access);
       return $access;
     }
@@ -121,11 +139,27 @@ class Access {
   }
   
   // teste si le rôle admin est autorisé
-  static function roleAdmin(): bool {
-    $access = in_array($_COOKIE[SELF::COOKIENAME] ?? null, config('admins'));
+  /*static function roleAdmin(): bool {
+    if (!self::USERS_IN_MYSQL) {
+      $access = in_array($_COOKIE[SELF::COOKIENAME] ?? null, config('admins'));
+    }
+    else {
+      $usrpwd = $_COOKIE[SELF::COOKIENAME] ?? null;
+      //echo "usrpwd=$usrpwd<br>\n";
+      $pos = strpos($usrpwd, ':');
+      $email = substr($usrpwd, 0, $pos);
+      $passwd = substr($usrpwd, $pos+1);
+      //echo "email=$email, passswd=$passwd<br>\n";
+      $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+      //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
+      $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);
+      //echo "access=",$access ? 'true' : 'false',"<br>\n";
+      die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
+    }
+    
     write_log($access);
     return $access;
-  }
+  }*/
   
   static function test(): void {
     echo "L'adresse IP est $_SERVER[REMOTE_ADDR]<br>\n";

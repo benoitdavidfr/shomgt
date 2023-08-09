@@ -31,6 +31,7 @@ abstract: |
 journal:
   9/8/2023:
     - début sprint6
+    - première version de la gestion des utilisateurs
   8/8/2023:
     - appel dans le BO en mode web de sgupdt/main.php
     - clonage de data/maps
@@ -1522,7 +1523,7 @@ register:
       - modification user sent=now, secret / email
       - envoi email avec lien contenant secret
       - l'utilisateur clique sur le lien -> validateReValidation
-    reValidateAllUsers:
+    reValidateOldUsers:
       - pour chaque utilisateur dont now-valid > noticeDelay
         - génération secret
         - modification user sent=now, secret / email
@@ -1530,7 +1531,7 @@ register:
         - l'utilisateur clique sur le lien -> validateReValidation
     validateReValidation:
       - modification table valid=now, secret=null / email+secret
-    suspend:
+    suspendOldUsers:
       - pour chaque utilisateur dont now-valid > suspensionDelay
         - génération secret
         - modification user sent=now, secret, role='suspended', valid=null / email
