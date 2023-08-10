@@ -147,9 +147,9 @@ function sendMail(string $action, string $email, string $secret, ?string $passwd
     echo $message;
   }
   elseif (mail($email, $subject, $message, implode("\r\n", $headers)))
-    echo "Envoi de mail à $email accepté<br>\n";
+    echo "Un mail vous a été envoyé, cliquer sur l'URL pour valider votre enregistrement<br>\n";
   else
-    echo "Envoi de mail à $email refusé<br>\n";
+    echo "Erreur, envoi de mail à $email refusé<br>\n";
 }
 
 function showMenu(?string $role): void {
@@ -239,7 +239,6 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     
     // un email lui est envoyé avec un lien contenant le secret
     sendMail('validateRegistration', $email, $secret, $passwd);
-    echo "Un mail vous a été envoyé, cliquer sur l'URL pour valider votre enregistrement<br>\n";
     die();
   }
   case 'validateRegistration': {
@@ -267,7 +266,6 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     MySql::query("update user set secret='$secret', sent=now() where email='$email'");
     // un email lui est envoyé avec un lien contenant le secret
     sendMail('validateCloseAccount', $email, $secret);
-    echo "Un mail vous a été envoyé, cliquer sur l'URL pour confirmer la fermeture du compte<br>\n";
     die();
   }
   case 'validateCloseAccount': {
@@ -315,7 +313,6 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     
     // un email lui est envoyé avec un lien contenant le secret
     sendMail('validatePasswdChange', $email, $secret, $passwd);
-    echo "Un mail vous a été envoyé, cliquer sur l'URL pour valider votre enregistrement<br>\n";
     die();
   }
   case 'validatePasswdChange': {
@@ -343,7 +340,6 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     MySql::query("update user set secret='$secret', sent=now() where email='$email'");
     // un email est envoyé avec un lien contenant le secret
     sendMail('validateReValidation', $email, $secret);
-    echo "Un mail vous a été envoyé, cliquer sur l'URL pour valider votre enregistrement<br>\n";
     die();
   }
   case 'reValidateOldUsers': { // fonction admin pour lister les vieux utilisateurs et leur demander de revalider leur compte 
