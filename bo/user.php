@@ -87,17 +87,69 @@ if (0) { // test de notValidEmail()
 }
 
 // validation du mot de passe, renvoit null si ok, sinon l'erreur
-function notValidPasswd(string $passwd): ?string {
-  if (strlen($passwd) < 8)
+function notValidPasswd(string $passwd, string $passwd2): ?string {
+  if ($passwd2 <> $passwd)
+    return "Les 2 mots de passe ne sont pas identiques<br>\n";
+  elseif (strlen($passwd) < 8)
     return "Longueur du mot de passe insuffisante";
   else
     return null;
 }
 
+function scriptUrl(): string {
+  //echo "<pre>"; print_r($_SERVER); echo "</pre>\n";
+  $url = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]$_SERVER[SCRIPT_NAME]";
+  //echo "url=$url<br>\n";
+  return $url;
+}
+//scriptUrl();
+
 // Envoie un email avec le lien contenant le secret
-function sendMail(string $action, string $email, string $secret, ?string $passwd=null): void { 
-  $link = "?action=$action&email=".urlencode($email)."&secret=$secret";
-  echo "mail to: $email, <a href='$link'>$action</a>",$passwd ? ", passwd=$passwd" : '',"<br>\n";
+function sendMail(string $action, string $email, string $secret, ?string $passwd=null): void {   
+  $link = scriptUrl()."?action=$action&email=".urlencode($email)."&secret=$secret";
+  //echo "link=$link<br>\n";
+  // Sujet
+  $subject = "action ShomGT";
+  $lienBo = "<a href='https://geoapi.fr/shomgt/bo/'>https://geoapi.fr/shomgt/bo/</a>";
+  $demande = match ($action) {
+      'validateRegistration' => "Vous avez demandé à vous incrire sur $lienBo.",
+      'validateCloseAccount' => "Vous avez demandé à supprimer votre compte de $lienBo.",
+      'validatePasswdChange' => "Vous avez demandé à changer de mot de passe sur $lienBo.",
+      'validateReValidation' => "Votre compte sur $lienBo nécessite d'être revalidé.",
+  };
+  // message
+  $message = "
+  <html>
+   <head>
+    <title>Action ShomGT</title>
+   </head>
+   <body>
+    <p>Bonjour</p>
+    <p>$demande</p>
+    <p>Pour valider cette action, veuillez <a href='$link'>cliquer sur ce lien</a>.</p>
+    <p>Merci.</p>
+    <p>Le robot ShomGT</p>
+   </body>
+  </html>
+  ";
+  // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+  $headers = [
+    'MIME-Version: 1.0',
+    'Content-type: text/html; charset=iso-8859-1',
+    // En-têtes additionnels
+    "To: $email",
+    'From: ShomGT <contact@geoapi.fr>',
+    'Cc: contact@geoapi.fr',
+  ];
+  // Envoi
+  if ($_SERVER['HTTP_HOST'] == 'localhost') {
+    echo "mail to: $email, <a href='$link'>$action</a>",$passwd ? ", passwd=$passwd" : '',"<br>\n";
+    echo $message;
+  }
+  elseif (mail($email, $subject, $message, implode("\r\n", $headers)))
+    echo "Envoi de mail à $email accepté<br>\n";
+  else
+    echo "Envoi de mail à $email refusé<br>\n";
 }
 
 function showMenu(?string $role): void {
@@ -144,7 +196,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     die();
   }
   case 'register': { // formulaire d'inscription 
-    echo "<table border=1><form method='get'>
+    echo "<table border=1><form method='post'>
         <input type='hidden' name='action' value='registerSubmit'>
         <tr><td>adresse email:</td><td><input type='text' size=80 name='email' /></td></tr>
         <tr><td>mot de passe:</td><td><input type='password' size=80 name='passwd' /></td></tr>
@@ -157,20 +209,8 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     $email = $_POST['email'] ?? $_GET['email'] ?? null or die("Erreur, email non défini dans registerSubmit");
     $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? null or die("Erreur, passwd non défini dans registerSubmit");
     $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? null or die("Erreur, passwd2 non défini dans registerSubmit");
-    if ($error = notValidEmail($email)) { // vérification que l'adresse email est valide et correspond aux suffixes définis
-      echo "email invalide: $error<br>\n";
-      echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-      die();
-    }
-    if ($passwd2 <> $passwd) {
-      echo "Erreur, les 2 mots de passe ne sont pas identiques<br>\n";
-      echo "<a href='?action=changePasswd'>Retour au formulaire de changement de mot de passe</a><br>\n";
-      echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-      die();
-    }
-    if ($error = notValidPasswd($passwd)) { // vérification que le mot de passe est suffisamment long
-      echo "mot de passe invalide: $error<br>\n";
-      echo "<a href='?action=changePasswd'>Retour au formulaire de changement de mot de passe</a><br>\n";
+    if ($error = (notValidEmail($email) || notValidPasswd($passwd, $passwd2))) {
+      echo "email ou mot de passe invalide: $error<br>\n";
       echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
       die();
     }
@@ -261,14 +301,10 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case 'changePasswdSubmit': { // traitement du formulaire de changement de mot de passe
     $email = Login::loggedIn();
     $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? null or die("Erreur, passwd non défini dans changePasswdSubmit");
-    if ($error = notValidEmail($email, $passwd)) {
-      echo "email invalide: $error<br>\n";
-      echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-      die();
-    }
-    if ($error = notValidPasswd($passwd)) {
-      echo "mot de passe invalide: $error<br>\n";
-      echo "<a href='?action=changePasswd'>Retour au formulaire de changement de mot de passe</a><br>\n";
+    $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? null or die("Erreur, passwd2 non défini dans registerSubmit");
+    if ($error = (notValidEmail($email) || notValidPasswd($passwd, $passwd2))) {
+      echo "email ou mot de passe invalide: $error<br>\n";
+      echo "<a href='?action=changePasswd'>Revenir au formulaire de changement de mot de passe</a><br>\n";
       echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
       die();
     }

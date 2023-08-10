@@ -105,7 +105,17 @@ class Access {
     $email = substr($usrpwd, 0, $pos);
     $passwd = substr($usrpwd, $pos+1);
     //echo "email=$email, passswd=$passwd<br>\n";
-    $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+    try {
+      $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+    }
+    catch (SExcept $e) {
+      if ($e->getSCode() == 'MySql::ErrorTableDoesntExist') {
+        createUserTable();
+        $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+      }
+      else
+        throw new SExcept($e->getMessage(), $e->getSCode());
+    }
     //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
     $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);
     //echo "access=",$access ? 'true' : 'false',"<br>\n";
