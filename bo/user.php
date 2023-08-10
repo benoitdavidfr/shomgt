@@ -68,13 +68,30 @@ echo $HTML_HEAD,"<h2>Gestion utilisateur</h2>\n";
 $role = userRole(Login::loggedIn());
 
 // validation de l'email, renvoit null si ok, sinon l'erreur
-function notValidEmail(string $passwd): ?string {
-  return null;
+function notValidEmail(string $email): ?string {
+  // Vérification simplifiée d'une adresse email - see https://www.linuxjournal.com/article/9585
+  if (!preg_match("!^[a-zA-Z0-9\!#\$%&'\*\+\-/=\?^_`\{\|\}~\.]{1,64}@[-a-zA-Z0-9\.]{1,255}$!", $email))
+    return "L'adresse ne respecte pas le format d'une adresse mail";
+  foreach (config('domains') as $domain) {
+    if (substr($email, - strlen($domain)) == $domain)
+      return null;
+  }
+  return "L'adresse ne correspond à aucun des domaines prévus";
+}
+if (0) { // test de notValidEmail()
+  foreach (['xx@developpement-durable.gouv.fr','xxn@cotes-darmor.gouv.fr', 'xx@cerema.fr','xx@free.fr','xx',''] as $email) {
+    $error = notValidEmail($email);
+    echo "$email -> ",$error ?? 'ok',"<br>\n";
+  }
+  die("Fin Test notValidEmail");
 }
 
 // validation du mot de passe, renvoit null si ok, sinon l'erreur
 function notValidPasswd(string $passwd): ?string {
-  return null;
+  if (strlen($passwd) < 8)
+    return "Longueur du mot de passe insuffisante";
+  else
+    return null;
 }
 
 // Envoie un email avec le lien contenant le secret
@@ -109,7 +126,7 @@ function showMenu(?string $role): void {
   echo "</ul>\n";
 }
 
-switch($action = $_POST['action'] ?? $_GET['action'] ?? null) {
+switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case null: {
     showMenu($role);
     die();
@@ -139,8 +156,15 @@ switch($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case 'registerSubmit': { // traitement du formulaire d'inscription
     $email = $_POST['email'] ?? $_GET['email'] ?? null or die("Erreur, email non défini dans registerSubmit");
     $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? null or die("Erreur, passwd non défini dans registerSubmit");
+    $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? null or die("Erreur, passwd2 non défini dans registerSubmit");
     if ($error = notValidEmail($email)) { // vérification que l'adresse email est valide et correspond aux suffixes définis
       echo "email invalide: $error<br>\n";
+      echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
+      die();
+    }
+    if ($passwd2 <> $passwd) {
+      echo "Erreur, les 2 mots de passe ne sont pas identiques<br>\n";
+      echo "<a href='?action=changePasswd'>Retour au formulaire de changement de mot de passe</a><br>\n";
       echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
       die();
     }
