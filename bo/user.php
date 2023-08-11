@@ -12,7 +12,19 @@ use Symfony\Component\Yaml\Yaml;
 
 
 class SqlSchema {
+  // dans le champ 'colums' la clé est le nom de la colonne pour SQL et le sous-champ 'type' est obligatoire
   const USER_TABLE = [
+    'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
+            ." - le champ 'comment' précisant la table concernée,\n"
+            ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
+            ."   - la clé définissant le nom SQL de la colonne,\n"
+            ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
+            ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
+            ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
+            ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
+            ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
+            ."     - pour clé la valeur de l'énumération et\n"
+            ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
     'comment' => "table des utilisateurs",
     'columns' => [
       'email' => [
@@ -32,16 +44,19 @@ class SqlSchema {
       'role'=> [
         'type'=> 'enum',
         'enum'=> [
-          'normal' => "utilisateur normal ayant le droit d'ajouter et de supprimer des cartes",
+          'normal' => "utilisateur normal ayant le droit de consulter les cartes, d'en ajouter et d'en supprimer",
           'admin' => "administrateur ayant en plus de l'utilisateur normal des droits supplémentaires,\n"
-                    ."notamment le droit de changer le rôle d'un utilisateur",
-          'restricted' => "utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer",
-          'banned' => "utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte",
-          'suspended' => "utilisateur suspendu car , n'a plus aucun droit jusqu'à ce qu'il réactive son compte\n"
-                    ."Il peut réactiver son compte",
-          'closed' => "utilisateur ayant demandé à fermer son compte et pouvant le réactiver en effectuant à nouveau\n"
-                    ."le process de création de compte",
-          'temp' => "utilisateur en cours de création dont la validité n'a pas été vérifiée",
+                    ."notamment le droit de changer le rôle des utilisateurs",
+          'restricted' => "utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter, ni d'en supprimer",
+          'banned' => "utilisateur banni n'ayant aucun droit, et n'ayant pas le droit de réactiver son compte",
+          'suspended' => "utilisateur suspendu en l'absence de confirmation pendant un délai d'un an,\n"
+                    ."il n'a plus aucun droit jusqu'à ce qu'il réactive son compte.\n"
+                    ."Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n"
+                    ."soit en exécutant le processus de création de compte",
+          'closed' => "utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n"
+                    ."en exécutant à nouveau le processus de création de compte",
+          'temp' => "utilisateur en cours de création dont la validité n'a pas été vérifiée,\n"
+                    ."et n'ayant aucun droit en attendant sa validation par mail",
           'system' => "utilisateur utilisé en interne à ShomGT",
         ],
         'comment'=> "rôle de l'utilisateur",
@@ -73,12 +88,12 @@ class SqlSchema {
   // fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
   static function sql(string $tableName, array $schema): string {
     $cols = [];
-    foreach ($schema['columns'] as $cname => $col) {
+    foreach ($schema['columns'] ?? [] as $cname => $col) {
       $cols[] = "  $cname "
         .match($col['type'] ?? null) {
           'enum' => "enum('".implode("','", array_keys($col['enum']))."')",
           default => "$col[type] ",
-          null => "NoType"
+          null => die("<b>Erreur, la colonne '$cname' doit comporter un champ 'type'</b>."),
       }
       .($col['keyOrNull'] ?? '')
       .(isset($col['comment']) ? " comment \"$col[comment]\"" : '');
@@ -265,12 +280,12 @@ function showMenu(?string $role): void { // Affichage du menu
   }
   echo "<li><a href='index.php'>Retour au menu principal du BO.</a></li>\n";
   if ($role == 'admin') {
-    echo "</ul><b>Fonction d'admin</b><ul>\n";
+    echo "</ul><b>Fonctions d'admin</b><ul>\n";
     echo "<li><a href='?action=register'>Enregistrer un nouvel utilisateur</a></li>\n";
-    echo "<li><a href='?action=reinitUserBase'>Réinitialiser la base des utilisateurs</a></li>\n";
-    echo "<li><a href='?action=showUsers'>Afficher/modifier les utilisateurs</a></li>\n";
+    echo "<li><a href='?action=editUsers'>Afficher/modifier les utilisateurs</a></li>\n";
     echo "<li><a href='?action=reValidateOldUsers'>Demander aux vieux utilisateurs de se revalider</a></li>\n";
     echo "<li><a href='?action=suspendOldUsers'>Suspendre les utilisateurs périmés</a></li>\n";
+    echo "<li><a href='?action=reinitUserBase'>Réinitialiser la base des utilisateurs</a></li>\n";
   }
   echo "</ul>\n";
 }
@@ -293,8 +308,8 @@ function htmlSelect(string $name, array $choices, string $selected='', string $s
     ."$spaces</form>\n";
 }
 
-function showUsers(): void {
-  echo '<pre>'; print_r($_GET); echo "</pre>\n";
+function editUsers(): void {
+  //echo '<pre>'; print_r($_GET); echo "</pre>\n";
   if (isset($_GET['role'])) {
     MySql::query("update user set role='$_GET[role]' where email='$_GET[email]'");
   }
@@ -303,15 +318,15 @@ function showUsers(): void {
     MySql::query("update user set comment='$comment' where email='$_GET[email]'");
   }
   echo "<table border=1><th>email</th><th>role</th><th>création</th><th>validité</th><th>commentaire</th>\n";
-  foreach (MySql::query("select * from user") as $user) {
+  foreach (MySql::query("select * from user order by email") as $user) {
     $roleSelect = htmlSelect(
       'role', // name
       ['normal', 'admin','temp','restricted', 'banned','suspended','closed','system'], // choices
       $user['role'], 'M',
-      ['action'=> 'showUsers', 'email'=> $user['email']] // $hiddenValues
+      ['action'=> 'editUsers', 'email'=> $user['email']] // $hiddenValues
     );
     $commentTextArea = "<form>"
-      ."<input type='hidden' name='action' value='showUsers' />"
+      ."<input type='hidden' name='action' value='editUsers' />"
       ."<input type='hidden' name='email' value='$user[email]' />"
       ."<textarea name='comment' rows='3' cols='50'>".htmlspecialchars($user['comment'] ?? '')."</textarea>"
       ."<input type='submit' value='M'>"
@@ -338,8 +353,8 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     showMenu($role);
     die();
   }
-  case 'showUsers': { // Afficher les utilisateurs
-    showUsers();
+  case 'editUsers': { // Afficher les utilisateurs
+    editUsers();
     die();
   }
   case 'register': { // formulaire d'inscription 

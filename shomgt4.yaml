@@ -1237,63 +1237,7 @@ géoréférencement:
   
 miseEnBase:
   description: mise en base de certaines informations pour la V4
-  user:
-    description: compte utilisateur créé par vérification de l'adresse email
-    attributs:
-      email:
-        type: string
-        description: adresse email
-        nul: jamais
-        clé: primaire
-      epasswd:
-        type: string
-        description: mot de passe encrypté
-        nul: jamais
-      newepasswd:
-        type: string
-        description: nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe
-        nul: possible
-      role:
-        type: string
-        description: rôle de l'utilisateur
-        enum:
-          normal: utilisateur normal ayant le droit d'ajouter et supprimer des cartes
-          admin: administrateur ayant notamment le droit de changer les rôles des utilisateurs
-          restricted: utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer
-          banned: utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte
-          suspended: utilisateur suspendu, n'a plus aucun droit jusqu'à ce qu'il réactive son compte
-          temp: utilisateur en cours de création dont la validité n'a pas été vérifiée
-        nul: jamais
-      secret:
-        type: string
-        description: secret envoyé par email pour vérifier l'adresse email
-        nul: possible, null ssi le lien reçu par email n'a pas été cliqué
-      create:
-        type: date+time
-        description: date et heure de création initiale du compte
-        nul: jamais
-      sent:
-        type: date+time
-        description: date et heure d'envoi du dernier mail de vérification
-        nul: jamais
-      valid:
-        type: date+time
-        description: date et heure de la dernière validation du compte
-        nul: possible, null ssi le compte n'est pas valide
-      comment:
-        type: longtext
-        description: commentaire, notamment si l'utilisateur est banni
-    sqlSchema: |
-      drop table if exists user;
-      create table user (
-        email varchar(256) primary key comment "adresse email",
-        epasswd longtext comment "mot de passe encrypté",
-        role enum('admin','normal','restricted', 'banned','suspended','temp') comment "rôle de l'utilisateur'"
-        secret varchar(256) comment "secret envoyé par email et attendu en retour, null ssi l'enregistrement a été validé",
-        regdt datetime comment "date et heure d'enregistrement, null ssi l'enregistrement a été validé",
-        validt datetime comment "date et heure de validation, null ssi utilisateur non validé"
-      );
-      
+  user: voir script user.php
   mapcat:
     description: |
       catalogue des cartes obsolètes ou non avec un n-uplet par carte
@@ -1417,71 +1361,7 @@ register:
     dockerHub:
       sign-in: se loguer
       register: s'enregistrer
-  user:
-    description: table user, compte utilisateur créé par vérification de l'adresse email
-    attributs:
-      email:
-        type: string
-        description: adresse email
-        nul: jamais
-        clé: primaire
-      epasswd:
-        type: string
-        description: mot de passe encrypté
-        nul: jamais
-      newepasswd:
-        type: string
-        description: nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe
-        nul: possible
-      role:
-        type: string
-        description: rôle de l'utilisateur
-        enum:
-          normal: utilisateur normal ayant le droit d'ajouter et supprimer des cartes
-          admin: |
-            administrateur ayant en plus de l'utilisateur normal des droits supplémentaires,
-            notamment le droit de changer les rôles des utilisateurs
-          restricted: utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter ou d'en supprimer
-          banned: utilisateur banni ayant aucun droit, et qui ne peut réactiver son compte
-          suspended: |
-            utilisateur suspendu, n'a plus aucun droit jusqu'à ce qu'il réactive son compte
-            Il peut réactiver son compte
-          closed: |
-            utilisateur ayant demandé à fermer son compte et pouvant le réactiver en effectuant à nouveau
-            le process de création de compte
-          temp: utilisateur en cours de création dont la validité n'a pas été vérifiée
-        nul: jamais
-      secret:
-        type: string
-        description: secret envoyé par email pour vérifier l'adresse email
-        nul: possible, null ssi le lien reçu par email n'a pas été cliqué
-      createdt:
-        type: date+time
-        description: date et heure de création initiale du compte
-        nul: jamais
-      sent:
-        type: date+time
-        description: date et heure d'envoi du dernier mail de vérification
-        nul: jamais
-      valid:
-        type: date+time
-        description: date et heure de la dernière validation du compte
-        nul: possible, null ssi le compte n'est pas valide
-      comment:
-        type: longtext
-        description: commentaire, notamment si l'utilisateur est banni
-    sqlSchema: |
-      drop table if exists user;
-      create table user (
-        email varchar(256) primary key comment "adresse email",
-        epasswd longtext not null comment "mot de passe encrypté",
-        newepasswd longtext comment "nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe",
-        role enum('normal','admin','restricted', 'banned','suspended','closed','temp') not null comment "rôle de l'utilisateur",
-        secret varchar(256) comment "secret envoyé par email et attendu en retour, null ssi le compte a été validé",
-        createdt datetime not null comment "date et heure de création initiale du compte",
-        sent datetime comment "date et heure d'envoi du dernier mail de validation, null ssi le compte a été validé",
-        valid datetime comment "date et heure de dernière validation, null ssi compte non validé"
-      );
+  table: table user définie dans user.php
   constantes:
     noticeDelay:
       value: 11 mois
