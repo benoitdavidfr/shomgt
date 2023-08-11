@@ -16,6 +16,10 @@ if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 
+if (!in_array(userRole($login), ['normal','admin'])) {
+  die("Accès non autorisé\n");
+}
+
 echo "<!DOCTYPE html><html><head><title>updatemaps@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo "<h2>Prise en compte des nouvelles versions dans la consultation des cartes</h2><pre>\n";
 

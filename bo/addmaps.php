@@ -16,6 +16,10 @@ if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 
+if (!in_array(userRole($login), ['normal','admin'])) {
+  die("Accès non autorisé\n");
+}
+
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
   throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 //echo "PF_PATH=$PF_PATH<br>\n";

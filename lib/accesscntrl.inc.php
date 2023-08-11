@@ -105,16 +105,15 @@ class Access {
     $email = substr($usrpwd, 0, $pos);
     $passwd = substr($usrpwd, $pos+1);
     //echo "email=$email, passswd=$passwd<br>\n";
+    $sql = "select epasswd from user where email='$email' and role in ('normal','admin','restricted')";
     try {
-      $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
+      $epasswds = MySql::getTuples($sql);
     }
     catch (SExcept $e) {
-      if ($e->getSCode() == 'MySql::ErrorTableDoesntExist') {
-        createUserTable();
-        $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
-      }
-      else
+      if ($e->getSCode() <> 'MySql::ErrorTableDoesntExist')
         throw new SExcept($e->getMessage(), $e->getSCode());
+      createUserTable();
+      $epasswds = MySql::getTuples($sql);
     }
     //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
     $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);

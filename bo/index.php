@@ -22,11 +22,14 @@ switch ($_GET['action'] ?? null) {
     // Explicitement je continue sur le cas suivant
   }
   case null: { // Menu après login
-    echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login)</h2>\n";
+    $role = userRole($login);
+    $roleDisplay = ($role <> 'normal') ? "/role=$role" : '';
+    echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login$roleDisplay)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
          "Identifier les cartes à ajouter/supprimer/actualiser dans le portefeuille ShomGT</a></li>\n";
+    if ($role == 'restricted') die();
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",
          "Télécharger une nouvelle version de cartes sur le site du Shom</a></li>\n";
     echo "<li><a href='addmaps.php'>Déposer cette nouvelle version de carte dans le portefeuille</a></li>\n";
@@ -34,8 +37,6 @@ switch ($_GET['action'] ?? null) {
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
     echo "<li><a href='updatemaps.php'>Prendre en compte les nouvelles versions dans la consultation des cartes</a></li>\n";
     echo "</ul>\n";
-    $role = userRole($login);
-    echo "role=$role<br>\n";
     if ($role <> 'admin') die();
     echo "<h3>Fonctions d'administration</h3>\n";
     echo "<ul>\n";
@@ -44,6 +45,7 @@ switch ($_GET['action'] ?? null) {
     echo "<li><a href='user.php'>Gérer les utilisateurs</a></li>\n";
     echo "<li><a href='maparchivestore.php'>Gèrer le stockage du portefeuille (liens, clone, ..)</a></li>\n";
     echo "<li><a href='clonedatamaps.php'>Créer dans sgpp/data/maps un clone de shomgt/data/maps</a></li>\n";
+    echo "<li><a href='?action=getenv'>Afficher les variables d'environnement</a></li>\n";
     //echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
     echo "</ul>\n";
     die();
@@ -55,6 +57,10 @@ switch ($_GET['action'] ?? null) {
     }
     else
       die("Erreur de suppression du cookie<br>\n");
+  }
+  case 'getenv': {
+    echo "<pre>getenv()="; print_r(getenv()); echo "</pre>\n";
+    die("<a href='index.php'>Retour au menu</a>\n");
   }
   /*case 'mapcat': {
     echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
