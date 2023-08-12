@@ -105,7 +105,7 @@ class Access {
     $email = substr($usrpwd, 0, $pos);
     $passwd = substr($usrpwd, $pos+1);
     //echo "email=$email, passswd=$passwd<br>\n";
-    $sql = "select epasswd from user where email='$email' and role in ('normal','admin','restricted')";
+    $sql = "select epasswd from user where email='$email' and role in ('normal','admin','restricted','system')";
     try {
       $epasswds = MySql::getTuples($sql);
     }

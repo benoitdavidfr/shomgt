@@ -33,6 +33,7 @@ journal:
     - fin du sprint6
     - fin du sprint7
     - 23:15 mise en prod 4.1 = sprint7
+    - git merge de la branche 4.1 dans main
   10/8/2023:
     - test de l'envi de mail et détection d'un bug dans l'exemple fourni par la doc Php
   9/8/2023:
@@ -337,6 +338,9 @@ backlog:
       - mettre en prod avec une config propre
     apportsFonctionnels:
       - finaliser le cycle de maj des cartes
+    bugs:
+      - shomgt et sgpp partagent la base des utilisateurs !
+        - faire une base distincte pour sgpp
   horsSprint:
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
