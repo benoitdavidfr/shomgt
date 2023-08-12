@@ -10,9 +10,10 @@ require_once __DIR__.'/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-
+// Classe portant en constante la définition SQL de la table user
+// ainsi qu'une méthode statique traduisant cette constate en requête SQL
 class SqlSchema {
-  // dans le champ 'colums' la clé est le nom de la colonne pour SQL et le sous-champ 'type' est obligatoire
+  // la structuration de la constante est définie dans son champ description
   const USER_TABLE = [
     'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
             ." - le champ 'comment' précisant la table concernée,\n"
@@ -34,8 +35,7 @@ class SqlSchema {
       ],
       'epasswd'=> [
         'type'=> 'longtext',
-        'keyOrNull'=> 'not null',
-        'comment'=> "mot de passe encrypté",
+        'comment'=> "mot de passe encrypté, null à la créatin d'un compte temporaire non valide",
       ],
       'newepasswd'=> [
         'type'=> 'longtext',
@@ -131,8 +131,7 @@ function createUserTable(): void { // création de la table des utilisateurs
 }
 //createUserTable(); die("FIN ligne ".__LINE__);
 
-// renvoit le role de l'utilisateur $user
-function userRole(?string $user): ?string {
+function userRole(?string $user): ?string { // renvoit le role de l'utilisateur $user
   if (!$user) {
     return null;
   }
@@ -159,10 +158,8 @@ if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo/user@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo $HTML_HEAD,"<h2>Gestion utilisateur</h2>\n";
 
-$role = userRole(Login::loggedIn());
-
-// validation de l'email, renvoit null si ok, sinon l'erreur
-function notValidEmail(string $email): ?string {
+// validation de l'email, renvoit null si valid, sinon l'erreur
+function badEmail(string $email): ?string {
   // Vérification simplifiée d'une adresse email - see https://www.linuxjournal.com/article/9585
   if (!preg_match("!^[a-zA-Z0-9\!#\$%&'\*\+\-/=\?^_`\{\|\}~\.]{1,64}@[-a-zA-Z0-9\.]{1,255}$!", $email))
     return "L'adresse ne respecte pas le format d'une adresse mail";
@@ -172,16 +169,16 @@ function notValidEmail(string $email): ?string {
   }
   return "L'adresse ne correspond à aucun des domaines prévus";
 }
-if (0) { // test de notValidEmail()
+if (0) { // test de badEmail()
   foreach (['xx@developpement-durable.gouv.fr','xxn@cotes-darmor.gouv.fr', 'xx@cerema.fr','xx@free.fr','xx',''] as $email) {
-    $error = notValidEmail($email);
+    $error = badEmail($email);
     echo "$email -> ",$error ?? 'ok',"<br>\n";
   }
-  die("Fin Test notValidEmail");
+  die("Fin Test badEmail");
 }
 
 // validation du mot de passe, renvoit null si ok, sinon l'erreur
-function notValidPasswd(string $passwd, string $passwd2): ?string {
+function badPasswd(string $passwd, string $passwd2): ?string {
   if ($passwd2 <> $passwd)
     return "Les 2 mots de passe ne sont pas identiques<br>\n";
   elseif (strlen($passwd) < 8)
@@ -207,19 +204,15 @@ function sendMail(string $action, string $email, string $secret, ?string $passwd
   // 2) Demande de cliquer sur le lien
   $phrases = match ($action) {
       'validateRegistration' => [
-        "Vous vous êtes incrit sur $boLink.",
+        "Vous vous êtes incrit sur $boLink ou avez changé votre mot de passe.",
         "Pour finaliser cette action, $clickOnLink."
       ],
       'validateCloseAccount' => [
         "Vous avez demandé à supprimer votre compte de $boLink.",
         "Pour finaliser cette action, $clickOnLink."
       ],
-      'validatePasswdChange' => [
-        "Vous avez demandé à changer de mot de passe sur $boLink.",
-        "Pour finaliser cette action, $clickOnLink."
-      ],
       'validateReValidation' => [
-        "Votre compte sur $boLink nécessite d'être revalidé.",
+        "Vous avez demandé à revalider votre compte sur $boLink ou votre compte nécessite de l'être.",
         "Pour réaliser cette action, $clickOnLink."
       ],
       'validateAfterSuspension' => [
@@ -262,40 +255,18 @@ function sendMail(string $action, string $email, string $secret, ?string $passwd
     echo "Erreur d'envoi du mail à $email refusé<br>\n";
 }
 
-function showMenu(?string $role): void { // Affichage du menu 
-  $user = Login::loggedIn();
-  echo "Logué comme '$user' avec un role '$role'.<br>\n";
-  $diff = MySql::getTuples("select valid, now() now, DATEDIFF(now(), valid) diff from user where email='$user'")[0];
-  //echo '<pre>',Yaml::dump([$user]),"</pre>\n";
-  if ($diff['diff'] > 6*30) {
-    printf("La dernière validation du compte remonte à %.0f mois<br>\n", $diff['diff']/30);
-    echo "Pensez à <a href='?action=reValidateByUser'>revalider votre compte</a><br>\n";
-  }
-  
-  echo "<h3>Menu</h3><ul>\n";
-  if ($role) {
-    echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
-    echo "<li><a href='?action=changePasswd'>Changer mon mot de passe</a></li>\n";
-    echo "<li><a href='?action=reValidateByUser'>Revalider mon compte</a></li>\n";
-    echo "<li><a href='?action=closeAccount'>Fermer mon compte</a></li>\n";
-  }
-  echo "<li><a href='index.php'>Retour au menu principal du BO.</a></li>\n";
-  if ($role == 'admin') {
-    echo "</ul><b>Fonctions d'admin</b><ul>\n";
-    echo "<li><a href='?action=register'>Enregistrer un nouvel utilisateur</a></li>\n";
-    echo "<li><a href='?action=editUsers'>Afficher/modifier les utilisateurs</a></li>\n";
-    echo "<li><a href='?action=reValidateOldUsers'>Demander aux vieux utilisateurs de se revalider</a></li>\n";
-    echo "<li><a href='?action=suspendOldUsers'>Suspendre les utilisateurs périmés</a></li>\n";
-    echo "<li><a href='?action=reinitUserBase'>Réinitialiser la base des utilisateurs</a></li>\n";
-    echo "<li><a href='?action=showScenarios'>Afficher les scénarios</a></li>\n";
-    echo "<li><a href='?action=showSimplifiedScenarios'>Afficher les scénarios simplifiés</a></li>\n";
-    echo "<li><a href='?action=checkScenarios'>checkScenarios</a></li>\n";
-  }
-  echo "</ul>\n";
-}
-
-// création d'un formulaire de choix d'une valeur
+// création d'un formulaire Html de choix d'une valeur (<select>)
 function htmlSelect(string $name, array $choices, string $selected='', string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
+  {/*Paramètres:
+      $name: nom du select, sera le champ de $_GET/$_POST contenant la valeur choisie
+      $choices: la liste des choix possibles soit sous la forme de liste, soit sous la forme d'un dictionnaire [nom => libellé]
+      $selected: le nom du choix pré-selectionné dans l'affichage
+      $submitValue: libellé du bouton de sélection
+      $hiddenValues: dict. [nom => valeur] transmis dans la variable $_GET ou $_POST
+      $action: chemin du script à exécuter après sélection de la valeur
+      $method: 'get' pour une transmission Http GET, 'post' pour une transmission POST
+    Le code Html est formatté pour faciliter son débuggage
+  */}
   $spaces = '    ';
   $form =  "$spaces<form action='$action' method='$method'>\n";
   foreach ($hiddenValues as $hvname => $value) {
@@ -312,8 +283,110 @@ function htmlSelect(string $name, array $choices, string $selected='', string $s
     ."$spaces</form>\n";
 }
 
+/* Le script est décomposé en "écrans" qui s'enchainent les uns après les autres
+** Chaque écran est défini comme une entrée de la table $actions ci-dessous avec
+**  - commé clé le nom ou id de l'écran
+**  - un champ title fournissant le titre de l'écran
+**  - un champ from avec l'écran ou les écrans qui y conduisent (string ou [string])
+**  - un champ scenario avec le pseudo-code de l'écran
+**  - un champ to avec l'écran ou les écrans auquel il conduit (string ou [string])
+**  - un champ apply avec la fonction à exécuter pour afficher cet écran
+*/
 $actions = [
+  'user.menu'=> [
+    'title'=> "menu du script user",
+    'from'=> [
+      'actionTestB',
+      'editUsers',
+      'reinitUserBase',
+    ],
+    'to'=> [
+      'actionTestA',
+      'changePasswd',
+      'reValidateByUser',
+      'closeAccount',
+      'BO.menu',
+      'editUsers',
+      'reValidateOldUsers',
+      'suspendOldUsers',
+      'reinitUserBase',
+      'showUserTableSchema',
+    ],
+    'apply'=> function(): void {
+      $user = Login::loggedIn();
+      $role = userRole($user);
+      if ($role)
+        echo "Logué comme '$user' avec un role '$role'.<br>\n";
+      else
+        echo "Utilisateur non logué.<br>\n";
+      $diff = MySql::getTuples("select valid, now() now, DATEDIFF(now(), valid) diff from user where email='$user'")[0] ?? null;
+      //echo '<pre>',Yaml::dump([$user]),"</pre>\n";
+      if ($diff && ($diff['diff'] > 6*30)) {
+        printf("La dernière validation du compte remonte à %.0f mois<br>\n", $diff['diff']/30);
+        echo "Pensez à <a href='?action=reValidateByUser'>revalider mon compte</a><br>\n";
+      }
+  
+      echo "<h3>Menu</h3><ul>\n";
+      if ($role) {
+        //echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
+        echo "<li><a href='?action=changePasswd'>Changer mon mot de passe</a></li>\n";
+        echo "<li><a href='?action=reValidateByUser'>Revalider mon compte</a></li>\n";
+        echo "<li><a href='?action=closeAccount'>Fermer mon compte</a></li>\n";
+      }
+      else {
+        echo "<li><a href='?action=register'>S'enregistrer comme nouvel utilisateur ou changer sont mot de passe</a></li>\n";
+      }
+      echo "<li><a href='index.php'>Retour au menu principal du BO.</a></li>\n";
+      if ($role == 'admin') {
+        echo "</ul><b>Fonctions d'admin</b><ul>\n";
+        echo "<li><a href='?action=register'>Enregistrer un nouvel utilisateur</a></li>\n";
+        echo "<li><a href='?action=editUsers'>Afficher/modifier les utilisateurs</a></li>\n";
+        echo "<li><a href='?action=reValidateOldUsers'>Demander aux vieux utilisateurs de se revalider</a></li>\n";
+        echo "<li><a href='?action=suspendOldUsers'>Suspendre les utilisateurs périmés</a></li>\n";
+        echo "<li><a href='?action=reinitUserBase'>Réinitialiser la table des utilisateurs</a></li>\n";
+        echo "</ul><b>Documentation du code</b><ul>\n";
+        echo "<li><a href='?action=showUserTableSchema'>Afficher le schema de la table des utilisateurs</a></li>\n";
+        echo "<li><a href='?action=showActions'>Afficher les actions</a></li>\n";
+        echo "<li><a href='?action=showSequenceBetweenActions'>Afficher l'enchainement entre actions</a></li>\n";
+        echo "<li><a href='?action=checkSequenceBetweenActions'>Vérifier les enchainements entre actions</a></li>\n";
+      }
+      echo "</ul>\n";
+      
+      die();
+    },
+  ],
+  'actionTestA'=> [
+    'title'=> "Action test A",
+    'from'=> 'user.menu',
+    'scenario'=> [
+      "action test A",
+      " -> appel de B",
+    ],
+    'to'=> 'actionTestB',
+    'apply'=> function(): void {
+      //function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
+      echo "Action Test A<br>\n";
+      echo button('go', ['action'=> 'actionTestB'], '', 'get');
+    },
+  ],
+  'actionTestB'=> [
+    'title'=> "Action test B",
+    'from'=> 'actionTestA',
+    'scenario'=> [
+      "action test B appelée de actionTestA",
+    ],
+    'to'=> 'user.menu',
+    'apply'=> function(): void {
+      //function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
+      echo "Action Test B<br>\n";
+      echo "<a href='user.php'>Menu user</a>\n";
+      die();
+    },
+  ],
   'editUsers' => [
+    'title'=> "Afficher/modifier les utilisateurs",
+    'from'=> 'user.menu',
+    'to'=> 'user.menu',
     'apply'=> function (): void {
       echo '<pre>'; print_r($_GET); echo "</pre>\n";
       if (isset($_GET['role'])) {
@@ -349,33 +422,11 @@ $actions = [
            "<pre>",Yaml::dump(SqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
     },
   ],
-  'actionTestA'=> [
-    'scenario'=> [
-      " - action test A",
-      " -> appel de B",
-    ],
-    'apply'=> function(): void {
-      //function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
-      echo "Action Test A<br>\n";
-      echo button('go', ['action'=> 'actionTestB'], '', 'get');
-    },
-  ],
-  'actionTestB'=> [
-    'scenario'=> [
-      " - action test B appelée de actionTestA",
-    ],
-    'apply'=> function(): void {
-      //function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
-      echo "Action Test B<br>\n";
-      echo "<a href='user.php'>Menu user</a>\n";
-      die();
-    },
-  ],
   'register'=> [
-    'title'=> "formulaire d'inscription d'un nouvel utilisateur",
+    'title'=> "formulaire d'inscription d'un nouvel utilisateur ou de changement de mot de passe oublié",
     'from'=> 'BO.login',
     'scenario'=> [
-      "un utilisateur non logué demande à ouvrir un compte",
+      "un utilisateur non logué demande à ouvrir un compte ou à changer son mot de passe qu'il a oublié",
       "il fournit une adresse email et un mot de passe en 2 exemplaires",
     ],
     'to'=> 'registerSubmit',
@@ -390,53 +441,67 @@ $actions = [
       die();
     },
   ],
+  'changePasswd'=> [
+    'title'=> "formulaire de changement de son mot de passe par un utilisateur logué",
+    'from'=> 'user.menu',
+    'scenario'=> [
+      "un utilisateur logué demande à changer son mot de passe",
+      "il fournit le nouveau mot de passe souhaité en 2 exemplaires",
+    ],
+    'to'=> 'registerSubmit',
+    'apply'=> function(): void  { // un utilisateur logué 
+      $email = Login::loggedIn() or die("Erreur, pour changePasswd l'utilisateur doit être loggé");
+      echo "<table border=1><form method='post'>
+          <input type='hidden' name='action' value='registerSubmit'>
+          <input type='hidden' name='email' value='$email'>
+          <tr><td>Nouveau mot de passe:</td><td><input type='password' size=80 name='passwd' /></td></tr>
+          <tr><td>Nouveau mot de passe2:</td><td><input type='password' size=80 name='passwd2' /></td></tr>
+          <tr><td colspan=2><center><input type='submit' value='Envoi' /></center></td></tr>
+        </form></table>\n";
+      die();
+    },
+  ],
   'registerSubmit'=> [
-    'title'=> "traitement du formulaire d'inscription",
-    'from'=> 'register',
+    'title'=> "traitement du formulaire d'inscription ou de changement de mot de passe",
+    'from'=> ['register', 'changePasswd'],
     'scenario'=> [
       "vérifications",
-      "  que l'utilisateur n'a pas déjà un compte ou que son compte est fermé ou suspendu",
+      "  que l'utilisateur n'a pas déjà un compte ou s'il en a un qu'il n'est pas banni",
       "  que son adresse email est valide et correspond aux suffixes définis",
       "  que son mot de passe est suffisamment long et que les 2 exemplaires sont identiques",
       "un secret est généré aléatoirement",
       "si le compte n'existe pas",
       "  alors un enregistrement est créé dans la table user avec",
-      "    email, epasswd, newepasswd=null, role='temp', secret, create=now, sent=now, valid=null, comment=null",
-      "sinonSi le role='closed' ou role='suspended'",
-      "  alors modification secret / email",
-      "sinon erreur",
+      "    email, epasswd=null, newepasswd, role='temp', secret, create=now, sent=now, valid=null, comment=null",
+      "sinon",
+      "  alors modification newepasswd, secret, sent=now / email",
       "envoi d'un email avec un lien vers validateRegistration",
     ],
     'to'=> 'validateRegistration',
     'apply'=> function(): void {
-      $email = $_POST['email'] ?? $_GET['email'] ?? null or die("Erreur, email non défini dans registerSubmit");
-      $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? null or die("Erreur, passwd non défini dans registerSubmit");
-      $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? null or die("Erreur, passwd2 non défini dans registerSubmit");
-      if (($error = notValidEmail($email)) || ($error = notValidPasswd($passwd, $passwd2))) {
+      write_log(true);
+      $email = $_POST['email'] ?? $_GET['email'] ?? die("Erreur, email non défini dans registerSubmit");
+      $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? die("Erreur, passwd non défini dans registerSubmit");
+      $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? die("Erreur, passwd2 non défini dans registerSubmit");
+      $users = MySql::getTuples("select role from user where email='$email'");
+      if ($users && ($users[0]['role'] == 'banned')) {
+        die("Erreur, l'utilisateur '$email' est banni.<br>\n");
+      }
+      if (($error = badEmail($email)) || ($error = badPasswd($passwd, $passwd2))) {
         echo "email ou mot de passe invalide: $error<br>\n";
         echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
         die();
       }
-      // vérification qu'il n'a pas déjà un compte ou que le compte est fermé ou suspendu
-      $users = MySql::getTuples("select * from user where email='$email'");
-      //$users = MySql::getTuples("select * from user");
-      //echo "<pre>"; print_r($users); echo "</pre>\n";
-      if ($users && !in_array($users[0]['role'], ['closed','suspended'])) {
-        echo "Erreur, l'utilisateur '$email' existe déjà et ne peut donc être créé<br>\n";
-        echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-        die();
-      }
-  
       // un secret est généré aléatoirement
       $secret = random_int(0, 1000000);
       // création/mise à jour de l'enregistrement
-      $epasswd = password_hash($passwd, PASSWORD_DEFAULT);
+      $newepasswd = password_hash($passwd, PASSWORD_DEFAULT);
       if ($users) {
-        $query = "update user set secret='$secret', sent=now() where email='$email'";
+        $query = "update user set newepasswd='$newepasswd', secret='$secret', sent=now() where email='$email'";
       }
       else {
-        $query = "insert into user(email, epasswd, role, secret, createdt, sent)
-                        values('$email', '$epasswd', 'temp', '$secret', now(), now())";
+        $query = "insert into user(email, newepasswd, role, secret, createdt, sent)
+                        values('$email', '$newepasswd', 'temp', '$secret', now(), now())";
       }
       MySql::query($query);
   
@@ -446,21 +511,28 @@ $actions = [
     },
   ],
   'validateRegistration'=> [
-    'title'=> "Traitement de l'activation du lien de validation envoyé par mail",
+    'title'=> "Traitement de l'activation du lien envoyé par mail de validation de l'inscription ou changement de mot de passe",
     'from'=> 'registerSubmit',
     'scenario'=> [
-      "modification table role='normal', valid=now, secret=null, sent=null / email+secret",
+      "nouvRole = ",
+      "  si role=='banned' alors erreur",
+      "  si role in('admin','normal','restricted','system') alors role",
+      "  si role in('suspended','closed','temp') alors 'normal'",
+      "modification table role=nouvRole, valid=now, epasswd=newepasswd, newepasswd=null, secret=null, sent=null / email+secret",
     ],
     'to'=> "BO.menu",
     'apply' => function(): void {
-      if (!isset($_GET['email']) || !isset($_GET['secret'])) {
-        echo "Appel incorrect, paramètres absents<br>\n";
-        echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-        die();
-      }
+      $email = $_GET['email'] ?? die("Appel incorrect, paramètre absent<br>\n");
+      $secret = $_GET['secret'] ?? die("Appel incorrect, paramètre absent<br>\n");
       // modification table valid=now, role='normal', secret=null / email+secret
-      $query = "update user set role='normal', valid=now(), secret=null, sent=null "
-              ."where email='$_GET[email]' and secret='$_GET[secret]'";
+      $user = MySql::getTuples("select role from user where email='$email' and secret='$secret'")[0];
+      $role = match ($user['role']) {
+        'banned' => die("validateRegistration interdit pour role=='banned'"),
+        'admin','normal','restricted','system' => $user['role'],
+        'suspended','closed','temp' => 'normal',
+      };
+      $query = "update user set role='$role', valid=now(), epasswd=newepasswd, newepasswd=null, secret=null, sent=null "
+              ."where email='$email' and secret='$secret'";
       MySql::query($query);
       if (mysqli_affected_rows(MySql::$mysqli) == 1) {
         echo "Enregistrement validé<br>\n";
@@ -483,7 +555,7 @@ $actions = [
     ],
     'to'=> 'validateCloseAccount',
     'apply'=> function(): void {
-      $email = Login::loggedIn() or throw new Exception("Erreur, pour fermer son compte un utilisateur soit être loggé");
+      $email = Login::loggedIn() or die("Erreur, pour fermer son compte un utilisateur soit être loggé");
       $secret = random_int(0, 1000000); // un secret est généré aléatoirement
       MySql::query("update user set secret='$secret', sent=now() where email='$email'");
       // un email lui est envoyé avec un lien contenant le secret
@@ -495,18 +567,15 @@ $actions = [
     'title'=> "Traitement de l'activation du lien de validation de fermeture de compte envoyé par mail",
     'from'=> 'closeAccount',
     'scenario'=> [
-      "modification user role='closed', valid=null, secret=null / email+secret",
+      "update user set role='closed', valid=null, secret=null, sent=null where email='\$email' and secret='\$secret'",
     ],
     'to'=> 'BO.menu',
     'apply'=> function(): void {
-      if (!isset($_GET['email']) || !isset($_GET['secret'])) {
-        echo "Appel incorrect, paramètres absents<br>\n";
-        echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-        die();
-      }
+      $email = $_GET['email'] ?? die("Erreur: email non défini dans validateCloseAccount");
+      $secret = $_GET['secret'] ?? die("Erreur: secret non défini dans validateCloseAccount");
       // modification table valid=now, role='normal', secret=null / email+secret
       $query = "update user set role='closed', valid=null, secret=null, sent=null "
-              ."where email='$_GET[email]' and secret='$_GET[secret]'";
+              ."where email='$email' and secret='$secret'";
       MySql::query($query);
       if (mysqli_affected_rows(MySql::$mysqli) == 1) {
         echo "Cloture validée<br>\n";
@@ -518,89 +587,12 @@ $actions = [
       die();
     },
   ],
-  'changePasswd'=> [
-    'title'=> "formulaire de demande à changer son mot de passe par un utilisateur logué",
-    'from'=> 'user.menu',
-    'scenario'=> [
-      "un utilisateur logué demande à changer son mot de passe",
-      "il fournit le nouveau mot de passe souhaité",
-      "un secret est généré aléatoirement",
-      "modification user sent=now, secret, newEpasswd / email",
-      "envoi d'un email avec un lien vers changePasswdSubmit",
-    ],
-    'to'=> 'changePasswdSubmit',
-    'apply'=> function(): void  { // un utilisateur logué 
-      echo "<table border=1><form method='get'>
-          <input type='hidden' name='action' value='changePasswdSubmit'>
-          <tr><td>Nouveau mot de passe:</td><td><input type='password' size=80 name='passwd' /></td></tr>
-          <tr><td>Nouveau mot de passe2:</td><td><input type='password' size=80 name='passwd2' /></td></tr>
-          <tr><td colspan=2><center><input type='submit' value='Envoi' /></center></td></tr>
-        </form></table>\n";
-      die();
-    },
-  ],
-  'changePasswdSubmit'=> [
-    'title'=> "traitement du formulaire de changement de mot de passe",
-    'from'=> 'changePasswd',
-    'scenario'=> [
-      "vérification du nouveau mot de passe",
-      "update user set newepasswd='\$epasswd', secret='\$secret', sent=now() where email='\$email'",
-      "envoi d'un mail avec un lien vers validatePasswdChange",
-    ],
-    'to'=> 'validatePasswdChange',
-    'apply'=> function(): void {
-      $email = Login::loggedIn();
-      $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? null or die("Erreur, passwd non défini dans changePasswdSubmit");
-      $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? null or die("Erreur, passwd2 non défini dans registerSubmit");
-      if ($error = notValidPasswd($passwd, $passwd2)) {
-        echo "mot de passe invalide: $error<br>\n";
-        echo "<a href='?action=changePasswd'>Revenir au formulaire de changement de mot de passe</a><br>\n";
-        echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-        die();
-      }
-      $epasswd = password_hash($passwd, PASSWORD_DEFAULT);
-      // un secret est généré aléatoirement
-      $secret = random_int(0, 1000000);
-      MySql::query("update user set newepasswd='$epasswd', secret='$secret', sent=now() where email='$email'");
-    
-      // un email lui est envoyé avec un lien contenant le secret
-      sendMail('validatePasswdChange', $email, $secret, $passwd);
-      die();
-    },
-  ],
-  'validatePasswdChange'=> [
-    'title'=> "Traitement de l'activation du lien de validation du changement de mot de passe envoyé par mail",
-    'from'=> 'changePasswdSubmit',
-    'scenario'=> [
-      "modification user valid=now, secret=null, epasswd=newepasswd, newepasswd=null / email+secret",
-    ],
-    'to'=> 'BO.menu',
-    'apply'=> function(): void {
-      if (!isset($_GET['email']) || !isset($_GET['secret'])) {
-        echo "Appel incorrect, paramètres absents<br>\n";
-        echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-        die();
-      }
-      // modification table valid=now, role='normal', secret=null / email+secret
-      $query = "update user set epasswd=newepasswd, newepasswd=null, valid=now(), secret=null, sent=null "
-              ."where email='$_GET[email]' and secret='$_GET[secret]'";
-      MySql::query($query);
-      if (mysqli_affected_rows(MySql::$mysqli) == 1) {
-        echo "Changement de mot de passe validé<br>\n";
-      }
-      else {
-        echo "Erreur, changement de mot de passe non validé<br>\n";
-      }
-      echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-      die();
-    },
-  ],
   'reValidateByUser'=> [
-    'title'=> "Demande re revalidation de son compte par un utilisateur logué",
+    'title'=> "Demande de revalidation de son compte par un utilisateur logué",
     'from'=> "user.menu",
     'scenario'=> [
       "génération secret",
-      "modification user sent=now, secret / email",
+      "update user set secret='\$secret', sent=now() where email='\$email'",
       "envoi email avec lien vers validateReValidation",
     ],
     'to'=> 'validateReValidation',
@@ -615,11 +607,11 @@ $actions = [
   ],
   'reValidateOldUsers'=> [
     'title'=> "fonction admin pour lister les vieux utilisateurs et leur demander de revalider leur compte",
-    'from'=> "user.menu.admin",
+    'from'=> 'user.menu',
     'scenario'=> [
-      "pour chaque utilisateur dont now-valid > noticeDelay",
+      "pour chaque utilisateur dont now-valid > \$maxDelayInDays",
       "  génération secret",
-      "  modification user sent=now, secret / email",
+      "  update user set secret='\$secret', sent=now() where email='\$email'",
       "  envoi email avec lien vers validateReValidation",
     ],
     'to'=> 'validateReValidation',
@@ -634,14 +626,12 @@ $actions = [
     
       $maxDelayInDays = 365 - 30; // 11 mois
       echo "<table border=1>";
-      $query = "select email, role, sent, comment, valid, DATEDIFF(now(), valid) diff
-                from user
+      $query = "select email, role, sent, comment, valid, DATEDIFF(now(), valid) diff from user
                 where DATEDIFF(now(), valid) > $maxDelayInDays -- validé il y a plus de 11 mois
                   and (sent is null or DATEDIFF(now(), sent) > 7) -- et à qui un rappel n'a pas été envoyé récemment";
       $emptyResult = true;
       foreach (MySql::query($query) as $user) {
         $emptyResult = false;
-        // function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string
         $button = button('envoyer un email', ['action'=> 'reValidateOldUsers', 'email'=> $user['email']], '', 'get');
         echo '<tr><td><pre>',Yaml::dump([$user]),"</pre></td></tr>\n";
         echo "<tr><td>$user[email]</td><td>$user[role]</td><td>$user[comment]</td>",
@@ -651,7 +641,7 @@ $actions = [
       if ($emptyResult)
         echo "Aucun utilisateur à revalider.</p>\n";
     
-      showMenu($role);
+      echo "<a href='user.php'>Retour au menu de la gestion des utilisateurs</a><br>\n";
       die();
     }
   ],
@@ -659,17 +649,13 @@ $actions = [
     'title'=> "Traitement de l'activation du lien de revalidation envoyé par mail",
     'from'=> ['reValidateByUser', 'reValidateOldUsers'],
     'scenario'=> [
-      "modification table valid=now, secret=null / email+secret"
+      "update user set valid=now(), secret=null, sent=null where email='\$email' and secret='\$secret'"
     ],
     'to'=> 'BO.menu',
     'apply'=> function(): void  {
-      if (!isset($_GET['email']) || !isset($_GET['secret'])) {
-        echo "Appel incorrect, paramètres absents<br>\n";
-        echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
-        die();
-      }
-      $query = "update user set valid=now(), secret=null, sent=null "
-              ."where email='$_GET[email]' and secret='$_GET[secret]'";
+      $email = $_GET['email'] ?? die("Erreur paramètre email absent dans validateReValidation");
+      $secret = $_GET['secret'] ?? die("Erreur paramètre secret absent dans validateReValidation");
+      $query = "update user set valid=now(), secret=null, sent=null where email='$email' and secret='$secret'";
       MySql::query($query);
       if (mysqli_affected_rows(MySql::$mysqli) == 1) {
         echo "ReValidation validée<br>\n";
@@ -683,11 +669,11 @@ $actions = [
   ],
   'suspendOldUsers'=> [
     'title'=> "fonction admin pour lister les très vieux utilisateurs et suspendre leur compte en leur envoyant un mail",
-    'from'=> 'user.menu.admin',
+    'from'=> 'user.menu',
     'scenario'=> [
-      "pour chaque utilisateur dont now-valid > suspensionDelay",
+      "pour chaque utilisateur dont now-valid > \$maxDelayInDays",
       "  génération secret",
-      "  modification user sent=now, secret, role='suspended', valid=null / email",
+      "  update user set role='suspended', secret='\$secret', sent=now() where email='\$email'",
       "  envoi email avec lien -> validateAfterSuspension",
     ],
     'to'=> 'validateAfterSuspension',
@@ -719,8 +705,25 @@ $actions = [
       if ($emptyResult)
         echo "Aucun utilisateur à suspendre.</p>\n";
     
-      showMenu($role);
+      echo "<a href='user.php'>Retour au menu de la gestion des utilisateurs</a><br>\n";
       die();
+    },
+  ],
+  'reinitUserBase'=> [
+    'title'=> "Réinitialiser la base des utilisateurs",
+    'from'=> 'user.menu',
+    'to'=> 'user.menu',
+    'apply'=> function(): void {
+      createUserTable();
+      echo "<a href='user.php'>Retour au menu de la gestion des utilisateurs</a><br>\n";
+      die();
+    },
+  ],
+  'showUserTableSchema'=> [
+    'title'=> "Affiche le schéma de la table user",
+    'from'=> 'user.menu',
+    'apply'=> function(): void {
+      echo '<pre>',Yaml::dump(SqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
     },
   ],
   'BO.login'=> [
@@ -730,28 +733,12 @@ $actions = [
   'BO.menu'=> [
     'title'=> "fantome du menu du BO",
     'from'=> [
+      'user.menu',
       'validateRegistration',
       'validateCloseAccount',
-      'validatePasswdChange',
       'validateReValidation',
     ],
     'to'=> [
-      
-    ],
-  ],
-  'user.menu'=> [
-    'title'=> "fantome du menu du script user",
-    'to'=> [
-      'changePasswd',
-      'closeAccount',
-      'reValidateByUser',
-    ],
-  ],
-  'user.menu.admin'=> [
-    'title'=> "fantome de la partie admin du menu du script user",
-    'to'=> [
-      'reValidateOldUsers',
-      'suspendOldUsers',
     ],
   ],
 ];
@@ -761,8 +748,8 @@ $actions['validateAfterSuspension'] = [
   'sameAs'=> 'validateRegistration',
   'apply'=> $actions['validateRegistration']['apply'],
 ];
-$actions['showScenarios'] = [
-  'title'=> "Affichage  des scenarios",
+$actions['showActions'] = [
+  'title'=> "Affiche les actions",
   'apply'=> function() use($actions): void {
     echo "<h3>Scenarios</h3>",
           "<pre>",
@@ -774,8 +761,8 @@ $actions['showScenarios'] = [
     die();
   },
 ];
-$actions['showSimplifiedScenarios'] = [
-  'title'=> "Affichage simplifié (title, from, to) des scenarios pour vérifier les enchainements",
+$actions['showSequenceBetweenActions'] = [
+  'title'=> "Affiche l'enchainement entre actions",
   'apply'=> function() use($actions): void {
     echo "<h3>Scenarios simplifiés (title, from, to) pour vérifier les enchainements</h3>",
           "<pre>",
@@ -789,8 +776,8 @@ $actions['showSimplifiedScenarios'] = [
     die();
   },
 ];
-$actions['checkScenarios'] = [
-  'title'=> "Vérifie les enchainements entre scénarios",
+$actions['checkSequenceBetweenActions'] = [
+  'title'=> "Vérifie les enchainements entre actions",
   'apply'=> function() use($actions): void {
     foreach ($actions as $action=> $actionDef) {
       if (isset($actionDef['from'])) {
@@ -869,21 +856,9 @@ $actions['checkScenarios'] = [
   },
 ];
 
-switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
-  case null: { // affichage du menu 
-    showMenu($role);
-    die();
-  }
-  case 'reinitUserBase': { // Réinitialiser la base des utilisateurs
-    createUserTable();
-    showMenu($role);
-    die();
-  }
-  default: {
-    if (isset($actions[$action]['apply']))
-      $actions[$action]['apply']();
-    else
-      echo "action '$action' inconnue<br>\n";
-    die();
-  }
-}
+$action = $_POST['action'] ?? $_GET['action'] ?? 'user.menu';
+if (isset($actions[$action]['apply']))
+  $actions[$action]['apply']();
+else
+  echo "action '$action' inconnue<br>\n";
+die();

@@ -29,7 +29,7 @@ class Login { // Fonctionnalités de login
     elseif (!isset($_POST['login']) || !isset($_POST['password'])) { // pas de paramètre de login
       echo $htmlHeadAndTitle,
            "Site à accès restreint, veuillez vous loguer",Login::FORM,
-           "</p>ou <a href='$registerUrl'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
+           "</p>ou <a href='$registerUrl'>vous inscrire ou changer votre mot de passe si vous l'avez oublié.</a>.<br>\n";
       die();
     }
     // appel avec paramètres de login incorrects -> affichage d'un message d'erreur et du formulaire

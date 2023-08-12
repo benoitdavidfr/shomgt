@@ -320,12 +320,10 @@ backlog:
     objectifs:
       - création de comptes
       - mise en base users
+      - bannissement utilisateur
     apportsFonctionnels:
-      - création de comptes
+      - création et gestion de comptes
   horsSprint:
-    - mise en base domaines et adresses IP
-    - bannissement utilisateur
-    - gestion noms de domaines et IP
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
     - automatiser la maj du GAN et de la purge des cartes
@@ -334,10 +332,8 @@ backlog:
     - ajouter un log sur shomgeotiff
     - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
     - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
-    - tableau des utilisateurs (réservé admins) -> '#fonctionnalités/userdb'
     - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
       - var. d'env. sur sgupdt -> var. GET sur sgserver avec zone
-    - annuler le dépôt de cartes
 fonctionnalités:
   admin:
     - bo réservé aux admins
@@ -1237,7 +1233,7 @@ géoréférencement:
   
 miseEnBase:
   description: mise en base de certaines informations pour la V4
-  user: voir script user.php
+  user: -> user.php?action=showUserTableSchema
   mapcat:
     description: |
       catalogue des cartes obsolètes ou non avec un n-uplet par carte
@@ -1296,16 +1292,6 @@ miseEnBase:
       description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
     gan(PAS_NECESSAIRE):
       description: stockage des infos du GAN mises à jour régulièrement par cron
-admin:
-  title: interface admin
-  fonctionnalités:
-    - gestion de
-      - la liste des domaines autorisés
-      - la liste des adresses IP autorisées
-    - annulation du dépôt d'une carte, restitution de la version précédente
-    - modification du rôle d'un utilisateur
-  implémentées:
-    - gestion de la version courante d'une carte
 bo:
   title: créer un BO pour les utilisateurs authentifiés
   fonctionnalités:
@@ -1353,75 +1339,9 @@ bo:
     - il peut déclarer qu'une carte est obsolète
   mettreAJourServicesShomGt:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
-register:
-  nomDuProcess:
-    github:
-      sign-in: se loguer
-      sign-up: s'enregistrer
-    dockerHub:
-      sign-in: se loguer
-      register: s'enregistrer
-  table: table user définie dans user.php
-  constantes:
-    noticeDelay:
-      value: 11 mois
-      description: délai après lequel une alerte est envoyée pour revalidation du compte
-    suspensionDelay:
-      value: 12 mois
-      description: délai après lequel un compte qui n'a pas été revalidé est suspendu
-  scénarios:
-    register:
-      - un utilisateur non logué demande à ouvrir un compte
-      - il fournit une adresse email et un mot de passe
-      - vérifications
-        - qu'il n'a pas déjà un compte ou que le compte est fermé ou suspendu
-        - que son adresse email est valide et correspond aux suffixes définis
-        - que son mot de passe est suffisamment long
-      - un secret est généré aléatoirement
-      - si le compte n'existe pas
-        - alors un enregistrement est créé dans la table user avec
-          - email, epasswd, newepasswd=null, role='temp', secret, create=now, sent=now, valid=null, comment=null
-      - sinonSi le role='closed' ou role='suspended'
-        - alors modification secret
-      - sinon erreur
-      - un email lui est envoyé avec un lien contenant le secret
-      - l'utilisateur clique sur le lien -> validateRegistration
-    validateRegistration:
-      - modification table valid=now, role='normal', secret=null / email+secret
-    closeAccount:
-      - un utilisateur loggué demande à fermer son compte
-      - un secret est généré aléatoirement
-      - modification user sent=now, secret / email
-      - l'utilisateur clique sur le lien -> validateCloseAccount
-    validateCloseAccount:
-      - modification user role='closed', valid=null, secret=null / email+secret
-    changePasswd:
-      - un utilisateur logué demande à changer son mot de passe
-      - il fournit le nouveau mot de passe souhaité
-      - un secret est généré aléatoirement
-      - modification user sent=now, secret, newEpasswd / email
-      - un email lui est envoyé avec un lien contenant le secret
-      - l'utilisateur clique sur le lien -> validatePasswdChange
-    validatePasswdChange:
-      - modification user valid=now, secret=null, epasswd=newepasswd, newepasswd=null / email+secret
-    reValidateByUser:
-      - génération secret
-      - modification user sent=now, secret / email
-      - envoi email avec lien contenant secret
-      - l'utilisateur clique sur le lien -> validateReValidation
-    reValidateOldUsers:
-      - pour chaque utilisateur dont now-valid > noticeDelay
-        - génération secret
-        - modification user sent=now, secret / email
-        - envoi email avec lien contenant secret
-        - l'utilisateur clique sur le lien -> validateReValidation
-    validateReValidation:
-      - modification table valid=now, secret=null / email+secret
-    suspendOldUsers:
-      - pour chaque utilisateur dont now-valid > suspensionDelay
-        - génération secret
-        - modification user sent=now, secret, role='suspended', valid=null / email
-        - envoi email avec lien contenant secret -> validateRegistration
+user:
+  table: -> user.php?action=showUserTableSchema
+  scénarios: -> user.php?action=showActions
 
 exec:
   exec: |
