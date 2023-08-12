@@ -29,6 +29,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  12/8/2023:
+    - fin du sprint6
   10/8/2023:
     - test de l'envi de mail et détection d'un bug dans l'exemple fourni par la doc Php
   9/8/2023:
@@ -317,6 +319,7 @@ backlog:
       - passer en dessous de 20 Go sur Alwaysdata (ok)
   sprint6:
     début: 9/8/2023
+    fin: 12/8/2023
     objectifs:
       - création de comptes
       - mise en base users
