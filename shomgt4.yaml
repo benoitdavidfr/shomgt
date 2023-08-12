@@ -317,7 +317,7 @@ backlog:
     apportsFonctionnels:
       - effectuer en mode web l'ajout d'une version suivie de la mise à jour des services de shomgt (ok)
       - passer en dessous de 20 Go sur Alwaysdata (ok)
-  sprint6:
+  sprint6(ok12/8T10:15):
     début: 9/8/2023
     fin: 12/8/2023
     objectifs:
@@ -326,6 +326,13 @@ backlog:
       - bannissement utilisateur
     apportsFonctionnels:
       - création et gestion de comptes
+  sprint7:
+    début: 12/8/2023
+    objectifs:
+      - lancer la mise à jour des GAN depuis l'interface web
+      - mettre en prod avec une config propre
+    apportsFonctionnels:
+      - finaliser le cycle de maj des cartes
   horsSprint:
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat

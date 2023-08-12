@@ -1,5 +1,5 @@
 <?php
-/* bo/updatemaps.php - mise à jour des cartes par sgupdt
+/ * bo/runbatch.php - mise à jour des cartes par sgupdt
 **
 ** Lance en arrière plan la mise à jour des cartes par sgupdt en stockant le résultat dans un fichier temporaire de sortie,
 ** Permet de consulter ce fichier temporaire de sortie au fur et à mesure de son remplissage,
