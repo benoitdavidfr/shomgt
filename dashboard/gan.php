@@ -57,6 +57,36 @@ require_once __DIR__.'/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+/* Verrou d'utilisation pour garantir que le script n'est pas utilisé plusieurs fois simultanément
+** 3 opération:
+**  - locked() pour connaitre l'état du verrou
+**  - lock() pour le vérouiller
+**  - unlock() pour le dévérouiller
+*/
+class Lock {
+  const LOCK_FILEPATH = __DIR__.'/LOCK.txt';
+  
+  static function locked(): ?string { // Si le verrou existe alors renvoie le contenu du fichier avec la date de verrou
+    if (is_file(self::LOCK_FILEPATH))
+      return file_get_contents(self::LOCK_FILEPATH);
+    else
+      return null;
+  }
+  
+  static function lock(): bool { // verouille, renvoie vrai si ok, false si le verrou existait déjà
+    if (is_file(self::LOCK_FILEPATH))
+      return false;
+    else {
+      file_put_contents(self::LOCK_FILEPATH, "Verrou déposé le ".date('c')."\n");
+      return true;
+    }
+  }
+  
+  static function unlock(): void {
+    unlink(self::LOCK_FILEPATH);
+  }
+};
+
 /** @param array<int, string> $http_response_header */
 function http_error_code(?array $http_response_header): ?string { // extrait le code d'erreur Http 
   if (!isset($http_response_header))
@@ -129,18 +159,27 @@ switch ($a) {
     die();
   }
   case 'harvest': { // moisson des GAN depuis le Shom en repartant de 0 
-    //echo "Harvest ligne ",__LINE__,"\n";
+    if ($lock = Lock::locked()) {
+      die("Exécution impossible, un autre utilisateur est en train d'utiliser ce script<br>\n$lock<br>\n");
+    }
+    Lock::lock();
     Portfolio::init();
     GanStatic::harvest();
+    Lock::unlock();
     die();
   }
   case 'newHarvest': { // moisson des GAN depuis le Shom réinitialisant au préalable 
-    //echo "fullHarvest ligne ",__LINE__,"\n";
+    if ($lock = Lock::locked()) {
+      die("Exécution impossible, un autre utilisateur est en train d'utiliser ce script<br>\n$lock<br>\n");
+    }
+    Lock::lock();
     Portfolio::init();
     GanStatic::harvest(['reinit'=> true]);
+    Lock::unlock();
     die();
   }
   case 'showHarvest': { // Affiche la moisson en Yaml 
+    Portfolio::init();
     GanStatic::build();
     echo Yaml::dump(Gan::allAsArray(), 4, 2);
     die();
@@ -153,19 +192,29 @@ switch ($a) {
     die("Enregistrement des fichiers Yaml et pser ok\n");
   }
   case 'harvestAndStore': { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+    if ($lock = Lock::locked()) {
+      die("Exécution impossible, un autre utilisateur est en train d'utiliser ce script<br>\n$lock<br>\n");
+    }
+    Lock::lock();
     Portfolio::init();
     GanStatic::harvest();
     GanStatic::build();
     file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
     GanStatic::storeAsPser();
+    Lock::unlock();
     die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
   }
-  case 'fullHarvestAndStore': { // moisson des GAN depuis le Shom puis enregistrement en Yaml/pser
+  case 'newHarvestAndStore': { // moisson des GAN en réinit. puis enregistrement en Yaml/pser
+    if ($lock = Lock::locked()) {
+      die("Exécution impossible, un autre utilisateur est en train d'utiliser ce script<br>\n$lock<br>\n");
+    }
+    Lock::lock();
     Portfolio::init();
     GanStatic::harvest(['reinit'=> true]);
     GanStatic::build();
     file_put_contents(GanStatic::PATH.'yaml', Yaml::dump(Gan::allAsArray(), 4, 2));
     GanStatic::storeAsPser();
+    Lock::unlock();
     die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
   }
   case 'analyzeHtml': { // analyse l'Html du GAN d'une carte particulière 
@@ -173,6 +222,10 @@ switch ($a) {
       or throw new Exception("argument mapNum absent");
     GanStatic::analyzeHtmlOfMap($mapNum);
     die();
+  }
+  case 'unlock': {
+    Lock::unlock();
+    die("Verrou supprimé\n");
   }
   default: die("Action $a inconnue");
 }

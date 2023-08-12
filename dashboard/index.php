@@ -43,16 +43,6 @@ use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard</title></head><body>\n";
 
-if (!isset($_GET['a'])) { // menu 
-  echo "<h2>Menu:</h2><ul>\n";
-  echo "<li><a href='?a=newObsoleteMaps'>Nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
-  echo "<li><a href='?a=perempt'>Degrés de péremption des cartes du portefeuille</li>\n";
-  echo "<li><a href='?a=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
-  echo "<li><a href='?a=listWfs'>liste des cartes du serveur WFS du Shom avec degré d'intérêt</li>\n";
-  echo "</ul>\n";
-  die();
-}
-
 // pour un entier fournit une représentation avec un '_' comme séparateur des milliers 
 function addUndescoreForThousand(?int $scaleden): string {
   if ($scaleden === null) return 'undef';
@@ -332,9 +322,65 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
 };
 
 class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique
-  const FILE_NAME = __DIR__.'/disponible.tsv';
+  const FILE_NAME = __DIR__.'/available.tsv';
   const MAX_DURATION = 7*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
   //const MAX_DURATION = 60; // Pour test
+  
+  // affiche comme table Html un tableau dont chaque ligne est une chaine avec \t comme séparateur
+  // Si header
+  private static function showTsvAsTable(array $data, ?string $header=null): void {
+    echo "<table border=1>\n";
+    if ($header) {
+      $header = explode("\t", $header);
+      echo '<th>#</th><th>',implode('</th><th>', $header),"</th>\n";
+    }
+    foreach ($data as $i => $line) {
+      $line = explode("\t", $line);
+      echo "<tr><td>$i</td><td>",implode('</td><td>', $line),"</td></tr>\n";
+    }
+    echo "</table>\n";
+  }
+  
+  static function load(): void { // chargement du fichier available.tsv
+    //echo "<pre>POST="; print_r($_POST); echo "</pre>\n";
+    if (!isset($_POST['text'])) {// appel intial
+      $page = 0;
+    }
+    elseif ($_POST['text']) { // chargement de la page $_POST[page]
+      $page = $_POST['page'];
+      $data = explode("\n", $_POST['text']);
+      //echo "<pre>data="; print_r($data); echo "</pre>\n";
+      $header = null;
+      if (substr($data[0], 0, 8) == 'Commande') {
+        $header = array_shift($data);
+      }
+      //echo "<pre>data ="; print_r($data); echo "</pre>\n";
+      self::showTsvAsTable($data, $header);
+      file_put_contents(__DIR__."/available-page$page.tsv", implode("\n", $data));
+      $page++;
+    }
+    else {
+      echo "Fin du chargement<br>\n";
+      $data = [];
+      $nbPages = $_POST['page'];
+      for ($page=0; $page < $nbPages; $page++) {
+        $text = file_get_contents(__DIR__."/available-page$page.tsv");
+        unlink(__DIR__."/available-page$page.tsv");
+        $data = array_merge($data, explode("\n", $text));
+        //echo "<pre>data="; print_r($data); echo "</pre>\n";
+      }
+      file_put_contents(self::FILE_NAME, implode("\n", $data));
+      self::showTsvAsTable($data);
+      return;
+    }
+    echo "Copier dans le cadre ci-dessous une copie de la liste des produits téléchageables",
+         " sur le <a href='https://diffusion.shom.fr/' target='_blank'>site de diffusion du Shom</a> (page $page)<br>\n";
+    echo "<table border=1><form method='post'>\n";
+    echo "  <input type='hidden' name='page' value='$page'/>\n";
+    echo "  <tr><td><textarea name='text' rows='30' cols='120'></textarea></td></tr>\n";
+    echo "  <tr><td><input type='submit' value='charger'></td></tr>\n";
+    echo "</form></table>\n";
+  }
   
   /** @var array<string, string> $all */
   static array $all=[]; // [{mapNum} => {maj}]
@@ -363,21 +409,16 @@ class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
   static function maj(string $mapNum): string { return self::$all[$mapNum] ?? ''; }
 };
 
-switch ($_GET['a']) {
-  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3
-    echo "<h2>Liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3</h2><pre>\n";
-    MapFromWfs::init();
-    foreach (MapFromWfs::$fts as $gmap) {
-      $gmap->showOne();
-    }
-    die();
-  }
-  case 'listOfInterest': { // liste des cartes d'intérêt 
-    MapFromWfs::init();
-    $listOfInterest = MapFromWfs::interest();
-    ksort($listOfInterest);
-    //echo "<pre>listOfInterest="; print_r($listOfInterest); echo "</pre>\n";
-    echo "<h2>Liste des cartes d'inérêt</h2><pre>\n",Yaml::dump($listOfInterest, 1),"</pre>\n";
+switch ($_GET['a'] ?? null) {
+  case null: { // menu 
+    //echo "<pre>"; print_r($_GET); echo "</pre>\n";
+    echo "<h2>Menu:</h2><ul>\n";
+    echo "<li><a href='?a=newObsoleteMaps'>Nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
+    echo "<li><a href='?a=loadAvailableOnTheShop'>Charge les versions disponibles dans le site de diffusion du Shom</li>\n";
+    echo "<li><a href='?a=perempt'>Degrés de péremption des cartes du portefeuille</li>\n";
+    echo "<li><a href='?a=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
+    echo "<li><a href='?a=listWfs'>liste des cartes du serveur WFS du Shom avec degré d'intérêt</li>\n";
+    echo "</ul>\n";
     die();
   }
   case 'newObsoleteMaps': { // détecte de nouvelles cartes à ajouter au portefeuille et les cartes obsolètes
@@ -422,6 +463,12 @@ switch ($_GET['a']) {
     }
     die();
   }
+  case 'loadAvailableOnTheShop': {
+    //echo "<pre>"; print_r($_POST); echo "</pre>\n";
+    AvailOnTheShop::load();
+    echo "<a href='index.php'>Retour au menu</a><br>\n";
+    die();
+  }
   case 'perempt': { // construction puis affichage des degrés de péremption 
     Portfolio::init(); // initialisation à partir du portefeuille
     //DbMapCat::init(); // chargement du fichier mapcat.yaml
@@ -436,6 +483,22 @@ switch ($_GET['a']) {
         $perempt->setGan($gan);
     }
     Perempt::showAll(); // Affichage du tableau des degrés de péremption
+    die();
+  }
+  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3
+    echo "<h2>Liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3</h2><pre>\n";
+    MapFromWfs::init();
+    foreach (MapFromWfs::$fts as $gmap) {
+      $gmap->showOne();
+    }
+    die();
+  }
+  case 'listOfInterest': { // liste des cartes d'intérêt 
+    MapFromWfs::init();
+    $listOfInterest = MapFromWfs::interest();
+    ksort($listOfInterest);
+    //echo "<pre>listOfInterest="; print_r($listOfInterest); echo "</pre>\n";
+    echo "<h2>Liste des cartes d'inérêt</h2><pre>\n",Yaml::dump($listOfInterest, 1),"</pre>\n";
     die();
   }
   case 'availOnShop': { // Test de AvailOnTheShop::init();

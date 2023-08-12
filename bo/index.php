@@ -6,6 +6,13 @@ require_once __DIR__.'/user.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+function harvestDate(): ?string { // lit la date de dernière moisson des GAN dans ../dashboard/gans.yaml
+  if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
+    return null;
+  $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
+  return $gans['valid'];
+}
+
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 
@@ -15,7 +22,7 @@ $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 $login = Login::login($HTML_HEAD.$HTML_TITLE, 'user.php?action=register');
 
 switch ($_GET['action'] ?? null) {
-  case 'deleteTempOutputSgupdt': { // revient de updatemaps.php et efface le fichier temporaire créé 
+  case 'deleteTempOutputBatch': { // revient de runbatch.php et efface le fichier temporaire créé 
     $filename = basename($_GET['filename']);
     //echo "filename=$filename<br>\n";
     unlink(__DIR__."/temp/$filename");
@@ -24,18 +31,21 @@ switch ($_GET['action'] ?? null) {
   case null: { // Menu après login
     $role = userRole($login);
     $roleDisplay = ($role <> 'normal') ? "/role=$role" : '';
+    $harvestInfo = ($harvestDate = harvestDate()) ? "précédemment moissonné le $harvestDate" : '';
     echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login$roleDisplay)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
+    if ($role == 'restricted') die();
+    echo "<li><a href='runbatch2.php?batch=harvestGan'>Moissonnage du GAN $harvestInfo</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
          "Identifier les cartes à ajouter/supprimer/actualiser dans le portefeuille ShomGT</a></li>\n";
-    if ($role == 'restricted') die();
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",
          "Télécharger une nouvelle version de cartes sur le site du Shom</a></li>\n";
     echo "<li><a href='addmaps.php'>Déposer cette nouvelle version de carte dans le portefeuille</a></li>\n";
     //echo "<li><a href='?action=mapcat'>Modifier le catalogue des cartes</li>\n";
     //echo "<li><a href='?action=obsoleteMap'>Déclarer une carte obsolète</a></li>\n";
-    echo "<li><a href='updatemaps.php'>Prendre en compte les nouvelles versions dans la consultation des cartes</a></li>\n";
+    echo "<li><a href='runbatch2.php?batch=sgupdt'>",
+         "Prendre en compte les nouvelles versions dans la consultation des cartes</a></li>\n";
     echo "</ul>\n";
     if ($role <> 'admin') die();
     echo "<h3>Fonctions d'administration</h3>\n";
@@ -47,6 +57,8 @@ switch ($_GET['action'] ?? null) {
     echo "<li><a href='clonedatamaps.php'>Créer dans sgpp/data/maps un clone de shomgt/data/maps</a></li>\n";
     echo "<li><a href='?action=getenv'>Afficher les variables d'environnement</a></li>\n";
     //echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
+    echo "</ul><h3>Fonctions de test</h3><ul>\n";
+    echo "<li><a href='runbatch2.php?batch=test'>batchtest</a></li>\n";
     echo "</ul>\n";
     die();
   }
