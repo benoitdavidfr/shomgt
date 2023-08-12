@@ -31,6 +31,8 @@ abstract: |
 journal:
   12/8/2023:
     - fin du sprint6
+    - fin du sprint7
+    - 23:15 mise en prod 4.1 = sprint7
   10/8/2023:
     - test de l'envi de mail et détection d'un bug dans l'exemple fourni par la doc Php
   9/8/2023:
@@ -326,10 +328,12 @@ backlog:
       - bannissement utilisateur
     apportsFonctionnels:
       - création et gestion de comptes
-  sprint7:
+  sprint7(ok12/8T23:15):
     début: 12/8/2023
+    fin: 12/8/2023T23/15
     objectifs:
       - lancer la mise à jour des GAN depuis l'interface web
+      - saisie en mode web de available.tsv
       - mettre en prod avec une config propre
     apportsFonctionnels:
       - finaliser le cycle de maj des cartes
@@ -1267,41 +1271,6 @@ miseEnBase:
       bbox:
         type: polygon
         description: boite engobante de la carte
-  PAS_NECESSAIRE:
-    trace(PAS_NECESSAIRE):
-      description: |
-        traces des ajouts et suppressions de cartes et de l'annulation éventuelle de l'action
-        L'action peut être
-         - ajout d'une nouvelle carte
-         - remplacement d'une carte par une nouvelle version
-         - suppression d'une carte obsolète
-      attributs:
-        mapnum:
-          description: numéro de la carte ajoutée, remplacée ou supprimée
-        version:
-          description: version de la carte ajoutée, null pour une carte supprimée
-        user:
-          description: utilisateur ayant réalisé l'action
-        action:
-          description: type d'action
-          enum:
-            add: ajout d'une nouvelle carte
-            replacement: remplacement d'une carte par une nouvelle version
-            delete: suppression d'une carte obsolète
-        dt:
-          description: date et heure de l'action
-        canceldt:
-          description: date et heure de l'annulation ou null si l'action n'a pas été annulée
-        canceluser:
-          description: admin ayant annulé l'action ou null si l'action n'a pas été annulée
-        path:
-          description: chemin vers l'archive 7z de la version remplacée ou de la carte supprimée, null pour une nouvelle carte
-    maildomain(PAS_NECESSAIRE):
-      description: liste des domaines mails autorisés pour les utilisateurs, gérée par un admin
-    ipaddress(PAS_NECESSAIRE):
-      description: liste des adresses IPv4 et préfixes IPv6 autorisés, gérée par un admin
-    gan(PAS_NECESSAIRE):
-      description: stockage des infos du GAN mises à jour régulièrement par cron
 bo:
   title: créer un BO pour les utilisateurs authentifiés
   fonctionnalités:
