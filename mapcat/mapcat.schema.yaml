@@ -4,6 +4,8 @@ modified: '2022-07-12'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    13/8/2023:
+      - ajout de la propriété deletedMaps et de la possibilité que mapsFrance soit unknown
     30/7/2023:
       - modification du schéma de la propriété cartesAyantUnIntérêtInsuffisant
         - suppression du caractère obligatoire de la propriété scaleDenominator car l'échelle est souvent indéfinie
@@ -120,10 +122,17 @@ definitions:
       pour la facade de Méditérannée, 'FX-Atl' pour la facade Atlantique et 'FX-MMN' pour la facade de la Manche
       et de la mer du Nord.
       Prend la valeur 'FR' ssi la carte intersecte toute la ZEE française.
-    type: array
-    items:
-      type: string
-      enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
+    oneOf:
+      - type: array
+        items:
+          type: string
+          enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
+      - description: |
+          Pour les cartes supprimées, cette information peut être inconnue et peu utile ;
+          dans ces cas on peut utiliser la valeur unknown.
+          Cette possibilité ne doit pas être utilisée pour les cartes courantes et les cartes obsolètes.
+        type: string
+        const: unknown
   borders:
     description: |
       Lorsque la carte ou ses cartouches ne sont pas géoréférencés, la connaissance de l'épaisseur du cadre combinée
@@ -350,7 +359,9 @@ properties:
         description: Description d'une carte.
         $ref: '#/definitions/map'
   obsoleteMaps:
-    description: dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur retrait
+    description: |
+      dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur retrait.
+      Les cartes obsolètes ne sont plus exposées par sgserver mais restent présentes dans le BO.
     type: object
     additionalProperties: false
     patternProperties:
@@ -365,7 +376,8 @@ properties:
             $ref: '#/definitions/map'
   cartesAyantUnIntérêtInsuffisant:
     description: |
-      Liste les cartes dont l'intérêt est insuffisant pour décrire les espaces sur lesquels la France exerce ses droits.
+      dictionnaire des cartes intersectant la ZEE mais inutiles pour décrire les espaces sur lesquels la France
+      exerce ses droits.
     type: object
     additionalProperties: false
     patternProperties:
@@ -383,6 +395,20 @@ properties:
             description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
             $ref: '#/definitions/scaleDenominator'
           reason: { description: motif de l'insuffisance, type: string }
+  deletedMaps:
+    description: cartes supprimées
+    type: object
+    additionalProperties: false
+    patternProperties:
+      ^FR\d\d\d\d:
+        description: pour chaque carte la liste des suppressions indexées par la date de suppression ou unknown
+        type: object
+        additionalProperties: false
+        patternProperties:
+          ^\d\d\d\d-\d\d-\d\d:
+            description: propriétés de chaque carte retirée
+            type: object
+            $ref: '#/definitions/map'
   eof:
     description: propriété marquant la fin du fichier
     type: 'null'

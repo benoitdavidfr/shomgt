@@ -5551,4 +5551,186 @@ cartesAyantUnIntérêtInsuffisant:
     title: 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier
     scaleDenominator: '50.000'
     reason: carte inutile de par son objet
+deletedMaps:
+  FR0982:
+    '2023-07-31':
+      title: 0982 - Abords Sud de Terre-Neuve - Ile Saint-Pierre - Port de Saint-Pierre - Ile Miquelon - Port de Miquelon
+      mapsFrance: [PM]
+      noteCatalog: remplacéePar 7638, 7639 et 7640
+  FR5438:
+    '2023-07-31':
+      title: 5438 - Océan Pacifique
+      mapsFrance: [PF, NC]
+      noteCatalog: carte à très petite échelle, assez moche, pas utile
+  FR5825:
+    '2020-12-27':
+      groupTitle: 'Océan Pacifique'
+      title: 'Ilot Clipperton'
+      mapsFrance: [CP]
+      insetMaps:
+        - title: 'Ilot Clipperton'
+          scaleDenominator: '20.000'
+          spatial: { SW: '10°15,53''N - 109°15,27''W', NE: '10°20,33''N - 109°11,18''W' }
+      noteCatalog: remplacée par 7750 et 7751
+  FR6015:
+    '2022-06-16':
+      groupTitle: 'Canada - Groenland - Islande'
+      title: 'Des passages du Nord-Ouest à la Mer du Groenland'
+      mapsFrance: []
+      scaleDenominator: 4.660.000
+      spatial: { SW: "48°50'N - 098°W", NE: "74°N - 014°30'W" }
+      noteCatalog: |
+        - redondante avec la carte au 1:10M plus générale.
+        - Correction de l'extension pour supprimer le cadre et améliorer l'affichage autour de St Pierre et Miquelon.
+        - On pourrait améliorer les corrections mais cela évite un affichage très moche.
+      badGan: "L'extension définie par le GAN conduit à intégrer une grande partie du cadre"
+  FR6118:
+    '2023-06-26':
+      groupTitle: 'Océan Atlantique Nord - Abords Sud de Terre-Neuve'
+      title: 'Iles Saint-Pierre et Miquelon'
+      mapsFrance: [PM]
+      scaleDenominator: '80.000'
+      spatial: { SW: "46°35,00'N - 056°38,95'W", NE: "47°17,00'N - 055°57,95'W" }
+      noteCatalog: remplacée par des cartes plus récentes
+  FR6553:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Kouaoua'
+      mapsFrance: [NC]
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°25,34''S - 165°48,00''E'
+        NE: '21°18,11''S - 165°53,20''E'
+      noteCatalog: remplacée par FR7757
+  FR6589:
+    '2023-01-10':
+      groupTitle: 'Côte Est de Nouvelle-Calédonie'
+      title: 'Baie de Canala'
+      mapsFrance:
+        - NC
+      scaleDenominator: '20.000'
+      spatial:
+        SW: '21°31,84''S - 165°54,60''E'
+        NE: '21°21,29''S - 166°02,28''E'
+      noteCatalog: remplacée par FR7757
+  FR6645:
+    '2020-12-27T07:58:14+01:00':
+      groupTitle: 'Côte Ouest de France'
+      title: 'Pointe de Penmarc''h - Abords de Saint-Guénolé et de Kérity'
+      mapsFrance:
+        - FX-Atl
+      scaleDenominator: '15.000'
+      spatial:
+        SW: '47°45,66''N - 004°26,36''W'
+        NE: '47°49,30''N - 004°18,32''W'
+      noteCatalog: remplacée par 7250
+  FR6646:
+    '2020-12-27T07:58:18+01:00':
+      groupTitle: 'Côte Ouest de France '
+      title: 'Abords et Ports du Guilvinec et de Lesconil'
+      mapsFrance:
+        - FX-Atl
+      scaleDenominator: '15.000'
+      spatial:
+        SW: '47°45,12''N - 004°19,24''W'
+        NE: '47°48,76''N - 004°11,20''W'
+      noteCatalog: remplacée par 7250
+  FR6725:
+    '2023-07-31':
+      title: 6725 - Estuaire de la Tamise - Partie Sud
+      mapsFrance: []
+      noteCatalog: Fac-similé de la carte GB 1607, n'intersecte pas la France, redondante avec 6735
+  FR6770:
+    '2023-01-10':
+      groupTitle: 'Océan Pacifique - Nouvelle Calédonie'
+      title: 'Abords Sud-Ouest de l''Île des Pins - Baies de Kuto et de Kanuméra'
+      mapsFrance:
+        - NC
+      scaleDenominator: '25.000'
+      spatial:
+        SW: '22°43,13''S - 167°16,80''E'
+        NE: '22°36,18''S - 167°27,90''E'
+      noteCatalog: remplacée par FR7763
+  FR6774:
+    '2023-07-31':
+      title: 6774 - Puerto de Bilbao
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte ES 3941, n'intersecte pas la France
+  FR6786:
+    '2023-07-31':
+      title: 6786 - De Biscarrosse à San Sebastian
+      scaleDenominator: '130.000'
+      mapsFrance: unknown
+      noteCatalog: redondante avec 7070 (1:168.000) et 7657 (1:175.000)
+  FR6851:
+    '2023-07-31':
+      title: 6851 - Ports d'Ajaccio et de Propriano
+      mapsFrance: unknown
+      noteCatalog: remplacée par FR7436
+  FR6856:
+    '2023-07-31':
+      title: 6856 - Abords et Port de Bastia
+      mapsFrance: unknown
+      noteCatalog: remplacée par FR7436
+  FR7019:
+    '2023-07-31':
+      title: 7019 - De Imperia à Portofino
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte IT 2, n'intersecte pas la France, redondante avec 7229
+  FR7037:
+    '2023-07-31':
+      title: 7037 - De Dover à North Foreland
+      scaleDenominator: '37.500'
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte Carte GB n°1828, n'intersecte pas la France, redondante avec 7424
+  FR7046:
+    '2023-07-31':
+      title: 7046 - Puerto de Barcelona
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte ES 4891, n'intersecte pas la France
+  FR7047:
+    '2023-07-31':
+      title: 7047 - Puerto de Tarragona
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte ES 4871, n'intersecte pas la France
+  FR7182:
+    '2023-07-31':
+      title: 7182 - Approches de l'Estuaire de la Tamise
+      mapsFrance: unknown
+      noteCatalog: fac-similé de la carte GB 1610, 1:150_000, intersecte la France mais inutile, redondante
+  FR7189:
+    '2023-07-31':
+      title: 7189 - Golfes d'Olbia et d'Aranci - Iles Tavolara et Molara
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte IT 322 et IT 318, Sicile, n'intersecte pas la France
+  FR7190:
+    '2023-07-31':
+      title: 7190 - Golfe de Congianus - De Capo Ferro à Capo Figari
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte IT 323, Sicile, n'intersecte pas la France
+  FR7191:
+    '2023-07-31':
+      title: 7191 - Archipel de la Maddalena
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte IT 324, Sicile, n'intersecte pas la France
+  FR7239:
+    '2023-07-31':
+      title: 7239 - Port de Santander
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte ES 4011, n'intersecte pas la France
+  FR7622:
+    '2023-07-31':
+      title: 7622 - Ports de Saint Lucia
+      mapsFrance: []
+      noteCatalog: carte grande échelle n'intersectant pas la France
+  FR7623:
+    '2023-07-31':
+      title: 7623 - Approches Nord-Ouest de Saint Lucia
+      mapsFrance: []
+      noteCatalog: fac-similé de la carte GB 197, n'intersecte pas la France, 1:25.000
+  FR7656:
+    '2022-06-23':
+      title: 7656 - De Santoña à Gijón
+      mapsFrance: []
+      noteCatalog: n'intersecte pas la France et retirée du catalogue du Shom, redondante avec 6991
 eof:

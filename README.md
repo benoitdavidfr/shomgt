@@ -11,8 +11,8 @@ comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
 Ce dépôt correspond la version 4 de ShomGT.
 Cette version, en cours de développement, propose des outils en mode web pour gérer le portefeuille de cartes 
-(ajout/suppression d'une carte, ajout/suppression d'une version d'une une carte).
-Elle doit permettre une gestion collaborative du portefeuille de cartes.
+(ajout/suppression d'une carte ou d'une version d'une carte).
+Son objectif est de permettre à différentes personnes d'effectuer les mises à jour du portefeuille de cartes.
 
 La version 3 avait pour objectif de simplifier la mise en place d'un serveur local, son approvisionnement
 avec les cartes du Shom, puis la mise à jour de ces cartes ;
@@ -38,7 +38,7 @@ ShomGT4 se décompose dans les 7 modules suivants:
     dans ce cas le répertoire data constitue un volume partagé entre ces 2 conteneurs.
     
   - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
-    Il est mis à jour régulièrement grâce à *dashboard*.
+    Il est mis à jour régulièrement au travers du BO en fonction des infos fournies par le *dashboard*.
   
   - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
@@ -63,20 +63,23 @@ ShomGT4 se décompose dans les 7 modules suivants:
 
 Chacun de ces modules correspond à un répertoire ;
 en plus de ces 7 modules, une [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
-## 2. Termes et concepts utilisés dans ce projet
-Dans ce projet sont utilisés différents termes et concepts définis ci-dessous:
 
-- **portefeuille de cartes**: l'ensemble des cartes gérées par ShomGT, chacune dans une certaine version,
+## 2. Termes et concepts utilisés dans ShomGT
+Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
+
+- **portefeuille de cartes**: l'ensemble des cartes gérées dans *sgserver*, chacune dans une certaine version,
 - **carte d'intérêt (pour ShomGT)**: carte ayant vocation à être dans le portefeuille.  
   Il s'agit:
-    - des cartes intersectant la ZEE française
-      - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement dans le catalogue MapCat
-    - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre
-- **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive)
+    - des cartes intersectant la ZEE française,
+      - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement dans le catalogue MapCat,
+    - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre,
+    - plus quelques cartes à proximité de la ZEE française et jugée utiles.
+- **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive),
+  intégrant les extensions du plateau continental.
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
   chaque carte est identifiée par un numéro sur 4 chiffres
   qui est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
-  La livraison par le Shom d'une carte correspond à une version particulière et prend la forme d'une archive 7z.
+  La livraison par le Shom d'une carte correspond à une version particulière et prend la forme numérique d'une archive 7z.
 - **carte spéciale** : dans ShomGT, on distingue :
   - les cartes normales, c'est à dire les [Cartes marines numériques raster
     (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
@@ -85,32 +88,34 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html),
     principalement les cartes d'action de l'Etat en mer (AEM), dont le format de livraison n'est pas fixé 
     et varie d'une carte à l'autre.
+- **Fac similé** : carte normale reproduction d'une carte étrangère, son format de livraison peut être légèrement différent
+  de celui des cartes normales.
 - **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
   - l'année d'édition ou de publication de la carte,
-  - le numéro de correction sur l'édition.
+  - le numéro de la correction sur l'édition.
     Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devait la reporter sur la carte.  
   
-  Dans ShomGT4, la version est définie sous la forme {année}c{correction}, où {année} est l'année d'édition ou de publication
-  de la carte et {correction} est le numéro de correction sur cette édition.
+  Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{correction},où {année} est l'année d'édition
+  ou de publication de la carte et {correction} est le numéro de correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.  
   Certaines cartes spéciales ont un identifiant spécifique de version de la forme {mapNum}_{année},
   où {année} est l'année de la publication de la carte, ou simplement {mapNum} quand l'année n'est pas connue.
-- **carte obsolète** : soit une carte que le Shom a retirée de son catalogue
+- **carte obsolète** : soit une carte retirée par le Shom de son catalogue,
   et qui doit donc être retirée du portefeuille ShomGT,
   soit une carte qui a été dans le portefeuille mais dont l'intérêt a été jugé insuffisant par la suite
-  et qui donc a été retirée du portefeuille même si elle peut rester une carte valide pour le Shom,
+  et qui donc a été retirée du portefeuille même si elle peut rester une carte valide pour le Shom.
 - **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
   une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
   du nombre de corrections apportées.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.
-  Les actualisations sont publiées chaque semaine (le jeudi) et datée par une chaîne de 4 chiffres correspondant
-  sur les 2 premiers chiffres aux 2 derniers chiffres de l'année, et sur 2 autres chiffres à la semaine dans l'année
+  Les actualisations sont publiées chaque semaine (le jeudi) et datée par un libellé de 4 chiffres
+  dont les 2 premiers correspondent aux 2 derniers chiffres de l'année, et les 2 autres chiffres à la semaine dans l'année
   conformément à [la définition ISO](https://fr.wikipedia.org/wiki/Num%C3%A9rotation_ISO_des_semaines).
   Le GAN prend la forme du site https://gan.shom.fr/ qui est un site HTML 
   et les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
-  Dans ShomGT3 ce site est scrappé pour retrouver la version courante d'une carte et la comparer 
-  avec celle de la carte du portefeuille.  
+  Dans ShomGT ce site est scrappé pour retrouver la version courante d'une carte et la comparer 
+  avec celle dans le portefeuille.  
   Seules les cartes normales sont mentionnées dans le GAN, à l'exception de la carte 0101 qui est le planisphère terrestre.
   Les cartes spéciales ne sont pas mentionnées dans le GAN.
 - **GéoTiff** : la numérisation d'une carte produit des images géoréférencées
@@ -119,9 +124,9 @@ Dans ce projet sont utilisés différents termes et concepts définis ci-dessous
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF) ; l'image est ainsi appelée **GéoTiff**.
   Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
   Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
-  Dans certains cas un GéoTiff peut ne pas être géoréférencé ; principalement dans 2 cas :
+  Un GéoTiff peut ne pas être géoréférencé dans les 2 cas suivants :
   - certaines cartes ne comporte pas de zone principale mais sont uniquement composées de cartouches ;
-    dans ce cas le GéoTiff de la carte globale n'est pas géoréférencé,
+    dans ce cas la livraison du Shom comporte un GéoTiff de la carte globale qui n'est pas géoréférencé,
   - plusieurs cartes spéciales ne sont pas géoréférencées.
   De plus quelques GéoTiffs sont référencés mais leur référencement est erroné
   et ne peut être interprété par certains logiciels.
