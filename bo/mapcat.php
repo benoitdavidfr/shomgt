@@ -204,64 +204,6 @@ class CmpMapCat {
 };
 //echo '<pre>maps='; print_r(MapCat::$maps);
 
-/*PhpDoc: classes
-name: GanInSet
-title: class GanInSet - description d'un cartouche dans la synthèse d'une carte
-*/
-/*class GanInSet {
-  protected string $title;
-  public string $scale;
-  public array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
-
-  function __construct(string $html) {
-    //echo "html=$html\n";
-    if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $html, $matches))
-      throw new Exception("Erreur de construction de GanInSet sur '$html'");
-    $this->title = trim($matches[1]);
-    $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
-  }
-
-  function asArray(): array {
-    return [
-      'title'=> $this->title,
-      'spatial'=> $this->spatial,
-    ];
-  }
-};*/
-
-/*PhpDoc: classes
-name: Gan
-title: class Gan - synthèse des GAN par carte à la date de moisson des GAN ou indication d'erreur d'interrogation des GAN
-doc: |
-*/
-/*class Gan {
-  const GAN_DIR = __DIR__.'/gan';
-  const PATH = __DIR__.'/../dashboard/gans.'; // chemin sans extension des fichiers stockant la synthèse en pser ou en yaml,
-  const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
-  const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
-  static string $hvalid=''; // intervalles des dates de la moisson des GAN
-  static array $gans=[]; // dictionnaire [$mapnum => Gan]
-
-  protected string $mapnum;
-  protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
-  protected string $title=''; // titre
-  public ?string $scale=null; // échelle
-  protected ?string $edition=null; // edition
-  protected array $corrections=[]; // liste des corrections
-  public array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  protected array $inSets=[]; // cartouches
-  protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
-  protected string $valid; // date de moissonnage du GAN en format ISO
-  protected string $harvestError=''; // erreur éventuelle du moissonnage
-
-  static function week(string $modified): string { // transforme une date en semaine sur 4 caractères comme utilisé par le GAN 
-    $time = strtotime($modified);
-    return substr(date('o', $time), 2) . date('W', $time);
-  }
-
-  
-};*/
-
 switch($_GET['action'] ?? null) {
   case null: {
     echo "<h2>Gestion du catalogue MapCat</h2><h3>Menu</h3><ul>\n";
