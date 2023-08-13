@@ -1,5 +1,8 @@
 <?php
-// bo/pfweight.php - gestion du poids des cartes du portefeuille - 1/8/2023
+/*PhpDoc:
+name: pfweight.php
+title: bo/pfweight.php - gestion du poids des cartes du portefeuille - 1/8/2023
+*/
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/login.inc.php';
@@ -8,20 +11,6 @@ require_once __DIR__.'/../mapcat/mapcat.inc.php';
 //require_once __DIR__.'/maparchive.php';
 
 use Symfony\Component\Yaml\Yaml;
-
-/*function dump(string $s): void {
-  echo "<table border=1><tr>";
-  for ($i = 0; $i < strlen($s); $i++) {
-    $c = substr($s, $i, 1);
-    echo "<td>$c</td>\n";
-  }
-  echo "</tr><tr>\n";
-  for ($i = 0; $i < strlen($s); $i++) {
-    $c = substr($s, $i, 1);
-    printf ("<td>%x</td>\n", ord($c));
-  }
-  echo "</tr></table>\n";
-}*/
 
 if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");

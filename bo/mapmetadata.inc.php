@@ -1,7 +1,10 @@
 <?php
-// bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 4/8/2023
-// déf. de la classe MapMetadata et de la fonction ganWeek2iso()
-
+/*PhpDoc:
+name: mapmetadata.php
+title: bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 4/8/2023
+doc: |
+  déf. de la classe MapMetadata et de la fonction ganWeek2iso()
+*/
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 

@@ -1,7 +1,10 @@
 <?php
-/* clonedatamaps.php - crée dans sgpp/data/maps un clone de shomgt/data/maps - 8/8/2023
-** Clone shomgt/data/maps dans sgpp/data/maps en créant des répertoires et des liens durs pour les fichiers
-** Sur localhost utilise des répertoires différents.
+/*PhpDoc:
+name: clonedatamaps.php
+title: clonedatamaps.php - crée dans sgpp/data/maps un clone de shomgt/data/maps - 8/8/2023
+doc: |
+  Clone shomgt/data/maps dans sgpp/data/maps en créant des répertoires et des liens durs pour les fichiers
+  Sur localhost utilise des répertoires différents.
 */
 //require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';

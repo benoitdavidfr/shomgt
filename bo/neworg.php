@@ -1,5 +1,8 @@
 <?php
-/* bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff
+/*PhpDoc:
+name: neworg.php
+title: bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff (PERIME)
+doc: |
   Principes
     - 3 sous-répertoires de shomgeotiff
     - archives

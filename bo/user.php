@@ -1,5 +1,8 @@
 <?php
-/* bo/user.php - création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023
+/*PhpDoc:
+name: user.php
+title: bo/user.php - création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023
+doc: |
    Améliorations à apporter:
      - au moins faire un log des actions
 */
@@ -255,34 +258,6 @@ function sendMail(string $action, string $email, string $secret, ?string $passwd
     echo "Erreur d'envoi du mail à $email refusé<br>\n";
 }
 
-// création d'un formulaire Html de choix d'une valeur (<select>)
-function htmlSelect(string $name, array $choices, string $selected='', string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
-  {/*Paramètres:
-      $name: nom du select, sera le champ de $_GET/$_POST contenant la valeur choisie
-      $choices: la liste des choix possibles soit sous la forme de liste, soit sous la forme d'un dictionnaire [nom => libellé]
-      $selected: le nom du choix pré-selectionné dans l'affichage
-      $submitValue: libellé du bouton de sélection
-      $hiddenValues: dict. [nom => valeur] transmis dans la variable $_GET ou $_POST
-      $action: chemin du script à exécuter après sélection de la valeur
-      $method: 'get' pour une transmission Http GET, 'post' pour une transmission POST
-    Le code Html est formatté pour faciliter son débuggage
-  */}
-  $spaces = '    ';
-  $form =  "$spaces<form action='$action' method='$method'>\n";
-  foreach ($hiddenValues as $hvname => $value) {
-    $form .= "$spaces  <input type='hidden' name='$hvname' value='$value' />\n";
-  }
-  $form .= "$spaces  <select name='$name'>\n";
-  foreach ($choices as $choice => $label) {
-    if (is_int($choice)) $choice = $label;
-    $form .= "$spaces    <option value='$choice'".($choice==$selected ? ' selected' : '').">$label</option>\n";
-  }
-  return $form
-    ."$spaces  </select>\n"
-    ."$spaces  <input type='submit' value='$submitValue'>\n"
-    ."$spaces</form>\n";
-}
-
 /* Le script est décomposé en "écrans" qui s'enchainent les uns après les autres
 ** Chaque écran est défini comme une entrée de la table $actions ci-dessous avec
 **  - commé clé le nom ou id de l'écran
@@ -398,21 +373,23 @@ $actions = [
       }
       echo "<table border=1><th>email</th><th>role</th><th>création</th><th>validité</th><th>commentaire</th>\n";
       foreach (MySql::query("select * from user order by email") as $user) {
-        $roleSelect = htmlSelect(
-          'role', // name
-          ['normal', 'admin','temp','restricted', 'banned','suspended','closed','system'], // choices
-          $user['role'], 'M',
-          ['action'=> 'editUsers', 'email'=> $user['email']] // $hiddenValues
-        );
-        $commentTextArea = "<form>"
-          ."<input type='hidden' name='action' value='editUsers' />"
-          ."<input type='hidden' name='email' value='$user[email]' />"
-          ."<textarea name='comment' rows='3' cols='50'>".htmlspecialchars($user['comment'] ?? '')."</textarea>"
-          ."<input type='submit' value='M'>"
-          ."</form>";
-        echo "<tr><td>$user[email]</td><td>$roleSelect</td>",
-             "<td>$user[createdt]</td><td>$user[valid]</td>",
-             "<td>$commentTextArea</td></tr>\n";
+        echo "<tr><td>$user[email]</td>",
+            "<td>",Html::select(
+                name: 'role',
+                choices: ['normal', 'admin','temp','restricted', 'banned','suspended','closed','system'],
+                selected: $user['role'],
+                submitValue: 'M',
+                hiddenValues: ['action'=> 'editUsers', 'email'=> $user['email']]
+              ),"</td>",
+            "<td>$user[createdt]</td>",
+            "<td>$user[valid]</td>",
+            "<td>",Html::textArea(
+                name: 'comment',
+                text: $user['comment'] ?? '',
+                submitValue: 'M',
+                hiddenValues: ['action'=> 'editUsers', 'email'=> $user['email']]
+              ),"</td>",
+            "</tr>\n";
       }
       echo "</table></p>\n";
   

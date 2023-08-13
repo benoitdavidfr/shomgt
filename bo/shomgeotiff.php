@@ -1,10 +1,15 @@
 <?php
-/* bo/shomgeotiff.php - accès aux fichiers de SHOMGEOTIFF à l'intérieur d'une archive 7z - 3/8/2023
-** Le PATH_INFO est composé de la concaténation
-**  - du chemin du fichier 7z,
-**  - du caractère '/' et
-**  - de l'entrée dans le fichier 7z
-** Permet aussi de télécharger l'archive 7z
+/*PhpDoc:
+name: shomgeotiff.php
+title: bo/shomgeotiff.php - accès aux fichiers de SHOMGEOTIFF à l'intérieur d'une archive 7z - 3/8/2023
+doc: |
+  Le PATH_INFO est composé de la concaténation
+   - du chemin du fichier 7z dans SHOMGT3_PORTFOLIO_PATH,
+   - du caractère '/' et
+   - de l'entrée dans le fichier 7z
+  Permet aussi:
+   - de télécharger l'archive 7z
+   - de convertir en .png un .tif ou un .pdf
 */
 require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';

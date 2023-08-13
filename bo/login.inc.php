@@ -1,6 +1,8 @@
 <?php
-// bo/login.inc.php - classe Login - 19/7/2023
-
+/*PhpDoc:
+name: login.inc.php
+title: bo/login.inc.php - classe Login définissant les fonctionnalités de login dans le BO - 19/7/2023
+*/
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 class Login { // Fonctionnalités de login 

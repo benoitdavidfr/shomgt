@@ -1,6 +1,8 @@
 <?php
-// bo/addmaps.php - ajout et vérification de nouvelles cartes dans le BO
-
+/*PhpDoc:
+name: addmaps.php
+title: bo/addmaps.php - ajout et vérification de nouvelles cartes dans le BO
+*/
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/user.php';
 require_once __DIR__.'/mapmetadata.inc.php';

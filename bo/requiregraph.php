@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: requiregraph.php - construction de la liste des inclusions require et requi_once - 11/6/2023
+title: requiregraph.php - construction de la liste des inclusions require et require_once - 11/6/2023
 */
 require_once __DIR__.'/../vendor/autoload.php';
 

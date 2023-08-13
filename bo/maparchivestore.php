@@ -1,19 +1,22 @@
 <?php
-/* bo/maparchivestore.php - gère les stockage d'archives de cartes - 7/8/2023
-** Un stockage d'archives de cartes (MapArchiveStore) est un répertoire qui contient
-**   - d'une part un sous-répertoire archives
-**   - d'autre part un sous-répertoire current avec des liens symboliques vers les archives
-**
-** La classe MapArchiveStore permet surtout de supporter des méthodes qui lisent et modifient les fichiers.
-**
-** Chgt de logique le 7/8/2023, lors d'un clonage utilisation de liens hards.
-** Cela permet d'éviter les boucles infinies ou les liens invalides lorsque l'on déplace le stockage.
-**
-** Ce script propose 4 fonctions:
-**  1) vérifier la conformité des liens de current
-**  2) si un lien de current est absolu alors le transformer en lien relatif
-**  3) cloner un MapArchiveStorage avec dans archives des liens durs pour les md.json et les 7z du storage d'origine
-**  4) comparer 2 MapArchiveStorage
+/*PhpDoc:
+name: maparchivestore.php
+title: bo/maparchivestore.php - gère les stockage d'archives de cartes - 7/8/2023
+doc: |
+  Un stockage d'archives de cartes (MapArchiveStore) est un répertoire qui contient
+    - d'une part un sous-répertoire archives
+    - d'autre part un sous-répertoire current avec des liens symboliques vers les archives
+ 
+  La classe MapArchiveStore permet surtout de supporter des méthodes qui lisent et modifient les fichiers.
+ 
+  Chgt de logique le 7/8/2023, lors d'un clonage utilisation de liens hards.
+  Cela permet d'éviter les boucles infinies ou les liens invalides lorsque l'on déplace le stockage.
+
+  Ce script propose 4 fonctions:
+   1) vérifier la conformité des liens de current
+   2) si un lien de current est absolu alors le transformer en lien relatif
+   3) cloner un MapArchiveStorage avec dans archives des liens durs pour les md.json et les 7z du storage d'origine
+   4) comparer 2 MapArchiveStorage
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';

@@ -1,5 +1,8 @@
 <?php
-/* proto purge des vieilles livraisons - Benoit DAVID - 16-17/7/2023
+/*PhpDoc:
+name: purge.php
+title: bo/purge.php - proto purge des vieilles livraisons - Benoit DAVID - 16-17/7/2023 (PERIME)
+doc: |
   Pour chaque carte, je garde
     - les versions ayant moins d'un an et
     - la plus récente des versions ayant plus d'un an

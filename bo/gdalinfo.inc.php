@@ -1,6 +1,8 @@
 <?php
-// gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
-
+/*PhpDoc:
+name: gdalinfo.inc.php
+title: gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
+*/
 require_once __DIR__.'/../lib/coordsys.inc.php';
 
 {/*PhpDoc: classes

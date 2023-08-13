@@ -3,7 +3,8 @@
 title: bo/mapcat.php - gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN
 classes:
 doc: |
-  L'objectif est d'identifier les écarts entre mapcat et le GAN pour
+  L'objectif est d'une part de vérifier les contaites sur MapCat et, d'autre part, d'identifier les écarts entre mapcat
+  et le GAN pour
     - s'assurer que mapcat est correct
     - marquer dans mapcat dans le champ badGan l'écart
 
@@ -11,7 +12,7 @@ doc: |
   Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
 journal: |
   13/8/2023:
-    - restructuration dans le cadre du BO v4
+    - restructuration dans le cadre du BO v4 et ajout de la vérification des contraintes
   24/4/2023:
     - prise en compte dans CmpMapCat::scale() de la possibilité que scaleDenominator ne soit pas défini
     - prise en compte dans CmpMapCat::cmpGans() que la carte soit définie dans MapCat et absente du GAN
@@ -32,73 +33,15 @@ use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE html>\n<html><head><title>bo/mapcat@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
-
-/* Vérifie les contraintes et les exceptions du champ spatial
-* contraintes:
-*  - les latitudes sont comprises entre -90° et 90°
-*  - la latitude North est supérieure à la latitude South
-*  - les longitudes West et East sont comprises entre -180° et 180° sauf dans l'exception circumnavigateTheEarth
-*  - La longitude East est supérieure à la longitude West sauf dans l'exception astrideTheAntimeridian
-*  - l'exception astrideTheAntimeridian correspond à une boite à cheval sur l'anti-méridien
-*    - elle est indiquée par le champ exception prenant la valeur 'astrideTheAntimeridian'
-*    - sauf pour l'exception circumnavigateTheEarth
-*  - l'exception circumnavigateTheEarth correspond à une boite couvrant la totalité de la Terre en longitude
-*    - elle est indiquée par le champ exception prenant la valeur 'circumnavigateTheEarth'
-*    - dans ce cas -180° <= West < 180° < East < 540° (360+180).
-*/
-class SpatialCheck extends Spatial {
-  protected ?string $exception; // nom de l'exception ou null
-  
-  function __construct(array $spatial) {
-    $this->exception = $spatial['exception'] ?? null;
-    parent::__construct($spatial);
+// retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
+function geoImagesOfMap(string $mapNum, array $map): array { 
+  $spatials = (isset($map['spatial'])) ? [$mapNum => $map] : [];
+  //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
+  foreach($map['insetMaps'] ?? [] as $i => $insetMap) {
+    $spatials["$mapNum/inset$i"] = $insetMap;
   }
-  
-  function badLats(): ?string {
-    if (($this->sw()[1] < -90) || ($this->ne()[1] > 90))
-      return "lat < -90 || > 90";
-    if ($this->sw()[1] >= $this->ne()[1])
-      return "south > north";
-    return null;
-  }
-  
-  function badLons(): ?string {
-    if ($this->sw()[0] >= $this->ne()[0])
-      return "west >= est";
-    if ($this->sw()[0] < -180)
-      return "west < -180";
-    return null;
-  }
-  
-  function exceptionLons(): ?string {
-    if (($this->ne()[0] - $this->sw()[0]) >= 360)
-      return 'circumnavigateTheEarth';
-    if ($this->ne()[0] > 180)
-      return 'astrideTheAntimeridian';
-    return null;
-  }
-  
-  function isBad(): ?string {
-    $bad = false;
-    if (($error = $this->badLats()) || ($error = $this->badLons())) {
-      return $error;
-    }
-    if (($exception = $this->exceptionLons()) <> $this->exception) {
-      return $exception;
-    }
-    return null;
-  }
-
-  // retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
-  static function spatials(string $mapNum, array $map): array { 
-    $spatials = (isset($map['spatial'])) ? [$mapNum => $map] : [];
-    //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
-    foreach($map['insetMaps'] ?? [] as $i => $insetMap) {
-      $spatials["$mapNum/inset$i"] = $insetMap;
-    }
-    return $spatials;
-  }
-};
+  return $spatials;
+}
 
 // Classe stockant le contenu du fichier mapcat.yaml tel quel et définissant de la méthode cmpGans
 class CmpMapCat {
@@ -260,8 +203,8 @@ switch($_GET['action'] ?? null) {
     { // Vérifie les contraintes sur le champ spatial et que les exceptions sont bien indiquées
       $bad = false;
       foreach ($mapCat['maps'] as $mapNum => $map) {
-        foreach(SpatialCheck::spatials($mapNum, $map) as $id => $info) {
-          $spatial = new SpatialCheck($info['spatial']);
+        foreach(geoImagesOfMap($mapNum, $map) as $id => $info) {
+          $spatial = new Spatial($info['spatial']);
           if ($error = $spatial->isBad()) {
             echo '<pre>',Yaml::dump([$error => [$mapNum => $map]], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
             $bad = true;
@@ -269,9 +212,13 @@ switch($_GET['action'] ?? null) {
         }
       }
       if (!$bad) {
-        echo "Tous les champs spatial respectent les contraintes<br>\n";
+        echo "Tous les champs spatial respectent leurs contraintes, à savoir:<br>\n";
+        echo '<pre>',
+             Yaml::dump(['Spatial::CONSTRAINTS'=> Spatial::CONSTRAINTS, 'Spatial::EXCEPTIONS'=> Spatial::EXCEPTIONS], 4),
+             "</pre>\n";
       }
     }
+    break;
   }
   case 'cmpGan': {
     CmpMapCat::init(Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml'));
@@ -279,5 +226,6 @@ switch($_GET['action'] ?? null) {
     //echo '<pre>gans='; print_r(Gan::$gans);
 
     CmpMapCat::cmpGans();
+    break;
   }
 }

@@ -1,13 +1,16 @@
 <?php
-/* bo/maparchive.php - Affichage et validation d'une archive 7z de carte - Benoit DAVID - 11/7-8/8/2023
- * La validation des cartes est définie d'une part par sa conformité à sa spécification
- * et, d'autre part, par sa cohérence avec MapCat.
- *
- * Voir les critères de conformité des archives de cartes dans shomgt4.yaml
- *
- * Le script est utilisé de 2 manières:
- *  - soit inclus dans addmaps.php et viewtiff.php, lui-même appelé par différents autre scripts
- *  - soit en CLI pour tester un ensemble de cartes.
+/*PhpDoc:
+name: maparchive.php
+title: bo/maparchive.php - Affichage et validation d'une archive 7z de carte - Benoit DAVID - 11/7-8/8/2023
+doc: |
+  La validation des cartes est définie d'une part par sa conformité à sa spécification
+  et, d'autre part, par sa cohérence avec MapCat.
+ 
+  Voir les critères de conformité des archives de cartes dans shomgt4.yaml
+ 
+  Le script est utilisé de 2 manières:
+   - soit inclus dans addmaps.php et viewtiff.php, lui-même appelé par différents autre scripts
+   - soit en CLI pour tester un ensemble de cartes.
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';

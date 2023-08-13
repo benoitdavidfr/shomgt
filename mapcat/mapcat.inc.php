@@ -1,14 +1,38 @@
 <?php
-/* mapcat/mapcat.inc.php - accès au catalogue MapCat
+/* mapcat/mapcat.inc.php - accès au catalogue MapCat et évrification des contraintes
 */
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-
-class Spatial { // décode le champ spatial de MapCat pour différentes utilisations
+/* décode le champ spatial de MapCat pour différentes utilisations
+*  et Vérifie les contraintes et les exceptions du champ spatial
+* Les contraintes sont définies dans la constante CONSTRAINTS
+* et la liste des exceptions est dans la constante EXCEPTIONS
+*/
+class Spatial {
+  const CONSTRAINTS = [
+    "les latitudes sont comprises entre -90° et 90°",
+    "la latitude North est supérieure à la latitude South",
+    "les longitudes West et East sont comprises entre -180° et 180° sauf dans l'exception circumnavigateTheEarth",
+    "la longitude East est supérieure à la longitude West sauf dans l'exception astrideTheAntimeridian",
+  ];
+  const EXCEPTIONS = [
+    'astrideTheAntimeridian'=> [
+      "l'exception astrideTheAntimeridian correspond à une boite à cheval sur l'anti-méridien",
+      "sauf dans l'exception circumnavigateTheEarth",
+      "elle est indiquée par la valeur 'astrideTheAntimeridian' dans le champ exception",
+      "dans ce cas East < West mais Spatial::__construct() augmente East de 360° pour que East > West",
+    ],
+    'circumnavigateTheEarth'=> [
+      "l'exception circumnavigateTheEarth correspond à une boite couvrant la totalité de la Terre en longitude",
+      "elle est indiquée par la valeur 'circumnavigateTheEarth' dans le champ exception",
+      "dans ce cas (East - West) >= 360 et -180° <= West < 180° < East < 540° (360+180)"
+    ],
+  ];
   protected array $sw; // position SW en LonLatDD
   protected array $ne; // position NE en LonLatDD
+  protected ?string $exception; // nom de l'exception ou null
   
   private static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
     if (!preg_match("!^(\d+)°((\d\d(,\d+)?)')?(N|S) - (\d+)°((\d\d(,\d+)?)')?(E|W)$!", $latLonDM, $matches))
@@ -32,11 +56,47 @@ class Spatial { // décode le champ spatial de MapCat pour différentes utilisat
     if ($this->ne[0] < $this->sw[0]) { // la boite intersecte l'antiméridien
       $this->ne[0] += 360;
     }
+    $this->exception = $spatial['exception'] ?? null;
   }
   
   function sw(): array { return $this->sw; }
   function ne(): array { return $this->ne; }
 
+  function badLats(): ?string { // si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null
+    if (($this->sw()[1] < -90) || ($this->ne()[1] > 90))
+      return "lat < -90 || > 90";
+    if ($this->sw()[1] >= $this->ne()[1])
+      return "south > north";
+    return null;
+  }
+  
+  function badLons(): ?string { // si les longitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null
+    if ($this->sw()[0] >= $this->ne()[0])
+      return "west >= est";
+    if ($this->sw()[0] < -180)
+      return "west < -180";
+    return null;
+  }
+  
+  function exceptionLons(): ?string { // si $this correspond à une exception alors renvoie son libellé, sinon null 
+    if (($this->ne()[0] - $this->sw()[0]) >= 360)
+      return 'circumnavigateTheEarth';
+    if ($this->ne()[0] > 180)
+      return 'astrideTheAntimeridian';
+    return null;
+  }
+  
+  function isBad(): ?string { // si $this n'est pas correct alors renvoie la raison, sinon null
+    $bad = false;
+    if (($error = $this->badLats()) || ($error = $this->badLons())) {
+      return $error;
+    }
+    if (($exception = $this->exceptionLons()) <> $this->exception) {
+      return $exception;
+    }
+    return null;
+  }
+  
   function dcmiBox(): array { // export utilisant les champs définis par le Dublin Core
     return [
       'westlimit' => $this->sw[0],
@@ -160,7 +220,7 @@ class MapCat { // Un objet MapCat correspond à l'entrée du catalogue correspon
   
   function asArray(): array { return $this->cat; }
   
-  function spatials(): array { // retourne la liste des extensions spatiales sous la forme [nom => Spatial]
+  function spatials(): array { // retourne la liste des extensions spatiales sous la forme [title => Spatial]
     $spatials = $this->spatial ? ['image principale de la carte'=> new Spatial($this->spatial)] : [];
     //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
     foreach ($this->insetMaps ?? [] as $i => $insetMap) {

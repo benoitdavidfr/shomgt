@@ -1,12 +1,15 @@
 <?php
-/* bo/pfcurrent.php - gestion des versions courantes des cartes du portefeuille - 1/8/2023
- * La version courante d'une carte est la version de la carte diffusée par sgserver
- * Cela peut soit être un des versions conservées, soit par extension l'info que la carte est obsolète,
- * soit encore par extension la disparition de la carte dans sgserver.
- * Si la carte est marquée obsolète, le client sgupdt supprime la carte localement ;
- * si la carte n'apparait pas dans sgserver alors le client conserve la carte qu'il détient.
- * L'obsolescence peut être décidée soit par ce que la carte a été retirée par le Shom de son propre portefeuille,
- * soit par ce que on décide que la carte n'est plus d'intérêt pour ShomGT.
+/*PhpDoc:
+name: pfcurrent.php
+title: bo/pfcurrent.php - gestion des versions courantes des cartes du portefeuille - 1/8/2023
+doc: |
+  La version courante d'une carte est la version de la carte diffusée par sgserver
+  Cela peut soit être un des versions conservées, soit par extension l'info que la carte est obsolète,
+  soit encore par extension la disparition de la carte dans sgserver.
+  Si la carte est marquée obsolète, le client sgupdt supprime la carte localement ;
+  si la carte n'apparait pas dans sgserver alors le client conserve la carte qu'il détient.
+  L'obsolescence peut être décidée soit par ce que la carte a été retirée par le Shom de son propre portefeuille,
+  soit par ce que on décide que la carte n'est plus d'intérêt pour ShomGT.
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
