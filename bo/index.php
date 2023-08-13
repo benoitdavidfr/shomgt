@@ -9,7 +9,7 @@ require_once __DIR__.'/user.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-function harvestDate(): ?string { // lit la date de dernière moisson des GAN dans ../dashboard/gans.yaml
+function ganHarvestDate(): ?string { // lit la date de dernière moisson des GAN dans ../dashboard/gans.yaml
   if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
     return null;
   $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
@@ -25,21 +25,26 @@ $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 $login = Login::login($HTML_HEAD.$HTML_TITLE, 'user.php?action=register');
 
 switch ($_GET['action'] ?? null) {
-  case 'deleteTempOutputBatch': { // revient de runbatch.php et efface le fichier temporaire créé 
+  case 'deleteTempOutputBatch': { // revient de runbatch.php et efface, s'il existe, le fichier temporaire créé 
     $filename = basename($_GET['filename']);
     //echo "filename=$filename<br>\n";
-    unlink(__DIR__."/temp/$filename");
+    if (is_file(__DIR__."/temp/$filename"))
+      unlink(__DIR__."/temp/$filename");
     // Explicitement je continue sur le cas suivant
   }
   case null: { // Menu après login
     $role = userRole($login);
     $roleDisplay = ($role <> 'normal') ? "/role=$role" : '';
-    $harvestInfo = ($harvestDate = harvestDate()) ? "précédemment moissonné le $harvestDate" : '';
+    $ganHarvestInfo = ($harvestDate = ganHarvestDate()) ? "précédemment moissonné le $harvestDate" : '';
+    $wfsUpdateDate = date('Y-m-d', filemtime(__DIR__."/../shomft/gt.json"));
     echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login$roleDisplay)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
     if ($role == 'restricted') die();
-    echo "<li><a href='runbatch2.php?batch=harvestGan'>Moissonnage du GAN $harvestInfo</a></li>\n";
+    echo "<li><a href='runbatch2.php?batch=harvestGan'>Moissonnage du GAN $ganHarvestInfo</a></li>\n";
+    echo "<li><a href='../shomft/updatecolls.php?collections=gt,aem,delmar'>",
+         "Mise à jour de la liste des cartes à partir du serveur WFS du Shom ",
+         "précédemment mise à jour le $wfsUpdateDate</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
          "Identifier les cartes à ajouter/supprimer/actualiser dans le portefeuille ShomGT</a></li>\n";
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",

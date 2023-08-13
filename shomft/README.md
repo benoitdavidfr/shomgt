@@ -53,7 +53,7 @@ et de mettre à disposition dans le projet les couches vecteur GeoJSON suivantes
 - liste des cartes spéciales (`aem.json`) extraite du WFS du Shom
   de la couche `GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table`
 
-- délimitations maritimes (`delmar.json`) extraites du WFS du Shom pae agrégation des couches:
+- délimitations maritimes (`delmar.json`) extraites du WFS du Shom par agrégation des couches:
   - `DELMAR_BDD_WFS:au_baseline` : lignes de base droites
   - `DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary` : délimitation établie par un accord entre Etats
   - `DELMAR_BDD_WFS:au_maritimeboundary_contiguouszone` : limite extérieure de la zone contiguë

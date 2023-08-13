@@ -203,7 +203,7 @@ class FtServer {
     foreach (self::$collections as $colName => &$coll) {
       $coll['url'] = self()."/$colName";
     }
-    // Ajout de collections dérivées slon les échelles
+    // Ajout de collections dérivées selon les échelles
     foreach (array_keys(self::$sdmax) as $i => $colName) {
       $imin = ($i <> count(self::$sdmax) - 1) ? $i + 1 : -1;
       $sdmin = ($imin == -1) ? 0 : (array_values(self::$sdmax))[$imin];
