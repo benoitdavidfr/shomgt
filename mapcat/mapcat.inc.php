@@ -5,7 +5,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class Spatial { // transforme une extension spatiale dans le format MapCat en un code JS d'un objet L.geoJSON pour Leaflet 
+
+class Spatial { // décode le champ spatial de MapCat pour différentes utilisations
   protected array $sw; // position SW en LonLatDD
   protected array $ne; // position NE en LonLatDD
   
@@ -33,6 +34,9 @@ class Spatial { // transforme une extension spatiale dans le format MapCat en un
     }
   }
   
+  function sw(): array { return $this->sw; }
+  function ne(): array { return $this->ne; }
+
   function dcmiBox(): array { // export utilisant les champs définis par le Dublin Core
     return [
       'westlimit' => $this->sw[0],

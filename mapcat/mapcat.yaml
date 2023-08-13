@@ -4,7 +4,7 @@ description: |
   où sont utilisés notamment l'extension spatiale et l'échelle des cartes et des cartouches.
   La liste des bordures est utilisée pour les GéoTiffs non ou mal géoréférencés.
   Les champs optionnels z-order et toDelete sont utilisés pour améliorer la superposition entre GéoTiffs.
-  Les champs layer et geotiffNames sont utilisés pour les cartes spéciales ne respectant pas les specs des GéoTiffs.
+  Les champs layer et geotiffNames sont utilisés pour les cartes spéciales ne respectant pas les specs des cartes.
   
   Ce catalogue ne contient pas les infos temporelles (édition et correction), il ne recense que les caractéristiques
   stables des cartes. Il est largement constitué par copie d'infos issues du GAN puis détection et gestion des écarts.
@@ -20,10 +20,8 @@ description: |
       - sauf s'il y a une erreur manifeste dans le GAN que j'indique dans badGan
     - en cas de nécessité pour améliorer la visualisation des GéoTiffs j'affine les extensions et je l'indique dans badGan
   
-  La structure du fichier ne change pas à l'occasion du passage en V4.
-  Cependant plusieurs corrections sont apportées grâce au test de conformité mis en oeuvre en V4.
-  
   Journal:
+    - 13/8/2023 - ajout de la section deletedMaps
     - 4/8/2023 - ajout de la carte 6686
     - 31/7/2023 - réactivation des bordures de la carte 7620
     - 28/7/2023 - plusieurs corrections d'erreurs détectée par l'exécution du test de conformité sur l'ensemble des cartes
@@ -72,6 +70,7 @@ maps:
     spatial:
       SW: '79°00,00''S - 100°00,00''E'
       NE: '80°00,00''N - 490°00,00''E'
+      exception: circumnavigateTheEarth
     noteCatalog: |
       correction de l'extension géo. pour que le bord Est ait une longitude supérieure au bord West et que l'extension en
       longitude soit supérieure à 360°, correction aussi du titre
@@ -881,13 +880,12 @@ maps:
   FR6817:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De la Nouvelle-Zélande aux îles Fidji et Samoa'
-    mapsFrance:
-      - NC
-      - WF
+    mapsFrance: [NC, WF]
     scaleDenominator: 3.500.000
     spatial:
       SW: '37°55,40''S - 171°34,30''E'
       NE: '07°30,00''S - 167°00,00''W'
+      exception: astrideTheAntimeridian
     references: 'Fac similé carte NZ n° 14605 publiée en 1976 (édition juillet 2007).'
   FR6820:
     groupTitle: 'Îles Loyauté'
@@ -970,7 +968,7 @@ maps:
     insetMaps:
       - title: 'Mer de Béring'
         scaleDenominator: 7.330.000
-        spatial: { SW: '49°00,00''N - 170°15,00''E', NE: '65°00,00''N - 169°20,00''W' }
+        spatial: { SW: '49°00,00''N - 170°15,00''E', NE: '65°00,00''N - 169°20,00''W', exception: astrideTheAntimeridian }
   FR6838:
     groupTitle: 'Côte Sud de France'
     title: 'Abords de Saint-Raphaël - De la Pointe des Issambres à la Pointe d''Anthéor'
@@ -1318,7 +1316,7 @@ maps:
     title: Océan Pacifique Nord - Partie Nord-Ouest
     mapsFrance: []
     scaleDenominator: '7.080.000'
-    spatial: {SW: "22°13,00'N - 117°10,00'E", NE: "62°00,00'N - 154°48,13'W"}
+    spatial: {SW: "22°13,00'N - 117°10,00'E", NE: "62°00,00'N - 154°48,13'W", exception: astrideTheAntimeridian}
   FR6980:
     groupTitle: 'Côte Ouest de Corse'
     title: 'L''Île-Rousse, Sant''Ambrogio et Calvi'
@@ -1464,13 +1462,12 @@ maps:
   FR7021:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Sud-Ouest'
-    mapsFrance:
-      - WF
-      - PF
+    mapsFrance: [WF, PF]
     scaleDenominator: 10.000.000
     spatial:
       SW: '13°00,00''S - 117°30,00''E'
       NE: '40°00,00''N - 154°20,00''W'
+      exception: astrideTheAntimeridian
     references: 'Fac similé Carte JP n°4052 publiée en 1983.'
   FR7023:
     groupTitle: 'Océan Pacifique Est'
@@ -2524,15 +2521,14 @@ maps:
     title: 'Océan Pacifique Sud - Partie Ouest'
     mapsFrance: [NC, WF, PF]
     scaleDenominator: 10.000.000
-    spatial: {SW: "51°05,44'S - 163°30,00'E", NE: "02°45,00'S - 108°28,11'W"}
+    spatial: {SW: "51°05,44'S - 163°30,00'E", NE: "02°45,00'S - 108°28,11'W", exception: astrideTheAntimeridian}
     replaces: '(remplace 5037,5038,5361)'
     references: 'Fac similé Carte NZ n°14061 publiée en 1986.'
     z-order: -1 # en dessous de 7023 et 6964
   FR7167:
     groupTitle: 'Côte Ouest de Nouvelle-Calédonie'
     title: 'De la Baie de Saint-Vincent à la Coupée Mara (Spéciale P)'
-    mapsFrance:
-      - NC
+    mapsFrance: [NC]
     scaleDenominator: '60.000'
     spatial:
       SW: '22°06,44''S - 165°31,60''E'
@@ -2793,7 +2789,7 @@ maps:
     scaleDenominator: '250.000'
     spatial:
       SW: '42°50,00''N - 007°15,00''E'
-      NE: '44°30,84''N - 010°40,33''E'
+      NE: '44°30,83''N - 010°40,33''E'
     references: 'Fac similé carte IT n°909 publiée en 1987.'
   FR7232:
     groupTitle: 'Côte Nord de France'
@@ -3034,6 +3030,7 @@ maps:
     spatial:
       SW: '51°00,00''S - 104°00,00''E'
       NE: '02°36,26''S - 167°57,92''W'
+      exception: astrideTheAntimeridian
     replaces: '(remplace 5356)'
     references: 'Fac similé Carte AU n°4060 publiée en 1987'
   FR7273:
@@ -3095,12 +3092,12 @@ maps:
   FR7283:
     groupTitle: 'Océan Pacifique Sud'
     title: 'Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna'
-    mapsFrance:
-      - WF
+    mapsFrance: [WF]
     scaleDenominator: 1.000.000
     spatial:
       SW: '16°30,00''S - 177°00,00''E'
       NE: '09°40,56''S - 172°47,00''W'
+      exception: astrideTheAntimeridian
     replaces: '(remplace 6067)'
   FR7291:
     groupTitle: 'Mer Méditerranée - Côtes de France et d''Italie'
@@ -3364,8 +3361,8 @@ maps:
     mapsFrance: [GF]
     scaleDenominator: '80.000'
     spatial:
-      SW: '04°12,00''N - 051°55,00''W'
-      NE: '04°50,00''N - 051°25,00''W'
+      SW: "04°12,00'N - 051°55,03'W"
+      NE: "04°50,00'N - 051°25,03'W"
     references: 'Fac similé carte BR n°110 publiée en 1979'
   FR7341:
     groupTitle: 'Côte Nord de France'
@@ -5323,6 +5320,7 @@ maps:
   FR8508:
     title: 8508 CX - Carte d'usages et activités - en Manche et Mer du Nord
     mapsFrance: [FX-MMN]
+    scaleDenominator: '444.998'
     spatial: {SW: "48°30'N - 4°10'W", NE: "51°35'N - 2°40'E"}
     borders: { left: 100, bottom: 100, right: 100, top: 100 }
     noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée"
@@ -5331,7 +5329,7 @@ maps:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
     mapsFrance: [ NC, WF ]
     scaleDenominator: 3.158.760
-    spatial: { SW: '30°S - 153°E', NE: '08°S - 174°W' }
+    spatial: { SW: '30°S - 153°E', NE: '08°S - 174°W', exception: astrideTheAntimeridian }
     borders: { left: 292, bottom: 239, right: 299, top: 193 }
     noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée et à cheval sur l'anti-méridien"
     badGan: "Carte spéciale absente du GAN"
@@ -5341,7 +5339,7 @@ maps:
     title: 'Délimitations des zones maritimes'
     mapsFrance: [FR]
     scaleDenominator: 38.000.000
-    spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E" }
+    spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E", exception: circumnavigateTheEarth }
     borders: { left: 217, bottom: 202, right: 224, top: 212 }
     noteCatalog: "Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°"
     badGan: "Carte spéciale absente du GAN"
@@ -5364,7 +5362,7 @@ maps:
     noteCatalog: "Carte spéciale absente du GAN, le tiff est géoréférencé"
     badGan: "Carte spéciale absente du GAN"
     layer: gtaem
-    geotiffNames: [8523_2021.tif]
+    #geotiffNames: [8523_2021.tif]
 obsoleteMaps:
   FR6608:
     '2022-04-06':
@@ -5534,7 +5532,7 @@ obsoleteMaps:
         SW: '38°36,90''N - 000°30,00''W'
         NE: '41°23,30''N - 004°50,00''E'
       references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
-cartesAyantUnIntérêtInsuffisant:
+uninterestingMaps:
   FR7678:
     title: 7678 - Îles Anjouan et Mohéli
     scaleDenominator: '156.000'

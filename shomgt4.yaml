@@ -1236,7 +1236,7 @@ specsDesCartes:
         - soit un fichier {mapNum}/{mapNum}_{year}.(tif|pdf) où {year} est l'année de publication de la carte
       - l'archive peut contenir un .tif et un .pdf ayant même nom de base
       - le répertoire {mapNum} de l'archive ne doit pas contenir d'autre fichier .tif ou .pdf
-      - si le répertoire {mapNum} de l'archive contient un fichier .xml alors il est utilisé comme fichier de MD ISO
+      - si le répertoire {mapNum} de l'archive contient un et un seul fichier .xml alors il est utilisé comme fichier de MD ISO
    
   géoréférencement:
       - Pour les 2 types de carte un .tif est considéré comme non géoréférencé ssi

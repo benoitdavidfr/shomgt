@@ -121,13 +121,21 @@ paths:
         name: version
         description: |
           Version de ce point d'entrée de l'API  
-          En version=0 (ou paramètre absent) la carte 8053 n'est pas transmise.  
-          En version=1, la liste de toutes les cartes sont transmises.
+          En version=0 (ou paramètre absent):
+            - la carte 8053 n'est pas transmise.  
+           - les cartes spéciales portent la version 'undefined', seule valeur acceptée par le client en version antérieure à 3
+          En version=1:
+           - la liste de toutes les cartes est transmise
+           - les cartes spéciales portent la version 'undefined', seule valeur acceptée par le client en version 3
+           En version=4:
+           - la liste de toutes les cartes est transmise
+           - les versions des cartes spéciales sont de la forme '{mapNum}_{année}' ou '{mapNum}', valeurs acceptées
+             par le client en version 4
         required: false
         schema:
           type: number
           minimum: 0
-          maximum: 1
+          maximum: 4
   /maps/{numCarte}.7z:
     description: retourne l'archive 7z correspondant à la dernière version disponible de la carte {numCarte}
     get:
@@ -409,7 +417,7 @@ components:
             type: object
             additionalProperties:
               $ref: '#/components/schemas/mapOfCatalog'
-        cartesAyantUnIntérêtInsuffisant:
+        uninterestingMaps:
           description: |
             Liste les cartes dont l'intérêt est insuffisant pour décrire les espaces sur lesquels la France exerce ses droits.
           type: object
@@ -424,6 +432,23 @@ components:
                 description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
                 $ref: '#/components/schemas/scaleDenominator'
               reason: { description: motif de l'insuffisance, type: string }
+        deletedMaps:
+          description: cartes supprimées
+          type: object
+          additionalProperties: false
+          patternProperties:
+            ^FR\d\d\d\d:
+              description: pour chaque carte la liste des suppressions indexées par la date de suppression ou unknown
+              type: object
+              additionalProperties: false
+              patternProperties:
+                ^\d\d\d\d-\d\d-\d\d:
+                  description: propriétés de chaque carte retirée
+                  type: object
+                  $ref: '#/definitions/map'
+        eof:
+          description: propriété marquant la fin du fichier
+          type: 'null'
     mapList:
       description: dictionnaire des cartes disponibles indexé sur le numéro de carte
       type: object

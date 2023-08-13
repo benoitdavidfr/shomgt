@@ -1,11 +1,13 @@
 title: schema JSON du catalogue des cartes Shom
 $id: https://sgserver.geoapi.fr/index.php/cat/schema
-modified: '2022-07-12'
+modified: '2023-08-13'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
     13/8/2023:
-      - ajout de la propriété deletedMaps et de la possibilité que mapsFrance soit unknown
+      - ajout de la propriété deletedMaps et de la possibilité que mapsFrance d'une carte soit unknown
+      - chgt du nom cartesAyantUnIntérêtInsuffisant en uninterestingMaps
+      - suppression du champ geotiffNames inutile étant donnée la spec actuelle des cartes spéciales.
     30/7/2023:
       - modification du schéma de la propriété cartesAyantUnIntérêtInsuffisant
         - suppression du caractère obligatoire de la propriété scaleDenominator car l'échelle est souvent indéfinie
@@ -55,10 +57,10 @@ definitions:
       - '15.00'
   latLonDM:
     description: |
-      couple (latitude, longitude) en dégrés-minutes WGS84 dans une chaine avec un formattage inspiré de celui utilisé
+      couple (latitude, longitude) en dégrés-minutes WGS84 dans une chaine avec un formattage similaire à celui utilisé
       par le Shom notamment dans les coins des cartes.
-      Avec la virgule comme séparateur de la partie décimale des minutes.
-      La partie décimale des minutes peut être omise de même que la partie minute.
+      Le séparateur de la partie décimale des minutes est la virgule.
+      La partie minutes peut être omise, de même que la partie décimale des minutes.
     type: string
     pattern: ^\d+°(\d\d(,\d+)?')?(N|S) - \d+°(\d\d(,\d+)?')?(E|W)$
     examples:
@@ -68,7 +70,11 @@ definitions:
       - 44°09,00'N - 002°36,00'W
       - 45°49,00'N - 001°00,00'W
   spatial:
-    description: Boite englobante définie par ses 2 coins SW et NE définis chacun comme latLonDM.
+    description: |
+      Boite englobante définie par ses 2 coins SW et NE définis chacun comme latLonDM.
+      Les contraintes de bbox s'appliquent.
+      Les boites qui couvrent plus d'un tour de la terre doivent mentionner l'exception circumnavigateTheEarth.
+      Les boites à cheval sur l'antiméridien doivent comporter l'exception astrideTheAntimeridian
     type: object
     required: [SW, NE]
     additionalProperties: false
@@ -79,6 +85,8 @@ definitions:
       NE:
         description: position du coin NE
         $ref: '#/definitions/latLonDM'
+      exception:
+        enum: [circumnavigateTheEarth, astrideTheAntimeridian]
   position:
     decription: position définie soit en dégrés-minutes dans une chaine, soit en degrés décimaux dans un array de 2 nombres
     oneOf:
@@ -129,7 +137,7 @@ definitions:
           enum: [FR, FX-Med, FX-Atl, FX-MMN, GP, GF, MQ, YT, RE, PM, BL, MF, TF, PF, WF, NC, CP]
       - description: |
           Pour les cartes supprimées, cette information peut être inconnue et peu utile ;
-          dans ces cas on peut utiliser la valeur unknown.
+          dans ces cas on peut utiliser la constante unknown.
           Cette possibilité ne doit pas être utilisée pour les cartes courantes et les cartes obsolètes.
         type: string
         const: unknown
@@ -192,8 +200,9 @@ definitions:
       Une carte comportant un espace principal doit renseigner les champs scaleDenominator et spatial,
       Une carte n'en comportant pas doit obligatoirement comporter au moins un cartouche.
       Lorsque l'info provenant du GAN est différente de celle du GAN, le champ badGan doit être renseigné.
-      Les cartes spéciales doivent définir les champs layer et geotiffname.
-      Si le GéoTiff de l'espace principal est non ou mal géoréférencé, le champ borders doit être rensigné.
+      Les cartes spéciales doivent définir le champ layer.
+      Le champ geotiffNames n'est pas utilisé mais pourra être utile dans une future version.
+      Si le GéoTiff de l'espace principal est non ou mal géoréférencé, le champ borders doit être renseigné.
     type: object
     additionalProperties: false
     required: [title, mapsFrance]
@@ -271,15 +280,17 @@ definitions:
         $ref: '#/definitions/borders'
       layer:
         description: |
-          défini uniquement pour les cartes spéciales et indique alors nom de la couche à laquelle le GéoTiff est affecté
+          défini uniquement pour les cartes spéciales et indique alors le nom de la couche à laquelle le GéoTiff est affecté
         type: string
-      geotiffNames:
-        description: |
-          pour les cartes spéciales, liste de noms de fichiers .tif ou .pdf possibles dans l'archive 7z.
-          Utilisé lorsqu'il n'est pas possible de déterminer autrement le nom du fichier contenant l'image principale
-        type: array
-        items:
-          type: string
+      #geotiffNames:
+      #  description: |
+      #    Utilisé uniquement pour les cartes spéciales lorsqu'il n'est pas possible de déterminer autrement
+      #    le nom du fichier contenant l'image principale.
+      #    pour les cartes spéciales, liste de noms de fichiers .tif ou .pdf possibles dans l'archive 7z.
+      #    Utilisé 
+      #  type: array
+      #  items:
+      #    type: string
       insetMaps:
         description: |
           liste éventuelle de cartouches issue du GAN.
@@ -374,7 +385,7 @@ properties:
             description: propriétés de chaque carte retirée
             type: object
             $ref: '#/definitions/map'
-  cartesAyantUnIntérêtInsuffisant:
+  uninterestingMaps:
     description: |
       dictionnaire des cartes intersectant la ZEE mais inutiles pour décrire les espaces sur lesquels la France
       exerce ses droits.
