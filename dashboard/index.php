@@ -13,7 +13,7 @@
  * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
  *
  * 2/7/2023:
- *  - correction lecture AvailOnTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin
+ *  - correction lecture AvailAtTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin
  * 28/6/2023:
  *  - **BUG** Attention, l'action perempt plante lorsqu'une nouvelle carte est ajoutée dans le patrimoine
  *    sans que le GAN soit moissonné sur cette carte
@@ -30,7 +30,7 @@
  * 22/8/2022: correction bug
  */
 /*PhpDoc:
-title: dashboard/index.php - Tableau de bord de mise à jour des cartes - 25/6/2023
+title: dashboard/index.php - Tableau de bord de l'actualité des cartes - 25/6/2023
 */
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -41,7 +41,7 @@ require_once __DIR__.'/../lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-echo "<!DOCTYPE HTML><html><head><title>dashboard</title></head><body>\n";
+echo "<!DOCTYPE HTML><html><head><title>dashboard@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 // pour un entier fournit une représentation avec un '_' comme séparateur des milliers 
 function addUndescoreForThousand(?int $scaleden): string {
@@ -204,7 +204,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   function __construct(string $mapNum, array $map) {
     //echo "<pre>"; print_r($map);
     $this->mapNum = $mapNum;
-    $this->mapCat = new MapCat($mapNum);
+    $this->mapCat = MapCat::get($mapNum);
     $this->pfVersion = $map['version'];
     $this->pfDate = $map['dateMD']['value'] ?? $map['dateArchive'];
   }
@@ -222,8 +222,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   function degree(): float { // calcul du degré de péremption 
     if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undefined'))
       return -1;
-    $mapCat = new MapCat($this->mapNum);
-    if ($mapCat->empty()) {
+    if (!($mapCat = MapCat::get($this->mapNum))) {
       die("Erreur la carte $this->mapNum n'est pas décrite dans mapcat.yaml");
     }
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
@@ -283,13 +282,13 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     ];
     foreach ($headers as $name => $label)
         echo "<tr><td><b>$name</b></td><td>$label</td></tr>\n";
-    if (AvailOnTheShop::exists())
+    if (AvailAtTheShop::exists())
       echo "<tr><td><b>boutique</b></td><td>disponibilité sur la boutique du Shom avec info de mise à jour</td></tr>\n";
     echo "</table></p>\n";
     echo "<p>Attention, certains écarts de version sont dus à des informations incomplètes ou incorrectes",
       " sur les sites du Shom</p>\n";
     echo "<table border=1><th>",implode('</th><th>', array_keys($headers)),"</th>\n";
-    if (AvailOnTheShop::exists())
+    if (AvailAtTheShop::exists())
       echo "<th>boutique</th>\n";
     foreach (Perempt::$all as $p) {
       $p->showAsRow();
@@ -314,14 +313,14 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
       echo "<tr><td>$c[num]</td><td>$c[semaineAvis]</td></tr>";
     }
     echo "</table></td>\n";
-    if (AvailOnTheShop::exists())
-      echo "<td>",AvailOnTheShop::maj($this->mapNum),"</td>\n";
+    if (AvailAtTheShop::exists())
+      echo "<td>",AvailAtTheShop::maj($this->mapNum),"</td>\n";
     //echo "<td><pre>"; print_r($this); echo "</pre></td>";
     echo "</tr>\n";
   }
 };
 
-class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique
+class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique
   const FILE_NAME = __DIR__.'/available.tsv';
   const MAX_DURATION = 7*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
   //const MAX_DURATION = 60; // Pour test
@@ -409,15 +408,62 @@ class AvailOnTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
   static function maj(string $mapNum): string { return self::$all[$mapNum] ?? ''; }
 };
 
-switch ($_GET['a'] ?? null) {
-  case null: { // menu 
+
+// retourne l'ancienneté de la dernière moisson du GAN en nombre de jours ou -1 si cette moisson n'existe pas
+function ganHarvestAge(): int {
+  if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
+    return -1;
+  $now = new DateTimeImmutable;
+  $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
+  $valid = explode('/', $gans['valid']);
+  //echo "valid="; print_r($valid); echo "<br>\n";
+  $valid = DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
+  //echo "now="; print_r($now); echo "<br>\n";
+  //echo "valid="; print_r($valid); echo "<br>\n";
+  //echo "diff="; print_r($valid->diff($now)); echo "<br>\n";
+  //echo "diff->days=",$valid->diff($now)->days,"<br>\n";
+  return $valid->diff($now)->days;
+}
+
+function wfsAge(): int {
+  if (!is_file(__DIR__."/../shomft/gt.json"))
+    return -1;
+  //echo 'filemtime=',date('Y-m-d', filemtime(__DIR__."/../shomft/gt.json")),"<br>\n";
+  $now = new DateTimeImmutable;
+  $filemtime = $now->setTimestamp(filemtime(__DIR__."/../shomft/gt.json"));
+  //echo "filemtime="; print_r($filemtime); echo "<br>\n";
+  return $filemtime->diff($now)->days;
+}
+
+switch ($action = ($_GET['action'] ?? null)) {
+  case null:
+  case 'deleteTempOutputBatch': { // menu avec éventuelle action préalable
+    if ($action == 'deleteTempOutputBatch') { // revient de runbatch.php et efface, s'il existe, le fichier temporaire créé 
+      $filename = basename($_GET['filename']);
+      //echo "filename=$filename<br>\n";
+      if (is_file(__DIR__."/../bo/temp/$filename"))
+        unlink(__DIR__."/../bo/temp/$filename");
+    }
     //echo "<pre>"; print_r($_GET); echo "</pre>\n";
-    echo "<h2>Menu:</h2><ul>\n";
-    echo "<li><a href='?a=newObsoleteMaps'>Nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
-    echo "<li><a href='?a=loadAvailableOnTheShop'>Charge les versions disponibles dans le site de diffusion du Shom</li>\n";
-    echo "<li><a href='?a=perempt'>Degrés de péremption des cartes du portefeuille</li>\n";
-    echo "<li><a href='?a=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
-    echo "<li><a href='?a=listWfs'>liste des cartes du serveur WFS du Shom avec degré d'intérêt</li>\n";
+    echo "<h2>Tableau de bord de l'actualité des cartes</h2><ul>\n";
+    $ganHarvestAge = ganHarvestAge();
+    //echo "ganHarvestAge=$ganHarvestAge<br>\n";
+    if (($ganHarvestAge >= 7) || ($ganHarvestAge == -1))
+      echo "<li><a href='../bo/runbatch.php?batch=pwd&returnTo=dashboard'>Moissonner le GAN",
+           ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
+    $wfsAge = wfsAge();
+    if (($wfsAge >= 7) || ($wfsAge == -1))
+      echo "<li><a href='../shomft/updatecolls.php?collections=gt,aem,delmar'>",
+           "Mettre à jour de la liste des cartes à partir du serveur WFS du Shom ",
+           ($wfsAge <> -1) ? "précédemment mise à jour il y a $wfsAge jours" : '',
+           "</a></li>\n";
+    echo "<li><a href='?action=newObsoleteMaps'>",
+         "Voir les nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
+    echo "<li><a href='?action=loadAvailableAtTheShop'>",
+         "Charger les versions disponibles dans le site de diffusion du Shom</li>\n";
+    echo "<li><a href='?action=perempt'>Afficher le degré de péremption des cartes du portefeuille</li>\n";
+    //echo "<li><a href='?action=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
+    echo "<li><a href='?action=listWfs'>Afficher la liste des cartes du serveur WFS du Shom avec leur intérêt</li>\n";
     echo "</ul>\n";
     die();
   }
@@ -463,9 +509,9 @@ switch ($_GET['a'] ?? null) {
     }
     die();
   }
-  case 'loadAvailableOnTheShop': {
+  case 'loadAvailableAtTheShop': {
     //echo "<pre>"; print_r($_POST); echo "</pre>\n";
-    AvailOnTheShop::load();
+    AvailAtTheShop::load();
     echo "<a href='index.php'>Retour au menu</a><br>\n";
     die();
   }
@@ -473,7 +519,7 @@ switch ($_GET['a'] ?? null) {
     Portfolio::init(); // initialisation à partir du portefeuille
     //DbMapCat::init(); // chargement du fichier mapcat.yaml
     GanStatic::loadFromPser(); // chargement de la synthèse des GANs
-    AvailOnTheShop::init();
+    AvailAtTheShop::init();
     Perempt::init(); // construction à partir du portefeuille
     // Mise à jour de perempt à partir du GAN
     foreach (Perempt::$all as $mapNum => $perempt) {
@@ -493,7 +539,7 @@ switch ($_GET['a'] ?? null) {
     }
     die();
   }
-  case 'listOfInterest': { // liste des cartes d'intérêt 
+  case 'listOfInterest': { // Affichage simple des cartes d'intérêt du serveur WFS
     MapFromWfs::init();
     $listOfInterest = MapFromWfs::interest();
     ksort($listOfInterest);
@@ -501,10 +547,10 @@ switch ($_GET['a'] ?? null) {
     echo "<h2>Liste des cartes d'inérêt</h2><pre>\n",Yaml::dump($listOfInterest, 1),"</pre>\n";
     die();
   }
-  case 'availOnShop': { // Test de AvailOnTheShop::init();
+  case 'availAtTheShop': { // Test de AvailAtTheShop::init();
     echo "<pre>";
-    AvailOnTheShop::init();
+    AvailAtTheShop::init();
     die();
   }
-  default: { die("Action $_GET[a] non définie\n"); }
+  default: { die("Action $action non définie\n"); }
 }

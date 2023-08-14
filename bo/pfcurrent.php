@@ -61,7 +61,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
  }
  echo "<table border=1>\n";
  foreach (directoryEntries("$PF_PATH/archives") as $mapNum) {
-   $mapCat = new Mapcat($mapNum);
+   $mapCat = Mapcat::get($mapNum);
    $ss = $mapCat->obsoleteDate ? '<s>' : '';
    $se = $mapCat->obsoleteDate ? '</s>' : '';
    echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
@@ -75,9 +75,8 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
   echo "<a href='index.php'>Retour au menu du BO</a></p>\n";
 }
 else { // liste de versions pour la carte $_GET['map']
-  $mapCat = new MapCat($_GET['map']);
+  $mapCat = MapCat::get($_GET['map']);
   echo "<h2>Carte $_GET[map] - $mapCat->title</h2>\n";
-  $mapCat = new MapCat($_GET['map']);
   echo "<pre>",Yaml::dump($mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
   
   // Détermination de la version courante
@@ -112,26 +111,8 @@ else { // liste de versions pour la carte $_GET['map']
   echo "    <input type='radio' id='none' name='mapVersion' value='none' ",(''==$currentVersion ? 'checked' : ''),"/>\n";
   echo "    <label for='none'>Carte retirée de la liste des cartes (n'indiquant rien au client)</label><br>\n";
   echo "  </div>\n";
-  echo "  <div>",button('Sélection', ['map'=>$_GET['map'], 'action'=>'chooseVersion'], '', 'get'),"</div>\n";
+  echo "  <div>",Html::button('Sélection', ['map'=>$_GET['map'], 'action'=>'chooseVersion'], '', 'get'),"</div>\n";
   echo "</fieldset></form>\n";
-  /*Modèle de formulaire bouttons radio<form>
-    <fieldset>
-      <legend>Please select your preferred contact method:</legend>
-      <div>
-        <input type="radio" id="contactChoice1" name="contact" value="email" />
-        <label for="contactChoice1">Email</label>
-
-        <input type="radio" id="contactChoice2" name="contact" value="phone" />
-        <label for="contactChoice2">Phone</label>
-
-        <input type="radio" id="contactChoice3" name="contact" value="mail" />
-        <label for="contactChoice3">Mail</label>
-      </div>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-    </fieldset>
-  </form>*/
   echo "<a href='pfweight.php?map=$_GET[map]'>Gestion de la suppression de versions</a><br>\n";
   echo "<a href='pfcurrent.php'>Retour à la liste des cartes</a></p>\n";
 }

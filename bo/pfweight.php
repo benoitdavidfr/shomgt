@@ -27,8 +27,8 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
   case 'deleteVersion': { // demande de confirmation pour la suppression d'une version
     echo "Suppression de la version $_POST[version] de la carte $_POST[map]<br>\n";
     $hiddenValues = ['action'=> 'confirmDeleteVersion', 'map'=> $_POST['map'], 'version'=> $_POST['version']];
-    echo "<table><tr><td>",button('confirmer', $hiddenValues),
-         "</td><td>",button('annuler', ['map'=> $_POST['map']], '', 'get'),
+    echo "<table><tr><td>",Html::button('confirmer', $hiddenValues),
+         "</td><td>",Html::button('annuler', ['map'=> $_POST['map']], '', 'get'),
          "</td></tr></table>\n";
     break;
   }
@@ -87,7 +87,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
         "<td></td><td>Moyenne par carte</td></tr>\n",
        "<th></th><th>Mb</th><th>#vers</th><th>Num et titre de la carte</th>\n";
   foreach ($maps as $mapNum => $map) {
-    $mapCat = new Mapcat($mapNum);
+    $mapCat = Mapcat::get($mapNum);
     $ss = $mapCat->obsoleteDate ? '<s>' : '';
     $se = $mapCat->obsoleteDate ? '</s>' : '';
     echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
@@ -104,9 +104,8 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
 }
 
 else { // liste de versions pour la carte $_GET['map']
-  $mapCat = new MapCat($_GET['map']);
+  $mapCat = MapCat::get($_GET['map']);
   echo "<h2>Carte $_GET[map] - $mapCat->title</h2>\n";
-  $mapCat = new MapCat($_GET['map']);
   echo "<pre>",Yaml::dump($mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
   
   // Détermination de la version courante
@@ -144,7 +143,7 @@ else { // liste de versions pour la carte $_GET['map']
          "<td>",$md['dateArchive'] ?? '',"</td>",
          "<td>",sprintf('%.1f Mb', $duMb),"</td>",
          "<td><a href='shomgeotiff.php/archives/$_GET[map]/$mapVersion.7z'>Télécharger l'archive 7z</a></td>",
-         "<td>",($mapVersion <> $currentVersion) ? button('supprimer', $hiddenValues) : '',"</td>",
+         "<td>",($mapVersion <> $currentVersion) ? Html::button('supprimer', $hiddenValues) : '',"</td>",
          "</tr>\n";
   }
   echo "</table>\n";

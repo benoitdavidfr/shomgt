@@ -19,10 +19,8 @@ if (!($login = Login::loggedIn()) || !in_array(userRole($login), ['normal','admi
 }
 
 $batches = [
-  'test'=> [
-    'title'=> "Test",
-    'cmde'=> 'php batchtest.php',
-  ],
+  'test'=> ['title'=> "Test",'cmde'=> 'php batchtest.php'],
+  'pwd'=> ['title'=> 'pwd', 'cmde'=> 'pwd'],
   'sgupdt'=> [
     'title'=> "Prise en compte des nouvelles versions dans la consultation des cartes",
     'cmde'=> 'php ../sgupdt/main.php',
@@ -55,6 +53,18 @@ if (!isset($_GET['next'])) { // premier appel
 $output = file_get_contents($outputFilePath);
 echo Yaml::dump(['command'=> $command, 'output'=> $output], 2, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"\n";
 
-echo "</pre><a href='?batch=$_GET[batch]&amp;next=$uniqid'>Afficher la suite</a><br>\n";
+echo "</pre><a href='?batch=$_GET[batch]&amp;next=$uniqid",
+      ($_GET['returnTo'] ?? null) ? "&amp;returnTo=$_GET[returnTo]" : '',
+      "'>Afficher la suite</a><br>\n";
 $outputFileBasename = basename($outputFilePath);
-echo "<a href='index.php?action=deleteTempOutputBatch&filename=$outputFileBasename'>Revenir au menu du BO</a><br>\n";
+switch ($_GET['returnTo'] ?? null) {
+  case 'dashboard': {
+    echo "<a href='../dashboard/index.php?action=deleteTempOutputBatch&filename=$outputFileBasename'>",
+         "Revenir au menu du tableau de bord</a><br>\n";
+    break;
+  }
+  default: {
+    echo "<a href='index.php?action=deleteTempOutputBatch&filename=$outputFileBasename'>Revenir au menu du BO</a><br>\n";
+    break;
+  }
+}
