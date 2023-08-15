@@ -63,7 +63,7 @@ class Image { // Image principale ou cartouche de la carte
       'ok' => "Image géoréférencée",
       'KO' => "Image mal géoréférencée",
     }
-    . (($this->georefBox && $this->georefBox->astrideTheAntimeridian()) ? " à cheval sur l'antiméridien" : '');
+    . (($this->georefBox && $this->georefBox->intersectsAntiMeridian()) ? " à cheval sur l'antiméridien" : '');
   }
   
   function xml(): ?string { return $this->xml; }
@@ -73,10 +73,12 @@ class Image { // Image principale ou cartouche de la carte
   // Recherche pour ce cartouche défini dans l'archive le meilleur cartouche correspondant défini dans le catalogue
   // retourne le titre de ce meilleur cartouche
   function bestInsetMapOfCat(array $insetMapsOfCat, bool $show=false): ?string {
+    //$show = true;
+    //echo "title=",$this->title(),", georefBox=",$this->georefBox,"<br>\n";
     $bests = []; // liste des cartouches de MapCat correspondant au cartouche de l'archive
     foreach ($insetMapsOfCat as $insetMapOfCat) {
-      $spatial = new Spatial($insetMapOfCat['spatial']);
-      $gbox = GBox::createFromDcmiBox($spatial->dcmiBox());
+      $gbox = new Spatial($insetMapOfCat['spatial']);
+      //echo "insetMapOfCat: title=",$insetMapOfCat['title'],", gbox=$gbox<br>\n";
       if ($this->georefBox->includes($gbox, $show))
         $bests[] = ['title'=> $insetMapOfCat['title'], 'gbox'=> $gbox];
     }
@@ -125,7 +127,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     //echo "MapArchive::__construct(pathOf7z=$pathOf7z, mapNum=$mapNum)<br>\n";
     $this->pathOf7z = $pathOf7z;
     $this->mapNum = $mapNum;
-    $mapCat = new MapCat($mapNum);
+    $mapCat = MapCat::get($mapNum);
     if (!is_file($pathOf7z))
       throw new Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $archive = new My7zArchive($pathOf7z);
@@ -199,7 +201,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   // Le résultat est un array avec en clés les noms des cartouches dans l'archive
   // et en valeurs les titres des cartouches dans MapCat
   function mappingInsetsWithMapCat(bool $show=false): array {
-    $mapCat = new MapCat($this->mapNum);
+    $mapCat = MapCat::get($this->mapNum);
     $mappingGeoTiffWithMapCat = [];
     foreach ($this->insets as $name => $inset) {
       if ($inset->tif() && $mapCat->insetMaps) {
@@ -216,8 +218,8 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
    *  - warnings listant les alertes
   */
   function invalid(): array {
-    $mapCat = new MapCat($this->mapNum);
-    if ($mapCat->empty())
+    $mapCat = MapCat::get($this->mapNum);
+    if (!$mapCat)
       return ['errors'=> ["La carte n'existe pas dans le catalogue MapCat"]];
     $errors = [];
     $warnings = [];
@@ -279,6 +281,17 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
           $errors[] = "Le fichier GéoTiff du cartouche $name est absent";
         if (!$inset->xml())
           $warnings[] = "Le fichier de métadonnées XML du cartouche $name est absent";
+        switch($inset->georef()) {
+          case 'ok': break;
+          case 'KO': {
+            $errors[] = "Le fichier GéoTiff du cartouche '$name' est mal géoréférencé";
+            break;
+          }
+          case null: {
+            $errors[] = "Le fichier GéoTiff du cartouche '$name' n'est pas géoréférencé";
+            break;
+          }
+        }
       }
       $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
       //echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
@@ -305,7 +318,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
     
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
-    $mapCat = new MapCat($this->mapNum);
+    $mapCat = MapCat::get($this->mapNum);
     echo "<table border=1>";
     
     // affichage de l'entrée du catalogue
@@ -380,7 +393,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       "Dump de l'objet Php</a></td></tr>\n";
     
     if ($button == 'validateMap') { // ajout d'un bouton de validation si l'option correspondante est indiquée
-      $validateButton = button(
+      $validateButton = Html::button(
           "Valider la carte et la déposer",
           [ 'action'=> 'validateMap',
             'path' => $_GET['path'],
@@ -412,7 +425,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
-    $mapCat = new MapCat($mapNum);
+    $mapCat = MapCat::get($mapNum);
     $invalid = $this->invalid();
     if (isset($invalid['errors'])) {
       $record['MapCat'] = $mapCat->asArray();
@@ -429,7 +442,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   
   function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
     if ($options['yaml'] ?? null) {
-      $mapCat = new MapCat($this->mapNum);
+      $mapCat = MapCat::get($this->mapNum);
       foreach ($this->insets as $name => $inset)
         $insets[$name] = $inset->asArray();
       echo Yaml::dump([$this->pathOf7z => [

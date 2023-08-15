@@ -4,6 +4,7 @@ name: mapcat.inc.php
 title: mapcat/mapcat.inc.php - accès au catalogue MapCat et vérification des contraintes
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../bo/lib.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -13,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 * Les contraintes sont définies dans la constante CONSTRAINTS
 * et la liste des exceptions est dans la constante EXCEPTIONS
 */
-class Spatial {
+class Spatial extends GBox {
   const CONSTRAINTS = [
     "les latitudes sont comprises entre -90° et 90°",
     "la latitude North est supérieure à la latitude South",
@@ -33,11 +34,18 @@ class Spatial {
       "dans ce cas (East - West) >= 360 et -180° <= West < 180° < East < 540° (360+180)"
     ],
   ];
-  protected array $sw; // position SW en LonLatDD
-  protected array $ne; // position NE en LonLatDD
-  protected ?string $exception; // nom de l'exception ou null
+  //protected array $sw; // position SW en LonLatDD
+  //protected array $ne; // position NE en LonLatDD
+  protected ?string $exception=null; // nom de l'exception ou null
   
-  private static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
+  function __construct(array|string $param=[]) {
+    parent::__construct($param);
+    if (is_array($param) && isset($param['exception'])) {
+      $this->exception = $param['exception'];
+    }
+  }
+  
+  /*private static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
     if (!preg_match("!^(\d+)°((\d\d(,\d+)?)')?(N|S) - (\d+)°((\d\d(,\d+)?)')?(E|W)$!", $latLonDM, $matches))
       throw new Exception("Erreur match sur $latLonDM");
     //echo "<pre>matches = "; print_r($matches); echo "</pre>\n";
@@ -50,9 +58,9 @@ class Spatial {
     if ($matches[10]=='W') $lon = - $lon;
     //echo "lat=$lat, lon=$lon<br>\n";
     return [$lon, $lat];
-  }
+  }*/
   
-  function __construct(array $spatial) {
+  /*function __construct(array $spatial) {
     //$spatial = ['SW'=> "51°00,00'S - 104°00,00'E", 'NE'=> "02°36,26'S - 167°57,92'W"]; // test antiméridien
     $this->sw = self::LatLonDM2LonLatDD($spatial['SW']);
     $this->ne = self::LatLonDM2LonLatDD($spatial['NE']);
@@ -60,10 +68,10 @@ class Spatial {
       $this->ne[0] += 360;
     }
     $this->exception = $spatial['exception'] ?? null;
-  }
+  }*/
   
-  function sw(): array { return $this->sw; }
-  function ne(): array { return $this->ne; }
+  function sw(): array { return $this->min; }
+  function ne(): array { return $this->max; }
 
   function badLats(): ?string { // si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null
     if (($this->sw()[1] < -90) || ($this->ne()[1] > 90))
@@ -100,31 +108,33 @@ class Spatial {
     return null;
   }
   
-  function dcmiBox(): array { // export utilisant les champs définis par le Dublin Core
+  /*function dcmiBox(): array { // export utilisant les champs définis par le Dublin Core
     return [
       'westlimit' => $this->sw[0],
       'southlimit'=> $this->sw[1],
       'eastlimit' => $this->ne[0],
       'northlimit'=> $this->ne[1],
     ];
-  }
+  }*/
   
-  private function nw(): array { return [$this->sw[0], $this->ne[1]]; }
-  private function se(): array { return [$this->ne[0], $this->sw[1]]; }
+  function area(): float { return ($this->max[0] - $this->min[0]) * ($this->max[1] - $this->min[1]); }
+  
+  private function nw(): array { return [$this->min[0], $this->max[1]]; }
+  private function se(): array { return [$this->max[0], $this->min[1]]; }
   
   private function shift(float $dlon): self { // créée une nouvelle boite décalée de $dlon
     $shift = clone $this;
-    $shift->sw[0] += $dlon;
-    $shift->ne[0] += $dlon;
+    $shift->min[0] += $dlon;
+    $shift->max[0] += $dlon;
     return $shift;
   }
   
-  private function ring(): array { return [$this->nw(), $this->ne, $this->se(), $this->sw, $this->nw()]; } // liste de positions
+  private function ring(): array { return [$this->nw(), $this->sw(), $this->se(), $this->ne(), $this->nw()]; }
   
   // A linear ring MUST follow the right-hand rule with respect to the area it bounds,
   // i.e., exterior rings are clockwise, and holes are counterclockwise.
   private function multiPolygon(): array { // génère un MultiPolygone GeoJSON 
-    if ($this->ne[0] < 180) { // cas standard
+    if ($this->max[0] < 180) { // cas standard
       return [
         'type'=> 'MultiPolygon',
         'coordinates'=> [[ $this->ring() ]],
@@ -152,7 +162,7 @@ class Spatial {
     ];
   }
   
-  function lgeoJSON0(): string { // génère un objet L.geoJSON - modèle avec constante
+  /*function lgeoJSON0(): string { // génère un objet L.geoJSON - modèle avec constante
     return <<<EOT
   L.geoJSON(
           { "type": "MultiPolygon",
@@ -164,7 +174,7 @@ class Spatial {
           { style: { "color": "red", "weight": 2, "opacity": 0.65 } });
 
 EOT;
-  }
+  }*/
   function lgeoJSON(array $style, string $popupContent): string { // retourne le code JS génèrant l'objet L.geoJSON
     return
       sprintf('L.geoJSON(%s,{style: %s, onEachFeature: onEachFeature});',
@@ -176,20 +186,12 @@ EOT;
   static function test(string $cas): void {
     echo "Spatial::test($cas)<br>\n";
     switch ($cas) {
-      case 'LatLonDM2LonLatDD': { // test de LatLonDM2LonLatDD
-        foreach (["42°39,93'N - 9°00,93'E", "42°39'N - 9°00'E", "42°N - 9°E", "44°09,00'N - 002°36,00'W", 
-                  "45°49,00'N - 001°00,00'W", "50°40,95'N - 000°54,92'E", "00°40,95'S - 000°54,92'E"] as $spatial) {
-          $lonLat = self::LatLonDM2LonLatDD($spatial);
-          echo "<pre>LatLonDM2LonLatDD($spatial) -> [$lonLat[0], $lonLat[1]]</pre>\n";
-        }
-        break;
-      }
       case 'Spatial::multiPolygon': {
         echo "<pre>";
-        $spatial = new Spatial(['SW'=>"42°39,93'N - 9°00,93'E", 'NE'=> "42°39'N - 9°00'E"]);
-        print_r($spatial->multiPolygon());
-        $spatial = new Spatial(['SW'=> "51°00,00'S - 104°00,00'E", 'NE'=> "02°36,26'S - 167°57,92'W"]);
-        print_r($spatial->multiPolygon());
+        $spatial = new Spatial(['SW'=>"42°N - 9°E", 'NE'=> "43°N - 10°E"]);
+        echo Yaml::dump([$spatial->multiPolygon()], 4);
+        $spatial = new Spatial(['SW'=> "51°S - 104°E", 'NE'=> "02°S - 168°W"]);
+        echo Yaml::dump([$spatial->multiPolygon()], 4);
         break;
       }
     }
@@ -197,8 +199,7 @@ EOT;
 };
 //Spatial::test();
 
-// Un objet MapCat correspond à l'enregistrement dans le catalogue pour une carte
-// ou à une entrée vide si la carte n'a pas été trouvée
+// Un objet MapCat correspond à l'enregistrement d'une carte dans le catalogue MapCat
 class MapCat {
   const ALL_KINDS = ['current','obsolete','uninteresting','deleted'];
   protected array $cat=[]; // contenu de l'entrée du catalogue correspondant à une carte
@@ -313,7 +314,6 @@ if (!callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 
 switch ($_GET['action'] ?? null) {
   case null: { // menu
-    echo "<a href='?action=testSpatial&cas=LatLonDM2LonLatDD'>Test Spatial, cas LatLonDM2LonLatDD</a><br>\n";
     echo "<a href='?action=testSpatial&cas=Spatial::multiPolygon'>Test Spatial, cas Spatial::multiPolygon</a><br>\n";
     $kind = isset($_GET['kind']) ? explode(',',$_GET['kind']) : [];
     echo "  <form>

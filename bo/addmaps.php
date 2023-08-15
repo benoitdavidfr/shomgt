@@ -4,6 +4,7 @@ name: addmaps.php
 title: bo/addmaps.php - ajout et vérification de nouvelles cartes dans le BO
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/user.php';
 require_once __DIR__.'/mapmetadata.inc.php';
 require_once __DIR__.'/maparchive.php';
@@ -196,7 +197,7 @@ if ($maps) {
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
          "<td><a href='viewtiff.php?path=/users/$login&map=",substr($map, 0, -3),"&button=validateMap'>vérifier</a></td>",
-         "<td>",button('supprimer', ['action'=>'delete','map'=>$map]),"</td>",
+         "<td>",Html::button('supprimer', ['action'=>'delete','map'=>$map]),"</td>",
          "</tr>\n";
   }
   echo "</table>\n";

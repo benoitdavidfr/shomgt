@@ -33,7 +33,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
     if ($role == 'restricted') die();
     echo "<li><a href='../dashboard/' target='_blank'>",
-         "Identifier les cartes à actualiser grâce au tabeau de bord de l'actualité des cartes</a></li>\n";
+         "Identifier les cartes à actualiser grâce au tableau de bord de l'actualité des cartes</a></li>\n";
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",
          "Télécharger une nouvelle version de cartes sur le site du Shom</a></li>\n";
     echo "<li><a href='addmaps.php'>Déposer cette nouvelle version de carte dans le portefeuille</a></li>\n";

@@ -202,6 +202,11 @@ if (!isset($_GET['map'])) { // affichage du contenu de la livraison ou du réper
 if (!is_file("$PF_PATH$_GET[path]/$_GET[map].7z"))
   die("Erreur le fichier $PF_PATH$_GET[path]/$_GET[map].7z n'existe pas\n");
 
+// transforme un GBox en une structure latLngBounds@Leaflet
+function latLngBounds(GBox $gbox): array {
+  return [[$gbox->south(), $gbox->west()], [$gbox->north(), $gbox->east()]];
+}
+
 switch ($_GET['action'] ?? null) {
   case null: { // affichage des caractéristiques de la carte
     echo HTML_HEAD;
@@ -221,12 +226,12 @@ switch ($_GET['action'] ?? null) {
   }
   case 'insetMapping': { // affiche le détail de la correspondance entre cartouches 
     $mapNum = substr($_GET['map'], 0, 4);
-    //$mapCat = new MapCat($mapNum);
     $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
     $mappingInsetsWithMapCat = $map->mappingInsetsWithMapCat(true);
     echo "<pre>mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
     sort($mappingInsetsWithMapCat);
     echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
+    $mapCat = MapCat::get($mapNum);
     echo "insetTitlesSorted = "; print_r($mapCat->insetTitlesSorted());
     if ($mappingInsetsWithMapCat <> $mapCat->insetTitlesSorted())
       echo "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
@@ -264,20 +269,20 @@ switch ($_GET['action'] ?? null) {
     }
     echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
     $spatials = []; // liste des couches Leaflet représentant les ext. spat. des GéoTiffs [title => code JS créant un L.geoJSON]
-    $mapCat = new MapCat($mapNum);
+    $mapCat = MapCat::get($mapNum);
     foreach ($mapCat->spatials() as $title => $spatial) {
       $title = str_replace('"', '\"', $title);
       //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";
       $spatials[$title] = $spatial->lgeoJSON(LGEOJSON_STYLE, $title);
     }
     //echo "<pre>spatials = "; print_r($spatials); echo "</pre>\n"; //die("Ok ligne ".__LINE__);
-    $bounds = ($georefBox = $map->georefBox()) ? $georefBox->latLngBounds() : [];
+    $bounds = ($georefBox = $map->georefBox()) ? latLngBounds($georefBox) : [];
     echo "<pre>bounds = "; print_r($bounds); echo "</pre>\n";
     if (!$tifs)
       die("Affichage impossible car aucun GéoTiff à afficher\n");
     if (!$bounds)
       die("Affichage impossible car impossible de déterminer l'extension à afficher\n");
-   //die("Ok ligne ".__LINE__);
+    //die("Ok ligne ".__LINE__);
     break;
   }
   default: {

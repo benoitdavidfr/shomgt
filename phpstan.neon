@@ -1,5 +1,6 @@
 parameters:
-  level: 6
+  #level: 6
+  level: 2
   typeAliases:
     TPos: 'array<int, float>'
     TLPos: 'array<int, array<int, float>>'
@@ -13,10 +14,10 @@ parameters:
   paths:
     - index.php
     - index2.php 
-    - login.php
     - mapwcat.php
     - tile.php
     - wms.php
+    - bo
     - lib
     - shomgt
     - sgupdt
@@ -27,4 +28,4 @@ parameters:
     - shomft
   excludePaths:
     analyse:
-      - sgserver/SevenZipArchive.php
+      - bo/SevenZipArchive.php

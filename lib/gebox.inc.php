@@ -17,6 +17,10 @@ doc: |
   Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
   Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
 journal: |
+  15/8/2023:
+    - ajout de BBox::includes()
+    - modification de BBox::__toString()
+    - intégration dans GBox::__construct() de l'initialisation d'un GBox à partir du format Spatial
   28/7/2022:
     - correction suite à analyse PhpStan level 4
   22/5/2022:
@@ -66,8 +70,9 @@ abstract class BBox {
     $this->max = [];
     if (!$param)
       return;
-    elseif (is_array($param) && in_array(count($param), [2,3]) && is_numeric($param[0])) // 1 pos
+    elseif (is_array($param) && in_array(count($param), [2,3]) && is_numeric($param[0])) { // 1 pos
       $this->bound($param);
+    }
     elseif (is_array($param) && (count($param)==4) && is_numeric($param[0])) { // 2 pos
       $this->bound([$param[0], $param[1]]);
       $this->bound([$param[2], $param[3]]);
@@ -145,12 +150,13 @@ abstract class BBox {
   /** @return array<string, TPos> */
   function asArray(): array { return ['min'=> $this->min, 'max'=> $this->max]; }
   
-  // affiche la BBox avec des coord. arrondies
+  // affiche la BBox en utilisant le format GeoJSON d'un Bbox
+  // avec des coord. arrondies en fonction de la $precision définie dans la classe appelée
   function __toString(): string {
     if (!$this->min)
-      return '{}';
-    else
-      return json_encode(['min'=> $this->round()->min, 'max'=> $this->round()->max]);
+      return '[]';
+    $p = (get_called_class())::$precision;
+    return sprintf("[%.{$p}f, %.{$p}f, %.{$p}f, %.{$p}f]", $this->min[0], $this->min[1], $this->max[0], $this->max[1]); 
   }
   
   function west(): ?float  { return $this->min ? $this->min[0] : null; }
@@ -253,6 +259,14 @@ abstract class BBox {
   
   // version bouléenne de intersects()
   function inters(BBox $b2): bool { return $this->intersects($b2) ? true : false; }
+
+  function includes(BBox $small, bool $show=false): bool { // teste si $small est strictement inclus dans $this
+    $result = ($this->min[0] < $small->min[0]) && ($this->min[1] < $small->min[1])
+           && ($this->max[0] > $small->max[0]) && ($this->max[1] > $small->max[1]);
+    if ($show)
+      echo $this,($result ? " includes " : " NOT includes "),$small,"<br>\n";
+    return $result;
+  }
 };
 
 {/*PhpDoc: classes
@@ -267,35 +281,36 @@ doc: |
   Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
 */}
 class GBox extends BBox {
-  const ErrorParamInFromShomGt = 'GBox::ErrorParamInFromShomGt';
+  const ErrorParamInConstruct = 'GBox::ErrorParamInConstruct';
   const ErrorSizeOfEmptyGBox = 'GBox::ErrorSizeOfEmptyGBox';
   const ErrorDistOfEmptyGBox = 'GBox::ErrorDistOfEmptyGBox';
   const ErrorDistanceOfEmptyGBox = 'GBox::ErrorDistanceOfEmptyGBox';
   
   static int $precision = 6; // nbre de chiffres après la virgule à conserver pour les positions
   
-  function dLon(): ?float  { return $this->min ? $this->max[0] - $this->min[0] : null; }
-  function dLat(): ?float  { return $this->min ? $this->max[1] - $this->min[1] : null; }
- 
-  // Crée un GBox à partir d'un rect tel que défini dans shomgt.yaml, voir les tests
-  /** @param array<string, string> $rect */
-  static function fromGeoDMd(array $rect): self {
-    foreach(['SW','NE'] as $c) {
-      if (!isset($rect[$c]))
-        throw new SExcept("Paramètre $c non défini dans GBox::fromShomGt()", self::ErrorParamInFromShomGt);
-      if (is_string($rect[$c])) {
-        $rect[$c] = Pos::fromGeoDMd($rect[$c]);
+  // ajoute au mécanisme de création de BBox la possibilité de créer une GBox à partir d'un array
+  // respectant le format Spatial défini dans MapCat et shomgt.yaml
+  // Remplace la méthode statique fromGeoDMd() conservée pour la compatibilité avec le code existant
+  function __construct(array|string $param=[]) {
+    if (is_array($param) && isset($param['SW']) && isset($param['NE'])) {
+      foreach(['SW','NE'] as $cornerId) {
+        if (is_string($param[$cornerId])) {
+          $param[$cornerId] = Pos::fromGeoDMd($param[$cornerId]);
+        }
+        elseif (!Pos::is($param[$cornerId]))
+          throw new SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);
       }
-      elseif (!is_array($rect[$c]))
-        throw new SExcept("Paramètre $c mal défini dans GBox::fromShomGt()", self::ErrorParamInFromShomGt);
+      // cas d'un rectangle intersectant l'anti-méridien
+      if ($param['NE'][0] < $param['SW'][0]) // la longitude Est < longitude West
+        $param['NE'][0] += 360; // la longitude Est est augmentée de 360° et devient comprise entre 180° et 360+180°
+      parent::__construct([$param['SW'], $param['NE']]);
     }
-    // cas d'un rectangle intersectant l'anti-méridien
-    if ($rect['NE'][0] < $rect['SW'][0]) // la longitude Est < longitude West
-      $rect['NE'][0] += 360; // la longitude Est est augmentée de 360° et devient comprise entre 180° et 360+180°
-    return new GBox([$rect['SW'][0], $rect['SW'][1], $rect['NE'][0], $rect['NE'][1]]);
+    else {
+      parent::__construct($param);
+    }
   }
   
-  static function fromGeoDMdTest(): void {
+  static function constructTest(): void {
     echo "<table border=1><th></th><th>paramètre</th><th>résultat</th>";
     foreach ([
       ['SW'=> "42°39,93'N - 9°00,93'E", 'NE'=> "43°08,95'N - 9°28,64'E", 'descr'=> "ok DM"],
@@ -308,7 +323,7 @@ class GBox extends BBox {
     ] as $rect) {
       echo "<tr><td>";
       try {
-        $gbox = self::fromGeoDMd($rect);
+        $gbox = new self($rect);
       }
       catch(SExcept $e) {
         echo "SExcept: {c: ",$e->getSCode(),", m: '",$e->getMessage(),"'}";
@@ -319,6 +334,13 @@ class GBox extends BBox {
     }
     echo "</table>\n";
   }
+  
+  function dLon(): ?float  { return $this->min ? $this->max[0] - $this->min[0] : null; }
+  function dLat(): ?float  { return $this->min ? $this->max[1] - $this->min[1] : null; }
+ 
+  // maintien de la méthode fromGeoDMd() pour conserver la compatibilité avec le code existant
+  /** @param array<string, string> $spatial */
+  static function fromGeoDMd(array $spatial): self { return new self($spatial); }
   
   function intersectsAntiMeridian(): bool { return ($this->east() > 180); } // Teste l'intersection avec l'AM
 
@@ -415,8 +437,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     BBox::intersectsTest();
     echo "<b>Test de GBox::dist</b><br>\n";
     GBox::distTest();
-    echo "<b>Test de GBox::fromGeoDMd</b><br>\n";
-    GBox::fromGeoDMdTest();
+    echo "<b>Test de GBox::__construct</b><br>\n";
+    GBox::constructTest();
     echo "<b>Test de GBox::intersectsAntiMeridian</b><br>\n";
     GBox::intersectsAntiMeridianTest();
   }

@@ -339,9 +339,8 @@ $actions = [
     ],
     'to'=> 'actionTestB',
     'apply'=> function(): void {
-      //function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
       echo "Action Test A<br>\n";
-      echo button('go', ['action'=> 'actionTestB'], '', 'get');
+      echo Html::button(submitValue: 'go', hiddenValues: ['action'=> 'actionTestB'], action: '', method: 'get');
     },
   ],
   'actionTestB'=> [
@@ -352,7 +351,6 @@ $actions = [
     ],
     'to'=> 'user.menu',
     'apply'=> function(): void {
-      //function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
       echo "Action Test B<br>\n";
       echo "<a href='user.php'>Menu user</a>\n";
       die();
@@ -609,7 +607,7 @@ $actions = [
       $emptyResult = true;
       foreach (MySql::query($query) as $user) {
         $emptyResult = false;
-        $button = button('envoyer un email', ['action'=> 'reValidateOldUsers', 'email'=> $user['email']], '', 'get');
+        $button = Html::button('envoyer un email', ['action'=> 'reValidateOldUsers', 'email'=> $user['email']], '', 'get');
         echo '<tr><td><pre>',Yaml::dump([$user]),"</pre></td></tr>\n";
         echo "<tr><td>$user[email]</td><td>$user[role]</td><td>$user[comment]</td>",
               "<td>$user[valid]</td><td>$user[diff]</td><td>$button</td></tr>\n";
@@ -672,8 +670,11 @@ $actions = [
       $emptyResult = true;
       foreach (MySql::query($query) as $user) {
         $emptyResult = false;
-        // function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string
-        $button = button('envoyer un email', ['action'=> 'suspendOldUsers', 'email'=> $user['email']], '', 'get');
+        $button = Html::button(
+          submitValue: 'envoyer un email', 
+          hiddenValues: ['action'=> 'suspendOldUsers', 'email'=> $user['email']], 
+          action: '', 
+          method: 'get');
         echo '<tr><td><pre>',Yaml::dump([$user]),"</pre></td></tr>\n";
         echo "<tr><td>$user[email]</td><td>$user[role]</td><td>$user[comment]</td>",
               "<td>$user[valid]</td><td>$user[diff]</td><td>$button</td></tr>\n";

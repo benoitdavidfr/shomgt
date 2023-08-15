@@ -4,137 +4,116 @@ name: gdalinfo.inc.php
 title: gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
 */
 require_once __DIR__.'/../lib/coordsys.inc.php';
+require_once __DIR__.'/../lib/gebox.inc.php';
 
 {/*PhpDoc: classes
-name: GBox
-title: class GBox - Gestion d'une BBox en coord. géo., chaque position codée comme [lon, lat]
+name: GdalGBox
+title: class GdalGBox extends GBox - Ajout à GBox de fonctionnalités
 doc: |
   Par convention, on cherche à respecter:
     (-180 <= lon <= 180) && (-90 <= lat <= 90)
   sauf pour les boites à cheval sur l'antiméridien où:
     (-180 <= lonmin <= 180 < lonmax <= 180+360 )
+  et sauf pour les boites qui couvrent la totalité de la Terre en longitude.
   Cette convention est différente de celle utilisée par GeoJSON.
   Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
-*/}
-class GBox { 
-  protected array $min=[]; // position SW en LonLat
-  protected array $max=[]; // position NE en LonLat
   
-  function __construct(array $polygon=[]) {
-    if (!$polygon) return;
-    /* Je fais l'hypothèse que l'ordre des positions dans le polygone est le même dans gdalinfo que dans cornerCoordinates
-    ** à savoir: upperLeft, lowerLeft, lowerRight, upperRight, upperLeft
-    ** Si ((lowerLeft[0] > 0) && (lowerRight[0] < 0)) cela indique que la boite est à cheval sur l'antiméridien
-    */
-    $lpos = $polygon['coordinates'][0]; // la liste des positions du polygone
-    $this->min = $lpos[1];
-    if (($lpos[1][0] > 0) && ($lpos[2][0] < 0)) { // boite est à cheval sur l'antiméridien
-      $this->max = [$lpos[3][0]+360, $lpos[3][1]];
-    }
-    else { // la boite n'est PAS à cheval sur l'antiméridien
-      $this->max = $lpos[3];
-    }
-  }
+  J'ajoute à GBox la possibilité de création à partir du polygone GeoJSON dans wgs84extent
+  Je fais l'hypothèse que l'ordre des positions dans le polygone est le même dans gdalinfo que dans cornerCoordinates
+  à savoir: upperLeft, lowerLeft, lowerRight, upperRight, upperLeft
+  Si ((lowerLeft[0] > 0) && (lowerRight[0] < 0)) cela indique que la boite est à cheval sur l'antiméridien
   
-  static function createFromDcmiBox(array $dcmiBox): self {
-    $gbox = new GBox;
-    $gbox->min = [$dcmiBox['westlimit'], $dcmiBox['southlimit']];
-    $gbox->max = [$dcmiBox['eastlimit'], $dcmiBox['northlimit']];
-    return $gbox;
-  }
-  
-  function min(): array { return $this->min; }
-  function max(): array { return $this->max; }
-  
-  function __toString(): string {
-    if (!$this->min)
-      return '[]';
-    else
-      return sprintf('[west: %f, south: %f, east: %f, north: %f]', $this->min[0], $this->min[1], $this->max[0], $this->max[1]);
-  }
-  
-  function astrideTheAntimeridian(): bool { return ($this->max[0] > 180); } // boite à cheval sur l'antiméridien
-  
-  function translate360West(): self { // retourne le GBox translaté de 360° vers l'ouest
-    $gbox = new GBox;
-    $gbox->min = [$this->min[0]-360, $this->min[1]];
-    $gbox->max = [$this->max[0]-360, $this->max[1]];
-    return $gbox;
-  }
+  Je considère au final qu'un GBox standardisé respecte les 2 contraintes ci-dessus.
 
-  function translateEastBound360East(): self { // retourne le GBox dont le bord Est est translaté de 360° vers l'est
-    $gbox = new GBox;
-    $gbox->min = [$this->min[0], $this->min[1]];
-    $gbox->max = [$this->max[0]+360, $this->max[1]];
-    return $gbox;
-  }
+  On essaie ici de réutiliser GBox et EBox en en créant des sous-classes GdalGBox et GdalEBox
+  pour leur ajouter des fonctionalités.
+  Pour cela les règles à respecter sont le suivantes:
+   - ne pas redéfinir __construct() avec une signature incompatible avec celle du parent car certaines méthodes
+     comme BBox::round() par exemple utilisent le __construct() de ses enfants.
+     - la signature peut par contre être étendue à de nouvelles possibilités
+   - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GdalGBox
+*/}
+class GdalGBox extends GBox { 
+  //protected array $min=[]; // position SW en LonLat
+  //protected array $max=[]; // position NE en LonLat
   
-  function area(): float { return ($this->max[0]-$this->min[0]) * ($this->max[1]-$this->min[1]); }
-  
-  function bound(array $pos): void { // agrandit le bbox avec la position $pos en LonLat
-    if (!$this->min) {
-      $this->min = $pos;
-      $this->max = $pos;
+  function __construct(array|string $param=[]) {
+    if (isset($param['coordinates'])) { // cas où le paramètre est un polygone GeoJSON
+      $lpos = $param['coordinates'][0]; // la liste des positions du polygone
+      $min = $lpos[1];
+      $max = $lpos[3];
+      if (($lpos[1][0] > 0) && ($lpos[2][0] < 0)) { // boite est à cheval sur l'antiméridien
+        $max[0] += 360;
+      }
+      parent::__construct([$min, $max]);
     }
     else {
-      if ($pos[0] < $this->min[0]) $this->min[0] = $pos[0];
-      if ($pos[1] < $this->min[1]) $this->min[1] = $pos[1];
-      if ($pos[0] > $this->max[0]) $this->max[0] = $pos[0];
-      if ($pos[1] > $this->max[1]) $this->max[1] = $pos[1];
+      parent::__construct($param);
     }
   }
   
-  function union(GBox $gbox): GBox { // retourne l'union des 2 bbox
-    if (!$gbox->min) {
-      return $this;
-    }
-    $union = $this;
-    $union->bound($gbox->min);
-    $union->bound($gbox->max);
-    return $union;
-  }
-  
-  function includes(GBox $small, bool $show=false): bool { // teste si $small est inclus dans $this
-    $result = ($this->min[0] < $small->min[0]) && ($this->min[1] < $small->min[1])
-           && ($this->max[0] > $small->max[0]) && ($this->max[1] > $small->max[1]);
-    if ($show)
-      echo $this,($result ? " includes " : " NOT includes "),$small,"<br>\n";
-    return $result;
-  }
-  
-  function latLngBounds(): array { // retourne un array de 2 positions en LatLng pour LeafLet
-    return [[$this->min[1], $this->min[0]], [$this->max[1], $this->max[0]]];
+  function std(): self { // standardisation, cad respectant les conventions
+    $min = $this->min;
+    if ($min[0] <= -180) $min[0] += 360;
+    if ($min[0]  >  180) $min[0] -= 360;
+    $max = $this->max;
+    if ($max[0] <= -180) $max[0] += 360;
+    if ($max[0]  >  180) $max[0] -= 360;
+    if ($max[0] < $min[0]) $max[0] += 360; // à cheval sur l'antiméridien
+    return new self([$min, $max]);
   }
 };
 
-// BBox en coord. projétées
-class Ebox {
-  protected array $min=[]; // position SW en proj
-  protected array $max=[]; // position NE en proj
+// extension de EBox avec possibilité de création à partir du champ cornerCoordinates de gdalinfo
+// et création d'un GdalGBox par déprojection du GdalEBox
+class GdalEBox extends EBox {
+  //protected array $min=[]; // position SW en proj
+  //protected array $max=[]; // position NE en proj
   protected array $center=[]; // position centre
 
-  function __construct(array $cc=[]) {
-    if (!$cc) return;
+  function __construct(array|string $param=[]) {
+    if (is_array($param) && isset($param['center'])) {
+      $min = [
+        ($param['upperLeft'][0] + $param['lowerLeft'][0])/2, // left
+        ($param['lowerRight'][1] + $param['lowerLeft'][1])/2, // lower
+      ];
+      $max = [
+        ($param['upperRight'][0] + $param['lowerRight'][0])/2, // right
+        ($param['upperRight'][1] + $param['upperLeft'][1])/2, // upper
+      ];
+      parent::__construct([$min, $max]);
+      $this->center = $param['center'];
+    }
+    else {
+      parent::__construct($param);
+    }
+  }
+  static function fromCornerCoordinates(array $cc) : self {
+    //echo "GdalEbox::fromCornerCoordinates(cc) "; print_r($cc);
+    if (!isset($cc['center']))
+      throw new Exception("Erreur, le paramètre n'est pas un cc");
     // construction à partir d'un array cornerCoordinates
-    $this->min = [
+    $min = [
       ($cc['upperLeft'][0] + $cc['lowerLeft'][0])/2, // left
       ($cc['lowerRight'][1] + $cc['lowerLeft'][1])/2, // lower
     ];
-    $this->max = [
+    $max = [
       ($cc['upperRight'][0] + $cc['lowerRight'][0])/2, // right
       ($cc['upperRight'][1] + $cc['upperLeft'][1])/2, // upper
     ];
-    $this->center = $cc['center'];
+    $gdalEBox = new self([$min, $max]);
+    $gdalEBox->center = $cc['center'];
+    return $gdalEBox;
   }
   
-  static function fromListOfPos(array $lpos): EBox {
+  /*static function fromListOfPos(array $lpos): EBox {
     $ebox = new EBox;
     foreach ($lpos as $pos)
       $ebox->bound($pos);
     return $ebox;
-  }
+  }*/
   
-  function bound(array $pos): void { // agrandit le bbox avec la position $pos
+  /*function bound(array $pos): void { // agrandit le bbox avec la position $pos
     if (!$this->min) {
       $this->min = $pos;
       $this->max = $pos;
@@ -145,16 +124,16 @@ class Ebox {
       if ($pos[0] > $this->max[0]) $this->max[0] = $pos[0];
       if ($pos[1] > $this->max[1]) $this->max[1] = $pos[1];
     }
-  }
+  }*/
   
-  function __toString(): string {
+  /*function __toString(): string {
     $center = $this->center ? sprintf("[x: %.0f, y: %.0f]", $this->center[0], $this->center[1]) : '[]';
     return sprintf("[west: %.0f, south: %.0f, east: %.0f, north: %.0f, center: %s]",
             $this->min[0], $this->min[1], $this->max[0], $this->max[1], $center);
-  }
+  }*/
   
   // distance entre 2 boites, nulle ssi les 2 boites sont identiques
-  function distance(EBox $b2): float {
+  /*function distance(EBox $b2): float {
     if (!$this->min || !$b2->min)
       throw new Exception("Erreur de GBox::distance() avec une des EBox vide");
     return max(
@@ -163,6 +142,19 @@ class Ebox {
       abs($b2->max[0] - $this->max[0]),
       abs($b2->max[1] - $this->max[1])
     );
+  }*/
+  
+  /*function geo(string $proj): GdalGBox {
+    $min = WorldMercator::geo($this->min);
+    $max = WorldMercator::geo($this->max);
+    return GBox::createFromDcmiBox([
+      'westlimit'=> $min[0], 'southlimit'=> $min[1],
+      'eastlimit'=> $max[0], 'northlimit'=> $max[1],
+    ]);
+  }*/
+  function geo(string $proj): GdalGBox {
+    $gbox = parent::geo($proj);
+    return new GdalGBox([$gbox->west(),$gbox->south(),$gbox->east(),$gbox->north()]);
   }
 };
 
@@ -177,7 +169,7 @@ class Ebox {
 */
 require_once __DIR__.'/my7zarchive.inc.php';
 
-class Gdalinfo { // info de géoréférencement d'une image fournie par gdalinfo
+class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
   protected array $info; // contenu du gdalinfo
   
   function __construct(string $path) {
@@ -203,15 +195,15 @@ class Gdalinfo { // info de géoréférencement d'une image fournie par gdalinfo
       return $this->goodGeoref() ? 'ok' : 'KO';
   }
   
-  function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo
+  function gbox(): ?GdalGBox { // retourne le GdalGBox ssi il est défini dans le gdalinfo
     if (!isset($this->info['wgs84Extent']))
       return null;
     else
-      return new GBox($this->info['wgs84Extent']);
+      return new GdalGBox($this->info['wgs84Extent']);
   }
 
   // Test de georef correct fondé sur la comparaison entre cornerCoordinates et la projection en WorldMercator de wgs84Extent
-  function goodGeoref(bool $debug=false): bool { 
+  /*function goodGeoref0(bool $debug=false): bool { 
     $ebox = new EBox($this->info['cornerCoordinates']);
     if ($debug)
       echo "  ebox=$ebox\n";
@@ -261,22 +253,39 @@ class Gdalinfo { // info de géoréférencement d'une image fournie par gdalinfo
         return true;
     }
     return false;
+  }*/
+  
+  // nlle version de goodGeoref() fondée sur la conversion en geo de cornerCoordinates
+  // et le calcul de la distance de cette GBox standardisée avec le wgs84Extent standardisé 
+  function goodGeoref(bool $debug=false): bool {
+    //$debug = true;
+    $cornerCoordinates = new GdalEBox($this->info['cornerCoordinates']);
+    if ($debug) {
+      echo "  cornerCoordinates=$cornerCoordinates\n";
+      echo "  cornerCoordinates->geo=",$cornerCoordinates->geo('WorldMercator'),"\n";
+      echo "  gbox=",$this->gbox(),"\n";
+    }
+    $dist = $this->gbox()->std()->distance($cornerCoordinates->geo('WorldMercator')->std());
+    if ($debug)
+      echo "  dist=$dist degrés\n";
+    return ($dist < 1e-2); // équivalent à 1 km
   }
   
   static function testGoodGeoref(string $PF_PATH): void {
     foreach ([
-        //"7620-2018c5 - Approches d'Anguilla"=> ['path7z'=> 'incoming/7620-2018c5/7620.7z', 'entry'=> '7620/7620_pal300.tif'],
+        //"7620-2018c5 - Approches d'Anguilla"=> ['path7z'=> 'archives/7620/7620-2018c5.7z', 'entry'=> '7620/7620_pal300.tif'],
         //"7471-2021c3 - D'Anguilla à St-Barth"=> ['path7z'=> 'archives/7471/7471-2021c3.7z', 'entry'=> '7471/7471_pal300.tif'],
         //"6977 - O. Pacif. N - P. NW /AM"=> ['path7z'=> 'archives/6977/6977-1982c169.7z', 'entry'=> '6977/6977_pal300.tif'],
         //"6835 - Océan Pacifique N. - P. E. /AM"=> ['path7z'=> 'current/6835.7z', 'entry'=> '6835/6835_pal300.tif'],
-        "0101 - Planisphère"=> ['path7z'=> 'current/0101.7z', 'entry'=> '0101/0101_pal300.tif'],
+        //"0101 - Planisphère"=> ['path7z'=> 'current/0101.7z', 'entry'=> '0101/0101_pal300.tif'],
+        "7427/1 - Port de Pauillac"=> ['path7z'=> 'archives/7427/7427-2016c13.7z', 'entry'=> '7427/7427_1_gtw.tif'],
       ] as $title => $tif) {
         echo "$title:\n";
         $archive = new My7zArchive("$PF_PATH/$tif[path7z]");
         $gdalInfo = new GdalInfo($path = $archive->extract($tif['entry']));
         $archive->remove($path);
         //print_r($gdalInfo);
-        $good = $gdalInfo->goodGeoref();
+        $good = $gdalInfo->goodGeoref(false);
         echo "  ",$good ? 'good' : 'bad',"\n";
         if (!$good) {
           $gdalInfo->goodGeoref(true);
