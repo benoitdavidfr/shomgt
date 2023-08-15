@@ -88,70 +88,7 @@ class GdalEBox extends EBox {
       parent::__construct($param);
     }
   }
-  static function fromCornerCoordinates(array $cc) : self {
-    //echo "GdalEbox::fromCornerCoordinates(cc) "; print_r($cc);
-    if (!isset($cc['center']))
-      throw new Exception("Erreur, le paramètre n'est pas un cc");
-    // construction à partir d'un array cornerCoordinates
-    $min = [
-      ($cc['upperLeft'][0] + $cc['lowerLeft'][0])/2, // left
-      ($cc['lowerRight'][1] + $cc['lowerLeft'][1])/2, // lower
-    ];
-    $max = [
-      ($cc['upperRight'][0] + $cc['lowerRight'][0])/2, // right
-      ($cc['upperRight'][1] + $cc['upperLeft'][1])/2, // upper
-    ];
-    $gdalEBox = new self([$min, $max]);
-    $gdalEBox->center = $cc['center'];
-    return $gdalEBox;
-  }
   
-  /*static function fromListOfPos(array $lpos): EBox {
-    $ebox = new EBox;
-    foreach ($lpos as $pos)
-      $ebox->bound($pos);
-    return $ebox;
-  }*/
-  
-  /*function bound(array $pos): void { // agrandit le bbox avec la position $pos
-    if (!$this->min) {
-      $this->min = $pos;
-      $this->max = $pos;
-    }
-    else {
-      if ($pos[0] < $this->min[0]) $this->min[0] = $pos[0];
-      if ($pos[1] < $this->min[1]) $this->min[1] = $pos[1];
-      if ($pos[0] > $this->max[0]) $this->max[0] = $pos[0];
-      if ($pos[1] > $this->max[1]) $this->max[1] = $pos[1];
-    }
-  }*/
-  
-  /*function __toString(): string {
-    $center = $this->center ? sprintf("[x: %.0f, y: %.0f]", $this->center[0], $this->center[1]) : '[]';
-    return sprintf("[west: %.0f, south: %.0f, east: %.0f, north: %.0f, center: %s]",
-            $this->min[0], $this->min[1], $this->max[0], $this->max[1], $center);
-  }*/
-  
-  // distance entre 2 boites, nulle ssi les 2 boites sont identiques
-  /*function distance(EBox $b2): float {
-    if (!$this->min || !$b2->min)
-      throw new Exception("Erreur de GBox::distance() avec une des EBox vide");
-    return max(
-      abs($b2->min[0] - $this->min[0]),
-      abs($b2->min[1] - $this->min[1]),
-      abs($b2->max[0] - $this->max[0]),
-      abs($b2->max[1] - $this->max[1])
-    );
-  }*/
-  
-  /*function geo(string $proj): GdalGBox {
-    $min = WorldMercator::geo($this->min);
-    $max = WorldMercator::geo($this->max);
-    return GBox::createFromDcmiBox([
-      'westlimit'=> $min[0], 'southlimit'=> $min[1],
-      'eastlimit'=> $max[0], 'northlimit'=> $max[1],
-    ]);
-  }*/
   function geo(string $proj): GdalGBox {
     $gbox = parent::geo($proj);
     return new GdalGBox([$gbox->west(),$gbox->south(),$gbox->east(),$gbox->north()]);

@@ -45,31 +45,6 @@ class Spatial extends GBox {
     }
   }
   
-  /*private static function LatLonDM2LonLatDD(string $latLonDM): array { // convertit une position LatLonDM en LonLat degrés décimaux
-    if (!preg_match("!^(\d+)°((\d\d(,\d+)?)')?(N|S) - (\d+)°((\d\d(,\d+)?)')?(E|W)$!", $latLonDM, $matches))
-      throw new Exception("Erreur match sur $latLonDM");
-    //echo "<pre>matches = "; print_r($matches); echo "</pre>\n";
-    $lat = $matches[1] + ($matches[3] ?  str_replace(',','.', $matches[3])/60 : 0);
-    if ($matches[5]=='S') $lat = - $lat;
-    if (!preg_match('!^0*([1-9]\d*)?$!', $matches[6], $matches2))
-      throw new Exception("Erreur match sur $matches[6]");
-    //echo "<pre>matches2 = "; print_r($matches2); echo "</pre>\n";
-    $lon = ($matches2[1] ?? 0) + ($matches[8] ? str_replace(',','.', $matches[8])/60 : 0);
-    if ($matches[10]=='W') $lon = - $lon;
-    //echo "lat=$lat, lon=$lon<br>\n";
-    return [$lon, $lat];
-  }*/
-  
-  /*function __construct(array $spatial) {
-    //$spatial = ['SW'=> "51°00,00'S - 104°00,00'E", 'NE'=> "02°36,26'S - 167°57,92'W"]; // test antiméridien
-    $this->sw = self::LatLonDM2LonLatDD($spatial['SW']);
-    $this->ne = self::LatLonDM2LonLatDD($spatial['NE']);
-    if ($this->ne[0] < $this->sw[0]) { // la boite intersecte l'antiméridien
-      $this->ne[0] += 360;
-    }
-    $this->exception = $spatial['exception'] ?? null;
-  }*/
-  
   function sw(): array { return $this->min; }
   function ne(): array { return $this->max; }
 
