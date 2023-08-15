@@ -23,7 +23,6 @@ if (!in_array($action, ['context.jsonld'])) { // formulaire
     <form>
     <select name='a' id='a'>\n",
     Html::selectOptions($action, [
-      
       'dumpLinks'=> "affiche le résultat du grep",
       'readSrc'=> "lit la liste des fichiers Php puis les ordres require entre fichiers puis effectue un affichage basique",
       'showIncludes'=> "affiche les inclusions à partir du fichier incluant",
@@ -34,40 +33,43 @@ if (!in_array($action, ['context.jsonld'])) { // formulaire
 }
 
 class PhpFile {
-  const ROOT = '/var/www/html/geoapi/shomgt';
-  protected string $path; // path du fichier ss ROOT 
-  protected ?string $title; // titre récupéré dans le src
+  static string $ROOT; // La racine de shomgt
+  protected string $path; // path du fichier ss $ROOT 
+  protected ?string $title=null; // titre récupéré dans le src
   protected array $includes=[]; // [{path} => ['grepSrc'=> {grepSrc}]]
-  protected array $includedIn=[]; // [{path}] path par rapport à ROOT
+  protected array $includedIn=[]; // [{path}] path par rapport à $ROOT
   protected array $sameAs=[]; // liens d'identités 
   static array $all; // [{path} => {PhpFile}]  
   
   function __construct(string $path) { // crée un fichier 
-    $this->path = substr($path, strlen(self::ROOT));
+    //echo "PhpFile::__construct(path: $path)\n";
+    $this->path = substr($path, strlen(self::$ROOT));
     //echo "file_get_contents($path)\n";
+    if (!is_file($path)) return;
     $src = file_get_contents($path);
     //echo "$path:\n", htmlspecialchars($src); die();
     $this->title = preg_match('!title: ([^\n]*)\n!', $src, $matches) ? $matches[1] : null;
   }
   
   function addInc(string $includedFile, string $grepSrc) { // ajoute un fichier inclus 
-    $this->includes[substr($includedFile, strlen(self::ROOT))]['grepSrc'] = $grepSrc;
+    $this->includes[substr($includedFile, strlen(self::$ROOT))]['grepSrc'] = $grepSrc;
   }
   
   static function add(string $path, string $includedFile, string $grepSrc): void { // ajoute un lien includes 
-   // echo "add($path, $includedFile)\n";
+    //echo "add($path, $includedFile, $grepSrc)\n";
     $path = realpath("../$path");
     //echo "  path -> $path\n";
     $includedFile = realpath(dirname($path)."/$includedFile");
     //echo "  includedFile -> $includedFile\n";
-    if (!isset(self::$all[substr($path, strlen(self::ROOT))])) {
-      self::$all[substr($path, strlen(self::ROOT))] = new self($path);
+    if (!isset(self::$all[substr($path, strlen(self::$ROOT))])) {
+      self::$all[substr($path, strlen(self::$ROOT))] = new self($path);
     }
-    self::$all[substr($path, strlen(self::ROOT))]->addInc($includedFile, $grepSrc);
+    self::$all[substr($path, strlen(self::$ROOT))]->addInc($includedFile, $grepSrc);
   }
   
   static function readPhpFiles(array $options=[]): void { // création des fichiers Php 
-    $command = "find .. -name '*.php' -print";
+    self::$ROOT = dirname(dirname(__FILE__));
+    $command = "find ".self::$ROOT." -name '*.php' -print";
     $output = [];
     $result_code = null;
     exec($command, $output, $result_code);
@@ -75,10 +77,11 @@ class PhpFile {
       echo '$output@readPhpFiles = '; print_r($output);
     }
     foreach ($output as $path) {
-      if (preg_match('!/vendor/!', $path) && !preg_match('!/vendor/autoload.php$!', $path)) // exclusion de vendor sauf autoload
+      if (preg_match('!/vendor/!', $path)) // exclusion de vendor sauf autoload
         continue;
-      $path = realpath(__DIR__."/$path");
-      self::$all[substr($path, strlen(self::ROOT))] = new self($path);
+      else {
+        self::$all[substr($path, strlen(self::$ROOT))] = new self($path);
+      }
     }
   }
   
@@ -105,7 +108,7 @@ class PhpFile {
       foreach ($phpFile->includes as $includedFilePath => $grepSrc) {
         //echo "$path includes $includedFilePath\n";
         if (!isset(self::$all[$includedFilePath])) {
-          self::$all[$includedFilePath] = new self(self::ROOT.$includedFilePath);
+          self::$all[$includedFilePath] = new self(self::$ROOT.$includedFilePath);
         }
         self::$all[$includedFilePath]->includedIn[] = $path;
       }
