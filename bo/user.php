@@ -831,7 +831,7 @@ $actions['checkSequenceBetweenActions'] = [
                   $action['fromDeduced'] = isset($action['fromDeduced']) ? implode(',', $action['fromDeduced']) : '';
                   $action['from'] = !isset($action['from']) ? ''
                       : (is_string($action['from']) ? $action['from'] : implode(',',$action['from']));
-                  if ($action['fromDeduced'] == ($action['from'] ?? []))
+                  if ($action['fromDeduced'] == ($action['from'] ?? [])) // @phpstan-ignore-line
                     return 'ok';
                   else
                     return ['title'=> $action['title'], 'from'=> $action['from'], 'fromDeduced'=> $action['fromDeduced']];

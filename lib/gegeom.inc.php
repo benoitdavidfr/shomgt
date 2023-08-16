@@ -90,9 +90,9 @@ abstract class Geometry {
   /** crée une géométrie à partir du json_decode() d'une géométrie GeoJSON
    * @param TGeoJsonGeometry $geom */
   static function fromGeoArray(array $geom): Geometry|GeometryCollection {
-    $type = $geom['type'] ?? null; // @phpstan-ignore-line
+    $type = $geom['type'] ?? null;
     if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
-      return new $type($geom['coordinates']);
+      return new $type($geom['coordinates']); // @phpstan-ignore-line
     elseif (($type=='GeometryCollection') && isset($geom['geometries'])) {
       $geoms = [];
       foreach ($geom['geometries'] as $g)
@@ -161,7 +161,7 @@ abstract class Geometry {
       return $elts;
     }
     else // $this est un élément
-      return [$this];
+      return [$this]; // @phpstan-ignore-line
   }
   
   /* agrège un ensemble de géométries élémentaires en une unique Geometry
@@ -959,7 +959,7 @@ class MultiPolygon extends Geometry {
   // utile pour restreindre le type retourné, notamment pour phpstan
   /** @param TGJMultiPolygon $geom */
   static function fromGeoArray(array $geom): MultiPolygon {
-    if (($geom['type'] ?? null) == 'MultiPolygon') // @phpstan-ignore-line
+    if (($geom['type'] ?? null) == 'MultiPolygon')
       return new MultiPolygon($geom['coordinates']);
     else
       throw new SExcept("Erreur de MultiPolygon::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
