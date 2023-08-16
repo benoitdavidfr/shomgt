@@ -83,7 +83,7 @@ class IsoMd {
     }
     //echo "$matches[1]<br>\n";
     //echo self::addUndescoreForThousand($matches[1]),"<br>\n";
-    $md['scaleDenominator'] = self::addUndescoreForThousand($matches[1]);
+    $md['scaleDenominator'] = self::addUndescoreForThousand(intval($matches[1]));
     
     return $md;
   }

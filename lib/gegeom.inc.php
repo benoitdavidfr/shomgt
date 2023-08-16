@@ -8,7 +8,7 @@ doc: |
   Ce fichier définit la classe abstraite Geometry, des sous-classes par type de géométrie GeoJSON
   (https://tools.ietf.org/html/rfc7946) ainsi qu'une classe Segment utilisé pour certains calculs.
   Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
-  puis en apppelant la méthode Geometry::fromGeoJSON().
+  puis en apppelant la méthode Geometry::fromGeoArray().
 journal: |
   10/6/2023:
     - corrections pour mise à niveau Php 8.2
@@ -85,12 +85,12 @@ abstract class Geometry {
   static int $ePrecision = 1; // nbre de chiffres après la virgule à conserver pour les coord. euclidiennes
   
   /** @var TPos|TLPos|TLLPos|TLLLPos $coords */
-  public readonly array $coords; // coordonnées ou Positions, stockées comme array, array(array), ... en fn de la sous-classe
+  public readonly array $coords; // Positions, stockées comme array, array(array), ... en fn de la sous-classe
   
-  // crée une géométrie à partir du json_decode() d'une géométrie GeoJSON
-  /** @param array<string, string|TPos|TLPos|TLLPos|TLLLPos> $geom */
+  /** crée une géométrie à partir du json_decode() d'une géométrie GeoJSON
+   * @param TGeoJsonGeometry $geom */
   static function fromGeoArray(array $geom): Geometry|GeometryCollection {
-    $type = $geom['type'] ?? null;
+    $type = $geom['type'] ?? null; // @phpstan-ignore-line
     if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
       return new $type($geom['coordinates']);
     elseif (($type=='GeometryCollection') && isset($geom['geometries'])) {
@@ -150,8 +150,8 @@ abstract class Geometry {
   // reprojète ue géométrie, prend en paramètre une fonction de reprojection d'une position, retourne un objet géométrie
   abstract function reproject(callable $reprojPos): Geometry;
   
-  // Décompose une géométrie en un array de géométries élémentaires (Point/LineString/Polygon)
-  /** @return array<int, object> */
+  // Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)
+  /** @return list<Point|LineString|Polygon> */
   function decompose(): array {
     $transfos = ['MultiPoint'=>'Point', 'MultiLineString'=>'LineString', 'MultiPolygon'=>'Polygon'];
     if (isset($transfos[$this->type()])) {
@@ -191,6 +191,8 @@ abstract class Geometry {
   }
   */
 }
+
+// Le test unitaire est à la fin du fichier
 
 {/*PhpDoc: classes
 name: Point
@@ -954,20 +956,17 @@ class MultiPolygon extends Geometry {
   /** @var TLLLPos $coords */
   public readonly array $coords; // contient une LLLPos
 
-  /** @param TLLLPos $coords */
-  function __construct(array $coords) { $this->coords = $coords; }
-  
-  // crée un MultiPolygon à partir du json_decode() d'une géométrie GeoJSON de type MultiPolygon ou Polygon
-  /** @param array<string, string|TLLPos|TLLLPos> $geom */
-  static function fromGeoArray(array $geom): self {
-    $type = $geom['type'] ?? null;
-    if (($type == 'MultiPolygon') && isset($geom['coordinates']))
+  // utile pour restreindre le type retourné, notamment pour phpstan
+  /** @param TGJMultiPolygon $geom */
+  static function fromGeoArray(array $geom): MultiPolygon {
+    if (($geom['type'] ?? null) == 'MultiPolygon') // @phpstan-ignore-line
       return new MultiPolygon($geom['coordinates']);
-    else if (($type == 'Polygon') && isset($geom['coordinates']))
-      return new MultiPolygon([$geom['coordinates']]);
     else
       throw new SExcept("Erreur de MultiPolygon::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
   }
+  
+  /** @param TLLLPos $coords */
+  function __construct(array $coords) { $this->coords = $coords; }
   
   function eltTypes(): array { return $this->coords ? ['Polygon'] : []; }
   
@@ -1105,11 +1104,11 @@ class GeometryCollection {
   const ErrorCenterOfEmpty = 'GeometryCollection::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'GeometryCollection::ErrorPosOfEmpty';
 
-  /** @var array<int, Object> $geometries */
+  /** @var array<int, Geometry> $geometries */
   public readonly array $geometries; // list of Geometry objects
   
   // prend en paramètre une liste d'objets Geometry
-  /** @param array<int, Object> $geometries */
+  /** @param array<int, Geometry> $geometries */
   function __construct(array $geometries) { $this->geometries = $geometries; }
   
   /** @return array<string, string|array<int, array<string, string|TPos|TLPos|TLLPos|TLLLPos>>> */
@@ -1195,7 +1194,7 @@ class GeometryCollection {
   }
   
   // Décompose une géométrie en un array de géométries élémentaires (Point/LineString/Polygon)
-  /** @return array<int, object> */
+  /** @return array<int, Point|LineString|Polygon> */
   function decompose(): array {
     $elts = [];
     foreach ($this->geometries as $g)
@@ -1234,5 +1233,120 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "gc=$gc<br>\n";
     //echo "gc->center()=",json_encode($gc->center()),"<br>\n";
     echo "gc->reproject()=",$gc->reproject(function(array $pos) { return $pos; }),"<br>\n";
+  }
+}
+
+if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe Geometry
+  if (!isset($_GET['test']))
+    echo "<a href='?test=Geometry'>Test unitaire de la classe Geometry</a>\n";
+  elseif ($_GET['test']=='Geometry') {
+    $RFC_EXAMPLES = [
+      'Point'=> '{"type": "Point", "coordinates": [100.0, 0.0]}',
+      'LineString'=> '{
+         "type": "LineString",
+         "coordinates": [
+             [100.0, 0.0],
+             [101.0, 1.0]
+         ]
+      }',
+      'Polygon No Hole'=> '{
+         "type": "Polygon",
+         "coordinates": [
+             [
+                 [100.0, 0.0],
+                 [101.0, 0.0],
+                 [101.0, 1.0],
+                 [100.0, 1.0],
+                 [100.0, 0.0]
+             ]
+         ]
+     }',
+     'Polygon with Holes'=> '{
+         "type": "Polygon",
+         "coordinates": [
+             [
+                 [100.0, 0.0],
+                 [101.0, 0.0],
+                 [101.0, 1.0],
+                 [100.0, 1.0],
+                 [100.0, 0.0]
+             ],
+             [
+                 [100.8, 0.8],
+                 [100.8, 0.2],
+                 [100.2, 0.2],
+                 [100.2, 0.8],
+                 [100.8, 0.8]
+             ]
+         ]
+     }',
+     'MultiPoint'=> '{
+         "type": "MultiPoint",
+         "coordinates": [
+             [100.0, 0.0],
+             [101.0, 1.0]
+         ]
+     }',
+     'MultiLineString'=> '{
+         "type": "MultiLineString",
+         "coordinates": [
+             [
+                 [100.0, 0.0],
+                 [101.0, 1.0]
+             ],
+             [
+                 [102.0, 2.0],
+                 [103.0, 3.0]
+             ]
+         ]
+     }',
+     'MultiPolygon'=> '{
+         "type": "MultiPolygon",
+         "coordinates": [
+             [
+                 [
+                     [102.0, 2.0],
+                     [103.0, 2.0],
+                     [103.0, 3.0],
+                     [102.0, 3.0],
+                     [102.0, 2.0]
+                 ]
+             ],
+             [
+                 [
+                     [100.0, 0.0],
+                     [101.0, 0.0],
+                     [101.0, 1.0],
+                     [100.0, 1.0],
+                     [100.0, 0.0]
+                 ],
+                 [
+                     [100.2, 0.2],
+                     [100.2, 0.8],
+                     [100.8, 0.8],
+                     [100.8, 0.2],
+                     [100.2, 0.2]
+                 ]
+             ]
+         ]
+     }',
+     'GeometryCollection'=> '{
+         "type": "GeometryCollection",
+         "geometries": [{
+             "type": "Point",
+             "coordinates": [100.0, 0.0]
+         }, {
+             "type": "LineString",
+             "coordinates": [
+                 [101.0, 0.0],
+                 [102.0, 1.0]
+             ]
+         }]
+     }',
+    ]; // les exemples de la RFC (Annex A)
+    foreach ($RFC_EXAMPLES as $label => $example) {
+      $geom = Geometry::fromGeoArray(json_decode($example, true));
+      echo "$label ->"; print_r($geom);
+    }
   }
 }

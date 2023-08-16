@@ -60,7 +60,7 @@ function download(string $url, string $outputFile, int $verbose): int {
      Il est alors nécessaire de récupérer le dernier match qui correspond au dernier appel HTTP */
   $httpCode = null;
   while (preg_match('!\n  HTTP/1\.1 (\d+) ([^\n]+)\n!', $log, $matches)) {
-    $httpCode = $matches[1];
+    $httpCode = intval($matches[1]);
     //echo "httpCode=$httpCode\n";
     $log = preg_replace('!\n  HTTP/1\.1 (\d+) ([^\n]+)!', '', $log, 1);
   }

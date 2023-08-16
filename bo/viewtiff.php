@@ -202,7 +202,9 @@ if (!isset($_GET['map'])) { // affichage du contenu de la livraison ou du réper
 if (!is_file("$PF_PATH$_GET[path]/$_GET[map].7z"))
   die("Erreur le fichier $PF_PATH$_GET[path]/$_GET[map].7z n'existe pas\n");
 
-// transforme un GBox en une structure latLngBounds@Leaflet
+/** transforme un GBox en une structure latLngBounds@Leaflet
+ * @return TLPos
+ */
 function latLngBounds(GBox $gbox): array {
   return [[$gbox->south(), $gbox->west()], [$gbox->north(), $gbox->east()]];
 }
@@ -218,7 +220,7 @@ switch ($_GET['action'] ?? null) {
   case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
     $archive = new My7zArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
     $path = $archive->extract($_GET['tif']);
-    $gdalinfo = new GdalInfo($path);
+    $gdalinfo = new GdalInfoBo($path);
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode($gdalinfo->asArray(), JSON_OPTIONS);
     $archive->remove($path);

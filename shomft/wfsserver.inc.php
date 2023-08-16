@@ -326,7 +326,7 @@ if (!isset($_SERVER['PATH_INFO']) && ((__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_S
 
 
 class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Features
-  /** @return array<int, array<string, string>> */
+  /** @return list<array<string, string>> */
   function collections(): array { // retourne la liste des collections
     $collections = [];
     foreach ($this->featureTypeList() as $typeId => $type) {

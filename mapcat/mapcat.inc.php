@@ -38,6 +38,7 @@ class Spatial extends GBox {
   //protected array $ne; // position NE en LonLatDD
   protected ?string $exception=null; // nom de l'exception ou null
   
+  /** @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string, exception?: string} $param */
   function __construct(array|string $param=[]) {
     parent::__construct($param);
     if (is_array($param) && isset($param['exception'])) {
@@ -45,7 +46,9 @@ class Spatial extends GBox {
     }
   }
   
+  /** @return TPos */
   function sw(): array { return $this->min; }
+  /** @return TPos */
   function ne(): array { return $this->max; }
 
   function badLats(): ?string { // si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null
@@ -94,7 +97,9 @@ class Spatial extends GBox {
   
   function area(): float { return ($this->max[0] - $this->min[0]) * ($this->max[1] - $this->min[1]); }
   
+  /** @return TPos */
   private function nw(): array { return [$this->min[0], $this->max[1]]; }
+  /** @return TPos */
   private function se(): array { return [$this->max[0], $this->min[1]]; }
   
   private function shift(float $dlon): self { // créée une nouvelle boite décalée de $dlon
@@ -104,10 +109,12 @@ class Spatial extends GBox {
     return $shift;
   }
   
+  /** @return TLPos */
   private function ring(): array { return [$this->nw(), $this->sw(), $this->se(), $this->ne(), $this->nw()]; }
   
   // A linear ring MUST follow the right-hand rule with respect to the area it bounds,
   // i.e., exterior rings are clockwise, and holes are counterclockwise.
+  /** @return TGJMultiPolygon */
   private function multiPolygon(): array { // génère un MultiPolygone GeoJSON 
     if ($this->max[0] < 180) { // cas standard
       return [
@@ -118,12 +125,16 @@ class Spatial extends GBox {
     else { // la boite intersecte l'antiméridien => duplication de l'autre côté
       return [
         'type'=> 'MultiPolygon',
-        'coordinates'=> [[ $this->ring() ], [ $this->shift(-360)->ring() ]],
+        'coordinates'=> [
+          [ $this->ring() ],
+          [ $this->shift(-360)->ring() ],
+        ],
       ];
       
     }
   }
   
+  /** @return TGeoJsonFeatureCollection */
   private function layer(string $popupContent): array { // génère une FeatureCollection GeoJson contenant le multiPolygone
     return [
       'type'=> 'FeatureCollection',
@@ -150,6 +161,7 @@ class Spatial extends GBox {
 
 EOT;
   }*/
+  /** @param array<string, string|int|float> $style */
   function lgeoJSON(array $style, string $popupContent): string { // retourne le code JS génèrant l'objet L.geoJSON
     return
       sprintf('L.geoJSON(%s,{style: %s, onEachFeature: onEachFeature});',
@@ -177,11 +189,17 @@ EOT;
 // Un objet MapCat correspond à l'enregistrement d'une carte dans le catalogue MapCat
 class MapCat {
   const ALL_KINDS = ['current','obsolete','uninteresting','deleted'];
-  protected array $cat=[]; // contenu de l'entrée du catalogue correspondant à une carte
+  /** @var TMapCatEntry $cat */
+  protected array $cat; // contenu de l'entrée du catalogue correspondant à une carte
+  /** @var TMapCatKind $kind */
   public readonly string $kind; // type de carte ('current' | 'obsolete' | 'uninteresting' | 'deleted')
+  /** @var array<string, TMapCatEntry> $maps */
   static array $maps=[]; // contenu du champ maps de MapCat
+  /** @var array<string, TMapCatEntry> $obsoleteMaps */
   static array $obsoleteMaps=[]; // contenu du champ obsoleteMaps de MapCat
+  /** @var array<string, TMapCatEntry> $uninterestingMaps */
   static array $uninterestingMaps=[]; // contenu du champ uninterestingMaps de MapCat
+  /** @var array<string, TMapCatEntry> $deletedMaps */
   static array $deletedMaps=[]; // contenu du champ deletedMaps de MapCat
   
   private static function init(): void {
@@ -193,6 +211,10 @@ class MapCat {
     //print_r(self::$uninterestingMaps);
   }
   
+  /** Retourn la liste des numéros de cartes correspondant aux types définis dans $kindOfMaps
+   * @param list<TMapCatKind> $kindOfMap
+   * @return list<string>
+   */
   static function mapNums(array $kindOfMap=['current','obsolete']): array {
     if (!self::$maps) MapCat::init();
     return array_merge(
@@ -203,29 +225,34 @@ class MapCat {
     );
   }
   
+  /** 
+   * @param TMapCatEntry $cat
+   * @param TMapCatKind $kind */
   private function __construct(array $cat, string $kind) { $this->cat = $cat; $this->kind = $kind; }
   
-  // retourne l'entrée du catalogue correspondant à $mapNum sous la forme d'un objet MapCat
-  // si cette entrée n'existe pas retourne null
+  /** retourne l'entrée du catalogue correspondant à $mapNum sous la forme d'un objet MapCat
+   * si cette entrée n'existe pas retourne null
+   * @param list<TMapCatKind> $kindOfMap
+   */
   static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?self {
     //echo "mapNum=$mapNum<br>\n";
     if (!self::$maps) MapCat::init();
     if (substr($mapNum, 0, 2) <> 'FR')
       $mapNum = 'FR'.$mapNum;
-    if (in_array('current', $kindOfMap) && ($cat = (self::$maps[$mapNum] ?? []))) {
+    if (in_array('current', $kindOfMap) && ($cat = (self::$maps[$mapNum] ?? null))) {
       return new self($cat, 'current');
     }
     // Je cherche la carte dans les cartes obsolètes
-    if (in_array('obsolete', $kindOfMap) && ($cat = (self::$obsoleteMaps[$mapNum] ?? []))) {
+    if (in_array('obsolete', $kindOfMap) && ($cat = (self::$obsoleteMaps[$mapNum] ?? null))) {
       //print_r($cat);
       $date = array_keys($cat)[count($cat)-1];
       return new self(array_merge(['obsoleteDate'=> $date], $cat[$date]), 'obsolete');
     }
     // Je cherche la carte dans les cartes inintéressantes
-    if (in_array('uninteresting', $kindOfMap) && ($cat = self::$uninterestingMaps[$mapNum] ?? [])) {
+    if (in_array('uninteresting', $kindOfMap) && ($cat = self::$uninterestingMaps[$mapNum] ?? null)) {
       return new self($cat, 'uninteresting');
     }
-    if (in_array('deleted', $kindOfMap) && ($cat = (self::$deletedMaps[$mapNum] ?? []))) {
+    if (in_array('deleted', $kindOfMap) && ($cat = (self::$deletedMaps[$mapNum] ?? null))) {
       //print_r($cat);
       $date = array_keys($cat)[count($cat)-1];
       return new self(array_merge(['deletedDate'=> $date], $cat[$date]), 'deleted');
@@ -233,8 +260,9 @@ class MapCat {
     return null;
   }
   
-  function __get(string $property) { return $this->cat[$property] ?? null; }
+  function __get(string $property): mixed { return $this->cat[$property] ?? null; }
   
+  /** @return array<string,mixed> */
   function asArray(): array { return array_merge($this->cat, ['kind'=> $this->kind]); }
   
   function scale(): ?string { // formatte l'échelle comme dans le GAN
@@ -245,6 +273,7 @@ class MapCat {
     return '1 : '.str_replace('.',' ',$this->insetMaps[$i]['scaleDenominator']);
   }
 
+  /** @return array<string, Spatial>*/
   function spatials(): array { // retourne la liste des extensions spatiales sous la forme [title => Spatial]
     $spatials = $this->spatial ? ['image principale de la carte'=> new Spatial($this->spatial)] : [];
     //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
@@ -254,7 +283,10 @@ class MapCat {
     return $spatials;
   }
 
-  function insetTitlesSorted(): array { // retourne la liste triée des titres des cartouches
+  /** retourne la liste triée des titres des cartouches
+   * @return list<string>
+   */
+  function insetTitlesSorted(): array {
     if (!$this->insetMaps) return [];
     $insetTitles = [];
     foreach ($this->insetMaps as $insetMap) {

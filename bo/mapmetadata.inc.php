@@ -79,23 +79,21 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     return $md;
   }
   
-  /* SI $mdName n'est pas défini et le fichier XML standard existe ALORS
-  **   retourne les MD ISO à partir du nom d'entrée standard des MD // MD d'une carte normale
-  ** SINON_SI $mdName est défini ALORS
-  **   retourne les MD ISO à partir du fichier $mdName // cas où je veux les MD d'un cartouche d'une carte normale
-  ** SINON // carte spéciale
-  **   S''il existe un et un seul fichier XML ALORS
-  **     retourne les MD ISO à partir de ce fichier XML // cas d'une carte spéciale ayant des MD XML
-  **   SINON // MD limitées construites avec un .tif/.pdf présent dans l'archive et servant de version
-  **     S'il existe un seul .tif ou pas de .tif et un seul .pdf ALORS
-  **       retourne MD dégradées carte spéciale à partir du .tif ou du .pdf
-  **     SINON_SI $geotiffNames est défini et un des $geotiffNames est présent dans l'archive ALORS
-  **       retourne MD dégradées carte spéciale à partir du noms de $geotiffNames présent dans l'archive
-  **     SINON
-  **       retourne [] // ERREUR
-  */
-  /** @return array<string, string> */
-  static function getFrom7z(string $pathOf7z, string $mdName='', array $geotiffNames=[]): array { 
+  /** SI $mdName n'est pas défini et le fichier XML standard existe ALORS
+   *   retourne les MD ISO à partir du nom d'entrée standard des MD // MD d'une carte normale
+   * SINON_SI $mdName est défini ALORS
+   *   retourne les MD ISO à partir du fichier $mdName // cas où je veux les MD d'un cartouche d'une carte normale
+   * SINON // carte spéciale
+   *   S''il existe un et un seul fichier XML ALORS
+   *     retourne les MD ISO à partir de ce fichier XML // cas d'une carte spéciale ayant des MD XML
+   *   SINON // MD limitées construites avec un .tif/.pdf présent dans l'archive et servant de version
+   *     S'il existe un seul .tif ou pas de .tif et un seul .pdf ALORS
+   *       retourne MD dégradées carte spéciale à partir du .tif ou du .pdf
+   *     SINON
+   *       retourne [] // ERREUR
+   * @return array<string, string>
+   */
+  static function getFrom7z(string $pathOf7z, string $mdName=''): array { 
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
     if (!is_file($pathOf7z)) {
       throw new Exception("Archive $pathOf7z inexistante");
@@ -155,7 +153,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     
     
     // génération de MD limitées pour une carte spéciale n'ayant pas de MD ISO
-    // 1er cas: il existe un seul .tif ou pas de .tif et un seul .pdf
+    // il doit alors exister un seul .tif ou pas de .tif et un seul .pdf
     $entriesPerExt = ['tif'=>[], 'pdf'=>[]];
     foreach ($archive as $entry) { // recherche des .tif et des .pdf
       //print_r($entry);
@@ -175,20 +173,6 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
         'version'=> basename($entriesPerExt['pdf'][0]['Name']),
         'dateArchive'=> substr($entriesPerExt['pdf'][0]['DateTime'], 0, 10),
       ];
-    }
-    
-    // 2ème cas - impossible d'identifier un .tif ou un .pdf et $geotiffNames est défini
-    if ($geotiffNames) {
-      foreach ($archive as $entry) {
-        foreach ($geotiffNames as $geotiffName) {
-          if (preg_match("!/$geotiffName$!", $entry['Name'])) {
-            return [
-              'version'=> $geotiffName,
-              'dateArchive'=> substr($entry['DateTime'], 0, 10),
-            ];
-          }
-        }
-      }
     }
     
     // cas d'erreur
@@ -226,7 +210,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
         echo Yaml::dump(["getMapVersionFrom7z($entry)"=> $md]);
       }
     }
-    elseif (1) { // @phpstan-ignore-line // Test de ttes les cartes de archives
+    elseif (1) { // Test de ttes les cartes de archives
       foreach (new DirectoryIterator("$PF_PATH/archives") as $archive) {
         if (in_array($archive, ['.','..','.DS_Store'])) continue;
         foreach (new DirectoryIterator("$PF_PATH/archives/$archive") as $entry) {

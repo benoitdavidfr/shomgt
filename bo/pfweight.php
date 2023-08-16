@@ -70,7 +70,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
   foreach ($output as $outputl) {
     if (!preg_match("!^(\d+)\s$PF_PATH/archives/(\d+)$!", $outputl, $matches))
       throw new Exception("No match for $outputl");
-    $duMb = $matches[1]/1024;
+    $duMb = intval($matches[1])/1024;
     $mapNum = $matches[2];
     $duMbSum += $duMb;
     $maps[$mapNum] = ['duMb' => $duMb, 'nbVersions'=> 0];
@@ -87,7 +87,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
         "<td></td><td>Moyenne par carte</td></tr>\n",
        "<th></th><th>Mb</th><th>#vers</th><th>Num et titre de la carte</th>\n";
   foreach ($maps as $mapNum => $map) {
-    $mapCat = Mapcat::get($mapNum);
+    $mapCat = MapCat::get($mapNum);
     $ss = $mapCat->obsoleteDate ? '<s>' : '';
     $se = $mapCat->obsoleteDate ? '</s>' : '';
     echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
@@ -121,8 +121,8 @@ else { // liste de versions pour la carte $_GET['map']
   foreach ($output as $outputl) {
     if (!preg_match("!^(\d+)\s$PF_PATH/archives/$_GET[map]/(.+)\.7z$!", $outputl, $matches))
       throw new Exception("No match for $outputl");
-    $duMbs[$matches[2]] = $matches[1]/1024;
-    $duMbSum += $matches[1]/1024;
+    $duMbs[$matches[2]] = intval($matches[1])/1024;
+    $duMbSum += intval($matches[1])/1024;
   }
   //echo "<pre>"; print_r($duMbs); echo "</pre>\n";
   

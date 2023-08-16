@@ -69,7 +69,8 @@ class GdalInfo {
   static function dms2Dec(string $val): float { // transforme "9d20'26.32\"E" ou "42d38'39.72\"N" en degrés décimaux
     if (!preg_match('!^(\d+)d([\d ]+)\'([\d .]+)"(E|W|N|S)$!', $val, $matches))
       throw new Exception("No match for \"$val\" in ".__FILE__." ligne ".__LINE__);
-    return (in_array($matches[4],['E','N']) ? +1 : -1) * ($matches[1] + ($matches[2] + $matches[3]/60)/60);
+    return (in_array($matches[4],['E','N']) ? +1 : -1)
+       * (intval($matches[1]) + (intval($matches[2]) + intval($matches[3])/60)/60);
   }
   
   // retourne le chemin du fichier info.json correspondant à un gtname, temp indique si la carte est dans temp ou dans maps

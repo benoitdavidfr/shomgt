@@ -34,6 +34,7 @@ use Symfony\Component\Yaml\Yaml;
 echo "<!DOCTYPE html>\n<html><head><title>bo/mapcat@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 // retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
+/** @return array<string, array<string, mixed>> */
 function geoImagesOfMap(string $mapNum, MapCat $mapCat): array { 
   $spatials = $mapCat->spatial ? [$mapNum => $mapCat->asArray()] : [];
   //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
@@ -170,7 +171,7 @@ switch($_GET['action'] ?? null) {
         foreach(geoImagesOfMap($mapNum, $mapCat) as $id => $info) {
           $spatial = new Spatial($info['spatial']);
           if ($error = $spatial->isBad()) {
-            echo '<pre>',Yaml::dump([$error => [$mapNum => $map]], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+            echo '<pre>',Yaml::dump([$error => [$mapNum => $info]], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
             $bad = true;
           }
         }

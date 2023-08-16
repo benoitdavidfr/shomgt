@@ -37,6 +37,7 @@ class GdalGBox extends GBox {
   //protected array $min=[]; // position SW en LonLat
   //protected array $max=[]; // position NE en LonLat
   
+  /** @param string|TPos|TLPos|TLLPos|array<string, mixed> $param */
   function __construct(array|string $param=[]) {
     if (isset($param['coordinates'])) { // cas où le paramètre est un polygone GeoJSON
       $lpos = $param['coordinates'][0]; // la liste des positions du polygone
@@ -69,8 +70,11 @@ class GdalGBox extends GBox {
 class GdalEBox extends EBox {
   //protected array $min=[]; // position SW en proj
   //protected array $max=[]; // position NE en proj
+  
+  /** @var TPos $center */
   protected array $center=[]; // position centre
-
+  
+  /** @param string|TPos|TLPos|TLLPos|array<string, array<int, number>> $param */
   function __construct(array|string $param=[]) {
     if (is_array($param) && isset($param['center'])) {
       $min = [
@@ -106,7 +110,8 @@ class GdalEBox extends EBox {
 */
 require_once __DIR__.'/my7zarchive.inc.php';
 
-class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
+class GdalInfoBo { // info de géoréférencement d'une image fournie par gdalinfo
+  /** @var array<string, mixed> $info */
   protected array $info; // contenu du gdalinfo
   
   function __construct(string $path) {
@@ -117,6 +122,7 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
     $this->info = json_decode(implode("\n", $output), true);
   }
   
+  /** @return array<string, mixed> */
   function asArray(): array { return $this->info; }
   
   /* indique si le géoréférencement est absent, correct ou incorrect, retourne
@@ -219,7 +225,7 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
       ] as $title => $tif) {
         echo "$title:\n";
         $archive = new My7zArchive("$PF_PATH/$tif[path7z]");
-        $gdalInfo = new GdalInfo($path = $archive->extract($tif['entry']));
+        $gdalInfo = new GdalInfoBo($path = $archive->extract($tif['entry']));
         $archive->remove($path);
         //print_r($gdalInfo);
         $good = $gdalInfo->goodGeoref(false);
@@ -234,7 +240,7 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
   
   static function test(string $path7z, string $entry): void {
     $archive = new My7zArchive($path7z);
-    $gdalInfo = new GdalInfo($path = $archive->extract($entry));
+    $gdalInfo = new GdalInfoBo($path = $archive->extract($entry));
     $archive->remove($path);
     //print_r($gdalInfo);
     echo 'georef = ',$gdalInfo->georef(),"\n";
@@ -244,13 +250,13 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
 if ((php_sapi_name() == 'cli') && ($argv[0]=='gdalinfo.inc.php')) {
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
     throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-  if (0) {
-    GdalInfo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
+  if (0) { // @phpstan-ignore-line
+    GdalInfoBo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
   }
-  elseif (0) {
-    GdalInfo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif'); 
+  elseif (0) { // @phpstan-ignore-line
+    GdalInfoBo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif'); 
   }
   elseif (1) { // Test de goodGeoref
-    GdalInfo::testGoodGeoref($PF_PATH);
+    GdalInfoBo::testGoodGeoref($PF_PATH);
   }
 }

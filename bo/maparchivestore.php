@@ -49,12 +49,14 @@ class MapArchiveStore {
   function __construct(?string $path) { $this->path = $path; }
   
   // retourne les motifs des liens dans current soit relatifs soit absolus
+  /** @return array<int, string> */
   private function targetPatterns(string $mapNum, string $ext): array {
     $versionCStd = '\d{4}c\d+[a-z]?'; // pattern std carte std
     $versionCSpeciale = '(\d{4}|\d{4}_\d{4})'; // pattern carte spéciale
     $versionPattern = match ($ext) {
         '7z' => "($versionCStd|$versionCSpeciale)",
         'md.json'=> "($versionCStd|\d{4}-\d{2}-\d{2}|$versionCSpeciale)",
+        default => throw new Exception("valeur $ext interdite"),
     };
     $targetRelPattern = "!^\.\./archives/$mapNum/$mapNum-$versionPattern\.$ext$!";
     $targetAbsPattern = "!^$this->path/archives/$mapNum/$mapNum-$versionPattern\.$ext$!";
@@ -91,8 +93,10 @@ class MapArchiveStore {
     return null;
   }
   
-  // Vérifie que les entrées de current sont des liens relatifs vers archives
-  // Renvoie la liste des entrées qui ne le sont pas sous la forme [entrée => codeDErreur]
+  /** Vérifie que les entrées de current sont des liens relatifs vers archives
+   * Renvoie la liste des entrées qui ne le sont pas sous la forme [entrée => codeDErreur]
+   * @return array<string, string>
+   */
   function wrongCurLinks(): array {
     if (!is_dir("$this->path/current"))
       throw new Exception("Erreur, le répertoire $this->path/current n'existe pas");
@@ -129,7 +133,7 @@ class MapArchiveStore {
           $target = "$this->path/archives/$archive/$filename";
           if (!link($target, $link))
             echo "Erreur link($target, $link)<br>\n";
-          elseif (self::DEBUG)
+          elseif (self::DEBUG) // @phpstan-ignore-line
             echo "link($target, $link) ok<br>\n";
         }
       }
@@ -146,11 +150,11 @@ class MapArchiveStore {
           echo "Alerte, $filename -> $target incorrect<br>\n";
         }
         else {
-          if (self::DEBUG)
+          if (self::DEBUG) // @phpstan-ignore-line
             echo "$filename -> $target<br>\n";
           if (!symlink($target, "$clonePath/current/$filename"))
             echo "Erreur symlink($target, $clonePath/current/$filename)<br>\n";
-          elseif (self::DEBUG)
+          elseif (self::DEBUG) // @phpstan-ignore-line
             echo "symlink($target, $clonePath/current/$filename) ok<br>\n";
         }
       }
@@ -166,6 +170,7 @@ class MapArchiveStore {
     throw new Exception("Pas d'extension pour $filename");
   }
   
+  /** @return array<string, array<string, int>> */
   private function listArchives(): array {
     $list = []; // [bname => [ext => inode]]
     foreach (new DirectoryIterator("$this->path/archives") as $archive) {
@@ -184,6 +189,7 @@ class MapArchiveStore {
     return $list;
   }
   
+  /** @return array<string, array<string, string>> */
   private function listCurrents(): array {
     $list = []; // [bname => [ext => target]]
     foreach (new DirectoryIterator("$this->path/current") as $filename) {
@@ -210,6 +216,7 @@ class MapArchiveStore {
     return $list;
   }
   
+  /** @return array<string, array<string, mixed>> */
   function diff(self $pfb): array {
     //echo "{$this->path}->diff($pfb->path)<br>\n";
     $labelA = basename($this->path);
@@ -279,6 +286,7 @@ class MapArchiveStore {
     return $diffs;
   }
   
+  /** @param array<mixed> $params */
   function action(?string $action, array $params): void {
     switch ($action) {
       case null: return;
@@ -376,7 +384,7 @@ class MapArchiveStore {
 
 if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier est inclus
 
-if (MapArchiveStore::TEST) { // TEST 
+if (MapArchiveStore::TEST) { // @phpstan-ignore-line // TEST 
   $PF_PATH = __DIR__.'/maparchivestore-test';
 }
 elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {

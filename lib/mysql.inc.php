@@ -109,7 +109,8 @@ class MySql {
       return new MySqlResult($result);
   }
 
-  static function getTuples(string $sql): array { // renvoie le résultat d'une requête sous la forme d'un array
+  /** @return array<int, array<string, string>> */
+  static function getTuples(string $sql): array { // renvoie le résultat d'une requête sous la forme d'un array de tuples
     /*PhpDoc: methods
     name: getTuples
     title: "static function getTuples(string $sql): array - renvoie le résultat d'une requête sous la forme d'un array"
@@ -124,12 +125,12 @@ class MySql {
 };
 
 // la classe MySqlResult permet d'utiliser le résultat d'une requête comme un itérateur
-/** @implements Iterator<int, array<int, string>> */
+/** @implements Iterator<int, array<string, string>> */
 class MySqlResult implements Iterator {
   const ErrorRewind = 'MySqlResult::ErrorRewind';
 
   protected ?mysqli_result $result = null; // l'objet mysqli_result
-  /** @var array<int, string>|null */
+  /** @var array<string, string>|null */
   protected ?array $ctuple = null; // le tuple courant ou null
   protected bool $firstDone = false; // vrai ssi le first rewind a été effectué
   
@@ -141,7 +142,7 @@ class MySqlResult implements Iterator {
     $this->firstDone = true;
     $this->next();
   }
-  /** @return array<int, string> */
+  /** @return array<string, string> */
   function current(): array { return $this->ctuple; }
   function key(): int { return 0; }
   function next(): void { $this->ctuple = $this->result->fetch_array(MYSQLI_ASSOC); }

@@ -242,7 +242,7 @@ switch ($_SERVER['PATH_INFO'] ?? null) {
       if (substr($map, -8) <> '.md.json') continue;
       $mapnum = substr($map, 0, 4);
       if (($version == 0) && in_array($mapnum, EXCLUDED_MAPS_IN_V0)) continue; // cartes exclues en version 0
-      if (TEST_MAPS && !in_array($mapnum, TEST_MAPS)) continue; // restriction éventuelle pour tests
+      if (TEST_MAPS && !in_array($mapnum, TEST_MAPS)) continue; // @phpstan-ignore-line // restriction éventuelle pour tests
       $mapMd = json_decode(file_get_contents("$PF_PATH/current/$map"), true);
       $mapNum = substr($map, 0, -8);
       if (($mapMd['status'] ?? null) == 'obsolete') {

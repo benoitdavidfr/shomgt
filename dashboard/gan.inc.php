@@ -419,7 +419,8 @@ class GanStatic {
   static function analyzeHtmlOfMap(string $mapnum): void {
     $map = Portfolio::$all[$mapnum];
     echo 'map='; print_r($map);
-    $ganWeek = GanStatic::week($map['modified']);
+    $modified = $map['dateMD']['value'] ?? $map['dateArchive'];
+    $ganWeek = GanStatic::week($modified);
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     if (isset($errors["$mapnum-$ganWeek"])) {
@@ -475,8 +476,7 @@ class GanStatic {
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
       $mapid = substr($id, 0, 4);
-      if ($mapa = Portfolio::$all[$mapid])
-        Gan::$gans[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
+      Gan::$gans[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
     }
   }
  

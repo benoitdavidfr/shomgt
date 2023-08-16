@@ -1,16 +1,69 @@
 parameters:
-  #level: 6
-  level: 2
+  level: 6
+  #level: 2
   typeAliases:
-    TPos: 'array<int, float>'
-    TLPos: 'array<int, array<int, float>>'
-    TLLPos: 'array<int, array<int, array<int, float>>>'
-    TLLLPos: 'array<int, array<int, array<int, array<int, float>>>>'
-    TGeoJsonProperties: 'array<string, mixed>'
-    TGeoJsonGeometry: 'array<string, string|TPos|TLPos|TLLPos|TLLLPos>'
-    TGeoJsonFeature: 'array<string, string|TGeoJsonProperties|TGeoJsonGeometry>'
-    TGeoJsonFeatureList: 'array<int, TGeoJsonFeature>'
-    TGeoJsonFeatureCollection: 'array<string, string|int|TGeoJsonFeatureList>'
+    # Définition des types de GeoJSON (https://datatracker.ietf.org/doc/html/rfc7946) décodés par json_decode()
+    TPos: list<float>
+    TLPos: list<TPos>
+    TLLPos: list<TLPos>
+    TLLLPos: list<TLLPos>
+    TGJBox: list<float>
+    TGJPoint: "array{type: 'Point', bbox?: TGJBox, coordinates: TPos}"
+    TGJLineString: "array{type: 'LineString', bbox?: TGJBox, coordinates: TLPos}"
+    TGJPolygon: "array{type: 'Polygon', bbox?: TGJBox, coordinates: TLLPos}"
+    TGJMultiPoint: "array{type: 'MultiPoint', bbox?: TGJBox, coordinates: TLPos}"
+    TGJMultiLineString: "array{type: 'MultiLineString', bbox?: TGJBox, coordinates: TLLPos}"
+    TGJMultiPolygon: "array{type: 'MultiPolygon', bbox?: TGJBox, coordinates: TLLLPos}"
+    TGJSimpleGeometry: "TGJPoint|TGJLineString|TGJPolygon|TGJMultiPoint|TGJMultiLineString|TGJMultiPolygon"
+    TGJGeometryCollection: "array{type: 'GeometryCollection', bbox?: TGJBox, geometries: list<TGJSimpleGeometry>}"
+    TGeoJsonGeometry: TGJSimpleGeometry|TGJGeometryCollection
+    TGeoJsonProperties: "array<string, mixed>"
+    TGeoJsonFeature: '''
+      array{type: 'Feature', id?: string, properties?: TGeoJsonProperties, bbox?: TGJBox, geometry: TGeoJsonGeometry}
+      '''
+    # Les champs numberReturned et totalFeatures sont ajoutés quand la collection est produite par un serveur WFS
+    TGeoJsonFeatureCollection: '''
+      array{
+        type: 'FeatureCollection',
+        bbox?: TGJBox,
+        features: list<TGeoJsonFeature>,
+        numberReturned?: int,
+        totalFeatures?: int
+      }
+      '''
+    # définition du type de l'enregistrement .md.json stocké dans shomgeotif/current
+    TMapMdGan: "array{week: string, date: string}|null"
+    TMapMdDateMD: "array{role: string, value: string}"
+    TMapMdNormal: '''
+      array{
+        title: string,
+        alternate: string,
+        version: string,
+        edition: string,
+        gan: TMapMdGan,
+        dateMD: TMapMdDateMD,
+        dateArchive: string,
+        user?: string,
+        dateUpload?: string
+      }
+      '''
+    TMapMdLimited: "array{version: string, dateArchive: string, user?: string, dateUpload?: string}"
+    TMapMdObsolete: "array{status: 'obsolete', date: string, user?: string}"
+    TMapMd: TMapMdNormal|TMapMdLimited|TMapMdObsolete
+    # description d'une carte dans le catalogue MapCat
+    TMapCatSpatial: "array{SW: string, NE: string, exception?: string}"
+    TMapCatInset: "array{title: string, scaleDenominator?: string, spatial?: TMapCatSpatial}"
+    TMapCatEntry: '''
+      array{
+        title: string,
+        scaleDenominator?: string,
+        spatial?: TMapCatSpatial,
+        mapsFrance: list<string>,
+        insetMaps: list<TMapCatInset>,
+        obsoleteDate?: string
+      }
+      '''
+    TMapCatKind: "'current'|'obsolete'|'uninteresting'|'deleted'"
   paths:
     - index.php
     - index2.php 
@@ -29,3 +82,6 @@ parameters:
   excludePaths:
     analyse:
       - bo/SevenZipArchive.php
+  universalObjectCratesClasses:
+    - MapCat
+  treatPhpDocTypesAsCertain: false

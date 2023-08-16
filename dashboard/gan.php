@@ -218,8 +218,9 @@ switch ($a) {
     die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
   }
   case 'analyzeHtml': { // analyse l'Html du GAN d'une carte particulière 
-    ($mapNum = $argv[2] ?? null)
-      or throw new Exception("argument mapNum absent");
+    if (!($mapNum = $argv[2] ?? null))
+      die("Errue, la commande nécessite en paramètre le numéro de la carte\n");
+    Portfolio::init();
     GanStatic::analyzeHtmlOfMap($mapNum);
     die();
   }

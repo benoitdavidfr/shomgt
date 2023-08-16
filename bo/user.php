@@ -89,6 +89,7 @@ class SqlSchema {
   ]; // Définition du schéma de la table user
 
   // fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
+  /** @param array<string, mixed> $schema */
   static function sql(string $tableName, array $schema): string {
     $cols = [];
     foreach ($schema['columns'] ?? [] as $cname => $col) {
@@ -109,7 +110,6 @@ class SqlSchema {
 
 $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI') or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
 MySql::open($LOG_MYSQL_URI);
-
 
 function createUserTable(): void { // création de la table des utilisateurs 
   MySql::query('drop table if exists user');
@@ -172,7 +172,7 @@ function badEmail(string $email): ?string {
   }
   return "L'adresse ne correspond à aucun des domaines prévus";
 }
-if (0) { // test de badEmail()
+if (0) { // @phpstan-ignore-line // test de badEmail()
   foreach (['xx@developpement-durable.gouv.fr','xxn@cotes-darmor.gouv.fr', 'xx@cerema.fr','xx@free.fr','xx',''] as $email) {
     $error = badEmail($email);
     echo "$email -> ",$error ?? 'ok',"<br>\n";
@@ -191,7 +191,7 @@ function badPasswd(string $passwd, string $passwd2): ?string {
 }
 
 // Envoie un email avec le lien contenant le secret
-function sendMail(string $action, string $email, string $secret, ?string $passwd=null): void {   
+function sendMail(string $action, string $email, int $secret, ?string $passwd=null): void {   
   // le lien de confirmation
   $link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]$_SERVER[SCRIPT_NAME]"
          ."?action=$action&email=".urlencode($email)."&secret=$secret";
@@ -258,15 +258,25 @@ function sendMail(string $action, string $email, string $secret, ?string $passwd
     echo "Erreur d'envoi du mail à $email refusé<br>\n";
 }
 
-/* Le script est décomposé en "écrans" qui s'enchainent les uns après les autres
-** Chaque écran est défini comme une entrée de la table $actions ci-dessous avec
-**  - commé clé le nom ou id de l'écran
-**  - un champ title fournissant le titre de l'écran
-**  - un champ from avec l'écran ou les écrans qui y conduisent (string ou [string])
-**  - un champ scenario avec le pseudo-code de l'écran
-**  - un champ to avec l'écran ou les écrans auquel il conduit (string ou [string])
-**  - un champ apply avec la fonction à exécuter pour afficher cet écran
-*/
+/** Le script est décomposé en "écrans" qui s'enchainent les uns après les autres
+ * Chaque écran est défini comme une entrée de la table $actions ci-dessous avec
+ *  - commé clé le nom ou id de l'écran
+ *  - un champ title fournissant le titre de l'écran
+ *  - un champ from avec l'écran ou les écrans qui y conduisent (string ou [string])
+ *  - un champ scenario avec le pseudo-code de l'écran
+ *  - un champ to avec l'écran ou les écrans auquel il conduit (string ou [string])
+ *  - un champ apply avec la fonction à exécuter pour afficher cet écran
+ * @var array<string, array{
+ *     title: string,
+ *     from?: string|list<string>,
+ *     fromDeduced?: list<string>,
+ *     scenario?: list<string>,
+ *     to?: string|list<string>,
+ *     toDeduced?: list<string>,
+ *     apply: callable(): void,
+ *     sameAs?: string
+ *  }> $actions
+ */
 $actions = [
   'user.menu'=> [
     'title'=> "menu du script user",
@@ -296,8 +306,8 @@ $actions = [
         echo "Utilisateur non logué.<br>\n";
       $diff = MySql::getTuples("select valid, now() now, DATEDIFF(now(), valid) diff from user where email='$user'")[0] ?? null;
       //echo '<pre>',Yaml::dump([$user]),"</pre>\n";
-      if ($diff && ($diff['diff'] > 6*30)) {
-        printf("La dernière validation du compte remonte à %.0f mois<br>\n", $diff['diff']/30);
+      if ($diff && (intval($diff['diff']) > 6*30)) {
+        printf("La dernière validation du compte remonte à %.0f mois<br>\n", intval($diff['diff'])/30);
         echo "Pensez à <a href='?action=reValidateByUser'>revalider mon compte</a><br>\n";
       }
   
@@ -505,6 +515,7 @@ $actions = [
         'banned' => die("validateRegistration interdit pour role=='banned'"),
         'admin','normal','restricted','system' => $user['role'],
         'suspended','closed','temp' => 'normal',
+        default => throw new Exception("valeur $user[role] interdite"),
       };
       $query = "update user set role='$role', valid=now(), epasswd=newepasswd, newepasswd=null, secret=null, sent=null "
               ."where email='$email' and secret='$secret'";
@@ -757,7 +768,7 @@ $actions['showSequenceBetweenActions'] = [
 $actions['checkSequenceBetweenActions'] = [
   'title'=> "Vérifie les enchainements entre actions",
   'apply'=> function() use($actions): void {
-    foreach ($actions as $action=> $actionDef) {
+    foreach ($actions as $action => $actionDef) {
       if (isset($actionDef['from'])) {
         if (is_string($actionDef['from']) && isset($actions[$actionDef['from']])) {
           $actions[$actionDef['from']]['toDeduced'][] = $action;

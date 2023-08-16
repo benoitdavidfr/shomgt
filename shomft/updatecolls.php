@@ -15,7 +15,8 @@ foreach(explode(',',$_GET['collections']) as $coll) {
   $shomGtPath = dirname($_SERVER['SCRIPT_NAME']);
   $url = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]$shomGtPath/ft.php/collections/$coll/items";
   //echo "url=$url <a href='$url'>$url</a><br>\n";
-  file_get_contents($url);
+  // active l'URL ce qui a pour effet de bord de reconstruire le fichier .json correspondant
+  file_get_contents($url); // @phpstan-ignore-line 
   if ($coll == 'delmar') {
     echo "Recopie de la collection $coll dans shomgt/geojson/<br>\n";
     copy(__DIR__."/$coll.json", __DIR__."/../shomgt/geojson/$coll.geojson");

@@ -10,6 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 
 define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
 
+/** @return array<int, string> */
 function directoryEntries(string $path): array { // retourne les entrées d'un répertoire sauf '.','..' et '.DS_Store'
   $entries = [];
   foreach (new DirectoryIterator($path) as $entry) {
@@ -20,14 +21,19 @@ function directoryEntries(string $path): array { // retourne les entrées d'un r
   return array_keys($entries);
 }
 
-// supprime les - suivis d'un retour à la ligne dans Yaml::dump()
-function YamlDump($data, int $level=3, int $indentation=2, int $options=0): string {
+/** supprime les - suivis d'un retour à la ligne dans Yaml::dump()
+ * @param mixed $data
+ */
+function YamlDump(mixed $data, int $level=3, int $indentation=2, int $options=0): string {
   $dump = Yaml::dump($data, $level, $indentation, $options);
   return preg_replace('!-\n *!', '- ', $dump);
 }
 
+// regroupe qqs méthodes sattiques de création de formulaires simples
 class Html {
-  // affiche un boutton HTML
+  /** affiche un bouton HTML
+   * @param array<string, string> $hiddenValues
+   */
   static function button(string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='post'): string {
     $form =  "<form action='$action' method='$method'>";
     foreach ($hiddenValues as $name => $value)
@@ -37,7 +43,10 @@ class Html {
       ."</form>";
   }
   
-  // création d'un formulaire Html de choix d'une valeur (<select>)
+  /** création d'un formulaire Html de choix d'une valeur (<select>)
+   * @param array<int, string>|array<string, string> $choices
+   * @param array<string, string> $hiddenValues
+   */
   static function select(string $name, array $choices, string $selected='', string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
     {/*Paramètres:
         $name: nom du select, sera le champ de $_GET/$_POST contenant la valeur choisie
@@ -64,8 +73,10 @@ class Html {
       ."$spaces  <input type='submit' value='$submitValue'>\n"
       ."$spaces</form>\n";
   }
-
-  static function textArea(string $name, string $text, int $rows=3, int $cols=50, string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'){
+  
+  // création d'un formulaire de saisie d'un texte (<textarea>)
+  /** @param array<string, string> $hiddenValues */
+  static function textArea(string $name, string $text, int $rows=3, int $cols=50, string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
     $form = "<form action='$action' method='$method'>\n";
     foreach ($hiddenValues as $hname => $hvalue)
       $form .= "  <input type='hidden' name='$hname' value='$hvalue' />\n";

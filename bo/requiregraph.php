@@ -6,7 +6,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class Html {
+class RequiredGraphHtml {
+  /** @param array<string, string> $options */
   static function selectOptions(string $outputFormat, array $options): string {
     $html = '';
     foreach ($options as $key => $label) {
@@ -22,7 +23,7 @@ if (!in_array($action, ['context.jsonld'])) { // formulaire
   echo "<html><head><title>requiregraph $action</title></head><body>
     <form>
     <select name='a' id='a'>\n",
-    Html::selectOptions($action, [
+    RequiredGraphHtml::selectOptions($action, [
       'dumpLinks'=> "affiche le résultat du grep",
       'readSrc'=> "lit la liste des fichiers Php puis les ordres require entre fichiers puis effectue un affichage basique",
       'showIncludes'=> "affiche les inclusions à partir du fichier incluant",
@@ -36,9 +37,13 @@ class PhpFile {
   static string $ROOT; // La racine de shomgt
   protected string $path; // path du fichier ss $ROOT 
   protected ?string $title=null; // titre récupéré dans le src
+  /** @var array<string, array<string, string>> $includes */
   protected array $includes=[]; // [{path} => ['grepSrc'=> {grepSrc}]]
+  /** @var array<int, string> $includedIn */
   protected array $includedIn=[]; // [{path}] path par rapport à $ROOT
+  /** @var array<int,string> $sameAs; */
   protected array $sameAs=[]; // liens d'identités 
+  /** @var array<string, self> */
   static array $all; // [{path} => {PhpFile}]  
   
   function __construct(string $path) { // crée un fichier 
@@ -51,7 +56,7 @@ class PhpFile {
     $this->title = preg_match('!title: ([^\n]*)\n!', $src, $matches) ? $matches[1] : null;
   }
   
-  function addInc(string $includedFile, string $grepSrc) { // ajoute un fichier inclus 
+  function addInc(string $includedFile, string $grepSrc): void { // ajoute un fichier inclus 
     $this->includes[substr($includedFile, strlen(self::$ROOT))]['grepSrc'] = $grepSrc;
   }
   
@@ -67,6 +72,7 @@ class PhpFile {
     self::$all[substr($path, strlen(self::$ROOT))]->addInc($includedFile, $grepSrc);
   }
   
+  /** @param array<string, mixed> $options */
   static function readPhpFiles(array $options=[]): void { // création des fichiers Php 
     self::$ROOT = dirname(dirname(__FILE__));
     $command = "find ".self::$ROOT." -name '*.php' -print";
@@ -85,6 +91,7 @@ class PhpFile {
     }
   }
   
+  /** @param array<string, mixed> $options */
   static function readLinks(array $options=[]): void { // recherche des liens par grep 
     $command = "grep require ../*.php ../*/*.php ../*/*/*.php";
     $output = [];
@@ -132,6 +139,7 @@ class PhpFile {
     }
   }
   
+  /** @return array<string, array<string, mixed>> */
   static function allIncludes(): array {
     $allIncludes = [];
     foreach (self::$all as $path => $phpFile) {
@@ -144,10 +152,11 @@ class PhpFile {
     return $allIncludes;
   }
 
+  /** @return array<string, array<string, mixed>> */
   static function allIncluded(): array {
     $allIncluded = [];
     foreach (self::$all as $path => $phpFile) {
-      if (true || $phpFile->includedIn) {
+      if ($phpFile->includedIn) {
         if ($phpFile->title)
           $allIncluded[$path]['title'] = $phpFile->title;
         if ($phpFile->sameAs)

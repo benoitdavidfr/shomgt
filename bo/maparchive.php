@@ -22,13 +22,14 @@ require_once __DIR__.'/gdalinfo.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 class Image { // Image principale ou cartouche de la carte 
-  //protected string $name=''; // nom du cartouche de la forme (\d+|[A-Z]+)_gtw, '' pour l'image principale
   protected ?string $tif=null; // nom du tif dans l'archive
   protected ?string $georef; // ('ok'|'KO'|null)
   protected ?GBox $georefBox=null; // gbox de géoréférencement de l'image
   protected ?string $xml=null; // nom de l'xml dans l'archive
+  /** @var array<string,mixed> $md */
   protected array $md=[]; // MD synthéttiques
   
+  /** @return array<string, mixed> */
   function asArray(): array {
     return [
       'tif'=> $this->tif,
@@ -42,7 +43,7 @@ class Image { // Image principale ou cartouche de la carte
   function setTif(string $tif, My7zArchive $archive): void {
     $this->tif = $tif;
     $tifPath = $archive->extract($tif);
-    $gdalinfo = new GdalInfo($tifPath);
+    $gdalinfo = new GdalInfoBo($tifPath);
     $this->georef = $gdalinfo->georef();
     $this->georefBox = $this->georef ? $gdalinfo->gbox() : null;
     $archive->remove($tifPath);
@@ -57,21 +58,25 @@ class Image { // Image principale ou cartouche de la carte
   function georef(): ?string { return $this->georef; }
   function georefBox(): ?GBox { return $this->georefBox; }
   
-  function georefLabel() { // label associé au georef
+  function georefLabel(): string { // label associé au georef
     return match ($this->georef()) {
       null => "Image non géoréférencée",
       'ok' => "Image géoréférencée",
       'KO' => "Image mal géoréférencée",
+      default => throw new Exception("valeur ".$this->georef()." interdite"),
     }
     . (($this->georefBox && $this->georefBox->intersectsAntiMeridian()) ? " à cheval sur l'antiméridien" : '');
   }
   
   function xml(): ?string { return $this->xml; }
+  /** @return array<string, mixed> */
   function md(): array { return $this->md; }
   function title(): ?string { return $this->md['title'] ?? null; }
   
-  // Recherche pour ce cartouche défini dans l'archive le meilleur cartouche correspondant défini dans le catalogue
-  // retourne le titre de ce meilleur cartouche
+  /** Recherche pour ce cartouche défini dans l'archive le meilleur cartouche correspondant défini dans le catalogue
+   *  retourne le titre de ce meilleur cartouche
+   * @param array<int, array<string, mixed>> $insetMapsOfCat
+   */
   function bestInsetMapOfCat(array $insetMapsOfCat, bool $show=false): ?string {
     //$show = true;
     //echo "title=",$this->title(),", georefBox=",$this->georefBox,"<br>\n";
@@ -111,13 +116,15 @@ class Image { // Image principale ou cartouche de la carte
 };
 
 class MapArchive { // analyse les fichiers d'une archive d'une carte pour évaluersa validité et afficher le contenu
-  const FORCE_VALIDATION = false; // utilisé pour forcer la validation d'une carte invalide
+  const FORCE_VALIDATION = false; // vrai ssi possibilité de forcer la validation d'une carte invalide
   protected string $type='undefined'; // 'undefined'|'normal'|'special'
   protected string $pathOf7z; // chemin chemin du fichier .7z
   protected string $mapNum; // no sur 4 chiffres
   protected ?string $thumbnail=null; // nom de la miniature dans l'archive
   protected Image $main; // les caractéristiques de l'image principale et les MD de la carte
+  /** @var array<string, Image> */
   protected array $insets=[]; // les cartouches [{name}=> Image]
+  /** @var array<string, int> */
   protected array $suppls=[]; // liste de noms de fichiers hors specs sous la forme [{name} => 1]
   
   /* $pathOf7z est le chemin du fichier .7z
@@ -166,6 +173,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     }
   }
   
+  /** @return array<int, string> */
   function gtiffs(): array { // retourne la liste des GéoTiffs géoréférencés
     $gtiffs = [];
     if ($this->main->georef() == 'ok')
@@ -197,9 +205,11 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return null;
   }
   
-  // construit la correspondance des cartouches de l'archive avec ceux de MapCat
-  // Le résultat est un array avec en clés les noms des cartouches dans l'archive
-  // et en valeurs les titres des cartouches dans MapCat
+  /** construit la correspondance des cartouches de l'archive avec ceux de MapCat
+   * Le résultat est un array avec en clés les noms des cartouches dans l'archive
+   * et en valeurs les titres des cartouches dans MapCat
+   * @return array<string, string>
+   */
   function mappingInsetsWithMapCat(bool $show=false): array {
     $mapCat = MapCat::get($this->mapNum);
     $mappingGeoTiffWithMapCat = [];
@@ -211,12 +221,13 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return $mappingGeoTiffWithMapCat;
   }
   
-  /* Teste la conformité à la spec et au catalogue
+  /** Teste la conformité à la spec et au catalogue
    * retourne [] si la carte est valide et conforme à sa description dans le catalogue
    * sinon un array comportant un au moins des 2 champs:
    *  - errors listant les erreurs
    *  - warnings listant les alertes
-  */
+   * @return array<string, array<int, string>>
+   */
   function invalid(): array {
     $mapCat = MapCat::get($this->mapNum);
     if (!$mapCat)
@@ -226,7 +237,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     if (!$this->thumbnail && ($this->type == 'normal'))
       $warnings[] = "L'archive ne comporte pas de miniature";
     if (!$this->main->tif())
-      return ['errors' => "Aucun GéoTiff défini pour la partie principale"];
+      return ['errors' => ["Aucun GéoTiff défini pour la partie principale"]];
     if (!$this->main->xml()) {
       if ($this->type == 'normal')
         $errors[] = "L'archive ne comporte pas de fichier de métadonnées XML pour la partie principale";
@@ -343,11 +354,11 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       if (!($md = $this->main->md()))
         $md = 'No Metadata';
       echo "<td><pre>",Yaml::dump($md, 1, 2),"</pre>";
+      $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
       if ($this->main->tif()) {
         $path = "?path=$_GET[path]&map=$_GET[map]&tif=".$this->main->tif()."&action=gdalinfo";
         $label = $this->main->georefLabel();
         echo "<a href='$path'>$label</a> / ";
-        $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
         //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
         $imageUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/".substr($this->main->tif(),0, -4).'.png';
         echo "<a href='$imageUrl'>Afficher l'image</a>";
@@ -394,16 +405,19 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     
     if ($button == 'validateMap') { // ajout d'un bouton de validation si l'option correspondante est indiquée
       $validateButton = Html::button(
-          "Valider la carte et la déposer",
-          [ 'action'=> 'validateMap',
+          submitValue: "Valider la carte et la déposer",
+          hiddenValues: [
+            'action'=> 'validateMap',
             'path' => $_GET['path'],
             'map'=> $_GET['map'].'.7z',
           ],
-          'addmaps.php', 'get');
+          action: 'addmaps.php',
+          method: 'get'
+      );
       if (!isset($invalid['errors'])) { // cas normal, pas d'erreur => proposition de validation
         echo "<tr><td colspan=2><center>$validateButton</center></td></tr>\n";
       }
-      elseif (self::FORCE_VALIDATION) { // cas particulier où il y a une erreur mais la validation peut être forcée
+      elseif (self::FORCE_VALIDATION) { // @phpstan-ignore-line // cas où il y a une erreur mais la validation peut être forcée
         echo "<tr><td colspan=2><center>",
                "<b>La carte n'est pas valide mais sa validation peut être forcée</b>",
                "$validateButton</center></td></tr>\n";
@@ -440,6 +454,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     //  print_r($this);
   }
   
+  /** @param array<string, mixed> $options */
   function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
     if ($options['yaml'] ?? null) {
       $mapCat = MapCat::get($this->mapNum);
@@ -470,6 +485,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   
   // Utilisé en CLI
   // Si $path est un fichier .7z appelle showAsYaml(), Si c'est un répertoire alors effectue un appel récursif sur chaque élément
+  /** @param array<string, mixed> $options */
   static function check(string $path, array $options): void {
     if (is_file($path)) {
       if (substr($path, -3) == '.7z') {

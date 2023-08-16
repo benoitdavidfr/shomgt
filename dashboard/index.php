@@ -195,18 +195,18 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   static array $all; // [mapNum => Perempt]
 
   static function init(): void { // construction à partir du portefeuille 
-    foreach (Portfolio::$all as $mapnum => $map) {
-      self::$all[$mapnum] = new self($mapnum, $map);
+    foreach (Portfolio::$all as $mapnum => $mapMd) {
+      self::$all[$mapnum] = new self($mapnum, $mapMd);
     }
   }
   
-  /** @param array<string, string> $map */
-  function __construct(string $mapNum, array $map) {
+  /** @param TMapMdNormal|TMapMdLimited $mapMd */
+  function __construct(string $mapNum, array $mapMd) {
     //echo "<pre>"; print_r($map);
     $this->mapNum = $mapNum;
     $this->mapCat = MapCat::get($mapNum);
-    $this->pfVersion = $map['version'];
-    $this->pfDate = $map['dateMD']['value'] ?? $map['dateArchive'];
+    $this->pfVersion = $mapMd['version'];
+    $this->pfDate = $mapMd['dateMD']['value'] ?? $mapMd['dateArchive'];
   }
   
   function setGan(Gan $gan): void { // Mise à jour de perempt à partir du GAN
@@ -238,7 +238,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     else
       return 100;
     if ($pfYear == $ganYear) {
-      $d = $ganNCor - $pfNCor;
+      $d = intval($ganNCor) - intval($pfNCor);
       if ($d < 0) $d = 0;
       return $d;
     }
@@ -325,8 +325,10 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
   const MAX_DURATION = 7*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
   //const MAX_DURATION = 60; // Pour test
   
-  // affiche comme table Html un tableau dont chaque ligne est une chaine avec \t comme séparateur
-  // Si header
+  /** affiche comme table Html un tableau dont chaque ligne est une chaine avec \t comme séparateur
+   * $header est soit une ligne avec séparateurs \t, soit nul
+   * @param list<string> $data
+   */
   private static function showTsvAsTable(array $data, ?string $header=null): void {
     echo "<table border=1>\n";
     if ($header) {

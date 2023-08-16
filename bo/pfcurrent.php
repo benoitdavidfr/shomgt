@@ -61,7 +61,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
  }
  echo "<table border=1>\n";
  foreach (directoryEntries("$PF_PATH/archives") as $mapNum) {
-   $mapCat = Mapcat::get($mapNum);
+   $mapCat = MapCat::get($mapNum);
    $ss = $mapCat->obsoleteDate ? '<s>' : '';
    $se = $mapCat->obsoleteDate ? '</s>' : '';
    echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non

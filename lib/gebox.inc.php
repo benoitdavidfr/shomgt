@@ -58,13 +58,14 @@ abstract class BBox {
   /** @var TPos $max */
   protected array $max=[]; // [number, number] ou [], [] ssi $min == []
   
-  // Soit ne prend pas de paramètre et créée alors une BBox vide,
-  // soit prend en paramètre un array de 2 ou 3 nombres (Pos) interprété comme une position,
-  // soit prend en paramètre un string dont l'explode donne 2 ou 3 nombres, interprété comme une position,
-  // soit un array de 4 ou 6 nombres, soit un string dont l'explode donne 4 ou 6 nombres, interprétés comme 2 pos.
-  // soit un array d'array, interprété comme une liste de positions (LPos),
-  // soit un array d'array d'array, interprété comme une liste de listes de positions (LLPos),
-  /** @param string|TPos|TLPos|TLLPos $param */
+  /** Soit ne prend pas de paramètre et créée alors une BBox vide,
+   * soit prend en paramètre un array de 2 ou 3 nombres (Pos) interprété comme une position,
+   * soit prend en paramètre un string dont l'explode donne 2 ou 3 nombres, interprété comme une position,
+   * soit un array de 4 ou 6 nombres, soit un string dont l'explode donne 4 ou 6 nombres, interprétés comme 2 pos.
+   * soit un array d'array, interprété comme une liste de positions (LPos),
+   * soit un array d'array d'array, interprété comme une liste de listes de positions (LLPos),
+   * @param string|TPos|TLPos|TLLPos $param
+   */
   function __construct(array|string $param=[]) {
     $this->min = [];
     $this->max = [];
@@ -288,9 +289,11 @@ class GBox extends BBox {
   
   static int $precision = 6; // nbre de chiffres après la virgule à conserver pour les positions
   
-  // ajoute au mécanisme de création de BBox la possibilité de créer une GBox à partir d'un array
-  // respectant le format Spatial défini dans MapCat et shomgt.yaml
-  // Remplace la méthode statique fromGeoDMd() conservée pour la compatibilité avec le code existant
+  /** ajoute au mécanisme de création de BBox la possibilité de créer une GBox à partir d'un array
+   * respectant le format Spatial défini dans MapCat et shomgt.yaml
+   * Remplace la méthode statique fromGeoDMd() conservée pour la compatibilité avec le code existant
+   * @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string} $param
+   */
   function __construct(array|string $param=[]) {
     if (is_array($param) && isset($param['SW']) && isset($param['NE'])) {
       foreach(['SW','NE'] as $cornerId) {

@@ -38,7 +38,7 @@ if (__FILE__ == "$_SERVER[DOCUMENT_ROOT]$_SERVER[SCRIPT_NAME]") { // TEST de la 
     throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
   $archive = new My7zArchive("$PF_PATH/incoming/20230710/7090.7z");
-  if (0) {
+  if (0) { // @phpstan-ignore-line
     foreach ($archive as $entry) {
       echo "<pre>"; print_r($entry); echo "</pre>\n";
     }

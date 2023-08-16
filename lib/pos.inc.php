@@ -81,10 +81,18 @@ class Pos {
       throw new SExcept("No match in Pos::fromGeoDMd($geoDMd)", self::ErrorParamInFromGeoDMd);
     //echo "<pre>matches="; print_r($matches); echo "</pre>\n";
     $lat = ($matches[6]=='N' ? 1 : -1) * 
-      ($matches[1] + (($matches[3] ? $matches[3] : 0) + ($matches[5] ? ".$matches[5]" : 0))/60);
+      ( intval($matches[1])
+        + ( ($matches[3] ? intval($matches[3]) : 0)
+            + ($matches[5] ? floatval(".$matches[5]") : 0)
+          ) / 60
+      );
     //echo "lat=$lat";
     $lon = ($matches[12]=='E' ? 1 : -1) * 
-      ($matches[7] + (($matches[9] ? $matches[9] : 0) + ($matches[11] ? ".$matches[11]" : 0))/60);
+      ( intval($matches[7])
+        + ( ($matches[9] ? intval($matches[9]) : 0)
+            + ($matches[11] ? floatval(".$matches[11]") : 0)
+          ) / 60
+      );
     //echo ", lon=$lon";
     return [$lon, $lat];
   }

@@ -186,7 +186,7 @@ class FtServer {
             ];
           }
           $numberReturned += $items['numberReturned'];
-          if ($numberReturned >= $items['totalFeatures']) // @phpstan-ignore-line
+          if ($numberReturned >= $items['totalFeatures'])
             break;
           $startindex += $count;
         }
@@ -238,11 +238,11 @@ class FtServer {
       header('Content-type: application/json; charset="utf-8"');
       fpassthru(fopen(__DIR__."/$colName.json",  'r'));
     }
-    elseif (isset(self::$sdmax[$colName])) {
+    elseif (isset(self::$sdmax[$colName])) { // couches corespondant à un découpage par échelles
       foreach (array_keys(self::$sdmax) as $i => $cname) {
         if ($cname == $colName) break;
       }
-      $imin = ($i <> count(self::$sdmax) - 1) ? $i + 1 : -1;
+      $imin = ($i <> count(self::$sdmax) - 1) ? $i + 1 : -1; // @phpstan-ignore-line
       $sdmin = ($imin == -1) ? 0 : (array_values(self::$sdmax))[$imin];
       $sdmax = self::$sdmax[$colName];
       //echo "sdmin=$sdmin, sdmax=$sdmax<br>\n";

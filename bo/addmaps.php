@@ -114,7 +114,8 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
       }
     }
     
-    if (!MapArchive::FORCE_VALIDATION) { // 2ème condition: la carte doit être valide (sauf si la validation peut être forcée)
+    // 2ème condition: la carte doit être valide (sauf si la validation peut être forcée)
+    if (!MapArchive::FORCE_VALIDATION) { // @phpstan-ignore-line 
       $map = new MapArchive("$PF_PATH/users/$login/$_GET[map]", $mapNum);
       $invalid = $map->invalid();
       //echo "<pre>invalid = ",Yaml::dump($invalid),"</pre>\n";
