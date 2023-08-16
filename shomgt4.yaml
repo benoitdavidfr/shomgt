@@ -29,6 +29,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  16/8/2023:
+    - exécution de phpstan level 6, plus d'erreurs sauf celles masquées par les instructions // @phpstan-ignore-line
   15/8/2023:
     - factorisation de mapcat/mapcat!Spatial avec lib/gebox/GBox
     - modification de lib/gebox
@@ -352,10 +354,15 @@ backlog:
     bugs:
       - shomgt et sgpp partagent la base des utilisateurs !
         - faire une base distincte pour sgpp
+  bugs16/8:
+    - pb sur la version de 8101 après correction qui génère un retéléchargement systématique dans le client
+      - 8101 devrait avoir une version 8101 et pas 8101.tif !
+    - pb test 6934 de repassage de obsolete en normal plante car dans le client elle est marquée obsolete dans le catalogue
   horsSprint:
+    - filtrer dans dashboard sur une zone
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
-    - automatiser la maj du GAN et de la purge des cartes
+    - automatiser la maj du GAN et de la purge des cartes ?
     - meilleure gestion en production de l'affichage des erreurs
     - gestion des stats d'utilisation
     - ajouter un log sur shomgeotiff

@@ -54,7 +54,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='?action=getenv'>Afficher les variables d'environnement</a></li>\n";
     //echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
     echo "</ul><h3>Fonctions de test</h3><ul>\n";
-    echo "<li><a href='runbatch2.php?batch=test'>batchtest</a></li>\n";
+    echo "<li><a href='runbatch.php?batch=test'>batchtest</a></li>\n";
     echo "</ul><h3>Documentation du code</h3><ul>\n";
     echo "<li><a href='requiregraph.php'>Graphe des inclusions Php</a></li>\n";
     echo "</ul>\n";

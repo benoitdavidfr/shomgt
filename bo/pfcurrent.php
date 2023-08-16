@@ -96,17 +96,22 @@ else { // liste de versions pour la carte $_GET['map']
     $mapVersion = substr($mapVersion, 0, -8);
     if ($md['status'] ?? null) {
       $label = 'Carte obsolète (indiquant au client de supprimer la carte)';
-    }
-    elseif ($md['edition'] ?? null) {
-      $label = "$md[edition] (version: $md[version], dateArchive: $md[dateArchive])";
+      echo "    <input type='radio' id='$mapVersion' name='mapVersion' value='$mapVersion' ",
+           ($mapVersion==$currentVersion ? 'checked' : ''),"/>\n";
+      echo "    <label for='$mapVersion'>$label</label><br>\n";
     }
     else {
-      $label = "version: $md[version], dateArchive: $md[dateArchive]";
+      if ($md['edition'] ?? null) {
+        $label = "$md[edition] (version: $md[version], dateArchive: $md[dateArchive])";
+      }
+      else {
+        $label = "version: $md[version], dateArchive: $md[dateArchive]";
+      }
+      echo "    <input type='radio' id='$mapVersion' name='mapVersion' value='$mapVersion' ",
+           ($mapVersion==$currentVersion ? 'checked' : ''),"/>\n";
+      echo "    <label for='$mapVersion'>",
+           "<a href='viewtiff.php?path=/archives/$_GET[map]&map=$mapVersion'>$label</a></label><br>\n";
     }
-    echo "    <input type='radio' id='$mapVersion' name='mapVersion' value='$mapVersion' ",
-         ($mapVersion==$currentVersion ? 'checked' : ''),"/>\n";
-    echo "    <label for='$mapVersion'>",
-         "<a href='viewtiff.php?path=/archives/$_GET[map]&map=$mapVersion'>$label</a></label><br>\n";
   }
   echo "    <input type='radio' id='none' name='mapVersion' value='none' ",(''==$currentVersion ? 'checked' : ''),"/>\n";
   echo "    <label for='none'>Carte retirée de la liste des cartes (n'indiquant rien au client)</label><br>\n";
