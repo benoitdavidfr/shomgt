@@ -10,6 +10,8 @@ doc: |
   A faire:
     - afficher à la fin une synthèse du traitement
 journal: |
+  17/8/2023:
+    - correction de la version des cartes spéciales
   8/8/2023:
     - ajout d'un verrou pour interdire des exécutions simultanées
   3/8/2023:
@@ -207,7 +209,6 @@ class ShomGtDelZone {
 };
 
 // Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
-// ou 'undefined' si aucun fichier de MD n'est trouvé
 function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';
@@ -247,15 +248,14 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   if (count($fileNamePerType['tfw'] ?? []) == 1) {
     $filename = $fileNamePerType['tfw'][0];
     //echo "j'utilise le seul fichier .tfw '$filename'\n";
-    $version = substr($filename, 0, -4); // je prends le nom du .tfw sans l'extension
+    $version = substr($filename, 5, -4); // je prends le nom du .tfw sans le numéro de carte et sans l'extension
     //echo "findCurrentMapVersion() returns $version\n";
     return $version;
   }
   // sinon, si il existe un seul fichier .pdf
   if (count($fileNamePerType['pdf'] ?? []) == 1) {
     $filename = $fileNamePerType['pdf'][0];
-    //echo "j'utilise le seul fichier .pdf '$filename'\n";
-    //echo "findCurrentMapVersion() returns $filename\n";
+    $version = substr($filename, 5, -4); // je prends le nom du .pdf sans le numéro de carte et sans l'extension
     return $filename; // je prends le nom du .pdf AVEC l'extension
   }
   //echo "findCurrentMapVersion() returns 'undefined'\n";
