@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
   $date = new DateTimeImmutable();
   // public DateTimeImmutable::setISODate(int $year, int $week, int $dayOfWeek = 1): DateTimeImmutable
-  $newDate = $date->setISODate((int)('20'.substr($ganWeek,0,2)), (int)substr($ganWeek, 2), 3);
+  $newDate = $date->setISODate(intval('20'.substr($ganWeek,0,2)), intval(substr($ganWeek, 2)), 3);
   return $newDate->format('Y-m-d');
 }
 
@@ -161,18 +161,15 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
         $entriesPerExt[substr($entry['Name'], -3)][] = $entry;
       }
     }
-    //echo '$entriesPerExt = '; print_r($entriesPerExt);
-    if (count($entriesPerExt['tif']) == 1) { // Il existe un et un seul .tif
-      return [
-        'version'=> basename($entriesPerExt['tif'][0]['Name']),
-        'dateArchive'=> substr($entriesPerExt['tif'][0]['DateTime'], 0, 10),
-      ];
-    }
-    elseif ((count($entriesPerExt['tif']) == 0) && (count($entriesPerExt['pdf']) == 1)) { // Il existe un et un seul .pdf
-      return [
-        'version'=> basename($entriesPerExt['pdf'][0]['Name']),
-        'dateArchive'=> substr($entriesPerExt['pdf'][0]['DateTime'], 0, 10),
-      ];
+    //echo '<pre>$entriesPerExt = '; print_r($entriesPerExt);
+    foreach (['tif','pdf'] as $ext) {
+      if (count($entriesPerExt[$ext]) == 1) { // Il existe un et un seul .{ext}
+        $fbn = basename($entriesPerExt[$ext][0]['Name'], ".$ext");
+        return [
+          'version'=> substr($fbn, 5), // l'année dans le nom
+          'dateArchive'=> substr($entriesPerExt[$ext][0]['DateTime'], 0, 10),
+        ];
+      }
     }
     
     // cas d'erreur

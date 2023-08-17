@@ -29,6 +29,10 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  17/8/2023:
+    - modif. spec. carte spéciale, interdiction fichier {mapNum}/{mapNum}.(tif|pdf)
+    - modif. version carte spéciale n'ayant pas de fichier MD ISO
+    - cela règle le bug du 16/8/2023 sur la carte 8101
   16/8/2023:
     - exécution de phpstan level 6, plus d'erreurs sauf celles masquées par les instructions // @phpstan-ignore-line
   15/8/2023:
@@ -355,8 +359,6 @@ backlog:
       - shomgt et sgpp partagent la base des utilisateurs !
         - faire une base distincte pour sgpp
   bugs16/8:
-    - pb sur la version de 8101 après correction qui génère un retéléchargement systématique dans le client
-      - 8101 devrait avoir une version 8101 et pas 8101.tif !
     - pb test 6934 de repassage de obsolete en normal plante car dans le client elle est marquée obsolete dans le catalogue
   horsSprint:
     - filtrer dans dashboard sur une zone
@@ -1247,7 +1249,7 @@ specsDesCartes:
       - dans cette archive le fichier {mapNum}/{mapNum}_pal300.tif n'existe pas
       - dans MapCat, les cartes spéciales sont identifiées par l'existence du champ layer
       - l'archive doit contenir au moins
-        - soit un fichier {mapNum}/{mapNum}.(tif|pdf)
+        - soit un fichier {mapNum}/{mapNum}.(tif|pdf) (possibilité supprimée 17/8/2023)
         - soit un fichier {mapNum}/{mapNum}_{year}.(tif|pdf) où {year} est l'année de publication de la carte
       - l'archive peut contenir un .tif et un .pdf ayant même nom de base
       - le répertoire {mapNum} de l'archive ne doit pas contenir d'autre fichier .tif ou .pdf
@@ -1257,10 +1259,18 @@ specsDesCartes:
       - Pour les 2 types de carte un .tif est considéré comme non géoréférencé ssi
         - le champ coordinateSystem/wkt de son gdalinfo est absent ou vide
       - sinon il est bien géoréférencé ssi
-        - la projection WoldMercator du wgs84Extent est distante de moins de 1 km de cornerCoordinates
+        - la déprojection WoldMercator du cornerCoordinates standardisée est distante du wgs84Extent standardisé
+          - de moins de 1e-2 degrés, soit à peu près 1 km 
       - sinon il est mal géoréférencé
       - si le fichier .tif ou .pdf n'est pas ou est mal géoréféréncé
         - alors l'enregistrement MapCat correspondant doit comporter un champ borders
+        
+  versionCarteSpéciale:
+    algo: |
+      Côté serveur l'algo de détermination est dans mapmetadata.inc.php!MapMetadata!getFrom7z.
+    principe:
+      - s'il existe un fichier XML alors application de la règle des cartes normales
+      - sinon la version est l'année définie dans le nom du fichier tif ou pdf
   
 géoréférencement:
   - dans ShomGT je vois le géoréférencement des images au travers de gdalinfo

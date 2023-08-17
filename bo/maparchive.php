@@ -132,11 +132,11 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   */
   function __construct(string $pathOf7z, string $mapNum) {
     //echo "MapArchive::__construct(pathOf7z=$pathOf7z, mapNum=$mapNum)<br>\n";
+    if (!is_file($pathOf7z))
+      throw new Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $this->pathOf7z = $pathOf7z;
     $this->mapNum = $mapNum;
     $mapCat = MapCat::get($mapNum);
-    if (!is_file($pathOf7z))
-      throw new Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $archive = new My7zArchive($pathOf7z);
     $this->main = new Image;
     foreach ($archive as $entry) {
@@ -160,9 +160,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
         else // $ext == 'xml'
           $this->insets[$name]->setXml($entry['Name'], $pathOf7z);
       }
-      elseif (preg_match("!^$mapNum/$mapNum(_\d+)?\.(tif|pdf)$!", $entry['Name'], $matches)) {
+      elseif (preg_match("!^$mapNum/{$mapNum}_\d{4}\.(tif|pdf)$!", $entry['Name'], $matches)) {
         $this->type = 'special';
-        if (($matches[2] == 'tif') || !$this->main->tif()) { // le .tif a priorité sur le .pdf
+        if (($matches[1] == 'tif') || !$this->main->tif()) { // le .tif a priorité sur le .pdf
           $this->main->setTif($entry['Name'], $archive);
         }
       }
