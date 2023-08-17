@@ -5,6 +5,8 @@ name: mapcat.inc.php
 classes:
 doc: |
 journal: |
+  17/8/2023:
+    - ajout des cartes obsolètes dans le catalogue
   2/7/2023:
     - correction d'un bug en lien avec la carte 7620
     - correction d'un bug sur la création du répertoire temp
@@ -39,6 +41,10 @@ class TempMapCat {
     $mapcat = json_decode(file_get_contents(self::MAPCAT_TEMP_PATH), true);
     foreach ($mapcat['maps'] as $name => $map) {
       self::$cat[$name] = new self($name, $map);
+    }
+    foreach ($mapcat['obsoleteMaps'] as $name => $map) {
+      $dateObs = array_keys($map)[count($map)-1]; // la dernière date d'obsolescence
+      self::$cat[$name] = new self($name, $map[$dateObs]);
     }
   }
   

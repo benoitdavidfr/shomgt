@@ -105,7 +105,7 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   soit une carte qui a été dans le portefeuille mais dont l'intérêt a été jugé insuffisant par la suite
   et qui donc a été retirée du portefeuille même si elle peut rester une carte valide pour le Shom.
 - **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
-  une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence
+  une carte peut être plus ou moins périmée ; une mesure de cette péremption est définie comme le par la différence
   du nombre de corrections apportées.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.

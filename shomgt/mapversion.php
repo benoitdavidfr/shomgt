@@ -12,6 +12,7 @@ function shomGTVersion(): int {
     case '/geoapi/shomgt/shomgt/mapversion.php': return 4; // en local
     case '/shomgt3/shomgt/mapversion.php': return 3; // sur geoapi.fr en V3
     case '/shomgt/shomgt/mapversion.php': return 4; // sur geoapi.fr en V4
+    case '/shomgt/mapversion.php': return 4; // sur sgpp.geoapi.fr en V4
     default: die("SCRIPT_NAME = $_SERVER[SCRIPT_NAME] non prévu\n");
   }
 }
