@@ -53,9 +53,6 @@ class Login { // Fonctionnalités de login
         echo $htmlHeadAndTitle;
         die("Erreur de création du cookie<br>\n");
       }
-      else {
-        echo "Création du cookie sur $parent ok<br>\n";
-      }
     }
     // login ok
     echo "Login/mot de passe correct, vous êtes authentifiés pour ",self::COOKIE_DURATION_IN_DAYS," jours<br>\n";
