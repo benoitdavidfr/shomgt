@@ -244,8 +244,6 @@ découpageEnComposantsV4:
       dashboard: liste des cartes à actualiser et des nlles cartes
       bureau.prestations@shom.fr: commande par mail à <bureau.prestations@shom.fr>
       diffusion.shom.fr: téléchargement sur le site
-interfacesImportantesEntreComposants:
-  portfolio:
 backlog:
   stratégie:
     - ajouter progressivement les nouvelles fonctionnalités
@@ -363,6 +361,17 @@ backlog:
     bugs:
       - shomgt et sgpp partagent la base des utilisateurs !
         - faire une base distincte pour sgpp
+  bugAcces20230818:
+    - le 18/8 j'ai voulu blacklister un referer sur le site de prod
+    - j'ai copié lib/accesscntrl.inc.php, et des secrets sur le site de prod
+    - je ne peux plus me loguer en authentifié sur le front mais je peux continuer à utiliser le back
+    - les utilisateurs non authentifiés semblent avoir accès normalement
+    - j'ai fait un checkout de la version 4.1 du 12/8 pour repartir de ce code
+    - j'ai créé une branche bugacces20230818 pour isoler les modifs que je pourrais faire sur ce code.
+    - l'idée est de reproduire le bug sur le site sgpp
+    - pour cela je clone shomgt sur sgpp
+    - en fait le bug vient du fonctionnement des cookie
+    - dans la V4, je crée le cookie dans le répertoire bo et par défaut il n'est pas dispo dans le répertoire racine
   horsSprint:
     - améliorer le délai entre 2 moissonnages de Gan -> '#/délaiEntre2MajGan'
     - filtrer dans dashboard sur une zone
