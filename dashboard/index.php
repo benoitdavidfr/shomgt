@@ -411,7 +411,72 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
 };
 
 
-// retourne l'ancienneté de la dernière moisson du GAN en nombre de jours ou -1 si cette moisson n'existe pas
+// Teste si à la fois $now - $first >= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now 
+function dateBetween(DateTimeImmutable $first, DateTimeImmutable $now, int $dayOfWeek=4, int $h=20, int $mn=0): bool {
+  //echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
+  
+  //$diff = $first->diff($now); print_r($diff); echo "<br>\n";
+  /*if ($diff->invert == 1) {
+    echo "diff.invert==1 <=> now < first<br>\n";
+  }
+  else {
+    echo "diff.invert<>=1 <=> first < now<br>\n";
+  }*/
+  if ($first->diff($now)->d == 0) // Il y a moins d'un jour d'écart
+    return false;
+  if ($first->diff($now)->days >= 7) // Il y a plus de 7 jours d'écart
+    return true;
+  
+  $W = $now->format('W'); // le no de la semaine de $now
+  //echo "Le no de la semaine de now est $W<br>\n";
+  $o = $now->format('o'); // l'année ISO semaine de $last
+  //echo "L'année (ISO semaine) d'aujourd'hui est $o<br>\n";
+  // j'appelle $thursday le jour qui doit être le $dayOfWeek
+  $thursday = $now->setISODate($o, $W, $dayOfWeek)->setTime($h, $mn);
+  //echo "Le jeudi 20h UTC de la semaine d'aujourd'hui est ",$thursday->format(DateTimeInterface::ISO8601),"<br>\n";
+  
+  $diff = $thursday->diff($now); // intervalle de $thursday à $now
+  //print_r($diff); echo "<br>\n";
+  if ($diff->invert == 1) { // c'est le jeudi d'après now => prendre le jeudi d'avant
+    //echo $thursday->format(DateTimeInterface::ISO8601)," est après maintenant<br>\n";
+    $oneWeek = new \DateInterval("P7D"); // 7 jours
+    $thursday = $thursday->sub($oneWeek);
+    //echo $thursday->format(DateTimeInterface::ISO8601)," est le jeudi de la semaine précédente<br>\n";
+  }
+  else {
+    //echo $thursday->format(DateTimeInterface::ISO8601)," est avant maintenant, c'est donc le jeudi précédent<br>\n";
+  }
+  $thursday_minus_first = $first->diff($thursday);
+  //print_r($thursday_minus_first);
+  if ($thursday_minus_first->invert == 1) {
+    //echo "thursday_minus_first->invert == 1 <=> thursday < first<br>\n";
+    return false;
+  }
+  else {
+    //echo "thursday_minus_first->invert <> 1 <=> first < thursday <br>\n";
+    return true;
+  }
+}
+
+function testDateBetween(): void {
+  $first = DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15');
+  $now = new DateTimeImmutable;
+  echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
+  $db = dateBetween($first, $now, 4, 20, 00);
+  echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
+  
+  $first = DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-11'); // Ve
+  $now = DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15'); // Ma
+  echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
+  $db = dateBetween($first, $now, 4, 20, 00);
+  echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
+}
+//testDateBetween();
+
+// indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
+// Si remoisson alors retourne l'age de la moisson en jours
+// Si la moisson n'existe pas alors retourne -1
+// Si la moisson n'a pas à être moissonnée retourne 0
 function ganHarvestAge(): int {
   //return -1;
   if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
@@ -421,11 +486,12 @@ function ganHarvestAge(): int {
   $valid = explode('/', $gans['valid']);
   //echo "valid="; print_r($valid); echo "<br>\n";
   $valid = DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
-  //echo "now="; print_r($now); echo "<br>\n";
-  //echo "valid="; print_r($valid); echo "<br>\n";
-  //echo "diff="; print_r($valid->diff($now)); echo "<br>\n";
-  //echo "diff->days=",$valid->diff($now)->days,"<br>\n";
-  return $valid->diff($now)->days;
+  if (dateBetween($valid, $now, 4, 20, 00)) {
+    //print_r($valid->diff($now));
+    return $valid->diff($now)->days;
+  }
+  else
+    return 0;
 }
 
 function wfsAge(): int {
@@ -451,7 +517,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<h2>Tableau de bord de l'actualité des cartes</h2><ul>\n";
     $ganHarvestAge = ganHarvestAge();
     //echo "ganHarvestAge=$ganHarvestAge<br>\n";
-    if (($ganHarvestAge >= 7) || ($ganHarvestAge == -1))
+    if (($ganHarvestAge == -1) || ($ganHarvestAge > 0))
       echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
     $wfsAge = wfsAge();

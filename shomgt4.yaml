@@ -361,7 +361,7 @@ backlog:
     bugs:
       - shomgt et sgpp partagent la base des utilisateurs !
         - faire une base distincte pour sgpp
-  bugAcces20230818:
+  bugAcces20230818(ok):
     - le 18/8 j'ai voulu blacklister un referer sur le site de prod
     - j'ai copié lib/accesscntrl.inc.php, et des secrets sur le site de prod
     - je ne peux plus me loguer en authentifié sur le front mais je peux continuer à utiliser le back
