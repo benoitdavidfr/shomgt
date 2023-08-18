@@ -49,6 +49,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='pfweight.php'>Gérer le poids du portefeuille</a></li>\n";
     echo "<li><a href='user.php'>Gérer les utilisateurs</a></li>\n";
     echo "<li><a href='mapcat.php'>Gérer le catalogue</a></li>\n";
+    echo "<li><a href='accesslog.php'>Consulter les logs d'accès</a></li>\n";
     echo "<li><a href='maparchivestore.php'>Gèrer le stockage du portefeuille (liens, clone, ..)</a></li>\n";
     echo "<li><a href='clonedatamaps.php'>Créer dans sgpp/data/maps un clone de shomgt/data/maps</a></li>\n";
     echo "<li><a href='?action=getenv'>Afficher les variables d'environnement</a></li>\n";

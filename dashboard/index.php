@@ -413,6 +413,7 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
 
 // retourne l'ancienneté de la dernière moisson du GAN en nombre de jours ou -1 si cette moisson n'existe pas
 function ganHarvestAge(): int {
+  //return -1;
   if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
     return -1;
   $now = new DateTimeImmutable;
@@ -451,7 +452,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     $ganHarvestAge = ganHarvestAge();
     //echo "ganHarvestAge=$ganHarvestAge<br>\n";
     if (($ganHarvestAge >= 7) || ($ganHarvestAge == -1))
-      echo "<li><a href='../bo/runbatch.php?batch=pwd&returnTo=dashboard'>Moissonner le GAN",
+      echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
     $wfsAge = wfsAge();
     if (($wfsAge >= 7) || ($wfsAge == -1))

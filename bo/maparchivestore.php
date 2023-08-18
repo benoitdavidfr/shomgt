@@ -254,7 +254,7 @@ class MapArchiveStore {
         }
       }
       foreach ($diffsa as $bname => &$codes) {
-        if ($codes['.7z'] == $codes['.md.json'])
+        if ($codes['.7z'] == ($codes['.md.json'] ?? null))
           $codes =  $codes['.7z'];
       }
       ksort($diffsa);

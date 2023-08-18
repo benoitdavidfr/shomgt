@@ -29,6 +29,11 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  18/8/2023:
+    - vérif. des corrections du GAN dans gan.inc.php et suppression de certaines d'entre elles
+      - cela règle le bug 7507@8/8/2023
+      - cela crée aussi des distortions dans le TdB
+        - qu'il faudrait corriger en modifiant les MD ISO des cartes concernées
   17/8/2023:
     - modif. spec. carte spéciale, interdiction fichier {mapNum}/{mapNum}.(tif|pdf)
     - modif. version carte spéciale n'ayant pas de fichier MD ISO
@@ -358,16 +363,15 @@ backlog:
     bugs:
       - shomgt et sgpp partagent la base des utilisateurs !
         - faire une base distincte pour sgpp
-  bugs16/8:
-    - pb test 6934 de repassage de obsolete en normal plante car dans le client elle est marquée obsolete dans le catalogue
   horsSprint:
+    - améliorer le délai entre 2 moissonnages de Gan -> '#/délaiEntre2MajGan'
     - filtrer dans dashboard sur une zone
+    - gérer un log plus fin des actions du BO
     - ajout gestion du catalogue dans le BO
       - mise en base de MapCat
     - automatiser la maj du GAN et de la purge des cartes ?
     - meilleure gestion en production de l'affichage des erreurs
     - gestion des stats d'utilisation
-    - ajouter un log sur shomgeotiff
     - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
     - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
     - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
@@ -404,10 +408,11 @@ fonctionnalités:
       - pour un utilisateur lister les versions déposées
         - accès à la version déposée
 bugs:
-  7507@8/8/2023:
+  7507@8/8/2023(ok):
     - pourquoi dashboard indique que la version GAN de la 7507 est la 1996c131
       - alors que le fichier gans.yaml indique
         - "edition: 'Publication 1995'"
+    - corrigé le 18/8/2023 - il s'agit des CORRECTIONS apportées dans gan.inc.php
 miseEnProd:
   principes:
     - préparer le déplacement de shomgeotiff
@@ -505,8 +510,9 @@ github:
   - créer un compte organization shomgt dans lequel je crée un dépôt shomgt4 (PAS FAIT)
 garderUneV3:
   - il faut que je garde une V3 opérationnelle pour tester l'utilisation de sgserver par des clients en V3
-  - sur Git créer une branche shomgt3 sur main avant de converger shomgt4 dans main
-  - sur Alwaysdata créer un répertoire ~/prod/geoapi/shomgt3 qui reste en V3
+  - sur Git j'ai créé une branche shomgt3 sur main avant de converger shomgt4 dans main
+  - sur Alwaysdata j'ai créé un répertoire ~/prod/geoapi/shomgt3 qui reste en V3
+  - le répertoire data peut être cloné car sa structure est identique à celle de la V4
 contraintesV3:
   - contraintes de sgupdt de la V3 sur la structure des cartes du portefeuille
   - dans les md sgupdt utilise
@@ -536,6 +542,13 @@ contraintesV3:
     - option 2 - modifier le .xml des cartes spéciales pour que le champ edition respecte le format de celui des cartes normales
       - => modifier le ;xml des cartes spéciales
   - dans un premier temps je choisis l'option 1
+délaiEntre2MajGan:
+  - au moins 24h et au moins un jeudi 18h
+  - calculer le jeudi précédent maintenant
+    - for ($d=1; $d<8; $d++)
+      - tester si now()-$d days est un jeudi
+        - si oui alors retourne la date de de jeudi
+  - tester si la précédente date est ou non avant ce jeudi 18h
 pointCartesSpéciales:
   7330(ok):
     title: Action de l'Etat en Mer en Zone Maritime Atlantique
@@ -609,6 +622,13 @@ pointCartesSpéciales:
          md: XML ok
         image: tif géoréférencé
 requêtesLog: |
+  -- accès ok au travers IP autorisée
+  SELECT * FROM `log`  
+  WHERE login is null
+    and user is null
+    and access='T'
+  ORDER BY `log`.`logdt`  DESC
+  
   SELECT * FROM `log`  
   WHERE request_uri like '/shomgt/sgserver/index.php%'
   ORDER BY `log`.`logdt`  DESC
@@ -1282,27 +1302,106 @@ miseEnBase:
   user: -> user.php?action=showUserTableSchema
   mapcat:
     description: |
-      catalogue des cartes obsolètes ou non avec un n-uplet par carte
-      IL FAUT ARCHIVER LES ANCIENNES VERSIONS POUR POUVOIR LES RESTAURER
+      catalogue des cartes avec un n-uplet par carte et par mise à jour
     attributs:
+      id:
+        type: int
+        keyOrNull: not null auto_increment primary key
+        comment: id du n-uplet incrémenté pour permettre des versions sucessives par carte
       mapnum:
         type: string
-        description: numéro de carte sur 4 chiffres
+        description: numéro de carte sur 4 chiffres précédé de 'FR'
       title:
         type: string
         description: titre de la carte sans le numéro en tête
+      kind:
+        type: string
+        description: "'current'|'obsolete'"
       delete:
         type: date ou null
-        description: date de suppression pour les cartes obsolètes ou null si la carte n'est pas obsolète
-      interest:
-        type: string
-        description: 'N' pour les cartes d'intérêt insuffisant, 'Y' pour les autres cartes
+        description: date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas
       content:
         type: JSON
         description: enregistrement conforme au schéma JSON
       bbox:
         type: polygon
         description: boite engobante de la carte
+      update:
+        type: datetime
+        comment: date de mise à jour dans la table
+      user:
+        type: string
+        comment: utilisateur ayant réalisé la mise à jour, null pour une versions système
+  user: |
+    'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
+            ." - le champ 'comment' précisant la table concernée,\n"
+            ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
+            ."   - la clé définissant le nom SQL de la colonne,\n"
+            ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
+            ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
+            ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
+            ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
+            ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
+            ."     - pour clé la valeur de l'énumération et\n"
+            ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
+    'comment' => "table des utilisateurs",
+    'columns' => [
+      'email' => [
+        'type'=> 'varchar(256)',
+        'keyOrNull'=> 'primary key',
+        'comment'=> "adresse email",
+      ],
+      'epasswd'=> [
+        'type'=> 'longtext',
+        'comment'=> "mot de passe encrypté, null à la créatin d'un compte temporaire non valide",
+      ],
+      'newepasswd'=> [
+        'type'=> 'longtext',
+        'comment'=> "nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe",
+      ],
+      'role'=> [
+        'type'=> 'enum',
+        'enum'=> [
+          'normal' => "utilisateur normal ayant le droit de consulter les cartes, d'en ajouter et d'en supprimer",
+          'admin' => "administrateur ayant en plus de l'utilisateur normal des droits supplémentaires,\n"
+                    ."notamment le droit de changer le rôle des utilisateurs",
+          'restricted' => "utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter, ni d'en supprimer",
+          'banned' => "utilisateur banni n'ayant aucun droit, et n'ayant pas le droit de réactiver son compte",
+          'suspended' => "utilisateur suspendu en l'absence de confirmation pendant un délai d'un an,\n"
+                    ."il n'a plus aucun droit jusqu'à ce qu'il réactive son compte.\n"
+                    ."Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n"
+                    ."soit en exécutant le processus de création de compte",
+          'closed' => "utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n"
+                    ."en exécutant à nouveau le processus de création de compte",
+          'temp' => "utilisateur en cours de création dont la validité n'a pas été vérifiée,\n"
+                    ."et n'ayant aucun droit en attendant sa validation par mail",
+          'system' => "utilisateur utilisé en interne à ShomGT",
+        ],
+        'comment'=> "rôle de l'utilisateur",
+      ],
+      'secret'=> [
+        'type'=> 'varchar(256)',
+        'comment'=> "secret envoyé par email et attendu en retour, null ssi le secret a été utilisé",
+      ],
+      'createdt'=> [
+        'type'=> 'datetime',
+        'keyOrNull'=> 'not null',
+        'comment'=> "date et heure de création initiale du compte",
+      ],
+      'sent'=> [
+        'type'=> 'datetime',
+        'comment'=> "date et heure d'envoi du dernier mail de validation, null ssi le lien du mail a été activé",
+      ],
+      'valid'=> [
+        'type'=> 'datetime',
+        'comment'=> "date et heure de dernière validation, null ssi compte non validé",
+      ],
+      'comment'=> [
+        'type'=> 'longtext',
+        'comment'=> "commentaire",
+      ],
+    ],
+
 bo:
   title: créer un BO pour les utilisateurs authentifiés
   fonctionnalités:

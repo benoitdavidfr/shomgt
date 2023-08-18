@@ -56,15 +56,16 @@ class Gan {
   // Il se lit {{num}=> [{edACorriger}=> {edCorrigée}]}
   // Liste d'écarts transmise le 15/6/2022 au Shom
   // Les écarts ci-dessous sont ceux restants après corrections du Shom
+  // Revisite le 18/8/2023, vérification par rapport à la carte elle même
   const CORRECTIONS = [
-    '6942'=> ["Edition n°3 - 2015"=> "Edition n°3 - 2016"],
-    '7143'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
-    '7268'=> ["Publication 1992"=> "Publication 1993"],
-    '7411'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],
-    '7414'=> ["Edition n°3 - 2013"=> "Edition n°3 - 2014"],
-    '7507'=> ["Publication 1995"=> "Publication 1996"],
-    '7593'=> ["Publication 2002"=> "Publication 2003"],
-    '7755'=> ["Publication 2015"=> "Publication 2016"],
+    '6942'=> ["Edition n°3 - 2015"=> "Edition n°3 - 2016"], // correction vérifiée le 18/8/2023
+    //'7143'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"], Suppression le 18/8/2023
+    //'7268'=> ["Publication 1992"=> "Publication 1993"],  Suppression le 18/8/2023
+    //'7411'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"],  Suppression le 18/8/2023
+    '7414'=> ["Edition n°3 - 2013"=> "Edition n°3 - 2014"], // correction vérifiée le 18/8/2023
+    //'7507'=> ["Publication 1995"=> "Publication 1996"], Suppression le 18/8/2023
+    //'7593'=> ["Publication 2002"=> "Publication 2003"],  Suppression le 18/8/2023
+    '7755'=> ["Publication 2015"=> "Publication 2016"], // correction vérifiée le 18/8/2023
   ];
 
   static string $hvalid=''; // intervalles des dates de la moisson des GAN
