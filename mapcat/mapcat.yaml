@@ -2293,12 +2293,12 @@ maps:
   FR7143:
     groupTitle: 'Côte Ouest de France'
     title: 'Abords des Iles de Houat et de Hoëdic'
-    mapsFrance:
-      - FX-Atl
+    mapsFrance: [FX-Atl]
     scaleDenominator: '20.000'
     spatial:
       SW: '47°17,84''N - 003°04,88''W'
       NE: '47°26,14''N - 002°47,13''W'
+    noteCatalog: Dans la version 2002c26, le fichier README.txt indique la correction des métadonnées d'une erreur Shom.
   FR7144:
     groupTitle: 'Côte Ouest de France'
     title: 'Embouchure de la Vilaine - De Damgan à La Roche-Bernard'
@@ -3022,6 +3022,7 @@ maps:
       SW: '23°28,30''S - 160°07,90''E'
       NE: '17°43,00''S - 169°06,00''E'
     replaces: '(remplace 1960)'
+    noteCatalog: Dans la version 1992c32, le fichier README.txt indique la correction des métadonnées d'une erreur Shom.
   FR7271:
     groupTitle: 'Océan Indien - Océan Pacifique Sud'
     title: 'Australasie et mers adjacentes'
@@ -4061,6 +4062,7 @@ maps:
     spatial:
       SW: '46°26,70''N - 001°52,68''W'
       NE: '46°30,74''N - 001°44,09''W'
+    noteCatalog: Dans la version 2002c14, le fichier README.txt indique la correction des métadonnées d'une erreur Shom.
   FR7412:
     groupTitle: 'Côte Ouest de France'
     title: 'Ile de Ré - Du Fier d''Ars à la Flotte'
@@ -4904,6 +4906,7 @@ maps:
       - title: 'A - Archipel de Pointe Géologie'
         scaleDenominator: '7.500'
         spatial: { SW: '66°40,27''S - 139°58,90''E', NE: '66°39,18''S - 140°01,75''E' }
+    noteCatalog: Dans la version 2002c3, le fichier README.txt indique la correction des métadonnées d'une erreur Shom.
   FR7594:
     groupTitle: 'Océan Antarctique - Mer Dumont d''Urville - Terre Adélie'
     title: 'De la Pointe Ebba au Cap de la Découverte'

@@ -108,7 +108,7 @@ use Symfony\Component\Yaml\Yaml;
 $login = Login::loggedIn() or die("Accès non autorisé\n");
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
-  
+  die("Erreur variable d'environnement SHOMGT3_PORTFOLIO_PATH non définie\n");
 }
 
 if (!isset($_GET['path'])) { // affichage de la liste des livraisons 
@@ -246,8 +246,15 @@ switch ($_GET['action'] ?? null) {
          "<pre><table border=1><th>DateTime</th><th>Attr</th><th>Size</th><th>Compressed</th><th>Name</th>\n";
     foreach ($archive as $entry) {
       //echo Yaml::dump([$entry]);
-      echo "<tr><td>$entry[DateTime]</td><td>$entry[Attr]</td><td align='right'>$entry[Size]</td>",
-           "<td align='right'>$entry[Compressed]</td><td>$entry[Name]</td></tr>\n";
+      if ($entry['Attr'] == '....A') {
+        $href = "shomgeotiff.php/$_GET[path]/$_GET[map].7z/$entry[Name]";
+        echo "<tr><td>$entry[DateTime]</td><td>$entry[Attr]</td><td align='right'>$entry[Size]</td>",
+             "<td align='right'>$entry[Compressed]</td><td><a href='$href'>$entry[Name]</a></td></tr>\n";
+      }
+      else {
+        echo "<tr><td>$entry[DateTime]</td><td>$entry[Attr]</td><td align='right'>$entry[Size]</td>",
+             "<td align='right'>$entry[Compressed]</td><td>$entry[Name]</td></tr>\n";
+      }
     }
     echo "</table></pre>";
     die();

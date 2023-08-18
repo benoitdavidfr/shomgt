@@ -21,6 +21,7 @@ define ('MIME_TYPES', [
   '.pdf'=> 'application/pdf',
   '.xml'=> 'text/xml; charset="utf-8"',
   '.7z' => 'application/x-7z-compressed',
+  '.txt'=> 'text/plain; charset="utf-8"',
 ]
 );
 
