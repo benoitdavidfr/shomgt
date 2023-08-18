@@ -96,6 +96,11 @@ class Access {
     return false;
   }
   
+  // Teste si le referer est dans la liste noire, utilisée pour tile.php
+  static function refererInBlackList(): bool {
+    return in_array($_SERVER['HTTP_REFERER'] ?? null, config('refererBlackList'));
+  }
+  
   private static function loginPwdInTable(string $usrpwd): bool {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");

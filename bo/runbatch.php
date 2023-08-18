@@ -53,9 +53,12 @@ if (!isset($_GET['next'])) { // premier appel
 $output = file_get_contents($outputFilePath);
 echo Yaml::dump(['command'=> $command, 'output'=> $output], 2, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"\n";
 
-echo "</pre><a href='?batch=$_GET[batch]&amp;next=$uniqid",
-      ($_GET['returnTo'] ?? null) ? "&amp;returnTo=$_GET[returnTo]" : '',
-      "'>Afficher la suite</a><br>\n";
+$no = ($_GET['no'] ?? 0) + 1; // permet de générer un URL différent à chaque fois
+$href = "?batch=$_GET[batch]&amp;next=$uniqid"
+        .(($_GET['returnTo'] ?? null) ? "&amp;returnTo=$_GET[returnTo]" : '')
+        ."&amp;no=$no"
+        .'#endOfFle';
+echo "</pre><a id='endOfFle' href='$href'>Afficher la suite</a><br>\n";
 $outputFileBasename = basename($outputFilePath);
 switch ($_GET['returnTo'] ?? null) {
   case 'dashboard': {
