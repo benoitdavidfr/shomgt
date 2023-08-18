@@ -44,6 +44,16 @@ class Login { // Fonctionnalités de login
     // appel avec paramètres de login corrects -> création d'un cookie
     // nécessité d'utiliser le paramètre path pour que le cookie soit aussi disponible dans le front
     else {
+      /*if (!setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]",
+                       time()+60*60*24*self::COOKIE_DURATION_IN_DAYS,)) {
+        // Erreur de création du cookie
+        echo $htmlHeadAndTitle;
+        echo "Erreur de création du cookie courant<br>\n";
+      }
+      else {
+        echo "création ok du cookie courant<br>\n";
+      }*/
+      
       $parent = dirname(dirname($_SERVER['SCRIPT_NAME']));
       if ($parent <> '/') $parent .= '/';
       if (!setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]",
@@ -53,9 +63,30 @@ class Login { // Fonctionnalités de login
         echo $htmlHeadAndTitle;
         die("Erreur de création du cookie<br>\n");
       }
+      else {
+        echo "création ok du cookie sur $parent<br>\n";
+      }
     }
     // login ok
     echo "Login/mot de passe correct, vous êtes authentifiés pour ",self::COOKIE_DURATION_IN_DAYS," jours<br>\n";
     return $_POST['login'];
+  }
+  
+  static function logout(string $HTML_HEAD, string $login): never {
+    /*if (setcookie(Login::COOKIE_NAME, 'authorized', -1)) {
+      echo "$HTML_HEAD<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+      echo "Vous êtes bien délogué sur le répertoire par défaut<br>\n";
+    }
+    else
+      die("Erreur de suppression du cookie<br>\n");
+    */
+    $parent = dirname(dirname($_SERVER['SCRIPT_NAME']));
+    if ($parent <> '/') $parent .= '/';
+    if (setcookie(Login::COOKIE_NAME, 'authorized', -1, $parent)) {
+      echo "$HTML_HEAD<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+      die("Vous êtes bien délogué<br>\n<a href='index.php'>Se reloguer ?<br>\n");
+    }
+    else
+      die("Erreur de suppression du cookie<br>\n");
   }
 };

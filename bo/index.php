@@ -12,6 +12,8 @@ use Symfony\Component\Yaml\Yaml;
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
 
+//echo "<pre>cookie="; print_r($_COOKIE); echo "</pre>\n";
+
 //createUserTable(); // pour réinitialiser la base en cas de bug
 
 // Si loggé retourne le login, sinon propose de se loguer et si ! ok alors arrête l'exécuction et propose de s'enregistrer
@@ -62,12 +64,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     die();
   }
   case 'logout': {
-    if (setcookie(Login::COOKIE_NAME, 'authorized', -3600)) {
-      echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
-      die("Vous êtes bien délogué<br>\n<a href='index.php'>Se reloguer ?<br>\n");
-    }
-    else
-      die("Erreur de suppression du cookie<br>\n");
+    Login::logout($HTML_HEAD, $login);
   }
   case 'getenv': {
     echo "<pre>getenv()="; print_r(getenv()); echo "</pre>\n";
