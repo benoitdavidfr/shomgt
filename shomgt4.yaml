@@ -34,6 +34,8 @@ journal:
     - mise en prod à 17:00
     - merge de shomgt4.2 dans main et suppression de shomgt4.2
     - création d'une branche shomgt4.3 et passage sur cette branche
+    - mise en prod de shomgeotiffpp
+    - je considère maintenant que la version de réf. est shomgeotiff
   18/8/2023:
     - vérif. des corrections du GAN dans gan.inc.php et suppression de certaines d'entre elles
       - cela règle le bug 7507@8/8/2023
