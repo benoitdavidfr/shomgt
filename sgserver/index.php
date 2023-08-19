@@ -11,6 +11,7 @@ doc: |
   api:
     /: page d'accueil utilisée pour proposer des URL de tests
     /api: retourne la description de l'api
+    /clientIpAddress: retourne l'adresse IP du client
     /cat.json: retourne mapcat.json 
     /maps.json: liste en JSON l'ensemble des cartes ayant été disponibles indexées par leur numéro et avec les infos suivantes
       si la carte est valide:
@@ -34,6 +35,10 @@ doc: |
     - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
       la propriété 'status' contenant la valeur 'obsolete'
 journal: |
+  19/8/2023:
+    - ajout d'un mécanisme de détection pour savoir si le client du serveur est ou non sur la même machine
+      - si le client est sur la même machine alors pas d'autre contrôle d'accès
+      - pour cette détection le serveur s'appelle lui-même sur l'API /clientIpAddress
   3-4/8/2023:
     - passage en ShomGT4
     - sgupdt en version 4 fait une requête avec le paramètre version=4
@@ -162,10 +167,23 @@ function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): vo
   die("$mesUti\n");
 }
 
-// Mécanisme de contrôle d'accès sur l'IP et le login / mdp
+// l'appel à clientIpAddress ne doit pas être protégé par le contrôle d'accès car s'il l'était cela bouclerait
+if (($_SERVER['PATH_INFO'] ?? null) == '/clientIpAddress') { // retourne l'adresse IP du client
+  header('Content-type: application/json');
+  die(json_encode(['REMOTE_ADDR'=> $_SERVER['REMOTE_ADDR']]));
+}
+
+// Mécanisme de contrôle d'accès d'abord sur un accès sur la même machine, puis sur l'IP puis sur le login / mdp
 // Si le contrôle est activé et s'il est refusé alors demande d'authentification
 try {
-  if (Access::cntrlFor('sgServer') && !Access::cntrl(null,true)) {
+  $url = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]$_SERVER[SCRIPT_NAME]/clientIpAddress";
+  $clientIpAddress = json_decode(file_get_contents($url), true);
+  if ($clientIpAddress['REMOTE_ADDR'] == $_SERVER['REMOTE_ADDR']) {
+    //echo "$clientIpAddress[REMOTE_ADDR] == $_SERVER[REMOTE_ADDR]\n";
+    //echo "Les adresses sont identiques\n";
+    // l'appel provient de la même machine, pas de contrôle d'accès compélmenatire
+  }
+  elseif (Access::cntrlFor('sgServer') && !Access::cntrl(null,true)) {
     // Si la requete ne comporte pas d'utilisateur, alors renvoie d'une demande d'authentification 401
     if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
       write_log(false);
@@ -198,10 +216,9 @@ switch ($_SERVER['PATH_INFO'] ?? null) {
     fpassthru(fopen(__DIR__.'/welcome.html', 'r'));
     die();
   }
-  case '/server': { // affichage de $_SERVER
-    echo "<!DOCTYPE html>\n<html><head><title>sgserver</title></head><body>\n";
-    echo "<pre>\n"; print_r($_SERVER);
-    die();
+  case '/server': { // affichage de $_SERVER en JSON
+    header('Content-type: application/json; charset="utf-8"');
+    die(json_encode($_SERVER));
   }
   case '/api':
   case '/api.json': { // envoi de de la doc de l'API 

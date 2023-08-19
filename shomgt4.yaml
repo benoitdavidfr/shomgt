@@ -551,6 +551,35 @@ contraintesV3:
     - option 2 - modifier le .xml des cartes spéciales pour que le champ edition respecte le format de celui des cartes normales
       - => modifier le ;xml des cartes spéciales
   - dans un premier temps je choisis l'option 1
+
+accèsSgServerSsAuth:
+  description: |
+    Lorsque sgupdt appelle sgserver sur la même machine, je pourrais me passer de transmettre un mot de passe.
+    Cela améliorerait la sécurité car je pourrais considérer que sgserver n'est utilisé que depuis une IP blanche
+    ou depuis la même machine et je pourrais interdire une utilisation avec authentification.
+    Cela éviterait d'avoir à mettre un mot de passe des la variable SHOMGT3_SERVER_URL
+  possibilités:
+    - title: simple -> tester si l'adrese IP du client = celle du serveur
+      description: |
+        Cela ne marche pas car sur Alwaysdata, l'adresse IP serveur et différente de l'adresse IP client.
+    - title: partage d'un secret dans un fichier stocké sur la machine
+      description: |
+        Problème: ce secret doit être passé en paramètre et peut être consulté notamment dans l'affichage des commandes.
+    - title: partage d'un secret dans un fichier stocké sur la machine et changement du secret à chaque appel
+      description: |
+        Peut être combiné avec le fichier de Lock de sgupdt
+        Je veux que sgupdt/main.php ne soit pas réentrant.
+        Pour cela je crée un fichier lock dans sgupdt.
+        Je peux ajouter à ce lock un secret que sgupdt envoie par GET à sgserver
+        Quand sgserver recoit ce secret il lit le fichier lock et vérifie que le secret est partagé
+    - title: 
+      description: |
+        Sur sgserver, l'adresse du client est particulière, c'est l'adresse d'un client sur la même machine !
+        Je peux sur sgserver déterminer de facon sûre l'adresse d'un tel client
+        et si l'adresse du client est la même alors c'est que le client est sur la même machine !
+        L'avantage de cette solution est qu'elle évite un couplage entre sgupt et sgserver.
+        
+
 délaiEntre2MajGan:
   - au moins 24h et au moins un jeudi 18h
   - calculer le jeudi précédent maintenant
