@@ -423,56 +423,71 @@ bugs:
         - "edition: 'Publication 1995'"
     - corrigé le 18/8/2023 - il s'agit des CORRECTIONS apportées dans gan.inc.php
 miseEnProd:
-  principes:
-    - préparer le déplacement de shomgeotiff
-      - SI ~/prod/shomtiffpp contient des liens vers ~/prod/shomtiff
-        - ALORS remplacer ces liens par une copie les fichiers pointés FIN_SI
-    - stocker la date de cette release {release-date} dans le fichier realease-date.json
-    - arrêter shomgt et affichage du site de maintenance
-      - SI ~/prod/geoapi/sgbacks n'existe pas ALORS le créer FIN_SI
-      - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date} où {release-date} est la date de la release
-      - déplacer ~/prod/geoapi/sgbacks/{release-date}/maintenance  -> ~/prod/geoapi/shomgt
-    - remplacer shomgeotiff par shomgeotiffpp
-      - SI ~/prod/shomgeotiff-backs n'existe pas ALORS le créer FIN_SI
-      - déplacer ~/prod/shomgeotiff -> ~/prod/shomgeotiff-backs/{release-date}
-      - déplacer ~/prod/shomgeotiffpp -> ~/prod/shomgeotiff
-    - remettre le nouveau site
-      - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date}/maintenance
-      - déplacer ~/prod/geoapi/sgpp -> ~/prod/geoapi/shomgt
-    - recréer ~/prod/geoapi/sgpp + ~/prod/shomgeotiffpp
-  miseEnOeuvre:
-    - écrire un script Php CLI dans ~/prod/geoapi/shomgt-maintenance/release.php
-  maintenance:
-    outils:
-      ~/prod/geoapi/shomgt-maintenance/release.php:
-        title: mise en prod de ~/prod/geoapi/sgpp et déplacement de shomgeotiffpp à la place de shomgeotiff
-      ~/prod/geoapi/shomgt-maintenance/startMaintenance.php:
-        title: remplacer le site par les panneaux de maintenance
-      ~/prod/geoapi/shomgt-maintenance/endMaintenance.php:
-        title: remplacer le site de maintenance par le site standard
-    répertoire:
-      - répertoire maintenance dans shomgt contenant les url de maintenance
-      - ces url de maintenance renvoient un message de maintenance et une erreur 503 sur chauqe point d'accès
-        - index.php -> garder le texte d'accueil
-        - mapwcat.php
-        - tile.php
-        - wms.php
-        - shomgt/tile.php -> message de maintenance dans une tuile
-        - shomgt/maps.php
-        - shomgt/dl.php
-        - sgserver/index.php
-  ptsAccèsOfficiels:
-    - https://geoapi.fr/shomgt/
-    - https://geoapi.fr/shomgt/mapwcat.php
-    - https://geoapi.fr/shomgt/tile.php
-    - https://geoapi.fr/shomgt/wms.php
-    - https://sgserver.geoapi.fr/index.php -> https://geoapi.fr/shomgt/sgserver/index.php
-  ptsAccèsCachés:
-    - https://geoapi.fr/shomgt/shomgt/dl.php
-    - https://geoapi.fr/shomgt/shomgt/tile.php
-    - https://geoapi.fr/shomgt/shomgt/maps.php
-    - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
-    - https://geoapi.fr/shomgt/shomgt/leaflet/*
+  cmdes: |
+    # cmdes pour mettre en prod sgpp à la place de shomgt sur Alwaysdata
+    cd ~/prod/geoapi
+    mv shomgt/vendor shomgt-stable/
+    cd sgpp
+    rm vendor # qui est un lien symbolique vers shomgt/vendor
+    ln -s ../shomgt-stable/vendor vendor
+    cd ..
+    mv shomgt shomgt-back
+    mv sgpp shomgt
+    
+  idéesDAmélioration:
+    - garder stable shomgt/tile.php, shomgt/wms.php qui sont des renvois vers les vrais services
+    - si le vrai fichier n'existe faire une erreur propre
+  archive:
+    principes:
+      - préparer le déplacement de shomgeotiff
+        - SI ~/prod/shomtiffpp contient des liens vers ~/prod/shomtiff
+          - ALORS remplacer ces liens par une copie les fichiers pointés FIN_SI
+      - stocker la date de cette release {release-date} dans le fichier realease-date.json
+      - arrêter shomgt et affichage du site de maintenance
+        - SI ~/prod/geoapi/sgbacks n'existe pas ALORS le créer FIN_SI
+        - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date} où {release-date} est la date de la release
+        - déplacer ~/prod/geoapi/sgbacks/{release-date}/maintenance  -> ~/prod/geoapi/shomgt
+      - remplacer shomgeotiff par shomgeotiffpp
+        - SI ~/prod/shomgeotiff-backs n'existe pas ALORS le créer FIN_SI
+        - déplacer ~/prod/shomgeotiff -> ~/prod/shomgeotiff-backs/{release-date}
+        - déplacer ~/prod/shomgeotiffpp -> ~/prod/shomgeotiff
+      - remettre le nouveau site
+        - déplacer ~/prod/geoapi/shomgt -> ~/prod/geoapi/sgbacks/{release-date}/maintenance
+        - déplacer ~/prod/geoapi/sgpp -> ~/prod/geoapi/shomgt
+      - recréer ~/prod/geoapi/sgpp + ~/prod/shomgeotiffpp
+    miseEnOeuvre:
+      - écrire un script Php CLI dans ~/prod/geoapi/shomgt-maintenance/release.php
+    maintenance:
+      outils:
+        ~/prod/geoapi/shomgt-maintenance/release.php:
+          title: mise en prod de ~/prod/geoapi/sgpp et déplacement de shomgeotiffpp à la place de shomgeotiff
+        ~/prod/geoapi/shomgt-maintenance/startMaintenance.php:
+          title: remplacer le site par les panneaux de maintenance
+        ~/prod/geoapi/shomgt-maintenance/endMaintenance.php:
+          title: remplacer le site de maintenance par le site standard
+      répertoire:
+        - répertoire maintenance dans shomgt contenant les url de maintenance
+        - ces url de maintenance renvoient un message de maintenance et une erreur 503 sur chauqe point d'accès
+          - index.php -> garder le texte d'accueil
+          - mapwcat.php
+          - tile.php
+          - wms.php
+          - shomgt/tile.php -> message de maintenance dans une tuile
+          - shomgt/maps.php
+          - shomgt/dl.php
+          - sgserver/index.php
+    ptsAccèsOfficiels:
+      - https://geoapi.fr/shomgt/
+      - https://geoapi.fr/shomgt/mapwcat.php
+      - https://geoapi.fr/shomgt/tile.php
+      - https://geoapi.fr/shomgt/wms.php
+      - https://sgserver.geoapi.fr/index.php -> https://geoapi.fr/shomgt/sgserver/index.php
+    ptsAccèsCachés:
+      - https://geoapi.fr/shomgt/shomgt/dl.php
+      - https://geoapi.fr/shomgt/shomgt/tile.php
+      - https://geoapi.fr/shomgt/shomgt/maps.php
+      - https://geoapi.fr/shomgt/shomgt/geojson/*.geojson
+      - https://geoapi.fr/shomgt/shomgt/leaflet/*
 bugsCartesParticulières:
   7507:
     - téléchargement le 28/8 d'une version notée "1995c131 GAN 2331"
