@@ -3,7 +3,7 @@
 name: clone.php
 title: clone.php - clone un répertoire src dans un répertoire dest - 18/8/2023
 doc: |
-  Clone le répertoire src qui doit exister dans le réperttoire dest qui est créé et ne doit pas prééxister
+  Clone le répertoire src qui doit exister dans le répertoire dest qui est créé et ne doit pas prééxister
   Le clonage s'effectue en créant:
    - pour chaque répertoire de src un nouveau répertoire dans dest
    - pour chaque fichier de src un lien dur dans dest
@@ -15,12 +15,18 @@ require_once __DIR__.'/lib.inc.php';
 
 //use Symfony\Component\Yaml\Yaml;
 
-/* Retourne un message en cas d'erreur et null ssi OK,
+/* $src est le chemin vers un répertoire existant à cloner
+ * $dest est le chemin vers le répertoire à créer par clonage qui ne doit pas pré-exister
  * $tab est la chaine à afficher avant les affichages de debug, si vide pas de d'affichage
+ * Retourne un message en cas d'erreur et null ssi OK
 */
-function cloneDir(string $src, string $dest, string $tab): ?string {
+function cloneDir(string $src, string $dest, string $tab=''): ?string {
   if ($tab)
     echo "{$tab}cloneDir($src, $dest)\n";
+  if (!mkdir($dest))
+    return "Erreur sur mkdir($dest)<br>\n";
+  elseif ($tab)
+    echo "{$tab}mkdir($dest2) ok <br>\n";
   foreach (new DirectoryIterator($src) as $entry) {
     if (in_array($entry, ['.','..','.DS_Store'])) continue;
     $dest2 = "$dest/$entry";
@@ -43,10 +49,6 @@ function cloneDir(string $src, string $dest, string $tab): ?string {
     }
     elseif (is_dir($src2)) {
       //echo "$src2 est un dir\n";
-      if (!mkdir($dest2))
-        return "Erreur sur mkdir($dest2)<br>\n";
-      elseif ($tab)
-        echo "{$tab}mkdir($dest2) ok <br>\n";
       if ($error = cloneDir($src2, $dest2, $tab ? $tab.'  ' : ''))
         return $error;
     }
@@ -95,9 +97,6 @@ if (!is_dir($src)) {
 }
 if (is_dir($dest)) {
   die("Erreur le répertoire $dest existe\n");
-}
-if (!mkdir($dest)) {
-  die("Erreur de création du répertoire $dest\n");
 }
 
 if ($error = cloneDir($src, $dest, $verbose ? ' ':''))

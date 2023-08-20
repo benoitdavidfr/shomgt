@@ -9,18 +9,18 @@ doc: |
  
   La classe MapArchiveStore permet surtout de supporter des méthodes qui lisent et modifient les fichiers.
  
-  Chgt de logique le 7/8/2023, lors d'un clonage utilisation de liens hards.
-  Cela permet d'éviter les boucles infinies ou les liens invalides lorsque l'on déplace le stockage.
+  Le 20/8/2023, utilisation pour le clonage de la fonction générique cloneDir()
 
   Ce script propose 4 fonctions:
    1) vérifier la conformité des liens de current
    2) si un lien de current est absolu alors le transformer en lien relatif
-   3) cloner un MapArchiveStorage avec dans archives des liens durs pour les md.json et les 7z du storage d'origine
-   4) comparer 2 MapArchiveStorage
+   3) dans l'env de préProdData et si shomgeotiffpp n'existe pas alors le créer par clonage de shomgeotiff
+   4) comparer shomgeotiffpp et shomgeotiff
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/login.inc.php';
+require_once __DIR__.'/clone.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -42,7 +42,7 @@ function rmdirRecursive(string $path): void {
 
 // Répertoire contenant 2 sous-répertoires archives et current
 class MapArchiveStore {
-  const TEST = 0; // 1 <=> exécution en mode test sur un objet test
+  //const PF_PATH_TEST = __DIR__.'/maparchivestore-testpp'; // si définie alors exécution en mode test sur l'objet défini
   const DEBUG = 0; // 1 <=> affichage de messages de debug 
   protected ?string $path=null; // le chemin du répertoire
   
@@ -108,8 +108,9 @@ class MapArchiveStore {
     return $errors;
   }
   
+  // REMPLACE par l'utilisation de la founction cloneDir() plus générique
   // clone $this dans le chemin $clonePath avec des liens durs pour les md.json et les 7z des archives
-  function clone(string $clonePath): ?self {
+  /*function clone(string $clonePath): ?self {
     if (is_dir($clonePath)) {
       echo "Erreur $clonePath existe déjà<br>\n";
       return null;
@@ -160,7 +161,7 @@ class MapArchiveStore {
       }
     }
     return new MapArchiveStore($clonePath);
-  }
+  }*/
 
   private static function extension(string $filename): string {
     if (substr($filename, -3)=='.7z')
@@ -219,6 +220,10 @@ class MapArchiveStore {
   /** @return array<string, array<string, mixed>> */
   function diff(self $pfb): array {
     //echo "{$this->path}->diff($pfb->path)<br>\n";
+    if (!is_dir($pfb->path)) {
+      echo "Erreur, le répertoire $pfb->path n'existe pas<br>\n";
+      return [];
+    }
     $labelA = basename($this->path);
     $labelB = basename($pfb->path);
     $diffs = [
@@ -370,7 +375,11 @@ class MapArchiveStore {
         return;
       }
       case 'clone': { // clone un MapArchiveStore avec des liens pour les md.json et les 7z
-        $this->clone("{$this->path}-clone");
+        //$this->clone("{$this->path}-clone");
+        if ($error = cloneDir($_GET['pf'], $_GET['dest']))
+          echo "$error<br>\n";
+        else
+          echo "Clonage de $_GET[pf] en $_GET[dest] ok<br>\n";
         break;
       }
       case 'diff': {
@@ -382,20 +391,26 @@ class MapArchiveStore {
   }
 };
 
+
 if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier est inclus
 
-if (MapArchiveStore::TEST) { // @phpstan-ignore-line // TEST 
-  $PF_PATH = __DIR__.'/maparchivestore-test';
+
+if (defined('MapArchiveStore::PF_PATH_TEST')) { // @phpstan-ignore-line // TEST 
+  $PF_PATH = MapArchiveStore::PF_PATH_TEST;
 }
 elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
   die("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie\n");
 }
 $bname = basename($PF_PATH);
 
-if (substr($PF_PATH, -2)=='pp')
+if (substr($PF_PATH, -2)=='pp') {
   $PF_PATH2 = substr($PF_PATH, 0, -2);
-else
+  $env = 'ppData'; // je suis dans l'env. de préProd data
+}
+else {
   $PF_PATH2 = $PF_PATH.'pp';
+  $env = 'prodData'; // je suis dans l'env. de Prod data
+}
 $bname2 = basename($PF_PATH2);
 
 echo "<!DOCTYPE html><html><head><title>mapArchiveStorage $bname@$_SERVER[HTTP_HOST]</title></head><body>\n";
@@ -410,9 +425,11 @@ if (isset($_GET['pf'])) {
 
 echo "<h3>Menu</h3><ul>\n";
 echo "<li><a href='?action=wrongCurLinks&pf=$PF_PATH'>vérifie les liens dans current dans '$bname'</a></li>\n";
-echo "<li><a href='?action=delete&pf=$PF_PATH-clone'>supprime '$bname-clone'</a></li>\n";
-echo "<li><a href='?action=clone&pf=$PF_PATH'>clone '$bname' avec des liens pour les md.json et les 7z</a></li>\n";
-echo "<li><a href='?action=diff&pf=$PF_PATH&pfb=$PF_PATH2'>compare '$bname' avec '$bname2'</a></li>\n";
-echo "<li><a href='?action=none'>aucune action</a></li>\n";
+//echo "<li><a href='?action=delete&pf=$PF_PATH-clone'>supprime '$bname-clone'</a></li>\n";
+if (($env == 'ppData') && !is_dir($PF_PATH))
+  echo "<li><a href='?action=clone&dest=$PF_PATH&amp;pf=$PF_PATH2'>crée '$bname' par clonage de '$bname2'</a></li>\n";
+if (is_dir($PF_PATH) && is_dir($PF_PATH2))
+  echo "<li><a href='?action=diff&pf=$PF_PATH&pfb=$PF_PATH2'>compare '$bname' avec '$bname2'</a></li>\n";
+//echo "<li><a href='?action=none'>aucune action</a></li>\n";
 echo "<li><a href='index.php'>retourne au menu du BO</a></li>\n";
 echo "</ul>\n";

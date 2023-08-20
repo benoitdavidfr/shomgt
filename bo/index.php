@@ -9,8 +9,9 @@ require_once __DIR__.'/user.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+$VERSION = '4.3';
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
-$HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT</h2>\n";
+$HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT $VERSION</h2>\n";
 
 //echo "<pre>cookie="; print_r($_COOKIE); echo "</pre>\n";
 
@@ -30,7 +31,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     }
     $role = userRole($login);
     $roleDisplay = ($role <> 'normal') ? "/role=$role" : '';
-    echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT ($login$roleDisplay)</h2>\n";
+    echo "$HTML_HEAD<h2>Interface Back Office (BO) de ShomGT $VERSION ($login$roleDisplay)</h2>\n";
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
     if ($role == 'restricted') die();

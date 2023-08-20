@@ -29,6 +29,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  20/8/2023:
+    - modif. logique du menu maparchiveStore et utilisation de la fonction générique de clonage
   19/8/2023:
     - ajout dans sgserver la possibilité de s'y connecter depuis la même machine sans autre authentification
     - mise en prod à 17:00
@@ -43,7 +45,7 @@ journal:
         - qu'il faudrait corriger en modifiant les MD ISO des cartes concernées
     - correction des MD ISO des cartes concernées
     - ajout blacklist des referer
-    - dév. nouvel outil de clonage
+    - dév. nouvelle fonction de clonage plus générique que celle de MapArchiveStore
   17/8/2023:
     - modif. spec. carte spéciale, interdiction fichier {mapNum}/{mapNum}.(tif|pdf)
     - modif. version carte spéciale n'ayant pas de fichier MD ISO
@@ -433,20 +435,17 @@ bugs:
         - "edition: 'Publication 1995'"
     - corrigé le 18/8/2023 - il s'agit des CORRECTIONS apportées dans gan.inc.php
 miseEnProd:
-  cmdes: |
+  cmdesMiseEnProdDev: |
     # cmdes pour mettre en prod sgpp à la place de shomgt sur Alwaysdata
     cd ~/prod/geoapi
-    mv shomgt/vendor shomgt-stable/
-    cd sgpp
-    rm vendor # qui est un lien symbolique vers shomgt/vendor
-    ln -s ../shomgt-stable/vendor vendor
-    cd ..
     mv shomgt shomgt-back
     mv sgpp shomgt
+    mkdir sgpp
     
   idéesDAmélioration:
     - garder stable shomgt/tile.php, shomgt/wms.php qui sont des renvois vers les vrais services
     - si le vrai fichier n'existe faire une erreur propre
+    - PB, ca complique la mise en prod, garder les choses simples.
   archive:
     principes:
       - préparer le déplacement de shomgeotiff
@@ -579,6 +578,7 @@ contraintesV3:
 
 accèsSgServerSsAuth:
   description: |
+    Possibilité 4 mise en prod le 19/8/2023
     Lorsque sgupdt appelle sgserver sur la même machine, je pourrais me passer de transmettre un mot de passe.
     Cela améliorerait la sécurité car je pourrais considérer que sgserver n'est utilisé que depuis une IP blanche
     ou depuis la même machine et je pourrais interdire une utilisation avec authentification.
@@ -597,21 +597,12 @@ accèsSgServerSsAuth:
         Pour cela je crée un fichier lock dans sgupdt.
         Je peux ajouter à ce lock un secret que sgupdt envoie par GET à sgserver
         Quand sgserver recoit ce secret il lit le fichier lock et vérifie que le secret est partagé
-    - title: 
+    - title: tester si l'adresse IP du client est l'adresse IP que le serveur détermine comme adresse d'appel de la machine
       description: |
         Sur sgserver, l'adresse du client est particulière, c'est l'adresse d'un client sur la même machine !
         Je peux sur sgserver déterminer de facon sûre l'adresse d'un tel client
         et si l'adresse du client est la même alors c'est que le client est sur la même machine !
         L'avantage de cette solution est qu'elle évite un couplage entre sgupt et sgserver.
-        
-
-délaiEntre2MajGan:
-  - au moins 24h et au moins un jeudi 18h
-  - calculer le jeudi précédent maintenant
-    - for ($d=1; $d<8; $d++)
-      - tester si now()-$d days est un jeudi
-        - si oui alors retourne la date de de jeudi
-  - tester si la précédente date est ou non avant ce jeudi 18h
 pointCartesSpéciales:
   7330(ok):
     title: Action de l'Etat en Mer en Zone Maritime Atlantique
