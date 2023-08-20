@@ -32,7 +32,8 @@ journal:
   20/8/2023:
     - modif. logique du menu maparchiveStore et utilisation de la fonction générique de clonage
     - modif clonedatamaps en utilisant la fonction générique de clonage
-    - création d'une branche mapCatInBase
+    - création d'une branche mapCatInBase et passage sur cette branche
+    - écriture chargement MapCat en base
   19/8/2023:
     - ajout dans sgserver la possibilité de s'y connecter depuis la même machine sans autre authentification
     - mise en prod à 17:00
@@ -1356,107 +1357,7 @@ géoréférencement:
 miseEnBase:
   description: mise en base de certaines informations pour la V4
   user: -> user.php?action=showUserTableSchema
-  mapcat:
-    description: |
-      catalogue des cartes avec un n-uplet par carte et par mise à jour
-    attributs:
-      id:
-        type: int
-        keyOrNull: not null auto_increment primary key
-        comment: id du n-uplet incrémenté pour permettre des versions sucessives par carte
-      mapnum:
-        type: string
-        description: numéro de carte sur 4 chiffres précédé de 'FR'
-      title:
-        type: string
-        description: titre de la carte sans le numéro en tête
-      kind:
-        type: string
-        description: "'current'|'obsolete'"
-      delete:
-        type: date ou null
-        description: date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas
-      content:
-        type: JSON
-        description: enregistrement conforme au schéma JSON
-      bbox:
-        type: polygon
-        description: boite engobante de la carte
-      update:
-        type: datetime
-        comment: date de mise à jour dans la table
-      user:
-        type: string
-        comment: utilisateur ayant réalisé la mise à jour, null pour une versions système
-  user: |
-    'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
-            ." - le champ 'comment' précisant la table concernée,\n"
-            ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
-            ."   - la clé définissant le nom SQL de la colonne,\n"
-            ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
-            ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
-            ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
-            ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
-            ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
-            ."     - pour clé la valeur de l'énumération et\n"
-            ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
-    'comment' => "table des utilisateurs",
-    'columns' => [
-      'email' => [
-        'type'=> 'varchar(256)',
-        'keyOrNull'=> 'primary key',
-        'comment'=> "adresse email",
-      ],
-      'epasswd'=> [
-        'type'=> 'longtext',
-        'comment'=> "mot de passe encrypté, null à la créatin d'un compte temporaire non valide",
-      ],
-      'newepasswd'=> [
-        'type'=> 'longtext',
-        'comment'=> "nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe",
-      ],
-      'role'=> [
-        'type'=> 'enum',
-        'enum'=> [
-          'normal' => "utilisateur normal ayant le droit de consulter les cartes, d'en ajouter et d'en supprimer",
-          'admin' => "administrateur ayant en plus de l'utilisateur normal des droits supplémentaires,\n"
-                    ."notamment le droit de changer le rôle des utilisateurs",
-          'restricted' => "utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter, ni d'en supprimer",
-          'banned' => "utilisateur banni n'ayant aucun droit, et n'ayant pas le droit de réactiver son compte",
-          'suspended' => "utilisateur suspendu en l'absence de confirmation pendant un délai d'un an,\n"
-                    ."il n'a plus aucun droit jusqu'à ce qu'il réactive son compte.\n"
-                    ."Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n"
-                    ."soit en exécutant le processus de création de compte",
-          'closed' => "utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n"
-                    ."en exécutant à nouveau le processus de création de compte",
-          'temp' => "utilisateur en cours de création dont la validité n'a pas été vérifiée,\n"
-                    ."et n'ayant aucun droit en attendant sa validation par mail",
-          'system' => "utilisateur utilisé en interne à ShomGT",
-        ],
-        'comment'=> "rôle de l'utilisateur",
-      ],
-      'secret'=> [
-        'type'=> 'varchar(256)',
-        'comment'=> "secret envoyé par email et attendu en retour, null ssi le secret a été utilisé",
-      ],
-      'createdt'=> [
-        'type'=> 'datetime',
-        'keyOrNull'=> 'not null',
-        'comment'=> "date et heure de création initiale du compte",
-      ],
-      'sent'=> [
-        'type'=> 'datetime',
-        'comment'=> "date et heure d'envoi du dernier mail de validation, null ssi le lien du mail a été activé",
-      ],
-      'valid'=> [
-        'type'=> 'datetime',
-        'comment'=> "date et heure de dernière validation, null ssi compte non validé",
-      ],
-      'comment'=> [
-        'type'=> 'longtext',
-        'comment'=> "commentaire",
-      ],
-    ],
+  mapcat: -> mapcat.php
 
 bo:
   title: créer un BO pour les utilisateurs authentifiés

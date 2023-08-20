@@ -70,6 +70,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     Login::logout($HTML_HEAD, $login);
   }
   case 'clonedata': { // clone 
+    echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     switch($_SERVER['HTTP_HOST'] ?? null) {
       case 'localhost': {
         echo "mode dev<br>\n";
@@ -99,6 +100,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     die("<a href='index.php'>Retour au menu</a>\n");
   }
   case 'getenv': {
+    echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";
     echo "<pre>getenv()="; print_r(getenv()); echo "</pre>\n";
     die("<a href='index.php'>Retour au menu</a>\n");
   }

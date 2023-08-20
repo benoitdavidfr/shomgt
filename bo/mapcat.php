@@ -27,15 +27,16 @@ journal: |
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../dashboard/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE html>\n<html><head><title>bo/mapcat@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
-// retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
-/** @return array<string, array<string, mixed>> */
-function geoImagesOfMap(string $mapNum, MapCat $mapCat): array { 
+/** retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
+ * @return array<string, array<string, mixed>> */
+function geoImagesOfMap(string $mapNum, MapCat $mapCat): array {
   $spatials = $mapCat->spatial ? [$mapNum => $mapCat->asArray()] : [];
   //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
   foreach($mapCat->insetMaps ?? [] as $i => $insetMap) {
@@ -109,11 +110,103 @@ function cmpGans(): void { // comparaison MapCat / GAN
   echo "</table>\n";
 }
 
+// Classe portant en constante la définition SQL de la table user
+// ainsi qu'une méthode statique traduisant cette constate en requête SQL
+class SqlSchema {
+  // la structuration de la constante est définie dans son champ description
+  const MAPCAT_TABLE = [
+    'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
+            ." - le champ 'comment' précisant la table concernée,\n"
+            ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
+            ."   - la clé définissant le nom SQL de la colonne,\n"
+            ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
+            ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
+            ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
+            ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
+            ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
+            ."     - pour clé la valeur de l'énumération et\n"
+            ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
+    'comment' => "table du catalogue des cartes avec 1 n-uplet par carte et par mise à jour",
+    'columns'=> [
+      'id'=> [
+        'type'=> 'int',
+        'keyOrNull'=> 'not null auto_increment primary key',
+        'comment'=> "id du n-uplet incrémenté pour permettre des versions sucessives par carte",
+      ],
+      'mapnum'=> [
+        'type'=> 'char(6)',
+        'keyOrNull'=> 'not null',
+        'comment'=> "numéro de carte sur 4 chiffres précédé de 'FR'",
+      ],
+      'title'=> [
+        'type'=> 'varchar(256)',
+        'keyOrNull'=> 'not null',
+        'comment'=> "titre de la carte sans le numéro en tête",
+      ],
+      'kind'=> [
+        'type'=> 'enum',
+        'keyOrNull'=> 'not null',
+        'enum'=> [
+          'current' => "carte courante",
+          'obsolete' => "carte obsolete",
+        ],
+        'comment'=> "carte courante ou obsolète",
+      ],
+      'obsoletedt'=> [
+        'type'=> 'datetime',
+        'comment'=> "date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas",
+      ],
+      'content'=> [
+        'type'=> 'JSON',
+        'keyOrNull'=> 'not null',
+        'comment'=> "enregistrement conforme au schéma JSON",
+      ],
+      /*'bbox'=> [
+        'type'=> 'POLYGON',
+        'keyOrNull'=> 'not null',
+        'comment'=> "boite engobante de la carte en WGS84",
+      ],*/
+      'updatedt'=> [
+        'type'=> 'datetime',
+        'keyOrNull'=> 'not null',
+        'comment'=> "date de création de l'enregistrement dans la table",
+      ],
+      'user'=> [
+        'type'=> 'varchar(256)',
+        'comment'=> "utilisateur ayant réalisé la mise à jour, null pour une versions système",
+      ],
+    ],
+  ]; // Définition du schéma de la table mapcat
+
+  // fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
+  /** @param array<string, mixed> $schema */
+  static function sql(string $tableName, array $schema): string {
+    $cols = [];
+    foreach ($schema['columns'] ?? [] as $cname => $col) {
+      $cols[] = "  $cname "
+        .match($col['type'] ?? null) {
+          'enum' => "enum('".implode("','", array_keys($col['enum']))."') ",
+          default => "$col[type] ",
+          null => die("<b>Erreur, la colonne '$cname' doit comporter un champ 'type'</b>."),
+      }
+      .($col['keyOrNull'] ?? '')
+      .(isset($col['comment']) ? " comment \"$col[comment]\"" : '');
+    }
+    return ("create table $tableName (\n"
+      .implode(",\n", $cols)."\n)"
+      .(isset($schema['comment']) ? " comment \"$schema[comment]\"\n" : ''));
+  }
+};
+
+
+
 switch($_GET['action'] ?? null) {
   case null: {
     echo "<h2>Gestion du catalogue MapCat</h2><h3>Menu</h3><ul>\n";
     echo "<li><a href='?action=check'>Vérifie les contraintes sur MapCat</a></li>\n";
-    echo "<li><a href='?action=cmpGan'>confrontation des données de localisation de MapCat avec celles du GAN</a></li>\n";
+    echo "<li><a href='?action=cmpGan'>Confronte les données de localisation de MapCat avec celles du GAN</a></li>\n";
+    echo "<li><a href='?action=createTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
+    echo "<li><a href='?action=showMapCat'>Affiche le catalogue</a></li>\n";
     die();
   }
   case 'check': {
@@ -189,6 +282,39 @@ switch($_GET['action'] ?? null) {
     GanStatic::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
     //echo '<pre>gans='; print_r(Gan::$gans);
     cmpGans();
+    break;
+  }
+  case 'createTable': {
+    $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
+      or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+    MySql::open($LOG_MYSQL_URI);
+    MySql::query('drop table if exists mapcat');
+    $query = SqlSchema::sql('mapcat', SqlSchema::MAPCAT_TABLE);
+    //echo "<pre>query=$query</pre>\n";
+    MySql::query($query);
+
+    //MySql::query('delete from mapcat');
+    foreach (MapCat::mapNums() as $mapNum) {
+      echo "mapNum = $mapNum<br>\n";
+      $mapCat = MapCat::get($mapNum);
+      $title = MySql::$mysqli->real_escape_string($mapCat->title);
+      $content = MySql::$mysqli->real_escape_string(json_encode($mapCat->asArray()));
+      $obsoletedt = $mapCat->obsoleteDate ? "'$mapCat->obsoleteDate'" : 'null';
+      $query = "insert into mapcat(mapnum, title, kind, obsoletedt, content, updatedt) "
+        ."values('$mapNum', '$title', '$mapCat->kind', $obsoletedt, '$content', now())";
+      //echo "<pre>query=$query</pre>\n";
+      MySql::query($query);
+    }
+    break;
+  }
+  case 'showMapCat': {
+    $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
+      or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+    MySql::open($LOG_MYSQL_URI);
+    foreach (MySql::query("select * from mapcat") as $mapcat) {
+      $mapcat['content'] = json_decode($mapcat['content'], true);
+      echo "<pre>",YamlDump([$mapcat], 5),"</pre>\n";
+    }
     break;
   }
 }
