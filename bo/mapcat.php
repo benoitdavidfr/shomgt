@@ -143,7 +143,7 @@ class SqlSchema {
         'type'=> 'varchar(256)',
         'keyOrNull'=> 'not null',
         'comment'=> "titre de la carte sans le numéro en tête",
-      ],*/
+      ],  // pas nécessaire peut être lu dans jdoc */
       /*'kind'=> [
         'type'=> 'enum',
         'keyOrNull'=> 'not null',
@@ -152,11 +152,11 @@ class SqlSchema {
           'obsolete' => "carte obsolete",
         ],
         'comment'=> "carte courante ou obsolète",
-      ],*/
+      ], pas nécessaire, peut être déduit de la valeur du champ obsoleteDate de jdoc*/
       /*'obsoletedt'=> [
         'type'=> 'datetime',
         'comment'=> "date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas",
-      ],*/
+      ], pas nécessaire, peut être lu dans jdoc*/
       'jdoc'=> [
         'type'=> 'JSON',
         'keyOrNull'=> 'not null',
@@ -166,7 +166,7 @@ class SqlSchema {
         'type'=> 'POLYGON',
         'keyOrNull'=> 'not null',
         'comment'=> "boite engobante de la carte en WGS84",
-      ],*/
+      ], voir le besoin */
       'updatedt'=> [
         'type'=> 'datetime',
         'keyOrNull'=> 'not null',
@@ -211,8 +211,9 @@ switch ($action = $_GET['action'] ?? null) {
     echo "<li><a href='?action=check'>Vérifie les contraintes sur MapCat</a></li>\n";
     echo "<li><a href='?action=cmpGan'>Confronte les données de localisation de MapCat avec celles du GAN</a></li>\n";
     echo "<li><a href='?action=createTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
-    echo "<li><a href='?action=showMapCat'>Affiche le catalogue</a></li>\n";
+    echo "<li><a href='?action=showMapCat'>Affiche le catalogue à partir de la table en base</a></li>\n";
     echo "<li><a href='?action=updateMapCat'>Met à jour le catalogue</a></li>\n";
+    echo "<li><a href='index.php'>Retour au menu du BO</a></li>\n";
     die();
   }
   case 'check': {
@@ -355,12 +356,19 @@ switch ($action = $_GET['action'] ?? null) {
       $query = "insert into mapcat(mapnum, jdoc, updatedt, user) values('$_POST[mapnum]', '$jdoc', now(), '$user')";
       echo "<pre>query=$query</pre>\n";
       MySql::query($query);
+      echo "maj carte $_POST[mapnum] ok<br>\n";
+      switch ($_POST['return'] ?? $_GET['return'] ?? null) {
+        case 'mapcat': {
+          echo "<a href='mapcat.php'>Retour</a><br>\n";
+        }
+      }
     }
     else {
       $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
       $yaml = YamlDump(json_decode($mapcat['jdoc'], true), 2);
       //static function textArea(string $name, string $text, int $rows=3, int $cols=50, string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
-      echo Html::textArea('jdoc', $yaml, 16, 100, 'maj', ['mapnum'=>$mapcat['mapnum']], '', 'post');
+      echo Html::textArea('jdoc', $yaml, 16, 100, 'maj', ['mapnum'=>$mapcat['mapnum'], 'return'=>'mapcat'], '', 'post');
+      echo "<a href='mapcat.php'>Retour</a><br>\n";
     }
     break;
   }
