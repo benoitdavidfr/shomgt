@@ -25,6 +25,7 @@ journal: |
     - migration 
 */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
@@ -138,12 +139,12 @@ class SqlSchema {
         'keyOrNull'=> 'not null',
         'comment'=> "numéro de carte sur 4 chiffres précédé de 'FR'",
       ],
-      'title'=> [
+      /*'title'=> [
         'type'=> 'varchar(256)',
         'keyOrNull'=> 'not null',
         'comment'=> "titre de la carte sans le numéro en tête",
-      ],
-      'kind'=> [
+      ],*/
+      /*'kind'=> [
         'type'=> 'enum',
         'keyOrNull'=> 'not null',
         'enum'=> [
@@ -151,12 +152,12 @@ class SqlSchema {
           'obsolete' => "carte obsolete",
         ],
         'comment'=> "carte courante ou obsolète",
-      ],
-      'obsoletedt'=> [
+      ],*/
+      /*'obsoletedt'=> [
         'type'=> 'datetime',
         'comment'=> "date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas",
-      ],
-      'content'=> [
+      ],*/
+      'jdoc'=> [
         'type'=> 'JSON',
         'keyOrNull'=> 'not null',
         'comment'=> "enregistrement conforme au schéma JSON",
@@ -198,15 +199,20 @@ class SqlSchema {
   }
 };
 
+if (!($user = Login::loggedIn())) {
+  die("Ce sript nécessite d'être logué\n");
+}
 
+echo '<pre>',Yaml::dump(['$_POST'=> $_POST ?? [], '$_GET'=> $_GET ?? []]),"</pre>\n";
 
-switch($_GET['action'] ?? null) {
+switch ($action = $_GET['action'] ?? null) {
   case null: {
     echo "<h2>Gestion du catalogue MapCat</h2><h3>Menu</h3><ul>\n";
     echo "<li><a href='?action=check'>Vérifie les contraintes sur MapCat</a></li>\n";
     echo "<li><a href='?action=cmpGan'>Confronte les données de localisation de MapCat avec celles du GAN</a></li>\n";
     echo "<li><a href='?action=createTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
     echo "<li><a href='?action=showMapCat'>Affiche le catalogue</a></li>\n";
+    echo "<li><a href='?action=updateMapCat'>Met à jour le catalogue</a></li>\n";
     die();
   }
   case 'check': {
@@ -297,11 +303,13 @@ switch($_GET['action'] ?? null) {
     foreach (MapCat::mapNums() as $mapNum) {
       echo "mapNum = $mapNum<br>\n";
       $mapCat = MapCat::get($mapNum);
-      $title = MySql::$mysqli->real_escape_string($mapCat->title);
-      $content = MySql::$mysqli->real_escape_string(json_encode($mapCat->asArray()));
-      $obsoletedt = $mapCat->obsoleteDate ? "'$mapCat->obsoleteDate'" : 'null';
-      $query = "insert into mapcat(mapnum, title, kind, obsoletedt, content, updatedt) "
-        ."values('$mapNum', '$title', '$mapCat->kind', $obsoletedt, '$content', now())";
+      //$title = MySql::$mysqli->real_escape_string($mapCat->title);
+      $jdoc = $mapCat->asArray();
+      unset($jdoc['kind']);
+      $jdoc = MySql::$mysqli->real_escape_string(json_encode($jdoc));
+      //$obsoletedt = $mapCat->obsoleteDate ? "'$mapCat->obsoleteDate'" : 'null';
+      $query = "insert into mapcat(mapnum, jdoc, updatedt) "
+        ."values('$mapNum', '$jdoc', now())";
       //echo "<pre>query=$query</pre>\n";
       MySql::query($query);
     }
@@ -311,10 +319,53 @@ switch($_GET['action'] ?? null) {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     MySql::open($LOG_MYSQL_URI);
-    foreach (MySql::query("select * from mapcat") as $mapcat) {
-      $mapcat['content'] = json_decode($mapcat['content'], true);
-      echo "<pre>",YamlDump([$mapcat], 5),"</pre>\n";
+    $mapCat = [];
+    foreach (MySql::query("select * from mapcat order by id") as $tuple) {
+      $tuple['jdoc'] = json_decode($tuple['jdoc'], true);
+      $mapCat[$tuple['mapnum']] = $tuple;
     }
+    echo "<pre>\n";
+    foreach ($mapCat as $mapNum => $mapCatEntry) {
+      echo YamlDump([$mapCatEntry], 5);
+    }
+    echo "</pre>\n";
+    break;
+  }
+  case 'updateMapCat': {
+    $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
+      or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+    MySql::open($LOG_MYSQL_URI);
+    $mapCat = [];
+    foreach (MySql::query('select id, mapnum, jdoc->"$.title" title from mapcat order by id') as $tuple) {
+      $mapCat[$tuple['mapnum']] = ['id'=> $tuple['id'], 'title'=> "$tuple[mapnum] - ".substr($tuple['title'], 1, -1)];
+    }
+    ksort($mapCat);
+    foreach ($mapCat as $tuple) {
+      echo "<a href='?action=updateMapCatId&amp;id=$tuple[id]'>$tuple[title]</a><br>\n";
+    }
+    break;
+  }
+  case 'updateMapCatId': {
+    $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
+      or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+    MySql::open($LOG_MYSQL_URI);
+    if (isset($_POST['jdoc'])) {
+      echo "maj<br>\n";
+      $jdoc = MySql::$mysqli->real_escape_string(json_encode(Yaml::parse($_POST['jdoc'])));
+      $query = "insert into mapcat(mapnum, jdoc, updatedt, user) values('$_POST[mapnum]', '$jdoc', now(), '$user')";
+      echo "<pre>query=$query</pre>\n";
+      MySql::query($query);
+    }
+    else {
+      $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
+      $yaml = YamlDump(json_decode($mapcat['jdoc'], true), 2);
+      //static function textArea(string $name, string $text, int $rows=3, int $cols=50, string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
+      echo Html::textArea('jdoc', $yaml, 16, 100, 'maj', ['mapnum'=>$mapcat['mapnum']], '', 'post');
+    }
+    break;
+  }
+  default: {
+    echo "action '$action' inconnue<br>\n";
     break;
   }
 }
