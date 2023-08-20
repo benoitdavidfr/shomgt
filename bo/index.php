@@ -6,6 +6,7 @@ title: shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 5-13/8/2023
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/user.php';
+require_once __DIR__.'/clone.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -54,7 +55,8 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='mapcat.php'>Gérer le catalogue</a></li>\n";
     echo "<li><a href='accesslog.php'>Consulter les logs d'accès</a></li>\n";
     echo "<li><a href='maparchivestore.php'>Gèrer le stockage du portefeuille (liens, clone, ..)</a></li>\n";
-    echo "<li><a href='clonedatamaps.php'>Créer dans sgpp/data/maps un clone de shomgt/data/maps</a></li>\n";
+    if (!is_dir(__DIR__.'/../data'))
+      echo "<li><a href='?action=clonedata'>Créer ../data par clonage de ../../shomgt/data</a></li>\n";
     echo "<li><a href='?action=getenv'>Afficher les variables d'environnement</a></li>\n";
     //echo "<li><a href='?action=upgrade1'>Modification des versions des cartes spéciales - 3/8/2023</a></li>\n";
     echo "</ul><h3>Fonctions de test</h3><ul>\n";
@@ -66,6 +68,35 @@ switch ($action = ($_GET['action'] ?? null)) {
   }
   case 'logout': {
     Login::logout($HTML_HEAD, $login);
+  }
+  case 'clonedata': { // clone 
+    switch($_SERVER['HTTP_HOST'] ?? null) {
+      case 'localhost': {
+        echo "mode dev<br>\n";
+        $dest = __DIR__.'/../data-clone';
+        $src = __DIR__.'/../data';
+        break;
+      }
+      case 'sgpp.geoapi.fr': {
+        $dest = __DIR__.'/../data'; // le data de sgpp
+        $src = __DIR__.'/../../shomgt/data'; // le data de shomgt
+        break;
+      }
+      default: {
+        die("Erreur, HTTP_HOST = $_SERVER[HTTP_HOST]");
+      }
+    }
+    if (is_dir($dest)) {
+      die("Erreur le répertoire $dest existe déjà\n");
+    }
+    if (!is_dir($src)) {
+      die("Erreur le répertoire $src n'existe pas\n");
+    }
+    if ($error = cloneDir($src, $dest))
+      echo "$error<br>\n";
+    else
+      echo "Clonage de $src dans $dest OK<br>\n";
+    die("<a href='index.php'>Retour au menu</a>\n");
   }
   case 'getenv': {
     echo "<pre>getenv()="; print_r(getenv()); echo "</pre>\n";
