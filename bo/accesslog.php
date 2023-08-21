@@ -95,12 +95,12 @@ class SqlDef {
 class GJGeom {
   // extrait le bbox d'une requête WMS et le transforme en Polygone GeoJSON
   // retourne [] si le BBOX n'est pas détecté dans la requête
-  static function wmsRequest2GJGeom(string $request_uri): array {
+  static function wmsRequest2GBox(string $request_uri): ?GBox {
 
     // détermination du bbox
     $bboxPattern = '!BBOX=(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)&!i';
     if (!preg_match($bboxPattern, $request_uri, $matches)) {
-      return [];
+      return null;
     }
     //echo "<pre>request_uri=$request_uri</pre>\n";
     $ebox = new EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
@@ -136,22 +136,16 @@ class GJGeom {
       'EPSG:3395','EPSG%3A3395' => 'WorldMercator',
       default => die("CRS $crs non pris en compte dans GJGeom::bbox2GJGeom()"),
     };
-    return [
-      'type'=> 'Polygon',
-      'coordinates'=> $ebox->geo($proj)->polygon(),
-    ];
+    return $ebox->geo($proj);
   }
   
   // tarnsforme une requête sur une tuile en géométrie GeoJSON 
-  static function tileRequest2GJGeom(string $request_uri): array {
+  static function tileRequest2GBox(string $request_uri): ?GBox {
     if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
-      return [];
+      return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";
     $ebox = Zoom::tileEBox($matches[1], $matches[2], $matches[3]); // $ebox en coord. WebMercator
-    return [
-      'type'=> 'Polygon',
-      'coordinates'=> $ebox->geo('WebMercator')->polygon(),
-    ];
+    return $ebox->geo('WebMercator');
   }
 
   static function test(): void {
@@ -169,6 +163,46 @@ class GJGeom {
   }
 };
 //GJGeom::test();
+
+class HeatData {
+  static function fromWmsRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
+    if (!($gbox = GJGeom::wmsRequest2GBox($request_uri)))
+      return [];
+    //echo "request_uri=$request_uri<br>\n";
+    //echo "gbox=$gbox\n";
+    $center = $gbox->center();
+    //echo "center=",implode(',', $center),"\n";
+    $area = $gbox->proj('WebMercator')->area();
+    //echo "area=$area\n";
+    return [$center[1], $center[0], 1e8/$area];
+  }
+  
+  static function fromTileRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
+    if (!($gbox = GJGeom::tileRequest2GBox($request_uri)))
+      return [];
+    //echo "request_uri=$request_uri<br>\n"; die();
+    $center = $gbox->center();
+    $area = $gbox->proj('WebMercator')->area();
+    return [$center[1], $center[0], 1e8/$area/6];
+  }
+  
+  static function test(): void {
+    if (0) {
+      $request_uri = '/shomgt/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
+        .'&BBOX=-1158270.138820303138%2C5982585.920146320947%2C1158270.138820303138%2C6833190.553342481144'
+        .'&CRS=EPSG%3A3857&WIDTH=1920&HEIGHT=705&LAYERS=gtpyr&STYLES='
+        .'&FORMAT=image%2Fpng&DPI=90&MAP_RESOLUTION=90&FORMAT_OPTIONS=dpi%3A90&TRANSPARENT=TRUE';
+      echo Yaml::dump(['HeatData::fromWmsRequest'=> self::fromWmsRequest($request_uri)]);
+    }
+    elseif (1) {
+      $request_uri = '/shomgt/tile.php/gtpyr/18/132703/90142.png';
+      echo Yaml::dump(['HeatData::fromTileRequest'=> self::fromTileRequest($request_uri)]);
+    }
+    die("Fin ligne ".__LINE__);
+  }
+};
+//HeatData::test();
+
 
 function durationInHours(string $duration): int {
   return match (substr($_GET['duration'], -1)) {
@@ -239,6 +273,7 @@ switch ($action = $_GET['action'] ?? null) {
     echo "$HTML_HEAD<h3>recentAccess depuis $_GET[duration]</h3>\n";
     $durationInHours = durationInHours($_GET['duration']);
     echo "<a href='?action=mapOfLogs&amp;duration=$_GET[duration]'>Carte des accès</a><br>\n";
+    echo "<a href='?action=heatMap&amp;duration=$_GET[duration]'>Carte de chaleur</a><br>\n";
     $sql = queryForRecentAccess($durationInHours, 'agg');
     echo "<table border=1>\n";
     $sum = 0;
@@ -277,48 +312,13 @@ switch ($action = $_GET['action'] ?? null) {
     die();
   }
   case 'mapOfLogs': { // code HTML+JS de la carte Leaflet
-    break;
-  }
-  case 'geojson': { // fournir le GeoJSON des logs
-    header('Content-type: application/json; charset="utf-8"');
-    echo '{"type":"FeatureCollection","features":[',"\n";
-    $durationInHours = durationInHours($_GET['duration']);
-    $sql = queryForRecentAccess($durationInHours, $_GET['ip'] ?? null);
-    $first = true;
-    foreach (MySql::query($sql) as $tuple) {
-      //print_r($tuple); echo "<br>\n";
-      //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
-      if (($geometry = GJGeom::wmsRequest2GJGeom($tuple['request_uri']))
-       || ($geometry = GJGeom::tileRequest2GJGeom($tuple['request_uri']))) {
-        $feature = [
-          'type'=> 'Feature',
-          'properties'=> [
-            'logdt'=> $tuple['logdt'],
-            'ip'=> $tuple['ip'],
-            'labelip'=> $tuple['label'] ?? $tuple['labelip'],
-            'login'=> $tuple['login'],
-            'user'=> $tuple['user'],
-          ],
-          'geometry'=> $geometry,
-        ];
-        if (!$first)
-          echo ",\n"; // séparateur entre 2 features
-        $first = false;
-        echo '  ',json_encode($feature);
-      }
-    }
-    die("\n]}\n");
-  }
-  default: die("Action $action inconnue");
-}
+    $geojsonParams = "&duration=$_GET[duration]".(isset($_GET['ip']) ? "&ip=$_GET[ip]" : '');
 
-$geojsonParams = "&duration=$_GET[duration]".(isset($_GET['ip']) ? "&ip=$_GET[ip]" : '');
-
-$request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
-  : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
-$dirname = dirname(dirname($_SERVER['SCRIPT_NAME']));
-$shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
-?>
+    $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
+      : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
+    $dirname = dirname(dirname($_SERVER['SCRIPT_NAME']));
+    $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
+    $mapSrcWithPolygons = <<<EOT
 <html>
   <head>
     <title>logs</title>
@@ -352,8 +352,8 @@ $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$di
   <body>
     <div id="map" style="height: 100%; width: 100%"></div>
     <script>
-      var shomgturl = '<?php echo $shomgturl;?>';
-      var geojsonParams = '<?php echo $geojsonParams;?>';
+      var shomgturl = '$shomgturl';
+      var geojsonParams = '$geojsonParams';
       var attrshom = "&copy; <a href='http://data.shom.fr' target='_blank'>Shom</a>";
       // initalize leaflet map
       var map = L.map('map').setView([46.5,3], 6);
@@ -375,7 +375,7 @@ $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$di
         )
       };
       map.addLayer(baseLayers["OSM"]);
-      
+  
       var overlays = {
         "Logs" : new L.GeoJSON.AJAX(shomgturl+'bo/accesslog.php?action=geojson'+geojsonParams, {
           style: { fillColor: 'LightBlue', color: 'DarkBlue', weight: 1, fillOpacity: 0.1}, minZoom: 0, maxZoom: 18
@@ -388,8 +388,146 @@ $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$di
         })
       };
       map.addLayer(overlays["Logs"]);
+  
+      L.control.layers(baseLayers, overlays).addTo(map);
+    </script>
+  </body>
+</html>
+
+EOT;
+    die($mapSrcWithPolygons);
+  }
+  case 'geojson': { // fournir le GeoJSON des logs
+    header('Content-type: application/json; charset="utf-8"');
+    echo '{"type":"FeatureCollection","features":[',"\n";
+    $durationInHours = durationInHours($_GET['duration']);
+    $sql = queryForRecentAccess($durationInHours, $_GET['ip'] ?? null);
+    $first = true;
+    foreach (MySql::query($sql) as $tuple) {
+      //print_r($tuple); echo "<br>\n";
+      //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
+      if (($gbox = GJGeom::wmsRequest2GBox($tuple['request_uri']))
+       || ($gbox = GJGeom::tileRequest2GBox($tuple['request_uri']))) {
+        $feature = [
+          'type'=> 'Feature',
+          'properties'=> [
+            'logdt'=> $tuple['logdt'],
+            'ip'=> $tuple['ip'],
+            'labelip'=> $tuple['label'] ?? $tuple['labelip'],
+            'login'=> $tuple['login'],
+            'user'=> $tuple['user'],
+          ],
+          'geometry'=> [
+            'type'=> 'Polygon',
+            'coordinates'=> $gbox->polygon(),
+          ],
+        ];
+        if (!$first)
+          echo ",\n"; // séparateur entre 2 features
+        $first = false;
+        echo '  ',json_encode($feature);
+      }
+    }
+    die("\n]}\n");
+  }
+  case 'heatMap': {
+    $durationInHours = durationInHours($_GET['duration']);
+    $data = [
+      [50.5, 30.5, 0.2], // lat, lng, intensity
+      [50.6, 30.4, 0.5]
+    ];
+    $data = []; // [[lat, lng, intensity]]
+    $sql = queryForRecentAccess($durationInHours, $_GET['ip'] ?? null);
+    foreach (MySql::query($sql) as $tuple) {
+      //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
+      if (($heatData = HeatData::fromWmsRequest($tuple['request_uri']))
+       || ($heatData = HeatData::fromTileRequest($tuple['request_uri'])))
+        $data[] = $heatData;
+    }
+
+    $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
+      : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
+    $dirname = dirname(dirname($_SERVER['SCRIPT_NAME']));
+    $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
+    
+    $data = json_encode($data);
+    $heatMap = <<<EOT
+<html>
+  <head>
+    <title>logs</title>
+    <meta charset="UTF-8">
+    <!-- meta nécessaire pour le mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css"/>
+    <!-- styles nécessaires pour le mobile -->
+    <link rel='stylesheet' href='../shomgt/leaflet/llmap.css'>
+    <script src="https://unpkg.com/leaflet@1.9/dist/leaflet.js"></script>
+    <!-- plug-in d'appel des GeoJSON en AJAX -->
+    <script src='../shomgt/leaflet/leaflet-ajax.js'></script>
+    <!-- plug-in HeatMap -->
+    <script src="js/leaflet-heat.js"></script>
+    <!-- chgt du curseur -->
+    <style>
+    .leaflet-grab {
+       cursor: auto;
+    }
+    .leaflet-dragging .leaflet-grab{
+       cursor: move;
+    }
+    #map {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    </style> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="map" style="height: 100%; width: 100%"></div>
+    <script>
+      var shomgturl = '$shomgturl';
+      var attrshom = "&copy; <a href='http://data.shom.fr' target='_blank'>Shom</a>";
+      // initalize leaflet map
+      var map = L.map('map').setView([46.5,3], 6);
+      var baseLayers = {
+        // PYR
+        "Pyramide GéoTIFF" : new L.TileLayer(
+          shomgturl+'shomgt/tile.php/gtpyr/{z}/{x}/{y}.png',
+          { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
+        ),
+        // OSM
+        "OSM" : new L.TileLayer(
+          'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+          {"attribution":"&copy; les contributeurs d’<a href='http://osm.org/copyright'>OpenStreetMap</a>"}
+        ),
+        // Fond blanc
+        "Fond blanc" : new L.TileLayer(
+          'https://visu.gexplor.fr/utilityserver.php/whiteimg/{z}/{x}/{y}.jpg',
+          { format: 'image/jpeg', minZoom: 0, maxZoom: 21, detectRetina: false}
+        )
+      };
+      map.addLayer(baseLayers["OSM"]);
+  
+      var overlays = {
+        "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/delmar.geojson', {
+          style: { color: 'SteelBlue'}, minZoom: 0, maxZoom: 18
+        }),
+        "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/frzee.geojson', {
+          style: { color: 'blue'}, minZoom: 0, maxZoom: 18
+        })
+      };
+      
+      var heat = L.heatLayer($data, {radius: 25}).addTo(map);
       
       L.control.layers(baseLayers, overlays).addTo(map);
     </script>
   </body>
 </html>
+
+EOT;
+    die($heatMap);
+  }
+  default: die("Action $action inconnue");
+}

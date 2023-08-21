@@ -30,7 +30,9 @@ abstract: |
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
   21/8/2023:
-    - création d'une branche mapOfLogs et passage sur cette branche pour commencer à développer cette fonctionnalité 
+    - création d'une branche mapOfLogs et passage sur cette branche pour commencer à développer cette fonctionnalité
+    - la carte des bbox est vite saturée
+    - essai intéressant de carte de chaleur
   20/8/2023:
     - modif. logique du menu maparchiveStore et utilisation de la fonction générique de clonage
     - modif clonedatamaps en utilisant la fonction générique de clonage
