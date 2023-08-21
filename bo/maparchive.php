@@ -325,7 +325,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
   
-  function showAsHtml(?string $button=null): void { // affiche le contenu de l'archive en Html 
+  function showAsHtml(?string $return=null): void { // affiche le contenu de l'archive en Html 
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
       throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
@@ -333,21 +333,29 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
     echo "<table border=1>";
     
-    // affichage de l'entrée du catalogue
-    echo "<tr><td>catalogue</td><td><pre>",
-        YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),
-        "</td></tr>\n";
-    
-    // miniature
-    echo "<tr><td>miniature</td>";
-    if ($this->thumbnail) {
-      $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
-      //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
-      $thumbnailUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/$this->thumbnail";
-      echo "<td><a href='$thumbnailUrl'><img src='$thumbnailUrl'></a></td></tr>\n";
+    { // affichage de l'entrée du catalogue
+      echo "<tr><td>catalogue</td>";
+      if ($this->mapCat) {
+        echo "<td><pre>",
+             YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),
+             "</td></tr>\n";
+      }
+      else {
+        echo "<td><pre>Carte absente du catalogue</td></tr>\n";
+      }
     }
-    else {
-      echo "<td>absente</td></tr>\n";
+    
+    { // miniature
+      echo "<tr><td>miniature</td>";
+      if ($this->thumbnail) {
+        $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
+        //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
+        $thumbnailUrl = "$shomgeotiffUrl$pathOf7zFromPfPath/$this->thumbnail";
+        echo "<td><a href='$thumbnailUrl'><img src='$thumbnailUrl'></a></td></tr>\n";
+      }
+      else {
+        echo "<td>absente</td></tr>\n";
+      }
     }
     
     { // caractéristiques de l'image principale
@@ -383,8 +391,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       echo "<td><pre><a href='$action'>",Yaml::dump($mappingInsetsWithMapCat),"</a></pre></td></tr>\n";
     }
     
-    // fichiers hors spec
-    if ($this->suppls) {
+    if ($this->suppls) { // fichiers hors spec
       echo "<tr><td>fichiers hors spec</td><td><ul>\n";
       foreach (array_keys($this->suppls) as $suppl)
         echo "<li>$suppl</li>\n";
@@ -398,13 +405,13 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     
     // Affichage de la carte Leaflet, du contenu de l'archive et de l'appel du dump
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=viewtiff'>",
-      "Affichage d'une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
+      "Afficher une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=show7zContents'>",
-      "Afficher le contenu de l'archive 7z</a></td></tr>\n";
-    echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
-      "Dump de l'objet Php</a></td></tr>\n";
+      "Afficher la liste des fichiers contenus dans l'archive 7z</a></td></tr>\n";
+    /*echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=dumpPhp'>",
+      "Dump de l'objet Php</a></td></tr>\n";*/
     
-    if ($button == 'validateMap') { // ajout d'un bouton de validation si l'option correspondante est indiquée
+    if ($return == 'addmaps') { // ajout éventuel d'un bouton de validation
       $validateButton = Html::button(
           submitValue: "Valider la carte et la déposer",
           hiddenValues: [
@@ -415,7 +422,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
           action: 'addmaps.php',
           method: 'get'
       );
-      if (!isset($invalid['errors'])) { // cas normal, pas d'erreur => proposition de validation
+      if (!isset($invalid['errors'])) { // cas normal, pas d'erreur => bouton de validation
         echo "<tr><td colspan=2><center>$validateButton</center></td></tr>\n";
       }
       elseif (self::FORCE_VALIDATION) { // @phpstan-ignore-line // cas où il y a une erreur mais la validation peut être forcée
@@ -425,14 +432,14 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       }
       else { // cas d'erreur normale, la validation n'est pas possible
         echo "<tr><td colspan=2><center>",
-             "<b>La carte ne peut pas être validée car elle n'est pas valide</b>",
+             "<b>La carte ne peut pas être validée car l'archive comporte des erreurs</b>",
              "</center></td></tr>\n";
       }
     }
     
     echo "</table>\n";
     
-    if ($button == 'validateMap') {
+    if ($return == 'addmaps') { // Retour éventuel vers addmaps sans validation
       echo "<a href='addmaps.php'>Retour au menu de dépôt de cartes</p>\n";
     }
   }

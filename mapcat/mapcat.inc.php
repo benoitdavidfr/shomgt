@@ -347,7 +347,8 @@ class MapCatInBase extends MapCat {
     MySql::open($LOG_MYSQL_URI);
     $mapcats = MySql::getTuples("select mapnum, kind, jdoc from mapcat where mapnum='FR$mapNum' order by id desc");
     //echo "<pre>mapcats="; print_r($mapcats); echo "</pre>\n";
-    $mapcat = $mapcats[0]; // le plus récent est en 0 étant donné le tri sur id desc
+    if (!($mapcat = $mapcats[0] ?? null)) // le plus récent est en 0 étant donné le tri sur id desc
+      return null;
     $jdoc = json_decode($mapcat['jdoc'], true);
     unset($jdoc['kind']);
     return new MapCatInBase($jdoc, $mapcat['kind']);

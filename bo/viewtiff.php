@@ -12,6 +12,7 @@
  * paramètres GET
  *  - path - chemin du répertoire contenant des 7z de cartes
  *  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
+ *  - return - permet de définir un éventuel mécanisme de retour
  *
  * Faire des tests de viewtiff avec:
  *  - 2 cartes normales standard sans cartouches
@@ -199,12 +200,12 @@ if (!isset($_GET['map'])) { // affichage du contenu de la livraison ou du réper
   die();
 }
 
-if (!is_file("$PF_PATH$_GET[path]/$_GET[map].7z"))
+if (!is_file("$PF_PATH$_GET[path]/$_GET[map].7z")) {
   die("Erreur le fichier $PF_PATH$_GET[path]/$_GET[map].7z n'existe pas\n");
+}
 
 /** transforme un GBox en une structure latLngBounds@Leaflet
- * @return TLPos
- */
+ * @return TLPos */
 function latLngBounds(GBox $gbox): array {
   return [[$gbox->south(), $gbox->west()], [$gbox->north(), $gbox->east()]];
 }
@@ -214,7 +215,7 @@ switch ($_GET['action'] ?? null) {
     echo HTML_HEAD;
     $mapNum = substr($_GET['map'], 0, 4);
     $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
-    $map->showAsHtml($_GET['button'] ?? null);
+    $map->showAsHtml($_GET['return'] ?? null);
     die();
   }
   case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
