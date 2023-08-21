@@ -29,9 +29,12 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  21/8/2023:
+    - création d'une branche mapOfLogs et passage sur cette branche pour commencer à développer cette fonctionnalité 
   20/8/2023:
     - modif. logique du menu maparchiveStore et utilisation de la fonction générique de clonage
     - modif clonedatamaps en utilisant la fonction générique de clonage
+    - création d'une branche mapCatInBase et passage sur cette branche pour commencer à développer cette fonctionnalité
   19/8/2023:
     - ajout dans sgserver la possibilité de s'y connecter depuis la même machine sans autre authentification
     - mise en prod à 17:00
