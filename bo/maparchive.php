@@ -13,7 +13,8 @@ doc: |
    - soit en CLI pour tester un ensemble de cartes.
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../mapcat/mapcat.inc.php';
+#require_once __DIR__.'/../mapcat/mapcat.inc.php';
+require_once __DIR__.'/mapcat.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';
@@ -126,7 +127,8 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   protected array $insets=[]; // les cartouches [{name}=> Image]
   /** @var array<string, int> */
   protected array $suppls=[]; // liste de noms de fichiers hors specs sous la forme [{name} => 1]
-  
+  protected ?MapCat $mapCat; // enregistrement correspondant à la carte dans MapCat
+
   /* $pathOf7z est le chemin du fichier .7z
   ** $mapNum est le numéro de la carte sur 4 chiffres
   */
@@ -136,7 +138,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       throw new Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $this->pathOf7z = $pathOf7z;
     $this->mapNum = $mapNum;
-    $mapCat = MapCat::get($mapNum);
+    $this->mapCat = MapCat::get($mapNum);
     $archive = new My7zArchive($pathOf7z);
     $this->main = new Image;
     foreach ($archive as $entry) {
@@ -211,10 +213,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
    * @return array<string, string>
    */
   function mappingInsetsWithMapCat(bool $show=false): array {
-    $mapCat = MapCat::get($this->mapNum);
     $mappingGeoTiffWithMapCat = [];
     foreach ($this->insets as $name => $inset) {
-      if ($inset->tif() && $mapCat->insetMaps) {
+      if ($inset->tif() && $this->mapCat->insetMaps) {
         $mappingGeoTiffWithMapCat[$name] = $inset->bestInsetMapOfCat($mapCat->insetMaps, $show);
       }
     }
@@ -229,8 +230,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
    * @return array<string, array<int, string>>
    */
   function invalid(): array {
-    $mapCat = MapCat::get($this->mapNum);
-    if (!$mapCat)
+    if (!$this->mapCat)
       return ['errors'=> ["La carte n'existe pas dans le catalogue MapCat"]];
     $errors = [];
     $warnings = [];
@@ -247,20 +247,22 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     // Partie Géoréférencement de la partie principale 
     switch ($this->main->georef()) {
       case 'ok': {
-        if (!$mapCat->scaleDenominator || !$mapCat->spatial)
+        if (!$this->mapCat->scaleDenominator || !$this->mapCat->spatial)
           $errors[] = "Le fichier GéoTiff principal est géoréférencé alors que le catalogue indique qu'il ne l'est pas";
+        elseif (!$this->georefBox()->includes($this->mapCat->spatial()))
+          $errors[] = "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive";
         break;
       }
       case null: { // Fichier principal non géoréférencé, 2 possibilités
         // carte normale composée uniquement de cartouches => ok ssi c'est indiqué comme telle dans le catalogue
         if ($this->type == 'normal') {
-          if ($mapCat->scaleDenominator || $mapCat->spatial)
+          if ($this->mapCat->scaleDenominator || $mapCat->spatial)
             $errors[] = "Le fichier GéoTiff principal n'est pas géoréférencé alors que le catalogue indique qu'il l'est";
           else
             $warnings[] = "Le fichier GéoTiff principal n'est pas géoréférencé ce qui est conforme au catalogue";
         }
         else { // carte spéciale géoréférencée par l'ajout de borders dans le catalogue => ok ssi borders présentes
-          if (!$mapCat->borders)
+          if (!$this->mapCat->borders)
             $errors[] = "Le fichier GéoTiff principal de la carte spéciale n'est pas géoréférencé"
               ." et le catalogue ne fournit pas l'information nécessaire à son géoréférencement";
           else
@@ -329,12 +331,11 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
     
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
-    $mapCat = MapCat::get($this->mapNum);
     echo "<table border=1>";
     
     // affichage de l'entrée du catalogue
     echo "<tr><td>catalogue</td><td><pre>",
-        YamlDump($mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),
+        YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),
         "</td></tr>\n";
     
     // miniature

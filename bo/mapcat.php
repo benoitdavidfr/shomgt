@@ -33,6 +33,10 @@ require_once __DIR__.'/../dashboard/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+
+if (!callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
+
+
 echo "<!DOCTYPE html>\n<html><head><title>bo/mapcat@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 /** retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
@@ -144,7 +148,7 @@ class SqlSchema {
         'keyOrNull'=> 'not null',
         'comment'=> "titre de la carte sans le numéro en tête",
       ],  // pas nécessaire peut être lu dans jdoc */
-      /*'kind'=> [
+      'kind'=> [
         'type'=> 'enum',
         'keyOrNull'=> 'not null',
         'enum'=> [
@@ -152,7 +156,7 @@ class SqlSchema {
           'obsolete' => "carte obsolete",
         ],
         'comment'=> "carte courante ou obsolète",
-      ], pas nécessaire, peut être déduit de la valeur du champ obsoleteDate de jdoc*/
+      ],
       /*'obsoletedt'=> [
         'type'=> 'datetime',
         'comment'=> "date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas",
@@ -170,7 +174,7 @@ class SqlSchema {
       'updatedt'=> [
         'type'=> 'datetime',
         'keyOrNull'=> 'not null',
-        'comment'=> "date de création de l'enregistrement dans la table",
+        'comment'=> "date de création/mise à jour de l'enregistrement dans la table",
       ],
       'user'=> [
         'type'=> 'varchar(256)',
@@ -200,7 +204,7 @@ class SqlSchema {
 };
 
 if (!($user = Login::loggedIn())) {
-  die("Ce sript nécessite d'être logué\n");
+  die("Erreur, ce sript nécessite d'être logué\n");
 }
 
 echo '<pre>',Yaml::dump(['$_POST'=> $_POST ?? [], '$_GET'=> $_GET ?? []]),"</pre>\n";
@@ -208,12 +212,12 @@ echo '<pre>',Yaml::dump(['$_POST'=> $_POST ?? [], '$_GET'=> $_GET ?? []]),"</pre
 switch ($action = $_GET['action'] ?? null) {
   case null: {
     echo "<h2>Gestion du catalogue MapCat</h2><h3>Menu</h3><ul>\n";
+    echo "<li><a href='index.php'>Retour au menu du BO</a></li>\n";
     echo "<li><a href='?action=check'>Vérifie les contraintes sur MapCat</a></li>\n";
     echo "<li><a href='?action=cmpGan'>Confronte les données de localisation de MapCat avec celles du GAN</a></li>\n";
     echo "<li><a href='?action=createTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
     echo "<li><a href='?action=showMapCat'>Affiche le catalogue à partir de la table en base</a></li>\n";
     echo "<li><a href='?action=updateMapCat'>Met à jour le catalogue</a></li>\n";
-    echo "<li><a href='index.php'>Retour au menu du BO</a></li>\n";
     die();
   }
   case 'check': {
@@ -301,16 +305,17 @@ switch ($action = $_GET['action'] ?? null) {
     MySql::query($query);
 
     //MySql::query('delete from mapcat');
-    foreach (MapCat::mapNums() as $mapNum) {
+    foreach (MapCatFromFile::mapNums() as $mapNum) {
       echo "mapNum = $mapNum<br>\n";
-      $mapCat = MapCat::get($mapNum);
+      $mapCat = MapCatFromFile::get($mapNum);
       //$title = MySql::$mysqli->real_escape_string($mapCat->title);
       $jdoc = $mapCat->asArray();
+      $kind = $jdoc['kind'];
       unset($jdoc['kind']);
       $jdoc = MySql::$mysqli->real_escape_string(json_encode($jdoc));
       //$obsoletedt = $mapCat->obsoleteDate ? "'$mapCat->obsoleteDate'" : 'null';
-      $query = "insert into mapcat(mapnum, jdoc, updatedt) "
-        ."values('$mapNum', '$jdoc', now())";
+      $query = "insert into mapcat(mapnum, kind, jdoc, updatedt) "
+        ."values('$mapNum', '$kind', '$jdoc', now())";
       //echo "<pre>query=$query</pre>\n";
       MySql::query($query);
     }
