@@ -6,6 +6,8 @@ functions:
 doc: |
   fonction d'enregistrement d'un log
 journal: |
+  22/8/2023:
+    ajout champ host dans la table log
   2/7/2022:
     changement de logique
     le log n'est plus paramétré dans config('mysqlParams') mais au travers de la var. d'env. SHOMGT3_LOG_MYSQL_URI
@@ -30,6 +32,7 @@ function log_table_schema(): string {
       referer longtext comment 'referer appelant',
       login varchar(255) comment 'login appelant éventuel issu du cookie',
       user varchar(255) comment 'login appelant éventuel issu de l\'authentification HTTP',
+      host varchar(255) comment 'host appelé',
       request_uri longtext comment 'requete appelée sans le host',
       access char(1) comment 'acces accordé T ou refusé F'
     )";
@@ -64,9 +67,9 @@ function write_log(bool $access): bool {
   //  $phpserver = json_encode($_SERVER);
   $referer = isset($_SERVER['HTTP_REFERER']) ? "'$_SERVER[HTTP_REFERER]'" : 'NULL';
   // Creation d'une enregistrement dans le log
-  $sql = "insert into log(logdt, ip, referer, login, user, request_uri, access) "
-        ."values (now(), '$_SERVER[REMOTE_ADDR]', $referer, $login, $user, '$_SERVER[REQUEST_URI]',"
-                ." '".($access?'T':'F')."')";
+  $sql = "insert into log(logdt, ip, referer, login, user, host, request_uri, access) "
+        ."values (now(), '$_SERVER[REMOTE_ADDR]', $referer, $login, $user,"
+          ." '$_SERVER[HTTP_HOST]', '$_SERVER[REQUEST_URI]', '".($access?'T':'F')."')";
   //  echo "<pre>",$sql,"</pre>\n";
   try {
     MySql::query($sql);

@@ -1,7 +1,7 @@
 <?php
 /*PhpDoc:
 name: accesslog.php
-title: accesslog.php - analyse des logs d'accès
+title: accesslog.php - analyse et affiche les logs d'accès y compris sous la forme de carte Leaflet
 doc: |
   Utilise https://github.com/Leaflet/Leaflet.heat pour les cartes de chaleur
 */
@@ -13,15 +13,14 @@ require_once __DIR__.'/../lib/zoom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-if ($_SERVER['HTTP_HOST'] == 'localhost')
-  $LOG_MYSQL_URI = 'mysql://bdavid:dsbune44@mysql-bdavid.alwaysdata.net/bdavid_shomgt';
-else
-  $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI') or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+// Sur localhost, j'utilise les logs de shomgt@geoapi.fr
+$ve = ($_SERVER['HTTP_HOST'] == 'localhost') ? 'SHOMGT3_GEOAPI_MYSQL_URI' : 'SHOMGT3_LOG_MYSQL_URI';
+$LOG_MYSQL_URI = getenv($ve) or die("Erreur, variable d'environnement '$ve' non définie");
 MySql::open($LOG_MYSQL_URI);
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>bo/accesslog@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
-class SqlDef {
+class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
   // la structuration de la constante est définie dans son champ description
   const IPADDRESS_SCHEMA = [
     'comment' => "table des adresses IP",
@@ -38,7 +37,8 @@ class SqlDef {
     ],
   ]; // Définition du schéma de la table ipaddress
   const IPADDRESS_CONTENT = [
-    ['86.244.235.216', "La bergerie"],
+    ['88.166.143.190', "BDavid"],
+    ['86.244.235.216', "BDavid"],
     ['127.0.0.1', "Accès local"],
     ['172.20.0.8', "Docker"],
     ['185.31.40.12', "Alwaysdata IPv4 (bdavid)"],
@@ -95,9 +95,8 @@ class SqlDef {
 
 // classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête
 class Request2GBox {
-  // extrait le bbox d'une requête WMS et le transforme en Polygone GeoJSON
-  // retourne [] si le BBOX n'est pas détecté dans la requête
-  static function wmsRequest2GBox(string $request_uri): ?GBox {
+  // extrait le bbox d'une requête WMS et le retourne comme GBox ou null si le BBOX n'est pas détecté dans la requête
+  static function wms(string $request_uri): ?GBox {
     // détermination du bbox
     $bboxPattern = '!BBOX=(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)&!i';
     if (!preg_match($bboxPattern, $request_uri, $matches)) {
@@ -140,8 +139,8 @@ class Request2GBox {
     return $ebox->geo($proj);
   }
   
-  // transforme une requête sur une tuile en GBox
-  static function tileRequest2GBox(string $request_uri): ?GBox {
+  // transforme en GBox une requête sur une tuile ou null si l'URI ne correspond pas à une requête sur une tuile
+  static function tile(string $request_uri): ?GBox {
     if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";
@@ -165,10 +164,10 @@ class Request2GBox {
 };
 //GJGeom::test();
 
-// construit un enregistrement pour carte de chaleur
+// construit un enregistrement pour carte de chaleur à partir de l'URI de la requête
 class HeatData {
   static function fromWmsRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
-    if (!($gbox = Request2GBox::wmsRequest2GBox($request_uri)))
+    if (!($gbox = Request2GBox::wms($request_uri)))
       return [];
     //echo "request_uri=$request_uri<br>\n";
     //echo "gbox=$gbox\n";
@@ -180,7 +179,7 @@ class HeatData {
   }
   
   static function fromTileRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
-    if (!($gbox = Request2GBox::tileRequest2GBox($request_uri)))
+    if (!($gbox = Request2GBox::tile($request_uri)))
       return [];
     //echo "request_uri=$request_uri<br>\n"; die();
     $center = $gbox->center();
@@ -206,7 +205,7 @@ class HeatData {
 //HeatData::test();
 
 
-function durationInHours(string $duration): int {
+function durationInHours(string $duration): int { // prend en compte l'unité pour traduire la durée en heures
   return match (substr($_GET['duration'], -1)) {
     'h' => intval(substr($_GET['duration'], 0, -1)),
     'd' => intval(substr($_GET['duration'], 0, -1))*24,
@@ -215,6 +214,7 @@ function durationInHours(string $duration): int {
   };
 }
 
+// retourne le texte de la requête SQL adhoc
 function queryForRecentAccess(string $durationInHours, ?string $param=null): string {
   switch ($param) {
     case 'agg': { // req agrégée sur les IP
@@ -315,7 +315,7 @@ switch ($action = $_GET['action'] ?? null) {
     echo "</table>\n";
     die();
   }
-  case 'mapOfLogs': { // code HTML+JS de la carte Leaflet
+  case 'mapOfLogs': { // code HTML+JS de la carte Leaflet des bbox des requêtes utilisant l'entrée geojson ci-dessous
     $geojsonParams = "&duration=$_GET[duration]".(isset($_GET['ip']) ? "&ip=$_GET[ip]" : '');
 
     $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
@@ -410,8 +410,8 @@ EOT;
     foreach (MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
-      if (($gbox = Request2GBox::wmsRequest2GBox($tuple['request_uri']))
-       || ($gbox = Request2GBox::tileRequest2GBox($tuple['request_uri']))) {
+      if (($gbox = Request2GBox::wms($tuple['request_uri']))
+       || ($gbox = Request2GBox::tile($tuple['request_uri']))) {
         $feature = [
           'type'=> 'Feature',
           'properties'=> [
@@ -434,7 +434,7 @@ EOT;
     }
     die("\n]}\n");
   }
-  case 'heatMap': { // génère une carte de chaleur Leaflet
+  case 'heatMap': { // code HTM+JS de la carte de chaleur Leaflet
     $durationInHours = durationInHours($_GET['duration']);
     $data = [
       [50.5, 30.5, 0.2], // lat, lng, intensity
