@@ -1,7 +1,9 @@
 <?php
 /*PhpDoc:
 name: accesslog.php
-title: accesslog.php - affichage des logs d'accès
+title: accesslog.php - analyse des logs d'accès
+doc: |
+  Utilise https://github.com/Leaflet/Leaflet.heat pour les cartes de chaleur
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
@@ -91,12 +93,11 @@ class SqlDef {
   }
 };
 
-// classe traduisant un URI correspondant à une requête WMS ou tile dans le polygone GeoJSON de la loc. de la requête
-class GJGeom {
+// classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête
+class Request2GBox {
   // extrait le bbox d'une requête WMS et le transforme en Polygone GeoJSON
   // retourne [] si le BBOX n'est pas détecté dans la requête
   static function wmsRequest2GBox(string $request_uri): ?GBox {
-
     // détermination du bbox
     $bboxPattern = '!BBOX=(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)&!i';
     if (!preg_match($bboxPattern, $request_uri, $matches)) {
@@ -139,7 +140,7 @@ class GJGeom {
     return $ebox->geo($proj);
   }
   
-  // tarnsforme une requête sur une tuile en géométrie GeoJSON 
+  // transforme une requête sur une tuile en GBox
   static function tileRequest2GBox(string $request_uri): ?GBox {
     if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
@@ -164,9 +165,10 @@ class GJGeom {
 };
 //GJGeom::test();
 
+// construit un enregistrement pour carte de chaleur
 class HeatData {
   static function fromWmsRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
-    if (!($gbox = GJGeom::wmsRequest2GBox($request_uri)))
+    if (!($gbox = Request2GBox::wmsRequest2GBox($request_uri)))
       return [];
     //echo "request_uri=$request_uri<br>\n";
     //echo "gbox=$gbox\n";
@@ -178,7 +180,7 @@ class HeatData {
   }
   
   static function fromTileRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
-    if (!($gbox = GJGeom::tileRequest2GBox($request_uri)))
+    if (!($gbox = Request2GBox::tileRequest2GBox($request_uri)))
       return [];
     //echo "request_uri=$request_uri<br>\n"; die();
     $center = $gbox->center();
@@ -272,7 +274,8 @@ switch ($action = $_GET['action'] ?? null) {
   case 'recentAccess': {
     echo "$HTML_HEAD<h3>recentAccess depuis $_GET[duration]</h3>\n";
     $durationInHours = durationInHours($_GET['duration']);
-    echo "<a href='?action=mapOfLogs&amp;duration=$_GET[duration]'>Carte des accès</a><br>\n";
+    echo "<a href='?action=mapOfLogs&amp;duration=$_GET[duration]'>Carte des accès</a>\n";
+    echo "(<a href='?action=geojson&amp;duration=$_GET[duration]'>geojson</a>)<br>\n";
     echo "<a href='?action=heatMap&amp;duration=$_GET[duration]'>Carte de chaleur</a><br>\n";
     $sql = queryForRecentAccess($durationInHours, 'agg');
     echo "<table border=1>\n";
@@ -298,6 +301,7 @@ switch ($action = $_GET['action'] ?? null) {
     $sql = queryForRecentAccess($durationInHours, $_GET['ip']);
     echo "<pre>sql=$sql</pre>\n";
     echo "<a href='?action=mapOfLogs&amp;duration=$_GET[duration]&ip=$_GET[ip]'>Carte des accès</a><br>\n";
+    echo "<a href='?action=heatMap&amp;duration=$_GET[duration]&ip=$_GET[ip]'>Carte de chaleur</a><br>\n";
     echo "<table border=1>\n";
     $first = true;
     foreach (MySql::query($sql) as $tuple) {
@@ -406,8 +410,8 @@ EOT;
     foreach (MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
-      if (($gbox = GJGeom::wmsRequest2GBox($tuple['request_uri']))
-       || ($gbox = GJGeom::tileRequest2GBox($tuple['request_uri']))) {
+      if (($gbox = Request2GBox::wmsRequest2GBox($tuple['request_uri']))
+       || ($gbox = Request2GBox::tileRequest2GBox($tuple['request_uri']))) {
         $feature = [
           'type'=> 'Feature',
           'properties'=> [
@@ -430,7 +434,7 @@ EOT;
     }
     die("\n]}\n");
   }
-  case 'heatMap': {
+  case 'heatMap': { // génère une carte de chaleur Leaflet
     $durationInHours = durationInHours($_GET['duration']);
     $data = [
       [50.5, 30.5, 0.2], // lat, lng, intensity
@@ -441,10 +445,14 @@ EOT;
     foreach (MySql::query($sql) as $tuple) {
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
       if (($heatData = HeatData::fromWmsRequest($tuple['request_uri']))
-       || ($heatData = HeatData::fromTileRequest($tuple['request_uri'])))
-        $data[] = $heatData;
+       || ($heatData = HeatData::fromTileRequest($tuple['request_uri']))) {
+         /*if (($heatData[0]==0) && ($heatData[1]==0))
+           echo "<pre>",Yaml::dump([$tuple['request_uri']=> $heatData]),"</pre>\n";*/
+         $data[] = $heatData;
+       }
     }
-
+    //die("Fin ligne ".__LINE__);
+    
     $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
       : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
     $dirname = dirname(dirname($_SERVER['SCRIPT_NAME']));
@@ -511,6 +519,7 @@ EOT;
       map.addLayer(baseLayers["OSM"]);
   
       var overlays = {
+        "HeatMap": new L.heatLayer($data, {radius: 25}),
         "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/delmar.geojson', {
           style: { color: 'SteelBlue'}, minZoom: 0, maxZoom: 18
         }),
@@ -518,8 +527,9 @@ EOT;
           style: { color: 'blue'}, minZoom: 0, maxZoom: 18
         })
       };
+      map.addLayer(overlays["HeatMap"]);
       
-      var heat = L.heatLayer($data, {radius: 25}).addTo(map);
+      //var heat = L.heatLayer($data, {radius: 25}).addTo(map);
       
       L.control.layers(baseLayers, overlays).addTo(map);
     </script>
