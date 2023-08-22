@@ -38,7 +38,7 @@ doc: |
 
 journal: |
   22/8/2023:
-    - déplace des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
+    - déplacement des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
   2/8/2022:
     - corrections suites à PhpStan level 6
   17/6/2022:
