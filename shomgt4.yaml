@@ -29,6 +29,10 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  22/8/2023:
+    - mise à jour et ajout d'un enregistrement MapCat dans addpmaps
+  21/8/2023:
+    - branche mapOfLogs
   20/8/2023:
     - modif. logique du menu maparchiveStore et utilisation de la fonction générique de clonage
     - modif clonedatamaps en utilisant la fonction générique de clonage
