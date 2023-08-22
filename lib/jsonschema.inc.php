@@ -244,13 +244,13 @@ class JsonSch {
   static function predef(string $path): string {
     //echo "predef(path=$path)<br>\n";
     if (!self::$predefs) {
-      if (($txt = @file_get_contents(__DIR__.'/predef.yaml')) === false)
-        throw new Exception("ouverture impossible du fichier predef.yaml");
+      if (($txt = @file_get_contents(__DIR__.'/jsonschpredef.yaml')) === false)
+        throw new Exception("ouverture impossible du fichier jsonschpredef.yaml");
       try {
         $yaml = Yaml::parse($txt, Yaml::PARSE_DATETIME);
       }
       catch (Exception $e) {
-        throw new Exception("Analyse Yaml du fichier predef.yaml incorrect: ".$e->getMessage());
+        throw new Exception("Analyse Yaml du fichier jsonschpredef.yaml incorrect: ".$e->getMessage());
       }
       foreach ($yaml['predefs'] as $id => $predef) {
         self::$predefs[$id] = $predef['localPath'];

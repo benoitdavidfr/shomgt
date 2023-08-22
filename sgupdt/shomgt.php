@@ -37,6 +37,8 @@ doc: |
   La classe ShomGt contient une représentation de shomgt.yaml qui se construit progressivement.
 
 journal: |
+  22/8/2023:
+    - déplace des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
   2/8/2022:
     - corrections suites à PhpStan level 6
   17/6/2022:
@@ -65,7 +67,7 @@ journal: |
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/schema/jsonschema.inc.php';
+require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../lib/geotiffs.inc.php';
 require_once __DIR__.'/../lib/mapcat.inc.php';
 
