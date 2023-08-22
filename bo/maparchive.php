@@ -334,15 +334,19 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     echo "<table border=1>";
     
     { // affichage de l'entrée du catalogue
-      echo "<tr><td>catalogue</td>";
+      echo "<tr><td >catalogue</td><td>";
       if ($this->mapCat) {
-        echo "<td><pre>",
-             YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),
-             "</td></tr>\n";
+        echo '<pre>',YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+        if ($return == 'addmaps')
+          echo "<a href='mapcat.php?action=updateMapCatId&mapnum=$_GET[map]&return=addmaps'>",
+                "Mettre à jour cette description</a>\n";
       }
       else {
-        echo "<td><pre>Carte absente du catalogue</td></tr>\n";
+        echo "Carte absente du catalogue</p>\n";
+        echo "<a href='mapcat.php?action=insertMapCat&mapnum=$_GET[map]&return=addmaps'>",
+              "Créer une description</a>\n";
       }
+      echo "</td></tr>\n";
     }
     
     { // miniature

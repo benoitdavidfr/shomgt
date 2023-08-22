@@ -29,6 +29,7 @@ require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
+require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../dashboard/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -117,9 +118,9 @@ function cmpGans(): void { // comparaison MapCat / GAN
 
 // Classe portant en constante la définition SQL de la table user
 // ainsi qu'une méthode statique traduisant cette constate en requête SQL
-class SqlSchema {
+class MapCatDef {
   // la structuration de la constante est définie dans son champ description
-  const MAPCAT_TABLE = [
+  const MAPCAT_TABLE_SCHEMA = [
     'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
             ." - le champ 'comment' précisant la table concernée,\n"
             ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
@@ -181,11 +182,11 @@ class SqlSchema {
         'comment'=> "utilisateur ayant réalisé la mise à jour, null pour une versions système",
       ],
     ],
-  ]; // Définition du schéma de la table mapcat
+  ]; // Définition du schéma SQL de la table mapcat
 
   // fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
   /** @param array<string, mixed> $schema */
-  static function sql(string $tableName, array $schema): string {
+  static function createTableSql(string $tableName, array $schema): string {
     $cols = [];
     foreach ($schema['columns'] ?? [] as $cname => $col) {
       $cols[] = "  $cname "
@@ -201,6 +202,28 @@ class SqlSchema {
       .implode(",\n", $cols)."\n)"
       .(isset($schema['comment']) ? " comment \"$schema[comment]\"\n" : ''));
   }
+
+  static function getMapSchema(): array { // construit le schéma d'une carte dans MapCat déduit du schéma de MapCat
+    $catSchema = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.schema.yaml');
+    return [
+      '$id'=> 'https://sgserver.geoapi.fr/index.php/cat/schema/map',
+      '$schema'=> $catSchema['$schema'],
+      'definitions' => $catSchema['definitions'],
+      '$ref'=> '#/definitions/map',
+    ];
+  }
+  
+  static function validatesAgainstSchema(string $yaml): array { // valide le doc. / schéma
+    $mapSchema = new JsonSchema(self::getMapSchema());
+    try {
+      $doc = Yaml::parse($yaml);
+    }
+    catch (Symfony\Component\Yaml\Exception\ParseException $e) {
+      return [$e->getMessage()];
+    }
+    $status = $mapSchema->check($doc);
+    return $status->errors();
+  }
 };
 
 if (!($user = Login::loggedIn())) {
@@ -209,7 +232,7 @@ if (!($user = Login::loggedIn())) {
 
 echo '<pre>',Yaml::dump(['$_POST'=> $_POST ?? [], '$_GET'=> $_GET ?? []]),"</pre>\n";
 
-switch ($action = $_GET['action'] ?? null) {
+switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case null: {
     echo "<h2>Gestion du catalogue MapCat</h2><h3>Menu</h3><ul>\n";
     echo "<li><a href='index.php'>Retour au menu du BO</a></li>\n";
@@ -220,7 +243,7 @@ switch ($action = $_GET['action'] ?? null) {
     echo "<li><a href='?action=updateMapCat'>Met à jour le catalogue</a></li>\n";
     die();
   }
-  case 'check': {
+  case 'check': { // Vérifie les contraintes sur MapCat
     $mapCat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
     
     { // Vérifie qu'aucun no de carte apparait dans plusieurs sections
@@ -289,18 +312,18 @@ switch ($action = $_GET['action'] ?? null) {
     }
     break;
   }
-  case 'cmpGan': {
+  case 'cmpGan': { // Confronte les données de localisation de MapCat avec celles du GAN
     GanStatic::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
     //echo '<pre>gans='; print_r(Gan::$gans);
     cmpGans();
     break;
   }
-  case 'createTable': {
+  case 'createTable': { // crée et peuple la table mapcat à partir du fichier mapcat.yaml
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     MySql::open($LOG_MYSQL_URI);
     MySql::query('drop table if exists mapcat');
-    $query = SqlSchema::sql('mapcat', SqlSchema::MAPCAT_TABLE);
+    $query = MapCatDef::createTableSql('mapcat', MapCatDef::MAPCAT_TABLE_SCHEMA);
     //echo "<pre>query=$query</pre>\n";
     MySql::query($query);
 
@@ -321,7 +344,7 @@ switch ($action = $_GET['action'] ?? null) {
     }
     break;
   }
-  case 'showMapCat': {
+  case 'showMapCat': { // affiche le contenu de la table mapcat
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     MySql::open($LOG_MYSQL_URI);
@@ -337,12 +360,13 @@ switch ($action = $_GET['action'] ?? null) {
     echo "</pre>\n";
     break;
   }
-  case 'updateMapCat': {
+  case 'updateMapCat': { // affiche les entrées de MapCat pour en sélectionner une pour mise à jour
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     MySql::open($LOG_MYSQL_URI);
     $mapCat = [];
-    foreach (MySql::query('select id, mapnum, jdoc->"$.title" title from mapcat order by id') as $tuple) {
+    $sql = 'select id, mapnum, jdoc->"$.title" title from mapcat where kind=\'current\' order by id';
+    foreach (MySql::query($sql) as $tuple) {
       $mapCat[$tuple['mapnum']] = ['id'=> $tuple['id'], 'title'=> "$tuple[mapnum] - ".substr($tuple['title'], 1, -1)];
     }
     ksort($mapCat);
@@ -351,31 +375,83 @@ switch ($action = $_GET['action'] ?? null) {
     }
     break;
   }
-  case 'updateMapCatId': {
+  case 'updateMapCatId': { // affiche le formulaire de mise à jour d'une entrée de mapcat et effectue la mise à jour en base
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     MySql::open($LOG_MYSQL_URI);
-    if (isset($_POST['jdoc'])) {
-      echo "maj<br>\n";
-      $jdoc = MySql::$mysqli->real_escape_string(json_encode(Yaml::parse($_POST['jdoc'])));
-      $query = "insert into mapcat(mapnum, jdoc, updatedt, user) values('$_POST[mapnum]', '$jdoc', now(), '$user')";
-      echo "<pre>query=$query</pre>\n";
-      MySql::query($query);
-      echo "maj carte $_POST[mapnum] ok<br>\n";
-      switch ($_POST['return'] ?? $_GET['return'] ?? null) {
-        case 'mapcat': {
-          echo "<a href='mapcat.php'>Retour</a><br>\n";
+    if (isset($_POST['yaml'])) { // Retour d'une saisie d'une description
+      $yaml = $_POST['yaml'];
+      if (!($errors = MapCatDef::validatesAgainstSchema($yaml))) { // description conforme, l'enregistrement est créé en base
+        $jdocRes = MySql::$mysqli->real_escape_string(json_encode(Yaml::parse($yaml)));
+        $query = "insert into mapcat(mapnum, kind, jdoc, updatedt, user) "
+                            ."values('$_POST[mapnum]', 'current', '$jdocRes', now(), '$user')";
+        echo "<pre>query=$query</pre>\n";
+        MySql::query($query);
+        echo "maj carte $_POST[mapnum] ok<br>\n";
+        switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
+          case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
+          case 'addmaps': { echo "<a href='addmaps.php'>Retour</a><br>\n"; break; }
+          default: die("valeur de return '$return' non prévue");
         }
+        break;
+      }
+      else { // description non conforme
+        echo "<b>Erreur, la description fournie n'est pas conforme au schéma JSON:</b>\n";
+        echo '<pre>',Yaml::dump($errors),"</pre>";
+        $mapcat = [
+          'mapnum'=> $_POST['mapnum'],
+          'yaml'=> $yaml,
+        ];
       }
     }
-    else {
-      $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
-      $yaml = YamlDump(json_decode($mapcat['jdoc'], true), 2);
-      //static function textArea(string $name, string $text, int $rows=3, int $cols=50, string $submitValue='submit', array $hiddenValues=[], string $action='', string $method='get'): string {
-      echo Html::textArea('jdoc', $yaml, 16, 100, 'maj', ['mapnum'=>$mapcat['mapnum'], 'return'=>'mapcat'], '', 'post');
-      echo "<a href='mapcat.php'>Retour</a><br>\n";
+    else { // Premier affichage du formulaire
+      if (isset($_GET['id']))
+        $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
+      elseif (isset($_GET['mapnum'])) {
+        $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where mapnum='FR$_GET[mapnum]' order by id desc")[0];
+        if (!$mapcat)
+          die("Erreur FR$_GET[mapnum] n'existe pas dans la table mapcat");
+      }
+      else
+        die("Appel de ".__FILE__."incorrect");
+      $mapcat['yaml'] = YamlDump(json_decode($mapcat['jdoc'], true), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+    }
+    // Fabrique le formulaire à partir de la variable $mapcat
+    echo "<b>Mise à jour de la description dans le catalogue MapCat de la carte $mapcat[mapnum]:</b></p>\n";
+    $hiddenValues = [
+      'action'=> 'updateMapCatId',
+      'mapnum'=> $mapcat['mapnum'],
+      'return'=> $_GET['return'] ?? 'mapcat'
+    ];
+    echo Html::textArea('yaml', $mapcat['yaml'], 16, 100, 'maj', $hiddenValues, '', 'post');
+    echo "</p><b>Le schéma JSON à respecter pour cette description est le suivant:</b><br>";
+    echo '<pre>',Yaml::dump(MapCatDef::getMapSchema(), 5, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+    switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
+      case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
+      case 'addmaps': { echo "<a href='addmaps.php'>Retour</a><br>\n"; break; }
+      default: die("valeur de return '$return' non prévue");
     }
     break;
+  }
+  case 'insertMapCat': {
+    echo "<b>Ajout de la description dans le catalogue MapCat de la carte $_GET[mapnum]:</b></p>\n";
+    $hiddenValues = [
+      'action'=> 'updateMapCatId',
+      'mapnum'=> "FR$_GET[mapnum]",
+      'return'=> $_GET['return'] ?? 'mapcat'
+    ];
+    echo Html::textArea('jdoc', '', 16, 100, 'ajout', $hiddenValues, '', 'post');
+    
+    echo "</p><b>Le schéma JSON à respecter pour cette description est le suivant:</b><br>";
+    echo '<pre>',Yaml::dump(MapCatDef::getMapSchema(), 5, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+    
+    switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
+      case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
+      case 'addmaps': { echo "<a href='addmaps.php'>Retour</a><br>\n"; break; }
+      default: die("valeur de return '$return' non prévue");
+    }
+    break;
+    
   }
   default: {
     echo "action '$action' inconnue<br>\n";
