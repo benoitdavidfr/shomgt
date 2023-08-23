@@ -194,6 +194,54 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/polygon'
+  insetMap:
+    type: object
+    additionalProperties: false
+    required: [title, scaleDenominator, spatial]
+    properties:
+      title:
+        description: titre du cartouche, issu du GAN
+        type: string
+      scaleDenominator:
+        description: dénominateur de l'échelle avec un . comme séparateur des milliers, issu du GAN
+        $ref: '#/definitions/scaleDenominator'
+      spatial:
+        description: boite englobante du cartouche, issu du GAN
+        $ref: '#/definitions/spatial'
+      noteCatalog:
+        description: commentaire associé au cartouche dans la gestion du catalogue
+        type: string
+      z-order:
+        description: z-order du cartouche, permettant de gérer les superpositions entre GéoTiffs de la même couche.
+        $ref: '#/definitions/z-order'
+      toDelete:
+        description: |
+          liste de zones à effacer dans le GéoTiff du cartouche,
+          permettant de gérer les superpositions entre GéoTiffs de couches différentes,
+          exprimées soit par une liste de polygones soit par une liste de boites.
+          Doit comporter le champ geotiffname identifiant le cartouche 
+        type: object
+        additionalProperties: false
+        required: [geotiffname]
+        properties:
+          geotiffname:
+            description: nom du fichier .tif du cartouche sans l'extension .tif
+            type: string
+          polygons:
+            description: zones à effacer définies comme polygones
+            type: array
+            items:
+              $ref: '#/definitions/polygon'
+          bboxes:
+            description: zones à effacer définies comme boites
+            type: array
+            items:
+              $ref: '#/definitions/bbox'
+      borders:
+        description: |
+          Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement
+          lorsque le GéoTiff ne l'est pas.
+        $ref: '#/definitions/borders'
   map:
     description: |
       Propriétés décrivant une carte.
@@ -299,53 +347,7 @@ definitions:
         type: array
         minItems: 1
         items:
-          type: object
-          additionalProperties: false
-          required: [title, scaleDenominator, spatial]
-          properties:
-            title:
-              description: titre du cartouche, issu du GAN
-              type: string
-            scaleDenominator:
-              description: dénominateur de l'échelle avec un . comme séparateur des milliers, issu du GAN
-              $ref: '#/definitions/scaleDenominator'
-            spatial:
-              description: boite englobante du cartouche, issu du GAN
-              $ref: '#/definitions/spatial'
-            noteCatalog:
-              description: commentaire associé au cartouche dans la gestion du catalogue
-              type: string
-            z-order:
-              description: z-order du cartouche, permettant de gérer les superpositions entre GéoTiffs de la même couche.
-              $ref: '#/definitions/z-order'
-            toDelete:
-              description: |
-                liste de zones à effacer dans le GéoTiff du cartouche,
-                permettant de gérer les superpositions entre GéoTiffs de couches différentes,
-                exprimées soit par une liste de polygones soit par une liste de boites.
-                Doit comporter le champ geotiffname identifiant le cartouche 
-              type: object
-              additionalProperties: false
-              required: [geotiffname]
-              properties:
-                geotiffname:
-                  description: nom du fichier .tif du cartouche sans l'extension .tif
-                  type: string
-                polygons:
-                  description: zones à effacer définies comme polygones
-                  type: array
-                  items:
-                    $ref: '#/definitions/polygon'
-                bboxes:
-                  description: zones à effacer définies comme boites
-                  type: array
-                  items:
-                    $ref: '#/definitions/bbox'
-            borders:
-              description: |
-                Définition de l'épaisseur du cadre du cartouche, permet de déterminer son géoréférencement
-                lorsque le GéoTiff ne l'est pas.
-              $ref: '#/definitions/borders'
+          $ref:  '#/definitions/insetMap'
 
 type: object
 required: [ title, $id, $schema, modified, maps ]

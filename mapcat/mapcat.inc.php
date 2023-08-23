@@ -5,6 +5,7 @@ title: mapcat/mapcat.inc.php - accès au catalogue MapCat et vérification des c
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../bo/lib.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -196,10 +197,17 @@ abstract class MapCat {
   /** @var TMapCatKind $kind */
   public readonly string $kind; // type de carte ('current' | 'obsolete' | 'uninteresting' | 'deleted')
   
+  /** Retourne la liste des numéros de carte (sans FR) en fonction de la liste des types
+   * @param list<TMapCatKind> $kindOfMap
+   * @return list<string>
+   */
   static function mapNums(array $kindOfMap=['current','obsolete']): array {
     return (self::SUBCLASS)::mapNums($kindOfMap);
   }
   
+  /** Retourne l'objet MapCat correspondant au numéro de carte (sans FR) ou null s'il n'existe pas
+   * @param list<TMapCatKind> $kindOfMap
+   */
   static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?self {
     return (self::SUBCLASS)::get($mapNum, $kindOfMap);
   }
@@ -342,6 +350,7 @@ class MapCatInBase extends MapCat {
   }
   
   static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?self {
+    //echo "appel de MapCatInBase::get($mapNum)<br>\n";
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     MySql::open($LOG_MYSQL_URI);

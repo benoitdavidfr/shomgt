@@ -35,9 +35,9 @@ title: dashboard/index.php - Tableau de bord de l'actualité des cartes - 25/6/2
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
+require_once __DIR__.'/../shomft/frzee.inc.php';
 require_once __DIR__.'/gan.inc.php';
 require_once __DIR__.'/portfolio.inc.php';
-require_once __DIR__.'/../lib/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -54,54 +54,6 @@ function addUndescoreForThousand(?int $scaleden): string {
     return addUndescoreForThousand(intval(floor($scaleden/1000)))
       .'_'.sprintf('%03d', $scaleden - 1000 * floor($scaleden/1000));
 }
-
-// liste des polygones de la ZEE chacun associé à une zoneid
-// permet d'indiquer pour un $mpol quel zoneid il intersecte
-class Zee {
-  protected string $id;
-  protected Polygon $polygon;
-  /** @var array<int, Zee> $all */
-  static array $all=[]; // contenu de la collection sous la forme [ Zee ]
-  
-  /** @return array<int, string> */
-  static function inters(MultiPolygon $mpol): array { // retourne la liste des zoneid des polygones intersectant la géométrie
-    if (!self::$all)
-      self::init();  
-    $result = [];
-    foreach (self::$all as $zee) {
-      if ($mpol->inters($zee->polygon))
-        $result[$zee->id] = 1;
-    }
-    ksort($result);
-    return array_keys($result);
-  }
-  
-  private static function init(): void { // initialise Zee
-    $FeatureCollection = json_decode(file_get_contents(__DIR__.'/../shomft/frzee.geojson'), true);
-    foreach ($FeatureCollection['features'] as $feature) {
-      switch ($type = $feature['geometry']['type']) {
-        case 'Polygon': {
-          self::$all[] = new self($feature['properties']['zoneid'], new Polygon($feature['geometry']['coordinates']));
-          break;
-        }
-        case 'MultiPolygon': {
-          foreach ($feature['geometry']['coordinates'] as $pol) {
-            self::$all[] = new self($feature['properties']['zoneid'], new Polygon($pol));
-          }
-          break;
-        }
-        default: {
-          throw new Exception("Dans frzee.geojson, geometry de type '$type' non prévue");
-        }
-      }
-    }
-  }
-  
-  private function __construct(string $id, Polygon $polygon) {
-    $this->id = $id;
-    $this->polygon = $polygon;
-  }
-};
 
 /**
  * MapFromWfs - liste des cartes définies dans le WFS 
@@ -183,7 +135,7 @@ class MapFromWfs {
 
 class Perempt { // croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption
   protected string $mapNum;
-  protected MapCat $mapCat;
+  protected ?MapCat $mapCat; // info de MapCat
   protected string $pfVersion; // info du portefeuille 
   protected ?string $pfDate; // info du portefeuille 
   protected string $ganVersion=''; // info du GAN 
@@ -215,15 +167,15 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     $this->degree = $this->degree();
   }
 
-  function title(): string { return $this->mapCat->title; }
+  function title(): string { return $this->mapCat->title ?? "<i>titre inconnu</i>"; }
   /** @return array<int, string> */
-  function mapsFrance(): array { return $this->mapCat->mapsFrance; }
+  function mapsFrance(): array { return $this->mapCat->mapsFrance ?? ['unkown']; }
     
   function degree(): float { // calcul du degré de péremption 
     if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undefined'))
       return -1;
-    if (!($mapCat = MapCat::get($this->mapNum))) {
-      die("Erreur la carte $this->mapNum n'est pas décrite dans mapcat.yaml");
+    if (!$this->mapCat) {
+      return -1;
     }
     if (preg_match('!^(\d+)c(\d+)$!', $this->pfVersion, $matches)) {
       $pfYear = $matches[1];
@@ -432,7 +384,7 @@ function dateBetween(DateTimeImmutable $first, DateTimeImmutable $now, int $dayO
   $o = $now->format('o'); // l'année ISO semaine de $last
   //echo "L'année (ISO semaine) d'aujourd'hui est $o<br>\n";
   // j'appelle $thursday le jour qui doit être le $dayOfWeek
-  $thursday = $now->setISODate($o, $W, $dayOfWeek)->setTime($h, $mn);
+  $thursday = $now->setISODate(intval($o), intval($W), $dayOfWeek)->setTime($h, $mn);
   //echo "Le jeudi 20h UTC de la semaine d'aujourd'hui est ",$thursday->format(DateTimeInterface::ISO8601),"<br>\n";
   
   $diff = $thursday->diff($now); // intervalle de $thursday à $now

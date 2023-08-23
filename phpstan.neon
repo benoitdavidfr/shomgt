@@ -85,6 +85,7 @@ parameters:
       - bo/mail.php
       - bo/neworg.php
       - bo/purge.php
+      - bo/jeudi.php
   universalObjectCratesClasses:
     - MapCat
   treatPhpDocTypesAsCertain: false

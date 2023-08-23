@@ -295,10 +295,14 @@ class GBox extends BBox {
    * @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string} $param
    */
   function __construct(array|string $param=[]) {
-    if (is_array($param) && isset($param['SW']) && isset($param['NE'])) {
+    //echo "GBox::__construct(",json_encode($param),")<br>\n";
+    if (is_array($param) && array_key_exists('SW', $param) && array_key_exists('NE', $param)) {
       foreach(['SW','NE'] as $cornerId) {
         if (is_string($param[$cornerId])) {
           $param[$cornerId] = Pos::fromGeoDMd($param[$cornerId]);
+        }
+        elseif (is_null($param[$cornerId])) {
+          throw new SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);
         }
         elseif (!Pos::is($param[$cornerId]))
           throw new SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);

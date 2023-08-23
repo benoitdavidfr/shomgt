@@ -108,61 +108,6 @@ class MapArchiveStore {
     return $errors;
   }
   
-  // REMPLACE par l'utilisation de la founction cloneDir() plus générique
-  // clone $this dans le chemin $clonePath avec des liens durs pour les md.json et les 7z des archives
-  /*function clone(string $clonePath): ?self {
-    if (is_dir($clonePath)) {
-      echo "Erreur $clonePath existe déjà<br>\n";
-      return null;
-    }
-    if (!mkdir($clonePath)) {
-      echo "Erreur mkdir($clonePath)<br>\n";
-      return null;
-    }
-    { // clonage des archives 
-      if (!mkdir("$clonePath/archives")) {
-        echo "Erreur mkdir($clonePath/archives)<br>\n";
-        return null;
-      }
-      foreach (new DirectoryIterator("$this->path/archives") as $archive) {
-        if (in_array($archive, ['.','..','.DS_Store'])) continue;
-        if (!mkdir("$clonePath/archives/$archive"))
-          echo "Erreur mkdir($clonePath/archives/$archive)<br>\n";
-        foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
-          if (in_array($filename, ['.','..','.DS_Store'])) continue;
-          $link = "$clonePath/archives/$archive/$filename";
-          $target = "$this->path/archives/$archive/$filename";
-          if (!link($target, $link))
-            echo "Erreur link($target, $link)<br>\n";
-          elseif (self::DEBUG) // @phpstan-ignore-line
-            echo "link($target, $link) ok<br>\n";
-        }
-      }
-    }
-    { // clonage de current en créant des liens vers les archives du clone à condition que le lien initial soit valide 
-      if (!mkdir("$clonePath/current")) {
-        echo "Erreur mkdir($clonePath/current)<br>\n";
-        return null;
-      }
-      foreach (new DirectoryIterator("$this->path/current") as $filename) {
-        if (in_array($filename, ['.','..','.DS_Store'])) continue;
-        $target = readlink("$this->path/current/$filename");
-        if ($this->wrongCurLink($filename)) {
-          echo "Alerte, $filename -> $target incorrect<br>\n";
-        }
-        else {
-          if (self::DEBUG) // @phpstan-ignore-line
-            echo "$filename -> $target<br>\n";
-          if (!symlink($target, "$clonePath/current/$filename"))
-            echo "Erreur symlink($target, $clonePath/current/$filename)<br>\n";
-          elseif (self::DEBUG) // @phpstan-ignore-line
-            echo "symlink($target, $clonePath/current/$filename) ok<br>\n";
-        }
-      }
-    }
-    return new MapArchiveStore($clonePath);
-  }*/
-
   private static function extension(string $filename): string {
     if (substr($filename, -3)=='.7z')
       return '.7z';
@@ -395,7 +340,7 @@ class MapArchiveStore {
 if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier est inclus
 
 
-if (defined('MapArchiveStore::PF_PATH_TEST')) { // @phpstan-ignore-line // TEST 
+if (defined('MapArchiveStore::PF_PATH_TEST')) { // TEST 
   $PF_PATH = MapArchiveStore::PF_PATH_TEST;
 }
 elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {

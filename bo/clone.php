@@ -26,7 +26,7 @@ function cloneDir(string $src, string $dest, string $tab=''): ?string {
   if (!mkdir($dest))
     return "Erreur sur mkdir($dest)<br>\n";
   elseif ($tab)
-    echo "{$tab}mkdir($dest2) ok <br>\n";
+    echo "{$tab}mkdir($dest) ok <br>\n";
   foreach (new DirectoryIterator($src) as $entry) {
     if (in_array($entry, ['.','..','.DS_Store'])) continue;
     $dest2 = "$dest/$entry";

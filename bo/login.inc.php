@@ -64,7 +64,7 @@ class Login { // Fonctionnalités de login
         die("Erreur de création du cookie<br>\n");
       }
       else {
-        echo "création ok du cookie sur $parent<br>\n";
+        //echo "création ok du cookie sur $parent<br>\n";
       }
     }
     // login ok

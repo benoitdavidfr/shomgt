@@ -216,7 +216,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     $mappingGeoTiffWithMapCat = [];
     foreach ($this->insets as $name => $inset) {
       if ($inset->tif() && $this->mapCat->insetMaps) {
-        $mappingGeoTiffWithMapCat[$name] = $inset->bestInsetMapOfCat($mapCat->insetMaps, $show);
+        $mappingGeoTiffWithMapCat[$name] = $inset->bestInsetMapOfCat($this->mapCat->insetMaps, $show);
       }
     }
     return $mappingGeoTiffWithMapCat;
@@ -256,7 +256,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       case null: { // Fichier principal non géoréférencé, 2 possibilités
         // carte normale composée uniquement de cartouches => ok ssi c'est indiqué comme telle dans le catalogue
         if ($this->type == 'normal') {
-          if ($this->mapCat->scaleDenominator || $mapCat->spatial)
+          if ($this->mapCat->scaleDenominator || $this->mapCat->spatial)
             $errors[] = "Le fichier GéoTiff principal n'est pas géoréférencé alors que le catalogue indique qu'il l'est";
           else
             $warnings[] = "Le fichier GéoTiff principal n'est pas géoréférencé ce qui est conforme au catalogue";
@@ -272,10 +272,10 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
         break;
       }
       case 'KO': { // Fichier principal mal géoréférencé, carte normale
-        if (!$mapCat->scaleDenominator || !$mapCat->spatial)
+        if (!$this->mapCat->scaleDenominator || !$this->mapCat->spatial)
           $errors[] = "Le fichier GéoTiff principal est mal géoréférencé"
             ." alors que le catalogue indique qu'il n'est pas géoréférencé";
-        elseif (!$mapCat->borders)
+        elseif (!$this->mapCat->borders)
           $errors[] = "Le fichier GéoTiff principal est mal géoréférencé"
             ." et le catalogue ne fournit pas l'information nécessaire à son géoréférencement";
         else
@@ -285,9 +285,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       }
     }
     // Partie cartouches
-    if (count($this->insets) <> count($mapCat->insetMaps ?? []))
+    if (count($this->insets) <> count($this->mapCat->insetMaps ?? []))
       $errors[] = "L'archive contient ".count($this->insets)." cartouches"
-        ." alors que le catalogue en mentionne ".count($mapCat->insetMaps ?? []);
+        ." alors que le catalogue en mentionne ".count($this->mapCat->insetMaps ?? []);
     if ($this->insets) {
       foreach ($this->insets as $name => $inset) {
         if (!$inset->tif())
@@ -311,7 +311,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       sort($mappingInsetsWithMapCat);
       //echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
       //echo "insetTitlesSorted = "; print_r($mapCat->insetTitlesSorted());
-      if ($mappingInsetsWithMapCat <> $mapCat->insetTitlesSorted())
+      if ($mappingInsetsWithMapCat <> $this->mapCat->insetTitlesSorted())
         $errors[] = "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
     }
     if ($this->suppls) {

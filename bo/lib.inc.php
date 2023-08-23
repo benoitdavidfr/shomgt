@@ -25,11 +25,12 @@ function directoryEntries(string $path): array { // retourne les entrées d'un r
  * @param mixed $data
  */
 function YamlDump(mixed $data, int $level=3, int $indentation=2, int $options=0): string {
+  $options |= Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK;
   $dump = Yaml::dump($data, $level, $indentation, $options);
   return preg_replace('!-\n *!', '- ', $dump);
 }
 
-// regroupe qqs méthodes sattiques de création de formulaires simples
+// regroupe qqs méthodes statiques de création de formulaires simples
 class Html {
   /** affiche un bouton HTML
    * @param array<string, string> $hiddenValues
@@ -87,9 +88,10 @@ class Html {
   }
 };
 
-// Permet de distinguer si un script est inclus dans un autre ou est directement appelé en mode CLI ou Web
-// retourne '' si ce fichier n'a pas été directement appelé, cad qu'il est inclus dans un autre,
-//  'web' s'il est appelé en mode web, 'cli' s'il est appelé en mode CLI
+/** Permet de distinguer si un script est inclus dans un autre ou est directement appelé en mode CLI ou Web
+ * retourne '' si ce fichier n'a pas été directement appelé, cad qu'il est inclus dans un autre,
+ *  'web' s'il est appelé en mode web, 'cli' s'il est appelé en mode CLI
+ * @return ''|'web'|'cli' */
 function callingThisFile(string $file): string {
   global $argv;
   if (php_sapi_name() == 'cli') {

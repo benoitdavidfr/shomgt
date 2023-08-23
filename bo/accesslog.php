@@ -144,20 +144,20 @@ class Request2GBox {
     if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";
-    $ebox = Zoom::tileEBox($matches[1], $matches[2], $matches[3]); // $ebox en coord. WebMercator
+    $ebox = Zoom::tileEBox(intval($matches[1]), intval($matches[2]), intval($matches[3])); // $ebox en coord. WebMercator
     return $ebox->geo('WebMercator');
   }
 
   static function test(): void {
-    if (0) { // test WMS
+    if (0) { // @phpstan-ignore-line // test WMS
       $request_uri = '/shomgt/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
         .'&BBOX=45.59043706550564679,-1.081144577564866704,45.64622396475353838,-0.9709213645309664464'
         .'&CRS=EPSG:4326&WIDTH=1463&HEIGHT=740&LAYERS=gtpyr&STYLES=&FORMAT=image/png'
         .'&DPI=96&MAP_RESOLUTION=96&FORMAT_OPTIONS=dpi:96&TRANSPARENT=TRUE';
-      echo "<pre>",Yaml::dump(self::wmsRequest2GJGeom($request_uri), 4);
+      echo "<pre>",Yaml::dump(self::wms($request_uri), 4);
     }
     elseif (1) { // test tile
-      echo "<pre>",Yaml::dump(self::tileRequest2GJGeom('/shomgt/tile.php/gtpyr/18/128733/91496.png'), 4);
+      echo "<pre>",Yaml::dump(self::tile('/shomgt/tile.php/gtpyr/18/128733/91496.png'), 4);
     }
     die("Fin ligne ".__LINE__);
   }
@@ -166,7 +166,10 @@ class Request2GBox {
 
 // construit un enregistrement pour carte de chaleur à partir de l'URI de la requête
 class HeatData {
-  static function fromWmsRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
+  /** retourne [] ou [lat, lng, intensity]
+   * @return list<int|float>
+  */
+  static function fromWmsRequest(string $request_uri): array {
     if (!($gbox = Request2GBox::wms($request_uri)))
       return [];
     //echo "request_uri=$request_uri<br>\n";
@@ -178,7 +181,10 @@ class HeatData {
     return [$center[1], $center[0], 1e8/$area];
   }
   
-  static function fromTileRequest(string $request_uri): array { // retourne [] ou [lat, lng, intensity]
+  /** retourne [] ou [lat, lng, intensity]
+   * @return list<int|float>
+   */
+  static function fromTileRequest(string $request_uri): array {
     if (!($gbox = Request2GBox::tile($request_uri)))
       return [];
     //echo "request_uri=$request_uri<br>\n"; die();
@@ -188,7 +194,7 @@ class HeatData {
   }
   
   static function test(): void {
-    if (0) {
+    if (0) { // @phpstan-ignore-line
       $request_uri = '/shomgt/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
         .'&BBOX=-1158270.138820303138%2C5982585.920146320947%2C1158270.138820303138%2C6833190.553342481144'
         .'&CRS=EPSG%3A3857&WIDTH=1920&HEIGHT=705&LAYERS=gtpyr&STYLES='
@@ -215,7 +221,7 @@ function durationInHours(string $duration): int { // prend en compte l'unité po
 }
 
 // retourne le texte de la requête SQL adhoc
-function queryForRecentAccess(string $durationInHours, ?string $param=null): string {
+function queryForRecentAccess(int $durationInHours, ?string $param=null): string {
   switch ($param) {
     case 'agg': { // req agrégée sur les IP
       return "select ip, label labelip, referer, login, user, count(*) nbre
@@ -265,7 +271,7 @@ switch ($action = $_GET['action'] ?? null) {
   }
   case 'createTableIpaddress': {
     echo "$HTML_HEAD<h3>Access log</h3>\n";
-    Mysql::query("drop table if exists ipaddress");
+    MySql::query("drop table if exists ipaddress");
     MySql::query(SqlDef::sql('ipaddress', SqlDef::IPADDRESS_SCHEMA));
     foreach (SqlDef::IPADDRESS_CONTENT as $iptuple)
       MySql::query("insert into ipaddress values('$iptuple[0]','$iptuple[1]')");

@@ -97,9 +97,7 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 if (!function_exists('is_assoc_array')) {
-  /**
-   * is_assoc_array() - teste si un array est un tableau associatif ou une liste
-   *
+  /** is_assoc_array() - teste si un array est un tableau associatif ou une liste
    * Une liste est définie comme ayant pour clés les n premiers entiers, n étant la longueur de la liste.
    * Un array qui n'est pas une liste est un tableau associatif.
    * [] est considérée comme une liste et donc pas un tableau associatif
