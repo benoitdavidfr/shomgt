@@ -271,6 +271,17 @@ EOT;
       return ['errors'=> ["Erreur: si .insetMaps n'est pas défini alors .spatial et .scaleDenominator doivent l'être"]];
     }
     
+    // si spatial contient un tiret comme dans le GAN, le remplacer par un tiret simple
+    if (isset($doc['spatial'])) {
+      $doc['spatial'] = str_replace('—','-', $doc['spatial']);
+    }
+    if (isset($doc['insetMaps']) && is_array($doc['insetMaps'])) {
+      foreach ($doc['insetMaps'] as $i => $insetMap) {
+        if (isset($insetMap['spatial']))
+          $doc['insetMaps'][$i]['spatial'] = str_replace('—','-', $insetMap['spatial']);
+      }
+    }
+    
     // calcul de MapsFrance en fonction de spatial
     if (!isset($doc['mapsFrance'])) {
       if (isset($doc['spatial'])) { // Si spatial est défini
@@ -378,18 +389,11 @@ EOT
       ],
     ]);
     foreach (JEUX_TESTS as $title => $jeu) {
-      $validatesAgainstSchema = self::validatesAgainstSchema($jeu['yaml']);
-      if ($validatesAgainstSchema['errors'])
-        echo "<pre>",Yaml::dump([
-          $title => [
-            'jeu' => $jeu,
-            'validatesAgainstSchema'=> $validatesAgainstSchema,
-        ]], 6, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+      $valid = self::validatesAgainstSchema($jeu['yaml']);
+      if (isset($valid['errors']))
+        echo "<pre>",YamlDump([$title => ['jeu' => $jeu, 'validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
       else
-        echo "<pre>",Yaml::dump([
-          $title => [
-            'validatesAgainstSchema'=> $validatesAgainstSchema,
-        ]], 6, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+        echo "<pre>",YamlDump([$title => ['validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
     }
   }
 };
@@ -557,7 +561,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
           or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
         MySql::open($LOG_MYSQL_URI);
-        $jdocRes = MySql::$mysqli->real_escape_string(json_encode(Yaml::parse($yaml)));
+        $jdocRes = MySql::$mysqli->real_escape_string(json_encode($valid['validDoc']));
         $query = "insert into mapcat(mapnum, kind, jdoc, updatedt, user) "
                             ."values('$_POST[mapnum]', 'current', '$jdocRes', now(), '$user')";
         echo "<pre>query=$query</pre>\n";

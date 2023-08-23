@@ -1,5 +1,4 @@
 <?php
-// 
 /*PhpDoc:
 name: pflib.inc.php
 title: bo/pflib.inc.php - biblio de functions - 2-13/8/2023
@@ -27,7 +26,9 @@ function directoryEntries(string $path): array { // retourne les entrées d'un r
 function YamlDump(mixed $data, int $level=3, int $indentation=2, int $options=0): string {
   $options |= Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK;
   $dump = Yaml::dump($data, $level, $indentation, $options);
-  return preg_replace('!-\n *!', '- ', $dump);
+  //return $dump;
+  //return preg_replace('!-\n *!', '- ', $dump);
+  return preg_replace('!: \|-ZZ\n!', ": |-\n", preg_replace('!-\n *!', '- ', preg_replace('!(: +)\|-\n!', "\$1|-ZZ\n", $dump)));
 }
 
 // regroupe qqs méthodes statiques de création de formulaires simples
@@ -121,5 +122,33 @@ function dumpString(string $s): void { // affiche les codes ASCII des caractère
 
 if (!callingThisFile(__FILE__)) return;
 
-echo "callingThisFile=",callingThisFile(__FILE__),"<br>\n";
-die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
+if (0) {
+  echo "callingThisFile=",callingThisFile(__FILE__),"<br>\n";
+  die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
+}
+elseif (1) {
+  foreach ([
+    [
+      'title'=> "un MULTI_LINE_LITERAL_BLOCK et une liste avec des objets",
+      'description'=> "La description\nsur plusieurs\nlignes",
+      'liste'=> [
+        "a",
+        ['title'=> "le fils"],
+      ],
+      'eof'=> null,
+    ],
+    [
+      'title'=> "Un des sous-objets avec un MULTI_LINE_LITERAL_BLOCK",
+      'description'=> "La description\nsur plusieurs\nlignes",
+      'liste'=> [
+        "a",
+        [
+          'title'=> "le fils",
+          'description'=> "La description du fils\nsur plusieurs\nlignes",
+        ],
+      ],
+      'eof'=> null,
+    ],
+  ] as $doc)
+  echo "<pre>",YamlDump($doc),"</pre>\n";
+}

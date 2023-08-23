@@ -436,7 +436,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       }
       else { // cas d'erreur normale, la validation n'est pas possible
         echo "<tr><td colspan=2><center>",
-             "<b>La carte ne peut pas être validée car l'archive comporte des erreurs</b>",
+             "<b>La carte ne peut pas être validée en raison des erreurs</b>",
              "</center></td></tr>\n";
       }
     }
