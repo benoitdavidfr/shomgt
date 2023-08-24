@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: shomgeotiff.php
 title: bo/shomgeotiff.php - accès aux fichiers de SHOMGEOTIFF à l'intérieur d'une archive 7z - 3/8/2023

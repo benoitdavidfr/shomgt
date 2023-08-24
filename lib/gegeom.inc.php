@@ -1,4 +1,5 @@
 <?php
+namespace gegeom;
 {/*PhpDoc:
 name:  gegeom.inc.php
 title: gegeom.inc.php - package géométrique utilisant des coordonnées géographiques ou euclidiennes

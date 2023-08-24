@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: gdalinfo.inc.php
 title: gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
@@ -7,8 +8,8 @@ require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 
 {/*PhpDoc: classes
-name: GdalGBox
-title: class GdalGBox extends GBox - Ajout à GBox de fonctionnalités
+name: GBox
+title: class GBox extends \gegeom\GBox - Ajout de fonctionnalités à \gegeom\GBox
 doc: |
   Par convention, on cherche à respecter:
     (-180 <= lon <= 180) && (-90 <= lat <= 90)
@@ -25,15 +26,15 @@ doc: |
   
   Je considère au final qu'un GBox standardisé respecte les 2 contraintes ci-dessus.
 
-  On essaie ici de réutiliser GBox et EBox en en créant des sous-classes GdalGBox et GdalEBox
+  On essaie ici de réutiliser \gegeom\GBox et \gegeom\EBox en en créant des sous-classes GBox et EBox
   pour leur ajouter des fonctionalités.
   Pour cela les règles à respecter sont le suivantes:
    - ne pas redéfinir __construct() avec une signature incompatible avec celle du parent car certaines méthodes
      comme BBox::round() par exemple utilisent le __construct() de ses enfants.
      - la signature peut par contre être étendue à de nouvelles possibilités
-   - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GdalGBox
+   - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GBox
 */}
-class GdalGBox extends GBox { 
+class GBox extends \gegeom\GBox { 
   //protected array $min=[]; // position SW en LonLat
   //protected array $max=[]; // position NE en LonLat
   
@@ -66,8 +67,8 @@ class GdalGBox extends GBox {
 };
 
 // extension de EBox avec possibilité de création à partir du champ cornerCoordinates de gdalinfo
-// et création d'un GdalGBox par déprojection du GdalEBox
-class GdalEBox extends EBox {
+// et création d'un GBox par déprojection du EBox
+class EBox extends \gegeom\EBox {
   //protected array $min=[]; // position SW en proj
   //protected array $max=[]; // position NE en proj
   
@@ -93,9 +94,9 @@ class GdalEBox extends EBox {
     }
   }
   
-  function geo(string $proj): GdalGBox {
+  function geo(string $proj): GBox {
     $gbox = parent::geo($proj);
-    return new GdalGBox([$gbox->west(),$gbox->south(),$gbox->east(),$gbox->north()]);
+    return new GBox([$gbox->west(),$gbox->south(),$gbox->east(),$gbox->north()]);
   }
 };
 
@@ -110,7 +111,7 @@ class GdalEBox extends EBox {
 */
 require_once __DIR__.'/my7zarchive.inc.php';
 
-class GdalInfoBo { // info de géoréférencement d'une image fournie par gdalinfo
+class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
   /** @var array<string, mixed> $info */
   protected array $info; // contenu du gdalinfo
   
@@ -138,11 +139,11 @@ class GdalInfoBo { // info de géoréférencement d'une image fournie par gdalin
       return $this->goodGeoref() ? 'ok' : 'KO';
   }
   
-  function gbox(): ?GdalGBox { // retourne le GdalGBox ssi il est défini dans le gdalinfo
+  function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo
     if (!isset($this->info['wgs84Extent']))
       return null;
     else
-      return new GdalGBox($this->info['wgs84Extent']);
+      return new GBox($this->info['wgs84Extent']);
   }
 
   // Test de georef correct fondé sur la comparaison entre cornerCoordinates et la projection en WorldMercator de wgs84Extent
@@ -202,7 +203,7 @@ class GdalInfoBo { // info de géoréférencement d'une image fournie par gdalin
   // et le calcul de la distance de cette GBox standardisée avec le wgs84Extent standardisé 
   function goodGeoref(bool $debug=false): bool {
     //$debug = true;
-    $cornerCoordinates = new GdalEBox($this->info['cornerCoordinates']);
+    $cornerCoordinates = new EBox($this->info['cornerCoordinates']);
     if ($debug) {
       echo "  cornerCoordinates=$cornerCoordinates\n";
       echo "  cornerCoordinates->geo=",$cornerCoordinates->geo('WorldMercator'),"\n";
@@ -225,7 +226,7 @@ class GdalInfoBo { // info de géoréférencement d'une image fournie par gdalin
       ] as $title => $tif) {
         echo "$title:\n";
         $archive = new My7zArchive("$PF_PATH/$tif[path7z]");
-        $gdalInfo = new GdalInfoBo($path = $archive->extract($tif['entry']));
+        $gdalInfo = new GdalInfo($path = $archive->extract($tif['entry']));
         $archive->remove($path);
         //print_r($gdalInfo);
         $good = $gdalInfo->goodGeoref(false);
@@ -251,12 +252,12 @@ if ((php_sapi_name() == 'cli') && ($argv[0]=='gdalinfo.inc.php')) {
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
     throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
   if (0) { // @phpstan-ignore-line
-    GdalInfoBo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
+    GdalInfo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
   }
   elseif (0) { // @phpstan-ignore-line
-    GdalInfoBo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif'); 
+    GdalInfo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif'); 
   }
   elseif (1) { // Test de goodGeoref
-    GdalInfoBo::testGoodGeoref($PF_PATH);
+    GdalInfo::testGoodGeoref($PF_PATH);
   }
 }

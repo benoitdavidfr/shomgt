@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: login.inc.php
 title: bo/login.inc.php - classe Login définissant les fonctionnalités de login dans le BO - 19/7/2023
@@ -16,7 +17,7 @@ class Login { // Fonctionnalités de login
   </form>\n";
   
   static function loggedIn(): ?string { // Si logué retourne le login en cookie, sinon retourne null
-    return (isset($_COOKIE[self::COOKIE_NAME]) && Access::cntrl($_COOKIE[self::COOKIE_NAME])) ? 
+    return (isset($_COOKIE[self::COOKIE_NAME]) && \Access::cntrl($_COOKIE[self::COOKIE_NAME])) ? 
       substr($_COOKIE[self::COOKIE_NAME], 0, strpos($_COOKIE[self::COOKIE_NAME], ':'))
         : null;
   }

@@ -449,9 +449,42 @@ bugs:
         - "edition: 'Publication 1995'"
     - corrigé le 18/8/2023 - il s'agit des CORRECTIONS apportées dans gan.inc.php
 
-restructurationBo: |
-  l'articulation addmaps / viewtiff / maparchive est trop complexe. La simplifier !
-  
+restructurationBo:
+  objectif: l'articulation addmaps / viewtiff / maparchive est trop complexe. La simplifier !
+  concepts:
+    MapArchive:
+      title: instance de carte stockée sous la forme d'une archive
+      id: {mapNum}-{édition}c{correction}
+      uri: http://geoapi.fr/shomgt/bo/shomgeotiff.php/archives/{mapNum}/{mapNum}-{édition}c{correction}
+      class:
+        name: MapArchive
+      contient:
+        - array<string, GeoRefImage>
+    GeoRefImage(GeoTiff):
+      title: image géoréférencée représentant une partie d'une carte
+    IsoMetadata:
+      title: MD ISO 19115 décrivant une carte ou une de ses parties
+    MapMetadata:
+      title: MD simplifiées décrivant une carte ou une de ses parties
+    MapArchiveStore:
+      title: ensemble de cartes stockées chacune sous la forme d'une archive
+      uri: http://geoapi.fr/shomgt/bo/shomgeotiff.php
+      class:
+        name: MapArchiveStore
+      contient:
+        - array<string, MapArchive>
+    MapCat/MapCatItem:
+      title: catalogue décrivant les cartes (MapCat) avec une entrée par carte (MapCatItem)
+      uri: http://geoapi.fr/shomgt/mapcat
+      class:
+        name: MapCat
+      contient:
+        - array<string, MapCatItem>
+    Gan/GanItem:
+      title: infos d'actualité sur les cartes (GAN) avec une entrée par carte (GanItem)
+      uri: http://geoapi.fr/shomgt/gan
+      contient:
+        - array<string, GanItem>
 
 miseEnProd:
   cmdesMiseEnProdDev: |

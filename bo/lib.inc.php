@@ -1,8 +1,11 @@
 <?php
+namespace bo;
+
 /*PhpDoc:
 name: pflib.inc.php
 title: bo/pflib.inc.php - biblio de functions - 2-13/8/2023
 */
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;

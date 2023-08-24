@@ -1,11 +1,12 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: tiffmap.php
 title: bo/tiffmap.php - génère une carte Leaflet pour visualiser les tiff contenues dans une archive de carte
 doc: |
- paramètres GET
-  - path - chemin du répertoire contenant des 7z de cartes ou d'autres répertoires
-  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
+  paramètres GET
+   - path - chemin du répertoire contenant le fichier 7z de la carte
+   - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
 */
 define ('LGEOJSON_STYLE', ['color'=>'blue', 'weight'=> 2, 'opacity'=> 0.3]); // style passé à l'appel de L.geoJSON()
 
@@ -21,6 +22,7 @@ if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
   die("Erreur variable d'environnement SHOMGT3_PORTFOLIO_PATH non définie\n");
 }
 
+// fabrication  de la liste des tiffs à afficher dans la carte
 $mapNum = substr($_GET['map'], 0, 4);
 $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
 $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
@@ -32,8 +34,10 @@ foreach ($map->gtiffs() as $fileName) {
   $spatials[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
 }
 echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
+
+// fabrication de la liste des extensions spatiales à afficher dans la carte
 $spatials = []; // liste des couches Leaflet représentant les ext. spat. des GéoTiffs [title => code JS créant un L.geoJSON]
-$mapCat = MapCat::get($mapNum);
+$mapCat = \mapcat\MapCatItem::get($mapNum);
 foreach ($mapCat->spatials() as $title => $spatial) {
   $title = str_replace('"', '\"', $title);
   //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";

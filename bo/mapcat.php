@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 title: bo/mapcat.php - gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN
 classes:

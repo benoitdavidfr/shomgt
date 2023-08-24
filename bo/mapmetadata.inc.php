@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: mapmetadata.php
 title: bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 4/8/2023
@@ -11,7 +12,7 @@ require_once __DIR__.'/my7zarchive.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
-  $date = new DateTimeImmutable();
+  $date = new \DateTimeImmutable();
   // public DateTimeImmutable::setISODate(int $year, int $week, int $dayOfWeek = 1): DateTimeImmutable
   $newDate = $date->setISODate(intval('20'.substr($ganWeek,0,2)), intval(substr($ganWeek, 2)), 3);
   return $newDate->format('Y-m-d');
@@ -25,9 +26,9 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
   static function extractFromIso19139(string $mdpath): array { // lit les MD dans le fichier ISO 19139
     $md = [];
     if (!($xmlmd = @file_get_contents($mdpath)))
-      throw new Exception("Fichier de MD non trouvé pour mdpath=$mdpath");
+      throw new \Exception("Fichier de MD non trouvé pour mdpath=$mdpath");
     $xmlmd = str_replace(['gmd:','gco:'], ['gmd_','gco_'], $xmlmd);
-    $mdSxe = new SimpleXMLElement($xmlmd);
+    $mdSxe = new \SimpleXMLElement($xmlmd);
     
     $citation = $mdSxe->gmd_identificationInfo->gmd_MD_DataIdentification->gmd_citation->gmd_CI_Citation;
     //print_r($citation);

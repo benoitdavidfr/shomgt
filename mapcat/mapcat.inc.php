@@ -1,4 +1,5 @@
 <?php
+namespace mapcat;
 /*PhpDoc:
 name: mapcat.inc.php
 title: mapcat/mapcat.inc.php - accès au catalogue MapCat et vérification des contraintes
@@ -15,7 +16,7 @@ use Symfony\Component\Yaml\Yaml;
 * Les contraintes sont définies dans la constante CONSTRAINTS
 * et la liste des exceptions est dans la constante EXCEPTIONS
 */
-class Spatial extends GBox {
+class Spatial extends \gegeom\GBox {
   const CONSTRAINTS = [
     "les latitudes sont comprises entre -90° et 90°",
     "la latitude North est supérieure à la latitude South",
@@ -35,8 +36,6 @@ class Spatial extends GBox {
       "dans ce cas (East - West) >= 360 et -180° <= West < 180° < East < 540° (360+180)"
     ],
   ];
-  //protected array $sw; // position SW en LonLatDD
-  //protected array $ne; // position NE en LonLatDD
   protected ?string $exception=null; // nom de l'exception ou null
   
   /** @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string, exception?: string} $param */
@@ -87,15 +86,7 @@ class Spatial extends GBox {
     return null;
   }
   
-  /*function dcmiBox(): array { // export utilisant les champs définis par le Dublin Core
-    return [
-      'westlimit' => $this->sw[0],
-      'southlimit'=> $this->sw[1],
-      'eastlimit' => $this->ne[0],
-      'northlimit'=> $this->ne[1],
-    ];
-  }*/
-  
+  // surface approximative en degrés carrés
   function area(): float { return ($this->max[0] - $this->min[0]) * ($this->max[1] - $this->min[1]); }
   
   /** @return TPos */
@@ -113,6 +104,7 @@ class Spatial extends GBox {
   /** @return TLPos */
   private function ring(): array { return [$this->nw(), $this->sw(), $this->se(), $this->ne(), $this->nw()]; }
   
+  // Retourne la boite comme MultiPolygon GeoJSON avec décomposition en 2 polygones
   // A linear ring MUST follow the right-hand rule with respect to the area it bounds,
   // i.e., exterior rings are clockwise, and holes are counterclockwise.
   /** @return TGJMultiPolygon */
@@ -188,9 +180,9 @@ EOT;
 //Spatial::test();
 
 // Un objet MapCat correspond à l'enregistrement d'une carte dans le catalogue MapCat
-abstract class MapCat {
+abstract class MapCatItem {
   //const SUBCLASS = 'MapCatFromFile'; // la sous-classe concrète effectivement utilisée
-  const SUBCLASS = 'MapCatInBase';
+  const SUBCLASS = '\mapcat\MapCatItemInBase';
   const ALL_KINDS = ['current','obsolete','uninteresting','deleted'];
   /** @var TMapCatEntry $cat */
   protected array $cat; // contenu de l'entrée du catalogue correspondant à une carte
@@ -272,7 +264,7 @@ abstract class MapCat {
   }
 };
 
-class MapCatFromFile extends MapCat {
+class MapCatItemFromFile extends MapCatItem {
   /** @var array<string, TMapCatEntry> $maps */
   static array $maps=[]; // contenu du champ maps de MapCat
   /** @var array<string, TMapCatEntry> $obsoleteMaps */
@@ -336,14 +328,14 @@ class MapCatFromFile extends MapCat {
   }
 }
 
-class MapCatInBase extends MapCat {
+class MapCatItemInBase extends MapCatItem {
   static function mapNums(array $kindOfMap=['current','obsolete']): array {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-    MySql::open($LOG_MYSQL_URI);
+    \MySql::open($LOG_MYSQL_URI);
     $mapNums = [];
     $query = "select distinct(mapnum) from mapcat where kind in ('".implode("','", $kindOfMap)."')";
-    foreach (MySql::query($query) as $tuple) {
+    foreach (\MySql::query($query) as $tuple) {
       $mapNums[] = substr($tuple['mapnum'], 2);
     }
     return $mapNums;
@@ -353,19 +345,19 @@ class MapCatInBase extends MapCat {
     //echo "appel de MapCatInBase::get($mapNum)<br>\n";
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-    MySql::open($LOG_MYSQL_URI);
-    $mapcats = MySql::getTuples("select mapnum, kind, jdoc from mapcat where mapnum='FR$mapNum' order by id desc");
+    \MySql::open($LOG_MYSQL_URI);
+    $mapcats = \MySql::getTuples("select mapnum, kind, jdoc from mapcat where mapnum='FR$mapNum' order by id desc");
     //echo "<pre>mapcats="; print_r($mapcats); echo "</pre>\n";
     if (!($mapcat = $mapcats[0] ?? null)) // le plus récent est en 0 étant donné le tri sur id desc
       return null;
     $jdoc = json_decode($mapcat['jdoc'], true);
     unset($jdoc['kind']);
-    return new MapCatInBase($jdoc, $mapcat['kind']);
+    return new MapCatItemInBase($jdoc, $mapcat['kind']);
   }
 };
 
 
-if (!callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
+if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 
   
 // Test des définitions des classes
@@ -402,21 +394,21 @@ switch ($_GET['action'] ?? null) {
       }
       else {
         $kind = [];
-        foreach (MapCat::ALL_KINDS as $k) {
+        foreach (MapCatItem::ALL_KINDS as $k) {
           if ($_GET[$k] ?? null)
             $kind[] = $k;
         }
       }
       echo "<h3>Liste des ",implode(',',$kind),"</h3><ul>\n";
-      foreach(MapCat::mapNums($kind) as $mapNum) {
-        $mapcat = MapCat::get($mapNum, $kind);
+      foreach(MapCatItem::mapNums($kind) as $mapNum) {
+        $mapcat = MapCatItem::get($mapNum, $kind);
         echo "<li><a href='?action=mapcat&mapNum=$mapNum&kind=",implode(',',$kind),"'>",
              "$mapNum - $mapcat->title ($mapcat->kind)</a></li>\n";
       }
       echo "</ul>\n";
     }
     else {
-      $mapcat = MapCat::get($_GET['mapNum'], MapCat::ALL_KINDS);
+      $mapcat = MapCatItem::get($_GET['mapNum'], MapCatItem::ALL_KINDS);
       echo '<pre>',Yaml::dump($mapcat->asArray()),"</pre>\n";
       //print_r($mapcat);
       echo "<a href='?action=mapcat&kind=$_GET[kind]'>Retour à la liste des $_GET[kind]</a><br>\n";

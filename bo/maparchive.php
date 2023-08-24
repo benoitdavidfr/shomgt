@@ -1,7 +1,8 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: maparchive.php
-title: bo/maparchive.php - Affichage et validation d'une archive 7z de carte - Benoit DAVID - 11/7-8/8/2023
+title: bo/maparchive.php - Affichage et validation d'une archive 7z de carte - Benoit DAVID - 7-8/2023
 doc: |
   La validation des cartes est définie d'une part par sa conformité à sa spécification
   et, d'autre part, par sa cohérence avec MapCat.
@@ -11,6 +12,7 @@ doc: |
   Le script est utilisé de 2 manières:
    - soit inclus dans addmaps.php et viewmap.php, lui-même appelé par différents autre scripts
    - soit en CLI pour tester un ensemble de cartes.
+   - soit en no CLI pour visualiser une archive
 */
 require_once __DIR__.'/../vendor/autoload.php';
 #require_once __DIR__.'/../mapcat/mapcat.inc.php';
@@ -22,8 +24,8 @@ require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class Image { // Image principale ou cartouche de la carte 
-  protected ?string $tif=null; // nom du tif dans l'archive
+class GeoRefImage { // Image principale ou cartouche de la carte 
+  protected ?string $tif=null; // chemin du tif dans l'archive
   protected ?string $georef; // ('ok'|'KO'|null)
   protected ?GBox $georefBox=null; // gbox de géoréférencement de l'image
   protected ?string $xml=null; // nom de l'xml dans l'archive
@@ -44,7 +46,7 @@ class Image { // Image principale ou cartouche de la carte
   function setTif(string $tif, My7zArchive $archive): void {
     $this->tif = $tif;
     $tifPath = $archive->extract($tif);
-    $gdalinfo = new GdalInfoBo($tifPath);
+    $gdalinfo = new GdalInfo($tifPath);
     $this->georef = $gdalinfo->georef();
     $this->georefBox = $this->georef ? $gdalinfo->gbox() : null;
     $archive->remove($tifPath);
@@ -117,17 +119,17 @@ class Image { // Image principale ou cartouche de la carte
 };
 
 class MapArchive { // analyse les fichiers d'une archive d'une carte pour évaluersa validité et afficher le contenu
-  const FORCE_VALIDATION = false; // vrai ssi possibilité de forcer la validation d'une carte invalide
+  //const FORCE_VALIDATION = false; // vrai ssi possibilité de forcer la validation d'une carte invalide
   protected string $type='undefined'; // 'undefined'|'normal'|'special'
-  protected string $pathOf7z; // chemin chemin du fichier .7z
+  protected string $pathOf7z; // chemin du fichier .7z
   protected string $mapNum; // no sur 4 chiffres
-  protected ?string $thumbnail=null; // nom de la miniature dans l'archive
-  protected Image $main; // les caractéristiques de l'image principale et les MD de la carte
-  /** @var array<string, Image> */
-  protected array $insets=[]; // les cartouches [{name}=> Image]
+  protected ?string $thumbnail=null; // chemin de la vignette dans l'archive
+  protected GeoRefImage $main; // les caractéristiques de l'image principale et les MD de la carte
+  /** @var array<string, GeoRefImage> */
+  protected array $insets=[]; // les cartouches [{name}=> GeoRefImage]
   /** @var array<string, int> */
   protected array $suppls=[]; // liste de noms de fichiers hors specs sous la forme [{name} => 1]
-  protected ?MapCat $mapCat; // enregistrement correspondant à la carte dans MapCat
+  protected ?\mapcat\MapCatItem $mapCat; // enregistrement correspondant à la carte dans MapCat
 
   /* $pathOf7z est le chemin du fichier .7z
   ** $mapNum est le numéro de la carte sur 4 chiffres
@@ -135,12 +137,12 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   function __construct(string $pathOf7z, string $mapNum) {
     //echo "MapArchive::__construct(pathOf7z=$pathOf7z, mapNum=$mapNum)<br>\n";
     if (!is_file($pathOf7z))
-      throw new Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
+      throw new \Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $this->pathOf7z = $pathOf7z;
     $this->mapNum = $mapNum;
-    $this->mapCat = MapCat::get($mapNum);
+    $this->mapCat = \mapcat\MapCatItem::get($mapNum);
     $archive = new My7zArchive($pathOf7z);
-    $this->main = new Image;
+    $this->main = new GeoRefImage;
     foreach ($archive as $entry) {
       //echo "<pre>"; print_r($entry); echo "</pre>\n";
       if ($entry['Attr'] <> '....A') continue; // pas un fichier
@@ -156,7 +158,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
         $name = $matches[2];
         $ext = $matches[4];
         if (!isset($this->insets[$name]))
-          $this->insets[$name] = new Image;
+          $this->insets[$name] = new GeoRefImage;
         if ($ext == 'tif')
           $this->insets[$name]->setTif($entry['Name'], $archive);
         else // $ext == 'xml'
@@ -350,7 +352,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     }
     
     { // miniature
-      echo "<tr><td>miniature</td>";
+      echo "<tr><td>vignette</td>";
       if ($this->thumbnail) {
         $pathOf7zFromPfPath = substr($this->pathOf7z, strlen($PF_PATH));
         //echo "<tr><td colspan=2>pathOf7zFromPfPath=$pathOf7zFromPfPath</td></tr>\n";
@@ -526,30 +528,143 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
 };
 
 
-if ((php_sapi_name() == 'cli') && ($argv[0]=='maparchive.php')) {
-  if (!isset($argv[1])) {
-    echo "usage: $argv[0] [{options}] {chemin_d'un_répertoire_ou_d'un_fichier.7z}\n";
-    echo "Si le chemin correspond à un répertoire alors le parcours récursivement pour trouver les archives 7z\n"
-      ."et vérifier la validité de chaque archive 7z comme carte ShomGT.\n";
-    echo "Options:\n";
-    echo "  -yaml affiche l'objet MapArchive complètement en Yaml.\n";
-    echo "  -invalid affiche le résultat du test de validité de la carte.\n";
-    echo "  -errors affiche les erreurs retournées par le test de validité de la carte.\n";
-    echo "  -php affiche l'objet MapArchive avec print_r() de Php.\n";
-    die();
-  }
-  $options = [];
-  for($i=1; $i < $argc; $i++) {
-    switch ($argv[$i]) {
-      case '-yaml': { $options['yaml'] = true; break; }
-      case '-invalid': { $options['invalid'] = true; break; }
-      case '-errors': { $options['errors'] = true; break; }
-      case '-php': { $options['php'] = true; break; }
-      default: {
-        //echo "i=$i, argv[i]=",$argv[$i],"\n";
-        MapArchive::check($argv[$i], $options);
-        break;
+switch (\bo\callingThisFile(__FILE__)) {
+  case null: return;
+  case 'cli': {
+    if (!isset($argv[1])) {
+      echo "usage: $argv[0] [{options}] {chemin_d'un_répertoire_ou_d'un_fichier.7z}\n";
+      echo "Si le chemin correspond à un répertoire alors le parcours récursivement pour trouver les archives 7z\n"
+        ."et vérifier la validité de chaque archive 7z comme carte ShomGT.\n";
+      echo "Options:\n";
+      echo "  -yaml affiche l'objet MapArchive complètement en Yaml.\n";
+      echo "  -invalid affiche le résultat du test de validité de la carte.\n";
+      echo "  -errors affiche les erreurs retournées par le test de validité de la carte.\n";
+      echo "  -php affiche l'objet MapArchive avec print_r() de Php.\n";
+      die();
+    }
+    $options = [];
+    for($i=1; $i < $argc; $i++) {
+      switch ($argv[$i]) {
+        case '-yaml': { $options['yaml'] = true; break; }
+        case '-invalid': { $options['invalid'] = true; break; }
+        case '-errors': { $options['errors'] = true; break; }
+        case '-php': { $options['php'] = true; break; }
+        default: {
+          //echo "i=$i, argv[i]=",$argv[$i],"\n";
+          MapArchive::check($argv[$i], $options);
+          break;
+        }
       }
     }
+    die();
+  }
+  case 'web': {
+    define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>maparchive@$_SERVER[HTTP_HOST]</title></head><body>\n");
+    define ('MIN_FOR_DISPLAY_IN_COLS', 100); // nbre min d'objets pour affichage en colonnes
+    define ('NBCOLS_FOR_DISPLAY', 24); // nbre de colonnes si affichage en colonnes
+
+    $login = Login::loggedIn() or die("Accès non autorisé\n");
+    $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH') or die("Erreur variable d'environnement SHOMGT3_PORTFOLIO_PATH non définie\n");
+    
+    if (!isset($_GET['map'])) { // la carte n'est pas définie -> sélection
+      $rpath = $_GET['path'] ?? '';
+      echo HTML_HEAD,"<h2>Répertoires de cartes ($rpath)</h2>\n";
+      $names = [];
+      foreach (new \DirectoryIterator("$PF_PATH/$rpath") as $name) {
+        if (in_array($name, ['.','..','.DS_Store'])) continue;
+        if (is_dir("$PF_PATH/$rpath/$name") || (is_file("$PF_PATH/$rpath/$name") && (substr("$PF_PATH/$rpath/$name", -3)=='.7z')))
+          $names[] = (string)$name;
+      }
+      if (count($names) < MIN_FOR_DISPLAY_IN_COLS) { // affichage sans colonne
+        echo "<ul>\n";
+        foreach ($names as $name) {
+          if (is_dir("$PF_PATH/$rpath/$name"))
+            echo "<li><a href='?path=$rpath/$name'>$name</a></li>\n";
+          else
+            echo "<li><a href='?path=$rpath&amp;map=",substr($name, 0, -3),"'>$name</a></li>\n";
+        }
+        echo "</ul>\n";
+      }
+      else { // affichage en colonnes
+        echo "<table border=1><tr>\n";
+        $i = 0;
+        for ($nocol=0; $nocol < NBCOLS_FOR_DISPLAY; $nocol++) {
+          echo "<td valign='top'>\n";
+          while ($i < round(count($names) / NBCOLS_FOR_DISPLAY * ($nocol+1))) {
+            $name = $names[$i];
+            if (is_dir("$PF_PATH/$rpath/$name"))
+              echo "&nbsp;<a href='?path=$rpath/$name'>$name</a>&nbsp;<br>\n";
+            else
+              echo "&nbsp;<a href='?path=$rpath&amp;map=",substr($name, 0, -3),"'>$name</a></li>\n";
+            $i++;
+          }
+          echo "</td>\n";
+        }
+        echo "</tr></table>\n";
+      }
+    }
+    else { // la carte définie -> affichage ou action particulière définie par $_GET['action']
+      switch ($_GET['action'] ?? null) {
+        case null: {
+          $mapNum = substr($_GET['map'], 0, 4);
+          $mapArchive = new MapArchive("$PF_PATH/$_GET[path]/$_GET[map].7z", $mapNum);
+          echo HTML_HEAD;
+          $mapArchive->showAsHtml();
+          break;
+        }
+        case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
+          $archive = new My7zArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
+          $path = $archive->extract($_GET['tif']);
+          $gdalinfo = new GdalInfo($path);
+          header('Content-type: application/json; charset="utf-8"');
+          echo json_encode($gdalinfo->asArray(), JSON_OPTIONS);
+          $archive->remove($path);
+          die();
+        }
+        case 'insetMapping': { // affiche le détail de la correspondance entre cartouches 
+          $mapNum = substr($_GET['map'], 0, 4);
+          $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
+          $mappingInsetsWithMapCat = $map->mappingInsetsWithMapCat(true);
+          echo "<pre>mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
+          sort($mappingInsetsWithMapCat);
+          echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
+          $mapCat = MapCat::get($mapNum);
+          echo "insetTitlesSorted = "; print_r($mapCat->insetTitlesSorted());
+          if ($mappingInsetsWithMapCat <> $mapCat->insetTitlesSorted())
+            echo "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";
+          die();
+        }
+        case 'show7zContents': { // affiche le contenu de l'archive
+          $archive = new My7zArchive("$PF_PATH$_GET[path]/$_GET[map].7z");
+          echo HTML_HEAD,
+               "<b>Contenu de l'archive $_GET[map].7z:</b><br>\n",
+               "<pre><table border=1><th>DateTime</th><th>Attr</th><th>Size</th><th>Compressed</th><th>Name</th>\n";
+          foreach ($archive as $entry) {
+            //echo Yaml::dump([$entry]);
+            if ($entry['Attr'] == '....A') {
+              $href = "shomgeotiff.php/$_GET[path]/$_GET[map].7z/$entry[Name]";
+              echo "<tr><td>$entry[DateTime]</td><td>$entry[Attr]</td><td align='right'>$entry[Size]</td>",
+                   "<td align='right'>$entry[Compressed]</td><td><a href='$href'>$entry[Name]</a></td></tr>\n";
+            }
+            else {
+              echo "<tr><td>$entry[DateTime]</td><td>$entry[Attr]</td><td align='right'>$entry[Size]</td>",
+                   "<td align='right'>$entry[Compressed]</td><td>$entry[Name]</td></tr>\n";
+            }
+          }
+          echo "</table></pre>";
+          die();
+        }
+        case 'dumpPhp': { // affiche le print_r() Php
+          $mapNum = substr($_GET['map'], 0, 4);
+          $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
+          echo HTML_HEAD,"<pre>"; print_r($map); echo "</pre>";
+          die();
+        }
+        default: {
+          die("Action $_GET[action] inconnue\n");
+        }
+      }
+    }
+    die();
   }
 }

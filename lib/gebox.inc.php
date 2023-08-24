@@ -1,4 +1,5 @@
 <?php
+namespace gegeom;
 {/*PhpDoc:
 name:  gebox.inc.php
 title: gebox.inc.php - définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes

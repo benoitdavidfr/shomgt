@@ -1,4 +1,5 @@
 <?php
+namespace gegeom;
 {/*PhpDoc:
 name:  pos.inc.php
 title: pos.inc.php - définition des classes statiques Pos, LPos, LLPos

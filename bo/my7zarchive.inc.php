@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: index.php
 title: my7zarchive.inc.php - étend SevenZipArchive par l'ajout de 2 méthodes simplifiant l'extraction temporaire d'un fichier
@@ -9,7 +10,7 @@ doc: |
 */
 require_once __DIR__.'/SevenZipArchive.php';
 
-class My7zArchive extends SevenZipArchive {
+class My7zArchive extends \SevenZipArchive {
   // retourne le chemin du l'entrée extraite
   function extract(string $entryName): string {
     if (!is_dir(__DIR__.'/temp') && !mkdir(__DIR__.'/temp'))
