@@ -1,6 +1,6 @@
 <?php
-/* bo/viewmap.php - Visualisation d'une carte Shom 7z pour éventuelle validation
- * Benoit DAVID - 11/7-6/8/2023
+/*PhpDoc:
+title: bo/viewmap.php - Visualisation d'une carte Shom 7z pour éventuelle validation- Benoit DAVID - 7-8/2023
  * Utilisé de 3 manières:
  *  - en autonome propose de visualiser les livraisons et les archives
  *  - appelé par addmaps.php pour visualiser et valider une carte 7z
@@ -14,7 +14,7 @@
  *  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
  *  - return - permet de définir un éventuel mécanisme de retour
  *
- * Faire des tests de viewtiff avec:
+ * Faire des tests de viewmap avec:
  *  - 2 cartes normales standard sans cartouches
  *  - 2 cartes normales standard avec cartouches
  *  - toutes les cartes spéciales anciennes et nouvelles
@@ -25,7 +25,7 @@ require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';
 require_once __DIR__.'/maparchive.php';
 
-define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>viewtiff</title></head><body>\n");
+define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>viewmap</title></head><body>\n");
 //define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
 define ('TEST_MAPS', [
     "2 cartes normales sans cartouche" => [
@@ -102,7 +102,6 @@ define ('TEST_MAPS', [
 ); // cartes de tests 
 define ('MIN_FOR_DISPLAY_IN_COLS', 100); // nbre min d'objets pour affichage en colonnes
 define ('NBCOLS_FOR_DISPLAY', 24); // nbre de colonnes si affichage en colonnes
-define ('LGEOJSON_STYLE', ['color'=>'blue', 'weight'=> 2, 'opacity'=> 0.3]); // style passé à l'appel de L.geoJSON()
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -204,12 +203,6 @@ if (!is_file("$PF_PATH$_GET[path]/$_GET[map].7z")) {
   die("Erreur le fichier $PF_PATH$_GET[path]/$_GET[map].7z n'existe pas\n");
 }
 
-/** transforme un GBox en une structure latLngBounds@Leaflet
- * @return TLPos */
-function latLngBounds(GBox $gbox): array {
-  return [[$gbox->south(), $gbox->west()], [$gbox->north(), $gbox->east()]];
-}
-
 switch ($_GET['action'] ?? null) {
   case null: { // affichage des caractéristiques de la carte
     echo HTML_HEAD;
@@ -266,108 +259,7 @@ switch ($_GET['action'] ?? null) {
     echo HTML_HEAD,"<pre>"; print_r($map); echo "</pre>";
     die();
   }
-  case 'viewtiff': { // affiche une carte dans Leaflet avec les images
-    $mapNum = substr($_GET['map'], 0, 4);
-    $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
-    $map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
-    // prefix d'URL vers le répertoire courant
-    $serverUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF']);
-    foreach ($map->gtiffs() as $fileName) {
-      echo "$fileName<br>\n";
-      $tifs[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
-      $spatials[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
-    }
-    echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
-    $spatials = []; // liste des couches Leaflet représentant les ext. spat. des GéoTiffs [title => code JS créant un L.geoJSON]
-    $mapCat = MapCat::get($mapNum);
-    foreach ($mapCat->spatials() as $title => $spatial) {
-      $title = str_replace('"', '\"', $title);
-      //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";
-      $spatials[$title] = $spatial->lgeoJSON(LGEOJSON_STYLE, $title);
-    }
-    //echo "<pre>spatials = "; print_r($spatials); echo "</pre>\n"; //die("Ok ligne ".__LINE__);
-    $bounds = ($georefBox = $map->georefBox()) ? latLngBounds($georefBox) : [];
-    echo "<pre>bounds = "; print_r($bounds); echo "</pre>\n";
-    if (!$tifs)
-      die("Affichage impossible car aucun GéoTiff à afficher\n");
-    if (!$bounds)
-      die("Affichage impossible car impossible de déterminer l'extension à afficher\n");
-    //die("Ok ligne ".__LINE__);
-    break;
-  }
   default: {
     die("Action $_GET[action] inconnue\n");
   }
 }
-?>
-<html>
-  <head>
-    <title>viewtiff <?php echo $_GET['map']; ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css"/>
-    <style>
-      #map {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map" style="height: 100%; width: 100%"></div>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/georaster"></script>
-    <script src="https://unpkg.com/proj4"></script>
-    <script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
-    <script>
-      // si le Feature contient une propriété popupContent alors le popUp est affiché lorsque le Feature est clické
-      function onEachFeature(feature, layer) {
-          // does this feature have a property named popupContent?
-          if (feature.properties && feature.properties.popupContent) {
-              layer.bindPopup(feature.properties.popupContent);
-          }
-      }
-      
-      // initalize leaflet map
-      var map = L.map('map').fitBounds(<?php echo json_encode($bounds); ?>);
-      var baseLayers = {
-        // OSM
-        "OSM" : new L.TileLayer(
-          'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
-          {"attribution":"&copy; les contributeurs d’<a href='http://osm.org/copyright'>OpenStreetMap</a>"}
-        ),
-        // Fond blanc
-        "Fond blanc" : new L.TileLayer(
-          'https://visu.gexplor.fr/utilityserver.php/whiteimg/{z}/{x}/{y}.jpg',
-          { format: 'image/jpeg', minZoom: 0, maxZoom: 21, detectRetina: false}
-        )
-      };
-      var overlays = {};
-      
-      // affichage des extensions spatiales
-<?php foreach ($spatials as $title => $spatial) { ?>
-      overlays[<?php echo "\"$title\""; ?>] = <?php echo $spatial; ?>
-      map.addLayer(overlays[<?php echo "\"$title\""; ?>]);
-<?php } ?>
-      
-<?php foreach ($tifs as $name => $path) { ?>
-      fetch(<?php echo "'$path'"; ?>)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => {
-          parseGeoraster(arrayBuffer).then(georaster => {
-            console.log("georaster:", georaster);
-            overlays[<?php echo "'$name'"; ?>] = new GeoRasterLayer({georaster: georaster, opacity: 1.0, resolution: 256});
-            map.addLayer(overlays[<?php echo "'$name'"; ?>]);
-<?php } ?>
-                  map.addLayer(baseLayers['OSM']);
-                  L.control.layers(baseLayers, overlays).addTo(map);
-<?php foreach ($tifs as $name => $path) { ?>
-              });
-            });
-<?php } ?>
-      
-    </script>
-  </body>
-</html>

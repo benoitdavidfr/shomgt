@@ -408,7 +408,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
          "</pre></td></tr>\n";
     
     // Affichage de la carte Leaflet, du contenu de l'archive et de l'appel du dump
-    echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=viewtiff'>",
+    echo "<tr><td colspan=2><a href='tiffmap.php?path=$_GET[path]&map=$_GET[map]'>",
       "Afficher une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='?path=$_GET[path]&map=$_GET[map]&action=show7zContents'>",
       "Afficher la liste des fichiers contenus dans l'archive 7z</a></td></tr>\n";
