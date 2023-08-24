@@ -117,7 +117,7 @@ class Access {
     catch (SExcept $e) {
       if ($e->getSCode() <> 'MySql::ErrorTableDoesntExist')
         throw new SExcept($e->getMessage(), $e->getSCode());
-      createUserTable();
+      \bo\createUserTable();
       $epasswds = MySql::getTuples($sql);
     }
     //echo '<pre>'; print_r($epasswds); echo "</pre>\n";

@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: pfweight.php
 title: bo/pfweight.php - gestion du poids des cartes du portefeuille - 1/8/2023
@@ -59,7 +60,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
 if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibilité d'en sélectionner une
   echo "<h2>Gestion du poids des cartes du portefeuille</h2>\n";
   $activated = []; // liste des cartes activées cad présentes dans current
-  foreach (new DirectoryIterator("$PF_PATH/current") as $map) {
+  foreach (new \DirectoryIterator("$PF_PATH/current") as $map) {
     if (!in_array($map, ['.','..','.DS_Store']))
       $activated[substr($map, 0, 4)] = 1;
   }
@@ -69,12 +70,12 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
   $duMbSum = 0; // poids total des cartes
   foreach ($output as $outputl) {
     if (!preg_match("!^(\d+)\s$PF_PATH/archives/(\d+)$!", $outputl, $matches))
-      throw new Exception("No match for $outputl");
+      throw new \Exception("No match for $outputl");
     $duMb = intval($matches[1])/1024;
     $mapNum = $matches[2];
     $duMbSum += $duMb;
     $maps[$mapNum] = ['duMb' => $duMb, 'nbVersions'=> 0];
-    foreach (new DirectoryIterator("$PF_PATH/archives/$mapNum") as $version) {
+    foreach (new \DirectoryIterator("$PF_PATH/archives/$mapNum") as $version) {
       if (substr($version, -3)=='.7z')
         $maps[$mapNum]['nbVersions']++;
     }
@@ -87,7 +88,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
         "<td></td><td>Moyenne par carte</td></tr>\n",
        "<th></th><th>Mb</th><th>#vers</th><th>Num et titre de la carte</th>\n";
   foreach ($maps as $mapNum => $map) {
-    $mapCat = MapCat::get($mapNum);
+    $mapCat = \mapcat\MapCat::get($mapNum);
     $ss = $mapCat->obsoleteDate ? '<s>' : '';
     $se = $mapCat->obsoleteDate ? '</s>' : '';
     echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
@@ -104,7 +105,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
 }
 
 else { // liste de versions pour la carte $_GET['map']
-  $mapCat = MapCat::get($_GET['map']);
+  $mapCat = \mapcat\MapCat::get($_GET['map']);
   echo "<h2>Carte $_GET[map] - $mapCat->title</h2>\n";
   echo "<pre>",Yaml::dump($mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
   
@@ -120,7 +121,7 @@ else { // liste de versions pour la carte $_GET['map']
   $duMbSum = 0; // poids total
   foreach ($output as $outputl) {
     if (!preg_match("!^(\d+)\s$PF_PATH/archives/$_GET[map]/(.+)\.7z$!", $outputl, $matches))
-      throw new Exception("No match for $outputl");
+      throw new \Exception("No match for $outputl");
     $duMbs[$matches[2]] = intval($matches[1])/1024;
     $duMbSum += intval($matches[1])/1024;
   }

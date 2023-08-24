@@ -1,7 +1,9 @@
 <?php
+namespace dashboard;
+/*PhpDoc:
+title: dashboard/index.php - 12/6/2023
+*/
 /**
- * dashboard/index.php - 12/6/2023
- *
  * Tableau de bord de mise à jour des cartes.
  * Affiche:
  *  1) les cartes manquantes ou en excès dans le portefeuille par rapport au flux WFS du Shom
@@ -64,7 +66,7 @@ function addUndescoreForThousand(?int $scaleden): string {
 class MapFromWfs {
   /** @var array<string, string> $prop */
   public readonly array $prop; // properties 
-  public readonly MultiPolygon $mpol; // géométrie comme MultiPolygon
+  public readonly \gegeom\MultiPolygon $mpol; // géométrie comme MultiPolygon
   
   /** @var array<string, MapFromWfs> $fts */
   static array $fts; // liste des MapFromWfs indexés sur carte_id
@@ -82,7 +84,7 @@ class MapFromWfs {
   /** @param TGeoJsonFeature $gmap */
   function __construct(array $gmap) {
     $this->prop = $gmap['properties'];
-    $this->mpol = MultiPolygon::fromGeoArray($gmap['geometry']);
+    $this->mpol = \gegeom\MultiPolygon::fromGeoArray($gmap['geometry']);
   }
   
   function mawwcatUrl(): string { // construction de l'URL vers mapwcat.php bien centré et avec le bon niveau de zoom
@@ -110,7 +112,7 @@ class MapFromWfs {
       $array['status'] = 'sans échelle';
     elseif ($this->prop['scale'] > 6e6)
       $array['status'] = 'à petite échelle (< 1/6M)';
-    elseif ($mapsFr = Zee::inters($this->mpol))
+    elseif ($mapsFr = \shomft\Zee::inters($this->mpol))
       $array['status'] = 'intersecte '.implode(',',$mapsFr);
     else
       $array['status'] = "Hors ZEE française";
@@ -126,7 +128,7 @@ class MapFromWfs {
     foreach (self::$fts as $id => $gmap) {
       if (isset($gmap->prop['scale']) && ($gmap->prop['scale'] > 6e6))
         $list[$gmap->prop['carte_id']] = ['SmallScale'];
-      elseif ($zeeIds = Zee::inters($gmap->mpol))
+      elseif ($zeeIds = \shomft\Zee::inters($gmap->mpol))
         $list[$gmap->prop['carte_id']] = $zeeIds;
     }
     return $list;
@@ -135,7 +137,7 @@ class MapFromWfs {
 
 class Perempt { // croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption
   protected string $mapNum;
-  protected ?MapCat $mapCat; // info de MapCat
+  protected ?\mapcat\MapCatItem $mapCat; // info de MapCat
   protected string $pfVersion; // info du portefeuille 
   protected ?string $pfDate; // info du portefeuille 
   protected string $ganVersion=''; // info du GAN 
@@ -156,7 +158,7 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   function __construct(string $mapNum, array $mapMd) {
     //echo "<pre>"; print_r($map);
     $this->mapNum = $mapNum;
-    $this->mapCat = MapCat::get($mapNum);
+    $this->mapCat = \mapcat\MapCat::get($mapNum);
     $this->pfVersion = $mapMd['version'];
     $this->pfDate = $mapMd['dateMD']['value'] ?? $mapMd['dateArchive'];
   }
@@ -364,7 +366,7 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
 
 
 // Teste si à la fois $now - $first >= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now 
-function dateBetween(DateTimeImmutable $first, DateTimeImmutable $now, int $dayOfWeek=4, int $h=20, int $mn=0): bool {
+function dateBetween(\DateTimeImmutable $first, \DateTimeImmutable $now, int $dayOfWeek=4, int $h=20, int $mn=0): bool {
   //echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
   
   //$diff = $first->diff($now); print_r($diff); echo "<br>\n";
@@ -411,15 +413,15 @@ function dateBetween(DateTimeImmutable $first, DateTimeImmutable $now, int $dayO
 }
 
 function testDateBetween(): void {
-  $first = DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15');
-  $now = new DateTimeImmutable;
-  echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
+  $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15');
+  $now = new \DateTimeImmutable;
+  echo 'first = ',$first->format(\DateTimeInterface::ISO8601),', now = ',$now->format(\DateTimeInterface::ISO8601),"<br>\n";
   $db = dateBetween($first, $now, 4, 20, 00);
   echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
   
-  $first = DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-11'); // Ve
-  $now = DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15'); // Ma
-  echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
+  $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-11'); // Ve
+  $now = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15'); // Ma
+  echo 'first = ',$first->format(\DateTimeInterface::ISO8601),', now = ',$now->format(\DateTimeInterface::ISO8601),"<br>\n";
   $db = dateBetween($first, $now, 4, 20, 00);
   echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
 }
@@ -433,11 +435,11 @@ function ganHarvestAge(): int {
   //return -1;
   if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
     return -1;
-  $now = new DateTimeImmutable;
+  $now = new \DateTimeImmutable;
   $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
   $valid = explode('/', $gans['valid']);
   //echo "valid="; print_r($valid); echo "<br>\n";
-  $valid = DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
+  $valid = \DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
   if (dateBetween($valid, $now, 4, 20, 00)) {
     //print_r($valid->diff($now));
     return $valid->diff($now)->days;
@@ -450,7 +452,7 @@ function wfsAge(): int {
   if (!is_file(__DIR__."/../shomft/gt.json"))
     return -1;
   //echo 'filemtime=',date('Y-m-d', filemtime(__DIR__."/../shomft/gt.json")),"<br>\n";
-  $now = new DateTimeImmutable;
+  $now = new \DateTimeImmutable;
   $filemtime = $now->setTimestamp(filemtime(__DIR__."/../shomft/gt.json"));
   //echo "filemtime="; print_r($filemtime); echo "<br>\n";
   return $filemtime->diff($now)->days;

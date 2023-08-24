@@ -37,7 +37,7 @@ echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
 
 // fabrication de la liste des extensions spatiales à afficher dans la carte
 $spatials = []; // liste des couches Leaflet représentant les ext. spat. des GéoTiffs [title => code JS créant un L.geoJSON]
-$mapCat = \mapcat\MapCatItem::get($mapNum);
+$mapCat = \mapcat\MapCat::get($mapNum);
 foreach ($mapCat->spatials() as $title => $spatial) {
   $title = str_replace('"', '\"', $title);
   //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";

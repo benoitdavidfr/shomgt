@@ -14,10 +14,10 @@ class My7zArchive extends \SevenZipArchive {
   // retourne le chemin du l'entrée extraite
   function extract(string $entryName): string {
     if (!is_dir(__DIR__.'/temp') && !mkdir(__DIR__.'/temp'))
-      throw new Exception("Erreur de création du répertoire __DIR__/temp");
+      throw new \Exception("Erreur de création du répertoire __DIR__/temp");
     $uniqid = uniqid();
     if (!is_dir(__DIR__."/temp/$uniqid") && !mkdir(__DIR__."/temp/$uniqid"))
-      throw new Exception("Erreur de création du répertoire __DIR__/temp/$uniqid");
+      throw new \Exception("Erreur de création du répertoire __DIR__/temp/$uniqid");
     $this->extractTo(__DIR__."/temp/$uniqid", $entryName);
     return __DIR__."/temp/$uniqid/$entryName"; 
   }
@@ -36,7 +36,7 @@ class My7zArchive extends \SevenZipArchive {
 
 if (__FILE__ == "$_SERVER[DOCUMENT_ROOT]$_SERVER[SCRIPT_NAME]") { // TEST de la classe
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+    throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
   $archive = new My7zArchive("$PF_PATH/incoming/20230710/7090.7z");
   if (0) { // @phpstan-ignore-line

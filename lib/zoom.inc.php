@@ -56,7 +56,7 @@ class Zoom {
     $x0 = - $base;
     $y0 =   $base;
     $size = self::Size0 / pow(2, $z);
-    return new EBox([
+    return new \gegeom\EBox([
       $x0 + $size * $ix, $y0 - $size * ($iy+1),
       $x0 + $size * ($ix+1), $y0 - $size * $iy
     ]);
@@ -65,7 +65,7 @@ class Zoom {
   // calcule les tuiles couvrant un GBox sous la forme d'une liste [['x'=>x, 'y'=>y, 'z'=>z]]
   // Lève une exception en cas d'erreur
   /** @return array<int, array<string, int>> */
-  static function gboxToTiles(GBox $gbox, int $width, int $height): array {
+  static function gboxToTiles(\gegeom\GBox $gbox, int $width, int $height): array {
     //echo "gbox=$gbox\n";
     return self::wemboxToTiles($gbox->proj('WebMercator'), $width, $height);
   }
@@ -73,7 +73,7 @@ class Zoom {
   // calcule les tuiles couvrant un EBox en coord. WebMercator sous la forme d'une liste [['x'=>x, 'y'=>y, 'z'=>z]]
   // Lève une exception en cas d'erreur
   /** @return array<int, array<string, int>> */
-  static function wemboxToTiles(EBox $ebox, int $width, int $height): array {
+  static function wemboxToTiles(\gegeom\EBox $ebox, int $width, int $height): array {
     //echo "ebox=$ebox, width=$width, height=$height\n";
     $pxSze = ($ebox->dx()/$width + $ebox->dy()/$height) / 2;
     $zoom = log(Zoom::Size0 / $pxSze / 256, 2);
@@ -121,10 +121,10 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
          "<br>\n ->geo('WebMercator') -> ",Zoom::tileEBox(9, 253, 176)->geo('WebMercator'),"<br>\n";
     echo "<h2>Test de Zoom::gboxToTiles()</h2>\n";
     foreach ([
-        ['gbox'=> new GBox([[4.5,43.0], [5.1,43.5]]), 'width'=> 1200, 'height'=> 800],
-        ['gbox'=> new GBox([[45,-90], [90,0]]), 'width'=> 1200, 'height'=> 800],
-        ['gbox'=> new GBox([[0,0], [45,45]]), 'width'=> 1, 'height'=> 1],
-        ['gbox'=> new GBox([[0,0], [45,45]]), 'width'=> 100000, 'height'=> 1000000],
+        ['gbox'=> new \gegeom\GBox([[4.5,43.0], [5.1,43.5]]), 'width'=> 1200, 'height'=> 800],
+        ['gbox'=> new \gegeom\GBox([[45,-90], [90,0]]), 'width'=> 1200, 'height'=> 800],
+        ['gbox'=> new \gegeom\GBox([[0,0], [45,45]]), 'width'=> 1, 'height'=> 1],
+        ['gbox'=> new \gegeom\GBox([[0,0], [45,45]]), 'width'=> 100000, 'height'=> 1000000],
       ] as $params) {
         echo "gbox=$params[gbox]<br>\n";
         try {

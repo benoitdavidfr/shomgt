@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: pfcurrent.php
 title: bo/pfcurrent.php - gestion des versions courantes des cartes du portefeuille - 1/8/2023
@@ -25,7 +26,7 @@ if (!($login = Login::loggedIn())) {
 }
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
 echo "<!DOCTYPE html><html><head><title>bo/activation</title></head><body>\n";
 //echo "<pre>_POST="; print_r($_POST); echo "</pre>\n";
@@ -55,13 +56,13 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
 if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibilité d'en sélectionner une
  echo "<h2>Gestion de l'activation des cartes du portefeuille</h2>\n";
  $activated = []; // liste des cartes activées cad présented dans current
- foreach (new DirectoryIterator("$PF_PATH/current") as $map) {
+ foreach (new \DirectoryIterator("$PF_PATH/current") as $map) {
    if (!in_array($map, ['.','..','.DS_Store']))
      $activated[substr($map, 0, 4)] = 1;
  }
  echo "<table border=1>\n";
  foreach (directoryEntries("$PF_PATH/archives") as $mapNum) {
-   $mapCat = MapCat::get($mapNum);
+   $mapCat = \mapcat\MapCat::get($mapNum);
    $ss = $mapCat->obsoleteDate ? '<s>' : '';
    $se = $mapCat->obsoleteDate ? '</s>' : '';
    echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
@@ -75,7 +76,7 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
   echo "<a href='index.php'>Retour au menu du BO</a></p>\n";
 }
 else { // liste de versions pour la carte $_GET['map']
-  $mapCat = MapCat::get($_GET['map']);
+  $mapCat = \mapcat\MapCat::get($_GET['map']);
   echo "<h2>Carte $_GET[map] - $mapCat->title</h2>\n";
   echo "<pre>",Yaml::dump($mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
   

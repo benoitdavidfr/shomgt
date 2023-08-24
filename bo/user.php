@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: user.php
 title: bo/user.php - création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023
@@ -109,13 +110,13 @@ class SqlSchema {
 };
 
 $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI') or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-MySql::open($LOG_MYSQL_URI);
+\MySql::open($LOG_MYSQL_URI);
 
 function createUserTable(): void { // création de la table des utilisateurs 
-  MySql::query('drop table if exists user');
+  \MySql::query('drop table if exists user');
   $query = SqlSchema::sql('user', SqlSchema::USER_TABLE);
   //echo "<pre>query=$query</pre>\n";
-  MySql::query($query);
+  \MySql::query($query);
   // initialisation de la table des utilisateurs
   foreach (config('loginPwds') as $email => $user) {
     if (!isset($user['passwd'])) {
@@ -125,11 +126,11 @@ function createUserTable(): void { // création de la table des utilisateurs
     $epasswd = password_hash($user['passwd'], PASSWORD_DEFAULT);
     $valid = $user['valid'] ?? 'now()';
     $role = $user['role'] ?? 'normal';
-    $comment = isset($user['comment']) ? "'".mysqli_real_escape_string(MySql::$mysqli, $user['comment'])."'" : 'null';
+    $comment = isset($user['comment']) ? "'".mysqli_real_escape_string(\MySql::$mysqli, $user['comment'])."'" : 'null';
     $query = "insert into user(email, epasswd, role, createdt, valid, comment) "
              ."values('$email', '$epasswd', '$role', now(), $valid, $comment)";
     //echo "<pre>query$query</pre>\n";
-    MySql::query($query);
+    \MySql::query($query);
   }
 }
 //createUserTable(); die("FIN ligne ".__LINE__);
@@ -140,16 +141,16 @@ function userRole(?string $user): ?string { // renvoit le role de l'utilisateur 
   }
   else {
     try {
-      $roles = MySql::getTuples("select role from user where email='$user'");
+      $roles = \MySql::getTuples("select role from user where email='$user'");
       return $roles[0]['role'] ?? null;
     }
-    catch (SExcept $e) {
-      if ($e->getSCode() == 'MySql::ErrorTableDoesntExist') {
+    catch (\SExcept $e) {
+      if ($e->getSCode() == '\MySql::ErrorTableDoesntExist') {
         createUserTable();
         return null;
       }
       else
-        throw new SExcept($e->getMessage(), $e->getSCode());
+        throw new \SExcept($e->getMessage(), $e->getSCode());
     }
   }
 }
@@ -304,7 +305,7 @@ $actions = [
         echo "Logué comme '$user' avec un role '$role'.<br>\n";
       else
         echo "Utilisateur non logué.<br>\n";
-      $diff = MySql::getTuples("select valid, now() now, DATEDIFF(now(), valid) diff from user where email='$user'")[0] ?? null;
+      $diff = \MySql::getTuples("select valid, now() now, DATEDIFF(now(), valid) diff from user where email='$user'")[0] ?? null;
       //echo '<pre>',Yaml::dump([$user]),"</pre>\n";
       if ($diff && (intval($diff['diff']) > 6*30)) {
         printf("La dernière validation du compte remonte à %.0f mois<br>\n", intval($diff['diff'])/30);
@@ -373,14 +374,14 @@ $actions = [
     'apply'=> function (): void {
       echo '<pre>'; print_r($_GET); echo "</pre>\n";
       if (isset($_GET['role'])) {
-        MySql::query("update user set role='$_GET[role]' where email='$_GET[email]'");
+        \MySql::query("update user set role='$_GET[role]' where email='$_GET[email]'");
       }
       if (isset($_GET['comment'])) {
-        $comment = mysqli_real_escape_string(MySql::$mysqli, $_GET['comment']);
-        MySql::query("update user set comment='$comment' where email='$_GET[email]'");
+        $comment = mysqli_real_escape_string(\MySql::$mysqli, $_GET['comment']);
+        \MySql::query("update user set comment='$comment' where email='$_GET[email]'");
       }
       echo "<table border=1><th>email</th><th>role</th><th>création</th><th>validité</th><th>commentaire</th>\n";
-      foreach (MySql::query("select * from user order by email") as $user) {
+      foreach (\MySql::query("select * from user order by email") as $user) {
         echo "<tr><td>$user[email]</td>",
             "<td>",Html::select(
                 name: 'role',
@@ -468,7 +469,7 @@ $actions = [
       $email = $_POST['email'] ?? $_GET['email'] ?? die("Erreur, email non défini dans registerSubmit");
       $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? die("Erreur, passwd non défini dans registerSubmit");
       $passwd2 = $_POST['passwd2'] ?? $_GET['passwd2'] ?? die("Erreur, passwd2 non défini dans registerSubmit");
-      $users = MySql::getTuples("select role from user where email='$email'");
+      $users = \MySql::getTuples("select role from user where email='$email'");
       if ($users && ($users[0]['role'] == 'banned')) {
         die("Erreur, l'utilisateur '$email' est banni.<br>\n");
       }
@@ -488,7 +489,7 @@ $actions = [
         $query = "insert into user(email, newepasswd, role, secret, createdt, sent)
                         values('$email', '$newepasswd', 'temp', '$secret', now(), now())";
       }
-      MySql::query($query);
+      \MySql::query($query);
   
       // un email lui est envoyé avec un lien contenant le secret
       sendMail('validateRegistration', $email, $secret, $passwd);
@@ -510,17 +511,17 @@ $actions = [
       $email = $_GET['email'] ?? die("Appel incorrect, paramètre absent<br>\n");
       $secret = $_GET['secret'] ?? die("Appel incorrect, paramètre absent<br>\n");
       // modification table valid=now, role='normal', secret=null / email+secret
-      $user = MySql::getTuples("select role from user where email='$email' and secret='$secret'")[0];
+      $user = \MySql::getTuples("select role from user where email='$email' and secret='$secret'")[0];
       $role = match ($user['role']) {
         'banned' => die("validateRegistration interdit pour role=='banned'"),
         'admin','normal','restricted','system' => $user['role'],
         'suspended','closed','temp' => 'normal',
-        default => throw new Exception("valeur $user[role] interdite"),
+        default => throw new \Exception("valeur $user[role] interdite"),
       };
       $query = "update user set role='$role', valid=now(), epasswd=newepasswd, newepasswd=null, secret=null, sent=null "
               ."where email='$email' and secret='$secret'";
-      MySql::query($query);
-      if (mysqli_affected_rows(MySql::$mysqli) == 1) {
+      \MySql::query($query);
+      if (mysqli_affected_rows(\MySql::$mysqli) == 1) {
         echo "Enregistrement validé<br>\n";
       }
       else {
@@ -543,7 +544,7 @@ $actions = [
     'apply'=> function(): void {
       $email = Login::loggedIn() or die("Erreur, pour fermer son compte un utilisateur soit être loggé");
       $secret = random_int(0, 1000000); // un secret est généré aléatoirement
-      MySql::query("update user set secret='$secret', sent=now() where email='$email'");
+      \MySql::query("update user set secret='$secret', sent=now() where email='$email'");
       // un email lui est envoyé avec un lien contenant le secret
       sendMail('validateCloseAccount', $email, $secret);
       die();
@@ -562,8 +563,8 @@ $actions = [
       // modification table valid=now, role='normal', secret=null / email+secret
       $query = "update user set role='closed', valid=null, secret=null, sent=null "
               ."where email='$email' and secret='$secret'";
-      MySql::query($query);
-      if (mysqli_affected_rows(MySql::$mysqli) == 1) {
+      \MySql::query($query);
+      if (mysqli_affected_rows(\MySql::$mysqli) == 1) {
         echo "Cloture validée<br>\n";
       }
       else {
@@ -585,7 +586,7 @@ $actions = [
     'apply'=> function(): void { 
       $email = Login::loggedIn();
       $secret = random_int(0, 1000000);
-      MySql::query("update user set secret='$secret', sent=now() where email='$email'");
+      \MySql::query("update user set secret='$secret', sent=now() where email='$email'");
       // un email est envoyé avec un lien contenant le secret
       sendMail('validateReValidation', $email, $secret);
       die();
@@ -604,7 +605,7 @@ $actions = [
     'apply'=> function(): void {
       if ($email = $_GET['email'] ?? null) {
         $secret = random_int(0, 1000000);
-        MySql::query("update user set secret='$secret', sent=now() where email='$email'");
+        \MySql::query("update user set secret='$secret', sent=now() where email='$email'");
         // un email est envoyé avec un lien contenant le secret
         sendMail('validateReValidation', $email, $secret);
         echo "Un mail a été envoyé à $email<br>\n";
@@ -616,7 +617,7 @@ $actions = [
                 where DATEDIFF(now(), valid) > $maxDelayInDays -- validé il y a plus de 11 mois
                   and (sent is null or DATEDIFF(now(), sent) > 7) -- et à qui un rappel n'a pas été envoyé récemment";
       $emptyResult = true;
-      foreach (MySql::query($query) as $user) {
+      foreach (\MySql::query($query) as $user) {
         $emptyResult = false;
         $button = Html::button('envoyer un email', ['action'=> 'reValidateOldUsers', 'email'=> $user['email']], '', 'get');
         echo '<tr><td><pre>',Yaml::dump([$user]),"</pre></td></tr>\n";
@@ -642,8 +643,8 @@ $actions = [
       $email = $_GET['email'] ?? die("Erreur paramètre email absent dans validateReValidation");
       $secret = $_GET['secret'] ?? die("Erreur paramètre secret absent dans validateReValidation");
       $query = "update user set valid=now(), secret=null, sent=null where email='$email' and secret='$secret'";
-      MySql::query($query);
-      if (mysqli_affected_rows(MySql::$mysqli) == 1) {
+      \MySql::query($query);
+      if (mysqli_affected_rows(\MySql::$mysqli) == 1) {
         echo "ReValidation validée<br>\n";
       }
       else {
@@ -666,7 +667,7 @@ $actions = [
     'apply'=> function(): void {
       if ($email = $_GET['email'] ?? null) {
         $secret = random_int(0, 1000000);
-        MySql::query("update user set role='suspended', secret='$secret', sent=now() where email='$email'");
+        \MySql::query("update user set role='suspended', secret='$secret', sent=now() where email='$email'");
         // un email est envoyé avec un lien contenant le secret
         sendMail('validateAfterSuspension', $email, $secret);
         echo "Un mail a été envoyé à $email<br>\n";
@@ -679,7 +680,7 @@ $actions = [
                 where DATEDIFF(now(), valid) > $maxDelayInDays -- validé il y a plus d'un an
                   and (sent is null or DATEDIFF(now(), sent) > 7) -- et à qui un rappel n'a pas été envoyé récemment";
       $emptyResult = true;
-      foreach (MySql::query($query) as $user) {
+      foreach (\MySql::query($query) as $user) {
         $emptyResult = false;
         $button = Html::button(
           submitValue: 'envoyer un email', 

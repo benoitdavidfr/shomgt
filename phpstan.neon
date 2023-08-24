@@ -87,6 +87,8 @@ parameters:
       - bo/mail.php
       - bo/neworg.php
       - bo/purge.php
+      - bo/testworldmerc.php
+      - bo/viewmap.php
   universalObjectCratesClasses:
     - mapcat\MapCatItem
   treatPhpDocTypesAsCertain: false

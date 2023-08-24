@@ -1,7 +1,7 @@
 <?php
-namespace bo;
+namespace mapcat;
 /*PhpDoc:
-title: bo/mapcat.php - gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN
+title: mapcat/index.php - gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN
 classes:
 doc: |
   L'objectif est d'une part de vérifier les contraintes sur MapCat et, d'autre part, d'identifier les écarts entre mapcat
@@ -28,8 +28,8 @@ journal: |
     - migration 
 */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/login.inc.php';
-require_once __DIR__.'/../mapcat/mapcat.inc.php';
+require_once __DIR__.'/../bo/login.inc.php';
+require_once __DIR__.'/mapcat.inc.php';
 require_once __DIR__.'/../shomft/frzee.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
@@ -39,14 +39,14 @@ require_once __DIR__.'/../dashboard/gan.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 
-if (!callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
+if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 
 
 echo "<!DOCTYPE html>\n<html><head><title>bo/mapcat@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 /** retourne la liste des images géoréférencées de la carte sous la forme [{id} => $info]
  * @return array<string, array<string, mixed>> */
-function geoImagesOfMap(string $mapNum, MapCat $mapCat): array {
+function geoImagesOfMap(string $mapNum, MapCatItem $mapCat): array {
   $spatials = $mapCat->spatial ? [$mapNum => $mapCat->asArray()] : [];
   //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
   foreach($mapCat->insetMaps ?? [] as $i => $insetMap) {
@@ -60,10 +60,10 @@ function cmpGans(): void { // comparaison MapCat / GAN
     "<th>cat'scale</th><th>gan'scale</th><th>ok?</th>",
     "<th>cat'SW</th><th>gan'SW</th><th>ok?</th>",
     "<th>x</th><th>cat'NE</th><th>gan'NE</th><th>ok?</th>\n";
-  foreach (MapCat::mapNums(['current']) as $mapNum) {
-    $mapCat = MapCat::get($mapNum);
+  foreach (\mapcat\MapCat::mapNums(['current']) as $mapNum) {
+    $mapCat = \mapcat\MapCat::get($mapNum);
     //echo "<pre>"; print_r($map); echo "</pre>";
-    if (!($gan = Gan::$gans[substr($mapNum, 2)] ?? null)) { // carte définie dans MapCat et absente du GAN
+    if (!($gan = \dashboard\Gan::$gans[substr($mapNum, 2)] ?? null)) { // carte définie dans MapCat et absente du GAN
       echo "<tr><td>$mapNum</td><td>",$mapCat->badGan ?? '',"</td><td></td>";
       echo "<td>",$mapCat->scale(),"</td><td colspan=9>Absente du GAN</td></tr>\n";
       continue;
@@ -91,7 +91,7 @@ function cmpGans(): void { // comparaison MapCat / GAN
     }
     foreach ($mapCat->insetMaps ?? [] as $i => $insetMap) {
       try {
-        $ganpart = Gan::$gans[substr($mapNum, 2)]->inSet(GBox::fromGeoDMd($insetMap['spatial']));
+        $ganpart = \dashboard\Gan::$gans[substr($mapNum, 2)]->inSet(new \gegeom\GBox($insetMap['spatial']));
         $ganpartspatial = [
           'SW' => str_replace('—', '-', $ganpart->spatial()['SW']),
           'NE' => str_replace('—', '-', $ganpart->spatial()['NE']),
@@ -113,7 +113,7 @@ function cmpGans(): void { // comparaison MapCat / GAN
           echo "</tr>\n";
         }
       }
-      catch (SExcept $e) {
+      catch (\SExcept $e) {
       }
     }
   }
@@ -239,7 +239,7 @@ EOT;
   static function getDefSchema(string $def): array {
     $catSchema = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.schema.yaml');
     if (!isset($catSchema['definitions'][$def]))
-      throw new Exception("Définition '$def' inconnue dans le schéma de MapCat");
+      throw new \Exception("Définition '$def' inconnue dans le schéma de MapCat");
     return [
       '$id'=> "https://sgserver.geoapi.fr/index.php/cat/schema/$def",
       '$schema'=> $catSchema['$schema'],
@@ -260,7 +260,7 @@ EOT;
     try {
       $doc = Yaml::parse($yaml);
     }
-    catch (Symfony\Component\Yaml\Exception\ParseException $e) {
+    catch (\Symfony\Component\Yaml\Exception\ParseException $e) {
       return ['errors'=> ["Erreur Yaml: ".$e->getMessage()]];
     }
     
@@ -286,21 +286,21 @@ EOT;
     // calcul de MapsFrance en fonction de spatial
     if (!isset($doc['mapsFrance'])) {
       if (isset($doc['spatial'])) { // Si spatial est défini
-        $spatialSchema = new JsonSchema(self::getDefSchema('spatial'));
+        $spatialSchema = new \JsonSchema(self::getDefSchema('spatial'));
         if (!$spatialSchema->check($doc['spatial'])->errors()) { // s'il est conforme à son schéma
           $mapSpatial = new Spatial($doc['spatial']);
-          $doc['mapsFrance'] = Zee::inters($mapSpatial);
+          $doc['mapsFrance'] = \shomft\Zee::inters($mapSpatial);
         }
       }
       elseif (isset($doc['insetMaps']) && is_array($doc['insetMaps'])) { // sinon, j'essaie de déduire des cartouches
-        $mapSpatial = new GBox;
+        $mapSpatial = new \gegeom\GBox;
         foreach ($doc['insetMaps'] as $insetMap) {
-          $insetMapSchema = new JsonSchema(self::getDefSchema('insetMap'));
+          $insetMapSchema = new \JsonSchema(self::getDefSchema('insetMap'));
           if (!$insetMapSchema->check($insetMap)->errors()) {
             $mapSpatial->union(new Spatial($insetMap['spatial']));
           }
         }
-        $doc['mapsFrance'] = Zee::inters($mapSpatial);
+        $doc['mapsFrance'] = \shomft\Zee::inters($mapSpatial);
       }
     }
     
@@ -315,7 +315,7 @@ EOT;
     }
     
     // vérification du schema de map
-    $mapSchema = new JsonSchema(self::getDefSchema('map'));
+    $mapSchema = new \JsonSchema(self::getDefSchema('map'));
     $status = $mapSchema->check($doc);
     if ($status->errors())
       return [
@@ -392,15 +392,15 @@ EOT
     foreach (JEUX_TESTS as $title => $jeu) {
       $valid = self::validatesAgainstSchema($jeu['yaml']);
       if (isset($valid['errors']))
-        echo "<pre>",YamlDump([$title => ['jeu' => $jeu, 'validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
+        echo "<pre>",\bo\YamlDump([$title => ['jeu' => $jeu, 'validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
       else
-        echo "<pre>",YamlDump([$title => ['validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
+        echo "<pre>",\bo\YamlDump([$title => ['validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
     }
   }
 };
 
 
-if (!($user = Login::loggedIn())) {
+if (!($user = \bo\Login::loggedIn())) {
   die("Erreur, ce sript nécessite d'être logué\n");
 }
 
@@ -423,7 +423,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     
     { // Vérifie qu'aucun no de carte apparait dans plusieurs sections
       $maps = [];
-      foreach (MapCat::ALL_KINDS as $kind) {
+      foreach (MapCatItem::ALL_KINDS as $kind) {
         foreach (MapCat::mapNums([$kind]) as $mapNum) {
           $maps[$mapNum][$kind] = MapCat::get($mapNum, [$kind]);
         }
@@ -488,7 +488,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     break;
   }
   case 'cmpGan': { // Confronte les données de localisation de MapCat avec celles du GAN
-    GanStatic::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
+    \dashboard\GanStatic::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
     //echo '<pre>gans='; print_r(Gan::$gans);
     cmpGans();
     break;
@@ -500,11 +500,11 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case 'createTable': { // crée et peuple la table mapcat à partir du fichier mapcat.yaml
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-    MySql::open($LOG_MYSQL_URI);
-    MySql::query('drop table if exists mapcat');
+    \MySql::open($LOG_MYSQL_URI);
+    \MySql::query('drop table if exists mapcat');
     $query = MapCatDef::createTableSql('mapcat', MapCatDef::MAPCAT_TABLE_SCHEMA);
     //echo "<pre>query=$query</pre>\n";
-    MySql::query($query);
+    \MySql::query($query);
 
     //MySql::query('delete from mapcat');
     foreach (MapCatFromFile::mapNums() as $mapNum) {
@@ -514,27 +514,27 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       $jdoc = $mapCat->asArray();
       $kind = $jdoc['kind'];
       unset($jdoc['kind']);
-      $jdoc = MySql::$mysqli->real_escape_string(json_encode($jdoc));
+      $jdoc = \MySql::$mysqli->real_escape_string(json_encode($jdoc));
       //$obsoletedt = $mapCat->obsoleteDate ? "'$mapCat->obsoleteDate'" : 'null';
       $query = "insert into mapcat(mapnum, kind, jdoc, updatedt) "
         ."values('$mapNum', '$kind', '$jdoc', now())";
       //echo "<pre>query=$query</pre>\n";
-      MySql::query($query);
+      \MySql::query($query);
     }
     break;
   }
   case 'showMapCat': { // affiche le contenu de la table mapcat
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-    MySql::open($LOG_MYSQL_URI);
+    \MySql::open($LOG_MYSQL_URI);
     $mapCat = [];
-    foreach (MySql::query("select * from mapcat order by id") as $tuple) {
+    foreach (\MySql::query("select * from mapcat order by id") as $tuple) {
       $tuple['jdoc'] = json_decode($tuple['jdoc'], true);
       $mapCat[$tuple['mapnum']] = $tuple;
     }
     echo "<pre>\n";
     foreach ($mapCat as $mapNum => $mapCatEntry) {
-      echo YamlDump([$mapCatEntry], 5);
+      echo \bo\YamlDump([$mapCatEntry], 5);
     }
     echo "</pre>\n";
     break;
@@ -542,10 +542,10 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case 'updateMapCat': { // affiche les entrées de MapCat pour en sélectionner une pour mise à jour
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-    MySql::open($LOG_MYSQL_URI);
+    \MySql::open($LOG_MYSQL_URI);
     $mapCat = [];
     $sql = 'select id, mapnum, jdoc->"$.title" title from mapcat where kind=\'current\' order by id';
-    foreach (MySql::query($sql) as $tuple) {
+    foreach (\MySql::query($sql) as $tuple) {
       $mapCat[$tuple['mapnum']] = ['id'=> $tuple['id'], 'title'=> "$tuple[mapnum] - ".substr($tuple['title'], 1, -1)];
     }
     ksort($mapCat);
@@ -561,12 +561,12 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       if (!isset($valid['errors'])) { // description conforme, l'enregistrement est créé en base
         $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
           or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-        MySql::open($LOG_MYSQL_URI);
-        $jdocRes = MySql::$mysqli->real_escape_string(json_encode($valid['validDoc']));
+        \MySql::open($LOG_MYSQL_URI);
+        $jdocRes = \MySql::$mysqli->real_escape_string(json_encode($valid['validDoc']));
         $query = "insert into mapcat(mapnum, kind, jdoc, updatedt, user) "
                             ."values('$_POST[mapnum]', 'current', '$jdocRes', now(), '$user')";
         echo "<pre>query=$query</pre>\n";
-        MySql::query($query);
+        \MySql::query($query);
         echo "maj carte $_POST[mapnum] ok<br>\n";
         switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
           case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
@@ -586,15 +586,15 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     }
     else { // Premier affichage du formulaire
       if (isset($_GET['id']))
-        $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
+        $mapcat = \MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
       elseif (isset($_GET['mapnum'])) {
-        $mapcat = MySql::getTuples("select mapnum, jdoc from mapcat where mapnum='FR$_GET[mapnum]' order by id desc")[0];
+        $mapcat = \MySql::getTuples("select mapnum, jdoc from mapcat where mapnum='FR$_GET[mapnum]' order by id desc")[0];
         if (!$mapcat)
           die("Erreur FR$_GET[mapnum] n'existe pas dans la table mapcat");
       }
       else
         die("Appel de ".__FILE__."incorrect");
-      $mapcat['yaml'] = YamlDump(json_decode($mapcat['jdoc'], true), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+      $mapcat['yaml'] = \bo\YamlDump(json_decode($mapcat['jdoc'], true), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
     }
     // Fabrique le formulaire à partir de la variable $mapcat
     echo "<b>Mise à jour de la description dans le catalogue MapCat de la carte $mapcat[mapnum]:</b></p>\n";
@@ -603,7 +603,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       'mapnum'=> $mapcat['mapnum'],
       'return'=> $_GET['return'] ?? 'mapcat'
     ];
-    echo Html::textArea('yaml', $mapcat['yaml'], 18, 120, 'maj', $hiddenValues, '', 'post');
+    echo \bo\Html::textArea('yaml', $mapcat['yaml'], 18, 120, 'maj', $hiddenValues, '', 'post');
     $mapNumSsFr = substr($mapcat['mapnum'], 2);
     echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$mapNumSsFr' target='_blank'>",
           "Affichage du GAN de cette carte</a><br>";
@@ -623,7 +623,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       'mapnum'=> "FR$_GET[mapnum]",
       'return'=> $_GET['return'] ?? 'mapcat'
     ];
-    echo Html::textArea('yaml', MapCatDef::DOC_MODEL_IN_YAML, 18, 120, 'ajout', $hiddenValues, '', 'post');
+    echo \bo\Html::textArea('yaml', MapCatDef::DOC_MODEL_IN_YAML, 18, 120, 'ajout', $hiddenValues, '', 'post');
     
     echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$_GET[mapnum]' target='_blank'>",
           "Affichage du GAN de cette carte</a><br>";

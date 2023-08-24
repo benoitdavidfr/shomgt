@@ -1,4 +1,5 @@
 <?php
+namespace dashboard;
 /*PhpDoc:
 name: gan.php
 title: dashboard/gan.php - IHM de gestion des GAN

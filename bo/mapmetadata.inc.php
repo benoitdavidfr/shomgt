@@ -62,7 +62,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
       $gan = $matches[4] ?? '';
     }
     else
-       throw new Exception("Format de l'édition inconnu pour \"$edition\"");
+       throw new \Exception("Format de l'édition inconnu pour \"$edition\"");
  
     $md['version'] = $anneeEdition.'c'.$lastUpdate;
     $md['edition'] = $edition;
@@ -97,7 +97,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
   static function getFrom7z(string $pathOf7z, string $mdName=''): array { 
     //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
     if (!is_file($pathOf7z)) {
-      throw new Exception("Archive $pathOf7z inexistante");
+      throw new \Exception("Archive $pathOf7z inexistante");
     }
     $archive = new My7zArchive($pathOf7z);
     $dateArchive = null;
@@ -148,7 +148,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
         }
       }
       if (!$dateArchive)
-        throw new Exception("Cas non prévu dans MapMetadata::getFrom7z()");
+        throw new \Exception("Cas non prévu dans MapMetadata::getFrom7z()");
       return array_merge($md, ['dateArchive'=> $dateArchive]);
     }
     
@@ -202,16 +202,16 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
           json_encode(self::getFrom7z("$PF_PATH/attente/20230628aem/$mapNum.7z"), JSON_OPTIONS),"\n";
     }
     elseif (0) { // @phpstan-ignore-line // test de toutes les cartes de current 
-      foreach (new DirectoryIterator("$PF_PATH/current") as $entry) {
+      foreach (new \DirectoryIterator("$PF_PATH/current") as $entry) {
         if (substr($entry, -3) <> '.7z') continue;
         $md = self::getFrom7z("$PF_PATH/current/$entry");
         echo Yaml::dump(["getMapVersionFrom7z($entry)"=> $md]);
       }
     }
     elseif (1) { // Test de ttes les cartes de archives
-      foreach (new DirectoryIterator("$PF_PATH/archives") as $archive) {
+      foreach (new \DirectoryIterator("$PF_PATH/archives") as $archive) {
         if (in_array($archive, ['.','..','.DS_Store'])) continue;
-        foreach (new DirectoryIterator("$PF_PATH/archives/$archive") as $entry) {
+        foreach (new \DirectoryIterator("$PF_PATH/archives/$archive") as $entry) {
           if (substr($entry, -3) <> '.7z') continue;
           $md = self::getFrom7z("$PF_PATH/archives/$archive/$entry");
           echo Yaml::dump(["getMapVersionFrom7z($archive/$entry)"=> $md]);
@@ -229,7 +229,7 @@ if ((php_sapi_name() == 'cli') && ($argv[0]=='mapmetadata.inc.php')) {
   }
   elseif ($argv[1] == 'TEST') { // Test sur certaines cartes 
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-      throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+      throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $PF_PATH = '/var/www/html/shomgeotiff';
     MapMetadata::test($PF_PATH);
     die();
@@ -238,7 +238,7 @@ if ((php_sapi_name() == 'cli') && ($argv[0]=='mapmetadata.inc.php')) {
     try {
       echo Yaml::dump(MapMetadata::getFrom7z($argv[1]));
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       die("Erreur: ".$e->getMessage()."\n");
     }
     die();

@@ -96,7 +96,7 @@ abstract class BBox {
         $this->bound([(float)$params[3], (float)$params[4]]);
       }
       else
-        throw new SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
+        throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
     }
     elseif (LPos::is($param)) { // $param est une liste de positions en cont. au moins une 
       foreach ($param as $pos)
@@ -108,7 +108,7 @@ abstract class BBox {
           $this->bound($pos);
     }
     else
-      throw new SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectParams);
+      throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectParams);
   }
 
   // renvoit vrai ssi le bbox est vide
@@ -120,7 +120,7 @@ abstract class BBox {
     if (!$pos)
       return $this;
     if (!Pos::is($pos))
-      throw new SExcept("Erreur dans bound sur ".json_encode($pos), self::ErrorIncorrectPosTypeInBound);
+      throw new \SExcept("Erreur dans bound sur ".json_encode($pos), self::ErrorIncorrectPosTypeInBound);
     if (!$this->min) {
       $this->min = $pos;
       $this->max = $pos;
@@ -303,10 +303,10 @@ class GBox extends BBox {
           $param[$cornerId] = Pos::fromGeoDMd($param[$cornerId]);
         }
         elseif (is_null($param[$cornerId])) {
-          throw new SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);
+          throw new \SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);
         }
         elseif (!Pos::is($param[$cornerId]))
-          throw new SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);
+          throw new \SExcept("Paramètre $cornerId mal défini dans GBox::__construct()", self::ErrorParamInConstruct);
       }
       // cas d'un rectangle intersectant l'anti-méridien
       if ($param['NE'][0] < $param['SW'][0]) // la longitude Est < longitude West
@@ -333,7 +333,7 @@ class GBox extends BBox {
       try {
         $gbox = new self($rect);
       }
-      catch(SExcept $e) {
+      catch(\SExcept $e) {
         echo "SExcept: {c: ",$e->getSCode(),", m: '",$e->getMessage(),"'}";
         $gbox = null;
       }
@@ -375,7 +375,7 @@ class GBox extends BBox {
   // taille max en degrés de longueur constante (Zoom::Size0 / 360) ou lève une exception si la BBox est vide
   function size(): float {
     if (!$this->min)
-      throw new SExcept("Erreur de GBox::size() sur une GBox vide", self::ErrorSizeOfEmptyGBox);
+      throw new \SExcept("Erreur de GBox::size() sur une GBox vide", self::ErrorSizeOfEmptyGBox);
     $cos = cos(($this->max[1] + $this->min[1])/2 / 180 * pi()); // cosinus de la latitude moyenne
     return max($this->dlon() * $cos, $this->dlat());
   }
@@ -389,7 +389,7 @@ class GBox extends BBox {
   }
   function dist(GBox $b2): float {
     if (!$this->min || !$b2->min)
-      throw new SExcept("Erreur de GBox::dist() avec une des GBox vide", self::ErrorDistOfEmptyGBox);
+      throw new \SExcept("Erreur de GBox::dist() avec une des GBox vide", self::ErrorDistOfEmptyGBox);
     $xmin = max($b2->min[0],$this->min[0]);
     $ymin = max($b2->min[1],$this->min[1]);
     $xmax = min($b2->max[0],$this->max[0]);
@@ -410,7 +410,7 @@ class GBox extends BBox {
   // distance entre 2 boites, nulle ssi les 2 boites sont identiques
   function distance(GBox $b2): float {
     if (!$this->min || !$b2->min)
-      throw new SExcept("Erreur de GBox::distance() avec une des GBox vide", self::ErrorDistanceOfEmptyGBox);
+      throw new \SExcept("Erreur de GBox::distance() avec une des GBox vide", self::ErrorDistanceOfEmptyGBox);
     $cos = cos(($this->max[1] + $this->min[1] + $b2->max[1] + $b2->min[1])/2 / 180 * pi()); // cos de la lat. moyenne
     return max(
       abs($b2->min[0] - $this->min[0]),
@@ -425,15 +425,17 @@ class GBox extends BBox {
     if (strncmp($proj, 'UTM-', 4)==0) { // cas particulier de l'UTM
       $zone = substr($proj, 4);
       return new EBox([
-        UTM::proj($this->min, $zone),
-        UTM::proj($this->max, $zone)
+        \coordsys\UTM::proj($this->min, $zone),
+        \coordsys\UTM::proj($this->max, $zone)
       ]);
     }
-    else
+    else {
+      $proj = '\coordsys\\'.$proj;
       return new EBox([
         $proj::proj($this->min),
         $proj::proj($this->max)
       ]);
+    }
   }
 };
 
@@ -475,7 +477,7 @@ class EBox extends BBox {
   // taille max en unité ou lève une exception si la EBox est vide
   function size(): float {
     if (!$this->min)
-      throw new SExcept("Erreur de EBox::size()  sur une EBox vide", self::ErrorSizeOfEmptyEBox);
+      throw new \SExcept("Erreur de EBox::size()  sur une EBox vide", self::ErrorSizeOfEmptyEBox);
     return max($this->dx(), $this->dy());
   }
   
@@ -487,7 +489,7 @@ class EBox extends BBox {
   }
   function dist(EBox $b2): float {
     if (!$this->min || !$b2->min)
-      throw new SExcept("Erreur de EBox::dist() avec une des EBox vide", self::ErrorDistOnEmptyEBox);
+      throw new \SExcept("Erreur de EBox::dist() avec une des EBox vide", self::ErrorDistOnEmptyEBox);
     $xmin = max($b2->min[0],$this->min[0]);
     $ymin = max($b2->min[1],$this->min[1]);
     $xmax = min($b2->max[0],$this->max[0]);
@@ -527,16 +529,18 @@ class EBox extends BBox {
   function geo(string $proj): GBox {
     if (strncmp($proj, 'UTM-', 4)==0) { // cas particulier de l'UTM
       $zone = substr($proj, 4);
-      return new GBox([
-        UTM::geo($this->min, $zone),
-        UTM::geo($this->max,$zone)
+      return new \gegeom\GBox([
+        \coordsys\UTM::geo($this->min, $zone),
+        \coordsys\UTM::geo($this->max,$zone)
       ]);
     }
-    else
+    else {
+      $proj = '\coordsys\\'.$proj;
       return new GBox([
         $proj::geo($this->min),
         $proj::geo($this->max)
       ]);
+    }
   }
 };
 
@@ -549,7 +553,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "Test de EBox::dist<br>\n";
     EBox::distTest();
     echo "Test de EBox::geo<br>\n";
-    $ebox = Zoom::tileEBox(9, 253, 176);
+    $ebox = \Zoom::tileEBox(9, 253, 176);
     echo "$ebox ->geo(WebMercator) = ", $ebox->geo('WebMercator'),"<br>\n";
     echo "<b>Test de GBox::proj()</b><br>\n";
     $gbox = new GBox([-2,48, -1,49]);
@@ -558,7 +562,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "$gbox ->proj(Lambert93) = ", $gbox->proj('Lambert93'),"<br>\n";
     
     echo "$gbox ->center() = ", json_encode($gbox->center()),"<br>\n";
-    echo "UTM::zone($gbox ->center()) = ", $zone = UTM::zone($gbox->center()),"<br>\n";
+    echo "UTM::zone($gbox ->center()) = ", $zone = \coordsys\UTM::zone($gbox->center()),"<br>\n";
     echo "$gbox ->proj(UTM-$zone) = ", $eboxutm = $gbox->proj("UTM-$zone"),"<br>\n";
     echo "$eboxutm ->geo(UTM-$zone) = ", $eboxutm->geo("UTM-$zone"),"<br>\n";
   }

@@ -92,8 +92,8 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   function asArray(): array { return [$this->path]; }
 
   // calcul de l'extension spatiale de la couche en WoM
-  function ebox(): EBox {
-    $gbox = new GBox([[-180, WorldMercator::MinLat],[180, WorldMercator::MaxLat]]);
+  function ebox(): \gegeom\EBox {
+    $gbox = new \gegeom\GBox([[-180, \coordsys\WorldMercator::MinLat],[180, \coordsys\WorldMercator::MaxLat]]);
     return $gbox->proj('WorldMercator');
   }
 
@@ -126,7 +126,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         case 'LineString': {
           $lpos = [];
           foreach ($geometry['coordinates'] as $i => $pos) {
-            $lpos[$i] = WorldMercator::proj($pos);
+            $lpos[$i] = \coordsys\WorldMercator::proj($pos);
           }
           $grImage->polyline($lpos, $style);
           break;
@@ -134,7 +134,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         case 'Polygon': {
           $lpos = [];
           foreach ($geometry['coordinates'][0] as $i => $pos) {
-            $lpos[$i] = WorldMercator::proj($pos);
+            $lpos[$i] = \coordsys\WorldMercator::proj($pos);
           }
           $grImage->polygon($lpos, $style);
           break;
@@ -143,7 +143,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
           foreach ($geometry['coordinates'] as $polygon) {
             $lpos = [];
             foreach ($polygon[0] as $i => $pos) {
-              $lpos[$i] = WorldMercator::proj($pos);
+              $lpos[$i] = \coordsys\WorldMercator::proj($pos);
             }
             $grImage->polygon($lpos, $style);
           }
@@ -170,7 +170,8 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
       $geometry = $feature['geometry'];
       switch ($geometry['type']) {
         case 'LineString': {
-          $geom = new $geometry['type']($geometry['coordinates']);
+          $geomType = "\gegeom\\$geometry[type]";
+          $geom = new $geomType($geometry['coordinates']);
           $d = $geom->distanceToPos($geo);
           if ($d < $dmin) {
             $dmin = $d;
@@ -180,7 +181,8 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
         }
         case 'Polygon':
         case 'MultiPolygon': {
-          $geom = new $geometry['type']($geometry['coordinates']);
+          $geomType = "\gegeom\\$geometry[type]";
+          $geom = new $geomType($geometry['coordinates']);
           if ($geom->pointInPolygon($geo))
             $info[] = $feature['properties'];
           break;

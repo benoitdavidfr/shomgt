@@ -39,7 +39,7 @@ doc: |
 journal: |
   5-10/2/2022:
     Ajout d'une exception dans les projections WebMercator et WorldMercator lorsque la latitude est < -85 ou > 85
-    Transformation des Exception en SExcept et fourniture d'un code de type string
+    Transformation des Exception en \SExcept et fourniture d'un code de type string
     Amélioration de la doc
   18/3/2019:
     Modification du code pour permettre de calculer les projections sur différents Ellipsoides.
@@ -214,16 +214,17 @@ class WebMercator extends IAG_GRS_1980 implements iCoordSys {
   const MaxLat =  85.051129;
   
   // couverture spatiale en degrés décimaux lon, lat
-  /** @return array<int, float> */
+  /** @return list<float> */
   static function spatial(): array { return [-180, self::MinLat, 180, self::MaxLat]; }
   
+  /**
+   * name:  proj
+   * title: "static function proj(array $lonlat, ?string $proj=null): array  - convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]"
+   * @param TPos $lonlat;
+   */
   static function proj(array $lonlat, ?string $proj=null): array {
-    /*PhpDoc: methods
-    name:  proj
-    title: "static function proj(array $lonlat, ?string $proj=null): array  - convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]"
-    */
     if (($lonlat[1] < self::MinLat) || ($lonlat[1] > self::MaxLat))
-      throw new SExcept("latitude incorrecte (< MinLat || > MaxLat) dans WebMercator::proj()", self::ErrorBadLat);
+      throw new \SExcept("latitude incorrecte (< MinLat || > MaxLat) dans WebMercator::proj()", self::ErrorBadLat);
     $lambda = $lonlat[0] * pi() / 180.0; // longitude en radians
     $phi = $lonlat[1] * pi() / 180.0;  // latitude en radians
 	  
@@ -231,7 +232,8 @@ class WebMercator extends IAG_GRS_1980 implements iCoordSys {
     $y = self::a() * log(tan(pi()/4 + $phi/2)); // (7-2)
     return [$x, $y];
   }
-    
+  
+  /** @param TPos $xy */
   static function geo(array $xy, ?string $proj=null): array {
     /*PhpDoc: methods
     name:  geo
@@ -314,7 +316,7 @@ class Ellipsoid implements iEllipsoid {
     if (isset(self::PARAMS[$ellipsoid]))
       self::$current = $ellipsoid;
     else
-      throw new SExcept("Erreur dans Ellipsoid::set($ellipsoid): ellipsoide non défini", self::ErrorUndef);
+      throw new \SExcept("Erreur dans Ellipsoid::set($ellipsoid): ellipsoide non défini", self::ErrorUndef);
   }
   
   // retourne la valeur d'un paramètre stocké pour l'ellipsoide courant
@@ -351,7 +353,7 @@ class WorldMercator extends Ellipsoid implements iCoordSys {
     title: "static function proj(array $lonlat, ?string $proj=null): array  - convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]"
     */
     if (($lonlat[1] < self::MinLat) || ($lonlat[1] > self::MaxLat))
-      throw new SExcept ("latitude incorrecte (< MinLat || > MaxLat) dans WorldMercator::proj()", self::ErrorBadLat);
+      throw new \SExcept ("latitude incorrecte (< MinLat || > MaxLat) dans WorldMercator::proj()", self::ErrorBadLat);
     $lambda = $lonlat[0] * pi() / 180.0; // longitude en radians
     $phi = $lonlat[1] * pi() / 180.0;  // latitude en radians
     $e = self::e(); //première exentricité de l'ellipsoïde
@@ -378,7 +380,7 @@ class WorldMercator extends Ellipsoid implements iCoordSys {
       if (abs($phi-$phi0) < self::EPSILON)
         return [ $lambda / pi() * 180.0 , $phi / pi() * 180.0 ];
     }
-    throw new SExcept("Convergence inachevee dans WorldMercator::geo() pour nbiter=$nbiter", self::ErrorNoConvergence);
+    throw new \SExcept("Convergence inachevee dans WorldMercator::geo() pour nbiter=$nbiter", self::ErrorNoConvergence);
   }
 };
 
@@ -534,7 +536,7 @@ class OgcWkt {
     if (preg_match($pattern, $opengiswkt))
       return 'L93';
     else
-      throw new SExcept ("PROJCS Don't match in CoordSys::detect()", self::ErrorNoDetect);
+      throw new \SExcept ("PROJCS Don't match in CoordSys::detect()", self::ErrorNoDetect);
   }
 };
 

@@ -108,7 +108,7 @@ abstract class Layer {
   abstract function asArray(): array;
 
   // calcul de l'extension spatiale de la couche en WoM
-  abstract function ebox(): EBox;
+  abstract function ebox(): \gegeom\EBox;
 
   // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
   // lorsqu'un élément intersecte l'anti-méridien, il est dupliqué dans les 2 hémisphères Ouest et Est
@@ -117,18 +117,18 @@ abstract class Layer {
 
   // utile pour éviter les erreurs d'analyse statique
   /** @return array<int, TGeoJsonFeature> */
-  function items(string $lyrname, ?GBox $qgbox): array { throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef); }
+  function items(string $lyrname, ?\gegeom\GBox $qgbox): array { throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef); }
 
   // utile pour éviter les erreurs d'analyse statique
   /** @return array<int, TGeoJsonFeature> */
-  function deletedZones(string $lyrname, ?GBox $qgbox): array {
+  function deletedZones(string $lyrname, ?\gegeom\GBox $qgbox): array {
     throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
   }
 
   // utile pour éviter les erreurs d'analyse statique
-  /** @return array<int, EBox> */
-  function itemEBoxes(EBox $wombox): array {
-    throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
+  /** @return array<int, \gegeom\EBox> */
+  function itemEBoxes(\gegeom\EBox $wombox): array {
+    throw new SExcept("Erreur, méthode non définie", self::ErrorUndef);
   }
 };
 
@@ -147,8 +147,8 @@ class PyrLayer extends Layer {
     return ['title'=> "Pyramide des cartes GéoTiff du 1/40M au 1/5k"];
   }
   
-  function ebox(): EBox { // Le rectangle englobant est l'extension de WorldMercator
-    $gbox = new GBox(WorldMercator::spatial());
+  function ebox(): \gegeom\EBox { // Le rectangle englobant est l'extension de WorldMercator
+    $gbox = new \gegeom\GBox(\coordsys\WorldMercator::spatial());
     return $gbox->proj('WorldMercator');
   }
   
@@ -201,8 +201,8 @@ class LabelLayer extends Layer {
   /** @param array<string, array<string, mixed>> $dictOfGT */
   function __construct(string $lyrName, array $dictOfGT) {
     foreach ($dictOfGT as $gtname => $gt) {
-      $gbox = GBox::fromGeoDMd($gt['spatial']);
-      $nw = WorldMercator::proj([$gbox->west(), $gbox->north()]);
+      $gbox = new \gegeom\GBox($gt['spatial']);
+      $nw = \coordsys\WorldMercator::proj([$gbox->west(), $gbox->north()]);
       $dilate = self::dilate($lyrName);
       $nw[0] -= $dilate;
       $nw[1] += $dilate;
@@ -210,11 +210,11 @@ class LabelLayer extends Layer {
     }
   }
   
-  /** @return array<string, mixed> */
+  /** @return array<string, TPos> */
   function asArray(): array { return $this->nws; }
   
-  function ebox(): EBox {
-    $ebox = new EBox;
+  function ebox(): \gegeom\EBox {
+    $ebox = new \gegeom\EBox;
     foreach ($this->nws as $pos)
       $ebox->bound($pos);
     return $ebox;
@@ -260,19 +260,20 @@ class TiffLayer extends Layer {
     foreach ($dictOfGT as $gtname => $gt) {
       foreach ($gt['outgrowth'] ?? [] as $i => $outgrowth) {
         // l'excroissance est dialtée pour compenser l'érosion sur la partie principale
-        $gt['outgrowth'][$i] = GBox:: fromGeoDMd($outgrowth)->proj('WorldMercator')->dilate(-self::dilate($lyrName));
+        $gt['outgrowth'][$i] = \gegeom\GBox::fromGeoDMd($outgrowth)->proj('WorldMercator')->dilate(-self::dilate($lyrName));
       }
       foreach ($gt['borders'] ?? [] as $k => $b)
         $gt['borders'][$k] = eval("return $b;"); // si c'est une expression, l'évalue et stocke le résultat
       $this->geotiffs[$gtname] = [
         'title'=> $gt['title'],
         // l'extension spatiale est légèrement errodée pour éviter d'affichier le trait noir du bord
-        'spatial'=> GBox:: fromGeoDMd($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
+        'spatial'=> \gegeom\GBox::fromGeoDMd($gt['spatial'])->proj('WorldMercator')->dilate(self::dilate($lyrName)),
         'outgrowth'=> $gt['outgrowth'] ?? [],
         'borders'=> $gt['borders'] ?? null,
         'deleted' => $gt['deleted'] ?? null,
       ];
     }
+    //echo "<pre>"; print_r($this); echo "</pre>\n";
   }
   
   /** @return array<string, mixed> */
@@ -290,8 +291,8 @@ class TiffLayer extends Layer {
   
   // calcul de l'union des ebox des GeoTiff de la couche ;
   // lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est
-  function ebox(): EBox {
-    $lyrEbox = new EBox;
+  function ebox(): \gegeom\EBox {
+    $lyrEbox = new \gegeom\EBox;
     foreach($this->geotiffs as $gtname => $gt) {
       $lyrEbox->union($gt['spatial']);
       // Si le GéoTiff intersecte l'anti-méridien alors il est dupliqué pour apparaitre aussi dans l'hémisphère Ouest
@@ -343,7 +344,7 @@ class TiffLayer extends Layer {
   * @param array<string, mixed> $gt
   * @return TGeoJsonFeature
   */
-  private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
+  private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, \gegeom\GBox $gbox): array {
     try {
       $isoMd = IsoMd::read($gtname);
       $errorMessage = '';
@@ -383,7 +384,7 @@ class TiffLayer extends Layer {
   
   // retourne un array de Features correspondant aux bbox des GéoTiffs
   /** @return array<int, TGeoJsonFeature> */
-  function items(string $lyrname, ?GBox $qgbox): array {
+  function items(string $lyrname, ?\gegeom\GBox $qgbox): array {
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {
       $gbox = $gt['spatial']->geo('WorldMercator'); // transf spatial en c. Géo.
@@ -405,8 +406,8 @@ class TiffLayer extends Layer {
   
   // retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle
   // Pour les GéoTiffs à cheval sur l'anti-méridien, les duplique à l'Ouest
-  /** @return array<int, EBox> */
-  function itemEBoxes(EBox $wombox): array {
+  /** @return array<int, \gegeom\EBox> */
+  function itemEBoxes(\gegeom\EBox $wombox): array {
     $eboxes = [];
     foreach($this->geotiffs as $gtname => $gt) {
       if ($wombox->inters($gt['spatial']))
@@ -425,12 +426,12 @@ class TiffLayer extends Layer {
   * @param array<string, mixed> $gt
   * @return TGeoJsonFeature
   */
-  private function deletedZonesForGeoTiff(string $lyrname, string $gtname, array $gt, GBox $gbox): array {
+  private function deletedZonesForGeoTiff(string $lyrname, string $gtname, array $gt, \gegeom\GBox $gbox): array {
     //echo "<pre>gt="; print_r($gt);
     $mpolygon = [];
     foreach ($gt['deleted']['bboxes'] ?? [] as $bbox) {
       if (isset($bbox['SW'])) {
-        $gbox = GBox:: fromGeoDMd($bbox);
+        $gbox = \gegeom\GBox:: fromGeoDMd($bbox);
         $mpolygon[] = $gbox->polygon();
       }
       else
@@ -439,7 +440,7 @@ class TiffLayer extends Layer {
     foreach($gt['deleted']['polygons'] ?? [] as $polygon) {
       foreach ($polygon as &$pos) {
         if (is_string($pos))
-          $pos = Pos::fromGeoDMd($pos);
+          $pos = \gegeom\Pos::fromGeoDMd($pos);
       }
       $mpolygon[] = [$polygon];
     }
@@ -459,7 +460,7 @@ class TiffLayer extends Layer {
 
   // retourne un array de Features correspondant aux zones effacées des GéoTiffs
   /** @return array<int, TGeoJsonFeature> */
-  function deletedZones(string $lyrname, ?GBox $qgbox): array {
+  function deletedZones(string $lyrname, ?\gegeom\GBox $qgbox): array {
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {
       if (!$gt['deleted']) continue;

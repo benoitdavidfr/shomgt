@@ -31,7 +31,7 @@ if (!($login = Login::loggedIn())) {
 
 // supprime un répertoire
 function rmdirRecursive(string $path): void {
-  foreach (new DirectoryIterator($path) as $filename) {
+  foreach (new \DirectoryIterator($path) as $filename) {
     if (in_array($filename, ['.','..'])) continue;
     if (is_dir("$path/$filename"))
       rmdirRecursive("$path/$filename");
@@ -57,7 +57,7 @@ class MapArchiveStore {
     $versionPattern = match ($ext) {
         '7z' => "($versionCStd|$versionCSpeciale)",
         'md.json'=> "($versionCStd|\d{4}-\d{2}-\d{2}|$versionCSpeciale)",
-        default => throw new Exception("valeur $ext interdite"),
+        default => throw new \Exception("valeur $ext interdite"),
     };
     $targetRelPattern = "!^\.\./archives/$mapNum/$mapNum-$versionPattern\.$ext$!";
     $targetAbsPattern = "!^$this->path/archives/$mapNum/$mapNum-$versionPattern\.$ext$!";
@@ -100,9 +100,9 @@ class MapArchiveStore {
    */
   function wrongCurLinks(): array {
     if (!is_dir("$this->path/current"))
-      throw new Exception("Erreur, le répertoire $this->path/current n'existe pas");
+      throw new \Exception("Erreur, le répertoire $this->path/current n'existe pas");
     $errors = [];
-    foreach (new DirectoryIterator("$this->path/current") as $entry) {
+    foreach (new \DirectoryIterator("$this->path/current") as $entry) {
       if (!in_array($entry, ['.','..','.DS_Store']) && ($error = $this->wrongCurLink($entry)))
         $errors[(string)$entry] = $error;
     }
@@ -114,15 +114,15 @@ class MapArchiveStore {
       return '.7z';
     if (substr($filename, -8)=='.md.json')
       return '.md.json';
-    throw new Exception("Pas d'extension pour $filename");
+    throw new \Exception("Pas d'extension pour $filename");
   }
   
   /** @return array<string, array<string, int>> */
   private function listArchives(): array {
     $list = []; // [bname => [ext => inode]]
-    foreach (new DirectoryIterator("$this->path/archives") as $archive) {
+    foreach (new \DirectoryIterator("$this->path/archives") as $archive) {
       if (in_array($archive, ['.','..','.DS_Store'])) continue;
-      foreach (new DirectoryIterator("$this->path/archives/$archive") as $filename) {
+      foreach (new \DirectoryIterator("$this->path/archives/$archive") as $filename) {
         if (in_array($filename, ['.','..','.DS_Store'])) continue;
         if (($inode = fileinode("$this->path/archives/$archive/$filename")) === false)
           echo "Erreur sur fileinode($this->path/archives/$archive/$filename)<br>\n";
@@ -139,7 +139,7 @@ class MapArchiveStore {
   /** @return array<string, array<string, string>> */
   private function listCurrents(): array {
     $list = []; // [bname => [ext => target]]
-    foreach (new DirectoryIterator("$this->path/current") as $filename) {
+    foreach (new \DirectoryIterator("$this->path/current") as $filename) {
       if (in_array($filename, ['.','..','.DS_Store'])) continue;
       $ext = self::extension($filename);
       if (($target = readlink("$this->path/current/$filename")) === false)
@@ -156,7 +156,7 @@ class MapArchiveStore {
       elseif ($targetForExt['.7z'] == $targetForExt['.md.json'])
         $targetForExt = $targetForExt['.7z'];
       else
-        throw new Exception("Erreur sur current: ".json_encode([$bname => $targetForExt]));
+        throw new \Exception("Erreur sur current: ".json_encode([$bname => $targetForExt]));
     }
     ksort($list);
     //echo "<pre>listCurrents="; print_r($list); die();
@@ -341,7 +341,7 @@ class MapArchiveStore {
 if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier est inclus
 
 
-if (defined('MapArchiveStore::PF_PATH_TEST')) { // TEST 
+if (defined('\bo\MapArchiveStore::PF_PATH_TEST')) { // TEST 
   $PF_PATH = MapArchiveStore::PF_PATH_TEST;
 }
 elseif (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {

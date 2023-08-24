@@ -27,7 +27,7 @@ journal: |
   7-10/2/2022:
     - ajout de code aux exceptions
     - décomposition du test unitaire de la classe Geometry dans les tests des sous-classes
-    - transformation des Exception en SExcept et fourniture d'un code de type string
+    - transformation des Exception en \SExcept et fourniture d'un code de type string
   9/3/2019:
     - ajout de nombreuses fonctionnalités
   7/3/2019:
@@ -101,7 +101,7 @@ abstract class Geometry {
       return new GeometryCollection($geoms);
     }
     else
-      throw new SExcept("Erreur de Geometry::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
+      throw new \SExcept("Erreur de Geometry::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
   }
   
   // fonction d'initialisation valable pour toutes les géométries homogènes
@@ -154,7 +154,7 @@ abstract class Geometry {
   // Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)
   /** @return list<Point|LineString|Polygon> */
   function decompose(): array {
-    $transfos = ['MultiPoint'=>'Point', 'MultiLineString'=>'LineString', 'MultiPolygon'=>'Polygon'];
+    $transfos = ['\gegeom\MultiPoint'=>'\gegeom\Point', '\gegeom\MultiLineString'=>'\gegeom\LineString', '\gegeom\MultiPolygon'=>'\gegeom\Polygon'];
     if (isset($transfos[$this->type()])) {
       $elts = [];
       foreach ($this->coords as $eltcoords)
@@ -227,10 +227,10 @@ class Point extends Geometry {
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] + $v[0], $this->coords[1] + $v[1]]);
-    elseif (is_object($v) && (get_class($v) == 'Point'))
+    elseif (is_object($v) && (get_class($v) == '\gegeom\Point'))
       return new Point([$this->coords[0] + $v->coords[0], $this->coords[1] + $v->coords[1]]);
     else
-      throw new SExcept("Erreur dans Point:add(), paramètre ni position ni Point", self::ErrorBadParamInAdd);
+      throw new \SExcept("Erreur dans Point:add(), paramètre ni position ni Point", self::ErrorBadParamInAdd);
   }
   
   /** @param Point|TPos $v */
@@ -241,10 +241,10 @@ class Point extends Geometry {
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] - $v[0], $this->coords[1] - $v[1]]);
-    elseif (get_class($v) == 'Point')
+    elseif (get_class($v) == '\gegeom\Point')
       return new Point([$this->coords[0] - $v->coords[0], $this->coords[1] - $v->coords[1]]);
     else
-      throw new SExcept("Erreur dans Point:diff(), paramètre ni position ni Point", self::ErrorBadParamInDiff);
+      throw new \SExcept("Erreur dans Point:diff(), paramètre ni position ni Point", self::ErrorBadParamInDiff);
   }
     
   function vectorProduct(Point $v): float {
@@ -295,7 +295,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     try {
       echo $pt->add([[1,1]]),"\n"; // @phpstan-ignore-line
     }
-    catch(SExcept $e) {
+    catch(\SExcept $e) {
       echo "Exception $e\nscode=",$e->getSCode(),"\n";
     }
   }
@@ -417,7 +417,7 @@ class Segment {
     $ab = $this->vector();
     $ap = new Point([$pos[0]-$this->tab[0][0], $pos[1]-$this->tab[0][1]]);
     if ($ab->norm() == 0)
-      throw new Exception("Erreur dans distancePosToLine : Points A et B confondus et donc droite non définie");
+      throw new \Exception("Erreur dans distancePosToLine : Points A et B confondus et donc droite non définie");
     return $ab->vectorProduct($ap) / $ab->norm();
   }
   static function test_distancePosToLine(): void {
@@ -482,7 +482,7 @@ class MultiPoint extends Geometry {
   function nbreOfPos(): int { return count($this->coords); }
   function aPos(): array {
     if (!$this->coords)
-      throw new SExcept("Erreur: MultiPoint::aPos() sur une liste de positions vide", self::ErrorEmpty);
+      throw new \SExcept("Erreur: MultiPoint::aPos() sur une liste de positions vide", self::ErrorEmpty);
     return $this->coords[0];
   }
   function gbox(): GBox { return new GBox($this->coords); }
@@ -672,7 +672,7 @@ class MultiLineString extends Geometry {
   
   function center(): array {
     if (!$this->coords)
-      throw new SExcept("Erreur: MultiLineString::center() sur une liste vide", self::ErrorCenterOfEmpty);
+      throw new \SExcept("Erreur: MultiLineString::center() sur une liste vide", self::ErrorCenterOfEmpty);
     $c = [0, 0];
     $nbre = 0;
     foreach ($this->coords as $lpos) {
@@ -689,7 +689,7 @@ class MultiLineString extends Geometry {
   
   function aPos(): array {
     if (!$this->coords)
-      throw new SExcept("Erreur: MultiLineString::aPos() sur une liste vide", self::ErrorPosOfEmpty);
+      throw new \SExcept("Erreur: MultiLineString::aPos() sur une liste vide", self::ErrorPosOfEmpty);
     return $this->coords[0][0];
   }
   
@@ -855,7 +855,7 @@ class Polygon extends Geometry {
   title: "function inters(Geometry $geom): bool - teste l'intersection entre les 2 polygones ou multi-polygones"
   */
   function inters(Geometry $geom, bool $verbose=false): bool {
-    if (get_class($geom) == 'Polygon') {
+    if (get_class($geom) == '\gegeom\Polygon') {
       // Si les boites ne s'intersectent pas alors les polygones non plus
       if (!$this->ebox()->inters($geom->ebox()))
         return false;
@@ -892,11 +892,11 @@ class Polygon extends Geometry {
       // Sinon il n'y a pas intersection
       return false;
     }
-    elseif (get_class($geom) == 'MultiPolygon') {
+    elseif (get_class($geom) == '\gegeom\MultiPolygon') {
       return $geom->inters($this);
     }
     else
-      throw new SExcept(
+      throw new \SExcept(
         "Erreur d'appel de Polygon::inters() avec en paramètre un objet de ".get_class($geom),
         self::ErrorInters);
   }
@@ -963,7 +963,7 @@ class MultiPolygon extends Geometry {
     if (($geom['type'] ?? null) == 'MultiPolygon')
       return new MultiPolygon($geom['coordinates']);
     else
-      throw new SExcept("Erreur de MultiPolygon::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
+      throw new \SExcept("Erreur de MultiPolygon::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
   }
   
   /** @param TLLLPos $coords */
@@ -980,7 +980,7 @@ class MultiPolygon extends Geometry {
     
   function center(): array {
     if (!$this->coords)
-      throw new SExcept("Erreur: MultiPolygon::center() sur une liste vide", self::ErrorCenterOfEmpty);
+      throw new \SExcept("Erreur: MultiPolygon::center() sur une liste vide", self::ErrorCenterOfEmpty);
     $c = [0, 0];
     $nbre = 0;
     foreach ($this->coords as $polygon) {
@@ -997,7 +997,7 @@ class MultiPolygon extends Geometry {
   
   function aPos(): array {
     if (!$this->coords)
-      throw new SExcept("Erreur: MultiPolygon::aPos() sur une liste vide", self::ErrorPosOfEmpty);
+      throw new \SExcept("Erreur: MultiPolygon::aPos() sur une liste vide", self::ErrorPosOfEmpty);
     return $this->coords[0][0][0];
   }
   
@@ -1056,14 +1056,14 @@ class MultiPolygon extends Geometry {
   title: "function inters(Geometry $geom): bool - teste l'intersection entre les 2 polygones ou multi-polygones"
   */
   function inters(Geometry $geom): bool {
-    if (get_class($geom) == 'Polygon') {
+    if (get_class($geom) == '\gegeom\Polygon') {
       foreach($this->geoms() as $polygon) {
         if ($polygon->inters($geom)) // intersection entre 2 polygones
           return true;
       }
       return false;
     }
-    elseif (get_class($geom) == 'MultiPolygon') {
+    elseif (get_class($geom) == '\gegeom\MultiPolygon') {
       foreach($this->geoms() as $pol0) {
         foreach ($geom->geoms() as $pol1) {
           if ($pol0->inters($pol1)) // intersection entre 2 polygones
@@ -1073,7 +1073,7 @@ class MultiPolygon extends Geometry {
       return false;
     }
     else
-      throw new SExcept("Erreur d'appel de MultiPolygon::inters() avec un objet de ".get_class($geom), self::ErrorInters);
+      throw new \SExcept("Erreur d'appel de MultiPolygon::inters() avec un objet de ".get_class($geom), self::ErrorInters);
   }
   
   /*static function haggregate(array $elts) - NON UTILISE {
@@ -1136,7 +1136,7 @@ class GeometryCollection {
   /** @return TPos */
   function center(): array {
     if (!$this->geometries)
-      throw new SExcept("Erreur: GeometryCollection::center() sur une liste vide", self::ErrorCenterOfEmpty);
+      throw new \SExcept("Erreur: GeometryCollection::center() sur une liste vide", self::ErrorCenterOfEmpty);
     $c = [0, 0];
     $nbre = 0;
     foreach ($this->geometries as $g) {
@@ -1158,7 +1158,7 @@ class GeometryCollection {
   /** @return TPos */
   function aPos(): array {
     if (!$this->geometries)
-      throw new SExcept("Erreur: GeometryCollection::aPos() sur une liste vide", self::ErrorPosOfEmpty);
+      throw new \SExcept("Erreur: GeometryCollection::aPos() sur une liste vide", self::ErrorPosOfEmpty);
     return $this->geometries[0]->aPos();
   }
   
@@ -1215,7 +1215,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "gc=$gc<br>\n";
     echo "gc->center()=",json_encode($gc->center()),"<br>\n";
     echo "gc->reproject()=",$gc->reproject(function(array $pos) { return $pos; }),"<br>\n";
-    echo "Proj en WebMercator=",$gc->reproject(function(array $pos) { return WebMercator::proj($pos); }),"<br>\n";
+    echo "Proj en WebMercator=",$gc->reproject(function(array $pos) { return \coordsys\WebMercator::proj($pos); }),"<br>\n";
     
     echo "<b>Test de decompose</b><br>\n";
     foreach ([

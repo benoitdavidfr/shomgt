@@ -31,7 +31,7 @@ if (!($login = Login::loggedIn())) {
 }
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
 // Teste si $fileName est une entrée de $archive
 function entryInArchive(string $fileName, My7zArchive $archive): bool {

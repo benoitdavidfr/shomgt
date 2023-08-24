@@ -82,12 +82,12 @@ class TempMapCat {
   }
     
   // sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet TempMapCat
-  private function insetMapFromRect(GBox $georefrect): ?self {
+  private function insetMapFromRect(\gegeom\GBox $georefrect): ?self {
     $distmin = INF;
     $best = -1;
     foreach ($this->map['insetMaps'] as $no => $insetMap) {
       //echo "insetMaps[$no]="; print_r($insetMap);
-      $dist = GBox::fromGeoDMd($insetMap['spatial'])->distance($georefrect);
+      $dist = \gegeom\GBox::fromGeoDMd($insetMap['spatial'])->distance($georefrect);
       //echo "distance=$dist\n";
       if ($dist < $distmin) {
         $best = $no;

@@ -79,7 +79,7 @@ class Pos {
   /** @return TPos */
   static function fromGeoDMd(string $geoDMd): array {
     if (!preg_match(self::GEODMD_PATTERN, $geoDMd, $matches))
-      throw new SExcept("No match in Pos::fromGeoDMd($geoDMd)", self::ErrorParamInFromGeoDMd);
+      throw new \SExcept("No match in Pos::fromGeoDMd($geoDMd)", self::ErrorParamInFromGeoDMd);
     //echo "<pre>matches="; print_r($matches); echo "</pre>\n";
     $lat = ($matches[6]=='N' ? 1 : -1) * 
       ( intval($matches[1])
@@ -157,7 +157,7 @@ class LPos {
   */
   static function center(array $lpos): array {
     if (!$lpos)
-      throw new SExcept("Erreur: LPos::center() d'une liste de positions vide", self::ErrorCenterOfEmptyLPos);
+      throw new \SExcept("Erreur: LPos::center() d'une liste de positions vide", self::ErrorCenterOfEmptyLPos);
     $c = [0, 0];
     $nbre = 0;
     foreach ($lpos as $pos) {

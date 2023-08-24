@@ -45,19 +45,19 @@ class GeoTiff {
   const ErrorBadGeoRef = 'GeoTiff::ErrorBadGeoRef';
   
   protected string $name; // nom du GéoTiff, c'est le basename du fichier tiff.
-  protected EBox $ebox; // rectangle englobant de géoréférencement du GéoTiff en WoM
+  protected \gegeom\EBox $ebox; // rectangle englobant de géoréférencement du GéoTiff en WoM
   /** @var array<string, int> $size */
   protected array $size; // width et height du GéoTiff
   
   /*PhpDoc: methods
   name: deduceGeoRefFromBorders
-  title: "deduceGeoRefFromBorders(EBox $spatial, array $borders): EBox - traite les GéoTiff non géo-référencés"
+  title: "deduceGeoRefFromBorders(\gegeom\EBox $spatial, array $borders): EBox - traite les GéoTiff non géo-référencés"
   doc: |
     Dans le cas où le GéoTiff n'est pas géoréférencé, calcule le rectangle de géoréférencement à partir du rectangle
     de la zone cartographiée en WoM et des tailles en pixels des bords à retirer et de la taille de l'image
   */
   /** @param array<string, int> $borders */
-  function deduceGeoRefFromBorders(EBox $spatial, array $borders): EBox {
+  function deduceGeoRefFromBorders(\gegeom\EBox $spatial, array $borders): \gegeom\EBox {
     //echo "GeoTiff::deduceGeoRefFromBorders(spatial=$spatial, borders)\n"; print_r($borders);
     // Calcul de la taille du pixel
     //echo "bottom=",eval("return $borders[bottom];"),"<br>\n";
@@ -68,7 +68,7 @@ class GeoTiff {
     //echo "pixelSizeY=$pixelSizeY\n";
     if (($pixelSizeX/$pixelSizeY > 1.1) || ($pixelSizeX/$pixelSizeY < 0.9))
       throw new SExcept("Erreur de géoréférencement", self::ErrorBadGeoRef);
-    $ebox = new EBox([
+    $ebox = new \gegeom\EBox([
       $spatial->west() - intval($borders['left'])  * $pixelSizeX, $spatial->south() - $borders['bottom'] * $pixelSizeY,
       $spatial->east() + intval($borders['right']) * $pixelSizeX, $spatial->north() + $borders['top']    * $pixelSizeY,
     ]);
@@ -78,7 +78,7 @@ class GeoTiff {
   
   /*PhpDoc: methods
   name: __construct
-  title: "__construct(string $name, EBox $spatial, array $borders, bool $debug) - initialise un objet GéoTiff"
+  title: "__construct(string $name, \gegeom\EBox $spatial, array $borders, bool $debug) - initialise un objet GéoTiff"
   doc: |
     Initialise un objet GéoTiff. $name est le basename du fichier tiff.
     Si le fichier GéoTiff correspondant est géoréférencé alors ce géoréférencement est lu dans le fichier .info
@@ -87,7 +87,7 @@ class GeoTiff {
     dans le tableau $borders qui est de la forme ['left'=> number, 'bottom'=> number, 'right'=> number, 'top'=> number]
   */
   /** @param array<string, int>|null $borders */
-  function __construct(string $name, EBox $spatial, ?array $borders, bool $debug) {
+  function __construct(string $name, \gegeom\EBox $spatial, ?array $borders, bool $debug) {
     if ($debug)
       echo "GeoTiff::__construct($name, $spatial,",json_encode($borders),")<br>\n";
     $this->name = $name;
@@ -116,18 +116,18 @@ class GeoTiff {
   }
   
   // calcul du rectangle englobant en WoM de la dalle ($i,$j)
-  function tileEbox(int $i, int $j): EBox {
+  function tileEbox(int $i, int $j): \gegeom\EBox {
     $resx = ($this->ebox->east()  - $this->ebox->west())  / $this->size['width'];
     $resy = ($this->ebox->north() - $this->ebox->south()) / $this->size['height'];
     $xmin = $this->ebox->west() +  $i * 1024 * $resx;
     $ymax = $this->ebox->north() - $j * 1024 * $resy;
     $xmax = min($this->ebox->west() +  ($i+1) * 1024 * $resx, $this->ebox->east());
     $ymin = max($this->ebox->north() - ($j+1) * 1024 * $resy, $this->ebox->south());
-    return new EBox([$xmin, $ymin, $xmax, $ymax]);
+    return new \gegeom\EBox([$xmin, $ymin, $xmax, $ymax]);
   }
   
   // recopie dans $dest la partie du GeoTiff correspondant à $qebox
-  function copyImage(GeoRefImage $dest, EBox $qebox, bool $debug): void {
+  function copyImage(GeoRefImage $dest, \gegeom\EBox $qebox, bool $debug): void {
     if ($debug)
       echo "copyImage(qebox=$qebox)@$this->name<br>\n";
     for($i=0; $i < $this->size['width']/1024; $i++) {

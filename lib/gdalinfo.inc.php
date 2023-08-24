@@ -42,8 +42,8 @@ class GeoJsonPolygon { // GeoJSON Polygon transformé en GBox
     $this->coordinates = $def['coordinates'][0];
   }
   
-  function gbox(): GBox {
-    $gbox = new GBox;
+  function gbox(): \gegeom\GBox {
+    $gbox = new \gegeom\GBox;
     foreach ($this->coordinates as $c)
       $gbox->bound($c);
     return $gbox;
@@ -63,8 +63,8 @@ class GdalInfo {
 
   /** @var array<string, int> $size */
   protected array $size; // ['width'=>{width}, 'height'=> {height}]
-  protected ?GBox $gbox=null; // le GBox issu du gdalinfo ou null si aucun gbox n'est défini
-  protected ?EBox $ebox=null; // le EBox issu du gdalinfo
+  protected ?\gegeom\GBox $gbox=null; // le GBox issu du gdalinfo ou null si aucun gbox n'est défini
+  protected ?\gegeom\EBox $ebox=null; // le EBox issu du gdalinfo
   
   static function dms2Dec(string $val): float { // transforme "9d20'26.32\"E" ou "42d38'39.72\"N" en degrés décimaux
     if (!preg_match('!^(\d+)d([\d ]+)\'([\d .]+)"(E|W|N|S)$!', $val, $matches))
@@ -82,7 +82,7 @@ class GdalInfo {
   
   /** @return array<string, int> */
   function size(): array { return $this->size; }
-  function ebox(): ?EBox { return $this->ebox; }
+  function ebox(): ?\gegeom\EBox { return $this->ebox; }
 
   function __construct(string $filename) { // extraction des infos générées par gdalinfo
     if (!is_file($filename))
@@ -105,7 +105,7 @@ class GdalInfo {
      * Cela évite d'avoir à tester et à gérer cette erreur
      * 31/7/2023 - cette modif génère des erreurs, je l'annule !
     */
-    $this->ebox = new EBox([
+    $this->ebox = new \gegeom\EBox([
       $info['cornerCoordinates']['lowerLeft'][0],
       $info['cornerCoordinates']['lowerLeft'][1],
       $info['cornerCoordinates']['upperRight'][0],

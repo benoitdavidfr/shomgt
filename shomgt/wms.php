@@ -135,32 +135,32 @@ class WmsShomGt extends WmsServer {
   }
 
   /** @param array<int, string> $bbox */
-  private function wombox(string $crs, array $bbox): EBox { // calcul EBox en WorldMercator en fonction de crs 
+  private function wombox(string $crs, array $bbox): \gegeom\EBox { // calcul EBox en WorldMercator en fonction de crs 
     $bbox = [floatval($bbox[0]), floatval($bbox[1]), floatval($bbox[2]), floatval($bbox[3])];
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
-        return new EBox([[$bbox[0], $bbox[1]], [$bbox[2], $bbox[3]]]);
+        return new \gegeom\EBox([[$bbox[0], $bbox[1]], [$bbox[2], $bbox[3]]]);
       }
       case 'EPSG:3857': { // WebMercator
-        return new EBox([
-          WorldMercator::proj(WebMercator::geo([$bbox[0], $bbox[1]])),
-          WorldMercator::proj(WebMercator::geo([$bbox[2], $bbox[3]])),
+        return new \gegeom\EBox([
+          \coordsys\WorldMercator::proj(\coordsys\WebMercator::geo([$bbox[0], $bbox[1]])),
+          \coordsys\WorldMercator::proj(\coordsys\WebMercator::geo([$bbox[2], $bbox[3]])),
         ]);
       }
       case 'EPSG:4326': { // WGS84 LatLon
-        if (($bbox[0] < WorldMercator::MinLat) || ($bbox[0] > WorldMercator::MaxLat))
+        if (($bbox[0] < \coordsys\WorldMercator::MinLat) || ($bbox[0] > \coordsys\WorldMercator::MaxLat))
           WmsServer::exception(400, "Erreur, latitude incorrecte dans le paramètre BBOX", 'InvalidRequest');
-        return new EBox([
-          WorldMercator::proj([$bbox[1], $bbox[0]]),
-          WorldMercator::proj([$bbox[3], $bbox[2]]),
+        return new \gegeom\EBox([
+          \coordsys\WorldMercator::proj([$bbox[1], $bbox[0]]),
+          \coordsys\WorldMercator::proj([$bbox[3], $bbox[2]]),
         ]);
       }
       case 'CRS:84': { // WGS84 LonLat
-        if (($bbox[1] < WorldMercator::MinLat) || ($bbox[1] > WorldMercator::MaxLat))
+        if (($bbox[1] < \coordsys\WorldMercator::MinLat) || ($bbox[1] > \coordsys\WorldMercator::MaxLat))
           WmsServer::exception(400, "Latitude incorrecte dans le paramètre BBOX", 'InvalidRequest');
-        return new EBox([
-          WorldMercator::proj([$bbox[0], $bbox[1]]),
-          WorldMercator::proj([$bbox[2], $bbox[3]]),
+        return new \gegeom\EBox([
+          \coordsys\WorldMercator::proj([$bbox[0], $bbox[1]]),
+          \coordsys\WorldMercator::proj([$bbox[2], $bbox[3]]),
         ]);
       }
       default:
@@ -183,7 +183,7 @@ class WmsShomGt extends WmsServer {
     return ($scaleden > $layerscaleden * 10);
   }
   
-  private function zoom(EBox $wombox, int $width): float {
+  private function zoom(\gegeom\EBox $wombox, int $width): float {
     return log(self::BASE*2/$wombox->dx() * $width/256, 2);
   }
   
@@ -244,7 +244,7 @@ class WmsShomGt extends WmsServer {
     
     if (0) { // @phpstan-ignore-line // commentaire de debug
       if ($debug) echo "Debug ligne ",__LINE__,"<br>\n";
-      $wombox2 = new EBox([
+      $wombox2 = new \gegeom\EBox([
         $wombox->west(),
         $wombox->north()-$wombox->dy()/10,
         //($wombox->north()+$wombox->south())/2,
@@ -390,8 +390,8 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
   }
   catch (SExcept $e) {
     switch($e->getSCode()) {
-      case WebMercator::ErrorBadLat:
-      case WorldMercator::ErrorBadLat: {
+      case \coordsys\WebMercator::ErrorBadLat:
+      case \coordsys\WorldMercator::ErrorBadLat: {
         WmsServer::exception(400, "Latitude incorrecte dans le paramètre BBOX", 'InvalidRequest', $e->getMessage());
       }
       default: {

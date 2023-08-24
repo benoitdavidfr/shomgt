@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: runbatch.php
 title: bo/runbatch.php - lancement d'un des 2 scripts CLI de mise à jour des cartes par sgupdt et de mise à jour des GAN

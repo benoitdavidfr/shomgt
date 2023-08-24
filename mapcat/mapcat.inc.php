@@ -185,13 +185,13 @@ EOT;
 class MapCatItem {
   //const SUBCLASS = 'MapCatFromFile'; // la sous-classe concrète effectivement utilisée
   const ALL_KINDS = ['current','obsolete','uninteresting','deleted'];
-  /** @var TMapCatEntry $cat */
+  /** @var TMapCatEntry $item */
   protected array $item; // contenu de l'entrée du catalogue correspondant à une carte
   /** @var TMapCatKind $kind */
   public readonly string $kind; // type de carte ('current' | 'obsolete' | 'uninteresting' | 'deleted')
   
   /** 
-   * @param TMapCatEntry $cat
+   * @param TMapCatEntry $item
    * @param TMapCatKind $kind */
   function __construct(array $item, string $kind) { $this->item = $item; $this->kind = $kind; }
   

@@ -1,4 +1,5 @@
 <?php
+namespace dashboard;
 /*PhpDoc:
 name: gan.inc.php
 title: dashboard/gan.inc.php - définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN
@@ -23,7 +24,7 @@ class GanInSet {
   function __construct(string $html) {
     //echo "html=$html\n";
     if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $html, $matches))
-      throw new Exception("Erreur de construction de GanInSet sur '$html'");
+      throw new \Exception("Erreur de construction de GanInSet sur '$html'");
     $this->title = trim($matches[1]);
     $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
   }
@@ -133,7 +134,7 @@ class Gan {
     foreach ($record as $inSet)
       $this->inSets[] = new GanInSet($inSet);
     if (!preg_match('!^([^{]*){div}([^{]*){/div}\s*({div}([^{]*){/div}\s*)?({div}([^{]*){/div})?\s*$!', $title, $matches))
-      throw new Exception("Erreur d'analyse du titre '$title'");
+      throw new \Exception("Erreur d'analyse du titre '$title'");
     //echo '$matches='; print_r($matches);
     switch (count($matches)) {
       case 3: { // sur-titre + titre sans bbox
@@ -147,7 +148,7 @@ class Gan {
         $this->spatial = ['SW'=> trim($matches[4]), 'NE'=> trim($matches[6])];
         break;
       }
-      default: throw new Exception("Erreur d'analyse du titre '$title', count=".count($matches));
+      default: throw new \Exception("Erreur d'analyse du titre '$title', count=".count($matches));
     }
     //echo '$this='; print_r($this);
   }
@@ -211,7 +212,7 @@ class Gan {
       //echo "anneeEdition=$anneeEdition<br>\n";
     }
     else {
-      throw new Exception("No match pour version edition='$this->edition'");
+      throw new \Exception("No match pour version edition='$this->edition'");
     }
     if (!$this->corrections) {
       return $anneeEdition.'c0';
@@ -226,15 +227,16 @@ class Gan {
   }
 
   // retourne le cartouche correspondant au qgbox
-  function inSet(GBox $qgbox): GanInSet {
+  function inSet(\gegeom\GBox $qgbox): GanInSet {
     //echo "<pre>"; print_r($this);
     $dmin = INF;
     $pmin = -1;
     foreach ($this->inSets as $pnum => $part) {
       //try {
-        $pgbox = GBox::fromGeoDMd([
+        $pgbox = new \gegeom\GBox([
           'SW'=> str_replace('—','-', $part->spatial()['SW']),
-          'NE'=> str_replace('—','-', $part->spatial()['NE'])]);
+          'NE'=> str_replace('—','-', $part->spatial()['NE']),
+        ]);
       /*}
       catch (SExcept $e) {
         echo "<pre>SExcept::message: ",$e->getMessage(),"\n";
@@ -249,7 +251,7 @@ class Gan {
       }
     }
     if ($pmin == -1)
-      throw new SExcept("Aucun Part");
+      throw new \SExcept("Aucun Part");
     return $this->inSets[$pmin];
   }
 };
@@ -285,7 +287,7 @@ class GanStatic {
     if (!file_exists(self::GAN_DIR))
       mkdir(self::GAN_DIR);
     elseif ($options['reinit'] ?? false) { // suppression des fichiers existants
-      foreach (new DirectoryIterator(self::GAN_DIR) as $filename) {
+      foreach (new \DirectoryIterator(self::GAN_DIR) as $filename) {
         if (!in_array($filename, ['.','..']))
           unlink("$gandir/$filename");
       }

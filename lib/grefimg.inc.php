@@ -94,13 +94,13 @@ class GeoRefImage {
   const ErrorDrawString = 'GeoRefImage::ErrorDrawString';
   const ErrorSaveAlpha = 'GeoRefImage::ErrorSaveAlpha';
 
-  protected EBox $ebox; // EBox en coordonnées dans un CRS comme World Mercator
+  protected \gegeom\EBox $ebox; // EBox en coordonnées dans un CRS comme World Mercator
   protected ?GdImage $image=null; // la ressource image
 
-  function ebox(): EBox { return $this->ebox; }
+  function ebox(): \gegeom\EBox { return $this->ebox; }
   function image(): ?GdImage { return $this->image; }
 
-  function __construct(EBox $ebox, ?GdImage $image=null) { $this->ebox = $ebox; $this->image = $image; }
+  function __construct(\gegeom\EBox $ebox, ?GdImage $image=null) { $this->ebox = $ebox; $this->image = $image; }
 
   // création d'une image vide avec un fond soit transparent soit blanc
   function create(int $width, int $height, bool $transparent): void {
@@ -168,7 +168,7 @@ class GeoRefImage {
 
   // recopie la partie de $srcImg correspondant à $qebox dans la zone de $this correspondant à $qebox
   // $qebox est en coordonnées utilisateur
-  function copyresampled(GeoRefImage $srcImg, EBox $qebox, bool $debug): void {
+  function copyresampled(GeoRefImage $srcImg, \gegeom\EBox $qebox, bool $debug): void {
     $sw = [$qebox->west(), $qebox->south()]; // position SW de $qebox en coord. utilisateur
     $ne = [$qebox->east(), $qebox->north()]; // position NE de $qebox en coord. utilisateur
     $sw_dst = $this->toImgPos($sw, $debug ? 'sw_dst' : ''); if ($debug) echo "sw_dst=$sw_dst[0],$sw_dst[1]<br>\n";
@@ -228,7 +228,7 @@ class GeoRefImage {
   }
   
   // Dessine le rectangle en le remplissant avec la couleur
-  function filledrectangle(EBox $rect, int $color): void {
+  function filledrectangle(\gegeom\EBox $rect, int $color): void {
     $nw = $this->toImgPos([$rect->west(), $rect->north()], '');
     $se = $this->toImgPos([$rect->east(), $rect->south()], '');
     @imagefilledrectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
@@ -236,7 +236,7 @@ class GeoRefImage {
   }
   
   // Dessine le rectangle dans la couleur
-  function rectangle(EBox $rect, int $color): void {
+  function rectangle(\gegeom\EBox $rect, int $color): void {
     $nw = $this->toImgPos([$rect->west(), $rect->north()], '');
     $se = $this->toImgPos([$rect->east(), $rect->south()], '');
     @imagerectangle($this->image, $nw[0], $nw[1], $se[0], $se[1], $color)
@@ -305,7 +305,7 @@ class GeoRefImage {
 if (basename(__FILE__)<>basename($_SERVER['PHP_SELF'])) return;
 
 
-$gtImg = new GeoRefImage(new EBox([[0,0],[1000,1000]]));
+$gtImg = new GeoRefImage(new \gegeom\EBox([[0,0],[1000,1000]]));
 $gtImg->create(1200, 600, false);
 $gtImg->polygon(
   [[50,50],[50,500],[500,500]],

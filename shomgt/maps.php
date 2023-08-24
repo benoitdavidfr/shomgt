@@ -125,7 +125,7 @@ class GtMaps {
     die(json_encode($layers[$lyrname]->asArray(), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
   }
   
-  private static function eboxToWoM(string $crs, EBox $ebox): EBox { // projette l'ebox en World Mercator
+  private static function eboxToWoM(string $crs, \gegeom\EBox $ebox): \gegeom\EBox { // projette l'ebox en World Mercator
     switch ($crs) {
       case 'EPSG:3395': return $ebox; // WGS84 World Mercator
       case 'EPSG:3857': return $ebox->geo('WebMercator')->proj('WorldMercator'); // Web Mercator
@@ -148,10 +148,10 @@ class GtMaps {
     if (isset($_GET['bbox']) && $_GET['bbox']) {
       if (count(explode(',', $_GET['bbox'])) <> 4)
         self::error(400, "Le paramètre bbox ne définit pas 4 nombres");
-      $ebox =  new EBox($_GET['bbox']);
+      $ebox =  new \gegeom\EBox($_GET['bbox']);
     }
     else {
-      $ebox = new EBox;
+      $ebox = new \gegeom\EBox;
       foreach ($lyrnames as $lyrname)
         $ebox->union($layers[$lyrname]->ebox());
     }
@@ -182,7 +182,7 @@ class GtMaps {
   static function items(array $lyrnames): void { // silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
-      $bbox = new GBox($bbox); // en coord. géo.
+      $bbox = new \gegeom\GBox($bbox); // en coord. géo.
     }
     foreach ($lyrnames as $lyrname) {
       if (!($layer = Layer::layers()[$lyrname] ?? null))
@@ -206,7 +206,7 @@ class GtMaps {
   static function corners(array $lyrnames): void { // coins des silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
-      $bbox = new GBox($bbox); // en coord. géo.
+      $bbox = new \gegeom\GBox($bbox); // en coord. géo.
     }
     foreach ($lyrnames as $lyrname) {
       if (!($layer = Layer::layers()[$lyrname] ?? null))
@@ -229,7 +229,7 @@ class GtMaps {
   static function deletedZones(array $lyrnames): void { // coins des silhouettes des GéoTiffs
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
-      $bbox = new GBox($bbox); // en coord. géo.
+      $bbox = new \gegeom\GBox($bbox); // en coord. géo.
     }
     foreach ($lyrnames as $lyrname) {
       if (!($layer = Layer::layers()[$lyrname] ?? null))

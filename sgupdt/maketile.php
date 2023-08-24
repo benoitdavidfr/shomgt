@@ -100,7 +100,7 @@ if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
     $transparent = imagecolorallocatealpha($image, 0xFF, 0xFF, 0xFF, 0x7F); // couleur transparente
     foreach ($listOfZonesToDelete['bboxes'] as $bboxToDelete) {
       echo "Effacement de:\n", Yaml::dump($bboxToDelete);
-      $gbox = GBox::fromGeoDMd($bboxToDelete); // interprétation du rectangle comme GBox
+      $gbox = new \gegeom\GBox($bboxToDelete); // interprétation du rectangle comme GBox
       $gri->filledrectangle($gbox->proj('WorldMercator'), $transparent);
     }
   }
@@ -112,8 +112,8 @@ if ($listOfZonesToDelete = $toDelete[basename($pngpath, '.png')] ?? []) {
       $polygon = [];
       foreach ($polygonToDelete as $i => $pos) {
         if (is_string($pos))
-          $pos = Pos::fromGeoDMd($pos);
-        $polygon[$i] = WorldMercator::proj($pos);
+          $pos = \gegeom\Pos::fromGeoDMd($pos);
+        $polygon[$i] = \coordsys\WorldMercator::proj($pos);
       }
       $gri->polygon($polygon, $transparent);
     }
