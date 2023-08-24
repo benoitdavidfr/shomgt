@@ -183,6 +183,7 @@ foreach (new DirectoryIterator("$PF_PATH/users/$login") as $file) {
   if (substr($file, -3) == '.7z')
     $maps[] = (string)$file;
 }
+
 if ($maps) {
   echo "<h3>Cartes en cours de dépôt</h3>\n";
   echo "<table border=1><th>titre</th><th>v. exist.</th><th>v. dépôt</th>\n";
@@ -197,7 +198,7 @@ if ($maps) {
     echo "<tr><td>",$md['title'] ?? $map,"</td>",
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
-         "<td><a href='viewtiff.php?path=/users/$login&map=",substr($map, 0, -3),"&return=addmaps'>vérifier</a></td>",
+         "<td><a href='viewmap.php?path=/users/$login&map=",substr($map, 0, -3),"&return=addmaps'>vérifier</a></td>",
          "<td>",Html::button('supprimer', ['action'=>'delete','map'=>$map]),"</td>",
          "</tr>\n";
   }

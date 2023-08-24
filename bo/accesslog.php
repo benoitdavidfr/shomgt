@@ -178,7 +178,11 @@ class HeatData {
     //echo "center=",implode(',', $center),"\n";
     $area = $gbox->proj('WebMercator')->area();
     //echo "area=$area\n";
-    return [$center[1], $center[0], 1e8/$area];
+    // Poids de 1 pour 100 km2, < 1 au dessus, > 1 en dessous
+    if ($area > 1e8)
+      return [];
+    else
+      return [$center[1], $center[0], 1e8/$area];
   }
   
   /** retourne [] ou [lat, lng, intensity]
@@ -190,7 +194,10 @@ class HeatData {
     //echo "request_uri=$request_uri<br>\n"; die();
     $center = $gbox->center();
     $area = $gbox->proj('WebMercator')->area();
-    return [$center[1], $center[0], 1e8/$area/6];
+    if ($area > 1e8)
+      return [];
+    else
+      return [$center[1], $center[0], (1e8/$area)/6];
   }
   
   static function test(): void {
@@ -221,7 +228,7 @@ function durationInHours(string $duration): int { // prend en compte l'unité po
 }
 
 // retourne le texte de la requête SQL adhoc
-function queryForRecentAccess(int $durationInHours, ?string $param=null): string {
+function queryForRecentAccess(string $access, int $durationInHours, ?string $param=null): string {
   switch ($param) {
     case 'agg': { // req agrégée sur les IP
       return "select ip, label labelip, referer, login, user, count(*) nbre
@@ -229,7 +236,7 @@ function queryForRecentAccess(int $durationInHours, ?string $param=null): string
         where
           (login is null or login <> 'benoit.david@free.fr')
           and (user is null or user <> 'benoit.david@free.fr')
-          and access='T'
+          and access='$access'
           and TIMESTAMPDIFF(HOUR,logdt,now()) < $durationInHours
         group by ip, labelip, referer, login, user
       ";
@@ -240,7 +247,7 @@ function queryForRecentAccess(int $durationInHours, ?string $param=null): string
         where
           (login is null or login <> 'benoit.david@free.fr')
           and (user is null or user <> 'benoit.david@free.fr')
-          and access='T'
+          and access='$access'
           and TIMESTAMPDIFF(HOUR,logdt,now()) < $durationInHours
       ";
     }
@@ -249,6 +256,7 @@ function queryForRecentAccess(int $durationInHours, ?string $param=null): string
         from log left join ipaddress using(ip) 
         where
           ip='$param'
+          and access='$access'
           and TIMESTAMPDIFF(HOUR,logdt,now()) < $durationInHours
       ";
     }
@@ -260,11 +268,17 @@ switch ($action = $_GET['action'] ?? null) {
     echo "$HTML_HEAD<h3>Access log</h3>\n";
     echo "<ul>\n";
     echo "<li>Nbre d'accès ok depuis";
-    echo "<a href='?action=recentAccess&duration=8h'> 8 heures</a>,\n";
-    echo "<a href='?action=recentAccess&duration=1h'> 1 heure</a>,\n";
-    echo "<a href='?action=recentAccess&duration=1d'> 24 heures</a>,\n";
-    echo "<a href='?action=recentAccess&duration=7d'> 1 semaine</a>,\n";
-    echo "<a href='?action=recentAccess&duration=1m'> 1 mois</a></li>\n";
+    echo "<a href='?action=recentAccess&access=T&duration=8h'> 8 heures</a>,\n";
+    echo "<a href='?action=recentAccess&access=T&duration=1h'> 1 heure</a>,\n";
+    echo "<a href='?action=recentAccess&access=T&duration=1d'> 24 heures</a>,\n";
+    echo "<a href='?action=recentAccess&access=T&duration=7d'> 1 semaine</a>,\n";
+    echo "<a href='?action=recentAccess&access=T&duration=1m'> 1 mois</a></li>\n";
+    echo "<li>Nbre d'accès KO depuis";
+    echo "<a href='?action=recentAccess&access=F&duration=8h'> 8 heures</a>,\n";
+    echo "<a href='?action=recentAccess&access=F&duration=1h'> 1 heure</a>,\n";
+    echo "<a href='?action=recentAccess&access=F&duration=1d'> 24 heures</a>,\n";
+    echo "<a href='?action=recentAccess&access=F&duration=7d'> 1 semaine</a>,\n";
+    echo "<a href='?action=recentAccess&access=F&duration=1m'> 1 mois</a></li>\n";
     echo "<li><a href='?action=createTableIpaddress'>Créer et peupler la table ipaddress</a></li>\n";
     echo "</ul>\n";
     die();
@@ -278,12 +292,12 @@ switch ($action = $_GET['action'] ?? null) {
     die();
   }
   case 'recentAccess': {
-    echo "$HTML_HEAD<h3>recentAccess depuis $_GET[duration]</h3>\n";
+    echo "$HTML_HEAD<h3>recentAccess depuis $_GET[duration] (access == $_GET[access])</h3>\n";
     $durationInHours = durationInHours($_GET['duration']);
-    echo "<a href='?action=mapOfLogs&amp;duration=$_GET[duration]'>Carte des accès</a>\n";
-    echo "(<a href='?action=geojson&amp;duration=$_GET[duration]'>geojson</a>)<br>\n";
-    echo "<a href='?action=heatMap&amp;duration=$_GET[duration]'>Carte de chaleur</a><br>\n";
-    $sql = queryForRecentAccess($durationInHours, 'agg');
+    echo "<a href='?action=mapOfLogs&amp;access=$_GET[access]&amp;duration=$_GET[duration]'>Carte des accès</a>\n";
+    echo "(<a href='?action=geojson&amp;access=$_GET[access]&amp;duration=$_GET[duration]'>geojson</a>)<br>\n";
+    echo "<a href='?action=heatMap&amp;access=$_GET[access]&amp;duration=$_GET[duration]'>Carte de chaleur</a><br>\n";
+    $sql = queryForRecentAccess($_GET['access'], $durationInHours, 'agg');
     echo "<table border=1>\n";
     $sum = 0;
     $first = true;
@@ -293,7 +307,7 @@ switch ($action = $_GET['action'] ?? null) {
         echo "<th>",implode('</th><th>', array_keys($tuple)),"</th>\n";
         $first = false;
       }
-      $href = "?action=recentAccessIp&duration=$_GET[duration]&ip=$tuple[ip]";
+      $href = "?action=recentAccessIp&access=$_GET[access]&duration=$_GET[duration]&ip=$tuple[ip]";
       echo "<tr><td><a href='$href'>",implode('</td><td>', $tuple),"</a></td></tr>\n";
       $sum += $tuple['nbre'];
     }
@@ -304,10 +318,12 @@ switch ($action = $_GET['action'] ?? null) {
   case 'recentAccessIp': {
     echo "$HTML_HEAD<h3>recentAccessIp depuis $_GET[duration] et depuis l'adresse IP $_GET[ip]</h3>\n";
     $durationInHours = durationInHours($_GET['duration']);
-    $sql = queryForRecentAccess($durationInHours, $_GET['ip']);
+    $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip']);
     echo "<pre>sql=$sql</pre>\n";
-    echo "<a href='?action=mapOfLogs&amp;duration=$_GET[duration]&ip=$_GET[ip]'>Carte des accès</a><br>\n";
-    echo "<a href='?action=heatMap&amp;duration=$_GET[duration]&ip=$_GET[ip]'>Carte de chaleur</a><br>\n";
+    echo "<a href='?action=mapOfLogs&amp;access=$_GET[access]&amp;duration=$_GET[duration]&ip=$_GET[ip]'>",
+          "Carte des accès</a><br>\n";
+    echo "<a href='?action=heatMap&amp;access=$_GET[access]&amp;duration=$_GET[duration]&ip=$_GET[ip]'>",
+          "Carte de chaleur</a><br>\n";
     echo "<table border=1>\n";
     $first = true;
     foreach (MySql::query($sql) as $tuple) {
@@ -322,7 +338,7 @@ switch ($action = $_GET['action'] ?? null) {
     die();
   }
   case 'mapOfLogs': { // code HTML+JS de la carte Leaflet des bbox des requêtes utilisant l'entrée geojson ci-dessous
-    $geojsonParams = "&duration=$_GET[duration]".(isset($_GET['ip']) ? "&ip=$_GET[ip]" : '');
+    $geojsonParams = "&access=$_GET[access]&duration=$_GET[duration]".(isset($_GET['ip']) ? "&ip=$_GET[ip]" : '');
 
     $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
       : ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');
@@ -411,7 +427,7 @@ EOT;
     header('Content-type: application/json; charset="utf-8"');
     echo '{"type":"FeatureCollection","features":[',"\n";
     $durationInHours = durationInHours($_GET['duration']);
-    $sql = queryForRecentAccess($durationInHours, $_GET['ip'] ?? null);
+    $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip'] ?? null);
     $first = true;
     foreach (MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
@@ -423,7 +439,7 @@ EOT;
           'properties'=> [
             'logdt'=> $tuple['logdt'],
             'ip'=> $tuple['ip'],
-            'labelip'=> $tuple['label'] ?? $tuple['labelip'],
+            'labelip'=> $tuple['label'] ?? $tuple['labelip'] ?? null,
             'login'=> $tuple['login'],
             'user'=> $tuple['user'],
           ],
@@ -447,7 +463,7 @@ EOT;
       [50.6, 30.4, 0.5]
     ];
     $data = []; // [[lat, lng, intensity]]
-    $sql = queryForRecentAccess($durationInHours, $_GET['ip'] ?? null);
+    $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip'] ?? null);
     foreach (MySql::query($sql) as $tuple) {
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
       if (($heatData = HeatData::fromWmsRequest($tuple['request_uri']))

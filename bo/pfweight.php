@@ -137,7 +137,7 @@ else { // liste de versions pour la carte $_GET['map']
     $bs = ($mapVersion == $currentVersion) ? '<b>' : '';
     $be = ($mapVersion == $currentVersion) ? '</b>' : '';
     $hiddenValues = ['action'=> 'deleteVersion', 'map'=> $_GET['map'], 'version'=> $mapVersion];
-    echo "<tr><td><a href='viewtiff.php?path=/archives/$_GET[map]&map=$mapVersion'>$bs$mapVersion$be</a></td>",
+    echo "<tr><td><a href='viewmap.php?path=/archives/$_GET[map]&map=$mapVersion'>$bs$mapVersion$be</a></td>",
          //"<td>",json_encode($md),"</td>",
          "<td>",$md['edition'] ?? 'edition non définie',"</td>",
          "<td>",$md['dateArchive'] ?? '',"</td>",

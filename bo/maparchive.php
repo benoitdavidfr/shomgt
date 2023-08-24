@@ -9,7 +9,7 @@ doc: |
   Voir les critères de conformité des archives de cartes dans shomgt4.yaml
  
   Le script est utilisé de 2 manières:
-   - soit inclus dans addmaps.php et viewtiff.php, lui-même appelé par différents autre scripts
+   - soit inclus dans addmaps.php et viewmap.php, lui-même appelé par différents autre scripts
    - soit en CLI pour tester un ensemble de cartes.
 */
 require_once __DIR__.'/../vendor/autoload.php';

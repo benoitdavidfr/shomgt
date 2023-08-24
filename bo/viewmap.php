@@ -1,5 +1,5 @@
 <?php
-/* bo/viewtiff.php - Visualisation pour validation d'une carte Shom 7z
+/* bo/viewmap.php - Visualisation d'une carte Shom 7z pour éventuelle validation
  * Benoit DAVID - 11/7-6/8/2023
  * Utilisé de 3 manières:
  *  - en autonome propose de visualiser les livraisons et les archives
@@ -10,7 +10,7 @@
  * Permet aussi de visualiser les extensions spatiales fournies dans MapCat
  *
  * paramètres GET
- *  - path - chemin du répertoire contenant des 7z de cartes
+ *  - path - chemin du répertoire contenant des 7z de cartes ou d'autres répertoires
  *  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
  *  - return - permet de définir un éventuel mécanisme de retour
  *

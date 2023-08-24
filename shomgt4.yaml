@@ -448,6 +448,11 @@ bugs:
       - alors que le fichier gans.yaml indique
         - "edition: 'Publication 1995'"
     - corrigé le 18/8/2023 - il s'agit des CORRECTIONS apportées dans gan.inc.php
+
+restructurationBo: |
+  l'articulation addmaps / viewtiff / maparchive est trop complexe. La simplifier !
+  
+
 miseEnProd:
   cmdesMiseEnProdDev: |
     # cmdes pour mettre en prod sgpp à la place de shomgt sur Alwaysdata

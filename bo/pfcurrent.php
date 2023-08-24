@@ -110,7 +110,7 @@ else { // liste de versions pour la carte $_GET['map']
       echo "    <input type='radio' id='$mapVersion' name='mapVersion' value='$mapVersion' ",
            ($mapVersion==$currentVersion ? 'checked' : ''),"/>\n";
       echo "    <label for='$mapVersion'>",
-           "<a href='viewtiff.php?path=/archives/$_GET[map]&map=$mapVersion'>$label</a></label><br>\n";
+           "<a href='viewmap.php?path=/archives/$_GET[map]&map=$mapVersion'>$label</a></label><br>\n";
     }
   }
   echo "    <input type='radio' id='none' name='mapVersion' value='none' ",(''==$currentVersion ? 'checked' : ''),"/>\n";
