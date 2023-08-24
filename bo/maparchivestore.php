@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: maparchivestore.php
 title: bo/maparchivestore.php - gère les stockage d'archives de cartes - 7/8/2023

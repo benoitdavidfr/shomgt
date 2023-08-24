@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: index.php
 title: shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 5-13/8/2023

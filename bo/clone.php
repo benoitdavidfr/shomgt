@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: clone.php
 title: clone.php - clone un répertoire src dans un répertoire dest - 18/8/2023
@@ -27,7 +28,7 @@ function cloneDir(string $src, string $dest, string $tab=''): ?string {
     return "Erreur sur mkdir($dest)<br>\n";
   elseif ($tab)
     echo "{$tab}mkdir($dest) ok <br>\n";
-  foreach (new DirectoryIterator($src) as $entry) {
+  foreach (new \DirectoryIterator($src) as $entry) {
     if (in_array($entry, ['.','..','.DS_Store'])) continue;
     $dest2 = "$dest/$entry";
     $src2 = "$src/$entry";

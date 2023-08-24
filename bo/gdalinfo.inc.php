@@ -235,13 +235,13 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
           $gdalInfo->goodGeoref(true);
         }
     }
-    $am = WorldMercator::proj([180, 0]);
+    $am = \coordsys\WorldMercator::proj([180, 0]);
     printf("AM=[x: %.0f, y: %.0f]\n", $am[0],$am[1]);
   }
   
   static function test(string $path7z, string $entry): void {
     $archive = new My7zArchive($path7z);
-    $gdalInfo = new GdalInfoBo($path = $archive->extract($entry));
+    $gdalInfo = new GdalInfo($path = $archive->extract($entry));
     $archive->remove($path);
     //print_r($gdalInfo);
     echo 'georef = ',$gdalInfo->georef(),"\n";
@@ -250,7 +250,7 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
 
 if ((php_sapi_name() == 'cli') && ($argv[0]=='gdalinfo.inc.php')) {
   if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-    throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+    throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
   if (0) { // @phpstan-ignore-line
     GdalInfo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
   }

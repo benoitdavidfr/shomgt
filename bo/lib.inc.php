@@ -15,7 +15,7 @@ define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_
 /** @return array<int, string> */
 function directoryEntries(string $path): array { // retourne les entrées d'un répertoire sauf '.','..' et '.DS_Store'
   $entries = [];
-  foreach (new DirectoryIterator($path) as $entry) {
+  foreach (new \DirectoryIterator($path) as $entry) {
     if (!in_array($entry, ['.','..','.DS_Store']))
       $entries[(string)$entry] = 1;
   }
@@ -125,7 +125,7 @@ function dumpString(string $s): void { // affiche les codes ASCII des caractère
 
 if (!callingThisFile(__FILE__)) return;
 
-if (0) {
+if (0) { // @phpstan-ignore-line
   echo "callingThisFile=",callingThisFile(__FILE__),"<br>\n";
   die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
 }

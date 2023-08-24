@@ -36,7 +36,7 @@ class Login { // Fonctionnalités de login
       die();
     }
     // appel avec paramètres de login incorrects -> affichage d'un message d'erreur et du formulaire
-    elseif (!Access::cntrl("$_POST[login]:$_POST[password]")) {
+    elseif (!\Access::cntrl("$_POST[login]:$_POST[password]")) {
       echo $htmlHeadAndTitle,
            "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
            "</p>ou <a href='$registerUrl'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";

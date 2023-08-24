@@ -458,21 +458,54 @@ restructurationBo:
       uri: http://geoapi.fr/shomgt/bo/shomgeotiff.php/archives/{mapNum}/{mapNum}-{édition}c{correction}
       class:
         name: MapArchive
-      contient:
-        - array<string, GeoRefImage>
+        properties:
+          thumbnail: Image
+          main: GeoRefImage
+          insets: array<string, GeoRefImage>
+    Image:
+      title: image non géoréférencée
+      method:
+        display:
+          action: génère une image png dans un flux Http
     GeoRefImage(GeoTiff):
-      title: image géoréférencée représentant une partie d'une carte
+      title: image géoréférencée représentant la partie principale d'une carte ou un de ses cartouches associée à des MD ISO
+      properties:
+        isoMD: IsoMetadata|null
+        gdalInfo: GdalInfo
+      methods:
+        mapMetadata: MapMetadata
+        display:
+          action: génère une image tiff ou png dans un flux Http
     IsoMetadata:
       title: MD ISO 19115 décrivant une carte ou une de ses parties
     MapMetadata:
-      title: MD simplifiées décrivant une carte ou une de ses parties
+      title: MD simplifiées décrivant une carte ou un de ses cartouches
+    GdalInfo:
+      title: métadonnées stockées dans l'image
+      properties:
+        size:
+          width: int
+          height: int
+        wgs84Extent: GBox|null
+        coordinateSystem: CrsWkt|null
+        cornerCoordinates: EBox|null
+      methods:
+        georef: ok|KO|null // géoréférencement - ok | KO=incorrect | null=non géoréférencé
+    CrsWkt:
+      title: description standardisée du système de coordonnées selon le standard OGC CRS WKT (ISO 19162)
+      note: |
+        Il existe 2 versions du standard:
+          - standard OGC 2.0.6 (document OGC 18-010r7 et ISO 19162:2019)
+          - standard OGC 1.0   (document OGC 12-063r5 et ISO 19162:2015)
+        Sur php82, gdalinfo est en version 'GDAL 3.6.2, released 2023/01/02' génère un WKT version 2.0.6
+        Sur Alwaysdata, gdalinfo est en version 'GDAL 2.4.0, released 2018/12/14' qui génère un WKT bersion 1.0
     MapArchiveStore:
       title: ensemble de cartes stockées chacune sous la forme d'une archive
       uri: http://geoapi.fr/shomgt/bo/shomgeotiff.php
       class:
         name: MapArchiveStore
-      contient:
-        - array<string, MapArchive>
+      archives: array<string, array<string, MapArchive>>
+      current: array<string,MapArchive>
     MapCat/MapCatItem:
       title: catalogue décrivant les cartes (MapCat) avec une entrée par carte (MapCatItem)
       uri: http://geoapi.fr/shomgt/mapcat

@@ -1,4 +1,5 @@
 <?php
+namespace coordsys;
 /*PhpDoc:
 name:  coordsys.inc.php
 title: coordsys.inc.php (v3) - changement simple de projection a priori sur l'ellipsoide IAG_GRS_1980

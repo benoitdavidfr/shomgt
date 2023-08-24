@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: accesslog.php
 title: accesslog.php - analyse et affiche les logs d'accès y compris sous la forme de carte Leaflet
@@ -16,7 +17,7 @@ use Symfony\Component\Yaml\Yaml;
 // Sur localhost, j'utilise les logs de shomgt@geoapi.fr
 $ve = ($_SERVER['HTTP_HOST'] == 'localhost') ? 'SHOMGT3_GEOAPI_MYSQL_URI' : 'SHOMGT3_LOG_MYSQL_URI';
 $LOG_MYSQL_URI = getenv($ve) or die("Erreur, variable d'environnement '$ve' non définie");
-MySql::open($LOG_MYSQL_URI);
+\MySql::open($LOG_MYSQL_URI);
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>bo/accesslog@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
@@ -96,20 +97,20 @@ class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
 // classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête
 class Request2GBox {
   // extrait le bbox d'une requête WMS et le retourne comme GBox ou null si le BBOX n'est pas détecté dans la requête
-  static function wms(string $request_uri): ?GBox {
+  static function wms(string $request_uri): ?\gegeom\GBox {
     // détermination du bbox
     $bboxPattern = '!BBOX=(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)&!i';
     if (!preg_match($bboxPattern, $request_uri, $matches)) {
       return null;
     }
     //echo "<pre>request_uri=$request_uri</pre>\n";
-    $ebox = new EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
+    $ebox = new \gegeom\EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
 
     // détermination du CRS WMS 1.3.0 / 1.1.1
     if (preg_match('!version=1\.3\.0!i', $request_uri)) {
       if (!preg_match('!CRS=([A-Z:\d%]+)&!i', $request_uri, $matches)) {
         echo "<pre>request_uri=$request_uri</pre>\n";
-        throw new Exception("Erreur CRS non détecté dans requête WMS version 1.3.0");
+        throw new \Exception("Erreur CRS non détecté dans requête WMS version 1.3.0");
       }
       //echo "<pre>crs ->>",Yaml::dump($matches),"</pre>\n";
       $crs = $matches[1];
@@ -117,7 +118,7 @@ class Request2GBox {
     elseif (preg_match('!version=1\.1\.1!i', $request_uri)) {
       if (!preg_match('!SRS=([A-Z:\d%]+)&!i', $request_uri, $matches)) {
         echo "<pre>request_uri=$request_uri</pre>\n";
-        throw new Exception("Erreur SRS non détecté dans requête WMS version 1.1.0");
+        throw new \Exception("Erreur SRS non détecté dans requête WMS version 1.1.0");
       }
       //echo "<pre>crs ->>",Yaml::dump($matches),"</pre>\n";
       $srs = $matches[1];
@@ -125,7 +126,7 @@ class Request2GBox {
     }
     else {
       echo "<pre>request_uri=$request_uri</pre>\n";
-      throw new Exception("Dans requête WMS, version ni 1.1.0 ni 1.3.0");
+      throw new \Exception("Dans requête WMS, version ni 1.1.0 ni 1.3.0");
     }
     
     // conversion de l'ebox en GBox et génération du GeoJSON
@@ -140,11 +141,11 @@ class Request2GBox {
   }
   
   // transforme en GBox une requête sur une tuile ou null si l'URI ne correspond pas à une requête sur une tuile
-  static function tile(string $request_uri): ?GBox {
+  static function tile(string $request_uri): ?\gegeom\GBox {
     if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";
-    $ebox = Zoom::tileEBox(intval($matches[1]), intval($matches[2]), intval($matches[3])); // $ebox en coord. WebMercator
+    $ebox = \Zoom::tileEBox(intval($matches[1]), intval($matches[2]), intval($matches[3])); // $ebox en coord. WebMercator
     return $ebox->geo('WebMercator');
   }
 
@@ -223,7 +224,7 @@ function durationInHours(string $duration): int { // prend en compte l'unité po
     'h' => intval(substr($_GET['duration'], 0, -1)),
     'd' => intval(substr($_GET['duration'], 0, -1))*24,
     'm' => intval(substr($_GET['duration'], 0, -1))*24*30,
-    default => throw new Exception("durée $_GET[duration] erronée"),
+    default => throw new \Exception("durée $_GET[duration] erronée"),
   };
 }
 
@@ -285,10 +286,10 @@ switch ($action = $_GET['action'] ?? null) {
   }
   case 'createTableIpaddress': {
     echo "$HTML_HEAD<h3>Access log</h3>\n";
-    MySql::query("drop table if exists ipaddress");
-    MySql::query(SqlDef::sql('ipaddress', SqlDef::IPADDRESS_SCHEMA));
+    \MySql::query("drop table if exists ipaddress");
+    \MySql::query(SqlDef::sql('ipaddress', SqlDef::IPADDRESS_SCHEMA));
     foreach (SqlDef::IPADDRESS_CONTENT as $iptuple)
-      MySql::query("insert into ipaddress values('$iptuple[0]','$iptuple[1]')");
+      \MySql::query("insert into ipaddress values('$iptuple[0]','$iptuple[1]')");
     die();
   }
   case 'recentAccess': {
@@ -301,7 +302,7 @@ switch ($action = $_GET['action'] ?? null) {
     echo "<table border=1>\n";
     $sum = 0;
     $first = true;
-    foreach (MySql::query($sql) as $tuple) {
+    foreach (\MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
       if ($first) {
         echo "<th>",implode('</th><th>', array_keys($tuple)),"</th>\n";
@@ -326,7 +327,7 @@ switch ($action = $_GET['action'] ?? null) {
           "Carte de chaleur</a><br>\n";
     echo "<table border=1>\n";
     $first = true;
-    foreach (MySql::query($sql) as $tuple) {
+    foreach (\MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
       if ($first) {
         echo "<th>",implode('</th><th>', array_keys($tuple)),"</th>\n";
@@ -429,7 +430,7 @@ EOT;
     $durationInHours = durationInHours($_GET['duration']);
     $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip'] ?? null);
     $first = true;
-    foreach (MySql::query($sql) as $tuple) {
+    foreach (\MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
       if (($gbox = Request2GBox::wms($tuple['request_uri']))
@@ -464,7 +465,7 @@ EOT;
     ];
     $data = []; // [[lat, lng, intensity]]
     $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip'] ?? null);
-    foreach (MySql::query($sql) as $tuple) {
+    foreach (\MySql::query($sql) as $tuple) {
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";
       if (($heatData = HeatData::fromWmsRequest($tuple['request_uri']))
        || ($heatData = HeatData::fromTileRequest($tuple['request_uri']))) {

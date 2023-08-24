@@ -1,4 +1,5 @@
 <?php
+namespace bo;
 /*PhpDoc:
 name: addmaps.php
 title: bo/addmaps.php - ajout et vérification de nouvelles cartes dans le BO
@@ -24,7 +25,7 @@ if (!in_array(userRole($login), ['normal','admin'])) {
 }
 
 if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+  throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 //echo "PF_PATH=$PF_PATH<br>\n";
 
 echo "<!DOCTYPE html><html><head><title>addmaps</title></head><body>\n";
@@ -179,7 +180,7 @@ if (!is_dir("$PF_PATH/users/$login") && !mkdir("$PF_PATH/users/$login")) {
   die("Erreur de création de \"$PF_PATH/users/$login\"\n");
 }
   
-foreach (new DirectoryIterator("$PF_PATH/users/$login") as $file) {
+foreach (new \DirectoryIterator("$PF_PATH/users/$login") as $file) {
   if (substr($file, -3) == '.7z')
     $maps[] = (string)$file;
 }
@@ -190,7 +191,7 @@ if ($maps) {
   foreach ($maps as $map) {
     $md = MapMetadata::getFrom7z("$PF_PATH/users/$login/$map");
     if (!isset($md['version']))
-      throw new Exception("Erreur md ne contient pas de champ version pour $PF_PATH/users/$login/$map");
+      throw new \Exception("Erreur md ne contient pas de champ version pour $PF_PATH/users/$login/$map");
     $newVersion = $md['version'];
     $existingVersion = existingVersion($PF_PATH, substr($map, 0, -3));
     if ($existingVersion == '0000c0')

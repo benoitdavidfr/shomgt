@@ -66,7 +66,7 @@ class GeoRefImage { // Image principale ou cartouche de la carte
       null => "Image non géoréférencée",
       'ok' => "Image géoréférencée",
       'KO' => "Image mal géoréférencée",
-      default => throw new Exception("valeur ".$this->georef()." interdite"),
+      default => throw new \Exception("valeur ".$this->georef()." interdite"),
     }
     . (($this->georefBox && $this->georefBox->intersectsAntiMeridian()) ? " à cheval sur l'antiméridien" : '');
   }
@@ -85,7 +85,7 @@ class GeoRefImage { // Image principale ou cartouche de la carte
     //echo "title=",$this->title(),", georefBox=",$this->georefBox,"<br>\n";
     $bests = []; // liste des cartouches de MapCat correspondant au cartouche de l'archive
     foreach ($insetMapsOfCat as $insetMapOfCat) {
-      $gbox = new Spatial($insetMapOfCat['spatial']);
+      $gbox = new \mapcat\Spatial($insetMapOfCat['spatial']);
       //echo "insetMapOfCat: title=",$insetMapOfCat['title'],", gbox=$gbox<br>\n";
       if ($this->georefBox->includes($gbox, $show))
         $bests[] = ['title'=> $insetMapOfCat['title'], 'gbox'=> $gbox];
@@ -140,7 +140,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       throw new \Exception("pathOf7z=$pathOf7z n'est pas un fichier dans MapArchive::__construct()");
     $this->pathOf7z = $pathOf7z;
     $this->mapNum = $mapNum;
-    $this->mapCat = \mapcat\MapCatItem::get($mapNum);
+    $this->mapCat = \mapcat\MapCat::get($mapNum);
     $archive = new My7zArchive($pathOf7z);
     $this->main = new GeoRefImage;
     foreach ($archive as $entry) {
@@ -329,7 +329,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   
   function showAsHtml(?string $return=null): void { // affiche le contenu de l'archive en Html 
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-      throw new Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+      throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
     
     echo "<h2>Carte $_GET[map] de la livraison $_GET[path]</h2>\n";
@@ -453,7 +453,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
-    $mapCat = MapCat::get($mapNum);
+    $mapCat = \mapcat\MapCat::get($mapNum);
     $invalid = $this->invalid();
     if (isset($invalid['errors'])) {
       $record['MapCat'] = $mapCat->asArray();
@@ -471,7 +471,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   /** @param array<string, mixed> $options */
   function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
     if ($options['yaml'] ?? null) {
-      $mapCat = MapCat::get($this->mapNum);
+      $mapCat = \mapcat\MapCat::get($this->mapNum);
       foreach ($this->insets as $name => $inset)
         $insets[$name] = $inset->asArray();
       echo Yaml::dump([$this->pathOf7z => [
@@ -516,7 +516,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     }
     elseif (is_dir($path)) {
       echo "**Répertoire $path**\n";
-      foreach (new DirectoryIterator($path) as $name) {
+      foreach (new \DirectoryIterator($path) as $name) {
         if (!in_array($name, ['.','..','.DS_Store']))
           self::check("$path/$name", $options);
       }
@@ -628,7 +628,7 @@ switch (\bo\callingThisFile(__FILE__)) {
           echo "<pre>mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
           sort($mappingInsetsWithMapCat);
           echo "mappingInsetsWithMapCat = "; print_r($mappingInsetsWithMapCat);
-          $mapCat = MapCat::get($mapNum);
+          $mapCat = \mapcat\MapCat::get($mapNum);
           echo "insetTitlesSorted = "; print_r($mapCat->insetTitlesSorted());
           if ($mappingInsetsWithMapCat <> $mapCat->insetTitlesSorted())
             echo "Il n'y a pas de bijection entre les cartouches définis dans l'archive et ceux définis dans MapCat";

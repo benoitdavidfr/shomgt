@@ -51,7 +51,7 @@ class Zoom {
   static function sizeOfADegreeInMeters(): float { return self::Size0 / 360.0; }
   
   // calcule la EBox en coord. WebMercator. de la tuile (z,x,y)
-  static function tileEBox(int $z, int $ix, int $iy): EBox {
+  static function tileEBox(int $z, int $ix, int $iy): \gegeom\EBox {
     $base = self::Size0 / 2;
     $x0 = - $base;
     $y0 =   $base;

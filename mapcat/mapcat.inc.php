@@ -11,6 +11,8 @@ require_once __DIR__.'/../bo/lib.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+
+
 /* décode le champ spatial de MapCat pour différentes utilisations
 * et Vérifie les contraintes et les exceptions du champ spatial
 * Les contraintes sont définies dans la constante CONSTRAINTS
@@ -179,40 +181,24 @@ EOT;
 };
 //Spatial::test();
 
-// Un objet MapCat correspond à l'enregistrement d'une carte dans le catalogue MapCat
-abstract class MapCatItem {
+// Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
+class MapCatItem {
   //const SUBCLASS = 'MapCatFromFile'; // la sous-classe concrète effectivement utilisée
-  const SUBCLASS = '\mapcat\MapCatItemInBase';
   const ALL_KINDS = ['current','obsolete','uninteresting','deleted'];
   /** @var TMapCatEntry $cat */
-  protected array $cat; // contenu de l'entrée du catalogue correspondant à une carte
+  protected array $item; // contenu de l'entrée du catalogue correspondant à une carte
   /** @var TMapCatKind $kind */
   public readonly string $kind; // type de carte ('current' | 'obsolete' | 'uninteresting' | 'deleted')
-  
-  /** Retourne la liste des numéros de carte (sans FR) en fonction de la liste des types
-   * @param list<TMapCatKind> $kindOfMap
-   * @return list<string>
-   */
-  static function mapNums(array $kindOfMap=['current','obsolete']): array {
-    return (self::SUBCLASS)::mapNums($kindOfMap);
-  }
-  
-  /** Retourne l'objet MapCat correspondant au numéro de carte (sans FR) ou null s'il n'existe pas
-   * @param list<TMapCatKind> $kindOfMap
-   */
-  static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?self {
-    return (self::SUBCLASS)::get($mapNum, $kindOfMap);
-  }
   
   /** 
    * @param TMapCatEntry $cat
    * @param TMapCatKind $kind */
-  protected function __construct(array $cat, string $kind) { $this->cat = $cat; $this->kind = $kind; }
+  function __construct(array $item, string $kind) { $this->item = $item; $this->kind = $kind; }
   
-  function __get(string $property): mixed { return $this->cat[$property] ?? null; }
+  function __get(string $property): mixed { return $this->item[$property] ?? null; }
   
   /** @return array<string,mixed> */
-  function asArray(): array { return array_merge($this->cat, ['kind'=> $this->kind]); }
+  function asArray(): array { return array_merge($this->item, ['kind'=> $this->kind]); }
   
   function scale(): ?string { // formatte l'échelle comme dans le GAN
     return $this->scaleDenominator ? '1 : '.str_replace('.',' ',$this->scaleDenominator) : 'undef';
@@ -264,7 +250,28 @@ abstract class MapCatItem {
   }
 };
 
-class MapCatItemFromFile extends MapCatItem {
+// La classe abstraite MapCat correspond au catalogue MapCat soit en fichier Yaml soit en base 
+abstract class MapCat {
+  //const SUBCLASS = 'MapCatFromFile'; // la sous-classe concrète effectivement utilisée
+  const SUBCLASS = '\mapcat\MapCatInBase';
+  
+  /** Retourne la liste des numéros de carte (sans FR) en fonction de la liste des types
+   * @param list<TMapCatKind> $kindOfMap
+   * @return list<string>
+   */
+  static function mapNums(array $kindOfMap=['current','obsolete']): array {
+    return (self::SUBCLASS)::mapNums($kindOfMap);
+  }
+  
+  /** Retourne l'objet MapCat correspondant au numéro de carte (sans FR) ou null s'il n'existe pas
+   * @param list<TMapCatKind> $kindOfMap
+   */
+  static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?MapCatItem {
+    return (self::SUBCLASS)::get($mapNum, $kindOfMap);
+  }
+};
+
+class MapCatFromFile extends MapCat {
   /** @var array<string, TMapCatEntry> $maps */
   static array $maps=[]; // contenu du champ maps de MapCat
   /** @var array<string, TMapCatEntry> $obsoleteMaps */
@@ -301,34 +308,34 @@ class MapCatItemFromFile extends MapCatItem {
    * si cette entrée n'existe pas retourne null
    * @param list<TMapCatKind> $kindOfMap
    */
-  static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?self {
+  static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?MapCatItem {
     //echo "mapNum=$mapNum<br>\n";
     if (!self::$maps) self::init();
     if (substr($mapNum, 0, 2) <> 'FR')
       $mapNum = 'FR'.$mapNum;
     if (in_array('current', $kindOfMap) && ($cat = (self::$maps[$mapNum] ?? null))) {
-      return new self($cat, 'current');
+      return new MapCatItem($cat, 'current');
     }
     // Je cherche la carte dans les cartes obsolètes
     if (in_array('obsolete', $kindOfMap) && ($cat = (self::$obsoleteMaps[$mapNum] ?? null))) {
       //print_r($cat);
       $date = array_keys($cat)[count($cat)-1];
-      return new self(array_merge(['obsoleteDate'=> $date], $cat[$date]), 'obsolete');
+      return new MapCatItem(array_merge(['obsoleteDate'=> $date], $cat[$date]), 'obsolete');
     }
     // Je cherche la carte dans les cartes inintéressantes
     if (in_array('uninteresting', $kindOfMap) && ($cat = self::$uninterestingMaps[$mapNum] ?? null)) {
-      return new self($cat, 'uninteresting');
+      return new MapCatItem($cat, 'uninteresting');
     }
     if (in_array('deleted', $kindOfMap) && ($cat = (self::$deletedMaps[$mapNum] ?? null))) {
       //print_r($cat);
       $date = array_keys($cat)[count($cat)-1];
-      return new self(array_merge(['deletedDate'=> $date], $cat[$date]), 'deleted');
+      return new MapCatItem(array_merge(['deletedDate'=> $date], $cat[$date]), 'deleted');
     }
     return null;
   }
 }
 
-class MapCatItemInBase extends MapCatItem {
+class MapCatInBase extends MapCat {
   static function mapNums(array $kindOfMap=['current','obsolete']): array {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
@@ -341,7 +348,7 @@ class MapCatItemInBase extends MapCatItem {
     return $mapNums;
   }
   
-  static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?self {
+  static function get(string $mapNum, array $kindOfMap=['current','obsolete']): ?MapCatItem {
     //echo "appel de MapCatInBase::get($mapNum)<br>\n";
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
@@ -352,7 +359,7 @@ class MapCatItemInBase extends MapCatItem {
       return null;
     $jdoc = json_decode($mapcat['jdoc'], true);
     unset($jdoc['kind']);
-    return new MapCatItemInBase($jdoc, $mapcat['kind']);
+    return new MapCatItem($jdoc, $mapcat['kind']);
   }
 };
 
@@ -370,7 +377,7 @@ switch ($_GET['action'] ?? null) {
       <div>
         <fieldset>
           <legend>Ou sélectionner un ou plusieurs types de carte</legend>\n";
-    foreach (MapCat::ALL_KINDS as $k)
+    foreach (MapCatItem::ALL_KINDS as $k)
       echo "        <div><input type='checkbox' name='$k' value='true' ",in_array($k, $kind) ? 'checked ' : '',"/>",
                    "<label for='$k'>$k</label></div>\n";
     echo "      </fieldset>
@@ -400,15 +407,15 @@ switch ($_GET['action'] ?? null) {
         }
       }
       echo "<h3>Liste des ",implode(',',$kind),"</h3><ul>\n";
-      foreach(MapCatItem::mapNums($kind) as $mapNum) {
-        $mapcat = MapCatItem::get($mapNum, $kind);
+      foreach(MapCat::mapNums($kind) as $mapNum) {
+        $mapcat = MapCat::get($mapNum, $kind);
         echo "<li><a href='?action=mapcat&mapNum=$mapNum&kind=",implode(',',$kind),"'>",
              "$mapNum - $mapcat->title ($mapcat->kind)</a></li>\n";
       }
       echo "</ul>\n";
     }
     else {
-      $mapcat = MapCatItem::get($_GET['mapNum'], MapCatItem::ALL_KINDS);
+      $mapcat = MapCat::get($_GET['mapNum'], MapCatItem::ALL_KINDS);
       echo '<pre>',Yaml::dump($mapcat->asArray()),"</pre>\n";
       //print_r($mapcat);
       echo "<a href='?action=mapcat&kind=$_GET[kind]'>Retour à la liste des $_GET[kind]</a><br>\n";

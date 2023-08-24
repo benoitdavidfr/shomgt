@@ -82,10 +82,11 @@ parameters:
   excludePaths:
     analyse:
       - bo/SevenZipArchive.php
+      - bo/arrayobject.php
+      - bo/jeudi.php
       - bo/mail.php
       - bo/neworg.php
       - bo/purge.php
-      - bo/jeudi.php
   universalObjectCratesClasses:
-    - MapCat
+    - mapcat\MapCatItem
   treatPhpDocTypesAsCertain: false
