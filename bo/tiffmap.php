@@ -14,31 +14,26 @@ require_once __DIR__.'/maparchive.php';
 
 /** transforme un GBox en une structure latLngBounds@Leaflet
  * @return TLPos */
-function latLngBounds(GBox $gbox): array {
+function latLngBounds(\gegeom\GBox $gbox): array {
   return [[$gbox->south(), $gbox->west()], [$gbox->north(), $gbox->east()]];
 }
 
-if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))) {
-  die("Erreur variable d'environnement SHOMGT3_PORTFOLIO_PATH non définie\n");
-}
-
+$rpath = $_GET['rpath'];
 // fabrication  de la liste des tiffs à afficher dans la carte
-$mapNum = substr($_GET['map'], 0, 4);
 $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
-$map = new MapArchive("$PF_PATH$_GET[path]/$_GET[map].7z", $mapNum);
+$map = new MapArchive($rpath);
 // prefix d'URL vers le répertoire courant
 $serverUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF']);
 foreach ($map->gtiffs() as $fileName) {
   echo "$fileName<br>\n";
-  $tifs[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
-  $spatials[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$_GET[path]/$_GET[map].7z/$fileName";
+  $tifs[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$rpath/$fileName";
+  $spatials[substr($fileName, 5, -4)] = "$serverUrl/shomgeotiff.php$rpath/$fileName";
 }
 echo "<pre>tifs = "; print_r($tifs); echo "</pre>\n";
 
 // fabrication de la liste des extensions spatiales à afficher dans la carte
 $spatials = []; // liste des couches Leaflet représentant les ext. spat. des GéoTiffs [title => code JS créant un L.geoJSON]
-$mapCat = \mapcat\MapCat::get($mapNum);
-foreach ($mapCat->spatials() as $title => $spatial) {
+foreach ($map->mapCat->spatials() as $title => $spatial) {
   $title = str_replace('"', '\"', $title);
   //echo "<pre>spatial[$name] = "; print_r($spatial); echo "</pre>\n";
   $spatials[$title] = $spatial->lgeoJSON(LGEOJSON_STYLE, $title);

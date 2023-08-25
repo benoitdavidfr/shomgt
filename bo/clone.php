@@ -61,7 +61,7 @@ function cloneDir(string $src, string $dest, string $tab=''): ?string {
 }
 
 switch (callingThisFile(__FILE__)) {
-  case '': return; // fichier inclus
+  case null: return; // fichier inclus
   case 'cli': { // appel comme cmde CLI
     if ($argc < 3)
       die("usage: php $argv[0] [-v] {src} {dest}\n");

@@ -93,19 +93,20 @@ class Html {
 };
 
 /** Permet de distinguer si un script est inclus dans un autre ou est directement appelé en mode CLI ou Web
- * retourne '' si ce fichier n'a pas été directement appelé, cad qu'il est inclus dans un autre,
+ * retourne null si ce script n'a pas été directement appelé, cad qu'il est inclus dans un autre,
  *  'web' s'il est appelé en mode web, 'cli' s'il est appelé en mode CLI
- * @return ''|'web'|'cli' */
-function callingThisFile(string $file): string {
+ * Doit être appelé avec en paramètre la constante __FILE__
+ * @return null|'web'|'cli' */
+function callingThisFile(string $file): ?string {
   global $argv;
   if (php_sapi_name() == 'cli') {
-    return ($argv[0] == basename($file)) ? 'cli' : '';
+    return ($argv[0] == basename($file)) ? 'cli' : null;
   }
   else {
     $documentRoot = $_SERVER['DOCUMENT_ROOT'];
     if (substr($documentRoot, -1)=='/') // Sur Alwaysdata $_SERVER['DOCUMENT_ROOT'] se termine par un '/'
       $documentRoot = substr($documentRoot, 0, -1);
-    return ($file == $documentRoot.$_SERVER['SCRIPT_NAME']) ? 'web' : '';
+    return ($file == $documentRoot.$_SERVER['SCRIPT_NAME']) ? 'web' : null;
   }
 }
 

@@ -2,25 +2,25 @@
 namespace bo;
 /*PhpDoc:
 name: mapmetadata.php
-title: bo/mapmetadata.inc.php - génération d'une MD de synthèse à partir du fichier XML ISO - 4/8/2023
+title: bo/mapmetadata.inc.php - génération d'une MD simplifiée à partir du fichier XML ISO - 4/8/2023
 doc: |
-  déf. de la classe MapMetadata et de la fonction ganWeek2iso()
+  déf. de la classe MapMetadata
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
-  $date = new \DateTimeImmutable();
-  // public DateTimeImmutable::setISODate(int $year, int $week, int $dayOfWeek = 1): DateTimeImmutable
-  $newDate = $date->setISODate(intval('20'.substr($ganWeek,0,2)), intval(substr($ganWeek, 2)), 3);
-  return $newDate->format('Y-m-d');
-}
-
 class MapMetadata { // construit les MD synthétiques d'une carte à partir des MD ISO dans le 7z 
+  static function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
+    $date = new \DateTimeImmutable();
+    // public DateTimeImmutable::setISODate(int $year, int $week, int $dayOfWeek = 1): DateTimeImmutable
+    $newDate = $date->setISODate(intval('20'.substr($ganWeek,0,2)), intval(substr($ganWeek, 2)), 3);
+    return $newDate->format('Y-m-d');
+  }
+
   // La date de revision n'est souvent pas celle de la correction mais de l'édition de la carte
-  // Le schéma des MD synthétiques est défini par md.schema.yaml
+  // Le schéma des MD simplifiées est défini par md.schema.yaml
   // $mdpath est le chemin du fichier xml contenant les MD ISO 19139
   /** @return array<string, string> */
   static function extractFromIso19139(string $mdpath): array { // lit les MD dans le fichier ISO 19139
@@ -66,7 +66,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
  
     $md['version'] = $anneeEdition.'c'.$lastUpdate;
     $md['edition'] = $edition;
-    $md['gan'] = $gan ? ['week'=> $gan, 'date'=> ganWeek2iso($gan)] : null;
+    $md['gan'] = $gan ? ['week'=> $gan, 'date'=> self::ganWeek2iso($gan)] : null;
     
     //echo "gmd_CI_Date=",print_r($citation->gmd_date->gmd_CI_Date),"\n";
       
@@ -94,8 +94,8 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
    *       retourne [] // ERREUR
    * @return array<string, string>
    */
-  static function getFrom7z(string $pathOf7z, string $mdName=''): array { 
-    //echo "MapVersion::getFrom7z($pathOf7z)<br>\n";
+  static function getFrom7z(string $pathOf7z, ?string $mdName=null): array {
+    //echo "MapMetadata::getFrom7z(pathOf7z=$pathOf7z, mdName=$mdName)<br>\n";
     if (!is_file($pathOf7z)) {
       throw new \Exception("Archive $pathOf7z inexistante");
     }
@@ -148,7 +148,7 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
         }
       }
       if (!$dateArchive)
-        throw new \Exception("Cas non prévu dans MapMetadata::getFrom7z()");
+        throw new \Exception("Cas non prévu dans MapMetadata::getFromArchive()");
       return array_merge($md, ['dateArchive'=> $dateArchive]);
     }
     
