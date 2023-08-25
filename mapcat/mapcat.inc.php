@@ -248,6 +248,19 @@ class MapCatItem {
       return array_values($scaleDenominators)[count($scaleDenominators)-1];
     }
   }
+
+  function diff(string $labelA, string $labelB, self $b): void {
+    echo "<table border=1><th>prop</th><th>$labelA</th><th>$labelB</th>\n";
+    foreach ($this->item as $p => $val) {
+      if ($val <> $b->$p)
+        echo "<tr><td>$p</td><td><pre>",Yaml::dump($val),"</pre></td><td><pre>",Yaml::dump($b->$p),"</pre></td></tr>\n";
+    }
+    foreach ($b->item as $p => $val) {
+      if (!$this->$p)
+        echo "<tr><td>$p</td><td>null</td><td><pre>",Yaml::dump($val),"</pre></td></tr>\n";
+    }
+    echo "</table>\n";
+  }
 };
 
 // La classe abstraite MapCat correspond au catalogue MapCat soit en fichier Yaml soit en base 
@@ -296,12 +309,14 @@ class MapCatFromFile extends MapCat {
    */
   static function mapNums(array $kindOfMap=['current','obsolete']): array {
     if (!self::$maps) self::init();
-    return array_merge(
+    $mapNums = array_merge(
       in_array('current', $kindOfMap) ? array_keys(self::$maps) : [],
       in_array('obsolete', $kindOfMap) ? array_keys(self::$obsoleteMaps) : [],
       in_array('uninteresting', $kindOfMap) ? array_keys(self::$uninterestingMaps) : [],
       in_array('deleted', $kindOfMap) ? array_keys(self::$deletedMaps) : [],
     );
+    foreach ($mapNums as &$mapNum) { $mapNum = substr($mapNum, 2); }
+    return $mapNums;
   }
     
   /** retourne l'entrée du catalogue correspondant à $mapNum sous la forme d'un objet MapCat

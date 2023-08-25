@@ -122,8 +122,8 @@ function cmpGans(): void { // comparaison MapCat / GAN
   echo "</table>\n";
 }
 
-// Classe portant en constante la définition SQL de la table user et le modèle de document Yaml
-// ainsi qu'une méthode statique traduisant cette constate en requête SQL
+// Classe portant en constante la définition SQL de la table mapcat et le modèle de document Yaml
+// ainsi qu'une méthode statique traduisant la définition SQL en requête SQL
 class MapCatDef {
   // la structuration de la constante est définie dans son champ description
   const MAPCAT_TABLE_SCHEMA = [
@@ -411,9 +411,10 @@ echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case null: {
     echo "<h2>Gestion du catalogue MapCat</h2><h3>Menu</h3><ul>\n";
-    echo "<li><a href='index.php'>Retour au menu du BO</a></li>\n";
+    echo "<li><a href='../bo/index.php'>Retour au menu du BO</a></li>\n";
     echo "<li><a href='?action=check'>Vérifie les contraintes sur MapCat</a></li>\n";
     echo "<li><a href='?action=cmpGan'>Confronte les données de localisation de MapCat avec celles du GAN</a></li>\n";
+    echo "<li><a href='?action=compareMapCats'>Compare le contenu de la table mapcat avec la version en Yaml</a></li>\n";
     echo "<li><a href='?action=createTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
     echo "<li><a href='?action=showMapCat'>Affiche le catalogue à partir de la table en base</a></li>\n";
     echo "<li><a href='?action=updateMapCat'>Met à jour le catalogue</a></li>\n";
@@ -499,6 +500,35 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     echo '<pre>',Yaml::dump(MapCatDef::getDefSchema('map'), 8, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
     break;
   }
+  case 'compareMapCats': {
+    $mapNumsFromFile = MapCatFromFile::mapNums();
+    //echo Yaml::dump(['$mapNumsFromFile'=> $mapNumsFromFile]),"</p>";
+    $mapNumsInBase = MapCatInBase::mapNums();
+    //echo Yaml::dump(['$mapNumsInBase'=> $mapNumsInBase]),"</p>";
+    echo Yaml::dump(['mapNums du fichier qui ne sont pas en base'=> array_diff($mapNumsFromFile, $mapNumsInBase)]),"</p>";
+    echo Yaml::dump(['mapNums en base qui ne sont pas dans le fichier'=> array_diff($mapNumsInBase, $mapNumsFromFile)]),"</p>";
+    $diff = false;
+    foreach ($mapNumsFromFile as $mapNum) {
+      $mapCatFromFile = MapCatFromFile::get($mapNum);
+      $mapCatInBase = MapCatInBase::get($mapNum);
+      if ($mapCatInBase <> $mapCatFromFile) {
+        $diff = true;
+        echo '<pre>',Yaml::dump(
+          [ $mapNum => [
+            'file'=> $mapCatFromFile->asArray(),
+            'base'=> $mapCatInBase->asArray()]
+          ], 6, 2),"</pre>\n";
+       }
+       if ($mapCatInBase <> $mapCatFromFile) {
+         echo "<table border=1><tr><td>$mapNum</td><td>";
+         $mapCatFromFile->diff('file', 'base', $mapCatInBase);
+         echo "</td></tr></table>\n";
+       }
+    }
+    if (!$diff)
+      echo "Tous les enregistrements sont identiques dans le fichier et en base<br>\n";
+    break;
+  }
   case 'createTable': { // crée et peuple la table mapcat à partir du fichier mapcat.yaml
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
@@ -552,7 +582,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     }
     ksort($mapCat);
     foreach ($mapCat as $tuple) {
-      echo "<a href='?action=updateMapCatId&amp;id=$tuple[id]'>$tuple[title]</a><br>\n";
+      echo "<a href='?action=updateMapCatId&amp;id=$tuple[id]&amp;return=mapcat'>$tuple[title]</a><br>\n";
     }
     break;
   }
@@ -571,7 +601,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         \MySql::query($query);
         echo "maj carte $_POST[mapnum] ok<br>\n";
         switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
-          case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
+          case 'mapcat': { echo "<a href='index.php'>Retour</a><br>\n"; break; }
           case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
           default: die("valeur de return '$return' non prévue");
         }
@@ -612,7 +642,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     echo "<a href='?action=showMapCatScheme' target='_blank'>",
           "Affichage du schéma JSON à respecter pour cette description</a><br>";
     switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
-      case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
+      case 'mapcat': { echo "<a href='index.php'>Retour</a><br>\n"; break; }
       case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
       default: die("valeur de return '$return' non prévue");
     }
@@ -633,7 +663,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
           "Affichage du schéma JSON à respecter pour cette description</a><br>";
     
     switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
-      case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
+      case 'mapcat': { echo "<a href='index.php'>Retour</a><br>\n"; break; }
       case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
       default: die("valeur de return '$return' non prévue");
     }
@@ -642,7 +672,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   }
   case 'testValidatesAgainstSchema': {
     MapCatDef::testValidatesAgainstSchema();
-    echo "<a href='mapcat.php'>Retour</a><br>\n";
+    echo "<a href='index.php'>Retour</a><br>\n";
     break;
   }
   default: {
