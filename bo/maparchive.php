@@ -262,12 +262,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
           $errors[] = "Le fichier GéoTiff principal est géoréférencé alors que le catalogue indique qu'il ne l'est pas";
         }
         elseif (!($inc = $this->georefBox()->includes($this->mapCat->spatial()))) {
-          echo "georefBox=",$this->georefBox(),"<br>\n";
-          echo "mapcat->spatial()=",$this->mapCat->spatial(),"<br>\n";
-          echo "georefBox->includes(mapcat->spatial())=",($inc ? 'T' : 'F'),"<br>\n";
-          
-                
-                
+          //echo "georefBox=",$this->georefBox(),"<br>\n";
+          //echo "mapcat->spatial()=",$this->mapCat->spatial(),"<br>\n";
+          //echo "georefBox->includes(mapcat->spatial())=",($inc ? 'T' : 'F'),"<br>\n";
           $errors[] = "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive";
         }
         break;
@@ -382,7 +379,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
         $md = 'No Metadata';
       echo "<td><pre>",Yaml::dump($md, 1, 2),"</pre>";
       if ($this->main->tif()) {
-        $path = "?rpath=$this->rpathOf7z&amp;action=gdalinfo&amp;name=".$this->main->tif();
+        $path = "maparchive.php?rpath=$this->rpathOf7z&amp;action=gdalinfo&amp;name=".$this->main->tif();
         $label = $this->main->georefLabel();
         echo "<a href='$path'>$label</a> / ";
         $imageUrl = $shomgeotiffUrl.$this->rpathOf7z.'/'.substr($this->main->tif(),0, -4).'.png'; // en PNG
@@ -394,7 +391,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     foreach ($this->insets as $name => $inset) { // caractéristiques de chaque cartouche
       $title = $inset->title() ?? 'NO metadata';
       $georefLabel = $inset->georefLabel();
-      $gdalinfo = "?rpath=$this->rpathOf7z&amp;action=gdalinfo&amp;name=".$inset->tif();
+      $gdalinfo = "maparchive.php?rpath=$this->rpathOf7z&amp;action=gdalinfo&amp;name=".$inset->tif();
       $imageUrl = $shomgeotiffUrl.$this->rpathOf7z.'/'.substr($inset->tif(),0, -4).'.png'; // en PNG
       echo "<tr><td>Cart. $name</a></td>",
            "<td>$title (<a href='$gdalinfo'>$georefLabel</a> / <a href='$imageUrl'>Afficher l'image</a>)</td></tr>\n";
@@ -402,7 +399,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     
     if (count($this->insets) > 1) { // Correspondance des cartouches
       $mappingInsetsWithMapCat = $this->mappingInsetsWithMapCat();
-      $action = "?rpath=$this->rpathOf7z&action=insetMapping";
+      $action = "maparchive.php?rpath=$this->rpathOf7z&action=insetMapping";
       echo "<tr><td>Corresp.<br>cartouches<br>(archive<br>-> MapCat)</td>";
       echo "<td><pre><a href='$action'>",Yaml::dump($mappingInsetsWithMapCat),"</a></pre></td></tr>\n";
     }
@@ -420,7 +417,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
          "</pre></td></tr>\n";
     
     // Affichage de la carte Leaflet, du contenu de l'archive et de l'appel du dump
-    echo "<tr><td colspan=2><a href='tiffmap.php?rpath=$_GET[rpath]'>",
+    echo "<tr><td colspan=2><a href='tiffmap.php?rpath=$this->rpathOf7z'>",
       "Afficher une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
     echo "<tr><td colspan=2><a href='maparchive.php?rpath=$this->rpathOf7z&action=show7zContents'>",
       "Afficher la liste des fichiers contenus dans l'archive 7z</a></td></tr>\n";

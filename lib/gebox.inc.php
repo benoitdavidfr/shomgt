@@ -428,9 +428,17 @@ class GBox extends BBox {
     );
   }
   
-  // teste si $small est strictement inclus dans $this
-  // redéfinition pour gérer des cas particuliers sur l'antiméridien
+  /** teste si $small est strictement inclus dans $this
+   * redéfinition pour gérer des cas particuliers sur l'antiméridien
+   * @param GBox $small */
   function includes(BBox $small, bool $show=false): bool {
+    // $small doit avoir pour classe soit GBox soit une sous-classe de GBox
+    $classOfSmall = get_class($small);
+    //echo "get_class(small)=$classOfSmall<br>\n";
+    //echo "class_parents($classOfSmall)=",implode(', ', class_parents($classOfSmall)),"<br>\n";
+    if (($classOfSmall <> 'gegeom\GBox') && !in_array('gegeom\GBox', class_parents($classOfSmall)))
+      throw new \Exception("Appel interdit GBox::includes($classOfSmall)");
+    
     if (!$this->intersectsAntiMeridian())
       return parent::includes($small, $show); // aucun des 2 n'intersecte l'AM
     
@@ -511,6 +519,30 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     GBox::constructTest();
     echo "<b>Test de GBox::intersectsAntiMeridian</b><br>\n";
     GBox::intersectsAntiMeridianTest();
+  }
+}
+
+// Vérification que includes() peut être appelée avec small objet d'une sous-classe de GBox
+class GBoxSubClass extends GBox {
+  static function includesTest(): void {
+    foreach ([
+      "cas particulier d'inclusion avec la grande qui intersecte l'AM et pas la petite"=> [
+        'big' => new GBox([177, 7, 252, 74]),
+        'small' => new GBoxSubClass([-173, 15, -116, 71]),
+      ],
+    ] as $title => $boxes) {
+      echo "<em>$title</em><br>\n";
+      $boxes['big']->includes($boxes['small'], true);
+    }
+  }
+};
+
+if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe GBoxSubClass
+  if (!isset($_GET['test']))
+    echo "<a href='?test=GBoxSubClass'>Test unitaire de la classe GBoxSubClass</a><br>\n";
+  elseif ($_GET['test']=='GBoxSubClass') {
+    echo "<b>Test de GBox::includes</b><br>\n";
+    GBoxSubClass::includesTest();
   }
 }
 
@@ -610,9 +642,19 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "<a href='?test=EBox'>Test unitaire de la classe EBox</a><br>\n";
   }
   elseif ($_GET['test']=='EBox') {
-    echo "Test de EBox::dist<br>\n";
+    echo "<b>Vérification que GBox::includes() génère une exception si small est un EBox</b><br>\n";
+    $big = new GBox([177, 7, 252, 74]);
+    $small = new EBox([-173, 15, -116, 71]);
+    try{
+      $big->includes($small, true); // @phpstan-ignore-line
+    }
+    catch (\Exception $e) {
+      echo "Interception de l'exception: ",$e->getMessage(),"</p>\n";
+    }
+      
+    echo "</p><b>Test de EBox::dist</b><br>\n";
     EBox::distTest();
-    echo "Test de EBox::geo<br>\n";
+    echo "</p><b>Test de EBox::geo</b><br>\n";
     $ebox = \Zoom::tileEBox(9, 253, 176);
     echo "$ebox ->geo(WebMercator) = ", $ebox->geo('WebMercator'),"<br>\n";
     echo "<b>Test de GBox::proj()</b><br>\n";
