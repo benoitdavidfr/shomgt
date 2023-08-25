@@ -369,6 +369,8 @@ if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
   
 // Test des définitions des classes
 
+echo "<!DOCTYPE html>\n<html><head><title>mapcat/mapcat.inc.php@$_SERVER[HTTP_HOST]</title></head><body>\n";
+
 switch ($_GET['action'] ?? null) {
   case null: { // menu
     echo "<a href='?action=testSpatial&cas=Spatial::multiPolygon'>Test Spatial, cas Spatial::multiPolygon</a><br>\n";

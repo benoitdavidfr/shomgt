@@ -164,6 +164,8 @@ class TempMapCat {
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire
 
 
+echo "<!DOCTYPE html>\n<html><head><title>lib/mapcat.inc.php@$_SERVER[HTTP_HOST]</title></head><body>\n";
+
 //TempMapCat::init('download');
 TempMapCat::init();
 echo "<pre>";

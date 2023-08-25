@@ -265,6 +265,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
           echo "georefBox=",$this->georefBox(),"<br>\n";
           echo "mapcat->spatial()=",$this->mapCat->spatial(),"<br>\n";
           echo "georefBox->includes(mapcat->spatial())=",($inc ? 'T' : 'F'),"<br>\n";
+          
                 
                 
           $errors[] = "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive";
@@ -609,14 +610,11 @@ switch (callingThisFile(__FILE__)) {
           '/archives/6977'=> "6977 - Océan Pacifique Nord - Partie Nord-Ouest",
           '/archives/7021'=> "7021 - Océan Pacifique Nord - Partie Sud-Ouest",
           '/archives/7271'=> "7271 - Australasie et mers adjacentes",
-          /*
-          7271
-          7166
-          6671
-          6670
-          6817
-          7283
-          */
+          '/archives/7166'=> "7166 - Océan Pacifique Sud - Partie Ouest",
+          '/archives/6671'=> "6671 - Mers du Corail et des Salomon - et mers adjacentes",
+          '/archives/6670'=> "6670 - Mers de Tasman et du Corail - De l'Australie à la Nouvelle-Zélande et aux Îles Fidji",
+          '/archives/6817'=> "6817 - De la Nouvelle-Zélande aux îles Fidji et Samoa",
+          '/archives/7283'=> "7283 - Des îles Fidji (Fiji) aux îles Tonga - Iles Wallis et Futuna",
         ],
         "Tests d'erreurs"=> [
           'path=/attente/20230628aem&map=xx'=> "Le fichier n'existe pas",

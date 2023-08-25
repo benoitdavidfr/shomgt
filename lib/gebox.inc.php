@@ -40,6 +40,10 @@ require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/pos.inc.php';
 require_once __DIR__.'/sexcept.inc.php';
 
+if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de chaque classe
+  echo "<!DOCTYPE html>\n<html><head><title>gebox@$_SERVER[HTTP_HOST]</title></head><body>\n";
+}
+
 {/*PhpDoc: classes
 name: BBox
 title: abstract class BBox - Gestion d'une BBox en coord. géo. ou euclidiennes, chaque point codé comme [lon, lat] ou [x, y]
@@ -428,16 +432,28 @@ class GBox extends BBox {
   // redéfinition pour gérer des cas particuliers sur l'antiméridien
   function includes(BBox $small, bool $show=false): bool {
     if (!$this->intersectsAntiMeridian())
-      return parent::includes($small, $show);
+      return parent::includes($small, $show); // aucun des 2 n'intersecte l'AM
     
-    //echo "this intersecte l'AM<br>\n";
+    if ($show)
+      echo "this intersecte l'AM<br>\n";
     if ($small->intersectsAntiMeridian())
-      return parent::includes($small, $show);
+      return parent::includes($small, $show); // les 2 intersectent l'AM
 
-    //echo "small n'intersecte pas l'AM<br>\n";
-    $small = $small->translate360East();
-    //echo "small=$small<br>\n";
-    return parent::includes($small, $show);
+    if ($show) {
+      echo "small=$small<br>\n";
+      echo "small n'intersecte pas l'AM<br>\n";
+    }
+    if ($small->east() == 180) {
+      if ($show)
+        echo "small->east == 180<br>\n";
+      return parent::includes($small, $show); // le bord Est de small est l'AM
+    }
+    else {
+      if ($show)
+        echo "small->east <> 180<br>\n";
+      $small = $small->translate360East();
+      return parent::includes($small, $show);
+    }
   }
   
   static function includesTest(): void {
@@ -451,6 +467,10 @@ class GBox extends BBox {
       "cas particulier de non inclusion avec la grande qui intersecte l'AM et pas la petite"=> [
         'big' => new GBox([177, 7, 200, 74]),
         'small' => new GBox([-173, 15, -116, 71]),
+      ],
+      "Cas 6671, le bord Est de l'extension == 180°"=> [
+        'big'=> new GBox([143.435716, -23.753623, 183.231767, 4.287820]),
+        'small'=> new GBox([146.666667, -20.984333, 180.000000, 0.100000]),
       ],
     ] as $title => $boxes) {
       echo "<em>$title</em><br>\n";
