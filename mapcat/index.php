@@ -11,8 +11,10 @@ doc: |
 
   Le traitement dans le GAN des excroissances de cartes est hétérogène.
   Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
+
+  Le script est aussi utilisé pour mettre à jour ou insérer un enregistrement MapCat depuis bo/addmaps
 journal: |
-  22-23/8/2023:
+  22-25/8/2023:
     - ajout mise en base de MapCat + mise à jour/saisie d'un enregistrement
   13/8/2023:
     - restructuration dans le cadre du BO v4 et ajout de la vérification des contraintes
@@ -29,12 +31,12 @@ journal: |
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../bo/login.inc.php';
-require_once __DIR__.'/mapcat.inc.php';
 require_once __DIR__.'/../shomft/frzee.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../dashboard/gan.inc.php';
+require_once __DIR__.'/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -570,7 +572,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         echo "maj carte $_POST[mapnum] ok<br>\n";
         switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
           case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
-          case 'addmaps': { echo "<a href='addmaps.php'>Retour</a><br>\n"; break; }
+          case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
           default: die("valeur de return '$return' non prévue");
         }
         break;
@@ -611,7 +613,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
           "Affichage du schéma JSON à respecter pour cette description</a><br>";
     switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
       case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
-      case 'addmaps': { echo "<a href='addmaps.php'>Retour</a><br>\n"; break; }
+      case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
       default: die("valeur de return '$return' non prévue");
     }
     break;
@@ -632,7 +634,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     
     switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
       case 'mapcat': { echo "<a href='mapcat.php'>Retour</a><br>\n"; break; }
-      case 'addmaps': { echo "<a href='addmaps.php'>Retour</a><br>\n"; break; }
+      case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
       default: die("valeur de return '$return' non prévue");
     }
     break;

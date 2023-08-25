@@ -25,8 +25,8 @@ if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 
-if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-  throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+$PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
+  or throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
 
 echo "<!DOCTYPE html><html><head><title>bo/activation</title></head><body>\n";
 //echo "<pre>_POST="; print_r($_POST); echo "</pre>\n";
@@ -54,26 +54,25 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
 }
 
 if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibilité d'en sélectionner une
- echo "<h2>Gestion de l'activation des cartes du portefeuille</h2>\n";
- $activated = []; // liste des cartes activées cad présented dans current
- foreach (new \DirectoryIterator("$PF_PATH/current") as $map) {
-   if (!in_array($map, ['.','..','.DS_Store']))
-     $activated[substr($map, 0, 4)] = 1;
- }
- echo "<table border=1>\n";
- foreach (directoryEntries("$PF_PATH/archives") as $mapNum) {
-   $mapCat = \mapcat\MapCat::get($mapNum);
-   $ss = $mapCat->obsoleteDate ? '<s>' : '';
-   $se = $mapCat->obsoleteDate ? '</s>' : '';
-   echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
-        "<td>$ss<a href='?map=$mapNum'>$mapNum</a> - $mapCat->title$se</td>", //num, lien et titre
-        "<td align='right'>{$ss}1:",$mapCat->scaleDenominator(),"$se</td>", // échelle
-        "<td>$ss",implode(', ',$mapCat->mapsFrance),"$se</td>", // zone ZEE
-        //<td>$ss<pre>",Yaml::dump($mapCat->asArray()),"</pre>$se</td>",
-        "</tr>\n";
-   }
+  echo "<h2>Gestion de l'activation des cartes du portefeuille</h2>\n";
+  $activated = []; // liste des cartes activées cad présented dans current
+  foreach (new \DirectoryIterator("$PF_PATH/current") as $map) {
+    if (!in_array($map, ['.','..','.DS_Store']))
+      $activated[substr($map, 0, 4)] = 1;
+  }
+  echo "<table border=1>\n";
+  foreach (directoryEntries("$PF_PATH/archives") as $mapNum) {
+    $mapCat = \mapcat\MapCat::get($mapNum);
+    $ss = $mapCat->obsoleteDate ? '<s>' : '';
+    $se = $mapCat->obsoleteDate ? '</s>' : '';
+    echo "<tr><td>",(!($activated[$mapNum] ?? null)) ? 'N' : '',"</td>\n", // carte activée ou non
+         "<td>$ss<a href='?map=$mapNum'>$mapNum</a> - $mapCat->title$se</td>", //num, lien et titre
+         "<td align='right'>{$ss}1:",$mapCat->scaleDenominator(),"$se</td>", // échelle
+         "<td>$ss",implode(', ',$mapCat->mapsFrance),"$se</td>", // zone ZEE
+         //<td>$ss<pre>",Yaml::dump($mapCat->asArray()),"</pre>$se</td>",
+         "</tr>\n";
+  }
   echo "</table>\n";
-  echo "<a href='index.php'>Retour au menu du BO</a></p>\n";
 }
 else { // liste de versions pour la carte $_GET['map']
   $mapCat = \mapcat\MapCat::get($_GET['map']);
@@ -111,7 +110,7 @@ else { // liste de versions pour la carte $_GET['map']
       echo "    <input type='radio' id='$mapVersion' name='mapVersion' value='$mapVersion' ",
            ($mapVersion==$currentVersion ? 'checked' : ''),"/>\n";
       echo "    <label for='$mapVersion'>",
-           "<a href='viewmap.php?path=/archives/$_GET[map]&map=$mapVersion'>$label</a></label><br>\n";
+           "<a href='maparchive.php?rpath=/archives/$_GET[map]/$mapVersion.7z'>$label</a></label><br>\n";
     }
   }
   echo "    <input type='radio' id='none' name='mapVersion' value='none' ",(''==$currentVersion ? 'checked' : ''),"/>\n";
@@ -122,3 +121,4 @@ else { // liste de versions pour la carte $_GET['map']
   echo "<a href='pfweight.php?map=$_GET[map]'>Gestion de la suppression de versions</a><br>\n";
   echo "<a href='pfcurrent.php'>Retour à la liste des cartes</a></p>\n";
 }
+echo "<a href='index.php'>Retour au menu du BO</a></p>\n";

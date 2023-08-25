@@ -92,8 +92,10 @@ abstract class Geometry {
    * @param TGeoJsonGeometry $geom */
   static function fromGeoArray(array $geom): Geometry|GeometryCollection {
     $type = $geom['type'] ?? null;
-    if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates']))
+    if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates'])) {
+      $type = "gegeom\\$type";
       return new $type($geom['coordinates']); // @phpstan-ignore-line
+    }
     elseif (($type=='GeometryCollection') && isset($geom['geometries'])) {
       $geoms = [];
       foreach ($geom['geometries'] as $g)
@@ -108,8 +110,8 @@ abstract class Geometry {
   /** @param TPos|TLPos|TLLPos|TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   
-  // récupère le type
-  function type(): string { return get_class($this); }
+  // récupère le type sans l'espace de nom
+  function type(): string { return substr(get_class($this), strlen('gegeom\\')); }
   
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
   /** @return array<int, string> */
@@ -120,7 +122,7 @@ abstract class Geometry {
   
   // génère la représentation Php du GeoJSON
   /** @return array<string, string|TPos|TLPos|TLLPos|TLLLPos> */
-  function asArray(): array { return ['type'=> get_class($this), 'coordinates'=> $this->coords]; }
+  function asArray(): array { return ['type'=> $this->type(), 'coordinates'=> $this->coords]; }
   
   // Retourne la liste des primitives contenues dans l'objet sous la forme d'objets
   // Point -> [], MutiPoint->[Point], LineString->[Point], MultiLineString->[LineString], Polygon->[LineString],
@@ -227,7 +229,7 @@ class Point extends Geometry {
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] + $v[0], $this->coords[1] + $v[1]]);
-    elseif (is_object($v) && (get_class($v) == '\gegeom\Point'))
+    elseif (is_object($v) && (get_class($v) == 'gegeom\Point'))
       return new Point([$this->coords[0] + $v->coords[0], $this->coords[1] + $v->coords[1]]);
     else
       throw new \SExcept("Erreur dans Point:add(), paramètre ni position ni Point", self::ErrorBadParamInAdd);
@@ -241,10 +243,12 @@ class Point extends Geometry {
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] - $v[0], $this->coords[1] - $v[1]]);
-    elseif (get_class($v) == '\gegeom\Point')
+    elseif (get_class($v) == 'gegeom\Point')
       return new Point([$this->coords[0] - $v->coords[0], $this->coords[1] - $v->coords[1]]);
     else
-      throw new \SExcept("Erreur dans Point:diff(), paramètre ni position ni Point", self::ErrorBadParamInDiff);
+      throw new \SExcept(
+        "Erreur dans Point:diff(), paramètre ni position ni Point mais ".get_class($v),
+        self::ErrorBadParamInDiff);
   }
     
   function vectorProduct(Point $v): float {
@@ -288,15 +292,18 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "<a href='?test=Point'>Test unitaire de la classe Point</a>\n";
   elseif ($_GET['test']=='Point') {
     $pt = new Point ([0,0]);
-    echo "pt=$pt<br>\n";
-    echo "reproject(pt)=",$pt->reproject(function(array $pos) { return $pos; }),"\n";
-    echo $pt->add([1,1]),"\n";
-    echo $pt->add(new Point([1,1])),"\n";
+    echo "pt=$pt\n";
+    echo "pt->reproject() = ",$pt->reproject(function(array $pos) { return $pos; }),"\n";
+    echo "$pt ->add([1,1]) = ",$pt->add([1,1]),"\n";
+    echo "$pt ->add(new Point([1,1]))) = ",$pt->add(new Point([1,1])),"\n";
+    echo "$pt ->diff([1,1]) = ",$pt->diff([1,1]),"\n";
+    echo "$pt ->diff(new Point([1,1]))) = ",$pt->diff(new Point([1,1])),"\n";
     try {
+      echo "$pt ->add([[1,1]]) (Vérification que cela génère une exception):\n";
       echo $pt->add([[1,1]]),"\n"; // @phpstan-ignore-line
     }
     catch(\SExcept $e) {
-      echo "Exception $e\nscode=",$e->getSCode(),"\n";
+      echo "  Exception ",$e->getMessage(),", scode=",$e->getSCode(),"\n";
     }
   }
 }
@@ -855,7 +862,7 @@ class Polygon extends Geometry {
   title: "function inters(Geometry $geom): bool - teste l'intersection entre les 2 polygones ou multi-polygones"
   */
   function inters(Geometry $geom, bool $verbose=false): bool {
-    if (get_class($geom) == '\gegeom\Polygon') {
+    if (get_class($geom) == 'gegeom\Polygon') {
       // Si les boites ne s'intersectent pas alors les polygones non plus
       if (!$this->ebox()->inters($geom->ebox()))
         return false;
@@ -892,7 +899,7 @@ class Polygon extends Geometry {
       // Sinon il n'y a pas intersection
       return false;
     }
-    elseif (get_class($geom) == '\gegeom\MultiPolygon') {
+    elseif (get_class($geom) == 'gegeom\MultiPolygon') {
       return $geom->inters($this);
     }
     else
@@ -1056,14 +1063,14 @@ class MultiPolygon extends Geometry {
   title: "function inters(Geometry $geom): bool - teste l'intersection entre les 2 polygones ou multi-polygones"
   */
   function inters(Geometry $geom): bool {
-    if (get_class($geom) == '\gegeom\Polygon') {
+    if (get_class($geom) == 'gegeom\Polygon') {
       foreach($this->geoms() as $polygon) {
         if ($polygon->inters($geom)) // intersection entre 2 polygones
           return true;
       }
       return false;
     }
-    elseif (get_class($geom) == '\gegeom\MultiPolygon') {
+    elseif (get_class($geom) == 'gegeom\MultiPolygon') {
       foreach($this->geoms() as $pol0) {
         foreach ($geom->geoms() as $pol1) {
           if ($pol0->inters($pol1)) // intersection entre 2 polygones
@@ -1089,8 +1096,18 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     echo "<a href='?test=MultiPolygon'>Test unitaire de la classe MultiPolygon</a><br>\n";
   elseif ($_GET['test']=='MultiPolygon') {
     $mpol = new MultiPolygon([[[[0,0],[1,0],[1,1],[0,0]]]]);
-    echo "mpol=$mpol<br>\n";
-    echo "mpol->center()=",json_encode($mpol->center()),"<br>\n";
+    echo "$mpol ->center()=",json_encode($mpol->center()),"\n";
+    $mpol2 = new MultiPolygon([[[[10,10],[11,10],[11,11],[10,10]]]]);
+    echo "$mpol\n  ->inters($mpol2) -> ",$mpol->inters($mpol2)?'T':'F'," / F\n";
+    $pol2 = new Polygon([[[10,10],[11,10],[11,11],[10,10]]]);
+    echo "$mpol\n  ->inters($pol2) -> ",$mpol->inters($pol2)?'T':'F'," / F\n";
+    echo "$pol2\n  ->inters($mpol) -> ",$pol2->inters($mpol)?'T':'F'," / F\n";
+    
+    // cas d'intersection
+    $carre10 = new MultiPolygon([[[[0,0],[10,0],[10,10],[0,10],[0,0]]]]);
+    $carre10decaleDe5 = new MultiPolygon([[[[5,5],[15,5],[15,15],[5,15],[5,5]]]]);
+    echo "$carre10\n  ->inters($carre10decaleDe5) -> ",$carre10->inters($carre10decaleDe5)?'T':'F'," / T\n";
+    
     die();
   }
 }

@@ -13,7 +13,8 @@ require_once __DIR__.'/maparchive.php';
 use Symfony\Component\Yaml\Yaml;
 
 //define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-
+define ('FORCE_VALIDATION', false); // vrai ssi possibilité de forcer la validation d'une carte invalide
+  
 //echo "upload_max_filesize=",ini_get('upload_max_filesize'),"<br>\n";
 //echo "post_max_size=",ini_get('post_max_size'),"<br>\n";
 if (!($login = Login::loggedIn())) {
@@ -64,6 +65,38 @@ function cmpVersion(string $v1, string $v2): int {
 
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à réaliser
   case null: break;
+  case 'verifyMap': {
+    echo "verifyMap@addmaps<br>\n";
+    $map = new MapArchive($_GET['rpath']);
+    echo "<table border=1>\n";
+    $map->showAsHtml('addmaps');
+    
+    $validateButton = Html::button(
+        submitValue: "Valider la carte et la déposer",
+        hiddenValues: [
+          'action'=> 'validateMap',
+          'rpath' => $_GET['rpath'],
+        ],
+        method: 'get'
+    );
+    $invalid = $map->invalid();
+    if (!isset($invalid['errors'])) { // cas normal, pas d'erreur => bouton de validation
+      echo "<tr><td colspan=2><center>$validateButton</center></td></tr>\n";
+    }
+    elseif (FORCE_VALIDATION) { // @phpstan-ignore-line // cas où il y a une erreur mais la validation peut être forcée
+      echo "<tr><td colspan=2><center>",
+             "<b>La carte n'est pas valide mais sa validation peut être forcée</b>",
+             "$validateButton</center></td></tr>\n";
+    }
+    else { // cas d'erreur normale, la validation n'est pas possible
+      echo "<tr><td colspan=2><center>",
+           "<b>La carte ne peut pas être validée en raison des erreurs</b>",
+           "</center></td></tr>\n";
+    }
+    
+    echo "</table>\n";
+    die();
+  }
   case 'upload': { // chargement du fichier d'une carte 
     //echo "<pre>_POST="; print_r($_POST);
     //echo "_FILES="; print_r($_FILES);
@@ -98,12 +131,15 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     echo "Suppresion de $_POST[map] confirmée<br>\n";
     break;
   }
-  case 'validateMap': { // dépôt de la carte
+  case 'validateMap': { // dépôt de la carte, paramètre GET rpath=chemin relatif de la carte à déposer
+    $rpath = $_GET['rpath'];
+    $newMap = new MapArchive($rpath);
+    
     { // Première condition: la version de la nouvelle version doit être postérieure à celle du portefeuille
-      $newMd = MapMetadata::getFrom7z("$PF_PATH/users/$login/$_GET[map]");
+      $newMd = $newMap->main()->md();
       //echo "<pre>newMd = "; print_r($newMd); echo "</pre>\n";
       $newVersion = $newMd['version'];
-      $mapNum = substr($_GET['map'], 0, 4);
+      $mapNum = substr(basename($rpath), 0, 4);
       $existingVersion = existingVersion($PF_PATH, $mapNum);
       $cmp = cmpVersion($newVersion, $existingVersion);
       //echo "newVersion=$newVersion, existingVersion=$existingVersion, cmp=$cmp<br>\n";
@@ -115,10 +151,9 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
       }
     }
     
-    // 2ème condition: la carte doit être valide (sauf si la validation peut être forcée)
-    if (!MapArchive::FORCE_VALIDATION) { // @phpstan-ignore-line 
-      $map = new MapArchive("$PF_PATH/users/$login/$_GET[map]", $mapNum);
-      $invalid = $map->invalid();
+    // 2ème condition: la carte doit être valide, sauf si la validation peut être forcée
+    if (!FORCE_VALIDATION) { // @phpstan-ignore-line 
+      $invalid = $newMap->invalid();
       //echo "<pre>invalid = ",Yaml::dump($invalid),"</pre>\n";
       if (isset($invalid['errors'])) {
         echo "<b>Dépôt impossible de la carte $mapNum, car l'archive contient les erreurs suivantes:</b><br>\n",
@@ -131,7 +166,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     // Je déplace l'archive 7z dans archives
     if (!is_dir("$PF_PATH/archives/$mapNum"))
       mkdir("$PF_PATH/archives/$mapNum");
-    rename("$PF_PATH/users/$login/$_GET[map]", "$PF_PATH/archives/$mapNum/$mapNum-$newVersion.7z");
+    rename("$PF_PATH/users/$login/$mapNum.7z", "$PF_PATH/archives/$mapNum/$mapNum-$newVersion.7z");
     // Je génère le fichier md.json associé
     $newMd = array_merge( // j'ajoute le nom de l'utilisateur déposant cette carte et la date de dépôt
       $newMd,
@@ -199,7 +234,7 @@ if ($maps) {
     echo "<tr><td>",$md['title'] ?? $map,"</td>",
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
-         "<td><a href='viewmap.php?path=/users/$login&map=",substr($map, 0, -3),"&return=addmaps'>vérifier</a></td>",
+         "<td><a href='?action=verifyMap&rpath=/users/$login/$map'>vérifier</a></td>",
          "<td>",Html::button('supprimer', ['action'=>'delete','map'=>$map]),"</td>",
          "</tr>\n";
   }

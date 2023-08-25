@@ -101,7 +101,6 @@ if (!($_GET['map'] ?? null)) { // liste des cartes du portefeuille avec possibil
          "</tr>\n";
   }
   echo "</table>\n";
-  echo "<a href='index.php'>Retour au menu du BO</a></p>\n";
 }
 
 else { // liste de versions pour la carte $_GET['map']
@@ -138,7 +137,7 @@ else { // liste de versions pour la carte $_GET['map']
     $bs = ($mapVersion == $currentVersion) ? '<b>' : '';
     $be = ($mapVersion == $currentVersion) ? '</b>' : '';
     $hiddenValues = ['action'=> 'deleteVersion', 'map'=> $_GET['map'], 'version'=> $mapVersion];
-    echo "<tr><td><a href='viewmap.php?path=/archives/$_GET[map]&map=$mapVersion'>$bs$mapVersion$be</a></td>",
+    echo "<tr><td><a href='maparchive.php?rpath=/archives/$_GET[map]/$mapVersion.7z'>$bs$mapVersion$be</a></td>",
          //"<td>",json_encode($md),"</td>",
          "<td>",$md['edition'] ?? 'edition non définie',"</td>",
          "<td>",$md['dateArchive'] ?? '',"</td>",
@@ -149,5 +148,6 @@ else { // liste de versions pour la carte $_GET['map']
   }
   echo "</table>\n";
   echo "<a href='pfcurrent.php?map=$_GET[map]'>Gestion de la version courante</a><br>\n";
-  echo "<a href='pfweight.php'>Retour à la liste des cartes</a></p>\n";
+  echo "<a href='pfweight.php'>Retour à la liste des cartes</a><br>\n";
 }
+echo "<a href='index.php'>Retour au menu du BO</a></p>\n";

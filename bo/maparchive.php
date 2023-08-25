@@ -121,7 +121,6 @@ class GeoRefImage { // Image principale ou cartouche de la carte
 };
 
 class MapArchive { // analyse les fichiers d'une archive d'une carte pour évaluersa validité et afficher le contenu
-  //const FORCE_VALIDATION = false; // vrai ssi possibilité de forcer la validation d'une carte invalide
   protected string $type='undefined'; // 'undefined'|'normal'|'special'
   public readonly string $rpathOf7z; // chemin du fichier .7z relativement à $PF_PATH et commencant par '/'
   public readonly string $mapNum; // no sur 4 chiffres
@@ -133,9 +132,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   protected array $suppls=[]; // liste de noms de fichiers hors specs sous la forme [{name} => 1]
   public readonly ?\mapcat\MapCatItem $mapCat; // enregistrement dans MapCat correspondant à la carte ou null
 
-  /* $pathOf7z est le chemin du fichier .7z
-  ** $mapNum est le numéro de la carte sur 4 chiffres
-  */
+  function main(): GeoRefImage { return $this->main; }
+  
+  // $rpathOf7z est le chemin relatif du fichier .7z
   function __construct(string $rpathOf7z) {
     echo "MapArchive::__construct(rpathOf7z=$rpathOf7z)<br>\n";
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
@@ -341,7 +340,10 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
   
-  function showAsHtml(string $return=null): void { // affiche en Html le contenu de l'archive en Html 
+  // affiche le contenu de l'archive en Html comme table Html sans les balises <table> et </table>
+  // afin de permettre à un script qui appelle cette fonction d'y ajouter des lignes
+  // caller est éventuellement le nom du script appellant
+  function showAsHtml(string $caller=null): void {
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
       or throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
@@ -350,14 +352,16 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       echo "<tr><td >catalogue</td><td>";
       if ($this->mapCat) {
         echo '<pre>',YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
-        /*if ($return == 'addmaps')
-          echo "<a href='mapcat.php?action=updateMapCatId&mapnum=$_GET[map]&return=addmaps'>",
-                "Mettre à jour cette description</a>\n";*/
+        if ($caller == 'addmaps') {
+          //$mapNum = substr(basename($_GET['rpath']), 0, 4);
+          echo "<a href='../mapcat/index.php?action=updateMapCatId&mapnum=$this->mapNum&return=addmaps'>",
+                "Mettre à jour cette description</a>\n";
+        }
       }
       else {
         echo "Carte absente du catalogue</p>\n";
-        /*echo "<a href='mapcat.php?action=insertMapCat&mapnum=$_GET[map]&return=addmaps'>",
-              "Créer une description</a>\n";*/
+        echo "<a href='../mapcat/index.php?action=insertMapCat&mapnum=$this->mapNum&return=addmaps'>",
+              "Créer une description</a>\n";
       }
       echo "</td></tr>\n";
     }
@@ -413,49 +417,17 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     
     // Affichage des erreurs et alertes
     echo "<tr><td>erreurs &<br>&nbsp; alertes</td><td><pre>",
-         Yaml::dump(($invalid = $this->invalid()) ? $invalid : 'aucun'),
+         Yaml::dump(($invalid = $this->invalid()) ? $invalid : 'aucune'),
          "</pre></td></tr>\n";
     
-    // Affichage de la carte Leaflet, du contenu de l'archive et de l'appel du dump
-    echo "<tr><td colspan=2><a href='tiffmap.php?rpath=$this->rpathOf7z'>",
-      "Afficher une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
-    echo "<tr><td colspan=2><a href='maparchive.php?rpath=$this->rpathOf7z&action=show7zContents'>",
-      "Afficher la liste des fichiers contenus dans l'archive 7z</a></td></tr>\n";
-    echo "<tr><td colspan=2><a href='maparchive.php?rpath=$this->rpathOf7z&action=dumpPhp'>",
-      "Dump de l'objet Php</a></td></tr>\n";
-    
-    /* Cette partie devrait être intégrée dans addmaps.php
-    if ($return == 'addmaps') { // ajout éventuel d'un bouton de validation
-      $validateButton = Html::button(
-          submitValue: "Valider la carte et la déposer",
-          hiddenValues: [
-            'action'=> 'validateMap',
-            'path' => $_GET['path'],
-            'map'=> $_GET['map'].'.7z',
-          ],
-          action: 'addmaps.php',
-          method: 'get'
-      );
-      if (!isset($invalid['errors'])) { // cas normal, pas d'erreur => bouton de validation
-        echo "<tr><td colspan=2><center>$validateButton</center></td></tr>\n";
-      }
-      elseif (self::FORCE_VALIDATION) { // @phpstan-ignore-line // cas où il y a une erreur mais la validation peut être forcée
-        echo "<tr><td colspan=2><center>",
-               "<b>La carte n'est pas valide mais sa validation peut être forcée</b>",
-               "$validateButton</center></td></tr>\n";
-      }
-      else { // cas d'erreur normale, la validation n'est pas possible
-        echo "<tr><td colspan=2><center>",
-             "<b>La carte ne peut pas être validée en raison des erreurs</b>",
-             "</center></td></tr>\n";
-      }
-    }*/
-    
-    
-    /* Idem, à tarnsférer dans addmaps
-    if ($return == 'addmaps') { // Retour éventuel vers addmaps sans validation
-      echo "<a href='addmaps.php'>Retour au menu de dépôt de cartes</p>\n";
-    }*/
+    { // Affichage de la carte Leaflet, du contenu de l'archive et de l'appel du dump
+      echo "<tr><td colspan=2><a href='tiffmap.php?rpath=$this->rpathOf7z'>",
+        "Afficher une carte Leaflet avec les images géoréférencées</a></td></tr>\n";
+      echo "<tr><td colspan=2><a href='maparchive.php?rpath=$this->rpathOf7z&action=show7zContents'>",
+        "Afficher la liste des fichiers contenus dans l'archive 7z</a></td></tr>\n";
+      echo "<tr><td colspan=2><a href='maparchive.php?rpath=$this->rpathOf7z&action=dumpPhp'>",
+        "Dump de l'objet Php</a></td></tr>\n";
+    }
   }
   
   function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
