@@ -234,7 +234,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   }
   
   /** Teste la conformité à la spec et au catalogue
-   * retourne [] si la carte est valide et conforme à sa description dans le catalogue
+   * retourne [] si la carte est valide et conforme à sa description dans le catalogue et sans alertes
    * sinon un array comportant un au moins des 2 champs:
    *  - errors listant les erreurs
    *  - warnings listant les alertes
@@ -258,10 +258,17 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     // Partie Géoréférencement de la partie principale 
     switch ($this->main->georef()) {
       case 'ok': {
-        if (!$this->mapCat->scaleDenominator || !$this->mapCat->spatial)
+        if (!$this->mapCat->scaleDenominator || !$this->mapCat->spatial) {
           $errors[] = "Le fichier GéoTiff principal est géoréférencé alors que le catalogue indique qu'il ne l'est pas";
-        elseif (!$this->georefBox()->includes($this->mapCat->spatial()))
+        }
+        elseif (!($inc = $this->georefBox()->includes($this->mapCat->spatial()))) {
+          echo "georefBox=",$this->georefBox(),"<br>\n";
+          echo "mapcat->spatial()=",$this->mapCat->spatial(),"<br>\n";
+          echo "georefBox->includes(mapcat->spatial())=",($inc ? 'T' : 'F'),"<br>\n";
+                
+                
           $errors[] = "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive";
+        }
         break;
       }
       case null: { // Fichier principal non géoréférencé, 2 possibilités
@@ -387,7 +394,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       $title = $inset->title() ?? 'NO metadata';
       $georefLabel = $inset->georefLabel();
       $gdalinfo = "?rpath=$this->rpathOf7z&amp;action=gdalinfo&amp;name=".$inset->tif();
-      $imageUrl = $shomgeotiffUrl.$this->rpathOf7z.'/'.substr($this->main->tif(),0, -4).'.png'; // en PNG
+      $imageUrl = $shomgeotiffUrl.$this->rpathOf7z.'/'.substr($inset->tif(),0, -4).'.png'; // en PNG
       echo "<tr><td>Cart. $name</a></td>",
            "<td>$title (<a href='$gdalinfo'>$georefLabel</a> / <a href='$imageUrl'>Afficher l'image</a>)</td></tr>\n";
     }
@@ -453,7 +460,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     }*/
   }
   
-  /*function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
+  function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
     $mapCat = \mapcat\MapCat::get($mapNum);
@@ -469,19 +476,19 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     echo Yaml::dump([$record], 9, 2);
     //if (isset($invalid['errors']))
     //  print_r($this);
-  }*/
+  }
   
   /** @param array<string, mixed> $options */
-  /*function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
+  function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
     if ($options['yaml'] ?? null) {
-      $mapCat = \mapcat\MapCat::get($this->mapNum);
+      $mapCat = $this->mapCat;
       foreach ($this->insets as $name => $inset)
         $insets[$name] = $inset->asArray();
-      echo Yaml::dump([$this->pathOf7z => [
+      echo Yaml::dump([$this->rpathOf7z => [
           'mapNum'=> $this->mapNum,
           'MapCat'=> $mapCat->asArray(),
           'type'=> $this->type,
-          'pathOf7z'=> $this->pathOf7z,
+          'rpathOf7z'=> $this->rpathOf7z,
           'thumbnail'=> $this->thumbnail,
           'main'=> $this->main->asArray(),
           'insets'=> $insets ?? [],
@@ -490,15 +497,15 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       ]], 9, 2);
     }
     if ($options['invalid'] ?? null) {
-      echo Yaml::dump([$this->pathOf7z => $this->invalid()], 9, 2);
+      echo Yaml::dump([$this->rpathOf7z => $this->invalid()], 9, 2);
     }
     if ($options['errors'] ?? null) {
-      echo Yaml::dump([$this->pathOf7z => ($this->invalid()['errors'] ?? [])], 9, 2);
+      echo Yaml::dump([$this->rpathOf7z => ($this->invalid()['errors'] ?? [])], 9, 2);
     }
     if ($options['php'] ?? null) {
-      print_r([$this->pathOf7z => $this]);
+      print_r([$this->rpathOf7z => $this]);
     }
-  }*/
+  }
   
   // Utilisé en CLI
   // Si $path est un fichier .7z appelle showAsYaml(), Si c'est un répertoire alors effectue un appel récursif sur chaque élément
@@ -548,6 +555,7 @@ switch (callingThisFile(__FILE__)) {
       die();
     }
     $options = [];
+    //print_r($argv);
     for($i=1; $i < $argc; $i++) {
       switch ($argv[$i]) {
         case '-yaml': { $options['yaml'] = true; break; }
@@ -556,7 +564,7 @@ switch (callingThisFile(__FILE__)) {
         case '-php': { $options['php'] = true; break; }
         default: {
           //echo "i=$i, argv[i]=",$argv[$i],"\n";
-          MapArchive::check($argv[$i], $options);
+          MapArchive::check(realpath($argv[$i]), $options);
           break;
         }
       }
@@ -575,57 +583,32 @@ switch (callingThisFile(__FILE__)) {
         ],
         "2 cartes normales avec partie principale et cartouches"=> [
           '/archives/7594/7594-2003c0.7z' => "7594 - De la Pointe Ebba au Cap de la Découverte",
-          '/archives/7090' => "7090 - De la Pointe de Barfleur à Saint-Vaast-la-Hougue",
+          '/archives/7090/7090-2018c15.7z' => "7090 - De la Pointe de Barfleur à Saint-Vaast-la-Hougue",
         ],
         "2 cartes normales avec cartouches mais sans partie principale" => [
-          'path=/archives/7207&map=7207-2303'=> "7207-2303 - Ports de Fécamp et du Tréport",
-          'path=/archives/7427&map=7427-1724'=>
-            "7427-1724 - La Gironde- De Mortagne-sur-Gironde au Bec d'Ambès"
-            ." - La Garonne et La Dordogne jusqu'à Bordeaux et Libourne",
+          '/archives/7207/7207-2020c4.7z'=> "7207 - Ports de Fécamp et du Tréport",
+          '/archives/7427/7427-2016c13.7z'=> "7427-1724 - La Gironde - ...",
         ],
         "Carte 7620 mal géoréférencée" => [
-          'path=/archives/7620&map=7620-1903'=> "7620-1903 - Approches d'Anguilla",
-          'path=/archives/7620&map=7620-2242'=> "7620-2242 - Approches d'Anguilla",
+          '/archives/7620/7620-2018c1.7z'=> "7620-2018c1 - Approches d'Anguilla bien géoréférencée",
+          '/archives/7620/7620-2018c5.7z'=> "7620-2018c5 - Approches d'Anguilla mal géoréférencée",
         ],
-        "Les anciennes cartes spéciales" => [
-          'path=/archives/7330&map=7330-1726'=> 
-            "7330-1726 - De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique",
-          'path=/archives/7344&map=7344-1726'=>
-            "7344-1726 - De Brest à la frontière belge - Action de l'Etat en Mer - Zone Manche et Mer du Nord",
-          'path=/archives/7360&map=7360-1726'=>
-            "7360-1726 - De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée",
-          'path=/archives/8101&map=8101-1726'=> "8101-1726 - MANCHEGRID - Carte générale",
-          'path=/archives/8502&map=8502-1726'=> "8502-1726 - Action de l'Etat en Mer en ZMSOI",
-          'path=/archives/8509&map=8509-1944'=> 
-            "8509-1944 - Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futun",
-          'path=/archives/8510&map=8510-1944'=> "8510-1944 - Délimitations des zones maritimes",
-          'path=/archives/8517&map=8517-1944'=>
-            "8517-1944 - Carte simplifiée de l''action de l''Etat en Mer des ZEE Polynésie Française et Clipperton",
-          'path=/archives/8523&map=8523-2224'=>
-            "8523-2224 - Carte d''Action de l'État en Mer - Océan Atlantique Nord - Zone maritime Antilles-Guyane",
-        ],
-        "Les nouvelles cartes spéciales" => [
-          'path=/incoming/20230628aem&map=7330'=> 
-            "7330 - De Cherbourg à Hendaye - Action de l'Etat en Mer en Zone Maritime Atlantique",
-          'path=/doublons/20230626&map=7344'=>
-            "7344 - Carte d’Action de l’État en Mer Zone Manche et Mer du Nord - \"De Brest à la frontière Belge\"",
-          'path=/doublons/20230626&map=7360'=>
-            "7360 - Carte d’Action de l’État en Mer Zone Méditerranée - \"De Cerbère à Menton\"",
-          'path=/attente/20230628aem&map=8502'=>
-            "8502 - Carte d’Action de l'État en Mer en Zone Maritime Sud de l'Océan Indien ZMSOI",
-          'path=/attente/20230628aem&map=8509'=>
-            "8509 - Carte d’Action de l’État en Mer - Nouvelle-Calédonie - Wallis et Futuna",
-          'path=/attente/20230628aem&map=8510'=> "8510 - Délimitation des zones maritimes",
-          'path=/attente/20230628aem&map=8517'=> 
-            "8517 - Carte simplifiée d’Action de l’État en Mer des ZEE Polynésie française et Clipperton",
-          'path=/attente/20230628aem&map=8523'=>
-            "8523 - Carte d’Action de l’État en Mer - Océan Atlantique Nord - Zone maritime Antilles-Guyane",
+        "Les cartes spéciales" => [
+          '/archives/7330'=> "7330 - Action de l'Etat en Mer en Zone Maritime Atlantique",
+          '/archives/7344'=> "7344 - Action de l'Etat en Mer - Zone Manche et Mer du Nord",
+          '/archives/7360'=> "7360 - De Cerbère à Menton - Action de l'Etat en Mer - Zone Méditerranée",
+          '/archives/8101'=> "8101 - MANCHEGRID - Carte générale",
+          '/archives/8502'=> "8502 - Action de l'Etat en Mer en ZMSOI",
+          '/archives/8509'=> "8509 - Action de l'Etat en Mer - Nouvelle-Calédonie - Wallis et Futun",
+          '/archives/8510'=> "8510 - Délimitations des zones maritimes",
+          '/archives/8517'=> "8517 - Carte simplifiée AEM des ZEE Polynésie Française et Clipperton",
+          '/archives/8523'=> "8523 - Carte d'Action de l'État en Mer - Océan Atlantique Nord - Zone maritime Antilles-Guyane",
         ],
         "Cartes à cheval sur l'antiméridien" => [
-          'path=/archives/6835&map=6835-2311'=> "6835-2311 - Océan Pacifique Nord - Partie Est",
-          'path=/archives/6977&map=6977-2304'=> "6977-2304 - Océan Pacifique Nord - Partie Nord-Ouest",
-          'path=/archives/7021&map=7021-2308'=> "7021-2308 - Océan Pacifique Nord - Partie Sud-Ouest",
-          'path=/archives/7271&map=7271-1726'=> "7271-1726 - Australasie et mers adjacentes",
+          '/archives/6835'=> "6835 - Océan Pacifique Nord - Partie Est",
+          '/archives/6977'=> "6977 - Océan Pacifique Nord - Partie Nord-Ouest",
+          '/archives/7021'=> "7021 - Océan Pacifique Nord - Partie Sud-Ouest",
+          '/archives/7271'=> "7271 - Australasie et mers adjacentes",
           /*
           7271
           7166

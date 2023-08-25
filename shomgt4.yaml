@@ -518,6 +518,24 @@ restructurationBo:
       uri: http://geoapi.fr/shomgt/gan
       contient:
         - array<string, GanItem>
+  bug6835:
+    title: inclusion de l'extension spatiale dans le géoréférencement
+    mapcat:
+      title: 'Océan Pacifique Nord - Partie Est'
+      spatial:
+        NE: "71°30,00'N - 116°30,00'W"
+        SW: "15°00,00'N - 173°05,00'W"
+      insetMaps:
+        - title: 'Mer de Béring'
+          spatial: { NE: "65°00,00'N - 169°20,00'W", SW: "49°00,00'N - 170°15,00'E", exception: astrideTheAntimeridian }
+          scaleDenominator: 7.330.000
+      mapsFrance: {  }
+      references: 'Fac similé carte US n°50 publiée en 1977 (édition juillet 1994).'
+      scaleDenominator: 7.330.000
+      kind: current
+    errors:
+        - "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive"
+
 
 miseEnProd:
   cmdesMiseEnProdDev: |

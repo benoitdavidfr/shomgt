@@ -372,6 +372,10 @@ class GBox extends BBox {
     return new GBox([$this->west()-360, $this->south(), $this->east()-360, $this->north()]);
   }
   
+  function translate360East(): self { // retourne le GBox translaté de 360° vers l'est
+    return new GBox([$this->west()+360, $this->south(), $this->east()+360, $this->north()]);
+  }
+  
   // taille max en degrés de longueur constante (Zoom::Size0 / 360) ou lève une exception si la BBox est vide
   function size(): float {
     if (!$this->min)
@@ -420,6 +424,40 @@ class GBox extends BBox {
     );
   }
   
+  // teste si $small est strictement inclus dans $this
+  // redéfinition pour gérer des cas particuliers sur l'antiméridien
+  function includes(BBox $small, bool $show=false): bool {
+    if (!$this->intersectsAntiMeridian())
+      return parent::includes($small, $show);
+    
+    //echo "this intersecte l'AM<br>\n";
+    if ($small->intersectsAntiMeridian())
+      return parent::includes($small, $show);
+
+    //echo "small n'intersecte pas l'AM<br>\n";
+    $small = $small->translate360East();
+    //echo "small=$small<br>\n";
+    return parent::includes($small, $show);
+  }
+  
+  static function includesTest(): void {
+    foreach ([
+      "cas std d'inclusion"=> ['big'=> new GBox([0, 43, 4, 50]), 'small'=> new GBox([1, 44, 3, 49])],
+      "cas std de non inclusion"=> ['big'=> new GBox([0, 43, 4, 49]), 'small'=> new GBox([1, 44, 3, 50])],
+      "cas particulier d'inclusion avec la grande qui intersecte l'AM et pas la petite"=> [
+        'big' => new GBox([177, 7, 252, 74]),
+        'small' => new GBox([-173, 15, -116, 71]),
+      ],
+      "cas particulier de non inclusion avec la grande qui intersecte l'AM et pas la petite"=> [
+        'big' => new GBox([177, 7, 200, 74]),
+        'small' => new GBox([-173, 15, -116, 71]),
+      ],
+    ] as $title => $boxes) {
+      echo "<em>$title</em><br>\n";
+      $boxes['big']->includes($boxes['small'], true);
+    }
+  }
+  
   // calcule la projection d'un GBox en utilisant $proj qui doit être défini comme projection dans coordsys
   function proj(string $proj): EBox {
     if (strncmp($proj, 'UTM-', 4)==0) { // cas particulier de l'UTM
@@ -447,6 +485,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     BBox::intersectsTest();
     echo "<b>Test de GBox::dist</b><br>\n";
     GBox::distTest();
+    echo "<b>Test de GBox::includes</b><br>\n";
+    GBox::includesTest();
     echo "<b>Test de GBox::__construct</b><br>\n";
     GBox::constructTest();
     echo "<b>Test de GBox::intersectsAntiMeridian</b><br>\n";

@@ -22,6 +22,7 @@ $rpath = $_GET['rpath'];
 // fabrication  de la liste des tiffs à afficher dans la carte
 $tifs = []; // liste des URL des GéoTiffs utilisant shomgeotiff.php [name => url]
 $map = new MapArchive($rpath);
+$mapNum = $map->mapNum;
 // prefix d'URL vers le répertoire courant
 $serverUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF']);
 foreach ($map->gtiffs() as $fileName) {
@@ -50,7 +51,7 @@ if (!$bounds)
 ?>
 <html>
   <head>
-    <title><?php echo "tiffmap $_GET[map]@_SERVER[HTTPS_HOST]"; ?></title>
+    <title><?php echo "tiffmap $mapNum@$_SERVER[HTTP_HOST]"; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css"/>
     <style>
