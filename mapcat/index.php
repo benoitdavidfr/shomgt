@@ -43,6 +43,24 @@ use Symfony\Component\Yaml\Yaml;
 
 if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 
+switch ($_SERVER['PATH_INFO'] ?? null) { // interface API JSON
+  case '/all': {
+    foreach (MapCat::mapNums() as $mapNum) {
+      $mapCats[$mapNum] = MapCat::get($mapNum)->asArray();
+    }
+    header('Content-type: application/json; charset="utf-8"');
+    die(json_encode($mapCats));
+  }
+  default: {
+    if (preg_match('!^/(\d{4})$!', $_SERVER['PATH_INFO'], $matches)) {
+      $mapNum = $matches[1];
+      $mapCat = MapCat::get($mapNum);
+      header('Content-type: application/json; charset="utf-8"');
+      die(json_encode($mapCat->asArray()));
+    }
+    echo "PATH_INFO='$_SERVER[PATH_INFO]' non compris<br>\n";
+  }
+}
 
 echo "<!DOCTYPE html>\n<html><head><title>bo/mapcat@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
@@ -405,6 +423,7 @@ EOT
 if (!($user = \bo\Login::loggedIn())) {
   die("Erreur, ce sript nécessite d'être logué\n");
 }
+
 
 echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
 

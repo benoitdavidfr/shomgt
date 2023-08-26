@@ -12,6 +12,55 @@ require_once __DIR__.'/../bo/lib.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 
+// standardise l'ordre des propriétés de $dict conformément au standard transmis $std
+function stdDict(array $std, array $src): array {
+  $stdDict = [];
+  foreach ($std as $k => $prop) {
+    if (is_int($k)) {
+      //echo "$k -> $prop\n";
+      if (isset($src[$prop]))
+        $stdDict[$prop] = $src[$prop];
+    }
+    else {
+      $sstd = $prop;
+      $prop = $k;
+      //echo Yaml::dump(['sstd'=> [$prop => $sstd]]),"\n";
+      if (is_string($sstd[0])) { // sous-objet
+        if (isset($src[$prop])) {
+          //echo "appel récursif sur $prop\n";
+          $stdDict[$prop] = stdDict($sstd, $src[$prop]);
+        }
+      }
+      else { // liste de ss-objets
+        $sstd = $sstd[0];
+        if (isset($src[$prop])) {
+          //echo "appel récursif sur $prop\n";
+          foreach ($src[$prop] as $i => $elt) {
+            $stdDict[$prop][] = stdDict($sstd, $elt);
+          }
+        }
+      }
+    }
+  }
+  return $stdDict;
+}
+if (0) { // Test de standardizeDict
+  $dict = [
+    'title'=> 'title',
+    'groupTitle'=> 'groupTitle',
+    'spatial'=> [
+      'NE'=> 'NE',
+      'SW'=> 'SW',
+    ],
+    'insetMaps'=> [
+      [
+        'scaleDenominator'=> 'scaleDenominator',
+        'title'=> 'title',
+      ]
+    ]
+  ];
+  echo '<pre>stdDict = ',Yaml::dump(standardizeDict(MapCatItem::STD_PROP, $dict)),"\n"; die("Fin ligne ".__LINE__);
+}
 
 /* décode le champ spatial de MapCat pour différentes utilisations
 * et Vérifie les contraintes et les exceptions du champ spatial
@@ -183,8 +232,37 @@ EOT;
 
 // Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
 class MapCatItem {
-  //const SUBCLASS = 'MapCatFromFile'; // la sous-classe concrète effectivement utilisée
   const ALL_KINDS = ['current','obsolete','uninteresting','deleted'];
+  const STD_PROP = [
+    'groupTitle',
+    'title',
+    'scaleDenominator',
+    'spatial' => ['SW', 'NE'],
+    'mapsFrance',
+    'replaces',
+    'references',
+    'noteShom',
+    'noteCatalog',
+    'badGan',
+    'noteCatalog',
+    'z-order',
+    'outgrowth',
+    'toDelete',
+    'borders',
+    'layer',
+    'insetMaps'=> [[
+      'title',
+      'scaleDenominator',
+      'spatial',
+      'noteCatalog',
+      'badGan',
+      'z-order',
+      'outgrowth',
+      'toDelete',
+      'borders',
+    ]],
+  ]; // ordre standard des propriétés 
+  
   /** @var TMapCatEntry $item */
   protected array $item; // contenu de l'entrée du catalogue correspondant à une carte
   /** @var TMapCatKind $kind */
@@ -198,7 +276,7 @@ class MapCatItem {
   function __get(string $property): mixed { return $this->item[$property] ?? null; }
   
   /** @return array<string,mixed> */
-  function asArray(): array { return array_merge($this->item, ['kind'=> $this->kind]); }
+  function asArray(): array { return array_merge(stdDict(self::STD_PROP, $this->item), ['kind'=> $this->kind]); }
   
   function scale(): ?string { // formatte l'échelle comme dans le GAN
     return $this->scaleDenominator ? '1 : '.str_replace('.',' ',$this->scaleDenominator) : 'undef';

@@ -55,6 +55,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='user.php'>Gérer les utilisateurs</a></li>\n";
     echo "<li><a href='../mapcat/index.php'>Gérer le catalogue</a></li>\n";
     echo "<li><a href='accesslog.php'>Consulter les logs d'accès</a></li>\n";
+    echo "<li><a href='shomgeotiff.php'>Accès au portefeuille selon une interface JSON</a></li>\n";
     echo "<li><a href='maparchivestore.php'>Gèrer le stockage du portefeuille (liens, clone, ..)</a></li>\n";
     if (!is_dir(__DIR__.'/../data'))
       echo "<li><a href='?action=clonedata'>Créer ../data par clonage de ../../shomgt/data</a></li>\n";

@@ -454,75 +454,221 @@ bugs:
         - "edition: 'Publication 1995'"
     - corrigé le 18/8/2023 - il s'agit des CORRECTIONS apportées dans gan.inc.php
 
-restructurationBo:
-  objectif: l'articulation addmaps / viewtiff / maparchive est trop complexe. La simplifier !
-  concepts:
-    MapArchive:
-      title: instance de carte stockée sous la forme d'une archive
-      id: {mapNum}-{édition}c{correction}
-      uri: http://geoapi.fr/shomgt/bo/shomgeotiff.php/archives/{mapNum}/{mapNum}-{édition}c{correction}
-      class:
-        name: MapArchive
-        properties:
-          thumbnail: Image
-          main: GeoRefImage
-          insets: array<string, GeoRefImage>
-    Image:
-      title: image non géoréférencée
-      method:
-        display:
-          action: génère une image png dans un flux Http
-    GeoRefImage(GeoTiff):
-      title: image géoréférencée représentant la partie principale d'une carte ou un de ses cartouches associée à des MD ISO
-      properties:
-        isoMD: IsoMetadata|null
-        gdalInfo: GdalInfo
-      methods:
-        mapMetadata: MapMetadata
-        display:
-          action: génère une image tiff ou png dans un flux Http
-    IsoMetadata:
-      title: MD ISO 19115 décrivant une carte ou une de ses parties
-    MapMetadata:
-      title: MD simplifiées décrivant une carte ou un de ses cartouches
-    GdalInfo:
-      title: métadonnées stockées dans l'image
-      properties:
-        size:
-          width: int
-          height: int
-        wgs84Extent: GBox|null
-        coordinateSystem: CrsWkt|null
-        cornerCoordinates: EBox|null
-      methods:
-        georef: ok|KO|null // géoréférencement - ok | KO=incorrect | null=non géoréférencé
-    CrsWkt:
-      title: description standardisée du système de coordonnées selon le standard OGC CRS WKT (ISO 19162)
-      note: |
-        Il existe 2 versions du standard:
-          - standard OGC 2.0.6 (document OGC 18-010r7 et ISO 19162:2019)
-          - standard OGC 1.0   (document OGC 12-063r5 et ISO 19162:2015)
-        Sur php82, gdalinfo est en version 'GDAL 3.6.2, released 2023/01/02' génère un WKT version 2.0.6
-        Sur Alwaysdata, gdalinfo est en version 'GDAL 2.4.0, released 2018/12/14' qui génère un WKT bersion 1.0
-    MapArchiveStore:
-      title: ensemble de cartes stockées chacune sous la forme d'une archive
-      uri: http://geoapi.fr/shomgt/bo/shomgeotiff.php
-      class:
-        name: MapArchiveStore
-      archives: array<string, array<string, MapArchive>>
-      current: array<string,MapArchive>
-    MapCat/MapCatItem:
-      title: catalogue décrivant les cartes (MapCat) avec une entrée par carte (MapCatItem)
-      uri: http://geoapi.fr/shomgt/mapcat
-      class:
-        name: MapCat
-      contient:
-        - array<string, MapCatItem>
-    Gan/GanItem:
-      title: infos d'actualité sur les cartes (GAN) avec une entrée par carte (GanItem)
-      uri: http://geoapi.fr/shomgt/gan
-      contient:
-        - array<string, GanItem>
+restructurationSousFormeDApi:
+  description: |
+    Décrit ShomGT sous la forme de concepts de plus haut niveau.
+    La formalisation adoptée est la définition d'API dans un formalisme style OpenAPI
+  openAPI:
+    info:
+      title: API ShomGT
+      description: |
+        Décrit ShomGT sous la forme de concepts de plus haut niveau.
+        La formalisation adoptée est la définition d'API dans un formalisme style OpenAPI
+    servers:
+      - description: idéal
+        url: http://shomgt.geoapi.fr/v4
+    paths:
+      /:
+        description: accueil
+      /maps:
+        description: Liste des cartes de l'entrepôt et de leurs versions
+        get:
+        post:
+          description: dépôt d'une version de carte définie par une archive 7z
+      /maps/{mapNum}:
+        description: Représente la carte {mapNum}
+        get:
+          description: Expose son titre, son entrée dans MapCat et ses différentes versions
+          responses:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    description: titre de la carte issu de MapCat
+                    type: string
+                  mapCat:
+                    description: lien vers l'entrée dans MapCat
+                    tye: string
+                  current:
+                    description: lien éventuel vers la version courante si la carte n'est pas obsolète
+                  versions:
+                    description: liens vers les différentes versions de cette carte indexées sur le libellé de la version
+                    type: object
+                    patternProperties:
+                      ^\d{4}-\d{4}(c\d+)$:
+                        description: lien vers la version
+                        type: string
+        delete:
+          description: suppression de toutes les versions de cette carte
+      /maps/{mapNum}/current:
+        description: Représente la version courante de la carte
+        get:
+          description: |
+            3 cas:
+              - s'il existe une version courante alors expose différents accès à cette version
+              - si la carte est obsolète retourne un code 404
+          responses:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getMapVersion'
+        put:
+          decription: Définit/modifie le pointeur vers la version courante
+        delete:
+          decription: Supprime le pointeur vers la version
+      /maps/{mapNum}/{version}:
+        description: Représente une version spécifique d'une carte
+        get:
+          description: Expose différents accès à cette version
+          responses:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getMapVersion'
+        delete:
+          decription: supprime cette version
+      /maps/{mapNum}/{version}/metadata:
+        description: Retourne les MD simplifiées de cette version
+      /maps/{mapNum}/{version}.7z:
+        description: Télécharge l'archive 7z correspondant à cette version
+      /maps/{mapNum}/{version}/7z:
+        description: expose les éléments de l'archive et propose d'y accéder
+      /maps/{mapNum}/{version}/7z/{elt}:
+        description: retourne l'élément {elt} de l'archive
+      /maps/{mapNum}/{version}/thumbnail.png:
+        description: retourne la vignette en PNG
+      /maps/{mapNum}/{version}/main.png:
+        description: retourne l'image de la partie principale reformattée en png
+      /maps/{mapNum}/{version}/main.json:
+        description: retourne les infos Gdal de l'image de la partie principale + champ georef
+      /maps/{mapNum}/{version}/main.xml:
+        description: retourne les MD ISO de la partie principale
+      /maps/{mapNum}/{version}/{inset}.png:
+        description: retourne l'image du cartouche {inset} reformattée en png
+      /maps/{mapNum}/{version}/{inset}.json:
+        description: retourne les infos Gdal de l'image du cartouche {inset} + champ georef
+      /maps/{mapNum}/{version}/{inset}.xml:
+        description: retourne les MD ISO du cartouche {inset}
+      /mapCat:
+        description: Représente le catalogue et donne accès à son contenu et à chaque entrée par carte
+        get:
+          description: liste des cartes par type
+      /mapCat/current:
+        description: liste des cartes courantes
+      /mapCat/obsolete:
+        description: liste des cartes obsolètes
+      /mapCat/uninteresting:
+        description: liste des cartes inintéressantes
+      /mapCat/deleted:
+        description: liste des cartes supprimées
+      /mapCat/{mapNum}:
+        description: Représente l'entrée dans MapCat correspondant à la carte {mapNum}
+        get:
+          description: Retourne la description de la carte {mapNum} dans MapCat
+        put:
+          description: Crée ou remplace la description de la carte
+        delete:
+          description: Transfère dans deleted la description de la carte
+        patch:
+          description: permet de changer le type d'entrée
+      /gan:
+        description: Représente l'instantané du GAN structuré sous la forme d'une API
+      /gan/{mapNum}:
+        description: Représente l'entrée du GAN pour la carte {mapNum}
+        get:
+          description: Retourne le contenu de l'entrée
+        put:
+          description: Crée/remplace l'entrée
+        delete:
+          description: Supprime l'entrée du GAN
+      /gan/{mapNum}/origin:
+        description: retourne la page HTML d'origine du GAN
+      /collections:
+        description: décrit les sous-points d'accès et liste les couches de ShomGT.
+        note: |
+          Les couches sont:
+            - une couche shomMaps des cartes Shom normales du portefeuille avec leur extension spatiale
+              - pas de représentation map ni tiles
+            - les 12 couches shomMaps{sd} des cartes Shom normales du portefeuille réparties par échelle
+              - pas de représentation map ni tiles
+            - les couches image ShomGT exposées par l'API tile et le service wms
+              - 12 gt{sd} / {sd} ::= 40M, 10M, 4M, 2M, 1M, 500k, 250k, 100k, 50k, 25k, 12k, 5k
+                - les gt{sd} ont une représentation Feature (les georefImages) et des repr. map et tiles
+              - 11 num{sd} / sauf 40M
+            - les 3 couches gtaem, gtMancheGrid, gtZonMar des cartes Shom spéciales
+              - ces 3 couches ont une représentation Feature (les georefImages) et des repr. map et tiles
+              - plus les 2 couches numaem, numMancheGrid de numéros, qui n'ont que des repr. map et tiles
+            - les couches vecteur ShomGT exposées par le service wmsv
+              - sar_2019, delmar, frzee, qui ont des repr. Feature et map
+      /collections/{collectionId}:
+        description: Description de la couche
+      /collections/{collectionId}/items:
+        description: |
+          pour les retourne les descriptions des GeorefImage de la couche comme Feature
+      /collections/{collectionId}/items/{featureId}:
+        description: retourne la description du GeorefImage de la couche comme Feature
+      /collections/{collectionId}/map:
+        description: décrit la carte
+      /collections/{collectionId}/map/{styleId}:
+        description: retourne l'image de la carte en fonction des paramètres
+      /collections/{collectionId}/map/{styleId}/info:
+        description: retourne le GeorefImage visible au point donné
+      /collections/{collectionId}/tiles:
+        description: liste le tileset dispo.
+      /collections/{collectionId}/tiles/WebMercatorQuad:
+        description: |
+          retourne la description du tileset
+          Ce point d'entrée correspond à un service de tuiles XYZ
+      /collections/{collectionId}/tiles/WebMercatorQuad/{tileMatrix}/{tileRow}/{tileCol}:
+        description: retourne la tuile
+      /wms:
+        description: accès aux couches ShomGt conformément au std WMS 1.3.0 et 1.0.1
+      dcat:
+        description: catalogue DCAT (dcat:Catalog) exposé en JSON-LD
+        note: |
+          Les Dataset du catalogue sont:
+            - les 44 couches de /collections
+            - MapCat
+            - le GAN
+          Les DataService du catalogue sont:
+            - l'API standardisée OGC API exposant les couches en Features, Maps et Tiles
+            - l'API adhoc permettant d'accéder aux versions de cartes, au Mapcat et au GAN
+      dcat/dataset/{collectionId}:
+        description: dcat:Dataset exposé en JSON-LD
+      dcat/service/{id}:
+        description: dcat:DataService exposé en JSON-LD
+    components:
+      schemas:
+        getMapVersion:
+          type: object
+          properties:
+            metadata:
+              description: lien vers les MD simplifiées de cette version
+            download:
+              description: lien vers l'URL de téléchargement de l'archive 7z de cette version
+            files:
+              description: lien vers les fichiers de l'archive 7z de cette version
+            thumbnail.png:
+              description: lien vers la vignette
+            main.png:
+              description: lien vers l'image reformattée en png de la partie principale
+            main.json:
+              description: lien vers les infos Gdal de l'image de la partie principale
+            main.xml:
+              description: lien vers les MD ISO de la partie principale
+          patternProperties:
+            ^inset(\d+|[A-Z])\.png$:
+              description: lien vers l'image reformattée en png du cartouche
+            ^inset(\d+|[A-Z])\.json$:
+              description: lien vers les infos Gdal de l'image du cartouche
+            ^inset(\d+|[A-Z])\.xml$:
+              description: lien vers les MD ISO du cartouche
+    
+  ogcApis:
+    collections:
+      - une collection est une couche WMS ou une FeatureCollection
+      - pour ShomGT une collection serait une couche ShomGT
+      - les Features d'une collection sont les GeorefImage avec leur description
+  
   bug6835:
     title: inclusion de l'extension spatiale dans le géoréférencement
     mapcat:
@@ -542,6 +688,32 @@ restructurationBo:
         - "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive"
 
 
+ogcApis:
+  title: rappel des OGC APIs
+  note: |
+    La notion de collection (couche) est commune, on peut avoir dans un serveur à la fois les Features, Maps et Tiles
+    sur les mêmes collections.
+  features:
+    examples:
+      - https://igngp.geoapi.fr/fts.php/cartes/api
+    patterns:
+      /: accueil
+      /collections: liste les FeatureCollections 
+      /collections/{collectionId}: décrit la FeatureCollection
+      /collections/{collectionId}/items: récupère les Features selon des critères
+      /collections/{collectionId}/items/{featureId}: récupère le Feature
+  maps:
+    patterns:
+      /: accueil
+      /collections: liste les collections = couche
+      /collections/{collectionId}: décrit la couche
+      /collections/{collectionId}/map: décrit la carte
+      /collections/{collectionId}/map/{styleId}?crs=CRS84&bbox=160.6,-55.95,-170,-25.89&width=600&height=400: retourne la carte
+      /collections/{collectionId}/map/{styleId}/info: getFeatureInfo
+  tiles:
+    patterns:
+      /collections/{collectionId}/tiles/{tileMatrixSetId}/{tileMatrix}/{tileRow}/{tileCol}: retourne un tuile
+      
 miseEnProd:
   cmdesMiseEnProdDev: |
     # cmdes pour mettre en prod sgpp à la place de shomgt sur Alwaysdata

@@ -12,7 +12,7 @@ doc: |
   Le script est utilisé de 3 manières:
    - soit inclus dans un script de BO
    - soit en CLI pour tester un ensemble de cartes.
-   - soit en web pour visualiser une archive
+   - soit en web pour visualiser une archive ou la liste des archives
 */
 require_once __DIR__.'/../vendor/autoload.php';
 #require_once __DIR__.'/../mapcat/mapcat.inc.php';
