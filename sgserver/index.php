@@ -35,6 +35,8 @@ doc: |
     - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
       la propriété 'status' contenant la valeur 'obsolete'
 journal: |
+  27/8/2023:
+    - envoi du MapCat en base et non en fichier
   19/8/2023:
     - ajout d'un mécanisme de détection pour savoir si le client du serveur est ou non sur la même machine
       - si le client est sur la même machine alors pas d'autre contrôle d'accès
@@ -111,6 +113,7 @@ define('TEST_MAPS', []); // PAS de restriction pour tests
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/../mapcat/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -232,7 +235,7 @@ switch ($_SERVER['PATH_INFO'] ?? null) {
   case '/cat.json': { // envoi de mapcat 
     header('Content-type: application/json; charset="utf-8"');
     echo json_encode(
-      Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml'),
+      ['maps'=> \mapcat\MapCat::allAsArray()],
       JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
     logRecord(['done'=> "ok - mapcat.json"]);
     die();

@@ -6,7 +6,7 @@ description: |
   Par défaut chaque couche du serveur WMS-V utilise un style portant le nom de la couche, ou si le nom n'existe pas
   alors le style 'default' qui est donc obligatoire dans le dictionnaire des styles.
   Dans l'appel du service WMS, un style différent du style par défaut peut être défini en utilisant le paramètre styles.
-  Les champs title et description des styles sont obligatooires, ils sont exposés par le service WMS dans le GetCapabilities.
+  Les champs title et description des styles sont obligatoires, ils sont exposés par le service WMS dans le GetCapabilities.
 $schema:
   $id: http://geoapi.fr/shomgt/shomgt/wmsvstyles.yaml#/$schema
   definitions:

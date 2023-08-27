@@ -31,20 +31,24 @@ abstract: |
 journal:
   27/8/2023:
     - supp. du compartiment obsolete de MapCat
+    - modif du schéma de MapCat en base pour remplacer l'attribut kind par l'attribut obsolete
     - supp. de la classe MapInBase qui devient MapCat
     - il faut que je gère plus finement les interfaces entre modules
       - chaque module pourrait être vu comme une classe Php
+    - correction de bugs dans wmsv dus au chgt de chemin de lib
+    - utilisation dans sgserver du mapcat en base
+    - plus d'erreurs phpstan level 6 sauf celles masquées par les instructions // @phpstan-ignore-line
   26/8/2023:
     - réflexion à la restucturation sous la forme d'API
   24-25/8/2023:
     - restructuration bo/maparchive pour améliorer le code
     - transfert mapcat.php dans mapcat/index.php
     - définition de noms d'espace Php pour bo, mapcat, dashboard, shomft, gegeom et coordsys
-    - exécution de phpstan level 6, plus d'erreurs sauf celles masquées par les instructions // @phpstan-ignore-line
+    - plus d'erreurs phpstan level 6 sauf celles masquées par les instructions // @phpstan-ignore-line
   23/8/2023:
     - amélioration du contrôle d'accès au service de tuile
     - amélioration mise à jour et ajout d'un enregistrement MapCat dans addpmaps
-    - exécution de phpstan level 6, plus d'erreurs sauf celles masquées par les instructions // @phpstan-ignore-line
+    - plus d'erreurs phpstan level 6 sauf celles masquées par les instructions // @phpstan-ignore-line
   22/8/2023:
     - mise à jour et ajout d'un enregistrement MapCat dans addpmaps
     - merge de mapCatInBase et mapOfLogs dans shomgt4.3
@@ -173,7 +177,7 @@ modifsAPrendreEnCompte:
       - le caractère obsolete ou non est défini dans mapStore, il n'y a pas de raison de dupliquer cette info
       - de plus cette duplication complexifie la gestion
 découpageEnComposantsV4:
-  display:
+  display(shomgt):
     objet: expose les 2 services WMS, ainsi que les flux Tile et GeoJSON et une carte Leaflet utilisant ces 2 derniers flux
     mode: Web
     offreA:

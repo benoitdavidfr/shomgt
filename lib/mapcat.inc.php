@@ -5,6 +5,8 @@ name: mapcat.inc.php
 classes:
 doc: |
 journal: |
+  27/8/2023:
+    - supp. des cartes obsolètes dont le compartiment a été suppprimé
   17/8/2023:
     - ajout des cartes obsolètes dans le catalogue
   2/7/2023:
@@ -33,7 +35,6 @@ class TempMapCat {
   static function init(string $option=''): void {
     if (($option=='download') || !is_file(self::MAPCAT_TEMP_PATH)) {
       $url = EnvVar::val('SHOMGT3_SERVER_URL').'/cat.json';
-      if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');
       $httpCode = download($url, self::MAPCAT_TEMP_PATH, 1);
       if ($httpCode <> 200)
         throw new Exception("Erreur de download de cat.json");
@@ -41,10 +42,6 @@ class TempMapCat {
     $mapcat = json_decode(file_get_contents(self::MAPCAT_TEMP_PATH), true);
     foreach ($mapcat['maps'] as $name => $map) {
       self::$cat[$name] = new self($name, $map);
-    }
-    foreach ($mapcat['obsoleteMaps'] as $name => $map) {
-      $dateObs = array_keys($map)[count($map)-1]; // la dernière date d'obsolescence
-      self::$cat[$name] = new self($name, $map[$dateObs]);
     }
   }
   

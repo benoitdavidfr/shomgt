@@ -463,6 +463,19 @@ class MapCat {
     $jdoc = json_decode($mapcat['jdoc'], true);
     return new MapCatItem($jdoc, 'alive');
   }
+
+  /** retourne tout le contenu de MapCat chaque entrée ssous la forme d'array et les num. avec FR
+   * @return array<string, TMapCatEntry>
+   */
+  static function allAsArray(): array {
+    $all = [];
+    // étant donné le tri $all ne contient que la dernière version pour chaque carte 
+    foreach (\MySql::query('select mapnum, jdoc from mapcat order by id') as $tuple) {
+      $all[$tuple['mapnum']] = json_decode($tuple['jdoc']);
+    }
+    ksort($all);
+    return $all;
+  }
 };
 
 class MapCatFromFile extends MapCat {
