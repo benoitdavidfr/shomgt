@@ -180,6 +180,7 @@ class GtMaps {
 
   /** @param array<int, string> $lyrnames */
   static function items(array $lyrnames): void { // silhouettes des GéoTiffs
+    //echo "GtMaps::items(",implode($lyrnames),")<br>\n";
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
       $bbox = new \gegeom\GBox($bbox); // en coord. géo.

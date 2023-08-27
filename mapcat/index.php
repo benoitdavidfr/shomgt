@@ -175,6 +175,8 @@ class MapCatDef {
         'type'=> 'boolean',
         'keyOrNull'=> 'not null',
         'comment'=> "vrai ssi la carte est obsolète",
+        'note'=> "Cette info sur l'obsolescence de la carte est utilisée dans la comparaison au GAN (cmpgan)\n"
+          ."car les cartes obsolètes ne sont pas décrites dans le GAN",
       ],
       'jdoc'=> [
         'type'=> 'JSON',
@@ -584,7 +586,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     \MySql::open($LOG_MYSQL_URI);
     $mapCat = [];
-    $sql = 'select id, mapnum, jdoc->"$.title" title from mapcat where kind=\'current\' order by id';
+    $sql = 'select id, mapnum, json_extract(jdoc, "$.title") title from mapcat order by id';
     foreach (\MySql::query($sql) as $tuple) {
       $mapCat[$tuple['mapnum']] = ['id'=> $tuple['id'], 'title'=> "$tuple[mapnum] - ".substr($tuple['title'], 1, -1)];
     }
@@ -602,9 +604,11 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
           or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
         \MySql::open($LOG_MYSQL_URI);
+        // la propriété obsolete est indiquée dans le jdoc si la carte est obsolète
+        $obsolete = ($valid['validDoc']['obsolete'] ?? false) ? 'true' : 'false';
         $jdocRes = \MySql::$mysqli->real_escape_string(json_encode($valid['validDoc']));
-        $query = "insert into mapcat(mapnum, kind, jdoc, updatedt, user) "
-                            ."values('$_POST[mapnum]', 'current', '$jdocRes', now(), '$user')";
+        $query = "insert into mapcat(mapnum, obsolete, jdoc, updatedt, user) "
+                            ."values('$_POST[mapnum]', $obsolete, '$jdocRes', now(), '$user')";
         echo "<pre>query=$query</pre>\n";
         \MySql::query($query);
         echo "maj carte $_POST[mapnum] ok<br>\n";

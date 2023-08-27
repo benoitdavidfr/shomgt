@@ -15,8 +15,9 @@ doc: |
    - soit en web pour visualiser une archive ou la liste des archives
 */
 require_once __DIR__.'/../vendor/autoload.php';
-#require_once __DIR__.'/../mapcat/mapcat.inc.php';
-require_once __DIR__.'/../mapcat/index.php';
+#require_once __DIR__.'/../mapcat/index.php';
+require_once __DIR__.'/../mapcat/mapcat.inc.php';
+require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';

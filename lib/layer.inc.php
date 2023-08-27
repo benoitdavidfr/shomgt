@@ -345,6 +345,7 @@ class TiffLayer extends Layer {
   * @return TGeoJsonFeature
   */
   private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, \gegeom\GBox $gbox): array {
+    //echo "TiffLayer::itemForGeoTiff($lyrname, $gtname, , $gbox)<br>\n";
     try {
       $isoMd = IsoMd::read($gtname);
       $errorMessage = '';
@@ -385,6 +386,7 @@ class TiffLayer extends Layer {
   // retourne un array de Features correspondant aux bbox des GéoTiffs
   /** @return array<int, TGeoJsonFeature> */
   function items(string $lyrname, ?\gegeom\GBox $qgbox): array {
+    //echo "TiffLayer::items($lyrname, $qgbox)<br>\n";
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {
       $gbox = $gt['spatial']->geo('WorldMercator'); // transf spatial en c. Géo.
@@ -401,6 +403,7 @@ class TiffLayer extends Layer {
         $features[] = $f;
       }
     }
+    //echo "TiffLayer::items() returns ",Yaml::dump($features),"<br>\n";
     return $features;
   }
   

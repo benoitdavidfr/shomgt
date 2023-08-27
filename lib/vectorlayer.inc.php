@@ -52,7 +52,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   static array $all = []; // dictionaire [{lyrName} => VectorLayer]
 
   static function initVectorLayers(string $filename): void {
-    Layer::initFromShomGt(__DIR__.'/../../data/shomgt'); // Initialisation des couches raster à partir du fichier shomgt.yaml
+    Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation des couches raster à partir du fichier shomgt.yaml
     $yaml = Yaml::parseFile($filename);
     foreach ($yaml['vectorLayers'] as $name => $vectorLayer) {
       self::$all[$name] = new self($name, $vectorLayer);
@@ -101,7 +101,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   /** @return array<int, TGeoJsonFeature> */
   private function items(): array {
     if ($this->path) {
-      return json_decode(file_get_contents(__DIR__.'/../'.$this->path), true)['features'];
+      return json_decode(file_get_contents(__DIR__.'/../shomgt/'.$this->path), true)['features'];
     }
     elseif (substr($this->name, 0, 3)=='cat') {
       $rasterLayerName = 'gt'.substr($this->name, 3);
