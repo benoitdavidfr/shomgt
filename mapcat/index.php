@@ -425,7 +425,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     echo "<li><a href='?action=cmpGan'>Confronte les données de localisation de MapCat avec celles du GAN</a></li>\n";
     echo "<li><a href='?action=compareMapCats'>Compare le contenu de la table mapcat avec la version en Yaml</a></li>\n";
     echo "<li><a href='?action=createTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
-    echo "<li><a href='?action=showMapCat'>Affiche le catalogue à partir de la table en base</a></li>\n";
+    echo "<li><a href='?action=showMapCat'>Affiche les n-uplets de la table mapcat</a></li>\n";
     echo "<li><a href='?action=updateMapCat'>Met à jour le catalogue</a></li>\n";
     echo "<li><a href='?action=testValidatesAgainstSchema'>testValidatesAgainstSchema</a></li>\n";
     die();

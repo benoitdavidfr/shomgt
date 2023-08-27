@@ -12,70 +12,129 @@ require_once __DIR__.'/../bo/lib.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 
-/** standardise l'ordre des propriétés de $src conformément au standard transmis $std
- * Le standard est défini récursivement comme une liste de:
- *  - soit une chaine pour les propriétés élémentaires
- *  - soit un dictionnaire chaine -> standard pour les propriétés contenant un sous-dict
- *  - soit une liste de dictionnaires chaine -> standard pour les propriétés contenant une liste de sous-dict
- * @param StdOrderOfProperties $std;
- * @param array<mixed> $src;
- * @return array<mixed>;
-*/
-function stdDict(array $std, array $src): array {
-  $stdDict = [];
-  foreach ($std as $k => $prop) {
-    if (is_int($k)) { // propriété simple correspondant à une valeur
-      //echo "$k -> $prop\n";
-      // je réordonne les propriétés dans l'ordre de std
-      if (isset($src[$prop])) {
-        $stdDict[$prop] = $src[$prop];
-        unset($src[$prop]);
-      }
-      // je rajoute à la fin les propriétés absentes du std
-      foreach ($src as $prop => $val) {
-        $stdDict[$prop] = $val;
-      }
-      
-    }
-    else { // propriété complexe
-      $sstd = $prop;
-      $prop = $k;
-      //echo Yaml::dump(['sstd'=> [$prop => $sstd]]),"\n";
-      if (is_string($sstd[0])) { // propriété correspondant à un sous-objet
+class StdOrderOfProp {
+  /** standardise l'ordre des propriétés de $src conformément au standard transmis $std
+   * Le standard est défini récursivement comme un array Php dont chaque élément est:
+   *  - soit int => chaine pour les propriétés élémentaires
+   *  - soit chaine => sous-standard pour les propriétés contenant un sous-dict ou une liste de sous-dict
+   *    le sous-standard s'applique alors au sous-dict ou a chacun des sous-dict
+   * @param array<mixed> $std;
+   * @param array<mixed> $src;
+   * @return array<mixed>;
+  */
+  static function ofDict(array $std, array $src, string $path=''): array {
+    $stdDict = [];
+    //echo "<pre>Appel de StdOrderOfProp::ofDict(path='$path', std=",json_encode($std),", src=",json_encode($src),")<pre>\n";
+    foreach ($std as $k => $prop) {
+      //echo json_encode(["path=$path" => [$k => $prop]]),"\n";
+      if (is_int($k)) { // propriété simple correspondant à une valeur
+        //echo "$k -> $prop\n";
+        // je réordonne les propriétés dans l'ordre de std
         if (isset($src[$prop])) {
-          //echo "appel récursif sur $prop\n";
-          $stdDict[$prop] = stdDict($sstd, $src[$prop]);
+          $stdDict[$prop] = $src[$prop];
         }
       }
-      else { // propriété correspondant à une liste de ss-objets
-        $sstd = $sstd[0];
-        if (isset($src[$prop])) {
-          //echo "appel récursif sur $prop\n";
+      else { // propriété complexe
+        list($prop, $sstd) = [$k, $prop]; // la clé est le nom de la propriété et la valeur ::= std | liste d'un std
+        //echo Yaml::dump(['sstd'=> [$prop => $sstd]]),"\n";
+        //echo "appel récursif sur $prop\n";
+        if (!isset($src[$prop])) continue;
+        if (!is_array($src[$prop]))
+          throw new \Exception("erreur sur $path/$prop, incompatibilité entre le std et le src");
+        if (!array_is_list($src[$prop])) { // propriété correspondant à un sous-objet
+          $stdDict[$prop] = self::ofDict($sstd, $src[$prop], "$path/$prop"); // @phpstan-ignore-line
+        }
+        else { // propriété correspond à une liste de sous-objets
+          $stdDict[$prop] = [];
           foreach ($src[$prop] as $i => $elt) {
-            $stdDict[$prop][] = stdDict($sstd, $elt);
+            $stdDict[$prop][] = self::ofDict($sstd, $elt); // @phpstan-ignore-line
           }
         }
       }
+      unset($src[$prop]);
+    }
+    // je rajoute à la fin les propriétés absentes du std
+    foreach ($src as $prop => $val) {
+      $stdDict[$prop] = $val;
+    }
+    //echo "<pre>StdOrderOfProp::ofDict(path='$path') retourne ",json_encode($stdDict),"<pre>\n";
+    return $stdDict;
+  }
+  
+  static function testOfDict(): void { // test de self::ofDict()
+    $dict = [
+      'title'=> 'title',
+      'groupTitle'=> 'groupTitle',
+      'spatial'=> [
+        'NE'=> 'NE',
+        'SW'=> 'SW',
+      ],
+      'insetMaps'=> [
+        [
+          'scaleDenominator'=> 'scaleDenominator',
+          'title'=> 'title',
+        ],
+        [
+          'scaleDenominator'=> 'scaleDenominator2',
+          'title'=> 'title2',
+        ],
+      ]
+    ];
+    echo '<pre>',Yaml::dump(['dict'=> $dict, 'stdOrderOfPropForDict'=> self::ofDict(MapCatItem::STD_PROP, $dict)], 5, 2),"\n";
+  }
+  
+  /** teste si $std est bien formé, si OK alors retourne null, sinon retourne l'erreur rencontrée
+   * @param array<mixed> $std;
+   */
+  static function checkTypeOfStd(array $std, string $path=''): ?string {
+    foreach ($std as $k => $prop) {
+      //echo json_encode(["path=$path" => [$k => $prop]]),"\n";
+      if (is_int($k)) { // propriété simple correspondant à une valeur atomique
+        // prop doit être le nom de la propriété
+        if (!is_string($prop))
+          return "Erreur sur path='$path', ".json_encode([$k => $prop]).", prop n'est pas un string";
+      }
+      else { // propriété complexe
+        list($prop, $sstd) = [$k, $prop]; // la clé est le nom de la propriété et la valeur ::= std | liste d'un std
+        if (!is_array($sstd)) // @phpstan-ignore-line
+          return "Erreur sur sur path='$path', ".json_encode([$prop => $sstd]).", sstd n'est pas un array";
+        if ($error = self::checkTypeOfStd($sstd, "$path.$prop"))
+          return $error;
+      }
+    }
+    return null;
+  }
+  
+  static function testCheckTypeOfStd(): void {
+    echo "<pre>";
+    $stds = [
+      "1 ok" => [
+        'a',
+        'b',
+        'c'=> ['a','b','c'],
+        'd',
+        'e'=> ['d','e','f'],
+        'f'=> ['f'],
+        'g'=> ['g'],
+      ],
+      "2 KO" => [
+        'a',
+        'c'=> 'a',
+      ],
+      "3 KO" => [
+        'a',
+        'c'=> [['a']],
+      ],
+    ];
+    foreach ($stds as $label => $std) {
+      echo "$label -> ",($error = self::checkTypeOfStd($std)) ? $error : 'ok',"\n";
     }
   }
-  return $stdDict;
-}
-if (0) { // @phpstan-ignore-line // Test de standardizeDict
-  $dict = [
-    'title'=> 'title',
-    'groupTitle'=> 'groupTitle',
-    'spatial'=> [
-      'NE'=> 'NE',
-      'SW'=> 'SW',
-    ],
-    'insetMaps'=> [
-      [
-        'scaleDenominator'=> 'scaleDenominator',
-        'title'=> 'title',
-      ]
-    ]
-  ];
-  echo '<pre>stdDict = ',Yaml::dump(stdDict(MapCatItem::STD_PROP, $dict)),"\n"; die("Fin ligne ".__LINE__);
+};
+if (0) { // @phpstan-ignore-line // Test de stdOrderOfPropForDict
+  StdOrderOfProp::testOfDict();
+  StdOrderOfProp::testCheckTypeOfStd();
+  die("Fin ligne ".__LINE__);
 }
 
 /* décode le champ spatial de MapCat pour différentes utilisations
@@ -249,7 +308,6 @@ EOT;
 // Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
 class MapCatItem {
   const ALL_KINDS = ['alive','uninteresting','deleted'];
-  /** @phpstan-assert StdOrderOfProperties STD_PROP */
   const STD_PROP = [
     'groupTitle',
     'title',
@@ -266,7 +324,7 @@ class MapCatItem {
     'toDelete',
     'borders',
     'layer',
-    'insetMaps'=> [[ // propriété contenant une liste de sous-objets
+    'insetMaps'=> [ // propriété contenant une liste de sous-objets
       'title',
       'scaleDenominator',
       'spatial',
@@ -276,7 +334,7 @@ class MapCatItem {
       'outgrowth',
       'toDelete',
       'borders',
-    ]],
+    ],
   ]; // ordre standard des propriétés 
   
   /** @var TMapCatEntry $item */
@@ -289,11 +347,15 @@ class MapCatItem {
    * @param TMapCatKind $kind */
   function __construct(array $item, string $kind) { $this->item = $item; $this->kind = $kind; }
   
+  static function checkValidity(): ?string { // vérifie le type de self::STD_PROP
+    return StdOrderOfProp::checkTypeOfStd(self::STD_PROP);
+  }
+  
   function __get(string $property): mixed { return $this->item[$property] ?? null; }
   
   /** @return array<string,mixed> */
   function asArray(): array {
-    $array = stdDict(self::STD_PROP, $this->item);
+    $array = StdOrderOfProp::ofDict(self::STD_PROP, $this->item);
     if ($this->kind == 'alive')
       return $array;
     else
@@ -362,6 +424,7 @@ class MapCatItem {
     echo "</table>\n";
   }
 };
+if ($error = MapCatItem::checkValidity()) throw new \Exception($error);
 
 // La classe MapCat correspond au catalogue MapCat a priori en base 
 class MapCat {
