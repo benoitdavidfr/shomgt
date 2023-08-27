@@ -12,8 +12,12 @@ require_once __DIR__.'/../bo/lib.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 
-/** standardise l'ordre des propriétés de $dict conformément au standard transmis $std
- * @param array<mixed> $std;
+/** standardise l'ordre des propriétés de $src conformément au standard transmis $std
+ * Le standard est défini récursivement comme une liste de:
+ *  - soit une chaine pour les propriétés élémentaires
+ *  - soit un dictionnaire chaine -> standard pour les propriétés contenant un sous-dict
+ *  - soit une liste de dictionnaires chaine -> standard pour les propriétés contenant une liste de sous-dict
+ * @param StdOrderOfProperties $std;
  * @param array<mixed> $src;
  * @return array<mixed>;
 */
@@ -245,24 +249,24 @@ EOT;
 // Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
 class MapCatItem {
   const ALL_KINDS = ['alive','uninteresting','deleted'];
+  /** @phpstan-assert StdOrderOfProperties STD_PROP */
   const STD_PROP = [
     'groupTitle',
     'title',
     'scaleDenominator',
-    'spatial' => ['SW', 'NE'], // propriété correspondant à un sous-objet
+    'spatial' => ['SW', 'NE', 'exception'], // propriété contenant un sous-objet
     'mapsFrance',
     'replaces',
     'references',
     'noteShom',
     'noteCatalog',
     'badGan',
-    'noteCatalog',
     'z-order',
     'outgrowth',
     'toDelete',
     'borders',
     'layer',
-    'insetMaps'=> [[ // propriété correspondant à une liste de sous-objets
+    'insetMaps'=> [[ // propriété contenant une liste de sous-objets
       'title',
       'scaleDenominator',
       'spatial',

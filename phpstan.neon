@@ -64,6 +64,7 @@ parameters:
       }
       '''
     TMapCatKind: "'alive'|'uninteresting'|'deleted'"
+    StdOrderOfProperties: list<string|array<string,StdOrderOfProperties>|list<array<string,StdOrderOfProperties>>
   paths:
     - index.php
     - index2.php 
