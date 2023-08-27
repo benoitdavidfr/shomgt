@@ -1,9 +1,15 @@
 title: schema JSON du catalogue des cartes Shom
 $id: https://sgserver.geoapi.fr/index.php/cat/schema
-modified: '2023-08-13'
+modified: '2023-08-27'
 description: |
   Ce schéma définit la structure du catalogue des cartes et des écarts voulus par rapport aux sources du Shom.
   Journal:
+    27/8/2023:
+      - suppression du compartiment obsolete car cette caractéristique est définie dans mapStore
+        - et l'existence d'un compartiment distinct complexifie la gestion
+      - toutefois cette info est utile pour éviter de comparer pour ces cartes MapCat au GAN
+        - elle est donc transformée en un champ obsolete de map
+      - il y a 13 cartes obsolètes
     13/8/2023:
       - ajout de la propriété deletedMaps et de la possibilité que mapsFrance d'une carte soit unknown
       - chgt du nom cartesAyantUnIntérêtInsuffisant en uninterestingMaps
@@ -299,6 +305,9 @@ definitions:
       noteCatalog:
         description: commentaire associé à la carte dans la gestion du catalogue
         type: string
+      obsolete:
+        description: Indique si la carte est obsolète c'est à dire qu'elle n'est plus maintenue par le Shom
+        type: boolean
       badGan:
         description: |
           commentaire expliquant les écarts de l'info de ce catalogue par rapport à celle du GAN ;
@@ -364,29 +373,13 @@ properties:
   created: { description: 'date de création initiale du document', $ref: '#/definitions/dateIso8601' }
   modified: { description: 'date de dernière modification du document', $ref: '#/definitions/dateIso8601' }
   maps:
-    description: dictionnaire des cartes non obsolètes indexées sur leur numéro précédé de 'FR'
+    description: dictionnaire des cartes vivantes (obsolètes ou non) indexées sur leur numéro précédé de 'FR'
     type: object
     additionalProperties: false
     patternProperties:
       ^FR\d\d\d\d:
         description: Description d'une carte.
         $ref: '#/definitions/map'
-  obsoleteMaps:
-    description: |
-      dictionnaire des cartes obsolètes indexées sur leur numéro précédé de 'FR' et la date de leur retrait.
-      Les cartes obsolètes ne sont plus exposées par sgserver mais restent présentes dans le BO.
-    type: object
-    additionalProperties: false
-    patternProperties:
-      ^FR\d\d\d\d:
-        description: pour chaque carte la liste des retraits indexés par la date de retrait
-        type: object
-        additionalProperties: false
-        patternProperties:
-          ^\d\d\d\d-\d\d-\d\d:
-            description: propriétés de chaque carte retirée
-            type: object
-            $ref: '#/definitions/map'
   uninterestingMaps:
     description: |
       dictionnaire des cartes intersectant la ZEE mais inutiles pour décrire les espaces sur lesquels la France
@@ -407,7 +400,7 @@ properties:
           scaleDenominator:
             description: dénominateur de l'échelle de l'espace principal avec un . comme séparateur des milliers.
             $ref: '#/definitions/scaleDenominator'
-          reason: { description: motif de l'insuffisance, type: string }
+          reason: { description: motif de leur inutilité, type: string }
   deletedMaps:
     description: cartes supprimées
     type: object

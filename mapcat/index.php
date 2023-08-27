@@ -44,7 +44,9 @@ use Symfony\Component\Yaml\Yaml;
 if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 
 switch ($_SERVER['PATH_INFO'] ?? null) { // interface API JSON
+  case null: break;
   case '/all': {
+    $mapCats = [];
     foreach (MapCat::mapNums() as $mapNum) {
       $mapCats[$mapNum] = MapCat::get($mapNum)->asArray();
     }
@@ -80,10 +82,11 @@ function cmpGans(): void { // comparaison MapCat / GAN
     "<th>cat'scale</th><th>gan'scale</th><th>ok?</th>",
     "<th>cat'SW</th><th>gan'SW</th><th>ok?</th>",
     "<th>x</th><th>cat'NE</th><th>gan'NE</th><th>ok?</th>\n";
-  foreach (\mapcat\MapCat::mapNums(['current']) as $mapNum) {
-    $mapCat = \mapcat\MapCat::get($mapNum);
+  foreach (MapCat::mapNums() as $mapNum) {
+    $mapCat = MapCat::get($mapNum);
+    if ($mapCat->obsolete) continue; // on ne compare pas les cartes obsolètes
     //echo "<pre>"; print_r($map); echo "</pre>";
-    if (!($gan = \dashboard\Gan::$gans[substr($mapNum, 2)] ?? null)) { // carte définie dans MapCat et absente du GAN
+    if (!($gan = \dashboard\Gan::$gans[$mapNum] ?? null)) { // carte définie dans MapCat et absente du GAN
       echo "<tr><td>$mapNum</td><td>",$mapCat->badGan ?? '',"</td><td></td>";
       echo "<td>",$mapCat->scale(),"</td><td colspan=9>Absente du GAN</td></tr>\n";
       continue;
@@ -111,7 +114,7 @@ function cmpGans(): void { // comparaison MapCat / GAN
     }
     foreach ($mapCat->insetMaps ?? [] as $i => $insetMap) {
       try {
-        $ganpart = \dashboard\Gan::$gans[substr($mapNum, 2)]->inSet(new \gegeom\GBox($insetMap['spatial']));
+        $ganpart = \dashboard\Gan::$gans[$mapNum]->inSet(new \gegeom\GBox($insetMap['spatial']));
         $ganpartspatial = [
           'SW' => str_replace('—', '-', $ganpart->spatial()['SW']),
           'NE' => str_replace('—', '-', $ganpart->spatial()['NE']),
@@ -168,24 +171,11 @@ class MapCatDef {
         'keyOrNull'=> 'not null',
         'comment'=> "numéro de carte sur 4 chiffres précédé de 'FR'",
       ],
-      /*'title'=> [
-        'type'=> 'varchar(256)',
+      'obsolete'=> [
+        'type'=> 'boolean',
         'keyOrNull'=> 'not null',
-        'comment'=> "titre de la carte sans le numéro en tête",
-      ],  // pas nécessaire peut être lu dans jdoc */
-      'kind'=> [
-        'type'=> 'enum',
-        'keyOrNull'=> 'not null',
-        'enum'=> [
-          'current' => "carte courante",
-          'obsolete' => "carte obsolete",
-        ],
-        'comment'=> "carte courante ou obsolète",
+        'comment'=> "vrai ssi la carte est obsolète",
       ],
-      /*'obsoletedt'=> [
-        'type'=> 'datetime',
-        'comment'=> "date de suppression pour les cartes obsolètes, ou null si elle ne l'est pas",
-      ], pas nécessaire, peut être lu dans jdoc*/
       'jdoc'=> [
         'type'=> 'JSON',
         'keyOrNull'=> 'not null',
@@ -441,13 +431,11 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     die();
   }
   case 'check': { // Vérifie les contraintes sur MapCat
-    $mapCat = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.yaml');
-    
     { // Vérifie qu'aucun no de carte apparait dans plusieurs sections
       $maps = [];
       foreach (MapCatItem::ALL_KINDS as $kind) {
-        foreach (MapCat::mapNums([$kind]) as $mapNum) {
-          $maps[$mapNum][$kind] = MapCat::get($mapNum, [$kind]);
+        foreach (MapCatFromFile::mapNums([$kind]) as $mapNum) {
+          $maps[$mapNum][$kind] = MapCatFromFile::get($mapNum, [$kind]);
         }
       }
       $found = false;
@@ -461,11 +449,11 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         echo "Aucun no de carte apparait dans plusieurs sections<br>\n";
     }
 
-    { // vérifie que toute carte current et obsolete dont l'image principale n'est pas géoréférencée a des cartouches
+    { // vérifie que toute carte current dont l'image principale n'est pas géoréférencée a des cartouches
       // cad que (scaleDenominator && spatial) || insetMaps toujours vrai
       $found = false;
-      foreach (MapCat::mapNums() as $mapNum) {
-        $mapCat = MapCat::get($mapNum);
+      foreach (MapCatFromFile::mapNums() as $mapNum) {
+        $mapCat = MapCatFromFile::get($mapNum);
         if (!$mapCat->insetMaps && (!$mapCat->scaleDenominator || !$mapCat->spatial)) {
           echo '<pre>',Yaml::dump([$mapNum => $mapCat]),"</pre>\n";
           $found = true;
@@ -477,21 +465,23 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
 
     { // Vérifie que Le mapsFrance de toute carte de maps est <> unknown
       $found = false;
-      foreach (MapCat::mapNums() as $mapNum) {
-        $mapCat = MapCat::get($mapNum);
+      foreach (MapCatFromFile::mapNums() as $mapNum) {
+        $mapCat = MapCatFromFile::get($mapNum);
         if ($mapCat->mapsFrance == 'unknown') {
           echo '<pre>',Yaml::dump([$mapNum => $mapCat]),"</pre>\n";
           $found = true;
         }
       }
       if (!$found)
-        echo "Le mapsFrance de toute carte current et obsolete est <> unknown<br>\n";
+        echo "Le mapsFrance de toute carte current est <> unknown<br>\n";
     }
     
     { // Vérifie les contraintes sur le champ spatial et que les exceptions sont bien indiquées
       $bad = false;
-      foreach (MapCat::mapNums() as $mapNum) {
-        $mapCat = MapCat::get($mapNum);
+      foreach (MapCatFromFile::mapNums() as $mapNum) {
+        //echo "mapNum=$mapNum<br>\n";
+        $mapCat = MapCatFromFile::get($mapNum);
+       // echo '<pre>',Yaml::dump([$mapNum => $mapCat->asArray()], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
         foreach(geoImagesOfMap($mapNum, $mapCat) as $id => $info) {
           $spatial = new Spatial($info['spatial']);
           if ($error = $spatial->isBad()) {
@@ -522,14 +512,14 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case 'compareMapCats': {
     $mapNumsFromFile = MapCatFromFile::mapNums();
     //echo Yaml::dump(['$mapNumsFromFile'=> $mapNumsFromFile]),"</p>";
-    $mapNumsInBase = MapCatInBase::mapNums();
+    $mapNumsInBase = MapCat::mapNums();
     //echo Yaml::dump(['$mapNumsInBase'=> $mapNumsInBase]),"</p>";
     echo Yaml::dump(['mapNums du fichier qui ne sont pas en base'=> array_diff($mapNumsFromFile, $mapNumsInBase)]),"</p>";
     echo Yaml::dump(['mapNums en base qui ne sont pas dans le fichier'=> array_diff($mapNumsInBase, $mapNumsFromFile)]),"</p>";
     $diff = false;
     foreach ($mapNumsFromFile as $mapNum) {
       $mapCatFromFile = MapCatFromFile::get($mapNum);
-      $mapCatInBase = MapCatInBase::get($mapNum);
+      $mapCatInBase = MapCat::get($mapNum);
       if ($mapCatInBase <> $mapCatFromFile) {
         $diff = true;
         echo '<pre>',Yaml::dump(
@@ -559,16 +549,15 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
 
     //MySql::query('delete from mapcat');
     foreach (MapCatFromFile::mapNums() as $mapNum) {
-      echo "mapNum = $mapNum<br>\n";
+      //echo "mapNum = $mapNum<br>\n";
       $mapCat = MapCatFromFile::get($mapNum);
       //$title = MySql::$mysqli->real_escape_string($mapCat->title);
       $jdoc = $mapCat->asArray();
-      $kind = $jdoc['kind'];
       unset($jdoc['kind']);
       $jdoc = \MySql::$mysqli->real_escape_string(json_encode($jdoc));
-      //$obsoletedt = $mapCat->obsoleteDate ? "'$mapCat->obsoleteDate'" : 'null';
-      $query = "insert into mapcat(mapnum, kind, jdoc, updatedt) "
-        ."values('$mapNum', '$kind', '$jdoc', now())";
+      $obsolete = $mapCat->obsolete ? 'true' : 'false';
+      $query = "insert into mapcat(mapnum, obsolete, jdoc, updatedt) "
+        ."values('FR$mapNum', $obsolete, '$jdoc', now())";
       //echo "<pre>query=$query</pre>\n";
       \MySql::query($query);
     }

@@ -446,6 +446,18 @@ maps:
     spatial:
       SW: '28°15,00''S - 153°30,00''W'
       NE: '07°30,00''S - 120°00,00''W'
+  FR6608:
+    title: 'Mer du Nord'
+    mapsFrance:
+      - FX-Atl
+      - FX-MMN
+    scaleDenominator: 1.500.000
+    spatial:
+      SW: '48°10,00''N - 004°20,00''W'
+      NE: '62°50,00''N - 012°36,00''E'
+    references: 'Fac similé carte NO n° 301 publiée en 1972 (édition 2009 - réimpression janvier 2015).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
   FR6610:
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié - Rade du Brusc'
@@ -504,6 +516,20 @@ maps:
       SW: '48°15,00''N - 034°15,00''W'
       NE: '60°38,00''N - 000°55,00''W'
     references: 'Fac similé carte GB n°4102 publiée en 1972 (édition août 2015).'
+  FR6619:
+    groupTitle: 'Océan Atlantique Nord'
+    title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
+    mapsFrance:
+      - BL
+      - GP
+      - MF
+    scaleDenominator: 3.500.000
+    spatial:
+      SW: '17°00,00''N - 082°00,00''W'
+      NE: '45°00,00''N - 060°30,00''W'
+    references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
   FR6623:
     groupTitle: 'Océan Atlantique Nord'
     title: De La Manche au Détroit de Gibraltar et à l'archipel des Açores
@@ -1124,6 +1150,38 @@ maps:
       SW: '07°20,00''N - 084°51,24''W'
       NE: '23°35,89''N - 058°40,00''W'
     references: 'Fac similé carte GB n°4402 publiée en 1982 (édition janvier 2014).'
+  FR6903:
+    groupTitle: 'Îles Anglo-Normandes'
+    title: 'Guernsey et Herm'
+    mapsFrance:
+      - FX-MMN
+    scaleDenominator: '25.000'
+    spatial:
+      SW: '49°23,40''N - 002°46,75''W'
+      NE: '49°32,00''N - 002°26,50''W'
+    references: 'Fac similé carte GB n°807 publiée en 1979 (édition février 2016).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
+    insetMaps:
+      - title: 'A - Beaucette Marina'
+        scaleDenominator: '15.000'
+        spatial: { SW: '49°29,94''N - 002°30,49''W', NE: '49°30,57''N - 002°28,98''W' }
+  FR6904:
+    groupTitle: 'Îles Anglo-Normandes'
+    title: 'Guernsey Est, Herm et Sark'
+    mapsFrance:
+      - FX-MMN
+    scaleDenominator: '25.000'
+    spatial:
+      SW: '49°23,34''N - 002°36,08''W'
+      NE: '49°31,94''N - 002°15,83''W'
+    references: 'Fac similé carte GB n°808 publiée en 1979 (édition février 2016).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
+    insetMaps:
+      - title: 'A - Beaucette Marina'
+        scaleDenominator: '15.000'
+        spatial: { SW: '49°29,94''N - 002°30,49''W', NE: '49°30,57''N - 002°28,98''W' }
   FR6907:
     groupTitle: 'Côte Sud de France'
     title: 'Etang de Berre'
@@ -1174,6 +1232,54 @@ maps:
     spatial:
       SW: '22°43,13''S - 166°49,70''E'
       NE: '22°19,03''S - 167°27,80''E'
+  FR6934:
+    groupTitle: 'Iles Anglo-Normandes'
+    title: 'Alderney (Aurigny) et les Casquets'
+    mapsFrance:
+      - FX-MMN
+    scaleDenominator: '25.000'
+    spatial:
+      SW: '49°38,50''N - 002°26,60''W'
+      NE: '49°46,98''N - 002°06,25''W'
+    references: 'Fac similé carte GB n°60 publiée en 1974 (édition mai 2004).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
+  FR6937:
+    groupTitle: 'Iles Anglo-Normandes'
+    title: 'Jersey - Côte Nord'
+    mapsFrance:
+      - FX-MMN
+    scaleDenominator: '25.000'
+    spatial:
+      SW: '49°13,30''N - 002°18,20''W'
+      NE: '49°21,80''N - 001°58,01''W'
+    references: 'Fac similé carte GB n°1136 publiée en 1974 (édition mai 2004).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
+  FR6938:
+    groupTitle: 'Îles Anglo-Normandes - Jersey'
+    title: 'Abords de Saint Hélier'
+    mapsFrance:
+      - FX-MMN
+    scaleDenominator: '25.000'
+    spatial:
+      SW: '49°06,23''N - 002°21,51''W'
+      NE: '49°14,71''N - 002°01,38''W'
+    references: 'Fac similé carte GB n°1137 publiée en 1974 (édition décembre 2017)'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
+  FR6939:
+    groupTitle: 'Îles Anglo-Normandes'
+    title: 'Jersey - Côte Est'
+    mapsFrance:
+      - FX-MMN
+    scaleDenominator: '25.000'
+    spatial:
+      SW: '49°06,90''N - 002°02,90''W'
+      NE: '49°15,40''N - 001°53,45''W'
+    references: 'Fac similé carte GB n°1138 publiée en 1974 (édition décembre 2018)'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
   FR6940:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à the Needles'
@@ -1459,6 +1565,17 @@ maps:
       SW: '33°40,00''N - 005°22,00''W'
       NE: '43°50,00''N - 004°25,00''E'
     references: 'Fac similé Carte ES n°4C publiée en 1982 (édition mai 1997).'
+  FR7016:
+    groupTitle: 'Mer Méditerranée'
+    title: 'Mer Méditerranée - Bassin oriental'
+    mapsFrance: [FX-Med]
+    scaleDenominator: 2.250.000
+    spatial:
+      SW: '30°05,00''N - 009°55,00''E'
+      NE: '43°39,25''N - 036°19,50''E'
+    references: 'Fac similé carte IT n°350 publiée en 1982 (édition 1997).'
+    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
   FR7021:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Sud-Ouest'
@@ -2580,6 +2697,16 @@ maps:
       SW: '48°01,84''N - 005°15,69''W'
       NE: '48°21,74''N - 004°31,99''W'
     z-order: 0 # 7172 < 7149
+  FR7181:
+    title: 7181 - De Harwich à North Foreland (Estuaire de la Tamise)
+    mapsFrance: []
+    scaleDenominator: '100.000'
+    spatial:
+      SW: "51°21,60'N - 000°32,80'E"
+      NE: "51°56,67'N - 002°01,26'E"
+    references: fac-similé de la carte GB 1183 - édition novembre 2013
+    noteCatalog: Obsolète, n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
   FR7183:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
@@ -2720,6 +2847,16 @@ maps:
       SW: '42°29,93''N - 013°26,58''W'
       NE: '48°55,74''N - 000°00,08''W'
     references: 'Fac similé ES 4A'
+  FR7212:
+    title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
+    mapsFrance: []
+    scaleDenominator: 1.000.000
+    spatial:
+      SW: "33°30'N - 14°W"
+      NE: "43°30'N - 5°15'W"
+    references: 'fac-similé de la carte Carte PT n° 21101 publiée en 1980 (édition avril 2002).'
+    noteCatalog: Obsolète, n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
+    obsolete: true
   FR7213:
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
@@ -4948,6 +5085,26 @@ maps:
       - title: 'C - Port de Lesconil'
         scaleDenominator: '10.000'
         spatial: { SW: '47°46,18''N - 004°13,72''W', NE: '47°48,17''N - 004°09,74''W' }
+  FR7616:
+    groupTitle: 'Petites Antilles'
+    title: Dominica
+    mapsFrance:
+      - GP
+    scaleDenominator: '60.000'
+    spatial:
+      SW: '15°09,00''N - 061°34,07''W'
+      NE: '15°41,50''N - 061°11,60''W'
+    replaces: '(remplace 3775)'
+    references: 'Fac similé Carte GB n°697 publiée en 1992.'
+    noteCatalog: Obsolète, pas très utile mais proche de la Guadeloupe
+    obsolete: true
+    insetMaps:
+      - title: 'A - Prince Rupert Bay et Douglas Bay'
+        scaleDenominator: '30.000'
+        spatial: { SW: '15°32,00''N - 061°29,25''W', NE: '15°36,50''N - 061°27,23''W' }
+      - title: 'B - Woodbridge Bay et Roseau Roads'
+        scaleDenominator: '12.500'
+        spatial: { SW: '15°17,26''N - 061°23,92''W', NE: '15°19,35''N - 061°22,45''W' }
   FR7620:
     groupTitle: 'Petites Antilles'
     title: 'Approches d''Anguilla'
@@ -5067,6 +5224,18 @@ maps:
       SW: '43°11,50''N - 003°36,00''W'
       NE: '44°18,00''N - 001°16,00''W'
     references: 'Fac similé carte ES n°39A publiée en 2008.'
+  FR7661:
+    groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
+    title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
+    mapsFrance:
+      - FX-Med
+    scaleDenominator: '425.000'
+    spatial:
+      SW: '38°36,90''N - 000°30,00''W'
+      NE: '41°23,30''N - 004°50,00''E'
+    references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
+    noteCatalog: Carte obsolète mais intersecte la France et pas d'autre carte équivalente
+    obsolete: true
   FR7663:
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'
@@ -5317,7 +5486,7 @@ maps:
     mapsFrance: [TF, RE, YT]
     scaleDenominator: 7.904.971
     spatial: {SW: "60°00,00'S - 030°00,00'E", NE: "05°00,00'N - 090°00,00'E"}
-    noteCatalog: 'Carte spéciale absente du GAN'
+    badGan: 'Carte spéciale absente du GAN'
     layer: gtaem
     #geotiffname: '8502_2010'
   FR8508:
@@ -5327,6 +5496,7 @@ maps:
     spatial: {SW: "48°30'N - 4°10'W", NE: "51°35'N - 2°40'E"}
     borders: { left: 100, bottom: 100, right: 100, top: 100 }
     noteCatalog: "Carte spéciale absente du GAN, uniquement en PDF, non géoréférencée"
+    badGan: 'Carte spéciale absente du GAN'
     layer: gtUsageActivites
   FR8509:
     title: 'Action de l''Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
@@ -5366,175 +5536,6 @@ maps:
     badGan: "Carte spéciale absente du GAN"
     layer: gtaem
     #geotiffNames: [8523_2021.tif]
-obsoleteMaps:
-  FR6608:
-    '2022-04-06':
-      title: 'Mer du Nord'
-      mapsFrance:
-        - FX-Atl
-        - FX-MMN
-      scaleDenominator: 1.500.000
-      spatial:
-        SW: '48°10,00''N - 004°20,00''W'
-        NE: '62°50,00''N - 012°36,00''E'
-      references: 'Fac similé carte NO n° 301 publiée en 1972 (édition 2009 - réimpression janvier 2015).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR6619:
-    '2022-04-06':
-      groupTitle: 'Océan Atlantique Nord'
-      title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
-      mapsFrance:
-        - BL
-        - GP
-        - MF
-      scaleDenominator: 3.500.000
-      spatial:
-        SW: '17°00,00''N - 082°00,00''W'
-        NE: '45°00,00''N - 060°30,00''W'
-      references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR6903:
-    '2022-04-06':
-      groupTitle: 'Îles Anglo-Normandes'
-      title: 'Guernsey et Herm'
-      mapsFrance:
-        - FX-MMN
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '49°23,40''N - 002°46,75''W'
-        NE: '49°32,00''N - 002°26,50''W'
-      references: 'Fac similé carte GB n°807 publiée en 1979 (édition février 2016).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-      insetMaps:
-        - title: 'A - Beaucette Marina'
-          scaleDenominator: '15.000'
-          spatial: { SW: '49°29,94''N - 002°30,49''W', NE: '49°30,57''N - 002°28,98''W' }
-  FR6904:
-    '2022-04-06':
-      groupTitle: 'Îles Anglo-Normandes'
-      title: 'Guernsey Est, Herm et Sark'
-      mapsFrance:
-        - FX-MMN
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '49°23,34''N - 002°36,08''W'
-        NE: '49°31,94''N - 002°15,83''W'
-      references: 'Fac similé carte GB n°808 publiée en 1979 (édition février 2016).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-      insetMaps:
-        - title: 'A - Beaucette Marina'
-          scaleDenominator: '15.000'
-          spatial: { SW: '49°29,94''N - 002°30,49''W', NE: '49°30,57''N - 002°28,98''W' }
-  FR6934:
-    '2022-04-06':
-      groupTitle: 'Iles Anglo-Normandes'
-      title: 'Alderney (Aurigny) et les Casquets'
-      mapsFrance:
-        - FX-MMN
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '49°38,50''N - 002°26,60''W'
-        NE: '49°46,98''N - 002°06,25''W'
-      references: 'Fac similé carte GB n°60 publiée en 1974 (édition mai 2004).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR6937:
-    '2022-04-06':
-      groupTitle: 'Iles Anglo-Normandes'
-      title: 'Jersey - Côte Nord'
-      mapsFrance:
-        - FX-MMN
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '49°13,30''N - 002°18,20''W'
-        NE: '49°21,80''N - 001°58,01''W'
-      references: 'Fac similé carte GB n°1136 publiée en 1974 (édition mai 2004).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR6938:
-    '2022-04-06':
-      groupTitle: 'Îles Anglo-Normandes - Jersey'
-      title: 'Abords de Saint Hélier'
-      mapsFrance:
-        - FX-MMN
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '49°06,23''N - 002°21,51''W'
-        NE: '49°14,71''N - 002°01,38''W'
-      references: 'Fac similé carte GB n°1137 publiée en 1974 (édition décembre 2017)'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR6939:
-    '2022-04-06':
-      groupTitle: 'Îles Anglo-Normandes'
-      title: 'Jersey - Côte Est'
-      mapsFrance:
-        - FX-MMN
-      scaleDenominator: '25.000'
-      spatial:
-        SW: '49°06,90''N - 002°02,90''W'
-        NE: '49°15,40''N - 001°53,45''W'
-      references: 'Fac similé carte GB n°1138 publiée en 1974 (édition décembre 2018)'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR7016:
-    '2022-04-06':
-      groupTitle: 'Mer Méditerranée'
-      title: 'Mer Méditerranée - Bassin oriental'
-      mapsFrance: [FX-Med]
-      scaleDenominator: 2.250.000
-      spatial:
-        SW: '30°05,00''N - 009°55,00''E'
-        NE: '43°39,25''N - 036°19,50''E'
-      references: 'Fac similé carte IT n°350 publiée en 1982 (édition 1997).'
-      noteCatalog: carte intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR7181:
-    '2018-11-28':
-      title: 7181 - De Harwich à North Foreland (Estuaire de la Tamise)
-      mapsFrance: []
-      scaleDenominator: '100.000'
-      spatial:
-        SW: "51°21,60'N - 000°32,80'E"
-        NE: "51°56,67'N - 002°01,26'E"
-      references: fac-similé de la carte GB 1183 - édition novembre 2013
-      noteCatalog: n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR7212:
-    '2020-12-23':
-      title: 7212 - De Cabo Finisterre à Casablanca (Dâr el Beïda)
-      mapsFrance: []
-      scaleDenominator: 1.000.000
-      spatial:
-        SW: "33°30'N - 14°W"
-        NE: "43°30'N - 5°15'W"
-      references: 'fac-similé de la carte Carte PT n° 21101 publiée en 1980 (édition avril 2002).'
-      noteCatalog: n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
-  FR7616:
-    '2022-04-06':
-      groupTitle: 'Petites Antilles'
-      title: Dominica
-      mapsFrance:
-        - GP
-      scaleDenominator: '60.000'
-      spatial:
-        SW: '15°09,00''N - 061°34,07''W'
-        NE: '15°41,50''N - 061°11,60''W'
-      replaces: '(remplace 3775)'
-      references: 'Fac similé Carte GB n°697 publiée en 1992.'
-      noteCatalog: Pas très utile mais proche de la Guadeloupe
-      insetMaps:
-        - title: 'A - Prince Rupert Bay et Douglas Bay'
-          scaleDenominator: '30.000'
-          spatial: { SW: '15°32,00''N - 061°29,25''W', NE: '15°36,50''N - 061°27,23''W' }
-        - title: 'B - Woodbridge Bay et Roseau Roads'
-          scaleDenominator: '12.500'
-          spatial: { SW: '15°17,26''N - 061°23,92''W', NE: '15°19,35''N - 061°22,45''W' }
-  FR7661:
-    '2022-04-06':
-      groupTitle: 'Mer Méditerranée - Côte Est d''Espagne'
-      title: 'De Cabo de la Nao à Barcelona et Islas Baleares'
-      mapsFrance:
-        - FX-Med
-      scaleDenominator: '425.000'
-      spatial:
-        SW: '38°36,90''N - 000°30,00''W'
-        NE: '41°23,30''N - 004°50,00''E'
-      references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
 uninterestingMaps:
   FR7678:
     title: 7678 - Îles Anjouan et Mohéli

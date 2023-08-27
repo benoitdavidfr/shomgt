@@ -55,15 +55,15 @@ parameters:
     TMapCatInset: "array{title: string, scaleDenominator?: string, spatial?: TMapCatSpatial}"
     TMapCatEntry: '''
       array{
+        deletedDate?: string,
         title: string,
         scaleDenominator?: string,
         spatial?: TMapCatSpatial,
         mapsFrance: list<string>,
-        insetMaps: list<TMapCatInset>,
-        obsoleteDate?: string
+        insetMaps: list<TMapCatInset>
       }
       '''
-    TMapCatKind: "'current'|'obsolete'|'uninteresting'|'deleted'"
+    TMapCatKind: "'alive'|'uninteresting'|'deleted'"
   paths:
     - index.php
     - index2.php 
