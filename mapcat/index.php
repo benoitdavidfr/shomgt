@@ -14,6 +14,8 @@ doc: |
 
   Le script est aussi utilisé pour mettre à jour ou insérer un enregistrement MapCat depuis bo/addmaps
 journal: |
+  27-28/8/2023:
+    - évolution du schéma
   22-25/8/2023:
     - ajout mise en base de MapCat + mise à jour/saisie d'un enregistrement
   13/8/2023:
@@ -27,7 +29,7 @@ journal: |
     - reprise après correction des GAN par le Shom à la suite de mon message
     - ajout comparaison des échelles
   24/6/2022:
-    - migration 
+    - migration
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../bo/login.inc.php';
@@ -170,13 +172,6 @@ class MapCatDef {
         'type'=> 'char(6)',
         'keyOrNull'=> 'not null',
         'comment'=> "numéro de carte sur 4 chiffres précédé de 'FR'",
-      ],
-      'obsolete'=> [
-        'type'=> 'boolean',
-        'keyOrNull'=> 'not null',
-        'comment'=> "vrai ssi la carte est obsolète",
-        'note'=> "Cette info sur l'obsolescence de la carte est utilisée dans la comparaison au GAN (cmpgan)\n"
-          ."car les cartes obsolètes ne sont pas décrites dans le GAN",
       ],
       'jdoc'=> [
         'type'=> 'JSON',
@@ -462,7 +457,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         }
       }
       if (!$found)
-        echo "Toute carte current et obsolete dont l'image principale n'est pas géoréférencée a des cartouches<br>\n";
+        echo "Toute carte selected dont l'image principale n'est pas géoréférencée a des cartouches<br>\n";
     }
 
     { // Vérifie que Le mapsFrance de toute carte de maps est <> unknown
@@ -555,11 +550,9 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       $mapCat = MapCatFromFile::get($mapNum);
       //$title = MySql::$mysqli->real_escape_string($mapCat->title);
       $jdoc = $mapCat->asArray();
-      unset($jdoc['kind']);
       $jdoc = \MySql::$mysqli->real_escape_string(json_encode($jdoc));
-      $obsolete = $mapCat->obsolete ? 'true' : 'false';
-      $query = "insert into mapcat(mapnum, obsolete, jdoc, updatedt) "
-        ."values('FR$mapNum', $obsolete, '$jdoc', now())";
+      $query = "insert into mapcat(mapnum, jdoc, updatedt) "
+        ."values('FR$mapNum', '$jdoc', now())";
       //echo "<pre>query=$query</pre>\n";
       \MySql::query($query);
     }
@@ -604,11 +597,9 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
         $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
           or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
         \MySql::open($LOG_MYSQL_URI);
-        // la propriété obsolete est indiquée dans le jdoc si la carte est obsolète
-        $obsolete = ($valid['validDoc']['obsolete'] ?? false) ? 'true' : 'false';
         $jdocRes = \MySql::$mysqli->real_escape_string(json_encode($valid['validDoc']));
-        $query = "insert into mapcat(mapnum, obsolete, jdoc, updatedt, user) "
-                            ."values('$_POST[mapnum]', $obsolete, '$jdocRes', now(), '$user')";
+        $query = "insert into mapcat(mapnum, jdoc, updatedt, user) "
+                            ."values('$_POST[mapnum]', '$jdocRes', now(), '$user')";
         echo "<pre>query=$query</pre>\n";
         \MySql::query($query);
         echo "maj carte $_POST[mapnum] ok<br>\n";

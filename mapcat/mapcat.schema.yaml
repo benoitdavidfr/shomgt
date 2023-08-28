@@ -306,8 +306,10 @@ definitions:
         description: commentaire associé à la carte dans la gestion du catalogue
         type: string
       obsolete:
-        description: Indique si la carte est obsolète c'est à dire qu'elle n'est plus maintenue par le Shom
-        type: boolean
+        description: |
+          Si la carte est obsolète (c'est à dire qu'elle n'est plus maintenue par le Shom) indique la raison de sa conservation.
+          Champ est absent ssi la carte n'est pas obsolète.
+        type: string
       badGan:
         description: |
           commentaire expliquant les écarts de l'info de ce catalogue par rapport à celle du GAN ;

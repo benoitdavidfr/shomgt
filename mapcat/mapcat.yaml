@@ -456,8 +456,7 @@ maps:
       SW: '48°10,00''N - 004°20,00''W'
       NE: '62°50,00''N - 012°36,00''E'
     references: 'Fac similé carte NO n° 301 publiée en 1972 (édition 2009 - réimpression janvier 2015).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente à cette échelle
   FR6610:
     groupTitle: 'Côte Sud de France'
     title: 'De Bandol au Cap Sicié - Rade du Brusc'
@@ -519,17 +518,13 @@ maps:
   FR6619:
     groupTitle: 'Océan Atlantique Nord'
     title: 'Côte Sud-Est de l''Amérique du Nord, Bahamas et Grandes Antilles'
-    mapsFrance:
-      - BL
-      - GP
-      - MF
+    mapsFrance: [BL, GP, MF]
     scaleDenominator: 3.500.000
     spatial:
       SW: '17°00,00''N - 082°00,00''W'
       NE: '45°00,00''N - 060°30,00''W'
     references: 'Fac similé carte US n°108 publiée en 1972 (édition décembre 1984).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente à cette échelle
   FR6623:
     groupTitle: 'Océan Atlantique Nord'
     title: De La Manche au Détroit de Gibraltar et à l'archipel des Açores
@@ -1160,8 +1155,7 @@ maps:
       SW: '49°23,40''N - 002°46,75''W'
       NE: '49°32,00''N - 002°26,50''W'
     references: 'Fac similé carte GB n°807 publiée en 1979 (édition février 2016).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée en raison de la proximité des îles Anglo-Normandes
     insetMaps:
       - title: 'A - Beaucette Marina'
         scaleDenominator: '15.000'
@@ -1176,8 +1170,7 @@ maps:
       SW: '49°23,34''N - 002°36,08''W'
       NE: '49°31,94''N - 002°15,83''W'
     references: 'Fac similé carte GB n°808 publiée en 1979 (édition février 2016).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée en raison de la proximité des îles Anglo-Normandes
     insetMaps:
       - title: 'A - Beaucette Marina'
         scaleDenominator: '15.000'
@@ -1242,8 +1235,7 @@ maps:
       SW: '49°38,50''N - 002°26,60''W'
       NE: '49°46,98''N - 002°06,25''W'
     references: 'Fac similé carte GB n°60 publiée en 1974 (édition mai 2004).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée en raison de la proximité des îles Anglo-Normandes
   FR6937:
     groupTitle: 'Iles Anglo-Normandes'
     title: 'Jersey - Côte Nord'
@@ -1254,8 +1246,7 @@ maps:
       SW: '49°13,30''N - 002°18,20''W'
       NE: '49°21,80''N - 001°58,01''W'
     references: 'Fac similé carte GB n°1136 publiée en 1974 (édition mai 2004).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée en raison de la proximité des îles Anglo-Normandes
   FR6938:
     groupTitle: 'Îles Anglo-Normandes - Jersey'
     title: 'Abords de Saint Hélier'
@@ -1266,25 +1257,21 @@ maps:
       SW: '49°06,23''N - 002°21,51''W'
       NE: '49°14,71''N - 002°01,38''W'
     references: 'Fac similé carte GB n°1137 publiée en 1974 (édition décembre 2017)'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée en raison de la proximité des îles Anglo-Normandes
   FR6939:
     groupTitle: 'Îles Anglo-Normandes'
     title: 'Jersey - Côte Est'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '25.000'
     spatial:
       SW: '49°06,90''N - 002°02,90''W'
       NE: '49°15,40''N - 001°53,45''W'
     references: 'Fac similé carte GB n°1138 publiée en 1974 (édition décembre 2018)'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée en raison de la proximité des îles Anglo-Normandes
   FR6940:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Start Point à the Needles'
-    mapsFrance:
-      - FX-MMN
+    mapsFrance: [FX-MMN]
     scaleDenominator: '152.476'
     spatial:
       SW: '49°42,82''N - 003°53,00''W'
@@ -1293,9 +1280,7 @@ maps:
   FR6941:
     groupTitle: 'Côte Sud d''Angleterre'
     title: 'De Lizard Point à Dartmouth'
-    mapsFrance:
-      - FX-Atl
-      - FX-MMN
+    mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: '154.000'
     spatial:
       SW: '49°22,92''N - 005°13,57''W'
@@ -1574,8 +1559,7 @@ maps:
       SW: '30°05,00''N - 009°55,00''E'
       NE: '43°39,25''N - 036°19,50''E'
     references: 'Fac similé carte IT n°350 publiée en 1982 (édition 1997).'
-    noteCatalog: carte obsolète mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: carte obsolète conservée car il n'y en a pas d'autre équivalente à cette échelle
   FR7021:
     groupTitle: 'Océan Pacifique Nord'
     title: 'Océan Pacifique Nord - Partie Sud-Ouest'
@@ -2705,8 +2689,7 @@ maps:
       SW: "51°21,60'N - 000°32,80'E"
       NE: "51°56,67'N - 002°01,26'E"
     references: fac-similé de la carte GB 1183 - édition novembre 2013
-    noteCatalog: Obsolète, n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: Obsolète, n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
   FR7183:
     groupTitle: 'Océan Indien'
     title: 'La Réunion - Partie Nord - De la Pointe des Châteaux à la Pointe de la Rivière du Mât'
@@ -2855,8 +2838,7 @@ maps:
       SW: "33°30'N - 14°W"
       NE: "43°30'N - 5°15'W"
     references: 'fac-similé de la carte Carte PT n° 21101 publiée en 1980 (édition avril 2002).'
-    noteCatalog: Obsolète, n'intersecte pas la France mais intéressante à conserver car il n'y en a pas d'autre équivalente
-    obsolete: true
+    obsolete: Obsolète, n'intersecte pas la France conservée car elle complète la couverte au 1/1M
   FR7213:
     groupTitle: 'Iles de la Société - Iles Sous-Le-Vent'
     title: Maupiti
@@ -5096,8 +5078,7 @@ maps:
       NE: '15°41,50''N - 061°11,60''W'
     replaces: '(remplace 3775)'
     references: 'Fac similé Carte GB n°697 publiée en 1992.'
-    noteCatalog: Obsolète, pas très utile mais proche de la Guadeloupe
-    obsolete: true
+    obsolete: Obsolète, pas très utile mais proche de la Guadeloupe
     insetMaps:
       - title: 'A - Prince Rupert Bay et Douglas Bay'
         scaleDenominator: '30.000'
@@ -5234,8 +5215,7 @@ maps:
       SW: '38°36,90''N - 000°30,00''W'
       NE: '41°23,30''N - 004°50,00''E'
     references: 'Fac similé carte ES n° 48 publiée en 1978 (édition septembre 2016)'
-    noteCatalog: Carte obsolète mais intersecte la France et pas d'autre carte équivalente
-    obsolete: true
+    obsolete: Carte obsolète mais intersecte la France et pas d'autre carte équivalente
   FR7663:
     groupTitle: 'Côte Est d''Espagne'
     title: 'Du port de Barcelona au Cap Cerbère'

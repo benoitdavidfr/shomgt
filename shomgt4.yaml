@@ -29,6 +29,10 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  28/8/2023:
+    - chgt du codage des cartes obsolètes dans MapCat
+      - dans le fichier Yaml le champ obsolete devient une chaine indiquant la raison de la conservation de la carte dans mapStore
+      - dans la table MySQL l'attribut obsolete est supprimé car inutile
   27/8/2023:
     - supp. du compartiment obsolete de MapCat
     - modif du schéma de MapCat en base pour remplacer l'attribut kind par l'attribut obsolete
@@ -177,8 +181,8 @@ modifsAPrendreEnCompte:
       - le caractère obsolete ou non est défini dans mapStore, il n'y a pas de raison de dupliquer cette info
       - de plus cette duplication complexifie la gestion
 découpageEnComposantsV4:
-  display(shomgt):
-    objet: expose les 2 services WMS, ainsi que les flux Tile et GeoJSON et une carte Leaflet utilisant ces 2 derniers flux
+  view(shomgt):
+    objet: expose les 2 services WMS, les flux Tile et GeoJSON et la carte Leaflet exposant ces 2 flux
     mode: Web
     offreA:
       extérieur: 2 services WMS, flux Tile et GeoJSON, et code JavaScript de visualisation
@@ -186,7 +190,7 @@ découpageEnComposantsV4:
       sgupdt: les données construites par sgupdt et stockées dans data
     note:
       - dockerisable
-      - fichiers geojson à actualiser régulièrement
+      - fichiers geojson à actualiser régulièrement / à intégrer dans updt
         - delmar.geojson, copié de shomft
         - frzee.geojson, copié de shomft
         - sar_2019.geojson, copié de diffusion.shom.fr
@@ -194,28 +198,53 @@ découpageEnComposantsV4:
     objet: répertoire ou volume partagé contenant les données pour shomgt
     mode: stockage
     note: éventuellement volume partagé docker
-  sgupdt:
-    objet: construit ou met à jour à partir de sgserver les données data nécessaires à shomgt
+  updt:
+    objet: construit ou met à jour à partir de sgserver les données data nécessaires à view
     mode: CLI
     offreA:
-      shomgt: les données construites pour shomgt dans data
+      view: les données construites dans data
     utiliseDe:
       sgserver: les données exposées par sgserver
     note: dockerisable
   sgserver:
-    objet: expose la dernière version de chaque carte, le libellé de cette version, les cartes retirées, et mapcat
+    objet: expose la dernière version de chaque carte, le libellé de cette version, les cartes obsolètes, et mapcat
     mode: Web
     offreA:
-      sgupt: la dernière version de chaque carte, le libellé de cette version, les cartes retirées, et mapcat
+      sgupt: la dernière version de chaque carte, le libellé de cette version, les cartes obsolètes, et mapcat
     utiliseDe:
-      portfolio:
+      mapStore:
         - les dernières versions stockées sous forme d'archives 7z et les md.json avec comme contraintes
           - les cartes 7z sont stockées dans le sous-répertoire current du portefeuille
           - à chaque carte 7z est associé un fichier .md.json contenant en JSON
             la propriété 'version' indiquant la version de la carte.
-          - les cartes retirées correspondent à un fichier {num}.md.json contenant en JSON
+          - les cartes obsolètes correspondent à un fichier {num}.md.json contenant en JSON
             la propriété 'status' contenant la valeur 'obsolete'
-      mapcat: le catalogue mapcat.yaml
+      mapcat: le catalogue
+    note:
+      - module, conservé pour compatibilité ascendante avec V3, devrait être remplacé par l'accès API à mapStore
+      - il existe plusieurs versions d'exposition
+        - version 0 utilisée par updt V3, image docker 0.6
+        - version 1 utilisée par updt V3, image docker > 0.6
+        - version 4 utilisée par updt V4
+  mapStore:
+    objet: entrepôt des versions des cartes du portefeuille, définit pour chaque carte sa version courante ou son obsolescence
+    mode: stockage + API
+    note:
+      - cet entrepôt est la référence pour la liste des cartes du portefeuille
+      - chaque carte de l'entrepôt devrait être décrite par un enregistrement de MapCat dans le compartiment selected
+      - les cartes obsolètes de l'entrepôt devraient être marquées obsolètes dans MapCat
+        - bien que les notions soient un peu différentes
+        - une carte obsolète dans l'entrepôt sera supprimée par sgupdt
+        - une carte obsolète dans MapCat ne sera pas comparée au GAN (A REQUESTIONNER !)
+    offreA:
+      sgserver: les dernières versions des cartes associée au libellé de la version, ainsi que la liste des cartes obsolètes
+      dashboard: les dernières versions des cartes associées au libellé de la version ainsi que la date de mise à jour
+    miseAJourPar:
+      bo:
+        - dépôt de nlles versions de cartes, fabrique son md.json
+        - gestion de la version courante et marquage d'une carte comme retirée
+        - suppresion 
+    structure: voir '#/structurePortfolio'
   mapcat:
     objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par sgupdt
     offreATous: le contenu du catalogue
@@ -224,13 +253,13 @@ découpageEnComposantsV4:
     miseAJourPar:
       - la mise à jour est complexe
       - la version initiale de MapCat existe sous la forme d'un fichier Yaml
-      - les cartes vivantes de ce fichier sont chargées en base qui peut être modifiée par BO
+      - les cartes sélectionnées de ce fichier sont chargées en base qui peut être modifiée par BO
       - la version de référence de ce compartiment est celle en base
       - le fichier Yaml est conservé comme sauvegarde et peut être comparé avec la version en base
       - la version de référence des 2 autres compartiments est celle du fichier
     note:
       - comporte 3 compartiments
-        - vivantes, les cartes dont il existe au moins une version dans mapStore, que la carte soit obsolete ou non
+        - selected, les cartes dont il existe au moins une version dans mapStore, que la carte soit obsolète ou non
         - uninteresting, les cartes intersectant la ZEE mais inutiles pour décrire les espaces sur lesquels la France
           exerce ses droits.
         - deleted, les cartes qui ont été présentes mais qui ne le sont plus
@@ -238,23 +267,7 @@ découpageEnComposantsV4:
           - sgserver ne les mentionne pas
       - MapCat peut être comparé au GAN pour identifier des écarts et éventuellement les corriger
         - s'ils ne sont pas corrigés, ces écarts doivent être justifiés
-  mapStore:
-    objet: entrepose les versions des cartes du portefeuille, définit pour chaque carte sa version courante ou son obsolescence
-    mode: stockage
-    note:
-      - cet entrepôt est la référence sur la liste de cartes du portefeuille
-      - chaque carte de l'entrepôt devrait être décrite par un enregistrement MapCat comme current ou obsolete
-      - les cartes obsolètes de l'entrepôt devraient être marquées obsolètes dans MapCat
-    offreA:
-      sgserver: les dernières versions des cartes associée au libellé de la version, ainsi que la liste des cartes retirées
-      dashboard: les dernières versions des cartes associée au libellé de la version ainsi que la date de mise à jour
-    miseAJourPar:
-      bo:
-        - dépôt de nlles versions de cartes, fabrique son md.json
-        - gestion de la version courante et marquage d'une carte comme retirée
-        - suppresion 
-    structure: voir '#/structurePortfolio'
-  shomft:
+  vect:
     objet: |
       expose
         - les sihouettes des cartes normales et spéciales, provenant du serveur WFS du Shom
@@ -443,12 +456,9 @@ backlog:
     - en fait le bug vient du fonctionnement des cookie
     - dans la V4, je crée le cookie dans le répertoire bo et par défaut il n'est pas dispo dans le répertoire racine
   horsSprint:
-    - améliorer le délai entre 2 moissonnages de Gan -> '#/délaiEntre2MajGan'
     - filtrer dans dashboard sur une zone
-    - gérer un log plus fin des actions du BO
-    - ajout gestion du catalogue dans le BO
-      - mise en base de MapCat
-    - automatiser la maj du GAN et de la purge des cartes ?
+    - gérer un log plus fin des actions du BO - NON
+    - automatiser la maj du GAN et de la purge des cartes ? NON
     - meilleure gestion en production de l'affichage des erreurs
     - gestion des stats d'utilisation
     - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique

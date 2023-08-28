@@ -144,14 +144,21 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
       $cmp = cmpVersion($newVersion, $existingVersion);
       //echo "newVersion=$newVersion, existingVersion=$existingVersion, cmp=$cmp<br>\n";
       if ($cmp <= 0) {
-        echo "<b>Dépôt impossible de la carte $mapNum,",
-             " la version de la carte en cours de dépôt ($newVersion) est antérieure ou identique",
-             " à celle de la carte actuellement dans le portefeuille ($existingVersion).</b><br>\n";
+        echo "<b>Dépôt impossible de la version $newVersion de la carte $mapNum qui est antérieure ou identique",
+             " à la version courante ($existingVersion) du portefeuille.</b><br>\n";
         break;
       }
     }
     
-    // 2ème condition: la carte doit être valide, sauf si la validation peut être forcée
+    // 2ème condition: cette version de carte ne doit pas exister
+    // Cela peut arriver exceptionnellement lorsque la version courante n'est pas la dernière
+    if (is_file("$PF_PATH/archives/$mapNum/$mapNum-$newVersion.7z")) {
+      echo "<b>Dépôt impossible de la version $newVersion de la carte $mapNum",
+           " car cette version est déjà présente dans le portefeuille sans être la version courante.</b><br>\n";
+      break;
+    }
+    
+    // 3ème condition: la carte doit être valide, sauf si la validation peut être forcée
     if (!FORCE_VALIDATION) { // @phpstan-ignore-line 
       $invalid = $newMap->invalid();
       //echo "<pre>invalid = ",Yaml::dump($invalid),"</pre>\n";
@@ -174,13 +181,13 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     );
     file_put_contents("$PF_PATH/archives/$mapNum/$mapNum-$newVersion.md.json", json_encode($newMd, JSON_OPTIONS));
     
-    // Je supprime les éventuels liens existants
+    // Je supprime la version courante éventuelle
     if (is_file("$PF_PATH/current/$mapNum.md.json"))
       unlink("$PF_PATH/current/$mapNum.md.json");
     if (is_file("$PF_PATH/current/$mapNum.7z"))
       unlink("$PF_PATH/current/$mapNum.7z");
     
-    // Je crée des liens vers la nlle version
+    // Je définis cette nouvelle version comme version courante
     symlink("../archives/$mapNum/$mapNum-$newVersion.7z", "$PF_PATH/current/$mapNum.7z");
     symlink("../archives/$mapNum/$mapNum-$newVersion.md.json", "$PF_PATH/current/$mapNum.md.json");
     echo "<b>Dépôt de la carte $mapNum réalisé.</b><br>\n";
@@ -192,7 +199,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
   }
 }
 
-// Affichage de la page hors éxécution d'action
+// Affichage de la page après éxécution éventuelle d'action préalable
 
 { // Menu de chargement d'une nouvelle archive 7z 
   echo "<h3>Chargement de l'archive 7z d'une carte</h3>\n";
