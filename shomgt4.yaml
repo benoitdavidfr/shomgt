@@ -29,6 +29,9 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  29/8/2023:
+    - transfert des 2 opérations mapcat/index.php?action=(updateMapCatId|insertMapCat) sous la forme de méthodes de MapCatItem
+      - utilisées dans bo/maparchive.php
   28/8/2023:
     - chgt du codage des cartes obsolètes dans MapCat
       - dans le fichier Yaml le champ obsolete devient une chaine indiquant la raison de la conservation de la carte dans mapStore
@@ -175,8 +178,8 @@ méthodeDeDécoupageEnComposants:
     avec si nécessaire un partage de données dans un disque partagé
   - ajouter les fonctions transverses
   - ajouter le stockage en base PgSql
-modifsAPrendreEnCompte:
-  - title: fusionner le compartiment obsolete de MapCat dans maps
+modifs:
+  - title: fusionner le compartiment obsolete de MapCat dans maps - FAIT le 28/8/2023
     rationale:
       - le caractère obsolete ou non est défini dans mapStore, il n'y a pas de raison de dupliquer cette info
       - de plus cette duplication complexifie la gestion
@@ -231,11 +234,13 @@ découpageEnComposantsV4:
     mode: stockage + API
     note:
       - cet entrepôt est la référence pour la liste des cartes du portefeuille
-      - chaque carte de l'entrepôt devrait être décrite par un enregistrement de MapCat dans le compartiment selected
+      - chaque carte de l'entrepôt devrait être décrite par un enregistrement de MapCat du compartiment selected
       - les cartes obsolètes de l'entrepôt devraient être marquées obsolètes dans MapCat
-        - bien que les notions soient un peu différentes
-        - une carte obsolète dans l'entrepôt sera supprimée par sgupdt
-        - une carte obsolète dans MapCat ne sera pas comparée au GAN (A REQUESTIONNER !)
+        - bien que les 2 notions soient un peu différentes
+        - dans l'entrepôt l'obsolescence indique à un client de supprimer la carte
+        - dans MapCat l'obsolescence indique que la carte n'est plus maintenue par le Shom
+          - et en conséquence qu'elle n'est plus exposée dans le GAN
+      - devrait exposer une API de consultation et de gestion qui remplacerait sgserver
     offreA:
       sgserver: les dernières versions des cartes associée au libellé de la version, ainsi que la liste des cartes obsolètes
       dashboard: les dernières versions des cartes associées au libellé de la version ainsi que la date de mise à jour
@@ -244,22 +249,22 @@ découpageEnComposantsV4:
         - dépôt de nlles versions de cartes, fabrique son md.json
         - gestion de la version courante et marquage d'une carte comme retirée
         - suppresion 
-    structure: voir '#/structurePortfolio'
+    structure: voir '#/structureMapStore' A REVOIR
   mapcat:
-    objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par sgupdt
+    objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par updt
     offreATous: le contenu du catalogue
     utiliseDe:
       gan: la dernière version de la synthèse des GANs pour comparaison au contenu du catalogue et corrections éventuelles
     miseAJourPar:
       - la mise à jour est complexe
       - la version initiale de MapCat existe sous la forme d'un fichier Yaml
-      - les cartes sélectionnées de ce fichier sont chargées en base qui peut être modifiée par BO
+      - les cartes du compatiment selected de ce fichier sont chargées en base qui peut être modifiée par BO
       - la version de référence de ce compartiment est celle en base
       - le fichier Yaml est conservé comme sauvegarde et peut être comparé avec la version en base
       - la version de référence des 2 autres compartiments est celle du fichier
     note:
       - comporte 3 compartiments
-        - selected, les cartes dont il existe au moins une version dans mapStore, que la carte soit obsolète ou non
+        - stored, les cartes dont il existe au moins une version dans mapStore, que la carte soit obsolète ou non
         - uninteresting, les cartes intersectant la ZEE mais inutiles pour décrire les espaces sur lesquels la France
           exerce ses droits.
         - deleted, les cartes qui ont été présentes mais qui ne le sont plus
@@ -465,6 +470,8 @@ backlog:
     - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
     - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
       - var. d'env. sur sgupdt -> var. GET sur sgserver avec zone
+  idée2023-08-29:
+    - pour la connexion de sgupdt à sgserver, la variable SHOMGT3_SERVER_URL pourrait donner une URL ne passant pas par http
 fonctionnalités:
   admin:
     - bo réservé aux admins
@@ -1078,7 +1085,6 @@ contraintesV3:
     - option 2 - modifier le .xml des cartes spéciales pour que le champ edition respecte le format de celui des cartes normales
       - => modifier le ;xml des cartes spéciales
   - dans un premier temps je choisis l'option 1
-
 accèsSgServerSsAuth:
   description: |
     Possibilité 4 mise en prod le 19/8/2023
@@ -1179,6 +1185,14 @@ pointCartesSpéciales:
          md: XML ok
         image: tif géoréférencé
 requêtesLog: |
+
+  -- accès à sgserver hors accès interne et BDavid -> aucun !
+  SELECT * FROM `log` join ipaddress using(ip)
+  WHERE request_uri like '%/sgserver/%'
+    and ip<>'2a00:b6e0:1:20:12::1' and ip<>'2a00:b6e0:1:50:1::1'
+    and label<>'BDavid'
+  ORDER BY `log`.`logdt`  DESC
+
   -- accès ok au travers IP autorisée
   SELECT * FROM `log`  
   WHERE login is null
@@ -1268,11 +1282,13 @@ conservation:
     - faire des synthèses des logs ttes les semaines
     - les logs détaillés pèsent environ 140 Mo pour 6 mois
     - supprimer les logs détaillés au bout d'un an
-structurePortfolio:
+structureMapStore:
   title: organisation du portefeuille de cartes dans l'option sans préProdData
   subDirectories:
     - name: /var/www/html (@local) | /home/bdavid/prod (@distant)
-      description: description des répertoires et fichiers contenant le portefeuille de cartes
+      description: |
+        description des répertoires et fichiers contenant le portefeuille de cartes
+        Sur geoapi.fr le portefeuille n'est pas exposé sur le Web
       entries:
         - name: shomgeotiff
           description: |

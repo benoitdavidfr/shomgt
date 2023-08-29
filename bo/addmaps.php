@@ -63,19 +63,38 @@ function cmpVersion(string $v1, string $v2): int {
     return 0;
 }
 
+echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
+
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à réaliser
   case null: break;
+  case 'updateMapCat':
+  case 'insertMapCat':
   case 'verifyMap': {
+    $mapNum = $_GET['mapNum'];
+    $abort = "<a href='?action=verifyMap&mapNum=$mapNum'>Retour</a>";
+    switch ($action) {
+      case 'updateMapCat': {
+        echo "updateMapCat<br>\n";
+        \mapcat\MapCatItem::updateMapCat($mapNum, $login, $abort);
+        break;
+      }
+      case 'insertMapCat': {
+        echo "insertMapCat<br>\n";
+        \mapcat\MapCatItem::insertMapCat($mapNum, $login, $abort);
+        break;
+      }
+      default: break;
+    }
     echo "verifyMap@addmaps<br>\n";
-    $map = new MapArchive($_GET['rpath']);
+    $map = new MapArchive("/users/$login/$mapNum.7z");
     echo "<table border=1>\n";
-    $map->showAsHtml('addmaps');
+    $map->showAsHtml(true);
     
     $validateButton = Html::button(
         submitValue: "Valider la carte et la déposer",
         hiddenValues: [
           'action'=> 'validateMap',
-          'rpath' => $_GET['rpath'],
+          'mapNum' => $_GET['mapNum'],
         ],
         method: 'get'
     );
@@ -93,9 +112,13 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
            "<b>La carte ne peut pas être validée en raison des erreurs</b>",
            "</center></td></tr>\n";
     }
-    
     echo "</table>\n";
+    echo "<a href='?'>Retour</a><br>\n";
     die();
+  }
+  case 'showMapCatScheme': { // Affiche le schema JSON de l'entité map
+    echo '<pre>',Yaml::dump(\mapcat\MapCatItem::getDefSchema('map'), 8, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+    break;
   }
   case 'upload': { // chargement du fichier d'une carte 
     //echo "<pre>_POST="; print_r($_POST);
@@ -127,8 +150,8 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     break;
   }
   case 'delete': { // suppression du fichier de la carte 
-    unlink($PF_PATH."/users/$login/$_POST[map]");
-    echo "Suppresion de $_POST[map] confirmée<br>\n";
+    unlink($PF_PATH."/users/$login/$_POST[mapNum]");
+    echo "Suppresion de $_POST[mapNum] confirmée<br>\n";
     break;
   }
   case 'validateMap': { // dépôt de la carte, paramètre GET rpath=chemin relatif de la carte à déposer
@@ -214,7 +237,7 @@ EOT;
 }
 
 // Tableau des cartes chargées avec actions possibles
-$maps = [];
+$mapNums = [];
 if (!is_dir("$PF_PATH/users") && !mkdir("$PF_PATH/users")) {
   die("Erreur de création de \"$PF_PATH/users\"\n");
 }
@@ -224,25 +247,25 @@ if (!is_dir("$PF_PATH/users/$login") && !mkdir("$PF_PATH/users/$login")) {
   
 foreach (new \DirectoryIterator("$PF_PATH/users/$login") as $file) {
   if (substr($file, -3) == '.7z')
-    $maps[] = (string)$file;
+    $mapNums[] = substr($file, 0, -3);
 }
 
-if ($maps) {
+if ($mapNums) {
   echo "<h3>Cartes en cours de dépôt</h3>\n";
   echo "<table border=1><th>titre</th><th>v. exist.</th><th>v. dépôt</th>\n";
-  foreach ($maps as $map) {
-    $md = MapMetadata::getFrom7z("$PF_PATH/users/$login/$map");
+  foreach ($mapNums as $mapNum) {
+    $md = MapMetadata::getFrom7z("$PF_PATH/users/$login/$mapNum.7z");
     if (!isset($md['version']))
-      throw new \Exception("Erreur md ne contient pas de champ version pour $PF_PATH/users/$login/$map");
+      throw new \Exception("Erreur md ne contient pas de champ version pour $PF_PATH/users/$login/$mapNum.7z");
     $newVersion = $md['version'];
-    $existingVersion = existingVersion($PF_PATH, substr($map, 0, -3));
+    $existingVersion = existingVersion($PF_PATH, $mapNum);
     if ($existingVersion == '0000c0')
       $existingVersion = '';
-    echo "<tr><td>",$md['title'] ?? $map,"</td>",
+    echo "<tr><td>",$md['title'] ?? $mapNum,"</td>",
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
-         "<td><a href='?action=verifyMap&rpath=/users/$login/$map'>vérifier</a></td>",
-         "<td>",Html::button('supprimer', ['action'=>'delete','map'=>$map]),"</td>",
+         "<td><a href='?action=verifyMap&mapNum=$mapNum'>vérifier</a></td>",
+         "<td>",Html::button('supprimer', ['action'=>'delete','mapNum'=>$mapNum]),"</td>",
          "</tr>\n";
   }
   echo "</table>\n";

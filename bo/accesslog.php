@@ -1,5 +1,5 @@
 <?php
-namespace bo;
+//namespace bo;
 /*PhpDoc:
 name: accesslog.php
 title: accesslog.php - analyse et affiche les logs d'accès y compris sous la forme de carte Leaflet
@@ -38,11 +38,12 @@ class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
     ],
   ]; // Définition du schéma de la table ipaddress
   const IPADDRESS_CONTENT = [
-    ['88.166.143.190', "BDavid"],
-    ['86.244.235.216', "BDavid"],
+    ['88.166.143.190', "BDavid"], // domicile
+    ['86.244.235.216', "BDavid"], // labergerieduperejule
     ['127.0.0.1', "Accès local"],
     ['172.20.0.8', "Docker"],
     ['185.31.40.12', "Alwaysdata IPv4 (bdavid)"],
+    ['2a00:b6e0:1:20:12::1', "Alwaysdata IPv6 (bdavid)"], // utilisée pour se loguer en interne
     ['199.19.249.196', "RIE"],
     ['185.24.185.194', "RIE"],
     ['185.24.186.194', "RIE"],
@@ -97,14 +98,16 @@ class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
 // classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête
 class Request2GBox {
   // extrait le bbox d'une requête WMS et le retourne comme GBox ou null si le BBOX n'est pas détecté dans la requête
-  static function wms(string $request_uri): ?\gegeom\GBox {
+  //static function wms(string $request_uri): ?\gegeom\GBox {
+  static function wms(string $request_uri): ?GBox {
     // détermination du bbox
     $bboxPattern = '!BBOX=(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)&!i';
     if (!preg_match($bboxPattern, $request_uri, $matches)) {
       return null;
     }
     //echo "<pre>request_uri=$request_uri</pre>\n";
-    $ebox = new \gegeom\EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
+    //$ebox = new \gegeom\EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
+    $ebox = new EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
 
     // détermination du CRS WMS 1.3.0 / 1.1.1
     if (preg_match('!version=1\.3\.0!i', $request_uri)) {
@@ -141,7 +144,8 @@ class Request2GBox {
   }
   
   // transforme en GBox une requête sur une tuile ou null si l'URI ne correspond pas à une requête sur une tuile
-  static function tile(string $request_uri): ?\gegeom\GBox {
+  //static function tile(string $request_uri): ?\gegeom\GBox {
+  static function tile(string $request_uri): ?GBox {
     if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";

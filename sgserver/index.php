@@ -1,5 +1,5 @@
 <?php
-/*PhpDoc:
+{/*PhpDoc:
 title: sgserver/index.php - serveur de carte 7z - ShomGTV4
 name: index.php
 doc: |
@@ -93,7 +93,7 @@ journal: |
     - utilisation passthru() à la place de file_get_contents() pour éviter une explosion mémoire
   11/5/2022:
     - création
-*/
+*/}
 //define ('DEBUG', true); // le mode DEBUG facilite le test interactif du serveur
 
 define('EXCLUDED_MAPS_IN_V0', ['8523']); // cartes exclues du service en V0 car incompatible avec sgupdt v0.6

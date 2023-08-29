@@ -342,9 +342,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   }
   
   // affiche le contenu de l'archive en Html comme table Html sans les balises <table> et </table>
-  // afin de permettre à un script qui appelle cette fonction d'y ajouter des lignes
-  // caller est éventuellement le nom du script appellant
-  function showAsHtml(string $caller=null): void {
+  // Si $mapCatUpdateOrCreate alors affiche la possibilité de modifier/créer l'enregistrement MapCat
+  // Cela est fait en rappellant le script avec l'action updateMapCat ou insertMapCat et le num de la carte
+  function showAsHtml(bool $mapCatUpdateOrCreate=false): void {
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
       or throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     $shomgeotiffUrl = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]".dirname($_SERVER['PHP_SELF'])."/shomgeotiff.php";
@@ -353,16 +353,14 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       echo "<tr><td >catalogue</td><td>";
       if ($this->mapCat) {
         echo '<pre>',YamlDump($this->mapCat->asArray(), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
-        if ($caller == 'addmaps') {
-          //$mapNum = substr(basename($_GET['rpath']), 0, 4);
-          echo "<a href='../mapcat/index.php?action=updateMapCatId&mapnum=$this->mapNum&return=addmaps'>",
-                "Mettre à jour cette description</a>\n";
+        if ($mapCatUpdateOrCreate) {
+          echo "<a href='?action=updateMapCat&mapNum=$this->mapNum'>Mettre à jour cette description</a>\n";
         }
       }
       else {
         echo "Carte absente du catalogue</p>\n";
-        echo "<a href='../mapcat/index.php?action=insertMapCat&mapnum=$this->mapNum&return=addmaps'>",
-              "Créer une description</a>\n";
+        if ($mapCatUpdateOrCreate)
+          echo "<a href='?action=insertMapCat&mapNum=$this->mapNum'>Créer une description</a>\n";
       }
       echo "</td></tr>\n";
     }

@@ -7,6 +7,7 @@ title: mapcat/mapcat.inc.php - accès au catalogue MapCat et vérification des c
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
+require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../bo/lib.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -306,6 +307,7 @@ EOT;
 //Spatial::test();
 
 // Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
+// La classe porte en outre en constante le modèle de document Yaml
 class MapCatItem {
   const ALL_KINDS = ['alive','uninteresting','deleted'];
   const STD_PROP = [
@@ -337,6 +339,197 @@ class MapCatItem {
     ],
   ]; // ordre standard des propriétés 
   
+  const DOC_MODEL_IN_YAML = <<<EOT
+title: # Titre de la carte, peut être recopié du GAN ou lu sur la carte, champ obligatoire
+  #exemple: "De Port-Barcarès à l'embouchure de l'Aude"
+scaleDenominator: # dénominateur de l'échelle de l'espace principal
+  #commentaires:
+  #  - avec un . comme séparateur des milliers, peut être recopié du GAN ou lu sur la carte
+  #  - Champ absent ssi la carte ne comporte pas d'espace principal (uniquement des cartouches).
+  #exemple:
+  #  scaleDenominator: '50.200'
+spatial: # boite englobante de l'espace principal décrit par ces 2 coins Sud-Ouest et Nord-Est 
+  SW: # coin Sud-Ouest de la boite en degrés et minutes WGS84
+  NE: # coin Nord-Est de la boite en degrés et minutes WGS84
+  #commentaires:
+  #  - Champ absent ssi la carte ne comporte pas d'espace principal (uniquement des cartouches).
+  #  - chaque coin doit respecter le motif: '^\d+°(\d\d(,\d+)?'')?(N|S) - \d+°(\d\d(,\d+)?'')?(E|W)$'
+  #  - peut être recopié du GAN ou lu sur la carte
+  #exemple:
+  #  spatial:
+  #    SW: "42°43,64'N - 002°56,73'E"
+  #    NE: "43°13,44'N - 003°24,43'E"
+insetMaps: # liste éventuelle de cartouches, chacun respectant la structure ci-dessous
+  - title: # Titre du cartouche, peut être recopié du GAN ou lu sur la carte
+    scaleDenominator: # dénominateur de l'échelle deu cartouche, peut être recopié du GAN ou lu sur la carte
+    spatial: # boite englobante du cartouche décrite comme celle de l'espace principal
+
+EOT;
+  
+  /** construit le schéma d'une déf. de MapCat, déduit du schéma de MapCat
+   * @return array<string, mixed> */
+  static function getDefSchema(string $def): array {
+    $catSchema = Yaml::parseFile(__DIR__.'/../mapcat/mapcat.schema.yaml');
+    if (!isset($catSchema['definitions'][$def]))
+      throw new \Exception("Définition '$def' inconnue dans le schéma de MapCat");
+    return [
+      '$id'=> "https://sgserver.geoapi.fr/index.php/cat/schema/$def",
+      '$schema'=> $catSchema['$schema'],
+      'definitions' => $catSchema['definitions'],
+      '$ref'=> "#/definitions/$def",
+    ];
+  }
+  
+  /** complète/valide le doc. / schéma
+   * retourne un array contenant:
+   *  - un champ errors avec les erreurs de validation si le doc n'est pas conforme au schéma map
+   *  - un champ warnings avec les alertes
+   *  - un champ validDoc avec le document corrigé et valide en Php si le doc est conforme
+   * @return array{errors?: list<string|list<mixed>>, warnings?: list<string>, validDoc?: array<mixed>}
+   */
+  static function validatesAgainstSchema(string $yaml): array {
+    // parse yaml
+    try {
+      $doc = Yaml::parse($yaml);
+    }
+    catch (\Symfony\Component\Yaml\Exception\ParseException $e) {
+      return ['errors'=> ["Erreur Yaml: ".$e->getMessage()]];
+    }
+    
+    // si insetMaps n'est pas défini alors spatial et scaleDenominator doivent l'être
+    // <=> (!insetMaps => spatial  && scaleDenominator)
+    // <=> (!insetMaps && !(spatial  && scaleDenominator)) est faux
+    // <=> si (!insetMaps && !(spatial  && scaleDenominator)) alors erreur
+    if (!isset($doc['insetMaps']) && !(isset($doc['spatial']) && isset($doc['scaleDenominator']))) {
+      return ['errors'=> ["Erreur: si .insetMaps n'est pas défini alors .spatial et .scaleDenominator doivent l'être"]];
+    }
+    
+    // si spatial contient un tiret comme dans le GAN, le remplacer par un tiret simple
+    if (isset($doc['spatial'])) {
+      $doc['spatial'] = str_replace('—','-', $doc['spatial']);
+    }
+    if (isset($doc['insetMaps']) && is_array($doc['insetMaps'])) {
+      foreach ($doc['insetMaps'] as $i => $insetMap) {
+        if (isset($insetMap['spatial']))
+          $doc['insetMaps'][$i]['spatial'] = str_replace('—','-', $insetMap['spatial']);
+      }
+    }
+    
+    // calcul de MapsFrance en fonction de spatial
+    if (!isset($doc['mapsFrance'])) {
+      if (isset($doc['spatial'])) { // Si spatial est défini
+        $spatialSchema = new \JsonSchema(self::getDefSchema('spatial'));
+        if (!$spatialSchema->check($doc['spatial'])->errors()) { // s'il est conforme à son schéma
+          $mapSpatial = new Spatial($doc['spatial']);
+          $doc['mapsFrance'] = \shomft\Zee::inters($mapSpatial);
+        }
+      }
+      elseif (isset($doc['insetMaps']) && is_array($doc['insetMaps'])) { // sinon, j'essaie de déduire des cartouches
+        $mapSpatial = new \gegeom\GBox;
+        foreach ($doc['insetMaps'] as $insetMap) {
+          $insetMapSchema = new \JsonSchema(self::getDefSchema('insetMap'));
+          if (!$insetMapSchema->check($insetMap)->errors()) {
+            $mapSpatial->union(new Spatial($insetMap['spatial']));
+          }
+        }
+        $doc['mapsFrance'] = \shomft\Zee::inters($mapSpatial);
+      }
+    }
+    
+    // si le scaleDenominator est flottant, cela signifie que c'est un dénominateur entre 1.000.000 et 999
+    if (isset($doc['scaleDenominator']) && is_float($doc['scaleDenominator'])) {
+      $doc['scaleDenominator'] = sprintf('%.3f', $doc['scaleDenominator']);
+    }
+    foreach ($doc['insetMaps'] ?? [] as $i => $insetMap) { // idem dans les cartouches
+      if (isset($insetMap['scaleDenominator']) && is_float($insetMap['scaleDenominator'])) {
+        $doc['insetMaps'][$i]['scaleDenominator'] = sprintf('%.3f', $insetMap['scaleDenominator']);
+      }
+    }
+    
+    // vérification du schema de map
+    $mapSchema = new \JsonSchema(self::getDefSchema('map'));
+    $status = $mapSchema->check($doc);
+    if ($status->errors())
+      return [
+        'errors'=> $status->errors(),
+        'warnings'=> $status->warnings(),
+      ];
+    else
+      return [
+        'warnings'=> $status->warnings(),
+        'validDoc'=> $doc,
+      ];
+  }
+  
+  static function testValidatesAgainstSchema(): void {
+    define('JEUX_TESTS', [
+      "Cas ok sans cartouche, ni mapsFrance" => [
+        'yaml' => <<<EOT
+title: "De Port-Barcarès à l'embouchure de l'Aude"
+scaleDenominator: '50.200'
+spatial:
+  SW: "42°43,64'N - 002°56,73'E"
+  NE: "43°13,44'N - 003°24,43'E"
+EOT
+      ],
+      "Cas ok avec cartouches, sans pp, ni mapsFrance" => [
+        'yaml' => <<<EOT
+title: 'Port Phaeton (Teauaa) - Tapuaeraha'
+insetMaps:
+  - title: 'A - Port Phaeton (Teauaa)'
+    scaleDenominator: '10.000'
+    spatial: { SW: '17°46,45''S - 149°20,54''W', NE: '17°43,66''S - 149°18,45''W' }
+  - title: 'B - Tapuaeraha'
+    scaleDenominator: '10.000'
+    spatial: { SW: '17°49,06''S - 149°19,56''W', NE: '17°46,28''S - 149°17,47''W' }
+EOT
+      ],
+      "Cas ok sans cartouche, ni mapsFrance, avec scaleDenominator flottant" => [
+        'yaml' => <<<EOT
+title: "De Port-Barcarès à l'embouchure de l'Aude"
+scaleDenominator: 50.200
+spatial:
+  SW: "42°43,64'N - 002°56,73'E"
+  NE: "43°13,44'N - 003°24,43'E"
+EOT
+      ],
+      "Cas ok sans cartouche, ni mapsFrance, avec scaleDenominator >= 1M" => [
+        'yaml' => <<<EOT
+title: 'Des îles Baléares à la Corse et à la Sardaigne'
+scaleDenominator: 1.000.000
+spatial:
+  SW: '35°30,00''N - 002°00,00''E'
+  NE: '45°23,00''N - 010°12,00''E'
+EOT
+      ],
+      "Cas KO sans cartouche, ni spatial, ni mapsFrance" => [
+        'yaml' => <<<EOT
+title: "De Port-Barcarès à l'embouchure de l'Aude"
+scaleDenominator: '50.200'
+EOT
+      ],
+      "Cas yaml KO" => [
+        'yaml' => <<<EOT
+title 'Port Phaeton (Teauaa) - Tapuaeraha'
+insetMaps:
+  - title: 'A - Port Phaeton (Teauaa)'
+    scaleDenominator: '10.000'
+    spatial: { SW: '17°46,45''S - 149°20,54''W', NE: '17°43,66''S - 149°18,45''W' }
+  - title: 'B - Tapuaeraha'
+    scaleDenominator: '10.000'
+    spatial: { SW: '17°49,06''S - 149°19,56''W', NE: '17°46,28''S - 149°17,47''W' }
+EOT
+      ],
+    ]);
+    foreach (JEUX_TESTS as $title => $jeu) {
+      $valid = self::validatesAgainstSchema($jeu['yaml']);
+      if (isset($valid['errors']))
+        echo "<pre>",\bo\YamlDump([$title => ['jeu' => $jeu, 'validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
+      else
+        echo "<pre>",\bo\YamlDump([$title => ['validatesAgainstSchema'=> $valid]], 6, 2),"</pre>\n";
+    }
+  }
+
   /** @var TMapCatEntry $item */
   protected array $item; // contenu de l'entrée du catalogue correspondant à une carte
   /** @var TMapCatKind $kind */
@@ -423,11 +616,150 @@ class MapCatItem {
     }
     echo "</table>\n";
   }
+
+  // insert en base l'enregistrement Mapcat correspondant à la carte $mapNum
+  // utilisée par updateMapCat()
+  private static function insertInMySql(string $mapNum, array $doc, string $user): bool {
+    $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
+      or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
+    \MySql::open($LOG_MYSQL_URI);
+    $jdocRes = \MySql::$mysqli->real_escape_string(json_encode($doc));
+    $query = "insert into mapcat(mapnum, jdoc, updatedt, user) "
+                        ."values('FR$mapNum', '$jdocRes', now(), '$user')";
+    echo "<pre>query=$query</pre>\n";
+    \MySql::query($query);
+    echo "maj carte $mapNum ok<br>\n";
+    return true;
+  }
+  
+  // appelée pour mettre à jour la description de la carte $mapNum cad en créer un nouvel enregistrement
+  // la première fois arrête le script en générant le formulaire qui rappelle le même script avec même URL et données en POST
+  // les fois suivantes
+  //   SI ajout ok alors retour de la méthode
+  //   SINON message d'erreur, génération à nouveau du formulaire avant arrêt du script
+  // Avec l'affichage du formulaire un lien d'abandon est affiché.
+  static function updateMapCat(string $mapNum, string $user, string $abort): bool {
+    if (!isset($_POST['yaml'])) { // Premier affichage du formulaire quand l'enregistrement existe
+      $mapcat = \MySql::getTuples("select mapnum, jdoc from mapcat where mapnum='FR$mapNum' order by id desc")[0];
+      if (!$mapcat) {
+        echo "Erreur FR$mapNum n'existe pas dans la table mapcat<br>\n";
+        return false;
+      }
+      $yaml = \bo\YamlDump(json_decode($mapcat['jdoc'], true), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+    }
+    else { // Retour d'une saisie d'une description soit depuis updateMapCat() soit depuis insertMapCat()
+      $validationResult = self::validatesAgainstSchema($_POST['yaml']);
+      if (isset($validationResult['validDoc'])) { // description conforme, l'enregistrement est créé en base
+        return self::insertInMySql($mapNum, $validationResult['validDoc'], $user);
+      }
+      else { // description non conforme
+        echo "<b>Erreur, la description fournie n'est pas conforme au schéma JSON:</b>\n";
+        echo '<pre>',Yaml::dump($validationResult),"</pre>"; // affichage des erreurs
+        $yaml = $_POST['yaml']; // $yaml contient la description non valide
+      }
+    }
+    
+    echo "<b>Mise à jour de la description dans le catalogue MapCat de la carte $mapNum]:</b></p>\n";
+    echo \bo\Html::textArea('yaml', $yaml, 18, 120, 'maj', ['mapNum'=> $mapNum], '', 'post');
+    echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$mapNum' target='_blank'>",
+          "Affichage du GAN de cette carte</a><br>";
+    echo "<a href='?action=showMapCatScheme' target='_blank'>",
+          "Affichage du schéma JSON à respecter pour cette description</a><br>";
+    echo "$abort";
+    die();
+  }
+
+  // appelée pour insérer la description de la carte $mapNum
+  // Génère le formulaire qui rappelle le même script avec même URL et données en POST puis arrête le script
+  // Si le formulaire a été saisi appelle updateMapCat
+  static function insertMapCat(string $mapNum, string $user, string $abort): bool {
+    if (isset($_POST['yaml'])) { // Retour d'une saisie d'une description
+      return self::updateMapCat($mapNum, $user, $abort);
+    }
+    echo "<b>Ajout de la description dans le catalogue MapCat de la carte $mapNum selon le modèle ci-dessous:</b></p>\n";
+    $hiddenValues = ['action'=> 'insertMapCat', 'mapnum'=> $mapNum];
+    echo \bo\Html::textArea('yaml', self::DOC_MODEL_IN_YAML, 18, 120, 'ajout', $hiddenValues, '', 'post');
+    
+    echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$mapNum' target='_blank'>",
+          "Affichage du GAN de cette carte</a><br>";
+    echo "<a href='?action=showMapCatScheme' target='_blank'>",
+          "Affichage du schéma JSON à respecter pour cette description</a><br>";
+    echo "$abort";
+    die();
+  }
 };
 if ($error = MapCatItem::checkValidity()) throw new \Exception($error);
 
-// La classe MapCat correspond au catalogue MapCat a priori en base 
+// La classe MapCat correspond au catalogue MapCat en base 
+// La classe porte en outre en constante la définition SQL de la table mapcat
+// ainsi qu'une méthode statique traduisant la définition SQL en requête SQL
 class MapCat {
+  // la structuration de la constante est définie dans son champ description
+  const MAPCAT_TABLE_SCHEMA = [
+    'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
+            ." - le champ 'comment' précisant la table concernée,\n"
+            ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
+            ."   - la clé définissant le nom SQL de la colonne,\n"
+            ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
+            ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
+            ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
+            ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
+            ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
+            ."     - pour clé la valeur de l'énumération et\n"
+            ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
+    'comment' => "table du catalogue des cartes avec 1 n-uplet par carte et par mise à jour",
+    'columns'=> [
+      'id'=> [
+        'type'=> 'int',
+        'keyOrNull'=> 'not null auto_increment primary key',
+        'comment'=> "id du n-uplet incrémenté pour permettre des versions sucessives par carte",
+      ],
+      'mapnum'=> [
+        'type'=> 'char(6)',
+        'keyOrNull'=> 'not null',
+        'comment'=> "numéro de carte sur 4 chiffres précédé de 'FR'",
+      ],
+      'jdoc'=> [
+        'type'=> 'JSON',
+        'keyOrNull'=> 'not null',
+        'comment'=> "enregistrement conforme au schéma JSON",
+      ],
+      /*'bbox'=> [
+        'type'=> 'POLYGON',
+        'keyOrNull'=> 'not null',
+        'comment'=> "boite engobante de la carte en WGS84",
+      ], voir le besoin */
+      'updatedt'=> [
+        'type'=> 'datetime',
+        'keyOrNull'=> 'not null',
+        'comment'=> "date de création/mise à jour de l'enregistrement dans la table",
+      ],
+      'user'=> [
+        'type'=> 'varchar(256)',
+        'comment'=> "utilisateur ayant réalisé la mise à jour, null pour une versions système",
+      ],
+    ],
+  ]; // Définition du schéma SQL de la table mapcat
+
+  /** fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
+   * @param array<string, mixed> $schema */
+  static function createTableSql(string $tableName, array $schema): string {
+    $cols = [];
+    foreach ($schema['columns'] ?? [] as $cname => $col) {
+      $cols[] = "  $cname "
+        .match($col['type'] ?? null) {
+          'enum' => "enum('".implode("','", array_keys($col['enum']))."') ",
+          default => "$col[type] ",
+          null => die("<b>Erreur, la colonne '$cname' doit comporter un champ 'type'</b>."),
+      }
+      .($col['keyOrNull'] ?? '')
+      .(isset($col['comment']) ? " comment \"$col[comment]\"" : '');
+    }
+    return ("create table $tableName (\n"
+      .implode(",\n", $cols)."\n)"
+      .(isset($schema['comment']) ? " comment \"$schema[comment]\"\n" : ''));
+  }
+  
   /** Retourne la liste des numéros de carte (sans FR) en fonction de la liste des types
    * @param list<TMapCatKind> $kindOfMap
    * @return list<string>
