@@ -155,14 +155,13 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     break;
   }
   case 'validateMap': { // dépôt de la carte, paramètre GET rpath=chemin relatif de la carte à déposer
-    $rpath = $_GET['rpath'];
-    $newMap = new MapArchive($rpath);
+    $mapNum = $_GET['mapNum'];
+    $newMap = new MapArchive("/users/$login/$mapNum.7z");
     
     { // Première condition: la version de la nouvelle version doit être postérieure à celle du portefeuille
       $newMd = $newMap->main()->md();
       //echo "<pre>newMd = "; print_r($newMd); echo "</pre>\n";
       $newVersion = $newMd['version'];
-      $mapNum = substr(basename($rpath), 0, 4);
       $existingVersion = existingVersion($PF_PATH, $mapNum);
       $cmp = cmpVersion($newVersion, $existingVersion);
       //echo "newVersion=$newVersion, existingVersion=$existingVersion, cmp=$cmp<br>\n";

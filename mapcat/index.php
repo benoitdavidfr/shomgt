@@ -150,7 +150,7 @@ if (!($user = \bo\Login::loggedIn())) {
 }
 
 
-echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
+//echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
 
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
   case null: {
@@ -162,6 +162,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     echo "<li><a href='?action=createMapCatTable'>Crée la table mapcat et charge le catalogue</a></li>\n";
     echo "<li><a href='?action=showMapCatTable'>Affiche le contenu de la table mapcat</a></li>\n";
     echo "<li><a href='?action=updateMapCatTable'>Met à jour la table mapcat</a></li>\n";
+    echo "<li><a href='?action=insertMapCat'>Ajoute un enregistrement à la table mapcat</a></li>\n";
     echo "<li><a href='?action=testValidatesAgainstSchema'>testValidatesAgainstSchema</a></li>\n";
     die();
   }
@@ -274,7 +275,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     \MySql::open($LOG_MYSQL_URI);
     \MySql::query('drop table if exists mapcat');
-    $query = MapCatDef::createTableSql('mapcat', MapCatDef::MAPCAT_TABLE_SCHEMA);
+    $query = MapCat::createTableSql('mapcat', MapCat::MAPCAT_TABLE_SCHEMA);
     //echo "<pre>query=$query</pre>\n";
     \MySql::query($query);
 
@@ -312,101 +313,28 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     \MySql::open($LOG_MYSQL_URI);
-    $mapCat = [];
+    $mapCats = [];
     $sql = 'select id, mapnum, json_extract(jdoc, "$.title") title from mapcat order by id';
     foreach (\MySql::query($sql) as $tuple) {
-      $mapCat[$tuple['mapnum']] = ['id'=> $tuple['id'], 'title'=> "$tuple[mapnum] - ".substr($tuple['title'], 1, -1)];
+      $mapNum = substr($tuple['mapnum'], 2);
+      $mapCats[$mapNum] = "$mapNum - ".substr($tuple['title'], 1, -1);
     }
-    ksort($mapCat);
-    foreach ($mapCat as $tuple) {
-      echo "<a href='?action=updateMapCatId&amp;id=$tuple[id]&amp;return=mapcat'>$tuple[title]</a><br>\n";
+    ksort($mapCats);
+    foreach ($mapCats as $mapNum => $title) {
+      echo "<a href='?action=updateMapCat&amp;mapNum=$mapNum'>$title</a><br>\n";
     }
     break;
   }
-  /*case 'updateMapCatId': { // affiche le formulaire de mise à jour d'une entrée de mapcat et effectue la mise à jour en base
-    if (isset($_POST['yaml'])) { // Retour d'une saisie d'une description
-      $yaml = $_POST['yaml'];
-      $valid = MapCatDef::validatesAgainstSchema($yaml);
-      if (!isset($valid['errors'])) { // description conforme, l'enregistrement est créé en base
-        $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
-          or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
-        \MySql::open($LOG_MYSQL_URI);
-        $jdocRes = \MySql::$mysqli->real_escape_string(json_encode($valid['validDoc']));
-        $query = "insert into mapcat(mapnum, jdoc, updatedt, user) "
-                            ."values('$_POST[mapnum]', '$jdocRes', now(), '$user')";
-        echo "<pre>query=$query</pre>\n";
-        \MySql::query($query);
-        echo "maj carte $_POST[mapnum] ok<br>\n";
-        switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
-          case 'mapcat': { echo "<a href='index.php'>Retour</a><br>\n"; break; }
-          case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
-          default: die("valeur de return '$return' non prévue");
-        }
-        break;
-      }
-      else { // description non conforme
-        echo "<b>Erreur, la description fournie n'est pas conforme au schéma JSON:</b>\n";
-        echo '<pre>',Yaml::dump($valid),"</pre>";
-        $mapcat = [
-          'mapnum'=> $_POST['mapnum'],
-          'yaml'=> $yaml,
-        ];
-      }
-    }
-    else { // Premier affichage du formulaire
-      if (isset($_GET['id']))
-        $mapcat = \MySql::getTuples("select mapnum, jdoc from mapcat where id=$_GET[id]")[0];
-      elseif (isset($_GET['mapnum'])) {
-        $mapcat = \MySql::getTuples("select mapnum, jdoc from mapcat where mapnum='FR$_GET[mapnum]' order by id desc")[0];
-        if (!$mapcat)
-          die("Erreur FR$_GET[mapnum] n'existe pas dans la table mapcat");
-      }
-      else
-        die("Appel de ".__FILE__."incorrect");
-      $mapcat['yaml'] = \bo\YamlDump(json_decode($mapcat['jdoc'], true), 3, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-    }
-    // Fabrique le formulaire à partir de la variable $mapcat
-    echo "<b>Mise à jour de la description dans le catalogue MapCat de la carte $mapcat[mapnum]:</b></p>\n";
-    $hiddenValues = [
-      'action'=> 'updateMapCatId',
-      'mapnum'=> $mapcat['mapnum'],
-      'return'=> $_GET['return'] ?? 'mapcat'
-    ];
-    echo \bo\Html::textArea('yaml', $mapcat['yaml'], 18, 120, 'maj', $hiddenValues, '', 'post');
-    $mapNumSsFr = substr($mapcat['mapnum'], 2);
-    echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$mapNumSsFr' target='_blank'>",
-          "Affichage du GAN de cette carte</a><br>";
-    echo "<a href='?action=showMapCatScheme' target='_blank'>",
-          "Affichage du schéma JSON à respecter pour cette description</a><br>";
-    switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
-      case 'mapcat': { echo "<a href='index.php'>Retour</a><br>\n"; break; }
-      case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
-      default: die("valeur de return '$return' non prévue");
-    }
+  case 'updateMapCat': { // met à jour un enregistrement
+    MapCatItem::updateMapCat($_GET['mapNum'], $user, "<a href='?action=updateMapCatTable'>Retour</a>");
+    echo "<a href='?'>Retour au menu</a>\n";
     break;
-  }*/
-  /*case 'insertMapCat': {
-    echo "<b>Ajout de la description dans le catalogue MapCat de la carte $_GET[mapnum] selon le modèle ci-dessous:</b></p>\n";
-    $hiddenValues = [
-      'action'=> 'updateMapCatId',
-      'mapnum'=> "FR$_GET[mapnum]",
-      'return'=> $_GET['return'] ?? 'mapcat'
-    ];
-    echo \bo\Html::textArea('yaml', MapCatDef::DOC_MODEL_IN_YAML, 18, 120, 'ajout', $hiddenValues, '', 'post');
-    
-    echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$_GET[mapnum]' target='_blank'>",
-          "Affichage du GAN de cette carte</a><br>";
-    echo "<a href='?action=showMapCatScheme' target='_blank'>",
-          "Affichage du schéma JSON à respecter pour cette description</a><br>";
-    
-    switch ($return = $_POST['return'] ?? $_GET['return'] ?? null) {
-      case 'mapcat': { echo "<a href='index.php'>Retour</a><br>\n"; break; }
-      case 'addmaps': { echo "<a href='../bo/addmaps.php'>Retour</a><br>\n"; break; }
-      default: die("valeur de return '$return' non prévue");
-    }
+  }
+  case 'insertMapCat': { // ajoute un enregistrement
+    MapCatItem::insertMapCat(null, $user, "<a href='?'>Retour</a>");
+    echo "<a href='?'>Retour au menu</a>\n";
     break;
-    
-  }*/
+  }
   case 'testValidatesAgainstSchema': {
     MapCatDef::testValidatesAgainstSchema();
     echo "<a href='index.php'>Retour</a><br>\n";

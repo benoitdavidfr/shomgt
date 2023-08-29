@@ -9,6 +9,7 @@ require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../bo/lib.inc.php';
+require_once __DIR__.'/../bo/htmlform.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -670,16 +671,32 @@ EOT
   }
 
   // appelée pour insérer la description de la carte $mapNum
-  // Génère le formulaire qui rappelle le même script avec même URL et données en POST puis arrête le script
+  // Si le formulaire n'a pas été saisi alors le génère en rappellant le même script avec même URL et données en POST
+  // puis arrête le script
   // Si le formulaire a été saisi appelle updateMapCat
-  static function insertMapCat(string $mapNum, string $user, string $abort): bool {
+  static function insertMapCat(?string $mapNum, string $user, string $abort): bool {
     if (isset($_POST['yaml'])) { // Retour d'une saisie d'une description
+      if (isset($_POST['mapNum']))
+        $mapNum = $_POST['mapNum'];
       return self::updateMapCat($mapNum, $user, $abort);
     }
     echo "<b>Ajout de la description dans le catalogue MapCat de la carte $mapNum selon le modèle ci-dessous:</b></p>\n";
-    $hiddenValues = ['action'=> 'insertMapCat', 'mapnum'=> $mapNum];
-    echo \bo\Html::textArea('yaml', self::DOC_MODEL_IN_YAML, 18, 120, 'ajout', $hiddenValues, '', 'post');
-    
+    echo new \html\Form( // formulaire avec un champ mapNum s'il n'est pas défini en entrée 
+      fields: array_merge(
+        $mapNum ? [] : ['mapNum'=> ['type'=> 'TextInput']],
+        ['yaml' => [
+          'type'=> 'TextArea',
+          'text'=> self::DOC_MODEL_IN_YAML,
+          'cols'=> 120,
+          'rows'=> 18,
+        ]]
+      ),
+      submit: 'ajout',
+      hiddens: ['action'=> 'insertMapCat'],
+      action: '',
+      method: 'post'
+    );
+      
     echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$mapNum' target='_blank'>",
           "Affichage du GAN de cette carte</a><br>";
     echo "<a href='?action=showMapCatScheme' target='_blank'>",
