@@ -52,7 +52,7 @@ doc: |
   2 classes concrètes en héritent, l'une avec des coord. géographiques, l'autre des coord. euclidiennes
   Il existe une BBox particulière correspondant à un espace vide. A sa création sans paramètre la BBox est vide.
 */}
-readonly abstract class BBox {
+abstract class BBox {
   const ErrorIncorrectNbOfParams = 'BBox::ErrorIncorrectNbOfParams';
   const ErrorIncorrectParams = 'BBox::ErrorIncorrectParams';
   const ErrorIncorrectPosTypeInBound = 'BBox::ErrorIncorrectPosTypeInBound';
