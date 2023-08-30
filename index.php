@@ -58,7 +58,7 @@ $start = $starts[floor(rand(0,count($starts)-1))];
 echo <<<EOT
 <frameset cols="50%,50%" >
   <frame src="index2.php" name="main">
-  <frame src="shomgt/mapwcat.php?center=$start[center]&zoom=$start[zoom]" name="map">
+  <frame src="view/mapwcat.php?center=$start[center]&zoom=$start[zoom]" name="map">
   <noframes>
   	<body>
   		<p><a href='index2.php'>Accès sans frame</p>

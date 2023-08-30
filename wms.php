@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: wms.php - proxy de shomgt/wms.php pour utilisation sur geoapi
+title: wms.php - proxy de view/wms.php pour utilisation sur geoapi
 name: wms.php
 */
-require __DIR__.'/shomgt/wms.php';
+require __DIR__.'/view/wms.php';

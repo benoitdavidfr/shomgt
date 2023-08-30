@@ -72,7 +72,7 @@ parameters:
     - wms.php
     - bo
     - lib
-    - shomgt
+    - view
     - sgupdt
     - sgserver
     - secrets

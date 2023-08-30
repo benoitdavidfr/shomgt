@@ -1,6 +1,6 @@
 <?php
 /*PhpDoc:
-title: mapwcat.php - renvoi vers shomgt/mapwcat.php pour utilisation sur geoapi
+title: mapwcat.php - renvoi vers view/mapwcat.php pour utilisation sur geoapi
 name: mapwcat.php
 */
 
@@ -9,7 +9,7 @@ $request_scheme = ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROT
 $dirname = dirname($_SERVER['SCRIPT_NAME']);
 $location = "$request_scheme://$_SERVER[HTTP_HOST]"
   .($dirname=='/' ? '/' : "$dirname/")
-  .'shomgt/mapwcat.php'
+  .'view/mapwcat.php'
   .(isset($_SERVER['QUERY_STRING']) ? "?$_SERVER[QUERY_STRING]" : '');
 //die("location=$location");
 
