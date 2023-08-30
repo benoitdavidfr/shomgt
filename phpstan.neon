@@ -53,7 +53,7 @@ parameters:
     # description d'une carte dans le catalogue MapCat
     TMapCatSpatial: "array{SW: string, NE: string, exception?: string}"
     TMapCatInset: "array{title: string, scaleDenominator?: string, spatial?: TMapCatSpatial}"
-    TMapCatEntry: '''
+    TMapCatItem: '''
       array{
         deletedDate?: string,
         title: string,

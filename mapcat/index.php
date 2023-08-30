@@ -336,7 +336,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     break;
   }
   case 'testValidatesAgainstSchema': {
-    MapCatDef::testValidatesAgainstSchema();
+    MapCatItem::testValidatesAgainstSchema();
     echo "<a href='index.php'>Retour</a><br>\n";
     break;
   }

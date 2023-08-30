@@ -309,7 +309,7 @@ EOT;
 
 // Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
 // La classe porte en outre en constante le modèle de document Yaml
-class MapCatItem {
+readonly class MapCatItem {
   const ALL_KINDS = ['alive','uninteresting','deleted'];
   const STD_PROP = [
     'groupTitle',
@@ -531,13 +531,13 @@ EOT
     }
   }
 
-  /** @var TMapCatEntry $item */
-  protected array $item; // contenu de l'entrée du catalogue correspondant à une carte
+  /** @var TMapCatItem $item */
+  public array $item; // contenu de l'entrée du catalogue correspondant à une carte
   /** @var TMapCatKind $kind */
-  public readonly string $kind; // type de carte ('alive' | 'uninteresting' | 'deleted')
+  public string $kind; // type de carte ('alive' | 'uninteresting' | 'deleted')
   
   /** 
-   * @param TMapCatEntry $item
+   * @param TMapCatItem $item
    * @param TMapCatKind $kind */
   function __construct(array $item, string $kind) { $this->item = $item; $this->kind = $kind; }
   
@@ -618,8 +618,10 @@ EOT
     echo "</table>\n";
   }
 
-  // insert en base l'enregistrement Mapcat correspondant à la carte $mapNum
-  // utilisée par updateMapCat()
+  /** insert en base l'enregistrement Mapcat correspondant à la carte $mapNum
+   * utilisée par updateMapCat()
+   * @param TMapCatItem $doc
+   */
   private static function insertInMySql(string $mapNum, array $doc, string $user): bool {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
@@ -683,16 +685,11 @@ EOT
     echo "<b>Ajout de la description dans le catalogue MapCat de la carte $mapNum selon le modèle ci-dessous:</b></p>\n";
     echo new \html\Form( // formulaire avec un champ mapNum s'il n'est pas défini en entrée 
       fields: array_merge(
-        $mapNum ? [] : ['mapNum'=> ['type'=> 'TextInput']],
-        ['yaml' => [
-          'type'=> 'TextArea',
-          'text'=> self::DOC_MODEL_IN_YAML,
-          'cols'=> 120,
-          'rows'=> 18,
-        ]]
+        $mapNum ? [] : ['mapNum'=> new \html\Input(label: 'mapNum')],
+        ['yaml' => new \html\TextArea (text: self::DOC_MODEL_IN_YAML, cols: 120, rows: 18)]
       ),
       submit: 'ajout',
-      hiddens: ['action'=> 'insertMapCat'],
+      hiddens: array_merge(['action'=> 'insertMapCat'], $mapNum ? ['mapNum'=> $mapNum] : []),
       action: '',
       method: 'post'
     );
@@ -814,7 +811,7 @@ class MapCat {
   }
 
   /** retourne tout le contenu de MapCat chaque entrée ssous la forme d'array et les num. avec FR
-   * @return array<string, TMapCatEntry>
+   * @return array<string, TMapCatItem>
    */
   static function allAsArray(): array {
     $all = [];
@@ -828,11 +825,11 @@ class MapCat {
 };
 
 class MapCatFromFile extends MapCat {
-  /** @var array<string, TMapCatEntry> $maps */
+  /** @var array<string, TMapCatItem> $maps */
   static array $maps=[]; // contenu du champ maps de MapCat
-  /** @var array<string, TMapCatEntry> $uninterestingMaps */
+  /** @var array<string, TMapCatItem> $uninterestingMaps */
   static array $uninterestingMaps=[]; // contenu du champ uninterestingMaps de MapCat
-  /** @var array<string, TMapCatEntry> $deletedMaps */
+  /** @var array<string, TMapCatItem> $deletedMaps */
   static array $deletedMaps=[]; // contenu du champ deletedMaps de MapCat
   
   private static function init(): void {
