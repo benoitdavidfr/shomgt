@@ -116,7 +116,9 @@ else { // liste de versions pour la carte $_GET['map']
   echo "    <input type='radio' id='none' name='mapVersion' value='none' ",(''==$currentVersion ? 'checked' : ''),"/>\n";
   echo "    <label for='none'>Carte retirée de la liste des cartes (n'indiquant rien au client)</label><br>\n";
   echo "  </div>\n";
-  echo "  <div>",Html::button('Sélection', ['map'=>$_GET['map'], 'action'=>'chooseVersion'], '', 'get'),"</div>\n";
+  echo "  <div>",
+    new \html\Form(submit: 'Sélection', hiddens: ['map'=>$_GET['map'], 'action'=>'chooseVersion'], action: '', method: 'get'),
+    "</div>\n";
   echo "</fieldset></form>\n";
   echo "<a href='pfweight.php?map=$_GET[map]'>Gestion de la suppression de versions</a><br>\n";
   echo "<a href='pfcurrent.php'>Retour à la liste des cartes</a></p>\n";

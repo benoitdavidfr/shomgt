@@ -27,9 +27,9 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
   case null: break; // pas d'action de modification à exécuter 
   case 'deleteVersion': { // demande de confirmation pour la suppression d'une version
     echo "Suppression de la version $_POST[version] de la carte $_POST[map]<br>\n";
-    $hiddenValues = ['action'=> 'confirmDeleteVersion', 'map'=> $_POST['map'], 'version'=> $_POST['version']];
-    echo "<table><tr><td>",Html::button('confirmer', $hiddenValues),
-         "</td><td>",Html::button('annuler', ['map'=> $_POST['map']], '', 'get'),
+    $hiddens = ['action'=> 'confirmDeleteVersion', 'map'=> $_POST['map'], 'version'=> $_POST['version']];
+    echo "<table><tr><td>",new \html\Form(submit: 'confirmer', hiddens: $hiddens, method: 'post'),
+         "</td><td>",new \html\Form(submit: 'annuler', hiddens: ['map'=> $_POST['map']], method: 'post'),
          "</td></tr></table>\n";
     break;
   }
@@ -136,14 +136,15 @@ else { // liste de versions pour la carte $_GET['map']
       echo "$PF_PATH/archives/$_GET[map]/$mapVersion.md.json absent<br>\n";
     $bs = ($mapVersion == $currentVersion) ? '<b>' : '';
     $be = ($mapVersion == $currentVersion) ? '</b>' : '';
-    $hiddenValues = ['action'=> 'deleteVersion', 'map'=> $_GET['map'], 'version'=> $mapVersion];
+    $hiddens = ['action'=> 'deleteVersion', 'map'=> $_GET['map'], 'version'=> $mapVersion];
     echo "<tr><td><a href='maparchive.php?rpath=/archives/$_GET[map]/$mapVersion.7z'>$bs$mapVersion$be</a></td>",
          //"<td>",json_encode($md),"</td>",
          "<td>",$md['edition'] ?? 'edition non définie',"</td>",
          "<td>",$md['dateArchive'] ?? '',"</td>",
          "<td>",sprintf('%.1f Mb', $duMb),"</td>",
          "<td><a href='shomgeotiff.php/archives/$_GET[map]/$mapVersion.7z'>Télécharger l'archive 7z</a></td>",
-         "<td>",($mapVersion <> $currentVersion) ? Html::button('supprimer', $hiddenValues) : '',"</td>",
+         "<td>",($mapVersion <> $currentVersion) ?
+             new \html\Form(submit: 'supprimer', hiddens: $hiddens, method: 'post') : '',"</td>",
          "</tr>\n";
   }
   echo "</table>\n";

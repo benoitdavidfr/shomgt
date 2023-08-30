@@ -663,7 +663,9 @@ EOT
     }
     
     echo "<b>Mise à jour de la description dans le catalogue MapCat de la carte $mapNum]:</b></p>\n";
-    echo \bo\Html::textArea('yaml', $yaml, 18, 120, 'maj', ['mapNum'=> $mapNum], '', 'post');
+    echo new \html\Form(
+      fields: ['yaml' => new \html\TextArea(text: $yaml, rows: 18, cols: 120)],
+      submit: 'maj', hiddens: ['mapNum'=> $mapNum], method: 'post');
     echo "</p><a href='https://gan.shom.fr/diffusion/qr/gan/$mapNum' target='_blank'>",
           "Affichage du GAN de cette carte</a><br>";
     echo "<a href='?action=showMapCatScheme' target='_blank'>",

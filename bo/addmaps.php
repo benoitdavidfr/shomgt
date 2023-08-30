@@ -90,9 +90,9 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     echo "<table border=1>\n";
     $map->showAsHtml(true);
     
-    $validateButton = Html::button(
-        submitValue: "Valider la carte et la déposer",
-        hiddenValues: [
+    $validateButton = new \html\Form(
+        submit: "Valider la carte et la déposer",
+        hiddens: [
           'action'=> 'validateMap',
           'mapNum' => $_GET['mapNum'],
         ],
@@ -264,7 +264,7 @@ if ($mapNums) {
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
          "<td><a href='?action=verifyMap&mapNum=$mapNum'>vérifier</a></td>",
-         "<td>",Html::button('supprimer', ['action'=>'delete','mapNum'=>$mapNum]),"</td>",
+         "<td>",new \html\Form(submit: 'supprimer', hiddens: ['action'=>'delete','mapNum'=>$mapNum]),"</td>",
          "</tr>\n";
   }
   echo "</table>\n";

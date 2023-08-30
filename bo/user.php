@@ -9,7 +9,7 @@ doc: |
 */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
-require_once __DIR__.'/lib.inc.php';
+require_once __DIR__.'/htmlform.inc.php';
 require_once __DIR__.'/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -351,7 +351,7 @@ $actions = [
     'to'=> 'actionTestB',
     'apply'=> function(): void {
       echo "Action Test A<br>\n";
-      echo Html::button(submitValue: 'go', hiddenValues: ['action'=> 'actionTestB'], action: '', method: 'get');
+      echo new \html\Form(submit: 'go', hiddens: ['action'=> 'actionTestB'], method: 'get');
     },
   ],
   'actionTestB'=> [
@@ -380,23 +380,21 @@ $actions = [
         $comment = mysqli_real_escape_string(\MySql::$mysqli, $_GET['comment']);
         \MySql::query("update user set comment='$comment' where email='$_GET[email]'");
       }
+      $choices = ['normal', 'admin','temp','restricted', 'banned','suspended','closed','system'];
       echo "<table border=1><th>email</th><th>role</th><th>création</th><th>validité</th><th>commentaire</th>\n";
       foreach (\MySql::query("select * from user order by email") as $user) {
         echo "<tr><td>$user[email]</td>",
-            "<td>",Html::select(
-                name: 'role',
-                choices: ['normal', 'admin','temp','restricted', 'banned','suspended','closed','system'],
-                selected: $user['role'],
-                submitValue: 'M',
-                hiddenValues: ['action'=> 'editUsers', 'email'=> $user['email']]
+            "<td>",new \html\Form(
+                fields: ['role'=> new \html\Select(choices: $choices, selected: $user['role'])],
+                submit: 'M',
+                hiddens: ['action'=> 'editUsers', 'email'=> $user['email']]
               ),"</td>",
             "<td>$user[createdt]</td>",
             "<td>$user[valid]</td>",
-            "<td>",Html::textArea(
-                name: 'comment',
-                text: $user['comment'] ?? '',
-                submitValue: 'M',
-                hiddenValues: ['action'=> 'editUsers', 'email'=> $user['email']]
+            "<td>",new \html\Form(
+                fields: ['comment'=> new \html\TextArea(text: $user['comment'] ?? '')],
+                submit: 'M',
+                hiddens: ['action'=> 'editUsers', 'email'=> $user['email']]
               ),"</td>",
             "</tr>\n";
       }
@@ -619,7 +617,8 @@ $actions = [
       $emptyResult = true;
       foreach (\MySql::query($query) as $user) {
         $emptyResult = false;
-        $button = Html::button('envoyer un email', ['action'=> 'reValidateOldUsers', 'email'=> $user['email']], '', 'get');
+        $hiddens = ['action'=> 'reValidateOldUsers', 'email'=> $user['email']];
+        $button = new \html\Form(submit: 'envoyer un email', hiddens: $hiddens, method: 'get');
         echo '<tr><td><pre>',Yaml::dump([$user]),"</pre></td></tr>\n";
         echo "<tr><td>$user[email]</td><td>$user[role]</td><td>$user[comment]</td>",
               "<td>$user[valid]</td><td>$user[diff]</td><td>$button</td></tr>\n";
@@ -682,10 +681,9 @@ $actions = [
       $emptyResult = true;
       foreach (\MySql::query($query) as $user) {
         $emptyResult = false;
-        $button = Html::button(
-          submitValue: 'envoyer un email', 
-          hiddenValues: ['action'=> 'suspendOldUsers', 'email'=> $user['email']], 
-          action: '', 
+        $button = new \html\Form(
+          submit: 'envoyer un email', 
+          hiddens: ['action'=> 'suspendOldUsers', 'email'=> $user['email']], 
           method: 'get');
         echo '<tr><td><pre>',Yaml::dump([$user]),"</pre></td></tr>\n";
         echo "<tr><td>$user[email]</td><td>$user[role]</td><td>$user[comment]</td>",
