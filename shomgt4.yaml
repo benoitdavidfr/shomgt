@@ -187,7 +187,7 @@ modifs:
       - le caractère obsolete ou non est défini dans mapStore, il n'y a pas de raison de dupliquer cette info
       - de plus cette duplication complexifie la gestion
 découpageEnComposantsV4:
-  view(shomgt):
+  view:
     objet: expose les 2 services WMS, les flux Tile et GeoJSON et la carte Leaflet exposant ces 2 flux
     mode: Web
     offreA:
@@ -200,10 +200,18 @@ découpageEnComposantsV4:
         - delmar.geojson, copié de shomft
         - frzee.geojson, copié de shomft
         - sar_2019.geojson, copié de diffusion.shom.fr
+    interfacesExposées:
+      - API tile.php
+      - services WMS
+      - appel à la carte mapwcat.php
   data:
     objet: répertoire ou volume partagé contenant les données pour shomgt
     mode: stockage
-    note: éventuellement volume partagé docker
+    note:
+      - éventuellement volume partagé docker
+      - documenté dans data/README.md
+    interfacesExposées:
+      - fichiers de data lus directement par view et écrits directement par updt
   updt:
     objet: construit ou met à jour à partir de sgserver les données data nécessaires à view
     mode: CLI
@@ -212,6 +220,8 @@ découpageEnComposantsV4:
     utiliseDe:
       sgserver: les données exposées par sgserver
     note: dockerisable
+    interfacesExposées:
+      - cmde CLI main.php
   sgserver:
     objet: expose la dernière version de chaque carte, le libellé de cette version, les cartes obsolètes, et mapcat
     mode: Web
@@ -232,6 +242,8 @@ découpageEnComposantsV4:
         - version 0 utilisée par updt V3, image docker 0.6
         - version 1 utilisée par updt V3, image docker > 0.6
         - version 4 utilisée par updt V4
+    interfacesExposées:
+      - API sgserver/index.php
   mapStore:
     objet: entrepôt des versions des cartes du portefeuille, définit pour chaque carte sa version courante ou son obsolescence
     mode: stockage + API
@@ -253,28 +265,39 @@ découpageEnComposantsV4:
         - gestion de la version courante et marquage d'une carte comme retirée
         - suppresion 
     structure: voir '#/structureMapStore' A REVOIR
+    interfacesExposées:
+      - aujourd'hui la structure et les fichiers sont exploitées par
+        - sgserver
+        - bo
+        - dashboard
+      - et modifié par bo
   mapcat:
-    objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par updt
+    objet: gère le catalogue de cartes, diffusé par sgserver et utilisé par updt et bo
     offreATous: le contenu du catalogue
     utiliseDe:
       gan: la dernière version de la synthèse des GANs pour comparaison au contenu du catalogue et corrections éventuelles
     miseAJourPar:
       - la mise à jour est complexe
       - la version initiale de MapCat existe sous la forme d'un fichier Yaml
-      - les cartes du compatiment selected de ce fichier sont chargées en base qui peut être modifiée par BO
+      - les cartes du compartiment selected de ce fichier sont chargées en base qui peut être modifiée par BO
       - la version de référence de ce compartiment est celle en base
       - le fichier Yaml est conservé comme sauvegarde et peut être comparé avec la version en base
       - la version de référence des 2 autres compartiments est celle du fichier
     note:
-      - comporte 3 compartiments
-        - stored, les cartes dont il existe au moins une version dans mapStore, que la carte soit obsolète ou non
+      - composé de 3 compartiments
+        - selected, les cartes sélectionnés dans le portefeuille dont il existe au moins une version dans mapStore,
+          que la carte soit obsolète ou non
         - uninteresting, les cartes intersectant la ZEE mais inutiles pour décrire les espaces sur lesquels la France
           exerce ses droits.
-        - deleted, les cartes qui ont été présentes mais qui ne le sont plus
+        - deleted, les cartes qui ont été présentes dans le portefeuille mais qui ne le sont plus
           - mapStore n'en conserve plus de versions
           - sgserver ne les mentionne pas
       - MapCat peut être comparé au GAN pour identifier des écarts et éventuellement les corriger
         - s'ils ne sont pas corrigés, ces écarts doivent être justifiés
+    interfacesExposées:
+      - inclusion de mapcat.inc.php
+      - lecture de mapcat.yaml et mapcat.schema.yaml
+      - script mapcat.php
   vect:
     objet: |
       expose
@@ -286,6 +309,9 @@ découpageEnComposantsV4:
       dashboard: les silhouettes des cartes et les contours simplifiés de la ZEE
     utiliseDe:
       shomWfs: le serveur WFS du Shom
+    interfacesExposées:
+      - inclusion de frzee.inc.php
+      - script web updatecolls.php
   dashboard:
     objet: |
       - expose un tableau de bord permettant d'identifier dans le portefeuille
@@ -295,7 +321,6 @@ découpageEnComposantsV4:
     mode: Web
     offreA:
       cmdeShom: cartes à commander
-      bo: cartes à marquer obsolètes
     utiliseDe:
       mapcat: le catalogue des cartes avec les infos stables
       portfolio:
@@ -306,6 +331,8 @@ découpageEnComposantsV4:
           - champ 'version'
           - champ 'revision' ou si non défini champ 'creation' (PAS COMPATIBLE !!!!!!!!!!!!!!!!!!!!!!!!!!!!)
       shomft: les silhouettes des cartes et les contours simplifiés de la ZEE
+    interfacesExposées:
+      - script web index.php
   gan:
     objet: moissonne le site GAN du Shom et stocke le résultat pour l'exposer
     mode: CLI
@@ -314,6 +341,10 @@ découpageEnComposantsV4:
       mapcat: infos GAN restructurées par carte conformément au schema gans.schema.yaml
     utiliseDe:
       gan.shom.fr: le site GAN du Shom
+    interfacesExposées:
+      - script CLI gan.php pour moissonner le GAN
+      - fichier gans.yaml et gans.pser pour consulter le GAN
+      - inclusion gan.inc.php
   bo:
     objet: mettre à jour le portefeuille et mapcat
     mode: Web
@@ -326,7 +357,9 @@ découpageEnComposantsV4:
       mapcat: modification de l'entrée du catalogue pour une carte
     utiliseDe:
       cmdeShom: cartes obtenues du Shom
-      dashboard: numéros des cartes à marquer comme obsolètes
+      dashboard: numéros des cartes à commander au Shom ou à marquer comme obsolètes
+    interfacesExposées:
+      - plusieurs scripts web
   cmdeShom:
     objet: commande manuelle des cartes au Shom à partir des infos du dashboard
     offreA:

@@ -146,7 +146,7 @@ class Request2GBox {
   // transforme en GBox une requête sur une tuile ou null si l'URI ne correspond pas à une requête sur une tuile
   static function tile(string $request_uri): ?\gegeom\GBox {
   //static function tile(string $request_uri): ?GBox {
-    if (!preg_match('!^/shomgt/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
+    if (!preg_match('!^/view/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";
     $ebox = \Zoom::tileEBox(intval($matches[1]), intval($matches[2]), intval($matches[3])); // $ebox en coord. WebMercator
@@ -155,14 +155,14 @@ class Request2GBox {
 
   static function test(): void {
     if (0) { // @phpstan-ignore-line // test WMS
-      $request_uri = '/shomgt/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
+      $request_uri = '/view/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
         .'&BBOX=45.59043706550564679,-1.081144577564866704,45.64622396475353838,-0.9709213645309664464'
         .'&CRS=EPSG:4326&WIDTH=1463&HEIGHT=740&LAYERS=gtpyr&STYLES=&FORMAT=image/png'
         .'&DPI=96&MAP_RESOLUTION=96&FORMAT_OPTIONS=dpi:96&TRANSPARENT=TRUE';
       echo "<pre>",Yaml::dump(self::wms($request_uri), 4);
     }
     elseif (1) { // test tile
-      echo "<pre>",Yaml::dump(self::tile('/shomgt/tile.php/gtpyr/18/128733/91496.png'), 4);
+      echo "<pre>",Yaml::dump(self::tile('/view/tile.php/gtpyr/18/128733/91496.png'), 4);
     }
     die("Fin ligne ".__LINE__);
   }
@@ -207,14 +207,14 @@ class HeatData {
   
   static function test(): void {
     if (0) { // @phpstan-ignore-line
-      $request_uri = '/shomgt/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
+      $request_uri = '/view/wms.php?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap'
         .'&BBOX=-1158270.138820303138%2C5982585.920146320947%2C1158270.138820303138%2C6833190.553342481144'
         .'&CRS=EPSG%3A3857&WIDTH=1920&HEIGHT=705&LAYERS=gtpyr&STYLES='
         .'&FORMAT=image%2Fpng&DPI=90&MAP_RESOLUTION=90&FORMAT_OPTIONS=dpi%3A90&TRANSPARENT=TRUE';
       echo Yaml::dump(['HeatData::fromWmsRequest'=> self::fromWmsRequest($request_uri)]);
     }
     elseif (1) {
-      $request_uri = '/shomgt/tile.php/gtpyr/18/132703/90142.png';
+      $request_uri = '/view/tile.php/gtpyr/18/132703/90142.png';
       echo Yaml::dump(['HeatData::fromTileRequest'=> self::fromTileRequest($request_uri)]);
     }
     die("Fin ligne ".__LINE__);
@@ -358,10 +358,10 @@ switch ($action = $_GET['action'] ?? null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css"/>
     <!-- styles nécessaires pour le mobile -->
-    <link rel='stylesheet' href='../shomgt/leaflet/llmap.css'>
+    <link rel='stylesheet' href='../view/leaflet/llmap.css'>
     <script src="https://unpkg.com/leaflet@1.9/dist/leaflet.js"></script>
     <!-- plug-in d'appel des GeoJSON en AJAX -->
-    <script src='../shomgt/leaflet/leaflet-ajax.js'></script>
+    <script src='../view/leaflet/leaflet-ajax.js'></script>
     <!-- chgt du curseur -->
     <style>
     .leaflet-grab {
@@ -391,7 +391,7 @@ switch ($action = $_GET['action'] ?? null) {
       var baseLayers = {
         // PYR
         "Pyramide GéoTIFF" : new L.TileLayer(
-          shomgturl+'shomgt/tile.php/gtpyr/{z}/{x}/{y}.png',
+          shomgturl+'view/tile.php/gtpyr/{z}/{x}/{y}.png',
           { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
         ),
         // OSM
@@ -411,10 +411,10 @@ switch ($action = $_GET['action'] ?? null) {
         "Logs" : new L.GeoJSON.AJAX(shomgturl+'bo/accesslog.php?action=geojson'+geojsonParams, {
           style: { fillColor: 'LightBlue', color: 'DarkBlue', weight: 1, fillOpacity: 0.1}, minZoom: 0, maxZoom: 18
         }),
-        "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/delmar.geojson', {
+        "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'view/geojson/delmar.geojson', {
           style: { color: 'SteelBlue'}, minZoom: 0, maxZoom: 18
         }),
-        "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/frzee.geojson', {
+        "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'view/geojson/frzee.geojson', {
           style: { color: 'blue'}, minZoom: 0, maxZoom: 18
         })
       };
@@ -495,10 +495,10 @@ EOT;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css"/>
     <!-- styles nécessaires pour le mobile -->
-    <link rel='stylesheet' href='../shomgt/leaflet/llmap.css'>
+    <link rel='stylesheet' href='../view/leaflet/llmap.css'>
     <script src="https://unpkg.com/leaflet@1.9/dist/leaflet.js"></script>
     <!-- plug-in d'appel des GeoJSON en AJAX -->
-    <script src='../shomgt/leaflet/leaflet-ajax.js'></script>
+    <script src='../view/leaflet/leaflet-ajax.js'></script>
     <!-- plug-in HeatMap -->
     <script src="js/leaflet-heat.js"></script>
     <!-- chgt du curseur -->
@@ -529,7 +529,7 @@ EOT;
       var baseLayers = {
         // PYR
         "Pyramide GéoTIFF" : new L.TileLayer(
-          shomgturl+'shomgt/tile.php/gtpyr/{z}/{x}/{y}.png',
+          shomgturl+'view/tile.php/gtpyr/{z}/{x}/{y}.png',
           { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
         ),
         // OSM
@@ -547,10 +547,10 @@ EOT;
   
       var overlays = {
         "HeatMap": new L.heatLayer($data, {radius: 25}),
-        "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/delmar.geojson', {
+        "Délim. maritimes (Shom)" : new L.GeoJSON.AJAX(shomgturl+'view/geojson/delmar.geojson', {
           style: { color: 'SteelBlue'}, minZoom: 0, maxZoom: 18
         }),
-        "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'shomgt/geojson/frzee.geojson', {
+        "ZEE simplifiée" : new L.GeoJSON.AJAX(shomgturl+'view/geojson/frzee.geojson', {
           style: { color: 'blue'}, minZoom: 0, maxZoom: 18
         })
       };
