@@ -86,18 +86,18 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
     dont le [format de livraison
     est bien défini](https://services.data.shom.fr/static/specifications/Descriptif_Contenu_geotiff.pdf) ;
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html) dont le format de livraison
-    n'est pas fixé et varie d'une carte à l'autre. ShomGT expose les cartes spéciales suivantes:
+    n'est pas fixé et varie d'une carte à l'autre. ShomGT expose les 9 cartes spéciales suivantes:
     - les 7 cartes d'action de l'Etat en mer (AEM),
     - la carte des délimitations des zones maritimes et la carte Manche GRID.
 - **Fac similé** : carte normale reproduction d'une carte étrangère, son format de livraison peut être légèrement différent
   de celui des cartes normales.
-- **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
+- **version** : une carte est livrée dans une certaine version qui est exprimée en 2 parties:
   - l'année d'édition ou de publication de la carte,
   - le numéro de la correction sur l'édition.
     Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devait la reporter sur la carte.  
   
-  Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{correction}, où {année} est l'année d'édition
-  ou de publication de la carte et {correction} est le numéro de correction sur cette édition.
+  Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{#correction}, où {année} est l'année d'édition
+  ou de publication de la carte et {#correction} est le numéro de correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.  
   Certaines cartes spéciales ont un identifiant spécifique de version avec uniquement l'année de publication.
 - **carte obsolète** : carte retirée par le Shom de son catalogue, et qui est donc retirée du portefeuille ShomGT,
