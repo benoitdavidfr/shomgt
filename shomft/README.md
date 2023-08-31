@@ -62,5 +62,5 @@ et de mettre à disposition dans le projet les couches vecteur GeoJSON suivantes
   - `DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary` : limite d'espace maritime revendiqué par la France sans accord
   - `DELMAR_BDD_WFS:au_maritimeboundary_territorialsea` : limite extérieure de la mer territoriale
 
-Pour actualiser les fichiers `gt.json`, `aem.json` et `delmar.json`, il suffit de les supprimer
-et d'appeler /ft.php/collections/{collection}/items où {collection} est respectivement `gt`, `aem` ou `delmar`.
+Le script `updatecolls.php` permet d'actualiser les fichiers `gt.json`, `aem.json` et `delmar.json`
+à partir du serveur WFS du Shom.
