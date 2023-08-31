@@ -310,7 +310,7 @@ class GBox extends BBox {
    * @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string} $param
    */
   function __construct(array|string $param=[]) {
-    echo "GBox::__construct(",json_encode($param),")<br>\n";
+    //echo "GBox::__construct(",json_encode($param),")<br>\n";
     if (is_array($param) && array_key_exists('SW', $param) && array_key_exists('NE', $param)) {
       foreach(['SW','NE'] as $cornerId) {
         if (is_string($param[$cornerId])) {
