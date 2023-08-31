@@ -1,4 +1,4 @@
-# Module sgserver de ShomGT3
+# Module sgserver de ShomGT
 L'objectif de sgserver est d'exposer à *sgupdt* les cartes du Shom gérées dans un répertoire appelé **shomgeotiff**.
 Il est mis à jour régulièrement grâce à *dashboard*.
 
@@ -9,12 +9,12 @@ Il est mis à jour régulièrement grâce à *dashboard*.
 ## 2. Entrepôt shomgeotiff des cartes
 Le répertoire shomgeotiff contient 2 sous-répertoires:
 
-- `archives` qui contient un sous-répertoire par carte du portefeuille contenant d'une part la liste des versions conservées
-  pour cette carte avec pour chaque version:
-  - un fichier `{mapNum}-{version}.7z` de carte correspondant au fichier 7z livré par le Shom,
-  - un fichier `{mapNum}-{version}.md.json` contenant quelques champs de métadonnées,
-    spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
-  et, d'autre part, si la carte est obsolète un fichier `{num}-{date}.md.json` contenant `{"status": "obsolete"}`
+- `archives` qui contient un sous-répertoire par carte du portefeuille contenant:
+  - d'une part la liste des versions conservées pour cette carte avec pour chaque version:
+    - un fichier `{mapNum}-{version}.7z` de carte correspondant au fichier 7z livré par le Shom,
+    - un fichier `{mapNum}-{version}.md.json` contenant quelques champs de métadonnées,
+      spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
+  - d'autre part, si la carte est obsolète un fichier `{num}-{date}.md.json` contenant `{"status": "obsolete"}`
 - `current` qui contient
   - d'une part pour chaque carte non obsolète 2 liens symboliques:
     - vers l'archive 7z de sa dernière version
