@@ -99,11 +99,11 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{#correction}, où {année} est l'année d'édition
   ou de publication de la carte et {#correction} est le numéro de correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.  
-  Certaines cartes spéciales ont un identifiant spécifique de version avec uniquement l'année de publication.
+  Certaines cartes spéciales ont pour identifiant de version uniquement l'année de publication.
 - **carte obsolète** : carte retirée par le Shom de son catalogue, et qui est donc retirée du portefeuille ShomGT,
 - **carte périmée** : carte pour laquelle le Shom distribue une versions plus récente que celle du portefeuille ;
-  une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence du nombre de corrections
-  apportées.
+  une carte du portefeuille peut être plus ou moins périmée et cette péremption peut être mesurée
+  par la différence du nombre de corrections apportées.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.
   Les actualisations sont publiées chaque semaine (le jeudi) et datée par un libellé de 4 chiffres
@@ -121,10 +121,9 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF).
   Une Image peut ne pas être géoréférencée dans les 2 cas suivants :
   - certaines cartes ne comportent pas de zone principale mais sont uniquement composées de cartouches ;
-    dans ce cas la livraison du Shom comporte une image de la carte globale qui n'est pas géoréférencée,
-  - plusieurs cartes spéciales ne sont pas géoréférencées.
-  De plus quelques images sont référencées mais leur référencement est erroné
-  et ne peut être interprété par certains logiciels.
+    dans ce cas l'image de la carte globale livrée par le Shom n'est pas géoréférencée,
+  - plusieurs cartes spéciales ne sont pas géoréférencées et sont même parfois livrées uniquement sous la forme d'un fichier PDF.
+  De plus quelques géoréférencements d'images sont erronés et ne peuvent pas être interprétés par certains logiciels.
 - **système de coordonnées**: Tous les fichiers GéoTIFF utilisés dans ShomGT sont fournis par le Shom
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator)
   dans le [système géodésique WGS84](https://fr.wikipedia.org/wiki/WGS_84),
@@ -142,20 +141,20 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   - le niveau de zoom 0 correspond à un affichage de la Terre entière en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zoom n-1.
   
-  ShomGT utilise 19 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
-- **couches de données**: dans ShomGT les images des cartes normales sont réparties dans des 12 couches image d'échelle homogène.
+  ShomGT utilise 19 niveaux de zoom (de 0 à 18), correspondant potentiellement à plus de 366 milliards de tuiles.
+- **couches de données**: dans ShomGT les images des cartes normales sont réparties dans 12 couches image d'échelle homogène.
   dont les dénominateurs sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
   40M (0-5), 10M (6), 4M (7), 2M (8), 1M (9), 500k (10), 250k (11), 100k (12), 50k (13), 25k (14), 12k (15), 5k (16-18).  
   Chacune de ses couches est identifiée par la chaine **gt** suivie du dénominateur de l'échelle.  
   De plus:
     - la couche **gtpyr** sélectionne la couche la plus appropriée parmi les 12 couches ci-dessus
-      en fonction du niveau de zoom défini par l'appel,
+      en fonction du niveau de zoom défini par l'appel de l'API,
     - la couche **gtaem** contient les 7 cartes Action de l'Etat en Mer (AEM)
     - la couche **gtMancheGrid** contient la carte MancheGrid,
     - la couche **gtZonMar** contient la carte de délimitation des zones maritimes.
   
-  Enfin, à chacune des 16 couches définies ci-dessus est associée une couche de leur numéro,
+  Enfin, à chacune des 16 couches définies ci-dessus est associée une couche des numéros de carte,
   permettant de repérer une carte par son numéro.
   
   Par ailleurs, ShomGT met à disposition les couches vecteur suivantes :
