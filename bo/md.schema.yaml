@@ -88,8 +88,9 @@ oneOf:
     additionalProperties: false
     properties:
       version:
-        description: le nom du fichier tif ou pdf contenant la carte
+        description: le nom du fichier tif ou pdf contenant la carte sans l'extension et sous la forme {mapNum}-{année}
         type: string
+        pattern: ^\d{4}-\d{4}$
       dateArchive:
         description: date du fichier tif/pdf dans l'archive, la seule date disponible en l'absence de MD ISO
         type: string
@@ -141,7 +142,7 @@ examples:
       role: revision
       value: '2023-04-12'
     dateArchive: '2023-04-12'
-  - version: 7330_2016.tif
+  - version: 7330-2016
     dateArchive: '2016-01-19'
   - status: obsolete
     date: '2016-01-19'
