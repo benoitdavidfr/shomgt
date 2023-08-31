@@ -37,10 +37,13 @@ forks: [ /geovect/gegeom ]
 */}
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/coordsys.inc.php';
 require_once __DIR__.'/zoom.inc.php';
 require_once __DIR__.'/gebox.inc.php';
 require_once __DIR__.'/sexcept.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
   echo "<html><head><meta charset='UTF-8'><title>gegeom</title></head><body><pre>";
@@ -110,7 +113,7 @@ abstract class Geometry {
   /** @param TPos|TLPos|TLLPos|TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   
-  // récupère le type sans l'espace de nom
+  // récupère le nom de la classe sans l'espace de nom
   function type(): string { return substr(get_class($this), strlen('gegeom\\')); }
   
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
@@ -156,11 +159,12 @@ abstract class Geometry {
   // Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)
   /** @return list<Point|LineString|Polygon> */
   function decompose(): array {
-    $transfos = ['\gegeom\MultiPoint'=>'\gegeom\Point', '\gegeom\MultiLineString'=>'\gegeom\LineString', '\gegeom\MultiPolygon'=>'\gegeom\Polygon'];
+    $transfos = ['MultiPoint'=>'Point', 'MultiLineString'=>'LineString', 'MultiPolygon'=>'Polygon'];
     if (isset($transfos[$this->type()])) {
       $elts = [];
-      foreach ($this->coords as $eltcoords)
-        $elts[] = new $transfos[$this->type()]($eltcoords);
+      foreach ($this->coords as $eltcoords) {
+        $elts[] = new ('\gegeom\\'.$transfos[$this->type()])($eltcoords);
+      }
       return $elts;
     }
     else // $this est un élément
@@ -1055,13 +1059,6 @@ class MultiPolygon extends Geometry {
     else
       throw new \SExcept("Erreur d'appel de MultiPolygon::inters() avec un objet de ".get_class($geom), self::ErrorInters);
   }
-  
-  /*static function haggregate(array $elts) - NON UTILISE {
-    $coords = [];
-    foreach ($elts as $elt)
-      $coords[] = $elt->coords;
-    return new MultiPolygon($coords);
-  }*/
 }
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe MultiPolygon
@@ -1242,33 +1239,13 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
       }',
       'Polygon No Hole'=> '{
          "type": "Polygon",
-         "coordinates": [
-             [
-                 [100.0, 0.0],
-                 [101.0, 0.0],
-                 [101.0, 1.0],
-                 [100.0, 1.0],
-                 [100.0, 0.0]
-             ]
-         ]
+         "coordinates": [[[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]]
      }',
      'Polygon with Holes'=> '{
          "type": "Polygon",
          "coordinates": [
-             [
-                 [100.0, 0.0],
-                 [101.0, 0.0],
-                 [101.0, 1.0],
-                 [100.0, 1.0],
-                 [100.0, 0.0]
-             ],
-             [
-                 [100.8, 0.8],
-                 [100.8, 0.2],
-                 [100.2, 0.2],
-                 [100.2, 0.8],
-                 [100.8, 0.8]
-             ]
+             [[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]],
+             [[100.8, 0.8],[100.8, 0.2],[100.2, 0.2],[100.2, 0.8],[100.8, 0.8]]
          ]
      }',
      'MultiPoint'=> '{
@@ -1337,7 +1314,11 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
     ]; // les exemples de la RFC (Annex A)
     foreach ($RFC_EXAMPLES as $label => $example) {
       $geom = Geometry::fromGeoArray(json_decode($example, true));
-      echo "$label ->"; print_r($geom);
+      //echo Yaml::dump([$label => $geom->asArray()], 4);
+      $decompose = [];
+      foreach ($geom->decompose() as $g)
+        $decompose[] = $g->asArray();
+      echo Yaml::dump(["decompose($label)" => $decompose], 5);
     }
   }
 }
