@@ -32,6 +32,7 @@ journal:
   31/8/2023:
     - améliorations de gebox.inc.php
     - mise en prod de 4.3 et merge dans main
+    - création d'une branche shomgt4.4 et checkout dessus
   29/8/2023:
     - transfert des 2 opérations mapcat/index.php?action=(updateMapCatId|insertMapCat) sous la forme de méthodes de MapCatItem
       - utilisées dans bo/maparchive.php
