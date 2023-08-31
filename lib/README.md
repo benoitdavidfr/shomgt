@@ -1,10 +1,10 @@
-# Bibliothèque commune de scripts Php pour ShomGT3
+# Bibliothèque commune de fonctions et classes
 ### wmsserver.inc.php - définition de la classe abstraite WmsServer
 La classe abstraite **WmsServer** gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
 elle est indépendante des fonctionnalités du serveur de shomgt.
 Elle génère un fichier temporaire de log utile au déverminage.
 
-### layer.inc.php  - Définition des classes Layer, PyrLayer, LabelLayer et TiffLayer
+### layer.inc.php  - Classes Layer, PyrLayer, LabelLayer et TiffLayer
 Les 4 classes Layer, PyrLayer, LabelLayer et TiffLayer permettent de construire à partir de shomgt.yaml la structuration
 en couches et de l'exploiter au travers des méthodes map() qui recopie dans une image GD l'extrait de la couche
 correspondant à un rectangle et pour la classe TiffLayer la méthode items() qui génère en GeoJSON les silhouettes des GéoTiffs.
@@ -22,7 +22,7 @@ Les listes de couches sont initialisées notamment à partir du [fichier shomgt.
         - zoom.inc.php
         - isomd.inc.php
 
-### vectorlayer.inc.php - Définition de la classe VectorLayer gérant les couches d'objets vecteur
+### vectorlayer.inc.php - Classe VectorLayer gérant les couches d'objets vecteur
 La classe VectorLayer gère une couche d'objets vecteur et est utilisé par ../shomgt/wmsv.php qui implémente
 un serveur WMS pour les couches vecteur.
 #### inclus
@@ -34,7 +34,7 @@ Ce script définit la fonction geotiffs() qui tretourne la liste des GéoTiffs d
 #### inclus
         - envvar.inc.php
 
-### geotiff.inc.php - Définition de la classe GeoTiff implémentant des méthodes sur un GéoTiff
+### geotiff.inc.php - Classe GeoTiff implémentant des méthodes sur un GéoTiff
 La classe GeoTiff définit plusieurs méthodes sur un GéoTiff,
 notamment la méthode copyImage() qui recopie dans un GeoRefImage la partie du GéoTiff
 qui correspond à une boite en coordonnées WorldMercator.
@@ -42,11 +42,11 @@ qui correspond à une boite en coordonnées WorldMercator.
         - gdalinfo.inc.php
         - envvar.inc.php
 
-### grefimg.inc.php  - Définition de la classe GeoRefImage gérant une image géoréférencée
+### grefimg.inc.php  - Classe GeoRefImage gérant une image géoréférencée
 La classe GeoRefImage propose différentes méthodes sur une image géoréférencée
 en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php) avec:
 
-   - la définition d'un espace en coordonnées utilisateurs formalisé par une boite englobante
+   - la définition d'un espace en coordonnées utilisateurs formalisé par une boite englobante (EBox)
      dans un système de coordonnées projeté comme WorldMercator,
    - une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones.
 #### inclus
@@ -58,14 +58,15 @@ Ce fichier définit la classe abstraite Geometry, des sous-classes
 par type de [géométrie GeoJSON](https://tools.ietf.org/html/rfc7946)
 ainsi qu'une classe Segment utilisé pour certains calculs.
 Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
-puis en apppelant la méthode Geometry::fromGeoJSON().
+puis en apppelant la méthode Geometry::fromGeoArray().
 #### inclus
         - coordsys.inc.php
         - zoom.inc.php
         - gebox.inc.php
         - sexcept.inc.php
 
-### gebox.inc.php - définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes
+### gebox.inc.php - Classes définissant un BBox avec des coord. géographiques ou euclidiennes
+La classe abstraite BBox définit une boite englobante en coordonnées géographiques ou euclidiennes.  
 La classe GBox définit une boite en coordonnées géographiques.  
 La classe EBox définit une boite en coordonnées euclidiennes projetées (World Mercator ou WebMercator).
 #### inclus
@@ -74,16 +75,21 @@ La classe EBox définit une boite en coordonnées euclidiennes projetées (World
         - coordsys.inc.php
         - sexcept.inc.php
 
-### pos.inc.php - Définition des classes statiques Pos, LPos, LLPos
+### pos.inc.php - Types Pos, LPos, LLPos
 Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
 qui permet de construire les primitives géométriques.
 Ainsi:
-  - une position est stockée en Php comme une liste de 2 ou 3 nombres
-    et la classe Pos regroupe des méthodes statiques qui s'appliquent à une position,
-  - la classe LPos regroupe des méthodes statiques qui s'appliquent à une liste de positions, et
-  - la classe LLPos regroupe des méthodes statiques qui s'appliquent à une liste de listes de positions.
 
-### zoom.inc.php  - définition de la classe Zoom regroupant l'intelligence autour du tuilage et des niveaux de zoom
+  - le type Pos correspond à une position stockée en Php comme une liste de 2 ou 3 nombres
+    et la classe Pos regroupe des méthodes statiques qui s'appliquent à une position,
+  - le type LPos correspond à une liste de Pos
+    et la classe LPos regroupe des méthodes statiques qui s'appliquent à de telles listes, et
+  - le type LLPos correspond à une liste de LPos
+    et la classe LLPos regroupe des méthodes statiques qui s'appliquent à une valeur de ce type.
+
+Ces 3 types sont aussi définis en PhpStan respectivemet sous les libellés TPos, TLPos et TLLPos.
+
+### zoom.inc.php  - Classe Zoom regroupant l'intelligence autour du tuilage et des niveaux de zoom
 #### inclus
         - sexcept.inc.php
         - gebox.inc.php
@@ -94,8 +100,8 @@ les coordonnées géographiques WGS84 (utilisé pour fournir des informations) e
 #### inclus
         - sexcept.inc.php
 
-### jsonschema.inc.php - validation de la conformité d'une instance Php à un schéma JSON
-Code utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml.
+### jsonschema.inc.php - validation de la conformité d'une valeur Php à un schéma JSON
+Utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml.
 #### inclus
         - ../vendor/autoload.php
         - jsonschfrg.inc.php
@@ -103,14 +109,20 @@ Code utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma 
 ### jsonschfrg.inc.php
 Utilisé par schema/jsonschema.inc.php.
 
-### accesscntrl.inc.php - contrôle d'accès
+### mapcat.inc.php - charge le catalogue de cartes et sait retourner pour un gtname les infos correspondantes
 #### inclus
-        - log.inc.php
-        - config.inc.php
+        - envvar.inc.php
+        - execdl.inc.php
+        - gdalinfo.inc.php
 
 ### cache.inc.php -  gestion d'un cache simple des tuiles
 #### inclus
         - envvar.inc.php
+
+### accesscntrl.inc.php - contrôle d'accès
+#### inclus
+        - log.inc.php
+        - config.inc.php
 
 ### config.inc.php - fichier de config par défaut
 Retourne le  contenu du fichier de config.
@@ -134,6 +146,8 @@ Simplifie l'utilisation des variables d'environnement.
 
 ### errortile.inc.php - Génération d'une image d'erreur contenant le message d'erreur et l'identifiant de la tuile
 
+### readmapversion.inc.php - extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
+
 ### isomd.inc.php - Récupération de MD ISO d'un GéoTiff'
 #### inclus
         - envvar.inc.php
@@ -152,11 +166,3 @@ Simplifie l'utilisation des variables d'environnement.
 
 ### execdl.inc.php - fonctions execCmde() et download()
 Simplifie l'utilisation des commandes d'exécution d'un autre script et de téléchargement d'un fichier en Http.
-
-### mapcat.inc.php - charge le catalogue de cartes et sait retourner pour un gtname les infos correspondantes
-#### inclus
-        - envvar.inc.php
-        - execdl.inc.php
-        - gdalinfo.inc.php
-
-### readmapversion.inc.php - extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
