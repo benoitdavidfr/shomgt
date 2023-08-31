@@ -1,6 +1,7 @@
-# Module sgupdt de ShomGT3
-L'objectif de ce module est, en interrogeant [sgserver](../sgserver) en http, de construire et mettre à jour 
-les fichiers nécessaires à [shomgt](../shomgt), stockés dans un répertoire [data](../data).  
+# Module sgupdt de ShomGT
+L'objectif de ce module est de construire et mettre à jour dans le répertoire [data](../data)
+les fichiers nécessaires à [view](../view),
+à partir des fichiers 7z fournis par le Shom exposés par [sgserver](../sgserver).
 
 ### Variables d'environnement
 
@@ -53,16 +54,7 @@ Découpe un PNG correspondant à un GéoTiff et efface les zones spécifiées da
 Génère le fichier shomgt.yaml dans [data](../data/) après avoir vérifié sa conformité à son schéma JSON
 défini dans [shomgt.schema.yaml](shomgt.schema.yaml).
 #### inclus
-        - schema/jsonschema.inc.php
+        - ../lib/jsonschema.inc.php
         - ../lib/geotiffs.inc.php
         - ../lib/mapcat.inc.php
         - ../vendor/autoload.php
-
-### schema/jsonschema.inc.php - validation de la conformité d'une instance Php à un schéma JSON
-Code utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml.
-#### inclus
-        - ../vendor/autoload.php
-        - schema/jsonschfrg.inc.php
-
-### schema/jsonschfrg.inc.php
-Utilisé par schema/jsonschema.inc.php.

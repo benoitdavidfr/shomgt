@@ -94,6 +94,15 @@ les coordonnées géographiques WGS84 (utilisé pour fournir des informations) e
 #### inclus
         - sexcept.inc.php
 
+### jsonschema.inc.php - validation de la conformité d'une instance Php à un schéma JSON
+Code utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml.
+#### inclus
+        - ../vendor/autoload.php
+        - jsonschfrg.inc.php
+
+### jsonschfrg.inc.php
+Utilisé par schema/jsonschema.inc.php.
+
 ### accesscntrl.inc.php - contrôle d'accès
 #### inclus
         - log.inc.php

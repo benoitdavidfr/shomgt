@@ -28,7 +28,7 @@ dans un sous-répertoire par carte  nommé par le no de la carte
 et contenant pour chaque image de la carte:
 
 - un sous-répertoire contenant les fichiers PNG découpant l'image en dalles de taille maximum 1024 x 1024 ;
-  le nom de ce sous-répertoire constitue l'identifiant de l'image dans la carte,
+  le nom de ce sous-répertoire est l'identifiant de l'image dans la carte,
 - un fichier JSON avec les informations de géoréférencement du fichier GéoTiff initial,
 - un fichier XML avec les métadonnées ISO 19139 de l'image.
 
