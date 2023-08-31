@@ -31,15 +31,13 @@ Le fichier `{mapNum}.md.json` dontient les champs suivants extraits des MD ISO 1
 - `gan`: si la semaine GAN est définie dans le champ edition alors structure composée des 2 sous-champs:
   - `week`: le numéro de la semaine fourni par le Shom
   - `date`: la date correspondante au numéro de la semaine
-- `ganWeek` : si présent dans le champ ci-dessus, la semaine GAN de mise à jour de la carte, sinon null
-- `ganDate` : si `ganWeek` présente, traduction en date ISO dans le format `YYYY-MM-DD`
 - `dateMD` : date de création ou mise à jour structurée par les 2 sous-champs 
   - `type` : 'creation' ou 'revision'
   - `value` : valeur de la date sous la forme YYYY-MM-DD
 - `dateArchive`: date du fichier tif/pdf principal dans l'archive, dans de nombreux cas la meilleure estimation de date
 
 #### 2.1.2 Exemple du fichier `7107.md.json`
-Exemple d'un fichier pour lequel le champ `ganWeek` est défini
+Exemple d'un fichier pour lequel le champ `gan` est défini
 
     {
         "title": "7107 - Port de La Trinité-Sur-Mer, Port du Crouesty - Entrée du Golfe du Morbihan",
@@ -57,7 +55,7 @@ Exemple d'un fichier pour lequel le champ `ganWeek` est défini
         "dateArchive": "2023-05-11"
     }
 #### 2.1.3 Exemple du fichier `6680.md.json`
-Exemple d'un fichier pour lequel le champ `ganWeek` n'est pas défini
+Exemple d'un fichier pour lequel le champ `gan` n'est pas défini
 
     {
         "title": "6680 - De l'Ile d'Ouessant à l'Ile de Batz",

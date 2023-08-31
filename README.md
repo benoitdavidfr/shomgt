@@ -48,18 +48,18 @@ ShomGT4 se décompose dans les 7 modules suivants:
     *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
     issues du [GAN du Shom](#gan).
     Il exploite aussi, pour détecter de nouvelles cartes, la liste des cartes diffusée par le Shom dans son serveur WFS.
-    
-  - **[BO](bo)** est le module de gestion du portefeuille de cartes exposé par sgserver.
-    Il permet notamment d'ajouter de nouvelles versions des cartes.
   
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes comme le titre de la carte, sa couverture spatiale,
     la liste de ses cartouches, ....
-    Il est utilisé par *sgupdt* et consultable au travers de *sgserver*.
+    Il est notamment utilisé par *sgupdt* au travers de *sgserver*.
   
   - **[shomft](shomft)** expose différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
     Il comprend aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
     d'intérêt pour ShomGT dans *dashboard*.
+    
+  - **[BO](bo)** est le module de gestion du portefeuille de cartes exposé par sgserver.
+    Il permet notamment d'ajouter de nouvelles versions des cartes.
 
 Chacun de ces modules correspond à un répertoire ;
 en plus de ces 7 modules, une [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
