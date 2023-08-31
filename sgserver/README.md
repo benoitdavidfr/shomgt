@@ -14,15 +14,15 @@ Le répertoire shomgeotiff contient 2 sous-répertoires:
     - un fichier `{mapNum}-{version}.7z` correspondant au fichier 7z livré par le Shom,
     - un fichier `{mapNum}-{version}.md.json` contenant quelques champs de métadonnées,
       spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
-  - d'autre part, si la carte est obsolète un fichier `{num}-{date}.md.json` contenant `{"status": "obsolete"}`
+  - d'autre part, si la carte est obsolète un fichier `{mapNum}-{date}.md.json` contenant `{"status": "obsolete"}`
 - `current` qui contient
   - d'une part pour chaque carte non obsolète 2 liens symboliques:
     - nommé `{mapNum}.7z` vers l'archive 7z de sa dernière version
     - nommé `{mapNum}.md.json` vers le fichier de MD simplifié de sa dernière version
-  - d'autre part pour chaque carte obsolète 1 lien symbolique vers le le fichier `{num}-{date}.md.json`
+  - d'autre part pour chaque carte obsolète 1 lien symbolique vers le le fichier `{mapNum}-{date}.md.json`
   
-#### 2.1.1 Spécification du fichier `{num}.md.json`
-Le fichier `{num}.md.json` dontient les champs suivants extraits des MD ISO 19139 de la carte:
+#### 2.1.1 Spécification du fichier `{mapNum}.md.json`
+Le fichier `{mapNum}.md.json` dontient les champs suivants extraits des MD ISO 19139 de la carte:
 
 - `title` : titre de la carte extrait de `//gmd:identificationInfo/*/gmd:citation/*/gmd:title/*`
 - `alternate` : titre alternatif éventuel ou '', extrait de //gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle/*
