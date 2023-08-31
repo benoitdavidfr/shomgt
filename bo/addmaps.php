@@ -150,7 +150,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
     break;
   }
   case 'delete': { // suppression du fichier de la carte 
-    unlink($PF_PATH."/users/$login/$_POST[mapNum]");
+    unlink($PF_PATH."/users/$login/$_POST[mapNum].7z");
     echo "Suppresion de $_POST[mapNum] confirmée<br>\n";
     break;
   }
@@ -264,7 +264,7 @@ if ($mapNums) {
          "<td>$existingVersion</td>",
          "<td>$newVersion</td>",
          "<td><a href='?action=verifyMap&mapNum=$mapNum'>vérifier</a></td>",
-         "<td>",new \html\Form(submit: 'supprimer', hiddens: ['action'=>'delete','mapNum'=>$mapNum]),"</td>",
+         "<td>",new \html\Form(submit: 'supprimer', hiddens: ['action'=>'delete','mapNum'=>$mapNum], method: 'post'),"</td>",
          "</tr>\n";
   }
   echo "</table>\n";

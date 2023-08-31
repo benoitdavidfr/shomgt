@@ -10,6 +10,7 @@ require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../bo/lib.inc.php';
 require_once __DIR__.'/../bo/htmlform.inc.php';
+require_once __DIR__.'/../shomft/frzee.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
