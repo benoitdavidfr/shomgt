@@ -74,6 +74,7 @@ abstract class BBox {
    * @param string|TPos|TLPos|TLLPos $param
    */
   function __construct(array|string $param=[]) {
+    //echo "BBox::__construct(",json_encode($param),")<br>\n";
     if (!$param) {
       $this->min = [];
       $this->max = [];
@@ -108,11 +109,12 @@ abstract class BBox {
         throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
     }
     elseif (LPos::is($param)) { // $param est une liste de positions en cont. au moins une 
+      //echo "param est une LPos<br>\n";
       $min = $param[0];
       $max = $param[0];
       foreach ($param as $pos) {
         $min = Pos::min($min, $pos);
-        $max = Pos::max($min, $pos);
+        $max = Pos::max($max, $pos);
       }
       $this->min = $min;
       $this->max = $max;
@@ -316,7 +318,7 @@ class GBox extends BBox {
    * @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string} $param
    */
   function __construct(array|string $param=[]) {
-    //echo "GBox::__construct(",json_encode($param),")<br>\n";
+    echo "GBox::__construct(",json_encode($param),")<br>\n";
     if (is_array($param) && array_key_exists('SW', $param) && array_key_exists('NE', $param)) {
       foreach(['SW','NE'] as $cornerId) {
         if (is_string($param[$cornerId])) {

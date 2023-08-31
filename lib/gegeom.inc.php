@@ -96,8 +96,7 @@ abstract class Geometry {
   static function fromGeoArray(array $geom): Geometry|GeometryCollection {
     $type = $geom['type'] ?? null;
     if (in_array($type, self::HOMOGENEOUSTYPES) && isset($geom['coordinates'])) {
-      $type = "gegeom\\$type";
-      return new $type($geom['coordinates']); // @phpstan-ignore-line
+      return new (__NAMESPACE__.'\\'.$type)($geom['coordinates']); // @phpstan-ignore-line
     }
     elseif (($type=='GeometryCollection') && isset($geom['geometries'])) {
       $geoms = [];
@@ -109,12 +108,12 @@ abstract class Geometry {
       throw new \SExcept("Erreur de Geometry::fromGeoArray(".json_encode($geom).")", self::ErrorFromGeoArray);
   }
   
-  // fonction d'initialisation valable pour toutes les géométries homogènes
-  /** @param TPos|TLPos|TLLPos|TLLLPos $coords */
+  /** fonction d'initialisation valable pour toutes les géométries homogènes
+   * @param TPos|TLPos|TLLPos|TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   
-  // récupère le nom de la classe sans l'espace de nom
-  function type(): string { return substr(get_class($this), strlen('gegeom\\')); }
+  // retourne le nom du type GeoJSON qui est le nom de la classe sans l'espace de nom
+  function type(): string { return substr(get_class($this), strlen(__NAMESPACE__)+1); }
   
   // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
   /** @return array<int, string> */
@@ -163,7 +162,7 @@ abstract class Geometry {
     if (isset($transfos[$this->type()])) {
       $elts = [];
       foreach ($this->coords as $eltcoords) {
-        $elts[] = new ('\gegeom\\'.$transfos[$this->type()])($eltcoords);
+        $elts[] = new (__NAMESPACE__.'\\'.$transfos[$this->type()])($eltcoords);
       }
       return $elts;
     }
@@ -206,7 +205,7 @@ class Point extends Geometry {
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] + $v[0], $this->coords[1] + $v[1]]);
-    elseif (is_object($v) && (get_class($v) == 'gegeom\Point'))
+    elseif (is_object($v) && (get_class($v) == __NAMESPACE__.'\Point'))
       return new Point([$this->coords[0] + $v->coords[0], $this->coords[1] + $v->coords[1]]);
     else
       throw new \SExcept("Erreur dans Point:add(), paramètre ni position ni Point", self::ErrorBadParamInAdd);
@@ -220,7 +219,7 @@ class Point extends Geometry {
     */
     if (Pos::is($v))
       return new Point([$this->coords[0] - $v[0], $this->coords[1] - $v[1]]);
-    elseif (get_class($v) == 'gegeom\Point')
+    elseif (is_object($v) && get_class($v) == __NAMESPACE__.'\Point')
       return new Point([$this->coords[0] - $v->coords[0], $this->coords[1] - $v->coords[1]]);
     else
       throw new \SExcept(
@@ -741,8 +740,8 @@ class Polygon extends Geometry {
   function center(): array { return LPos::center($this->coords[0]); }
   function nbreOfPos(): int { return LElts::LLcount($this->coords); }
   function aPos(): array { return $this->coords[0][0]; }
-  function gbox(): GBox { return new GBox($this->coords); }
-  function ebox(): EBox { return new EBox($this->coords); }
+  function gbox(): GBox { return new GBox($this->coords[0]); }
+  function ebox(): EBox { return new EBox($this->coords[0]); }
   
   function distanceToPos(array $pos): float {
     if ($this->pointInPolygon($pos))
@@ -839,10 +838,13 @@ class Polygon extends Geometry {
   title: "function inters(Geometry $geom): bool - teste l'intersection entre les 2 polygones ou multi-polygones"
   */
   function inters(Geometry $geom, bool $verbose=false): bool {
-    if (get_class($geom) == 'gegeom\Polygon') {
+    if (get_class($geom) == __NAMESPACE__.'\Polygon') {
       // Si les boites ne s'intersectent pas alors les polygones non plus
-      if (!$this->ebox()->inters($geom->ebox()))
+      if (!$this->ebox()->inters($geom->ebox())) {
+        if ($verbose)
+          echo "Les 2 boites ne s'intersectent pas<br>\n";
         return false;
+      }
       // si un point de $geom est dans $this alors il y a intersection
       foreach($geom->geoms() as $i=> $ls) {
         foreach ($ls->coords as $j=> $pos) {
@@ -876,7 +878,7 @@ class Polygon extends Geometry {
       // Sinon il n'y a pas intersection
       return false;
     }
-    elseif (get_class($geom) == 'gegeom\MultiPolygon') {
+    elseif (get_class($geom) == __NAMESPACE__.'\MultiPolygon') {
       return $geom->inters($this);
     }
     else
