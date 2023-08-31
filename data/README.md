@@ -1,6 +1,7 @@
 # Organisation des fichiers dans data
-**data** est un sous-répertoire du répertoire principal de ShomGT qui contient les données
- produites par le [module sgupdt](../sgupdt) et exploitées par [le module view](../view).
+**data** est un sous-répertoire du répertoire principal de ShomGT contenant les données
+structurées afin d'être facilement et efficacement utilisées par [le module view](../view).
+Ces données sont produites par le [module sgupdt](../sgupdt).
 Lorsque ces modules sont déployés comme conteneurs Docker, *data* est un volume partagé entre ces conteneurs.
 
 Outre ce fichier de documentation, *data* contient le fichier `shomgt.yaml` et 3 sous-répertoires.
