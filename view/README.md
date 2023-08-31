@@ -1,4 +1,4 @@
-# Module shomgt de ShomGT3
+# Module view de ShomGT
 
 Ce module propose les services suivants :
 
@@ -30,7 +30,7 @@ Ce module utilise les variables d'environnement suivantes:
   - `{server}` est l'adresse du serveur de bases MySql,
   - `{base}` est le nom de la base.
 - `SHOMGT3_MAPWCAT_FORCE_HTTPS`: si `true` alors https est forcé dans mapwcat ;
-  cette variable est nécessaire par exemple pour utiliser shomgt derrière un proxy inverse Traefik
+  cette variable est nécessaire par exemple pour utiliser view derrière un proxy inverse Traefik
 
 ## Liste des fichiers Php
 
@@ -59,7 +59,7 @@ Exemple:
 - Le fichier `../secrets/tileaccess.inc.php` n'est inclus que s'il existe.
   Il permet de blacklister certaines adresses IP abusives,
   par exemple à partir de laquelle quelqu'un cherche à aspirer l'ensemble des tuiles.
-  Ces adresses IP black sont listées dans le fichier ../secrets/secretconfig.inc.php
+  Ces adresses IP blacklistées sont dans le fichier ../secrets/secretconfig.inc.php
 
 - Le fichier `../vendor/autoload.php` charge le [composant externe symfony/yaml](../docs/composantexterne.md)
   intégré avec l'utilitaire composer.
@@ -140,13 +140,12 @@ Les points d'accès sont:
         - ../lib/accesscntrl.inc.php
 
 ### dl.php - téléchargements appelé depuis la carte avec un gtname en paramètre
-Propose de télécharger pour un GéoTiff :
+Propose de télécharger pour une image :
 
-- le GéoTiff au format PNG, ce qui permet de l'afficher facilement dans un navigateur,
-- les métadonnées ISO 19139 du GéoTiff au format XML,
-- les infos de gdalinfo du GéoTiff, notamment son géoréférencement, au format JSON,
-- la carte contenant le GéoTiff comme archive 7z.
-
+- l'image au format PNG, ce qui permet de l'afficher facilement dans un navigateur,
+- les métadonnées ISO 19139 de l'image au format XML,
+- les infos de gdalinfo du GéoTiff initial, notamment son géoréférencement, au format JSON,
+- la carte contenant l'image comme archive 7z.
 #### inclus
         - ../lib/gdalinfo.inc.php
         - ../lib/envvar.inc.php

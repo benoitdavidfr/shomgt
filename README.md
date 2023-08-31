@@ -119,7 +119,7 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   correspondant aux différentes zones géographiques de la carte, souvent une zone principale et des cartouches,
   chaque zone corespond dans la livraison à une image géoréférencée
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF).
-  Une Image peut ne pas être géoréférencée dans les 2 cas suivants :
+  Dans les 2 cas suivants une Image n'est pas géoréférencée:
   - certaines cartes ne comportent pas de zone principale mais sont uniquement composées de cartouches ;
     dans ce cas l'image de la carte globale livrée par le Shom n'est pas géoréférencée,
   - plusieurs cartes spéciales ne sont pas géoréférencées et sont même parfois livrées uniquement sous la forme d'un fichier PDF.
