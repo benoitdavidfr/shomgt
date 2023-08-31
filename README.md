@@ -34,7 +34,7 @@ ShomGT4 se décompose dans les 7 modules suivants:
     en interrogeant *sgserver*,
     et les stocke dans un [répertoire data décrit ici](data).  
     
-    *shomgt* et *sgupdt* peuvent être déployés comme conteneurs Docker,
+    *view* et *sgupdt* peuvent être déployés comme conteneurs Docker,
     dans ce cas le répertoire data constitue un volume partagé entre ces 2 conteneurs.
     
   - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
@@ -75,7 +75,7 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
     - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre,
     - plus quelques cartes à proximité de la ZEE française et jugée utiles.
 - **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive),
-  intégrant parfois les extensions du plateau continental.
+  intégrant parfois les extensions du [plateau continental](https://fr.wikipedia.org/wiki/Plateau_continental_(droit)).
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
   chaque carte est identifiée par un numéro sur 4 chiffres
   qui est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
@@ -85,9 +85,10 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
     (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
     dont le [format de livraison
     est bien défini](https://services.data.shom.fr/static/specifications/Descriptif_Contenu_geotiff.pdf) ;
-  - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html),
-    principalement les cartes d'action de l'Etat en mer (AEM), dont le format de livraison n'est pas fixé 
-    et varie d'une carte à l'autre.
+  - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html) dont le format de livraison
+    n'est pas fixé et varie d'une carte à l'autre. ShomGT expose les cartes spéciales suivantes:
+    - les 7 cartes d'action de l'Etat en mer (AEM),
+    - la carte des délimitations des zones maritimes et la carte Manche GRID.
 - **Fac similé** : carte normale reproduction d'une carte étrangère, son format de livraison peut être légèrement différent
   de celui des cartes normales.
 - **version** : une carte est livrée dans une certaine version qui s'exprime en 2 parties:
