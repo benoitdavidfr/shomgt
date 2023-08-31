@@ -1,14 +1,14 @@
 # Organisation des fichiers dans data
-**data** est un sous-répertoire du répertoire principal de ShomGT contenant les données
-structurées afin d'être facilement et efficacement utilisées par [le module view](../view).
-Ces données sont produites par le [module sgupdt](../sgupdt).
+**data** contient les données structurées afin d'être facilement et efficacement utilisées par [le module view](../view)
+et produites par le [module sgupdt](../sgupdt).
+C'est un sous-répertoire du répertoire principal de ShomGT.
 Lorsque ces modules sont déployés comme conteneurs Docker, *data* est un volume partagé entre ces conteneurs.
 
 Outre ce fichier de documentation, *data* contient le fichier `shomgt.yaml` et 3 sous-répertoires.
 
 ## Le fichier shomgt.yaml
 Le fichier `shomgt.yaml` définit les couches d'images par leur identifiant et les images qu'elles contiennent.
-Chaque image est identifiée dans la carte par le nom de base du fichier GéoTiff livré par le Shom.
+Chaque image est identifiée par le nom de base du fichier GéoTiff livré par le Shom.
 Dans le fichier `shomgt.yaml` chaque couche liste les images qu'elle contient avec comme clé l'identifiant de l'image
 et comme propriétés au moins son titre et la couverture spatiale de la zone cartographiée à l'intérieur de son cadre.
 Une image peut en outre comporter les propriétés suivantes:
