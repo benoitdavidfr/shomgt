@@ -208,14 +208,15 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
   function georefBox(): ?\gegeom\GBox { // retourne null ssi aucun tif géoréférencé
     if ($this->main->georefBox())
       return $this->main->georefBox();
-    if ($this->insets) {
-      $georefBox = new GBox;
+    elseif ($this->insets) {
+      $georefBox = new \gegeom\GBox;
       foreach ($this->insets as $inset) {
-        $georefBox->union($inset->georefBox());
+        $georefBox = $georefBox->union($inset->georefBox());
       }
       return $georefBox;
     }
-    return null;
+    else
+      return null;
   }
   
   /** construit la correspondance des cartouches de l'archive avec ceux de MapCat

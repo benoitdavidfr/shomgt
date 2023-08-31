@@ -138,6 +138,20 @@ class Pos {
   /**
   * @param TPos $a
   * @param TPos $b
+  * @return TPos
+  */
+  static function min(array $a, array $b): array { return [min($a[0], $b[0]), min($a[1], $b[1])]; }
+  
+  /**
+  * @param TPos $a
+  * @param TPos $b
+  * @return TPos
+  */
+  static function max(array $a, array $b): array { return [max($a[0], $b[0]), max($a[1], $b[1])]; }
+  
+  /**
+  * @param TPos $a
+  * @param TPos $b
   */
   static function distance(array $a, array $b): float {
     return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));

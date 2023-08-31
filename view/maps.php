@@ -153,7 +153,7 @@ class GtMaps {
     else {
       $ebox = new \gegeom\EBox;
       foreach ($lyrnames as $lyrname)
-        $ebox->union($layers[$lyrname]->ebox());
+        $ebox = $ebox->union($layers[$lyrname]->ebox());
     }
     //echo $ebox;
     $ebox = GtMaps::eboxToWoM($crs, $ebox); // l'ebox est transformé en World Mercator

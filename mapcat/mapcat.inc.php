@@ -165,14 +165,12 @@ class Spatial extends \gegeom\GBox {
       "dans ce cas (East - West) >= 360 et -180° <= West < 180° < East < 540° (360+180)"
     ],
   ];
-  protected ?string $exception=null; // nom de l'exception ou null
+  public readonly ?string $exception; // nom de l'exception ou null
   
   /** @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string, exception?: string} $param */
   function __construct(array|string $param=[]) {
     parent::__construct($param);
-    if (is_array($param) && isset($param['exception'])) {
-      $this->exception = $param['exception'];
-    }
+    $this->exception = !is_array($param) ? null : ($param['exception'] ?? null);
   }
   
   /** @return TPos */
@@ -223,13 +221,6 @@ class Spatial extends \gegeom\GBox {
   /** @return TPos */
   private function se(): array { return [$this->max[0], $this->min[1]]; }
   
-  private function shift(float $dlon): self { // créée une nouvelle boite décalée de $dlon
-    $shift = clone $this;
-    $shift->min[0] += $dlon;
-    $shift->max[0] += $dlon;
-    return $shift;
-  }
-  
   /** @return TLPos */
   private function ring(): array { return [$this->nw(), $this->sw(), $this->se(), $this->ne(), $this->nw()]; }
   
@@ -249,7 +240,7 @@ class Spatial extends \gegeom\GBox {
         'type'=> 'MultiPolygon',
         'coordinates'=> [
           [ $this->ring() ],
-          [ $this->shift(-360)->ring() ],
+          [ $this->translate360West()->ring() ],
         ],
       ];
       
@@ -431,7 +422,7 @@ EOT;
         foreach ($doc['insetMaps'] as $insetMap) {
           $insetMapSchema = new \JsonSchema(self::getDefSchema('insetMap'));
           if (!$insetMapSchema->check($insetMap)->errors()) {
-            $mapSpatial->union(new Spatial($insetMap['spatial']));
+            $mapSpatial = $mapSpatial->union(new Spatial($insetMap['spatial']));
           }
         }
         $doc['mapsFrance'] = \shomft\Zee::inters($mapSpatial);

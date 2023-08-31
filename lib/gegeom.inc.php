@@ -166,33 +166,6 @@ abstract class Geometry {
     else // $this est un élément
       return [$this]; // @phpstan-ignore-line
   }
-  
-  /* agrège un ensemble de géométries élémentaires en une unique Geometry
-  static function aggregate(array $elts): Geometry {
-    $bbox = new GBox;
-    foreach ($elts as $elt)
-      $bbox->union($elt->bbox());
-    return new Polygon($bbox->polygon()); // temporaireemnt représente chaque agrégat par son GBox
-    $elts = array_merge([new Polygon($bbox->polygon())], $elts);
-    if (count($elts) == 1)
-      return $elts[0];
-    $agg = [];
-    foreach ($elts as $elt)
-      $agg[$elt->type()][] = $elt;
-    if (isset($agg['Point']) && !isset($agg['LineString']) && !isset($agg['Polygon']))
-      return MultiPoint::haggregate($agg['Point']);
-    elseif (!isset($agg['Point']) && isset($agg['LineString']) && !isset($agg['Polygon']))
-      return MultiLineString::haggregate($agg['LineString']);
-    elseif (!isset($agg['Point']) && !isset($agg['LineString']) && isset($agg['Polygon']))
-      return MultiPolygon::haggregate($agg['Polygon']);
-    else 
-      return new GeometryCollection(array_merge(
-        MultiPoint::haggregate($agg['Point']),
-        MultiLineString::haggregate($agg['LineString']),
-        MultiPolygon::haggregate($agg['Polygon'])
-      ));
-  }
-  */
 }
 
 // Le test unitaire est à la fin du fichier
@@ -1009,17 +982,17 @@ class MultiPolygon extends Geometry {
   }
   
   function gbox(): GBox {
-    $bbox = new GBox;
+    $gbox = new GBox;
     foreach ($this->coords as $llpos)
-      $bbox->union(new GBox($llpos));
-    return $bbox;
+      $gbox = $gbox->union(new GBox($llpos));
+    return $gbox;
   }
   
   function ebox(): EBox {
-    $bbox = new EBox;
+    $ebox = new EBox;
     foreach ($this->coords as $llpos)
-      $bbox->union(new EBox($llpos));
-    return $bbox;
+      $ebox = $ebox->union(new EBox($llpos));
+    return $ebox;
   }
   
   function distanceToPos(array $pos): float {
@@ -1180,17 +1153,17 @@ class GeometryCollection {
   }
   
   function gbox(): GBox {
-    $bbox = new GBox;
+    $gbox = new GBox;
     foreach ($this->geometries as $geom)
-      $bbox->union($geom->gbox());
-    return $bbox;
+      $gbox = $gbox->union($geom->gbox());
+    return $gbox;
   }
   
   function ebox(): EBox {
-    $bbox = new EBox;
+    $ebox = new EBox;
     foreach ($this->geometries as $geom)
-      $bbox->union($geom->ebox());
-    return $bbox;
+      $ebox = $ebox->union($geom->ebox());
+    return $ebox;
   }
   
   /** @param TPos $pos */

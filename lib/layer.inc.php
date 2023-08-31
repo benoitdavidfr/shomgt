@@ -216,7 +216,7 @@ class LabelLayer extends Layer {
   function ebox(): \gegeom\EBox {
     $ebox = new \gegeom\EBox;
     foreach ($this->nws as $pos)
-      $ebox->bound($pos);
+      $ebox = $ebox->bound($pos);
     return $ebox;
   }
   
@@ -259,7 +259,7 @@ class TiffLayer extends Layer {
     //echo "dilate=$dilate<br>\n";
     foreach ($dictOfGT as $gtname => $gt) {
       foreach ($gt['outgrowth'] ?? [] as $i => $outgrowth) {
-        // l'excroissance est dialtée pour compenser l'érosion sur la partie principale
+        // l'excroissance est dilatée pour compenser l'érosion sur la partie principale
         $gt['outgrowth'][$i] = \gegeom\GBox::fromGeoDMd($outgrowth)->proj('WorldMercator')->dilate(-self::dilate($lyrName));
       }
       foreach ($gt['borders'] ?? [] as $k => $b)
@@ -294,11 +294,11 @@ class TiffLayer extends Layer {
   function ebox(): \gegeom\EBox {
     $lyrEbox = new \gegeom\EBox;
     foreach($this->geotiffs as $gtname => $gt) {
-      $lyrEbox->union($gt['spatial']);
+      $lyrEbox = $lyrEbox->union($gt['spatial']);
       // Si le GéoTiff intersecte l'anti-méridien alors il est dupliqué pour apparaitre aussi dans l'hémisphère Ouest
       $gbox = $gt['spatial']->geo('WorldMercator');
       if ($gbox->intersectsAntiMeridian())
-        $lyrEbox->union($gbox->translate360West()->proj('WorldMercator'));
+        $lyrEbox = $lyrEbox->union($gbox->translate360West()->proj('WorldMercator'));
     }
     return $lyrEbox;
   }

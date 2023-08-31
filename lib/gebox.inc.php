@@ -18,6 +18,8 @@ doc: |
   Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
   Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
 journal: |
+  31/8/2023:
+    - modif de BBox pour mettre en readonly les prop. $min et $max, modif des méthodes modifiant $min ou $max
   15/8/2023:
     - ajout de BBox::includes()
     - modification de BBox::__toString()
@@ -59,9 +61,9 @@ abstract class BBox {
   const ErrorIntersectsWithUndefBBox = 'BBox::ErrorIntersectsWithUndefBBox';
   
   /** @var TPos $min */
-  protected array $min=[]; // [number, number] ou []
+  public readonly array $min; // [number, number] ou []
   /** @var TPos $max */
-  protected array $max=[]; // [number, number] ou [], [] ssi $min == []
+  public readonly array $max; // [number, number] ou [], [] ssi $min == []
   
   /** Soit ne prend pas de paramètre et créée alors une BBox vide,
    * soit prend en paramètre un array de 2 ou 3 nombres (Pos) interprété comme une position,
@@ -72,44 +74,60 @@ abstract class BBox {
    * @param string|TPos|TLPos|TLLPos $param
    */
   function __construct(array|string $param=[]) {
-    $this->min = [];
-    $this->max = [];
-    if (!$param)
-      return;
+    if (!$param) {
+      $this->min = [];
+      $this->max = [];
+    }
     elseif (is_array($param) && in_array(count($param), [2,3]) && is_numeric($param[0])) { // 1 pos
-      $this->bound($param);
+      $this->min = [$param[0], $param[1]];
+      $this->max = $this->min;
     }
     elseif (is_array($param) && (count($param)==4) && is_numeric($param[0])) { // 2 pos
-      $this->bound([$param[0], $param[1]]);
-      $this->bound([$param[2], $param[3]]);
+      $this->min = Pos::min([$param[0], $param[1]], [$param[2], $param[3]]);
+      $this->max = Pos::max([$param[0], $param[1]], [$param[2], $param[3]]);
     }
     elseif (is_array($param) && (count($param)==6) && is_numeric($param[0])) { // 2 pos
-      $this->bound([$param[0], $param[1]]);
-      $this->bound([$param[3], $param[4]]);
+      $this->min = Pos::min([$param[0], $param[1]], [$param[3], $param[4]]);
+      $this->max = Pos::max([$param[0], $param[1]], [$param[3], $param[4]]);
     }
     elseif (is_string($param)) {
       $params = explode(',', $param);
-      if (in_array(count($params), [2,3]))
-        $this->bound([(float)$params[0], (float)$params[1]]);
+      if (in_array(count($params), [2,3])) {
+        $this->min = [(float)$param[0], (float)$param[1]];
+        $this->max = $this->min;
+      }
       elseif (count($params)==4) {
-        $this->bound([(float)$params[0], (float)$params[1]]);
-        $this->bound([(float)$params[2], (float)$params[3]]);
+        $this->min = Pos::min([(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]);
+        $this->max = Pos::max([(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]);
       }
       elseif (count($params)==6) {
-        $this->bound([(float)$params[0], (float)$params[1]]);
-        $this->bound([(float)$params[3], (float)$params[4]]);
+        $this->min = Pos::min([(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]);
+        $this->max = Pos::max([(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]);
       }
       else
         throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
     }
     elseif (LPos::is($param)) { // $param est une liste de positions en cont. au moins une 
-      foreach ($param as $pos)
-        $this->bound($pos);
+      $min = $param[0];
+      $max = $param[0];
+      foreach ($param as $pos) {
+        $min = Pos::min($min, $pos);
+        $max = Pos::max($min, $pos);
+      }
+      $this->min = $min;
+      $this->max = $max;
     }
     elseif (LLPos::is($param)) { // $param est une liste de listes de positions en contenant au moins une
-      foreach ($param as $lpos)
-        foreach ($lpos as $pos)
-          $this->bound($pos);
+      $min = $param[0][0];
+      $max = $param[0][0];
+      foreach ($param as $lpos) {
+        foreach ($lpos as $pos) {
+          $min = Pos::min($min, $pos);
+          $max = Pos::max($min, $pos);
+        }
+      }
+      $this->min = $min;
+      $this->max = $max;
     }
     else
       throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectParams);
@@ -118,35 +136,35 @@ abstract class BBox {
   // renvoit vrai ssi le bbox est vide
   function empty(): bool { return (count($this->min) == 0); }
   
-  // intègre une position à la BBox, renvoie la BBox modifiée
-  /** @param TPos $pos */
+  /** retourne la BBox contenant à la fois $this et la position
+   * @param TPos $pos
+   * @return static */
   function bound(array $pos): BBox {
     if (!$pos)
       return $this;
     if (!Pos::is($pos))
       throw new \SExcept("Erreur dans bound sur ".json_encode($pos), self::ErrorIncorrectPosTypeInBound);
     if (!$this->min) {
-      $this->min = $pos;
-      $this->max = $pos;
+      $called_class = get_called_class();
+      return new $called_class($pos);
     }
     else {
-      $this->min = [ min($this->min[0], $pos[0]), min($this->min[1], $pos[1])];
-      $this->max = [ max($this->max[0], $pos[0]), max($this->max[1], $pos[1])];
+      $called_class = get_called_class();
+      return new $called_class([$this->min, $this->max, $pos]);
     }
-    return $this;
   }
 
   // si $this est indéfini alors le renvoit
   // sinon crée un nouvel objet de la classe appelée avec des coord. arrondies
   // en fonction de la $precision définie dans la classe appelée
-  /** @return $this */
+  /** @return static */
   function round(): BBox {
     if (!$this->min)
       return $this;
     else {
       $called_class = get_called_class();
       $dixpprec = 10 ** $called_class::$precision;
-      return new $called_class([ // @phpstan-ignore-line
+      return new $called_class([
         floor($this->min[0] * $dixpprec) / $dixpprec, floor($this->min[1] * $dixpprec) / $dixpprec, 
         ceil($this->max[0] * $dixpprec) / $dixpprec,  ceil($this->max[1] * $dixpprec) / $dixpprec, 
       ]);
@@ -170,10 +188,10 @@ abstract class BBox {
   function east(): ?float  { return $this->min ? $this->max[0] : null; }
   function north(): ?float { return $this->min ? $this->max[1] : null; }
   
-  function setWest(float $val): void  { $this->min[0] = $val; }
-  function setSouth(float $val): void { $this->min[1] = $val; }
-  function setEast(float $val): void  { $this->max[0] = $val; }
-  function setNorth(float $val): void { $this->max[1] = $val; }
+  //function setWest(float $val): void  { $this->min[0] = $val; }
+  //function setSouth(float $val): void { $this->min[1] = $val; }
+  //function setEast(float $val): void  { $this->max[0] = $val; }
+  //qfunction setNorth(float $val): void { $this->max[1] = $val; }
   
   // retourne le centre de la BBox ou [] si elle est vide
   /** @return TPos */
@@ -196,27 +214,25 @@ abstract class BBox {
       ]];
   }
   
-  // modifie $this pour qu'il soit l'union de $this et de $b2, renvoie $this
-  // la BBox vide est un élément neutre pour l'union
+  // Retourne l'union de $this et de $b2, la BBox vide est un élément neutre pour l'union
   function unionVerbose(BBox $b2): BBox {
     $u = $this->union($b2);
     echo "BBox::union(b2=$b2)@$this -> $u<br>\n";
     return $u;
   }
+  /**
+  * @param $this $b2
+  * @return static
+  */
   function union(BBox $b2): BBox {
     if (!$b2->min)
       return $this;
     elseif (!$this->min) {
-      $this->min = $b2->min;
-      $this->max = $b2->max;
-      return $this;
+      return $b2;
     }
     else {
-      $this->min[0] = min($this->min[0], $b2->min[0]);
-      $this->min[1] = min($this->min[1], $b2->min[1]);
-      $this->max[0] = max($this->max[0], $b2->max[0]);
-      $this->max[1] = max($this->max[1], $b2->max[1]);
-      return $this;
+      $called_class = get_called_class();
+      return new $called_class([$this->min, $this->max, $b2->min, $b2->max]);
     }
   }
   
@@ -231,7 +247,7 @@ abstract class BBox {
   }
   /**
   * @param $this $b2
-  * @return $this
+  * @return static
   */
   function intersects(BBox $b2): ?BBox {
     if (!$this->min || !$b2->min)
@@ -241,7 +257,7 @@ abstract class BBox {
     $xmax = min($b2->max[0], $this->max[0]);
     $ymax = min($b2->max[1], $this->max[1]);
     if (($xmax >= $xmin) && ($ymax >= $ymin))
-      return new (get_called_class())([$xmin, $ymin, $xmax, $ymax]); // @phpstan-ignore-line
+      return new (get_called_class())([$xmin, $ymin, $xmax, $ymax]);
     else
       return null;
   }
@@ -372,12 +388,16 @@ class GBox extends BBox {
     return [$this->west(), $this->south(), ($this->east() > 180) ? $this->east() - 360 : $this->east(), $this->north()];
   }
   
+  /** @return static */
   function translate360West(): self { // retourne le GBox translaté de 360° vers l'ouest
-    return new GBox([$this->west()-360, $this->south(), $this->east()-360, $this->north()]);
+    $called_class = get_called_class();
+    return new $called_class([$this->west()-360, $this->south(), $this->east()-360, $this->north()]);
   }
   
+  /** @return static */
   function translate360East(): self { // retourne le GBox translaté de 360° vers l'est
-    return new GBox([$this->west()+360, $this->south(), $this->east()+360, $this->north()]);
+    $called_class = get_called_class();
+    return new $called_class([$this->west()+360, $this->south(), $this->east()+360, $this->north()]);
   }
   
   // taille max en degrés de longueur constante (Zoom::Size0 / 360) ou lève une exception si la BBox est vide
@@ -608,13 +628,11 @@ class EBox extends BBox {
       return $int->area()/$right->area();
   }
   
-  // dilate le rectangle de $dilate
+  // retourne le rectangle dilaté de $dilate
   function dilate(float $dilate): EBox {
-    $this->min[0] -= $dilate;
-    $this->min[1] -= $dilate;
-    $this->max[0] += $dilate;
-    $this->max[1] += $dilate;
-    return $this;
+    $min = [$this->min[0] - $dilate, $this->min[1] - $dilate];
+    $max = [$this->max[0] + $dilate, $this->max[1] + $dilate];
+    return new EBox([$min, $max]);
   }
   
   // calcule les coord.géo. d'un EBox en utilisant $proj qui doit être défini comme projection dans coordsys
