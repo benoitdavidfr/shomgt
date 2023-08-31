@@ -11,14 +11,14 @@ Le répertoire shomgeotiff contient 2 sous-répertoires:
 
 - `archives` qui contient un sous-répertoire par carte du portefeuille contenant:
   - d'une part la liste des versions conservées pour cette carte avec pour chaque version:
-    - un fichier `{mapNum}-{version}.7z` de carte correspondant au fichier 7z livré par le Shom,
+    - un fichier `{mapNum}-{version}.7z` correspondant au fichier 7z livré par le Shom,
     - un fichier `{mapNum}-{version}.md.json` contenant quelques champs de métadonnées,
       spécifiés ci-dessous, extraits des MD ISO 19139 de la carte
   - d'autre part, si la carte est obsolète un fichier `{num}-{date}.md.json` contenant `{"status": "obsolete"}`
 - `current` qui contient
   - d'une part pour chaque carte non obsolète 2 liens symboliques:
-    - vers l'archive 7z de sa dernière version
-    - vers le fichier de MD simplifié de sa dernière version
+    - nommé `{mapNum}.7z` vers l'archive 7z de sa dernière version
+    - nommé `{mapNum}.md.json` vers le fichier de MD simplifié de sa dernière version
   - d'autre part pour chaque carte obsolète 1 lien symbolique vers le le fichier `{num}-{date}.md.json`
   
 #### 2.1.1 Spécification du fichier `{num}.md.json`
