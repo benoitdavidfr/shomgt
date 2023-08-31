@@ -24,9 +24,9 @@ Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 ## 1. Décomposition en modules
 ShomGT4 se décompose dans les 7 modules suivants:
 
-  - **[shomgt](shomgt)** expose différents services de consultation des cartes:
-    - un service de tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map), 
-    - un autre conforme au [protocole WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
+  - **[view](view)** expose les services suivants de consultation des cartes:
+    - une API tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) très utilisé, 
+    - un service conforme au [protocole WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
     - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
@@ -58,7 +58,7 @@ ShomGT4 se décompose dans les 7 modules suivants:
     Il est utilisé par *sgupdt* et consultable au travers de *sgserver*.
   
   - **[shomft](shomft)** expose différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
-    Il gère aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
+    Il comprend aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
     d'intérêt pour ShomGT dans *dashboard*.
 
 Chacun de ces modules correspond à un répertoire ;
@@ -67,7 +67,7 @@ en plus de ces 7 modules, une [bibiothèque commune contient un certain nombre d
 ## 2. Termes et concepts utilisés dans ShomGT
 Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
 
-- **portefeuille de cartes**: l'ensemble des cartes gérées dans *sgserver*, chacune dans une certaine version,
+- **portefeuille de cartes**: l'ensemble des cartes exposées dans *sgserver*, chacune dans une certaine version,
 - **carte d'intérêt (pour ShomGT)**: carte ayant vocation à être dans le portefeuille.  
   Il s'agit:
     - des cartes intersectant la ZEE française,
@@ -75,7 +75,7 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
     - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre,
     - plus quelques cartes à proximité de la ZEE française et jugée utiles.
 - **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive),
-  intégrant les extensions du plateau continental.
+  intégrant parfois les extensions du plateau continental.
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
   chaque carte est identifiée par un numéro sur 4 chiffres
   qui est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
@@ -95,22 +95,18 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   - le numéro de la correction sur l'édition.
     Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devait la reporter sur la carte.  
   
-  Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{correction},où {année} est l'année d'édition
+  Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{correction}, où {année} est l'année d'édition
   ou de publication de la carte et {correction} est le numéro de correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.  
-  Certaines cartes spéciales ont un identifiant spécifique de version de la forme {mapNum}_{année},
-  où {année} est l'année de la publication de la carte, ou simplement {mapNum} quand l'année n'est pas connue.
-- **carte obsolète** : soit une carte retirée par le Shom de son catalogue,
-  et qui doit donc être retirée du portefeuille ShomGT,
-  soit une carte qui a été dans le portefeuille mais dont l'intérêt a été jugé insuffisant par la suite
-  et qui donc a été retirée du portefeuille même si elle peut rester une carte valide pour le Shom.
-- **carte périmée** : carte dont la version dans le portefeuille est remplacée par une version plus récente ;
-  une carte peut être plus ou moins périmée ; une mesure de cette péremption est définie comme le par la différence
-  du nombre de corrections apportées.
+  Certaines cartes spéciales ont un identifiant spécifique de version avec uniquement l'année de publication.
+- **carte obsolète** : carte retirée par le Shom de son catalogue, et qui est donc retirée du portefeuille ShomGT,
+- **carte périmée** : carte pour laquelle le Shom distribue une versions plus récente que celle du portefeuille ;
+  une carte peut être plus ou moins périmée ; cette péremption peut être mesurée par la différence du nombre de corrections
+  apportées.
 - **<a name='gan'>GAN</a>**: le GAN (Groupe d'Avis aux Navigateurs) est le dispositif du Shom de diffusion
   des actualisations de ses documents, notamment de ses cartes.
   Les actualisations sont publiées chaque semaine (le jeudi) et datée par un libellé de 4 chiffres
-  dont les 2 premiers correspondent aux 2 derniers chiffres de l'année, et les 2 autres chiffres à la semaine dans l'année
+  dont les 2 premiers correspondent aux 2 derniers chiffres de l'année, et les 2 derniers chiffres à la semaine dans l'année
   conformément à [la définition ISO](https://fr.wikipedia.org/wiki/Num%C3%A9rotation_ISO_des_semaines).
   Le GAN prend la forme du site https://gan.shom.fr/ qui est un site HTML 
   et les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
@@ -118,22 +114,20 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   avec celle dans le portefeuille.  
   Seules les cartes normales sont mentionnées dans le GAN, à l'exception de la carte 0101 qui est le planisphère terrestre.
   Les cartes spéciales ne sont pas mentionnées dans le GAN.
-- **GéoTiff** : la numérisation d'une carte produit des images géoréférencées
+- **Image** : la numérisation d'une carte produit des images géoréférencées
   correspondant aux différentes zones géographiques de la carte, souvent une zone principale et des cartouches,
   chaque zone corespond dans la livraison à une image géoréférencée
-  au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF) ; l'image est ainsi appelée **GéoTiff**.
-  Par extension cette image est toujours appelée GéoTiff lorsqu'elle est transformée dans un autre format.
-  Le GéoTiff est identifié dans la carte par le nom du fichier tiff sans l'extension .tif.
-  Un GéoTiff peut ne pas être géoréférencé dans les 2 cas suivants :
-  - certaines cartes ne comporte pas de zone principale mais sont uniquement composées de cartouches ;
-    dans ce cas la livraison du Shom comporte un GéoTiff de la carte globale qui n'est pas géoréférencé,
+  au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF).
+  Une Image peut ne pas être géoréférencée dans les 2 cas suivants :
+  - certaines cartes ne comportent pas de zone principale mais sont uniquement composées de cartouches ;
+    dans ce cas la livraison du Shom comporte une image de la carte globale qui n'est pas géoréférencée,
   - plusieurs cartes spéciales ne sont pas géoréférencées.
-  De plus quelques GéoTiffs sont référencés mais leur référencement est erroné
+  De plus quelques images sont référencées mais leur référencement est erroné
   et ne peut être interprété par certains logiciels.
 - **système de coordonnées**: Tous les fichiers GéoTIFF utilisés dans ShomGT sont fournis par le Shom
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator)
   dans le [système géodésique WGS84](https://fr.wikipedia.org/wiki/WGS_84),
-  ce système de coordonnées est aussi appelé **World Mercator**.  
+  ce système de coordonnées est appelé **World Mercator**.  
   Les coordonnées, par exemple dans le GAN, ne sont pas fournies en World Mercator mais en coordonnées géographiques,
   en dégrés et minutes décimales en WGS84 ;
   par exemple "41°28,00'N - 010°30,00'W" signifie latitude 41° et 28,00 minutes Nord, et longitude 10° et 30,00 minutes Ouest.  
@@ -144,11 +138,11 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   Il est donc souvent nécessaire de changer une position d'un système de coordonnées à un autre.  
 - **niveau de zoom**: le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) définit ce concept
   de niveau de zoom par:
-  - le niveau de zoom 0 correspond à un affichage de la Terre en projection Web Mercator sur une tuile 256 x 256,
+  - le niveau de zoom 0 correspond à un affichage de la Terre entière en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zoom n-1.
   
-  ShomGT utilise 18 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
-- **couches de données**: dans ShomGT les GéoTiffs des cartes normales sont répartis dans des couches image d'échelle homogène.
+  ShomGT utilise 19 niveaux de zoom, correspondant potentiellement à plus de 91 milliards de tuiles.
+- **couches de données**: dans ShomGT les images des cartes normales sont réparties dans des 12 couches image d'échelle homogène.
   dont les dénominateurs sont les suivants,
   avec entre parenthèses le ou les niveaux de zoom XYZ correspondants:
   40M (0-5), 10M (6), 4M (7), 2M (8), 1M (9), 500k (10), 250k (11), 100k (12), 50k (13), 25k (14), 12k (15), 5k (16-18).  
@@ -203,4 +197,4 @@ ShomGT utilise différents [composants externes décrits ici](docs/composantexte
 
 Le [système de log est documenté ici](docs/log.md).
 
-ShomGT utilise Php 8 et a été validé avec Php 8.2.
+ShomGT utilise Php dans sa version 8.2.

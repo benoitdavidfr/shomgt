@@ -368,6 +368,9 @@ découpageEnComposantsV4:
       dashboard: liste des cartes à actualiser et des nlles cartes
       bureau.prestations@shom.fr: commande par mail à <bureau.prestations@shom.fr>
       diffusion.shom.fr: téléchargement sur le site
+questions:
+  - faut-il vraiment limiter dans le BO le dépôt de nouvelles versions de cartes aux utilisateurs connectés ?
+    - inconvénient, cela complique l'adoption de cette fonctionnalité par les utilisateurs
 backlog:
   stratégie:
     - ajouter progressivement les nouvelles fonctionnalités
@@ -502,12 +505,11 @@ backlog:
     - automatiser la maj du GAN et de la purge des cartes ? NON
     - meilleure gestion en production de l'affichage des erreurs
     - gestion des stats d'utilisation
+      - agrégation des stats ?
     - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
     - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
     - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
       - var. d'env. sur sgupdt -> var. GET sur sgserver avec zone
-  idée2023-08-29:
-    - pour la connexion de sgupdt à sgserver, la variable SHOMGT3_SERVER_URL pourrait donner une URL ne passant pas par http
 fonctionnalités:
   admin:
     - bo réservé aux admins
