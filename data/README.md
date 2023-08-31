@@ -1,6 +1,6 @@
 # Organisation des fichiers dans data
-**data** contient les données structurées afin d'être facilement et efficacement utilisées par [le module view](../view) ;
-elles sont produites par le [module sgupdt](../sgupdt).
+**data** est le répertoire des données structurées afin d'être facilement et efficacement utilisées par [le module view](../view) ;
+ces données sont produites par le [module sgupdt](../sgupdt).
 *data* est un sous-répertoire du répertoire principal de ShomGT ou un volume partagé entre les conteneurs
 lorsque ces modules sont déployés comme conteneurs Docker.
 
