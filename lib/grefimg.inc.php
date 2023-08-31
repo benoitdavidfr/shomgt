@@ -315,6 +315,11 @@ $gtImg->polygon(
   [[100,100],[50,500],[800,200]],
   new Style(['color'=> [0, 0, 255], 'weight'=> 2, 'fillColor'=> [0, 0, 255], 'fillOpacity'=> 0.3], $gtImg)
 );
+$black = $gtImg->colorallocate([0,0,0]);
+$white = $gtImg->colorallocate([255,255,255]);
+$gtImg->string(font: 3, pos: [50,50], string: "position [50,50]", text_color: $black, bg_color: $white, debug: false);
+$gtImg->string(font: 3, pos: [500,500], string: "position [500,500]", text_color: $black, bg_color: $white, debug: false);
+$gtImg->string(font: 3, pos: [800,200], string: "position [800,200]", text_color: $black, bg_color: $white, debug: false);
 /*$gtImg->polygon(
   [[100,100],[50,500],[800,200]],
   new Style(['fillColor'=> [0, 0, 255], 'fillOpacity'=> 0.1], $gtImg)

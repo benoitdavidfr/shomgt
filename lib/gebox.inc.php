@@ -84,12 +84,12 @@ abstract class BBox {
       $this->max = $this->min;
     }
     elseif (is_array($param) && (count($param)==4) && is_numeric($param[0])) { // 2 pos
-      $this->min = Pos::min([$param[0], $param[1]], [$param[2], $param[3]]);
-      $this->max = Pos::max([$param[0], $param[1]], [$param[2], $param[3]]);
+      $this->min = LPos::min([[$param[0], $param[1]], [$param[2], $param[3]]]);
+      $this->max = LPos::max([[$param[0], $param[1]], [$param[2], $param[3]]]);
     }
     elseif (is_array($param) && (count($param)==6) && is_numeric($param[0])) { // 2 pos
-      $this->min = Pos::min([$param[0], $param[1]], [$param[3], $param[4]]);
-      $this->max = Pos::max([$param[0], $param[1]], [$param[3], $param[4]]);
+      $this->min = LPos::min([[$param[0], $param[1]], [$param[3], $param[4]]]);
+      $this->max = LPos::max([[$param[0], $param[1]], [$param[3], $param[4]]]);
     }
     elseif (is_string($param)) {
       $params = explode(',', $param);
@@ -98,35 +98,27 @@ abstract class BBox {
         $this->max = $this->min;
       }
       elseif (count($params)==4) {
-        $this->min = Pos::min([(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]);
-        $this->max = Pos::max([(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]);
+        $this->min = LPos::min([[(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]]);
+        $this->max = LPos::max([[(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]]);
       }
       elseif (count($params)==6) {
-        $this->min = Pos::min([(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]);
-        $this->max = Pos::max([(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]);
+        $this->min = LPos::min([[(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]]);
+        $this->max = LPos::max([[(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]]);
       }
       else
         throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
     }
     elseif (LPos::is($param)) { // $param est une liste de positions en cont. au moins une 
       //echo "param est une LPos<br>\n";
-      $min = $param[0];
-      $max = $param[0];
-      foreach ($param as $pos) {
-        $min = Pos::min($min, $pos);
-        $max = Pos::max($max, $pos);
-      }
-      $this->min = $min;
-      $this->max = $max;
+      $this->min = LPos::min($param);
+      $this->max = LPos::max($param);;
     }
     elseif (LLPos::is($param)) { // $param est une liste de listes de positions en contenant au moins une
       $min = $param[0][0];
       $max = $param[0][0];
       foreach ($param as $lpos) {
-        foreach ($lpos as $pos) {
-          $min = Pos::min($min, $pos);
-          $max = Pos::max($min, $pos);
-        }
+        $min = LPos::min([$min, LPos::min($lpos)]);
+        $max = LPos::min([$min, LPos::max($lpos)]);
       }
       $this->min = $min;
       $this->max = $max;

@@ -21,7 +21,10 @@ journal: |
 */}
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
-  
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Yaml\Yaml;
+
 function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier un flottant pour simplifier le Yaml
   static $epsilon = 1e-8; // pour arrondir éventuellement en entier pour la sortie Yaml
   if ($v == 0)
@@ -45,8 +48,8 @@ name: LElts
 title: class LElts - Fonctions de gestion de liste d'éléments
 */}
 class LElts {
-  // Nbre d'élts d'une liste de listes d'élts
-  /** @param array<int, array<int, mixed>> $llelts */
+  /** Nbre d'élts d'une liste de listes d'élts
+   * @param array<int, array<int, mixed>> $llelts */
   static function LLcount(array $llelts): int {
     $nbElts = 0;
     foreach ($llelts as $lelts)
@@ -54,8 +57,8 @@ class LElts {
     return $nbElts;
   }
 
-  // Nbre d'élts d'une liste de listes de listes d'élts
-  /** @param array<int, array<int, array<int, mixed>>> $lllelts */
+  /** Nbre d'élts d'une liste de listes de listes d'élts
+   * @param array<int, array<int, array<int, mixed>>> $lllelts */
   static function LLLcount(array $lllelts): int {
     $nbElts = 0;
     foreach ($lllelts as $llelts)
@@ -65,6 +68,7 @@ class LElts {
 }
 
 
+// Fonctions sur les positions représentée par une liste de 2 nombres
 class Pos {
   const GEODMD_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
   
@@ -75,8 +79,8 @@ class Pos {
     return is_array($pos) && in_array(count($pos),[2,3]) && is_numeric($pos[0] ?? null) && is_numeric($pos[1] ?? null);
   }
   
-  // décode une position en coords géo. degré minutes
-  /** @return TPos */
+  /** décode une position en coords géo. degré minutes
+   * @return TPos */
   static function fromGeoDMd(string $geoDMd): array {
     if (!preg_match(self::GEODMD_PATTERN, $geoDMd, $matches))
       throw new \SExcept("No match in Pos::fromGeoDMd($geoDMd)", self::ErrorParamInFromGeoDMd);
@@ -113,9 +117,9 @@ class Pos {
     return $string;
   }
   
-  // Formate une position (lon,lat) en lat,lon degrés, minutes décimales
-  // $resolution est la résolution de la position en degrés à conserver
-  /** @param TPos $pos */
+  /** Formate une position (lon,lat) en lat,lon degrés, minutes décimales
+   * $resolution est la résolution de la position en degrés à conserver
+   * @param TPos $pos */
   static function formatInGeoDMd(array $pos, float $resolution): string {
     //return sprintf("[%f, %f]",$pos[0], $pos[1]);
     $lat = $pos[1];
@@ -138,34 +142,46 @@ class Pos {
   /**
   * @param TPos $a
   * @param TPos $b
-  * @return TPos
-  */
-  static function min(array $a, array $b): array { return [min($a[0], $b[0]), min($a[1], $b[1])]; }
-  
-  /**
-  * @param TPos $a
-  * @param TPos $b
-  * @return TPos
-  */
-  static function max(array $a, array $b): array { return [max($a[0], $b[0]), max($a[1], $b[1])]; }
-  
-  /**
-  * @param TPos $a
-  * @param TPos $b
   */
   static function distance(array $a, array $b): float {
     return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));
   }
 };
 
+// Fonctions sur les listes de positions représentée par une liste de Pos
 class LPos {
   const ErrorCenterOfEmptyLPos = 'Pos::ErrorCenterOfEmptyLPos';
 
   // teste si une variable correspond à une liste d'au moins une position
   static function is(mixed $lpos): bool { return is_array($lpos) && Pos::is($lpos[0] ?? null); }
 
-  // calcule le centre d'une liste de positions, génère une exception si la liste est vide
-  /**
+  /** Retourne la position avec le min des positions en paraaètres pour chaque coordonnée
+  * @param TLPos $lpos
+  * @return TPos */
+  static function min(array $lpos): array {
+    if (!$lpos)
+      return [];
+    else {
+      $x = min(array_map(function(array $pos): float {return $pos[0]; }, $lpos));
+      $y = min(array_map(function(array $pos): float {return $pos[1]; }, $lpos));
+      return [$x, $y];
+    }
+  }
+  
+  /** Retourne la position avec le max des positions en paraaètres pour chaque coordonnée
+  * @param TLPos $lpos
+  * @return TPos */
+  static function max(array $lpos): array {
+    if (!$lpos)
+      return [];
+    else {
+      $x = max(array_map(function(array $pos): float {return $pos[0]; }, $lpos));
+      $y = max(array_map(function(array $pos): float {return $pos[1]; }, $lpos));
+      return [$x, $y];
+    }
+  }
+  
+  /** calcule le centre d'une liste de positions, génère une exception si la liste est vide
   * @param TLPos $lpos
   * @return TPos
   */
@@ -182,21 +198,19 @@ class LPos {
     return [$c[0]/$nbre, $c[1]/$nbre];
   }
   
-  // reprojète une liste de positions et en retourne la liste
-  /**
+  /** reprojète une liste de positions et en retourne la liste
   * @param TLPos $lpos
   * @return TLPos
   */
   static function reproj(callable $reprojPos, array $lpos): array { return array_map($reprojPos, $lpos); }
 };
 
+// Fonctions sur les listes de listes de positions représentée par une liste de LPos
 class LLPos {
   // teste si une variable correspond à une liste de listes de positions dont la première en contient au moins une
   static function is(mixed $llpos): bool { return is_array($llpos) && LPos::is($llpos[0] ?? null); }
 
-  // reprojète une liste de liste de positions et en retourne la liste
-  // reprojète une liste de positions et en retourne la liste
-  /**
+  /** reprojète une liste de liste de positions et en retourne la liste
   * @param TLLPos $llpos
   * @return TLLPos
   */
@@ -224,3 +238,12 @@ foreach ([
   echo "$label ",LPos::is($item) ? "est" : "n'est PAS"," une liste de positions<br>\n";
   echo "$label ",LLPos::is($item) ? "est" : "n'est PAS"," une liste de listes de positions<br>\n";
 }
+
+echo '<pre>',Yaml::dump(['LPos::min()' => LPos::min([[10,20],[25,15]])]),"</pre>\n";
+echo '<pre>',Yaml::dump(['LPos::max()' => LPos::max([[10,20],[25,15]])]),"</pre>\n";
+
+echo '<h3>Test LPos::reproj()</h3><pre>',
+  Yaml::dump(LPos::reproj(function(array $pos): array { return [$pos[0]+1, $pos[1]+1]; }, [[10,0], [0,10]])),"</pre>\n";
+
+echo '<h3>Test LLPos::reproj()</h3><pre>',
+    Yaml::dump(LLPos::reproj(function(array $pos): array { return [$pos[0]+1, $pos[1]+1]; }, [[[10,0], [0,10]]])),"</pre>\n";
