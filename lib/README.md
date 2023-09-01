@@ -1,8 +1,8 @@
 # Bibliothèque commune de fonctions et classes
 ### layer.inc.php  - Classes Layer, PyrLayer, LabelLayer et TiffLayer
-La classe Layer est une classe abstraite d'une couche de ShomGT qui regoupe les classes PyrLayer, LabelLayer et TiffLayer.  
-La classe Layer contient en outre en statique le dictionnaire des couches de ShomGT.  
-Les objets Layer sont construits à partir du contenu du [fichier shomgt.yaml](../data#le-fichier-shomgtyaml).   
+La classe Layer est une classe abstraite des couches image de ShomGT qui regoupe les classes PyrLayer, LabelLayer et TiffLayer
+et qui contient en statique le dictionnaire des couches de ShomGT.  
+Ce dictionnaire est construit à partir du contenu du [fichier shomgt.yaml](../data#le-fichier-shomgtyaml).   
 
 Un objet Layer, au travers de la méthode map(), sait recopier dans une image GD l'extrait de la couche
 correspondant à une boite définie en WorldMercator.
@@ -19,7 +19,7 @@ Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
         - isomd.inc.php
 
 ### vectorlayer.inc.php - Classe VectorLayer gérant les couches d'objets vecteur
-La classe VectorLayer gère une couche d'objets vecteur et est utilisé par ../view/wmsv.php qui implémente
+La classe VectorLayer gère une couche d'objets vecteur ; elle est utilisée par ../view/wmsv.php qui implémente
 un serveur WMS pour les couches vecteur.  
 Comme pour la classe PyrLayer, la méthode map() sait dessiner dans une image GD l'extrait de la couche
 correspondant à une boite définie en WorldMercator ;
@@ -41,7 +41,7 @@ La classe GeoTiff définit plusieurs méthodes sur un GéoTiff,
 notamment la méthode copyImage() qui recopie dans un GeoRefImage la partie du GéoTiff
 correspondant à une boite en coordonnées WorldMercator.
 La classe GeoTiff gère notamment le fait que les fichiers GeoTiff initiaux ont été découpés en dalles 1024 X 1024
-dans un soucu d'efficacité.
+dans un souci d'efficacité.
 #### inclus
         - gdalinfo.inc.php
         - envvar.inc.php
@@ -101,6 +101,12 @@ Ces 3 types sont aussi définis en PhpStan respectivemet sous les libellés TPos
 ### coordsys.inc.php (v3) - changement simple de projection a priori sur l'ellipsoide IAG_GRS_1980
 Code utilisé pour changer des coordonnées de système de coordonnées entre World Mercator (la projection des cartes),
 les coordonnées géographiques WGS84 (utilisé pour fournir des informations) et Web Mercator (la projection des tuiles).
+
+Les systèmes de coordonnées sont définis comme des classes portant des méthodes
+proj() pour projeter des coordonnées géographiques en coordonnées cartésiennes et
+à l'inverse geo() pour calculer les coordonnées géographiques à partir des coordonnées cartésiennes.
+
+Le fichier définit notamment les classes `WorldMercator` et `WebMercator`.
 #### inclus
         - sexcept.inc.php
 
@@ -110,7 +116,10 @@ elle est indépendante des fonctionnalités du serveur de shomgt.
 Elle génère un fichier temporaire de log utile au déverminage.
 
 ### jsonschema.inc.php - validation de la conformité d'une valeur Php à un schéma JSON
-Utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml.
+Utilisé dans sgupt pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml
+et dans mapcat pour valider un enregistrement du catalogue par rapport à son schéma JSON.  
+La notion de schéma JSON est définie dans https://json-schema.org/.
+Dans ShomGT il est utilisé pour valider des fichiers Yaml ou des données Php ; les schémas sont aussi exprimés en Yaml.
 #### inclus
         - ../vendor/autoload.php
         - jsonschfrg.inc.php
@@ -143,6 +152,13 @@ Utilise le fichier `../secrets/secretconfig.inc.php` uniquement s'il existe.
 Extrait du fichier JSON fabriqué par [gdalinfo](https://gdal.org/programs/gdalinfo.html)
 les infos essentielles qui sont la taille de l'image en nombre de pixels et si le fichier est géoréférencé 
 son extension en coordonnées World Mercator et en coordonnées géographiques.
+
+Attention, `gdalinfo.inc.php` utilise la commande `gdalinfo` qui selon la mise à jour du système
+peut être en version 2 ou 3.
+Le WKT du CRS respecte un standard différent en fonction de la version de `gdalinfo`:
+
+  - en version 3.6.2 (2023/01/02), il respecte le standard OGC 2.0.6 (document OGC 18-010r7 et ISO 19162:2019), dit WKT 2 (2019).
+  - en version 2.4.0 (2018/12/14), il respecte le standard OGC 1.0   (document OGC 12-063r5 et ISO 19162:2015), dit WKT.
 #### inclus
         - geotiffs.inc.php
         - gebox.inc.php
