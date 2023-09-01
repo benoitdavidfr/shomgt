@@ -152,3 +152,9 @@ class GeoTiff {
   }
 };
 
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+
+if (isset($_GET['gtname'])) {
+  $geotiff = new GeoTiff($_GET['gtname'], new \gegeom\EBox, null, true);
+}

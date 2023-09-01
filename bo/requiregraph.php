@@ -121,24 +121,7 @@ class PhpFile {
       }
     }
   }
-  
-  static function buildSameAs(): void { // génère les liens sameAs 
-    foreach (self::$all as $path => $phpFile) {
-      foreach (['main','shomgt','sgupdt'] as $libname) {
-        if (preg_match("!^/$libname/lib/!", $path)) {
-          foreach (['main','shomgt','sgupdt'] as $libname2) {
-            if ($libname2 == $libname) continue;
-            $otherPath = str_replace($libname, $libname2, $path);
-            if (isset(self::$all[$otherPath])) {
-              //echo "lib $path sameAs $otherPath\n";
-              $phpFile->sameAs[] = $otherPath;
-            }
-          }
-        }
-      }
-    }
-  }
-  
+    
   /** @return array<string, array<string, mixed>> */
   static function allIncludes(): array {
     $allIncludes = [];
@@ -187,7 +170,6 @@ switch ($action) {
     PhpFile::readPhpFiles();
     PhpFile::readLinks();
     PhpFile::buildIncludedIn();
-    PhpFile::buildSameAs();
     echo Yaml::dump(PhpFile::allIncludes(), 3);
     break;
   }
@@ -196,7 +178,6 @@ switch ($action) {
     PhpFile::readPhpFiles();
     PhpFile::readLinks();
     PhpFile::buildIncludedIn();
-    PhpFile::buildSameAs();
     echo Yaml::dump(PhpFile::allIncluded(), 3);
     break;
   }

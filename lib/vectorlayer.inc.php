@@ -210,3 +210,11 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     return $xml;
   }
 };
+
+
+if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
+
+
+VectorLayer::initVectorLayers('../view/wmsvlayers.yaml');
+echo "<h2>Couches créées par VectorLayer::initVectorLayers()</h2>\n";
+echo "<pre>vectorLayers="; print_r(VectorLayer::$all);

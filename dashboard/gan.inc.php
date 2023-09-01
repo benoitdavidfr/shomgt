@@ -171,7 +171,7 @@ class Gan {
     return [
       'title'=> "Synthèse du résultat du moissonnage des GAN des cartes du catalogue",
       'description'=> "Seules sont présentes les cartes non obsolètes présentes sur sgserver",
-      '$id'=> 'https://geoapi.fr/shomgt3/cat2/gans',
+      '$id'=> 'https://geoapi.fr/shomgt4/cat2/gans',
       '$schema'=> __DIR__.'/gans',
       'valid'=> self::$hvalid,
       'gans'=> array_map(function(Gan $gan) { return $gan->asArray(); }, self::$gans),

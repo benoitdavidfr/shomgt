@@ -484,5 +484,6 @@ if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
 
 
 // Initialisation à parir du fichier shomgt.yaml
-Layer::initFromShomGt(__DIR__.'/../../data/shomgt');
-//print_r(Layer::layers());
+Layer::initFromShomGt(__DIR__.'/../data/shomgt');
+echo "<h2>Couches créées par Layer::initFromShomGt()</h2>\n";
+echo "<pre>layers="; print_r(Layer::layers());

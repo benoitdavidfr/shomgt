@@ -66,6 +66,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='https://benoitdavidfr.github.io/cartes/carte-sgpp.html'>Test blacklist referer sgpp</a></li>\n";
     echo "<li><a href='https://benoitdavidfr.github.io/cartes/carte-shomgt.html'>Test blacklist referer shomgt</a></li>\n";
     echo "<li><a href='https://carte.snosan.fr/'>Test carte Snosan</a></li>\n";
+    echo "<li><a href='?action=tests'>Tests des composants</a></li>\n";
     echo "</ul><h3>Documentation du code</h3><ul>\n";
     echo "<li><a href='requiregraph.php'>Graphe des inclusions Php</a></li>\n";
     echo "</ul>\n";
@@ -103,6 +104,28 @@ switch ($action = ($_GET['action'] ?? null)) {
     else
       echo "Clonage de $src dans $dest OK<br>\n";
     die("<a href='index.php'>Retour au menu</a>\n");
+  }
+  case 'tests': {
+    echo $HTML_HEAD,"<h2>Tests des points d'entrée et des composants</h2>\n";
+    echo "<h3>Points d'entrée</h2><ul>\n";
+    echo "<li><a href='../mapwcat.php'>mapwcat.php</a></li>\n";
+    echo "<li><a href='../tile.php'>tile.php</a></li>\n";
+    echo "<li><a href='../tile.php/gtpyr/6/31/21.png'>tile.php/gtpyr/6/31/21.png - une tuile</a></li>\n";
+    echo "<li><a href='../view/maps.php/collections/gt25k/items'>",
+      "view/maps.php/collections/gt25k/items - catalogue gt25k</a></li>\n";
+    echo "<li><a href='../wms.php'>wms.php</a></li>\n";
+    echo "<li><a href='../view/wmsv.php'>wmsv.php</a></li>\n";
+    echo "</ul><h3>Composants</h2><ul>\n";
+    echo "<li><a href='../lib/layer.inc.php'>layer.inc.php - définition des couches d'images</a></li>\n";
+    echo "<li><a href='../lib/vectorlayer.inc.php'>vectorlayer.inc.php - définition des couches vecteurs</a></li>\n";
+    echo "<li><a href='../lib/geotiff.inc.php?gtname=4233_pal300'>",
+      "geotiff.inc.php - création de l'objet GéoTiff 4233_pal300</a></li>\n";
+    echo "<li><a href='../lib/grefimg.inc.php'>grefimg.inc.php - image géoréférencée</a></li>\n";
+    echo "<li><a href='../lib/gegeom.inc.php'>gegeom.inc.php - package géométrique</a></li>\n";
+    echo "<li><a href='../lib/gebox.inc.php'>gebox.inc.php - boites</a></li>\n";
+    echo "<li><a href='../lib/pos.inc.php'>pos.inc.php - types Pos, ...</a></li>\n";
+    echo "<li><a href='../lib/jsonschema.inc.php'>jsonschema.inc.php</a></li>\n";
+    break;
   }
   case 'getenv': {
     echo $HTML_HEAD,"<h2>Interface de gestion de ShomGt ($login)</h2>\n";

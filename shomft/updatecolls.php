@@ -18,8 +18,8 @@ foreach(explode(',',$_GET['collections']) as $coll) {
   // active l'URL ce qui a pour effet de bord de reconstruire le fichier .json correspondant
   file_get_contents($url); // @phpstan-ignore-line 
   if ($coll == 'delmar') {
-    echo "Recopie de la collection $coll dans shomgt/geojson/<br>\n";
-    copy(__DIR__."/$coll.json", __DIR__."/../shomgt/geojson/$coll.geojson");
+    echo "Recopie de la collection $coll dans view/geojson/<br>\n";
+    copy(__DIR__."/$coll.json", __DIR__."/../view/geojson/$coll.geojson");
   }
 }
 die("Fin OK");

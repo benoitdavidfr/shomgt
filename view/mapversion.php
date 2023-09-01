@@ -9,10 +9,10 @@ $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
 
 function shomGTVersion(): int {
   switch ($_SERVER['SCRIPT_NAME']) {
-    case '/geoapi/shomgt/shomgt/mapversion.php': return 4; // en local
+    case '/geoapi/shomgt/view/mapversion.php': return 4; // en local
     case '/shomgt3/shomgt/mapversion.php': return 3; // sur geoapi.fr en V3
-    case '/shomgt/shomgt/mapversion.php': return 4; // sur geoapi.fr en V4
-    case '/shomgt/mapversion.php': return 4; // sur sgpp.geoapi.fr en V4
+    case '/shomgt/view/mapversion.php': return 4; // sur geoapi.fr en V4
+    case '/view/mapversion.php': return 4; // sur sgpp.geoapi.fr en V4
     default: die("SCRIPT_NAME = $_SERVER[SCRIPT_NAME] non prévu\n");
   }
 }

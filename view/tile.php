@@ -8,16 +8,16 @@ doc: |
   L'utilisation de l'option GET verbose=1 permet d'afficher des commentaires
   Point d'accès:
     end_point API:
-      http://localhost/geoapi/gt/ws/tile.php
-      https://geoapi.fr/shomgt/ws/tile.php
+      http://localhost/geoapi/shomgt/view/tile.php
+      https://geoapi.fr/shomgt/view/tile.php
     end_point layer:
-      http://localhost/geoapi/gt/ws/tile.php/{layer}
-      https://geoapi.fr/shomgt/ws/tile.php/{layer}
+      http://localhost/geoapi/shomgt/view/tile.php/{layer}
+      https://geoapi.fr/shomgt/view/tile.php/{layer}
     end_point tile:
-      http://localhost/geoapi/gt/ws/tile.php/{layer}/{z}/{x}/{y}.png
-      https://geoapi.fr/shomgt/ws/tile.php/{layer}/{z}/{x}/{y}.png
+      http://localhost/geoapi/shomgt/view/tile.php/{layer}/{z}/{x}/{y}.png
+      https://geoapi.fr/shomgt/view/tile.php/{layer}/{z}/{x}/{y}.png
   Test:
-    http://localhost/geoapi/shomgt/ws/tile.php/gtpyr/17/63957/45506.png
+    http://localhost/geoapi/shomgt/view/tile.php/gtpyr/17/63957/45506.png
 journal: |
   28-31/7/2022:
     - correction suite à analyse PhpStan level 6
