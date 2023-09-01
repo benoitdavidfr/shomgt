@@ -36,11 +36,11 @@ La fonction geotiffs() tretourne la liste des GéoTiffs dans SHOMGT3_MAPS_DIR_PA
         - envvar.inc.php
 
 ### geotiff.inc.php - Classe GeoTiff implémentant des méthodes sur un GéoTiff
-Un objet GéoTiff est une des images initialement livrée par le Shom en format GéoTiff.
+Un objet GéoTiff est une des images initialement livrées par le Shom en format GéoTiff.
 La classe GeoTiff définit plusieurs méthodes sur un GéoTiff,
 notamment la méthode copyImage() qui recopie dans un GeoRefImage la partie du GéoTiff
 correspondant à une boite en coordonnées WorldMercator.
-La classe GeoTiff gère notamment le fait que les fichiers GeoTiff initiaux ont été découpés en dalles 1024 X 1024
+La classe GeoTiff gère notamment le fait que les fichiers GéoTiff initiaux ont été découpés en dalles 1024 X 1024
 dans un souci d'efficacité.
 #### inclus
         - gdalinfo.inc.php
@@ -60,7 +60,7 @@ en étendant la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php)
 ### gegeom.inc.php - package géométrique utilisant des coordonnées géographiques ou euclidiennes
 Ce fichier définit la classe abstraite Geometry, des sous-classes
 par type de [géométrie GeoJSON](https://tools.ietf.org/html/rfc7946)
-ainsi qu'une classe Segment utilisé pour certains calculs.
+ainsi qu'une classe Segment utilisée pour certains calculs.
 Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
 puis en apppelant la méthode Geometry::fromGeoArray().
 #### inclus

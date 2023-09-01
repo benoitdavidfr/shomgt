@@ -293,9 +293,9 @@ doc: |
   On considère le segment comme fermé sur sa première position et ouvert sur la seconde
   Cela signifie que la première position appartient au segment mais pas la seconde.
 */}
-class Segment {
+readonly class Segment {
   /** @var TLPos */
-  protected array $tab; // 2 positions: [[number]]
+  public array $tab; // 2 positions: [[number]]
   
   /**
   * @param TPos $pos0
@@ -692,13 +692,6 @@ class MultiLineString extends Geometry {
   function reproject(callable $reprojPos): Geometry {
     return new self(LLPos::reproj($reprojPos, $this->coords));
   }
-  
-  /*static function haggregate(array $elts) - NON UTILISE {
-    $coords = [];
-    foreach ($elts as $elt)
-      $coords[] = $elt->coords;
-    return new MultiLineString($coords);
-  }*/
 }
 
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe Geometry
