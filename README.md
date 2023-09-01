@@ -198,3 +198,5 @@ ShomGT utilise différents [composants externes décrits ici](docs/composantexte
 Le [système de log est documenté ici](docs/log.md).
 
 ShomGT utilise Php dans sa version 8.2.
+Le code est testé par [PHPStan](https://phpstan.org/) au niveau 6;
+voir le [fichier de configuration PHPStan](phpstan.neon).
