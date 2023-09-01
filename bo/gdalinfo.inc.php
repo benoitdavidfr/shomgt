@@ -4,8 +4,87 @@ namespace bo;
 name: gdalinfo.inc.php
 title: gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
 */
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
+#require_once __DIR__.'/../lib/gegeom.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
+require_once __DIR__.'/lib.inc.php';
+require_once __DIR__.'/my7zarchive.inc.php';
+
+use Symfony\Component\Yaml\Yaml;
+
+readonly class GBoxAsPolygon {
+  /** Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s'il intersecte ou non l'antiméridien
+   * On fait l'hypothèse que le polygone respecte la règle GeoJSON d'orientation inverse des aiguilles d'une montre
+   * Détecte les # des segments NS et WE
+   * Si le segment WE suit le segment NS alors le GBox n'intersecte pas l'AM
+   * A l'inverse si ce n'est pas le cas alors GBox intersecte l'AM
+   * NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE
+   */
+  public array $coords;
+  
+  function __construct(array $param) {
+    if (($param['type'] ?? null) <> 'Polygon')
+      throw new \Exception("type <> 'Polygon'");
+    if ((count($param['coordinates'] ?? []) <> 1) || (count($param['coordinates'][0] ?? []) <> 5))
+      throw new \Exception("Il n'y a pas 5 positions, il y en a ".count($param['coordinates'][0] ?? []));
+    $this->coords = $param['coordinates'];
+  }
+  
+  // numéro du segment Nord->Sud
+  function NSs(): int {
+    for($i=0; $i <= 3; $i++) {
+      // même X et $i.Y > $i+1.Y
+      if (($this->coords[0][$i][0] == $this->coords[0][$i+1][0]) && ($this->coords[0][$i][1] > $this->coords[0][$i+1][1]))
+        return $i;
+    }
+    throw new \Exception("numéro du segment Nord->Sud non trouvé");
+  }
+  
+  // numéro du segment West->Est
+  function WEs(): int {
+    for($i=0; $i <= 3; $i++) {
+      // même Y et $i.X < $i+1.X
+      if (($this->coords[0][$i][1] == $this->coords[0][$i+1][1]) && ($this->coords[0][$i][0] < $this->coords[0][$i+1][0]))
+        return $i;
+    }
+    throw new \Exception("numéro du segment West->Est non trouvé");
+  }
+  
+  function crossesTheAM(bool $verbose=false) {
+    if ($verbose) {
+      echo "#NSs=",$this->NSs(),"<br>\n";
+      echo "#WEs=",$this->WEs(),"<br>\n";
+    }
+    if ($this->WEs() - $this->NSs() == 1) {
+      if ($verbose)
+        echo "DONT crosses the AM\n";
+      return false;
+    }
+    else {
+      if ($verbose)
+        echo "crosses the AM\n";
+      return true;
+    }
+  }
+  
+  /** coin SW
+   * @return TPos */
+  function SWc(): array { // position du coin SW, c'est la fin du segment NS
+    $ins = $this->NSs();
+    return $this->coords[0][$ins+1];
+  }
+  
+  /** coin NE
+   * @return TPos */
+  function NEc(): array { // position du coin NE, c'est l'indice du point NS + 3 modulo 4
+    $ins = $this->NSs();
+    $ine = $ins + 3;
+    if ($ine >= 4)
+      $ine -= 4;
+    return $this->coords[0][$ine];
+  }
+};
 
 {/*PhpDoc: classes
 name: GBox
@@ -20,9 +99,6 @@ doc: |
   Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
   
   J'ajoute à GBox la possibilité de création à partir du polygone GeoJSON dans wgs84extent
-  Je fais l'hypothèse que l'ordre des positions dans le polygone est le même dans gdalinfo que dans cornerCoordinates
-  à savoir: upperLeft, lowerLeft, lowerRight, upperRight, upperLeft
-  Si ((lowerLeft[0] > 0) && (lowerRight[0] < 0)) cela indique que la boite est à cheval sur l'antiméridien
   
   Je considère au final qu'un GBox standardisé respecte les 2 contraintes ci-dessus.
 
@@ -35,18 +111,19 @@ doc: |
    - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GBox
 */}
 class GBox extends \gegeom\GBox { 
-  //protected array $min=[]; // position SW en LonLat
-  //protected array $max=[]; // position NE en LonLat
+  /* @var TPos $min */
+  //public readonly array $min; // [number, number] ou []
+  /* @var TPos $max */
+  //public readonly array $max; // [number, number] ou [], [] ssi $min == []
   
-  /** @param string|TPos|TLPos|TLLPos|array<string, mixed> $param */
+  /** @param string|TPos|TLPos|TLLPos|TGJPolygon $param */
   function __construct(array|string $param=[]) {
     if (isset($param['coordinates'])) { // cas où le paramètre est un polygone GeoJSON
-      $lpos = $param['coordinates'][0]; // la liste des positions du polygone
-      $min = $lpos[1];
-      $max = $lpos[3];
-      if (($lpos[1][0] > 0) && ($lpos[2][0] < 0)) { // boite est à cheval sur l'antiméridien
+      $gbAsPol = new GBoxAsPolygon($param);
+      $min = $gbAsPol->SWc();
+      $max = $gbAsPol->NEc();
+      if ($gbAsPol->crossesTheAM())
         $max[0] += 360;
-      }
       parent::__construct([$min, $max]);
     }
     else {
@@ -104,16 +181,11 @@ class EBox extends \gegeom\EBox {
  * Un fichier peut être géoréférencé, non géoréférencé ou mal géoréférencé.
  * Il est géoréférencé ssi les champs coordinateSystem, cornerCoordinates et wgs84Extent sont définis.
  * Il est mal géoréférencé ssi son géoréférencement est erroné.
- * Cela peut se traduire par un coordinateSystem/wkt invalide
- * ou des coordonnées cornerCoordinates différentes de la projection de wgs84Extent.
- * Dans cette version, je considère que coordinateSystem/wkt et cornerCoordinates ne sont pas utilisés
- * et que donc un fichier n'est jamais mal géoréférencé
+ * Voir la définition de mal géoréférencé dans goodGeoref()
 */
-require_once __DIR__.'/my7zarchive.inc.php';
-
-class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
+readonly class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
   /** @var array<string, mixed> $info */
-  protected array $info; // contenu du gdalinfo
+  public array $info; // contenu du gdalinfo
   
   function __construct(string $path) {
     $cmde = "gdalinfo -json $path";
@@ -142,64 +214,17 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
   function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo
     if (!isset($this->info['wgs84Extent']))
       return null;
-    else
-      return new GBox($this->info['wgs84Extent']);
+    else {
+      try {
+        return new GBox($this->info['wgs84Extent']);
+      }
+      catch(\Exception $e) {
+        return null;
+      }
+    }
   }
 
-  // Test de georef correct fondé sur la comparaison entre cornerCoordinates et la projection en WorldMercator de wgs84Extent
-  /*function goodGeoref0(bool $debug=false): bool { 
-    $ebox = new EBox($this->info['cornerCoordinates']);
-    if ($debug)
-      echo "  ebox=$ebox\n";
-    if ($debug)
-      echo "  gbox=",$this->gbox(),"\n";
-
-    foreach(['std','AM+ccInTheWestHemisphere','bboxCoversMoreThan360°'] as $case) {
-      switch ($case) {
-        case 'std': { // cas standard
-          $gbox = $this->gbox();
-          break;
-        }
-        // Si non cela peut venir de la convention pour les images à cheval sur l'antimeridien
-        case 'AM+ccInTheWestHemisphere': { // cas particulier 1 où les cornerCoordinates sont définis dans l'hémisphère Ouest
-          //if (!$this->gbox()->astrideTheAntimeridian())
-          //  return false;
-
-          if ($debug)
-            echo "  boite à cheval sur AM\n";
-          $gbox = $this->gbox()->translate360West();
-          if ($debug)
-            echo "  translate360West=$gbox\n";
-          break;
-        }
-        case 'bboxCoversMoreThan360°': { // cas particulier 2 où la boite couvre une largeur de plus de 360° (cas 0101)
-          if ($debug)
-            echo "  Test boite couvrant une largeur de plus de 360°\n";
-          $gbox = $this->gbox()->translateEastBound360East();
-          if ($debug)
-            echo "  translateEastBound360East=$gbox\n";
-          break;
-        }
-      }
-      
-      $proj = EBox::fromListOfPos([
-        WorldMercator::proj($gbox->min()),
-        WorldMercator::proj($gbox->max()),
-      ]);
-      if ($debug)
-        echo "  proj=$proj\n";
-      
-      $distance = $ebox->distance($proj);
-      if ($debug)
-        printf("  distance=%.0f\n", $distance);
-    
-      if ($distance < 1000) // Si la distance est inférieure à 1 km alors géoréférencement ok
-        return true;
-    }
-    return false;
-  }*/
-  
-  // nlle version de goodGeoref() fondée sur la conversion en geo de cornerCoordinates
+  // version de goodGeoref() fondée sur la conversion en geo de cornerCoordinates
   // et le calcul de la distance de cette GBox standardisée avec le wgs84Extent standardisé 
   function goodGeoref(bool $debug=false): bool {
     //$debug = true;
@@ -209,9 +234,19 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
       echo "  cornerCoordinates->geo=",$cornerCoordinates->geo('WorldMercator'),"\n";
       echo "  gbox=",$this->gbox(),"\n";
     }
+    if (!$this->gbox()) {
+      if ($debug)
+        echo "<b>Exception \"".$e->getMessage()."\" dans GBoxAsPolygon</b><br>\n";
+      return false;
+    }
     $dist = $this->gbox()->std()->distance($cornerCoordinates->geo('WorldMercator')->std());
-    if ($debug)
-      echo "  dist=$dist degrés\n";
+    if ($debug) {
+      echo "  dist=$dist degrés ";
+      if ($dist < 1e-2)
+        echo "< 1e-2 => good\n";
+      else
+        echo "> 1e-2 => bad\n";
+    }
     return ($dist < 1e-2); // équivalent à 1 km
   }
   
@@ -248,16 +283,57 @@ class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
   }
 };
 
-if ((php_sapi_name() == 'cli') && ($argv[0]=='gdalinfo.inc.php')) {
-  if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
-    throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-  if (0) { // @phpstan-ignore-line
-    GdalInfo::test("$PF_PATH/incoming/20230628aem/7330.7z", '7330/7330_2019.pdf');
+
+// Tests
+
+switch ($mode = callingThisFile(__FILE__)) {
+  case null: return;
+  case 'web': { // sélection d'un fichier tif dans une archive 7z
+    if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+      throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
+    $rpath = $_GET['rpath'] ?? '';
+    if ($entry = $_GET['entry'] ?? null) {
+      $archive = new My7zArchive($PF_PATH.$rpath);
+      $gdalInfo = new GdalInfo($path = $archive->extract($entry));
+      $archive->remove($path);
+      //echo "<pre>"; print_r($gdalInfo);
+      echo "<pre>",Yaml::dump(['wgs84Extent'=> $gdalInfo->info['wgs84Extent']], 6),"</pre>";
+      try {
+        $gbasp = new GBoxAsPolygon($gdalInfo->info['wgs84Extent']);
+        echo $gbasp->crossesTheAM(true) ? "Crosses the AM<br>\n" : '';
+        echo 'gbox=',$gdalInfo->gbox(),"<br>\n";
+        echo "<pre>goodGeoref:\n";
+        $gdalInfo->goodGeoref(true);
+      }
+      catch (\Exception $e) {
+        echo "<b>Exception \"".$e->getMessage()."\" dans GBoxAsPolygon</b><br>\n";
+      }
+    }
+    elseif (!is_file($PF_PATH.$rpath) && is_dir($PF_PATH.$rpath)) {
+      foreach (new \DirectoryIterator($PF_PATH.$rpath) as $entry) {
+        if (in_array($entry, ['.','..','.DS_Store'])) continue;
+        echo "<a href='?rpath=$rpath/$entry'>$entry</a><br>\n";
+      }
+    }
+    elseif (is_file($PF_PATH.$rpath) && substr($rpath, -3)=='.7z') {
+      //echo "$rpath is .7z file<br>\n";
+      $archive = new My7zArchive($PF_PATH.$rpath);
+      foreach ($archive as $entry) {
+        if (substr($entry['Name'], -4) == '.tif')
+          echo "<a href='?rpath=$rpath&entry=$entry[Name]'>$entry[Name]<br>\n";
+      }
+    }
+    elseif (is_file($PF_PATH.$rpath) && substr($rpath, -5)=='.json') {
+      header('Content-type: application/json; charset="utf-8"');
+      die (file_get_contents($PF_PATH.$rpath));
+    }
+    else {
+      echo "$rpath ni dir, ni .7z, ni .json<br>\n";
+    }
+    break;
   }
-  elseif (0) { // @phpstan-ignore-line
-    GdalInfo::test("$PF_PATH/attente/20230628aem/8502.7z", '8502/8502CXC_Ed2_2023.tif'); 
-  }
-  elseif (1) { // Test de goodGeoref
+  case 'cli': {
     GdalInfo::testGoodGeoref($PF_PATH);
   }
+  default: die("mode '$mode' inconnu");
 }

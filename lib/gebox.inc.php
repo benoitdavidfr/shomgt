@@ -184,11 +184,6 @@ abstract class BBox {
   function east(): ?float  { return $this->min ? $this->max[0] : null; }
   function north(): ?float { return $this->min ? $this->max[1] : null; }
   
-  //function setWest(float $val): void  { $this->min[0] = $val; }
-  //function setSouth(float $val): void { $this->min[1] = $val; }
-  //function setEast(float $val): void  { $this->max[0] = $val; }
-  //qfunction setNorth(float $val): void { $this->max[1] = $val; }
-  
   // retourne le centre de la BBox ou [] si elle est vide
   /** @return TPos */
   function center(): array {

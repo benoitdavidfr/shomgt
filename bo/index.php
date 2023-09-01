@@ -116,15 +116,16 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='../wms.php'>wms.php</a></li>\n";
     echo "<li><a href='../view/wmsv.php'>wmsv.php</a></li>\n";
     echo "</ul><h3>Composants</h2><ul>\n";
-    echo "<li><a href='../lib/layer.inc.php'>layer.inc.php - définition des couches d'images</a></li>\n";
-    echo "<li><a href='../lib/vectorlayer.inc.php'>vectorlayer.inc.php - définition des couches vecteurs</a></li>\n";
+    echo "<li><a href='gdalinfo.inc.php'>bo/gdalinfo.inc.php</a></li>\n";
+    echo "<li><a href='../lib/layer.inc.php'>lib/layer.inc.php - définition des couches d'images</a></li>\n";
+    echo "<li><a href='../lib/vectorlayer.inc.php'>lib/vectorlayer.inc.php - définition des couches vecteurs</a></li>\n";
     echo "<li><a href='../lib/geotiff.inc.php?gtname=4233_pal300'>",
-      "geotiff.inc.php - création de l'objet GéoTiff 4233_pal300</a></li>\n";
-    echo "<li><a href='../lib/grefimg.inc.php'>grefimg.inc.php - image géoréférencée</a></li>\n";
-    echo "<li><a href='../lib/gegeom.inc.php'>gegeom.inc.php - package géométrique</a></li>\n";
-    echo "<li><a href='../lib/gebox.inc.php'>gebox.inc.php - boites</a></li>\n";
-    echo "<li><a href='../lib/pos.inc.php'>pos.inc.php - types Pos, ...</a></li>\n";
-    echo "<li><a href='../lib/jsonschema.inc.php'>jsonschema.inc.php</a></li>\n";
+      "lib/geotiff.inc.php - création de l'objet GéoTiff 4233_pal300</a></li>\n";
+    echo "<li><a href='../lib/grefimg.inc.php'>lib/grefimg.inc.php - image géoréférencée</a></li>\n";
+    echo "<li><a href='../lib/gegeom.inc.php'>lib/gegeom.inc.php - package géométrique</a></li>\n";
+    echo "<li><a href='../lib/gebox.inc.php'>lib/gebox.inc.php - boites</a></li>\n";
+    echo "<li><a href='../lib/pos.inc.php'>lib/pos.inc.php - types Pos, ...</a></li>\n";
+    echo "<li><a href='../lib/jsonschema.inc.php'>lib/jsonschema.inc.php</a></li>\n";
     break;
   }
   case 'getenv': {
