@@ -1,20 +1,16 @@
 # Bibliothèque commune de fonctions et classes
-### wmsserver.inc.php - définition de la classe abstraite WmsServer
-La classe abstraite **WmsServer** gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
-elle est indépendante des fonctionnalités du serveur de shomgt.
-Elle génère un fichier temporaire de log utile au déverminage.
-
 ### layer.inc.php  - Classes Layer, PyrLayer, LabelLayer et TiffLayer
-Les 4 classes Layer, PyrLayer, LabelLayer et TiffLayer permettent de construire à partir de shomgt.yaml la structuration
-en couches et de l'exploiter au travers des méthodes map() qui recopie dans une image GD l'extrait de la couche
-correspondant à un rectangle et pour la classe TiffLayer la méthode items() qui génère en GeoJSON les silhouettes des GéoTiffs.
+La classe Layer est une classe abstraite d'une couche de ShomGT qui regoupe les classes PyrLayer, LabelLayer et TiffLayer.  
+La classe Layer contient en outre en statique le dictionnaire des couches de ShomGT.  
+Les objets Layer sont construits à partir du contenu du [fichier shomgt.yaml](../data#le-fichier-shomgtyaml).   
 
-La classe abstraite Layer définit les couches du serveur de cartes.  
-La classe TiffLayer correspond aux couches agrégeant des GéoTiff.  
+Un objet Layer, au travers de la méthode map(), sait recopier dans une image GD l'extrait de la couche
+correspondant à un rectangle.
+
+La classe TiffLayer correspond aux couches agrégeant des GéoTiff ;
+la méthode items() génère en GeoJSON les silhouettes des GéoTiffs.  
 La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.  
 Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.  
-
-Les listes de couches sont initialisées notamment à partir du [fichier shomgt.yaml](../data#le-fichier-shomgtyaml).
 #### inclus
         - ../vendor/autoload.php
         - grefimg.inc.php
@@ -23,8 +19,10 @@ Les listes de couches sont initialisées notamment à partir du [fichier shomgt.
         - isomd.inc.php
 
 ### vectorlayer.inc.php - Classe VectorLayer gérant les couches d'objets vecteur
-La classe VectorLayer gère une couche d'objets vecteur et est utilisé par ../shomgt/wmsv.php qui implémente
-un serveur WMS pour les couches vecteur.
+La classe VectorLayer gère une couche d'objets vecteur et est utilisé par ../view/wmsv.php qui implémente
+un serveur WMS pour les couches vecteur.  
+Comme pour la classe PyrLayer, la méthode map(), sait recopier dans une image GD l'extrait image de la couche
+correspondant à un rectangle et la méthode items() .
 #### inclus
         - layer.inc.php
         - gegeom.inc.php
@@ -99,6 +97,11 @@ Code utilisé pour changer des coordonnées de système de coordonnées entre Wo
 les coordonnées géographiques WGS84 (utilisé pour fournir des informations) et Web Mercator (la projection des tuiles).
 #### inclus
         - sexcept.inc.php
+
+### wmsserver.inc.php - définition de la classe abstraite WmsServer
+La classe abstraite **WmsServer** gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
+elle est indépendante des fonctionnalités du serveur de shomgt.
+Elle génère un fichier temporaire de log utile au déverminage.
 
 ### jsonschema.inc.php - validation de la conformité d'une valeur Php à un schéma JSON
 Utilisé dans main.php pour valider shomgt.yaml par rapport à son schéma JSON défini dans shomgt.schema.yaml.

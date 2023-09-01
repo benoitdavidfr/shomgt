@@ -60,13 +60,14 @@ doc: |
 */
 abstract class Layer {
   const ErrorUndef = 'Layer::ErrorUndef';
-  const LAYERS_PSER_PATH = __DIR__.'/layers.pser';
+  const LAYERS_PSER_PATH = __DIR__.'/../data/layers.pser';
   const DILATE = - 1e-3; // dilatation en mètres sur la carte
 
   /** @var array<string, Layer> $layers */
   static array $layers=[]; // dictionaire [{lyrName} => Layer]
 
   // initialise le dictionnaire des couches à partir du fichier shomgt.yaml
+  // Ce dictionnaire est stocké dans un fichier pser afin de ne pas avoir à le recosntruire à chaque appel
   static function initFromShomGt(string $filename): void {
     if (!is_file("$filename.yaml")) { // cas notamment où shomgt.yaml n'a pas encore été généré
       header('HTTP/1.1 500 Internal Server Error');
@@ -99,12 +100,12 @@ abstract class Layer {
     }
   }
 
-  // retourne le dictionnaire des couches
-  /** @return array<string, Layer> */
+  /** retourne le dictionnaire des couches
+   * @return array<string, Layer> */
   static function layers(): array { return self::$layers; }
   
-  // fournit une représentation de la couche comme array pour affichage
-  /** @return array<string, mixed> */
+  /** fournit une représentation de la couche comme array pour affichage
+   * @return array<string, mixed> */
   abstract function asArray(): array;
 
   // calcul de l'extension spatiale de la couche en WoM
@@ -115,18 +116,20 @@ abstract class Layer {
   // le paramètre zoom est uniquement utilisé dans la classe PyrLayer
   abstract function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void;
 
-  // utile pour éviter les erreurs d'analyse statique
-  /** @return array<int, TGeoJsonFeature> */
-  function items(string $lyrname, ?\gegeom\GBox $qgbox): array { throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef); }
+  /** utile pour éviter les erreurs d'analyse statique
+   * @return list<TGeoJsonFeature> */
+  function items(string $lyrname, ?\gegeom\GBox $qgbox): array {
+    throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
+  }
 
-  // utile pour éviter les erreurs d'analyse statique
-  /** @return array<int, TGeoJsonFeature> */
+  /** utile pour éviter les erreurs d'analyse statique
+   * @return list<TGeoJsonFeature> */
   function deletedZones(string $lyrname, ?\gegeom\GBox $qgbox): array {
     throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
   }
 
-  // utile pour éviter les erreurs d'analyse statique
-  /** @return array<int, \gegeom\EBox> */
+  /** utile pour éviter les erreurs d'analyse statique
+   * @return array<int, \gegeom\EBox> */
   function itemEBoxes(\gegeom\EBox $wombox): array {
     throw new SExcept("Erreur, méthode non définie", self::ErrorUndef);
   }

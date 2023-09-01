@@ -97,11 +97,11 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     return $gbox->proj('WorldMercator');
   }
 
-  // retourne un array de Features structurés comme array Php
-  /** @return array<int, TGeoJsonFeature> */
+  /** retourne un array de Features structurés comme array Php
+   * @return array<int, TGeoJsonFeature> */
   private function items(): array {
     if ($this->path) {
-      return json_decode(file_get_contents(__DIR__.'/../shomgt/'.$this->path), true)['features'];
+      return json_decode(file_get_contents(__DIR__.'/../view/'.$this->path), true)['features'];
     }
     elseif (substr($this->name, 0, 3)=='cat') {
       $rasterLayerName = 'gt'.substr($this->name, 3);
@@ -158,11 +158,9 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     }
   }
 
-  // retourne une liste de propriétés des features concernés
-  /**
+  /** retourne une liste de propriétés des features concernés
   * @param TPos $geo
-  * @return array<int, TGeoJsonProperties>
-  */
+  * @return array<int, TGeoJsonProperties> */
   function featureInfo(array $geo, int $featureCount, float $resolution): array {
     $info = [];
     $dmin = 10 * $resolution;
