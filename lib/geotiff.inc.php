@@ -107,7 +107,7 @@ class GeoTiff {
     }
   }
   
-  // clone le GeoTiff pour fabriquer une copie translatée de 360° vers l'Ouest.
+  // clone le GeoTiff pour en fabriquer une copie translatée de 360° vers l'Ouest.
   // Utilisé pour dupliquer les GéoTiffs à cheval sur l'anti-méridien.
   function translate360West(): self {
     $translate = clone $this;

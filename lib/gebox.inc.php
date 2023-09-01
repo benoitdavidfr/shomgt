@@ -94,19 +94,21 @@ abstract class BBox {
     elseif (is_string($param)) {
       $params = explode(',', $param);
       if (in_array(count($params), [2,3])) {
-        $this->min = [(float)$param[0], (float)$param[1]];
+        $this->min = [(float)$params[0], (float)$params[1]];
         $this->max = $this->min;
       }
       elseif (count($params)==4) {
-        $this->min = LPos::min([[(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]]);
-        $this->max = LPos::max([[(float)$param[0], (float)$param[1]], [(float)$param[2], (float)$param[3]]]);
+        $lpos = [[(float)$params[0], (float)$params[1]], [(float)$params[2], (float)$params[3]]];
+        $this->min = LPos::min($lpos);
+        $this->max = LPos::max($lpos);
       }
       elseif (count($params)==6) {
-        $this->min = LPos::min([[(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]]);
-        $this->max = LPos::max([[(float)$param[0], (float)$param[1]], [(float)$param[3], (float)$param[4]]]);
+        $lpos = [[(float)$params[0], (float)$params[1]], [(float)$params[3], (float)$params[4]]];
+        $this->min = LPos::min($lpos);
+        $this->max = LPos::max($lpos);
       }
       else
-        throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectNbOfParams);
+        throw new \SExcept("Erreur de BBox::__construct(param=$param)", self::ErrorIncorrectParams);
     }
     elseif (LPos::is($param)) { // $param est une liste de positions en cont. au moins une 
       //echo "param est une LPos<br>\n";

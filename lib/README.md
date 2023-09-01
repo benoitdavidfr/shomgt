@@ -5,7 +5,7 @@ La classe Layer contient en outre en statique le dictionnaire des couches de Sho
 Les objets Layer sont construits à partir du contenu du [fichier shomgt.yaml](../data#le-fichier-shomgtyaml).   
 
 Un objet Layer, au travers de la méthode map(), sait recopier dans une image GD l'extrait de la couche
-correspondant à un rectangle.
+correspondant à une boite définie en WorldMercator.
 
 La classe TiffLayer correspond aux couches agrégeant des GéoTiff ;
 la méthode items() génère en GeoJSON les silhouettes des GéoTiffs.  
@@ -21,21 +21,27 @@ Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
 ### vectorlayer.inc.php - Classe VectorLayer gérant les couches d'objets vecteur
 La classe VectorLayer gère une couche d'objets vecteur et est utilisé par ../view/wmsv.php qui implémente
 un serveur WMS pour les couches vecteur.  
-Comme pour la classe PyrLayer, la méthode map(), sait recopier dans une image GD l'extrait image de la couche
-correspondant à un rectangle et la méthode items() .
+Comme pour la classe PyrLayer, la méthode map() sait dessiner dans une image GD l'extrait de la couche
+correspondant à une boite définie en WorldMercator ;
+elle utilise pour dessiner les objets vecteur un style, dont la définition est inspirée de celle utilisée dans Leaflet.
+
+La méthode items() retourne le contenu de la couche comme liste de Features GeoJSON.
 #### inclus
         - layer.inc.php
         - gegeom.inc.php
 
 ### geotiffs.inc.php - liste les GeoTiffs
-Ce script définit la fonction geotiffs() qui tretourne la liste des GéoTiffs dans SHOMGT3_MAPS_DIR_PATH.
+La fonction geotiffs() tretourne la liste des GéoTiffs dans SHOMGT3_MAPS_DIR_PATH.
 #### inclus
         - envvar.inc.php
 
 ### geotiff.inc.php - Classe GeoTiff implémentant des méthodes sur un GéoTiff
+Un objet GéoTiff est une des images initialement livrée par le Shom en format GéoTiff.
 La classe GeoTiff définit plusieurs méthodes sur un GéoTiff,
 notamment la méthode copyImage() qui recopie dans un GeoRefImage la partie du GéoTiff
-qui correspond à une boite en coordonnées WorldMercator.
+correspondant à une boite en coordonnées WorldMercator.
+La classe GeoTiff gère notamment le fait que les fichiers GeoTiff initiaux ont été découpés en dalles 1024 X 1024
+dans un soucu d'efficacité.
 #### inclus
         - gdalinfo.inc.php
         - envvar.inc.php
