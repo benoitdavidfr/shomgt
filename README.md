@@ -201,4 +201,4 @@ ShomGT utilise Php dans sa version 8.2.
 Le code est testé par [PHPStan](https://phpstan.org/) au niveau 6;
 voir le [fichier de configuration PHPStan](phpstan.neon).
 
-La doc PHPDoc est disponible sur https://benoitdavidfr.github.io/shomgt/.
+La [doc PHPDoc est disponible ici](phpdoc).
