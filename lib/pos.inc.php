@@ -1,31 +1,34 @@
 <?php
+/**
+ * définition des classes statiques Pos, LPos, LLPos
+ *
+ * Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
+ * qui permet de construire les primitives géométriques.
+ * Une position est stockée comme un array de 2 ou 3 nombres.
+ *  On gère aussi une liste de positions comme array de positions
+ *  et une liste de listes de positions comme array d'array de positions.
+ *
+ * journal:
+ *  - 2/9/2023:
+ *    - ajout du calcul de surface sur une LPos
+ *    - restructuration de la doc en PHPDoc
+ *  - 31/7/2022:
+ *    - ajout déclarations PhpStan pour level 6  
+ *  - 23/12/2020:  
+ *    - ajout roundToIntIfPossible()  
+ *  - 17/12/2020:  
+ *    - création  
+ */
 namespace gegeom;
-{/*PhpDoc:
-name:  pos.inc.php
-title: pos.inc.php - définition des classes statiques Pos, LPos, LLPos
-functions:
-classes:
-doc: |
-  Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
-  qui permet de construire les primitives géométriques.
-  Une position est stockée comme un array de 2 ou 3 nombres.
-  On gère aussi une liste de positions comme array de positions
-  et une liste de listes de positions comme array d'array de positions.
-journal: |
-  31/7/2022:
-    - ajout déclarations PhpStan pour level 6
-  23/12/2020:
-    - ajout roundToIntIfPossible()
-  17/12/2020:
-    - création
-*/}
+
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-function roundToIntIfPossible(float $v): float|int { // arrondit si possible comme entier un flottant pour simplifier le Yaml
+/** arrondit si possible comme entier un flottant pour simplifier le Yaml */
+function roundToIntIfPossible(float $v): float|int {
   static $epsilon = 1e-8; // pour arrondir éventuellement en entier pour la sortie Yaml
   if ($v == 0)
     return (int)$v;
@@ -43,13 +46,10 @@ if (0) { // @phpstan-ignore-line // Tests unitaires
 }
 
 
-{/*PhpDoc: classes
-name: LElts
-title: class LElts - Fonctions de gestion de liste d'éléments
-*/}
+/** Fonctions de gestion de liste d'éléments */
 class LElts {
   /** Nbre d'élts d'une liste de listes d'élts
-   * @param array<int, array<int, mixed>> $llelts */
+   * @param list<list<mixed>> $llelts */
   static function LLcount(array $llelts): int {
     $nbElts = 0;
     foreach ($llelts as $lelts)
@@ -68,13 +68,13 @@ class LElts {
 }
 
 
-// Fonctions sur les positions représentées par une liste de 2 nombres
+/** Fonctions sur les positions représentées par une liste de 2 nombres */
 class Pos {
   const GEODMD_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
   
   const ErrorParamInFromGeoDMd = 'Pos::ErrorParamInFromGeoDMd';
   
-  // teste si une valeur correspond à une position
+  /** teste si une valeur correspond à une position */
   static function is(mixed $pos): bool {
     return is_array($pos) && in_array(count($pos),[2,3]) && is_numeric($pos[0] ?? null) && is_numeric($pos[1] ?? null);
   }
@@ -102,7 +102,7 @@ class Pos {
     return [$lon, $lat];
   }
   
-  // Formatte une coord. lat ou lon
+  /** Formatte une coord. lat ou lon */
   static function formatCoordInDMd(float $coord, int $nbposMin): string {
     $min = number_format(($coord-floor($coord))*60, $nbposMin, ','); // minutes formattées
     //echo "min=$min<br>\n";
@@ -145,7 +145,7 @@ class Pos {
    * @return TPos */
   static function diff(array $a, array $b): array { return [$a[0] - $b[0], $a[1] - $b[1]]; }
   
-  /** retourne pe produit scalaire
+  /** retourne le produit scalaire
    * @param TPos $u;
    * @param TPos $v; */
   static function scalarProduct(array $u, array $v): float { return $u[0]*$v[0] + $u[1]*$v[1]; }
@@ -155,25 +155,25 @@ class Pos {
    * @param TPos $v; */
   static function vectorProduct(array $u, array $v): float { return $u[0]*$v[1] - $u[1]*$v[0]; }
   
-  /**
-  * @param TPos $a
-  * @param TPos $b
-  */
+  /** Retourne la distance entre 2 positions
+   * @param TPos $a
+   * @param TPos $b
+   */
   static function distance(array $a, array $b): float {
     return sqrt(($b[0]-$a[0])*($b[0]-$a[0]) + ($b[1]-$a[1])*($b[1]-$a[1]));
   }
 };
 
-// Fonctions sur les listes de positions représentées par une liste de Pos
+/** Fonctions sur les listes de positions représentées par une liste de Pos */
 class LPos {
   const ErrorCenterOfEmptyLPos = 'Pos::ErrorCenterOfEmptyLPos';
 
-  // teste si une valeur correspond à une liste d'au moins une position
+  /** teste si une valeur correspond à une liste d'au moins une position */
   static function is(mixed $lpos): bool { return is_array($lpos) && Pos::is($lpos[0] ?? null); }
 
   /** Retourne la position avec le min des positions en paraaètres pour chaque coordonnée
-  * @param TLPos $lpos
-  * @return TPos */
+   * @param TLPos $lpos
+   * @return TPos */
   static function min(array $lpos): array {
     if (!$lpos)
       return [];
@@ -185,8 +185,8 @@ class LPos {
   }
   
   /** Retourne la position avec le max des positions en paraaètres pour chaque coordonnée
-  * @param TLPos $lpos
-  * @return TPos */
+   * @param TLPos $lpos
+   * @return TPos */
   static function max(array $lpos): array {
     if (!$lpos)
       return [];
@@ -197,10 +197,10 @@ class LPos {
     }
   }
   
-  /** calcule le centre d'une liste de positions, génère une exception si la liste est vide
-  * @param TLPos $lpos
-  * @return TPos
-  */
+  /** calcule le barycentre d'une liste de positions, génère une exception si la liste est vide
+   * @param TLPos $lpos
+   * @return TPos
+   */
   static function center(array $lpos): array {
     if (!$lpos)
       throw new \SExcept("Erreur: LPos::center() d'une liste de positions vide", self::ErrorCenterOfEmptyLPos);
@@ -228,20 +228,19 @@ class LPos {
   }
   
   /** reprojète une liste de positions et en retourne la liste
-  * @param TLPos $lpos
-  * @return TLPos */
+   * @param TLPos $lpos
+   * @return TLPos */
   static function reproj(callable $reprojPos, array $lpos): array { return array_map($reprojPos, $lpos); }
 };
 
-// Fonctions sur les listes de listes de positions représentée par une liste de LPos
+/** Fonctions sur les listes de listes de positions représentée par une liste de LPos */
 class LLPos {
-  // teste si une variable correspond à une liste de listes de positions dont la première en contient au moins une
+  /** teste si une valeur correspond à une liste de listes de positions dont la première en contient au moins une */
   static function is(mixed $llpos): bool { return is_array($llpos) && LPos::is($llpos[0] ?? null); }
 
   /** reprojète une liste de liste de positions et en retourne la liste
   * @param TLLPos $llpos
-  * @return TLLPos
-  */
+  * @return TLLPos */
   static function reproj(callable $reprojPos, array $llpos): array {
     $coords = [];
     foreach ($llpos as $i => $lpos)

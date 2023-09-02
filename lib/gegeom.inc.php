@@ -1,40 +1,39 @@
 <?php
+/**
+ * Package géométrique utilisant des coordonnées géographiques ou euclidiennes
+ *
+ *  Ce fichier définit la classe abstraite Geometry, des sous-classes par type de géométrie GeoJSON
+ *  (https://tools.ietf.org/html/rfc7946) ainsi qu'une classe Segment utilisé pour certains calculs.
+ *  Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
+ *  puis en appellant la méthode Geometry::fromGeoArray().
+ *
+ * journal:
+ * - 2/9/2023
+ *   - reformattage de la doc en PHPDoc
+ * - 10/6/2023:
+ *   - corrections pour mise à niveau Php 8.2
+ *     - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 590
+ *     - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 833
+ * - 22/8/2022:
+ *   - correction bug
+ * - 28/7/2022:
+ *   - correction suite à analyse PhpStan
+ *   - suppression du style associé à une géométrie
+ *   - GeomtryCollection n'est plus une sous-classe de Geometry
+ *   - transfert de qqs méthodes dans Po, LPos et LLPos
+ * - 8/7/2022:
+ *   - ajout Segment::(projPosOnLine+distancePosToLine+distanceToPos) + LineString::distanceToPos
+ * - 7-10/2/2022:
+ *   - ajout de code aux exceptions
+ *   - décomposition du test unitaire de la classe Geometry dans les tests des sous-classes
+ *   - transformation des Exception en \SExcept et fourniture d'un code de type string
+ * - 9/3/2019:
+ *   - ajout de nombreuses fonctionnalités
+ * - 7/3/2019:
+ *   - création
+ */
 namespace gegeom;
-{/*PhpDoc:
-name:  gegeom.inc.php
-title: gegeom.inc.php - package géométrique utilisant des coordonnées géographiques ou euclidiennes
-functions:
-classes:
-doc: |
-  Ce fichier définit la classe abstraite Geometry, des sous-classes par type de géométrie GeoJSON
-  (https://tools.ietf.org/html/rfc7946) ainsi qu'une classe Segment utilisé pour certains calculs.
-  Une géométrie GeoJSON peut être facilement créée en décodant le JSON en Php par json_decode()
-  puis en apppelant la méthode Geometry::fromGeoArray().
-journal: |
-  10/6/2023:
-    - corrections pour mise à niveau Php 8.2
-      - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 590
-      - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 833
-  22/8/2022:
-    - correction bug
-  28/7/2022:
-    - correction suite à analyse PhpStan
-    - suppression du style associé à une géométrie
-    - GeomtryCollection n'est plus une sous-classe de Geometry
-    - transfert de qqs méthodes dans Po, LPos et LLPos
-  8/7/2022:
-    - ajout Segment::(projPosOnLine+distancePosToLine+distanceToPos) + LineString::distanceToPos
-  7-10/2/2022:
-    - ajout de code aux exceptions
-    - décomposition du test unitaire de la classe Geometry dans les tests des sous-classes
-    - transformation des Exception en \SExcept et fourniture d'un code de type string
-  9/3/2019:
-    - ajout de nombreuses fonctionnalités
-  7/3/2019:
-  -   création
-includes: [coordsys.inc.php, zoom.inc.php, gebox.inc.php, sexcept.inc.php]
-forks: [ /geovect/gegeom ]
-*/}
+
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -49,8 +48,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
   echo "<html><head><meta charset='UTF-8'><title>gegeom</title></head><body><pre>";
 }
 
-// Prend une valeur et la transforme récursivement en aray Php pur sans objet, utile pour l'afficher avec json_encode
-// Les objets rencontrés doivent avoir une méthode asArray() qui décompose l'objet en array des propriétés exposées
+/** Prend une valeur et la transforme récursivement en aray Php pur sans objet, utile pour l'afficher avec json_encode
+ * Les objets rencontrés doivent avoir une méthode asArray() qui décompose l'objet en array des propriétés exposées */
 function asArray(mixed $val): mixed {
   //echo "AsArray(",json_encode($val),")<br>\n";
   if (is_array($val)) {
@@ -66,30 +65,30 @@ function asArray(mixed $val): mixed {
     return $val;
 }
 
-// génère un json en traversant les objets qui savent se décomposer en array par asArray()
+/** génère un json en traversant les objets qui savent se décomposer en array par asArray() */
 function my_json_encode(mixed $val): string {
   return json_encode(asArray($val), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 }
 
 
-{/*PhpDoc: classes
-name: Geometry
-title: abstract class Geometry - Gestion d'une Geometry GeoJSON (hors collection) et de quelques opérations
-doc: |
-  Les coordonnées sont conservées en array comme en GeoJSON et pas structurées avec des objets.
-  Chaque type de géométrie correspond à une sous-classe concrète.
-  Par défaut, la géométrie est en coordonnées géographiques mais les classes peuvent aussi être utilisées
-  avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préfixées par e.
-*/}
+/**
+ * abstract class Geometry - Gestion d'une Geometry GeoJSON (hors collection) et de quelques opérations
+ *
+ * Les coordonnées sont conservées en array comme en GeoJSON et pas structurées avec des objets.
+ * Chaque type de géométrie correspond à une sous-classe concrète.
+ * Par défaut, la géométrie est en coordonnées géographiques mais les classes peuvent aussi être utilisées
+ * avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préfixées par e.
+*/
 abstract class Geometry {
-  const ErrorFromGeoArray = 'Geometry::ErrorFromGeoArray';
+  const ErrorFromGeoArray = 'Geometry::ErrorFromGeoArray'; /** Code d'erreur dans SExcept() */
+  /** Liste des types de géoémtries homogènes */
   const HOMOGENEOUSTYPES = ['Point','LineString','Polygon','MultiPoint','MultiLineString','MultiPolygon'];
   
-  static int $precision = 6; // nbre de chiffres après la virgule à conserver pour les coord. géo.
-  static int $ePrecision = 1; // nbre de chiffres après la virgule à conserver pour les coord. euclidiennes
+  static int $precision = 6; /** nbre de chiffres après la virgule à conserver pour les coord. géo. */
+  static int $ePrecision = 1; /** nbre de chiffres après la virgule à conserver pour les coord. euclidiennes */
   
-  /** @var TPos|TLPos|TLLPos|TLLLPos $coords */
-  public readonly array $coords; // Positions, stockées comme array, array(array), ... en fn de la sous-classe
+  /** @var TPos|TLPos|TLLPos|TLLLPos $coords Positions, stockées comme array, array(array), ... en fn de la sous-classe */
+  public readonly array $coords;
   
   /** crée une géométrie à partir du json_decode() d'une géométrie GeoJSON
    * @param TGeoJsonGeometry $geom */
@@ -112,22 +111,22 @@ abstract class Geometry {
    * @param TPos|TLPos|TLLPos|TLLLPos $coords */
   function __construct(array $coords) { $this->coords = $coords; }
   
-  // retourne le nom du type GeoJSON qui est le nom de la classe sans l'espace de nom
+  /** retourne le nom du type GeoJSON qui est le nom de la classe sans l'espace de nom */
   function type(): string { return substr(get_class($this), strlen(__NAMESPACE__)+1); }
   
-  // retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
-  /** @return array<int, string> */
+  /** retourne la liste des types élémentaires ('Point','LineString','Polygon') contenus dans la géométrie
+   * @return list<string> */
   abstract function eltTypes(): array;
   
-  // génère la réprésentation string GeoJSON
+  /** génère la réprésentation string GeoJSON */
   function __toString(): string { return json_encode($this->asArray()); }
   
-  // génère la représentation Php du GeoJSON
-  /** @return array<string, string|TPos|TLPos|TLLPos|TLLLPos> */
+  /** génère la représentation Php du GeoJSON
+   * @return array<string, string|TPos|TLPos|TLLPos|TLLLPos> */
   function asArray(): array { return ['type'=> $this->type(), 'coordinates'=> $this->coords]; }
   
-  // Retourne la liste des primitives contenues dans l'objet sous la forme d'objets
-  // Point -> [], MutiPoint->[Point], LineString->[Point], MultiLineString->[LineString], Polygon->[LineString],
+  /** Retourne la liste des primitives contenues dans l'objet sous la forme d'objets
+   * Point -> [], MutiPoint->[Point], LineString->[Point], MultiLineString->[LineString], Polygon->[LineString],
   // MutiPolygon->[Polygon]
   /** @return array<int, object> */
   abstract function geoms(): array;
