@@ -1588,6 +1588,9 @@ bo:
     - il peut mettre à jour les services ShomGt avec les nouvelles versions de cartes
 
 doc:
+  précisionCoordGéo:
+    - en Php précision d'un float de 1.11e-16
+    - soit * 40.000 km -> 4e-9 mètres
   exec:
     exec: |
       exec — Exécute un programme externe

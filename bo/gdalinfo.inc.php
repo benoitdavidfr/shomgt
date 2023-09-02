@@ -16,18 +16,26 @@ use Symfony\Component\Yaml\Yaml;
 readonly class GBoxAsPolygon {
   /** Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s'il intersecte ou non l'antiméridien
    * On fait l'hypothèse que le polygone respecte la règle GeoJSON d'orientation inverse des aiguilles d'une montre
+   * Par contre, on fait aussi l'hypothèse que le polygone ne respecte pas la règle GeoJSON de dédoublage des objets
+   * intersectant l'antiméridien.
+   * Ces hypothèses ont été vérifiées sur de nombreuses cartes.
    * Détecte les # des segments NS et WE
    * Si le segment WE suit le segment NS alors le GBox n'intersecte pas l'AM
    * A l'inverse si ce n'est pas le cas alors GBox intersecte l'AM
    * NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE
    */
+  const EPSILON = 1e-2; // en degrés soit environ 1 km
+  /** @var TLLPos $coords; */
   public array $coords;
   
+  /** @param TGJPolygon $param; */
   function __construct(array $param) {
     if (($param['type'] ?? null) <> 'Polygon')
       throw new \Exception("type <> 'Polygon'");
-    if ((count($param['coordinates'] ?? []) <> 1) || (count($param['coordinates'][0] ?? []) <> 5))
-      throw new \Exception("Il n'y a pas 5 positions, il y en a ".count($param['coordinates'][0] ?? []));
+    if (!\gegeom\LLPos::is($param['coordinates']))
+      throw new \Exception("coordinates n'est pas un LLPos");
+    if (count($param['coordinates'][0]) <> 5)
+      throw new \Exception("coordinates n'a pas 5 positions, il y en a ".count($param['coordinates'][0] ?? []));
     $this->coords = $param['coordinates'];
   }
   
@@ -35,7 +43,8 @@ readonly class GBoxAsPolygon {
   function NSs(): int {
     for($i=0; $i <= 3; $i++) {
       // même X et $i.Y > $i+1.Y
-      if (($this->coords[0][$i][0] == $this->coords[0][$i+1][0]) && ($this->coords[0][$i][1] > $this->coords[0][$i+1][1]))
+      if ((abs($this->coords[0][$i][0] - $this->coords[0][$i+1][0]) < self::EPSILON)
+         && ($this->coords[0][$i][1] > $this->coords[0][$i+1][1]))
         return $i;
     }
     throw new \Exception("numéro du segment Nord->Sud non trouvé");
@@ -45,13 +54,15 @@ readonly class GBoxAsPolygon {
   function WEs(): int {
     for($i=0; $i <= 3; $i++) {
       // même Y et $i.X < $i+1.X
-      if (($this->coords[0][$i][1] == $this->coords[0][$i+1][1]) && ($this->coords[0][$i][0] < $this->coords[0][$i+1][0]))
+      if ((abs($this->coords[0][$i][1] - $this->coords[0][$i+1][1]) < self::EPSILON)
+         && ($this->coords[0][$i][0] < $this->coords[0][$i+1][0]))
         return $i;
     }
     throw new \Exception("numéro du segment West->Est non trouvé");
   }
   
-  function crossesTheAM(bool $verbose=false) {
+  // indique si le polygone intersecte ou non l'anti-méridien
+  function crossesTheAM(bool $verbose=false): bool {
     if ($verbose) {
       echo "#NSs=",$this->NSs(),"<br>\n";
       echo "#WEs=",$this->WEs(),"<br>\n";
@@ -215,17 +226,12 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
     if (!isset($this->info['wgs84Extent']))
       return null;
     else {
-      try {
-        return new GBox($this->info['wgs84Extent']);
-      }
-      catch(\Exception $e) {
-        return null;
-      }
+      return new GBox($this->info['wgs84Extent']);
     }
   }
 
-  // version de goodGeoref() fondée sur la conversion en geo de cornerCoordinates
-  // et le calcul de la distance de cette GBox standardisée avec le wgs84Extent standardisé 
+  // Teste si le géoréférencement fourni par gdalinfo est correct
+  // Le principe est fondé sur la compraison entre wgs84Extent et la conversion en geo de cornerCoordinates
   function goodGeoref(bool $debug=false): bool {
     //$debug = true;
     $cornerCoordinates = new EBox($this->info['cornerCoordinates']);
@@ -235,8 +241,6 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
       echo "  gbox=",$this->gbox(),"\n";
     }
     if (!$this->gbox()) {
-      if ($debug)
-        echo "<b>Exception \"".$e->getMessage()."\" dans GBoxAsPolygon</b><br>\n";
       return false;
     }
     $dist = $this->gbox()->std()->distance($cornerCoordinates->geo('WorldMercator')->std());
@@ -252,11 +256,11 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
   
   static function testGoodGeoref(string $PF_PATH): void {
     foreach ([
-        //"7620-2018c5 - Approches d'Anguilla"=> ['path7z'=> 'archives/7620/7620-2018c5.7z', 'entry'=> '7620/7620_pal300.tif'],
-        //"7471-2021c3 - D'Anguilla à St-Barth"=> ['path7z'=> 'archives/7471/7471-2021c3.7z', 'entry'=> '7471/7471_pal300.tif'],
-        //"6977 - O. Pacif. N - P. NW /AM"=> ['path7z'=> 'archives/6977/6977-1982c169.7z', 'entry'=> '6977/6977_pal300.tif'],
-        //"6835 - Océan Pacifique N. - P. E. /AM"=> ['path7z'=> 'current/6835.7z', 'entry'=> '6835/6835_pal300.tif'],
-        //"0101 - Planisphère"=> ['path7z'=> 'current/0101.7z', 'entry'=> '0101/0101_pal300.tif'],
+        "7620-2018c5 - Approches d'Anguilla"=> ['path7z'=> 'archives/7620/7620-2018c5.7z', 'entry'=> '7620/7620_pal300.tif'],
+        "7471-2021c3 - D'Anguilla à St-Barth"=> ['path7z'=> 'archives/7471/7471-2021c3.7z', 'entry'=> '7471/7471_pal300.tif'],
+        "6977 - O. Pacif. N - P. NW /AM"=> ['path7z'=> 'archives/6977/6977-1982c169.7z', 'entry'=> '6977/6977_pal300.tif'],
+        "6835 - Océan Pacifique N. - P. E. /AM"=> ['path7z'=> 'current/6835.7z', 'entry'=> '6835/6835_pal300.tif'],
+        "0101 - Planisphère"=> ['path7z'=> 'current/0101.7z', 'entry'=> '0101/0101_pal300.tif'],
         "7427/1 - Port de Pauillac"=> ['path7z'=> 'archives/7427/7427-2016c13.7z', 'entry'=> '7427/7427_1_gtw.tif'],
       ] as $title => $tif) {
         echo "$title:\n";
@@ -333,7 +337,10 @@ switch ($mode = callingThisFile(__FILE__)) {
     break;
   }
   case 'cli': {
+    if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
+      throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     GdalInfo::testGoodGeoref($PF_PATH);
+    break;
   }
   default: die("mode '$mode' inconnu");
 }

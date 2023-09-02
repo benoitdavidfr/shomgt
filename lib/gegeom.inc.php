@@ -314,7 +314,7 @@ readonly class Segment {
   name:  intersects
   title: "function intersects(Segment $seg): array - intersection entre 2 segments"
   doc: |
-    Je considère les segments fermé sur le premier point et ouvert sur le second.
+    Je considère les segments fermés sur le premier point et ouvert sur le second.
     Cela signifie qu'une intersection ne peut avoir lieu sur la seconde position
     Si les segments ne s'intersectent pas alors retourne []
     S'ils s'intersectent alors retourne le dictionnaire

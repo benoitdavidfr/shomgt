@@ -68,13 +68,13 @@ class LElts {
 }
 
 
-// Fonctions sur les positions représentée par une liste de 2 nombres
+// Fonctions sur les positions représentées par une liste de 2 nombres
 class Pos {
   const GEODMD_PATTERN = '!^(\d+)°((\d\d)(,(\d+))?\')?(N|S) - (\d+)°((\d\d)(,(\d+))?\')?(E|W)$!';
   
   const ErrorParamInFromGeoDMd = 'Pos::ErrorParamInFromGeoDMd';
   
-  // teste si une variable correspond à une position
+  // teste si une valeur correspond à une position
   static function is(mixed $pos): bool {
     return is_array($pos) && in_array(count($pos),[2,3]) && is_numeric($pos[0] ?? null) && is_numeric($pos[1] ?? null);
   }
@@ -139,6 +139,22 @@ class Pos {
       .' - '.self::formatCoordInDMd(abs($lon), $nbposMin).(($lon >= 0) ? 'E' : 'W');
   }
 
+  /** retourne a - b
+   * @param TPos $a;
+   * @param TPos $b;
+   * @return TPos */
+  static function diff(array $a, array $b): array { return [$a[0] - $b[0], $a[1] - $b[1]]; }
+  
+  /** retourne pe produit scalaire
+   * @param TPos $u;
+   * @param TPos $v; */
+  static function scalarProduct(array $u, array $v): float { return $u[0]*$v[0] + $u[1]*$v[1]; }
+  
+  /** retourne pe produit vectoriel en 2D
+   * @param TPos $u;
+   * @param TPos $v; */
+  static function vectorProduct(array $u, array $v): float { return $u[0]*$v[1] - $u[1]*$v[0]; }
+  
   /**
   * @param TPos $a
   * @param TPos $b
@@ -148,11 +164,11 @@ class Pos {
   }
 };
 
-// Fonctions sur les listes de positions représentée par une liste de Pos
+// Fonctions sur les listes de positions représentées par une liste de Pos
 class LPos {
   const ErrorCenterOfEmptyLPos = 'Pos::ErrorCenterOfEmptyLPos';
 
-  // teste si une variable correspond à une liste d'au moins une position
+  // teste si une valeur correspond à une liste d'au moins une position
   static function is(mixed $lpos): bool { return is_array($lpos) && Pos::is($lpos[0] ?? null); }
 
   /** Retourne la position avec le min des positions en paraaètres pour chaque coordonnée
@@ -198,10 +214,22 @@ class LPos {
     return [$c[0]/$nbre, $c[1]/$nbre];
   }
   
+  /** calcule la surface de l'aire définie par une liste de positions
+   * la surface est positive si la liste de positions tourne dans le sens direct (ineverse des auguilles), négatif sinon
+   * @param TLPos $lpos */
+  static function area(array $lpos): float {
+    $area = 0;
+    for ($i=1; $i < count($lpos)-1; $i++) {
+      $a = Pos::vectorProduct(Pos::diff($lpos[$i], $lpos[0]), Pos::diff($lpos[$i+1], $lpos[$i]))/2;
+      //echo "vectorProduct(i+1-i, i+2-i+1) = $a<br>\n";
+      $area += $a;
+    }
+    return $area;
+  }
+  
   /** reprojète une liste de positions et en retourne la liste
   * @param TLPos $lpos
-  * @return TLPos
-  */
+  * @return TLPos */
   static function reproj(callable $reprojPos, array $lpos): array { return array_map($reprojPos, $lpos); }
 };
 
@@ -238,6 +266,16 @@ foreach ([
   echo "$label ",LPos::is($item) ? "est" : "n'est PAS"," une liste de positions<br>\n";
   echo "$label ",LLPos::is($item) ? "est" : "n'est PAS"," une liste de listes de positions<br>\n";
 }
+
+//$lpos = [[0,0],[1,0],[1,1],[Ø,1],[0,0]];
+$lpos = [[0,0],[1,0],[1,1]];
+echo "<pre>area(",Yaml::dump($lpos, 0),")=",LPos::area($lpos),"</pre>\n";
+$lpos = [[0,0],[1,0],[1,1],[0,1]];
+echo "<pre>area(",Yaml::dump($lpos, 0),")=",LPos::area($lpos),"</pre>\n";
+$lpos = [[0,0],[0,1],[1,1],[1,0]];
+echo "<pre>area(",Yaml::dump($lpos, 0),")=",LPos::area($lpos),"</pre>\n";
+$lpos = [[0,0],[10,0],[10,10],[0,10]];
+echo "<pre>area(",Yaml::dump($lpos, 0),")=",LPos::area($lpos),"</pre>\n";
 
 echo '<pre>',Yaml::dump(['LPos::min()' => LPos::min([[10,20],[25,15]])]),"</pre>\n";
 echo '<pre>',Yaml::dump(['LPos::max()' => LPos::max([[10,20],[25,15]])]),"</pre>\n";
