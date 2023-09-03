@@ -31,6 +31,27 @@ parameters:
         totalFeatures?: int
       }
       '''
+    # Description d'un GéoTiff dans shomgt.yaml et dans TiffLayer
+    TBBox: "array{SW: string, NE: string}"
+    TBorders: "array{left: number, bottom: number, right: number, top: number}"
+    TGeoTiff: '''
+      array{
+        title: string,
+        spatial: TBBox,
+        outgrowth: list<TBBox>,
+        borders: TBorders,
+        deleted: list<TBBox>
+      }
+      '''
+    TGeoTiffStoredInLayer: '''
+      array{
+        title: string,
+        spatial: \gegeom\EBox,
+        outgrowth: list<\gegeom\EBox>,
+        borders: TBorders,
+        deleted: list<\gegeom\EBox>
+      }
+      '''
     # définition du type de l'enregistrement .md.json stocké dans shomgeotif/current
     TMapMdGan: "array{week: string, date: string}|null"
     TMapMdDateMD: "array{role: string, value: string}"

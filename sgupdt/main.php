@@ -47,7 +47,7 @@ journal: |
       - pour permettre le déplacement du répertoire de carte de temp vers SHOMGT3_MAPS_DIR_PATH
   16/5/2022:
     - détection de la liste des cartes obsolètes dans maps.json
-    - construction du shomgt.yaml et transfert dans le répertoire data
+    - construction du layers.yaml et transfert dans le répertoire data
     - effacement des cartes obsolètes
     - le bug sur 0101 provenait d'un bug de sgserver
   15/5/2022:
@@ -99,7 +99,7 @@ if (!@is_dir(__DIR__.'/temp')) {
 
 if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version 
   echo "Dates de dernière modification des fichiers sources:\n";
-  foreach (['maketile.php', 'shomgt.php'] as $phpScript) {
+  foreach (['maketile.php', 'layers.php'] as $phpScript) {
     $result_code = null;
     $output = [];
     exec("php ".__DIR__."/$phpScript -v", $output, $result_code);
@@ -153,7 +153,7 @@ class UpdtMaps { // stocke les informations téléchargées de $SERVER_URL/maps.
     if ($httpCode <> 200)
       throw new Exception("Erreur de download sur maps.json, httpCode=$httpCode");
     $maps = json_decode(file_get_contents(__DIR__.'/temp/maps.json'), true, 512, JSON_THROW_ON_ERROR);
-    //unlink(__DIR__.'/temp/maps.json'); // ne pas le détruire car utilisé dans shomgt.php
+    //unlink(__DIR__.'/temp/maps.json'); // ne pas le détruire car utilisé dans layers.php
     foreach ($maps as $mapnum => $map) {
       if (is_int($mapnum) || ctype_digit($mapnum)) { // on se limite aux cartes dont l'id est un nombre
         if ($map['status'] == 'ok') // on distingue les cartes valides de celles qui sont obsolètes
@@ -167,14 +167,14 @@ class UpdtMaps { // stocke les informations téléchargées de $SERVER_URL/maps.
   }
 };
 
-// lit dans le fichier shomgt.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml
+// lit dans le fichier layers.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml
 class ShomGtDelZone {
   /** @var array<string, array<string, array<string, mixed>>> $deleted */
   static array $deleted=[]; // [{mapnum} => [{gtname} => {toDel}]]
   
   static function init(): void { // lit le fichier et structure les zones à effacer par mapnum et gtname
-    if (is_file(__DIR__.'/../data/shomgt.yaml'))
-      $yaml = Yaml::parseFile(__DIR__.'/../data/shomgt.yaml');
+    if (is_file(__DIR__.'/../data/layers.yaml'))
+      $yaml = Yaml::parseFile(__DIR__.'/../data/layers.yaml');
     else
       $yaml = [];
     foreach ($yaml as $layerName => $layer) {
@@ -188,7 +188,7 @@ class ShomGtDelZone {
     }
   }
   
-  // retourne pour un mapnum la définition par gtname des zones effacées de shomgt.yaml ou [] si aucune zone n'est définie
+  // retourne pour un mapnum la définition par gtname des zones effacées de layers.yaml ou [] si aucune zone n'est définie
   /** @return array<string, array<string, array<string, mixed>>> */
   static function deleted(string $mapnum): array {
     if (isset(self::$deleted[$mapnum])) {
@@ -200,7 +200,7 @@ class ShomGtDelZone {
       return [];
   }
 
-  // Teste si pour un $mapnum les zones à effacer de TempMapCat sont ou non identiques aux zones effacées de shomgt.yaml
+  // Teste si pour un $mapnum les zones à effacer de TempMapCat sont ou non identiques aux zones effacées de layers.yaml
   static function sameDelZones(string $mapnum): bool {
     //echo "ShomGtDelZone::deleted="; print_r(ShomGtDelZone::deleted($mapnum));
     //echo "TempMapCat::toDeleteByGtname="; print_r(TempMapCat::toDeleteByGtname("FR$mapnum"));
@@ -343,7 +343,7 @@ while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec u
   
     UpdtMaps::init($SERVER_URL); // télécharge ${SHOMGT3_SERVER_URL}/maps.json et stocke les informations
     TempMapCat::init(); // lit le fichier mapcat.yaml en le téléchargeant s'il n'existe pas
-    ShomGtDelZone::init(); // lit dans le fichier shomgt.yaml les zones effacées pour les comparer avec celles à effacer
+    ShomGtDelZone::init(); // lit dans le fichier layers.yaml les zones effacées pour les comparer avec celles à effacer
   
     // téléchargement des cartes et transfert au fur et à mesure dans SHOMGT3_MAPS_DIR_PATH
     foreach (UpdtMaps::$validMaps as $mapnum => $mapVersion) {
@@ -369,14 +369,14 @@ while (true) { // si $UPDATE_DURATION est défini alors le process boucle avec u
         UpdtMaps::$downloaded[] = $mapnum;
     }
 
-    // construction du shomgt.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
-    if (execCmde("php ".__DIR__."/shomgt.php $TEMP/shomgt.yaml", CMDE_VERBOSE)) {
-      echo "Erreur dans la génération de shomgt.yaml\n";
+    // construction du layers.yaml dans $TEMP et si ok alors transfert dans SHOMGT3_MAPS_DIR_PATH/../
+    if (execCmde("php ".__DIR__."/layers.php $TEMP/layers.yaml", CMDE_VERBOSE)) {
+      echo "Erreur dans la génération de layers.yaml\n";
       Lock::unlock();
       die(1);
     }
-    rename("$TEMP/shomgt.yaml", "$MAPS_DIR_PATH/../shomgt.yaml")
-      or throw new Exception("Erreur rename($TEMP/shomgt.yaml, $MAPS_DIR_PATH/../shomgt.yaml)");
+    rename("$TEMP/layers.yaml", "$MAPS_DIR_PATH/../layers.yaml")
+      or throw new Exception("Erreur rename($TEMP/layers.yaml, $MAPS_DIR_PATH/../layers.yaml)");
 
     // effacement du cache des tuiles s'il existe
     if (is_dir("$MAPS_DIR_PATH/../tilecache")) {

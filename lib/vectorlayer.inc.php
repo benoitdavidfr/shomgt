@@ -52,7 +52,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
   static array $all = []; // dictionaire [{lyrName} => VectorLayer]
 
   static function initVectorLayers(string $filename): void {
-    Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation des couches raster à partir du fichier shomgt.yaml
+    Layer::initLayers(); // Initialisation des couches raster à partir du fichier Yaml
     $yaml = Yaml::parseFile($filename);
     foreach ($yaml['vectorLayers'] as $name => $vectorLayer) {
       self::$all[$name] = new self($name, $vectorLayer);

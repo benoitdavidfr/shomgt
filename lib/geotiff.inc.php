@@ -73,7 +73,7 @@ class GeoTiff {
    * Sinon le rectangle de géoréférencement est calculé à partir du rectangle englobant la zone cartographiée en WoM
    * et des tailles en pixels des bords à retirer et de la taille de l'image.
    *
-   * @param array{left: number, bottom: number, right: number, top: number}|null $borders nbre de pixels des bords */
+   * @param TBorders|null $borders nbre de pixels des bords */
   function __construct(string $name, \gegeom\EBox $spatial, ?array $borders, bool $debug) {
     if ($debug)
       echo "GeoTiff::__construct($name, $spatial,",json_encode($borders),")<br>\n";

@@ -285,7 +285,7 @@ try {
   $ebox = Zoom::tileEBox($z, $x, $y)->geo('WebMercator')->proj('WorldMercator');
   $grImage = new GeoRefImage($ebox); // création de l'image Géoréférencée
   $grImage->create(256, 256, true); // création d'une image GD transparente
-  Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
+  Layer::initLayers(); // Initialisation à partir du fichier Yaml
   $layers = Layer::layers();
   if (!isset($layers[$lyrname])) {
     header('HTTP/1.1 500 Internal Server Error');

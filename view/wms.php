@@ -220,7 +220,7 @@ class WmsShomGt extends WmsServer {
       $lyrnames = ['gt40M'];
     }
       
-    Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
+    Layer::initLayers(); // Initialisation à partir du fichier Yaml
     $debug = $_GET['debug'] ?? false;
     $grImage = new GeoRefImage($wombox); // création de l'image Géoréférencée
     $grImage->create($width, $height, true); // création d'une image GD transparente

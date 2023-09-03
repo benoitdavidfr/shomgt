@@ -1,20 +1,20 @@
 <?php
 /*PhpDoc:
-title: shomgt.php - génération du fichier shomgt.yaml
-name: shomgt.php
+title: layers.php - génération du fichier layers.yaml
+name: layers.php
 doc: |
-  Ce script génère le fichier shomgt.yaml soit s'il est défini dans le fichier en paramètre soit sinon sur STDOUT 
+  Ce script génère le fichier layers.yaml soit s'il est défini dans le fichier en paramètre soit sinon sur STDOUT 
   Il prend en entrée:
     - le catalogue des cartes téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
-    - la liste des géotiffs prévus dans shomgt, avec pour certains leur géoréférencement (GdalInfo)
+    - la liste des géotiffs prévus dans view, avec pour certains leur géoréférencement (GdalInfo)
   Il retourne:
-    - le code 0 ssi la sortie est du Yaml correct et est conforme au schéma shomgt.schema.yaml
+    - le code 0 ssi la sortie est du Yaml correct et est conforme au schéma layers.schema.yaml
     - le code 1 ssi la sortie n'est pas du Yaml
-    - le code 2 ssi la sortie n'est pas conforme au schéma shomgt.schema.yaml
+    - le code 2 ssi la sortie n'est pas conforme au schéma layers.schema.yaml
     - le code >= 3 ssi une autre erreur est rencontrée
 
-  La liste des cartes prévues dans shomgt correspond à:
-    - les cartes existantes dans shomgt (que je vais trouver dans ../data/)
+  La liste des cartes prévues correspond à:
+    - les cartes existantes (que je vais trouver dans ../data/)
     - moins les cartes obsolètes à supprimer (que je trouve dans maps.json)
 
   Les couches avec leur seuil d'échelles sont définies dans la classe LayerDef.
@@ -22,7 +22,7 @@ doc: |
   L'algorithme est le suivant:
     - j'initialise Map à partir de mapcat.yaml téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
     - j'initialise ShomGt avec la liste des couches définie dans LayerDef
-    - je construis la liste des géotiffs à mettre dans shomgt en scannant le répertoire de ../data/curent
+    - je construis la liste des géotiffs à mettre dans layers en scannant le répertoire de ../data/curent
     - pour chacun de ces géotiffs
       - je l'ajoute à ShomGt
       - pour cela je recherche dans Map les infos sur ce GéoTiff
@@ -32,11 +32,14 @@ doc: |
     - je vérifie que la structure ShomGT est conforme à son schéma
     - enfin, j'affiche ShomGt en Yaml
 
-  La classe LayerDef définit les couches à créer dans shomgt et permet d'associer une couche à un géotiff.
+  La classe LayerDef définit les couches à créer dans layers et permet d'associer une couche à un géotiff.
   La classe Map gère le catalogue des cartes et retrouve pour un géotiff les infos correspondantes.
-  La classe ShomGt contient une représentation de shomgt.yaml qui se construit progressivement.
+  La classe ShomGt contient une représentation de layers.yaml qui se construit progressivement.
 
 journal: |
+  3/9/2023:
+    - chgt du nom du fichier Yaml en layers.yaml
+    - chgt du nom de ce script
   22/8/2023:
     - déplacement des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
   2/8/2022:
@@ -124,7 +127,7 @@ class LayerDef {
   }
 };
 
-class ShomGt { // construction progressive du futur contenu de shomgt.yaml
+class ShomGt { // construction progressive du futur contenu de layers.yaml
   protected string $gtname;
   protected string $title; // titre issu du catalogue de cartes
   /** @var array<string, TPos> $spatial */
@@ -140,7 +143,7 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   protected array $borders=[]; // bordures au cas où le GéoTiff n'est pas géoréférencé
 
   /** @var array<string, array<string, ShomGt>> $all */
-  static array $all=[]; // contenu de shomgt.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
+  static array $all=[]; // contenu de layers.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
 
   static function init(): void {
     foreach (array_reverse(LayerDef::LAYERS_SCALE_DEN_MAX) as $lyrId => $scaleDenMax) {
@@ -156,16 +159,16 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
     $map = TempMapCat::fromGtname($gtname, false);
     //echo "map="; print_r($map);
     if (!$map) {
-      fprintf(STDERR, "Alerte: le GéoTiff $gtname n'existe pas dans le catalogue, il n'apparaitra donc pas dans shomgt.yaml\n");
+      fprintf(STDERR, "Alerte: le GéoTiff $gtname n'existe pas dans le catalogue, il n'apparaitra donc pas dans layers.yaml\n");
       return;
     }
     $gtinfo = $map->gtInfo();
     if (!$gtinfo) {
-      fprintf(STDERR, "Erreur: le GéoTiff $gtname n'est pas géoréférencé, il n'apparaitra donc pas dans shomgt.yaml\n");
+      fprintf(STDERR, "Erreur: le GéoTiff $gtname n'est pas géoréférencé, il n'apparaitra donc pas dans layers.yaml\n");
       return;
     }
     if (!$gtinfo['spatial']) {
-      fprintf(STDERR, "Info: le GéoTiff $gtname n'a pas de zone principale et n'apparaitra donc pas dans shomgt.yaml\n");
+      fprintf(STDERR, "Info: le GéoTiff $gtname n'a pas de zone principale et n'apparaitra donc pas dans layers.yaml\n");
       return;
     }
     //echo 'gtinfo='; print_r($gtinfo);
@@ -214,10 +217,10 @@ class ShomGt { // construction progressive du futur contenu de shomgt.yaml
   /** @return array<string, array<string, array<string, mixed>>|string>  */
   static function allAsArray(): array { // génère la représentation Yaml de tous les ShomGt dans un string
     $array = [
-      'title'=> "liste de GéoTiffs préparée pour le container shomgt",
+      'title'=> "liste de GéoTiffs préparée pour le container view",
       'description'=> "fichier généré par " .__FILE__,
       'created'=> date(DATE_ATOM),
-      '$schema'=> "shomgt",
+      '$schema'=> "layers",
     ];
     foreach (self::$all as $lyrname => $shomGts) {
       $array[$lyrname] = [];
@@ -335,7 +338,7 @@ foreach ($geotiffs as $mapnum => $gtnames) {
 ShomGt::sortwzorder();
 //print_r(ShomGt::$all); die();
 
-// Génération dans $yaml du fichier shomgt.yaml en vérifiant sa validité Yaml et sa conformité au schéma
+// Génération dans $yaml du fichier layers.yaml en vérifiant sa validité Yaml et sa conformité au schéma
 $yaml = Yaml::dump(ShomGt::allAsArray(), 6, 2);
 fwrite($fout, $yaml);
 try {
@@ -349,11 +352,11 @@ catch (ParseException $e) {
 $parsed['$schema'] = __DIR__.'/'.$parsed['$schema'];
 $status = \jsonschema\Schema::autoCheck($parsed);
 if ($status->ok()) {
-  fprintf(STDERR, "Ok, shomgt.yaml conforme à son schéma\n");
+  fprintf(STDERR, "Ok, layers.yaml conforme à son schéma\n");
   exit(0);
 }
 else {
-  fprintf(STDERR, "Erreur, shomgt.yaml NON conforme à son schéma\n");
+  fprintf(STDERR, "Erreur, layers.yaml NON conforme à son schéma\n");
   foreach ($status->errors() as $error)
     fprintf(STDERR, "%s\n", $error);
   exit(2);

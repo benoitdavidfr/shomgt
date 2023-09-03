@@ -1,4 +1,4 @@
-title: Schéma JSON de shomgt
+title: Schéma JSON de la définition des couche
 $schema: http://json-schema.org/schema#
 $id: http://geoapi.fr/shomgt3/maps/shomgt.schema.yaml
 definitions:

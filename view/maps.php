@@ -320,7 +320,7 @@ try {
     }
   }
 
-  Layer::initFromShomGt(__DIR__.'/../data/shomgt'); // Initialisation à partir du fichier shomgt.yaml
+  Layer::initLayers(); // Initialisation à partir du fichier Yaml
 
   if ($_SERVER['PATH_INFO'] == '/collections') { // liste des couches 
     GtMaps::listOfLayers();

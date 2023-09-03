@@ -1,45 +1,42 @@
 <?php
-/*PhpDoc:
-title: layer.inc.php - définition des classes Layer, PyrLayer, LabelLayer et TiffLayer
-name: layer.inc.php
-classes:
-doc: |
-  Les 4 classes permettent de construire à partir de shomgt.yaml la structuration en couches et de l'exploiter au travers
-  des méthodes map() qui recopie dans une image GD l'extrait de la couche correspondant à un rectangle
-  et pour la classe TiffLayer la méthode items() qui génère en GeoJSON les silhouettes des GéoTiffs.
-
-  La classe abstraite Layer définit les couches du serveur de cartes.
-  La classe TiffLayer correspond aux couches agrégeant des GéoTiff.
-  La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
-  Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
-journal: |
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-    - la gestion dans Layer::$layers de couches de types différents limite les possibilités d'analyse statique du code !! 
-  7/6/2022:
-    - ajout d'une érosion des rectangles englobants des cartes d'une mesure définie sur la carte, ex 1mm
-      pour s'assurer que le trait du bord de la carte est bien effacé
-  6/6/2022:
-    - modif. définition du niveau de zoom dans PyrLayer::map()
-  30/5/2022:
-    - modif initialisation Layer
-  24/5/2022:
-    - envoi d'une erreur Http 500 lorsque le fichier shomgt.yaml n'existe pas
-  22/5/2022:
-    - dans TiffLayer gestion des cartes n'ayant pas de Mdiso
-    - dans TiffLayer duplication des silhouettes des GéoTiffs à cehval sur l'AM
-  1/5/2022:
-    - ajout de la classe PyrLayer
-  29/4/2022:
-    - gestion des GéoTiff à cheval sur l'anti-méridien
-    - gestion de la superposition de plusieures couches
-  25/4/2022:
-    - scission de maps.php
-includes:
-  - grefimg.inc.php
-  - geotiff.inc.php
-  - zoom.inc.php
-  - isomd.inc.php
+/** définition des classes Layer, PyrLayer, LabelLayer et TiffLayer
+ *
+ * Les 4 classes permettent de construire à partir de shomgt.yaml la structuration en couches et de l'exploiter au travers
+ * des méthodes map() qui recopie dans une image GD l'extrait de la couche correspondant à un rectangle
+ * et pour la classe TiffLayer la méthode items() qui génère en GeoJSON les silhouettes des GéoTiffs.
+ *
+ * La classe abstraite Layer définit les couches du serveur de cartes.
+ * La classe TiffLayer correspond aux couches agrégeant des GéoTiff.
+ * La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
+ * Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.
+ *
+ * journal:
+ * - 3/9/2023
+ *   - reformattage de la doc en PHPDoc
+ *   - modification de la fonction d'initialisation des couches
+ *   - renommage du fichier de définition des couches en layers.yaml
+ * - 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ *   - la gestion dans Layer::$layers de couches de types différents limite les possibilités d'analyse statique du code !! 
+ * - 7/6/2022:
+ *   - ajout d'une érosion des rectangles englobants des cartes d'une mesure définie sur la carte, ex 1mm
+ *     pour s'assurer que le trait du bord de la carte est bien effacé
+ * 6/6/2022:
+ *   - modif. définition du niveau de zoom dans PyrLayer::map()
+ * 30/5/2022:
+ *   - modif initialisation Layer
+ * 24/5/2022:
+ *   - envoi d'une erreur Http 500 lorsque le fichier shomgt.yaml n'existe pas
+ * 22/5/2022:
+ *   - dans TiffLayer gestion des cartes n'ayant pas de Mdiso
+ *   - dans TiffLayer duplication des silhouettes des GéoTiffs à cehval sur l'AM
+ * 1/5/2022:
+ *   - ajout de la classe PyrLayer
+ * 29/4/2022:
+ *   - gestion des GéoTiff à cheval sur l'anti-méridien
+ *   - gestion de la superposition de plusieures couches
+ * 25/4/2022:
+ *   - scission de maps.php
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
@@ -51,36 +48,37 @@ require_once __DIR__.'/isomd.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-/*PhpDoc: classes
-title: class Layer - classe abstraite correspondant à une couche du serveur de cartes
-name: Layer
-doc: |
-  Cette classe définit l'interface et stocke le dictionnaire des couches dans la variable statique self::$layers
-  [{lyrName} => Layer] initialisé à partir du fichier shomgt.yaml par initFromShomGt()
+/** classe abstraite correspondant à une couche du serveur de cartes
+ *
+ * Cette classe définit l'interface et stocke le dictionnaire des couches dans la variable statique self::$layers
+ * [{lyrName} => Layer] initialisé à partir du fichier shomgt.yaml par initFromShomGt()
 */
 abstract class Layer {
   const ErrorUndef = 'Layer::ErrorUndef';
+  const LAYERS_YAML_PATH = __DIR__.'/../data/layers.yaml';
   const LAYERS_PSER_PATH = __DIR__.'/../data/layers.pser';
-  const DILATE = - 1e-3; // dilatation en mètres sur la carte
+  /** dilatation en mètres sur la carte */
+  const DILATE = - 1e-3;
 
-  /** @var array<string, Layer> $layers */
-  static array $layers=[]; // dictionaire [{lyrName} => Layer]
+  /** @var array<string, Layer> $layers  dictionaire [{lyrName} => Layer] */
+  static array $layers=[];
 
-  // initialise le dictionnaire des couches à partir du fichier shomgt.yaml
-  // Ce dictionnaire est stocké dans un fichier pser afin de ne pas avoir à le recosntruire à chaque appel
-  static function initFromShomGt(string $filename): void {
-    if (!is_file("$filename.yaml")) { // cas notamment où shomgt.yaml n'a pas encore été généré
+  /** initialise le dictionnaire des couches à partir du fichier Yaml ou du fichier pser
+   *
+   * Ce dictionnaire est stocké dans un fichier pser afin de ne pas avoir à le reconstruire à chaque appel */
+  static function initLayers(): void {
+    if (!is_file(self::LAYERS_YAML_PATH)) { // cas notamment où shomgt.yaml n'a pas encore été généré
       header('HTTP/1.1 500 Internal Server Error');
       header('Content-type: text/plain; charset="utf-8"');
-      die("Erreur: Erreur fichier $filename.yaml absent\n");
+      die("Erreur: Erreur fichier Yaml des couches absent\n");
     }
-    if (is_file(self::LAYERS_PSER_PATH) && (filemtime(self::LAYERS_PSER_PATH) > filemtime("$filename.yaml"))) {
+    if (is_file(self::LAYERS_PSER_PATH) && (filemtime(self::LAYERS_PSER_PATH) > filemtime(self::LAYERS_YAML_PATH))) {
       self::$layers = unserialize(file_get_contents(self::LAYERS_PSER_PATH));
       return;
     }
     self::$layers['gtpyr'] = new PyrLayer;
-    $shomgt = Yaml::parseFile("$filename.yaml");
-    foreach ($shomgt as $lyrName => $dictOfGT) {
+    $layers = Yaml::parseFile(self::LAYERS_YAML_PATH);
+    foreach ($layers as $lyrName => $dictOfGT) {
       if (substr($lyrName,0,2)=='gt') {
         self::$layers[$lyrName] = new TiffLayer($lyrName, $dictOfGT ?? []);
         self::$layers['num'.substr($lyrName,2)] = new LabelLayer($lyrName, $dictOfGT ?? []);
@@ -89,7 +87,8 @@ abstract class Layer {
     file_put_contents(self::LAYERS_PSER_PATH, serialize(self::$layers));
   }
   
-  static function dilate(string $lyrName): float { // calcule le coeff de dilatation en fonction du nom de la couche
+  /** calcule le coeff de dilatation en fonction du nom de la couche */
+  static function dilate(string $lyrName): float {
     $sd = substr($lyrName, 2);
     if (ctype_digit(substr($sd, 0, 1)) && ($sd <> '40M')) {
       $sd = intval(str_replace(['k','M'], ['000','000000'], $sd));
@@ -111,15 +110,16 @@ abstract class Layer {
   // calcul de l'extension spatiale de la couche en WoM
   abstract function ebox(): \gegeom\EBox;
 
-  // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
-  // lorsqu'un élément intersecte l'anti-méridien, il est dupliqué dans les 2 hémisphères Ouest et Est
-  // le paramètre zoom est uniquement utilisé dans la classe PyrLayer
+  /** copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
+   *
+   * lorsqu'un élément intersecte l'anti-méridien, il est dupliqué dans les 2 hémisphères Ouest et Est
+   * le paramètre zoom est uniquement utilisé dans la classe PyrLayer */
   abstract function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void;
 
   /** utile pour éviter les erreurs d'analyse statique
    * @return list<TGeoJsonFeature> */
   function items(string $lyrname, ?\gegeom\GBox $qgbox): array {
-    throw new SExcept("Erreur, méthode non défiinie", self::ErrorUndef);
+    throw new SExcept("Erreur, méthode non définie", self::ErrorUndef);
   }
 
   /** utile pour éviter les erreurs d'analyse statique
@@ -135,12 +135,9 @@ abstract class Layer {
   }
 };
 
-/*PhpDoc: classes
-title: class PyrLayer - couche Pyramide
-name: PyrLayer
-doc: |
-  La classe PyrLayer implémente un objet Layer correspondant à la pyramide des échelles.
-  Le choix des échelles en fonction du niveau de zoom est défini dans la méthode PyrLayer::map()
+/** couche Pyramide
+ *
+ * Le choix des échelles en fonction du niveau de zoom est défini dans la méthode PyrLayer::map()
 */
 class PyrLayer extends Layer {
   const ErrorBadZoomValue = 'PyrLayer::ErrorBadZoomValue';
@@ -190,12 +187,7 @@ class PyrLayer extends Layer {
 };
 
 
-/*PhpDoc: classes
-title: class LabelLayer - couche d'étiquettes
-name: LabelLayer
-doc: |
-  Permet de dessiner les étiquettes associées aux GéoTiffs
-*/
+/** couche d'étiquettes, permet de dessiner les étiquettes associées aux GéoTiffs */
 class LabelLayer extends Layer {
   const ErrorUndef = 'LabelLayer::ErrorUndef';
   /** @var array<string, TPos> $nws */
@@ -236,27 +228,17 @@ class LabelLayer extends Layer {
 };
 
 
-/*PhpDoc: classes
-title: class LayerTiff - couche correspondant à un ensemble de GéoTiff juxtaposés
-name: LayerTiff
-doc: |
-  Chaque couche est définie comme un dictionnaire
-    [gtname -> ['title'=>string, 'spatial'=>EBoxEnWoM, 'deleted'=> {deleted}, borders'=>{borders}?]]
-  où {borders} est un array des taille des bords à supprimer pour 'right', 'bottom', 'left' et 'top'
-  La méthode map() recopie dans l'image géoréférencée passée en paramètre l'extrait des GéoTiffs d'une couche en effacant
-  leurs bords. L'image est géoréférencée dans le système de coordonnées WorldMercator.
-  Lorsqu'un GéoTiff intersecte l'anti-méridien, il est stocké une seule fois avec un EBox ayant -180 < west < 180 < east < 540
-  et lors de la recopie dans l'image il est dupliqué dans l'hémisphère Est et dans l'hémisphère Ouest
-*/
+/** couche correspondant à un ensemble de GéoTiff juxtaposés */
 class TiffLayer extends Layer {
   const ErrorBadGeoCoords = 'Layer::ErrorBadGeoCoords';
-  const WOM_BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
+  /** xmax en Web Mercator en mètres */
+  const WOM_BASE = 20037508.3427892476320267;
   
-  // dict. [gtname => ['title'=>string, 'spatial'=>EBox, 'outgrowth'=>[EBox], 'deleted'=> {deleted}, borders'=>{borders}?]]
-  /** @var array<string, array<string, mixed>> $geotiffs */
+  /** dict. des GéoTiffs contenus dans la couche
+   * @var array<string, TGeoTiffStoredInLayer> $geotiffs */
   protected array $geotiffs=[];
   
-  /** @param array<string, array<string, mixed>> $dictOfGT */
+  /** @param array<string, TGeoTiff> $dictOfGT dictionnaire des GéoTiffs */
   function __construct(string $lyrName, array $dictOfGT) {
     //echo "lyrName=$lyrName<br>\n";
     //echo "dilate=$dilate<br>\n";
@@ -292,8 +274,9 @@ class TiffLayer extends Layer {
     return $array;
   }
   
-  // calcul de l'union des ebox des GeoTiff de la couche ;
-  // lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est
+  /** calcul de l'union des ebox des GeoTiff de la couche
+   *
+   * lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est */
   function ebox(): \gegeom\EBox {
     $lyrEbox = new \gegeom\EBox;
     foreach($this->geotiffs as $gtname => $gt) {
@@ -306,8 +289,9 @@ class TiffLayer extends Layer {
     return $lyrEbox;
   }
   
-  // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
-  // lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est
+  /** copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
+   *
+   * lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est */
   function map(GeoRefImage $grImage, bool $debug, int $zoom=-1): void {
     //echo "<pre>"; print_r($this); echo "</pre>\n";
     $qebox = $grImage->ebox();
@@ -342,11 +326,9 @@ class TiffLayer extends Layer {
     }
   }
 
-  // retourne le Feature correspondant au GeoTiff
-  /**
+  /** retourne le Feature correspondant au GeoTiff
   * @param array<string, mixed> $gt
-  * @return TGeoJsonFeature
-  */
+  * @return TGeoJsonFeature */
   private function itemForGeoTiff(string $lyrname, string $gtname, array $gt, \gegeom\GBox $gbox): array {
     //echo "TiffLayer::itemForGeoTiff($lyrname, $gtname, , $gbox)<br>\n";
     try {
@@ -386,8 +368,8 @@ class TiffLayer extends Layer {
     ];
   }
   
-  // retourne un array de Features correspondant aux bbox des GéoTiffs
-  /** @return array<int, TGeoJsonFeature> */
+  /** retourne une liste de Features correspondant aux bbox des GéoTiffs
+   * @return list<TGeoJsonFeature> */
   function items(string $lyrname, ?\gegeom\GBox $qgbox): array {
     //echo "TiffLayer::items($lyrname, $qgbox)<br>\n";
     $features = [];
@@ -410,9 +392,10 @@ class TiffLayer extends Layer {
     return $features;
   }
   
-  // retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle
-  // Pour les GéoTiffs à cheval sur l'anti-méridien, les duplique à l'Ouest
-  /** @return array<int, \gegeom\EBox> */
+  /** retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle
+   *
+   * Les GéoTiffs à cheval sur l'anti-méridien sont dupliqués à l'Ouest
+   * @return array<int, \gegeom\EBox> */
   function itemEBoxes(\gegeom\EBox $wombox): array {
     $eboxes = [];
     foreach($this->geotiffs as $gtname => $gt) {
@@ -427,11 +410,9 @@ class TiffLayer extends Layer {
     return $eboxes;
   }
 
-  // retourne le Feature correspondant au zones effacées du GeoTiff
-  /**
+  /** retourne le Feature correspondant au zones effacées du GeoTiff
   * @param array<string, mixed> $gt
-  * @return TGeoJsonFeature
-  */
+  * @return TGeoJsonFeature */
   private function deletedZonesForGeoTiff(string $lyrname, string $gtname, array $gt, \gegeom\GBox $gbox): array {
     //echo "<pre>gt="; print_r($gt);
     $mpolygon = [];
@@ -464,8 +445,8 @@ class TiffLayer extends Layer {
     ];
   }
 
-  // retourne un array de Features correspondant aux zones effacées des GéoTiffs
-  /** @return array<int, TGeoJsonFeature> */
+  /** retourne un array de Features correspondant aux zones effacées des GéoTiffs
+   * @return list<TGeoJsonFeature> */
   function deletedZones(string $lyrname, ?\gegeom\GBox $qgbox): array {
     $features = [];
     foreach($this->geotiffs as $gtname => $gt) {
@@ -484,6 +465,6 @@ if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return;
 
 
 // Initialisation à parir du fichier shomgt.yaml
-Layer::initFromShomGt(__DIR__.'/../data/shomgt');
+Layer::initLayers();
 echo "<h2>Couches créées par Layer::initFromShomGt()</h2>\n";
 echo "<pre>layers="; print_r(Layer::layers());
