@@ -13,7 +13,7 @@
  * - 3/4/2020:
  *   - chgt de nom du fichier
  * - 8/2/2019:
- *   - Fragment est utilisée en dehors de la classe JsonSchema
+ *   - Fragment est utilisée en dehors de la classe Schema
  * - 24/1/2019:
  *   - chgt de nom de la classe de Elt en Fragment et du fichier de jsonschelt en jsonschfrt
  * - 19/1/2019:
@@ -37,11 +37,11 @@ class Fragment {
   private bool $verbose; // verbosité boolean
   /** @var bool|array<mixed> $def définition de l'élément courant du schema sous la forme d'un array ou d'un booléen Php */
   private array|bool $def;
-  private JsonSchema $schema; // l'objet schema contenant l'élément, indispensable pour retrouver ses définitions
+  private Schema $schema; // l'objet schema contenant l'élément, indispensable pour retrouver ses définitions
   // et pour connaitre son répertoire courant en cas de référence relative
   
   /** @param bool|array<mixed> $def */
-  function __construct(array|bool $def, JsonSchema $schema, bool $verbose) {
+  function __construct(array|bool $def, Schema $schema, bool $verbose) {
     if ($verbose)
       echo "Fragment::_construct(def=",json_encode($def),", schema, verbose=true)<br>\n";
     /*if (!is_array($def) && !is_bool($def)) {
@@ -145,7 +145,7 @@ class Fragment {
       echo "checkRef(id=$id, instance=",json_encode($instance),")@def=",json_encode($this->def),"<br><br>\n";
     $path = $this->def['$ref'];
     if (!preg_match('!^((https?://[^/]+/[^#]*)|[^#]+)?(#(.*))?$!', $path, $matches))
-      throw  new \Exception("Chemin $path non compris dans JsonSchema::__construct()");
+      throw  new \Exception("Chemin $path non compris dans Schema::__construct()");
     $filepath = $matches[1];
     $eltpath = $matches[4] ?? '';
     //echo "checkRef: filepath=$filepath, eltpath=$eltpath<br>\n";
@@ -161,7 +161,7 @@ class Fragment {
     }
     else {
       try { // Si filepath alors fichier schéma différent
-        $schema = new JsonSchema($path, $this->verbose, $this->schema);
+        $schema = new Schema($path, $this->verbose, $this->schema);
         return $schema->check($instance, [], $id, $status);
       } catch (\Exception $e) {
         return $status->setError("Sur $id erreur ".$e->getMessage());

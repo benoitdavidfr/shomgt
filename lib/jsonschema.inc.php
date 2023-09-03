@@ -2,30 +2,15 @@
 /**
  * validation de la conformité d'une instance Php à un schéma JSON
  *
- * Pour valider la conformité d'un fichier JSON ou Yaml à un schéma, utiliser la méthode statique
- *   JsonSchema::autoCheck() qui prend en paramètre une instance et retourne un Status
- * Une autre possibilité pour valider la conformité d'une instance définie comme valeur Php à un schéma, il faut:
- *   - créer un objet JsonSchema en fournissant le contenu du schema sous la forme d'un array Php
- *   - appeler sur cet objet la méthode check avec l'instance Php à vérifier
- *   - analyser le statut retourné (classe Status) par cette vérification
- * voir https://json-schema.org/understanding-json-schema/reference/index.html (draft-06)
- * La classe est utilisée avec des valeurs Php
- * 3 types d'erreurs sont gérées:
- *   - une structuration non prévue de schéma génère une exception
- *   - une non conformité d'une instance à un schéma fait échouer la vérification
- *   - une alerte peut être produite dans certains cas sans faire échouer la vérification
- * Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
- * Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.
- *
  * journal:
  * - 3/9/2023:
  *   - reformattage de la doc en PHPDoc
- *   - définition d'un espace de noms
- *   - suppression de is_assoc_array() replacé par !array_is_list()
+ *   - définition d'un espace de noms et renommage des noms de classe
+ *   - suppression de is_assoc_array() remplacé par !array_is_list()
  * - 22/1/2021:
  *   - passage à Php 8
  *   - redéfinition de la logique de tests élémentaires
- *   - JsonSchema::autocheck() transmet le répertoire du doc au schéma
+ *   - Schema::autocheck() transmet le répertoire du doc au schéma
  * - 5/11/2020:
  *   - ajout constructeur sur Status pour permettre une initialisation non vide
  * - 3/4/2020:
@@ -37,7 +22,7 @@
  * - 5-8/2/2019:
  *   - ajout de la possibilité dans Lib::file_get_contents() d'exécuter un script Php renvoyant un array Php
  * - 26/1/2019:
- *   - modification dans JsonSchema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma
+ *   - modification dans Schema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma
  * - 24/1/2019:
  *   - utilisation du mot-clé $schema à la place de jSchema
  * - 23/1/2019:
@@ -47,8 +32,8 @@
  *   - scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php
  *   - ajout de Lib::deref() pour déréférencer un pointeur JSON
  *   - permet d'utiliser les URL http://{name}.georef.eu/ pour des docs autres que des schémas
- *   - ajout de la possibilité de définir des options d'affichage dans JsonSchema::check()
- *   - ajout de JsonSchema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema
+ *   - ajout de la possibilité de définir des options d'affichage dans Schema::check()
+ *   - ajout de Schema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema
  * - 18/1/2019:
  *   - Ajout fonctionnalité d'utilisation de schémas prédéfinis
  * - 16-17/1/2019:
@@ -336,8 +321,25 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 
 /**
  * schéma JSON initialisé soit par un chemin dans un fichier JSON/Yaml, soit par un array Php
+ *
+ * Pour valider la conformité d'un fichier JSON ou Yaml à un schéma, utiliser la méthode statique
+ *   Schema::autoCheck() qui prend en paramètre une instance et retourne un Status.
+ *
+ * Une autre possibilité pour valider la conformité d'une instance définie comme valeur Php à un schéma:
+ *   - créer un objet Schema en fournissant le contenu du schema
+ *   - appeler sur cet objet la méthode check avec l'instance Php à vérifier qui retourne un Status
+ *
+ * voir https://json-schema.org/understanding-json-schema/reference/index.html (draft-06)
+ *
+ * 3 types d'erreurs sont gérées:
+ *   - une structuration non prévue de schéma génère une exception
+ *   - une non conformité d'une instance à un schéma fait échouer la vérification
+ *   - une alerte peut être produite dans certains cas sans faire échouer la vérification
+ *
+ * Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
+ * Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.
  */
-class JsonSchema {
+class Schema {
   const SCHEMAIDS = [ // liste des id acceptés pour le champ $schema
     'http://json-schema.org/schema#',
     'http://json-schema.org/draft-06/schema#',
@@ -351,33 +353,33 @@ class JsonSchema {
   private Status $status; // objet Status contenant le statut issu de la création du schéma
 
   /**
-   * création d'un JsonSchema
+   * création d'un Schema
    *
-   * Un objet JsonSchema peut être initialisé par un fragment JSON/Yaml stocké dans un fichier et identifié par un chemin
+   * Un objet Schema peut être initialisé par un fragment JSON/Yaml stocké dans un fichier et identifié par un chemin
    * de la forme {filePath}(#{eltPath})? où:
    *   - {filePath} identifie un fichier et peut être utilisé dans file_get_contents()
    *   - {eltPath} est le chemin d'un élément de la forme (/{elt})+ à l'intérieur du fichier
    * Le fichier est soit un fichier json dont l'extension doit être .json,
    * soit un fichier yaml dont l'extension doit être .yaml ou .yml.
-   * Un JsonSchema peut aussi être défini par un array, dans ce cas si le champ $id n'est pas défini alors les chemins
+   * Un Schema peut aussi être défini par un array, dans ce cas si le champ $id n'est pas défini alors les chemins
    * de fichier utilisés dans les références vers d'autres schémas ne doivent pas être définis en relatif
    *
    * @param bool|string|array<mixed> $def chemin d'un fichier contenant le JSON/Yaml, ou contenu comme array Php ou comme booléen
    * @param bool $verbose=false indique éventuellement si l'analyse doit être commentée
-   * @param ?JsonSchema $parent=null contient éventuellement le schema père et n'est utilisé qu'en interne à la classe
+   * @param ?Schema $parent=null contient éventuellement le schema père et n'est utilisé qu'en interne à la classe
    */
-  function __construct(bool|string|array $def, bool $verbose=false, ?JsonSchema $parent=null) {
-    //echo "JsonSchema::__construct($def)<br>\n";
+  function __construct(bool|string|array $def, bool $verbose=false, ?Schema $parent=null) {
+    //echo "Schema::__construct($def)<br>\n";
     $def0 = $def;
     $this->verbose = $verbose;
     if ($verbose)
-      echo "JsonSchema::_construct(def=",json_encode($def),",",
+      echo "Schema::_construct(def=",json_encode($def),",",
            " parent->filepath=",$parent ? $parent->filepath : 'none',")<br>\n";
     $this->status = new Status;
     if (is_string($def)) { // le paramètre $def est le chemin du fichier contenant l'objet JSON
       $def = Lib::predef($def); // remplacement des chemins prédéfinis par leur équivalent local
       if (!preg_match('!^((https?://[^/]+/[^#]+)|[^#]+)?(#(.*))?$!', $def, $matches))
-        throw  new \Exception("Chemin $def non compris dans JsonSchema::__construct()");
+        throw  new \Exception("Chemin $def non compris dans Schema::__construct()");
       $filepath = $matches[1]; // partie avant #
       $eltpath = $matches[4] ?? ''; // partie après #
       //echo "filepath=$filepath, eltpath=$eltpath<br>\n";
@@ -468,7 +470,7 @@ class JsonSchema {
   }
   
   /**
-   * check - vérification de la conformité d'une instance au JsonSchema, renvoit un Status
+   * check - vérification de la conformité d'une instance au Schema, renvoit un Status
    *
    * Un check() prend un statut initial et le modifie pour le renvoyer à la fin
    *  - le premier paramètre est l'instance à valider comme valeur Php
@@ -532,12 +534,12 @@ class JsonSchema {
   static function autoCheck(mixed $instance, array $options=[]): Status {
     $verbose = $options['verbose'] ?? false;
     if ($verbose)
-      echo "JsonSchema::autoCheck(instance=",json_encode($instance),",options=",json_encode($options),")<br>\n";
+      echo "Schema::autoCheck(instance=",json_encode($instance),",options=",json_encode($options),")<br>\n";
     
     if (is_string($instance)) { // le premier paramètre est le chemin du fichier contenant l'instance
       $instance = Lib::predef($instance); // remplacement des chemins prédéfinis par leur équivalent local
       if (!preg_match('!^([^#]+)(#(.*))?$!', $instance, $matches))
-        throw  new \Exception("Chemin $instance non compris dans JsonSchema::autoCheck()");
+        throw  new \Exception("Chemin $instance non compris dans Schema::autoCheck()");
       $filepath = $matches[1]; // partie avant #
       $eltpath = isset($matches[3]) ? $matches[3] : ''; // partie après #
       //echo "filepath=$filepath, eltpath=$eltpath<br>\n";
@@ -553,14 +555,14 @@ class JsonSchema {
     if (is_string($jSchema) && (substr($jSchema, 0, 7)<>'http://') && (substr($jSchema, 0, 8)<>'https://')
       && (substr($jSchema, 0, 1)<>'/') && isset($pathDir))
         $jSchema = "$pathDir/$jSchema";
-    $schema = new JsonSchema($jSchema, $verbose);
+    $schema = new Schema($jSchema, $verbose);
     return $schema->check($instance, $options);
   }
 
   static function test(): never {
-    echo "Test JsonSchema<br>\n";
+    echo "Test Schema<br>\n";
     foreach ([['type'=> 'string'], ['type'=> 'number']] as $schemaDef) {
-      $schema = new JsonSchema($schemaDef);
+      $schema = new Schema($schemaDef);
       $status = $schema->check('Test');
       if ($status->ok()) {
         echo "ok<br>\n";
@@ -569,14 +571,14 @@ class JsonSchema {
       else
         $status->showErrors();
     }
-    echo "FIN test JsonSchema<br><br>\n";
+    echo "FIN test Schema<br><br>\n";
     die();
   }
 };
 
-if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe JsonSchema 
+if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de la classe Schema 
   if (!isset($_GET['test']))
-    echo "<a href='?test=JsonSchema'>Test de la classe JsonSchema</a><br>\n";
-  elseif ($_GET['test']=='JsonSchema')
-    JsonSchema::test();
+    echo "<a href='?test=Schema'>Test de la classe Schema</a><br>\n";
+  elseif ($_GET['test']=='Schema')
+    Schema::test();
 }
