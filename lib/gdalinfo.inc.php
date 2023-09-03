@@ -1,29 +1,27 @@
 <?php
-/*PhpDoc:
-title: gdalinfo.inc.php - Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles
-name: gdalinfo.inc.php
-classes:
-doc: |
-  Les infos essentielles sur la taille size et si le fichier est géoréférencé son ebox et son gbox
-journal: |
-  26/7/2023:
-    - le code pour calculer le gbox est faux lorsque le GéoTiff intersecte l'antiméridien
-    - modification du calcul de GdalInfo::$ebox pour contourner les erreurs sur coordinateSystem
-  6/6/2022:
-    - réécriture pour fonctionner à la fois en GDAL 2 et en GDAL3 ; utilise la sortie de gdalinfo -json
-  22/5/2022:
-    - modif. utilisation EnVar
-  3/5/2022:
-    - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
-    - chagt du paramètre de GdalInfo::__construct()
-  28/4/2022:
-    - correction d'un bug
-    - traitement du cas où le Tiff n'est pas géoréférencé alors seul size est renseigné
-  24/4/2022:
-    - définition de la classe GdalInfo
-  18-20/4/2022:
-    - création pour répondre aux besoins de décodage des infos CRS liées aux cartes Shom
-*/
+/** Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles
+ *
+ * Les infos essentielles sur la taille size et si le fichier est géoréférencé son ebox et son gbox
+ *
+ * journal: |
+ * - 26/7/2023:
+ *   - le code pour calculer le gbox est faux lorsque le GéoTiff intersecte l'antiméridien
+ *   - modification du calcul de GdalInfo::$ebox pour contourner les erreurs sur coordinateSystem
+ * - 6/6/2022:
+ *   - réécriture pour fonctionner à la fois en GDAL 2 et en GDAL3 ; utilise la sortie de gdalinfo -json
+ * - 22/5/2022:
+ *   - modif. utilisation EnVar
+ * - 3/5/2022:
+ *   - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
+ *   - chagt du paramètre de GdalInfo::__construct()
+ * - 28/4/2022:
+ *   - correction d'un bug
+ *   - traitement du cas où le Tiff n'est pas géoréférencé alors seul size est renseigné
+ * - 24/4/2022:
+ *   - définition de la classe GdalInfo
+ * - 18-20/4/2022:
+ *   - création pour répondre aux besoins de décodage des infos CRS liées aux cartes Shom
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/sexcept.inc.php';
@@ -45,7 +43,7 @@ class GeoJsonPolygon { // GeoJSON Polygon transformé en GBox
   function gbox(): \gegeom\GBox {
     $gbox = new \gegeom\GBox;
     foreach ($this->coordinates as $c)
-      $gbox->bound($c);
+      $gbox = $gbox->bound($c);
     return $gbox;
   }
 };
@@ -66,12 +64,12 @@ class GdalInfo {
   protected ?\gegeom\GBox $gbox=null; // le GBox issu du gdalinfo ou null si aucun gbox n'est défini
   protected ?\gegeom\EBox $ebox=null; // le EBox issu du gdalinfo
   
-  static function dms2Dec(string $val): float { // transforme "9d20'26.32\"E" ou "42d38'39.72\"N" en degrés décimaux
+  /*static function dms2Dec(string $val): float { // transforme "9d20'26.32\"E" ou "42d38'39.72\"N" en degrés décimaux
     if (!preg_match('!^(\d+)d([\d ]+)\'([\d .]+)"(E|W|N|S)$!', $val, $matches))
       throw new Exception("No match for \"$val\" in ".__FILE__." ligne ".__LINE__);
     return (in_array($matches[4],['E','N']) ? +1 : -1)
        * (intval($matches[1]) + (intval($matches[2]) + intval($matches[3])/60)/60);
-  }
+  }*/
   
   // retourne le chemin du fichier info.json correspondant à un gtname, temp indique si la carte est dans temp ou dans maps
   static function filepath(string $gtname, bool $temp): string {

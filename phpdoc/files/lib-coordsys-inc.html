@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,98 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">coordsys.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">changement simple de projection a priori sur l&#039;ellipsoide IAG_GRS_1980</p>
+
+    <section class="phpdocumentor-description"><p>Objectif d'effectuer simplement des changements de projection sur un même ellipsoide.
+Fonctions (long,lat) -&gt; (x,y) et inverse
+Implémente les projections Lambert93, WebMercator, WorldMercator et UTM sur l'ellipsoide IAG_GRS_1980 par défaut.
+Le Web Mercator est défini dans:
+http://earth-info.nga.mil/GandG/wgs84/web_mercator/(U)%20NGA_SIG_0011_1.0.0_WEBMERC.pdf</p>
+<p>La structuration informatique choisie consiste à définir les projections comme des classes portant des méthodes
+proj() pour projeter des coordonnées géographiques en coordonnées cartésiennes
+et à l'inverse geo() pour calculer les coordonnées géographiques à partir des coordonnées cartésiennes.
+Cette structuration permet notamment de ne pas avoir à créer un objet particulier pour effectuer un changement
+de coordonnées et d'utiliser facilement ces changements dans gegeom.inc.php où le changement prend en paramètre
+une fonction d'un système dans un autre. Elle permet ainsi une bonne indépendance entre le présent module
+et la définition des primitives géométriques dans gegeom.inc.php</p>
+<p>Ces projections héritent d'une classe définissant l'ellipsoide sur lequel elles sont définies.
+Ces ellipsoides sont définis par 2 classes.</p>
+<ul>
+<li>soit la classe IAG_GRS_1980 qui définit l'ellipsoide du même nom,</li>
+<li>soit la classe Ellipsoid qui peut être paramétrée pour différents ellipsoides.</li>
+</ul>
+<p>Si une projection définit l'ellipsoide sur lequel elle s'applique, comme par exemple Lambert93 ou WebMercator,
+alors la classe définissant cette projection hérite de la classe définissant cet ellipsoide.
+A l'inverse, si la projection peut être définie pour différents ellipsoides, comme par exemple UTM ou WorldMercator,
+alors la classe définissant cette projection hérite de la classe Ellipsoid qui peut ainsi être paramétrée.</p>
+<p>Utilisation d'exceptions étendues avec un code string dont la valeur reprend le nom de la constante.</p>
+<p>Pour calculer des surfaces, ajouter la projection sinusoidale qui est unique et équivalente (conserve localement
+les surfaces)
+https://fr.wikipedia.org/wiki/Projection_sinuso%C3%AFdale
+Voir ~/html/geovect/coordsys/light.inc.php</p>
+<p>journal: |</p>
+<ul>
+<li>5-10/2/2022:
+<ul>
+<li>Ajout d'une exception dans les projections WebMercator et WorldMercator lorsque la latitude est &lt; -85 ou &gt; 85</li>
+<li>Transformation des Exception en \SExcept et fourniture d'un code de type string</li>
+<li>Amélioration de la doc</li>
+</ul>
+</li>
+<li>18/3/2019:
+<ul>
+<li>Modification du code pour permettre de calculer les projections sur différents Ellipsoides.</li>
+<li>Cette version ne permet pas d'effectuer un chagt d'ellipsoide.</li>
+</ul>
+</li>
+<li>3/3/2019:
+<ul>
+<li>fork de ~/html/geometry/coordsys.inc.php, passage en v3</li>
+<li>modification des interfaces pour utiliser systématiquement des positions [X, Y] ou [longitude, latitude] en degrés décimaux</li>
+<li>modification des interfaces d'UTM, la zone est un paramètre supplémentaire, ajout de ma méthode zone()</li>
+<li>La détection de WKT est transférée dans une classe spécifique.</li>
+</ul>
+</li>
+<li>4/11/2018:
+<ul>
+<li>chgt du code WM en WebMercator</li>
+<li>ajout de WorldMercator sous le code WorldMercator</li>
+</ul>
+</li>
+<li>22/11/2017:
+<ul>
+<li>intégration dans geometry</li>
+</ul>
+</li>
+<li>14-15/12/2016
+<ul>
+<li>ajout de l'UTM</li>
+<li>chgt de l'organisation des classes et de l'interface</li>
+<li>passage en v2</li>
+</ul>
+</li>
+<li>14/11/2016
+<ul>
+<li>correction d'un bug</li>
+</ul>
+</li>
+<li>12/11/2016
+<ul>
+<li>ajout de wm2geo() et geo2wm()</li>
+</ul>
+</li>
+<li>26/6/2016
+<ul>
+<li>ajout de chg pour améliorer l'indépendance de ce module avec geom2d.inc.php</li>
+</ul>
+</li>
+<li>23/6/2016
+<ul>
+<li>première version</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -130,7 +225,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iEllipsoid.html"><abbr title="\coordsys\iEllipsoid">iEllipsoid</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iCoordSys.html"><abbr title="\coordsys\iCoordSys">iCoordSys</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iEllipsoid.html"><abbr title="\coordsys\iEllipsoid">iEllipsoid</abbr></a></dt><dd>interface de définition d&#039;un ellipsoide</dd>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iCoordSys.html"><abbr title="\coordsys\iCoordSys">iCoordSys</abbr></a></dt><dd>définit l&#039;interface pour un système de coordonnées</dd>    </dl>
 
     <h4 id="toc-classes">
         Classes
@@ -138,7 +233,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-IAG-GRS-1980.html"><abbr title="\coordsys\IAG_GRS_1980">IAG_GRS_1980</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-Lambert93.html"><abbr title="\coordsys\Lambert93">Lambert93</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-WebMercator.html"><abbr title="\coordsys\WebMercator">WebMercator</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-LonLatDd.html"><abbr title="\coordsys\LonLatDd">LonLatDd</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-LatLonDd.html"><abbr title="\coordsys\LatLonDd">LatLonDd</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-Ellipsoid.html"><abbr title="\coordsys\Ellipsoid">Ellipsoid</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-WorldMercator.html"><abbr title="\coordsys\WorldMercator">WorldMercator</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-UTM.html"><abbr title="\coordsys\UTM">UTM</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-OgcWkt.html"><abbr title="\coordsys\OgcWkt">OgcWkt</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-IAG-GRS-1980.html"><abbr title="\coordsys\IAG_GRS_1980">IAG_GRS_1980</abbr></a></dt><dd>classe statique définissant l&#039;ellipsoide IAG_GRS_1980</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-Lambert93.html"><abbr title="\coordsys\Lambert93">Lambert93</abbr></a></dt><dd>définition des fonctions de proj et inverse du Lambert 93</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-WebMercator.html"><abbr title="\coordsys\WebMercator">WebMercator</abbr></a></dt><dd>définition des fonctions de proj et inverse du Web Mercator</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-LonLatDd.html"><abbr title="\coordsys\LonLatDd">LonLatDd</abbr></a></dt><dd>définition Les système de coordonnées LonLatDd correspond au coord. géo. en degrés décimaux dans l&#039;ordre (lon,lat)</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-LatLonDd.html"><abbr title="\coordsys\LatLonDd">LatLonDd</abbr></a></dt><dd>définition du système de coordonnées LatLonDd correspond au coord. géo. en degrés décimaux dans l&#039;ordre (lat,lon)</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-Ellipsoid.html"><abbr title="\coordsys\Ellipsoid">Ellipsoid</abbr></a></dt><dd>classe statique définissant un ellipsoide qui peut être paramétré</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-WorldMercator.html"><abbr title="\coordsys\WorldMercator">WorldMercator</abbr></a></dt><dd>définition de la projection World Mercator qui peut être définie sur différents ellipsoides.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/coordsys-UTM.html"><abbr title="\coordsys\UTM">UTM</abbr></a></dt><dd>définition des fonctions de proj et inverse de l&#039;UTM zone</dd>    </dl>
 
 
 
@@ -157,6 +252,7 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Transformation d&#039;une valeur en radians en une chaine en degres sexagesimaux</dd>
 
     </dl>
 
@@ -179,16 +275,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">556</span>
+    <span class="phpdocumentor-element-found-in__line">424</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Transformation d&#039;une valeur en radians en une chaine en degres sexagesimaux</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">radians2degresSexa</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$r</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ptcardinal</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dr</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>si ptcardinal est fourni alors le retour respecte la notation avec point cardinal
+sinon c'est la notation signee qui est utilisee
+dr est la precision de r</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">

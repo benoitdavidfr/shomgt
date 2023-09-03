@@ -1,19 +1,15 @@
 <?php
-/*PhpDoc:
-name: errortile.inc.php
-title: errortile.inc.php - Génération d'une image d'erreur contenant le message d'erreur et l'identifiant de la tuile
-classes:
-doc: |
-journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
-*/
+/** Génération d'une image d'erreur contenant le message d'erreur et l'identifiant de la tuile
+ *
+ * - 28/7/2022:
+ *   - correction suite à analyse PhpStan level 4
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
-// en cas d'erreur dans la génération
+/** en cas d'erreur dans la génération */
 function error(string $message): never { echo $message; die(1); }
 
-// Création et affichage d'une image d'erreur
+/** Création et affichage d'une image d'erreur */
 function sendErrorTile(string $tileid, string $message, string $symbol='undef', string $color='FF0000', int $width=128, int $height=128): never {
   if (isset($_GET['output']) && ($_GET['output']=='txt')) {
     header('Content-type: text/plain; charset="utf-8"');

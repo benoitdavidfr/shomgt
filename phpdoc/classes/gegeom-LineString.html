@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -134,17 +138,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">510</span>
+    <span class="phpdocumentor-element-found-in__line">461</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">abstract class Geometry - Gestion d&#039;une Geometry GeoJSON (hors collection) et de quelques opérations</p>
+            <p class="phpdocumentor-summary">contient au moins 2 positions</p>
 
-    <section class="phpdocumentor-description"><p>Les coordonnées sont conservées en array comme en GeoJSON et pas structurées avec des objets.
-Chaque type de géométrie correspond à une sous-classe concrète.
-Par défaut, la géométrie est en coordonnées géographiques mais les classes peuvent aussi être utilisées
-avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préfixées par e.</p>
-</section>
 
 
 
@@ -179,7 +178,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
         &nbsp;= [&#039;Point&#039;, &#039;LineString&#039;, &#039;Polygon&#039;, &#039;MultiPoint&#039;, &#039;MultiLineString&#039;, &#039;MultiPolygon&#039;]                            </span>
 </dt>
-<dd>Liste des types de géoémtries homogènes</dd>
+<dd>Liste des types de géométries homogènes</dd>
 
     </dl>
 
@@ -236,6 +235,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
                                 &nbsp;: <abbr title="\gegeom\TPos">TPos</abbr>    </span>
 </dt>
+<dd>retourne un point de la géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_asArray">asArray()</a>
@@ -249,24 +249,28 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
                                 &nbsp;: <abbr title="\gegeom\TPos">TPos</abbr>    </span>
 </dt>
+<dd>renvoie le barycentre d&#039;une géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_decompose">decompose()</a>
     <span>
                                 &nbsp;: array&lt;int, <a href="classes/gegeom-Point.html"><abbr title="\gegeom\Point">Point</abbr></a>|<a href="classes/gegeom-LineString.html"><abbr title="\gegeom\LineString">LineString</abbr></a>|<a href="classes/gegeom-Polygon.html"><abbr title="\gegeom\Polygon">Polygon</abbr></a>&gt;    </span>
 </dt>
+<dd>Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_distanceToPos">distanceToPos()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>calcule la distance d&#039;une LineString à une position</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_ebox">ebox()</a>
     <span>
                                 &nbsp;: <a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>    </span>
 </dt>
+<dd>retourne la EBox de la géométrie considérée comme euclidienne</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_eltTypes">eltTypes()</a>
@@ -287,6 +291,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
                                 &nbsp;: <a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>    </span>
 </dt>
+<dd>retourne la GBox de la géométrie considérée comme géographique</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_geoms">geoms()</a>
@@ -295,7 +300,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
 </dt>
 <dd>Retourne la liste des primitives contenues dans l&#039;objet sous la forme d&#039;objets
 Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&gt;[LineString], Polygon-&gt;[LineString],
-// MutiPolygon-&gt;[Polygon]</dd>
+MutiPolygon-&gt;[Polygon]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_nbreOfPos">nbreOfPos()</a>
@@ -308,18 +313,21 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>teste si la position p est dans le polygone formé par la ligne fermée</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_reproject">reproject()</a>
     <span>
                                 &nbsp;: <a href="classes/gegeom-LineString.html"><abbr title="\gegeom\LineString">LineString</abbr></a>    </span>
 </dt>
+<dd>reprojète ue géométrie, prend en paramètre une fonction de reprojection d&#039;une position, retourne un objet géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_segs">segs()</a>
     <span>
-                                &nbsp;: array&lt;int, object&gt;    </span>
+                                &nbsp;: array&lt;int, <a href="classes/gegeom-Segment.html"><abbr title="\gegeom\Segment">Segment</abbr></a>&gt;    </span>
 </dt>
+<dd>liste des segments constituant la polyligne</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-LineString.html#method_test_distanceToPos">test_distanceToPos()</a>
@@ -394,7 +402,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-        <p class="phpdocumentor-summary">Liste des types de géoémtries homogènes</p>
+        <p class="phpdocumentor-summary">Liste des types de géométries homogènes</p>
 
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -435,7 +443,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">512</span>
+    <span class="phpdocumentor-element-found-in__line">463</span>
 
     </aside>
 
@@ -447,7 +455,9 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>contient une liste de listes de 2 ou 3 nombres</p>
+</section>
+
     
 
 </article>
@@ -540,7 +550,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">515</span>
+    <span class="phpdocumentor-element-found-in__line">466</span>
 
     </aside>
 
@@ -618,11 +628,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">527</span>
+    <span class="phpdocumentor-element-found-in__line">478</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne un point de la géométrie</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">aPos</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\gegeom\TPos">TPos</abbr></span></code>
@@ -689,11 +700,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">525</span>
+    <span class="phpdocumentor-element-found-in__line">476</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">renvoie le barycentre d&#039;une géométrie</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">center</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\gegeom\TPos">TPos</abbr></span></code>
@@ -728,7 +740,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">decompose</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/gegeom-Point.html"><abbr title="\gegeom\Point">Point</abbr></a>|<a href="classes/gegeom-LineString.html"><abbr title="\gegeom\LineString">LineString</abbr></a>|<a href="classes/gegeom-Polygon.html"><abbr title="\gegeom\Polygon">Polygon</abbr></a>&gt;</span></code>
@@ -759,11 +772,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">604</span>
+    <span class="phpdocumentor-element-found-in__line">547</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcule la distance d&#039;une LineString à une position</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">distanceToPos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -804,11 +818,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">529</span>
+    <span class="phpdocumentor-element-found-in__line">480</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la EBox de la géométrie considérée comme euclidienne</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">ebox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></span></code>
@@ -839,7 +854,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">516</span>
+    <span class="phpdocumentor-element-found-in__line">467</span>
 
     </aside>
 
@@ -921,11 +936,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">528</span>
+    <span class="phpdocumentor-element-found-in__line">479</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la GBox de la géométrie considérée comme géographique</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">gbox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a></span></code>
@@ -956,13 +972,13 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">518</span>
+    <span class="phpdocumentor-element-found-in__line">469</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Retourne la liste des primitives contenues dans l&#039;objet sous la forme d&#039;objets
 Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&gt;[LineString], Polygon-&gt;[LineString],
-// MutiPolygon-&gt;[Polygon]</p>
+MutiPolygon-&gt;[Polygon]</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -994,7 +1010,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">526</span>
+    <span class="phpdocumentor-element-found-in__line">477</span>
 
     </aside>
 
@@ -1029,11 +1045,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">540</span>
+    <span class="phpdocumentor-element-found-in__line">489</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">teste si la position p est dans le polygone formé par la ligne fermée</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">pointInPolygon</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$p</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1074,11 +1091,12 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">531</span>
+    <span class="phpdocumentor-element-found-in__line">482</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">reprojète ue géométrie, prend en paramètre une fonction de reprojection d&#039;une position, retourne un objet géométrie</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">reproject</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reprojPos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-LineString.html"><abbr title="\gegeom\LineString">LineString</abbr></a></span></code>
@@ -1119,14 +1137,15 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">585</span>
+    <span class="phpdocumentor-element-found-in__line">531</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste des segments constituant la polyligne</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">segs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, object&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">segs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/gegeom-Segment.html"><abbr title="\gegeom\Segment">Segment</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1136,7 +1155,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;int, object&gt;</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/gegeom-Segment.html"><abbr title="\gegeom\Segment">Segment</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -1154,7 +1173,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">613</span>
+    <span class="phpdocumentor-element-found-in__line">556</span>
 
     </aside>
 
@@ -1185,7 +1204,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">564</span>
+    <span class="phpdocumentor-element-found-in__line">513</span>
 
     </aside>
 

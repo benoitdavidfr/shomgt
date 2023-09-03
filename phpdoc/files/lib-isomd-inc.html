@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,30 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">isomd.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">Récupération de MD ISO d&#039;un GéoTiff</p>
+
+    <section class="phpdocumentor-description"><p>Récupère dans le fichier XML ISO 19139 d'un GéoTiff les 4 champs de métadonnées suivants:
+mdDate: date de modification des métadonnées
+edition: édition de la carte, example: Edition n° 3 - 2016
+lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
+scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
+La méthode statique read() de la classe IsoMd retourne un dict. de ces informations</p>
+<p>journal:</p>
+<ul>
+<li>22/5/2022:
+<ul>
+<li>utilisation EnVar</li>
+</ul>
+</li>
+<li>3/5/2022:
+<ul>
+<li>correction bug</li>
+<li>changement du séparateur des milliers en '_' car 1) moins confusant que '.' et 2) utilisé par Php et Yaml</li>
+<li>utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 

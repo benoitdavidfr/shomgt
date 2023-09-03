@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -130,11 +134,16 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">représente une image géo-référencée</p>
+
+    <section class="phpdocumentor-description"><p>Une image géoréférencée est l'association d'une image GD et d'un EBox.
+Les opérations GD peuvent ainsi être effectuées en coordonnées utilisateur plutôt qu'en coordonnées image
+Les coordonnées utilisateur (X,Y) sont définies avec X de gauche à droite et Y du bas vers le haut.</p>
+</section>
 
 
 
@@ -264,30 +273,35 @@
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>Alloue une couleur pour l&#039;image</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_colorallocatealpha">colorallocatealpha()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>Alloue une couleur avec alpha pour l&#039;image</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_copyresampled">copyresampled()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>recopie la partie de $srcImg correspondant à $qebox dans la zone de $this correspondant à $qebox</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_create">create()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>création d&#039;une image vide avec un fond soit transparent soit blanc</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_createfrompng">createfrompng()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>chargement de l&#039;image à partir d&#039;un fichier ou d&#039;une URL</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_ebox">ebox()</a>
@@ -300,6 +314,7 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Dessine le rectangle en le remplissant avec la couleur</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_image">image()</a>
@@ -312,42 +327,51 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Dessine dans le style le polygone défini par une liste de positions</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_polyline">polyline()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Dessine dans le style une polyligne définie par une liste de positiions</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_rectangle">rectangle()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Dessine le rectangle dans la couleur</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_savealpha">savealpha()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>nécessaire pour conserver le canal alpha avant de générer l&#039;image PNG avec le paramètre true ;
+Le alphablending doit être désactivé (imagealphablending($im, false)) pour conserver le canal alpha en premier lieu.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_string">string()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
+avec un cadre de fond de plan dans la couleur $bg_color</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_toImgPos">toImgPos()</a>
     <span>
                                 &nbsp;: array&lt;int, int&gt;    </span>
 </dt>
+<dd>transforme en coordonnées image une position en coordonnées utilisateur</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/GeoRefImage.html#method_toUserPos">toUserPos()</a>
     <span>
                                 &nbsp;: <abbr title="\TPos">TPos</abbr>    </span>
 </dt>
+<dd>transforme en coordonnées utilisateur une position en coordonnées image</dd>
 
     </dl>
 
@@ -371,7 +395,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -399,7 +423,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -427,7 +451,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -455,7 +479,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -483,7 +507,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -511,7 +535,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -539,7 +563,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -567,7 +591,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -595,7 +619,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -623,7 +647,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -651,7 +675,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -695,7 +719,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -728,7 +752,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -766,7 +790,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -814,11 +838,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">204</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Alloue une couleur pour l&#039;image</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">colorallocate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, int&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rvb</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
@@ -833,7 +858,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;int, int&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>RVB comme liste de 3 entiers</p>
+</section>
+
             </dd>
             </dl>
 
@@ -859,11 +886,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">216</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Alloue une couleur avec alpha pour l&#039;image</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">colorallocatealpha</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, int&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rvba</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
@@ -878,7 +906,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;int, int&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>RVBA comme liste de 4 entiers</p>
+</section>
+
             </dd>
             </dl>
 
@@ -904,11 +934,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">recopie la partie de $srcImg correspondant à $qebox dans la zone de $this correspondant à $qebox</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">copyresampled</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/GeoRefImage.html"><abbr title="\GeoRefImage">GeoRefImage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$srcImg</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$qebox</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$debug</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -930,7 +961,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>en coordonnées utilisateur</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$debug</span>
@@ -959,11 +992,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">création d&#039;une image vide avec un fond soit transparent soit blanc</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$width</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$height</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$transparent</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1014,11 +1048,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">chargement de l&#039;image à partir d&#039;un fichier ou d&#039;une URL</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">createfrompng</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1055,7 +1090,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -1090,11 +1125,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">231</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Dessine le rectangle en le remplissant avec la couleur</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">filledrectangle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rect</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$color</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1138,7 +1174,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1173,11 +1209,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">265</span>
+    <span class="phpdocumentor-element-found-in__line">262</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Dessine dans le style le polygone défini par une liste de positions</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">polygon</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\TLPos">TLPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lpos</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Style.html"><abbr title="\Style">Style</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1221,11 +1258,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">248</span>
+    <span class="phpdocumentor-element-found-in__line">245</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Dessine dans le style une polyligne définie par une liste de positiions</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">polyline</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\TLPos">TLPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lpos</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Style.html"><abbr title="\Style">Style</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1269,11 +1307,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Dessine le rectangle dans la couleur</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">rectangle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rect</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$color</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1317,11 +1356,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">nécessaire pour conserver le canal alpha avant de générer l&#039;image PNG avec le paramètre true ;
+Le alphablending doit être désactivé (imagealphablending($im, false)) pour conserver le canal alpha en premier lieu.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">savealpha</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enable</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1358,11 +1399,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
+avec un cadre de fond de plan dans la couleur $bg_color</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">string</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\GdFont">GdFont</abbr>|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$font</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$text_color</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$bg_color</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$debug</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1434,11 +1477,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">149</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">transforme en coordonnées image une position en coordonnées utilisateur</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">toImgPos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$uPos</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$debug</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, int&gt;</span></code>
@@ -1486,11 +1530,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/grefimg.inc.php"><a href="files/lib-grefimg-inc.html"><abbr title="lib/grefimg.inc.php">grefimg.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">162</span>
+    <span class="phpdocumentor-element-found-in__line">159</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">transforme en coordonnées utilisateur une position en coordonnées image</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">toUserPos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, int&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$imgPos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\TPos">TPos</abbr></span></code>

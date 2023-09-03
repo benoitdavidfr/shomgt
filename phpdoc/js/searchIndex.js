@@ -143,12 +143,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GBox",
             "name": "GBox",
-            "summary": "",
+            "summary": "BBox\u0020en\u0020coord.\u0020g\u00E9o.,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Blon,\u0020lat\u005D",
             "url": "classes/bo-GBox.html"
         },                {
             "fqsen": "\\bo\\GBox\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml\nRemplace\u0020la\u0020m\u00E9thode\u0020statique\u0020fromGeoDMd\u0028\u0029\u0020conserv\u00E9e\u0020pour\u0020la\u0020compatibilit\u00E9\u0020avec\u0020le\u0020code\u0020existant",
+            "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml",
             "url": "classes/bo-GBox.html#method___construct"
         },                {
             "fqsen": "\\bo\\GBox\u003A\u003Astd\u0028\u0029",
@@ -158,7 +158,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\EBox",
             "name": "EBox",
-            "summary": "",
+            "summary": "BBox\u0020en\u0020coord.\u0020projet\u00E9es\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Bx,\u0020y\u005D",
             "url": "classes/bo-EBox.html"
         },                {
             "fqsen": "\\bo\\EBox\u003A\u003A__construct\u0028\u0029",
@@ -168,7 +168,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\EBox\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "calcule\u0020les\u0020coord.g\u00E9o.\u0020d\u0027un\u0020EBox\u0020en\u0020utilisant\u0020\u0024proj\u0020qui\u0020doit\u0020\u00EAtre\u0020d\u00E9fini\u0020comme\u0020projection\u0020dans\u0020coordsys",
             "url": "classes/bo-EBox.html#method_geo"
         },                {
             "fqsen": "\\bo\\EBox\u003A\u003A\u0024center",
@@ -1373,7 +1373,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Cache",
             "name": "Cache",
-            "summary": "",
+            "summary": "classe\u0020statique\u0020impl\u00E9mentant\u0020la\u0020gestion\u0020du\u0020cache\u0020des\u0020tuiles",
             "url": "classes/Cache.html"
         },                {
             "fqsen": "\\Cache\u003A\u003Apath\u0028\u0029",
@@ -1383,17 +1383,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Cache\u003A\u003Atest\u0028\u0029",
             "name": "test",
-            "summary": "",
+            "summary": "d\u00E9finit\u0020les\u0020conditions\u0020de\u0020mise\u0020en\u0020cache",
             "url": "classes/Cache.html#method_test"
         },                {
             "fqsen": "\\Cache\u003A\u003AreadAndSend\u0028\u0029",
             "name": "readAndSend",
-            "summary": "",
+            "summary": "Si\u0020la\u0020tuile\u0020est\u0020pr\u00E9sente\u0020alors\u0020l\u0027affiche",
             "url": "classes/Cache.html#method_readAndSend"
         },                {
             "fqsen": "\\Cache\u003A\u003Awrite\u0028\u0029",
             "name": "write",
-            "summary": "",
+            "summary": "Si\u0020les\u0020conditions\u0020sont\u0020remplies\u0020alors\u0020stocke\u0020la\u0020tuile",
             "url": "classes/Cache.html#method_write"
         },                {
             "fqsen": "\\Cache\u003A\u003ANB_SECONDS_IN_CACHE",
@@ -1408,12 +1408,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\radians2degresSexa\u0028\u0029",
             "name": "radians2degresSexa",
-            "summary": "",
+            "summary": "Transformation\u0020d\u0027une\u0020valeur\u0020en\u0020radians\u0020en\u0020une\u0020chaine\u0020en\u0020degres\u0020sexagesimaux",
             "url": "namespaces/coordsys.html#function_radians2degresSexa"
         },                {
             "fqsen": "\\coordsys\\IAG_GRS_1980",
             "name": "IAG_GRS_1980",
-            "summary": "",
+            "summary": "classe\u0020statique\u0020d\u00E9finissant\u0020l\u0027ellipsoide\u0020IAG_GRS_1980",
             "url": "classes/coordsys-IAG-GRS-1980.html"
         },                {
             "fqsen": "\\coordsys\\IAG_GRS_1980\u003A\u003Aa\u0028\u0029",
@@ -1438,17 +1438,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\Lambert93",
             "name": "Lambert93",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020des\u0020fonctions\u0020de\u0020proj\u0020et\u0020inverse\u0020du\u0020Lambert\u002093",
             "url": "classes/coordsys-Lambert93.html"
         },                {
             "fqsen": "\\coordsys\\Lambert93\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-Lambert93.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\Lambert93\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "retourne\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-Lambert93.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\Lambert93\u003A\u003Ac",
@@ -1473,22 +1473,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\WebMercator",
             "name": "WebMercator",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020des\u0020fonctions\u0020de\u0020proj\u0020et\u0020inverse\u0020du\u0020Web\u0020Mercator",
             "url": "classes/coordsys-WebMercator.html"
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003Aspatial\u0028\u0029",
             "name": "spatial",
-            "summary": "",
+            "summary": "couverture\u0020spatiale\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020lon,\u0020lat",
             "url": "classes/coordsys-WebMercator.html#method_spatial"
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "name\u003A\u0020\u0020proj\ntitle\u003A\u0020\u0022static\u0020function\u0020proj\u0028array\u0020\u0024lonlat,\u0020\u003Fstring\u0020\u0024proj\u003Dnull\u0029\u003A\u0020array\u0020\u0020\u002D\u0020convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D\u0022",
+            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-WebMercator.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "convertit\u0020des\u0020coordonn\u00E9es\u0020Web\u0020Mercator\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-WebMercator.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003AErrorBadLat",
@@ -1498,67 +1498,67 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003AMinLat",
             "name": "MinLat",
-            "summary": "",
+            "summary": "correspond\u0020\u00E0\u0020la\u0020latitude\u0020min\u0020pour\u0020que\u0020la\u0020projection\u0020soit\u0020un\u0020carr\u00E9\u0020de\u0020largeur\u00202\u002Api\u002Aa",
             "url": "classes/coordsys-WebMercator.html#constant_MinLat"
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003AMaxLat",
             "name": "MaxLat",
-            "summary": "",
+            "summary": "correspond\u0020\u00E0\u0020la\u0020latitude\u0020max\u0020pour\u0020que\u0020la\u0020projection\u0020soit\u0020un\u0020carr\u00E9\u0020de\u0020largeur\u00202\u002Api\u002Aa",
             "url": "classes/coordsys-WebMercator.html#constant_MaxLat"
         },                {
             "fqsen": "\\coordsys\\LonLatDd",
             "name": "LonLatDd",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020Les\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LonLatDd\u0020correspond\u0020au\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lon,lat\u0029",
             "url": "classes/coordsys-LonLatDd.html"
         },                {
             "fqsen": "\\coordsys\\LonLatDd\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-LonLatDd.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\LonLatDd\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-LonLatDd.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\LatLonDd",
             "name": "LatLonDd",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LatLonDd\u0020correspond\u0020au\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lat,lon\u0029",
             "url": "classes/coordsys-LatLonDd.html"
         },                {
             "fqsen": "\\coordsys\\LatLonDd\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-LatLonDd.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\LatLonDd\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-LatLonDd.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid",
             "name": "Ellipsoid",
-            "summary": "",
+            "summary": "classe\u0020statique\u0020d\u00E9finissant\u0020un\u0020ellipsoide\u0020qui\u0020peut\u0020\u00EAtre\u0020param\u00E9tr\u00E9",
             "url": "classes/coordsys-Ellipsoid.html"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003Aavailable\u0028\u0029",
             "name": "available",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020ellipsoides\u0020propos\u00E9s",
             "url": "classes/coordsys-Ellipsoid.html#method_available"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003A\u0024current",
             "name": "current",
-            "summary": "",
+            "summary": "ellipsoide\u0020courant,\u0020par\u0020d\u00E9faut\u0020IAG_GRS_1980",
             "url": "classes/coordsys-Ellipsoid.html#property_current"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003Aset\u0028\u0029",
             "name": "set",
-            "summary": "",
+            "summary": "D\u00E9finition\u0020d\u0027un\u0020ellipsoide",
             "url": "classes/coordsys-Ellipsoid.html#method_set"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003Aparam\u0028\u0029",
             "name": "param",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020valeur\u0020d\u0027un\u0020param\u00E8tre\u0020stock\u00E9\u0020pour\u0020l\u0027ellipsoide\u0020courant",
             "url": "classes/coordsys-Ellipsoid.html#method_param"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003Aa\u0028\u0029",
@@ -1588,27 +1588,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003APARAMS",
             "name": "PARAMS",
-            "summary": "",
+            "summary": "constante\u0020d\u00E9finissant\u0020diff\u00E9rents\u0020ellipsoides",
             "url": "classes/coordsys-Ellipsoid.html#constant_PARAMS"
         },                {
             "fqsen": "\\coordsys\\WorldMercator",
             "name": "WorldMercator",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020de\u0020la\u0020projection\u0020World\u0020Mercator\u0020qui\u0020peut\u0020\u00EAtre\u0020d\u00E9finie\u0020sur\u0020diff\u00E9rents\u0020ellipsoides.",
             "url": "classes/coordsys-WorldMercator.html"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003Aspatial\u0028\u0029",
             "name": "spatial",
-            "summary": "",
+            "summary": "couverture\u0020spatiale\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020lon,\u0020lat",
             "url": "classes/coordsys-WorldMercator.html#method_spatial"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-WorldMercator.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-WorldMercator.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003AErrorBadLat",
@@ -1623,7 +1623,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003AEPSILON",
             "name": "EPSILON",
-            "summary": "",
+            "summary": "tolerance\u0020de\u0020convergence\u0020du\u0020calcul\u0020de\u0020la\u0020latitude",
             "url": "classes/coordsys-WorldMercator.html#constant_EPSILON"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003AMinLat",
@@ -1638,7 +1638,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\UTM",
             "name": "UTM",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020des\u0020fonctions\u0020de\u0020proj\u0020et\u0020inverse\u0020de\u0020l\u0027UTM\u0020zone",
             "url": "classes/coordsys-UTM.html"
         },                {
             "fqsen": "\\coordsys\\UTM\u003A\u003Alambda0\u0028\u0029",
@@ -1663,17 +1663,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\UTM\u003A\u003Azone\u0028\u0029",
             "name": "zone",
-            "summary": "",
+            "summary": "\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020\u002D\u003E\u0020zone\u0020UTM",
             "url": "classes/coordsys-UTM.html#method_zone"
         },                {
             "fqsen": "\\coordsys\\UTM\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "\u0028lon,\u0020lat\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020\u002D\u003E\u0020\u005BX,\u0020Y\u005D\u0020en\u0020UTM\u0020zone",
             "url": "classes/coordsys-UTM.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\UTM\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "coord.\u0020UTM\u0020zone\u0020\u002D\u003E\u0020\u005Blon,\u0020lat\u005D\u0020en\u0020degr\u00E9s",
             "url": "classes/coordsys-UTM.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\UTM\u003A\u003Ak0",
@@ -1681,24 +1681,9 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/coordsys-UTM.html#constant_k0"
         },                {
-            "fqsen": "\\coordsys\\OgcWkt",
-            "name": "OgcWkt",
-            "summary": "",
-            "url": "classes/coordsys-OgcWkt.html"
-        },                {
-            "fqsen": "\\coordsys\\OgcWkt\u003A\u003Adetect\u0028\u0029",
-            "name": "detect",
-            "summary": "",
-            "url": "classes/coordsys-OgcWkt.html#method_detect"
-        },                {
-            "fqsen": "\\coordsys\\OgcWkt\u003A\u003AErrorNoDetect",
-            "name": "ErrorNoDetect",
-            "summary": "",
-            "url": "classes/coordsys-OgcWkt.html#constant_ErrorNoDetect"
-        },                {
             "fqsen": "\\coordsys\\iEllipsoid",
             "name": "iEllipsoid",
-            "summary": "",
+            "summary": "interface\u0020de\u0020d\u00E9finition\u0020d\u0027un\u0020ellipsoide",
             "url": "classes/coordsys-iEllipsoid.html"
         },                {
             "fqsen": "\\coordsys\\iEllipsoid\u003A\u003Aa\u0028\u0029",
@@ -1718,17 +1703,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\iCoordSys",
             "name": "iCoordSys",
-            "summary": "",
+            "summary": "d\u00E9finit\u0020l\u0027interface\u0020pour\u0020un\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es",
             "url": "classes/coordsys-iCoordSys.html"
         },                {
             "fqsen": "\\coordsys\\iCoordSys\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-iCoordSys.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\iCoordSys\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-iCoordSys.html#method_geo"
         },                {
             "fqsen": "\\EnvVar",
@@ -1753,7 +1738,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\sendErrorTile\u0028\u0029",
             "name": "sendErrorTile",
-            "summary": "",
+            "summary": "Cr\u00E9ation\u0020et\u0020affichage\u0020d\u0027une\u0020image\u0020d\u0027erreur",
             "url": "namespaces/default.html#function_sendErrorTile"
         },                {
             "fqsen": "\\execCmde\u0028\u0029",
@@ -1763,7 +1748,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\download\u0028\u0029",
             "name": "download",
-            "summary": "",
+            "summary": "t\u00E9l\u00E9chargement\u0020d\u0027un\u0020fichier\u0020en\u0020utilisant\u0020la\u0020commande\u0020wget",
             "url": "namespaces/default.html#function_download"
         },                {
             "fqsen": "\\GeoJsonPolygon",
@@ -1795,11 +1780,6 @@ Search.appendIndex(
             "name": "GdalInfo",
             "summary": "",
             "url": "classes/GdalInfo.html"
-        },                {
-            "fqsen": "\\GdalInfo\u003A\u003Adms2Dec\u0028\u0029",
-            "name": "dms2Dec",
-            "summary": "",
-            "url": "classes/GdalInfo.html#method_dms2Dec"
         },                {
             "fqsen": "\\GdalInfo\u003A\u003Afilepath\u0028\u0029",
             "name": "filepath",
@@ -1843,7 +1823,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox",
             "name": "BBox",
-            "summary": "",
+            "summary": "Gestion\u0020d\u0027une\u0020BBox\u0020en\u0020coord.\u0020g\u00E9o.\u0020ou\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9\u0020comme\u0020\u005Blon,\u0020lat\u005D\u0020ou\u0020\u005Bx,\u0020y\u005D",
             "url": "classes/gegeom-BBox.html"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003A__construct\u0028\u0029",
@@ -1853,7 +1833,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Aempty\u0028\u0029",
             "name": "empty",
-            "summary": "",
+            "summary": "renvoit\u0020vrai\u0020ssi\u0020la\u0020bbox\u0020est\u0020vide",
             "url": "classes/gegeom-BBox.html#method_empty"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Abound\u0028\u0029",
@@ -1863,7 +1843,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Around\u0028\u0029",
             "name": "round",
-            "summary": "",
+            "summary": "si\u0020\u0024this\u0020est\u0020ind\u00E9fini\u0020alors\u0020le\u0020renvoit\nsinon\u0020cr\u00E9e\u0020un\u0020nouvel\u0020objet\u0020de\u0020la\u0020classe\u0020appel\u00E9e\u0020avec\u0020des\u0020coord.\u0020arrondies\nen\u0020fonction\u0020de\u0020la\u0020\u0024precision\u0020d\u00E9finie\u0020dans\u0020la\u0020classe\u0020appel\u00E9e",
             "url": "classes/gegeom-BBox.html#method_round"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003AasArray\u0028\u0029",
@@ -1873,7 +1853,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
-            "summary": "",
+            "summary": "affiche\u0020la\u0020BBox\u0020en\u0020utilisant\u0020le\u0020format\u0020GeoJSON\u0020d\u0027un\u0020Bbox\navec\u0020des\u0020coord.\u0020arrondies\u0020en\u0020fonction\u0020de\u0020la\u0020\u0024precision\u0020d\u00E9finie\u0020dans\u0020la\u0020classe\u0020appel\u00E9e",
             "url": "classes/gegeom-BBox.html#method___toString"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Awest\u0028\u0029",
@@ -1898,12 +1878,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020centre\u0020de\u0020la\u0020BBox\u0020ou\u0020\u005B\u005D\u0020si\u0020elle\u0020est\u0020vide",
             "url": "classes/gegeom-BBox.html#method_center"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Apolygon\u0028\u0029",
             "name": "polygon",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020array\u0020d\u0027array\u0020avec\u0020les\u00205\u0020positions\u0020du\u0020polygone\u0020de\u0020la\u0020BBox\u0020ou\u0020\u005B\u005D\u0020si\u0020elle\u0020est\u0020vide",
             "url": "classes/gegeom-BBox.html#method_polygon"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003AunionVerbose\u0028\u0029",
@@ -1913,18 +1893,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Aunion\u0028\u0029",
             "name": "union",
-            "summary": "",
+            "summary": "Retourne\u0020l\u0027union\u0020de\u00202\u0020BBox",
             "url": "classes/gegeom-BBox.html#method_union"
+        },                {
+            "fqsen": "\\gegeom\\BBox\u003A\u003Aintersects\u0028\u0029",
+            "name": "intersects",
+            "summary": "intersection\u0020de\u00202\u0020bbox,\u0020si\u0020\u0024this\u0020intersecte\u0020\u0024b2\u0020alors\u0020retourne\u0020le\u0020GBox\/EBox\u0020d\u0027intersection,\u0020sinon\u0020retourne\u0020null.",
+            "url": "classes/gegeom-BBox.html#method_intersects"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003AintersectsVerbose\u0028\u0029",
             "name": "intersectsVerbose",
             "summary": "",
             "url": "classes/gegeom-BBox.html#method_intersectsVerbose"
-        },                {
-            "fqsen": "\\gegeom\\BBox\u003A\u003Aintersects\u0028\u0029",
-            "name": "intersects",
-            "summary": "",
-            "url": "classes/gegeom-BBox.html#method_intersects"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003AintersectsTest\u0028\u0029",
             "name": "intersectsTest",
@@ -1933,12 +1913,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Ainters\u0028\u0029",
             "name": "inters",
-            "summary": "",
+            "summary": "version\u0020boul\u00E9enne\u0020de\u0020intersects\u0028\u0029",
             "url": "classes/gegeom-BBox.html#method_inters"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "",
+            "summary": "teste\u0020si\u0020\u0024small\u0020est\u0020strictement\u0020inclus\u0020dans\u0020\u0024this",
             "url": "classes/gegeom-BBox.html#method_includes"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003AErrorIncorrectNbOfParams",
@@ -1973,12 +1953,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GBox",
             "name": "GBox",
-            "summary": "",
+            "summary": "BBox\u0020en\u0020coord.\u0020g\u00E9o.,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Blon,\u0020lat\u005D",
             "url": "classes/gegeom-GBox.html"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml\nRemplace\u0020la\u0020m\u00E9thode\u0020statique\u0020fromGeoDMd\u0028\u0029\u0020conserv\u00E9e\u0020pour\u0020la\u0020compatibilit\u00E9\u0020avec\u0020le\u0020code\u0020existant",
+            "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml",
             "url": "classes/gegeom-GBox.html#method___construct"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AconstructTest\u0028\u0029",
@@ -1998,12 +1978,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AfromGeoDMd\u0028\u0029",
             "name": "fromGeoDMd",
-            "summary": "",
+            "summary": "maintien\u0020de\u0020la\u0020m\u00E9thode\u0020fromGeoDMd\u0028\u0029\u0020pour\u0020conserver\u0020la\u0020compatibilit\u00E9\u0020avec\u0020le\u0020code\u0020existant",
             "url": "classes/gegeom-GBox.html#method_fromGeoDMd"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AintersectsAntiMeridian\u0028\u0029",
             "name": "intersectsAntiMeridian",
-            "summary": "",
+            "summary": "Teste\u0020l\u0027intersection\u0020avec\u0020l\u0027AM",
             "url": "classes/gegeom-GBox.html#method_intersectsAntiMeridian"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AintersectsAntiMeridianTest\u0028\u0029",
@@ -2013,33 +1993,33 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AasGeoJsonBbox\u0028\u0029",
             "name": "asGeoJsonBbox",
-            "summary": "",
+            "summary": "renvoie\u0020un\u0020array\u0020de\u00204\u0020coord\u0020\u005Bwest,\u0020south,\u0020east,\u0020north\u005D\u0020avec\u0020east\u0020\u003C\u0020180\u0020conforme\u0020\u00E0\u0020la\u0020structuration\u0020dans\u0020GeoJSON",
             "url": "classes/gegeom-GBox.html#method_asGeoJsonBbox"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003Atranslate360West\u0028\u0029",
             "name": "translate360West",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020GBox\u0020translat\u00E9\u0020de\u0020360\u00B0\u0020vers\u0020l\u0027ouest",
             "url": "classes/gegeom-GBox.html#method_translate360West"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003Atranslate360East\u0028\u0029",
             "name": "translate360East",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020GBox\u0020translat\u00E9\u0020de\u0020360\u00B0\u0020vers\u0020l\u0027est",
             "url": "classes/gegeom-GBox.html#method_translate360East"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003Asize\u0028\u0029",
             "name": "size",
-            "summary": "",
+            "summary": "taille\u0020max\u0020en\u0020degr\u00E9s\u0020de\u0020longueur\u0020constante\u0020\u0028Zoom\u003A\u003ASize0\u0020\/\u0020360\u0029\u0020ou\u0020rettourne\u00200\u0020si\u0020la\u0020BBox\u0020est\u0020vide",
             "url": "classes/gegeom-GBox.html#method_size"
+        },                {
+            "fqsen": "\\gegeom\\GBox\u003A\u003Adist\u0028\u0029",
+            "name": "dist",
+            "summary": "distance\u0020la\u0020plus\u0020courte\u0020entre\u0020les\u0020position\u0020des\u00202\u0020GBox,\u0020g\u00E9n\u00E8re\u0020une\u0020exception\u0020si\u0020une\u0020des\u00202\u0020BBox\u0020est\u0020vide",
+            "url": "classes/gegeom-GBox.html#method_dist"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AdistVerbose\u0028\u0029",
             "name": "distVerbose",
             "summary": "",
             "url": "classes/gegeom-GBox.html#method_distVerbose"
-        },                {
-            "fqsen": "\\gegeom\\GBox\u003A\u003Adist\u0028\u0029",
-            "name": "dist",
-            "summary": "",
-            "url": "classes/gegeom-GBox.html#method_dist"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AdistTest\u0028\u0029",
             "name": "distTest",
@@ -2048,12 +2028,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003Adistance\u0028\u0029",
             "name": "distance",
-            "summary": "",
+            "summary": "distance\u0020entre\u00202\u0020boites,\u0020nulle\u0020ssi\u0020les\u00202\u0020boites\u0020sont\u0020identiques",
             "url": "classes/gegeom-GBox.html#method_distance"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003Aincludes\u0028\u0029",
             "name": "includes",
-            "summary": "teste\u0020si\u0020\u0024small\u0020est\u0020strictement\u0020inclus\u0020dans\u0020\u0024this\nred\u00E9finition\u0020pour\u0020g\u00E9rer\u0020des\u0020cas\u0020particuliers\u0020sur\u0020l\u0027antim\u00E9ridien",
+            "summary": "teste\u0020si\u0020\u0024small\u0020est\u0020strictement\u0020inclus\u0020dans\u0020\u0024this",
             "url": "classes/gegeom-GBox.html#method_includes"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AincludesTest\u0028\u0029",
@@ -2063,18 +2043,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "",
+            "summary": "calcule\u0020la\u0020projection\u0020d\u0027un\u0020GBox\u0020en\u0020utilisant\u0020\u0024proj\u0020qui\u0020doit\u0020\u00EAtre\u0020d\u00E9fini\u0020comme\u0020projection\u0020dans\u0020coordsys",
             "url": "classes/gegeom-GBox.html#method_proj"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AErrorParamInConstruct",
             "name": "ErrorParamInConstruct",
             "summary": "",
             "url": "classes/gegeom-GBox.html#constant_ErrorParamInConstruct"
-        },                {
-            "fqsen": "\\gegeom\\GBox\u003A\u003AErrorSizeOfEmptyGBox",
-            "name": "ErrorSizeOfEmptyGBox",
-            "summary": "",
-            "url": "classes/gegeom-GBox.html#constant_ErrorSizeOfEmptyGBox"
         },                {
             "fqsen": "\\gegeom\\GBox\u003A\u003AErrorDistOfEmptyGBox",
             "name": "ErrorDistOfEmptyGBox",
@@ -2093,7 +2068,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GBoxSubClass",
             "name": "GBoxSubClass",
-            "summary": "",
+            "summary": "V\u00E9rification\u0020que\u0020includes\u0028\u0029\u0020peut\u0020\u00EAtre\u0020appel\u00E9e\u0020avec\u0020small\u0020objet\u0020d\u0027une\u0020sous\u002Dclasse\u0020de\u0020GBox",
             "url": "classes/gegeom-GBoxSubClass.html"
         },                {
             "fqsen": "\\gegeom\\GBoxSubClass\u003A\u003AincludesTest\u0028\u0029",
@@ -2103,7 +2078,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\EBox",
             "name": "EBox",
-            "summary": "",
+            "summary": "BBox\u0020en\u0020coord.\u0020projet\u00E9es\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Bx,\u0020y\u005D",
             "url": "classes/gegeom-EBox.html"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003Adx\u0028\u0029",
@@ -2118,23 +2093,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003AtranslateInX\u0028\u0029",
             "name": "translateInX",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020rectangle\u0020translat\u00E9\u0020en\u0020X",
             "url": "classes/gegeom-EBox.html#method_translateInX"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003Asize\u0028\u0029",
             "name": "size",
-            "summary": "",
+            "summary": "taille\u0020max\u0020en\u0020unit\u00E9\u0020ou\u0020retourne\u00200\u0020si\u0020la\u0020EBox\u0020est\u0020vide",
             "url": "classes/gegeom-EBox.html#method_size"
+        },                {
+            "fqsen": "\\gegeom\\EBox\u003A\u003Adist\u0028\u0029",
+            "name": "dist",
+            "summary": "distance\u0020min.\u0020entre\u0020les\u0020positions\u0020de\u00202\u0020BBox,\u0020g\u00E9n\u00E8re\u0020une\u0020erreur\u0020si\u0020une\u0020des\u00202\u0020BBox\u0020est\u0020vide",
+            "url": "classes/gegeom-EBox.html#method_dist"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003AdistVerbose\u0028\u0029",
             "name": "distVerbose",
             "summary": "",
             "url": "classes/gegeom-EBox.html#method_distVerbose"
-        },                {
-            "fqsen": "\\gegeom\\EBox\u003A\u003Adist\u0028\u0029",
-            "name": "dist",
-            "summary": "",
-            "url": "classes/gegeom-EBox.html#method_dist"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003AdistTest\u0028\u0029",
             "name": "distTest",
@@ -2143,28 +2118,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003Aarea\u0028\u0029",
             "name": "area",
-            "summary": "",
+            "summary": "surface\u0020du\u0020Bbox",
             "url": "classes/gegeom-EBox.html#method_area"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003Acovers\u0028\u0029",
             "name": "covers",
-            "summary": "",
+            "summary": "taux\u0020de\u0020couverture\u0020du\u0020Bbox\u0020\u0024right\u0020par\u0020le\u0020Bbox\u0020\u0024this",
             "url": "classes/gegeom-EBox.html#method_covers"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003Adilate\u0028\u0029",
             "name": "dilate",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020rectangle\u0020dilat\u00E9\u0020de\u0020\u0024dilate",
             "url": "classes/gegeom-EBox.html#method_dilate"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "",
+            "summary": "calcule\u0020les\u0020coord.g\u00E9o.\u0020d\u0027un\u0020EBox\u0020en\u0020utilisant\u0020\u0024proj\u0020qui\u0020doit\u0020\u00EAtre\u0020d\u00E9fini\u0020comme\u0020projection\u0020dans\u0020coordsys",
             "url": "classes/gegeom-EBox.html#method_geo"
-        },                {
-            "fqsen": "\\gegeom\\EBox\u003A\u003AErrorSizeOfEmptyEBox",
-            "name": "ErrorSizeOfEmptyEBox",
-            "summary": "",
-            "url": "classes/gegeom-EBox.html#constant_ErrorSizeOfEmptyEBox"
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003AErrorDistOnEmptyEBox",
             "name": "ErrorDistOnEmptyEBox",
@@ -2173,7 +2143,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\EBox\u003A\u003A\u0024precision",
             "name": "precision",
-            "summary": "",
+            "summary": "nbre\u0020de\u0020chiffres\u0020apr\u00E8s\u0020la\u0020virgule\u0020\u00E0\u0020conserver\u0020pour\u0020les\u0020positions",
             "url": "classes/gegeom-EBox.html#property_precision"
         },                {
             "fqsen": "\\gegeom\\asArray\u0028\u0029",
@@ -2223,12 +2193,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-Geometry.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Geometry.html#method_center"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2238,32 +2208,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Geometry.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-Geometry.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-Geometry.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020min.\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-Geometry.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Geometry.html#method_reproject"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003Adecompose\u0028\u0029",
             "name": "decompose",
-            "summary": "",
+            "summary": "D\u00E9compose\u0020une\u0020g\u00E9om\u00E9trie\u0020en\u0020une\u0020liste\u0020de\u0020g\u00E9om\u00E9tries\u0020\u00E9l\u00E9mentaires\u0020\u0028Point\u007CLineString\u007CPolygon\u0029",
             "url": "classes/gegeom-Geometry.html#method_decompose"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003AErrorFromGeoArray",
@@ -2273,7 +2243,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003AHOMOGENEOUSTYPES",
             "name": "HOMOGENEOUSTYPES",
-            "summary": "Liste\u0020des\u0020types\u0020de\u0020g\u00E9o\u00E9mtries\u0020homog\u00E8nes",
+            "summary": "Liste\u0020des\u0020types\u0020de\u0020g\u00E9om\u00E9tries\u0020homog\u00E8nes",
             "url": "classes/gegeom-Geometry.html#constant_HOMOGENEOUSTYPES"
         },                {
             "fqsen": "\\gegeom\\Geometry\u003A\u003A\u0024precision",
@@ -2293,7 +2263,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Point",
             "name": "Point",
-            "summary": "abstract\u0020class\u0020Geometry\u0020\u002D\u0020Gestion\u0020d\u0027une\u0020Geometry\u0020GeoJSON\u0020\u0028hors\u0020collection\u0029\u0020et\u0020de\u0020quelques\u0020op\u00E9rations",
+            "summary": "Un\u0020Point\u0020correspond\u0020\u00E0\u0020une\u0020position,\u0020il\u0020peut\u0020aussi\u0020\u00EAtre\u0020consid\u00E9r\u00E9\u0020comme\u0020un\u0020vecteur",
             "url": "classes/gegeom-Point.html"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003A__construct\u0028\u0029",
@@ -2308,12 +2278,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-Point.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Point.html#method_center"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2323,57 +2293,57 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Point.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-Point.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-Point.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020min.\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-Point.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Point.html#method_reproject"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "",
+            "summary": "\u0024this\u0020\u002B\u0020\u0024v\u0020en\u00202D",
             "url": "classes/gegeom-Point.html#method_add"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Adiff\u0028\u0029",
             "name": "diff",
-            "summary": "",
+            "summary": "\u0024this\u0020\u002D\u0020\u0024v\u0020en\u00202D",
             "url": "classes/gegeom-Point.html#method_diff"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AvectorProduct\u0028\u0029",
             "name": "vectorProduct",
-            "summary": "",
+            "summary": "produit\u0020vectoriel\u0020\u0024this\u0020par\u0020\u0024v\u0020en\u00202D",
             "url": "classes/gegeom-Point.html#method_vectorProduct"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AscalarProduct\u0028\u0029",
             "name": "scalarProduct",
-            "summary": "",
+            "summary": "produit\u0020scalaire\u0020\u0024this\u0020par\u0020\u0024v\u0020en\u00202D",
             "url": "classes/gegeom-Point.html#method_scalarProduct"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AscalMult\u0028\u0029",
             "name": "scalMult",
-            "summary": "",
+            "summary": "multiplication\u0020de\u0020\u0024this\u0020consid\u00E9r\u00E9\u0020comme\u0020un\u0020vecteur\u0020par\u0020un\u0020scalaire",
             "url": "classes/gegeom-Point.html#method_scalMult"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003Anorm\u0028\u0029",
             "name": "norm",
-            "summary": "",
+            "summary": "norme\u0020de\u0020\u0024this\u0020consid\u00E9r\u00E9\u0020comme\u0020un\u0020vecteur",
             "url": "classes/gegeom-Point.html#method_norm"
         },                {
             "fqsen": "\\gegeom\\Point\u003A\u003AErrorBadParamInAdd",
@@ -2393,7 +2363,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Segment",
             "name": "Segment",
-            "summary": "",
+            "summary": "Segment\u0020compos\u00E9\u0020de\u00202\u0020positions\u0020\u003B\u0020consid\u00E9r\u00E9\u0020comme\u0020orient\u00E9\u0020de\u0020la\u0020premi\u00E8re\u0020vers\u0020la\u0020seconde",
             "url": "classes/gegeom-Segment.html"
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003A__construct\u0028\u0029",
@@ -2408,12 +2378,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003Avector\u0028\u0029",
             "name": "vector",
-            "summary": "",
+            "summary": "g\u00E9n\u00E8re\u0020le\u0020vecteur\u0020correspondant\u0020\u00E0\u0020\u0024tab\u005B1\u005D\u0020\u002D\u0020\u0024tab\u005B0\u005D\u0020repr\u00E9sent\u00E9\u0020par\u0020un\u0020Point",
             "url": "classes/gegeom-Segment.html#method_vector"
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003Aintersects\u0028\u0029",
             "name": "intersects",
-            "summary": "",
+            "summary": "intersection\u0020entre\u00202\u0020segments",
             "url": "classes/gegeom-Segment.html#method_intersects"
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003Atest_intersects\u0028\u0029",
@@ -2423,7 +2393,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003AprojPosOnLine\u0028\u0029",
             "name": "projPosOnLine",
-            "summary": "",
+            "summary": "projection\u0020d\u0027une\u0020position\u0020sur\u0020la\u0020ligne\u0020d\u00E9finie\u0020par\u0020le\u0020segment\nretourne\u0020u\u0020\/\u0020P\u0027\u0020\u003D\u0020A\u0020\u002B\u0020u\u0020\u002A\u0020\u0028B\u002DA\u0029.",
             "url": "classes/gegeom-Segment.html#method_projPosOnLine"
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003Atest_projPosOnLine\u0028\u0029",
@@ -2433,7 +2403,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003AdistancePosToLine\u0028\u0029",
             "name": "distancePosToLine",
-            "summary": "",
+            "summary": "distance\u0020sign\u00E9e\u0020de\u0020\u0024pos\u0020\u00E0\u0020la\u0020droite\u0020d\u00E9finie\u0020par\u0020le\u0020segment",
             "url": "classes/gegeom-Segment.html#method_distancePosToLine"
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003Atest_distancePosToLine\u0028\u0029",
@@ -2443,7 +2413,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020de\u0020la\u0020position\u0020au\u0020segment",
             "url": "classes/gegeom-Segment.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\Segment\u003A\u003Atest_distanceToPos\u0028\u0029",
@@ -2458,7 +2428,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPoint",
             "name": "MultiPoint",
-            "summary": "abstract\u0020class\u0020Geometry\u0020\u002D\u0020Gestion\u0020d\u0027une\u0020Geometry\u0020GeoJSON\u0020\u0028hors\u0020collection\u0029\u0020et\u0020de\u0020quelques\u0020op\u00E9rations",
+            "summary": "Une\u0020liste\u0020de\u0020points,\u0020peut\u002D\u00EAtre\u0020vide",
             "url": "classes/gegeom-MultiPoint.html"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003A__construct\u0028\u0029",
@@ -2473,12 +2443,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-MultiPoint.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPoint.html#method_center"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2488,27 +2458,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPoint.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-MultiPoint.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-MultiPoint.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020min.\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-MultiPoint.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPoint.html#method_reproject"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003AErrorEmpty",
@@ -2523,7 +2493,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\LineString",
             "name": "LineString",
-            "summary": "abstract\u0020class\u0020Geometry\u0020\u002D\u0020Gestion\u0020d\u0027une\u0020Geometry\u0020GeoJSON\u0020\u0028hors\u0020collection\u0029\u0020et\u0020de\u0020quelques\u0020op\u00E9rations",
+            "summary": "contient\u0020au\u0020moins\u00202\u0020positions",
             "url": "classes/gegeom-LineString.html"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003A__construct\u0028\u0029",
@@ -2538,12 +2508,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-LineString.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-LineString.html#method_center"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2553,27 +2523,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-LineString.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-LineString.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-LineString.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-LineString.html#method_reproject"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003ApointInPolygon\u0028\u0029",
             "name": "pointInPolygon",
-            "summary": "",
+            "summary": "teste\u0020si\u0020la\u0020position\u0020p\u0020est\u0020dans\u0020le\u0020polygone\u0020form\u00E9\u0020par\u0020la\u0020ligne\u0020ferm\u00E9e",
             "url": "classes/gegeom-LineString.html#method_pointInPolygon"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Atest_pointInPolygon\u0028\u0029",
@@ -2583,12 +2553,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Asegs\u0028\u0029",
             "name": "segs",
-            "summary": "",
+            "summary": "liste\u0020des\u0020segments\u0020constituant\u0020la\u0020polyligne",
             "url": "classes/gegeom-LineString.html#method_segs"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "calcule\u0020la\u0020distance\u0020d\u0027une\u0020LineString\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-LineString.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003Atest_distanceToPos\u0028\u0029",
@@ -2603,7 +2573,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiLineString",
             "name": "MultiLineString",
-            "summary": "abstract\u0020class\u0020Geometry\u0020\u002D\u0020Gestion\u0020d\u0027une\u0020Geometry\u0020GeoJSON\u0020\u0028hors\u0020collection\u0029\u0020et\u0020de\u0020quelques\u0020op\u00E9rations",
+            "summary": "contient\u0020une\u0020liste\u0020de\u0020liste\u0020de\u0020positions,\u0020chaque\u0020liste\u0020de\u0020positions\u0020en\u0020contient\u0020au\u0020moins\u00202",
             "url": "classes/gegeom-MultiLineString.html"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003A__construct\u0028\u0029",
@@ -2618,12 +2588,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-MultiLineString.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiLineString.html#method_center"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2633,27 +2603,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiLineString.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-MultiLineString.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-MultiLineString.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020min.\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-MultiLineString.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiLineString.html#method_reproject"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003AErrorCenterOfEmpty",
@@ -2673,7 +2643,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Polygon",
             "name": "Polygon",
-            "summary": "abstract\u0020class\u0020Geometry\u0020\u002D\u0020Gestion\u0020d\u0027une\u0020Geometry\u0020GeoJSON\u0020\u0028hors\u0020collection\u0029\u0020et\u0020de\u0020quelques\u0020op\u00E9rations",
+            "summary": "Polygon\u0020au\u0020sens\u0020GeoJSON",
             "url": "classes/gegeom-Polygon.html"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003A__construct\u0028\u0029",
@@ -2688,12 +2658,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-Polygon.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Polygon.html#method_center"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2703,37 +2673,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Polygon.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-Polygon.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-Polygon.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020min.\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-Polygon.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-Polygon.html#method_reproject"
         },                {
-            "fqsen": "\\gegeom\\Polygon\u003A\u003Aarea_A_ADAPTER\u0028\u0029",
-            "name": "area_A_ADAPTER",
-            "summary": "",
-            "url": "classes/gegeom-Polygon.html#method_area_A_ADAPTER"
+            "fqsen": "\\gegeom\\Polygon\u003A\u003Aarea\u0028\u0029",
+            "name": "area",
+            "summary": "Calcule\u0020la\u0020surface\u0020du\u0020polygone.",
+            "url": "classes/gegeom-Polygon.html#method_area"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003ApointInPolygon\u0028\u0029",
             "name": "pointInPolygon",
-            "summary": "",
+            "summary": "teste\u0020si\u0020la\u0020position\u0020est\u0020dans\u0020le\u0020polygone",
             "url": "classes/gegeom-Polygon.html#method_pointInPolygon"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Atest_pointInPolygon\u0028\u0029",
@@ -2743,12 +2713,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Asegs\u0028\u0029",
             "name": "segs",
-            "summary": "",
+            "summary": "liste\u0020des\u0020segments\u0020constituant\u0020le\u0020polygone",
             "url": "classes/gegeom-Polygon.html#method_segs"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Ainters\u0028\u0029",
             "name": "inters",
-            "summary": "",
+            "summary": "teste\u0020l\u0027intersection\u0020entre\u0020les\u00202\u0020polygones\u0020ou\u0020multi\u002Dpolygones",
             "url": "classes/gegeom-Polygon.html#method_inters"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003Atest_inters\u0028\u0029",
@@ -2768,7 +2738,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPolygon",
             "name": "MultiPolygon",
-            "summary": "abstract\u0020class\u0020Geometry\u0020\u002D\u0020Gestion\u0020d\u0027une\u0020Geometry\u0020GeoJSON\u0020\u0028hors\u0020collection\u0029\u0020et\u0020de\u0020quelques\u0020op\u00E9rations",
+            "summary": "Chaque\u0020polygone\u0020respecte\u0020les\u0020contraintes\u0020du\u0020Polygon",
             "url": "classes/gegeom-MultiPolygon.html"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003AfromGeoArray\u0028\u0029",
@@ -2788,12 +2758,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Ageoms\u0028\u0029",
             "name": "geoms",
-            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\n\/\/\u0020MutiPolygon\u002D\u003E\u005BPolygon\u005D",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020primitives\u0020contenues\u0020dans\u0020l\u0027objet\u0020sous\u0020la\u0020forme\u0020d\u0027objets\nPoint\u0020\u002D\u003E\u0020\u005B\u005D,\u0020MutiPoint\u002D\u003E\u005BPoint\u005D,\u0020LineString\u002D\u003E\u005BPoint\u005D,\u0020MultiLineString\u002D\u003E\u005BLineString\u005D,\u0020Polygon\u002D\u003E\u005BLineString\u005D,\nMutiPolygon\u002D\u003E\u005BPolygon\u005D",
             "url": "classes/gegeom-MultiPolygon.html#method_geoms"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Acenter\u0028\u0029",
             "name": "center",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020barycentre\u0020d\u0027une\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPolygon.html#method_center"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003AnbreOfPos\u0028\u0029",
@@ -2803,27 +2773,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003AaPos\u0028\u0029",
             "name": "aPos",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020point\u0020de\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPolygon.html#method_aPos"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020GBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020g\u00E9ographique",
             "url": "classes/gegeom-MultiPolygon.html#method_gbox"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020EBox\u0020de\u0020la\u0020g\u00E9om\u00E9trie\u0020consid\u00E9r\u00E9e\u0020comme\u0020euclidienne",
             "url": "classes/gegeom-MultiPolygon.html#method_ebox"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003AdistanceToPos\u0028\u0029",
             "name": "distanceToPos",
-            "summary": "",
+            "summary": "distance\u0020min.\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020\u00E0\u0020une\u0020position",
             "url": "classes/gegeom-MultiPolygon.html#method_distanceToPos"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Areproject\u0028\u0029",
             "name": "reproject",
-            "summary": "",
+            "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPolygon.html#method_reproject"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003ApointInPolygon\u0028\u0029",
@@ -2863,12 +2833,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GeometryCollection",
             "name": "GeometryCollection",
-            "summary": "",
+            "summary": "Une\u0020collection\u0020correspond\u0020\u00E0\u0020une\u0020liste\u0020d\u0027objets\u0020g\u00E9om\u00E9triques\u0020de\u0020ka\u0020classe\u0020Geometry",
             "url": "classes/gegeom-GeometryCollection.html"
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "prend\u0020en\u0020param\u00E8tre\u0020une\u0020liste\u0020d\u0027objets\u0020Geometry",
             "url": "classes/gegeom-GeometryCollection.html#method___construct"
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003AasArray\u0028\u0029",
@@ -2883,7 +2853,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003AeltTypes\u0028\u0029",
             "name": "eltTypes",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020types\u0020\u00E9l\u00E9mentaires\u0020\u0028\u0027Point\u0027,\u0027LineString\u0027,\u0027Polygon\u0027\u0029\u0020contenus\u0020dans\u0020la\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-GeometryCollection.html#method_eltTypes"
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003Acenter\u0028\u0029",
@@ -2923,7 +2893,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003Adecompose\u0028\u0029",
             "name": "decompose",
-            "summary": "",
+            "summary": "D\u00E9compose\u0020une\u0020g\u00E9om\u00E9trie\u0020en\u0020un\u0020array\u0020de\u0020g\u00E9om\u00E9tries\u0020\u00E9l\u00E9mentaires\u0020\u0028Point\/LineString\/Polygon\u0029",
             "url": "classes/gegeom-GeometryCollection.html#method_decompose"
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003AErrorCenterOfEmpty",
@@ -2943,17 +2913,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GeoTiff",
             "name": "GeoTiff",
-            "summary": "",
+            "summary": "un\u0020G\u00E9oTiff\u0020Shom\u0020qui\u0020sait\u0020notamment\u0020se\u0020d\u00E9composer\u0020en\u0020dalles",
             "url": "classes/GeoTiff.html"
         },                {
             "fqsen": "\\GeoTiff\u003A\u003AdeduceGeoRefFromBorders\u0028\u0029",
             "name": "deduceGeoRefFromBorders",
-            "summary": "",
+            "summary": "traite\u0020les\u0020G\u00E9oTiff\u0020non\u0020g\u00E9o\u002Dr\u00E9f\u00E9renc\u00E9s",
             "url": "classes/GeoTiff.html#method_deduceGeoRefFromBorders"
         },                {
             "fqsen": "\\GeoTiff\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "initialise\u0020un\u0020objet\u0020G\u00E9oTiff",
             "url": "classes/GeoTiff.html#method___construct"
         },                {
             "fqsen": "\\GeoTiff\u003A\u003Atranslate360West\u0028\u0029",
@@ -2963,12 +2933,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GeoTiff\u003A\u003AtileEbox\u0028\u0029",
             "name": "tileEbox",
-            "summary": "",
+            "summary": "calcul\u0020du\u0020rectangle\u0020englobant\u0020en\u0020WoM\u0020de\u0020la\u0020dalle\u0020\u0028\u0024i,\u0024j\u0029",
             "url": "classes/GeoTiff.html#method_tileEbox"
         },                {
             "fqsen": "\\GeoTiff\u003A\u003AcopyImage\u0028\u0029",
             "name": "copyImage",
-            "summary": "",
+            "summary": "recopie\u0020dans\u0020\u0024dest\u0020la\u0020partie\u0020du\u0020GeoTiff\u0020correspondant\u0020\u00E0\u0020\u0024qebox",
             "url": "classes/GeoTiff.html#method_copyImage"
         },                {
             "fqsen": "\\GeoTiff\u003A\u003AErrorNotGeoRef",
@@ -2998,22 +2968,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\geotiffs\u0028\u0029",
             "name": "geotiffs",
-            "summary": "",
+            "summary": "liste\u0020des\u0020GeoTiffs",
             "url": "namespaces/default.html#function_geotiffs"
         },                {
             "fqsen": "\\Http",
             "name": "Http",
-            "summary": "",
+            "summary": "classe\u0020portant\u0020le\u0020m\u00E9thode\u0020getHttpError\u0028\u0029",
             "url": "classes/Http.html"
         },                {
             "fqsen": "\\Http\u003A\u003AgetHttpError\u0028\u0029",
             "name": "getHttpError",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020code\u0020Http\u0020et\u0020le\u0020message\u0020d\u0027erreur\u0020retourn\u00E9",
             "url": "classes/Http.html#method_getHttpError"
         },                {
             "fqsen": "\\Style",
             "name": "Style",
-            "summary": "",
+            "summary": "D\u00E9finition\u0020d\u0027un\u0020Style\u0020de\u0020repr\u00E9sentation\u0020graphique\u0020des\u0020objets\u0020vecteurs\u0020inspir\u00E9\u0020de\u0020celui\u0020utilis\u00E9\u0020par\u0020Leaflet",
             "url": "classes/Style.html"
         },                {
             "fqsen": "\\Style\u003A\u003A__construct\u0028\u0029",
@@ -3023,27 +2993,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Style\u003A\u003A\u0024weight",
             "name": "weight",
-            "summary": "",
+            "summary": "\u00E9paissur\u0020du\u0020trait,\u00201\u0020par\u0020d\u00E9faut",
             "url": "classes/Style.html#property_weight"
         },                {
             "fqsen": "\\Style\u003A\u003A\u0024color",
             "name": "color",
-            "summary": "",
+            "summary": "couleur\u0020de\u0020trait\u0020comme\u0020array\u0020RVB,\u0020si\u0020absent\u0020pas\u0020de\u0020couleur\u0020de\u0020trait",
             "url": "classes/Style.html#property_color"
         },                {
             "fqsen": "\\Style\u003A\u003A\u0024fillColor",
             "name": "fillColor",
-            "summary": "",
+            "summary": "\/\/\u0020couleur\u0020de\u0020remplissage\u0020comme\u0020array\u0020RVB,\u0020si\u0020absent\u0020pas\u0020de\u0020remplissage",
             "url": "classes/Style.html#property_fillColor"
         },                {
             "fqsen": "\\Style\u003A\u003A\u0024title",
             "name": "title",
-            "summary": "",
+            "summary": "titre\u0020du\u0020style",
             "url": "classes/Style.html#property_title"
         },                {
             "fqsen": "\\GeoRefImage",
             "name": "GeoRefImage",
-            "summary": "",
+            "summary": "repr\u00E9sente\u0020une\u0020image\u0020g\u00E9o\u002Dr\u00E9f\u00E9renc\u00E9e",
             "url": "classes/GeoRefImage.html"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003A\u0024ebox",
@@ -3063,67 +3033,67 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "",
+            "summary": "cr\u00E9ation\u0020d\u0027une\u0020image\u0020vide\u0020avec\u0020un\u0020fond\u0020soit\u0020transparent\u0020soit\u0020blanc",
             "url": "classes/GeoRefImage.html#method_create"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Acreatefrompng\u0028\u0029",
             "name": "createfrompng",
-            "summary": "",
+            "summary": "chargement\u0020de\u0020l\u0027image\u0020\u00E0\u0020partir\u0020d\u0027un\u0020fichier\u0020ou\u0020d\u0027une\u0020URL",
             "url": "classes/GeoRefImage.html#method_createfrompng"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003AtoImgPos\u0028\u0029",
             "name": "toImgPos",
-            "summary": "",
+            "summary": "transforme\u0020en\u0020coordonn\u00E9es\u0020image\u0020une\u0020position\u0020en\u0020coordonn\u00E9es\u0020utilisateur",
             "url": "classes/GeoRefImage.html#method_toImgPos"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003AtoUserPos\u0028\u0029",
             "name": "toUserPos",
-            "summary": "",
+            "summary": "transforme\u0020en\u0020coordonn\u00E9es\u0020utilisateur\u0020une\u0020position\u0020en\u0020coordonn\u00E9es\u0020image",
             "url": "classes/GeoRefImage.html#method_toUserPos"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Acopyresampled\u0028\u0029",
             "name": "copyresampled",
-            "summary": "",
+            "summary": "recopie\u0020la\u0020partie\u0020de\u0020\u0024srcImg\u0020correspondant\u0020\u00E0\u0020\u0024qebox\u0020dans\u0020la\u0020zone\u0020de\u0020\u0024this\u0020correspondant\u0020\u00E0\u0020\u0024qebox",
             "url": "classes/GeoRefImage.html#method_copyresampled"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Acolorallocate\u0028\u0029",
             "name": "colorallocate",
-            "summary": "",
+            "summary": "Alloue\u0020une\u0020couleur\u0020pour\u0020l\u0027image",
             "url": "classes/GeoRefImage.html#method_colorallocate"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Acolorallocatealpha\u0028\u0029",
             "name": "colorallocatealpha",
-            "summary": "",
+            "summary": "Alloue\u0020une\u0020couleur\u0020avec\u0020alpha\u0020pour\u0020l\u0027image",
             "url": "classes/GeoRefImage.html#method_colorallocatealpha"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Asavealpha\u0028\u0029",
             "name": "savealpha",
-            "summary": "",
+            "summary": "n\u00E9cessaire\u0020pour\u0020conserver\u0020le\u0020canal\u0020alpha\u0020avant\u0020de\u0020g\u00E9n\u00E9rer\u0020l\u0027image\u0020PNG\u0020avec\u0020le\u0020param\u00E8tre\u0020true\u0020\u003B\nLe\u0020alphablending\u0020doit\u0020\u00EAtre\u0020d\u00E9sactiv\u00E9\u0020\u0028imagealphablending\u0028\u0024im,\u0020false\u0029\u0029\u0020pour\u0020conserver\u0020le\u0020canal\u0020alpha\u0020en\u0020premier\u0020lieu.",
             "url": "classes/GeoRefImage.html#method_savealpha"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Afilledrectangle\u0028\u0029",
             "name": "filledrectangle",
-            "summary": "",
+            "summary": "Dessine\u0020le\u0020rectangle\u0020en\u0020le\u0020remplissant\u0020avec\u0020la\u0020couleur",
             "url": "classes/GeoRefImage.html#method_filledrectangle"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Arectangle\u0028\u0029",
             "name": "rectangle",
-            "summary": "",
+            "summary": "Dessine\u0020le\u0020rectangle\u0020dans\u0020la\u0020couleur",
             "url": "classes/GeoRefImage.html#method_rectangle"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Apolyline\u0028\u0029",
             "name": "polyline",
-            "summary": "",
+            "summary": "Dessine\u0020dans\u0020le\u0020style\u0020une\u0020polyligne\u0020d\u00E9finie\u0020par\u0020une\u0020liste\u0020de\u0020positiions",
             "url": "classes/GeoRefImage.html#method_polyline"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Apolygon\u0028\u0029",
             "name": "polygon",
-            "summary": "",
+            "summary": "Dessine\u0020dans\u0020le\u0020style\u0020le\u0020polygone\u0020d\u00E9fini\u0020par\u0020une\u0020liste\u0020de\u0020positions",
             "url": "classes/GeoRefImage.html#method_polygon"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003Astring\u0028\u0029",
             "name": "string",
-            "summary": "",
+            "summary": "Dessine\u0020une\u0020chaine\u0020de\u0020caract\u00E8re\u0020\u00E0\u0020une\u0020position\u0020en\u0020coord.\u0020utilisateur\u0020dans\u0020la\u0020fonte\u0020\u0024font,\u0020la\u0020couleur\u0020\u0024text_color\navec\u0020un\u0020cadre\u0020de\u0020fond\u0020de\u0020plan\u0020dans\u0020la\u0020couleur\u0020\u0024bg_color",
             "url": "classes/GeoRefImage.html#method_string"
         },                {
             "fqsen": "\\GeoRefImage\u003A\u003AErrorCreate",
@@ -3188,7 +3158,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\IsoMd\u003A\u003AaddUndescoreForThousand\u0028\u0029",
             "name": "addUndescoreForThousand",
-            "summary": "",
+            "summary": "pour\u0020un\u0020entier\u0020fournit\u0020une\u0020repr\u00E9sentation\u0020avec\u0020un\u0020\u0027_\u0027\u0020comme\u0020s\u00E9parateur\u0020des\u0020milliers",
             "url": "classes/IsoMd.html#method_addUndescoreForThousand"
         },                {
             "fqsen": "\\IsoMd\u003A\u003Aread\u0028\u0029",
@@ -3211,305 +3181,305 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/IsoMd.html#constant_NoMatchForEdition"
         },                {
-            "fqsen": "\\is_assoc_array\u0028\u0029",
+            "fqsen": "\\jsonschema\\is_assoc_array\u0028\u0029",
             "name": "is_assoc_array",
             "summary": "is_assoc_array\u0028\u0029\u0020\u002D\u0020teste\u0020si\u0020un\u0020array\u0020est\u0020un\u0020tableau\u0020associatif\u0020ou\u0020une\u0020liste\nUne\u0020liste\u0020est\u0020d\u00E9finie\u0020comme\u0020ayant\u0020pour\u0020cl\u00E9s\u0020les\u0020n\u0020premiers\u0020entiers,\u0020n\u0020\u00E9tant\u0020la\u0020longueur\u0020de\u0020la\u0020liste.",
-            "url": "namespaces/default.html#function_is_assoc_array"
+            "url": "namespaces/jsonschema.html#function_is_assoc_array"
         },                {
-            "fqsen": "\\is_assoc_arrayC\u0028\u0029",
+            "fqsen": "\\jsonschema\\is_assoc_arrayC\u0028\u0029",
             "name": "is_assoc_arrayC",
             "summary": "",
-            "url": "namespaces/default.html#function_is_assoc_arrayC"
+            "url": "namespaces/jsonschema.html#function_is_assoc_arrayC"
         },                {
-            "fqsen": "\\test_is_assoc_array\u0028\u0029",
+            "fqsen": "\\jsonschema\\test_is_assoc_array\u0028\u0029",
             "name": "test_is_assoc_array",
             "summary": "",
-            "url": "namespaces/default.html#function_test_is_assoc_array"
+            "url": "namespaces/jsonschema.html#function_test_is_assoc_array"
         },                {
-            "fqsen": "\\JsonSchStatus",
+            "fqsen": "\\jsonschema\\JsonSchStatus",
             "name": "JsonSchStatus",
-            "summary": "class\u0020JsonSchStatus\u0020\u002D\u0020d\u00E9finit\u0020un\u0020statut\u0020de\u0020v\u00E9rification\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance",
-            "url": "classes/JsonSchStatus.html"
+            "summary": "d\u00E9finit\u0020un\u0020statut\u0020de\u0020v\u00E9rification\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance",
+            "url": "classes/jsonschema-JsonSchStatus.html"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/JsonSchStatus.html#method___construct"
+            "url": "classes/jsonschema-JsonSchStatus.html#method___construct"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003A__toString\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "",
-            "url": "classes/JsonSchStatus.html#method___toString"
+            "url": "classes/jsonschema-JsonSchStatus.html#method___toString"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003AsetError\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AsetError\u0028\u0029",
             "name": "setError",
-            "summary": "",
-            "url": "classes/JsonSchStatus.html#method_setError"
+            "summary": "ajoute\u0020une\u0020erreur,\u0020retourne\u0020\u0024this",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_setError"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003AsetErrorBranch\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AsetErrorBranch\u0028\u0029",
             "name": "setErrorBranch",
-            "summary": "",
-            "url": "classes/JsonSchStatus.html#method_setErrorBranch"
+            "summary": "ajoute\u0020une\u0020branche\u0020d\u0027erreurs,\u0020retourne\u0020\u0024this",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_setErrorBranch"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003Aok\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003Aok\u0028\u0029",
             "name": "ok",
-            "summary": "function\u0020ok\u0028\u0029\u003A\u0020bool\u0020\u002D\u0020true\u0020ssi\u0020pas\u0020d\u0027erreur",
-            "url": "classes/JsonSchStatus.html#method_ok"
+            "summary": "retourne\u0020true\u0020ssi\u0020pas\u0020d\u0027erreur",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_ok"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003A\u0024errors",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A\u0024errors",
             "name": "errors",
             "summary": "",
-            "url": "classes/JsonSchStatus.html#property_errors"
+            "url": "classes/jsonschema-JsonSchStatus.html#property_errors"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003AshowErrors\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AshowErrors\u0028\u0029",
             "name": "showErrors",
-            "summary": "showErrors\u0028\u0029\u003A\u0020void\u0020\u002D\u0020affiche\u0020les\u0020erreurs",
-            "url": "classes/JsonSchStatus.html#method_showErrors"
+            "summary": "affiche\u0020les\u0020erreurs",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_showErrors"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003AsetWarning\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AsetWarning\u0028\u0029",
             "name": "setWarning",
-            "summary": "",
-            "url": "classes/JsonSchStatus.html#method_setWarning"
+            "summary": "ajoute\u0020un\u0020warning",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_setWarning"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003A\u0024warnings",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A\u0024warnings",
             "name": "warnings",
             "summary": "",
-            "url": "classes/JsonSchStatus.html#property_warnings"
+            "url": "classes/jsonschema-JsonSchStatus.html#property_warnings"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003AshowWarnings\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AshowWarnings\u0028\u0029",
             "name": "showWarnings",
-            "summary": "function\u0020showWarnings\u0028\u0029\u003A\u0020void\u0020\u002D\u0020affiche\u0020les\u0020warnings",
-            "url": "classes/JsonSchStatus.html#method_showWarnings"
+            "summary": "affiche\u0020les\u0020warnings",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_showWarnings"
         },                {
-            "fqsen": "\\JsonSchStatus\u003A\u003Aappend\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003Aappend\u0028\u0029",
             "name": "append",
-            "summary": "",
-            "url": "classes/JsonSchStatus.html#method_append"
+            "summary": "ajoute\u0020\u00E0\u0020la\u0020fin\u0020du\u0020statut\u0020courant\u0020le\u0020statut\u0020en\u0020param\u00E8tre\u0020et\u0020renvoie\u0020le\u0020statut\u0020courant",
+            "url": "classes/jsonschema-JsonSchStatus.html#method_append"
         },                {
-            "fqsen": "\\JsonSch",
+            "fqsen": "\\jsonschema\\JsonSch",
             "name": "JsonSch",
             "summary": "class\u0020JsonSch\u0020\u002D\u0020classe\u0020statique\u0020portant\u0020qqs\u0020m\u00E9thodes\u0020statiques",
-            "url": "classes/JsonSch.html"
+            "url": "classes/jsonschema-JsonSch.html"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003Apredef\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Apredef\u0028\u0029",
             "name": "predef",
             "summary": "",
-            "url": "classes/JsonSch.html#method_predef"
+            "url": "classes/jsonschema-JsonSch.html#method_predef"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003Aderef\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Aderef\u0028\u0029",
             "name": "deref",
             "summary": "",
-            "url": "classes/JsonSch.html#method_deref"
+            "url": "classes/jsonschema-JsonSch.html#method_deref"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003AsubElement\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003AsubElement\u0028\u0029",
             "name": "subElement",
             "summary": "",
-            "url": "classes/JsonSch.html#method_subElement"
+            "url": "classes/jsonschema-JsonSch.html#method_subElement"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003AsubElementC\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003AsubElementC\u0028\u0029",
             "name": "subElementC",
             "summary": "",
-            "url": "classes/JsonSch.html#method_subElementC"
+            "url": "classes/jsonschema-JsonSch.html#method_subElementC"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003Atest_subElement\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Atest_subElement\u0028\u0029",
             "name": "test_subElement",
             "summary": "",
-            "url": "classes/JsonSch.html#method_test_subElement"
+            "url": "classes/jsonschema-JsonSch.html#method_test_subElement"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003Afile_get_contents\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Afile_get_contents\u0028\u0029",
             "name": "file_get_contents",
             "summary": "",
-            "url": "classes/JsonSch.html#method_file_get_contents"
+            "url": "classes/jsonschema-JsonSch.html#method_file_get_contents"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003Aencode\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Aencode\u0028\u0029",
             "name": "encode",
             "summary": "",
-            "url": "classes/JsonSch.html#method_encode"
+            "url": "classes/jsonschema-JsonSch.html#method_encode"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003A\u0024predefs",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003A\u0024predefs",
             "name": "predefs",
             "summary": "",
-            "url": "classes/JsonSch.html#property_predefs"
+            "url": "classes/jsonschema-JsonSch.html#property_predefs"
         },                {
-            "fqsen": "\\JsonSch\u003A\u003A\u0024patterns",
+            "fqsen": "\\jsonschema\\JsonSch\u003A\u003A\u0024patterns",
             "name": "patterns",
             "summary": "",
-            "url": "classes/JsonSch.html#property_patterns"
+            "url": "classes/jsonschema-JsonSch.html#property_patterns"
         },                {
-            "fqsen": "\\JsonSchema",
+            "fqsen": "\\jsonschema\\JsonSchema",
             "name": "JsonSchema",
-            "summary": "class\u0020JsonSchema\u0020\u002D\u0020sch\u00E9ma\u0020JSON\u0020d\u00E9fini\u0020soit\u0020dans\u0020un\u0020fichier\u0020par\u0020un\u0020chemin\u0020soit\u0020par\u0020un\u0020array\u0020Php",
-            "url": "classes/JsonSchema.html"
+            "summary": "sch\u00E9ma\u0020JSON\u0020d\u00E9fini\u0020soit\u0020dans\u0020un\u0020fichier\u0020par\u0020un\u0020chemin,\u0020soit\u0020par\u0020un\u0020array\u0020Php",
+            "url": "classes/jsonschema-JsonSchema.html"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "function\u0020__construct\u0028\u0024def,\u0020bool\u0020\u0024verbose\u003Dfalse,\u0020\u003FJsonSchema\u0020\u0024parent\u003Dnull\u0029\u0020\u002D\u0020cr\u00E9ation\u0020d\u0027un\u0020JsonSchema",
-            "url": "classes/JsonSchema.html#method___construct"
+            "summary": "cr\u00E9ation\u0020d\u0027un\u0020JsonSchema",
+            "url": "classes/jsonschema-JsonSchema.html#method___construct"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003A\u0024def",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024def",
             "name": "def",
             "summary": "",
-            "url": "classes/JsonSchema.html#property_def"
+            "url": "classes/jsonschema-JsonSchema.html#property_def"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003AcheckDefinition\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003AcheckDefinition\u0028\u0029",
             "name": "checkDefinition",
-            "summary": "checkDefinition\u0028\u0029\u0020\u002D\u0020lance\u0020une\u0020exception\u0020si\u0020d\u00E9tecte\u0020une\u0020boucle\u0020dans\u0020les\u0020d\u00E9fs\u0020ou\u0020une\u0020r\u00E9f\u00E9rence\u0020\u00E0\u0020une\u0020d\u00E9f.\u0020inexistante",
-            "url": "classes/JsonSchema.html#method_checkDefinition"
+            "summary": "lance\u0020une\u0020exception\u0020si\u0020d\u00E9tecte\u0020une\u0020boucle\u0020dans\u0020les\u0020d\u00E9fs\u0020ou\u0020une\u0020r\u00E9f\u00E9rence\u0020\u00E0\u0020une\u0020d\u00E9f.\u0020inexistante",
+            "url": "classes/jsonschema-JsonSchema.html#method_checkDefinition"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003Acheck\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003Acheck\u0028\u0029",
             "name": "check",
             "summary": "check\u0020\u002D\u0020validation\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020au\u0020JsonSchema,\u0020renvoit\u0020un\u0020JsonSchStatus",
-            "url": "classes/JsonSchema.html#method_check"
+            "url": "classes/jsonschema-JsonSchema.html#method_check"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003AautoCheck\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003AautoCheck\u0028\u0029",
             "name": "autoCheck",
             "summary": "autoCheck\u0028\u0029\u0020\u002D\u0020valide\u0020la\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020\u00E0\u0020son\u0020sch\u00E9ma\u0020d\u00E9fini\u0020par\u0020le\u0020champ\u0020\u0024schema",
-            "url": "classes/JsonSchema.html#method_autoCheck"
+            "url": "classes/jsonschema-JsonSchema.html#method_autoCheck"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003Atest\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003Atest\u0028\u0029",
             "name": "test",
             "summary": "",
-            "url": "classes/JsonSchema.html#method_test"
+            "url": "classes/jsonschema-JsonSchema.html#method_test"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003ASCHEMAIDS",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003ASCHEMAIDS",
             "name": "SCHEMAIDS",
             "summary": "",
-            "url": "classes/JsonSchema.html#constant_SCHEMAIDS"
+            "url": "classes/jsonschema-JsonSchema.html#constant_SCHEMAIDS"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003A\u0024verbose",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024verbose",
             "name": "verbose",
             "summary": "",
-            "url": "classes/JsonSchema.html#property_verbose"
+            "url": "classes/jsonschema-JsonSchema.html#property_verbose"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003A\u0024filepath",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024filepath",
             "name": "filepath",
             "summary": "",
-            "url": "classes/JsonSchema.html#property_filepath"
+            "url": "classes/jsonschema-JsonSchema.html#property_filepath"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003A\u0024elt",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024elt",
             "name": "elt",
             "summary": "",
-            "url": "classes/JsonSchema.html#property_elt"
+            "url": "classes/jsonschema-JsonSchema.html#property_elt"
         },                {
-            "fqsen": "\\JsonSchema\u003A\u003A\u0024status",
+            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024status",
             "name": "status",
             "summary": "",
-            "url": "classes/JsonSchema.html#property_status"
+            "url": "classes/jsonschema-JsonSchema.html#property_status"
         },                {
-            "fqsen": "\\JsonSchFragment",
+            "fqsen": "\\jsonschema\\JsonSchFragment",
             "name": "JsonSchFragment",
-            "summary": "class\u0020JsonSchFragment\u0020\u002D\u0020classe\u0020utilis\u00E9e\u0020par\u0020JsonSchema\u0020d\u00E9finissant\u0020un\u0020fragment\u0020d\u0027un\u0020schema\u0020JSON",
-            "url": "classes/JsonSchFragment.html"
+            "summary": "classe\u0020utilis\u00E9e\u0020par\u0020JsonSchema\u0020d\u00E9finissant\u0020un\u0020fragment\u0020d\u0027un\u0020schema\u0020JSON",
+            "url": "classes/jsonschema-JsonSchFragment.html"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#method___construct"
+            "url": "classes/jsonschema-JsonSchFragment.html#method___construct"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003A__toString\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#method___toString"
+            "url": "classes/jsonschema-JsonSchFragment.html#method___toString"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003A\u0024def",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A\u0024def",
             "name": "def",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#property_def"
+            "url": "classes/jsonschema-JsonSchFragment.html#property_def"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AschemaOfProperty\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AschemaOfProperty\u0028\u0029",
             "name": "schemaOfProperty",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#method_schemaOfProperty"
+            "url": "classes/jsonschema-JsonSchFragment.html#method_schemaOfProperty"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003Acheck\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003Acheck\u0028\u0029",
             "name": "check",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#method_check"
+            "url": "classes/jsonschema-JsonSchFragment.html#method_check"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckRef\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckRef\u0028\u0029",
             "name": "checkRef",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkRef"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020\u0024ref",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkRef"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckAnyOf\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckAnyOf\u0028\u0029",
             "name": "checkAnyOf",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkAnyOf"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020anyOf",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkAnyOf"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckOneOf\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckOneOf\u0028\u0029",
             "name": "checkOneOf",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkOneOf"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020oneOf",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkOneOf"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckAllOf\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckAllOf\u0028\u0029",
             "name": "checkAllOf",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkAllOf"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020allOf",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkAllOf"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckNot\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckNot\u0028\u0029",
             "name": "checkNot",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkNot"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020not",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkNot"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckType\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckType\u0028\u0029",
             "name": "checkType",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkType"
+            "summary": "v\u00E9rifie\u0020la\u0020compatibilit\u00E9\u0020entre\u0020le\u0020type\u0020indiqu\u00E9\u0020par\u0020le\u0020schema\u0020et\u0020le\u0020type\u0020Php\u0020de\u0020l\u0027instance",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkType"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckObject\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckObject\u0028\u0029",
             "name": "checkObject",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkObject"
+            "summary": "traitement\u0020des\u0020propri\u00E9t\u00E9s\u0020li\u00E9es\u0020aux\u0020objets",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkObject"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckArray\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckArray\u0028\u0029",
             "name": "checkArray",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkArray"
+            "summary": "traitement\u0020des\u0020propri\u00E9t\u00E9s\u0020d\u0027array",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkArray"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckUniqueItems\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckUniqueItems\u0028\u0029",
             "name": "checkUniqueItems",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkUniqueItems"
+            "summary": "v\u00E9rifie\u0020si\u0020les\u0020valeurs\u0020de\u0020l\u0027array\u0020\u0024array\u0020sont\u0020distinctes\u00202\u0020\u00E0\u00202\nPour\u0020cela\u0020les\u0020valeurs\u0020sont\u0020transform\u00E9es\u0020en\u0020chaine\u0020pour\u0020utiliser\u0020array_unique\u0028\u0029",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkUniqueItems"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckTuple\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckTuple\u0028\u0029",
             "name": "checkTuple",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkTuple"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020type\u0020indique\u0020que\u0020la\u0020valeur\u0020est\u0020un\u0020object",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkTuple"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckNumberOrInteger\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckNumberOrInteger\u0028\u0029",
             "name": "checkNumberOrInteger",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkNumberOrInteger"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020type\u0020indique\u0020que\u0020l\u0027instance\u0020est\u0020un\u0020num\u00E9rique\u0020ou\u0020un\u0020entier",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkNumberOrInteger"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AhasNoFractionalPart\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AhasNoFractionalPart\u0028\u0029",
             "name": "hasNoFractionalPart",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_hasNoFractionalPart"
+            "summary": "teste\u0020l\u0027absence\u0020de\u0020partie\u0020fractionaire\u0020du\u0020nombre\u0020pass\u00E9\u0020en\u0020param\u00E8tre,\u0020en\u0020pratique\u0020elle\u0020doit\u0020\u00EAtre\u0020tr\u00E8s\u0020faible",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_hasNoFractionalPart"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckString\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckString\u0028\u0029",
             "name": "checkString",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkString"
+            "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020type\u0020indique\u0020que\u0020l\u0027instance\u0020est\u0020une\u0020chaine\u0020ou\u0020une\u0020date",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkString"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003AcheckStringFormat\u0028\u0029",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckStringFormat\u0028\u0029",
             "name": "checkStringFormat",
-            "summary": "",
-            "url": "classes/JsonSchFragment.html#method_checkStringFormat"
+            "summary": "test\u0020des\u0020formats,\u0020certains\u0020motifs\u0020sont\u0020\u00E0\u0020am\u00E9liorer",
+            "url": "classes/jsonschema-JsonSchFragment.html#method_checkStringFormat"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003ARFC3339_EXTENDED",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003ARFC3339_EXTENDED",
             "name": "RFC3339_EXTENDED",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#constant_RFC3339_EXTENDED"
+            "url": "classes/jsonschema-JsonSchFragment.html#constant_RFC3339_EXTENDED"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003A\u0024verbose",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A\u0024verbose",
             "name": "verbose",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#property_verbose"
+            "url": "classes/jsonschema-JsonSchFragment.html#property_verbose"
         },                {
-            "fqsen": "\\JsonSchFragment\u003A\u003A\u0024schema",
+            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A\u0024schema",
             "name": "schema",
             "summary": "",
-            "url": "classes/JsonSchFragment.html#property_schema"
+            "url": "classes/jsonschema-JsonSchFragment.html#property_schema"
         },                {
             "fqsen": "\\Layer",
             "name": "Layer",
@@ -4313,12 +4283,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\Spatial",
             "name": "Spatial",
-            "summary": "",
+            "summary": "BBox\u0020en\u0020coord.\u0020g\u00E9o.,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Blon,\u0020lat\u005D",
             "url": "classes/mapcat-Spatial.html"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml\nRemplace\u0020la\u0020m\u00E9thode\u0020statique\u0020fromGeoDMd\u0028\u0029\u0020conserv\u00E9e\u0020pour\u0020la\u0020compatibilit\u00E9\u0020avec\u0020le\u0020code\u0020existant",
+            "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml",
             "url": "classes/mapcat-Spatial.html#method___construct"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003Asw\u0028\u0029",
@@ -5050,6 +5020,11 @@ Search.appendIndex(
             "name": "gegeom",
             "summary": "",
             "url": "namespaces/gegeom.html"
+        },                {
+            "fqsen": "\\jsonschema",
+            "name": "jsonschema",
+            "summary": "",
+            "url": "namespaces/jsonschema.html"
         },                {
             "fqsen": "\\mapcat",
             "name": "mapcat",

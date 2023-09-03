@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -134,11 +138,18 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">284</span>
+    <span class="phpdocumentor-element-found-in__line">231</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">classe statique définissant un ellipsoide qui peut être paramétré</p>
+
+    <section class="phpdocumentor-description"><p>La classe porte d'une part les constantes définissant différents ellipsoides et, d'autre part,
+la définition d'un ellipsoide courant. Par défaut utilisation de l'ellipsoide IAG_GRS_1980
+L'ellipsoide de Clarke 1866 peut être sélectionné pour tester l'exemple USGS sur UTM
+D'autres ellipsoides peuvent être ajoutés au besoin.
+https://en.wikipedia.org/wiki/Earth_ellipsoid</p>
+</section>
 
 
 
@@ -158,7 +169,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iEllipsoid.html"><abbr title="\coordsys\iEllipsoid">iEllipsoid</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iEllipsoid.html"><abbr title="\coordsys\iEllipsoid">iEllipsoid</abbr></a></dt><dd>interface de définition d&#039;un ellipsoide</dd>    </dl>
 
 
 
@@ -201,6 +212,7 @@
     &#039;f&#039; =&gt; 1 / 294.978698214,
 ]]                            </span>
 </dt>
+<dd>constante définissant différents ellipsoides</dd>
 
     </dl>
 
@@ -216,6 +228,7 @@
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>ellipsoide courant, par défaut IAG_GRS_1980</dd>
 
     </dl>
 
@@ -236,12 +249,14 @@
     <span>
                                 &nbsp;: array&lt;int, string&gt;    </span>
 </dt>
+<dd>retourne la liste des ellipsoides proposés</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/coordsys-Ellipsoid.html#method_current">current()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>retourne l&#039;ellipsoide courant</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/coordsys-Ellipsoid.html#method_e">e()</a>
@@ -260,12 +275,14 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Définition d&#039;un ellipsoide</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/coordsys-Ellipsoid.html#method_param">param()</a>
     <span>
                                 &nbsp;: float|null    </span>
 </dt>
+<dd>retourne la valeur d&#039;un paramètre stocké pour l&#039;ellipsoide courant</dd>
 
     </dl>
 
@@ -289,7 +306,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">233</span>
 
     </aside>
 
@@ -317,7 +334,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">285</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -345,11 +362,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">235</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">constante définissant différents ellipsoides</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -404,11 +422,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">254</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">ellipsoide courant, par défaut IAG_GRS_1980</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">string</span>
@@ -442,7 +461,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">325</span>
+    <span class="phpdocumentor-element-found-in__line">274</span>
 
     </aside>
 
@@ -477,11 +496,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">309</span>
+    <span class="phpdocumentor-element-found-in__line">258</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la liste des ellipsoides proposés</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">available</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
@@ -512,11 +532,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne l&#039;ellipsoide courant</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">current</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -547,7 +568,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">329</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -582,7 +603,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">327</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -617,11 +638,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">315</span>
+    <span class="phpdocumentor-element-found-in__line">264</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Définition d&#039;un ellipsoide</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">set</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ellipsoid</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">self::DEFAULT</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -658,11 +680,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la valeur d&#039;un paramètre stocké pour l&#039;ellipsoide courant</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">param</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float|null</span></code>

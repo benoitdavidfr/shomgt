@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,59 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">gebox.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes</p>
+
+    <section class="phpdocumentor-description"><p>La classe abstraite BBox implémente des fonctionnalités génériques valables en coord. géo. comme euclidiennes
+Des classes héritées concrètes GBox et EBox implémentent les fonctionnalités spécifiques aux coord. géo.
+ou euclidiennes.
+Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
+qui permet de construire les primitives géométriques.
+Une position est stockée comme un array de 2 ou 3 nombres.
+On gère aussi une liste de positions comme array de positions et une liste de listes de positions
+comme array d'array de positions.</p>
+<p>Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
+Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude &gt; 180°.</p>
+<p>journal: |</p>
+<ul>
+<li>31/8/2023:
+<ul>
+<li>modif de BBox pour mettre en readonly les prop. $min et $max, modif des méthodes modifiant $min ou $max</li>
+</ul>
+</li>
+<li>15/8/2023:
+<ul>
+<li>ajout de BBox::includes()</li>
+<li>modification de BBox::__toString()</li>
+<li>intégration dans GBox::__construct() de l'initialisation d'un GBox à partir du format Spatial</li>
+</ul>
+</li>
+<li>28/7/2022:
+<ul>
+<li>correction suite à analyse PhpStan level 4</li>
+</ul>
+</li>
+<li>22/5/2022:
+<ul>
+<li>correction d'un bug dans GBox::asGeoJsonBbox()</li>
+</ul>
+</li>
+<li>29/4/2022:
+<ul>
+<li>création d'un GBox à partir des coins SW et NE et prise en compte du cas où il intersecte l'anti-méridien</li>
+</ul>
+</li>
+<li>9/3/2019:
+<ul>
+<li>scission de gegeom.inc.php</li>
+</ul>
+</li>
+<li>7/3/2019:
+<ul>
+<li>création</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -131,7 +187,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-BBox.html"><abbr title="\gegeom\BBox">BBox</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-GBoxSubClass.html"><abbr title="\gegeom\GBoxSubClass">GBoxSubClass</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-BBox.html"><abbr title="\gegeom\BBox">BBox</abbr></a></dt><dd>Gestion d&#039;une BBox en coord. géo. ou euclidiennes, chaque position codé comme [lon, lat] ou [x, y]</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a></dt><dd>BBox en coord. géo., chaque position codée comme [lon, lat]</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-GBoxSubClass.html"><abbr title="\gegeom\GBoxSubClass">GBoxSubClass</abbr></a></dt><dd>Vérification que includes() peut être appelée avec small objet d&#039;une sous-classe de GBox</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></dt><dd>BBox en coord. projetées euclidiennes, chaque position codée comme [x, y]</dd>    </dl>
 
 
 

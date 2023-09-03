@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -133,11 +137,15 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">295</span>
+    <span class="phpdocumentor-element-found-in__line">275</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Segment composé de 2 positions ; considéré comme orienté de la première vers la seconde</p>
+
+    <section class="phpdocumentor-description"><p>On considère le segment comme fermé sur sa première position et ouvert sur la seconde
+Cela signifie que la première position appartient au segment mais pas la seconde.</p>
+</section>
 
 
 
@@ -194,24 +202,29 @@
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>distance signée de $pos à la droite définie par le segment</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Segment.html#method_distanceToPos">distanceToPos()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>distance de la position au segment</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Segment.html#method_intersects">intersects()</a>
     <span>
                                 &nbsp;: array&lt;string, mixed&gt;    </span>
 </dt>
+<dd>intersection entre 2 segments</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Segment.html#method_projPosOnLine">projPosOnLine()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>projection d&#039;une position sur la ligne définie par le segment
+retourne u / P&#039; = A + u * (B-A).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Segment.html#method_test_distancePosToLine">test_distancePosToLine()</a>
@@ -242,6 +255,7 @@
     <span>
                                 &nbsp;: <a href="classes/gegeom-Point.html"><abbr title="\gegeom\Point">Point</abbr></a>    </span>
 </dt>
+<dd>génère le vecteur correspondant à $tab[1] - $tab[0] représenté par un Point</dd>
 
     </dl>
 
@@ -274,7 +288,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">277</span>
 
     </aside>
 
@@ -286,7 +300,9 @@
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>tableau de 2 positions</p>
+</section>
+
     
 
 </article>
@@ -312,7 +328,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">303</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -360,7 +376,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">285</span>
 
     </aside>
 
@@ -395,18 +411,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">380</span>
+    <span class="phpdocumentor-element-found-in__line">361</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">distance signée de $pos à la droite définie par le segment</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">distancePosToLine</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>La distance est positive si le point est à gauche de la droite AB et négative s'il est à droite</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -440,11 +459,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">413</span>
+    <span class="phpdocumentor-element-found-in__line">376</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">distance de la position au segment</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">distanceToPos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -485,18 +505,26 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">324</span>
+    <span class="phpdocumentor-element-found-in__line">302</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">intersection entre 2 segments</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">intersects</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-Segment.html"><abbr title="\gegeom\Segment">Segment</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seg</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Je considère les segments fermés sur le premier point et ouvert sur le second.
+Cela signifie qu'une intersection ne peut avoir lieu sur la seconde position
+Si les segments ne s'intersectent pas alors retourne []
+S'ils s'intersectent alors retourne le dictionnaire
+['pos'=&gt; l'intersection comme Point, 'u'=&gt; l'abscisse sur le premier segment, 'v'=&gt; l'abscisse sur le second]
+Si les 2 segments sont parallèles, alors retourne [] même s'ils sont partiellement confondus</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -530,11 +558,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">343</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">projection d&#039;une position sur la ligne définie par le segment
+retourne u / P&#039; = A + u * (B-A).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">projPosOnLine</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -575,7 +605,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">405</span>
+    <span class="phpdocumentor-element-found-in__line">368</span>
 
     </aside>
 
@@ -606,7 +636,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">422</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
@@ -637,7 +667,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">349</span>
+    <span class="phpdocumentor-element-found-in__line">327</span>
 
     </aside>
 
@@ -668,7 +698,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">370</span>
+    <span class="phpdocumentor-element-found-in__line">348</span>
 
     </aside>
 
@@ -699,11 +729,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">génère le vecteur correspondant à $tab[1] - $tab[0] représenté par un Point</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">vector</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-Point.html"><abbr title="\gegeom\Point">Point</abbr></a></span></code>

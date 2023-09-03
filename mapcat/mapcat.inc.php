@@ -411,7 +411,7 @@ EOT;
     // calcul de MapsFrance en fonction de spatial
     if (!isset($doc['mapsFrance'])) {
       if (isset($doc['spatial'])) { // Si spatial est défini
-        $spatialSchema = new \JsonSchema(self::getDefSchema('spatial'));
+        $spatialSchema = new \jsonschema\JsonSchema(self::getDefSchema('spatial'));
         if (!$spatialSchema->check($doc['spatial'])->errors()) { // s'il est conforme à son schéma
           $mapSpatial = new Spatial($doc['spatial']);
           $doc['mapsFrance'] = \shomft\Zee::inters($mapSpatial);
@@ -420,7 +420,7 @@ EOT;
       elseif (isset($doc['insetMaps']) && is_array($doc['insetMaps'])) { // sinon, j'essaie de déduire des cartouches
         $mapSpatial = new \gegeom\GBox;
         foreach ($doc['insetMaps'] as $insetMap) {
-          $insetMapSchema = new \JsonSchema(self::getDefSchema('insetMap'));
+          $insetMapSchema = new \jsonschema\JsonSchema(self::getDefSchema('insetMap'));
           if (!$insetMapSchema->check($insetMap)->errors()) {
             $mapSpatial = $mapSpatial->union(new Spatial($insetMap['spatial']));
           }
@@ -440,7 +440,7 @@ EOT;
     }
     
     // vérification du schema de map
-    $mapSchema = new \JsonSchema(self::getDefSchema('map'));
+    $mapSchema = new \jsonschema\JsonSchema(self::getDefSchema('map'));
     $status = $mapSchema->check($doc);
     if ($status->errors())
       return [

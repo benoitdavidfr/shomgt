@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,105 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">accesscntrl.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">contrôle d&#039;accès</p>
+
+    <section class="phpdocumentor-description"><p>Le contrôle d'accès utilise 3 modes de contrôle distincts:</p>
+<ol>
+<li>vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
+les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.</li>
+<li>vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.</li>
+<li>authentification HTTP Basic, utilisé pour le service WMS.
+Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
+Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:</li>
+</ol>
+<ul>
+<li>exploite le fichier de config</li>
+<li>expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle</li>
+<li>expose la méthode cntrl() pour réaliser le contrôle</li>
+</ul>
+<p>journal:</p>
+<ul>
+<li>10/8/2023:
+<ul>
+<li>utilisation des logins, passwd et role en base de données</li>
+</ul>
+</li>
+<li>19/5/2022:
+<ul>
+<li>adaptation pour sgserver de ShomGT3</li>
+</ul>
+</li>
+<li>23/1/2022:
+<ul>
+<li>ajout ipInBlackList() pour tile.php</li>
+</ul>
+</li>
+<li>27/12/2020:
+<ul>
+<li>ajout test admins</li>
+</ul>
+</li>
+<li>23/5/2020:
+<ul>
+<li>ajout du contrôle sur préfixe IPv6</li>
+</ul>
+</li>
+<li>30/3/2019:
+<ul>
+<li>adaptation pour ShomGt v2</li>
+</ul>
+</li>
+<li>16/12/2018:
+<ul>
+<li>détection d'une forte utilisation du service WMS par referer=http://10.56.204.34/seamis-sig/ &amp; ip= 185.24.184.194</li>
+<li>réactivation du contrôle d'accès sur le WMS</li>
+</ul>
+</li>
+<li>10/8/2018:
+<ul>
+<li>Ajout de la constante Access::CNTRLFORTILE pour déasctiver le controle d'accès par tuiles</li>
+</ul>
+</li>
+<li>22/7/2018:
+<ul>
+<li>ajout d'un mécanisme d'accès par referer</li>
+<li>transformation en classe</li>
+</ul>
+</li>
+<li>6/6/2018:
+<ul>
+<li>prise en compte dans $whiteIpList de nouvelles adresses IP RIE</li>
+<li>indiquées sur http://pne.metier.i2/adresses-presentees-sur-internet-a1012.html</li>
+<li>page mise à jour le 5 avril 2018</li>
+</ul>
+</li>
+<li>25/6/2017:
+<ul>
+<li>ajout d'un paramètre nolog pour controler le log dans le wms</li>
+</ul>
+</li>
+<li>23/6/2017:
+<ul>
+<li>l'inclusion du fichier n'exécute plus la fonction</li>
+</ul>
+</li>
+<li>14/6/2017:
+<ul>
+<li>intégration du log pour tracer les refus d'accès</li>
+</ul>
+</li>
+<li>10/6/2017:
+<ul>
+<li>refonte</li>
+</ul>
+</li>
+<li>8/6/2017:
+<ul>
+<li>création</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 

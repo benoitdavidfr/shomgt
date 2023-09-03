@@ -1,24 +1,19 @@
 <?php
-/*PhpDoc:
-title: geotiff.inc.php - définition de la classe GeoTiff
-name: geotiff.inc.php
-classes:
-doc: |
-  Tous les calculs sont effectués dans le CRS des cartes Shom qui est WGS84 World Mercator, abrévié en WoM.
-  test:
-    http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
-journal: |
-  22/5/2022:
-    - modif utilisation EnvVar
-  3/5/2022:
-    - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
-  1/5/2022:
-    - chgt chemin des cartes
-  25/4/2022:
-    - scission de maps.php
-includes:
-  - envvar.inc.php
-  - gdalinfo.inc.php
+/**
+ * définition de la classe GeoTiff
+ *
+ * Tous les calculs sont effectués dans le CRS des cartes Shom qui est WGS84 World Mercator, abrévié en WoM.
+ * test:  http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
+ *
+ * journal:
+ * - 22/5/2022:
+ *   - modif utilisation EnvVar
+ * - 3/5/2022:
+ *   - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
+ * - 1/5/2022:
+ *   - chgt chemin des cartes
+ * - 25/4/2022:
+ *   - scission de maps.php
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
@@ -27,19 +22,16 @@ require_once __DIR__.'/gdalinfo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-/*PhpDoc: classes
-title: class GeoTiff - un GéoTiff Shom qui sait notamment se décomposer en dalles
-name: Layer
-methods:
-doc: |
-  Définit un objet correspondant à un GéoTiff.
-  Le nom fait le lien avec le fichier correspondant.
-  Le rectangle englobant $spatial est celui de la zone cartographiée et provient de shomgt.yaml
-  Si le fichier tif est correctement géoréférencé alors le rectangle de géoréf. est lu dans le fichier .info
-  et est utilisé pour connaître les bords du GéoTiff à effacer.
-  Sinon, ces bords doivent être fournis à la création de l'objet GéoTiff.
-  L'objet GéoTiff prend en compte le dallage qui a été effectué et sait extraire une partie de l'image à partir de ces dalles.
-*/
+/** un GéoTiff Shom qui sait notamment se décomposer en dalles
+ *
+ * Définit un objet correspondant à un GéoTiff, cad une image initialement livrée par le Shom au format GéoTiff.
+ * Le nom fait le lien avec le fichier correspondant.
+ * Le rectangle englobant $spatial est celui de la zone cartographiée et provient de shomgt.yaml
+ * Si le fichier tif est correctement géoréférencé alors le rectangle de géoréf. est lu dans le fichier .info
+ * et est utilisé pour connaître les bords du GéoTiff à effacer.
+ * Sinon, ces bords doivent être fournis à la création de l'objet GéoTiff.
+ * L'objet GéoTiff sait extraire une partie de l'image en prenant en compte le dallage effectué.
+ */
 class GeoTiff {
   const ErrorNotGeoRef = 'GeoTiff::ErrorNotGeoRef';
   const ErrorBadGeoRef = 'GeoTiff::ErrorBadGeoRef';
@@ -49,14 +41,12 @@ class GeoTiff {
   /** @var array<string, int> $size */
   protected array $size; // width et height du GéoTiff
   
-  /*PhpDoc: methods
-  name: deduceGeoRefFromBorders
-  title: "deduceGeoRefFromBorders(\gegeom\EBox $spatial, array $borders): EBox - traite les GéoTiff non géo-référencés"
-  doc: |
-    Dans le cas où le GéoTiff n'est pas géoréférencé, calcule le rectangle de géoréférencement à partir du rectangle
-    de la zone cartographiée en WoM et des tailles en pixels des bords à retirer et de la taille de l'image
-  */
-  /** @param array<string, int> $borders */
+  /** traite les GéoTiff non géo-référencés
+   *
+   * Dans le cas où le GéoTiff n'est pas géoréférencé, calcule le rectangle de géoréférencement à partir du rectangle
+   * de la zone cartographiée en WoM et des tailles en pixels des bords à retirer et de la taille de l'image
+   *
+   * @param array<string, int> $borders */
   function deduceGeoRefFromBorders(\gegeom\EBox $spatial, array $borders): \gegeom\EBox {
     //echo "GeoTiff::deduceGeoRefFromBorders(spatial=$spatial, borders)\n"; print_r($borders);
     // Calcul de la taille du pixel
@@ -76,17 +66,14 @@ class GeoTiff {
     return $ebox;
   }
   
-  /*PhpDoc: methods
-  name: __construct
-  title: "__construct(string $name, \gegeom\EBox $spatial, array $borders, bool $debug) - initialise un objet GéoTiff"
-  doc: |
-    Initialise un objet GéoTiff. $name est le basename du fichier tiff.
-    Si le fichier GéoTiff correspondant est géoréférencé alors ce géoréférencement est lu dans le fichier .info
-    Sinon le rectangle de géoréférencement est calculé à partir du rectangle englobant la zone cartographiée en WoM
-    et des tailles en pixels des bords à retirer et de la taille de l'image. Dans ce second cas ces bords sont passés
-    dans le tableau $borders qui est de la forme ['left'=> number, 'bottom'=> number, 'right'=> number, 'top'=> number]
-  */
-  /** @param array<string, int>|null $borders */
+  /** initialise un objet GéoTiff
+   *
+   * Initialise un objet GéoTiff. $name est le basename du fichier tiff.
+   * Si le fichier GéoTiff correspondant est géoréférencé alors ce géoréférencement est lu dans le fichier .info
+   * Sinon le rectangle de géoréférencement est calculé à partir du rectangle englobant la zone cartographiée en WoM
+   * et des tailles en pixels des bords à retirer et de la taille de l'image.
+   *
+   * @param array{left: number, bottom: number, right: number, top: number}|null $borders nbre de pixels des bords */
   function __construct(string $name, \gegeom\EBox $spatial, ?array $borders, bool $debug) {
     if ($debug)
       echo "GeoTiff::__construct($name, $spatial,",json_encode($borders),")<br>\n";
@@ -115,7 +102,7 @@ class GeoTiff {
     return $translate;
   }
   
-  // calcul du rectangle englobant en WoM de la dalle ($i,$j)
+  /** calcul du rectangle englobant en WoM de la dalle ($i,$j) */
   function tileEbox(int $i, int $j): \gegeom\EBox {
     $resx = ($this->ebox->east()  - $this->ebox->west())  / $this->size['width'];
     $resy = ($this->ebox->north() - $this->ebox->south()) / $this->size['height'];
@@ -126,7 +113,7 @@ class GeoTiff {
     return new \gegeom\EBox([$xmin, $ymin, $xmax, $ymax]);
   }
   
-  // recopie dans $dest la partie du GeoTiff correspondant à $qebox
+  /** recopie dans $dest la partie du GeoTiff correspondant à $qebox */
   function copyImage(GeoRefImage $dest, \gegeom\EBox $qebox, bool $debug): void {
     if ($debug)
       echo "copyImage(qebox=$qebox)@$this->name<br>\n";

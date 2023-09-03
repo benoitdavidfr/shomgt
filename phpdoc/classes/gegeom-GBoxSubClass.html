@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -134,11 +138,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">537</span>
+    <span class="phpdocumentor-element-found-in__line">535</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Vérification que includes() peut être appelée avec small objet d&#039;une sous-classe de GBox</p>
+
 
 
 
@@ -204,12 +209,6 @@
         &nbsp;= &#039;GBox::ErrorParamInConstruct&#039;                            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/gegeom-GBox.html#constant_ErrorSizeOfEmptyGBox">ErrorSizeOfEmptyGBox</a>
-    <span>
-        &nbsp;= &#039;GBox::ErrorSizeOfEmptyGBox&#039;                            </span>
-</dt>
-
     </dl>
 
 
@@ -260,6 +259,8 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>affiche la BBox en utilisant le format GeoJSON d&#039;un Bbox
+avec des coord. arrondies en fonction de la $precision définie dans la classe appelée</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_asArray">asArray()</a>
@@ -272,6 +273,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: array&lt;int, float&gt;    </span>
 </dt>
+<dd>renvoie un array de 4 coord [west, south, east, north] avec east &lt; 180 conforme à la structuration dans GeoJSON</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_bound">bound()</a>
@@ -285,6 +287,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: <abbr title="\gegeom\TPos">TPos</abbr>    </span>
 </dt>
+<dd>retourne le centre de la BBox ou [] si elle est vide</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_constructTest">constructTest()</a>
@@ -297,12 +300,14 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>distance la plus courte entre les position des 2 GBox, génère une exception si une des 2 BBox est vide</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_distance">distance()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>distance entre 2 boites, nulle ssi les 2 boites sont identiques</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_distTest">distTest()</a>
@@ -339,18 +344,21 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>renvoit vrai ssi la bbox est vide</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_fromGeoDMd">fromGeoDMd()</a>
     <span>
                                 &nbsp;: self    </span>
 </dt>
+<dd>maintien de la méthode fromGeoDMd() pour conserver la compatibilité avec le code existant</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_includes">includes()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>teste si $small est strictement inclus dans $this</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBoxSubClass.html#method_includesTest">includesTest()</a>
@@ -363,18 +371,21 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>version bouléenne de intersects()</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_intersects">intersects()</a>
     <span>
                                 &nbsp;: static    </span>
 </dt>
+<dd>intersection de 2 bbox, si $this intersecte $b2 alors retourne le GBox/EBox d&#039;intersection, sinon retourne null.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_intersectsAntiMeridian">intersectsAntiMeridian()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Teste l&#039;intersection avec l&#039;AM</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_intersectsAntiMeridianTest">intersectsAntiMeridianTest()</a>
@@ -405,24 +416,30 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: <abbr title="\gegeom\TLLPos">TLLPos</abbr>    </span>
 </dt>
+<dd>retourne un array d&#039;array avec les 5 positions du polygone de la BBox ou [] si elle est vide</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_proj">proj()</a>
     <span>
                                 &nbsp;: <a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>    </span>
 </dt>
+<dd>calcule la projection d&#039;un GBox en utilisant $proj qui doit être défini comme projection dans coordsys</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_round">round()</a>
     <span>
                                 &nbsp;: static    </span>
 </dt>
+<dd>si $this est indéfini alors le renvoit
+sinon crée un nouvel objet de la classe appelée avec des coord. arrondies
+en fonction de la $precision définie dans la classe appelée</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_size">size()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>taille max en degrés de longueur constante (Zoom::Size0 / 360) ou rettourne 0 si la BBox est vide</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_south">south()</a>
@@ -435,18 +452,21 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <span>
                                 &nbsp;: static    </span>
 </dt>
+<dd>retourne le GBox translaté de 360° vers l&#039;est</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_translate360West">translate360West()</a>
     <span>
                                 &nbsp;: static    </span>
 </dt>
+<dd>retourne le GBox translaté de 360° vers l&#039;ouest</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_union">union()</a>
     <span>
                                 &nbsp;: static    </span>
 </dt>
+<dd>Retourne l&#039;union de 2 BBox</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_unionVerbose">unionVerbose()</a>
@@ -482,7 +502,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">300</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 
@@ -510,7 +530,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">299</span>
+    <span class="phpdocumentor-element-found-in__line">290</span>
 
     </aside>
 
@@ -538,7 +558,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -566,7 +586,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -594,7 +614,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -622,7 +642,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -650,7 +670,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
@@ -660,34 +680,6 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">ErrorParamInConstruct</span>
     = <span class="phpdocumentor-signature__default-value">&#039;GBox::ErrorParamInConstruct&#039;</span>
-</code>
-
-
-    
-    
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_ErrorSizeOfEmptyGBox">
-        ErrorSizeOfEmptyGBox
-        <a href="classes/gegeom-GBox.html#constant_ErrorSizeOfEmptyGBox" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">298</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">ErrorSizeOfEmptyGBox</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;GBox::ErrorSizeOfEmptyGBox&#039;</span>
 </code>
 
 
@@ -722,7 +714,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -734,7 +726,9 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>[number, number] ou [], [] ssi $min == []</p>
+</section>
+
     
 
 </article>
@@ -755,7 +749,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -767,7 +761,9 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>[number, number] ou []</p>
+</section>
+
     
 
 </article>
@@ -788,7 +784,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -826,7 +822,7 @@ soit un array de 4 ou 6 nombres, soit un string dont l&#039;explode donne 4 ou 6
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -874,11 +870,13 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">175</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">affiche la BBox en utilisant le format GeoJSON d&#039;un Bbox
+avec des coord. arrondies en fonction de la $precision définie dans la classe appelée</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__toString</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -909,7 +907,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">167</span>
 
     </aside>
 
@@ -944,11 +942,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">372</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">renvoie un array de 4 coord [west, south, east, north] avec east &lt; 180 conforme à la structuration dans GeoJSON</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">asGeoJsonBbox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, float&gt;</span></code>
@@ -979,7 +978,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1025,11 +1024,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le centre de la BBox ou [] si elle est vide</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">center</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\gegeom\TPos">TPos</abbr></span></code>
@@ -1060,7 +1060,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -1091,18 +1091,21 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">409</span>
+    <span class="phpdocumentor-element-found-in__line">401</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">distance la plus courte entre les position des 2 GBox, génère une exception si une des 2 BBox est vide</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">dist</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$b2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>N'est pas une réelle distance entre GBox</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1136,11 +1139,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">430</span>
+    <span class="phpdocumentor-element-found-in__line">427</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">distance entre 2 boites, nulle ssi les 2 boites sont identiques</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">distance</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$b2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -1181,7 +1185,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">423</span>
+    <span class="phpdocumentor-element-found-in__line">420</span>
 
     </aside>
 
@@ -1212,7 +1216,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">404</span>
+    <span class="phpdocumentor-element-found-in__line">415</span>
 
     </aside>
 
@@ -1257,7 +1261,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">358</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
@@ -1292,7 +1296,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">357</span>
+    <span class="phpdocumentor-element-found-in__line">349</span>
 
     </aside>
 
@@ -1327,7 +1331,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -1362,11 +1366,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">renvoit vrai ssi la bbox est vide</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">empty</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1397,14 +1402,15 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">362</span>
+    <span class="phpdocumentor-element-found-in__line">355</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">maintien de la méthode fromGeoDMd() pour conserver la compatibilité avec le code existant</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromGeoDMd</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$spatial</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromGeoDMd</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TMapCatSpatial">TMapCatSpatial</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$spatial</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1413,7 +1419,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$spatial</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string, string&gt;</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TMapCatSpatial">TMapCatSpatial</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1442,11 +1448,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">276</span>
+    <span class="phpdocumentor-element-found-in__line">270</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">teste si $small est strictement inclus dans $this</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">includes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-BBox.html"><abbr title="\gegeom\BBox">BBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$small</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$show</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1494,7 +1501,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">538</span>
+    <span class="phpdocumentor-element-found-in__line">536</span>
 
     </aside>
 
@@ -1525,11 +1532,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">274</span>
+    <span class="phpdocumentor-element-found-in__line">267</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">version bouléenne de intersects()</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">inters</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-BBox.html"><abbr title="\gegeom\BBox">BBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$b2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1570,11 +1578,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">231</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">intersection de 2 bbox, si $this intersecte $b2 alors retourne le GBox/EBox d&#039;intersection, sinon retourne null.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">intersects</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-BBox.html"><abbr title="\gegeom\BBox">BBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$b2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
@@ -1615,11 +1624,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">364</span>
+    <span class="phpdocumentor-element-found-in__line">358</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Teste l&#039;intersection avec l&#039;AM</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">intersectsAntiMeridian</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1650,7 +1660,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">360</span>
 
     </aside>
 
@@ -1681,7 +1691,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">256</span>
+    <span class="phpdocumentor-element-found-in__line">249</span>
 
     </aside>
 
@@ -1712,7 +1722,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">234</span>
+    <span class="phpdocumentor-element-found-in__line">243</span>
 
     </aside>
 
@@ -1757,7 +1767,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -1792,11 +1802,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne un array d&#039;array avec les 5 positions du polygone de la BBox ou [] si elle est vide</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">polygon</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\gegeom\TLLPos">TLLPos</abbr></span></code>
@@ -1827,11 +1838,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">501</span>
+    <span class="phpdocumentor-element-found-in__line">499</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcule la projection d&#039;un GBox en utilisant $proj qui doit être défini comme projection dans coordsys</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">proj</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$proj</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></span></code>
@@ -1872,11 +1884,14 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">si $this est indéfini alors le renvoit
+sinon crée un nouvel objet de la classe appelée avec des coord. arrondies
+en fonction de la $precision définie dans la classe appelée</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">round</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
@@ -1907,11 +1922,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">395</span>
+    <span class="phpdocumentor-element-found-in__line">391</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">taille max en degrés de longueur constante (Zoom::Size0 / 360) ou rettourne 0 si la BBox est vide</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">size</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -1942,7 +1958,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -1977,11 +1993,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">389</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le GBox translaté de 360° vers l&#039;est</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">translate360East</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
@@ -2012,11 +2029,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">383</span>
+    <span class="phpdocumentor-element-found-in__line">378</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le GBox translaté de 360° vers l&#039;ouest</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">translate360West</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
@@ -2047,11 +2065,12 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retourne l&#039;union de 2 BBox</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">union</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-BBox.html"><abbr title="\gegeom\BBox">BBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$b2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
@@ -2092,7 +2111,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -2137,7 +2156,7 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">182</span>
+    <span class="phpdocumentor-element-found-in__line">178</span>
 
     </aside>
 
@@ -2278,7 +2297,6 @@ soit un array d'array d'array, interprété comme une liste de listes de positio
                                                     <li><a href="classes/gegeom-BBox.html#constant_ErrorIncorrectPosTypeInBound">ErrorIncorrectPosTypeInBound</a></li>
                                                     <li><a href="classes/gegeom-BBox.html#constant_ErrorIntersectsWithUndefBBox">ErrorIntersectsWithUndefBBox</a></li>
                                                     <li><a href="classes/gegeom-GBox.html#constant_ErrorParamInConstruct">ErrorParamInConstruct</a></li>
-                                                    <li><a href="classes/gegeom-GBox.html#constant_ErrorSizeOfEmptyGBox">ErrorSizeOfEmptyGBox</a></li>
                                             </ul>
                 </li>
             

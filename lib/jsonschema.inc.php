@@ -1,95 +1,94 @@
 <?php
-/*PhpDoc:
-name: jsonschema.inc.php
-title: jsonschema.inc.php - validation de la conformité d'une instance Php à un schéma JSON
-classes:
-doc: |
-  Pour valider la conformité d'un fichier JSON ou Yaml à un schéma, utiliser la méthode statique
-    JsonSchema::autoCheck() qui prend en paramètre une instance et retourne un JsonSchStatus
-  Une autre possibilité pour valider la conformité d'une instance définie comme valeur Php à un schéma, il faut:
-    - créer un objet JsonSchema en fournissant le contenu du schema sous la forme d'un array Php
-    - appeler sur cet objet la méthode check avec l'instance Php à vérifier
-    - analyser le statut retourné (classe JsonSchStatus) par cette vérification
-  voir https://json-schema.org/understanding-json-schema/reference/index.html (draft-06)
-  La classe est utilisée avec des valeurs Php
-  3 types d'erreurs sont gérées:
-    - une structuration non prévue de schéma génère une exception
-    - une non conformité d'une instance à un schéma fait échouer la vérification
-    - une alerte peut être produite dans certains cas sans faire échouer la vérification
-  Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
-  Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.
-journal: |
-  22/1/2021:
-    - passage à Php 8
-    - redéfinition de la logique de tests élémentaires
-    - JsonSchema::autocheck() transmet le répertoire du doc au schéma
-  5/11/2020:
-    ajout constructeur sur JsonSchStatus pour permettre une initialisation non vide
-  3/4/2020:
-    modification du mécanisme de registre de schéma
-    Les URI en http://id.georef.eu/ et http://docs.georef.eu/ ne sont pas réécrites dans JsonSch::predef()
-    mais traitées par JsonSch::deref() en faisant appel à getFragmentFromPath() définie dans YamlDoc
-  24/2/2019:
-    modification des règles de réécriture dans JsonSch::predef()
-  5-8/2/2019:
-    ajout de la possibilité dans JsonSch::file_get_contents() d'exécuter un script Php renvoyant un array Php
-  26/1/2019:
-    modification dans JsonSchema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma
-  24/1/2019:
-    utilisation du mot-clé $schema à la place de jSchema
-  23/1/2019:
-    correction d'un bug lors de l'ouverture d'un schéma dont le chemin est défini en relatif
-    amélioration de l'erreur lors qu'un élément d'un schéma n'est pas défini
-  19/1/2019:
-    scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php
-    ajout de JsonSch::deref() pour déréférencer un pointeur JSON
-    permet d'utiliser les URL http://{name}.georef.eu/ pour des docs autres que des schémas
-    ajout de la possibilité de définir des options d'affichage dans JsonSchema::check()
-    ajout de JsonSchema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema
-  18/1/2019:
-    Ajout fonctionnalité d'utilisation de schémas prédéfinis
-  16-17/1/2019:
-    Correction d'un bug sur items
-    Modif de la logique de vérification pour ne pas traiter les ensembles de types comme des anyOf()
-    Traitement de AdditionalItems comme schema
-  15/1/2019:
-    Correction d'un bug sur PropertyNames
-  11-14/1/2018:
-    Renforcement des tests et correction de bugs
-    ajout additionalProperties, propertyNames, minProperties, maxProperties, minItems, maxItems, contains, uniqueItems
-      minLength, maxLength, pattern, Generic Enumerated misc values, Generic const misc values, multiple, dependencies
-      allOf, oneOf, not, Tuple validation, Tuple validation w additional items, format
-    Publication sur Gihub
-  9-10/1/2018:
-    Réécriture complète en 3 classes: schéma JSON, élément d'un schéma et statut d'une vérification
-    Correction d'un bug dans la vérification d'un schéma par le méta-schéma
-  8/1/2018:
-    BUG trouvé: lorsqu'un schéma référence un autre schéma dans le même répertoire,
-    le répertoire de référence doit être le répertoire courant du schéma
-  7/1/2019:
-    BUG trouvé dans l'utilisation d'une définition dans un oneOf,
-    oneOf coupe le lien vers le schema racine pour éviter d'enregistrer les erreurs
-    alors que les référence vers une définition a besoin de ce lien
-    voir http://localhost/schema/?action=check&file=ex/route500
-    début de correction
-    quand on a une hiérarchie de schéma, dans lequel chercher une définition ?
-    a priori je prenais la racine mais ce n'est pas toujours le cas
-    solution: distinguer les vrai schémas des pseudo-schémas qui sont des parties d'un schéma
-  3/1/2019
-    les fonctions complémentaires ne sont définies que si elles ne le sont pas déjà
-    correction bug
-  2/1/2019
-    ajout oneOf
-    correction du test d'une propriété requise qui prend la valeur nulle
-    correction de divers bugs détectés par les tests sur des exemples de GeoJSON
-    assouplissement de la détection dans $ref au premier niveau d'un schema
-    ajout d'un mécanisme de tests unitaires
-    ajout patternProperties et test sur http://localhost/yamldoc/?doc=dublincoreyd&ypath=%2Ftables%2Fdcmes%2Fdata
-  1/1/2019
-    première version
-includes:
-  - jsonschfrg.inc.php
-*/
+/**
+ * validation de la conformité d'une instance Php à un schéma JSON
+ *
+ * Pour valider la conformité d'un fichier JSON ou Yaml à un schéma, utiliser la méthode statique
+ *   JsonSchema::autoCheck() qui prend en paramètre une instance et retourne un JsonSchStatus
+ * Une autre possibilité pour valider la conformité d'une instance définie comme valeur Php à un schéma, il faut:
+ *   - créer un objet JsonSchema en fournissant le contenu du schema sous la forme d'un array Php
+ *   - appeler sur cet objet la méthode check avec l'instance Php à vérifier
+ *   - analyser le statut retourné (classe JsonSchStatus) par cette vérification
+ * voir https://json-schema.org/understanding-json-schema/reference/index.html (draft-06)
+ * La classe est utilisée avec des valeurs Php
+ * 3 types d'erreurs sont gérées:
+ *   - une structuration non prévue de schéma génère une exception
+ *   - une non conformité d'une instance à un schéma fait échouer la vérification
+ *   - une alerte peut être produite dans certains cas sans faire échouer la vérification
+ * Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
+ * Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.
+ *
+ * journal: |
+ * - 22/1/2021:
+ *   - passage à Php 8
+ *   - redéfinition de la logique de tests élémentaires
+ *   - JsonSchema::autocheck() transmet le répertoire du doc au schéma
+ * - 5/11/2020:
+ *   - ajout constructeur sur JsonSchStatus pour permettre une initialisation non vide
+ * - 3/4/2020:
+ *   - modification du mécanisme de registre de schéma
+ *   - Les URI en http://id.georef.eu/ et http://docs.georef.eu/ ne sont pas réécrites dans JsonSch::predef()
+ *     mais traitées par JsonSch::deref() en faisant appel à getFragmentFromPath() définie dans YamlDoc
+ * - 24/2/2019:
+ *   - modification des règles de réécriture dans JsonSch::predef()
+ * - 5-8/2/2019:
+ *   - ajout de la possibilité dans JsonSch::file_get_contents() d'exécuter un script Php renvoyant un array Php
+ * - 26/1/2019:
+ *   - modification dans JsonSchema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma
+ * - 24/1/2019:
+ *   - utilisation du mot-clé $schema à la place de jSchema
+ * - 23/1/2019:
+ *   - correction d'un bug lors de l'ouverture d'un schéma dont le chemin est défini en relatif
+ *   - amélioration de l'erreur lors qu'un élément d'un schéma n'est pas défini
+ * - 19/1/2019:
+ *   - scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php
+ *   - ajout de JsonSch::deref() pour déréférencer un pointeur JSON
+ *   - permet d'utiliser les URL http://{name}.georef.eu/ pour des docs autres que des schémas
+ *   - ajout de la possibilité de définir des options d'affichage dans JsonSchema::check()
+ *   - ajout de JsonSchema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema
+ * - 18/1/2019:
+ *   - Ajout fonctionnalité d'utilisation de schémas prédéfinis
+ * - 16-17/1/2019:
+ *   - Correction d'un bug sur items
+ *   - Modif de la logique de vérification pour ne pas traiter les ensembles de types comme des anyOf()
+ *   - Traitement de AdditionalItems comme schema
+ * - 15/1/2019:
+ *   - Correction d'un bug sur PropertyNames
+ * - 11-14/1/2018:
+ *   - Renforcement des tests et correction de bugs
+ *   - ajout additionalProperties, propertyNames, minProperties, maxProperties, minItems, maxItems, contains, uniqueItems
+ *     minLength, maxLength, pattern, Generic Enumerated misc values, Generic const misc values, multiple, dependencies
+ *     allOf, oneOf, not, Tuple validation, Tuple validation w additional items, format
+ *   - Publication sur Gihub
+ * - 9-10/1/2018:
+ *   - Réécriture complète en 3 classes: schéma JSON, élément d'un schéma et statut d'une vérification
+ *   - Correction d'un bug dans la vérification d'un schéma par le méta-schéma
+ * - 8/1/2018:
+ *   - BUG trouvé: lorsqu'un schéma référence un autre schéma dans le même répertoire,
+ *   - le répertoire de référence doit être le répertoire courant du schéma
+ * - 7/1/2019:
+ *   - BUG trouvé dans l'utilisation d'une définition dans un oneOf,
+ *   - oneOf coupe le lien vers le schema racine pour éviter d'enregistrer les erreurs
+ *     alors que les référence vers une définition a besoin de ce lien
+ *     voir http://localhost/schema/?action=check&file=ex/route500
+ *   - début de correction
+ *     - quand on a une hiérarchie de schéma, dans lequel chercher une définition ?
+ *   - a priori je prenais la racine mais ce n'est pas toujours le cas
+ *   - solution: distinguer les vrai schémas des pseudo-schémas qui sont des parties d'un schéma
+ * - 3/1/2019
+ *   - les fonctions complémentaires ne sont définies que si elles ne le sont pas déjà
+ *   - correction bug
+ * - 2/1/2019
+ *   - ajout oneOf
+ *   - correction du test d'une propriété requise qui prend la valeur nulle
+ *   - correction de divers bugs détectés par les tests sur des exemples de GeoJSON
+ *   - assouplissement de la détection dans $ref au premier niveau d'un schema
+ *   - ajout d'un mécanisme de tests unitaires
+ *   - ajout patternProperties et test sur http://localhost/yamldoc/?doc=dublincoreyd&ypath=%2Ftables%2Fdcmes%2Fdata
+ * - 1/1/2019
+ *   - première version
+ */
+namespace jsonschema;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/jsonschfrg.inc.php';
 
@@ -135,7 +134,7 @@ if (!function_exists('is_assoc_array')) {
 }
 
 /**
- * class JsonSchStatus - définit un statut de vérification de conformité d'une instance
+ * définit un statut de vérification de conformité d'une instance
  *
  * La classe JsonSchStatus définit le statut d'une vérification de conformité d'une instance
  * Un objet de cette classe est retourné par une vérification.
@@ -167,11 +166,11 @@ class JsonSchStatus {
     return Yaml::dump([['Errors'=>$this->errors, 'Warnings'=> $this->warnings], 999]);
   }
   
-  // ajoute une erreur, retourne $this
+  /** ajoute une erreur, retourne $this */
   function setError(string $message): self { $this->errors[] = $message; return $this; }
   
-  // ajoute une branche d'erreurs, retourne $this
-  /** @param array<int, mixed> $statusArray */
+  /** ajoute une branche d'erreurs, retourne $this
+   * @param array<int, mixed> $statusArray */
   function setErrorBranch(string $message, array $statusArray): self {
     $children = [];
     foreach ($statusArray as $status2)
@@ -180,46 +179,39 @@ class JsonSchStatus {
     return $this;
   }
   
-  /**
-   * function ok(): bool - true ssi pas d'erreur
-   */
+  /** retourne true ssi pas d'erreur */
   function ok(): bool { return count($this->errors)==0; }
   
-  /**
-   * function errors(): array - retourne les erreurs
+  /** retourne les erreurs
    *
-   * @return array<int, string|array<string, mixed>>
+   * @return list<string|array<string, mixed>>
    */
   function errors(): array { return $this->errors; }
   
-  /**
-   * showErrors(): void - affiche les erreurs
-   */
+  /** affiche les erreurs */
   function showErrors(string $message=''): void {
     if ($this->errors)
       echo $message,'<pre><b>',Yaml::dump(['Errors'=>$this->errors], 999),"</b></pre>\n";
   }
   
-  // ajoute un warning
+  /** ajoute un warning */
   function setWarning(string $message): void { $this->warnings[] = $message; }
   
   /**
-   * function warnings(): array - retourne les alertes
+   * retourne les alertes
    *
-   * @return array<int, string>
+   * @return list<string>
    */
   function warnings(): array { return $this->warnings; }
   
-  /**
-   * function showWarnings(): void - affiche les warnings
-   */
+  /** affiche les warnings */
   function showWarnings(string $message=''): void {
     echo $message;
     if ($this->warnings)
       echo '<pre><i>',Yaml::dump(['Warnings'=> $this->warnings], 999),"</i></pre>";
   }
   
-  // ajoute à la fin du statut courant le statut en paramètre et renvoie le statut courant
+  /** ajoute à la fin du statut courant le statut en paramètre et renvoie le statut courant */
   function append(JsonSchStatus $toAppend): JsonSchStatus {
     $this->warnings = array_merge($this->warnings, $toAppend->warnings);
     $this->errors = array_merge($this->errors, $toAppend->errors);
@@ -243,12 +235,12 @@ class JsonSch {
     //echo "predef(path=$path)<br>\n";
     if (!self::$predefs) {
       if (($txt = @file_get_contents(__DIR__.'/jsonschpredef.yaml')) === false)
-        throw new Exception("ouverture impossible du fichier jsonschpredef.yaml");
+        throw  new \Exception("ouverture impossible du fichier jsonschpredef.yaml");
       try {
         $yaml = Yaml::parse($txt, Yaml::PARSE_DATETIME);
       }
-      catch (Exception $e) {
-        throw new Exception("Analyse Yaml du fichier jsonschpredef.yaml incorrect: ".$e->getMessage());
+      catch (\Exception $e) {
+        throw  new \Exception("Analyse Yaml du fichier jsonschpredef.yaml incorrect: ".$e->getMessage());
       }
       foreach ($yaml['predefs'] as $id => $predef) {
         self::$predefs[$id] = $predef['localPath'];
@@ -272,7 +264,7 @@ class JsonSch {
           if (is_file(__DIR__.$path3))
             return __DIR__.$path3;
         }
-        throw new Exception("neither $path2 nor $path3 is a file"); // @phpstan-ignore-line
+        throw  new \Exception("neither $path2 nor $path3 is a file"); // @phpstan-ignore-line
       }
     }
     return $path;
@@ -287,7 +279,7 @@ class JsonSch {
     $path = self::predef($def['$ref']);
     //echo "path après predef: $path<br>\n";
     if (!preg_match('!^((http://[^/]+/[^#]+)|[^#]+)(#(.*))?$!', $path, $matches))
-      throw new Exception("Chemin $path non compris dans JsonSch::deref()");
+      throw  new \Exception("Chemin $path non compris dans JsonSch::deref()");
     $filepath = $matches[1]; // partie avant #
     $eltpath = isset($matches[4]) ? $matches[4] : ''; // partie après #
     $doc = self::file_get_contents($filepath);
@@ -301,7 +293,7 @@ class JsonSch {
     if (!$path)
       return $content;
     if (!preg_match('!^/([^/]+)(/.*)?$!', $path, $matches))
-      throw new Exception("Erreur path '$path' mal formé dans subElement()");
+      throw  new \Exception("Erreur path '$path' mal formé dans subElement()");
     $first = $matches[1];
     $path = isset($matches[2]) ? $matches[2] : '';
     if (!isset($content[$first]))
@@ -337,18 +329,18 @@ class JsonSch {
     /*if (preg_match('!^http://(id|docs).georef.eu/!', $path))
       return getFragmentFromUri($path); // ???? */
     if (($txt = @file_get_contents($path)) === false)
-      throw new Exception("ouverture impossible du fichier $path");
+      throw  new \Exception("ouverture impossible du fichier $path");
     if ((substr($path, -5)=='.yaml') || (substr($path, -4)=='.yml')) {
       try {
         return Yaml::parse($txt, Yaml::PARSE_DATETIME);
       }
-      catch (Exception $e) {
-        throw new Exception("Analyse Yaml du fichier $path incorrect: ".$e->getMessage());
+      catch (\Exception $e) {
+        throw  new \Exception("Analyse Yaml du fichier $path incorrect: ".$e->getMessage());
       }
     }
     elseif (substr($path, -5)=='.json') {
       if (($doc = json_decode($txt, true)) === null)
-        throw new Exception("Décodage JSON du fichier $path incorrect: ".json_last_error_msg());
+        throw  new \Exception("Décodage JSON du fichier $path incorrect: ".json_last_error_msg());
       return $doc;
     }
     elseif (substr($path, -4)=='.php') {
@@ -359,10 +351,10 @@ class JsonSch {
       try {
         return Yaml::parse($txt, Yaml::PARSE_DATETIME);
       }
-      catch (Exception $e) {
+      catch (\Exception $e) {
         if (($doc = json_decode($txt, true)) !== null)
           return $doc;
-        throw new Exception(
+        throw  new \Exception(
             "Décodage Yaml+JSON du fichier $path incorrect: ".$e->getMessage().'+'.json_last_error_msg());
       }
     }
@@ -383,7 +375,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 }
 
 /**
- *class JsonSchema - schéma JSON défini soit dans un fichier par un chemin soit par un array Php
+ * schéma JSON défini soit dans un fichier par un chemin, soit par un array Php
  *
  * La class JsonSchema correspond à un schéma JSON défini dans un fichier par un chemin
  * de la forme {filePath}(#{eltPath})? où:
@@ -408,14 +400,11 @@ class JsonSchema {
   private JsonSchStatus $status; // objet JsonSchStatus contenant le statut issu de la création du schéma
 
   /**
-   * function __construct($def, bool $verbose=false, ?JsonSchema $parent=null) - création d'un JsonSchema
+   * création d'un JsonSchema
    *
-   * le premier paramètre est soit le chemin d'un fichier contenant l'objet JSON/Yaml,
-   *   soit son contenu comme array Php ou comme booléen
-   * le second paramètre indique éventuellement si l'analyse doit être commentée
-   * le troisième paramètre contient éventuellement le schema père et n'est utilisé qu'en interne à la classe
-   *
-   * @param bool|string|array<mixed> $def
+   * @param bool|string|array<mixed> $def chemin d'un fichier contenant le JSON/Yaml, ou contenu comme array Php ou comme booléen
+   * @param bool $verbose=false indique éventuellement si l'analyse doit être commentée
+   * @param ?JsonSchema $parent=null contient éventuellement le schema père et n'est utilisé qu'en interne à la classe
    */
   function __construct(bool|string|array $def, bool $verbose=false, ?JsonSchema $parent=null) {
     //echo "JsonSchema::__construct($def)<br>\n";
@@ -428,7 +417,7 @@ class JsonSchema {
     if (is_string($def)) { // le paramètre $def est le chemin du fichier contenant l'objet JSON
       $def = JsonSch::predef($def); // remplacement des chemins prédéfinis par leur équivalent local
       if (!preg_match('!^((https?://[^/]+/[^#]+)|[^#]+)?(#(.*))?$!', $def, $matches))
-        throw new Exception("Chemin $def non compris dans JsonSchema::__construct()");
+        throw  new \Exception("Chemin $def non compris dans JsonSchema::__construct()");
       $filepath = $matches[1]; // partie avant #
       $eltpath = $matches[4] ?? ''; // partie après #
       //echo "filepath=$filepath, eltpath=$eltpath<br>\n";
@@ -441,16 +430,16 @@ class JsonSchema {
       else { // cas où le chemin du fichier est défini en relatif, utiliser alors le répertoire du schéma parent
         //echo "chemin défini en relatif<br>\n";
         if (!$parent)
-          throw new Exception("Ouverture de $filepath impossible sans schema parent");
+          throw  new \Exception("Ouverture de $filepath impossible sans schema parent");
         if (!($pfilepath = $parent->filepath))
-          throw new Exception("Ouverture de $filepath impossible car le filepath du schema parent n'est pas défini");
+          throw  new \Exception("Ouverture de $filepath impossible car le filepath du schema parent n'est pas défini");
         $pfiledir = dirname($pfilepath);
         $this->filepath = "$pfiledir/$filepath";
         $def = JsonSch::file_get_contents($this->filepath);
       }
       $eltDef = $eltpath ? JsonSch::subElement($def, $eltpath) : $def; // la définition de l'élément
       if (!$eltDef)
-        throw new Exception("Ouverture de $def0 impossible car le chemin $eltpath n'existe pas dans le schéma");
+        throw  new \Exception("Ouverture de $def0 impossible car le chemin $eltpath n'existe pas dans le schéma");
     }
     elseif (is_array($def)) { // le premier paramètre est le contenu comme array Php
       $this->filepath = null;
@@ -467,7 +456,7 @@ class JsonSchema {
       return;
     }
     else
-      throw new Exception("Erreur paramètre def incorrect dans la création d'un schéma");
+      throw  new \Exception("Erreur paramètre def incorrect dans la création d'un schéma");
     $this->def = $def;
     
     /*Je ne comprends pas
@@ -483,13 +472,12 @@ class JsonSchema {
     $this->elt = new JsonSchFragment($eltDef, $this, $verbose);
   }
   
-  // définition du contenu du schéma sous la forme d'un array Php ou un boolean
-  /** @return bool|array<mixed> */
+  /** définition du contenu du schéma sous la forme d'un array Php ou un boolean
+   * @return bool|array<mixed> */
   function def(): bool|array { return $this->def; }
  
-  // 
   /**
-   * checkDefinition() - lance une exception si détecte une boucle dans les défs ou une référence à une déf. inexistante
+   * lance une exception si détecte une boucle dans les défs ou une référence à une déf. inexistante
    *
    * @param string $defid
    * @param array<string, mixed> $defs
@@ -498,9 +486,9 @@ class JsonSchema {
   private static function checkDefinition(string $defid, array $defs, array $defPath=[]): void {
     //echo "checkLoopInDefinition(defid=$defid, defs=",json_encode($defs),")<br>\n";
     if (in_array($defid, $defPath))
-      throw new Exception("boucle (".implode(', ', $defPath).", $defid) détectée");
+      throw  new \Exception("boucle (".implode(', ', $defPath).", $defid) détectée");
     if (!isset($defs[$defid]))
-      throw new Exception("Erreur, définition $defid inconnue");
+      throw  new \Exception("Erreur, définition $defid inconnue");
     $def = $defs[$defid];
     ///echo "def="; print_r($def); echo "<br>\n";
     if (array_keys($def)[0]=='anyOf') {
@@ -511,7 +499,7 @@ class JsonSchema {
           $ref = $childDef['$ref'];
           //echo "ref = $ref<br>\n";
           if (!preg_match('!^#/definitions/(.*)$!', $ref, $matches))
-            throw new Exception("Référence '$ref' non comprise");
+            throw  new \Exception("Référence '$ref' non comprise");
           $defid2 = $matches[1];
           self::checkDefinition($defid2, $defs, array_merge($defPath, [$defid]));
         }
@@ -589,7 +577,7 @@ class JsonSchema {
     if (is_string($instance)) { // le premier paramètre est le chemin du fichier contenant l'instance
       $instance = JsonSch::predef($instance); // remplacement des chemins prédéfinis par leur équivalent local
       if (!preg_match('!^([^#]+)(#(.*))?$!', $instance, $matches))
-        throw new Exception("Chemin $instance non compris dans JsonSchema::autoCheck()");
+        throw  new \Exception("Chemin $instance non compris dans JsonSchema::autoCheck()");
       $filepath = $matches[1]; // partie avant #
       $eltpath = isset($matches[3]) ? $matches[3] : ''; // partie après #
       //echo "filepath=$filepath, eltpath=$eltpath<br>\n";

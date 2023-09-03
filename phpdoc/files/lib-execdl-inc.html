@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,15 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">execdl.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">fonctions execCmde() et download()
+journal: |
+- 20/6/2022:
+  - modif du retour d&#039;execCmde() pour récupérer l&#039;output de la commande appelée en cas d&#039;erreur
+- 20/5/2022:
+  - modif pour traiter un téléchargement avec authentification
+- 18/5/2022:
+  - création à partir de main.php</p>
+
 
 
 
@@ -150,6 +162,7 @@
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>téléchargement d&#039;un fichier en utilisant la commande wget</dd>
 
     </dl>
 
@@ -172,7 +185,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/execdl.inc.php"><a href="files/lib-execdl-inc.html"><abbr title="lib/execdl.inc.php">execdl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
@@ -182,8 +195,7 @@
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">execCmde</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cmde</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$verbose</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string|int&gt;</span></code>
 
-        <section class="phpdocumentor-description"><p>exécute une cmde Linux, $verbose est le degré de verbosité
-retourne [] ssi tout est ok, cad le retour d'exec() !== false &amp;&amp; $result_code == 0
+        <section class="phpdocumentor-description"><p>retourne [] ssi tout est ok, cad le retour d'exec() !== false &amp;&amp; $result_code == 0
 sinon retourne ['result_code'=&gt; {result_code}, 'output'=&gt; {output}]</p>
 </section>
 
@@ -194,14 +206,22 @@ sinon retourne ['result_code'=&gt; {result_code}, 'output'=&gt; {output}]</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><ul>
+<li>commande linux à exécuter</li>
+</ul>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$verbose</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><ul>
+<li>degré de verbosité</li>
+</ul>
+</section>
+
             </dd>
             </dl>
 
@@ -222,16 +242,21 @@ sinon retourne ['result_code'=&gt; {result_code}, 'output'=&gt; {output}]</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/execdl.inc.php"><a href="files/lib-execdl-inc.html"><abbr title="lib/execdl.inc.php">execdl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">téléchargement d&#039;un fichier en utilisant la commande wget</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">download</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$url</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$outputFile</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$verbose</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>effectue un wget sur l'url et stocke le résultat dans $outputFile ; retourne le code http ; si code&lt;&gt;200 le fichier est vide
+Utilise les variables d'environnement http_proxy: et https_proxy si elles sont définies
+ainsi que le login/passwd défini dans l'URL du serveur</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">

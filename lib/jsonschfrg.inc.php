@@ -2,30 +2,32 @@
 /**
  * jsonschfrg.inc.php - définition de la classe JsonSchFragment utilisée par le validateur de schéma JSON
  *
- * journal: |
- *   12/1/2022:
- *     - correction bug dans JsonSchFragment::checkNumberOrInteger()
- *   22/1/2021:
- *     - passage à Php 8
- *     - modif JsonSchFragment::checkArray() pour que le test sur uniqueItems fonctionne sur des non atomes
- *   25/4/2020:
- *     ajout vérification de la contrainte enum pour un object, un array et un numberOrInteger en plus du string
- *   3/4/2020:
- *     chgt de nom du fichier
- *   8/2/2019:
- *     JsonSchFragment est utilisée en dehors de la classe JsonSchema
- *   24/1/2019:
- *     chgt de nom de la classe de Elt en Fragment et du fichier de jsonschelt en jsonschfrt
- *   19/1/2019:
- *     scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php
- *   1-18/1/2019:
- *     Voir journal dans jsonschema.inc.php
+ * journal:
+ * - 12/1/2022:
+ *   - correction bug dans JsonSchFragment::checkNumberOrInteger()
+ * - 22/1/2021:
+ *   - passage à Php 8
+ *   - modif JsonSchFragment::checkArray() pour que le test sur uniqueItems fonctionne sur des non atomes
+ * - 25/4/2020:
+ *   - ajout vérification de la contrainte enum pour un object, un array et un numberOrInteger en plus du string
+ * - 3/4/2020:
+ *   - chgt de nom du fichier
+ * - 8/2/2019:
+ *   - JsonSchFragment est utilisée en dehors de la classe JsonSchema
+ * - 24/1/2019:
+ *   - chgt de nom de la classe de Elt en Fragment et du fichier de jsonschelt en jsonschfrt
+ * - 19/1/2019:
+ *   - scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php
+ * - 1-18/1/2019:
+ *   - Voir journal dans jsonschema.inc.php
 */
+namespace jsonschema;
+
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
- * class JsonSchFragment - classe utilisée par JsonSchema définissant un fragment d'un schema JSON
+ * classe utilisée par JsonSchema définissant un fragment d'un schema JSON
  *
  * Un JsonSchFragment correspond à un fragment d'un schéma ; il connait son schéma père
  * afin d'être capable pour retrouver une définition définie en relatif dans son schéma père
@@ -33,8 +35,8 @@ use Symfony\Component\Yaml\Exception\ParseException;
 class JsonSchFragment {
   const RFC3339_EXTENDED = 'Y-m-d\TH:i:s.vP'; // DateTimeInterface::RFC3339_EXTENDED
   private bool $verbose; // verbosité boolean
-  /** @var bool|array<mixed> $def */
-  private array|bool $def; // définition de l'élément courant du schema sous la forme d'un array ou d'un booléen Php
+  /** @var bool|array<mixed> $def définition de l'élément courant du schema sous la forme d'un array ou d'un booléen Php */
+  private array|bool $def;
   private JsonSchema $schema; // l'objet schema contenant l'élément, indispensable pour retrouver ses définitions
   // et pour connaitre son répertoire courant en cas de référence relative
   
@@ -45,7 +47,7 @@ class JsonSchFragment {
     /*if (!is_array($def) && !is_bool($def)) {
       $errorMessage = "TypeError: Argument def passed to JsonSchFragment::__construct() must be of the type array or boolean";
       echo "JsonSchFragment::__construct(def=",json_encode($this->def),")<br>$errorMessage<br><br>\n";
-      throw new Exception($errorMessage);
+      throw  new \Exception($errorMessage);
     }*/
     $this->verbose = $verbose;
     $this->def = $def;
@@ -103,7 +105,7 @@ class JsonSchFragment {
     if (is_bool($this->def))
       return $this->def ? $status : $status->setError("Schema faux pour $id");
     if (!is_array($this->def))
-      throw new Exception("schema non défini pour $id comme array, def=".json_encode($this->def));
+      throw  new \Exception("schema non défini pour $id comme array, def=".json_encode($this->def));
     if (isset($this->def['$ref']))
       return $this->checkRef($id, $instance, $status);
     if (isset($this->def['anyOf']))
@@ -119,7 +121,7 @@ class JsonSchFragment {
         (is_string($this->def['type']) ? [$this->def['type']] : 
           (is_array($this->def['type']) ? $this->def['type'] : null));
     if ($types === null)
-      throw new Exception("def[type]=".json_encode($this->def['type'])." ni string ni list pour $id");
+      throw  new \Exception("def[type]=".json_encode($this->def['type'])." ni string ni list pour $id");
     
     // vérifie la compatibilité entre le type indiqué par le schema et le type Php de l'instance
     if ($types)
@@ -137,13 +139,13 @@ class JsonSchFragment {
     return $status;
   }
    
-  // traitement du cas où le schema est défini par un $ref
+  /** traitement du cas où le schema est défini par un $ref */
   private function checkRef(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkRef(id=$id, instance=",json_encode($instance),")@def=",json_encode($this->def),"<br><br>\n";
     $path = $this->def['$ref'];
     if (!preg_match('!^((https?://[^/]+/[^#]*)|[^#]+)?(#(.*))?$!', $path, $matches))
-      throw new Exception("Chemin $path non compris dans JsonSchema::__construct()");
+      throw  new \Exception("Chemin $path non compris dans JsonSchema::__construct()");
     $filepath = $matches[1];
     $eltpath = $matches[4] ?? '';
     //echo "checkRef: filepath=$filepath, eltpath=$eltpath<br>\n";
@@ -161,13 +163,13 @@ class JsonSchFragment {
       try { // Si filepath alors fichier schéma différent
         $schema = new JsonSchema($path, $this->verbose, $this->schema);
         return $schema->check($instance, [], $id, $status);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
         return $status->setError("Sur $id erreur ".$e->getMessage());
       }
     }
   }
   
-  // traitement du cas où le schema est défini par un anyOf
+  /** traitement du cas où le schema est défini par un anyOf */
   private function checkAnyOf(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkAnyOf(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -184,7 +186,7 @@ class JsonSchFragment {
     return $status->setErrorBranch("aucun schema anyOf pour $id", $errors);
   }
   
-  // traitement du cas où le schema est défini par un oneOf
+  /** traitement du cas où le schema est défini par un oneOf */
   private function checkOneOf(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkOneOf(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -211,7 +213,7 @@ class JsonSchFragment {
       return $status->setErrorBranch("aucun schema oneOf pour $id", $errors);
   }
   
-  // traitement du cas où le schema est défini par un allOf
+  /** traitement du cas où le schema est défini par un allOf */
   private function checkAllOf(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkAllOf(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -227,7 +229,7 @@ class JsonSchFragment {
     return $status;
   }
   
-  // traitement du cas où le schema est défini par un not
+  /** traitement du cas où le schema est défini par un not */
   private function checkNot(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkNot(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -240,8 +242,8 @@ class JsonSchFragment {
       return $status;
   }
 
-  // vérifie la compatibilité entre le type indiqué par le schema et le type Php de l'instance
-  /** @param array<int, string> $types */
+  /** vérifie la compatibilité entre le type indiqué par le schema et le type Php de l'instance
+   * @param array<int, string> $types */
   private function checkType(string $id, array $types, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkType(id=$id, types=",json_encode($types),", instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -282,7 +284,7 @@ class JsonSchFragment {
     return $status;
   }
   
-  // traitement des propriétés liées aux objets
+  /** traitement des propriétés liées aux objets */
   private function checkObject(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkObject(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -343,7 +345,7 @@ class JsonSchFragment {
         if (isset($instance[$propname])) { // alors la dépendance doit être vérifiée
           //echo "dependency=",json_encode($dependency),"<br>\n";
           if (!is_array($dependency))
-            throw new Exception("Erreur dependency pour $id.$propname ni list ni assoc_array");
+            throw  new \Exception("Erreur dependency pour $id.$propname ni list ni assoc_array");
           elseif (!is_assoc_array($dependency)) { // property depedency
             //echo "vérification de la dépendance de propriété sur $propname<br>\n";
             foreach ($dependency as $dependentPropName)
@@ -361,7 +363,7 @@ class JsonSchFragment {
     return $status;
   }
   
-  // traitement des propriétés d'array
+  /** traitement des propriétés d'array */
   private function checkArray(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkArray(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -408,7 +410,7 @@ class JsonSchFragment {
     if (is_bool($this->def['items']))
       return $this->def['items'] ? $status : $status->setError("items faux pour $id");
     if (!is_array($this->def['items']))
-      throw new Exception("items devrait être un objet, un array ou un booléen pour $id");
+      throw  new \Exception("items devrait être un objet, un array ou un booléen pour $id");
     if (!is_assoc_array($this->def['items']))
       return $this->checkTuple($id, $instance, $status);
     $schOfItem = new self($this->def['items'], $this->schema, $this->verbose);
@@ -417,9 +419,9 @@ class JsonSchFragment {
     return $status;
   }
   
-  // vérifie si les valeurs de l'array $array sont distinctes 2 à 2
-  // Pour cela les valeurs sont transformées en chaine pour utiliser array_unique()
-  /** @param array<int, string> $array */
+  /** vérifie si les valeurs de l'array $array sont distinctes 2 à 2
+   * Pour cela les valeurs sont transformées en chaine pour utiliser array_unique()
+   * @param array<int, string> $array */
   private static function checkUniqueItems(array $array): bool {
     $strings = [];
     foreach ($array as $i => $val) {
@@ -428,7 +430,7 @@ class JsonSchFragment {
     return (count(array_unique($strings)) == count($strings));
   }
   
-  // traitement du cas où le type indique que la valeur est un object
+  /** traitement du cas où le type indique que la valeur est un object */
   private function checkTuple(string $id, mixed $instance, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkTuple(id=$id, instance=",json_encode($instance),")@def=$this<br><br>\n";
@@ -451,7 +453,7 @@ class JsonSchFragment {
     return $status;
   }
 
-  // traitement du cas où le type indique que l'instance est un numérique ou un entier
+  /** traitement du cas où le type indique que l'instance est un numérique ou un entier */
   private function checkNumberOrInteger(string $id, mixed $number, JsonSchStatus $status): JsonSchStatus {
     if (!is_numeric($number))
       return $status;
@@ -474,10 +476,10 @@ class JsonSchFragment {
     return $status;
   }
   
-  // teste l'absence de partie fractionaire du nombre passé en paramètre, en pratique elle doit être très faible
+  /** teste l'absence de partie fractionaire du nombre passé en paramètre, en pratique elle doit être très faible */
   static private function hasNoFractionalPart(float $f): bool { return abs($f - floor($f)) < 1e-15; }
   
-  // traitement du cas où le type indique que l'instance est une chaine ou une date
+  /** traitement du cas où le type indique que l'instance est une chaine ou une date */
   private function checkString(string $id, mixed $string, JsonSchStatus $status): JsonSchStatus {
     if ($this->verbose)
       echo "checkString(id=$id, instance=",json_encode($string),")@def=$this<br><br>\n";
@@ -505,7 +507,7 @@ class JsonSchFragment {
     return $status;
   }
   
-  // test des formats, certains motifs sont à améliorer
+  /** test des formats, certains motifs sont à améliorer */
   private function checkStringFormat(string $id, string $string, JsonSchStatus $status): JsonSchStatus {
     $knownFormats = [
       'date-time'=> '^\d\d\d\d-\d\d-\d\dT\d\d:\d\d(:\d\d(\.\d+)?)?(([-+]\d\d:\d\d)|Z)$', // RFC 3339, section 5.6.

@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -137,11 +141,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">256</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">définition Les système de coordonnées LonLatDd correspond au coord. géo. en degrés décimaux dans l&#039;ordre (lon,lat)</p>
+
 
 
 
@@ -161,7 +166,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iCoordSys.html"><abbr title="\coordsys\iCoordSys">iCoordSys</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/coordsys-iCoordSys.html"><abbr title="\coordsys\iCoordSys">iCoordSys</abbr></a></dt><dd>définit l&#039;interface pour un système de coordonnées</dd>    </dl>
 
 
 
@@ -218,12 +223,14 @@
     <span>
                                 &nbsp;: <abbr title="\coordsys\TPos">TPos</abbr>    </span>
 </dt>
+<dd>convertit [X,Y] en [longitude, latitude] en degrés décimaux</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/coordsys-LonLatDd.html#method_proj">proj()</a>
     <span>
                                 &nbsp;: <abbr title="\coordsys\TPos">TPos</abbr>    </span>
 </dt>
+<dd>convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]</dd>
 
     </dl>
 
@@ -247,7 +254,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -296,7 +303,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -331,7 +338,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -366,7 +373,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -401,18 +408,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">258</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">convertit [X,Y] en [longitude, latitude] en degrés décimaux</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">geo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$xy</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$proj</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\coordsys\TPos">TPos</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Le 2ème paramètre est utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -453,18 +463,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">proj</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lonlat</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$proj</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\coordsys\TPos">TPos</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Le 2ème paramètre est utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">

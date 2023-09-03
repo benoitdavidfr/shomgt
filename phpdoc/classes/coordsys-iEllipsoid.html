@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -122,11 +126,26 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">interface de définition d&#039;un ellipsoide</p>
+
+    <section class="phpdocumentor-description"><p>La présente interface spécifie comment un ellipsoide doit être défini, à savoir pouvoir restituer les 3 paramètres:</p>
+<ul>
+<li>demi grand axe (semi-major axis) en mètres</li>
+<li>excentricité (eccentricity)</li>
+<li>excentricité au carré
+Le calcul de ces paramètres dépend des paramètres stockés.</li>
+</ul>
+<p>Terminologie:
+a : semi-major axis
+b : semi-minor axis
+flattening : f = ( a − b ) / a
+eccentricity : e ** 2 = 1 - (1 - flattening) ** 2
+e ** 2 = 1 - b ** 2 / a ** 2</p>
+</section>
 
 
 
@@ -198,7 +217,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -233,7 +252,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -268,7 +287,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/coordsys.inc.php"><a href="files/lib-coordsys-inc.html"><abbr title="lib/coordsys.inc.php">coordsys.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 

@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,156 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">jsonschema.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">validation de la conformité d&#039;une instance Php à un schéma JSON</p>
+
+    <section class="phpdocumentor-description"><p>Pour valider la conformité d'un fichier JSON ou Yaml à un schéma, utiliser la méthode statique
+JsonSchema::autoCheck() qui prend en paramètre une instance et retourne un JsonSchStatus
+Une autre possibilité pour valider la conformité d'une instance définie comme valeur Php à un schéma, il faut:</p>
+<ul>
+<li>créer un objet JsonSchema en fournissant le contenu du schema sous la forme d'un array Php</li>
+<li>appeler sur cet objet la méthode check avec l'instance Php à vérifier</li>
+<li>analyser le statut retourné (classe JsonSchStatus) par cette vérification
+voir https://json-schema.org/understanding-json-schema/reference/index.html (draft-06)
+La classe est utilisée avec des valeurs Php
+3 types d'erreurs sont gérées:</li>
+<li>une structuration non prévue de schéma génère une exception</li>
+<li>une non conformité d'une instance à un schéma fait échouer la vérification</li>
+<li>une alerte peut être produite dans certains cas sans faire échouer la vérification
+Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
+Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.</li>
+</ul>
+<p>journal: |</p>
+<ul>
+<li>22/1/2021:
+<ul>
+<li>passage à Php 8</li>
+<li>redéfinition de la logique de tests élémentaires</li>
+<li>JsonSchema::autocheck() transmet le répertoire du doc au schéma</li>
+</ul>
+</li>
+<li>5/11/2020:
+<ul>
+<li>ajout constructeur sur JsonSchStatus pour permettre une initialisation non vide</li>
+</ul>
+</li>
+<li>3/4/2020:
+<ul>
+<li>modification du mécanisme de registre de schéma</li>
+<li>Les URI en http://id.georef.eu/ et http://docs.georef.eu/ ne sont pas réécrites dans JsonSch::predef()
+mais traitées par JsonSch::deref() en faisant appel à getFragmentFromPath() définie dans YamlDoc</li>
+</ul>
+</li>
+<li>24/2/2019:
+<ul>
+<li>modification des règles de réécriture dans JsonSch::predef()</li>
+</ul>
+</li>
+<li>5-8/2/2019:
+<ul>
+<li>ajout de la possibilité dans JsonSch::file_get_contents() d'exécuter un script Php renvoyant un array Php</li>
+</ul>
+</li>
+<li>26/1/2019:
+<ul>
+<li>modification dans JsonSchema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma</li>
+</ul>
+</li>
+<li>24/1/2019:
+<ul>
+<li>utilisation du mot-clé $schema à la place de jSchema</li>
+</ul>
+</li>
+<li>23/1/2019:
+<ul>
+<li>correction d'un bug lors de l'ouverture d'un schéma dont le chemin est défini en relatif</li>
+<li>amélioration de l'erreur lors qu'un élément d'un schéma n'est pas défini</li>
+</ul>
+</li>
+<li>19/1/2019:
+<ul>
+<li>scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php</li>
+<li>ajout de JsonSch::deref() pour déréférencer un pointeur JSON</li>
+<li>permet d'utiliser les URL http://{name}.georef.eu/ pour des docs autres que des schémas</li>
+<li>ajout de la possibilité de définir des options d'affichage dans JsonSchema::check()</li>
+<li>ajout de JsonSchema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema</li>
+</ul>
+</li>
+<li>18/1/2019:
+<ul>
+<li>Ajout fonctionnalité d'utilisation de schémas prédéfinis</li>
+</ul>
+</li>
+<li>16-17/1/2019:
+<ul>
+<li>Correction d'un bug sur items</li>
+<li>Modif de la logique de vérification pour ne pas traiter les ensembles de types comme des anyOf()</li>
+<li>Traitement de AdditionalItems comme schema</li>
+</ul>
+</li>
+<li>15/1/2019:
+<ul>
+<li>Correction d'un bug sur PropertyNames</li>
+</ul>
+</li>
+<li>11-14/1/2018:
+<ul>
+<li>Renforcement des tests et correction de bugs</li>
+<li>ajout additionalProperties, propertyNames, minProperties, maxProperties, minItems, maxItems, contains, uniqueItems
+minLength, maxLength, pattern, Generic Enumerated misc values, Generic const misc values, multiple, dependencies
+allOf, oneOf, not, Tuple validation, Tuple validation w additional items, format</li>
+<li>Publication sur Gihub</li>
+</ul>
+</li>
+<li>9-10/1/2018:
+<ul>
+<li>Réécriture complète en 3 classes: schéma JSON, élément d'un schéma et statut d'une vérification</li>
+<li>Correction d'un bug dans la vérification d'un schéma par le méta-schéma</li>
+</ul>
+</li>
+<li>8/1/2018:
+<ul>
+<li>BUG trouvé: lorsqu'un schéma référence un autre schéma dans le même répertoire,</li>
+<li>le répertoire de référence doit être le répertoire courant du schéma</li>
+</ul>
+</li>
+<li>7/1/2019:
+<ul>
+<li>BUG trouvé dans l'utilisation d'une définition dans un oneOf,</li>
+<li>oneOf coupe le lien vers le schema racine pour éviter d'enregistrer les erreurs
+alors que les référence vers une définition a besoin de ce lien
+voir http://localhost/schema/?action=check&amp;file=ex/route500</li>
+<li>début de correction
+<ul>
+<li>quand on a une hiérarchie de schéma, dans lequel chercher une définition ?</li>
+</ul>
+</li>
+<li>a priori je prenais la racine mais ce n'est pas toujours le cas</li>
+<li>solution: distinguer les vrai schémas des pseudo-schémas qui sont des parties d'un schéma</li>
+</ul>
+</li>
+<li>3/1/2019
+<ul>
+<li>les fonctions complémentaires ne sont définies que si elles ne le sont pas déjà</li>
+<li>correction bug</li>
+</ul>
+</li>
+<li>2/1/2019
+<ul>
+<li>ajout oneOf</li>
+<li>correction du test d'une propriété requise qui prend la valeur nulle</li>
+<li>correction de divers bugs détectés par les tests sur des exemples de GeoJSON</li>
+<li>assouplissement de la détection dans $ref au premier niveau d'un schema</li>
+<li>ajout d'un mécanisme de tests unitaires</li>
+<li>ajout patternProperties et test sur http://localhost/yamldoc/?doc=dublincoreyd&amp;ypath=%2Ftables%2Fdcmes%2Fdata</li>
+</ul>
+</li>
+<li>1/1/2019
+<ul>
+<li>première version</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -131,7 +284,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/JsonSchStatus.html"><abbr title="\JsonSchStatus">JsonSchStatus</abbr></a></dt><dd>class JsonSchStatus - définit un statut de vérification de conformité d&#039;une instance</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/JsonSch.html"><abbr title="\JsonSch">JsonSch</abbr></a></dt><dd>class JsonSch - classe statique portant qqs méthodes statiques</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/JsonSchema.html"><abbr title="\JsonSchema">JsonSchema</abbr></a></dt><dd>class JsonSchema - schéma JSON défini soit dans un fichier par un chemin soit par un array Php</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-JsonSchStatus.html"><abbr title="\jsonschema\JsonSchStatus">JsonSchStatus</abbr></a></dt><dd>définit un statut de vérification de conformité d&#039;une instance</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-JsonSch.html"><abbr title="\jsonschema\JsonSch">JsonSch</abbr></a></dt><dd>class JsonSch - classe statique portant qqs méthodes statiques</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-JsonSchema.html"><abbr title="\jsonschema\JsonSchema">JsonSchema</abbr></a></dt><dd>schéma JSON défini soit dans un fichier par un chemin, soit par un array Php</dd>    </dl>
 
 
 
@@ -146,7 +299,7 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_is_assoc_array">is_assoc_array()</a>
+    <a href="namespaces/jsonschema.html#function_is_assoc_array">is_assoc_array()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -154,13 +307,13 @@
 Une liste est définie comme ayant pour clés les n premiers entiers, n étant la longueur de la liste.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_is_assoc_arrayC">is_assoc_arrayC()</a>
+    <a href="namespaces/jsonschema.html#function_is_assoc_arrayC">is_assoc_arrayC()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/default.html#function_test_is_assoc_array">test_is_assoc_array()</a>
+    <a href="namespaces/jsonschema.html#function_test_is_assoc_array">test_is_assoc_array()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -180,13 +333,13 @@ Une liste est définie comme ayant pour clés les n premiers entiers, n étant l
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_is_assoc_array">
         is_assoc_array()
-        <a href="namespaces/default.html#function_is_assoc_array" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/jsonschema.html#function_is_assoc_array" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/jsonschema.inc.php"><a href="files/lib-jsonschema-inc.html"><abbr title="lib/jsonschema.inc.php">jsonschema.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -223,13 +376,13 @@ Une liste est définie comme ayant pour clés les n premiers entiers, n étant l
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_is_assoc_arrayC">
         is_assoc_arrayC()
-        <a href="namespaces/default.html#function_is_assoc_arrayC" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/jsonschema.html#function_is_assoc_arrayC" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/jsonschema.inc.php"><a href="files/lib-jsonschema-inc.html"><abbr title="lib/jsonschema.inc.php">jsonschema.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -257,13 +410,13 @@ Une liste est définie comme ayant pour clés les n premiers entiers, n étant l
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_test_is_assoc_array">
         test_is_assoc_array()
-        <a href="namespaces/default.html#function_test_is_assoc_array" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/jsonschema.html#function_test_is_assoc_array" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/jsonschema.inc.php"><a href="files/lib-jsonschema-inc.html"><abbr title="lib/jsonschema.inc.php">jsonschema.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -392,9 +545,9 @@ Une liste est définie comme ayant pour clés les n premiers entiers, n étant l
                             <li class="phpdocumentor-on-this-page-section__title">Functions</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="namespaces/default.html#function_is_assoc_array">is_assoc_array()</a></li>
-                                                    <li><a href="namespaces/default.html#function_is_assoc_arrayC">is_assoc_arrayC()</a></li>
-                                                    <li><a href="namespaces/default.html#function_test_is_assoc_array">test_is_assoc_array()</a></li>
+                                                    <li><a href="namespaces/jsonschema.html#function_is_assoc_array">is_assoc_array()</a></li>
+                                                    <li><a href="namespaces/jsonschema.html#function_is_assoc_arrayC">is_assoc_arrayC()</a></li>
+                                                    <li><a href="namespaces/jsonschema.html#function_test_is_assoc_array">test_is_assoc_array()</a></li>
                                             </ul>
                 </li>
                     </ul>

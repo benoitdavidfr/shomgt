@@ -1,22 +1,21 @@
 <?php
-/*PhpDoc:
-title: geotiffs.inc.php - liste les GeoTiffs
-name: geotiffs.inc.php
-doc: |
-journal: |
-  6/6/2022:
-    - passage à gdalinfo -json
-  22/5/2022:
-    - utilisation EnvVar
-  24/4/2022:
-    - documentation
-*/
+/** liste les GeoTiffs
+ *
+ * journal: |
+ * - 6/6/2022:
+ *   - passage à gdalinfo -json
+ * - 22/5/2022:
+ *   - utilisation EnvVar
+ * - 24/4/2022:
+ *   - documentation
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/envvar.inc.php';
 
-/** @return array<int, string> */
-function geotiffs(): array { // liste des GeoTiffs 
+/** liste des GeoTiffs
+ * @return list<string> */
+function geotiffs(): array { //  
   $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
   $gtiffs = [];
   foreach (new DirectoryIterator($MAPS_DIR_PATH) as $map) {

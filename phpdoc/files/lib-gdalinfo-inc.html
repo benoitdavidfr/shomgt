@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,51 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">gdalinfo.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">Analyse un JSON fabriqué par GDAL INFO et en extrait les infos essentielles</p>
+
+    <section class="phpdocumentor-description"><p>Les infos essentielles sur la taille size et si le fichier est géoréférencé son ebox et son gbox</p>
+<p>journal: |</p>
+<ul>
+<li>26/7/2023:
+<ul>
+<li>le code pour calculer le gbox est faux lorsque le GéoTiff intersecte l'antiméridien</li>
+<li>modification du calcul de GdalInfo::$ebox pour contourner les erreurs sur coordinateSystem</li>
+</ul>
+</li>
+<li>6/6/2022:
+<ul>
+<li>réécriture pour fonctionner à la fois en GDAL 2 et en GDAL3 ; utilise la sortie de gdalinfo -json</li>
+</ul>
+</li>
+<li>22/5/2022:
+<ul>
+<li>modif. utilisation EnVar</li>
+</ul>
+</li>
+<li>3/5/2022:
+<ul>
+<li>utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH</li>
+<li>chagt du paramètre de GdalInfo::__construct()</li>
+</ul>
+</li>
+<li>28/4/2022:
+<ul>
+<li>correction d'un bug</li>
+<li>traitement du cas où le Tiff n'est pas géoréférencé alors seul size est renseigné</li>
+</ul>
+</li>
+<li>24/4/2022:
+<ul>
+<li>définition de la classe GdalInfo</li>
+</ul>
+</li>
+<li>18-20/4/2022:
+<ul>
+<li>création pour répondre aux besoins de décodage des infos CRS liées aux cartes Shom</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 

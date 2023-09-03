@@ -347,7 +347,7 @@ catch (ParseException $e) {
 }
 
 $parsed['$schema'] = __DIR__.'/'.$parsed['$schema'];
-$status = JsonSchema::autoCheck($parsed);
+$status = \jsonschema\JsonSchema::autoCheck($parsed);
 if ($status->ok()) {
   fprintf(STDERR, "Ok, shomgt.yaml conforme à son schéma\n");
   exit(0);

@@ -1,22 +1,21 @@
 <?php
-/*PhpDoc:
-title: isomd.inc.php - Récupération de MD ISO d'un GéoTiff
-name: isomd.inc.php
-doc: |
-  Récupère pour un GéoTiff 4 champs de métadonnées:
-    mdDate: date de modification des métadonnées
-    edition: édition de la carte, example: Edition n° 3 - 2016
-    lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
-    scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
-  La méthode statique read() retourne un array avec ces informations
-journal:
-  22/5/2022:
-    - utilisation EnVar
-  3/5/2022:
-    - correction bug
-    - changement du séparateur des milliers en '_' car 1) moins confusant que '.' et 2) utilisé par Php et Yaml
-    - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
-*/
+/** Récupération de MD ISO d'un GéoTiff
+ *
+ * Récupère dans le fichier XML ISO 19139 d'un GéoTiff les 4 champs de métadonnées suivants:
+ *   mdDate: date de modification des métadonnées
+ *   edition: édition de la carte, example: Edition n° 3 - 2016
+ *   lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
+ *   scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
+ * La méthode statique read() de la classe IsoMd retourne un dict. de ces informations
+ *
+ * journal:
+ * - 22/5/2022:
+ *   - utilisation EnVar
+ * - 3/5/2022:
+ *   - correction bug
+ *   - changement du séparateur des milliers en '_' car 1) moins confusant que '.' et 2) utilisé par Php et Yaml
+ *   - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/envvar.inc.php';
@@ -26,7 +25,7 @@ class IsoMd {
   const NoMatchForMdDate = 'IsoMd::NoMatchForMdDate';
   const NoMatchForEdition = 'IsoMd::NoMatchForEdition';
   
-  // pour un entier fournit une représentation avec un '_' comme séparateur des milliers 
+  /** pour un entier fournit une représentation avec un '_' comme séparateur des milliers */
   static function addUndescoreForThousand(int $int): string {
     if ($int < 0)
       return '-'.self::addUndescoreForThousand(-$int);

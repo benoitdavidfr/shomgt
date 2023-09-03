@@ -323,7 +323,7 @@ class TiffLayer extends Layer {
       foreach ($gt['outgrowth'] ?? [] as $i=> $outgrowth) {
         $intEbox = $qebox->intersects($outgrowth); // intersection entre le rect. requêté et l'excroissance
         if ($intEbox) {
-          $gtogth = new GeoTiff($gtname, $outgrowth, [], $debug);
+          $gtogth = new GeoTiff($gtname, $outgrowth, null, $debug);
           $gtogth->copyImage($grImage, $intEbox, $debug);
         }
       }

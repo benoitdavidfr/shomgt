@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -110,7 +114,50 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">grefimg.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">Définition de la classe GeoRefImage pour gérer une image géoréférencée</p>
+
+    <section class="phpdocumentor-description"><p>Ajout à une ressource <a href="https://www.php.net/manual/fr/book.image.php">GD</a></p>
+<ul>
+<li>d'un espace en coordonnées utilisateurs, typiquement un système de coordonnées projeté comme WorldMercator</li>
+<li>d'une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
+Il serait logique d'étendre cette notion de style aux écritures et aux rectangles.</li>
+</ul>
+<p>journal: |</p>
+<ul>
+<li>28/7/2022:
+<ul>
+<li>correction suite à analyse PhpStan level 4</li>
+</ul>
+</li>
+<li>8-9/7/2022:
+<ul>
+<li>ajout classe Style</li>
+<li>suppression méthode GeoRefImage::filledpolygon()</li>
+<li>modification des paramètres des méthodes GeoRefImage::polygon() et GeoRefImage::polyline()</li>
+</ul>
+</li>
+<li>10/6/2022:
+<ul>
+<li>revue de code</li>
+</ul>
+</li>
+<li>27/4/2022:
+<ul>
+<li>ajout GeoRefImage::imagefilledpolygon()</li>
+</ul>
+</li>
+<li>26/4/2022:
+<ul>
+<li>ajout GeoRefImage::imagefilledrectangle()</li>
+</ul>
+</li>
+<li>22/4/2022:
+<ul>
+<li>création</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -131,7 +178,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Http.html"><abbr title="\Http">Http</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Style.html"><abbr title="\Style">Style</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/GeoRefImage.html"><abbr title="\GeoRefImage">GeoRefImage</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Http.html"><abbr title="\Http">Http</abbr></a></dt><dd>classe portant le méthode getHttpError()</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Style.html"><abbr title="\Style">Style</abbr></a></dt><dd>Définition d&#039;un Style de représentation graphique des objets vecteurs inspiré de celui utilisé par Leaflet</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/GeoRefImage.html"><abbr title="\GeoRefImage">GeoRefImage</abbr></a></dt><dd>représente une image géo-référencée</dd>    </dl>
 
 
 

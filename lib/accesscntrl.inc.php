@@ -1,55 +1,53 @@
 <?php
-/*PhpDoc:
-name: accesscntrl.inc.php
-title: accesscntrl.inc.php - contrôle d'accès
-includes: [ log.inc.php, config.inc.php ]
-doc: |
-  Le contrôle d'accès utilise 3 modes de contrôle distincts:
-    1) vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
-      les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
-    2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
-    3) authentification HTTP Basic, utilisé pour le service WMS.
-  Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
-  Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
-    - exploite le fichier de config
-    - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
-    - expose la méthode cntrl() pour réaliser le contrôle 
-journal: |
-  10/8/2023:
-    - utilisation des logins, passwd et role en base de données
-  19/5/2022:
-    - adaptation pour sgserver de ShomGT3
-  23/1/2022:
-    ajout ipInBlackList() pour tile.php
-  27/12/2020:
-    ajout test admins
-  23/5/2020:
-    ajout du contrôle sur préfixe IPv6
-  30/3/2019:
-    adaptation pour ShomGt v2
-  16/12/2018:
-    détection d'une forte utilisation du service WMS par referer=http://10.56.204.34/seamis-sig/ & ip= 185.24.184.194
-    réactivation du contrôle d'accès sur le WMS
-  10/8/2018:
-    Ajout de la constante Access::CNTRLFORTILE pour déasctiver le controle d'accès par tuiles
-  22/7/2018:
-    ajout d'un mécanisme d'accès par referer
-    transformation en classe
-  6/6/2018:
-    prise en compte dans $whiteIpList de nouvelles adresses IP RIE
-    indiquées sur http://pne.metier.i2/adresses-presentees-sur-internet-a1012.html
-    page mise à jour le 5 avril 2018
-  25/6/2017:
-    ajout d'un paramètre nolog pour controler le log dans le wms
-  23/6/2017:
-    l'inclusion du fichier n'exécute plus la fonction
-  14/6/2017:
-    intégration du log pour tracer les refus d'accès
-  10/6/2017:
-    refonte
-  8/6/2017:
-    création
-*/
+/** contrôle d'accès
+ *
+ * Le contrôle d'accès utilise 3 modes de contrôle distincts:
+ *   1) vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
+ *      les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
+ *   2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
+ *   3) authentification HTTP Basic, utilisé pour le service WMS.
+ * Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
+ * Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
+ *   - exploite le fichier de config
+ *   - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
+ *   - expose la méthode cntrl() pour réaliser le contrôle 
+ *
+ * journal:
+ * - 10/8/2023:
+ *   - utilisation des logins, passwd et role en base de données
+ * - 19/5/2022:
+ *   - adaptation pour sgserver de ShomGT3
+ * - 23/1/2022:
+ *   - ajout ipInBlackList() pour tile.php
+ * - 27/12/2020:
+ *   - ajout test admins
+ * - 23/5/2020:
+ *   - ajout du contrôle sur préfixe IPv6
+ * - 30/3/2019:
+ *   - adaptation pour ShomGt v2
+ * - 16/12/2018:
+ *   - détection d'une forte utilisation du service WMS par referer=http://10.56.204.34/seamis-sig/ & ip= 185.24.184.194
+ *   - réactivation du contrôle d'accès sur le WMS
+ * - 10/8/2018:
+ *   - Ajout de la constante Access::CNTRLFORTILE pour déasctiver le controle d'accès par tuiles
+ * - 22/7/2018:
+ *   - ajout d'un mécanisme d'accès par referer
+ *   - transformation en classe
+ * - 6/6/2018:
+ *   - prise en compte dans $whiteIpList de nouvelles adresses IP RIE
+ *   - indiquées sur http://pne.metier.i2/adresses-presentees-sur-internet-a1012.html
+ *   - page mise à jour le 5 avril 2018
+ * - 25/6/2017:
+ *   - ajout d'un paramètre nolog pour controler le log dans le wms
+ * - 23/6/2017:
+ *   - l'inclusion du fichier n'exécute plus la fonction
+ * - 14/6/2017:
+ *   - intégration du log pour tracer les refus d'accès
+ * - 10/6/2017:
+ *   - refonte
+ * - 8/6/2017:
+ *   - création
+ */
 //die("OK ligne ".__LINE__." de ".__FILE__);
 require_once __DIR__.'/log.inc.php';
 require_once __DIR__.'/config.inc.php';

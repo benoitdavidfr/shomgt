@@ -1,41 +1,39 @@
 <?php
+/**
+ * définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes
+ *
+ * La classe abstraite BBox implémente des fonctionnalités génériques valables en coord. géo. comme euclidiennes
+ * Des classes héritées concrètes GBox et EBox implémentent les fonctionnalités spécifiques aux coord. géo.
+ * ou euclidiennes.
+ * Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
+ * qui permet de construire les primitives géométriques.
+ * Une position est stockée comme un array de 2 ou 3 nombres.
+ * On gère aussi une liste de positions comme array de positions et une liste de listes de positions
+ * comme array d'array de positions.
+ * 
+ * Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
+ * Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
+ *
+ * journal: |
+ * - 31/8/2023:
+ *   - modif de BBox pour mettre en readonly les prop. $min et $max, modif des méthodes modifiant $min ou $max
+ * - 15/8/2023:
+ *   - ajout de BBox::includes()
+ *   - modification de BBox::__toString()
+ *   - intégration dans GBox::__construct() de l'initialisation d'un GBox à partir du format Spatial
+ * - 28/7/2022:
+ *   - correction suite à analyse PhpStan level 4
+ * - 22/5/2022:
+ *   - correction d'un bug dans GBox::asGeoJsonBbox()
+ * - 29/4/2022:
+ *   - création d'un GBox à partir des coins SW et NE et prise en compte du cas où il intersecte l'anti-méridien
+ * - 9/3/2019:
+ *   - scission de gegeom.inc.php
+ * - 7/3/2019:
+ *   - création
+ */
 namespace gegeom;
-{/*PhpDoc:
-name:  gebox.inc.php
-title: gebox.inc.php - définition de classes définissant un BBox avec des coord. géographiques ou euclidiennes
-functions:
-classes:
-doc: |
-  La classe abstraite BBox implémente des fonctionnalités génériques valables en coord. géo. comme euclidiennes
-  Des classes héritées concrètes GBox et EBox implémentent les fonctionnalités spécifiques aux coord. géo.
-  ou euclidiennes.
-  Comme dans GeoJSON, on distingue la notion de Point, qui est une primitive géométrique, de la notion de position
-  qui permet de construire les primitives géométriques.
-  Une position est stockée comme un array de 2 ou 3 nombres.
-  On gère aussi une liste de positions comme array de positions et une liste de listes de positions
-  comme array d'array de positions.
-  
-  Les rectangles à cheval sur l'anti-méridien soulèvent des difficultés particulières.
-  Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
-journal: |
-  31/8/2023:
-    - modif de BBox pour mettre en readonly les prop. $min et $max, modif des méthodes modifiant $min ou $max
-  15/8/2023:
-    - ajout de BBox::includes()
-    - modification de BBox::__toString()
-    - intégration dans GBox::__construct() de l'initialisation d'un GBox à partir du format Spatial
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
-  22/5/2022:
-    - correction d'un bug dans GBox::asGeoJsonBbox()
-  29/4/2022:
-    - création d'un GBox à partir des coins SW et NE et prise en compte du cas où il intersecte l'anti-méridien
-  9/3/2019:
-    - scission de gegeom.inc.php
-  7/3/2019:
-    - création
-includes: [coordsys.inc.php, pos.inc.php, zoom.inc.php, sexcept.inc.php]
-*/}
+
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/coordsys.inc.php';
@@ -46,24 +44,22 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   echo "<!DOCTYPE html>\n<html><head><title>gebox@$_SERVER[HTTP_HOST]</title></head><body>\n";
 }
 
-{/*PhpDoc: classes
-name: BBox
-title: abstract class BBox - Gestion d'une BBox en coord. géo. ou euclidiennes, chaque point codé comme [lon, lat] ou [x, y]
-doc: |
-  Cette classe est abstraite.
-  2 classes concrètes en héritent, l'une avec des coord. géographiques, l'autre des coord. euclidiennes
-  Il existe une BBox particulière correspondant à un espace vide. A sa création sans paramètre la BBox est vide.
-*/}
+/** Gestion d'une BBox en coord. géo. ou euclidiennes, chaque position codé comme [lon, lat] ou [x, y]
+ *
+ * Cette classe est abstraite.
+ * 2 classes concrètes en héritent, l'une avec des coord. géographiques, l'autre des coord. euclidiennes
+ * Il existe une BBox particulière correspondant à un espace vide. A sa création sans paramètre la BBox est vide.
+ */
 abstract class BBox {
   const ErrorIncorrectNbOfParams = 'BBox::ErrorIncorrectNbOfParams';
   const ErrorIncorrectParams = 'BBox::ErrorIncorrectParams';
   const ErrorIncorrectPosTypeInBound = 'BBox::ErrorIncorrectPosTypeInBound';
   const ErrorIntersectsWithUndefBBox = 'BBox::ErrorIntersectsWithUndefBBox';
   
-  /** @var TPos $min */
-  public readonly array $min; // [number, number] ou []
-  /** @var TPos $max */
-  public readonly array $max; // [number, number] ou [], [] ssi $min == []
+  /** @var TPos $min [number, number] ou [] */
+  public readonly array $min;
+  /** @var TPos $max [number, number] ou [], [] ssi $min == [] */
+  public readonly array $max;
   
   /** Soit ne prend pas de paramètre et créée alors une BBox vide,
    * soit prend en paramètre un array de 2 ou 3 nombres (Pos) interprété comme une position,
@@ -129,7 +125,7 @@ abstract class BBox {
       throw new \SExcept("Erreur de BBox::__construct(".json_encode($param).")", self::ErrorIncorrectParams);
   }
 
-  // renvoit vrai ssi le bbox est vide
+  /** renvoit vrai ssi la bbox est vide */
   function empty(): bool { return (count($this->min) == 0); }
   
   /** retourne la BBox contenant à la fois $this et la position
@@ -150,10 +146,10 @@ abstract class BBox {
     }
   }
 
-  // si $this est indéfini alors le renvoit
-  // sinon crée un nouvel objet de la classe appelée avec des coord. arrondies
-  // en fonction de la $precision définie dans la classe appelée
-  /** @return static */
+  /** si $this est indéfini alors le renvoit
+   * sinon crée un nouvel objet de la classe appelée avec des coord. arrondies
+   * en fonction de la $precision définie dans la classe appelée
+   * @return static */
   function round(): BBox {
     if (!$this->min)
       return $this;
@@ -170,8 +166,8 @@ abstract class BBox {
   /** @return array<string, TPos> */
   function asArray(): array { return ['min'=> $this->min, 'max'=> $this->max]; }
   
-  // affiche la BBox en utilisant le format GeoJSON d'un Bbox
-  // avec des coord. arrondies en fonction de la $precision définie dans la classe appelée
+  /** affiche la BBox en utilisant le format GeoJSON d'un Bbox
+   * avec des coord. arrondies en fonction de la $precision définie dans la classe appelée */
   function __toString(): string {
     if (!$this->min)
       return '[]';
@@ -184,14 +180,14 @@ abstract class BBox {
   function east(): ?float  { return $this->min ? $this->max[0] : null; }
   function north(): ?float { return $this->min ? $this->max[1] : null; }
   
-  // retourne le centre de la BBox ou [] si elle est vide
-  /** @return TPos */
+  /** retourne le centre de la BBox ou [] si elle est vide
+   * @return TPos */
   function center(): array {
     return $this->min ? [($this->min[0]+$this->max[0])/2, ($this->min[1]+$this->max[1])/2] : [];
   }
   
-  // retourne un array d'array avec les 5 positions du polygone de la BBox ou [] si elle est vide
-  /** @return TLLPos */
+  /** retourne un array d'array avec les 5 positions du polygone de la BBox ou [] si elle est vide
+   * @return TLLPos */
   function polygon(): array {
     if (!$this->min)
       return [];
@@ -211,7 +207,7 @@ abstract class BBox {
     echo "BBox::union(b2=$b2)@$this -> $u<br>\n";
     return $u;
   }
-  /**
+  /** Retourne l'union de 2 BBox
   * @param $this $b2
   * @return static
   */
@@ -227,19 +223,11 @@ abstract class BBox {
     }
   }
   
-  // intersection de 2 bbox, si $this intersecte $b2 alors retourne le GBox/EBox d'intersection, sinon retourne null.
-  // Si un des 2 bbox est vide alors retourne null
-  // La déclaration PhpDocs précise que GBox X BBox -> GBox et EBox X BBox -> EBox
-  // PhpStan ne comprend pas le new get_called_class(), ca semble être un bug connu de PhpStan
-  function intersectsVerbose(BBox $b2): ?BBox {
-    $i = $this->intersects($b2);
-    echo "BBox::intersects(b2=$b2)@$this -> ",$i ? 'true' : 'false',"<br>\n";
-    return $i;
-  }
-  /**
-  * @param $this $b2
-  * @return static
-  */
+  /** intersection de 2 bbox, si $this intersecte $b2 alors retourne le GBox/EBox d'intersection, sinon retourne null.
+   *
+   * @param $this $b2
+   * @return static
+   */
   function intersects(BBox $b2): ?BBox {
     if (!$this->min || !$b2->min)
       return null;
@@ -251,6 +239,11 @@ abstract class BBox {
       return new (get_called_class())([$xmin, $ymin, $xmax, $ymax]);
     else
       return null;
+  }
+  function intersectsVerbose(BBox $b2): ?BBox {
+    $i = $this->intersects($b2);
+    echo "BBox::intersects(b2=$b2)@$this -> ",$i ? 'true' : 'false',"<br>\n";
+    return $i;
   }
   // Test unitaire de la méthode intersects
   static function intersectsTest(): void {
@@ -270,10 +263,11 @@ abstract class BBox {
     $b1->intersectsVerbose($b2);
   }
   
-  // version bouléenne de intersects()
+  /** version bouléenne de intersects() */
   function inters(BBox $b2): bool { return $this->intersects($b2) ? true : false; }
 
-  function includes(BBox $small, bool $show=false): bool { // teste si $small est strictement inclus dans $this
+  /** teste si $small est strictement inclus dans $this */
+  function includes(BBox $small, bool $show=false): bool {
     $result = ($this->min[0] < $small->min[0]) && ($this->min[1] < $small->min[1])
            && ($this->max[0] > $small->max[0]) && ($this->max[1] > $small->max[1]);
     if ($show)
@@ -282,20 +276,17 @@ abstract class BBox {
   }
 };
 
-{/*PhpDoc: classes
-name: GBox
-title: class GBox extends BBox - Gestion d'une BBox en coord. géo., chaque point codé comme [lon, lat]
-doc: |
-  Par convention, on cherche à respecter:
-    (-180 <= lon <= 180) && (-90 <= lat <= 90)
-  sauf pour les boites à cheval sur l'anti-méridien où:
-    (-180 <= lonmin <= 180 < lonmax <= 180+360 )
-  Cette convention est différente de celle utilisée par GeoJSON.
-  Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
-*/}
+/** BBox en coord. géo., chaque position codée comme [lon, lat]
+ *
+ * Par convention, on cherche à respecter:
+ *   (-180 <= lon <= 180) && (-90 <= lat <= 90)
+ * sauf pour les boites à cheval sur l'anti-méridien où:
+ *   (-180 <= lonmin <= 180 < lonmax <= 180+360 )
+ * Cette convention est différente de celle utilisée par GeoJSON.
+ * Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
+ */
 class GBox extends BBox {
   const ErrorParamInConstruct = 'GBox::ErrorParamInConstruct';
-  const ErrorSizeOfEmptyGBox = 'GBox::ErrorSizeOfEmptyGBox';
   const ErrorDistOfEmptyGBox = 'GBox::ErrorDistOfEmptyGBox';
   const ErrorDistanceOfEmptyGBox = 'GBox::ErrorDistanceOfEmptyGBox';
   
@@ -303,8 +294,9 @@ class GBox extends BBox {
   
   /** ajoute au mécanisme de création de BBox la possibilité de créer une GBox à partir d'un array
    * respectant le format Spatial défini dans MapCat et shomgt.yaml
+   *
    * Remplace la méthode statique fromGeoDMd() conservée pour la compatibilité avec le code existant
-   * @param string|TPos|TLPos|TLLPos|array{SW: string, NE: string} $param
+   * @param string|TPos|TLPos|TLLPos|TMapCatSpatial $param
    */
   function __construct(array|string $param=[]) {
     //echo "GBox::__construct(",json_encode($param),")<br>\n";
@@ -357,11 +349,13 @@ class GBox extends BBox {
   function dLon(): ?float  { return $this->min ? $this->max[0] - $this->min[0] : null; }
   function dLat(): ?float  { return $this->min ? $this->max[1] - $this->min[1] : null; }
  
-  // maintien de la méthode fromGeoDMd() pour conserver la compatibilité avec le code existant
-  /** @param array<string, string> $spatial */
+  /** maintien de la méthode fromGeoDMd() pour conserver la compatibilité avec le code existant
+   *
+   * @param TMapCatSpatial $spatial */
   static function fromGeoDMd(array $spatial): self { return new self($spatial); }
   
-  function intersectsAntiMeridian(): bool { return ($this->east() > 180); } // Teste l'intersection avec l'AM
+  /** Teste l'intersection avec l'AM */
+  function intersectsAntiMeridian(): bool { return ($this->east() > 180); }
 
   static function intersectsAntiMeridianTest(): void {
     foreach ([
@@ -373,39 +367,37 @@ class GBox extends BBox {
     }
   }
   
-  // renvoie un array de 4 coord [west, south, east, north] avec east < 180 conforme à la structuration dans GeoJSON
-  /** @return array<int, float> */
+  /** renvoie un array de 4 coord [west, south, east, north] avec east < 180 conforme à la structuration dans GeoJSON
+   * @return array<int, float> */
   function asGeoJsonBbox(): array {
     return [$this->west(), $this->south(), ($this->east() > 180) ? $this->east() - 360 : $this->east(), $this->north()];
   }
   
-  /** @return static */
-  function translate360West(): self { // retourne le GBox translaté de 360° vers l'ouest
+  /** retourne le GBox translaté de 360° vers l'ouest
+   * @return static */
+  function translate360West(): self {
     $called_class = get_called_class();
     return new $called_class([$this->west()-360, $this->south(), $this->east()-360, $this->north()]);
   }
   
-  /** @return static */
-  function translate360East(): self { // retourne le GBox translaté de 360° vers l'est
+  /** retourne le GBox translaté de 360° vers l'est
+   * @return static */
+  function translate360East(): self {
     $called_class = get_called_class();
     return new $called_class([$this->west()+360, $this->south(), $this->east()+360, $this->north()]);
   }
   
-  // taille max en degrés de longueur constante (Zoom::Size0 / 360) ou lève une exception si la BBox est vide
+  /** taille max en degrés de longueur constante (Zoom::Size0 / 360) ou rettourne 0 si la BBox est vide */
   function size(): float {
     if (!$this->min)
-      throw new \SExcept("Erreur de GBox::size() sur une GBox vide", self::ErrorSizeOfEmptyGBox);
+      return 0;
     $cos = cos(($this->max[1] + $this->min[1])/2 / 180 * pi()); // cosinus de la latitude moyenne
     return max($this->dlon() * $cos, $this->dlat());
   }
   
-  // distance la plus courte entre les points des 2 GBox, génère une erreur si une des 2 BBox est vide
-  // N'est pas une réelle distance entre GBox
-  function distVerbose(GBox $b2): float {
-    $d = $this->dist($b2);
-    echo "GBox::dist(b2=$b2)@$this -> ",$d,"<br>\n";
-    return $d;
-  }
+  /** distance la plus courte entre les position des 2 GBox, génère une exception si une des 2 BBox est vide
+   *
+   * N'est pas une réelle distance entre GBox */
   function dist(GBox $b2): float {
     if (!$this->min || !$b2->min)
       throw new \SExcept("Erreur de GBox::dist() avec une des GBox vide", self::ErrorDistOfEmptyGBox);
@@ -420,13 +412,18 @@ class GBox extends BBox {
       return max(($xmin-$xmax),0)*$cos + max(($ymin-$ymax), 0);
     }
   }
+  function distVerbose(GBox $b2): float {
+    $d = $this->dist($b2);
+    echo "GBox::dist(b2=$b2)@$this -> ",$d,"<br>\n";
+    return $d;
+  }
   static function distTest(): void {
     $b1 = new GBox([[0,0], [2,2]]);
     $b2 = new GBox([[1,1], [3,3]]);
     $b1->distVerbose($b2);
   }
   
-  // distance entre 2 boites, nulle ssi les 2 boites sont identiques
+  /** distance entre 2 boites, nulle ssi les 2 boites sont identiques */
   function distance(GBox $b2): float {
     if (!$this->min || !$b2->min)
       throw new \SExcept("Erreur de GBox::distance() avec une des GBox vide", self::ErrorDistanceOfEmptyGBox);
@@ -440,7 +437,8 @@ class GBox extends BBox {
   }
   
   /** teste si $small est strictement inclus dans $this
-   * redéfinition pour gérer des cas particuliers sur l'antiméridien
+   *
+   * redéfinie pour gérer des cas particuliers sur l'antiméridien
    * @param GBox $small */
   function includes(BBox $small, bool $show=false): bool {
     // $small doit avoir pour classe soit GBox soit une sous-classe de GBox
@@ -497,7 +495,7 @@ class GBox extends BBox {
     }
   }
   
-  // calcule la projection d'un GBox en utilisant $proj qui doit être défini comme projection dans coordsys
+  /** calcule la projection d'un GBox en utilisant $proj qui doit être défini comme projection dans coordsys */
   function proj(string $proj): EBox {
     if (strncmp($proj, 'UTM-', 4)==0) { // cas particulier de l'UTM
       $zone = substr($proj, 4);
@@ -533,7 +531,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   }
 }
 
-// Vérification que includes() peut être appelée avec small objet d'une sous-classe de GBox
+/** Vérification que includes() peut être appelée avec small objet d'une sous-classe de GBox */
 class GBoxSubClass extends GBox {
   static function includesTest(): void {
     foreach ([
@@ -557,39 +555,33 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   }
 }
 
-{/*PhpDoc: classes
-name: EBox
-title: class EBox extends BBox - Gestion d'une BBox en coord. projetées euclidiennes, chaque point codé comme [x, y]
-doc: |
-  On fait l'hypothèse que la projection fait correspondre l'axe X à la direction Ouest->Est
-  et l'axe Y à la direction Sud->Nord
-*/}
+/** BBox en coord. projetées euclidiennes, chaque position codée comme [x, y]
+ *
+ * On fait l'hypothèse que la projection fait correspondre l'axe X à la direction Ouest->Est
+ * et l'axe Y à la direction Sud->Nord
+ */
 class EBox extends BBox {
-  const ErrorSizeOfEmptyEBox = 'EBox::ErrorSizeOfEmptyEBox';
   const ErrorDistOnEmptyEBox = 'EBox::ErrorDistOnEmptyEBox';
   
-  static int $precision = 1; // nbre de chiffres après la virgule à conserver pour les positions
+  /** nbre de chiffres après la virgule à conserver pour les positions */
+  static int $precision = 1;
   
   function dx(): ?float  { return $this->min ? $this->max[0] - $this->min[0] : null; }
   function dy(): ?float  { return $this->min ? $this->max[1] - $this->min[1] : null; }
    
-  function translateInX(float $dx): self { // renvoie le rectangle translaté en X
+  /** renvoie le rectangle translaté en X */
+  function translateInX(float $dx): self {
     return new self([$this->min[0] + $dx, $this->min[1], $this->max[0] + $dx, $this->max[1]]);
   }
 
-  // taille max en unité ou lève une exception si la EBox est vide
+  /** taille max en unité ou retourne 0 si la EBox est vide */
   function size(): float {
     if (!$this->min)
-      throw new \SExcept("Erreur de EBox::size()  sur une EBox vide", self::ErrorSizeOfEmptyEBox);
+      return 0;
     return max($this->dx(), $this->dy());
   }
   
-  // distance min. entre les points de 2 BBox, génère une erreur si une des 2 BBox est vide
-  function distVerbose(EBox $b2): float {
-    $d = $this->dist($b2);
-    echo "EBox::dist(b2=$b2)@$this -> ",$d,"<br>\n";
-    return $d;
-  }
+  /** distance min. entre les positions de 2 BBox, génère une erreur si une des 2 BBox est vide */
   function dist(EBox $b2): float {
     if (!$this->min || !$b2->min)
       throw new \SExcept("Erreur de EBox::dist() avec une des EBox vide", self::ErrorDistOnEmptyEBox);
@@ -602,16 +594,21 @@ class EBox extends BBox {
     else
       return max(($xmin-$xmax),0) + max(($ymin-$ymax), 0);
   }
+  function distVerbose(EBox $b2): float {
+    $d = $this->dist($b2);
+    echo "EBox::dist(b2=$b2)@$this -> ",$d,"<br>\n";
+    return $d;
+  }
   static function distTest(): void {
     $b1 = new EBox([[0,0], [2,2]]);
     $b2 = new EBox([[1,1], [3,3]]);
     $b1->distVerbose($b2);
   }
   
-  // surface du Bbox
+  /** surface du Bbox */
   function area(): float { return $this->dx() * $this->dy(); }
 
-  // taux de couverture du Bbox $right par le Bbox $this
+  /** taux de couverture du Bbox $right par le Bbox $this */
   function covers(EBox $right): float {
     if (!($int = $this->intersects($right)))
       return 0;
@@ -619,20 +616,20 @@ class EBox extends BBox {
       return $int->area()/$right->area();
   }
   
-  // retourne le rectangle dilaté de $dilate
-  function dilate(float $dilate): EBox {
+  /** retourne le rectangle dilaté de $dilate */
+  function dilate(float $dilate): self {
     $min = [$this->min[0] - $dilate, $this->min[1] - $dilate];
     $max = [$this->max[0] + $dilate, $this->max[1] + $dilate];
-    return new EBox([$min, $max]);
+    return new self([$min, $max]);
   }
   
-  // calcule les coord.géo. d'un EBox en utilisant $proj qui doit être défini comme projection dans coordsys
+  /** calcule les coord.géo. d'un EBox en utilisant $proj qui doit être défini comme projection dans coordsys */
   function geo(string $proj): GBox {
     if (strncmp($proj, 'UTM-', 4)==0) { // cas particulier de l'UTM
       $zone = substr($proj, 4);
-      return new \gegeom\GBox([
+      return new GBox([
         \coordsys\UTM::geo($this->min, $zone),
-        \coordsys\UTM::geo($this->max,$zone)
+        \coordsys\UTM::geo($this->max, $zone)
       ]);
     }
     else {

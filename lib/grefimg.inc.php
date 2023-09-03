@@ -1,40 +1,36 @@
 <?php
-{/*PhpDoc:
-name:  grefimg.inc.php
-title: grefimg.inc.php - Définition de la classe GeoRefImage gérant une image géoréférencée
-doc: |
-  Définition de la classe GeoRefImage gérant une image géoréférencée.
-  Ajout sur la bibliothèque [GD](https://www.php.net/manual/fr/book.image.php)
-   - d'un espace en coordonnées utilisateurs, typiquement un système de coordonnées projeté comme WorldMercator
-   - d'une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
-  Il serait logique d'étendre cette notion de style aux écritures et aux rectangles.
-journal: |
-  28/7/2022:
-    - correction suite à analyse PhpStan level 4
-  8-9/7/2022:
-    - ajout classe Style
-    - suppression méthode GeoRefImage::filledpolygon()
-    - modification des paramètres des méthodes GeoRefImage::polygon() et GeoRefImage::polyline()
-  10/6/2022:
-    - revue de code
-  27/4/2022:
-    - ajout GeoRefImage::imagefilledpolygon()
-  26/4/2022:
-    - ajout GeoRefImage::imagefilledrectangle()
-  22/4/2022:
-    - création
-functions:
-classes:
-includes: [gebox.inc.php, sexcept.inc.php]
-*/}
+/** Définition de la classe GeoRefImage pour gérer une image géoréférencée
+ *
+ * Ajout à une ressource [GD](https://www.php.net/manual/fr/book.image.php)
+ *  - d'un espace en coordonnées utilisateurs, typiquement un système de coordonnées projeté comme WorldMercator
+ *  - d'une notion de style inspiré de Leaflet pour dessiner des polylignes et des polygones
+ * Il serait logique d'étendre cette notion de style aux écritures et aux rectangles.
+ *
+ * journal: |
+ * - 28/7/2022:
+ *   - correction suite à analyse PhpStan level 4
+ * - 8-9/7/2022:
+ *   - ajout classe Style
+ *   - suppression méthode GeoRefImage::filledpolygon()
+ *   - modification des paramètres des méthodes GeoRefImage::polygon() et GeoRefImage::polyline()
+ * - 10/6/2022:
+ *   - revue de code
+ * - 27/4/2022:
+ *   - ajout GeoRefImage::imagefilledpolygon()
+ * - 26/4/2022:
+ *   - ajout GeoRefImage::imagefilledrectangle()
+ * - 22/4/2022:
+ *   - création
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/sexcept.inc.php';
 require_once __DIR__.'/gebox.inc.php';
 
+/** classe portant le méthode getHttpError() */
 class Http {
-  // retourne le code Http et le message d'erreur retourné
-  /** @return array<string, string> */
+  /** retourne le code Http et le message d'erreur retourné
+   * @return array<string, string> */
   static function getHttpError(string $url): array {
     $context = stream_context_create(['http'=> ['ignore_errors'=> true]]); 
     $message = file_get_contents($url, false, $context);
@@ -46,12 +42,16 @@ class Http {
   }
 };
 
-// Style de représentation des objets vecteurs 
+/** Définition d'un Style de représentation graphique des objets vecteurs inspiré de celui utilisé par Leaflet */
 class Style {
-  protected string $title; // titre du style
-  protected ?int $color; // couleur de trait comme array RVB, si absent pas de couleur de trait
-  protected int $weight; // épaissur du trait, 1 par défaut
-  protected ?int $fillColor; // couleur de remplissage comme array RVB, si absent pas de remplissage
+  /** titre du style */
+  protected string $title;
+  /** couleur de trait comme array RVB, si absent pas de couleur de trait */
+  protected ?int $color;
+  /** épaissur du trait, 1 par défaut */
+  protected int $weight;
+  /** // couleur de remplissage comme array RVB, si absent pas de remplissage */
+  protected ?int $fillColor;
 
   /** @param array<string, int|float|array<int, int>> $style */
   function __construct(array $style, GeoRefImage $grImage) {
@@ -73,13 +73,11 @@ class Style {
   function fillColor(): ?int { return $this->fillColor; }
 };
 
-/*PhpDoc: classes
-name: GeoRefImage
-title: class GeoRefImage - représente une image géo-référencée
-doc: |
-  Une image géoréférencée est l'association d'une image GD et d'un EBox.
-  Les opérations GD peuvent ainsi être effectuées en coordonnées utilisateur plutôt qu'en coordonnées image
-  Les coordonnées utilisateur (X,Y) sont définies avec X de gauche à droite et Y du bas vers le haut.
+/** représente une image géo-référencée
+ *
+ * Une image géoréférencée est l'association d'une image GD et d'un EBox.
+ * Les opérations GD peuvent ainsi être effectuées en coordonnées utilisateur plutôt qu'en coordonnées image
+ * Les coordonnées utilisateur (X,Y) sont définies avec X de gauche à droite et Y du bas vers le haut.
 */
 class GeoRefImage {
   const ErrorCreate = 'GeoRefImage::ErrorCreate';
@@ -102,7 +100,7 @@ class GeoRefImage {
 
   function __construct(\gegeom\EBox $ebox, ?GdImage $image=null) { $this->ebox = $ebox; $this->image = $image; }
 
-  // création d'une image vide avec un fond soit transparent soit blanc
+  /** création d'une image vide avec un fond soit transparent soit blanc */
   function create(int $width, int $height, bool $transparent): void {
     $this->image = @imagecreatetruecolor($width, $height)
       or throw new SExcept("Erreur dans imagecreatetruecolor() pour GeoRefImage::create($width, $height)", self::ErrorCreate);
@@ -126,7 +124,8 @@ class GeoRefImage {
     }
   }
 
-  function createfrompng(string $filename): void { // chargement de l'image à partir d'un fichier ou d'une URL
+  /** chargement de l'image à partir d'un fichier ou d'une URL */
+  function createfrompng(string $filename): void {
     if (!($image = @imagecreatefrompng($filename))) {
       if (preg_match('!^https?://!', $filename)) {
         $httpError = Http::getHttpError($filename);
@@ -141,8 +140,7 @@ class GeoRefImage {
     $this->image = $image;
   }
 
-  // transforme en coordonnées image une position en coordonnées utilisateur
-  /**
+  /** transforme en coordonnées image une position en coordonnées utilisateur
   * @param TPos $uPos
   * @return array<int, int>
   */
@@ -154,8 +152,7 @@ class GeoRefImage {
     ];
   }
 
-  // transforme en coordonnées utilisateur une position en coordonnées image
-  /**
+  /** transforme en coordonnées utilisateur une position en coordonnées image
   * @param array<int, int> $imgPos
   * @return TPos
   */
@@ -166,8 +163,8 @@ class GeoRefImage {
     ];
   }
 
-  // recopie la partie de $srcImg correspondant à $qebox dans la zone de $this correspondant à $qebox
-  // $qebox est en coordonnées utilisateur
+  /** recopie la partie de $srcImg correspondant à $qebox dans la zone de $this correspondant à $qebox
+   * @param \gegeom\EBox  $qebox  en coordonnées utilisateur */
   function copyresampled(GeoRefImage $srcImg, \gegeom\EBox $qebox, bool $debug): void {
     $sw = [$qebox->west(), $qebox->south()]; // position SW de $qebox en coord. utilisateur
     $ne = [$qebox->east(), $qebox->north()]; // position NE de $qebox en coord. utilisateur
@@ -202,8 +199,8 @@ class GeoRefImage {
         $dst_x, $dst_y, $src_x, $src_y, $dst_width, $dst_height, $src_width, $src_height);
   }*/
   
-  // Alloue une couleur pour l'image
-  /** @param array<int, int> $rvb */
+  /** Alloue une couleur pour l'image
+   * @param list<int> $rvb  RVB comme liste de 3 entiers */
   function colorallocate(array $rvb): int {
     $color = @imagecolorallocate($this->image, $rvb[0], $rvb[1], $rvb[2]);
     if ($color === false)
@@ -211,8 +208,8 @@ class GeoRefImage {
     return $color;
   }
 
-  // Alloue une couleur avec alpha pour l'image
-  /** @param array<int, int> $rvba */
+  /** Alloue une couleur avec alpha pour l'image
+   * @param list<int> $rvba  RVBA comme liste de 4 entiers */
   function colorallocatealpha(array $rvba): int {
     $color = @imagecolorallocatealpha($this->image, $rvba[0], $rvba[1], $rvba[2], $rvba[3]);
     if ($color === false)
@@ -220,14 +217,14 @@ class GeoRefImage {
     return $color;
   }
   
-  // nécessaire pour conserver le canal alpha avant de générer l'image PNG avec le paramètre true ; 
-  // Le alphablending doit être désactivé (imagealphablending($im, false)) pour conserver le canal alpha en premier lieu. 
+  /** nécessaire pour conserver le canal alpha avant de générer l'image PNG avec le paramètre true ; 
+   * Le alphablending doit être désactivé (imagealphablending($im, false)) pour conserver le canal alpha en premier lieu. */
   function savealpha(bool $enable): void {
     @imagesavealpha($this->image, $enable)
       or throw new SExcept("Erreur imageSaveAlpha", self::ErrorSaveAlpha);
   }
   
-  // Dessine le rectangle en le remplissant avec la couleur
+  /** Dessine le rectangle en le remplissant avec la couleur */
   function filledrectangle(\gegeom\EBox $rect, int $color): void {
     $nw = $this->toImgPos([$rect->west(), $rect->north()], '');
     $se = $this->toImgPos([$rect->east(), $rect->south()], '');
@@ -235,7 +232,7 @@ class GeoRefImage {
       or throw new SExcept("erreur de imagefilledrectangle()", self::ErrorFilledRectangle);
   }
   
-  // Dessine le rectangle dans la couleur
+  /** Dessine le rectangle dans la couleur */
   function rectangle(\gegeom\EBox $rect, int $color): void {
     $nw = $this->toImgPos([$rect->west(), $rect->north()], '');
     $se = $this->toImgPos([$rect->east(), $rect->south()], '');
@@ -243,8 +240,8 @@ class GeoRefImage {
       or throw new SExcept("erreur de imagerectangle()", self::ErrorRectangle);
   }
   
-  // Dessine dans le style une polyligne définie par une liste de positiions
-  /** @param TLPos $lpos */
+  /** Dessine dans le style une polyligne définie par une liste de positiions
+   * @param TLPos $lpos */
   function polyline(array $lpos, Style $style): void {
     if (($color = $style->color()) === null)
       return;
@@ -260,8 +257,8 @@ class GeoRefImage {
     }
   }
   
-  // Dessine dans le style le polygone défini par une liste de positions
-  /** @param TLPos $lpos */
+  /** Dessine dans le style le polygone défini par une liste de positions
+   * @param TLPos $lpos */
   function polygon(array $lpos, Style $style): void {
     $points = [];
     foreach ($lpos as $i => $pos) {
@@ -280,9 +277,9 @@ class GeoRefImage {
     }
   }
   
-  // Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
-  // avec un cadre de fond de plan dans la couleur $bg_color
-  /** @param TPos $pos */
+  /** Dessine une chaine de caractère à une position en coord. utilisateur dans la fonte $font, la couleur $text_color
+   * avec un cadre de fond de plan dans la couleur $bg_color
+   * @param TPos $pos */
   function string(GdFont|int $font, array $pos, string $string, int $text_color, int $bg_color, bool $debug): void {
     $pos = $this->toImgPos($pos, '');
     

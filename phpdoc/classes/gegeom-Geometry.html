@@ -77,6 +77,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
@@ -178,7 +182,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
         &nbsp;= [&#039;Point&#039;, &#039;LineString&#039;, &#039;Polygon&#039;, &#039;MultiPoint&#039;, &#039;MultiLineString&#039;, &#039;MultiPolygon&#039;]                            </span>
 </dt>
-<dd>Liste des types de géoémtries homogènes</dd>
+<dd>Liste des types de géométries homogènes</dd>
 
     </dl>
 
@@ -235,6 +239,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
                                 &nbsp;: <abbr title="\gegeom\TPos">TPos</abbr>    </span>
 </dt>
+<dd>retourne un point de la géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_asArray">asArray()</a>
@@ -248,24 +253,28 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
                                 &nbsp;: <abbr title="\gegeom\TPos">TPos</abbr>    </span>
 </dt>
+<dd>renvoie le barycentre d&#039;une géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_decompose">decompose()</a>
     <span>
                                 &nbsp;: array&lt;int, <a href="classes/gegeom-Point.html"><abbr title="\gegeom\Point">Point</abbr></a>|<a href="classes/gegeom-LineString.html"><abbr title="\gegeom\LineString">LineString</abbr></a>|<a href="classes/gegeom-Polygon.html"><abbr title="\gegeom\Polygon">Polygon</abbr></a>&gt;    </span>
 </dt>
+<dd>Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_distanceToPos">distanceToPos()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>distance min. d&#039;une géométrie à une position</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_ebox">ebox()</a>
     <span>
                                 &nbsp;: <a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>    </span>
 </dt>
+<dd>retourne la EBox de la géométrie considérée comme euclidienne</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_eltTypes">eltTypes()</a>
@@ -286,6 +295,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
     <span>
                                 &nbsp;: <a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>    </span>
 </dt>
+<dd>retourne la GBox de la géométrie considérée comme géographique</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_geoms">geoms()</a>
@@ -294,7 +304,7 @@ avec des coordonnées euclidiennes en utilisant des méthodes soécifiques préf
 </dt>
 <dd>Retourne la liste des primitives contenues dans l&#039;objet sous la forme d&#039;objets
 Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&gt;[LineString], Polygon-&gt;[LineString],
-// MutiPolygon-&gt;[Polygon]</dd>
+MutiPolygon-&gt;[Polygon]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_nbreOfPos">nbreOfPos()</a>
@@ -307,6 +317,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
     <span>
                                 &nbsp;: <a href="classes/gegeom-Geometry.html"><abbr title="\gegeom\Geometry">Geometry</abbr></a>    </span>
 </dt>
+<dd>reprojète ue géométrie, prend en paramètre une fonction de reprojection d&#039;une position, retourne un objet géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_type">type()</a>
@@ -369,7 +380,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-        <p class="phpdocumentor-summary">Liste des types de géoémtries homogènes</p>
+        <p class="phpdocumentor-summary">Liste des types de géométries homogènes</p>
 
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -599,7 +610,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne un point de la géométrie</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">aPos</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\gegeom\TPos">TPos</abbr></span></code>
@@ -670,7 +682,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">renvoie le barycentre d&#039;une géométrie</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">center</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\gegeom\TPos">TPos</abbr></span></code>
@@ -705,7 +718,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Décompose une géométrie en une liste de géométries élémentaires (Point|LineString|Polygon)</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">decompose</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/gegeom-Point.html"><abbr title="\gegeom\Point">Point</abbr></a>|<a href="classes/gegeom-LineString.html"><abbr title="\gegeom\LineString">LineString</abbr></a>|<a href="classes/gegeom-Polygon.html"><abbr title="\gegeom\Polygon">Polygon</abbr></a>&gt;</span></code>
@@ -740,7 +754,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">distance min. d&#039;une géométrie à une position</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">distanceToPos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -785,7 +800,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la EBox de la géométrie considérée comme euclidienne</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">ebox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></span></code>
@@ -902,7 +918,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la GBox de la géométrie considérée comme géographique</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">gbox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a></span></code>
@@ -939,7 +956,7 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
         <p class="phpdocumentor-summary">Retourne la liste des primitives contenues dans l&#039;objet sous la forme d&#039;objets
 Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&gt;[LineString], Polygon-&gt;[LineString],
-// MutiPolygon-&gt;[Polygon]</p>
+MutiPolygon-&gt;[Polygon]</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1010,7 +1027,8 @@ Point -&gt; [], MutiPoint-&gt;[Point], LineString-&gt;[Point], MultiLineString-&
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">reprojète ue géométrie, prend en paramètre une fonction de reprojection d&#039;une position, retourne un objet géométrie</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">reproject</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reprojPos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-Geometry.html"><abbr title="\gegeom\Geometry">Geometry</abbr></a></span></code>

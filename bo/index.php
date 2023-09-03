@@ -125,6 +125,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='../lib/gegeom.inc.php'>lib/gegeom.inc.php - package géométrique</a></li>\n";
     echo "<li><a href='../lib/gebox.inc.php'>lib/gebox.inc.php - boites</a></li>\n";
     echo "<li><a href='../lib/pos.inc.php'>lib/pos.inc.php - types Pos, ...</a></li>\n";
+    echo "<li><a href='../lib/coordsys.inc.php'>lib/coordsys.inc.php - systèmes de coordonnées.</a></li>\n";
     echo "<li><a href='../lib/jsonschema.inc.php'>lib/jsonschema.inc.php</a></li>\n";
     break;
   }
