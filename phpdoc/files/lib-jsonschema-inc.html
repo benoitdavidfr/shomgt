@@ -132,8 +132,15 @@ La classe est utilisée avec des valeurs Php
 Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
 Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.</li>
 </ul>
-<p>journal: |</p>
+<p>journal:</p>
 <ul>
+<li>3/9/2023:
+<ul>
+<li>reformattage de la doc en PHPDoc</li>
+<li>définition d'un espace de noms</li>
+<li>suppression de is_assoc_array() replacé par !array_is_list()</li>
+</ul>
+</li>
 <li>22/1/2021:
 <ul>
 <li>passage à Php 8</li>
@@ -292,147 +299,12 @@ voir http://localhost/schema/?action=check&amp;file=ex/route500</li>
 
 
 
-<h4 id="toc-functions">
-    Functions
-    <a href="files/lib-jsonschema-inc.html#toc-functions" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/jsonschema.html#function_is_assoc_array">is_assoc_array()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>is_assoc_array() - teste si un array est un tableau associatif ou une liste
-Une liste est définie comme ayant pour clés les n premiers entiers, n étant la longueur de la liste.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/jsonschema.html#function_is_assoc_arrayC">is_assoc_arrayC()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/jsonschema.html#function_test_is_assoc_array">test_is_assoc_array()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-
-    </dl>
 
 
 
         
 
-            <section class="phpdocumentor-functions">
-        <h3 class="phpdocumentor-elements__header" id="functions">
-            Functions
-            <a href="files/lib-jsonschema-inc.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_is_assoc_array">
-        is_assoc_array()
-        <a href="namespaces/jsonschema.html#function_is_assoc_array" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="lib/jsonschema.inc.php"><a href="files/lib-jsonschema-inc.html"><abbr title="lib/jsonschema.inc.php">jsonschema.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">107</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">is_assoc_array() - teste si un array est un tableau associatif ou une liste
-Une liste est définie comme ayant pour clés les n premiers entiers, n étant la longueur de la liste.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">is_assoc_array</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-        <section class="phpdocumentor-description"><p>Un array qui n'est pas une liste est un tableau associatif.
-[] est considérée comme une liste et donc pas un tableau associatif</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$array</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_is_assoc_arrayC">
-        is_assoc_arrayC()
-        <a href="namespaces/jsonschema.html#function_is_assoc_arrayC" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="lib/jsonschema.inc.php"><a href="files/lib-jsonschema-inc.html"><abbr title="lib/jsonschema.inc.php">jsonschema.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">112</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">is_assoc_arrayC</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$array</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_test_is_assoc_array">
-        test_is_assoc_array()
-        <a href="namespaces/jsonschema.html#function_test_is_assoc_array" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="lib/jsonschema.inc.php"><a href="files/lib-jsonschema-inc.html"><abbr title="lib/jsonschema.inc.php">jsonschema.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">118</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">test_is_assoc_array</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-    
-    
-
-    
-</article>
-            </section>
-
+        
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
@@ -537,19 +409,10 @@ Une liste est définie comme ayant pour clés les n premiers entiers, n étant l
             <li>
                 <ul class="phpdocumentor-list -clean">
                                                                                                         <li><a href="files/lib-jsonschema-inc.html#toc-classes">Classes</a></li>
-                                                                                                                            <li><a href="files/lib-jsonschema-inc.html#toc-functions">Functions</a></li>
-                                    </ul>
+                                                                                                                    </ul>
             </li>
 
             
-                            <li class="phpdocumentor-on-this-page-section__title">Functions</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="namespaces/jsonschema.html#function_is_assoc_array">is_assoc_array()</a></li>
-                                                    <li><a href="namespaces/jsonschema.html#function_is_assoc_arrayC">is_assoc_arrayC()</a></li>
-                                                    <li><a href="namespaces/jsonschema.html#function_test_is_assoc_array">test_is_assoc_array()</a></li>
-                                            </ul>
-                </li>
                     </ul>
     </section>
 

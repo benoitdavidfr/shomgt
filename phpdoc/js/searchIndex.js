@@ -3181,21 +3181,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/IsoMd.html#constant_NoMatchForEdition"
         },                {
-            "fqsen": "\\jsonschema\\is_assoc_array\u0028\u0029",
-            "name": "is_assoc_array",
-            "summary": "is_assoc_array\u0028\u0029\u0020\u002D\u0020teste\u0020si\u0020un\u0020array\u0020est\u0020un\u0020tableau\u0020associatif\u0020ou\u0020une\u0020liste\nUne\u0020liste\u0020est\u0020d\u00E9finie\u0020comme\u0020ayant\u0020pour\u0020cl\u00E9s\u0020les\u0020n\u0020premiers\u0020entiers,\u0020n\u0020\u00E9tant\u0020la\u0020longueur\u0020de\u0020la\u0020liste.",
-            "url": "namespaces/jsonschema.html#function_is_assoc_array"
-        },                {
-            "fqsen": "\\jsonschema\\is_assoc_arrayC\u0028\u0029",
-            "name": "is_assoc_arrayC",
-            "summary": "",
-            "url": "namespaces/jsonschema.html#function_is_assoc_arrayC"
-        },                {
-            "fqsen": "\\jsonschema\\test_is_assoc_array\u0028\u0029",
-            "name": "test_is_assoc_array",
-            "summary": "",
-            "url": "namespaces/jsonschema.html#function_test_is_assoc_array"
-        },                {
             "fqsen": "\\jsonschema\\Status",
             "name": "Status",
             "summary": "Statut\u0020de\u0020v\u00E9rification\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020\u00E0\u0020un\u0020sch\u00E9ma",
