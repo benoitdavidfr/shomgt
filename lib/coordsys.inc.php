@@ -210,7 +210,7 @@ class WebMercator extends IAG_GRS_1980 implements iCoordSys {
   }
 };
 
-/** définition Les système de coordonnées LonLatDd correspond aux coord. géo. en degrés décimaux dans l'ordre (lon,lat) */
+/** définition du système de coordonnées LonLatDd correspondant aux coord. géo. en degrés décimaux dans l'ordre (lon,lat) */
 class LonLatDd extends IAG_GRS_1980 implements iCoordSys {
   static function proj(array $lonlat, ?string $proj=null): array { return $lonlat; }
   static function geo(array $xy, ?string $proj=null): array { return $xy; }
@@ -225,8 +225,10 @@ class LatLonDd extends IAG_GRS_1980 implements iCoordSys {
 /** définition d'un ellipsoide paramétrable
  *
  * La classe porte d'une part les constantes définissant différents ellipsoides et, d'autre part,
- * la définition d'un ellipsoide courant. Par défaut utilisation de l'ellipsoide IAG_GRS_1980
- * L'ellipsoide de Clarke 1866 peut être sélectionné pour tester l'exemple USGS sur UTM
+ * la définition d'un ellipsoide courant. Par défaut utilisation de l'ellipsoide IAG_GRS_1980.
+ *
+ * L'ellipsoide de Clarke 1866 est sélectionné pour tester l'exemple USGS sur UTM.
+ *
  * D'autres ellipsoides peuvent être ajoutés au besoin.
  * https://en.wikipedia.org/wiki/Earth_ellipsoid */
 class Ellipsoid implements iEllipsoid {

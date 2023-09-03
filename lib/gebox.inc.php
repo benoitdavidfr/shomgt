@@ -44,7 +44,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   echo "<!DOCTYPE html>\n<html><head><title>gebox@$_SERVER[HTTP_HOST]</title></head><body>\n";
 }
 
-/** Gestion d'une BBox en coord. géo. ou euclidiennes, chaque position codé comme [lon, lat] ou [x, y]
+/** Boite englobante en coord. géo. ou euclidiennes, chaque position codée comme [lon, lat] ou [x, y]
  *
  * Cette classe est abstraite.
  * 2 classes concrètes en héritent, l'une avec des coord. géographiques, l'autre des coord. euclidiennes

@@ -1508,7 +1508,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\LonLatDd",
             "name": "LonLatDd",
-            "summary": "d\u00E9finition\u0020Les\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LonLatDd\u0020correspond\u0020aux\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lon,lat\u0029",
+            "summary": "d\u00E9finition\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LonLatDd\u0020correspondant\u0020aux\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lon,lat\u0029",
             "url": "classes/coordsys-LonLatDd.html"
         },                {
             "fqsen": "\\coordsys\\LonLatDd\u003A\u003Aproj\u0028\u0029",
@@ -1823,7 +1823,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\BBox",
             "name": "BBox",
-            "summary": "Gestion\u0020d\u0027une\u0020BBox\u0020en\u0020coord.\u0020g\u00E9o.\u0020ou\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9\u0020comme\u0020\u005Blon,\u0020lat\u005D\u0020ou\u0020\u005Bx,\u0020y\u005D",
+            "summary": "Boite\u0020englobante\u0020en\u0020coord.\u0020g\u00E9o.\u0020ou\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Blon,\u0020lat\u005D\u0020ou\u0020\u005Bx,\u0020y\u005D",
             "url": "classes/gegeom-BBox.html"
         },                {
             "fqsen": "\\gegeom\\BBox\u003A\u003A__construct\u0028\u0029",
@@ -2428,7 +2428,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPoint",
             "name": "MultiPoint",
-            "summary": "Une\u0020liste\u0020de\u0020points,\u0020peut\u002D\u00EAtre\u0020vide",
+            "summary": "Une\u0020liste\u0020de\u0020points,\u0020\u00E9ventuellement\u0020vide",
             "url": "classes/gegeom-MultiPoint.html"
         },                {
             "fqsen": "\\gegeom\\MultiPoint\u003A\u003A__construct\u0028\u0029",
@@ -2493,7 +2493,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\LineString",
             "name": "LineString",
-            "summary": "contient\u0020au\u0020moins\u00202\u0020positions",
+            "summary": "Ligne\u0020bris\u00E9e,\u0020contient\u0020au\u0020moins\u00202\u0020positions",
             "url": "classes/gegeom-LineString.html"
         },                {
             "fqsen": "\\gegeom\\LineString\u003A\u003A__construct\u0028\u0029",
@@ -2573,7 +2573,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiLineString",
             "name": "MultiLineString",
-            "summary": "contient\u0020une\u0020liste\u0020de\u0020liste\u0020de\u0020positions,\u0020chaque\u0020liste\u0020de\u0020positions\u0020en\u0020contient\u0020au\u0020moins\u00202",
+            "summary": "Liste\u0020de\u0020lignes\u0020bris\u00E9es",
             "url": "classes/gegeom-MultiLineString.html"
         },                {
             "fqsen": "\\gegeom\\MultiLineString\u003A\u003A__construct\u0028\u0029",
@@ -2643,7 +2643,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\Polygon",
             "name": "Polygon",
-            "summary": "Polygon\u0020au\u0020sens\u0020GeoJSON",
+            "summary": "Polygone\u0020au\u0020sens\u0020GeoJSON,\u0020cad\u0020avec\u0020une\u0020limite\u0020ext\u00E9rieure\u0020et\u0020\u00E9ventuellement\u0020des\u0020limites\u0020int\u00E9rieures\u0020ou\u0020trous",
             "url": "classes/gegeom-Polygon.html"
         },                {
             "fqsen": "\\gegeom\\Polygon\u003A\u003A__construct\u0028\u0029",
@@ -2738,7 +2738,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\MultiPolygon",
             "name": "MultiPolygon",
-            "summary": "Chaque\u0020polygone\u0020respecte\u0020les\u0020contraintes\u0020du\u0020Polygon",
+            "summary": "Liste\u0020de\u0020polygones",
             "url": "classes/gegeom-MultiPolygon.html"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003AfromGeoArray\u0028\u0029",
@@ -2833,7 +2833,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\gegeom\\GeometryCollection",
             "name": "GeometryCollection",
-            "summary": "Une\u0020collection\u0020correspond\u0020\u00E0\u0020une\u0020liste\u0020d\u0027objets\u0020g\u00E9om\u00E9triques\u0020de\u0020ka\u0020classe\u0020Geometry",
+            "summary": "Liste\u0020d\u0027objets\u0020g\u00E9om\u00E9triques\u0020de\u0020ka\u0020classe\u0020Geometry",
             "url": "classes/gegeom-GeometryCollection.html"
         },                {
             "fqsen": "\\gegeom\\GeometryCollection\u003A\u003A__construct\u0028\u0029",
@@ -3196,119 +3196,119 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/jsonschema.html#function_test_is_assoc_array"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus",
-            "name": "JsonSchStatus",
-            "summary": "d\u00E9finit\u0020un\u0020statut\u0020de\u0020v\u00E9rification\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance",
-            "url": "classes/jsonschema-JsonSchStatus.html"
+            "fqsen": "\\jsonschema\\Status",
+            "name": "Status",
+            "summary": "Statut\u0020de\u0020v\u00E9rification\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020\u00E0\u0020un\u0020sch\u00E9ma",
+            "url": "classes/jsonschema-Status.html"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchStatus.html#method___construct"
+            "url": "classes/jsonschema-Status.html#method___construct"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A__toString\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchStatus.html#method___toString"
+            "url": "classes/jsonschema-Status.html#method___toString"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AsetError\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003AsetError\u0028\u0029",
             "name": "setError",
             "summary": "ajoute\u0020une\u0020erreur,\u0020retourne\u0020\u0024this",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_setError"
+            "url": "classes/jsonschema-Status.html#method_setError"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AsetErrorBranch\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003AsetErrorBranch\u0028\u0029",
             "name": "setErrorBranch",
             "summary": "ajoute\u0020une\u0020branche\u0020d\u0027erreurs,\u0020retourne\u0020\u0024this",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_setErrorBranch"
+            "url": "classes/jsonschema-Status.html#method_setErrorBranch"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003Aok\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003Aok\u0028\u0029",
             "name": "ok",
             "summary": "retourne\u0020true\u0020ssi\u0020pas\u0020d\u0027erreur",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_ok"
+            "url": "classes/jsonschema-Status.html#method_ok"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A\u0024errors",
+            "fqsen": "\\jsonschema\\Status\u003A\u003A\u0024errors",
             "name": "errors",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchStatus.html#property_errors"
+            "url": "classes/jsonschema-Status.html#property_errors"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AshowErrors\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003AshowErrors\u0028\u0029",
             "name": "showErrors",
             "summary": "affiche\u0020les\u0020erreurs",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_showErrors"
+            "url": "classes/jsonschema-Status.html#method_showErrors"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AsetWarning\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003AsetWarning\u0028\u0029",
             "name": "setWarning",
             "summary": "ajoute\u0020un\u0020warning",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_setWarning"
+            "url": "classes/jsonschema-Status.html#method_setWarning"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003A\u0024warnings",
+            "fqsen": "\\jsonschema\\Status\u003A\u003A\u0024warnings",
             "name": "warnings",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchStatus.html#property_warnings"
+            "url": "classes/jsonschema-Status.html#property_warnings"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003AshowWarnings\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003AshowWarnings\u0028\u0029",
             "name": "showWarnings",
             "summary": "affiche\u0020les\u0020warnings",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_showWarnings"
+            "url": "classes/jsonschema-Status.html#method_showWarnings"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchStatus\u003A\u003Aappend\u0028\u0029",
+            "fqsen": "\\jsonschema\\Status\u003A\u003Aappend\u0028\u0029",
             "name": "append",
             "summary": "ajoute\u0020\u00E0\u0020la\u0020fin\u0020du\u0020statut\u0020courant\u0020le\u0020statut\u0020en\u0020param\u00E8tre\u0020et\u0020renvoie\u0020le\u0020statut\u0020courant",
-            "url": "classes/jsonschema-JsonSchStatus.html#method_append"
+            "url": "classes/jsonschema-Status.html#method_append"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch",
-            "name": "JsonSch",
-            "summary": "class\u0020JsonSch\u0020\u002D\u0020classe\u0020statique\u0020portant\u0020qqs\u0020m\u00E9thodes\u0020statiques",
-            "url": "classes/jsonschema-JsonSch.html"
+            "fqsen": "\\jsonschema\\Lib",
+            "name": "Lib",
+            "summary": "classe\u0020statique\u0020portant\u0020qqs\u0020m\u00E9thodes\u0020statiques",
+            "url": "classes/jsonschema-Lib.html"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Apredef\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003Apredef\u0028\u0029",
             "name": "predef",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_predef"
+            "url": "classes/jsonschema-Lib.html#method_predef"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Aderef\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003Aderef\u0028\u0029",
             "name": "deref",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_deref"
+            "url": "classes/jsonschema-Lib.html#method_deref"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003AsubElement\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003AsubElement\u0028\u0029",
             "name": "subElement",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_subElement"
+            "url": "classes/jsonschema-Lib.html#method_subElement"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003AsubElementC\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003AsubElementC\u0028\u0029",
             "name": "subElementC",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_subElementC"
+            "url": "classes/jsonschema-Lib.html#method_subElementC"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Atest_subElement\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003Atest_subElement\u0028\u0029",
             "name": "test_subElement",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_test_subElement"
+            "url": "classes/jsonschema-Lib.html#method_test_subElement"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Afile_get_contents\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003Afile_get_contents\u0028\u0029",
             "name": "file_get_contents",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_file_get_contents"
+            "url": "classes/jsonschema-Lib.html#method_file_get_contents"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003Aencode\u0028\u0029",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003Aencode\u0028\u0029",
             "name": "encode",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#method_encode"
+            "url": "classes/jsonschema-Lib.html#method_encode"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003A\u0024predefs",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003A\u0024predefs",
             "name": "predefs",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#property_predefs"
+            "url": "classes/jsonschema-Lib.html#property_predefs"
         },                {
-            "fqsen": "\\jsonschema\\JsonSch\u003A\u003A\u0024patterns",
+            "fqsen": "\\jsonschema\\Lib\u003A\u003A\u0024patterns",
             "name": "patterns",
             "summary": "",
-            "url": "classes/jsonschema-JsonSch.html#property_patterns"
+            "url": "classes/jsonschema-Lib.html#property_patterns"
         },                {
             "fqsen": "\\jsonschema\\JsonSchema",
             "name": "JsonSchema",
-            "summary": "sch\u00E9ma\u0020JSON\u0020d\u00E9fini\u0020soit\u0020dans\u0020un\u0020fichier\u0020par\u0020un\u0020chemin,\u0020soit\u0020par\u0020un\u0020array\u0020Php",
+            "summary": "sch\u00E9ma\u0020JSON\u0020initialis\u00E9\u0020soit\u0020par\u0020un\u0020chemin\u0020dans\u0020un\u0020fichier\u0020JSON\/Yaml,\u0020soit\u0020par\u0020un\u0020array\u0020Php",
             "url": "classes/jsonschema-JsonSchema.html"
         },                {
             "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A__construct\u0028\u0029",
@@ -3328,7 +3328,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\jsonschema\\JsonSchema\u003A\u003Acheck\u0028\u0029",
             "name": "check",
-            "summary": "check\u0020\u002D\u0020validation\u0020de\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020au\u0020JsonSchema,\u0020renvoit\u0020un\u0020JsonSchStatus",
+            "summary": "check\u0020\u002D\u0020v\u00E9rification\u0020de\u0020la\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020au\u0020JsonSchema,\u0020renvoit\u0020un\u0020Status",
             "url": "classes/jsonschema-JsonSchema.html#method_check"
         },                {
             "fqsen": "\\jsonschema\\JsonSchema\u003A\u003AautoCheck\u0028\u0029",
@@ -3366,120 +3366,120 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/jsonschema-JsonSchema.html#property_status"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment",
-            "name": "JsonSchFragment",
-            "summary": "classe\u0020utilis\u00E9e\u0020par\u0020JsonSchema\u0020d\u00E9finissant\u0020un\u0020fragment\u0020d\u0027un\u0020schema\u0020JSON",
-            "url": "classes/jsonschema-JsonSchFragment.html"
+            "fqsen": "\\jsonschema\\Fragment",
+            "name": "Fragment",
+            "summary": "classe\u0020utilis\u00E9e\u0020par\u0020Schema\u0020d\u00E9finissant\u0020un\u0020fragment\u0020d\u0027un\u0020schema\u0020JSON",
+            "url": "classes/jsonschema-Fragment.html"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#method___construct"
+            "url": "classes/jsonschema-Fragment.html#method___construct"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A__toString\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#method___toString"
+            "url": "classes/jsonschema-Fragment.html#method___toString"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A\u0024def",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003A\u0024def",
             "name": "def",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#property_def"
+            "url": "classes/jsonschema-Fragment.html#property_def"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AschemaOfProperty\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AschemaOfProperty\u0028\u0029",
             "name": "schemaOfProperty",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_schemaOfProperty"
+            "url": "classes/jsonschema-Fragment.html#method_schemaOfProperty"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003Acheck\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003Acheck\u0028\u0029",
             "name": "check",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_check"
+            "url": "classes/jsonschema-Fragment.html#method_check"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckRef\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckRef\u0028\u0029",
             "name": "checkRef",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020\u0024ref",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkRef"
+            "url": "classes/jsonschema-Fragment.html#method_checkRef"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckAnyOf\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckAnyOf\u0028\u0029",
             "name": "checkAnyOf",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020anyOf",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkAnyOf"
+            "url": "classes/jsonschema-Fragment.html#method_checkAnyOf"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckOneOf\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckOneOf\u0028\u0029",
             "name": "checkOneOf",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020oneOf",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkOneOf"
+            "url": "classes/jsonschema-Fragment.html#method_checkOneOf"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckAllOf\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckAllOf\u0028\u0029",
             "name": "checkAllOf",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020allOf",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkAllOf"
+            "url": "classes/jsonschema-Fragment.html#method_checkAllOf"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckNot\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckNot\u0028\u0029",
             "name": "checkNot",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020schema\u0020est\u0020d\u00E9fini\u0020par\u0020un\u0020not",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkNot"
+            "url": "classes/jsonschema-Fragment.html#method_checkNot"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckType\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckType\u0028\u0029",
             "name": "checkType",
             "summary": "v\u00E9rifie\u0020la\u0020compatibilit\u00E9\u0020entre\u0020le\u0020type\u0020indiqu\u00E9\u0020par\u0020le\u0020schema\u0020et\u0020le\u0020type\u0020Php\u0020de\u0020l\u0027instance",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkType"
+            "url": "classes/jsonschema-Fragment.html#method_checkType"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckObject\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckObject\u0028\u0029",
             "name": "checkObject",
             "summary": "traitement\u0020des\u0020propri\u00E9t\u00E9s\u0020li\u00E9es\u0020aux\u0020objets",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkObject"
+            "url": "classes/jsonschema-Fragment.html#method_checkObject"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckArray\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckArray\u0028\u0029",
             "name": "checkArray",
             "summary": "traitement\u0020des\u0020propri\u00E9t\u00E9s\u0020d\u0027array",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkArray"
+            "url": "classes/jsonschema-Fragment.html#method_checkArray"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckUniqueItems\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckUniqueItems\u0028\u0029",
             "name": "checkUniqueItems",
             "summary": "v\u00E9rifie\u0020si\u0020les\u0020valeurs\u0020de\u0020l\u0027array\u0020\u0024array\u0020sont\u0020distinctes\u00202\u0020\u00E0\u00202\nPour\u0020cela\u0020les\u0020valeurs\u0020sont\u0020transform\u00E9es\u0020en\u0020chaine\u0020pour\u0020utiliser\u0020array_unique\u0028\u0029",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkUniqueItems"
+            "url": "classes/jsonschema-Fragment.html#method_checkUniqueItems"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckTuple\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckTuple\u0028\u0029",
             "name": "checkTuple",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020type\u0020indique\u0020que\u0020la\u0020valeur\u0020est\u0020un\u0020object",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkTuple"
+            "url": "classes/jsonschema-Fragment.html#method_checkTuple"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckNumberOrInteger\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckNumberOrInteger\u0028\u0029",
             "name": "checkNumberOrInteger",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020type\u0020indique\u0020que\u0020l\u0027instance\u0020est\u0020un\u0020num\u00E9rique\u0020ou\u0020un\u0020entier",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkNumberOrInteger"
+            "url": "classes/jsonschema-Fragment.html#method_checkNumberOrInteger"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AhasNoFractionalPart\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AhasNoFractionalPart\u0028\u0029",
             "name": "hasNoFractionalPart",
             "summary": "teste\u0020l\u0027absence\u0020de\u0020partie\u0020fractionaire\u0020du\u0020nombre\u0020pass\u00E9\u0020en\u0020param\u00E8tre,\u0020en\u0020pratique\u0020elle\u0020doit\u0020\u00EAtre\u0020tr\u00E8s\u0020faible",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_hasNoFractionalPart"
+            "url": "classes/jsonschema-Fragment.html#method_hasNoFractionalPart"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckString\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckString\u0028\u0029",
             "name": "checkString",
             "summary": "traitement\u0020du\u0020cas\u0020o\u00F9\u0020le\u0020type\u0020indique\u0020que\u0020l\u0027instance\u0020est\u0020une\u0020chaine\u0020ou\u0020une\u0020date",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkString"
+            "url": "classes/jsonschema-Fragment.html#method_checkString"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003AcheckStringFormat\u0028\u0029",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003AcheckStringFormat\u0028\u0029",
             "name": "checkStringFormat",
             "summary": "test\u0020des\u0020formats,\u0020certains\u0020motifs\u0020sont\u0020\u00E0\u0020am\u00E9liorer",
-            "url": "classes/jsonschema-JsonSchFragment.html#method_checkStringFormat"
+            "url": "classes/jsonschema-Fragment.html#method_checkStringFormat"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003ARFC3339_EXTENDED",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003ARFC3339_EXTENDED",
             "name": "RFC3339_EXTENDED",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#constant_RFC3339_EXTENDED"
+            "url": "classes/jsonschema-Fragment.html#constant_RFC3339_EXTENDED"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A\u0024verbose",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003A\u0024verbose",
             "name": "verbose",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#property_verbose"
+            "url": "classes/jsonschema-Fragment.html#property_verbose"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchFragment\u003A\u003A\u0024schema",
+            "fqsen": "\\jsonschema\\Fragment\u003A\u003A\u0024schema",
             "name": "schema",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchFragment.html#property_schema"
+            "url": "classes/jsonschema-Fragment.html#property_schema"
         },                {
             "fqsen": "\\Layer",
             "name": "Layer",

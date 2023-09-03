@@ -402,7 +402,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
   }
 }
 
-/** Une liste de points, peut-être vide */
+/** Une liste de points, éventuellement vide */
 class MultiPoint extends Geometry {
   const ErrorEmpty = 'MultiPoint::ErrorEmpty';
   
@@ -457,7 +457,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 }
 
 
-/** contient au moins 2 positions */
+/** Ligne brisée, contient au moins 2 positions */
 class LineString extends Geometry {
   /** @var TLPos $coords contient une liste de listes de 2 ou 3 nombres */
   public readonly array $coords;
@@ -573,7 +573,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 }
 
 
-/** contient une liste de liste de positions, chaque liste de positions en contient au moins 2 */
+/** Liste de lignes brisées */
 class MultiLineString extends Geometry {
   const ErrorCenterOfEmpty = 'MultiLineString::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'MultiLineString::ErrorPosOfEmpty';
@@ -644,15 +644,15 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 }
 
 
-/** Polygon au sens GeoJSON
+/** Polygone au sens GeoJSON, cad avec une limite extérieure et éventuellement des limites intérieures ou trous
  *
- * Comporte un extérieur qui contient au moins 4 positions
- * Chaque intérieur contient au moins 4 positions et est contenu dans l'extérieur sans l'intersecter
+ * L'extérieur contient au moins 4 positions.
+ * Chaque intérieur contient au moins 4 positions et est contenu dans l'extérieur sans l'intersecter.
  * Les intérieurs ne s'intersectent pas 2 à 2 */
 class Polygon extends Geometry {
   const ErrorInters = 'Polygon::ErrorInters';
 
-  /** @var TLLPos $coords */
+  /** @var TLLPos $coords L 1ère liste de positions correspond à l'anneau extérieur, les autres aux anneaux intérieurs */
   public readonly array $coords;
 
   /** @param TLLPos $coords */
@@ -828,7 +828,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 }
 
 
-/** Chaque polygone respecte les contraintes du Polygon */
+/** Liste de polygones */
 class MultiPolygon extends Geometry {
   const ErrorFromGeoArray = 'MultiPolygon::ErrorFromGeoArray';
   const ErrorCenterOfEmpty = 'MultiPolygon::ErrorCenterOfEmpty';
@@ -980,7 +980,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
 }
 
 
-/** Une collection correspond à une liste d'objets géométriques de ka classe Geometry */
+/** Liste d'objets géométriques de ka classe Geometry */
 class GeometryCollection {
   const ErrorCenterOfEmpty = 'GeometryCollection::ErrorCenterOfEmpty';
   const ErrorPosOfEmpty = 'GeometryCollection::ErrorPosOfEmpty';

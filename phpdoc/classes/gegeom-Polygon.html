@@ -142,10 +142,10 @@
 
     </aside>
 
-            <p class="phpdocumentor-summary">Polygon au sens GeoJSON</p>
+            <p class="phpdocumentor-summary">Polygone au sens GeoJSON, cad avec une limite extérieure et éventuellement des limites intérieures ou trous</p>
 
-    <section class="phpdocumentor-description"><p>Comporte un extérieur qui contient au moins 4 positions
-Chaque intérieur contient au moins 4 positions et est contenu dans l'extérieur sans l'intersecter
+    <section class="phpdocumentor-description"><p>L'extérieur contient au moins 4 positions.
+Chaque intérieur contient au moins 4 positions et est contenu dans l'extérieur sans l'intersecter.
 Les intérieurs ne s'intersectent pas 2 à 2</p>
 </section>
 
@@ -507,7 +507,9 @@ MutiPolygon-&gt;[Polygon]</dd>
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>L 1ère liste de positions correspond à l'anneau extérieur, les autres aux anneaux intérieurs</p>
+</section>
+
     
 
 </article>
