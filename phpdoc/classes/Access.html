@@ -134,11 +134,27 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Regroupe la logique du contrôle d&#039;accès</p>
+
+    <section class="phpdocumentor-description"><p>Le contrôle d'accès s'effectue selon 3 modes de contrôle distincts:</p>
+<ol>
+<li>vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
+les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.</li>
+<li>vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.</li>
+<li>authentification HTTP Basic, utilisé pour le service WMS.</li>
+</ol>
+<p>Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp</p>
+<p>Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:</p>
+<ul>
+<li>exploite le fichier de config</li>
+<li>expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle</li>
+<li>expose la méthode cntrl() pour réaliser le contrôle</li>
+</ul>
+</section>
 
 
 
@@ -254,7 +270,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -282,7 +298,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -324,7 +340,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -376,7 +392,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -421,7 +437,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -456,7 +472,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -491,7 +507,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -522,7 +538,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
@@ -557,7 +573,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -592,7 +608,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 

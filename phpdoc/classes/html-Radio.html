@@ -116,6 +116,9 @@
         <h2 class="phpdocumentor-content__title">
     Radio
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/html-Field.html"><abbr title="\html\Field">Field</abbr></a>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -137,11 +140,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/htmlform.inc.php"><a href="files/bo-htmlform-inc.html"><abbr title="bo/htmlform.inc.php">htmlform.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Champ de formulaire boutons radio</p>
+
 
 
 
@@ -198,12 +202,14 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Création du champ</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/html-Radio.html#method_toString">toString()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>retourne le code Html</dd>
 
     </dl>
 
@@ -236,7 +242,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/htmlform.inc.php"><a href="files/bo-htmlform-inc.html"><abbr title="bo/htmlform.inc.php">htmlform.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -269,7 +275,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/htmlform.inc.php"><a href="files/bo-htmlform-inc.html"><abbr title="bo/htmlform.inc.php">htmlform.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -302,7 +308,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/htmlform.inc.php"><a href="files/bo-htmlform-inc.html"><abbr title="bo/htmlform.inc.php">htmlform.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -340,14 +346,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/htmlform.inc.php"><a href="files/bo-htmlform-inc.html"><abbr title="bo/htmlform.inc.php">htmlform.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Création du champ</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, string&gt;|array&lt;string, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choices</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$label</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$selected</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, string&gt;|array&lt;string, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choices</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$label</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$selected</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -359,21 +366,27 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;int, string&gt;|array&lt;string, string&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>soit une liste de nom=libellé, soit un dict [nom =&gt; libelléDuChoix]</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$label</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>libellé pour indiquer ce champ dans le formulaire</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$selected</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>le nom du choix par défaut</p>
+</section>
+
             </dd>
             </dl>
 
@@ -395,11 +408,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/htmlform.inc.php"><a href="files/bo-htmlform-inc.html"><abbr title="bo/htmlform.inc.php">htmlform.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le code Html</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">toString</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>

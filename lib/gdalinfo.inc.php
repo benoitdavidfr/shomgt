@@ -49,9 +49,9 @@ readonly class GeoJsonPolygon {
   }
 };
 
-/** gère l'extraction des infos d'un fichier généré par gdalinfo
+/** extrait des infos d'un fichier JSON généré par gdalinfo
  *
- * La méthode __construct() lit le fichier, en extrait les infos intéressantes et les stocke dans l'objet ainsi créé
+ * La méthode __construct() lit le fichier JSON, en extrait les infos intéressantes et les stocke dans l'objet ainsi créé
  * Les autres méthodes extraient des infos de l'objet.
  */
 readonly class GdalInfo {

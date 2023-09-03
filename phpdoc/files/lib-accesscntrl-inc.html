@@ -116,21 +116,7 @@
 
             <p class="phpdocumentor-summary">contrôle d&#039;accès</p>
 
-    <section class="phpdocumentor-description"><p>Le contrôle d'accès utilise 3 modes de contrôle distincts:</p>
-<ol>
-<li>vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
-les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.</li>
-<li>vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.</li>
-<li>authentification HTTP Basic, utilisé pour le service WMS.
-Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
-Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:</li>
-</ol>
-<ul>
-<li>exploite le fichier de config</li>
-<li>expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle</li>
-<li>expose la méthode cntrl() pour réaliser le contrôle</li>
-</ul>
-<p>journal:</p>
+    <section class="phpdocumentor-description"><p>journal:</p>
 <ul>
 <li>10/8/2023:
 <ul>
@@ -233,7 +219,7 @@ Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Access.html"><abbr title="\Access">Access</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Access.html"><abbr title="\Access">Access</abbr></a></dt><dd>Regroupe la logique du contrôle d&#039;accès</dd>    </dl>
 
 
 

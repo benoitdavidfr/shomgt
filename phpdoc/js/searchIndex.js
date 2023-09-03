@@ -141,89 +141,109 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/bo-GBoxAsPolygon.html#property_coords"
         },                {
-            "fqsen": "\\bo\\GBox",
-            "name": "GBox",
+            "fqsen": "\\bo\\GBoxBo",
+            "name": "GBoxBo",
             "summary": "BBox\u0020en\u0020coord.\u0020g\u00E9o.,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Blon,\u0020lat\u005D",
-            "url": "classes/bo-GBox.html"
+            "url": "classes/bo-GBoxBo.html"
         },                {
-            "fqsen": "\\bo\\GBox\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\bo\\GBoxBo\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "ajoute\u0020au\u0020m\u00E9canisme\u0020de\u0020cr\u00E9ation\u0020de\u0020BBox\u0020la\u0020possibilit\u00E9\u0020de\u0020cr\u00E9er\u0020une\u0020GBox\u0020\u00E0\u0020partir\u0020d\u0027un\u0020array\nrespectant\u0020le\u0020format\u0020Spatial\u0020d\u00E9fini\u0020dans\u0020MapCat\u0020et\u0020shomgt.yaml",
-            "url": "classes/bo-GBox.html#method___construct"
+            "url": "classes/bo-GBoxBo.html#method___construct"
         },                {
-            "fqsen": "\\bo\\GBox\u003A\u003Astd\u0028\u0029",
+            "fqsen": "\\bo\\GBoxBo\u003A\u003Astd\u0028\u0029",
             "name": "std",
             "summary": "",
-            "url": "classes/bo-GBox.html#method_std"
+            "url": "classes/bo-GBoxBo.html#method_std"
         },                {
-            "fqsen": "\\bo\\EBox",
-            "name": "EBox",
+            "fqsen": "\\bo\\EBoxBo",
+            "name": "EBoxBo",
             "summary": "BBox\u0020en\u0020coord.\u0020projet\u00E9es\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Bx,\u0020y\u005D",
-            "url": "classes/bo-EBox.html"
+            "url": "classes/bo-EBoxBo.html"
         },                {
-            "fqsen": "\\bo\\EBox\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\bo\\EBoxBo\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/bo-EBox.html#method___construct"
+            "url": "classes/bo-EBoxBo.html#method___construct"
         },                {
-            "fqsen": "\\bo\\EBox\u003A\u003Ageo\u0028\u0029",
+            "fqsen": "\\bo\\EBoxBo\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
             "summary": "calcule\u0020les\u0020coord.g\u00E9o.\u0020d\u0027un\u0020EBox\u0020en\u0020utilisant\u0020\u0024proj\u0020qui\u0020doit\u0020\u00EAtre\u0020d\u00E9fini\u0020comme\u0020projection\u0020dans\u0020coordsys",
-            "url": "classes/bo-EBox.html#method_geo"
+            "url": "classes/bo-EBoxBo.html#method_geo"
         },                {
-            "fqsen": "\\bo\\EBox\u003A\u003A\u0024center",
+            "fqsen": "\\bo\\EBoxBo\u003A\u003A\u0024center",
             "name": "center",
             "summary": "",
-            "url": "classes/bo-EBox.html#property_center"
+            "url": "classes/bo-EBoxBo.html#property_center"
         },                {
-            "fqsen": "\\bo\\GdalInfo",
-            "name": "GdalInfo",
+            "fqsen": "\\bo\\GdalInfoBo",
+            "name": "GdalInfoBo",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html"
+            "url": "classes/bo-GdalInfoBo.html"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method___construct"
+            "url": "classes/bo-GdalInfoBo.html#method___construct"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003AasArray\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003AasArray\u0028\u0029",
             "name": "asArray",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method_asArray"
+            "url": "classes/bo-GdalInfoBo.html#method_asArray"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003Ageoref\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003Ageoref\u0028\u0029",
             "name": "georef",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method_georef"
+            "url": "classes/bo-GdalInfoBo.html#method_georef"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003Agbox\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method_gbox"
+            "url": "classes/bo-GdalInfoBo.html#method_gbox"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003AgoodGeoref\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003AgoodGeoref\u0028\u0029",
             "name": "goodGeoref",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method_goodGeoref"
+            "url": "classes/bo-GdalInfoBo.html#method_goodGeoref"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003AtestGoodGeoref\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003AtestGoodGeoref\u0028\u0029",
             "name": "testGoodGeoref",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method_testGoodGeoref"
+            "url": "classes/bo-GdalInfoBo.html#method_testGoodGeoref"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003Atest\u0028\u0029",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003Atest\u0028\u0029",
             "name": "test",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#method_test"
+            "url": "classes/bo-GdalInfoBo.html#method_test"
         },                {
-            "fqsen": "\\bo\\GdalInfo\u003A\u003A\u0024info",
+            "fqsen": "\\bo\\GdalInfoBo\u003A\u003A\u0024info",
             "name": "info",
             "summary": "",
-            "url": "classes/bo-GdalInfo.html#property_info"
+            "url": "classes/bo-GdalInfoBo.html#property_info"
+        },                {
+            "fqsen": "\\html\\Field",
+            "name": "Field",
+            "summary": "Sur\u002Dclasse\u0020des\u0020champs\u0020de\u0020formulaire",
+            "url": "classes/html-Field.html"
+        },                {
+            "fqsen": "\\html\\Field\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "pour\u0020faire\u0020plaisir\u0020\u00E0\u0020phpstan",
+            "url": "classes/html-Field.html#method___construct"
+        },                {
+            "fqsen": "\\html\\Field\u003A\u003AtoString\u0028\u0029",
+            "name": "toString",
+            "summary": "retourne\u0020le\u0020code\u0020Html",
+            "url": "classes/html-Field.html#method_toString"
+        },                {
+            "fqsen": "\\html\\Field\u003A\u003A\u0024label",
+            "name": "label",
+            "summary": "",
+            "url": "classes/html-Field.html#property_label"
         },                {
             "fqsen": "\\html\\Form",
             "name": "Form",
-            "summary": "",
+            "summary": "Formulaire\u0020Html",
             "url": "classes/html-Form.html"
         },                {
             "fqsen": "\\html\\Form\u003A\u003A__construct\u0028\u0029",
@@ -263,17 +283,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\html\\Input",
             "name": "Input",
-            "summary": "",
+            "summary": "Champ\u0020de\u0020formulaire\u0020input",
             "url": "classes/html-Input.html"
         },                {
             "fqsen": "\\html\\Input\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Cr\u00E9ation\u0020du\u0020champ",
             "url": "classes/html-Input.html#method___construct"
         },                {
             "fqsen": "\\html\\Input\u003A\u003AtoString\u0028\u0029",
             "name": "toString",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020code\u0020Html",
             "url": "classes/html-Input.html#method_toString"
         },                {
             "fqsen": "\\html\\Input\u003A\u003A\u0024label",
@@ -298,17 +318,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\html\\TextArea",
             "name": "TextArea",
-            "summary": "",
+            "summary": "Champ\u0020de\u0020formulaire\u0020TextArea",
             "url": "classes/html-TextArea.html"
         },                {
             "fqsen": "\\html\\TextArea\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Cr\u00E9ation\u0020du\u0020champ",
             "url": "classes/html-TextArea.html#method___construct"
         },                {
             "fqsen": "\\html\\TextArea\u003A\u003AtoString\u0028\u0029",
             "name": "toString",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020code\u0020Html",
             "url": "classes/html-TextArea.html#method_toString"
         },                {
             "fqsen": "\\html\\TextArea\u003A\u003A\u0024label",
@@ -333,17 +353,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\html\\Select",
             "name": "Select",
-            "summary": "",
+            "summary": "Champ\u0020de\u0020formulaire\u0020Select",
             "url": "classes/html-Select.html"
         },                {
             "fqsen": "\\html\\Select\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Cr\u00E9ation\u0020du\u0020champ",
             "url": "classes/html-Select.html#method___construct"
         },                {
             "fqsen": "\\html\\Select\u003A\u003AtoString\u0028\u0029",
             "name": "toString",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020code\u0020Html",
             "url": "classes/html-Select.html#method_toString"
         },                {
             "fqsen": "\\html\\Select\u003A\u003A\u0024choices",
@@ -363,17 +383,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\html\\Radio",
             "name": "Radio",
-            "summary": "",
+            "summary": "Champ\u0020de\u0020formulaire\u0020boutons\u0020radio",
             "url": "classes/html-Radio.html"
         },                {
             "fqsen": "\\html\\Radio\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Cr\u00E9ation\u0020du\u0020champ",
             "url": "classes/html-Radio.html#method___construct"
         },                {
             "fqsen": "\\html\\Radio\u003A\u003AtoString\u0028\u0029",
             "name": "toString",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020code\u0020Html",
             "url": "classes/html-Radio.html#method_toString"
         },                {
             "fqsen": "\\html\\Radio\u003A\u003A\u0024choices",
@@ -1318,7 +1338,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Access",
             "name": "Access",
-            "summary": "",
+            "summary": "Regroupe\u0020la\u0020logique\u0020du\u0020contr\u00F4le\u0020d\u0027acc\u00E8s",
             "url": "classes/Access.html"
         },                {
             "fqsen": "\\Access\u003A\u003AcntrlFor\u0028\u0029",
@@ -1753,7 +1773,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GeoJsonPolygon",
             "name": "GeoJsonPolygon",
-            "summary": "",
+            "summary": "GeoJSON\u0020Polygon\u0020transform\u00E9\u0020en\u0020GBox",
             "url": "classes/GeoJsonPolygon.html"
         },                {
             "fqsen": "\\GeoJsonPolygon\u003A\u003A__construct\u0028\u0029",
@@ -1778,12 +1798,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GdalInfo",
             "name": "GdalInfo",
-            "summary": "",
+            "summary": "g\u00E8re\u0020l\u0027extraction\u0020des\u0020infos\u0020d\u0027un\u0020fichier\u0020g\u00E9n\u00E9r\u00E9\u0020par\u0020gdalinfo",
             "url": "classes/GdalInfo.html"
         },                {
             "fqsen": "\\GdalInfo\u003A\u003Afilepath\u0028\u0029",
             "name": "filepath",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020chemin\u0020du\u0020fichier\u0020info.json\u0020correspondant\u0020\u00E0\u0020un\u0020gtname,\u0020temp\u0020indique\u0020si\u0020la\u0020carte\u0020est\u0020dans\u0020temp\u0020ou\u0020dans\u0020maps",
             "url": "classes/GdalInfo.html#method_filepath"
         },                {
             "fqsen": "\\GdalInfo\u003A\u003A\u0024size",
