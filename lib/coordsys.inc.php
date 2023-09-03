@@ -92,28 +92,33 @@ interface iEllipsoid {
   static function e(): float; // eccentricity
 };
 
-/** définit l'interface pour un système de coordonnées */
+/**
+ * interface de définition d'un système de coordonnées
+ *
+ * Un système de coordonnées doit savoir convertir une pos. géographique (longitude, latitude) définie en degrés déc.
+ * en coordonnées projetées [X, Y] dans l'espace euclidien, et vice-versa.
+ */
 interface iCoordSys {
   /**
-   * convertit une pos. (longitude, latitude) en degrés déc. en [X, Y]
+   * convertit une position géographique (longitude, latitude) en degrés déc. en coordonnées projetées [X, Y]
    *
-   * Le 2ème paramètre est utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone
-   * @param TPos $lonlat
-   * @return TPos
+   * @param TPos $lonlat position géographique (longitude, latitude) en degrés déc.
+   * @param ?string $proj utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone
+   * @return TPos coordonnées projetées [X, Y]
    */
   static function proj(array $lonlat, ?string $proj=null): array;
 
   /**
-   * convertit [X,Y] en [longitude, latitude] en degrés décimaux
+   * convertit des coordonnées projetées [X, Y] en position géographique [longitude, latitude] en degrés décimaux
    *
-   * Le 2ème paramètre est utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone
-   * @param TPos $xy
-   * @return TPos
+   * @param TPos $xy coordonnées projetées [X, Y]
+   * @param ?string $proj utilisé s'il est nécessaire de préciser le système de coordonnées, par exemple en UTM la zone
+   * @return TPos position géographique (longitude, latitude) en degrés déc.
    */
   static function geo(array $xy, ?string $proj=null): array;
 };
   
-/** classe statique définissant l'ellipsoide IAG_GRS_1980 */
+/** définition de l'ellipsoide IAG_GRS_1980 */
 class IAG_GRS_1980 implements iEllipsoid {
   const PARAMS = [
     'title'=> "Ellipsoide GRS (Geodetic Reference System) 1980 défini par l'IAG (Int. Association of Geodesy)",
@@ -128,11 +133,7 @@ class IAG_GRS_1980 implements iEllipsoid {
   static function e(): float { return sqrt(self::e2()); }
 };
 
-/**
- *définition des fonctions de proj et inverse du Lambert 93
- *
- * Lambert93 est défini sur l'ellipsoide IAG_GRS_1980
- */
+/** définition du système de coordonnées Lambert 93 défini sur l'ellipsoide IAG_GRS_1980 */
 class Lambert93 extends IAG_GRS_1980 implements iCoordSys {
   const c = 11754255.426096; //constante de la projection
   const n = 0.725607765053267; //exposant de la projection
@@ -173,7 +174,7 @@ class Lambert93 extends IAG_GRS_1980 implements iCoordSys {
   }
 };
   
-/** définition des fonctions de proj et inverse du Web Mercator
+/** définition du système de coordonnées Web Mercator
  *
  * WebMercator est défini sur une sphère ayant comme rayon le demi grand axe de l'ellipsoide IAG_GRS_1980 */
 class WebMercator extends IAG_GRS_1980 implements iCoordSys {
@@ -209,19 +210,19 @@ class WebMercator extends IAG_GRS_1980 implements iCoordSys {
   }
 };
 
-/** définition Les système de coordonnées LonLatDd correspond au coord. géo. en degrés décimaux dans l'ordre (lon,lat) */
+/** définition Les système de coordonnées LonLatDd correspond aux coord. géo. en degrés décimaux dans l'ordre (lon,lat) */
 class LonLatDd extends IAG_GRS_1980 implements iCoordSys {
   static function proj(array $lonlat, ?string $proj=null): array { return $lonlat; }
   static function geo(array $xy, ?string $proj=null): array { return $xy; }
 };
 
-/** définition du système de coordonnées LatLonDd correspond au coord. géo. en degrés décimaux dans l'ordre (lat,lon) */
+/** définition du système de coordonnées LatLonDd correspond aux coord. géo. en degrés décimaux dans l'ordre (lat,lon) */
 class LatLonDd extends IAG_GRS_1980 implements iCoordSys {
   static function proj(array $lonlat, ?string $proj=null): array { return [$lonlat[1], $lonlat[0]]; }
   static function geo(array $xy, ?string $proj=null): array { return [$xy[1], $xy[0]]; }
 };
 
-/** classe statique définissant un ellipsoide qui peut être paramétré
+/** définition d'un ellipsoide paramétrable
  *
  * La classe porte d'une part les constantes définissant différents ellipsoides et, d'autre part,
  * la définition d'un ellipsoide courant. Par défaut utilisation de l'ellipsoide IAG_GRS_1980
@@ -278,7 +279,7 @@ class Ellipsoid implements iEllipsoid {
   static function e(): float { return sqrt(self::e2()); }
 };
 
-/** définition de la projection World Mercator qui peut être définie sur différents ellipsoides. */
+/** définition de la projection de Mercator et du système de coordonnées WorldMercator défini sur l'ellipsoide IAG_GRS_1980. */
 class WorldMercator extends Ellipsoid implements iCoordSys {
   const ErrorBadLat = 'WorldMercator::ErrorBadLat';
   const ErrorNoConvergence = 'WorldMercator::ErrorNoConvergence';
@@ -323,7 +324,7 @@ class WorldMercator extends Ellipsoid implements iCoordSys {
 };
 
 
-/** définition des fonctions de proj et inverse de l'UTM zone
+/** définition des systèmes de coordonnées UTM zone
  *
  * La projection UTM est définie par zone correspondant à un fuseau de 6 degrés en séparant l’hémisphère Nord du Sud.
  * Soit au total 120 zones (60 pour le Nord et 60 pour le Sud).

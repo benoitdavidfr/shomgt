@@ -1413,7 +1413,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\IAG_GRS_1980",
             "name": "IAG_GRS_1980",
-            "summary": "classe\u0020statique\u0020d\u00E9finissant\u0020l\u0027ellipsoide\u0020IAG_GRS_1980",
+            "summary": "d\u00E9finition\u0020de\u0020l\u0027ellipsoide\u0020IAG_GRS_1980",
             "url": "classes/coordsys-IAG-GRS-1980.html"
         },                {
             "fqsen": "\\coordsys\\IAG_GRS_1980\u003A\u003Aa\u0028\u0029",
@@ -1438,7 +1438,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\Lambert93",
             "name": "Lambert93",
-            "summary": "d\u00E9finition\u0020des\u0020fonctions\u0020de\u0020proj\u0020et\u0020inverse\u0020du\u0020Lambert\u002093",
+            "summary": "d\u00E9finition\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020Lambert\u002093\u0020d\u00E9fini\u0020sur\u0020l\u0027ellipsoide\u0020IAG_GRS_1980",
             "url": "classes/coordsys-Lambert93.html"
         },                {
             "fqsen": "\\coordsys\\Lambert93\u003A\u003Aproj\u0028\u0029",
@@ -1473,7 +1473,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\WebMercator",
             "name": "WebMercator",
-            "summary": "d\u00E9finition\u0020des\u0020fonctions\u0020de\u0020proj\u0020et\u0020inverse\u0020du\u0020Web\u0020Mercator",
+            "summary": "d\u00E9finition\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020Web\u0020Mercator",
             "url": "classes/coordsys-WebMercator.html"
         },                {
             "fqsen": "\\coordsys\\WebMercator\u003A\u003Aspatial\u0028\u0029",
@@ -1508,37 +1508,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\LonLatDd",
             "name": "LonLatDd",
-            "summary": "d\u00E9finition\u0020Les\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LonLatDd\u0020correspond\u0020au\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lon,lat\u0029",
+            "summary": "d\u00E9finition\u0020Les\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LonLatDd\u0020correspond\u0020aux\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lon,lat\u0029",
             "url": "classes/coordsys-LonLatDd.html"
         },                {
             "fqsen": "\\coordsys\\LonLatDd\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
+            "summary": "convertit\u0020une\u0020position\u0020g\u00E9ographique\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-LonLatDd.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\LonLatDd\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
+            "summary": "convertit\u0020des\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D\u0020en\u0020position\u0020g\u00E9ographique\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-LonLatDd.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\LatLonDd",
             "name": "LatLonDd",
-            "summary": "d\u00E9finition\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LatLonDd\u0020correspond\u0020au\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lat,lon\u0029",
+            "summary": "d\u00E9finition\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020LatLonDd\u0020correspond\u0020aux\u0020coord.\u0020g\u00E9o.\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux\u0020dans\u0020l\u0027ordre\u0020\u0028lat,lon\u0029",
             "url": "classes/coordsys-LatLonDd.html"
         },                {
             "fqsen": "\\coordsys\\LatLonDd\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
+            "summary": "convertit\u0020une\u0020position\u0020g\u00E9ographique\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-LatLonDd.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\LatLonDd\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
+            "summary": "convertit\u0020des\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D\u0020en\u0020position\u0020g\u00E9ographique\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-LatLonDd.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid",
             "name": "Ellipsoid",
-            "summary": "classe\u0020statique\u0020d\u00E9finissant\u0020un\u0020ellipsoide\u0020qui\u0020peut\u0020\u00EAtre\u0020param\u00E9tr\u00E9",
+            "summary": "d\u00E9finition\u0020d\u0027un\u0020ellipsoide\u0020param\u00E9trable",
             "url": "classes/coordsys-Ellipsoid.html"
         },                {
             "fqsen": "\\coordsys\\Ellipsoid\u003A\u003Aavailable\u0028\u0029",
@@ -1593,7 +1593,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\WorldMercator",
             "name": "WorldMercator",
-            "summary": "d\u00E9finition\u0020de\u0020la\u0020projection\u0020World\u0020Mercator\u0020qui\u0020peut\u0020\u00EAtre\u0020d\u00E9finie\u0020sur\u0020diff\u00E9rents\u0020ellipsoides.",
+            "summary": "d\u00E9finition\u0020de\u0020la\u0020projection\u0020de\u0020Mercator\u0020et\u0020du\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es\u0020WorldMercator\u0020d\u00E9fini\u0020sur\u0020l\u0027ellipsoide\u0020IAG_GRS_1980.",
             "url": "classes/coordsys-WorldMercator.html"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003Aspatial\u0028\u0029",
@@ -1608,7 +1608,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
+            "summary": "convertit\u0020des\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D\u0020en\u0020position\u0020g\u00E9ographique\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-WorldMercator.html#method_geo"
         },                {
             "fqsen": "\\coordsys\\WorldMercator\u003A\u003AErrorBadLat",
@@ -1638,7 +1638,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\UTM",
             "name": "UTM",
-            "summary": "d\u00E9finition\u0020des\u0020fonctions\u0020de\u0020proj\u0020et\u0020inverse\u0020de\u0020l\u0027UTM\u0020zone",
+            "summary": "d\u00E9finition\u0020des\u0020syst\u00E8mes\u0020de\u0020coordonn\u00E9es\u0020UTM\u0020zone",
             "url": "classes/coordsys-UTM.html"
         },                {
             "fqsen": "\\coordsys\\UTM\u003A\u003Alambda0\u0028\u0029",
@@ -1703,17 +1703,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\coordsys\\iCoordSys",
             "name": "iCoordSys",
-            "summary": "d\u00E9finit\u0020l\u0027interface\u0020pour\u0020un\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es",
+            "summary": "interface\u0020de\u0020d\u00E9finition\u0020d\u0027un\u0020syst\u00E8me\u0020de\u0020coordonn\u00E9es",
             "url": "classes/coordsys-iCoordSys.html"
         },                {
             "fqsen": "\\coordsys\\iCoordSys\u003A\u003Aproj\u0028\u0029",
             "name": "proj",
-            "summary": "convertit\u0020une\u0020pos.\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020\u005BX,\u0020Y\u005D",
+            "summary": "convertit\u0020une\u0020position\u0020g\u00E9ographique\u0020\u0028longitude,\u0020latitude\u0029\u0020en\u0020degr\u00E9s\u0020d\u00E9c.\u0020en\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D",
             "url": "classes/coordsys-iCoordSys.html#method_proj"
         },                {
             "fqsen": "\\coordsys\\iCoordSys\u003A\u003Ageo\u0028\u0029",
             "name": "geo",
-            "summary": "convertit\u0020\u005BX,Y\u005D\u0020en\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
+            "summary": "convertit\u0020des\u0020coordonn\u00E9es\u0020projet\u00E9es\u0020\u005BX,\u0020Y\u005D\u0020en\u0020position\u0020g\u00E9ographique\u0020\u005Blongitude,\u0020latitude\u005D\u0020en\u0020degr\u00E9s\u0020d\u00E9cimaux",
             "url": "classes/coordsys-iCoordSys.html#method_geo"
         },                {
             "fqsen": "\\EnvVar",

@@ -68,6 +68,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<li><a href='https://carte.snosan.fr/'>Test carte Snosan</a></li>\n";
     echo "<li><a href='?action=tests'>Tests des composants</a></li>\n";
     echo "</ul><h3>Documentation du code</h3><ul>\n";
+    echo "<li><a href='https://benoitdavidfr.github.io/shomgt/'>Site Github avec PHPDoc</a></li>\n";
     echo "<li><a href='requiregraph.php'>Graphe des inclusions Php</a></li>\n";
     echo "</ul>\n";
     die();
