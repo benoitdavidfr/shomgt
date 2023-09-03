@@ -114,7 +114,44 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">log.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">fonction d&#039;enregistrement d&#039;un log</p>
+
+    <section class="phpdocumentor-description"><p>journal: |</p>
+<ul>
+<li>22/8/2023:
+<ul>
+<li>ajout champ host dans la table log</li>
+</ul>
+</li>
+<li>2/7/2022:
+<ul>
+<li>changement de logique</li>
+<li>le log n'est plus paramétré dans config('mysqlParams') mais au travers de la var. d'env. SHOMGT3_LOG_MYSQL_URI</li>
+</ul>
+</li>
+<li>5/5/2022:
+<ul>
+<li>correction bug</li>
+</ul>
+</li>
+<li>7/2/2022:
+<ul>
+<li>ajout de code aux exceptions, une constante par méthode</li>
+</ul>
+</li>
+<li>15/12/2018:
+<ul>
+<li>ajout de la création de la table si elle n'existe pas</li>
+<li>de plus dans openMySQL() sur localhost la base est créée si elle n'existe pas</li>
+</ul>
+</li>
+<li>20/7/2017:
+<ul>
+<li>suppression de l'utilisation du champ phpserver</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -160,12 +197,14 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>définition de la commande SQL de création de la table</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_write_log">write_log()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>enregistrement d&#039;un log</dd>
 
     </dl>
 
@@ -188,7 +227,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/log.inc.php"><a href="files/lib-log-inc.html"><abbr title="lib/log.inc.php">log.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -223,11 +262,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/log.inc.php"><a href="files/lib-log-inc.html"><abbr title="lib/log.inc.php">log.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">définition de la commande SQL de création de la table</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">log_table_schema</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -251,11 +291,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/log.inc.php"><a href="files/lib-log-inc.html"><abbr title="lib/log.inc.php">log.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">enregistrement d&#039;un log</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">write_log</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$access</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>

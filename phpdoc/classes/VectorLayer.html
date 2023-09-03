@@ -138,7 +138,8 @@
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Couche d&#039;objets vecteur + dictionnaire de ces couches</p>
+
 
 
 
@@ -169,6 +170,7 @@
     <span>
                         &nbsp;: array&lt;string, <a href="classes/VectorLayer.html"><abbr title="\VectorLayer">VectorLayer</abbr></a>&gt;            </span>
 </dt>
+<dd>// dictionaire [{lyrName} =&gt; VectorLayer]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/VectorLayer.html#property_description">$description</a>
@@ -191,7 +193,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/VectorLayer.html#property_style">$style</a>
     <span>
-                        &nbsp;: array&lt;string, mixed&gt;            </span>
+                        &nbsp;: <abbr title="\TStyle">TStyle</abbr>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -219,12 +221,14 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Génère l&#039;extrait XML des couches pour les capacités</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/VectorLayer.html#method_asArray">asArray()</a>
     <span>
                                 &nbsp;: array&lt;int, string&gt;    </span>
 </dt>
+<dd>fournit une représentation de la couche comme array pour affichage</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/VectorLayer.html#method_ebox">ebox()</a>
@@ -250,18 +254,21 @@
     <span>
                                 &nbsp;: array&lt;string, <a href="classes/VectorLayer.html"><abbr title="\VectorLayer">VectorLayer</abbr></a>&gt;    </span>
 </dt>
+<dd>retourne le dictionnaire des couches</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/VectorLayer.html#method_map">map()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>copie dans $grImage l&#039;extrait de la couche correspondant au rectangle de $grImage,</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/VectorLayer.html#method_asXml">asXml()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Génère l&#039;extrait XML de la couche pour les capacités</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/VectorLayer.html#method_items">items()</a>
@@ -301,11 +308,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">// dictionaire [{lyrName} =&gt; VectorLayer]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, <a href="classes/VectorLayer.html"><abbr title="\VectorLayer">VectorLayer</abbr></a>&gt;</span>
@@ -440,7 +448,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string, mixed&gt;</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\TStyle">TStyle</abbr></span>
     <span class="phpdocumentor-signature__name">$style</span>
     </code>
 
@@ -504,7 +512,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -552,11 +560,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">207</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Génère l&#039;extrait XML des couches pour les capacités</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">allAsXml</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -587,11 +596,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">fournit une représentation de la couche comme array pour affichage</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">asArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
@@ -622,7 +632,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -657,7 +667,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -717,7 +727,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -758,11 +768,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le dictionnaire des couches</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">layers</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, <a href="classes/VectorLayer.html"><abbr title="\VectorLayer">VectorLayer</abbr></a>&gt;</span></code>
@@ -793,11 +804,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">copie dans $grImage l&#039;extrait de la couche correspondant au rectangle de $grImage,</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">map</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/GeoRefImage.html"><abbr title="\GeoRefImage">GeoRefImage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grImage</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$styleId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -841,11 +853,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Génère l&#039;extrait XML de la couche pour les capacités</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">asXml</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -876,7 +889,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 

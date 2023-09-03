@@ -1,42 +1,34 @@
 <?php
-/*PhpDoc:
-name: mysql.inc.php
-title: mysql.inc.php - classes MySql et MySqlResult utilisées pour exécuter des requêtes MySql
-classes:
-doc: |
-  Simplification de l'utilisation de MySql.
-  La méthode statique MySql::open() prend en paramètre les paramètres MySql
-  sous la forme mysql://{user}:{passwd}@{host}/{database}
-  Voir utilisation en fin de fichier
-  Sur localhost si la base utilisée n'existe pas alors elle est créée.
-journal: |
-  9/8/2023:
-    - ajout de la méthode MySql::getTuples()
-  31/7/2022:
-    - ajout déclarations PhpStan pour level 6
-  1/7/2022:
-    - ajout d'un test pour que le fichier puisse être inclus dans une config où MySql n'est pas disponible
-  16/4/2022:
-    - correction d'un bug dans MySql::query()
-  7-9/2/2022:
-    utilisation des exceptions de MySqli en interne à la classe MySql
-    ajout des codes aux exceptions avec des codes simplifiés par rapport à ceux de MySqli
-  23/11/2019:
-    sur localhost si la base à ouvrir n'existe pas alors elle est créée pour simplifier le redémérrage d'un serveur docker vide
-  3/8/2018 15:00
-    ajout MySql::server()
-  3/8/2018
-    création
-includes: [sexcept.inc.php]
+/** classes MySql et MySqlResult utilisées pour exécuter des requêtes MySql
+ *
+ * journal: |
+ * - 9/8/2023:
+ *   - ajout de la méthode MySql::getTuples()
+ * - 31/7/2022:
+ *   - ajout déclarations PhpStan pour level 6
+ * - 1/7/2022:
+ *   - ajout d'un test pour que le fichier puisse être inclus dans une config où MySql n'est pas disponible
+ * - 16/4/2022:
+ *   - correction d'un bug dans MySql::query()
+ * - 7-9/2/2022:
+ *   - utilisation des exceptions de MySqli en interne à la classe MySql
+ *   - ajout des codes aux exceptions avec des codes simplifiés par rapport à ceux de MySqli
+ * - 23/11/2019:
+ *   - sur localhost si la base à ouvrir n'existe pas alors elle est créée pour simplifier le redémérrage d'un serveur docker vide
+ * - 3/8/2018 15:00
+ *   - ajout MySql::server()
+ * - 3/8/2018
+ *   - création
 */
 require_once __DIR__.'/sexcept.inc.php';
 
 
-// Activation du rapport d'erreur - Lance une exception mysqli_sql_exception pour les erreurs, au lieu d'émettre des alertes 
-// Ne s'exécute que si la fonction existe ce qui permet d'inclure ce fichier si on n'utilise pas MySql
+/* Activation du rapport d'erreur - Lance une exception mysqli_sql_exception pour les erreurs, au lieu d'émettre des alertes 
+ * Ne s'exécute que si la fonction existe ce qui permet d'inclure ce fichier si on n'utilise pas MySql */
 if (function_exists('mysqli_report'))
   mysqli_report(MYSQLI_REPORT_STRICT);
 
+/** Classe simplifiant l'utilisation de MySql */
 class MySql {
   const ErrorOpen = 'MySql::ErrorOpen';
   const ErrorServer = 'MySql::ErrorServer';
@@ -46,7 +38,13 @@ class MySql {
   static ?mysqli $mysqli=null; // handle MySQL
   static ?string $server=null; // serveur MySql
     
-  // ouvre une connexion MySQL et enregistre le handle en variable de classe
+  /** ouvre une connexion MySQL
+   *
+   * Sur localhost si la base utilisée n'existe pas alors elle est créée.
+   * Enregistre le handle en variable statique.
+   *
+   * @param string $mysqlParams; paramètres de la base sous la forme mysql://{user}:{passwd}@{host}/{database}
+   */
   static function open(string $mysqlParams): void {
     if (!preg_match('!^mysql://([^:]+):([^@]+)@([^/]+)/(.*)$!', $mysqlParams, $matches))
       throw new SExcept("Erreur: dans MySql::open() params \"".$mysqlParams."\" incorrect", self::ErrorOpen);
@@ -84,13 +82,14 @@ class MySql {
         self::ErrorOpen);
   }
   
+  /** retourne le nom du serveur */
   static function server(): string {
     if (!self::$server)
       throw new SExcept("Erreur: dans MySql::server() server non défini", self::ErrorServer);
     return self::$server;
   }
   
-  // exécute une requête MySQL, soulève une exception en cas d'erreur, renvoie le résultat
+  /** exécute une requête MySQL, soulève une exception en cas d'erreur, retourne le résultat soit TRUE soit un objet MySqlResult */
   static function query(string $sql): bool|MySqlResult {
     if (!self::$mysqli)
       throw new SExcept("Erreur: dans MySql::query() mysqli non défini", self::ErrorQuery);
@@ -109,14 +108,11 @@ class MySql {
       return new MySqlResult($result);
   }
 
-  /** @return array<int, array<string, string>> */
-  static function getTuples(string $sql): array { // renvoie le résultat d'une requête sous la forme d'un array de tuples
-    /*PhpDoc: methods
-    name: getTuples
-    title: "static function getTuples(string $sql): array - renvoie le résultat d'une requête sous la forme d'un array"
-    doc: |
-      Plus adapté que query() quand on sait que le nombre de n-uplets retournés est faible
-    */
+  /** renvoie le résultat d'une requête sous la forme d'une liste de tuples
+   *
+   * Plus pratique que query() quand on sait que le nombre de n-uplets retournés est faible
+   * @return list<array<string, string>> */
+  static function getTuples(string $sql): array {
     $tuples = [];
     foreach (self::query($sql) as $tuple)
       $tuples[] = $tuple;
@@ -124,8 +120,8 @@ class MySql {
   }
 };
 
-// la classe MySqlResult permet d'utiliser le résultat d'une requête comme un itérateur
-/** @implements Iterator<int, array<string, string>> */
+/** la classe MySqlResult permet d'utiliser le résultat d'une requête comme un itérateur
+ * @implements Iterator<int, array<string, string>> */
 class MySqlResult implements Iterator {
   const ErrorRewind = 'MySqlResult::ErrorRewind';
 

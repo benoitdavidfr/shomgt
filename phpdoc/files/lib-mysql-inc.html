@@ -114,7 +114,53 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">mysql.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">classes MySql et MySqlResult utilisées pour exécuter des requêtes MySql</p>
+
+    <section class="phpdocumentor-description"><p>journal: |</p>
+<ul>
+<li>9/8/2023:
+<ul>
+<li>ajout de la méthode MySql::getTuples()</li>
+</ul>
+</li>
+<li>31/7/2022:
+<ul>
+<li>ajout déclarations PhpStan pour level 6</li>
+</ul>
+</li>
+<li>1/7/2022:
+<ul>
+<li>ajout d'un test pour que le fichier puisse être inclus dans une config où MySql n'est pas disponible</li>
+</ul>
+</li>
+<li>16/4/2022:
+<ul>
+<li>correction d'un bug dans MySql::query()</li>
+</ul>
+</li>
+<li>7-9/2/2022:
+<ul>
+<li>utilisation des exceptions de MySqli en interne à la classe MySql</li>
+<li>ajout des codes aux exceptions avec des codes simplifiés par rapport à ceux de MySqli</li>
+</ul>
+</li>
+<li>23/11/2019:
+<ul>
+<li>sur localhost si la base à ouvrir n'existe pas alors elle est créée pour simplifier le redémérrage d'un serveur docker vide</li>
+</ul>
+</li>
+<li>3/8/2018 15:00
+<ul>
+<li>ajout MySql::server()</li>
+</ul>
+</li>
+<li>3/8/2018
+<ul>
+<li>création</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -135,7 +181,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/MySql.html"><abbr title="\MySql">MySql</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/MySqlResult.html"><abbr title="\MySqlResult">MySqlResult</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/MySql.html"><abbr title="\MySql">MySql</abbr></a></dt><dd>Classe simplifiant l&#039;utilisation de MySql</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/MySqlResult.html"><abbr title="\MySqlResult">MySqlResult</abbr></a></dt><dd>la classe MySqlResult permet d&#039;utiliser le résultat d&#039;une requête comme un itérateur</dd>    </dl>
 
 
 

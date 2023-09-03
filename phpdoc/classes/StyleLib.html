@@ -134,11 +134,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Gestion de la bibliothèque des styles stockée dans le fichier yaml</p>
+
 
 
 
@@ -167,8 +168,9 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/StyleLib.html#property_all">$all</a>
     <span>
-                        &nbsp;: array&lt;string, array&lt;string, mixed&gt;&gt;            </span>
+                        &nbsp;: array&lt;string, <abbr title="\TStyle">TStyle</abbr>&gt;            </span>
 </dt>
+<dd>dictionnaire des styles indexés par leur identifiant</dd>
 
     </dl>
 
@@ -183,12 +185,14 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Publication de la liste des styles disponibles dans les capacités du serveur</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/StyleLib.html#method_get">get()</a>
     <span>
-                                &nbsp;: array&lt;string, mixed&gt;    </span>
+                                &nbsp;: <abbr title="\TStyle">TStyle</abbr>    </span>
 </dt>
+<dd>retourne le style correspondant au nom demandé ou s&#039;il n&#039;existe pas []</dd>
 
     </dl>
 
@@ -221,14 +225,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dictionnaire des styles indexés par leur identifiant</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, array&lt;string, mixed&gt;&gt;</span>
+    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, <abbr title="\TStyle">TStyle</abbr>&gt;</span>
     <span class="phpdocumentor-signature__name">$all</span>
     </code>
 
@@ -259,18 +264,22 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Publication de la liste des styles disponibles dans les capacités du serveur</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">asXml</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrTitle</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Le titre du style doit comporter le titre de la couche car le titre du style est utilisa dans QGis
+pour définir le titre de la couche stylée.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -304,14 +313,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/vectorlayer.inc.php"><a href="files/lib-vectorlayer-inc.html"><abbr title="lib/vectorlayer.inc.php">vectorlayer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le style correspondant au nom demandé ou s&#039;il n&#039;existe pas []</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\TStyle">TStyle</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -331,11 +341,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>$all</p>
-</section>
-
+        <span class="phpdocumentor-signature__response_type"><abbr title="\TStyle">TStyle</abbr></span>
             </section>
 
 </article>

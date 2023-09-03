@@ -114,7 +114,37 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">readmapversion.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp</p>
+
+    <section class="phpdocumentor-description"><p>journal:</p>
+<ul>
+<li>3/8/3023:
+<ul>
+<li>prise en compte du format de l'édition utilisée pour les cartes spéciales</li>
+</ul>
+</li>
+<li>10/6/2023:
+<ul>
+<li>corrections passage Php8.2 - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 46</li>
+</ul>
+</li>
+<li>13/1/2023:
+<ul>
+<li>modif format de l'édition dans le XML -&gt; 'Publication 1989 - Dernière correction : 149 - GAN : 2250'</li>
+</ul>
+</li>
+<li>17/10/2022:
+<ul>
+<li>modif format de l'édition dans le XML</li>
+</ul>
+</li>
+<li>1/8/2022:
+<ul>
+<li>ajout déclarations PhpStan pour level 6</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -145,8 +175,9 @@
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_readMapVersion">readMapVersion()</a>
     <span>
-                                &nbsp;: array&lt;string, string&gt;    </span>
+                                &nbsp;: array{version: string, dateStamp: string}    </span>
 </dt>
+<dd>extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp</dd>
 
     </dl>
 
@@ -169,16 +200,19 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/readmapversion.inc.php"><a href="files/lib-readmapversion-inc.html"><abbr title="lib/readmapversion.inc.php">readmapversion.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">readMapVersion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">readMapVersion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array{version: string, dateStamp: string}</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>La version est fournie sous la forme d'une chaine &quot;${anneeEdition}c${lastUpdate}&quot;</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -194,7 +228,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span>
+        <span class="phpdocumentor-signature__response_type">array{version: string, dateStamp: string}</span>
             </section>
 
 </article>

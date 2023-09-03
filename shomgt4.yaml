@@ -24,6 +24,10 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  2-3/9/2023:
+    - conversion de la doc en PHPDoc avec qqs adaptations du code pour le rendre plus lisible
+    - publication de phpdoc sur Github
+    - conversion de lib
   1/9/2023:
     - correction de 2 bugs sur la prod
     - correction d'un bug de méthode

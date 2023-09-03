@@ -3668,22 +3668,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\log_table_schema\u0028\u0029",
             "name": "log_table_schema",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020de\u0020la\u0020commande\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table",
             "url": "namespaces/default.html#function_log_table_schema"
         },                {
             "fqsen": "\\write_log\u0028\u0029",
             "name": "write_log",
-            "summary": "",
+            "summary": "enregistrement\u0020d\u0027un\u0020log",
             "url": "namespaces/default.html#function_write_log"
         },                {
             "fqsen": "\\TempMapCat",
             "name": "TempMapCat",
-            "summary": "",
+            "summary": "charge\u0020le\u0020catalogue\u0020de\u0020cartes\u0020et\u0020sait\u0020retourner\u0020pour\u0020un\u0020gtname\u0020les\u0020infos\u0020correspondantes",
             "url": "classes/TempMapCat.html"
         },                {
             "fqsen": "\\TempMapCat\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "si\u0020\u0024option\u0020\u003D\u003D\u0020\u0027download\u0027\u0020ou\u0020si\u0020le\u0020fichier\u0020mapcat.json\u0020n\u0027existe\u0020pas\u0020alors\u0020t\u00E9l\u00E9charge\u0020mapcat.json\u0020depuis\u0020\u0024SHOMGT3_SERVER_URL\npuis\u0020initialise\u0020self\u003A\u003A\u0024cat\u0020\u00E0\u0020partir\u0020du\u0020fichier",
             "url": "classes/TempMapCat.html#method_init"
         },                {
             "fqsen": "\\TempMapCat\u003A\u003A__construct\u0028\u0029",
@@ -3713,22 +3713,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\TempMapCat\u003A\u003AinsetMapFromRect\u0028\u0029",
             "name": "insetMapFromRect",
-            "summary": "",
+            "summary": "s\u00E9lectionne\u0020le\u0020cartouche\u0020qui\u0020correspond\u0020le\u0020mieux\u0020au\u0020rectangle\u0020pass\u00E9\u0020en\u0020param\u00E8tre\u0020et\u0020en\u0020construit\u0020un\u0020objet\u0020TempMapCat",
             "url": "classes/TempMapCat.html#method_insetMapFromRect"
         },                {
             "fqsen": "\\TempMapCat\u003A\u003AfromGtname\u0028\u0029",
             "name": "fromGtname",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020carte\u0020ou\u0020le\u0020cartouche\u0020correspondant\u0020\u00E0\u0020\u0024gtname,\u0020\u0024temp\u0020indique\u0020si\u0020la\u0020carte\u0020est\u0020dans\u0020temp\u0020ou\u0020dans\u0020maps",
             "url": "classes/TempMapCat.html#method_fromGtname"
         },                {
             "fqsen": "\\TempMapCat\u003A\u003AallZonesToDelete\u0028\u0029",
             "name": "allZonesToDelete",
-            "summary": "",
+            "summary": "extrait\u0020de\u0020TempMapCat\u0020ceux\u0020ayant\u0020un\u0020champ\u0020toDelete\net\u0020retourne\u0020un\u0020array\u0020\u005B\u007Bgtname\u007D\u003D\u003E\u0020\u007BtoDelete\u007D\u005D\u0020\/\u0020\u007BtoDelete\u007D\u0020d\u00E9fini\u0020par\u0020mapcat.schema.yaml",
             "url": "classes/TempMapCat.html#method_allZonesToDelete"
         },                {
             "fqsen": "\\TempMapCat\u003A\u003AtoDeleteByGtname\u0028\u0029",
             "name": "toDeleteByGtname",
-            "summary": "",
+            "summary": "retourne\u0020pour\u0020la\u0020carte\u0020\u0024mapid\u0020les\u0020champs\u0020toDelete\u0020par\u0020gtname\u0020ou\u0020\u005B\u005D\u0020s\u0027il\u0020n\u0027y\u0020en\u0020a\u0020pas",
             "url": "classes/TempMapCat.html#method_toDeleteByGtname"
         },                {
             "fqsen": "\\TempMapCat\u003A\u003AMAPCAT_TEMP_PATH",
@@ -3753,12 +3753,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\MySql",
             "name": "MySql",
-            "summary": "",
+            "summary": "Classe\u0020simplifiant\u0020l\u0027utilisation\u0020de\u0020MySql",
             "url": "classes/MySql.html"
         },                {
             "fqsen": "\\MySql\u003A\u003Aopen\u0028\u0029",
             "name": "open",
-            "summary": "",
+            "summary": "ouvre\u0020une\u0020connexion\u0020MySQL",
             "url": "classes/MySql.html#method_open"
         },                {
             "fqsen": "\\MySql\u003A\u003A\u0024server",
@@ -3768,12 +3768,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\MySql\u003A\u003Aquery\u0028\u0029",
             "name": "query",
-            "summary": "",
+            "summary": "ex\u00E9cute\u0020une\u0020requ\u00EAte\u0020MySQL,\u0020soul\u00E8ve\u0020une\u0020exception\u0020en\u0020cas\u0020d\u0027erreur,\u0020retourne\u0020le\u0020r\u00E9sultat\u0020soit\u0020TRUE\u0020soit\u0020un\u0020objet\u0020MySqlResult",
             "url": "classes/MySql.html#method_query"
         },                {
             "fqsen": "\\MySql\u003A\u003AgetTuples\u0028\u0029",
             "name": "getTuples",
-            "summary": "",
+            "summary": "renvoie\u0020le\u0020r\u00E9sultat\u0020d\u0027une\u0020requ\u00EAte\u0020sous\u0020la\u0020forme\u0020d\u0027une\u0020liste\u0020de\u0020tuples",
             "url": "classes/MySql.html#method_getTuples"
         },                {
             "fqsen": "\\MySql\u003A\u003AErrorOpen",
@@ -3803,7 +3803,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\MySqlResult",
             "name": "MySqlResult",
-            "summary": "",
+            "summary": "la\u0020classe\u0020MySqlResult\u0020permet\u0020d\u0027utiliser\u0020le\u0020r\u00E9sultat\u0020d\u0027une\u0020requ\u00EAte\u0020comme\u0020un\u0020it\u00E9rateur",
             "url": "classes/MySqlResult.html"
         },                {
             "fqsen": "\\MySqlResult\u003A\u003A__construct\u0028\u0029",
@@ -3988,12 +3988,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\readMapVersion\u0028\u0029",
             "name": "readMapVersion",
-            "summary": "",
+            "summary": "extrait\u0020du\u0020fichier\u0020MD\u0020ISO\u0020dont\u0020le\u0020path\u0020est\u0020fourni\u0020la\u0020version\u0020de\u0020la\u0020carte\u0020et\u0020la\u0020date\u0020dateStamp",
             "url": "namespaces/default.html#function_readMapVersion"
         },                {
             "fqsen": "\\SExcept",
             "name": "SExcept",
-            "summary": "",
+            "summary": "Exception\u0020avec\u0020code\u0020string",
             "url": "classes/SExcept.html"
         },                {
             "fqsen": "\\SExcept\u003A\u003A__construct\u0028\u0029",
@@ -4013,27 +4013,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\StyleLib",
             "name": "StyleLib",
-            "summary": "",
+            "summary": "Gestion\u0020de\u0020la\u0020biblioth\u00E8que\u0020des\u0020styles\u0020stock\u00E9e\u0020dans\u0020le\u0020fichier\u0020yaml",
             "url": "classes/StyleLib.html"
         },                {
             "fqsen": "\\StyleLib\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020style\u0020correspondant\u0020au\u0020nom\u0020demand\u00E9\u0020ou\u0020s\u0027il\u0020n\u0027existe\u0020pas\u0020\u005B\u005D",
             "url": "classes/StyleLib.html#method_get"
         },                {
             "fqsen": "\\StyleLib\u003A\u003AasXml\u0028\u0029",
             "name": "asXml",
-            "summary": "",
+            "summary": "Publication\u0020de\u0020la\u0020liste\u0020des\u0020styles\u0020disponibles\u0020dans\u0020les\u0020capacit\u00E9s\u0020du\u0020serveur",
             "url": "classes/StyleLib.html#method_asXml"
         },                {
             "fqsen": "\\StyleLib\u003A\u003A\u0024all",
             "name": "all",
-            "summary": "",
+            "summary": "dictionnaire\u0020des\u0020styles\u0020index\u00E9s\u0020par\u0020leur\u0020identifiant",
             "url": "classes/StyleLib.html#property_all"
         },                {
             "fqsen": "\\VectorLayer",
             "name": "VectorLayer",
-            "summary": "",
+            "summary": "Couche\u0020d\u0027objets\u0020vecteur\u0020\u002B\u0020dictionnaire\u0020de\u0020ces\u0020couches",
             "url": "classes/VectorLayer.html"
         },                {
             "fqsen": "\\VectorLayer\u003A\u003AinitVectorLayers\u0028\u0029",
@@ -4043,7 +4043,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\VectorLayer\u003A\u003Alayers\u0028\u0029",
             "name": "layers",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020dictionnaire\u0020des\u0020couches",
             "url": "classes/VectorLayer.html#method_layers"
         },                {
             "fqsen": "\\VectorLayer\u003A\u003A__construct\u0028\u0029",
@@ -4053,7 +4053,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\VectorLayer\u003A\u003AasArray\u0028\u0029",
             "name": "asArray",
-            "summary": "",
+            "summary": "fournit\u0020une\u0020repr\u00E9sentation\u0020de\u0020la\u0020couche\u0020comme\u0020array\u0020pour\u0020affichage",
             "url": "classes/VectorLayer.html#method_asArray"
         },                {
             "fqsen": "\\VectorLayer\u003A\u003Aebox\u0028\u0029",
@@ -4068,7 +4068,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\VectorLayer\u003A\u003Amap\u0028\u0029",
             "name": "map",
-            "summary": "",
+            "summary": "copie\u0020dans\u0020\u0024grImage\u0020l\u0027extrait\u0020de\u0020la\u0020couche\u0020correspondant\u0020au\u0020rectangle\u0020de\u0020\u0024grImage,",
             "url": "classes/VectorLayer.html#method_map"
         },                {
             "fqsen": "\\VectorLayer\u003A\u003AfeatureInfo\u0028\u0029",
@@ -4078,12 +4078,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\VectorLayer\u003A\u003AasXml\u0028\u0029",
             "name": "asXml",
-            "summary": "",
+            "summary": "G\u00E9n\u00E8re\u0020l\u0027extrait\u0020XML\u0020de\u0020la\u0020couche\u0020pour\u0020les\u0020capacit\u00E9s",
             "url": "classes/VectorLayer.html#method_asXml"
         },                {
             "fqsen": "\\VectorLayer\u003A\u003AallAsXml\u0028\u0029",
             "name": "allAsXml",
-            "summary": "",
+            "summary": "G\u00E9n\u00E8re\u0020l\u0027extrait\u0020XML\u0020des\u0020couches\u0020pour\u0020les\u0020capacit\u00E9s",
             "url": "classes/VectorLayer.html#method_allAsXml"
         },                {
             "fqsen": "\\VectorLayer\u003A\u003A\u0024name",
@@ -4113,47 +4113,47 @@ Search.appendIndex(
         },                {
             "fqsen": "\\VectorLayer\u003A\u003A\u0024all",
             "name": "all",
-            "summary": "",
+            "summary": "\/\/\u0020dictionaire\u0020\u005B\u007BlyrName\u007D\u0020\u003D\u003E\u0020VectorLayer\u005D",
             "url": "classes/VectorLayer.html#property_all"
         },                {
             "fqsen": "\\WmsServer",
             "name": "WmsServer",
-            "summary": "",
+            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
             "url": "classes/WmsServer.html"
         },                {
             "fqsen": "\\WmsServer\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "possibilit\u00E9\u0020de\u0020modifier\u0020le\u0020nom\u0020du\u0020fichier\u0020de\u0020log",
             "url": "classes/WmsServer.html#method_init"
         },                {
             "fqsen": "\\WmsServer\u003A\u003Alog\u0028\u0029",
             "name": "log",
-            "summary": "",
+            "summary": "\u00E9crit\u0020un\u0020message\u0020dans\u0020le\u0020fichier\u0020des\u0020logs",
             "url": "classes/WmsServer.html#method_log"
         },                {
             "fqsen": "\\WmsServer\u003A\u003Aexception\u0028\u0029",
             "name": "exception",
-            "summary": "",
+            "summary": "Envoi\u0020d\u0027une\u0020exception\u0020WMS",
             "url": "classes/WmsServer.html#method_exception"
         },                {
             "fqsen": "\\WmsServer\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getCapabilities\u0028\u0029",
             "url": "classes/WmsServer.html#method_getCapabilities"
         },                {
             "fqsen": "\\WmsServer\u003A\u003AgetMap\u0028\u0029",
             "name": "getMap",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getMap\u0028\u0029",
             "url": "classes/WmsServer.html#method_getMap"
         },                {
             "fqsen": "\\WmsServer\u003A\u003AgetFeatureInfo\u0028\u0029",
             "name": "getFeatureInfo",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020peut\u0020fournir\u0020une\u0020m\u00E9thode\u0020getFeatureInfo\u0028\u0029",
             "url": "classes/WmsServer.html#method_getFeatureInfo"
         },                {
             "fqsen": "\\WmsServer\u003A\u003Aprocess\u0028\u0029",
             "name": "process",
-            "summary": "",
+            "summary": "traite\u0020une\u0020requ\u00EAte\u0020WMS",
             "url": "classes/WmsServer.html#method_process"
         },                {
             "fqsen": "\\WmsServer\u003A\u003A\u0024debug",
@@ -4168,32 +4168,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsServerTest",
             "name": "WmsServerTest",
-            "summary": "",
+            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
             "url": "classes/WmsServerTest.html"
         },                {
             "fqsen": "\\WmsServerTest\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getCapabilities\u0028\u0029",
             "url": "classes/WmsServerTest.html#method_getCapabilities"
         },                {
             "fqsen": "\\WmsServerTest\u003A\u003AgetMap\u0028\u0029",
             "name": "getMap",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getMap\u0028\u0029",
             "url": "classes/WmsServerTest.html#method_getMap"
         },                {
             "fqsen": "\\Zoom",
             "name": "Zoom",
-            "summary": "",
+            "summary": "classe\u0020regroupant\u0020l\u0027intelligence\u0020autour\u0020du\u0020tuilage\u0020et\u0020des\u0020niveaux\u0020de\u0020zoom",
             "url": "classes/Zoom.html"
         },                {
             "fqsen": "\\Zoom\u003A\u003ApixelSize\u0028\u0029",
             "name": "pixelSize",
-            "summary": "",
+            "summary": "taille\u0020du\u0020pixel\u0020en\u0020m\u00E8tres\u0020en\u0020fonction\u0020du\u0020zoom",
             "url": "classes/Zoom.html#method_pixelSize"
         },                {
             "fqsen": "\\Zoom\u003A\u003AzoomForGBoxSize\u0028\u0029",
             "name": "zoomForGBoxSize",
-            "summary": "",
+            "summary": "niveau\u0020de\u0020zoom\u0020adapt\u00E9\u0020\u00E0\u0020la\u0020visualisation\u0020d\u0027une\u0020g\u00E9om\u00E9trie\u0020d\u00E9finie\u0020par\u0020la\u0020taille\u0020de\u0020son\u0020GBox",
             "url": "classes/Zoom.html#method_zoomForGBoxSize"
         },                {
             "fqsen": "\\Zoom\u003A\u003AsizeOfADegreeInMeters\u0028\u0029",
@@ -4203,17 +4203,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Zoom\u003A\u003AtileEBox\u0028\u0029",
             "name": "tileEBox",
-            "summary": "",
+            "summary": "calcule\u0020la\u0020EBox\u0020en\u0020coord.\u0020WebMercator.\u0020de\u0020la\u0020tuile\u0020\u0028z,x,y\u0029",
             "url": "classes/Zoom.html#method_tileEBox"
         },                {
             "fqsen": "\\Zoom\u003A\u003AgboxToTiles\u0028\u0029",
             "name": "gboxToTiles",
-            "summary": "",
+            "summary": "calcule\u0020les\u0020tuiles\u0020couvrant\u0020un\u0020GBox\u0020sous\u0020la\u0020forme\u0020d\u0027une\u0020liste\u0020\u005B\u005B\u0027x\u0027\u003D\u003Ex,\u0020\u0027y\u0027\u003D\u003Ey,\u0020\u0027z\u0027\u003D\u003Ez\u005D\u005D",
             "url": "classes/Zoom.html#method_gboxToTiles"
         },                {
             "fqsen": "\\Zoom\u003A\u003AwemboxToTiles\u0028\u0029",
             "name": "wemboxToTiles",
-            "summary": "",
+            "summary": "calcule\u0020les\u0020tuiles\u0020couvrant\u0020un\u0020EBox\u0020en\u0020coord.\u0020WebMercator\u0020sous\u0020la\u0020forme\u0020d\u0027une\u0020liste\u0020\u005B\u005B\u0027x\u0027\u003D\u003Ex,\u0020\u0027y\u0027\u003D\u003Ey,\u0020\u0027z\u0027\u003D\u003Ez\u005D\u005D",
             "url": "classes/Zoom.html#method_wemboxToTiles"
         },                {
             "fqsen": "\\Zoom\u003A\u003AErrorTooManyTiles",
@@ -4228,7 +4228,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Zoom\u003A\u003ASize0",
             "name": "Size0",
-            "summary": "",
+            "summary": "Size0\u0020est\u0020la\u0020circumf\u00E9rence\u0020de\u0020la\u0020Terre\u0020en\u0020m\u00E8tres\u0020utilis\u00E9e\u0020dans\u0020la\u0020projection\u0020WebMercator",
             "url": "classes/Zoom.html#constant_Size0"
         },                {
             "fqsen": "\\mapcat\\geoImagesOfMap\u0028\u0029",
@@ -4908,12 +4908,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsShomGt",
             "name": "WmsShomGt",
-            "summary": "",
+            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
             "url": "classes/WmsShomGt.html"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getCapabilities\u0028\u0029",
             "url": "classes/WmsShomGt.html#method_getCapabilities"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003Awombox\u0028\u0029",
@@ -4933,7 +4933,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AgetMap\u0028\u0029",
             "name": "getMap",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getMap\u0028\u0029",
             "url": "classes/WmsShomGt.html#method_getMap"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003ASTD_PIXEL_SIZE",
@@ -4953,12 +4953,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsvShomGt",
             "name": "WmsvShomGt",
-            "summary": "",
+            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
             "url": "classes/WmsvShomGt.html"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getCapabilities\u0028\u0029",
             "url": "classes/WmsvShomGt.html#method_getCapabilities"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003Awombox\u0028\u0029",
@@ -4968,7 +4968,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AgetMap\u0028\u0029",
             "name": "getMap",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getMap\u0028\u0029",
             "url": "classes/WmsvShomGt.html#method_getMap"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AtoGeo\u0028\u0029",
@@ -4978,7 +4978,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AgetFeatureInfo\u0028\u0029",
             "name": "getFeatureInfo",
-            "summary": "",
+            "summary": "La\u0020classe\u0020concr\u00E8te\u0020peut\u0020fournir\u0020une\u0020m\u00E9thode\u0020getFeatureInfo\u0028\u0029",
             "url": "classes/WmsvShomGt.html#method_getFeatureInfo"
         },                {
             "fqsen": "\\",

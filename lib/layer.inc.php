@@ -14,7 +14,7 @@
  * - 3/9/2023
  *   - reformattage de la doc en PHPDoc
  *   - modification de la fonction d'initialisation des couches
- *   - renommage du fichier de définition des couches en layers.yaml
+ *   - renommage du fichier de définition des couches de shomgt.yaml en layers.yaml
  * - 28-31/7/2022:
  *   - correction suite à analyse PhpStan level 6
  *   - la gestion dans Layer::$layers de couches de types différents limite les possibilités d'analyse statique du code !! 

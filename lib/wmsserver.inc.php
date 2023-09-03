@@ -1,43 +1,40 @@
 <?php
-/*PhpDoc:
-name: wmsserver.inc.php
-title: wmsserver.inc.php - définition de la classe abstraite WmsServer
-classes:
-doc: |
-  Cette classe gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
-  elle est indépendante des fonctionnalités du serveur de shomgt.
-  Elle génère un fichier temporaire de log utile au déverminage
-journal: |
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-  8/6/2022:
-    - migration shomgt v3
-    - modif. gestion du log
-  9/11/2016
-    migration shomgt v2
-  9/11/2016
-    première version
-*/ 
+/** définition de la classe abstraite WmsServer
+ *
+ * journal:
+ * - 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * - 8/6/2022:
+ *   - migration shomgt v3
+ *   - modif. gestion du log
+ * - 9/11/2016
+ *   - migration shomgt v2
+ * - 9/11/2016
+ *   - première version
+ */ 
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 
-/*PhpDoc: classes
-name: class WmsServer
-title: abstract class WmsServer - classe abstraite WmsServer de gestion du dialogue entre le client et le serveur
-doc: |
+/** classe abstraite WmsServer de gestion du dialogue du serveur avec le client
+ *
+ * Cette classe gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
+ * elle est indépendante des fonctionnalités du serveur de shomgt.
+ * Elle génère un fichier temporaire de log utile au déverminage
 */
 abstract class WmsServer {
   static int $debug=0;
   static string $logfilename = __DIR__.'/wmsserver_logfile.txt'; // nom du fichier de logs par défaut
   
-  /** @param array<string, string> $params */
-  static function init(array $params): void { // possibilité de modifier le nom du fichier de log
+  /** possibilité de modifier le nom du fichier de log
+   * @param array<string, string> $params */
+  static function init(array $params): void {
     if (isset($params['logfilename']))
       self::$logfilename = $params['logfilename'];
   }
   
-  static function log(string $message): void { // écrit un message dans le fichier des logs
+  /** écrit un message dans le fichier des logs */
+  static function log(string $message): void {
     // Si le fichier de log n'a pas été modifié depuis plus de 5' alors il est remplacé
     $flag_append = (is_file(self::$logfilename) && (time() - filemtime(self::$logfilename) > 5*60)) ? 0 : FILE_APPEND;
     file_put_contents(
@@ -48,12 +45,12 @@ abstract class WmsServer {
     or die("Erreur d'ecriture dans le fichier de logs dans WmsServer");
   }
   
-  /* Envoi d'une exception WMS
-  httpErrorCode : code d'erreur HTTP
-  mesUti : message destiné à l'utilisateur
-  wmsErrorCode : code erreur à renvoyer dans l'Exception, si '' pas de code d'erreur
-  mesSys : message système écrit dans le log s'il est différent du message destiné à l'utilisateur, sinon ''
-  */
+  /** Envoi d'une exception WMS
+   * @param int $httpErrorCode code d'erreur HTTP
+   * @param string $mesUti message destiné à l'utilisateur
+   * @param string $wmsErrorCode='' code erreur à renvoyer dans l'Exception, si '' pas de code d'erreur
+   * @param string $mesSys='' message système écrit dans le log s'il est différent du message destiné à l'utilisateur, sinon ''
+   */
   static function exception(int $httpErrorCode, string $mesUti, string $wmsErrorCode='', string $mesSys=''): never {
     static $httpErrorCodes = [
       400 => 'Bad Request', // paramètres en entrée incorrects
@@ -80,28 +77,38 @@ EOT;
     die(sprintf($format, $wmsErrorCode?' exceptionCode="'.$wmsErrorCode.'"' : '', $mesUti));
   }
   
+  /** La classe concrète doit fournir une méthode getCapabilities() */
   abstract function getCapabilities(string $version=''): never;
   
-  /**
-  * @param array<int, string> $lyrnames
-  * @param array<int, string> $styles
-  * @param array<int, string> $bbox
+  /** La classe concrète doit fournir une méthode getMap() 
+  * @param string $version
+  * @param list<string> $lyrnames
+  * @param list<string> $styles
+  * @param list<string> $bbox
+  * @param string $crs
+  * @param int $width
+  * @param int $height
+  * @param string $format
+  * @param string $transparent
+  * @param string $bgcolor
   */
   abstract function getMap(string $version, array $lyrnames, array $styles, array $bbox, string $crs, int $width, int $height, string $format, string $transparent, string $bgcolor): never;
   
-  /**
+  /** La classe concrète peut fournir une méthode getFeatureInfo() 
   * @param array<int, string> $lyrnames
+  * @param string $crs
   * @param TPos $pos
-  * @param array<int, float> $pixelSize
+  * @param int $featureCount
+  * @param list<float> $pixelSize
+  * @param string $format
   */
   function getFeatureInfo(array $lyrnames, string $crs, array $pos, int $featureCount, array $pixelSize, string $format): never {
     die('');
   }
   
-  // traite une requête WMS
-  /** @param array<string, string> $params */
+  /** traite une requête WMS
+   * @param array<string, string> $params copie de _GET */
   function process(array $params): never {
-    // copie de _GET avec les noms des paramètres en majuscules
     $GET = [];
     foreach ($params as $k=>$v)
       $GET[strtoupper($k)] = $v;

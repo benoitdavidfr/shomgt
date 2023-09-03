@@ -1,26 +1,25 @@
 <?php
-/*PhpDoc:
-title: mapcat.inc.php - charge le catalogue de cartes et sait retourner pour un gtname les infos correspondantes
-name: mapcat.inc.php
-classes:
-doc: |
-journal: |
-  27/8/2023:
-    - supp. des cartes obsolètes dont le compartiment a été suppprimé
-  17/8/2023:
-    - ajout des cartes obsolètes dans le catalogue
-  2/7/2023:
-    - correction d'un bug en lien avec la carte 7620
-    - correction d'un bug sur la création du répertoire temp
-  1/8/2022:
-    - correction suite à analyse PhpStan level 6
-  17-18/6/2022:
-    - création
-*/
+/**
+ * charge le catalogue de cartes et sait retourner pour un gtname les infos correspondantes
+ *
+ * journal: |
+ * - 27/8/2023:
+ *   - supp. des cartes obsolètes dont le compartiment a été suppprimé
+ * - 17/8/2023:
+ *   - ajout des cartes obsolètes dans le catalogue
+ * - 2/7/2023:
+ *   - correction d'un bug en lien avec la carte 7620
+ *   - correction d'un bug sur la création du répertoire temp
+ * - 1/8/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * - 17-18/6/2022:
+ *   - création
+ */
 require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/execdl.inc.php';
 require_once __DIR__.'/gdalinfo.inc.php';
 
+/** charge le catalogue de cartes et sait retourner pour un gtname les infos correspondantes */
 class TempMapCat {
   const MAPCAT_TEMP_PATH = __DIR__.'/../sgupdt/temp/mapcat.json';
   protected string $name; // le nom de la carte
@@ -30,8 +29,8 @@ class TempMapCat {
   /** @var array<string, TempMapCat> $cat */
   static array $cat; // catalogue [{mapName} => TempMapCat]
   
-  // si $option == 'download' ou si le fichier mapcat.json n'existe pas alors télécharge mapcat.json depuis $SHOMGT3_SERVER_URL
-  // puis initialise self::$cat à partir du fichier 
+  /** si $option == 'download' ou si le fichier mapcat.json n'existe pas alors télécharge mapcat.json depuis $SHOMGT3_SERVER_URL
+   * puis initialise self::$cat à partir du fichier */
   static function init(string $option=''): void {
     if (($option=='download') || !is_file(self::MAPCAT_TEMP_PATH)) {
       $url = EnvVar::val('SHOMGT3_SERVER_URL').'/cat.json';
@@ -46,10 +45,7 @@ class TempMapCat {
   }
   
   /** @param array<string, mixed> $map */
-  function __construct(string $name, array $map) {
-    $this->name = $name;
-    $this->map = $map;
-  }
+  function __construct(string $name, array $map) { $this->name = $name; $this->map = $map; }
   
   //function title(): string { return $this->map['title']; }
   //function spatial(): array { return $this->map['spatial'] ?? []; }
@@ -78,7 +74,7 @@ class TempMapCat {
     ];
   }
     
-  // sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet TempMapCat
+  /** sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet TempMapCat */
   private function insetMapFromRect(\gegeom\GBox $georefrect): ?self {
     $distmin = INF;
     $best = -1;
@@ -97,7 +93,7 @@ class TempMapCat {
     return new self("inset $best of $this->name", $this->map['insetMaps'][$best]);
   }
   
-  // retourne la carte ou le cartouche correspondant à $gtname, $temp indique si la carte est dans temp ou dans maps
+  /** retourne la carte ou le cartouche correspondant à $gtname, $temp indique si la carte est dans temp ou dans maps */
   static function fromGtname(string $gtname, bool $temp): ?self {
     $mapnum = substr($gtname, 0, 4);
     $map = self::$cat["FR$mapnum"] ?? null;
@@ -120,9 +116,9 @@ class TempMapCat {
     }
   }
   
-  // extrait de TempMapCat ceux ayant un champ toDelete
-  // et retourne un array [{gtname}=> {toDelete}] / {toDelete} défini par mapcat.schema.yaml
-  /** @return array<string, array<string, array<int, mixed>>> */
+  /** extrait de TempMapCat ceux ayant un champ toDelete
+   * et retourne un array [{gtname}=> {toDelete}] / {toDelete} défini par mapcat.schema.yaml
+   * @return array<string, array<string, array<int, mixed>>> */
   static function allZonesToDelete(): array {
     $toDelete = [];
     foreach (self::$cat as $mapid => $mapcat) {
@@ -138,8 +134,8 @@ class TempMapCat {
     return $toDelete;
   }
   
-  // retourne pour la carte $mapid les champs toDelete par gtname ou [] s'il n'y en a pas
-  /** @return array<string, array<string, array<int, mixed>>> */
+  /** retourne pour la carte $mapid les champs toDelete par gtname ou [] s'il n'y en a pas
+   * @return array<string, array<string, array<int, mixed>>> */
   static function toDeleteByGtname(string $mapid): array {
     $toDelete = []; // [{gtname}=> {toDelete}]
     $mapcat = self::$cat[$mapid];

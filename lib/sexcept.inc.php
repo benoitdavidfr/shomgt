@@ -1,17 +1,9 @@
 <?php
-/*PhpDoc:
-name:  sexcept.inc.php
-title: sexcept.inc.php - Exception avec code string
-classes:
-doc: |
-*/
-/*PhpDoc: classes
-name: SExcept
-title: class SExcept extends Exception - Exception avec code string
-doc: |
-*/
+/** Exception avec code string */
+
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
+/** Exception avec code string */
 class SExcept extends Exception {
   protected string $scode; // code sous forme d'une chaine de caractères
   

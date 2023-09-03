@@ -1,30 +1,27 @@
 <?php
-/*PhpDoc:
-name:  log.inc.php
-title: log.inc.php - enregistrement d'un log
-functions:
-doc: |
-  fonction d'enregistrement d'un log
-journal: |
-  22/8/2023:
-    ajout champ host dans la table log
-  2/7/2022:
-    changement de logique
-    le log n'est plus paramétré dans config('mysqlParams') mais au travers de la var. d'env. SHOMGT3_LOG_MYSQL_URI
-  5/5/2022:
-    correction bug
-  7/2/2022:
-    ajout de code aux exceptions, une constante par méthode
-  15/12/2018:
-    ajout de la création de la table si elle n'existe pas
-    de plus dans openMySQL() sur localhost la base est créée si elle n'existe pas
-  20/7/2017:
-    suppression de l'utilisation du champ phpserver
-includes: [mysql.inc.php, sexcept.inc.php]
-*/
+/**
+ * fonction d'enregistrement d'un log
+ *
+ * journal: |
+ * - 22/8/2023:
+ *   - ajout champ host dans la table log
+ * - 2/7/2022:
+ *   - changement de logique
+ *   - le log n'est plus paramétré dans config('mysqlParams') mais au travers de la var. d'env. SHOMGT3_LOG_MYSQL_URI
+ * - 5/5/2022:
+ *   - correction bug
+ * - 7/2/2022:
+ *   - ajout de code aux exceptions, une constante par méthode
+ * - 15/12/2018:
+ *   - ajout de la création de la table si elle n'existe pas
+ *   - de plus dans openMySQL() sur localhost la base est créée si elle n'existe pas
+ * - 20/7/2017:
+ *   - suppression de l'utilisation du champ phpserver
+ */
 require_once __DIR__.'/mysql.inc.php';
 require_once __DIR__.'/sexcept.inc.php';
 
+/** définition de la commande SQL de création de la table */
 function log_table_schema(): string {
   return "create table log(
       logdt datetime not null comment 'date et heure',
@@ -38,17 +35,9 @@ function log_table_schema(): string {
     )";
 }
 
-/*PhpDoc: functions
-name:  write_log
-title: function write_log($access) - enregistrement d'un log
-doc: |
-  Fonction d'enregistrement d'un log.
-  Le paramètre est retourné.
-*/
-//function write_log(bool $access): bool { return $access; }
-
 define ('COOKIE_NAME', 'shomusrpwd');
 
+/** enregistrement d'un log */
 function write_log(bool $access): bool {
   // si la variable d'env. n'est pas définie alors le log est désactivé
   if (!($LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')))

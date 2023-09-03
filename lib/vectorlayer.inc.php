@@ -1,35 +1,34 @@
 <?php
-/*PhpDoc:
-title: vectorlayer.inc.php - gestion de couches d'objets vecteur
-name: vectorlayer.inc.php
-doc: |
-  Affichage des couches vecteur
-journal: |
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-  10/7/2022:
-    - rajout des couches de catalogue en réutilisant le code de layer.inc.php
-  8-9/7/2022:
-    - création sur le modèle de layer.inc.php
-*/
+/** gestion de couches d'objets vecteur
+ *
+ * journal: |
+ * - 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * - 10/7/2022:
+ *   - rajout des couches de catalogue en réutilisant le code de layer.inc.php
+ * - 8-9/7/2022:
+ *   - création sur le modèle de layer.inc.php
+ */
 require_once __DIR__.'/layer.inc.php';
 require_once __DIR__.'/gegeom.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fichier yaml
-  // dictionnaire des styles indexés par leur identifiant
-  // [{id} => ['title'=>{title}, 'color'=>{color}, 'weight'=<{weight}, 'fillColor'=>{fillColor}, 'fillOpacity'=>{fillOpacity}]]
-  /** @var array<string, array<string, mixed>> $all */
+/** Gestion de la bibliothèque des styles stockée dans le fichier yaml */
+class StyleLib {
+  /** dictionnaire des styles indexés par leur identifiant
+   * @var array<string, TStyle> $all */
   static array $all;
     
-  // retourne le style correspondant au nom demandé ou s'il n'existe pas []
-  /** @return array<string, mixed> $all */
+  /** retourne le style correspondant au nom demandé ou s'il n'existe pas []
+   * @return TStyle */
   static function get(string $name): array { return self::$all[$name] ?? []; }
   
-  // Publication de la liste des styles disponibles dans les capacités du serveur
-  // Le titre du style doit comporter le titre de la couche car le titre du style est utilisa dans QGis
-  // pour définir le titre de la couche stylée
+  /** Publication de la liste des styles disponibles dans les capacités du serveur
+   *
+   * Le titre du style doit comporter le titre de la couche car le titre du style est utilisa dans QGis
+   * pour définir le titre de la couche stylée.
+   */
   static function asXml(string $lyrTitle): string {
     $xml = '';
     foreach (self::$all as $styleId => $style) {
@@ -40,16 +39,18 @@ class StyleLib { // Gestion de la bibliothèque des styles stockée dans le fich
   }
 }
 
-class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couches
+/** Couche d'objets vecteur + dictionnaire de ces couches */
+class VectorLayer {
   protected string $name;
   protected string $title;
   protected string $description;
   protected ?string $path;
-  /** @var array<string, mixed> $style */
+  /** @var TStyle $style */
   protected array $style;
   
-  /** @var array<string, VectorLayer> $all */
-  static array $all = []; // dictionaire [{lyrName} => VectorLayer]
+  /** // dictionaire [{lyrName} => VectorLayer]
+   * @var array<string, VectorLayer> $all */
+  static array $all = [];
 
   static function initVectorLayers(string $filename): void {
     Layer::initLayers(); // Initialisation des couches raster à partir du fichier Yaml
@@ -74,8 +75,8 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     StyleLib::$all = $yaml['styles'];
   }
   
-  // retourne le dictionnaire des couches
-  /** @return array<string, VectorLayer> */
+  /** retourne le dictionnaire des couches
+   * @return array<string, VectorLayer> */
   static function layers(): array { return self::$all; }
 
   /** @param array<string, mixed> $vectorLayer */
@@ -87,8 +88,8 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     $this->style = $vectorLayer['style'];
   }
 
-  // fournit une représentation de la couche comme array pour affichage
-  /** @return array<int, string> */
+  /** fournit une représentation de la couche comme array pour affichage
+   * @return array<int, string> */
   function asArray(): array { return [$this->path]; }
 
   // calcul de l'extension spatiale de la couche en WoM
@@ -114,7 +115,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     }
   }
   
-  // copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage,
+  /** copie dans $grImage l'extrait de la couche correspondant au rectangle de $grImage, */
   function map(GeoRefImage $grImage, string $styleId): void {
     // si le paramètre $style est non vide alors J'essaie de récupérer le style dans la bibliothèque
     $styleDef = $styleId ? StyleLib::get($styleId) : [];
@@ -191,7 +192,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
     return $info;
   }
   
-  // Génère l'extrait XML de la couche pour les capacités
+  /** Génère l'extrait XML de la couche pour les capacités */
   private function asXml(): string {
     return
       '<Layer queryable="1" opaque="0">'
@@ -202,7 +203,7 @@ class VectorLayer { // structure d'une couche vecteur + dictionnaire de ces couc
       .'</Layer>';
   }
   
-  // Génère l'extrait XML des couches pour les capacités
+  /** Génère l'extrait XML des couches pour les capacités */
   static function allAsXml(): string {
     $xml = '';
     foreach(self::$all as $name => $layer)

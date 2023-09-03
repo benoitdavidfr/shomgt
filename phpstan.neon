@@ -52,6 +52,9 @@ parameters:
         deleted: list<\gegeom\EBox>
       }
       '''
+    # définition du style pour l'affichage vecteur
+    TColor: list<int>
+    TStyle: "array{title: string, description: string, color: TColor, weight: int, fillColor: TColor, fillOpacity: float}"
     # définition du type de l'enregistrement .md.json stocké dans shomgeotif/current
     TMapMdGan: "array{week: string, date: string}|null"
     TMapMdDateMD: "array{role: string, value: string}"

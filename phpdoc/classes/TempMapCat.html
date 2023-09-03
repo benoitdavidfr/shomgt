@@ -134,11 +134,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">charge le catalogue de cartes et sait retourner pour un gtname les infos correspondantes</p>
+
 
 
 
@@ -214,12 +215,15 @@
     <span>
                                 &nbsp;: array&lt;string, array&lt;string, array&lt;int, mixed&gt;&gt;&gt;    </span>
 </dt>
+<dd>extrait de TempMapCat ceux ayant un champ toDelete
+et retourne un array [{gtname}=&gt; {toDelete}] / {toDelete} défini par mapcat.schema.yaml</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/TempMapCat.html#method_fromGtname">fromGtname()</a>
     <span>
                                 &nbsp;: self|null    </span>
 </dt>
+<dd>retourne la carte ou le cartouche correspondant à $gtname, $temp indique si la carte est dans temp ou dans maps</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/TempMapCat.html#method_gtInfo">gtInfo()</a>
@@ -232,6 +236,8 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>si $option == &#039;download&#039; ou si le fichier mapcat.json n&#039;existe pas alors télécharge mapcat.json depuis $SHOMGT3_SERVER_URL
+puis initialise self::$cat à partir du fichier</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/TempMapCat.html#method_insetMap">insetMap()</a>
@@ -256,12 +262,14 @@
     <span>
                                 &nbsp;: array&lt;string, array&lt;string, array&lt;int, mixed&gt;&gt;&gt;    </span>
 </dt>
+<dd>retourne pour la carte $mapid les champs toDelete par gtname ou [] s&#039;il n&#039;y en a pas</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/TempMapCat.html#method_insetMapFromRect">insetMapFromRect()</a>
     <span>
                                 &nbsp;: self|null    </span>
 </dt>
+<dd>sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet TempMapCat</dd>
 
     </dl>
 
@@ -285,7 +293,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -329,7 +337,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -362,7 +370,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -395,7 +403,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -433,7 +441,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -481,11 +489,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">extrait de TempMapCat ceux ayant un champ toDelete
+et retourne un array [{gtname}=&gt; {toDelete}] / {toDelete} défini par mapcat.schema.yaml</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">allZonesToDelete</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, array&lt;int, mixed&gt;&gt;&gt;</span></code>
@@ -516,11 +526,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la carte ou le cartouche correspondant à $gtname, $temp indique si la carte est dans temp ou dans maps</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromGtname</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gtname</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$temp</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self|null</span></code>
@@ -568,7 +579,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -603,11 +614,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">si $option == &#039;download&#039; ou si le fichier mapcat.json n&#039;existe pas alors télécharge mapcat.json depuis $SHOMGT3_SERVER_URL
+puis initialise self::$cat à partir du fichier</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">init</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -644,7 +657,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -689,7 +702,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -724,7 +737,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -759,11 +772,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">143</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne pour la carte $mapid les champs toDelete par gtname ou [] s&#039;il n&#039;y en a pas</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">toDeleteByGtname</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapid</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, array&lt;int, mixed&gt;&gt;&gt;</span></code>
@@ -804,11 +818,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/mapcat.inc.php"><a href="files/lib-mapcat-inc.html"><abbr title="lib/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">sélectionne le cartouche qui correspond le mieux au rectangle passé en paramètre et en construit un objet TempMapCat</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">insetMapFromRect</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$georefrect</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self|null</span></code>

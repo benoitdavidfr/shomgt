@@ -1,24 +1,26 @@
 <?php
-/*PhpDoc:
-title: readmapversion.inc.php - extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
-name: readmapversion.inc..php
-doc: |
-  La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
-  Le retour est un dict. ['version'=> {version}, 'dateStamp'=> {dateStamp}]
-journal: |
-  3/8/3023:
-    - prise en compte du format de l'édition utilisée pour les cartes spéciales
-  10/6/2023:
-    - corrections passage Php8.2 - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 46
-  13/1/2023:
-    - modif format de l'édition dans le XML -> 'Publication 1989 - Dernière correction : 149 - GAN : 2250'
-  17/10/2022:
-    - modif format de l'édition dans le XML
-  1/8/2022:
-    - ajout déclarations PhpStan pour level 6
-*/
+/**
+ * extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
+ *
+ * journal:
+ * - 3/8/3023:
+ *   - prise en compte du format de l'édition utilisée pour les cartes spéciales
+ * - 10/6/2023:
+ *   - corrections passage Php8.2 - Deprecated: Using ${var} in strings is deprecated, use {$var} instead on line 46
+ * - 13/1/2023:
+ *   - modif format de l'édition dans le XML -> 'Publication 1989 - Dernière correction : 149 - GAN : 2250'
+ * - 17/10/2022:
+ *   - modif format de l'édition dans le XML
+ * - 1/8/2022:
+ *   - ajout déclarations PhpStan pour level 6
+ */
 
-/** @return array<string, string> */
+/**
+ * extrait du fichier MD ISO dont le path est fourni la version de la carte et la date dateStamp
+ *
+ * La version est fournie sous la forme d'une chaine "${anneeEdition}c${lastUpdate}" 
+ *
+ * @return array{version: string, dateStamp: string} */
 function readMapVersion(string $path): array {
   if (!($xmlmd = @file_get_contents($path)))
     throw new Exception("Fichier de MD non trouvé pour path=$path");
@@ -74,5 +76,4 @@ function readMapVersion(string $path): array {
   }
   else
      throw new Exception("Format de l'édition inconnu pour \"$edition\"");
-  
 }
