@@ -137,11 +137,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">couche correspondant à un ensemble de GéoTiff juxtaposés</p>
+
 
 
 
@@ -170,6 +171,7 @@
     <span>
         &nbsp;= -0.001                            </span>
 </dt>
+<dd>dilatation en mètres sur la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/TiffLayer.html#constant_ErrorBadGeoCoords">ErrorBadGeoCoords</a>
@@ -190,10 +192,17 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Layer.html#constant_LAYERS_YAML_PATH">LAYERS_YAML_PATH</a>
+    <span>
+        &nbsp;= __DIR__ . &#039;/../data/layers.yaml&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/TiffLayer.html#constant_WOM_BASE">WOM_BASE</a>
     <span>
         &nbsp;= 20037508.342789248                            </span>
 </dt>
+<dd>xmax en Web Mercator en mètres</dd>
 
     </dl>
 
@@ -213,8 +222,9 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/TiffLayer.html#property_geotiffs">$geotiffs</a>
     <span>
-                        &nbsp;: array&lt;string, array&lt;string, mixed&gt;&gt;            </span>
+                        &nbsp;: array&lt;string, <abbr title="\TGeoTiffStoredInLayer">TGeoTiffStoredInLayer</abbr>&gt;            </span>
 </dt>
+<dd>dict. des GéoTiffs contenus dans la couche</dd>
 
     </dl>
 
@@ -242,39 +252,42 @@
     <span>
                                 &nbsp;: array&lt;int, <abbr title="\TGeoJsonFeature">TGeoJsonFeature</abbr>&gt;    </span>
 </dt>
-<dd>utile pour éviter les erreurs d&#039;analyse statique</dd>
+<dd>retourne un array de Features correspondant aux zones effacées des GéoTiffs</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Layer.html#method_dilate">dilate()</a>
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>calcule le coeff de dilatation en fonction du nom de la couche</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/TiffLayer.html#method_ebox">ebox()</a>
     <span>
                                 &nbsp;: <a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>    </span>
 </dt>
+<dd>calcul de l&#039;union des ebox des GeoTiff de la couche</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Layer.html#method_initFromShomGt">initFromShomGt()</a>
+    <a href="classes/Layer.html#method_initLayers">initLayers()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>initialise le dictionnaire des couches à partir du fichier Yaml ou du fichier pser</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/TiffLayer.html#method_itemEBoxes">itemEBoxes()</a>
     <span>
                                 &nbsp;: array&lt;int, <a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>&gt;    </span>
 </dt>
-<dd>utile pour éviter les erreurs d&#039;analyse statique</dd>
+<dd>retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/TiffLayer.html#method_items">items()</a>
     <span>
                                 &nbsp;: array&lt;int, <abbr title="\TGeoJsonFeature">TGeoJsonFeature</abbr>&gt;    </span>
 </dt>
-<dd>utile pour éviter les erreurs d&#039;analyse statique</dd>
+<dd>retourne une liste de Features correspondant aux bbox des GéoTiffs</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Layer.html#method_layers">layers()</a>
@@ -288,18 +301,21 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>copie dans $grImage l&#039;extrait de la couche correspondant au rectangle de $grImage,</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/TiffLayer.html#method_deletedZonesForGeoTiff">deletedZonesForGeoTiff()</a>
     <span>
                                 &nbsp;: <abbr title="\TGeoJsonFeature">TGeoJsonFeature</abbr>    </span>
 </dt>
+<dd>retourne le Feature correspondant au zones effacées du GeoTiff</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/TiffLayer.html#method_itemForGeoTiff">itemForGeoTiff()</a>
     <span>
                                 &nbsp;: <abbr title="\TGeoJsonFeature">TGeoJsonFeature</abbr>    </span>
 </dt>
+<dd>retourne le Feature correspondant au GeoTiff</dd>
 
     </dl>
 
@@ -323,11 +339,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dilatation en mètres sur la carte</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -351,7 +368,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">252</span>
+    <span class="phpdocumentor-element-found-in__line">233</span>
 
     </aside>
 
@@ -379,7 +396,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -407,7 +424,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -426,6 +443,34 @@
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_LAYERS_YAML_PATH">
+        LAYERS_YAML_PATH
+        <a href="classes/Layer.html#constant_LAYERS_YAML_PATH" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">58</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">LAYERS_YAML_PATH</span>
+    = <span class="phpdocumentor-signature__default-value">__DIR__ . &#039;/../data/layers.yaml&#039;</span>
+</code>
+
+
+    
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_WOM_BASE">
         WOM_BASE
         <a href="classes/TiffLayer.html#constant_WOM_BASE" class="headerlink"><i class="fas fa-link"></i></a>
@@ -435,11 +480,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">253</span>
+    <span class="phpdocumentor-element-found-in__line">235</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">xmax en Web Mercator en mètres</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -479,7 +525,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -491,7 +537,9 @@
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
-    
+        <section class="phpdocumentor-description"><p>dictionaire [{lyrName} =&gt; Layer]</p>
+</section>
+
     
 
 </article>
@@ -512,14 +560,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dict. des GéoTiffs contenus dans la couche</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string, array&lt;string, mixed&gt;&gt;</span>
+        <span class="phpdocumentor-signature__type">array&lt;string, <abbr title="\TGeoTiffStoredInLayer">TGeoTiffStoredInLayer</abbr>&gt;</span>
     <span class="phpdocumentor-signature__name">$geotiffs</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
@@ -550,14 +599,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">260</span>
+    <span class="phpdocumentor-element-found-in__line">242</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrName</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string, array&lt;string, mixed&gt;&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dictOfGT</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrName</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string, <abbr title="\TGeoTiff">TGeoTiff</abbr>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dictOfGT</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -573,10 +622,12 @@
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$dictOfGT</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string, array&lt;string, mixed&gt;&gt;</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string, <abbr title="\TGeoTiff">TGeoTiff</abbr>&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>dictionnaire des GéoTiffs</p>
+</section>
+
             </dd>
             </dl>
 
@@ -598,7 +649,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">283</span>
+    <span class="phpdocumentor-element-found-in__line">265</span>
 
     </aside>
 
@@ -634,11 +685,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">469</span>
+    <span class="phpdocumentor-element-found-in__line">450</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">utile pour éviter les erreurs d&#039;analyse statique</p>
+        <p class="phpdocumentor-summary">retourne un array de Features correspondant aux zones effacées des GéoTiffs</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -687,11 +738,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcule le coeff de dilatation en fonction du nom de la couche</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">dilate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -732,18 +784,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcul de l&#039;union des ebox des GeoTiff de la couche</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">ebox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est</p>
+</section>
+
     
     
 
@@ -759,37 +814,30 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_initFromShomGt">
-        initFromShomGt()
-        <a href="classes/Layer.html#method_initFromShomGt" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_initLayers">
+        initLayers()
+        <a href="classes/Layer.html#method_initLayers" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">initialise le dictionnaire des couches à partir du fichier Yaml ou du fichier pser</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initFromShomGt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initLayers</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$filename</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
+        <section class="phpdocumentor-description"><p>Ce dictionnaire est stocké dans un fichier pser afin de ne pas avoir à le reconstruire à chaque appel</p>
+</section>
 
+    
     
 
     
@@ -808,11 +856,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">416</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">utile pour éviter les erreurs d&#039;analyse statique</p>
+        <p class="phpdocumentor-summary">retourne la liste des EBox des GéoTiffs de la couche intersectant le rectangle</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -820,7 +868,9 @@
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Les GéoTiffs à cheval sur l'anti-méridien sont dupliqués à l'Ouest</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -854,11 +904,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">373</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">utile pour éviter les erreurs d&#039;analyse statique</p>
+        <p class="phpdocumentor-summary">retourne une liste de Features correspondant aux bbox des GéoTiffs</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -907,7 +957,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -943,18 +993,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">311</span>
+    <span class="phpdocumentor-element-found-in__line">295</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">copie dans $grImage l&#039;extrait de la couche correspondant au rectangle de $grImage,</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">map</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/GeoRefImage.html"><abbr title="\GeoRefImage">GeoRefImage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grImage</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$debug</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$zoom</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>lorsqu'un GéoTiff intersecte l'anti-méridien il est dupliqué dans les 2 hémisphères Ouest et Est</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -998,11 +1051,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">435</span>
+    <span class="phpdocumentor-element-found-in__line">416</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le Feature correspondant au zones effacées du GeoTiff</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">deletedZonesForGeoTiff</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrname</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gtname</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gt</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gbox</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\TGeoJsonFeature">TGeoJsonFeature</abbr></span></code>
@@ -1064,11 +1118,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">350</span>
+    <span class="phpdocumentor-element-found-in__line">332</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le Feature correspondant au GeoTiff</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">itemForGeoTiff</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrname</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gtname</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gt</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gbox</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\TGeoJsonFeature">TGeoJsonFeature</abbr></span></code>
@@ -1233,6 +1288,7 @@
                                                     <li><a href="classes/TiffLayer.html#constant_ErrorBadGeoCoords">ErrorBadGeoCoords</a></li>
                                                     <li><a href="classes/Layer.html#constant_ErrorUndef">ErrorUndef</a></li>
                                                     <li><a href="classes/Layer.html#constant_LAYERS_PSER_PATH">LAYERS_PSER_PATH</a></li>
+                                                    <li><a href="classes/Layer.html#constant_LAYERS_YAML_PATH">LAYERS_YAML_PATH</a></li>
                                                     <li><a href="classes/TiffLayer.html#constant_WOM_BASE">WOM_BASE</a></li>
                                             </ul>
                 </li>
@@ -1253,7 +1309,7 @@
                                             <li><a href="classes/TiffLayer.html#method_deletedZones">deletedZones()</a></li>
                                             <li><a href="classes/Layer.html#method_dilate">dilate()</a></li>
                                             <li><a href="classes/TiffLayer.html#method_ebox">ebox()</a></li>
-                                            <li><a href="classes/Layer.html#method_initFromShomGt">initFromShomGt()</a></li>
+                                            <li><a href="classes/Layer.html#method_initLayers">initLayers()</a></li>
                                             <li><a href="classes/TiffLayer.html#method_itemEBoxes">itemEBoxes()</a></li>
                                             <li><a href="classes/TiffLayer.html#method_items">items()</a></li>
                                             <li><a href="classes/Layer.html#method_layers">layers()</a></li>

@@ -114,7 +114,54 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">layer.inc.php</h2>
 
-        
+            <p class="phpdocumentor-summary">définition des classes Layer, PyrLayer, LabelLayer et TiffLayer</p>
+
+    <section class="phpdocumentor-description"><p>Les 4 classes permettent de construire à partir de shomgt.yaml la structuration en couches et de l'exploiter au travers
+des méthodes map() qui recopie dans une image GD l'extrait de la couche correspondant à un rectangle
+et pour la classe TiffLayer la méthode items() qui génère en GeoJSON les silhouettes des GéoTiffs.</p>
+<p>La classe abstraite Layer définit les couches du serveur de cartes.
+La classe TiffLayer correspond aux couches agrégeant des GéoTiff.
+La classe PyrLayer correspond à la pyramide des TiffLayer qui permet d'afficher le bon GéoTiff en fonction du niveau de zoom.
+Enfin, la classe LabelLayer correspond aux étiquettes associées aux GéoTiff.</p>
+<p>journal:</p>
+<ul>
+<li>3/9/2023
+<ul>
+<li>reformattage de la doc en PHPDoc</li>
+<li>modification de la fonction d'initialisation des couches</li>
+<li>renommage du fichier de définition des couches en layers.yaml</li>
+</ul>
+</li>
+<li>28-31/7/2022:
+<ul>
+<li>correction suite à analyse PhpStan level 6</li>
+<li>la gestion dans Layer::$layers de couches de types différents limite les possibilités d'analyse statique du code !!</li>
+</ul>
+</li>
+<li>7/6/2022:
+<ul>
+<li>ajout d'une érosion des rectangles englobants des cartes d'une mesure définie sur la carte, ex 1mm
+pour s'assurer que le trait du bord de la carte est bien effacé
+6/6/2022:</li>
+<li>modif. définition du niveau de zoom dans PyrLayer::map()
+30/5/2022:</li>
+<li>modif initialisation Layer
+24/5/2022:</li>
+<li>envoi d'une erreur Http 500 lorsque le fichier shomgt.yaml n'existe pas
+22/5/2022:</li>
+<li>dans TiffLayer gestion des cartes n'ayant pas de Mdiso</li>
+<li>dans TiffLayer duplication des silhouettes des GéoTiffs à cehval sur l'AM
+1/5/2022:</li>
+<li>ajout de la classe PyrLayer
+29/4/2022:</li>
+<li>gestion des GéoTiff à cheval sur l'anti-méridien</li>
+<li>gestion de la superposition de plusieures couches
+25/4/2022:</li>
+<li>scission de maps.php</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -135,7 +182,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Layer.html"><abbr title="\Layer">Layer</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/PyrLayer.html"><abbr title="\PyrLayer">PyrLayer</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/LabelLayer.html"><abbr title="\LabelLayer">LabelLayer</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/TiffLayer.html"><abbr title="\TiffLayer">TiffLayer</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Layer.html"><abbr title="\Layer">Layer</abbr></a></dt><dd>classe abstraite correspondant à une couche du serveur de cartes</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/PyrLayer.html"><abbr title="\PyrLayer">PyrLayer</abbr></a></dt><dd>couche Pyramide</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/LabelLayer.html"><abbr title="\LabelLayer">LabelLayer</abbr></a></dt><dd>couche d&#039;étiquettes, permet de dessiner les étiquettes associées aux GéoTiffs</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/TiffLayer.html"><abbr title="\TiffLayer">TiffLayer</abbr></a></dt><dd>couche correspondant à un ensemble de GéoTiff juxtaposés</dd>    </dl>
 
 
 

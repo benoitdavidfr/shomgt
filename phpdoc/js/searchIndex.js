@@ -3291,65 +3291,65 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/jsonschema-Lib.html#property_patterns"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema",
-            "name": "JsonSchema",
+            "fqsen": "\\jsonschema\\Schema",
+            "name": "Schema",
             "summary": "sch\u00E9ma\u0020JSON\u0020initialis\u00E9\u0020soit\u0020par\u0020un\u0020chemin\u0020dans\u0020un\u0020fichier\u0020JSON\/Yaml,\u0020soit\u0020par\u0020un\u0020array\u0020Php",
-            "url": "classes/jsonschema-JsonSchema.html"
+            "url": "classes/jsonschema-Schema.html"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "cr\u00E9ation\u0020d\u0027un\u0020JsonSchema",
-            "url": "classes/jsonschema-JsonSchema.html#method___construct"
+            "summary": "cr\u00E9ation\u0020d\u0027un\u0020Schema",
+            "url": "classes/jsonschema-Schema.html#method___construct"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024def",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003A\u0024def",
             "name": "def",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#property_def"
+            "url": "classes/jsonschema-Schema.html#property_def"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003AcheckDefinition\u0028\u0029",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003AcheckDefinition\u0028\u0029",
             "name": "checkDefinition",
             "summary": "lance\u0020une\u0020exception\u0020si\u0020d\u00E9tecte\u0020une\u0020boucle\u0020dans\u0020les\u0020d\u00E9fs\u0020ou\u0020une\u0020r\u00E9f\u00E9rence\u0020\u00E0\u0020une\u0020d\u00E9f.\u0020inexistante",
-            "url": "classes/jsonschema-JsonSchema.html#method_checkDefinition"
+            "url": "classes/jsonschema-Schema.html#method_checkDefinition"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003Acheck\u0028\u0029",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003Acheck\u0028\u0029",
             "name": "check",
-            "summary": "check\u0020\u002D\u0020v\u00E9rification\u0020de\u0020la\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020au\u0020JsonSchema,\u0020renvoit\u0020un\u0020Status",
-            "url": "classes/jsonschema-JsonSchema.html#method_check"
+            "summary": "check\u0020\u002D\u0020v\u00E9rification\u0020de\u0020la\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020au\u0020Schema,\u0020renvoit\u0020un\u0020Status",
+            "url": "classes/jsonschema-Schema.html#method_check"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003AautoCheck\u0028\u0029",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003AautoCheck\u0028\u0029",
             "name": "autoCheck",
             "summary": "autoCheck\u0028\u0029\u0020\u002D\u0020valide\u0020la\u0020conformit\u00E9\u0020d\u0027une\u0020instance\u0020\u00E0\u0020son\u0020sch\u00E9ma\u0020d\u00E9fini\u0020par\u0020le\u0020champ\u0020\u0024schema",
-            "url": "classes/jsonschema-JsonSchema.html#method_autoCheck"
+            "url": "classes/jsonschema-Schema.html#method_autoCheck"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003Atest\u0028\u0029",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003Atest\u0028\u0029",
             "name": "test",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#method_test"
+            "url": "classes/jsonschema-Schema.html#method_test"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003ASCHEMAIDS",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003ASCHEMAIDS",
             "name": "SCHEMAIDS",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#constant_SCHEMAIDS"
+            "url": "classes/jsonschema-Schema.html#constant_SCHEMAIDS"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024verbose",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003A\u0024verbose",
             "name": "verbose",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#property_verbose"
+            "url": "classes/jsonschema-Schema.html#property_verbose"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024filepath",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003A\u0024filepath",
             "name": "filepath",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#property_filepath"
+            "url": "classes/jsonschema-Schema.html#property_filepath"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024elt",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003A\u0024elt",
             "name": "elt",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#property_elt"
+            "url": "classes/jsonschema-Schema.html#property_elt"
         },                {
-            "fqsen": "\\jsonschema\\JsonSchema\u003A\u003A\u0024status",
+            "fqsen": "\\jsonschema\\Schema\u003A\u003A\u0024status",
             "name": "status",
             "summary": "",
-            "url": "classes/jsonschema-JsonSchema.html#property_status"
+            "url": "classes/jsonschema-Schema.html#property_status"
         },                {
             "fqsen": "\\jsonschema\\Fragment",
             "name": "Fragment",
@@ -3468,17 +3468,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Layer",
             "name": "Layer",
-            "summary": "",
+            "summary": "classe\u0020abstraite\u0020correspondant\u0020\u00E0\u0020une\u0020couche\u0020du\u0020serveur\u0020de\u0020cartes",
             "url": "classes/Layer.html"
         },                {
-            "fqsen": "\\Layer\u003A\u003AinitFromShomGt\u0028\u0029",
-            "name": "initFromShomGt",
-            "summary": "",
-            "url": "classes/Layer.html#method_initFromShomGt"
+            "fqsen": "\\Layer\u003A\u003AinitLayers\u0028\u0029",
+            "name": "initLayers",
+            "summary": "initialise\u0020le\u0020dictionnaire\u0020des\u0020couches\u0020\u00E0\u0020partir\u0020du\u0020fichier\u0020Yaml\u0020ou\u0020du\u0020fichier\u0020pser",
+            "url": "classes/Layer.html#method_initLayers"
         },                {
             "fqsen": "\\Layer\u003A\u003Adilate\u0028\u0029",
             "name": "dilate",
-            "summary": "",
+            "summary": "calcule\u0020le\u0020coeff\u0020de\u0020dilatation\u0020en\u0020fonction\u0020du\u0020nom\u0020de\u0020la\u0020couche",
             "url": "classes/Layer.html#method_dilate"
         },                {
             "fqsen": "\\Layer\u003A\u003A\u0024layers",
@@ -3498,7 +3498,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Layer\u003A\u003Amap\u0028\u0029",
             "name": "map",
-            "summary": "",
+            "summary": "copie\u0020dans\u0020\u0024grImage\u0020l\u0027extrait\u0020de\u0020la\u0020couche\u0020correspondant\u0020au\u0020rectangle\u0020de\u0020\u0024grImage,",
             "url": "classes/Layer.html#method_map"
         },                {
             "fqsen": "\\Layer\u003A\u003Aitems\u0028\u0029",
@@ -3521,6 +3521,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Layer.html#constant_ErrorUndef"
         },                {
+            "fqsen": "\\Layer\u003A\u003ALAYERS_YAML_PATH",
+            "name": "LAYERS_YAML_PATH",
+            "summary": "",
+            "url": "classes/Layer.html#constant_LAYERS_YAML_PATH"
+        },                {
             "fqsen": "\\Layer\u003A\u003ALAYERS_PSER_PATH",
             "name": "LAYERS_PSER_PATH",
             "summary": "",
@@ -3528,12 +3533,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Layer\u003A\u003ADILATE",
             "name": "DILATE",
-            "summary": "",
+            "summary": "dilatation\u0020en\u0020m\u00E8tres\u0020sur\u0020la\u0020carte",
             "url": "classes/Layer.html#constant_DILATE"
         },                {
             "fqsen": "\\PyrLayer",
             "name": "PyrLayer",
-            "summary": "",
+            "summary": "couche\u0020Pyramide",
             "url": "classes/PyrLayer.html"
         },                {
             "fqsen": "\\PyrLayer\u003A\u003AasArray\u0028\u0029",
@@ -3548,7 +3553,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\PyrLayer\u003A\u003Amap\u0028\u0029",
             "name": "map",
-            "summary": "",
+            "summary": "copie\u0020dans\u0020\u0024grImage\u0020l\u0027extrait\u0020de\u0020la\u0020couche\u0020correspondant\u0020au\u0020rectangle\u0020de\u0020\u0024grImage,",
             "url": "classes/PyrLayer.html#method_map"
         },                {
             "fqsen": "\\PyrLayer\u003A\u003AErrorBadZoomValue",
@@ -3558,7 +3563,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\LabelLayer",
             "name": "LabelLayer",
-            "summary": "",
+            "summary": "couche\u0020d\u0027\u00E9tiquettes,\u0020permet\u0020de\u0020dessiner\u0020les\u0020\u00E9tiquettes\u0020associ\u00E9es\u0020aux\u0020G\u00E9oTiffs",
             "url": "classes/LabelLayer.html"
         },                {
             "fqsen": "\\LabelLayer\u003A\u003A__construct\u0028\u0029",
@@ -3578,7 +3583,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\LabelLayer\u003A\u003Amap\u0028\u0029",
             "name": "map",
-            "summary": "",
+            "summary": "copie\u0020dans\u0020\u0024grImage\u0020l\u0027extrait\u0020de\u0020la\u0020couche\u0020correspondant\u0020au\u0020rectangle\u0020de\u0020\u0024grImage,",
             "url": "classes/LabelLayer.html#method_map"
         },                {
             "fqsen": "\\LabelLayer\u003A\u003AErrorUndef",
@@ -3593,7 +3598,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\TiffLayer",
             "name": "TiffLayer",
-            "summary": "",
+            "summary": "couche\u0020correspondant\u0020\u00E0\u0020un\u0020ensemble\u0020de\u0020G\u00E9oTiff\u0020juxtapos\u00E9s",
             "url": "classes/TiffLayer.html"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003A__construct\u0028\u0029",
@@ -3608,37 +3613,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\TiffLayer\u003A\u003Aebox\u0028\u0029",
             "name": "ebox",
-            "summary": "",
+            "summary": "calcul\u0020de\u0020l\u0027union\u0020des\u0020ebox\u0020des\u0020GeoTiff\u0020de\u0020la\u0020couche",
             "url": "classes/TiffLayer.html#method_ebox"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003Amap\u0028\u0029",
             "name": "map",
-            "summary": "",
+            "summary": "copie\u0020dans\u0020\u0024grImage\u0020l\u0027extrait\u0020de\u0020la\u0020couche\u0020correspondant\u0020au\u0020rectangle\u0020de\u0020\u0024grImage,",
             "url": "classes/TiffLayer.html#method_map"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003AitemForGeoTiff\u0028\u0029",
             "name": "itemForGeoTiff",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020Feature\u0020correspondant\u0020au\u0020GeoTiff",
             "url": "classes/TiffLayer.html#method_itemForGeoTiff"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003Aitems\u0028\u0029",
             "name": "items",
-            "summary": "utile\u0020pour\u0020\u00E9viter\u0020les\u0020erreurs\u0020d\u0027analyse\u0020statique",
+            "summary": "retourne\u0020une\u0020liste\u0020de\u0020Features\u0020correspondant\u0020aux\u0020bbox\u0020des\u0020G\u00E9oTiffs",
             "url": "classes/TiffLayer.html#method_items"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003AitemEBoxes\u0028\u0029",
             "name": "itemEBoxes",
-            "summary": "utile\u0020pour\u0020\u00E9viter\u0020les\u0020erreurs\u0020d\u0027analyse\u0020statique",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020EBox\u0020des\u0020G\u00E9oTiffs\u0020de\u0020la\u0020couche\u0020intersectant\u0020le\u0020rectangle",
             "url": "classes/TiffLayer.html#method_itemEBoxes"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003AdeletedZonesForGeoTiff\u0028\u0029",
             "name": "deletedZonesForGeoTiff",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020Feature\u0020correspondant\u0020au\u0020zones\u0020effac\u00E9es\u0020du\u0020GeoTiff",
             "url": "classes/TiffLayer.html#method_deletedZonesForGeoTiff"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003AdeletedZones\u0028\u0029",
             "name": "deletedZones",
-            "summary": "utile\u0020pour\u0020\u00E9viter\u0020les\u0020erreurs\u0020d\u0027analyse\u0020statique",
+            "summary": "retourne\u0020un\u0020array\u0020de\u0020Features\u0020correspondant\u0020aux\u0020zones\u0020effac\u00E9es\u0020des\u0020G\u00E9oTiffs",
             "url": "classes/TiffLayer.html#method_deletedZones"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003AErrorBadGeoCoords",
@@ -3648,12 +3653,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\TiffLayer\u003A\u003AWOM_BASE",
             "name": "WOM_BASE",
-            "summary": "",
+            "summary": "xmax\u0020en\u0020Web\u0020Mercator\u0020en\u0020m\u00E8tres",
             "url": "classes/TiffLayer.html#constant_WOM_BASE"
         },                {
             "fqsen": "\\TiffLayer\u003A\u003A\u0024geotiffs",
             "name": "geotiffs",
-            "summary": "",
+            "summary": "dict.\u0020des\u0020G\u00E9oTiffs\u0020contenus\u0020dans\u0020la\u0020couche",
             "url": "classes/TiffLayer.html#property_geotiffs"
         },                {
             "fqsen": "\\COOKIE_NAME",
@@ -4571,101 +4576,6 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#function_sendHttpCode"
         },                {
-            "fqsen": "\\SGSERVER_VERSION",
-            "name": "SGSERVER_VERSION",
-            "summary": "",
-            "url": "namespaces/default.html#constant_SGSERVER_VERSION"
-        },                {
-            "fqsen": "\\CMDE_VERBOSE",
-            "name": "CMDE_VERBOSE",
-            "summary": "",
-            "url": "namespaces/default.html#constant_CMDE_VERBOSE"
-        },                {
-            "fqsen": "\\findCurrentMapVersion\u0028\u0029",
-            "name": "findCurrentMapVersion",
-            "summary": "",
-            "url": "namespaces/default.html#function_findCurrentMapVersion"
-        },                {
-            "fqsen": "\\expand\u0028\u0029",
-            "name": "expand",
-            "summary": "",
-            "url": "namespaces/default.html#function_expand"
-        },                {
-            "fqsen": "\\dlExpandInstallMap\u0028\u0029",
-            "name": "dlExpandInstallMap",
-            "summary": "",
-            "url": "namespaces/default.html#function_dlExpandInstallMap"
-        },                {
-            "fqsen": "\\Lock",
-            "name": "Lock",
-            "summary": "",
-            "url": "classes/Lock.html"
-        },                {
-            "fqsen": "\\Lock\u003A\u003Alocked\u0028\u0029",
-            "name": "locked",
-            "summary": "",
-            "url": "classes/Lock.html#method_locked"
-        },                {
-            "fqsen": "\\Lock\u003A\u003Alock\u0028\u0029",
-            "name": "lock",
-            "summary": "",
-            "url": "classes/Lock.html#method_lock"
-        },                {
-            "fqsen": "\\Lock\u003A\u003Aunlock\u0028\u0029",
-            "name": "unlock",
-            "summary": "",
-            "url": "classes/Lock.html#method_unlock"
-        },                {
-            "fqsen": "\\Lock\u003A\u003ALOCK_FILEPATH",
-            "name": "LOCK_FILEPATH",
-            "summary": "",
-            "url": "classes/Lock.html#constant_LOCK_FILEPATH"
-        },                {
-            "fqsen": "\\UpdtMaps",
-            "name": "UpdtMaps",
-            "summary": "",
-            "url": "classes/UpdtMaps.html"
-        },                {
-            "fqsen": "\\UpdtMaps\u003A\u003Ainit\u0028\u0029",
-            "name": "init",
-            "summary": "",
-            "url": "classes/UpdtMaps.html#method_init"
-        },                {
-            "fqsen": "\\UpdtMaps\u003A\u003A\u0024validMaps",
-            "name": "validMaps",
-            "summary": "",
-            "url": "classes/UpdtMaps.html#property_validMaps"
-        },                {
-            "fqsen": "\\UpdtMaps\u003A\u003A\u0024obsoleteMaps",
-            "name": "obsoleteMaps",
-            "summary": "",
-            "url": "classes/UpdtMaps.html#property_obsoleteMaps"
-        },                {
-            "fqsen": "\\UpdtMaps\u003A\u003A\u0024downloaded",
-            "name": "downloaded",
-            "summary": "",
-            "url": "classes/UpdtMaps.html#property_downloaded"
-        },                {
-            "fqsen": "\\ShomGtDelZone",
-            "name": "ShomGtDelZone",
-            "summary": "",
-            "url": "classes/ShomGtDelZone.html"
-        },                {
-            "fqsen": "\\ShomGtDelZone\u003A\u003Ainit\u0028\u0029",
-            "name": "init",
-            "summary": "",
-            "url": "classes/ShomGtDelZone.html#method_init"
-        },                {
-            "fqsen": "\\ShomGtDelZone\u003A\u003A\u0024deleted",
-            "name": "deleted",
-            "summary": "",
-            "url": "classes/ShomGtDelZone.html#property_deleted"
-        },                {
-            "fqsen": "\\ShomGtDelZone\u003A\u003AsameDelZones\u0028\u0029",
-            "name": "sameDelZones",
-            "summary": "",
-            "url": "classes/ShomGtDelZone.html#method_sameDelZones"
-        },                {
             "fqsen": "\\obsoleteMaps\u0028\u0029",
             "name": "obsoleteMaps",
             "summary": "",
@@ -4780,6 +4690,101 @@ Search.appendIndex(
             "name": "all",
             "summary": "",
             "url": "classes/ShomGt.html#property_all"
+        },                {
+            "fqsen": "\\SGSERVER_VERSION",
+            "name": "SGSERVER_VERSION",
+            "summary": "",
+            "url": "namespaces/default.html#constant_SGSERVER_VERSION"
+        },                {
+            "fqsen": "\\CMDE_VERBOSE",
+            "name": "CMDE_VERBOSE",
+            "summary": "",
+            "url": "namespaces/default.html#constant_CMDE_VERBOSE"
+        },                {
+            "fqsen": "\\findCurrentMapVersion\u0028\u0029",
+            "name": "findCurrentMapVersion",
+            "summary": "",
+            "url": "namespaces/default.html#function_findCurrentMapVersion"
+        },                {
+            "fqsen": "\\expand\u0028\u0029",
+            "name": "expand",
+            "summary": "",
+            "url": "namespaces/default.html#function_expand"
+        },                {
+            "fqsen": "\\dlExpandInstallMap\u0028\u0029",
+            "name": "dlExpandInstallMap",
+            "summary": "",
+            "url": "namespaces/default.html#function_dlExpandInstallMap"
+        },                {
+            "fqsen": "\\Lock",
+            "name": "Lock",
+            "summary": "",
+            "url": "classes/Lock.html"
+        },                {
+            "fqsen": "\\Lock\u003A\u003Alocked\u0028\u0029",
+            "name": "locked",
+            "summary": "",
+            "url": "classes/Lock.html#method_locked"
+        },                {
+            "fqsen": "\\Lock\u003A\u003Alock\u0028\u0029",
+            "name": "lock",
+            "summary": "",
+            "url": "classes/Lock.html#method_lock"
+        },                {
+            "fqsen": "\\Lock\u003A\u003Aunlock\u0028\u0029",
+            "name": "unlock",
+            "summary": "",
+            "url": "classes/Lock.html#method_unlock"
+        },                {
+            "fqsen": "\\Lock\u003A\u003ALOCK_FILEPATH",
+            "name": "LOCK_FILEPATH",
+            "summary": "",
+            "url": "classes/Lock.html#constant_LOCK_FILEPATH"
+        },                {
+            "fqsen": "\\UpdtMaps",
+            "name": "UpdtMaps",
+            "summary": "",
+            "url": "classes/UpdtMaps.html"
+        },                {
+            "fqsen": "\\UpdtMaps\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "",
+            "url": "classes/UpdtMaps.html#method_init"
+        },                {
+            "fqsen": "\\UpdtMaps\u003A\u003A\u0024validMaps",
+            "name": "validMaps",
+            "summary": "",
+            "url": "classes/UpdtMaps.html#property_validMaps"
+        },                {
+            "fqsen": "\\UpdtMaps\u003A\u003A\u0024obsoleteMaps",
+            "name": "obsoleteMaps",
+            "summary": "",
+            "url": "classes/UpdtMaps.html#property_obsoleteMaps"
+        },                {
+            "fqsen": "\\UpdtMaps\u003A\u003A\u0024downloaded",
+            "name": "downloaded",
+            "summary": "",
+            "url": "classes/UpdtMaps.html#property_downloaded"
+        },                {
+            "fqsen": "\\ShomGtDelZone",
+            "name": "ShomGtDelZone",
+            "summary": "",
+            "url": "classes/ShomGtDelZone.html"
+        },                {
+            "fqsen": "\\ShomGtDelZone\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "",
+            "url": "classes/ShomGtDelZone.html#method_init"
+        },                {
+            "fqsen": "\\ShomGtDelZone\u003A\u003A\u0024deleted",
+            "name": "deleted",
+            "summary": "",
+            "url": "classes/ShomGtDelZone.html#property_deleted"
+        },                {
+            "fqsen": "\\ShomGtDelZone\u003A\u003AsameDelZones\u0028\u0029",
+            "name": "sameDelZones",
+            "summary": "",
+            "url": "classes/ShomGtDelZone.html#method_sameDelZones"
         },                {
             "fqsen": "\\execCmdeTest\u0028\u0029",
             "name": "execCmdeTest",

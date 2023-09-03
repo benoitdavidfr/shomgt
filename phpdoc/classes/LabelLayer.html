@@ -137,11 +137,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">199</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">couche d&#039;étiquettes, permet de dessiner les étiquettes associées aux GéoTiffs</p>
+
 
 
 
@@ -170,6 +171,7 @@
     <span>
         &nbsp;= -0.001                            </span>
 </dt>
+<dd>dilatation en mètres sur la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/LabelLayer.html#constant_ErrorUndef">ErrorUndef</a>
@@ -181,6 +183,12 @@
     <a href="classes/Layer.html#constant_LAYERS_PSER_PATH">LAYERS_PSER_PATH</a>
     <span>
         &nbsp;= __DIR__ . &#039;/../data/layers.pser&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Layer.html#constant_LAYERS_YAML_PATH">LAYERS_YAML_PATH</a>
+    <span>
+        &nbsp;= __DIR__ . &#039;/../data/layers.yaml&#039;                            </span>
 </dt>
 
     </dl>
@@ -237,6 +245,7 @@
     <span>
                                 &nbsp;: float    </span>
 </dt>
+<dd>calcule le coeff de dilatation en fonction du nom de la couche</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/LabelLayer.html#method_ebox">ebox()</a>
@@ -245,10 +254,11 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Layer.html#method_initFromShomGt">initFromShomGt()</a>
+    <a href="classes/Layer.html#method_initLayers">initLayers()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>initialise le dictionnaire des couches à partir du fichier Yaml ou du fichier pser</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Layer.html#method_itemEBoxes">itemEBoxes()</a>
@@ -276,6 +286,7 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>copie dans $grImage l&#039;extrait de la couche correspondant au rectangle de $grImage,</dd>
 
     </dl>
 
@@ -299,11 +310,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dilatation en mètres sur la carte</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -327,7 +339,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">192</span>
 
     </aside>
 
@@ -355,7 +367,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -365,6 +377,34 @@
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">LAYERS_PSER_PATH</span>
     = <span class="phpdocumentor-signature__default-value">__DIR__ . &#039;/../data/layers.pser&#039;</span>
+</code>
+
+
+    
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_LAYERS_YAML_PATH">
+        LAYERS_YAML_PATH
+        <a href="classes/Layer.html#constant_LAYERS_YAML_PATH" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">58</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">LAYERS_YAML_PATH</span>
+    = <span class="phpdocumentor-signature__default-value">__DIR__ . &#039;/../data/layers.yaml&#039;</span>
 </code>
 
 
@@ -399,7 +439,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -411,7 +451,9 @@
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
-    
+        <section class="phpdocumentor-description"><p>dictionaire [{lyrName} =&gt; Layer]</p>
+</section>
+
     
 
 </article>
@@ -432,7 +474,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -470,7 +512,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">205</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
@@ -518,7 +560,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -607,11 +649,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcule le coeff de dilatation en fonction du nom de la couche</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">dilate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lyrName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
@@ -652,7 +695,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">219</span>
+    <span class="phpdocumentor-element-found-in__line">211</span>
 
     </aside>
 
@@ -679,37 +722,30 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_initFromShomGt">
-        initFromShomGt()
-        <a href="classes/Layer.html#method_initFromShomGt" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_initLayers">
+        initLayers()
+        <a href="classes/Layer.html#method_initLayers" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">initialise le dictionnaire des couches à partir du fichier Yaml ou du fichier pser</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initFromShomGt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initLayers</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$filename</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
+        <section class="phpdocumentor-description"><p>Ce dictionnaire est stocké dans un fichier pser afin de ne pas avoir à le reconstruire à chaque appel</p>
+</section>
 
+    
     
 
     
@@ -827,7 +863,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -863,18 +899,22 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/layer.inc.php"><a href="files/lib-layer-inc.html"><abbr title="lib/layer.inc.php">layer.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">226</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">copie dans $grImage l&#039;extrait de la couche correspondant au rectangle de $grImage,</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">map</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/GeoRefImage.html"><abbr title="\GeoRefImage">GeoRefImage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grImage</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$debug</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$zoom</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>lorsqu'un élément intersecte l'anti-méridien, il est dupliqué dans les 2 hémisphères Ouest et Est
+le paramètre zoom est uniquement utilisé dans la classe PyrLayer</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1020,6 +1060,7 @@
                                                     <li><a href="classes/Layer.html#constant_DILATE">DILATE</a></li>
                                                     <li><a href="classes/LabelLayer.html#constant_ErrorUndef">ErrorUndef</a></li>
                                                     <li><a href="classes/Layer.html#constant_LAYERS_PSER_PATH">LAYERS_PSER_PATH</a></li>
+                                                    <li><a href="classes/Layer.html#constant_LAYERS_YAML_PATH">LAYERS_YAML_PATH</a></li>
                                             </ul>
                 </li>
             
@@ -1039,7 +1080,7 @@
                                             <li><a href="classes/Layer.html#method_deletedZones">deletedZones()</a></li>
                                             <li><a href="classes/Layer.html#method_dilate">dilate()</a></li>
                                             <li><a href="classes/LabelLayer.html#method_ebox">ebox()</a></li>
-                                            <li><a href="classes/Layer.html#method_initFromShomGt">initFromShomGt()</a></li>
+                                            <li><a href="classes/Layer.html#method_initLayers">initLayers()</a></li>
                                             <li><a href="classes/Layer.html#method_itemEBoxes">itemEBoxes()</a></li>
                                             <li><a href="classes/Layer.html#method_items">items()</a></li>
                                             <li><a href="classes/Layer.html#method_layers">layers()</a></li>

@@ -116,36 +116,20 @@
 
             <p class="phpdocumentor-summary">validation de la conformité d&#039;une instance Php à un schéma JSON</p>
 
-    <section class="phpdocumentor-description"><p>Pour valider la conformité d'un fichier JSON ou Yaml à un schéma, utiliser la méthode statique
-JsonSchema::autoCheck() qui prend en paramètre une instance et retourne un Status
-Une autre possibilité pour valider la conformité d'une instance définie comme valeur Php à un schéma, il faut:</p>
-<ul>
-<li>créer un objet JsonSchema en fournissant le contenu du schema sous la forme d'un array Php</li>
-<li>appeler sur cet objet la méthode check avec l'instance Php à vérifier</li>
-<li>analyser le statut retourné (classe Status) par cette vérification
-voir https://json-schema.org/understanding-json-schema/reference/index.html (draft-06)
-La classe est utilisée avec des valeurs Php
-3 types d'erreurs sont gérées:</li>
-<li>une structuration non prévue de schéma génère une exception</li>
-<li>une non conformité d'une instance à un schéma fait échouer la vérification</li>
-<li>une alerte peut être produite dans certains cas sans faire échouer la vérification
-Lorsque le schéma est conforme au méta-schéma, la génération d'une exception correspond à un bug du code.
-Ce validateur implémente la spec http://json-schema.org/draft-06/schema# en totalité.</li>
-</ul>
-<p>journal:</p>
+    <section class="phpdocumentor-description"><p>journal:</p>
 <ul>
 <li>3/9/2023:
 <ul>
 <li>reformattage de la doc en PHPDoc</li>
-<li>définition d'un espace de noms</li>
-<li>suppression de is_assoc_array() replacé par !array_is_list()</li>
+<li>définition d'un espace de noms et renommage des noms de classe</li>
+<li>suppression de is_assoc_array() remplacé par !array_is_list()</li>
 </ul>
 </li>
 <li>22/1/2021:
 <ul>
 <li>passage à Php 8</li>
 <li>redéfinition de la logique de tests élémentaires</li>
-<li>JsonSchema::autocheck() transmet le répertoire du doc au schéma</li>
+<li>Schema::autocheck() transmet le répertoire du doc au schéma</li>
 </ul>
 </li>
 <li>5/11/2020:
@@ -172,7 +156,7 @@ mais traitées par Lib::deref() en faisant appel à getFragmentFromPath() défin
 </li>
 <li>26/1/2019:
 <ul>
-<li>modification dans JsonSchema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma</li>
+<li>modification dans Schema::autoCheck() du cas ou on ajoute .schema.yaml au nom du fichier du schéma</li>
 </ul>
 </li>
 <li>24/1/2019:
@@ -191,8 +175,8 @@ mais traitées par Lib::deref() en faisant appel à getFragmentFromPath() défin
 <li>scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php</li>
 <li>ajout de Lib::deref() pour déréférencer un pointeur JSON</li>
 <li>permet d'utiliser les URL http://{name}.georef.eu/ pour des docs autres que des schémas</li>
-<li>ajout de la possibilité de définir des options d'affichage dans JsonSchema::check()</li>
-<li>ajout de JsonSchema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema</li>
+<li>ajout de la possibilité de définir des options d'affichage dans Schema::check()</li>
+<li>ajout de Schema::autoCheck() pour vérifier qu'une instance est conforme au schéma défini par le champ jSchema</li>
 </ul>
 </li>
 <li>18/1/2019:
@@ -291,7 +275,7 @@ voir http://localhost/schema/?action=check&amp;file=ex/route500</li>
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-Status.html"><abbr title="\jsonschema\Status">Status</abbr></a></dt><dd>Statut de vérification de conformité d&#039;une instance à un schéma</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-Lib.html"><abbr title="\jsonschema\Lib">Lib</abbr></a></dt><dd>classe statique portant qqs méthodes statiques</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-JsonSchema.html"><abbr title="\jsonschema\JsonSchema">JsonSchema</abbr></a></dt><dd>schéma JSON initialisé soit par un chemin dans un fichier JSON/Yaml, soit par un array Php</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-Status.html"><abbr title="\jsonschema\Status">Status</abbr></a></dt><dd>Statut de vérification de conformité d&#039;une instance à un schéma</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-Lib.html"><abbr title="\jsonschema\Lib">Lib</abbr></a></dt><dd>classe statique portant qqs méthodes statiques</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/jsonschema-Schema.html"><abbr title="\jsonschema\Schema">Schema</abbr></a></dt><dd>schéma JSON initialisé soit par un chemin dans un fichier JSON/Yaml, soit par un array Php</dd>    </dl>
 
 
 
