@@ -121,7 +121,7 @@ doc: |
      - la signature peut par contre être étendue à de nouvelles possibilités
    - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GBox
 */}
-class GBox extends \gegeom\GBox { 
+class GBoxBo extends \gegeom\GBox { 
   /* @var TPos $min */
   //public readonly array $min; // [number, number] ou []
   /* @var TPos $max */
@@ -156,7 +156,7 @@ class GBox extends \gegeom\GBox {
 
 // extension de EBox avec possibilité de création à partir du champ cornerCoordinates de gdalinfo
 // et création d'un GBox par déprojection du EBox
-class EBox extends \gegeom\EBox {
+class EBoxBo extends \gegeom\EBox {
   //protected array $min=[]; // position SW en proj
   //protected array $max=[]; // position NE en proj
   
@@ -182,9 +182,9 @@ class EBox extends \gegeom\EBox {
     }
   }
   
-  function geo(string $proj): GBox {
+  function geo(string $proj): GBoxBo {
     $gbox = parent::geo($proj);
-    return new GBox([$gbox->west(),$gbox->south(),$gbox->east(),$gbox->north()]);
+    return new GBoxBo([$gbox->west(),$gbox->south(),$gbox->east(),$gbox->north()]);
   }
 };
 
@@ -194,7 +194,7 @@ class EBox extends \gegeom\EBox {
  * Il est mal géoréférencé ssi son géoréférencement est erroné.
  * Voir la définition de mal géoréférencé dans goodGeoref()
 */
-readonly class GdalInfo { // info de géoréférencement d'une image fournie par gdalinfo
+readonly class GdalInfoBo { // info de géoréférencement d'une image fournie par gdalinfo
   /** @var array<string, mixed> $info */
   public array $info; // contenu du gdalinfo
   
@@ -222,11 +222,11 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
       return $this->goodGeoref() ? 'ok' : 'KO';
   }
   
-  function gbox(): ?GBox { // retourne le GBox ssi il est défini dans le gdalinfo
+  function gbox(): ?GBoxBo { // retourne le GBox ssi il est défini dans le gdalinfo
     if (!isset($this->info['wgs84Extent']))
       return null;
     else {
-      return new GBox($this->info['wgs84Extent']);
+      return new GBoxBo($this->info['wgs84Extent']);
     }
   }
 
@@ -234,7 +234,7 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
   // Le principe est fondé sur la compraison entre wgs84Extent et la conversion en geo de cornerCoordinates
   function goodGeoref(bool $debug=false): bool {
     //$debug = true;
-    $cornerCoordinates = new EBox($this->info['cornerCoordinates']);
+    $cornerCoordinates = new EBoxBo($this->info['cornerCoordinates']);
     if ($debug) {
       echo "  cornerCoordinates=$cornerCoordinates\n";
       echo "  cornerCoordinates->geo=",$cornerCoordinates->geo('WorldMercator'),"\n";
@@ -265,7 +265,7 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
       ] as $title => $tif) {
         echo "$title:\n";
         $archive = new My7zArchive("$PF_PATH/$tif[path7z]");
-        $gdalInfo = new GdalInfo($path = $archive->extract($tif['entry']));
+        $gdalInfo = new GdalInfoBo($path = $archive->extract($tif['entry']));
         $archive->remove($path);
         //print_r($gdalInfo);
         $good = $gdalInfo->goodGeoref(false);
@@ -280,7 +280,7 @@ readonly class GdalInfo { // info de géoréférencement d'une image fournie par
   
   static function test(string $path7z, string $entry): void {
     $archive = new My7zArchive($path7z);
-    $gdalInfo = new GdalInfo($path = $archive->extract($entry));
+    $gdalInfo = new GdalInfoBo($path = $archive->extract($entry));
     $archive->remove($path);
     //print_r($gdalInfo);
     echo 'georef = ',$gdalInfo->georef(),"\n";
@@ -298,7 +298,7 @@ switch ($mode = callingThisFile(__FILE__)) {
     $rpath = $_GET['rpath'] ?? '';
     if ($entry = $_GET['entry'] ?? null) {
       $archive = new My7zArchive($PF_PATH.$rpath);
-      $gdalInfo = new GdalInfo($path = $archive->extract($entry));
+      $gdalInfo = new GdalInfoBo($path = $archive->extract($entry));
       $archive->remove($path);
       //echo "<pre>"; print_r($gdalInfo);
       echo "<pre>",Yaml::dump(['wgs84Extent'=> $gdalInfo->info['wgs84Extent']], 6),"</pre>";
@@ -339,7 +339,7 @@ switch ($mode = callingThisFile(__FILE__)) {
   case 'cli': {
     if (!($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')))
       throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
-    GdalInfo::testGoodGeoref($PF_PATH);
+    GdalInfoBo::testGoodGeoref($PF_PATH);
     break;
   }
   default: die("mode '$mode' inconnu");

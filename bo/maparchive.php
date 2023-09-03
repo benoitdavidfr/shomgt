@@ -47,7 +47,7 @@ class GeoRefImage { // Image principale ou cartouche de la carte
   function setTif(string $tif, My7zArchive $archive): void {
     $this->tif = $tif;
     $tifPath = $archive->extract($tif);
-    $gdalinfo = new GdalInfo($tifPath);
+    $gdalinfo = new GdalInfoBo($tifPath);
     $this->georef = $gdalinfo->georef();
     $this->georefBox = $this->georef ? $gdalinfo->gbox() : null;
     $archive->remove($tifPath);
@@ -651,7 +651,7 @@ switch (callingThisFile(__FILE__)) {
         case 'gdalinfo': { // affichage du gdalinfo correspondant à un tif
           $archive = new My7zArchive($PF_PATH.$rpath);
           $tiffpath = $archive->extract($_GET['name']);
-          $gdalinfo = new GdalInfo($tiffpath);
+          $gdalinfo = new GdalInfoBo($tiffpath);
           $archive->remove($tiffpath);
           header('Content-type: application/json; charset="utf-8"');
           die(json_encode($gdalinfo->asArray(), JSON_OPTIONS));

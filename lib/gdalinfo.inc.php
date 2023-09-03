@@ -28,10 +28,11 @@ require_once __DIR__.'/sexcept.inc.php';
 require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/gebox.inc.php';
 
-class GeoJsonPolygon { // GeoJSON Polygon transformé en GBox 
+/** GeoJSON Polygon transformé en GBox */
+readonly class GeoJsonPolygon {
   const ErrorBadType = 'Polygon::ErrorBadType';
   /** @var TLPos $coordinates */
-  protected array $coordinates;
+  public array $coordinates;
   
   /** @param array<string, mixed> $def */
   function __construct(array $def) {
@@ -48,21 +49,19 @@ class GeoJsonPolygon { // GeoJSON Polygon transformé en GBox
   }
 };
 
-/*PhpDoc: classes
-title: class GdalInfo - gère l'extraction des infos d'un fichier généré par gdalinfo
-name: GdalInfo
-doc: |
-  La méthode __construct() lit le fichier, en extrait les infos intéressantes et les stocke dans l'objet ainsi créé
-  Les autres méthodes extraient des infos de l'objet.
-*/
-class GdalInfo {
+/** gère l'extraction des infos d'un fichier généré par gdalinfo
+ *
+ * La méthode __construct() lit le fichier, en extrait les infos intéressantes et les stocke dans l'objet ainsi créé
+ * Les autres méthodes extraient des infos de l'objet.
+ */
+readonly class GdalInfo {
   const ErrorFileNotFound = 'GdalInfo::ErrorFileNotFound';
   const ErrorNoMatch = 'GdalInfo::ErrorNoMatch';
 
   /** @var array<string, int> $size */
-  protected array $size; // ['width'=>{width}, 'height'=> {height}]
-  protected ?\gegeom\GBox $gbox=null; // le GBox issu du gdalinfo ou null si aucun gbox n'est défini
-  protected ?\gegeom\EBox $ebox=null; // le EBox issu du gdalinfo
+  public array $size; // ['width'=>{width}, 'height'=> {height}]
+  public ?\gegeom\GBox $gbox; // le GBox issu du gdalinfo ou null si aucun gbox n'est défini
+  public ?\gegeom\EBox $ebox; // le EBox issu du gdalinfo
   
   /*static function dms2Dec(string $val): float { // transforme "9d20'26.32\"E" ou "42d38'39.72\"N" en degrés décimaux
     if (!preg_match('!^(\d+)d([\d ]+)\'([\d .]+)"(E|W|N|S)$!', $val, $matches))
@@ -71,14 +70,17 @@ class GdalInfo {
        * (intval($matches[1]) + (intval($matches[2]) + intval($matches[3])/60)/60);
   }*/
   
-  // retourne le chemin du fichier info.json correspondant à un gtname, temp indique si la carte est dans temp ou dans maps
+  /** retourne le chemin du fichier info.json correspondant à un gtname, temp indique si la carte est dans temp ou dans maps
+   * @param string $gtname; nom du GéoTiff
+   * @param bool $temp vrai si dans temp, false sinon
+  */
   static function filepath(string $gtname, bool $temp): string {
     return sprintf('%s/%s/%s.info.json',
       EnvVar::val('SHOMGT3_MAPS_DIR_PATH').($temp ? '/../temp' : ''),
       substr($gtname, 0, 4), $gtname);
   }
   
-  /** @return array<string, int> */
+  /** @return array{width: int, height: int} */
   function size(): array { return $this->size; }
   function ebox(): ?\gegeom\EBox { return $this->ebox; }
 
@@ -93,25 +95,21 @@ class GdalInfo {
     $this->size = ['width'=> $info['size'][0], 'height'=> $info['size'][1]];
   
     // si le champ coordinateSystem n'est pas défini alors le fichier n'est pas géoréférencé
-    if (!($info['coordinateSystem']['wkt'] ?? null))
+    if (!($info['coordinateSystem']['wkt'] ?? null)) {
+      $this->gbox = null;
+      $this->ebox = null;
       return;
+    }
 
     $wgs84Extent = new GeoJsonPolygon($info['wgs84Extent']);
     $this->gbox = $wgs84Extent->gbox();
 
-    /* 26/7/2023 - Suppression de l'utilisation de cornerCoordinates qui dans certains cas (comme 7620-2242) est faux
-     * Cela évite d'avoir à tester et à gérer cette erreur
-     * 31/7/2023 - cette modif génère des erreurs, je l'annule !
-    */
     $this->ebox = new \gegeom\EBox([
       $info['cornerCoordinates']['lowerLeft'][0],
       $info['cornerCoordinates']['lowerLeft'][1],
       $info['cornerCoordinates']['upperRight'][0],
       $info['cornerCoordinates']['upperRight'][1],
     ]);
-    /*A la place ebox est déduit de gbox
-    $this->ebox = $this->gbox->proj('WorldMercator');
-    */
   }
 
   /** @return array<string, mixed> */

@@ -1,17 +1,6 @@
 <?php
 /** contrôle d'accès
  *
- * Le contrôle d'accès utilise 3 modes de contrôle distincts:
- *   1) vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
- *      les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
- *   2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
- *   3) authentification HTTP Basic, utilisé pour le service WMS.
- * Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
- * Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
- *   - exploite le fichier de config
- *   - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
- *   - expose la méthode cntrl() pour réaliser le contrôle 
- *
  * journal:
  * - 10/8/2023:
  *   - utilisation des logins, passwd et role en base de données
@@ -54,6 +43,21 @@ require_once __DIR__.'/config.inc.php';
 
 //echo "<pre>"; print_r($_SERVER);
 
+/** Regroupe la logique du contrôle d'accès
+ *
+ * Le contrôle d'accès s'effectue selon 3 modes de contrôle distincts:
+ *   1) vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
+ *      les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
+ *   2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
+ *   3) authentification HTTP Basic, utilisé pour le service WMS.
+ *
+ * Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
+ *
+ * Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
+ *   - exploite le fichier de config
+ *   - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
+ *   - expose la méthode cntrl() pour réaliser le contrôle 
+ */
 class Access {
   const COOKIENAME = 'shomusrpwd'; // nom du cookie utilisé pour stocker le login/mdp dans le navigateur
   const FORBIDDEN_ACCESS_MESSAGE = "<body>Bonjour,</p>
