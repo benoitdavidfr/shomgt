@@ -21,7 +21,7 @@ require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 require_once __DIR__.'/mapmetadata.inc.php';
-require_once __DIR__.'/gdalinfo.inc.php';
+require_once __DIR__.'/gdalinfobo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 

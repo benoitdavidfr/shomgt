@@ -105,10 +105,8 @@ readonly class GdalInfo {
     $this->gbox = $wgs84Extent->gbox();
 
     $this->ebox = new \gegeom\EBox([
-      $info['cornerCoordinates']['lowerLeft'][0],
-      $info['cornerCoordinates']['lowerLeft'][1],
-      $info['cornerCoordinates']['upperRight'][0],
-      $info['cornerCoordinates']['upperRight'][1],
+      $info['cornerCoordinates']['lowerLeft'],
+      $info['cornerCoordinates']['upperRight'],
     ]);
   }
 
@@ -134,7 +132,7 @@ use Symfony\Component\Yaml\Yaml;
 //echo "<pre>$info\n";
 echo "<pre>\n";
 
-if (1) { // @phpstan-ignore-line // Test sur le GéoTiffs 7620
+if (0) { // @phpstan-ignore-line // Test sur le GéoTiffs 7620
   $gtname = '7620_pal300';
   $gdalInfo = new GdalInfo(GdalInfo::filepath($gtname, false));
   echo Yaml::dump([$gtname => $gdalInfo->asArray()]);

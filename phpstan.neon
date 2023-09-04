@@ -103,6 +103,7 @@ parameters:
     - dashboard
     - mapcat
     - shomft
+    - phpanalyzer
   excludePaths:
     analyse:
       - bo/SevenZipArchive.php

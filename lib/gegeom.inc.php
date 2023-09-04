@@ -913,18 +913,17 @@ class MultiPolygon extends Geometry {
     return new self($coords);
   }
   
-  /*function area(): float {
+  function area(): float {
     $area = 0.0;
-    foreach($this->geom as $polygon)
+    foreach($this->coords as $llpos) {
+      $polygon = new Polygon($llpos);
       $area += $polygon->area();
+    }
     return $area;
-  }*/
+  }
   
-  /*PhpDoc: methods
-  name:  pointInPolygon
-  title: "pointInPolygon(array $pos): bool - teste si une position est dans un des polygones"
-  */
-  /** @param TPos $pos */
+  /** teste si une position est dans un des polygones.
+   * @param TPos $pos */
   function pointInPolygon(array $pos): bool {
     foreach ($this->geoms() as $polygon)
       if ($polygon->pointInPolygon($pos))
@@ -932,10 +931,7 @@ class MultiPolygon extends Geometry {
     return false;
   }
   
-  /*PhpDoc: methods
-  name:  inters
-  title: "function inters(Geometry $geom): bool - teste l'intersection entre les 2 polygones ou multi-polygones"
-  */
+  /** teste l'intersection entre les 2 polygones ou multi-polygones */
   function inters(Geometry $geom): bool {
     if (get_class($geom) == 'gegeom\Polygon') {
       foreach($this->geoms() as $polygon) {
