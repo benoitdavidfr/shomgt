@@ -6,10 +6,12 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+ini_set('memory_limit', '1024M');
+
 /** simplification de l'utilisation des token Php */
 readonly class Token {
-  /** @var ?int $lineNo; no de la ligne du source Php */
-  public ?int $lineNo;
+  /** @var ?int $lineNr; no de la ligne du source Php */
+  public ?int $lineNr;
   /** @var ?int $id; id. du token */
   public ?int $id;
   /** @var ?string $name; nom du token */
@@ -17,29 +19,36 @@ readonly class Token {
   /** @var string $src; code source correspondant au token */
   public string $src;
   
-  /** lit les tokens d'un fichier et les retourne sous la forme d'une liste
-   * @return list<Token> */
-  static function get_all(string $path): array {
-    $code = file_get_contents($path);
-    $tokens = [];
-    foreach (token_get_all($code) as $token)
-      $tokens[] = new Token($token);
-    return $tokens;
-  }
-  
-  function __construct(mixed $token) {
+  function __construct(array|string $token) {
+    $lineNr = 0;
     if (is_array($token)) {
       $this->id = $token[0];
       $this->name = token_name($token[0]);
-      $this->lineNo = $token[2];
+      $this->lineNr = $token[2];
       $this->src = $token[1];
+      $lineNr = $this->lineNr;
     }
     else {
       $this->id = null;
       $this->name = null;
-      $this->lineNo = null;
+      $this->lineNr = $lineNr;
       $this->src = $token;
     }
+  }
+};
+
+/** Tous les tokens d'un fichier */
+readonly class AllTokens {
+  /** @var list<Token> $t; liste des tokens correspondant au source du fichier */
+  readonly public array $tokens; // Token[]
+  
+  /** lit les tokens d'un fichier et les stocke */
+  function __construct(string $path) {
+    $code = file_get_contents($path);
+    $tokens = [];
+    foreach (token_get_all($code) as $token)
+      $tokens[] = new Token($token);
+    $this->tokens = $tokens;
   }
 };
 
@@ -49,8 +58,9 @@ class PhpFileAn {
   const EXCLUDED = ['.','..','.git','vendor','shomgeotiff','gan','data','temp'];
   /** @var string $rpath chemin relatf par rapport à $root */
   readonly public string $rpath;
-  /** @var list<Token> $tokens; liste des tokens correspondant au source du fichier */
-  readonly public array $tokens; // Token[]
+  readonly public string $title;
+  readonly public array $includes;
+  readonly public array $classes;
   
   /** @var string $root; chemin de la racine de l'arbre */
   static string $root;
@@ -62,17 +72,17 @@ class PhpFileAn {
    *        | {{rpath} => TREE} # pour un répertoire
    *
    * @return array<string, mixed>|PhpFileAn */
-  static function buildTree(string $rpath='', bool $verbose=false): array|PhpFileAn {
+  static function buildTree(string $class='PhpFileAn', string $rpath='', bool $verbose=false): array|PhpFileAn {
     if ($verbose)
-      echo "analyze($rpath)\n";
+      echo "buildTree(class=$class, rpath=$rpath)<br>\n";
     if (is_file(self::$root.$rpath) && (substr($rpath, -4)=='.php')) {
-      return new self($rpath);
+      return new $class($rpath, new AllTokens(self::$root.$rpath));
     }
     elseif (is_dir(self::$root.$rpath)) {
       $result = [];
       foreach (new DirectoryIterator(self::$root.$rpath) as $entry) {
         if (in_array($entry, self::EXCLUDED)) continue;
-        if ($tree = self::buildTree("$rpath/$entry"))
+        if ($tree = self::buildTree($class, "$rpath/$entry", $verbose))
           $result["$entry"] = $tree;
       }
       if ($result)
@@ -102,25 +112,31 @@ class PhpFileAn {
     }
   }
   
-  function __construct(string $rpath) {
+  function __construct(string $rpath, AllTokens $tokens) {
     $this->rpath = $rpath;
-    $this->tokens = Token::get_all(self::$root.$rpath);
+    $this->title = $this->title($tokens);
+    $this->includes = $this->includes($tokens);
+    $this->classes = $this->classes($tokens);
   }
+  
+  /* * retourne un objet AllTokens
+  function tokens(): AllTokens { return new AllTokens(self::$root.$this->rpath); } */
   
   /** Retourne l'objet comme array
    * @return array<mixed> */
   function asArray(): array {
+    $tokens = $this->tokens();
     return [
-      'title'=> "<a href='viewtoken.php?rpath=$this->rpath'>".$this->title()."</a>",
-      'includes'=> $this->includes(),
-      'classes'=> $this->classes(),
+      'title'=> "<a href='viewtoken.php?rpath=$this->rpath'>".$this->title."</a>",
+      'includes'=> $this->includes,
+      'classes'=> $this->classes,
     ];
   }
   
   /** Retourne le titre du fichier extrait du commentaire PhpDoc */
-  function title(): string {
-    if (isset($this->tokens[1]) && ($this->tokens[1]->id == T_DOC_COMMENT)) {
-      $comment = $this->tokens[1]->src;
+  function title(AllTokens $all): string {
+    if (isset($all->tokens[1]) && ($all->tokens[1]->id == T_DOC_COMMENT)) {
+      $comment = $all->tokens[1]->src;
       //echo "comment=",htmlentities($comment),"\n";
       if (preg_match('!^/\*\*\n \* ([^\n]*)!', $comment, $matches)) {
         return $matches[1];
@@ -141,13 +157,13 @@ class PhpFileAn {
    *
    * @return list<string>
    */
-  function includes(): array {
+  function includes(AllTokens $all): array {
     $includes = [];
-    foreach ($this->tokens as $i => $token) {
+    foreach ($all->tokens as $i => $token) {
       if ($token->id == T_REQUIRE_ONCE) {
-        if ($this->tokens[$i+4]->id == T_CONSTANT_ENCAPSED_STRING) {
+        if ($all->tokens[$i+4]->id == T_CONSTANT_ENCAPSED_STRING) {
           //echo "string=",$this->tokens[$i+4]->src,"\n";
-          $inc = dirname(self::$root.$this->rpath).substr($this->tokens[$i+4]->src, 1, -1);
+          $inc = dirname(self::$root.$this->rpath).substr($all->tokens[$i+4]->src, 1, -1);
           if (($rp = realpath($inc)) === false) {
             echo "<b>Erreur d'inclusion de $inc dans $this->rpath</b>\n";
             $includes[] = "$inc (BAD)";
@@ -163,19 +179,19 @@ class PhpFileAn {
   }
   
   /** retourne le spacename du fichier */
-  function namespace(): string {
+  function namespace(AllTokens $all): string {
     // Cas où le namspace est la première instruction après T_OPEN_TAG
-    if (isset($this->tokens[1]) && ($this->tokens[1]->id == T_NAMESPACE)) {
-      if ($this->tokens[3]->id == T_STRING) {
-        $namespace = $this->tokens[3]->src;
+    if (isset($all->tokens[1]) && ($all->tokens[1]->id == T_NAMESPACE)) {
+      if ($all->tokens[3]->id == T_STRING) {
+        $namespace = $all->tokens[3]->src;
         //echo "namespace=$namespace\n";
         return "$namespace\\";
       }
     }
     // Cas où le namespace est après T_OPEN_TAG et T_DOC_COMMENT et T_WHITESPACE
-    if (isset($this->tokens[3]) && ($this->tokens[3]->id == T_NAMESPACE)) {
-      if ($this->tokens[5]->id == T_STRING) {
-        $namespace = $this->tokens[5]->src;
+    if (isset($all->tokens[3]) && ($all->tokens[3]->id == T_NAMESPACE)) {
+      if ($all->tokens[5]->id == T_STRING) {
+        $namespace = $all->tokens[5]->src;
         //echo "namespace=$namespace\n";
         return "$namespace\\";
       }
@@ -185,17 +201,112 @@ class PhpFileAn {
   
   /** Retourne la liste des classes définies dans le fichier avec le numéro de la ligne à laquelle la classe est définie
    * @return array<string, int> */
-  function classes(): array {
+  function classes(AllTokens $all): array {
     $classes = [];
-    $namespace = $this->namespace();
-    foreach ($this->tokens as $i => $token) {
+    $namespace = $this->namespace($all);
+    foreach ($all->tokens as $i => $token) {
       if ($token->id == T_CLASS) {
-        if ($this->tokens[$i+2]->id == T_STRING) {
-          $classes[$namespace.$this->tokens[$i+2]->src] = $this->tokens[$i+2]->lineNo;
+        if ($all->tokens[$i+2]->id == T_STRING) {
+          $classes[$namespace.$all->tokens[$i+2]->src] = $all->tokens[$i+2]->lineNr;
         }
       }
     }
     return $classes;
+  }
+};
+
+/** Block de code Php encadré par { et } */
+class PhpBlock {
+  /** @var int $startTokenNr, no du token de début du block correspondant à '{' */
+  readonly public int $startTokenNr; 
+  /** @var int $lastTokenNr; no du token de fin du block correspondant à '}' */
+  readonly public int $lastTokenNr;
+  /** @var list<Block> $subBlocks; liste de blocks enfants */
+  readonly public array $subBlocks;
+  
+  /** Création d'un block
+   * l@param ist<Token> $tokens; liste des tokens du fichier contenant le block
+   * @param int $startTokenNr, no du token de début du block correspondant à '{' 
+   */
+  function __construct(AllTokens $all, int $startTokenNr) {
+    echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
+    $this->startTokenNr = $startTokenNr;
+    $subBlocks = [];
+    for ($tnr=$startTokenNr+1; $tnr < count($all->tokens); $tnr++) {
+      if ($all->tokens[$tnr]->src == '}') {
+        $this->lastTokenNr = $tnr;
+        $this->subBlocks = $subBlocks;
+        return;
+      }
+      elseif ($all->tokens[$tnr]->src == '{') {
+        echo "{ détectée au token $tnr<br>\n";
+        $subBlock = new PhpBlock ($all, $tnr);
+        $subBlocks[] = $subBlock;
+        $tnr = $subBlock->lastTokenNr;
+      }
+    }
+  }
+
+  function asArray(): array {
+    return [
+      'startTokenNr'=> $this->startTokenNr,
+      'lastTokenNr'=> $this->lastTokenNr,
+      'subBlocks'=> array_map(function(PhpBlock $sb) { return $sb->asArray(); }, $this->subBlocks),
+    ];
+  }
+};
+
+/** Détermination des blocks */
+class PhpFileBlock extends PhpFileAn {
+  /** @var PhpBocks[] $blocks liste des blocks contenus dans le fichier */
+  readonly public array $blocks;
+  
+  /** liste tous les fichiers avec un lien vers */
+  static function chooseFile(string $rpath=''): void {
+    foreach (new DirectoryIterator(PhpFileAn::$root.$rpath) as $entry) {
+      if (in_array($entry, self::EXCLUDED)) continue;
+      if (is_file(PhpFileAn::$root.$rpath."/$entry") && (substr($entry, -4)=='.php')) {
+        echo "<a href='?action=phpFileBlock&rpath=$rpath/$entry'>$rpath/$entry</a><br>\n";
+      }
+      elseif (is_dir(PhpFileAn::$root.$rpath."/$entry")) {
+        self::chooseFile("$rpath/$entry");
+      }
+    }
+  }
+  
+  function __construct(string $rpath) {
+    $all = new AllTokens(self::$root.$rpath);
+    parent::__construct($rpath, $all);
+    $blocks = [];
+    for ($tnr=0; $tnr < count($all->tokens); $tnr++) {
+      if ($all->tokens[$tnr]->src == '}') {
+        echo "} détectée dans PhpFileBlock::__construct() au token $tnr<br>\n";
+      }
+      elseif ($all->tokens[$tnr]->src == '{') {
+        echo "{ détectée au token $tnr<br>\n";
+        $block = new PhpBlock ($all, $tnr);
+        echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
+        $blocks[] = $block;
+        $tnr = $block->lastTokenNr;
+      }
+    }
+    $this->blocks = $blocks;
+  }
+  
+  /** Retourne l'objet comme array
+   * @return array<mixed> */
+  function asArray(): array {
+    return [
+      'title'=> "<a href='viewtoken.php?rpath=$this->rpath'>".$this->title."</a>",
+      'includes'=> $this->includes,
+      'classes'=> $this->classes,
+      'blocks'=> array_map(function(PhpBlock $block) { return $block->asArray(); }, $this->blocks),
+    ];
+  }
+  
+  function showFile(): void {
+    echo '<pre>',str_replace("''","'",Yaml::dump($this->asArray(), 99, 2)),"</pre>\n";
+    echo "<pre>"; print_r($this);
   }
 };
 
@@ -214,8 +325,8 @@ class Graph {
   static function build(array|PhpFileAn $tree, string $rpath=''): void {
     //echo "build(rpath=$rpath)<br>\n";
     if (is_object($tree)) { // c'est un fichier Php
-      self::$titles[$rpath] = $tree->title();
-      foreach ($tree->includes() as $inc) {
+      self::$titles[$rpath] = $tree->title;
+      foreach ($tree->includes as $inc) {
         if (substr($inc, 0, 6)=='{root}') {
           $inc = substr($inc, 6);
           //echo "inc=$inc<br>\n";
@@ -223,7 +334,7 @@ class Graph {
           self::$incIn[$inc][$rpath] = 1;
         }
       }
-      foreach ($tree->classes() as $className => $noLine) {
+      foreach ($tree->classes as $className => $noLine) {
         self::$classesInFile[$className][$rpath] = $noLine;
       }
     }
@@ -277,6 +388,7 @@ switch ($_GET['action'] ?? null) {
     echo "<a href='?action=graph'>Affichage du graphe</a><br>\n";
     echo "<a href='?action=fileIncludedIn'>Inclusions entre fichiers inversées</a><br>\n";
     echo "<a href='?action=classInFile'>Liste des classes et fichiers la définissant</a><br>\n";
+    echo "<a href='?action=phpFileBlock'>phpFileBlock</a><br>\n";
     break;
   }
   case 'includes': {
@@ -305,6 +417,15 @@ switch ($_GET['action'] ?? null) {
     $tree = PhpFileAn::buildTree(); // construction de l'arbre
     Graph::build($tree); // fabrication du graphe
     echo '<pre>',str_replace("''", "'", Yaml::dump(Graph::exportClasses(), 99, 2));
+    break;
+  }
+  case 'phpFileBlock': {
+    if (!isset($_GET['rpath']))
+      PhpFileBlock::chooseFile();
+    else {
+      $file = new phpFileBlock($_GET['rpath']);
+      $file->showFile();
+    }
     break;
   }
 }
