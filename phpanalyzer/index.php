@@ -50,6 +50,20 @@ readonly class AllTokens {
       $tokens[] = new Token($token);
     $this->tokens = $tokens;
   }
+  
+  /** Retourne le code source entre le token no $startNr et le token $endNr.
+   * token $start compris, token $end non compris
+  */
+  function srcCode(int $startNr, int $endNr, string $id): string {
+    $code = '';
+    //$code = "$id ($startNr->$endNr)\n";
+    if ($endNr == -1)
+      $endNr = count($this->tokens);
+    for ($nr=$startNr; $nr<$endNr; $nr++) {
+      $code .= $this->tokens[$nr]->src;
+    }
+    return $code;
+  }
 };
 
 /** Fichier Php analysé avec son chemin relatif et ses tokens et organisation des fichiers en un arbre */
@@ -254,6 +268,27 @@ class PhpBlock {
       'subBlocks'=> array_map(function(PhpBlock $sb) { return $sb->asArray(); }, $this->subBlocks),
     ];
   }
+  
+  /** représente le block comme une cellule d'une table Html */
+  function asHtml(AllTokens $all, string $id): string {
+    if (!$this->subBlocks) {
+      $rows = [htmlentities($all->srcCode($this->startTokenNr+1, $this->lastTokenNr+1, "$id/0/leaf"))];
+    }
+    else {
+      $rows = [];
+      foreach ($this->subBlocks as $nb => $block) {
+        $startTokenNr = ($nb==0) ? $this->startTokenNr+1 : $this->subBlocks[$nb-1]->lastTokenNr+1;
+        //$rows[] = "<i>avant le block $nb</i>";
+        $rows[] = htmlentities($all->srcCode($startTokenNr+1, $block->startTokenNr+1, "$id/$nb/pre")); // le code avant le block nb
+        $rows[] = $block->asHtml($all, "$id/$nb"); // le code du block courant
+      }
+      $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, $this->lastTokenNr+1, "$id/$nb"));
+    }
+    $blankCell = "<td>&nbsp;&nbsp;</td>";
+    return "<table border=1>"
+      ."<tr>$blankCell<td><pre>".implode("</pre></td></tr>\n<tr>$blankCell<td><pre>", $rows)."</pre></td></tr>"
+      ."</table>";
+  }
 };
 
 /** Détermination des blocks */
@@ -283,9 +318,9 @@ class PhpFileBlock extends PhpFileAn {
         echo "} détectée dans PhpFileBlock::__construct() au token $tnr<br>\n";
       }
       elseif ($all->tokens[$tnr]->src == '{') {
-        echo "{ détectée au token $tnr<br>\n";
+        //echo "{ détectée au token $tnr<br>\n";
         $block = new PhpBlock ($all, $tnr);
-        echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
+        //echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
         $blocks[] = $block;
         $tnr = $block->lastTokenNr;
       }
@@ -304,9 +339,23 @@ class PhpFileBlock extends PhpFileAn {
     ];
   }
   
+  /** représente $this comme une table Html */
+  function asHtml(): string {
+    $all = new AllTokens(self::$root.$this->rpath);
+    $rows = [];
+    foreach ($this->blocks as $nb => $block) {
+      $startTokenNr = ($nb==0) ? 0 : $this->blocks[$nb-1]->lastTokenNr+1;
+      $rows[] = htmlentities($all->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
+      $rows[] = $block->asHtml($all, "$nb"); // le code du block courant
+    }
+    $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, -1, "FIN"));
+    return "<table border=1><tr><td><pre>".implode("</pre></td></tr>\n<tr><td><pre>", $rows)."</pre></td></tr></table>";
+  }
+  
   function showFile(): void {
-    echo '<pre>',str_replace("''","'",Yaml::dump($this->asArray(), 99, 2)),"</pre>\n";
-    echo "<pre>"; print_r($this);
+    //echo '<pre>',str_replace("''","'",Yaml::dump($this->asArray(), 99, 2)),"</pre>\n";
+    //echo "<pre>"; print_r($this);
+    echo $this->asHtml();
   }
 };
 
