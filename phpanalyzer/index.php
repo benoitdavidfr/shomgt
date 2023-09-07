@@ -6,7 +6,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-ini_set('memory_limit', '1024M');
+//ini_set('memory_limit', '1024M');
 
 /** simplification de l'utilisation des token Php */
 readonly class Token {
@@ -19,6 +19,7 @@ readonly class Token {
   /** @var string $src; code source correspondant au token */
   public string $src;
   
+  /** @param list<mixed>|string $token */
   function __construct(array|string $token) {
     $lineNr = 0;
     if (is_array($token)) {
@@ -39,7 +40,7 @@ readonly class Token {
 
 /** Tous les tokens d'un fichier */
 readonly class AllTokens {
-  /** @var list<Token> $t; liste des tokens correspondant au source du fichier */
+  /** @var list<Token> $tokens; liste des tokens correspondant au source du fichier */
   readonly public array $tokens; // Token[]
   
   /** lit les tokens d'un fichier et les stocke */
@@ -66,14 +67,16 @@ readonly class AllTokens {
   }
 };
 
-/** Fichier Php analysé avec son chemin relatif et ses tokens et organisation des fichiers en un arbre */
+/** Fichier Php analysé avec son chemin relatif et organisation des fichiers en un arbre */
 class PhpFileAn {
   /** liste des sous-répertoires exclus du parcours lors de la construction de l'arbre */
   const EXCLUDED = ['.','..','.git','vendor','shomgeotiff','gan','data','temp'];
   /** @var string $rpath chemin relatf par rapport à $root */
   readonly public string $rpath;
   readonly public string $title;
+  /** @var list<string> $includes; liste des fichiers inclus */ 
   readonly public array $includes;
+  /** @var array<string, int> $classes  liste des classes avec le no de ligne de sa définition */
   readonly public array $classes;
   
   /** @var string $root; chemin de la racine de l'arbre */
@@ -139,7 +142,6 @@ class PhpFileAn {
   /** Retourne l'objet comme array
    * @return array<mixed> */
   function asArray(): array {
-    $tokens = $this->tokens();
     return [
       'title'=> "<a href='viewtoken.php?rpath=$this->rpath'>".$this->title."</a>",
       'includes'=> $this->includes,
@@ -235,7 +237,7 @@ class PhpBlock {
   readonly public int $startTokenNr; 
   /** @var int $lastTokenNr; no du token de fin du block correspondant à '}' */
   readonly public int $lastTokenNr;
-  /** @var list<Block> $subBlocks; liste de blocks enfants */
+  /** @var list<PhpBlock> $subBlocks; liste de blocks enfants */
   readonly public array $subBlocks;
   
   /** Création d'un block
@@ -259,8 +261,13 @@ class PhpBlock {
         $tnr = $subBlock->lastTokenNr;
       }
     }
+    echo "<b>Erreur, fin de construction non trouvée pour le block commencé au token $startTokenNr</b></p>\n";
+    $this->subBlocks = $subBlocks;
+    $this->lastTokenNr = count($all->tokens)-1;
   }
 
+  /** Retourne un PhpBlock comme un array
+   * @return array<mixed> */
   function asArray(): array {
     return [
       'startTokenNr'=> $this->startTokenNr,
@@ -293,7 +300,7 @@ class PhpBlock {
 
 /** Détermination des blocks */
 class PhpFileBlock extends PhpFileAn {
-  /** @var PhpBocks[] $blocks liste des blocks contenus dans le fichier */
+  /** @var PhpBlock[] $blocks liste des blocks contenus dans le fichier */
   readonly public array $blocks;
   
   /** liste tous les fichiers avec un lien vers */
@@ -343,12 +350,17 @@ class PhpFileBlock extends PhpFileAn {
   function asHtml(): string {
     $all = new AllTokens(self::$root.$this->rpath);
     $rows = [];
-    foreach ($this->blocks as $nb => $block) {
-      $startTokenNr = ($nb==0) ? 0 : $this->blocks[$nb-1]->lastTokenNr+1;
-      $rows[] = htmlentities($all->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
-      $rows[] = $block->asHtml($all, "$nb"); // le code du block courant
+    if (!$this->blocks) {
+      $rows[] = htmlentities($all->srcCode(0, -1, "/only")); // le code de tout le fichier
     }
-    $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, -1, "FIN"));
+    else {
+      foreach ($this->blocks as $nb => $block) {
+        $startTokenNr = ($nb==0) ? 0 : $this->blocks[$nb-1]->lastTokenNr+1;
+        $rows[] = htmlentities($all->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
+        $rows[] = $block->asHtml($all, "$nb"); // le code du block courant
+      }
+      $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, -1, "FIN"));
+    }
     return "<table border=1><tr><td><pre>".implode("</pre></td></tr>\n<tr><td><pre>", $rows)."</pre></td></tr></table>";
   }
   
@@ -472,7 +484,7 @@ switch ($_GET['action'] ?? null) {
     if (!isset($_GET['rpath']))
       PhpFileBlock::chooseFile();
     else {
-      $file = new phpFileBlock($_GET['rpath']);
+      $file = new PhpFileBlock($_GET['rpath']);
       $file->showFile();
     }
     break;
