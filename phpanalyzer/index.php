@@ -56,14 +56,13 @@ readonly class AllTokens {
     $this->tokens = $tokens;
   }
   
-  /** Génère une représentation symbolique d'un fragment de code compris entre les tokens no $startNr et no $endNr.
-   * token $startNr compris, token $endNr non compris.
+  /** Génère une représentation symbolique d'un fragment de code commencant au token no $startNr et de longueur $len.
    * Cette repr. symbolique est constituée de la concétanation pour les tokens ayant un name de ce name entre {}
    * et pour les autres du src. */
-  function symbStr(int $startNr, int $endNr, string $id): string {
+  function symbStr(int $startNr, int $len): string {
     $code = '';
-    //$code = "$id ($startNr->$endNr)\n";
-    if ($endNr == -1)
+    $endNr = $startNr + $len;
+    if ($endNr > count($this->tokens))
       $endNr = count($this->tokens);
     for ($nr=$startNr; $nr<$endNr; $nr++) {
       if ($this->tokens[$nr]->name)
@@ -295,8 +294,7 @@ class PhpFile {
     $includes = [];
     foreach ($all->tokens as $i => $token) {
       if ($token->id == T_REQUIRE_ONCE) {
-        if ($all->tokens[$i+4]->id == T_CONSTANT_ENCAPSED_STRING) {
-          //echo "string=",$this->tokens[$i+4]->src,"\n";
+        if (preg_match('!^{T_REQUIRE_ONCE}{T_WHITESPACE}{T_DIR}\.{T_CONSTANT_ENCAPSED_STRING}$!', $all->symbStr($i, 5))) {
           $inc = dirname(self::$root.$this->rpath).substr($all->tokens[$i+4]->src, 1, -1);
           if (($rp = realpath($inc)) === false) {
             echo "<b>Erreur d'inclusion de $inc dans $this->rpath</b>\n";
@@ -307,6 +305,9 @@ class PhpFile {
           else
             $includes[] = $rp;
         }
+        else {
+          echo "<b>Erreur, T_REQUIRE_ONCE détecté mais non interprété</b><br>\n";
+        }
       }
     }
     return $includes;
@@ -315,20 +316,16 @@ class PhpFile {
   /** retourne le spacename du fichier ou '' si aucun n'a été défini */
   function namespace(AllTokens $all): string {
     // Cas où le namspace est la première instruction après T_OPEN_TAG
-    if (isset($all->tokens[1]) && ($all->tokens[1]->id == T_NAMESPACE)) {
-      if ($all->tokens[3]->id == T_STRING) {
-        $namespace = $all->tokens[3]->src;
-        //echo "namespace=$namespace\n";
-        return "$namespace\\";
-      }
+    if (preg_match('!^{T_NAMESPACE}{T_WHITESPACE}{T_STRING}$!', $all->symbStr(1, 3))) {
+      $namespace = $all->tokens[3]->src;
+      //echo "namespace=$namespace<br>\n";
+      return "$namespace\\";
     }
     // Cas où le namespace est après T_OPEN_TAG et T_DOC_COMMENT et T_WHITESPACE
-    if (isset($all->tokens[3]) && ($all->tokens[3]->id == T_NAMESPACE)) {
-      if ($all->tokens[5]->id == T_STRING) {
-        $namespace = $all->tokens[5]->src;
-        //echo "namespace=$namespace\n";
-        return "$namespace\\";
-      }
+    if (preg_match('!^{T_DOC_COMMENT}{T_WHITESPACE}{T_NAMESPACE}{T_WHITESPACE}{T_STRING}$!', $all->symbStr(1, 5))) {
+      $namespace = $all->tokens[5]->src;
+      //echo "namespace=$namespace<br>\n";
+      return "$namespace\\";
     }
     return '';
   }
@@ -340,8 +337,11 @@ class PhpFile {
     $namespace = $this->namespace($all);
     foreach ($all->tokens as $i => $token) {
       if ($token->id == T_CLASS) {
-        if ($all->tokens[$i+2]->id == T_STRING) {
+        if (preg_match('!^{T_CLASS}{T_WHITESPACE}{T_STRING}$!', $all->symbStr($i, 3))) {
           $classes[$namespace.$all->tokens[$i+2]->src] = $all->tokens[$i+2]->lineNr;
+        }
+        else {
+          echo "<b>Erreur, T_CLASS détecté mais non interprété</b><br>\n";
         }
       }
     }
