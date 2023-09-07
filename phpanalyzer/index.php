@@ -103,7 +103,7 @@ class PhpBlock {
    * @param int $startTokenNr, no du token de début du block correspondant à '{' 
    */
   function __construct(AllTokens $all, int $startTokenNr) {
-    echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
+    //echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
     $this->startTokenNr = $startTokenNr;
     $subBlocks = [];
     for ($tnr=$startTokenNr+1; $tnr < count($all->tokens); $tnr++) {
@@ -113,7 +113,7 @@ class PhpBlock {
         return;
       }
       elseif ($all->tokens[$tnr]->src == '{') {
-        echo "{ détectée au token $tnr<br>\n";
+        //echo "{ détectée au token $tnr<br>\n";
         $subBlock = new PhpBlock ($all, $tnr);
         $subBlocks[] = $subBlock;
         $tnr = $subBlock->lastTokenNr;
@@ -226,7 +226,7 @@ class PhpFile {
         echo "<a href='?action=$action&rpath=$rpath/$entry'>$rpath/$entry</a><br>\n";
       }
       elseif (is_dir(PhpFile::$root.$rpath."/$entry")) {
-        self::chooseFile("$rpath/$entry");
+        self::chooseFile($action, "$rpath/$entry");
       }
     }
   }
@@ -263,7 +263,7 @@ class PhpFile {
       'title'=> "<a href='viewtoken.php?rpath=$this->rpath'>".$this->title."</a>",
       'includes'=> $this->includes,
       'classes'=> $this->classes,
-      'blocks'=> array_map(function(PhpBlock $block) { return $block->asArray(); }, $this->blocks),
+      //'blocks'=> array_map(function(PhpBlock $block) { return $block->asArray(); }, $this->blocks),
     ];
   }
   
