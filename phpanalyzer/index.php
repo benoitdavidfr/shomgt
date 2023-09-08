@@ -57,18 +57,36 @@ readonly class AllTokens {
   }
   
   /** Génère une représentation symbolique d'un fragment de code commencant au token no $startNr et de longueur $len.
-   * Cette repr. symbolique est constituée de la concétanation pour les tokens ayant un name de ce name entre {}
-   * et pour les autres du src. */
+   * Si $len > 0 alors cette repr. symbolique est constituée de la concaténation pour les tokens ayant un name
+   * de ce name entre {} et pour les autres du src.
+   * Si $len < 0 alors la repr. est structuurée en sens inverse */
   function symbStr(int $startNr, int $len): string {
+    if ($startNr < 0)
+      $startNr = 0;
+    if ($startNr >= count($this->tokens))
+      $startNr = count($this->tokens) - 1;
     $code = '';
-    $endNr = $startNr + $len;
-    if ($endNr > count($this->tokens))
-      $endNr = count($this->tokens);
-    for ($nr=$startNr; $nr<$endNr; $nr++) {
-      if ($this->tokens[$nr]->name)
-        $code .= '{'.$this->tokens[$nr]->name.'}';
-      else
-        $code .= $this->tokens[$nr]->src;
+    if ($len > 0) {
+      $endNr = $startNr + $len;
+      if ($endNr > count($this->tokens))
+        $endNr = count($this->tokens);
+      for ($nr=$startNr; $nr<$endNr; $nr++) {
+        if ($this->tokens[$nr]->name)
+          $code .= '{'.$this->tokens[$nr]->name.'}';
+        else
+          $code .= $this->tokens[$nr]->src;
+      }
+    }
+    elseif ($len < 0) {
+      for ($i=0; $i < - $len ; $i++) {
+        $nr = $startNr - $i;
+        if ($nr < 0)
+          return $code;
+        if ($this->tokens[$nr]->name)
+          $code .= '{'.$this->tokens[$nr]->name.'}';
+        else
+          $code .= $this->tokens[$nr]->src;
+      }
     }
     return $code;
   }
@@ -97,11 +115,47 @@ class PhpBlock {
   /** @var list<PhpBlock> $subBlocks; liste de blocks enfants */
   readonly public array $subBlocks;
   
-  /** Création d'un block
-   * l@param ist<Token> $tokens; liste des tokens du fichier contenant le block
+  /** Création d'un block en distinguant classe, fonction ou autre block.
    * @param int $startTokenNr, no du token de début du block correspondant à '{' 
+   * @param list<Token> $tokens; liste des tokens du fichier contenant le block
    */
-  function __construct(AllTokens $all, int $startTokenNr) {
+  static function create(int $startTokenNr, AllTokens $all): PhpBlock {
+    echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
+    
+    echo "symbStr=",$all->symbStr($startTokenNr-1, -4),"<br>\n";
+    
+    // class {nom_classe} {
+    // class {nom_classe} extends {nom_classe_mère} {
+    // class {nom_class} implements {interface_name} {
+    // class {nom_class} extends {nom_classe_mère} implements {interface_name} {
+    $pattern = '!^({T_WHITESPACE})?'
+        .'({T_STRING}{T_WHITESPACE}{T_IMPLEMENTS}{T_WHITESPACE})?'   // implements {interface_name}
+        .'({T_STRING}{T_WHITESPACE}{T_EXTENDS}{T_WHITESPACE})?'      //extends {nom_classe_mère}
+        .'{T_STRING}{T_WHITESPACE}{T_CLASS}!';                       // class {nom_classe}
+    if (preg_match($pattern, $all->symbStr($startTokenNr-1, -12))) {
+      echo "Classe ",$all->tokens[$startTokenNr-2]->src," détectée<br>\n";
+      return new PhpClass($startTokenNr, $all);
+    }
+    elseif (preg_match('!^({T_WHITESPACE})?({T_STRING}|{T_ARRAY})({T_WHITESPACE})?:!', $all->symbStr($startTokenNr-1, -4))) {
+      echo "Function détectée avec type de retour<br>\n";
+      return new PhpFunction($startTokenNr, $all);
+    }
+    elseif (preg_match('!^({T_WHITESPACE})?\)!', $all->symbStr($startTokenNr-1, -4))) {
+      echo "Function détectée sans type de retour<br>\n";
+      return new PhpFunction($startTokenNr, $all);
+    }
+    else {
+      echo "NI Class Ni Function détectée<br>\n";
+      return new self($startTokenNr, $all);
+    }
+  }
+  
+  /** Création d'un block de base.
+   * Analyse l'existence de sous-blocks
+   * @param int $startTokenNr, no du token de début du block correspondant à '{' 
+   * @param list<Token> $tokens; liste des tokens du fichier contenant le block
+   */
+  function __construct(int $startTokenNr, AllTokens $all) {
     //echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
     $this->startTokenNr = $startTokenNr;
     $subBlocks = [];
@@ -113,7 +167,7 @@ class PhpBlock {
       }
       elseif ($all->tokens[$tnr]->src == '{') {
         //echo "{ détectée au token $tnr<br>\n";
-        $subBlock = new PhpBlock ($all, $tnr);
+        $subBlock = PhpBlock::create($tnr, $all);
         $subBlocks[] = $subBlock;
         $tnr = $subBlock->lastTokenNr;
       }
@@ -127,6 +181,7 @@ class PhpBlock {
    * @return array<mixed> */
   function asArray(): array {
     return [
+      'class'=> get_class($this),
       'startTokenNr'=> $this->startTokenNr,
       'lastTokenNr'=> $this->lastTokenNr,
       'subBlocks'=> array_map(function(PhpBlock $sb) { return $sb->asArray(); }, $this->subBlocks),
@@ -135,11 +190,11 @@ class PhpBlock {
   
   /** représente le block comme une cellule d'une table Html */
   function blocksAsHtml(AllTokens $all, string $id): string {
+    $rows = [];
     if (!$this->subBlocks) {
-      $rows = [htmlentities($all->srcCode($this->startTokenNr+1, $this->lastTokenNr+1, "$id/0/leaf"))];
+      $rows[] = htmlentities($all->srcCode($this->startTokenNr+1, $this->lastTokenNr+1, "$id/0/leaf"));
     }
     else {
-      $rows = [];
       foreach ($this->subBlocks as $nb => $block) {
         $startTokenNr = ($nb==0) ? $this->startTokenNr+1 : $this->subBlocks[$nb-1]->lastTokenNr+1;
         //$rows[] = "<i>avant le block $nb</i>";
@@ -149,10 +204,29 @@ class PhpBlock {
       $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, $this->lastTokenNr+1, "$id/$nb"));
     }
     $blankCell = "<td>&nbsp;&nbsp;</td>"; // cellule blanche pour décaler les blocks et améliorer la clareté
-    return "<table border=1>"
+    return
+       '<b>'.get_class($this).'</b>'
+      ."<table border=1>"
       ."<tr>$blankCell<td><pre>".implode("</pre></td></tr>\n<tr>$blankCell<td><pre>", $rows)."</pre></td></tr>"
       ."</table>";
   }
+};
+
+/** Block correspondant à la définition d'une classe */
+class PhpClass extends PhpBlock {
+  readonly public string $name;
+  readonly public string $title;
+
+  function __construct(int $startTokenNr, AllTokens $all) {
+    parent::__construct($startTokenNr, $all);
+  }
+};
+
+/** Block correspondant à la définition d'une fonction ou d'une méthode */
+class PhpFunction extends PhpBlock {
+  readonly public string $name;
+  readonly public string $title;
+  
 };
 
 /** Fichier Php analysé avec son chemin relatif et organisation des fichiers en un arbre */
@@ -242,11 +316,11 @@ class PhpFile {
     $blocks = [];
     for ($tnr=0; $tnr < count($all->tokens); $tnr++) {
       if ($all->tokens[$tnr]->src == '}') {
-        echo "} détectée dans PhpFileBlock::__construct() au token $tnr<br>\n";
+        echo "} détectée dans PhpFile::__construct() au token $tnr<br>\n";
       }
       elseif ($all->tokens[$tnr]->src == '{') {
         //echo "{ détectée au token $tnr<br>\n";
-        $block = new PhpBlock ($all, $tnr);
+        $block = PhpBlock::create($tnr, $all);
         //echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
         $blocks[] = $block;
         $tnr = $block->lastTokenNr;
@@ -294,7 +368,7 @@ class PhpFile {
     $includes = [];
     foreach ($all->tokens as $i => $token) {
       if ($token->id == T_REQUIRE_ONCE) {
-        if (preg_match('!^{T_REQUIRE_ONCE}{T_WHITESPACE}{T_DIR}\.{T_CONSTANT_ENCAPSED_STRING}$!', $all->symbStr($i, 5))) {
+        if ($all->symbStr($i, 5) == '{T_REQUIRE_ONCE}{T_WHITESPACE}{T_DIR}.{T_CONSTANT_ENCAPSED_STRING}') {
           $inc = dirname(self::$root.$this->rpath).substr($all->tokens[$i+4]->src, 1, -1);
           if (($rp = realpath($inc)) === false) {
             echo "<b>Erreur d'inclusion de $inc dans $this->rpath</b>\n";
@@ -316,13 +390,13 @@ class PhpFile {
   /** retourne le spacename du fichier ou '' si aucun n'a été défini */
   function namespace(AllTokens $all): string {
     // Cas où le namspace est la première instruction après T_OPEN_TAG
-    if (preg_match('!^{T_NAMESPACE}{T_WHITESPACE}{T_STRING}$!', $all->symbStr(1, 3))) {
+    if ($all->symbStr(1, 3) == '{T_NAMESPACE}{T_WHITESPACE}{T_STRING}') {
       $namespace = $all->tokens[3]->src;
       //echo "namespace=$namespace<br>\n";
       return "$namespace\\";
     }
     // Cas où le namespace est après T_OPEN_TAG et T_DOC_COMMENT et T_WHITESPACE
-    if (preg_match('!^{T_DOC_COMMENT}{T_WHITESPACE}{T_NAMESPACE}{T_WHITESPACE}{T_STRING}$!', $all->symbStr(1, 5))) {
+    if ($all->symbStr(1, 5) == '{T_DOC_COMMENT}{T_WHITESPACE}{T_NAMESPACE}{T_WHITESPACE}{T_STRING}') {
       $namespace = $all->tokens[5]->src;
       //echo "namespace=$namespace<br>\n";
       return "$namespace\\";
@@ -337,7 +411,7 @@ class PhpFile {
     $namespace = $this->namespace($all);
     foreach ($all->tokens as $i => $token) {
       if ($token->id == T_CLASS) {
-        if (preg_match('!^{T_CLASS}{T_WHITESPACE}{T_STRING}$!', $all->symbStr($i, 3))) {
+        if ($all->symbStr($i, 3) == '{T_CLASS}{T_WHITESPACE}{T_STRING}') {
           $classes[$namespace.$all->tokens[$i+2]->src] = $all->tokens[$i+2]->lineNr;
         }
         else {
