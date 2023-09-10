@@ -41,90 +41,9 @@ readonly class Token {
   }
 };
 
-/** Tous les tokens d'un fichier.
+/** Les tokens correspondant à un fichier gérés comme un array de Token.
  * Classe distincte de PhpFile car il est souvent préférable de ne pas conserver tous les tokens qui prennent de la place.
- * Ainsi l'objet AllTokens peut être créé temporairement pour effectuer des traitements.
- *
-readonly class AllTokens {
-  /** @var list<Token> $tokens; liste des tokens correspondant au source du fichier *
-  readonly public array $tokens; // Token[]
-  
-  /** lit les tokens d'un fichier et les stocke *
-  function __construct(string $path) {
-    $code = file_get_contents($path);
-    $tokens = [];
-    $lineNr = 0;
-    foreach (token_get_all($code) as $token) {
-      $token = new Token($token, $lineNr);
-      $tokens[] = $token;
-      $lineNr = $token->lineNr;
-    }
-    $this->tokens = $tokens;
-  }
-  
-  /** Génère une représentation symbolique d'un fragment de code commencant au token no $startNr et de longueur $len.
-   * Si $len > 0 alors cette repr. symbolique est constituée de la concaténation pour les tokens ayant un name
-   * de ce name entre {} et pour les autres du src.
-   * Si $len < 0 alors la repr. est structuurée en sens inverse *
-  function symbStr(int $startNr, int $len): string {
-    if ($startNr < 0)
-      $startNr = 0;
-    if ($startNr >= count($this->tokens))
-      $startNr = count($this->tokens) - 1;
-    $code = '';
-    if ($len > 0) {
-      $endNr = $startNr + $len;
-      if ($endNr > count($this->tokens))
-        $endNr = count($this->tokens);
-      for ($nr=$startNr; $nr<$endNr; $nr++) {
-        if ($this->tokens[$nr]->name)
-          $code .= '{'.$this->tokens[$nr]->name.'}';
-        else
-          $code .= $this->tokens[$nr]->src;
-      }
-    }
-    elseif ($len < 0) {
-      for ($i=0; $i < - $len ; $i++) {
-        $nr = $startNr - $i;
-        if ($nr < 0)
-          return $code;
-        if ($this->tokens[$nr]->name)
-          $code .= '{'.$this->tokens[$nr]->name.'}';
-        else
-          $code .= $this->tokens[$nr]->src;
-      }
-    }
-    return $code;
-  }
-  
-  /** Reconstruit le code source entre le token no $startNr et le token $endNr.
-   * token $startNr compris, token $endNr non compris
-  *
-  function srcCode(int $startNr, int $endNr, string $id): string {
-    $code = '';
-    //$code = "$id ($startNr->$endNr)\n";
-    if ($startNr < 0)
-      $startNr = 0;
-    if (($endNr == -1) || ($endNr > count($this->tokens)))
-      $endNr = count($this->tokens);
-    for ($nr=$startNr; $nr<$endNr; $nr++) {
-      $code .= $this->tokens[$nr]->src;
-    }
-    return $code;
-  }
-
-  /** Retourne le no de token correspondant au $src précédent $startNr.
-   * Retourne -1 si la chaine n'a pas été trouvée *
-  function findSrcBackward(int $startNr, string $src): int {
-    for ($nr = $startNr; $nr >= 0; $nr--) {
-      if ($this->tokens[$nr]->src == $src)
-        return $nr;
-    }
-    return -1;
-  }
-};*/
-
-/** Les tokens correspondant à un fichier gérés comme un array de Token
+ * Ainsi l'objet TokenArray peut être créé temporairement pour effectuer des traitements.
  * @extends ArrayObject<int,Token> */
 class TokenArray extends ArrayObject {
   function __construct(string $path) {
@@ -169,7 +88,7 @@ class TokenArray extends ArrayObject {
   /** Reconstruit le code source entre le token no $startNr et le token $endNr.
    * token $startNr compris, token $endNr non compris
   */
-  function srcCode(int $startNr, int $endNr): string {
+  function srcCode(int $startNr, int $endNr, string $id=''): string {
     $code = '';
     //$code = "$id ($startNr->$endNr)\n";
     if ($startNr < 0)
@@ -192,24 +111,6 @@ class TokenArray extends ArrayObject {
     return -1;
   }
 };
-
-/*if (1) {
-  $tokens = new TokenArray('testcode.php');
-  echo "<pre>"; //print_r($tokens);
-  if (0) { // @phpstan-ignore-line
-    echo "<table border=1>";
-    foreach ($tokens as $token) {
-      echo "<tr><td>$token->lineNr</td><td>$token->name</td><td>",htmlentities($token->src),"</td></tr>\n";
-    }
-    echo "</table>\n";
-  }
-  else {
-    echo htmlentities($tokens->srcCode(0, -1));
-  }
-  die("\n<b>Fin ligne ".__LINE__."</b>\n");
-}*/
-
-
 
 /** Block de code Php encadré par { et } */
 class PhpBlock {
@@ -282,7 +183,7 @@ class PhpBlock {
   /** Création d'un block de base.
    * Analyse l'existence de sous-blocks
    * @param int $startTokenNr, no du token de début du block correspondant à '{' 
-   * @param list<Token> $tokens; liste des tokens du fichier contenant le block
+   * @param TokenArray $tokens; liste des tokens du fichier contenant le block
    */
   function __construct(int $startTokenNr, TokenArray $tokens) {
     echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
@@ -519,7 +420,7 @@ class PhpFile {
       echo "buildTree(class=$class, rpath=$rpath)<br>\n";
     if (is_file(self::$root.$rpath) && (substr($rpath, -4)=='.php')) { // Fichier Php
       //echo "new $class(rpath=$rpath)<br>\n";
-      return new $class($rpath, new AllTokens(self::$root.$rpath));
+      return new $class($rpath, new TokenArray(self::$root.$rpath));
     }
     elseif (is_dir(self::$root.$rpath)) { // Répertoire
       $result = [];
@@ -651,16 +552,16 @@ class PhpFile {
   }
   
   /** retourne le spacename du fichier ou '' si aucun n'a été défini */
-  function namespace(AllTokens $all): string {
+  function namespace(TokenArray $tokens): string {
     // Cas où le namspace est la première instruction après T_OPEN_TAG
-    if ($all->symbStr(1, 3) == '{T_NAMESPACE}{T_WHITESPACE}{T_STRING}') {
-      $namespace = $all->tokens[3]->src;
+    if ($tokens->symbStr(1, 3) == 'T_NAMESPACE,T_WHITESPACE,T_STRING') {
+      $namespace = $tokens[3]->src;
       //echo "namespace=$namespace<br>\n";
       return "$namespace\\";
     }
     // Cas où le namespace est après T_OPEN_TAG et T_DOC_COMMENT et T_WHITESPACE
-    if ($all->symbStr(1, 5) == '{T_DOC_COMMENT}{T_WHITESPACE}{T_NAMESPACE}{T_WHITESPACE}{T_STRING}') {
-      $namespace = $all->tokens[5]->src;
+    if ($tokens->symbStr(1, 5) == 'T_DOC_COMMENT,T_WHITESPACE,T_NAMESPACE,T_WHITESPACE,T_STRING') {
+      $namespace = $tokens[5]->src;
       //echo "namespace=$namespace<br>\n";
       return "$namespace\\";
     }
