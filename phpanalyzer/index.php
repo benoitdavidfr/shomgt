@@ -44,12 +44,12 @@ readonly class Token {
 /** Tous les tokens d'un fichier.
  * Classe distincte de PhpFile car il est souvent préférable de ne pas conserver tous les tokens qui prennent de la place.
  * Ainsi l'objet AllTokens peut être créé temporairement pour effectuer des traitements.
- */
+ *
 readonly class AllTokens {
-  /** @var list<Token> $tokens; liste des tokens correspondant au source du fichier */
+  /** @var list<Token> $tokens; liste des tokens correspondant au source du fichier *
   readonly public array $tokens; // Token[]
   
-  /** lit les tokens d'un fichier et les stocke */
+  /** lit les tokens d'un fichier et les stocke *
   function __construct(string $path) {
     $code = file_get_contents($path);
     $tokens = [];
@@ -65,7 +65,7 @@ readonly class AllTokens {
   /** Génère une représentation symbolique d'un fragment de code commencant au token no $startNr et de longueur $len.
    * Si $len > 0 alors cette repr. symbolique est constituée de la concaténation pour les tokens ayant un name
    * de ce name entre {} et pour les autres du src.
-   * Si $len < 0 alors la repr. est structuurée en sens inverse */
+   * Si $len < 0 alors la repr. est structuurée en sens inverse *
   function symbStr(int $startNr, int $len): string {
     if ($startNr < 0)
       $startNr = 0;
@@ -99,7 +99,7 @@ readonly class AllTokens {
   
   /** Reconstruit le code source entre le token no $startNr et le token $endNr.
    * token $startNr compris, token $endNr non compris
-  */
+  *
   function srcCode(int $startNr, int $endNr, string $id): string {
     $code = '';
     //$code = "$id ($startNr->$endNr)\n";
@@ -114,7 +114,7 @@ readonly class AllTokens {
   }
 
   /** Retourne le no de token correspondant au $src précédent $startNr.
-   * Retourne -1 si la chaine n'a pas été trouvée */
+   * Retourne -1 si la chaine n'a pas été trouvée *
   function findSrcBackward(int $startNr, string $src): int {
     for ($nr = $startNr; $nr >= 0; $nr--) {
       if ($this->tokens[$nr]->src == $src)
@@ -122,7 +122,7 @@ readonly class AllTokens {
     }
     return -1;
   }
-};
+};*/
 
 /** Les tokens correspondant à un fichier gérés comme un array de Token
  * @extends ArrayObject<int,Token> */
@@ -163,7 +163,7 @@ class TokenArray extends ArrayObject {
         $code .= ($this[$nr]->name ? $this[$nr]->name : $this[$nr]->src).',';
       }
     }
-    return $code;
+    return substr($code, 0, -1); // j'enlève le dernier séparateur
   }
   
   /** Reconstruit le code source entre le token no $startNr et le token $endNr.
@@ -223,55 +223,59 @@ class PhpBlock {
   /** Création d'un block en distinguant classe, fonction ou autre block.
    * Pour être détectées, les fonctions autres que __construct() doivent avoir un type de retour
    * @param int $startTokenNr, no du token de début du block correspondant à '{' 
-   * @param AllTokens $all; tokens du fichier contenant le block
+   * @param TokenArray $tokens; tokens du fichier contenant le block
    */
-  static function create(int $startTokenNr, AllTokens $all): PhpBlock {
+  static function create(int $startTokenNr, TokenArray $tokens): PhpBlock {
     //die("Fin ligne ".__LINE__);
-    //echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
-    //echo "symbStr=",$all->symbStr($startTokenNr-1, -4),"<br>\n";
+    echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
+    echo "symbStr=",$tokens->symbStr($startTokenNr-1, -12),"<br>\n";
     
     // class {nom_classe} {
     // class {nom_classe} extends {nom_classe_mère} {
     // class {nom_class} implements {interface_name} {
     // class {nom_class} extends {nom_classe_mère} implements {interface_name} {
-    $pattern = '!^({T_WHITESPACE})?'
-        .'({T_STRING}{T_WHITESPACE}{T_IMPLEMENTS}{T_WHITESPACE})?'   // implements {interface_name}
-        .'(({T_STRING}|{T_NAME_FULLY_QUALIFIED}){T_WHITESPACE}{T_EXTENDS}{T_WHITESPACE})?'      // extends {nom_classe_mère}
-        .'{T_STRING}{T_WHITESPACE}{T_CLASS}!';                       // class {nom_classe}
-    if (preg_match($pattern, $all->symbStr($startTokenNr-1, -12))) {
-      //echo "Définition de classe détectée<br>\n";
-      return new PhpClass($startTokenNr, $all);
+    $pattern = '!^(T_WHITESPACE,)?'
+        .'(T_STRING,T_WHITESPACE,T_IMPLEMENTS,T_WHITESPACE,)?'   // implements {interface_name}
+        .'((T_STRING|T_NAME_FULLY_QUALIFIED),T_WHITESPACE,T_EXTENDS,T_WHITESPACE,)?' // extends {nom_classe_mère}
+        .'T_STRING,T_WHITESPACE,T_CLASS!';                       // class {nom_classe}
+     if (preg_match($pattern, $tokens->symbStr($startTokenNr-1, -12))) {
+      echo "Définition de classe détectée<br>\n";
+      return new PhpClass($startTokenNr, $tokens);
     }
     // symbStr={T_WHITESPACE}{T_STRING}?{T_WHITESPACE}
-    elseif (preg_match('!^({T_WHITESPACE})?({T_STRING}|{T_ARRAY})\??({T_WHITESPACE})?:!', $all->symbStr($startTokenNr-1, -5))) {
-      //echo "Function détectée avec type de retour<br>\n";
-      return new PhpFunction($startTokenNr, $all);
+    elseif (preg_match('!^(T_WHITESPACE,)?(T_STRING,|T_ARRAY,)(\?,)?(T_WHITESPACE,)?:!', $tokens->symbStr($startTokenNr-1, -5))) {
+      echo "Function détectée avec type de retour<br>\n";
+      return new PhpFunction($startTokenNr, $tokens);
     }
     else {
-      if (preg_match('!^({T_WHITESPACE})?\)!', $all->symbStr($startTokenNr-1, -4))) {
-        //echo "Function détectée sans type de retour<br>\n";
-        $openBracketNr = $all->findSrcBackward($startTokenNr, '('); // recherche de la parenthèse ouvrante dé début des paramètres
-        //echo 'symbStrBracket=',$all->symbStr($openBracketNr, -12),"<br>\n";
-        //echo "srcCode=",htmlentities($all->srcCode($openBracketNr-12, $openBracketNr, '')),"<br>\n";
-        if ($all->symbStr($openBracketNr, -4) == '({T_STRING}{T_WHITESPACE}{T_FUNCTION}') {
-          //echo "détection de function xxx(<br>\n";
-          if ($all->tokens[$openBracketNr-1]->src == '__construct') {
+      if (preg_match('!^(T_WHITESPACE,)?\)!', $tokens->symbStr($startTokenNr-1, -4))) {
+        echo "Function détectée sans type de retour<br>\n";
+        $openBracketNr = $tokens->findSrcBackward($startTokenNr, '('); // recherche de la ( de début des paramètres
+        echo 'symbStrBracket=',$tokens->symbStr($openBracketNr, -12),"<br>\n";
+        echo "srcCode=",htmlentities($tokens->srcCode($openBracketNr-12, $openBracketNr, '')),"<br>\n";
+        if ($tokens->symbStr($openBracketNr, -4) == '(,T_STRING,T_WHITESPACE,T_FUNCTION') {
+          echo "détection de function xxx(<br>\n";
+          if ($tokens[$openBracketNr-1]->src == '__construct') {
             //echo "Détection de __construct()<br>\n";
-            return new PhpFunction($startTokenNr, $all);
+            return new PhpFunction($startTokenNr, $tokens);
           }
+          else
+            echo "fonction sans type de retour non reconnue<br>\n";
           // cas éventuel d'une fonction sans type de retour non reconnue
         }
-        elseif ($all->symbStr($openBracketNr, -5) == '({T_WHITESPACE}{T_STRING}{T_WHITESPACE}{T_FUNCTION}') {
-          //echo "détection de function xxx (<br>\n";
-          if ($all->tokens[$openBracketNr-2]->src == '__construct') {
-            //echo "Détection de __construct ()<br>\n";
-            return new PhpFunction($startTokenNr, $all);
+        elseif ($tokens->symbStr($openBracketNr, -5) == '(,T_WHITESPACE,T_STRING,T_WHITESPACE,T_FUNCTION') {
+          echo "détection de function xxx (<br>\n";
+          if ($tokens[$openBracketNr-2]->src == '__construct') {
+            echo "Détection de __construct ()<br>\n";
+            return new PhpFunction($startTokenNr, $tokens);
           }
+          else
+            echo "fonction sans type de retour non reconnue<br>\n";
           // cas éventuel d'une fonction sans type de retour non reconnue
         }
       }
-      //echo "NI Class Ni Function détectée<br>\n";
-      return new self($startTokenNr, $all);
+      echo "NI Class Ni Function détectée<br>\n";
+      return new self($startTokenNr, $tokens);
     }
   }
   
@@ -280,26 +284,26 @@ class PhpBlock {
    * @param int $startTokenNr, no du token de début du block correspondant à '{' 
    * @param list<Token> $tokens; liste des tokens du fichier contenant le block
    */
-  function __construct(int $startTokenNr, AllTokens $all) {
-    //echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
+  function __construct(int $startTokenNr, TokenArray $tokens) {
+    echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
     $this->startTokenNr = $startTokenNr;
     $subBlocks = [];
-    for ($tnr=$startTokenNr+1; $tnr < count($all->tokens); $tnr++) {
-      if ($all->tokens[$tnr]->src == '}') {
+    for ($tnr=$startTokenNr+1; $tnr < count($tokens); $tnr++) {
+      if ($tokens[$tnr]->src == '}') {
         $this->lastTokenNr = $tnr;
         $this->subBlocks = $subBlocks;
         return;
       }
-      elseif ($all->tokens[$tnr]->src == '{') {
+      elseif ($tokens[$tnr]->src == '{') {
         //echo "{ détectée au token $tnr<br>\n";
-        $subBlock = PhpBlock::create($tnr, $all);
+        $subBlock = PhpBlock::create($tnr, $tokens);
         $subBlocks[] = $subBlock;
         $tnr = $subBlock->lastTokenNr;
       }
     }
     echo "<b>Erreur, fin de construction non trouvée pour le block commencé au token $startTokenNr</b></p>\n";
     $this->subBlocks = $subBlocks;
-    $this->lastTokenNr = count($all->tokens)-1;
+    $this->lastTokenNr = count($tokens)-1;
   }
 
   /** Retourne un PhpBlock comme un array
@@ -313,19 +317,20 @@ class PhpBlock {
   }
   
   /** représente le block comme une cellule d'une table Html */
-  function blocksAsHtml(AllTokens $all, string $id): string {
+  function blocksAsHtml(TokenArray $tokens, string $id): string {
     $rows = [];
     if (!$this->subBlocks) {
-      $rows[] = htmlentities($all->srcCode($this->startTokenNr+1, $this->lastTokenNr+1, "$id/0/leaf"));
+      $rows[] = htmlentities($tokens->srcCode($this->startTokenNr+1, $this->lastTokenNr+1, "$id/0/leaf"));
     }
     else {
       foreach ($this->subBlocks as $nb => $block) {
         $startTokenNr = ($nb==0) ? $this->startTokenNr+1 : $this->subBlocks[$nb-1]->lastTokenNr+1;
         //$rows[] = "<i>avant le block $nb</i>";
-        $rows[] = htmlentities($all->srcCode($startTokenNr+1, $block->startTokenNr+1, "$id/$nb/pre")); // le code avant le block nb
-        $rows[] = $block->blocksAsHtml($all, "$id/$nb"); // le code du block courant
+        // le code avant le block nb
+        $rows[] = htmlentities($tokens->srcCode($startTokenNr+1, $block->startTokenNr+1, "$id/$nb/pre"));
+        $rows[] = $block->blocksAsHtml($tokens, "$id/$nb"); // le code du block courant
       }
-      $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, $this->lastTokenNr+1, "$id/$nb"));
+      $rows[] = htmlentities($tokens->srcCode($block->lastTokenNr+1, $this->lastTokenNr+1, "$id/$nb"));
     }
     $blankCell = "<td>&nbsp;&nbsp;</td>"; // cellule blanche pour décaler les blocks et améliorer la clareté
     return
@@ -345,54 +350,54 @@ class PhpClass extends PhpBlock {
   //readonly public string $title;
 
   /** Définition d'une classe ; gère les différents cas de figure */
-  function __construct(int $startTokenNr, AllTokens $all) {
-    parent::__construct($startTokenNr, $all);
+  function __construct(int $startTokenNr, TokenArray $tokens) {
+    parent::__construct($startTokenNr, $tokens);
 
-    $this->lineNr = $all->tokens[$startTokenNr]->lineNr;
-    if ($all->tokens[$startTokenNr-1]->id == T_WHITESPACE)
+    $this->lineNr = $tokens[$startTokenNr]->lineNr;
+    if ($tokens[$startTokenNr-1]->id == T_WHITESPACE)
       $startTokenNr--;
-    if ($all->symbStr($startTokenNr-1, -3) == '{T_STRING}{T_WHITESPACE}{T_CLASS}') { // class {nom_classe} {
+    if ($tokens->symbStr($startTokenNr-1, -3) == 'T_STRING,T_WHITESPACE,T_CLASS') { // class {nom_classe} {
       //echo "class {nom_classe}<br>\n";
-      $this->name = $all->tokens[$startTokenNr-1]->src;
+      $this->name = $tokens[$startTokenNr-1]->src;
       $this->parentClassName = '';
       $this->interface = '';
       //echo "class $this->name<br>\n";
     }
     else {
       // class {nom_classe} extends {nom_classe_mère} {
-      $symbStrPattern = '!^({T_STRING}|{T_NAME_FULLY_QUALIFIED}){T_WHITESPACE}{T_EXTENDS}' // extends {nom_classe_mère}
-          .'{T_WHITESPACE}{T_STRING}{T_WHITESPACE}{T_CLASS}!'; // class {nom_classe} 
-      // echo "symbStr=",$all->symbStr($startTokenNr-1, -7),"<br>\n";
-      if (preg_match($symbStrPattern, $all->symbStr($startTokenNr-1, -7))) {
+      $symbStrPattern = '!^(T_STRING|T_NAME_FULLY_QUALIFIED),T_WHITESPACE,T_EXTENDS,' // extends {nom_classe_mère}
+          .'T_WHITESPACE,T_STRING,T_WHITESPACE,T_CLASS!'; // class {nom_classe} 
+      //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -7),"<br>\n";
+      if (preg_match($symbStrPattern, $tokens->symbStr($startTokenNr-1, -7))) {
         //echo "class {nom_classe} extends {nom_classe_mère}<br>\n";
-        $this->name = $all->tokens[$startTokenNr-5]->src;
-        $this->parentClassName = $all->tokens[$startTokenNr-1]->src;
+        $this->name = $tokens[$startTokenNr-5]->src;
+        $this->parentClassName = $tokens[$startTokenNr-1]->src;
         $this->interface = '';
         //echo "class $this->name extends $this->parentClassName<br>\n";
       }
       else {
         // class {nom_class} implements {interface_name} {
-        $symbStr = '{T_STRING}{T_WHITESPACE}{T_IMPLEMENTS}{T_WHITESPACE}{T_STRING}{T_WHITESPACE}{T_CLASS}';
-        //echo "symbStr=",$all->symbStr($startTokenNr-1, -7),"<br>\n";
-        if ($all->symbStr($startTokenNr-1, -7) == $symbStr) {
+        $symbStr = 'T_STRING,T_WHITESPACE,T_IMPLEMENTS,T_WHITESPACE,T_STRING,T_WHITESPACE,T_CLASS';
+        //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -7),"<br>\n";
+        if ($tokens->symbStr($startTokenNr-1, -7) == $symbStr) {
           //echo "class {nom_classe} implements {interface_name}<br>\n";
-          $this->name = $all->tokens[$startTokenNr-5]->src;
+          $this->name = $tokens[$startTokenNr-5]->src;
           $this->parentClassName = '';
-          $this->interface = $all->tokens[$startTokenNr-1]->src;
+          $this->interface = $tokens[$startTokenNr-1]->src;
           //echo "class $this->name implements $this->interface<br>\n";
         }
         else {
           // class {nom_class} extends {nom_classe_mère} implements {interface_name} {
           $symbStrPattern = '!^'
-                    .'{T_STRING}{T_WHITESPACE}{T_IMPLEMENTS}{T_WHITESPACE}' // implements {interface_name} {
-                    .'({T_STRING}|{T_NAME_FULLY_QUALIFIED}){T_WHITESPACE}{T_EXTENDS}{T_WHITESPACE}' // extends {nom_classe_mère}
-                    .'{T_STRING}{T_WHITESPACE}{T_CLASS}!'; // class {nom_class}
-          //echo "symbStr=",$all->symbStr($startTokenNr-1, -7),"<br>\n";
-          if (preg_match($symbStrPattern, $all->symbStr($startTokenNr-1, -11))) {
+                    .'T_STRING,T_WHITESPACE,T_IMPLEMENTS,T_WHITESPACE,' // implements {interface_name} {
+                    .'(T_STRING|T_NAME_FULLY_QUALIFIED),T_WHITESPACE,T_EXTENDS,T_WHITESPACE,' // extends {nom_classe_mère}
+                    .'T_STRING,T_WHITESPACE,T_CLASS!'; // class {nom_class}
+          //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -7),"<br>\n";
+          if (preg_match($symbStrPattern, $tokens->symbStr($startTokenNr-1, -11))) {
             //echo "class {nom_classe} extends {nom_classe_mère} implements {interface_name}<br>\n";
-            $this->name = $all->tokens[$startTokenNr-9]->src;
-            $this->parentClassName = $all->tokens[$startTokenNr-5]->src;
-            $this->interface = $all->tokens[$startTokenNr-1]->src;
+            $this->name = $tokens[$startTokenNr-9]->src;
+            $this->parentClassName = $tokens[$startTokenNr-5]->src;
+            $this->interface = $tokens[$startTokenNr-1]->src;
             //echo "class $this->name extends $this->parentClassName implements $this->interface<br>\n";
           }
           else {
@@ -418,12 +423,12 @@ class PhpClass extends PhpBlock {
   }
   
   /** représente le block comme une cellule d'une table Html */
-  function blocksAsHtml(AllTokens $all, string $id): string {
+  function blocksAsHtml(TokenArray $tokens, string $id): string {
     return "<b>Class $this->name"
       .($this->parentClassName ? " extends $this->parentClassName" : '')
       .($this->interface ? " implements $this->interface" : '')
       .'</b><br>'
-      .parent::blocksAsHtml($all, $id);
+      .parent::blocksAsHtml($tokens, $id);
   }
 };
 
@@ -434,31 +439,31 @@ class PhpFunction extends PhpBlock {
   readonly public int $lineNr;
   //readonly public string $title;
   
-  function __construct(int $startTokenNr, AllTokens $all) {
-    //echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
-    parent::__construct($startTokenNr, $all);
+  function __construct(int $startTokenNr, TokenArray $tokens) {
+    echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
+    parent::__construct($startTokenNr, $tokens);
     
-    $this->lineNr = $all->tokens[$startTokenNr]->lineNr;
+    $this->lineNr = $tokens[$startTokenNr]->lineNr;
     
-    $nr = $all->findSrcBackward($startTokenNr, '('); // recherche de la parenthèse ouvrante dé début des paramètres
-    $this->params = $all->srcCode($nr, $startTokenNr, '');
+    $nr = $tokens->findSrcBackward($startTokenNr, '('); // recherche de la parenthèse ouvrante dé début des paramètres
+    $this->params = $tokens->srcCode($nr, $startTokenNr, '');
     $nr--;
-    if ($all->tokens[$nr]->id == T_WHITESPACE)
+    if ($tokens[$nr]->id == T_WHITESPACE)
       $nr--;
     // $nr pointe sur le premier token <> T_WHITESPACE avant la '('
-    //echo 'symbStrBracket=',$all->symbStr($nr, -12),"<br>\n";
-    if (in_array($all->tokens[$nr]->id, [T_STRING, T_EMPTY, T_NAMESPACE])) { // function ff(
-      $this->name = $all->tokens[$nr]->src;
+    echo 'symbStrBracket=',$tokens->symbStr($nr, -12),"<br>\n";
+    if (in_array($tokens[$nr]->id, [T_STRING, T_EMPTY, T_NAMESPACE])) { // function ff(
+      $this->name = $tokens[$nr]->src;
     }
-    elseif (in_array($all->tokens[$nr]->id, [T_FUNCTION, T_USE])) { // function( | function use(
+    elseif (in_array($tokens[$nr]->id, [T_FUNCTION, T_USE])) { // function( | function use(
       $this->name = '';
     }
     else {
       //for($i=0; $i<1000; $i++) echo "lineNr($i)=",$all->tokens[$i],"<br>\n";
       echo "<b>Erreur dans PhpFunction::__construct()</b><br>\n";
-      echo "ligne=",$all->tokens[$nr]->lineNr,"<br>\n";
-      echo 'symbStr=',$all->symbStr($nr, -3),"<br>\n";
-      echo 'srcCode=',htmlentities($all->srcCode($nr-8, $nr+5, '')),"<br>\n";
+      echo "ligne=",$tokens[$nr]->lineNr,"<br>\n";
+      echo 'symbStr=',$tokens->symbStr($nr, -3),"<br>\n";
+      echo 'srcCode=',htmlentities($tokens->srcCode($nr-8, $nr+5, '')),"<br>\n";
       die("Erreur dans PhpFunction::__construct() ligne ".__LINE__);
     }
   }
@@ -477,10 +482,10 @@ class PhpFunction extends PhpBlock {
   }
   
   /** représente le block comme une cellule d'une table Html */
-  function blocksAsHtml(AllTokens $all, string $id): string {
+  function blocksAsHtml(TokenArray $tokens, string $id): string {
     return "<b>Function ".($this->name ? $this->name : '(anonym)')." $this->params"
       .'</b><br>'
-      .parent::blocksAsHtml($all, $id);
+      .parent::blocksAsHtml($tokens, $id);
   }
 };
 
@@ -560,22 +565,22 @@ class PhpFile {
     }
   }
   
-  function __construct(string $rpath, AllTokens $all=null) {
+  function __construct(string $rpath, TokenArray $tokens=null) {
     $this->rpath = $rpath;
-    if (!$all)
-      $all = new AllTokens(self::$root.$rpath);
-    $this->title = $this->title($all);
-    $this->includes = $this->includes($all);
+    if (!$tokens)
+      $tokens = new TokenArray(self::$root.$rpath);
+    $this->title = $this->title($tokens);
+    $this->includes = $this->includes($tokens);
     
     // construction des blocks
     $blocks = [];
-    for ($tnr=0; $tnr < count($all->tokens); $tnr++) {
-      if ($all->tokens[$tnr]->src == '}') {
+    for ($tnr=0; $tnr < count($tokens); $tnr++) {
+      if ($tokens[$tnr]->src == '}') {
         echo "} détectée dans PhpFile::__construct() au token $tnr<br>\n";
       }
-      elseif ($all->tokens[$tnr]->src == '{') {
+      elseif ($tokens[$tnr]->src == '{') {
         //echo "{ détectée au token $tnr<br>\n";
-        $block = PhpBlock::create($tnr, $all);
+        $block = PhpBlock::create($tnr, $tokens);
         //echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
         $blocks[] = $block;
         $tnr = $block->lastTokenNr;
@@ -598,9 +603,9 @@ class PhpFile {
   }
   
   /** Retourne le titre du fichier extrait du commentaire PhpDoc */
-  function title(AllTokens $all): string {
-    if (isset($all->tokens[1]) && ($all->tokens[1]->id == T_DOC_COMMENT)) {
-      $comment = $all->tokens[1]->src;
+  function title(TokenArray $tokens): string {
+    if (isset($tokens[1]) && ($tokens[1]->id == T_DOC_COMMENT)) {
+      $comment = $tokens[1]->src;
       //echo "comment=",htmlentities($comment),"\n";
       if (preg_match('!^/\*\*\n \* ([^\n]*)!', $comment, $matches)) {
         return $matches[1];
@@ -621,12 +626,13 @@ class PhpFile {
    *
    * @return list<string>
    */
-  function includes(AllTokens $all): array {
+  function includes(TokenArray $tokens): array {
     $includes = [];
-    foreach ($all->tokens as $i => $token) {
+    foreach ($tokens as $i => $token) {
       if ($token->id == T_REQUIRE_ONCE) {
-        if ($all->symbStr($i, 5) == '{T_REQUIRE_ONCE}{T_WHITESPACE}{T_DIR}.{T_CONSTANT_ENCAPSED_STRING}') {
-          $inc = dirname(self::$root.$this->rpath).substr($all->tokens[$i+4]->src, 1, -1);
+        echo $tokens->symbStr($i, 5),"<br>\n";
+        if ($tokens->symbStr($i, 5) == 'T_REQUIRE_ONCE,T_WHITESPACE,T_DIR,.,T_CONSTANT_ENCAPSED_STRING') {
+          $inc = dirname(self::$root.$this->rpath).substr($tokens[$i+4]->src, 1, -1);
           if (($rp = realpath($inc)) === false) {
             echo "<b>Erreur d'inclusion de $inc dans $this->rpath</b>\n";
             $includes[] = "$inc (BAD)";
@@ -675,25 +681,25 @@ class PhpFile {
   
   /** représente les blocks contenus dans le fichier comme une table Html */
   function blocksAsHtml(): string {
-    $all = new AllTokens(self::$root.$this->rpath);
+    $tokens = new TokenArray(self::$root.$this->rpath);
     $rows = [];
     if (!$this->blocks) {
-      $rows[] = htmlentities($all->srcCode(0, -1, "/only")); // le code de tout le fichier
+      $rows[] = htmlentities($tokens->srcCode(0, -1, "/only")); // le code de tout le fichier
     }
     else {
       foreach ($this->blocks as $nb => $block) {
         $startTokenNr = ($nb==0) ? 0 : $this->blocks[$nb-1]->lastTokenNr+1;
-        $rows[] = htmlentities($all->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
-        $rows[] = $block->blocksAsHtml($all, "$nb"); // le code du block courant
+        $rows[] = htmlentities($tokens->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
+        $rows[] = $block->blocksAsHtml($tokens, "$nb"); // le code du block courant
       }
-      $rows[] = htmlentities($all->srcCode($block->lastTokenNr+1, -1, "FIN"));
+      $rows[] = htmlentities($tokens->srcCode($block->lastTokenNr+1, -1, "FIN"));
     }
     return "<table border=1>"
           ."<tr><td><pre>".implode("</pre></td></tr>\n<tr><td><pre>", $rows)."</pre></td></tr>"
           ."</table>";
   }
 
-  /** Test de la détection des appels de fonctions et méthodes */
+  /** Test de la détection des appels de fonctions et méthodes *
   function calls(): void {
     $all = new AllTokens(self::$root.$this->rpath);
     for ($nr=0; $nr < count($all->tokens); $nr++) {
@@ -720,9 +726,9 @@ class PhpFile {
       if ($symbstr == '{T_STRING}(') {
         echo "DetectAppelFonction: ", $all->srcCode($nr, $nr+2, ''),"<br>\n";
         echo "&nbsp;&nbsp;context: ",htmlentities($all->srcCode($nr-10, $nr+12, '')),"<br>\n";
-      }*/
+      }*
     }
-  }
+  }*/
 };
 
 /** déduit de l'arbre des fichiers les graphes pour déduire les relations inverses */
@@ -844,7 +850,7 @@ switch ($_GET['action'] ?? null) {
     }
     break;
   }
-  case 'buildCalls': {
+  /*case 'buildCalls': {
     if (!isset($_GET['rpath']))
       PhpFile::chooseFile('buildCalls');
     else {
@@ -852,5 +858,5 @@ switch ($_GET['action'] ?? null) {
       echo $file->calls();
     }
     break;
-  }
+  }*/
 }
