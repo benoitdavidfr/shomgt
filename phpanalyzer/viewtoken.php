@@ -16,14 +16,14 @@
 
 { // Propose de changer noToken en gardant rpath et lineNo
   $noToken = (($_GET['noToken'] ?? 'false') == 'false') ? false : true;
-  $lineNo = $_GET['lineNo'] ?? '';
-  $lineNoParam = $lineNo ? "&lineNo=$lineNo" : '';
-  $lineNoAnchor = $lineNo ? "#line$lineNo" : '';
+  $lineNr = $_GET['lineNr'] ?? '';
+  $lineNrParam = $lineNr ? "&lineNr=$lineNr" : '';
+  $lineNrAnchor = $lineNr ? "#line$lineNr" : '';
   if ($noToken) {
-    echo "<a href='?rpath=$_GET[rpath]$lineNoParam&noToken=false$lineNoAnchor'>Avec tokens</a><br>\n";
+    echo "<a href='?rpath=$_GET[rpath]$lineNrParam&noToken=false$lineNrAnchor'>Avec tokens</a><br>\n";
   }
   else {
-    echo "<a href='?rpath=$_GET[rpath]$lineNoParam&noToken=true$lineNoAnchor'>Sans token</a><br>\n";
+    echo "<a href='?rpath=$_GET[rpath]$lineNrParam&noToken=true$lineNrAnchor'>Sans token</a><br>\n";
   }
 }
 
@@ -31,14 +31,14 @@ $code = file_get_contents(__DIR__."/..$_GET[rpath]");
 
 // Décomposition des tokens par ligne du source
 $tokensPerLine = []; // [{noLigne} => [{token}]]
-$lineNo = 0;
+$lineNr = 0;
 foreach (token_get_all($code) as $token) {
   if (is_array($token)) {
-    $lineNo = $token[2];
-    $tokensPerLine[$lineNo][] = ['token_name'=> token_name($token[0]), 'src'=> $token[1]];
+    $lineNr = $token[2];
+    $tokensPerLine[$lineNr][] = ['token_name'=> token_name($token[0]), 'src'=> $token[1]];
   }
   else {
-    $tokensPerLine[$lineNo][] = ['src'=> $token];
+    $tokensPerLine[$lineNr][] = ['src'=> $token];
   }
 }
 

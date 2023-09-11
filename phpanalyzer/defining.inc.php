@@ -1,6 +1,6 @@
 <?php
 /**
- * Détection des blocks Php encadrés de { } pour PhpAanalyzer
+ * Fichier Php avec ses définitions de fonctions et classes
  */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/token.inc.php';
@@ -284,5 +284,77 @@ class PhpFunction extends PhpBlock {
     return "<b>Function ".($this->name ? $this->name : '(anonym)')." $this->params"
       .'</b><br>'
       .parent::blocksAsHtml($tokens, $id);
+  }
+};
+
+/** Fichier Php avec les caractéristiques spécifiques à la définition de classes et fonctions */
+class DefiningFile extends PhpFile {
+  /** @var PhpBlock[] $blocks liste des blocks contenus dans le fichier */
+  readonly public array $blocks;
+  
+  function __construct(string $rpath, TokenArray $tokens=null) {
+    if (!$tokens)
+      $tokens = new TokenArray(parent::$root.$rpath);
+    
+    parent::__construct($rpath, $tokens);
+    
+    // construction des blocks
+    $blocks = [];
+    for ($tnr=0; $tnr < count($tokens); $tnr++) {
+      if ($tokens[$tnr]->src == '}') {
+        echo "} détectée dans PhpFile::__construct() au token $tnr<br>\n";
+      }
+      elseif ($tokens[$tnr]->src == '{') {
+        //echo "{ détectée au token $tnr<br>\n";
+        $block = PhpBlock::create($tnr, $tokens);
+        //echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
+        $blocks[] = $block;
+        $tnr = $block->lastTokenNr;
+      }
+    }
+    $this->blocks = $blocks;
+  }
+  
+  /** Retourne l'objet comme array.
+   * @return array<mixed> */
+  function asArray(): array {
+    return array_merge(
+      parent::asArray(),
+      [
+        'classes'=> array_map(function(PhpClass $class) { return $class->asArray(); }, $this->classes),
+        //'blocks'=> array_map(function(PhpBlock $block) { return $block->asArray(); }, $this->blocks),
+      ]);
+  }
+  
+  /** Récupère les classes dans les blocks
+   * @return array<string,PhpClass> */
+  function classes(): array {
+    $classes = [];
+    foreach ($this->blocks as $block) {
+      if (get_class($block) == 'PhpClass') {
+        $classes[$block->name] = $block;
+      }
+    }
+    return $classes;
+  }
+  
+  /** représente les blocks contenus dans le fichier comme une table Html */
+  function blocksAsHtml(): string {
+    $tokens = new TokenArray(self::$root.$this->rpath);
+    $rows = [];
+    if (!$this->blocks) {
+      $rows[] = htmlentities($tokens->srcCode(0, -1, "/only")); // le code de tout le fichier
+    }
+    else {
+      foreach ($this->blocks as $nb => $block) {
+        $startTokenNr = ($nb==0) ? 0 : $this->blocks[$nb-1]->lastTokenNr+1;
+        $rows[] = htmlentities($tokens->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
+        $rows[] = $block->blocksAsHtml($tokens, "$nb"); // le code du block courant
+      }
+      $rows[] = htmlentities($tokens->srcCode($block->lastTokenNr+1, -1, "FIN"));
+    }
+    return "<table border=1>"
+          ."<tr><td><pre>".implode("</pre></td></tr>\n<tr><td><pre>", $rows)."</pre></td></tr>"
+          ."</table>";
   }
 };

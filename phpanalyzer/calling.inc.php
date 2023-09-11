@@ -1,6 +1,6 @@
 <?php
 /**
- * construit les appels présents dans un fichier php
+ * Fichier php avec ses appels Php
  */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/token.inc.php';
@@ -80,45 +80,37 @@ readonly abstract class Call {
     }
   }
 
-  /** Création des appels de fonctions et méthodes
-   * @return list<Call> */
-  static function create(TokenArray $tokens): array {
-    //echo "<b>Call::create()</b><br>\n";
-    $calls = [];
-    for ($nr=0; $nr < count($tokens); $nr++) {
-      if ($tokens[$nr]->src == '(') {
-        $lineNr = $tokens[$nr]->lineNr;
-        // $nr pointe sur une '('
-        $nr2 = $nr;
-        if ($tokens[$nr-1]->id == T_WHITESPACE) {
-          $nr2--; // si la '(' est précédée d'un T_WHITESPACE alors $nr2 pointe sur ce T_WHITESPACE
-        }
-        $symbstr = $tokens->symbstr($nr2-1, -3); // tokens avant la ( et l'éventuel blanc
-       // Détection d'un appel de méthode statique
-        if (preg_match('!^T_STRING,T_DOUBLE_COLON,(T_STRING|T_NAME_FULLY_QUALIFIED)!', $symbstr)) {
-          $calls[] = new StaticMethodCall($nr, $lineNr, $tokens[$nr2-3]->src, $tokens[$nr2-1]->src);
-        }
-        // Détection d'un appel de fonction
-        elseif (preg_match(
-            '!^(T_STRING|T_NAME_FULLY_QUALIFIED),(T_WHITESPACE,)?'
-            .'(;|}|{|\(|=|T_IS_GREATER_OR_EQUAL|T_IS_EQUAL|>|<|T_RETURN|,|T_DOUBLE_ARROW|\.)!', $symbstr)) {
-          $funName = $tokens[$nr2-1]->src;
-          $calls[] = new FunctionCall($nr, $lineNr, $tokens[$nr2-1]->src);
-        }
-        // Appel de méthode non statique
-        elseif (preg_match('!^T_STRING,T_OBJECT_OPERATOR!', $symbstr)) {
-          $calls[] = new NonStaticMethodCall($nr, $lineNr, $tokens[$nr2-1]->src);
-        }
-        // Détection d'un appel de new
-        elseif (preg_match('!^(T_STRING|T_NAME_FULLY_QUALIFIED|T_VARIABLE),T_WHITESPACE,T_NEW!', $symbstr)) {
-          $className = $tokens[$nr2-1]->src;
-          $calls[] = new NewCall($nr, $lineNr, $tokens[$nr2-1]->src);
-        }
-      }
+  /** Construit et retourne l'arbre des répertoires et fichiers
+   *
+   * Structure récursive de l'arbre:
+   * TREE ::= PhpFile # pour un fichier
+   *        | {{rpath} => TREE} # pour un répertoire
+   *
+   * Peut être appelé avec un nom de sous-classe de PhpFile pour construire un arbre d'objet de cette sous-classe.
+   * @return array<string, mixed>|PhpFile *
+  static function buildTree(string $class='PhpFile', string $rpath='', bool $verbose=false): array|PhpFile {
+    if ($verbose)
+      echo "buildTree(class=$class, rpath=$rpath)<br>\n";
+    if (is_file(self::$root.$rpath) && (substr($rpath, -4)=='.php')) { // Fichier Php
+      //echo "new $class(rpath=$rpath)<br>\n";
+      return new $class($rpath, new TokenArray(self::$root.$rpath));
     }
-    return $calls;
+    elseif (is_dir(self::$root.$rpath)) { // Répertoire
+      $result = [];
+      foreach (new DirectoryIterator(self::$root.$rpath) as $entry) {
+        if (in_array($entry, self::EXCLUDED)) continue;
+        if ($tree = self::buildTree($class, "$rpath/$entry", $verbose))
+          $result["$entry"] = $tree;
+      }
+      return $result;
+    }
+    else {
+      //echo "$rpath ni phpFile ni dir\n";
+      return [];
+    }
   }
-
+  */
+  
   function __construct(int $tokenNr, int $lineNr) { $this->tokenNr = $tokenNr; $this->lineNr = $lineNr; }
 
   /** Retourne un call comme un array
@@ -171,7 +163,7 @@ readonly class StaticMethodCall extends Call {
 /** Appel d'une méthode non statique d'une classe, cette classe est souvent inconnue */
 readonly class NonStaticMethodCall extends StaticMethodCall {
   function __construct(int $nr, int $lineNr, string $name, string $class='') {
-    parent::__construct($nr, $lineNr, $name, $class);
+    parent::__construct($nr, $lineNr, $class, $name);
   }
   
   function asArray(): array {
@@ -179,3 +171,56 @@ readonly class NonStaticMethodCall extends StaticMethodCall {
   }
 };
 
+/** Fichier Php avec ses caractéristiques d'appels à des fonctions et méthodes */
+class CallingFile extends PhpFile {
+  /** @var array<string,Call> $calls; liste des appels du fichier */
+  readonly array $calls;
+  
+  /** Création des appels de fonctions et méthodes à partir d'un fichier Php
+   * @return list<Call> */
+  function __construct(string $rpath, TokenArray $tokens=null) {
+    //echo "<b>Call::create()</b><br>\n";
+    if (!$tokens)
+      $tokens = new TokenArray(parent::$root.$rpath);
+    
+    parent::__construct($rpath, $tokens);
+
+    $calls = [];
+    for ($nr=0; $nr < count($tokens); $nr++) {
+      if ($tokens[$nr]->src == '(') {
+        $lineNr = $tokens[$nr]->lineNr;
+        // $nr pointe sur une '('
+        $nr2 = $nr;
+        if ($tokens[$nr-1]->id == T_WHITESPACE) {
+          $nr2--; // si la '(' est précédée d'un T_WHITESPACE alors $nr2 pointe sur ce T_WHITESPACE
+        }
+        $symbstr = $tokens->symbstr($nr2-1, -3); // tokens avant la ( et l'éventuel blanc
+       // Détection d'un appel de méthode statique
+        if (preg_match('!^T_STRING,T_DOUBLE_COLON,(T_STRING|T_NAME_FULLY_QUALIFIED)!', $symbstr)) {
+          $calls[] = new StaticMethodCall($nr, $lineNr, $tokens[$nr2-3]->src, $tokens[$nr2-1]->src);
+        }
+        // Détection d'un appel de fonction
+        elseif (preg_match(
+            '!^(T_STRING|T_NAME_FULLY_QUALIFIED),(T_WHITESPACE,)?'
+            .'(;|}|{|\(|=|T_IS_GREATER_OR_EQUAL|T_IS_EQUAL|>|<|T_RETURN|,|T_DOUBLE_ARROW|\.)!', $symbstr)) {
+          $funName = $tokens[$nr2-1]->src;
+          $calls[] = new FunctionCall($nr, $lineNr, $tokens[$nr2-1]->src);
+        }
+        // Appel de méthode non statique
+        elseif (preg_match('!^T_STRING,T_OBJECT_OPERATOR!', $symbstr)) {
+          $calls[] = new NonStaticMethodCall($nr, $lineNr, $tokens[$nr2-1]->src);
+        }
+        // Détection d'un appel de new
+        elseif (preg_match('!^(T_STRING|T_NAME_FULLY_QUALIFIED|T_VARIABLE),T_WHITESPACE,T_NEW!', $symbstr)) {
+          $className = $tokens[$nr2-1]->src;
+          $calls[] = new NewCall($nr, $lineNr, $tokens[$nr2-1]->src);
+        }
+      }
+    }
+    $this->calls = $calls;
+  }
+
+  function asArray(): array {
+    return array_map(function(Call $call): array { return $call->asArray(); }, $this->calls);
+  }
+};

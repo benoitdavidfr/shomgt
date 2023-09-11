@@ -4,8 +4,8 @@
  */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/token.inc.php';
-require_once __DIR__.'/phpblock.inc.php';
-require_once __DIR__.'/phpcall.inc.php';
+require_once __DIR__.'/defining.inc.php';
+require_once __DIR__.'/calling.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -20,10 +20,6 @@ class PhpFile {
   readonly public string $title;
   /** @var list<string> $includes; liste des fichiers inclus */ 
   readonly public array $includes;
-  /** @var PhpBlock[] $blocks liste des blocks contenus dans le fichier */
-  readonly public array $blocks;
-  /** @var array<string, PhpClass> $classes  dictionnaire des classes */
-  readonly public array $classes;
   
   /** @var string $root; chemin de la racine de l'arbre */
   static string $root;
@@ -36,7 +32,7 @@ class PhpFile {
    *
    * Peut être appelé avec un nom de sous-classe de PhpFile pour construire un arbre d'objet de cette sous-classe.
    * @return array<string, mixed>|PhpFile */
-  static function buildTree(string $class='PhpFile', string $rpath='', bool $verbose=false): array|PhpFile {
+  static function buildTree(string $class, string $rpath='', bool $verbose=false): array|PhpFile {
     if ($verbose)
       echo "buildTree(class=$class, rpath=$rpath)<br>\n";
     if (is_file(self::$root.$rpath) && (substr($rpath, -4)=='.php')) { // Fichier Php
@@ -87,30 +83,10 @@ class PhpFile {
     }
   }
   
-  function __construct(string $rpath, TokenArray $tokens=null) {
+  function __construct(string $rpath, TokenArray $tokens) {
     $this->rpath = $rpath;
-    if (!$tokens)
-      $tokens = new TokenArray(self::$root.$rpath);
     $this->title = $this->title($tokens);
     $this->includes = $this->includes($tokens);
-    
-    // construction des blocks
-    $blocks = [];
-    for ($tnr=0; $tnr < count($tokens); $tnr++) {
-      if ($tokens[$tnr]->src == '}') {
-        echo "} détectée dans PhpFile::__construct() au token $tnr<br>\n";
-      }
-      elseif ($tokens[$tnr]->src == '{') {
-        //echo "{ détectée au token $tnr<br>\n";
-        $block = PhpBlock::create($tnr, $tokens);
-        //echo "{ détectée au token $tnr retournée au token $block->lastTokenNr<br>\n";
-        $blocks[] = $block;
-        $tnr = $block->lastTokenNr;
-      }
-    }
-    $this->blocks = $blocks;
-    
-    $this->classes = $this->classes();
   }
   
   /** Retourne l'objet comme array.
@@ -119,8 +95,6 @@ class PhpFile {
     return [
       'title'=> "<a href='viewtoken.php?rpath=$this->rpath'>".$this->title."</a>",
       'includes'=> $this->includes,
-      'classes'=> array_map(function(PhpClass $class) { return $class->asArray(); }, $this->classes),
-      //'blocks'=> array_map(function(PhpBlock $block) { return $block->asArray(); }, $this->blocks),
     ];
   }
   
@@ -189,38 +163,6 @@ class PhpFile {
     return '';
   }
   
-  /** Récupère les classes dans les blocks
-   * @return array<string,PhpClass> */
-  function classes(): array {
-    $classes = [];
-    foreach ($this->blocks as $block) {
-      if (get_class($block) == 'PhpClass') {
-        $classes[$block->name] = $block;
-      }
-    }
-    return $classes;
-  }
-  
-  /** représente les blocks contenus dans le fichier comme une table Html */
-  function blocksAsHtml(): string {
-    $tokens = new TokenArray(self::$root.$this->rpath);
-    $rows = [];
-    if (!$this->blocks) {
-      $rows[] = htmlentities($tokens->srcCode(0, -1, "/only")); // le code de tout le fichier
-    }
-    else {
-      foreach ($this->blocks as $nb => $block) {
-        $startTokenNr = ($nb==0) ? 0 : $this->blocks[$nb-1]->lastTokenNr+1;
-        $rows[] = htmlentities($tokens->srcCode($startTokenNr, $block->startTokenNr+1, "{$nb}/pre")); // le code avant le block nb
-        $rows[] = $block->blocksAsHtml($tokens, "$nb"); // le code du block courant
-      }
-      $rows[] = htmlentities($tokens->srcCode($block->lastTokenNr+1, -1, "FIN"));
-    }
-    return "<table border=1>"
-          ."<tr><td><pre>".implode("</pre></td></tr>\n<tr><td><pre>", $rows)."</pre></td></tr>"
-          ."</table>";
-  }
-
 };
 
 /** déduit de l'arbre des fichiers les graphes pour déduire les relations inverses */
@@ -229,13 +171,13 @@ class Graph {
   static array $titles=[];
   /** @var array<string, array<string, 1>> $incIn matrice [{rpathInclus} => [{rpath_incluants} => 1]] */
   static array $incIn=[];
-  /** @var array<string, array<string, int>> $classesInFile matrice [{className} => [{rpath_incluants} => {noLigne}]] */
+  /** @var array<string, array<string, PhpClass>> $classesInFile matrice [{className} => [{rpath_incluants} => PhpClass]] */
   static array $classesInFile=[];
   
   /** parcours l'arbre d'inclusion et construit les propriétés $titles et $incIn.
    * @param array<mixed> $tree l'arbre d'inclusion
    */
-  static function build(array|PhpFile $tree, string $rpath=''): void {
+  static function build(array|DefiningFile $tree, string $rpath=''): void {
     //echo "build(rpath=$rpath)<br>\n";
     if (is_object($tree)) { // c'est un fichier Php
       self::$titles[$rpath] = $tree->title;
@@ -247,8 +189,8 @@ class Graph {
           self::$incIn[$inc][$rpath] = 1;
         }
       }
-      foreach ($tree->classes as $className => $noLine) {
-        self::$classesInFile[$className][$rpath] = $noLine;
+      foreach ($tree->classes as $className => $class) {
+        self::$classesInFile[$className][$rpath] = $class;
       }
     }
     else { // c'est un répertoire
@@ -281,11 +223,12 @@ class Graph {
   static function exportClasses(): array {
     $export = [];
     ksort(self::$classesInFile);
-    foreach (self::$classesInFile as $className => $files) {
-      foreach ($files as $rpath => $lineNo) {
+    foreach (self::$classesInFile as $className => $files) { // $files ::= [{rpath_incluants} => PhpClass]
+      foreach ($files as $rpath => $class) {
+        $lineNr = $class->lineNr;
         // Url vers le fichier à la bonne ligne
-        $url = "<a href='viewtoken.php?rpath=$rpath&lineNo=$lineNo#line$lineNo'>$rpath</a>";
-        $export[$className]['files'][$url] = $lineNo;
+        $url = "<a href='viewtoken.php?rpath=$rpath&lineNr=$lineNr#line$lineNr'>$rpath</a>";
+        $export[$className]['files'][$url] = $lineNr;
       }
     }
     return $export;
@@ -303,33 +246,43 @@ switch ($_GET['action'] ?? null) {
     echo "<a href='?action=classInFile'>Liste des classes et fichiers la définissant</a><br>\n";
     echo "<a href='?action=buildBlocks'>Test de construction des blocks</a><br>\n";
     echo "<a href='?action=detectCalls'>Test de détection des calls</a><br>\n";
-    echo "<a href='?action=createCalls'>Construction des calls d'un fichier</a><br>\n";
+    echo "<a href='?action=callsInAPhpFile'>Liste des calls d'un fichier</a><br>\n";
+    echo "<a href='?action=callsInAllPhpFiles'>Liste des calls de tous les fichiers</a><br>\n";
     break;
   }
   case 'includes': {
     echo "<h2>Arbre des répertoires et fichiers avec inclusions et classes</h2>\n";
-    $tree = PhpFile::buildTree(); // construction de l'arbre
+    $tree = PhpFile::buildTree('PhpFile'); // construction de l'arbre
     echo '<pre>',str_replace("''", "'", Yaml::dump([PhpFile::$root => PhpFile::treeAsArray($tree)], 99, 2));
     break;
   }
   case 'graph': {
     echo "<h2>Affichage du graphe</h2>\n";
-    $tree = PhpFile::buildTree(); // construction de l'arbre
+    $tree = PhpFile::buildTree('DefiningFile'); // construction de l'arbre
     Graph::build($tree); // fabrication du graphe
     //echo '<pre>',str_replace("''","'",Yaml::dump(['$incIn'=> Graph::$incIn], 99, 2));
-    echo '<pre>',str_replace("''","'",Yaml::dump(['$classesInFile'=> Graph::$classesInFile], 99, 2));
+    //echo "<pre>classesInFile= "; print_r(Graph::$classesInFile);
+    echo '<pre>',
+          str_replace("''","'",
+            Yaml::dump([
+              '$classesInFile' => array_map(
+                function(array $phpClasses) {
+                  return array_map(function(PhpClass $class): int { return $class->lineNr; }, $phpClasses); }, 
+                Graph::$classesInFile
+              )],
+              99, 2));
     break;
   }
   case 'fileIncludedIn': {
     echo "<h2>Inclusions inversées</h2>\n";
-    $tree = PhpFile::buildTree(); // construction de l'arbre
+    $tree = PhpFile::buildTree('DefiningFile'); // construction de l'arbre
     Graph::build($tree); // fabrication du graphe
     echo '<pre>',Yaml::dump(Graph::exportInvIncludes(), 99, 2);
     break;
   }
   case 'classInFile': {
     echo "<h2>Liste des classes et pour chacune les fichiers dans lesquels elle est définie</h2>\n";
-    $tree = PhpFile::buildTree(); // construction de l'arbre
+    $tree = PhpFile::buildTree('DefiningFile'); // construction de l'arbre
     Graph::build($tree); // fabrication du graphe
     echo '<pre>',str_replace("''", "'", Yaml::dump(Graph::exportClasses(), 99, 2));
     break;
@@ -338,7 +291,7 @@ switch ($_GET['action'] ?? null) {
     if (!isset($_GET['rpath']))
       PhpFile::chooseFile('buildBlocks');
     else {
-      $file = new PhpFile($_GET['rpath']);
+      $file = new DefiningFile($_GET['rpath']);
       echo $file->blocksAsHtml();
     }
     break;
@@ -351,19 +304,20 @@ switch ($_GET['action'] ?? null) {
     }
     break;
   }
-  case 'createCalls': {
+  case 'callsInAPhpFile': {
     if (!isset($_GET['rpath']))
-      PhpFile::chooseFile('createCalls');
+      PhpFile::chooseFile('callsInAPhpFile');
     else {
-      $calls = Call::create(new TokenArray(PhpFile::$root.$_GET['rpath']));
+      $callingFile = new CallingFile($_GET['rpath']);
       //echo "<pre>calls="; print_r($calls);
       echo "<pre>",
-           Yaml::dump([
-             $_GET['rpath'].'calls'=>
-               array_map(function(Call $call): array { return $call->asArray(); }, $calls)
-           ]),
+           Yaml::dump([$_GET['rpath'].'calls'=> $callingFile->asArray()]),
            "</pre>\n";
     }
+    break;
+  }
+  case 'callsInAllPhpFiles': {
+    
     break;
   }
 }
