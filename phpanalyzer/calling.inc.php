@@ -80,38 +80,9 @@ readonly abstract class Call {
     }
   }
 
-  /** Construit et retourne l'arbre des répertoires et fichiers
-   *
-   * Structure récursive de l'arbre:
-   * TREE ::= PhpFile # pour un fichier
-   *        | {{rpath} => TREE} # pour un répertoire
-   *
-   * Peut être appelé avec un nom de sous-classe de PhpFile pour construire un arbre d'objet de cette sous-classe.
-   * @return array<string, mixed>|PhpFile *
-  static function buildTree(string $class='PhpFile', string $rpath='', bool $verbose=false): array|PhpFile {
-    if ($verbose)
-      echo "buildTree(class=$class, rpath=$rpath)<br>\n";
-    if (is_file(self::$root.$rpath) && (substr($rpath, -4)=='.php')) { // Fichier Php
-      //echo "new $class(rpath=$rpath)<br>\n";
-      return new $class($rpath, new TokenArray(self::$root.$rpath));
-    }
-    elseif (is_dir(self::$root.$rpath)) { // Répertoire
-      $result = [];
-      foreach (new DirectoryIterator(self::$root.$rpath) as $entry) {
-        if (in_array($entry, self::EXCLUDED)) continue;
-        if ($tree = self::buildTree($class, "$rpath/$entry", $verbose))
-          $result["$entry"] = $tree;
-      }
-      return $result;
-    }
-    else {
-      //echo "$rpath ni phpFile ni dir\n";
-      return [];
-    }
-  }
-  */
-  
   function __construct(int $tokenNr, int $lineNr) { $this->tokenNr = $tokenNr; $this->lineNr = $lineNr; }
+
+  abstract function __toString(): string;
 
   /** Retourne un call comme un array
    * @return array<mixed> */
@@ -125,6 +96,8 @@ readonly class FunctionCall extends Call {
   
   function __construct(int $nr, int $lineNr, string $name) { parent::__construct($nr, $lineNr); $this->name = $name; }
   
+  function __toString(): string { return "fun $this->name(), ligne $this->lineNr"; }
+  
   function asArray(): array {
     return ['type'=> 'FunctionCall', 'name'=> $this->name];
   }
@@ -136,6 +109,8 @@ readonly class NewCall extends Call {
   public string $class;
   
   function __construct(int $nr, int $lineNr, string $class) { parent::__construct($nr, $lineNr); $this->class = $class; }
+  
+  function __toString(): string { return "new $this->class, ligne $this->lineNr"; }
   
   function asArray(): array {
     return ['type'=> 'NewCall', 'class'=> $this->class];
@@ -155,6 +130,8 @@ readonly class StaticMethodCall extends Call {
     $this->name = $name;
   }
   
+  function __toString(): string { return "$this->class::$this->name(), ligne $this->lineNr"; }
+  
   function asArray(): array {
     return ['type'=> 'StaticMethodCall', 'class'=> $this->class, 'name'=> $this->name];
   }
@@ -166,6 +143,8 @@ readonly class NonStaticMethodCall extends StaticMethodCall {
     parent::__construct($nr, $lineNr, $class, $name);
   }
   
+  function __toString(): string { return "$this->class::$this->name(), ligne $this->lineNr"; }
+  
   function asArray(): array {
     return ['type'=> 'NonStaticMethodCall', 'class'=> $this->class, 'name'=> $this->name, 'lineNr'=> $this->lineNr];
   }
@@ -173,13 +152,33 @@ readonly class NonStaticMethodCall extends StaticMethodCall {
 
 /** Fichier Php avec ses caractéristiques d'appels à des fonctions et méthodes */
 class CallingFile extends PhpFile {
-  /** @var array<string,Call> $calls; liste des appels du fichier */
+  /** @var array<int,Call> $calls; liste des appels dans le fichier */
   readonly array $calls;
   
+  /** Affiche les appels à la classe $class */
+  static function callingClass(string $class, string $rpath=''): void {
+    if (is_dir(parent::$root.$rpath)) {
+      foreach (new DirectoryIterator(parent::$root.$rpath) as $entry) {
+        if (in_array($entry, PhpFile::EXCLUDED)) continue;
+        //echo "entry $entry<br>\n";
+        self::callingClass($class, "$rpath/$entry");
+      }
+    }
+    elseif (substr($rpath, -4)=='.php') {
+      $file = new CallingFile($rpath);
+      foreach ($file->calls as $call) {
+        if (in_array(get_class($call), ['StaticMethodCall','NewCall'])) {
+          if ($call->class == $class)
+            echo "$rpath: <b>$call</b><br>\n";
+        }
+      }
+    }
+  }
+
   /** Création des appels de fonctions et méthodes à partir d'un fichier Php
    * @return list<Call> */
   function __construct(string $rpath, TokenArray $tokens=null) {
-    //echo "<b>Call::create()</b><br>\n";
+    //echo "<b>CallingFile::__construct()</b><br>\n";
     if (!$tokens)
       $tokens = new TokenArray(parent::$root.$rpath);
     

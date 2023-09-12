@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 /** Fichier Php analysé avec son chemin relatif et organisation des fichiers en un arbre */
 class PhpFile {
   /** liste des sous-répertoires exclus du parcours lors de la construction de l'arbre */
-  const EXCLUDED = ['.','..','.git','vendor','shomgeotiff','gan','data','temp'];
+  const EXCLUDED = ['.','..','.git','.phpdoc','vendor','shomgeotiff','gan','data','temp'];
   /** @var string $rpath chemin relatf par rapport à $root */
   readonly public string $rpath;
   readonly public string $title;
@@ -126,7 +126,7 @@ class PhpFile {
     $includes = [];
     foreach ($tokens as $i => $token) {
       if ($token->id == T_REQUIRE_ONCE) {
-        echo $tokens->symbStr($i, 5),"<br>\n";
+        //echo $tokens->symbStr($i, 5),"<br>\n";
         if ($tokens->symbStr($i, 5) == 'T_REQUIRE_ONCE,T_WHITESPACE,T_DIR,.,T_CONSTANT_ENCAPSED_STRING') {
           $inc = dirname(self::$root.$this->rpath).substr($tokens[$i+4]->src, 1, -1);
           if (($rp = realpath($inc)) === false) {
@@ -247,7 +247,7 @@ switch ($_GET['action'] ?? null) {
     echo "<a href='?action=buildBlocks'>Test de construction des blocks</a><br>\n";
     echo "<a href='?action=detectCalls'>Test de détection des calls</a><br>\n";
     echo "<a href='?action=callsInAPhpFile'>Liste des calls d'un fichier</a><br>\n";
-    echo "<a href='?action=callsInAllPhpFiles'>Liste des calls de tous les fichiers</a><br>\n";
+    echo "<a href='?action=callsToClassOrFunction'>Choix d'une classe ou d'une méthode et affichage des appels</a><br>\n";
     break;
   }
   case 'includes': {
@@ -316,8 +316,15 @@ switch ($_GET['action'] ?? null) {
     }
     break;
   }
-  case 'callsInAllPhpFiles': {
-    
+  case 'callsToClassOrFunction': {
+    if (isset($_GET['class']))
+      CallingFile::callingClass($_GET['class']);
+    elseif (isset($_GET['function'])) {
+      
+    }
+    else
+      // choix d'une classe ou d'une fonction
+      DefiningFile::chooseClassOrFunction($_GET['rpath'] ?? '');
     break;
   }
 }

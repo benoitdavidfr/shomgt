@@ -292,6 +292,24 @@ class DefiningFile extends PhpFile {
   /** @var PhpBlock[] $blocks liste des blocks contenus dans le fichier */
   readonly public array $blocks;
   
+  static function chooseClassOrFunction(string $rpath=''): void {
+    if (is_dir(parent::$root.$rpath)) {
+      foreach (new DirectoryIterator(parent::$root.$rpath) as $entry) {
+        if (in_array($entry, PhpFile::EXCLUDED)) continue;
+        if (is_dir(parent::$root.$rpath."/$entry"))
+          echo "<a href='?action=$_GET[action]&amp;rpath=$rpath/$entry'><b>$entry</b></a><br>\n";
+        elseif (substr($entry, -4) == '.php')
+          echo "<a href='?action=$_GET[action]&amp;rpath=$rpath/$entry'>$entry</a><br>\n";
+      }
+    }
+    else {
+      $file = new DefiningFile($rpath);
+      foreach ($file->classes() as $className => $class) {
+        echo "<a href='?action=$_GET[action]&amp;class=$className'>$className</a><br>\n";
+      }
+    }
+  }
+  
   function __construct(string $rpath, TokenArray $tokens=null) {
     if (!$tokens)
       $tokens = new TokenArray(parent::$root.$rpath);
