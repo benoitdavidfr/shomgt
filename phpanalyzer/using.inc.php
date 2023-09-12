@@ -150,6 +150,26 @@ readonly class NonStaticMethodCall extends StaticMethodCall {
   }
 };
 
+/** Utilisation d'une classe par extension */
+readonly class PhpExtends extends PhpUse {
+  /** @var string $extendedClass; la classe étendue */
+  public string $extendedClass;
+  /** @var string $defClass; la nouvelle classe définie */
+  public string $defClass;
+  
+  function __construct(int $nr, int $lineNr, string $extendedClass, string $defClass) {
+    parent::__construct($nr, $lineNr);
+    $this->extendedClass = $extendedClass;
+    $this->defClass = $defClass;
+  }
+  
+  function __toString(): string { return "$this->defClass extends $this->extendedClass, ligne $this->lineNr"; }
+  
+  function asArray(): array {
+    return ['type'=> 'Extends', 'extendedClass'=> $this->extendedClass, 'defClass'=> $this->defClass, 'lineNr'=> $this->lineNr];
+  }
+};
+
 /** Fichier Php avec ses caractéristiques d'utilisation de fonctions et classes */
 class UsingFile extends PhpFile {
   /** @var array<int,PhpUse> $uses; liste des utilisations détectées dans le fichier */
@@ -171,11 +191,15 @@ class UsingFile extends PhpFile {
           if ($use->class == $class)
             echo "$rpath: <b>$use</b><br>\n";
         }
+        if (in_array(get_class($use), ['PhpExtends'])) {
+          if ($use->extendedClass == $class)
+            echo "$rpath: <b>$use</b><br>\n";
+        }
       }
     }
   }
 
-  /** Création des appels de fonctions et méthodes à partir d'un fichier Php */
+  /** Création des utilisations de fonctions et classes à partir d'un fichier Php */
   function __construct(string $rpath, TokenArray $tokens=null) {
     //echo "<b>UsingFile::__construct()</b><br>\n";
     if (!$tokens)
@@ -185,7 +209,13 @@ class UsingFile extends PhpFile {
 
     $uses = [];
     for ($nr=0; $nr < count($tokens); $nr++) {
-      if ($tokens[$nr]->src == '(') {
+      if ($tokens[$nr]->id == T_EXTENDS) {
+        //echo "extends détecté<br>\n";
+        $symbstr = $tokens->symbstr($nr-3, 7);
+        //echo "symstr=",$symbstr,"<br>\n";
+        $uses[] = new PhpExtends($nr, $tokens[$nr]->lineNr, $tokens[$nr+2]->src, $tokens[$nr-2]->src);
+      }
+      elseif ($tokens[$nr]->src == '(') {
         $lineNr = $tokens[$nr]->lineNr;
         // $nr pointe sur une '('
         $nr2 = $nr;
