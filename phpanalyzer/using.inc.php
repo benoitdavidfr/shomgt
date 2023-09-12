@@ -1,13 +1,13 @@
 <?php
 /**
- * Fichier php avec ses appels Php
+ * Fichier php avec l'utilisation des définitions de fonctions et de classes
  */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/token.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-readonly abstract class Call {
+readonly abstract class PhpUse {
   /** Numéro du token ( de l'appel */
   public int $tokenNr;
   /** Numéro de ligne de l'appel */
@@ -90,7 +90,7 @@ readonly abstract class Call {
 };
 
 /** appel de fonction */
-readonly class FunctionCall extends Call {
+readonly class FunctionCall extends PhpUse {
   /** Nom de la fonction appelée */
   public string $name;
   
@@ -104,7 +104,7 @@ readonly class FunctionCall extends Call {
 };
 
 /** appel de création d'un objet d'une classe */
-readonly class NewCall extends Call {
+readonly class NewCall extends PhpUse {
   /** nom de la classe de la méthode appelée si elle est connue */
   public string $class;
   
@@ -118,7 +118,7 @@ readonly class NewCall extends Call {
 };
 
 /** Appel d'une méthode statique d'une classe */
-readonly class StaticMethodCall extends Call {
+readonly class StaticMethodCall extends PhpUse {
   /** nom de la classe de la méthode appelée (toujours connue) */
   public string $class;
   /** Nom de la méthode appelée. */
@@ -150,41 +150,40 @@ readonly class NonStaticMethodCall extends StaticMethodCall {
   }
 };
 
-/** Fichier Php avec ses caractéristiques d'appels à des fonctions et méthodes */
-class CallingFile extends PhpFile {
-  /** @var array<int,Call> $calls; liste des appels dans le fichier */
-  readonly array $calls;
+/** Fichier Php avec ses caractéristiques d'utilisation de fonctions et classes */
+class UsingFile extends PhpFile {
+  /** @var array<int,PhpUse> $uses; liste des utilisations détectées dans le fichier */
+  readonly array $uses;
   
   /** Affiche les appels à la classe $class */
-  static function callingClass(string $class, string $rpath=''): void {
+  static function usingClass(string $class, string $rpath=''): void {
     if (is_dir(parent::$root.$rpath)) {
       foreach (new DirectoryIterator(parent::$root.$rpath) as $entry) {
         if (in_array($entry, PhpFile::EXCLUDED)) continue;
         //echo "entry $entry<br>\n";
-        self::callingClass($class, "$rpath/$entry");
+        self::usingClass($class, "$rpath/$entry");
       }
     }
     elseif (substr($rpath, -4)=='.php') {
-      $file = new CallingFile($rpath);
-      foreach ($file->calls as $call) {
-        if (in_array(get_class($call), ['StaticMethodCall','NewCall'])) {
-          if ($call->class == $class)
-            echo "$rpath: <b>$call</b><br>\n";
+      $file = new UsingFile($rpath);
+      foreach ($file->uses as $use) {
+        if (in_array(get_class($use), ['StaticMethodCall','NewCall'])) {
+          if ($use->class == $class)
+            echo "$rpath: <b>$use</b><br>\n";
         }
       }
     }
   }
 
-  /** Création des appels de fonctions et méthodes à partir d'un fichier Php
-   * @return list<Call> */
+  /** Création des appels de fonctions et méthodes à partir d'un fichier Php */
   function __construct(string $rpath, TokenArray $tokens=null) {
-    //echo "<b>CallingFile::__construct()</b><br>\n";
+    //echo "<b>UsingFile::__construct()</b><br>\n";
     if (!$tokens)
       $tokens = new TokenArray(parent::$root.$rpath);
     
     parent::__construct($rpath, $tokens);
 
-    $calls = [];
+    $uses = [];
     for ($nr=0; $nr < count($tokens); $nr++) {
       if ($tokens[$nr]->src == '(') {
         $lineNr = $tokens[$nr]->lineNr;
@@ -196,30 +195,30 @@ class CallingFile extends PhpFile {
         $symbstr = $tokens->symbstr($nr2-1, -3); // tokens avant la ( et l'éventuel blanc
        // Détection d'un appel de méthode statique
         if (preg_match('!^T_STRING,T_DOUBLE_COLON,(T_STRING|T_NAME_FULLY_QUALIFIED)!', $symbstr)) {
-          $calls[] = new StaticMethodCall($nr, $lineNr, $tokens[$nr2-3]->src, $tokens[$nr2-1]->src);
+          $uses[] = new StaticMethodCall($nr, $lineNr, $tokens[$nr2-3]->src, $tokens[$nr2-1]->src);
         }
         // Détection d'un appel de fonction
         elseif (preg_match(
             '!^(T_STRING|T_NAME_FULLY_QUALIFIED),(T_WHITESPACE,)?'
             .'(;|}|{|\(|=|T_IS_GREATER_OR_EQUAL|T_IS_EQUAL|>|<|T_RETURN|,|T_DOUBLE_ARROW|\.)!', $symbstr)) {
           $funName = $tokens[$nr2-1]->src;
-          $calls[] = new FunctionCall($nr, $lineNr, $tokens[$nr2-1]->src);
+          $uses[] = new FunctionCall($nr, $lineNr, $tokens[$nr2-1]->src);
         }
         // Appel de méthode non statique
         elseif (preg_match('!^T_STRING,T_OBJECT_OPERATOR!', $symbstr)) {
-          $calls[] = new NonStaticMethodCall($nr, $lineNr, $tokens[$nr2-1]->src);
+          $uses[] = new NonStaticMethodCall($nr, $lineNr, $tokens[$nr2-1]->src);
         }
         // Détection d'un appel de new
         elseif (preg_match('!^(T_STRING|T_NAME_FULLY_QUALIFIED|T_VARIABLE),T_WHITESPACE,T_NEW!', $symbstr)) {
           $className = $tokens[$nr2-1]->src;
-          $calls[] = new NewCall($nr, $lineNr, $tokens[$nr2-1]->src);
+          $uses[] = new NewCall($nr, $lineNr, $tokens[$nr2-1]->src);
         }
       }
     }
-    $this->calls = $calls;
+    $this->uses = $uses;
   }
 
   function asArray(): array {
-    return array_map(function(Call $call): array { return $call->asArray(); }, $this->calls);
+    return array_map(function(PhpUse $use): array { return $use->asArray(); }, $this->uses);
   }
 };

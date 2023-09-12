@@ -25,8 +25,8 @@ class PhpBlock {
    */
   static function create(int $startTokenNr, TokenArray $tokens): PhpBlock {
     //die("Fin ligne ".__LINE__);
-    echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
-    echo "symbStr=",$tokens->symbStr($startTokenNr-1, -12),"<br>\n";
+    //echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
+    //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -12),"<br>\n";
     
     // class {nom_classe} {
     // class {nom_classe} extends {nom_classe_mère} {
@@ -37,42 +37,42 @@ class PhpBlock {
         .'((T_STRING|T_NAME_FULLY_QUALIFIED),T_WHITESPACE,T_EXTENDS,T_WHITESPACE,)?' // extends {nom_classe_mère}
         .'T_STRING,T_WHITESPACE,T_CLASS!';                       // class {nom_classe}
      if (preg_match($pattern, $tokens->symbStr($startTokenNr-1, -12))) {
-      echo "Définition de classe détectée<br>\n";
+      //echo "Définition de classe détectée<br>\n";
       return new PhpClass($startTokenNr, $tokens);
     }
     // symbStr={T_WHITESPACE}{T_STRING}?{T_WHITESPACE}
     elseif (preg_match('!^(T_WHITESPACE,)?(T_STRING,|T_ARRAY,)(\?,)?(T_WHITESPACE,)?:!', $tokens->symbStr($startTokenNr-1, -5))) {
-      echo "Function détectée avec type de retour<br>\n";
+      //echo "Function détectée avec type de retour<br>\n";
       return new PhpFunction($startTokenNr, $tokens);
     }
     else {
       if (preg_match('!^(T_WHITESPACE,)?\)!', $tokens->symbStr($startTokenNr-1, -4))) {
-        echo "Function détectée sans type de retour<br>\n";
+        //echo "Function détectée sans type de retour<br>\n";
         $openBracketNr = $tokens->findSrcBackward($startTokenNr, '('); // recherche de la ( de début des paramètres
-        echo 'symbStrBracket=',$tokens->symbStr($openBracketNr, -12),"<br>\n";
-        echo "srcCode=",htmlentities($tokens->srcCode($openBracketNr-12, $openBracketNr, '')),"<br>\n";
+        //echo 'symbStrBracket=',$tokens->symbStr($openBracketNr, -12),"<br>\n";
+        //echo "srcCode=",htmlentities($tokens->srcCode($openBracketNr-12, $openBracketNr, '')),"<br>\n";
         if ($tokens->symbStr($openBracketNr, -4) == '(,T_STRING,T_WHITESPACE,T_FUNCTION') {
-          echo "détection de function xxx(<br>\n";
+          //echo "détection de function xxx(<br>\n";
           if ($tokens[$openBracketNr-1]->src == '__construct') {
             //echo "Détection de __construct()<br>\n";
             return new PhpFunction($startTokenNr, $tokens);
           }
-          else
-            echo "fonction sans type de retour non reconnue<br>\n";
+          //else
+            //echo "fonction sans type de retour non reconnue<br>\n";
           // cas éventuel d'une fonction sans type de retour non reconnue
         }
         elseif ($tokens->symbStr($openBracketNr, -5) == '(,T_WHITESPACE,T_STRING,T_WHITESPACE,T_FUNCTION') {
-          echo "détection de function xxx (<br>\n";
+          //echo "détection de function xxx (<br>\n";
           if ($tokens[$openBracketNr-2]->src == '__construct') {
-            echo "Détection de __construct ()<br>\n";
+            //echo "Détection de __construct ()<br>\n";
             return new PhpFunction($startTokenNr, $tokens);
           }
-          else
-            echo "fonction sans type de retour non reconnue<br>\n";
+          //else
+            //echo "fonction sans type de retour non reconnue<br>\n";
           // cas éventuel d'une fonction sans type de retour non reconnue
         }
       }
-      echo "NI Class Ni Function détectée<br>\n";
+      //echo "NI Class Ni Function détectée<br>\n";
       return new self($startTokenNr, $tokens);
     }
   }
@@ -83,7 +83,7 @@ class PhpBlock {
    * @param TokenArray $tokens; liste des tokens du fichier contenant le block
    */
   function __construct(int $startTokenNr, TokenArray $tokens) {
-    echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
+    //echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
     $this->startTokenNr = $startTokenNr;
     $subBlocks = [];
     for ($tnr=$startTokenNr+1; $tnr < count($tokens); $tnr++) {
@@ -238,7 +238,7 @@ class PhpFunction extends PhpBlock {
   //readonly public string $title;
   
   function __construct(int $startTokenNr, TokenArray $tokens) {
-    echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
+    //echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
     parent::__construct($startTokenNr, $tokens);
     
     $this->lineNr = $tokens[$startTokenNr]->lineNr;
@@ -249,7 +249,7 @@ class PhpFunction extends PhpBlock {
     if ($tokens[$nr]->id == T_WHITESPACE)
       $nr--;
     // $nr pointe sur le premier token <> T_WHITESPACE avant la '('
-    echo 'symbStrBracket=',$tokens->symbStr($nr, -12),"<br>\n";
+    //echo 'symbStrBracket=',$tokens->symbStr($nr, -12),"<br>\n";
     if (in_array($tokens[$nr]->id, [T_STRING, T_EMPTY, T_NAMESPACE])) { // function ff(
       $this->name = $tokens[$nr]->src;
     }
@@ -292,6 +292,7 @@ class DefiningFile extends PhpFile {
   /** @var PhpBlock[] $blocks liste des blocks contenus dans le fichier */
   readonly public array $blocks;
   
+  /** parcourt tous les fichiers Php pour afficher les classes et les fonctions définies */
   static function chooseClassOrFunction(string $rpath=''): void {
     if (is_dir(parent::$root.$rpath)) {
       foreach (new DirectoryIterator(parent::$root.$rpath) as $entry) {
@@ -304,8 +305,9 @@ class DefiningFile extends PhpFile {
     }
     else {
       $file = new DefiningFile($rpath);
+      $namespace = $file->namespace;
       foreach ($file->classes() as $className => $class) {
-        echo "<a href='?action=$_GET[action]&amp;class=$className'>$className</a><br>\n";
+        echo "<a href='?action=$_GET[action]&amp;class=\\$namespace$className&amp;src=$rpath'>\\$namespace$className</a><br>\n";
       }
     }
   }
@@ -339,7 +341,7 @@ class DefiningFile extends PhpFile {
     return array_merge(
       parent::asArray(),
       [
-        'classes'=> array_map(function(PhpClass $class) { return $class->asArray(); }, $this->classes),
+        'classes'=> array_map(function(PhpClass $class) { return $class->asArray(); }, $this->classes()),
         //'blocks'=> array_map(function(PhpBlock $block) { return $block->asArray(); }, $this->blocks),
       ]);
   }

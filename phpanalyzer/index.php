@@ -5,7 +5,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/token.inc.php';
 require_once __DIR__.'/defining.inc.php';
-require_once __DIR__.'/calling.inc.php';
+require_once __DIR__.'/using.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -17,6 +17,7 @@ class PhpFile {
   const EXCLUDED = ['.','..','.git','.phpdoc','vendor','shomgeotiff','gan','data','temp'];
   /** @var string $rpath chemin relatf par rapport à $root */
   readonly public string $rpath;
+  readonly public string $namespace;
   readonly public string $title;
   /** @var list<string> $includes; liste des fichiers inclus */ 
   readonly public array $includes;
@@ -85,6 +86,7 @@ class PhpFile {
   
   function __construct(string $rpath, TokenArray $tokens) {
     $this->rpath = $rpath;
+    $this->namespace = $this->namespace($tokens);
     $this->title = $this->title($tokens);
     $this->includes = $this->includes($tokens);
   }
@@ -162,7 +164,6 @@ class PhpFile {
     }
     return '';
   }
-  
 };
 
 /** déduit de l'arbre des fichiers les graphes pour déduire les relations inverses */
@@ -189,7 +190,7 @@ class Graph {
           self::$incIn[$inc][$rpath] = 1;
         }
       }
-      foreach ($tree->classes as $className => $class) {
+      foreach ($tree->classes() as $className => $class) {
         self::$classesInFile[$className][$rpath] = $class;
       }
     }
@@ -245,9 +246,9 @@ switch ($_GET['action'] ?? null) {
     echo "<a href='?action=fileIncludedIn'>Inclusions entre fichiers inversées</a><br>\n";
     echo "<a href='?action=classInFile'>Liste des classes et fichiers la définissant</a><br>\n";
     echo "<a href='?action=buildBlocks'>Test de construction des blocks</a><br>\n";
-    echo "<a href='?action=detectCalls'>Test de détection des calls</a><br>\n";
-    echo "<a href='?action=callsInAPhpFile'>Liste des calls d'un fichier</a><br>\n";
-    echo "<a href='?action=callsToClassOrFunction'>Choix d'une classe ou d'une méthode et affichage des appels</a><br>\n";
+    echo "<a href='?action=detectUses'>Test de détection des utilisations</a><br>\n";
+    echo "<a href='?action=usesInAPhpFile'>Liste des utilisations d'un fichier</a><br>\n";
+    echo "<a href='?action=useClassOrFunction'>Affichage des utilisations d'une classe ou d'une fonction</a><br>\n";
     break;
   }
   case 'includes': {
@@ -296,29 +297,29 @@ switch ($_GET['action'] ?? null) {
     }
     break;
   }
-  case 'detectCalls': {
+  case 'detectUses': {
     if (!isset($_GET['rpath']))
-      PhpFile::chooseFile('detectCalls');
+      PhpFile::chooseFile('detectUses');
     else {
-      Call::detect(new TokenArray(PhpFile::$root.$_GET['rpath']));
+      PhpUse::detect(new TokenArray(PhpFile::$root.$_GET['rpath']));
     }
     break;
   }
-  case 'callsInAPhpFile': {
+  case 'usesInAPhpFile': {
     if (!isset($_GET['rpath']))
-      PhpFile::chooseFile('callsInAPhpFile');
+      PhpFile::chooseFile('usesInAPhpFile');
     else {
-      $callingFile = new CallingFile($_GET['rpath']);
+      $usingFile = new UsingFile($_GET['rpath']);
       //echo "<pre>calls="; print_r($calls);
       echo "<pre>",
-           Yaml::dump([$_GET['rpath'].'calls'=> $callingFile->asArray()]),
+           Yaml::dump([$_GET['rpath'].'calls'=> $usingFile->asArray()]),
            "</pre>\n";
     }
     break;
   }
-  case 'callsToClassOrFunction': {
+  case 'useClassOrFunction': {
     if (isset($_GET['class']))
-      CallingFile::callingClass($_GET['class']);
+      UsingFile::usingClass($_GET['class']);
     elseif (isset($_GET['function'])) {
       
     }
