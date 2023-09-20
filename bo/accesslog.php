@@ -135,7 +135,7 @@ class Request2GBox {
     // conversion de l'ebox en GBox et génération du GeoJSON
     $proj = match ($crs) {
       'CRS:84' => 'LonLatDd',
-      'EPSG:4326' => 'LatLonDd',
+      'EPSG:4326', 'EPSG%3A4326' => 'LatLonDd',
       'EPSG:3857','EPSG%3A3857' => 'WebMercator',
       'EPSG:3395','EPSG%3A3395' => 'WorldMercator',
       default => die("CRS $crs non pris en compte dans GJGeom::bbox2GJGeom()"),
