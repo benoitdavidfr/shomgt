@@ -132,7 +132,7 @@ class PhpFile {
         if ($tokens->symbStr($i, 5) == 'T_REQUIRE_ONCE,T_WHITESPACE,T_DIR,.,T_CONSTANT_ENCAPSED_STRING') {
           $inc = dirname(self::$root.$this->rpath).substr($tokens[$i+4]->src, 1, -1);
           if (($rp = realpath($inc)) === false) {
-            echo "<b>Erreur d'inclusion de $inc dans $this->rpath</b>\n";
+            echo "<b>Erreur d'inclusion de $inc dans $this->rpath</b><br>\n";
             $includes[] = "$inc (BAD)";
           }
           elseif (substr($rp, 0, strlen(self::$root)) == self::$root)
