@@ -236,8 +236,8 @@ class Graph {
   }
 };
 
-//PhpFile::$root = __DIR__.'/testcode';
-PhpFile::$root = realpath(__DIR__.'/..');
+PhpFile::$root = __DIR__.'/testcode';
+//PhpFile::$root = realpath(__DIR__.'/..');
 
 echo "<!DOCTYPE html>\n<html><head><title>phpanalyzer</title></head><body>\n";
 switch ($_GET['action'] ?? null) {

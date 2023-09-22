@@ -91,11 +91,23 @@ readonly abstract class PhpUse {
    * @return array<mixed> */
   abstract function asArray(): array;
   
-  /** Retourne le nom de la classe utilisée ou '' si aucune */
-  abstract function usedClassName(): string;
+  /** Retourne le nom qualifié de la classe utilisée ou '' si aucune
+   * $namespace est l'espace de nom déclaré dans le fichier utilisant*/
+  abstract function usedClassName(string $namespace): string;
   
-  /** Retourne le nom de la fonction utilisée ou '' si aucune */
-  abstract function usedFunctionName(): string;
+  /** Retourne le nom qualifié de la fonction utilisée ou '' si aucune
+   * $namespace est l'espace de nom déclaré dans le fichier utilisant*/
+  abstract function usedFunctionName(string $namespace): string;
+
+  /** fabrique un nom qualifié à partir du nom de classe ou fonction trouvé dans le fichier et du de l'espace de nom du fichier */
+  static function qualifName(string $namespace, string $cfname): string {
+    if (!$cfname) // pas de nom
+      return '';
+    elseif (substr($cfname, 0, 1)=='\\') // le nom est déjà qualifié
+      return $cfname;
+    else // le nom qualifié est la concaténation de l'espace de nom et du nom non qualifié
+      return $namespace.$cfname;
+  }
 };
 
 /** appel de fonction */
@@ -109,8 +121,8 @@ readonly class FunctionCall extends PhpUse {
   
   function asArray(): array { return ['type'=> 'FunctionCall', 'name'=> $this->name]; }
 
-  function usedClassName(): string { return ''; }
-  function usedFunctionName(): string { return $this->name; }
+  function usedClassName(string $namespace): string { return ''; }
+  function usedFunctionName(string $namespace): string { return self::qualifName($namespace, $this->name); }
 };
 
 /** appel de création d'un objet d'une classe */
@@ -124,8 +136,8 @@ readonly class NewCall extends PhpUse {
   
   function asArray(): array { return ['type'=> 'NewCall', 'class'=> $this->class]; }
 
-  function usedClassName(): string { return $this->class; }
-  function usedFunctionName(): string { return ''; }
+  function usedClassName(string $namespace): string { return self::qualifName($namespace, $this->class); }
+  function usedFunctionName(string $namespace): string { return ''; }
 };
 
 /** Appel d'une méthode statique d'une classe */
@@ -147,8 +159,8 @@ readonly class StaticMethodCall extends PhpUse {
     return ['type'=> 'StaticMethodCall', 'class'=> $this->class, 'name'=> $this->name];
   }
 
-  function usedClassName(): string { return $this->class; }
-  function usedFunctionName(): string { return ''; }
+  function usedClassName(string $namespace): string { return self::qualifName($namespace, $this->class); }
+  function usedFunctionName(string $namespace): string { return ''; }
 };
 
 /** Appel d'une méthode non statique d'une classe généralement inconnue */
@@ -183,8 +195,8 @@ readonly class PhpExtends extends PhpUse {
     return ['type'=> 'Extends', 'extendedClass'=> $this->extendedClass, 'defClass'=> $this->defClass, 'lineNr'=> $this->lineNr];
   }
 
-  function usedClassName(): string { return $this->extendedClass; }
-  function usedFunctionName(): string { return ''; }
+  function usedClassName(string $namespace): string { return self::qualifName($namespace, $this->extendedClass); }
+  function usedFunctionName(string $namespace): string { return ''; }
 };
 
 /** Fichier Php avec ses caractéristiques d'utilisation de fonctions et classes */
@@ -203,15 +215,21 @@ class UsingFile extends PhpFile {
       }
     }
     elseif (substr($rpath, -4)=='.php') {
+      echo "rpath=$rpath<br>\n";
       $file = new UsingFile($rpath);
       $namespace = '\\'.$file->namespace;
+      echo "namespace=$namespace<br>\n";
       foreach ($file->uses as $use) {
-        //echo "use->usedClassName()=",$use->usedClassName(),"<br>\n";
-        if (($type == 'class') && ($namespace.$use->usedClassName() == $name))
-          echo "$rpath: <b>$use</b><br>\n";
-        //echo "use->usedFunctionName()=",$use->usedFunctionName(),"<br>\n";
-        if (($type == 'function') && ($namespace.$use->usedFunctionName() == $name))
-          echo "$rpath: <b>$use</b><br>\n";
+        if ($type == 'class') {
+          if ($use->usedClassName($namespace) == $name)
+            echo "$rpath: <b>$use</b><br>\n";
+        }
+        elseif ($type == 'function') {
+          if ($use->usedFunctionName($namespace))
+            echo $use->usedFunctionName($namespace)," == $name ?<br>\n";
+          if ($use->usedFunctionName($namespace) == $name)
+            echo "$rpath: <b>$use</b><br>\n";
+        }
       }
     }
   }
