@@ -215,18 +215,18 @@ class UsingFile extends PhpFile {
       }
     }
     elseif (substr($rpath, -4)=='.php') {
-      echo "rpath=$rpath<br>\n";
+      //echo "rpath=$rpath<br>\n";
       $file = new UsingFile($rpath);
       $namespace = '\\'.$file->namespace;
-      echo "namespace=$namespace<br>\n";
+      //echo "namespace=$namespace<br>\n";
       foreach ($file->uses as $use) {
         if ($type == 'class') {
           if ($use->usedClassName($namespace) == $name)
             echo "$rpath: <b>$use</b><br>\n";
         }
         elseif ($type == 'function') {
-          if ($use->usedFunctionName($namespace))
-            echo $use->usedFunctionName($namespace)," == $name ?<br>\n";
+          /*if ($use->usedFunctionName($namespace))
+            echo $use->usedFunctionName($namespace)," == $name ?<br>\n";*/
           if ($use->usedFunctionName($namespace) == $name)
             echo "$rpath: <b>$use</b><br>\n";
         }
