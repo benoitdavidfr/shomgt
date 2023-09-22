@@ -7,8 +7,11 @@ require_once __DIR__.'/token.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+/** classe abstraite des utilisation */
 readonly abstract class PhpUse {
-  /** Numéro du token ( de l'appel */
+  /** Numéro du token de référence de l'appel
+   * '(' pour un appel de fonction ou de méthode,
+   * mot-clé extends pour une extension de classse, mot-clé new pour une création d'objet */
   public int $tokenNr;
   /** Numéro de ligne de l'appel */
   public int $lineNr;
@@ -87,6 +90,12 @@ readonly abstract class PhpUse {
   /** Retourne un call comme un array
    * @return array<mixed> */
   abstract function asArray(): array;
+  
+  /** Retourne le nom de la classe utilisée ou '' si aucune */
+  abstract function usedClassName(): string;
+  
+  /** Retourne le nom de la fonction utilisée ou '' si aucune */
+  abstract function usedFunctionName(): string;
 };
 
 /** appel de fonction */
@@ -98,9 +107,10 @@ readonly class FunctionCall extends PhpUse {
   
   function __toString(): string { return "fun $this->name(), ligne $this->lineNr"; }
   
-  function asArray(): array {
-    return ['type'=> 'FunctionCall', 'name'=> $this->name];
-  }
+  function asArray(): array { return ['type'=> 'FunctionCall', 'name'=> $this->name]; }
+
+  function usedClassName(): string { return ''; }
+  function usedFunctionName(): string { return $this->name; }
 };
 
 /** appel de création d'un objet d'une classe */
@@ -112,9 +122,10 @@ readonly class NewCall extends PhpUse {
   
   function __toString(): string { return "new $this->class, ligne $this->lineNr"; }
   
-  function asArray(): array {
-    return ['type'=> 'NewCall', 'class'=> $this->class];
-  }
+  function asArray(): array { return ['type'=> 'NewCall', 'class'=> $this->class]; }
+
+  function usedClassName(): string { return $this->class; }
+  function usedFunctionName(): string { return ''; }
 };
 
 /** Appel d'une méthode statique d'une classe */
@@ -135,9 +146,12 @@ readonly class StaticMethodCall extends PhpUse {
   function asArray(): array {
     return ['type'=> 'StaticMethodCall', 'class'=> $this->class, 'name'=> $this->name];
   }
+
+  function usedClassName(): string { return $this->class; }
+  function usedFunctionName(): string { return ''; }
 };
 
-/** Appel d'une méthode non statique d'une classe, cette classe est souvent inconnue */
+/** Appel d'une méthode non statique d'une classe généralement inconnue */
 readonly class NonStaticMethodCall extends StaticMethodCall {
   function __construct(int $nr, int $lineNr, string $name, string $class='') {
     parent::__construct($nr, $lineNr, $class, $name);
@@ -168,6 +182,9 @@ readonly class PhpExtends extends PhpUse {
   function asArray(): array {
     return ['type'=> 'Extends', 'extendedClass'=> $this->extendedClass, 'defClass'=> $this->defClass, 'lineNr'=> $this->lineNr];
   }
+
+  function usedClassName(): string { return $this->extendedClass; }
+  function usedFunctionName(): string { return ''; }
 };
 
 /** Fichier Php avec ses caractéristiques d'utilisation de fonctions et classes */
@@ -175,26 +192,26 @@ class UsingFile extends PhpFile {
   /** @var array<int,PhpUse> $uses; liste des utilisations détectées dans le fichier */
   readonly array $uses;
   
-  /** Affiche les appels à la classe $class */
-  static function usingClass(string $class, string $rpath=''): void {
+  /** Affiche les appels à la classe ou la fonction $name */
+  static function usingClassOrFunction(string $type, string $name, string $rpath=''): void {
+    //echo "UsingFile::usingClassOrFunction(type=$type, name=$name, rpath=$rpath)<br>\n";
     if (is_dir(parent::$root.$rpath)) {
       foreach (new DirectoryIterator(parent::$root.$rpath) as $entry) {
         if (in_array($entry, PhpFile::EXCLUDED)) continue;
         //echo "entry $entry<br>\n";
-        self::usingClass($class, "$rpath/$entry");
+        self::usingClassOrFunction($type, $name, "$rpath/$entry");
       }
     }
     elseif (substr($rpath, -4)=='.php') {
       $file = new UsingFile($rpath);
+      $namespace = '\\'.$file->namespace;
       foreach ($file->uses as $use) {
-        if (in_array(get_class($use), ['StaticMethodCall','NewCall'])) {
-          if ($use->class == $class)
-            echo "$rpath: <b>$use</b><br>\n";
-        }
-        if (in_array(get_class($use), ['PhpExtends'])) {
-          if ($use->extendedClass == $class)
-            echo "$rpath: <b>$use</b><br>\n";
-        }
+        //echo "use->usedClassName()=",$use->usedClassName(),"<br>\n";
+        if (($type == 'class') && ($namespace.$use->usedClassName() == $name))
+          echo "$rpath: <b>$use</b><br>\n";
+        //echo "use->usedFunctionName()=",$use->usedFunctionName(),"<br>\n";
+        if (($type == 'function') && ($namespace.$use->usedFunctionName() == $name))
+          echo "$rpath: <b>$use</b><br>\n";
       }
     }
   }
@@ -209,13 +226,16 @@ class UsingFile extends PhpFile {
 
     $uses = [];
     for ($nr=0; $nr < count($tokens); $nr++) {
-      if ($tokens[$nr]->id == T_EXTENDS) {
+      if ($tokens[$nr]->id == T_EXTENDS) { // Détection de la cération d'une sous-classe
         //echo "extends détecté<br>\n";
         $symbstr = $tokens->symbstr($nr-3, 7);
         //echo "symstr=",$symbstr,"<br>\n";
         $uses[] = new PhpExtends($nr, $tokens[$nr]->lineNr, $tokens[$nr+2]->src, $tokens[$nr-2]->src);
       }
-      elseif ($tokens[$nr]->src == '(') {
+      elseif ($tokens[$nr]->id == T_NEW) { // Détection d'un appel de new
+        $uses[] = new NewCall($nr, $tokens[$nr]->lineNr, $tokens[$nr+2]->src);
+      }
+      elseif ($tokens[$nr]->src == '(') { /// détection d'un appel de fonction ou méthode
         $lineNr = $tokens[$nr]->lineNr;
         // $nr pointe sur une '('
         $nr2 = $nr;
@@ -237,11 +257,6 @@ class UsingFile extends PhpFile {
         // Appel de méthode non statique
         elseif (preg_match('!^T_STRING,T_OBJECT_OPERATOR!', $symbstr)) {
           $uses[] = new NonStaticMethodCall($nr, $lineNr, $tokens[$nr2-1]->src);
-        }
-        // Détection d'un appel de new
-        elseif (preg_match('!^(T_STRING|T_NAME_FULLY_QUALIFIED|T_VARIABLE),T_WHITESPACE,T_NEW!', $symbstr)) {
-          $className = $tokens[$nr2-1]->src;
-          $uses[] = new NewCall($nr, $lineNr, $tokens[$nr2-1]->src);
         }
       }
     }

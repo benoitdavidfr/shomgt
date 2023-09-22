@@ -24,6 +24,9 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  15-22/9/2023:
+    - chgt de mac
+    - reprise sur la sauvegarde et les modifs enregistrées dans github depuis début sept.
   2-3/9/2023:
     - conversion de la doc en PHPDoc avec qqs adaptations du code pour le rendre plus lisible
     - publication de phpdoc sur Github

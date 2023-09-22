@@ -24,9 +24,12 @@ class PhpBlock {
    * @param TokenArray $tokens; tokens du fichier contenant le block
    */
   static function create(int $startTokenNr, TokenArray $tokens): PhpBlock {
+    $verbose = $_GET['verbose'] ?? null;
     //die("Fin ligne ".__LINE__);
-    //echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
-    //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -12),"<br>\n";
+    if ($verbose == 'true') {
+      echo "PhpBlock::create(startTokenNr=$startTokenNr)<br>\n";
+      echo "symbStr=",$tokens->symbStr($startTokenNr-1, -12),"<br>\n";
+    }
     
     // class {nom_classe} {
     // class {nom_classe} extends {nom_classe_mère} {
@@ -36,43 +39,52 @@ class PhpBlock {
         .'(T_STRING,T_WHITESPACE,T_IMPLEMENTS,T_WHITESPACE,)?'   // implements {interface_name}
         .'((T_STRING|T_NAME_FULLY_QUALIFIED),T_WHITESPACE,T_EXTENDS,T_WHITESPACE,)?' // extends {nom_classe_mère}
         .'T_STRING,T_WHITESPACE,T_CLASS!';                       // class {nom_classe}
-     if (preg_match($pattern, $tokens->symbStr($startTokenNr-1, -12))) {
-      //echo "Définition de classe détectée<br>\n";
+    if (preg_match($pattern, $tokens->symbStr($startTokenNr-1, -12))) {
+      if ($verbose)
+        echo "Définition de classe détectée<br>\n";
       return new PhpClass($startTokenNr, $tokens);
     }
     // symbStr={T_WHITESPACE}{T_STRING}?{T_WHITESPACE}
+      //symbStr=T_WHITESPACE,T_STRING,T_WHITESPACE,:,),(,T_STRING,T_WHITESPACE,T_FUNCTION,T_OPEN_TAG,
     elseif (preg_match('!^(T_WHITESPACE,)?(T_STRING,|T_ARRAY,)(\?,)?(T_WHITESPACE,)?:!', $tokens->symbStr($startTokenNr-1, -5))) {
-      //echo "Function détectée avec type de retour<br>\n";
+      if ($verbose)
+        echo "Function détectée avec type de retour<br>\n";
       return new PhpFunction($startTokenNr, $tokens);
     }
     else {
       if (preg_match('!^(T_WHITESPACE,)?\)!', $tokens->symbStr($startTokenNr-1, -4))) {
-        //echo "Function détectée sans type de retour<br>\n";
+        if ($verbose)
+          echo "Function détectée sans type de retour<br>\n";
         $openBracketNr = $tokens->findSrcBackward($startTokenNr, '('); // recherche de la ( de début des paramètres
         //echo 'symbStrBracket=',$tokens->symbStr($openBracketNr, -12),"<br>\n";
         //echo "srcCode=",htmlentities($tokens->srcCode($openBracketNr-12, $openBracketNr, '')),"<br>\n";
         if ($tokens->symbStr($openBracketNr, -4) == '(,T_STRING,T_WHITESPACE,T_FUNCTION') {
           //echo "détection de function xxx(<br>\n";
           if ($tokens[$openBracketNr-1]->src == '__construct') {
-            //echo "Détection de __construct()<br>\n";
+            if ($verbose)
+              echo "Détection de __construct()<br>\n";
             return new PhpFunction($startTokenNr, $tokens);
           }
-          //else
-            //echo "fonction sans type de retour non reconnue<br>\n";
-          // cas éventuel d'une fonction sans type de retour non reconnue
+          else { // cas éventuel d'une fonction sans type de retour non reconnue
+            if ($verbose)
+              echo "fonction sans type de retour non reconnue<br>\n";
+          }
         }
         elseif ($tokens->symbStr($openBracketNr, -5) == '(,T_WHITESPACE,T_STRING,T_WHITESPACE,T_FUNCTION') {
           //echo "détection de function xxx (<br>\n";
           if ($tokens[$openBracketNr-2]->src == '__construct') {
-            //echo "Détection de __construct ()<br>\n";
+            if ($verbose)
+              echo "Détection de __construct ()<br>\n";
             return new PhpFunction($startTokenNr, $tokens);
           }
-          //else
-            //echo "fonction sans type de retour non reconnue<br>\n";
-          // cas éventuel d'une fonction sans type de retour non reconnue
+          else { // cas éventuel d'une fonction sans type de retour non reconnue
+            if ($verbose)
+              echo "fonction sans type de retour non reconnue<br>\n";
+          }
         }
       }
-      //echo "NI Class Ni Function détectée<br>\n";
+      if ($verbose)
+        echo "NI Class Ni Function détectée<br>\n";
       return new self($startTokenNr, $tokens);
     }
   }
@@ -149,17 +161,20 @@ class PhpClass extends PhpBlock {
 
   /** Définition d'une classe ; gère les différents cas de figure */
   function __construct(int $startTokenNr, TokenArray $tokens) {
+    $verbose = $_GET['verbose'] ?? null;
     parent::__construct($startTokenNr, $tokens);
 
     $this->lineNr = $tokens[$startTokenNr]->lineNr;
     if ($tokens[$startTokenNr-1]->id == T_WHITESPACE)
       $startTokenNr--;
     if ($tokens->symbStr($startTokenNr-1, -3) == 'T_STRING,T_WHITESPACE,T_CLASS') { // class {nom_classe} {
-      //echo "class {nom_classe}<br>\n";
+      if ($verbose)
+        echo "class {nom_classe}<br>\n";
       $this->name = $tokens[$startTokenNr-1]->src;
       $this->parentClassName = '';
       $this->interface = '';
-      //echo "class $this->name<br>\n";
+      if ($verbose)
+        echo "class $this->name<br>\n";
     }
     else {
       // class {nom_classe} extends {nom_classe_mère} {
@@ -167,22 +182,26 @@ class PhpClass extends PhpBlock {
           .'T_WHITESPACE,T_STRING,T_WHITESPACE,T_CLASS!'; // class {nom_classe} 
       //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -7),"<br>\n";
       if (preg_match($symbStrPattern, $tokens->symbStr($startTokenNr-1, -7))) {
-        //echo "class {nom_classe} extends {nom_classe_mère}<br>\n";
+        if ($verbose)
+          echo "class {nom_classe} extends {nom_classe_mère}<br>\n";
         $this->name = $tokens[$startTokenNr-5]->src;
         $this->parentClassName = $tokens[$startTokenNr-1]->src;
         $this->interface = '';
-        //echo "class $this->name extends $this->parentClassName<br>\n";
+        if ($verbose)
+          echo "class $this->name extends $this->parentClassName<br>\n";
       }
       else {
         // class {nom_class} implements {interface_name} {
         $symbStr = 'T_STRING,T_WHITESPACE,T_IMPLEMENTS,T_WHITESPACE,T_STRING,T_WHITESPACE,T_CLASS';
         //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -7),"<br>\n";
         if ($tokens->symbStr($startTokenNr-1, -7) == $symbStr) {
-          //echo "class {nom_classe} implements {interface_name}<br>\n";
+          if ($verbose)
+            echo "class {nom_classe} implements {interface_name}<br>\n";
           $this->name = $tokens[$startTokenNr-5]->src;
           $this->parentClassName = '';
           $this->interface = $tokens[$startTokenNr-1]->src;
-          //echo "class $this->name implements $this->interface<br>\n";
+          if ($verbose)
+            echo "class $this->name implements $this->interface<br>\n";
         }
         else {
           // class {nom_class} extends {nom_classe_mère} implements {interface_name} {
@@ -192,11 +211,13 @@ class PhpClass extends PhpBlock {
                     .'T_STRING,T_WHITESPACE,T_CLASS!'; // class {nom_class}
           //echo "symbStr=",$tokens->symbStr($startTokenNr-1, -7),"<br>\n";
           if (preg_match($symbStrPattern, $tokens->symbStr($startTokenNr-1, -11))) {
-            //echo "class {nom_classe} extends {nom_classe_mère} implements {interface_name}<br>\n";
+            if ($verbose)
+              echo "class {nom_classe} extends {nom_classe_mère} implements {interface_name}<br>\n";
             $this->name = $tokens[$startTokenNr-9]->src;
             $this->parentClassName = $tokens[$startTokenNr-5]->src;
             $this->interface = $tokens[$startTokenNr-1]->src;
-            //echo "class $this->name extends $this->parentClassName implements $this->interface<br>\n";
+            if ($verbose)
+              echo "class $this->name extends $this->parentClassName implements $this->interface<br>\n";
           }
           else {
             die("Fin ligne ".__LINE__." sur erreur dans PhpClass::__construct()");
@@ -238,7 +259,9 @@ class PhpFunction extends PhpBlock {
   //readonly public string $title;
   
   function __construct(int $startTokenNr, TokenArray $tokens) {
-    //echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
+    $verbose = $_GET['verbose'] ?? null;
+    if ($verbose)
+      echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
     parent::__construct($startTokenNr, $tokens);
     
     $this->lineNr = $tokens[$startTokenNr]->lineNr;
@@ -309,6 +332,9 @@ class DefiningFile extends PhpFile {
       foreach ($file->classes() as $className => $class) {
         echo "<a href='?action=$_GET[action]&amp;class=\\$namespace$className&amp;src=$rpath'>\\$namespace$className</a><br>\n";
       }
+      foreach ($file->functions() as $funName => $fun) {
+        echo "<a href='?action=$_GET[action]&amp;function=\\$namespace$funName&amp;src=$rpath'>\\$namespace$funName</a><br>\n";
+      }
     }
   }
   
@@ -356,6 +382,18 @@ class DefiningFile extends PhpFile {
       }
     }
     return $classes;
+  }
+  
+  /** Récupère les fonctions dans les blocks
+   * @return array<string,PhpFunction> */
+  function functions(): array {
+    $functions = [];
+    foreach ($this->blocks as $block) {
+      if (get_class($block) == 'PhpFunction') {
+        $functions[$block->name] = $block;
+      }
+    }
+    return $functions;
   }
   
   /** représente les blocks contenus dans le fichier comme une table Html */

@@ -236,6 +236,7 @@ class Graph {
   }
 };
 
+//PhpFile::$root = __DIR__.'/testcode';
 PhpFile::$root = realpath(__DIR__.'/..');
 
 echo "<!DOCTYPE html>\n<html><head><title>phpanalyzer</title></head><body>\n";
@@ -319,10 +320,9 @@ switch ($_GET['action'] ?? null) {
   }
   case 'useClassOrFunction': {
     if (isset($_GET['class']))
-      UsingFile::usingClass($_GET['class']);
-    elseif (isset($_GET['function'])) {
-      
-    }
+      UsingFile::usingClassOrFunction('class', $_GET['class']);
+    elseif (isset($_GET['function']))
+      UsingFile::usingClassOrFunction('function', $_GET['function']);
     else
       // choix d'une classe ou d'une fonction
       DefiningFile::chooseClassOrFunction($_GET['rpath'] ?? '');

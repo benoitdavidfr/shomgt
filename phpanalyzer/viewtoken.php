@@ -32,13 +32,13 @@ $code = file_get_contents(__DIR__."/..$_GET[rpath]");
 // Décomposition des tokens par ligne du source
 $tokensPerLine = []; // [{noLigne} => [{token}]]
 $lineNr = 0;
-foreach (token_get_all($code) as $token) {
+foreach (token_get_all($code) as $no => $token) {
   if (is_array($token)) {
     $lineNr = $token[2];
-    $tokensPerLine[$lineNr][] = ['token_name'=> token_name($token[0]), 'src'=> $token[1]];
+    $tokensPerLine[$lineNr][] = ['no'=> $no, 'token_name'=> token_name($token[0]), 'src'=> $token[1]];
   }
   else {
-    $tokensPerLine[$lineNr][] = ['src'=> $token];
+    $tokensPerLine[$lineNr][] = ['no'=> $no, 'src'=> $token];
   }
 }
 
@@ -54,7 +54,7 @@ foreach ($srcPerLine as $nol => $src) {
   if (!$noToken) {
     echo "<td><table border=1>";
     foreach ($tokensPerLine[$nol] ?? [] as $tokenOfLine) {
-      echo "<tr><td>",$tokenOfLine['token_name'] ?? '',"</td>",
+      echo "<tr><td>$tokenOfLine[no]</td><td>",$tokenOfLine['token_name'] ?? '',"</td>",
             "<td>",str_replace("\n","<br>\n",htmlentities($tokenOfLine['src'])),"</td></tr>";
     }
     echo "</table></td>";
