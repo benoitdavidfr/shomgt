@@ -9,7 +9,7 @@ function fun21(int $a, string $b) : array { $a = 1; return []; } // fonction ave
 class C { // définition d'une classe
   function __construct() { $a = 1; }
   function nonStatMeth(): void { $a = 1; }
-  static function statMeth(): void { $a = 1; }
+  static function statMeth(): void { echo "C::statMeth<br>\n"; }
 };
 
 class D extends C { // définition d'une sous-classe

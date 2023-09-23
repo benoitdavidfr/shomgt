@@ -1,6 +1,6 @@
 <?php
 /** Fichier test d'utilisation de définitions sans espace de nom explicite */
-//namespace ns;
+namespace ns;
 
 require_once __DIR__.'/def.php';
 

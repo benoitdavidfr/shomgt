@@ -244,6 +244,7 @@ class FileIncGraph {
  * Un objet correspond à la définition d'une classe ou d'une fonction et à ses utilisations
  */
 class UseGraph {
+  const SAME_DIR = false; // si vrai alors affiche les utilisations dans le même répertoire que les définitions
   readonly public PhpBlock $def; // l'objet de définition
   /** @var array<string,list<PhpUse>> $uses liste des objets d'utilisation par fichier */
   protected array $uses=[];
@@ -253,7 +254,7 @@ class UseGraph {
   /** @var array<string,array<string,UseGraph>> $classes; les classes idexées sur leur nom et le chemin du fichier de déf. */
   static array $classes=[];
   
-  // construction des définitions
+  /** construction récursive des définitions d'un répertoire */
   static function buildDefs(string $rpath=''): void {
     //echo "UseGraph::buildDefs(rpath=$rpath)<br>\n";
     foreach (new DirectoryIterator(PhpFile::$root.$rpath) as $entry) {
@@ -285,6 +286,8 @@ class UseGraph {
         foreach ($useFile->uses as $use) {
           //echo "$use<br>\n";
           if ($uFunName = $use->usedFunctionName($useFile->namespace)) {
+            if (substr($uFunName, 0, 1) == '\\')
+              $uFunName = substr($uFunName, 1);
             // Je n'enregistre que les utilisations effectuées dans un fichier différent de la définition
             if (isset(self::$functions[$uFunName]) && !isset(self::$functions[$uFunName][$userpath])) {
               if (count(array_keys(self::$functions[$uFunName])) > 1) { // fun définie dans plusieurs fichiers
@@ -293,14 +296,17 @@ class UseGraph {
               }
               else {
                 $defrpath = array_keys(self::$functions[$uFunName])[0];
-                if (dirname($defrpath) <> dirname($userpath)) {
-                  echo "Fonction $uFunName utilisée dans $userpath définie dans $defrpath<br>\n";
+                if (self::SAME_DIR || (dirname($defrpath) <> dirname($userpath))) {
+                  //echo "Fonction $uFunName utilisée dans $userpath définie dans $defrpath<br>\n";
                   self::$functions[$uFunName][$defrpath]->addUse($userpath, $use);
                 }
               }
             }
           }
           if ($uClassName = $use->usedClassName($useFile->namespace)) {
+            if (substr($uClassName, 0, 1) == '\\')
+              $uClassName = substr($uClassName, 1);
+            //echo "uClassName=$uClassName<br>\n";
             // Je n'enregistre que les utilisations effectuées dans un fichier différent de la définition
             if (isset(self::$classes[$uClassName]) && !isset(self::$classes[$uClassName][$userpath])) {
               if (count(array_keys(self::$classes[$uClassName])) > 1) { // classe définie dans plusieurs fichiers
@@ -309,8 +315,8 @@ class UseGraph {
               }
               else {
                 $defrpath = array_keys(self::$classes[$uClassName])[0];
-                if (dirname($defrpath) <> dirname($userpath)) {
-                  echo "Classe $uClassName utilisée dans $userpath définie dans $defrpath<br>\n";
+                if (self::SAME_DIR || (dirname($defrpath) <> dirname($userpath))) {
+                  //echo "Classe $uClassName utilisée dans $userpath définie dans $defrpath<br>\n";
                   self::$classes[$uClassName][$defrpath]->addUse($userpath, $use);
                 }
               }
@@ -326,6 +332,8 @@ class UseGraph {
   function addUse(string $userpath, PhpUse $use): void { $this->uses[$userpath][] = $use; }
   
   static function show(): void {
+    ksort(self::$functions);
+    ksort(self::$classes);
     echo "<pre>";
     foreach (self::$functions as $name => $pathUses) {
       foreach ($pathUses as $defrpath => $graphElt) {
@@ -356,6 +364,7 @@ class UseGraph {
 };
 
 //PhpFile::$root = __DIR__.'/testcode';
+//PhpFile::$root = __DIR__;
 PhpFile::$root = realpath(__DIR__.'/..');
 
 echo "<!DOCTYPE html>\n<html><head><title>phpanalyzer</title></head><body>\n";
@@ -441,6 +450,7 @@ switch ($_GET['action'] ?? null) {
   }
   case 'useGraph': {
     UseGraph::buildDefs();
+    //echo "<pre>functions = "; print_r(UseGraph::$functions); echo "classes ="; print_r(UseGraph::$classes); echo "</pre>\n";
     UseGraph::buildUses();
     UseGraph::show();
     break;
