@@ -85,6 +85,9 @@ class PhpFile {
   }
   
   function __construct(string $rpath, TokenArray $tokens) {
+    $verbose = $_GET['verbose'] ?? null;
+    if ($verbose)
+      echo "<b>PhpFile::__construct(rpath=$rpath)</b><br>\n";
     $this->rpath = $rpath;
     $this->namespace = $this->namespace($tokens);
     $this->title = $this->title($tokens);
@@ -148,7 +151,7 @@ class PhpFile {
     return $includes;
   }
   
-  /** retourne le spacename du fichier ou '' si aucun n'a été défini */
+  /** retourne le namespace du fichier ou '' si aucun n'est défini */
   function namespace(TokenArray $tokens): string {
     // Cas où le namspace est la première instruction après T_OPEN_TAG
     if ($tokens->symbStr(1, 3) == 'T_NAMESPACE,T_WHITESPACE,T_STRING') {
@@ -166,9 +169,9 @@ class PhpFile {
   }
 };
 
-/** déduit de l'arbre des fichiers les graphes pour déduire les relations inverses */
-class Graph {
-  /** @var array<string, string> dictionnaire [{rpath => {title}] */
+/** graphe d'inclusions entre fichiers et de fichier dans lequel une classe est définie */
+class FileIncGraph {
+  /** @var array<string, string> dictionnaire des titres des fichiers [{rpath => {title}] */
   static array $titles=[];
   /** @var array<string, array<string, 1>> $incIn matrice [{rpathInclus} => [{rpath_incluants} => 1]] */
   static array $incIn=[];
@@ -186,7 +189,7 @@ class Graph {
         if (substr($inc, 0, 6)=='{root}') {
           $inc = substr($inc, 6);
           //echo "inc=$inc<br>\n";
-          //echo "addGraph($rpath, $inc)<br>\n";
+          //echo "addFileIncGraph($rpath, $inc)<br>\n";
           self::$incIn[$inc][$rpath] = 1;
         }
       }
@@ -242,51 +245,50 @@ PhpFile::$root = realpath(__DIR__.'/..');
 echo "<!DOCTYPE html>\n<html><head><title>phpanalyzer</title></head><body>\n";
 switch ($_GET['action'] ?? null) {
   case null: {
-    echo "<a href='?action=includes'>Arbre des répertoires et fichiers avec fichiers inclus et classes définies</a><br>\n";
-    echo "<a href='?action=graph'>Affichage du graphe</a><br>\n";
-    echo "<a href='?action=fileIncludedIn'>Inclusions entre fichiers inversées</a><br>\n";
+    echo "<a href='?action=fileIncludes'>Arbre des répertoires et fichiers avec inclusions de fichiers</a><br>\n";
+    echo "<a href='?action=fileIncGraph'>Affichage du graphe d'inclusions entre fichiers</a><br>\n";
+    echo "<a href='?action=fileIncludedIn'>Inclusions inversées entre fichiers</a><br>\n";
     echo "<a href='?action=classInFile'>Liste des classes et fichiers la définissant</a><br>\n";
     echo "<a href='?action=buildBlocks'>Test de construction des blocks</a><br>\n";
-    echo "<a href='?action=detectUses'>Test de détection des utilisations</a><br>\n";
     echo "<a href='?action=usesInAPhpFile'>Liste des utilisations d'un fichier</a><br>\n";
     echo "<a href='?action=useClassOrFunction'>Affichage des utilisations d'une classe ou d'une fonction</a><br>\n";
     break;
   }
-  case 'includes': {
-    echo "<h2>Arbre des répertoires et fichiers avec inclusions et classes</h2>\n";
+  case 'fileIncludes': {
+    echo "<h2>Arbre des répertoires et fichiers avec inclusions de fichiers</h2>\n";
     $tree = PhpFile::buildTree('PhpFile'); // construction de l'arbre
     echo '<pre>',str_replace("''", "'", Yaml::dump([PhpFile::$root => PhpFile::treeAsArray($tree)], 99, 2));
     break;
   }
-  case 'graph': {
-    echo "<h2>Affichage du graphe</h2>\n";
+  case 'fileIncGraph': {
+    echo "<h2>Affichage du graphe d'inclusions entre fichiers</h2>\n";
     $tree = PhpFile::buildTree('DefiningFile'); // construction de l'arbre
-    Graph::build($tree); // fabrication du graphe
-    //echo '<pre>',str_replace("''","'",Yaml::dump(['$incIn'=> Graph::$incIn], 99, 2));
-    //echo "<pre>classesInFile= "; print_r(Graph::$classesInFile);
+    FileIncGraph::build($tree); // fabrication du graphe
+    //echo '<pre>',str_replace("''","'",Yaml::dump(['$incIn'=> FileIncGraph::$incIn], 99, 2));
+    //echo "<pre>classesInFile= "; print_r(FileIncGraph::$classesInFile);
     echo '<pre>',
           str_replace("''","'",
             Yaml::dump([
               '$classesInFile' => array_map(
                 function(array $phpClasses) {
                   return array_map(function(PhpClass $class): int { return $class->lineNr; }, $phpClasses); }, 
-                Graph::$classesInFile
+                FileIncGraph::$classesInFile
               )],
               99, 2));
     break;
   }
   case 'fileIncludedIn': {
-    echo "<h2>Inclusions inversées</h2>\n";
+    echo "<h2>Inclusions inversées entre fichiers</h2>\n";
     $tree = PhpFile::buildTree('DefiningFile'); // construction de l'arbre
-    Graph::build($tree); // fabrication du graphe
-    echo '<pre>',Yaml::dump(Graph::exportInvIncludes(), 99, 2);
+    FileIncGraph::build($tree); // fabrication du graphe
+    echo '<pre>',Yaml::dump(FileIncGraph::exportInvIncludes(), 99, 2);
     break;
   }
   case 'classInFile': {
     echo "<h2>Liste des classes et pour chacune les fichiers dans lesquels elle est définie</h2>\n";
     $tree = PhpFile::buildTree('DefiningFile'); // construction de l'arbre
-    Graph::build($tree); // fabrication du graphe
-    echo '<pre>',str_replace("''", "'", Yaml::dump(Graph::exportClasses(), 99, 2));
+    FileIncGraph::build($tree); // fabrication du graphe
+    echo '<pre>',str_replace("''", "'", Yaml::dump(FileIncGraph::exportClasses(), 99, 2));
     break;
   }
   case 'buildBlocks': {
@@ -295,14 +297,6 @@ switch ($_GET['action'] ?? null) {
     else {
       $file = new DefiningFile($_GET['rpath']);
       echo $file->blocksAsHtml();
-    }
-    break;
-  }
-  case 'detectUses': {
-    if (!isset($_GET['rpath']))
-      PhpFile::chooseFile('detectUses');
-    else {
-      PhpUse::detect(new TokenArray(PhpFile::$root.$_GET['rpath']));
     }
     break;
   }

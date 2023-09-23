@@ -1,6 +1,6 @@
 <?php
 /** Fichier test de définition et utilisation de fonction et de classe */
-//namespace ns;
+namespace ns;
 function fun1(): void { $a = 1; } // fonction retournant un void
 function fun2(): array { $a = 1; return []; } // fonction retournant un array
 function fun11() : void { $a = 1; } // fonction avec blanc avant :
