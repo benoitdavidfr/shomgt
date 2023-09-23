@@ -25,11 +25,11 @@ readonly abstract class PhpUse {
   abstract function asArray(): array;
   
   /** Retourne le nom qualifié de la classe utilisée ou '' si aucune
-   * $namespace est l'espace de nom déclaré dans le fichier utilisant*/
+   * $namespace est l'espace de nom déclaré dans le fichier utilisant */
   abstract function usedClassName(string $namespace): string;
   
   /** Retourne le nom qualifié de la fonction utilisée ou '' si aucune
-   * $namespace est l'espace de nom déclaré dans le fichier utilisant*/
+   * $namespace est l'espace de nom déclaré dans le fichier utilisant */
   abstract function usedFunctionName(string $namespace): string;
 
   /** fabrique un nom qualifié à partir du nom de classe ou fonction trouvé dans le fichier et du de l'espace de nom du fichier */

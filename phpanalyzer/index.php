@@ -239,6 +239,122 @@ class FileIncGraph {
   }
 };
 
+/** Graphe d'utilisation des classes et fonctions
+ *
+ * Un objet correspond à la définition d'une classe ou d'une fonction et à ses utilisations
+ */
+class UseGraph {
+  readonly public PhpBlock $def; // l'objet de définition
+  /** @var array<string,list<PhpUse>> $uses liste des objets d'utilisation par fichier */
+  protected array $uses=[];
+  
+  /** @var array<string,array<string,UseGraph>> $functions; les fonctions idexées sur leur nom et le chemin du fichier de déf. */
+  static array $functions=[];
+  /** @var array<string,array<string,UseGraph>> $classes; les classes idexées sur leur nom et le chemin du fichier de déf. */
+  static array $classes=[];
+  
+  // construction des définitions
+  static function buildDefs(string $rpath=''): void {
+    //echo "UseGraph::buildDefs(rpath=$rpath)<br>\n";
+    foreach (new DirectoryIterator(PhpFile::$root.$rpath) as $entry) {
+      if (in_array($entry, PhpFile::EXCLUDED)) continue;
+      if (is_dir(PhpFile::$root."$rpath/$entry"))
+        self::buildDefs("$rpath/$entry");
+      elseif (substr($entry, -4) == '.php') {
+        $defrpath = "$rpath/$entry";
+        $defFile = new DefiningFile($defrpath);
+        foreach ($defFile->functions() as $name => $def) {
+          self::$functions[$name][$defrpath] = new self($def);
+        }
+        foreach ($defFile->classes() as $name => $def) {
+          self::$classes[$name][$defrpath] = new self($def);
+        }
+      }
+    }
+  }
+
+  // construction des utilisations
+  static function buildUses(string $rpath=''): void {
+    foreach (new DirectoryIterator(PhpFile::$root.$rpath) as $entry) {
+      if (in_array($entry, PhpFile::EXCLUDED)) continue;
+      if (is_dir(PhpFile::$root."$rpath/$entry"))
+        self::buildUses("$rpath/$entry");
+      elseif (substr($entry, -4) == '.php') {
+        $userpath = "$rpath/$entry";
+        $useFile = new UsingFile($userpath);
+        foreach ($useFile->uses as $use) {
+          //echo "$use<br>\n";
+          if ($uFunName = $use->usedFunctionName($useFile->namespace)) {
+            // Je n'enregistre que les utilisations effectuées dans un fichier différent de la définition
+            if (isset(self::$functions[$uFunName]) && !isset(self::$functions[$uFunName][$userpath])) {
+              if (count(array_keys(self::$functions[$uFunName])) > 1) { // fun définie dans plusieurs fichiers
+                echo "Dans $userpath utilisation de la fonction $uFunName définie dans \n";
+                echo "<ul><li>",implode("</li>\n<li>", array_keys(self::$functions[$uFunName])),"</li></ul>\n";
+              }
+              else {
+                $defrpath = array_keys(self::$functions[$uFunName])[0];
+                if (dirname($defrpath) <> dirname($userpath)) {
+                  echo "Fonction $uFunName utilisée dans $userpath définie dans $defrpath<br>\n";
+                  self::$functions[$uFunName][$defrpath]->addUse($userpath, $use);
+                }
+              }
+            }
+          }
+          if ($uClassName = $use->usedClassName($useFile->namespace)) {
+            // Je n'enregistre que les utilisations effectuées dans un fichier différent de la définition
+            if (isset(self::$classes[$uClassName]) && !isset(self::$classes[$uClassName][$userpath])) {
+              if (count(array_keys(self::$classes[$uClassName])) > 1) { // classe définie dans plusieurs fichiers
+                echo "Dans $userpath utilisation de la classe $uClassName définie dans \n";
+                echo "<ul><li>",implode("</li>\n<li>", array_keys(self::$classes[$uClassName])),"</li></ul>\n";
+              }
+              else {
+                $defrpath = array_keys(self::$classes[$uClassName])[0];
+                if (dirname($defrpath) <> dirname($userpath)) {
+                  echo "Classe $uClassName utilisée dans $userpath définie dans $defrpath<br>\n";
+                  self::$classes[$uClassName][$defrpath]->addUse($userpath, $use);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  function __construct(PhpBlock $def) { $this->def = $def; }
+  
+  function addUse(string $userpath, PhpUse $use): void { $this->uses[$userpath][] = $use; }
+  
+  static function show(): void {
+    echo "<pre>";
+    foreach (self::$functions as $name => $pathUses) {
+      foreach ($pathUses as $defrpath => $graphElt) {
+        $key = "Fun $name@$defrpath#".$graphElt->def->lineNr;
+        if ($graphElt->uses)
+          echo Yaml::dump([$key => $graphElt->asArray()], 99);
+      }
+    }
+    foreach (self::$classes as $name => $pathUses) {
+      foreach ($pathUses as $defrpath => $graphElt) {
+        $key = "Class $name@$defrpath#".$graphElt->def->lineNr;
+        if ($graphElt->uses)
+          echo Yaml::dump([$key => $graphElt->asArray()], 99);
+      }
+    }
+  }
+  
+  /** Retourne un élément du graphe comme array pur
+   * @return array<mixed> */
+  function asArray(): array {
+    $array = [];
+    foreach ($this->uses as $userpath => $uses) {
+      foreach ($uses as $use)
+        $array[$userpath][] = $use->__toString();
+    }
+    return $array;
+  }
+};
+
 //PhpFile::$root = __DIR__.'/testcode';
 PhpFile::$root = realpath(__DIR__.'/..');
 
@@ -252,6 +368,7 @@ switch ($_GET['action'] ?? null) {
     echo "<a href='?action=buildBlocks'>Test de construction des blocks</a><br>\n";
     echo "<a href='?action=usesInAPhpFile'>Liste des utilisations d'un fichier</a><br>\n";
     echo "<a href='?action=useClassOrFunction'>Affichage des utilisations d'une classe ou d'une fonction</a><br>\n";
+    echo "<a href='?action=useGraph'>useGraph</a><br>\n";
     break;
   }
   case 'fileIncludes': {
@@ -320,6 +437,12 @@ switch ($_GET['action'] ?? null) {
     else
       // choix d'une classe ou d'une fonction
       DefiningFile::chooseClassOrFunction($_GET['rpath'] ?? '');
+    break;
+  }
+  case 'useGraph': {
+    UseGraph::buildDefs();
+    UseGraph::buildUses();
+    UseGraph::show();
     break;
   }
 }

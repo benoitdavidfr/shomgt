@@ -13,6 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 class PhpBlock {
   /** @var int $startTokenNr, no du token de début du block correspondant à '{' */
   readonly public int $startTokenNr; 
+  readonly public int $lineNr;
   /** @var int $lastTokenNr; no du token de fin du block correspondant à '}' */
   readonly public int $lastTokenNr;
   /** @var list<PhpBlock> $subBlocks; liste de blocks enfants */
@@ -96,6 +97,7 @@ class PhpBlock {
   function __construct(string $namespace, int $startTokenNr, TokenArray $tokens) {
     //echo "Appel PhpBlock::__construct(startTokenNr=$startTokenNr)<br>\n";
     $this->startTokenNr = $startTokenNr;
+    $this->lineNr = $tokens[$startTokenNr]->lineNr;
     $subBlocks = [];
     for ($tnr=$startTokenNr+1; $tnr < count($tokens); $tnr++) {
       if ($tokens[$tnr]->src == '}') {
@@ -155,7 +157,6 @@ class PhpClass extends PhpBlock {
   readonly public string $name;
   readonly public string $parentClassName; // '' si pas de classe mère
   readonly public string $interface; // '' si pas d'interface
-  readonly public int $lineNr;
   //readonly public string $title;
 
   /** Définition d'une classe ; gère les différents cas de figure */
@@ -163,7 +164,6 @@ class PhpClass extends PhpBlock {
     $verbose = $_GET['verbose'] ?? null;
     parent::__construct($namespace, $startTokenNr, $tokens);
 
-    $this->lineNr = $tokens[$startTokenNr]->lineNr;
     if ($tokens[$startTokenNr-1]->id == T_WHITESPACE)
       $startTokenNr--;
     if ($tokens->symbStr($startTokenNr-1, -3) == 'T_STRING,T_WHITESPACE,T_CLASS') { // class {nom_classe} {
@@ -254,7 +254,6 @@ class PhpClass extends PhpBlock {
 class PhpFunction extends PhpBlock {
   readonly public string $name; // '' si fonction anonyme
   readonly public string $params;
-  readonly public int $lineNr;
   //readonly public string $title;
   
   function __construct(string $namespace, int $startTokenNr, TokenArray $tokens) {
@@ -262,8 +261,6 @@ class PhpFunction extends PhpBlock {
     if ($verbose)
       echo "PhpFunction::__construct(startTokenNr=$startTokenNr)<br>\n";
     parent::__construct($namespace, $startTokenNr, $tokens);
-    
-    $this->lineNr = $tokens[$startTokenNr]->lineNr;
     
     $nr = $tokens->findSrcBackward($startTokenNr, '('); // recherche de la parenthèse ouvrante dé début des paramètres
     $this->params = $tokens->srcCode($nr, $startTokenNr, '');
