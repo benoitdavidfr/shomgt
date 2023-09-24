@@ -1,9 +1,7 @@
 <?php
+/** BO de ShomGT4 - Benoit DAVID - 5-13/8/2023 */
 namespace bo;
-/*PhpDoc:
-name: index.php
-title: shomgt/bo/index.php - BO de ShomGT4 - Benoit DAVID - 5-13/8/2023
-*/
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/user.php';

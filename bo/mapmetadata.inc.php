@@ -1,17 +1,14 @@
 <?php
+/** génération d'une MD simplifiée à partir du fichier XML ISO - 4/8/2023 */
 namespace bo;
-/*PhpDoc:
-name: mapmetadata.php
-title: bo/mapmetadata.inc.php - génération d'une MD simplifiée à partir du fichier XML ISO - 4/8/2023
-doc: |
-  déf. de la classe MapMetadata
-*/
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class MapMetadata { // construit les MD synthétiques d'une carte à partir des MD ISO dans le 7z 
+/** construit les MD synthétiques d'une carte à partir des MD ISO dans le 7z  */
+class MapMetadata {
   static function ganWeek2iso(string $ganWeek): string { // traduit une semaine GAN en date ISO 
     $date = new \DateTimeImmutable();
     // public DateTimeImmutable::setISODate(int $year, int $week, int $dayOfWeek = 1): DateTimeImmutable
@@ -80,7 +77,9 @@ class MapMetadata { // construit les MD synthétiques d'une carte à partir des 
     return $md;
   }
   
-  /** SI $mdName n'est pas défini et le fichier XML standard existe ALORS
+  /** retoune les MD simplifiées extraites d'une archive 7z.
+   * 
+   * SI $mdName n'est pas défini et le fichier XML standard existe ALORS
    *   retourne les MD ISO à partir du nom d'entrée standard des MD // MD d'une carte normale
    * SINON_SI $mdName est défini ALORS
    *   retourne les MD ISO à partir du fichier $mdName // cas où je veux les MD d'un cartouche d'une carte normale

@@ -1,13 +1,12 @@
 <?php
+/** génère une carte Leaflet pour visualiser les tiff contenues dans une archive de carte
+ *
+ * paramètres GET
+ *  - path - chemin du répertoire contenant le fichier 7z de la carte
+ *  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
+ */
 namespace bo;
-/*PhpDoc:
-name: tiffmap.php
-title: bo/tiffmap.php - génère une carte Leaflet pour visualiser les tiff contenues dans une archive de carte
-doc: |
-  paramètres GET
-   - path - chemin du répertoire contenant le fichier 7z de la carte
-   - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
-*/
+
 define ('LGEOJSON_STYLE', ['color'=>'blue', 'weight'=> 2, 'opacity'=> 0.3]); // style passé à l'appel de L.geoJSON()
 
 require_once __DIR__.'/maparchive.php';

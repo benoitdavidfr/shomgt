@@ -1,23 +1,22 @@
 <?php
+/** gère les stockage d'archives de cartes - 7/8/2023
+ *
+ * Un stockage d'archives de cartes (MapArchiveStore) est un répertoire qui contient
+ *   - d'une part un sous-répertoire archives
+ *   - d'autre part un sous-répertoire current avec des liens symboliques vers les archives
+ *
+ * La classe MapArchiveStore permet surtout de supporter des méthodes qui lisent et modifient les fichiers.
+ *
+ * Le 20/8/2023, utilisation pour le clonage de la fonction générique cloneDir()
+ *
+ * Ce script propose 4 fonctions:
+ *  1) vérifier la conformité des liens de current
+ *  2) si un lien de current est absolu alors le transformer en lien relatif
+ *  3) dans l'env de préProdData et si shomgeotiffpp n'existe pas alors le créer par clonage de shomgeotiff
+ *  4) comparer shomgeotiffpp et shomgeotiff
+ */
 namespace bo;
-/*PhpDoc:
-name: maparchivestore.php
-title: bo/maparchivestore.php - gère les stockage d'archives de cartes - 7/8/2023
-doc: |
-  Un stockage d'archives de cartes (MapArchiveStore) est un répertoire qui contient
-    - d'une part un sous-répertoire archives
-    - d'autre part un sous-répertoire current avec des liens symboliques vers les archives
- 
-  La classe MapArchiveStore permet surtout de supporter des méthodes qui lisent et modifient les fichiers.
- 
-  Le 20/8/2023, utilisation pour le clonage de la fonction générique cloneDir()
 
-  Ce script propose 4 fonctions:
-   1) vérifier la conformité des liens de current
-   2) si un lien de current est absolu alors le transformer en lien relatif
-   3) dans l'env de préProdData et si shomgeotiffpp n'existe pas alors le créer par clonage de shomgeotiff
-   4) comparer shomgeotiffpp et shomgeotiff
-*/
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/login.inc.php';

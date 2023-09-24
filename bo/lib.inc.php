@@ -1,10 +1,6 @@
 <?php
+/** biblio de fonctions - 2-13/8/2023 */
 namespace bo;
-
-/*PhpDoc:
-name: pflib.inc.php
-title: bo/lib.inc.php - biblio de fonctions - 2-13/8/2023
-*/
 
 require_once __DIR__.'/../vendor/autoload.php';
 

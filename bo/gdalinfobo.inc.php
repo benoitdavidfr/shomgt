@@ -1,9 +1,7 @@
 <?php
+/** fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023 */
 namespace bo;
-/*PhpDoc:
-name: gdalinfo.inc.php
-title: gdalinfo.inc.php - fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
-*/
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 #require_once __DIR__.'/../lib/gegeom.inc.php';
@@ -13,18 +11,20 @@ require_once __DIR__.'/my7zarchive.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+/** Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s'il intersecte ou non l'antiméridien
+ *
+ * On fait l'hypothèse que le polygone respecte la règle GeoJSON d'orientation inverse des aiguilles d'une montre
+ * Par contre, on fait aussi l'hypothèse que le polygone ne respecte pas la règle GeoJSON de dédoublage des objets
+ * intersectant l'antiméridien.
+ * Ces hypothèses ont été vérifiées sur de nombreuses cartes.
+ * Détecte les # des segments NS et WE
+ * Si le segment WE suit le segment NS alors le GBox n'intersecte pas l'AM
+ * A l'inverse si ce n'est pas le cas alors GBox intersecte l'AM
+ * NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE
+ */
 readonly class GBoxAsPolygon {
-  /** Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s'il intersecte ou non l'antiméridien
-   * On fait l'hypothèse que le polygone respecte la règle GeoJSON d'orientation inverse des aiguilles d'une montre
-   * Par contre, on fait aussi l'hypothèse que le polygone ne respecte pas la règle GeoJSON de dédoublage des objets
-   * intersectant l'antiméridien.
-   * Ces hypothèses ont été vérifiées sur de nombreuses cartes.
-   * Détecte les # des segments NS et WE
-   * Si le segment WE suit le segment NS alors le GBox n'intersecte pas l'AM
-   * A l'inverse si ce n'est pas le cas alors GBox intersecte l'AM
-   * NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE
-   */
-  const EPSILON = 1e-2; // en degrés soit environ 1 km
+  /** en degrés soit environ 1 km */
+  const EPSILON = 1e-2;
   /** @var TLLPos $coords; */
   public array $coords;
   
@@ -39,7 +39,7 @@ readonly class GBoxAsPolygon {
     $this->coords = $param['coordinates'];
   }
   
-  // numéro du segment Nord->Sud
+  /** numéro du segment Nord->Sud */
   function NSs(): int {
     for($i=0; $i <= 3; $i++) {
       // même X et $i.Y > $i+1.Y
@@ -50,7 +50,7 @@ readonly class GBoxAsPolygon {
     throw new \Exception("numéro du segment Nord->Sud non trouvé");
   }
   
-  // numéro du segment West->Est
+  /** numéro du segment West->Est */
   function WEs(): int {
     for($i=0; $i <= 3; $i++) {
       // même Y et $i.X < $i+1.X
@@ -61,7 +61,7 @@ readonly class GBoxAsPolygon {
     throw new \Exception("numéro du segment West->Est non trouvé");
   }
   
-  // indique si le polygone intersecte ou non l'anti-méridien
+  /** indique si le polygone intersecte ou non l'anti-méridien */
   function crossesTheAM(bool $verbose=false): bool {
     if ($verbose) {
       echo "#NSs=",$this->NSs(),"<br>\n";
@@ -79,16 +79,16 @@ readonly class GBoxAsPolygon {
     }
   }
   
-  /** coin SW
+  /** position du coin SW, c'est la fin du segment NS
    * @return TPos */
-  function SWc(): array { // position du coin SW, c'est la fin du segment NS
+  function SWc(): array {
     $ins = $this->NSs();
     return $this->coords[0][$ins+1];
   }
   
-  /** coin NE
+  /** position du coin NE, c'est l'indice du point NS + 3 modulo 4
    * @return TPos */
-  function NEc(): array { // position du coin NE, c'est l'indice du point NS + 3 modulo 4
+  function NEc(): array {
     $ins = $this->NSs();
     $ine = $ins + 3;
     if ($ine >= 4)
@@ -97,30 +97,28 @@ readonly class GBoxAsPolygon {
   }
 };
 
-{/*PhpDoc: classes
-name: GBox
-title: class GBox extends \gegeom\GBox - Ajout de fonctionnalités à \gegeom\GBox
-doc: |
-  Par convention, on cherche à respecter:
-    (-180 <= lon <= 180) && (-90 <= lat <= 90)
-  sauf pour les boites à cheval sur l'antiméridien où:
-    (-180 <= lonmin <= 180 < lonmax <= 180+360 )
-  et sauf pour les boites qui couvrent la totalité de la Terre en longitude.
-  Cette convention est différente de celle utilisée par GeoJSON.
-  Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
-  
-  J'ajoute à GBox la possibilité de création à partir du polygone GeoJSON dans wgs84extent
-  
-  Je considère au final qu'un GBox standardisé respecte les 2 contraintes ci-dessus.
-
-  On essaie ici de réutiliser \gegeom\GBox et \gegeom\EBox en en créant des sous-classes GBox et EBox
-  pour leur ajouter des fonctionalités.
-  Pour cela les règles à respecter sont le suivantes:
-   - ne pas redéfinir __construct() avec une signature incompatible avec celle du parent car certaines méthodes
-     comme BBox::round() par exemple utilisent le __construct() de ses enfants.
-     - la signature peut par contre être étendue à de nouvelles possibilités
-   - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GBox
-*/}
+/** Ajout de fonctionnalités à \gegeom\GBox
+ *
+ * Par convention, on cherche à respecter:
+ *   (-180 <= lon <= 180) && (-90 <= lat <= 90)
+ * sauf pour les boites à cheval sur l'antiméridien où:
+ *   (-180 <= lonmin <= 180 < lonmax <= 180+360 )
+ * et sauf pour les boites qui couvrent la totalité de la Terre en longitude.
+ * Cette convention est différente de celle utilisée par GeoJSON.
+ * Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin < -180
+ * 
+ * J'ajoute à GBox la possibilité de création à partir du polygone GeoJSON dans wgs84extent
+ * 
+ * Je considère au final qu'un GBox standardisé respecte les 2 contraintes ci-dessus.
+ *
+ * On essaie ici de réutiliser \gegeom\GBox et \gegeom\EBox en en créant des sous-classes GBox et EBox
+ * pour leur ajouter des fonctionalités.
+ * Pour cela les règles à respecter sont le suivantes:
+ *  - ne pas redéfinir __construct() avec une signature incompatible avec celle du parent car certaines méthodes
+ *    comme BBox::round() par exemple utilisent le __construct() de ses enfants.
+ *    - la signature peut par contre être étendue à de nouvelles possibilités
+ *  - redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GBox
+ */
 class GBoxBo extends \gegeom\GBox { 
   /* @var TPos $min */
   //public readonly array $min; // [number, number] ou []
@@ -142,7 +140,8 @@ class GBoxBo extends \gegeom\GBox {
     }
   }
   
-  function std(): self { // standardisation, cad respectant les conventions
+  /** standardisation, cad respectant les conventions */
+  function std(): self {
     $min = $this->min;
     if ($min[0] <= -180) $min[0] += 360;
     if ($min[0]  >  180) $min[0] -= 360;
@@ -154,8 +153,9 @@ class GBoxBo extends \gegeom\GBox {
   }
 };
 
-// extension de EBox avec possibilité de création à partir du champ cornerCoordinates de gdalinfo
-// et création d'un GBox par déprojection du EBox
+/** extension de EBox avec possibilité de création à partir du champ cornerCoordinates de gdalinfo
+ *
+ * et création d'un GBox par déprojection du EBox */
 class EBoxBo extends \gegeom\EBox {
   //protected array $min=[]; // position SW en proj
   //protected array $max=[]; // position NE en proj
@@ -188,7 +188,7 @@ class EBoxBo extends \gegeom\EBox {
   }
 };
 
-/* Gdalinfo - contenu du gdalinfo d'un fichier .tif ou .pdf
+/**  contenu du gdalinfo d'un fichier .tif ou .pdf.
  * Un fichier peut être géoréférencé, non géoréférencé ou mal géoréférencé.
  * Il est géoréférencé ssi les champs coordinateSystem, cornerCoordinates et wgs84Extent sont définis.
  * Il est mal géoréférencé ssi son géoréférencement est erroné.
@@ -209,7 +209,8 @@ readonly class GdalInfoBo { // info de géoréférencement d'une image fournie p
   /** @return array<string, mixed> */
   function asArray(): array { return $this->info; }
   
-  /* indique si le géoréférencement est absent, correct ou incorrect, retourne
+  /** indique si le géoréférencement est absent, correct ou incorrect.
+   * retourne
    *  - null si non géoréférencé cad champ 'coordinateSystem/wkt' non défini ou vide
    *  - 'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' défini et non vide
    *  - 'KO' si géoréférencé incorrectement
@@ -222,7 +223,8 @@ readonly class GdalInfoBo { // info de géoréférencement d'une image fournie p
       return $this->goodGeoref() ? 'ok' : 'KO';
   }
   
-  function gbox(): ?GBoxBo { // retourne le GBox ssi il est défini dans le gdalinfo
+  /** retourne le GBox ssi il est défini dans le gdalinfo */
+  function gbox(): ?GBoxBo {
     if (!isset($this->info['wgs84Extent']))
       return null;
     else {
@@ -230,8 +232,8 @@ readonly class GdalInfoBo { // info de géoréférencement d'une image fournie p
     }
   }
 
-  // Teste si le géoréférencement fourni par gdalinfo est correct
-  // Le principe est fondé sur la compraison entre wgs84Extent et la conversion en geo de cornerCoordinates
+  /** Teste si le géoréférencement fourni par gdalinfo est correct.
+   * Le principe est fondé sur la compraison entre wgs84Extent et la conversion en geo de cornerCoordinates */
   function goodGeoref(bool $debug=false): bool {
     //$debug = true;
     $cornerCoordinates = new EBoxBo($this->info['cornerCoordinates']);
@@ -254,6 +256,7 @@ readonly class GdalInfoBo { // info de géoréférencement d'une image fournie p
     return ($dist < 1e-2); // équivalent à 1 km
   }
   
+  /** Test de goodGeoref() */
   static function testGoodGeoref(string $PF_PATH): void {
     foreach ([
         "7620-2018c5 - Approches d'Anguilla"=> ['path7z'=> 'archives/7620/7620-2018c5.7z', 'entry'=> '7620/7620_pal300.tif'],

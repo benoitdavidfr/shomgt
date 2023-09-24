@@ -1,11 +1,10 @@
 <?php
+/** analyse et affiche les logs d'accès y compris sous la forme de carte Leaflet.
+ *
+ * Utilise https://github.com/Leaflet/Leaflet.heat pour les cartes de chaleur
+ */
 //namespace bo;
-/*PhpDoc:
-name: accesslog.php
-title: accesslog.php - analyse et affiche les logs d'accès y compris sous la forme de carte Leaflet
-doc: |
-  Utilise https://github.com/Leaflet/Leaflet.heat pour les cartes de chaleur
-*/
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
@@ -21,8 +20,9 @@ $LOG_MYSQL_URI = getenv($ve) or die("Erreur, variable d'environnement '$ve' non 
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>bo/accesslog@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
-class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
-  // la structuration de la constante est définie dans son champ description
+/** Définition du schéma de la table ipaddress et de son contenu */
+class SqlDef {
+  /** Définition du schéma de la table ipaddress */
   const IPADDRESS_SCHEMA = [
     'comment' => "table des adresses IP",
     'columns' => [
@@ -36,7 +36,8 @@ class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
         'comment'=> "étiquette associée",
       ],
     ],
-  ]; // Définition du schéma de la table ipaddress
+  ];
+  /** Contenu de la table ipaddress */
   const IPADDRESS_CONTENT = [
     ['88.166.143.190', "BDavid"], // domicile
     ['86.244.235.216', "BDavid"], // labergerieduperejule
@@ -75,8 +76,9 @@ class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
     ['134.246.184.7', "Shom"],
     ['137.129.13.93', "Shom"],
   ];
-  // fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
-  /** @param array<string, mixed> $schema */
+  
+  /** fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma.
+   * @param array<string, mixed> $schema */
   static function sql(string $tableName, array $schema): string {
     $cols = [];
     foreach ($schema['columns'] ?? [] as $cname => $col) {
@@ -95,9 +97,9 @@ class SqlDef { // Définition du schéma de la table ipaddress et de son contenu
   }
 };
 
-// classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête
+/** classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête */
 class Request2GBox {
-  // extrait le bbox d'une requête WMS et le retourne comme GBox ou null si le BBOX n'est pas détecté dans la requête
+  /** extrait le bbox d'une requête WMS et le retourne comme GBox ou null si le BBOX n'est pas détecté dans la requête */
   static function wms(string $request_uri): ?\gegeom\GBox {
   //static function wms(string $request_uri): ?GBox {
     // détermination du bbox
@@ -169,11 +171,11 @@ class Request2GBox {
 };
 //GJGeom::test();
 
-// construit un enregistrement pour carte de chaleur à partir de l'URI de la requête
+/** construit un enregistrement pour carte de chaleur à partir de l'URI de la requête */
 class HeatData {
   /** retourne [] ou [lat, lng, intensity]
    * @return list<int|float>
-  */
+   */
   static function fromWmsRequest(string $request_uri): array {
     if (!($gbox = Request2GBox::wms($request_uri)))
       return [];
@@ -222,8 +224,8 @@ class HeatData {
 };
 //HeatData::test();
 
-
-function durationInHours(string $duration): int { // prend en compte l'unité pour traduire la durée en heures
+/** prend en compte l'unité pour traduire la durée en heures */
+function durationInHours(string $duration): int {
   return match (substr($_GET['duration'], -1)) {
     'h' => intval(substr($_GET['duration'], 0, -1)),
     'd' => intval(substr($_GET['duration'], 0, -1))*24,
@@ -232,7 +234,7 @@ function durationInHours(string $duration): int { // prend en compte l'unité po
   };
 }
 
-// retourne le texte de la requête SQL adhoc
+/** retourne le texte de la requête SQL adhoc */
 function queryForRecentAccess(string $access, int $durationInHours, ?string $param=null): string {
   switch ($param) {
     case 'agg': { // req agrégée sur les IP

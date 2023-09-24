@@ -1,26 +1,25 @@
 <?php
+/** clone un répertoire src dans un répertoire dest - 18/8/2023.
+ *
+ * Clone le répertoire src qui doit exister dans le répertoire dest qui est créé et ne doit pas prééxister
+ * Le clonage s'effectue en créant:
+ *  - pour chaque répertoire de src un nouveau répertoire dans dest
+ *  - pour chaque fichier de src un lien dur dans dest
+ *  - pour chaque lien symbolique des src un lien symbolique dans dest ayant même cible
+ * Peut s'exécuter soit en CLI soit en web
+ */
 namespace bo;
-/*PhpDoc:
-name: clone.php
-title: clone.php - clone un répertoire src dans un répertoire dest - 18/8/2023
-doc: |
-  Clone le répertoire src qui doit exister dans le répertoire dest qui est créé et ne doit pas prééxister
-  Le clonage s'effectue en créant:
-   - pour chaque répertoire de src un nouveau répertoire dans dest
-   - pour chaque fichier de src un lien dur dans dest
-   - pour chaque lien symbolique des src un lien symbolique dans dest ayant même cible
-  Peut s'exécuter soit en CLI soit en web
-*/
 //require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
 
 //use Symfony\Component\Yaml\Yaml;
 
-/* $src est le chemin vers un répertoire existant à cloner
- * $dest est le chemin vers le répertoire à créer par clonage qui ne doit pas pré-exister
- * $tab est la chaine à afficher avant les affichages de debug, si vide pas de d'affichage
+/** fonction récursive de clonage.
+ * @param string $src; le chemin vers un répertoire existant à cloner
+ * @param string $dest; le chemin vers le répertoire à créer par clonage qui ne doit pas pré-exister
+ * @param string $tab; la chaine à afficher avant les affichages de debug, si vide pas de d'affichage
  * Retourne un message en cas d'erreur et null ssi OK
-*/
+ */
 function cloneDir(string $src, string $dest, string $tab=''): ?string {
   if ($tab)
     echo "{$tab}cloneDir($src, $dest)\n";

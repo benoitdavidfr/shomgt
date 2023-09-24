@@ -1,20 +1,19 @@
 <?php
+/** accès aux fichiers de SHOMGEOTIFF en http - 8/2023.
+ *
+ * Par défaut lorsque PATH_INFO n'est pas défini propose d'accéder à archives ou current.
+ * Définit un objet version qui regroupe le .7z et le md.json ayant même basename.
+ * Dans /current possibilité de passer sur la version courante.
+ * Puis possibilité de visualiser le .md.json ou de télécharger le .7z
+ * Enfin possibilité de lister le contenu du .7z et d'accéder à chaque élément.
+ * Le PATH_INFO est composé de la concaténation
+ *  - du chemin du fichier 7z dans SHOMGT3_PORTFOLIO_PATH,
+ *  - du caractère '/' et
+ *  - de l'entrée dans le fichier 7z
+ * Permet aussi de convertir en .png un .tif ou un .pdf
+ */
 namespace bo;
-/*PhpDoc:
-name: shomgeotiff.php
-title: bo/shomgeotiff.php - accès aux fichiers de SHOMGEOTIFF en http - 8/2023
-doc: |
-  Par défaut lorsque PATH_INFO n'est pas défini propose d'accéder à archives ou current.
-  Définit un objet version qui regroupe le .7z et le md.json ayant même basename.
-  Dans /current possibilité de passer sur la version courante.
-  Puis possibilité de visualiser le .md.json ou de télécharger le .7z
-  Enfin possibilité de lister le contenu du .7z et d'accéder à chaque élément.
-  Le PATH_INFO est composé de la concaténation
-   - du chemin du fichier 7z dans SHOMGT3_PORTFOLIO_PATH,
-   - du caractère '/' et
-   - de l'entrée dans le fichier 7z
-  Permet aussi de convertir en .png un .tif ou un .pdf
-*/
+
 require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/my7zarchive.inc.php';
 

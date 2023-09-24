@@ -1,15 +1,14 @@
 <?php
+/** lancement d'un des 2 scripts CLI de mise à jour des cartes par sgupdt et de mise à jour des GAN
+ *
+ * Lance en arrière plan un script CLI en stockant le résultat dans un fichier temporaire de sortie,
+ * Permet de consulter ce fichier temporaire de sortie au fur et à mesure de son remplissage,
+ * notamment dans le cas où l'exécution est assez longue.
+ * Revient à la fin au menu du BO en demandant d'effacer le fichier temporaire.
+ * C'est à l'utilisateur de décider quand la mise à jour est terminée.
+ */  
 namespace bo;
-/*PhpDoc:
-name: runbatch.php
-title: bo/runbatch.php - lancement d'un des 2 scripts CLI de mise à jour des cartes par sgupdt et de mise à jour des GAN
-doc: |
-  Lance en arrière plan un script CLI en stockant le résultat dans un fichier temporaire de sortie,
-  Permet de consulter ce fichier temporaire de sortie au fur et à mesure de son remplissage,
-  notamment dans le cas où l'exécution est assez longue.
-  Revient à la fin au menu du BO en demandant d'effacer le fichier temporaire.
-  C'est à l'utilisateur de décider quand la mise à jour est terminée.
-*/  
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/user.php';
 

@@ -1,12 +1,11 @@
 <?php
+/** création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023.
+ *
+ *  Améliorations à apporter:
+ *    - au moins faire un log des actions
+ */
 namespace bo;
-/*PhpDoc:
-name: user.php
-title: bo/user.php - création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023
-doc: |
-   Améliorations à apporter:
-     - au moins faire un log des actions
-*/
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
 require_once __DIR__.'/htmlform.inc.php';

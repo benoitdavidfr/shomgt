@@ -1,9 +1,7 @@
 <?php
+/** gestion du poids des cartes du portefeuille - 1/8/2023 */
 namespace bo;
-/*PhpDoc:
-name: pfweight.php
-title: bo/pfweight.php - gestion du poids des cartes du portefeuille - 1/8/2023
-*/
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/lib.inc.php';
 require_once __DIR__.'/login.inc.php';

@@ -1,13 +1,12 @@
 <?php
+/** étend SevenZipArchive par l'ajout de 2 méthodes simplifiant l'extraction temporaire d'un fichier.
+ *
+ *  - extract() extrait une entrée de l'archive et retourne le chemin du fichier créé
+ *  - remove() supprime le fichier extrait ainsi que les répertoires créés
+ * Le fichier est extrait dans un répertoire unique afin d'éviter les collisions.
+ */
 namespace bo;
-/*PhpDoc:
-name: index.php
-title: my7zarchive.inc.php - étend SevenZipArchive par l'ajout de 2 méthodes simplifiant l'extraction temporaire d'un fichier
-doc: |
-   - extract() extrait une entrée de l'archive et retourne le chemin du fichier créé
-   - remove() supprime le fichier extrait ainsi que les répertoires créés
-  Le fichier est extrait dans un répertoire unique afin d'éviter les collisions.
-*/
+
 require_once __DIR__.'/SevenZipArchive.php';
 
 class My7zArchive extends \SevenZipArchive {
