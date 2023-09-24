@@ -122,7 +122,10 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">accesslog.php</h2>
 
-        
+            <p class="phpdocumentor-summary">analyse et affiche les logs d&#039;accès y compris sous la forme de carte Leaflet.</p>
+
+    <section class="phpdocumentor-description"><p>Utilise https://github.com/Leaflet/Leaflet.heat pour les cartes de chaleur</p>
+</section>
 
 
 
@@ -143,7 +146,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/SqlDef.html"><abbr title="\SqlDef">SqlDef</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Request2GBox.html"><abbr title="\Request2GBox">Request2GBox</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/HeatData.html"><abbr title="\HeatData">HeatData</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/SqlDef.html"><abbr title="\SqlDef">SqlDef</abbr></a></dt><dd>Définition du schéma de la table ipaddress et de son contenu</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Request2GBox.html"><abbr title="\Request2GBox">Request2GBox</abbr></a></dt><dd>classe traduisant un URI correspondant à une requête WMS ou tile dans le GBox de la loc. de la requête</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/HeatData.html"><abbr title="\HeatData">HeatData</abbr></a></dt><dd>construit un enregistrement pour carte de chaleur à partir de l&#039;URI de la requête</dd>    </dl>
 
 
 
@@ -162,12 +165,14 @@
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>prend en compte l&#039;unité pour traduire la durée en heures</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_queryForRecentAccess">queryForRecentAccess()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>retourne le texte de la requête SQL adhoc</dd>
 
     </dl>
 
@@ -190,11 +195,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/accesslog.php"><a href="files/bo-accesslog.html"><abbr title="bo/accesslog.php">accesslog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">226</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">prend en compte l&#039;unité pour traduire la durée en heures</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">durationInHours</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$duration</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
@@ -228,11 +234,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/accesslog.php"><a href="files/bo-accesslog.html"><abbr title="bo/accesslog.php">accesslog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">236</span>
+    <span class="phpdocumentor-element-found-in__line">238</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le texte de la requête SQL adhoc</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">queryForRecentAccess</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$access</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$durationInHours</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$param</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>

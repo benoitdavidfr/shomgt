@@ -122,7 +122,17 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">clone.php</h2>
 
-        
+            <p class="phpdocumentor-summary">clone un répertoire src dans un répertoire dest - 18/8/2023.</p>
+
+    <section class="phpdocumentor-description"><p>Clone le répertoire src qui doit exister dans le répertoire dest qui est créé et ne doit pas prééxister
+Le clonage s'effectue en créant:</p>
+<ul>
+<li>pour chaque répertoire de src un nouveau répertoire dans dest</li>
+<li>pour chaque fichier de src un lien dur dans dest</li>
+<li>pour chaque lien symbolique des src un lien symbolique dans dest ayant même cible
+Peut s'exécuter soit en CLI soit en web</li>
+</ul>
+</section>
 
 
 
@@ -155,6 +165,7 @@
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>fonction récursive de clonage.</dd>
 
     </dl>
 
@@ -177,11 +188,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/clone.php"><a href="files/bo-clone.html"><abbr title="bo/clone.php">clone.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">fonction récursive de clonage.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">cloneDir</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$src</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dest</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tab</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>

@@ -138,7 +138,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GBoxAsPolygon.html"><abbr title="\bo\GBoxAsPolygon">GBoxAsPolygon</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GBoxBo.html"><abbr title="\bo\GBoxBo">GBoxBo</abbr></a></dt><dd>BBox en coord. géo., chaque position codée comme [lon, lat]</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-EBoxBo.html"><abbr title="\bo\EBoxBo">EBoxBo</abbr></a></dt><dd>BBox en coord. projetées euclidiennes, chaque position codée comme [x, y]</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GdalInfoBo.html"><abbr title="\bo\GdalInfoBo">GdalInfoBo</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-Login.html"><abbr title="\bo\Login">Login</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GeoRefImage.html"><abbr title="\bo\GeoRefImage">GeoRefImage</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-MapArchive.html"><abbr title="\bo\MapArchive">MapArchive</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-MapArchiveStore.html"><abbr title="\bo\MapArchiveStore">MapArchiveStore</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-MapMetadata.html"><abbr title="\bo\MapMetadata">MapMetadata</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-My7zArchive.html"><abbr title="\bo\My7zArchive">My7zArchive</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-SqlSchema.html"><abbr title="\bo\SqlSchema">SqlSchema</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GBoxAsPolygon.html"><abbr title="\bo\GBoxAsPolygon">GBoxAsPolygon</abbr></a></dt><dd>Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s&#039;il intersecte ou non l&#039;antiméridien</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GBoxBo.html"><abbr title="\bo\GBoxBo">GBoxBo</abbr></a></dt><dd>Ajout de fonctionnalités à \gegeom\GBox</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-EBoxBo.html"><abbr title="\bo\EBoxBo">EBoxBo</abbr></a></dt><dd>extension de EBox avec possibilité de création à partir du champ cornerCoordinates de gdalinfo</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GdalInfoBo.html"><abbr title="\bo\GdalInfoBo">GdalInfoBo</abbr></a></dt><dd>contenu du gdalinfo d&#039;un fichier .tif ou .pdf.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-Login.html"><abbr title="\bo\Login">Login</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-GeoRefImage.html"><abbr title="\bo\GeoRefImage">GeoRefImage</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-MapArchive.html"><abbr title="\bo\MapArchive">MapArchive</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-MapArchiveStore.html"><abbr title="\bo\MapArchiveStore">MapArchiveStore</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-MapMetadata.html"><abbr title="\bo\MapMetadata">MapMetadata</abbr></a></dt><dd>construit les MD synthétiques d&#039;une carte à partir des MD ISO dans le 7z</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-My7zArchive.html"><abbr title="\bo\My7zArchive">My7zArchive</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-SqlSchema.html"><abbr title="\bo\SqlSchema">SqlSchema</abbr></a></dt>    </dl>
 
 
 
@@ -169,6 +169,7 @@
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>fonction récursive de clonage.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/bo.html#function_directoryEntries">directoryEntries()</a>
@@ -273,7 +274,7 @@ Doit être appelé avec en paramètre la constante __FILE__</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/addmaps.php"><a href="files/bo-addmaps.html"><abbr title="bo/addmaps.php">addmaps.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -318,7 +319,7 @@ Doit être appelé avec en paramètre la constante __FILE__</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/addmaps.php"><a href="files/bo-addmaps.html"><abbr title="bo/addmaps.php">addmaps.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -363,11 +364,12 @@ Doit être appelé avec en paramètre la constante __FILE__</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/clone.php"><a href="files/bo-clone.html"><abbr title="bo/clone.php">clone.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">fonction récursive de clonage.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">cloneDir</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$src</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dest</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tab</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -415,7 +417,7 @@ Doit être appelé avec en paramètre la constante __FILE__</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/lib.inc.php"><a href="files/bo-lib-inc.html"><abbr title="bo/lib.inc.php">lib.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
@@ -453,7 +455,7 @@ Doit être appelé avec en paramètre la constante __FILE__</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/lib.inc.php"><a href="files/bo-lib-inc.html"><abbr title="bo/lib.inc.php">lib.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -513,7 +515,7 @@ Doit être appelé avec en paramètre la constante __FILE__</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/lib.inc.php"><a href="files/bo-lib-inc.html"><abbr title="bo/lib.inc.php">lib.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -555,7 +557,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/lib.inc.php"><a href="files/bo-lib-inc.html"><abbr title="bo/lib.inc.php">lib.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -589,7 +591,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchivestore.php"><a href="files/bo-maparchivestore.html"><abbr title="bo/maparchivestore.php">maparchivestore.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -623,7 +625,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/shomgeotiff.php"><a href="files/bo-shomgeotiff.html"><abbr title="bo/shomgeotiff.php">shomgeotiff.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -668,7 +670,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/shomgeotiff.php"><a href="files/bo-shomgeotiff.html"><abbr title="bo/shomgeotiff.php">shomgeotiff.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">176</span>
 
     </aside>
 
@@ -702,7 +704,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/tiffmap.php"><a href="files/bo-tiffmap.html"><abbr title="bo/tiffmap.php">tiffmap.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -741,7 +743,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -765,7 +767,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">137</span>
 
     </aside>
 
@@ -803,7 +805,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -841,7 +843,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -886,7 +888,7 @@ Doit être appelé avec en paramètre la constante __FILE__</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 

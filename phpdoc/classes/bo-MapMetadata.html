@@ -143,11 +143,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/mapmetadata.inc.php"><a href="files/bo-mapmetadata-inc.html"><abbr title="bo/mapmetadata.inc.php">mapmetadata.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">11</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">construit les MD synthétiques d&#039;une carte à partir des MD ISO dans le 7z</p>
+
 
 
 
@@ -191,18 +192,7 @@
     <span>
                                 &nbsp;: array&lt;string, string&gt;    </span>
 </dt>
-<dd>SI $mdName n&#039;est pas défini et le fichier XML standard existe ALORS
-  retourne les MD ISO à partir du nom d&#039;entrée standard des MD // MD d&#039;une carte normale
-SINON_SI $mdName est défini ALORS
-  retourne les MD ISO à partir du fichier $mdName // cas où je veux les MD d&#039;un cartouche d&#039;une carte normale
-SINON // carte spéciale
-  S&#039;&#039;il existe un et un seul fichier XML ALORS
-    retourne les MD ISO à partir de ce fichier XML // cas d&#039;une carte spéciale ayant des MD XML
-  SINON // MD limitées construites avec un .tif/.pdf présent dans l&#039;archive et servant de version
-    S&#039;il existe un seul .tif ou pas de .tif et un seul .pdf ALORS
-      retourne MD dégradées carte spéciale à partir du .tif ou du .pdf
-    SINON
-      retourne [] // ERREUR</dd>
+<dd>retoune les MD simplifiées extraites d&#039;une archive 7z.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapMetadata.html#method_test">test()</a>
@@ -239,7 +229,7 @@ SINON // carte spéciale
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/mapmetadata.inc.php"><a href="files/bo-mapmetadata-inc.html"><abbr title="bo/mapmetadata.inc.php">mapmetadata.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
@@ -284,7 +274,7 @@ SINON // carte spéciale
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/mapmetadata.inc.php"><a href="files/bo-mapmetadata-inc.html"><abbr title="bo/mapmetadata.inc.php">mapmetadata.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
@@ -329,22 +319,11 @@ SINON // carte spéciale
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/mapmetadata.inc.php"><a href="files/bo-mapmetadata-inc.html"><abbr title="bo/mapmetadata.inc.php">mapmetadata.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">SI $mdName n&#039;est pas défini et le fichier XML standard existe ALORS
-  retourne les MD ISO à partir du nom d&#039;entrée standard des MD // MD d&#039;une carte normale
-SINON_SI $mdName est défini ALORS
-  retourne les MD ISO à partir du fichier $mdName // cas où je veux les MD d&#039;un cartouche d&#039;une carte normale
-SINON // carte spéciale
-  S&#039;&#039;il existe un et un seul fichier XML ALORS
-    retourne les MD ISO à partir de ce fichier XML // cas d&#039;une carte spéciale ayant des MD XML
-  SINON // MD limitées construites avec un .tif/.pdf présent dans l&#039;archive et servant de version
-    S&#039;il existe un seul .tif ou pas de .tif et un seul .pdf ALORS
-      retourne MD dégradées carte spéciale à partir du .tif ou du .pdf
-    SINON
-      retourne [] // ERREUR</p>
+        <p class="phpdocumentor-summary">retoune les MD simplifiées extraites d&#039;une archive 7z.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -352,7 +331,20 @@ SINON // carte spéciale
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>SI $mdName n'est pas défini et le fichier XML standard existe ALORS
+retourne les MD ISO à partir du nom d'entrée standard des MD // MD d'une carte normale
+SINON_SI $mdName est défini ALORS
+retourne les MD ISO à partir du fichier $mdName // cas où je veux les MD d'un cartouche d'une carte normale
+SINON // carte spéciale
+S''il existe un et un seul fichier XML ALORS
+retourne les MD ISO à partir de ce fichier XML // cas d'une carte spéciale ayant des MD XML
+SINON // MD limitées construites avec un .tif/.pdf présent dans l'archive et servant de version
+S'il existe un seul .tif ou pas de .tif et un seul .pdf ALORS
+retourne MD dégradées carte spéciale à partir du .tif ou du .pdf
+SINON
+retourne [] // ERREUR</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -393,7 +385,7 @@ SINON // carte spéciale
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/mapmetadata.inc.php"><a href="files/bo-mapmetadata-inc.html"><abbr title="bo/mapmetadata.inc.php">mapmetadata.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 

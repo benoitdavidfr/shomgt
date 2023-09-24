@@ -3,42 +3,42 @@ Search.appendIndex(
                 {
             "fqsen": "\\durationInHours\u0028\u0029",
             "name": "durationInHours",
-            "summary": "",
+            "summary": "prend\u0020en\u0020compte\u0020l\u0027unit\u00E9\u0020pour\u0020traduire\u0020la\u0020dur\u00E9e\u0020en\u0020heures",
             "url": "namespaces/default.html#function_durationInHours"
         },                {
             "fqsen": "\\queryForRecentAccess\u0028\u0029",
             "name": "queryForRecentAccess",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020texte\u0020de\u0020la\u0020requ\u00EAte\u0020SQL\u0020adhoc",
             "url": "namespaces/default.html#function_queryForRecentAccess"
         },                {
             "fqsen": "\\SqlDef",
             "name": "SqlDef",
-            "summary": "",
+            "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020ipaddress\u0020et\u0020de\u0020son\u0020contenu",
             "url": "classes/SqlDef.html"
         },                {
             "fqsen": "\\SqlDef\u003A\u003Asql\u0028\u0029",
             "name": "sql",
-            "summary": "",
+            "summary": "fabrique\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020des\u0020constantes\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma.",
             "url": "classes/SqlDef.html#method_sql"
         },                {
             "fqsen": "\\SqlDef\u003A\u003AIPADDRESS_SCHEMA",
             "name": "IPADDRESS_SCHEMA",
-            "summary": "",
+            "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020ipaddress",
             "url": "classes/SqlDef.html#constant_IPADDRESS_SCHEMA"
         },                {
             "fqsen": "\\SqlDef\u003A\u003AIPADDRESS_CONTENT",
             "name": "IPADDRESS_CONTENT",
-            "summary": "",
+            "summary": "Contenu\u0020de\u0020la\u0020table\u0020ipaddress",
             "url": "classes/SqlDef.html#constant_IPADDRESS_CONTENT"
         },                {
             "fqsen": "\\Request2GBox",
             "name": "Request2GBox",
-            "summary": "",
+            "summary": "classe\u0020traduisant\u0020un\u0020URI\u0020correspondant\u0020\u00E0\u0020une\u0020requ\u00EAte\u0020WMS\u0020ou\u0020tile\u0020dans\u0020le\u0020GBox\u0020de\u0020la\u0020loc.\u0020de\u0020la\u0020requ\u00EAte",
             "url": "classes/Request2GBox.html"
         },                {
             "fqsen": "\\Request2GBox\u003A\u003Awms\u0028\u0029",
             "name": "wms",
-            "summary": "",
+            "summary": "extrait\u0020le\u0020bbox\u0020d\u0027une\u0020requ\u00EAte\u0020WMS\u0020et\u0020le\u0020retourne\u0020comme\u0020GBox\u0020ou\u0020null\u0020si\u0020le\u0020BBOX\u0020n\u0027est\u0020pas\u0020d\u00E9tect\u00E9\u0020dans\u0020la\u0020requ\u00EAte",
             "url": "classes/Request2GBox.html#method_wms"
         },                {
             "fqsen": "\\Request2GBox\u003A\u003Atile\u0028\u0029",
@@ -53,7 +53,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\HeatData",
             "name": "HeatData",
-            "summary": "",
+            "summary": "construit\u0020un\u0020enregistrement\u0020pour\u0020carte\u0020de\u0020chaleur\u0020\u00E0\u0020partir\u0020de\u0020l\u0027URI\u0020de\u0020la\u0020requ\u00EAte",
             "url": "classes/HeatData.html"
         },                {
             "fqsen": "\\HeatData\u003A\u003AfromWmsRequest\u0028\u0029",
@@ -86,14 +86,9 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/bo.html#function_cmpVersion"
         },                {
-            "fqsen": "\\AOT",
-            "name": "AOT",
-            "summary": "",
-            "url": "classes/AOT.html"
-        },                {
             "fqsen": "\\bo\\cloneDir\u0028\u0029",
             "name": "cloneDir",
-            "summary": "",
+            "summary": "fonction\u0020r\u00E9cursive\u0020de\u0020clonage.",
             "url": "namespaces/bo.html#function_cloneDir"
         },                {
             "fqsen": "\\menu\u0028\u0029",
@@ -103,7 +98,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon",
             "name": "GBoxAsPolygon",
-            "summary": "",
+            "summary": "Analyse\u0020un\u0020GBox\u0020fourni\u0020par\u0020gdalinfo\u0020comme\u0020polygone\u0020GeoJSON\u0020pour\u0020d\u00E9terminer\u0020s\u0027il\u0020intersecte\u0020ou\u0020non\u0020l\u0027antim\u00E9ridien",
             "url": "classes/bo-GBoxAsPolygon.html"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003A__construct\u0028\u0029",
@@ -113,32 +108,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003ANSs\u0028\u0029",
             "name": "NSs",
-            "summary": "",
+            "summary": "num\u00E9ro\u0020du\u0020segment\u0020Nord\u002D\u003ESud",
             "url": "classes/bo-GBoxAsPolygon.html#method_NSs"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003AWEs\u0028\u0029",
             "name": "WEs",
-            "summary": "",
+            "summary": "num\u00E9ro\u0020du\u0020segment\u0020West\u002D\u003EEst",
             "url": "classes/bo-GBoxAsPolygon.html#method_WEs"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003AcrossesTheAM\u0028\u0029",
             "name": "crossesTheAM",
-            "summary": "",
+            "summary": "indique\u0020si\u0020le\u0020polygone\u0020intersecte\u0020ou\u0020non\u0020l\u0027anti\u002Dm\u00E9ridien",
             "url": "classes/bo-GBoxAsPolygon.html#method_crossesTheAM"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003ASWc\u0028\u0029",
             "name": "SWc",
-            "summary": "coin\u0020SW",
+            "summary": "position\u0020du\u0020coin\u0020SW,\u0020c\u0027est\u0020la\u0020fin\u0020du\u0020segment\u0020NS",
             "url": "classes/bo-GBoxAsPolygon.html#method_SWc"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003ANEc\u0028\u0029",
             "name": "NEc",
-            "summary": "coin\u0020NE",
+            "summary": "position\u0020du\u0020coin\u0020NE,\u0020c\u0027est\u0020l\u0027indice\u0020du\u0020point\u0020NS\u0020\u002B\u00203\u0020modulo\u00204",
             "url": "classes/bo-GBoxAsPolygon.html#method_NEc"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003AEPSILON",
             "name": "EPSILON",
-            "summary": "Analyse\u0020un\u0020GBox\u0020fourni\u0020par\u0020gdalinfo\u0020comme\u0020polygone\u0020GeoJSON\u0020pour\u0020d\u00E9terminer\u0020s\u0027il\u0020intersecte\u0020ou\u0020non\u0020l\u0027antim\u00E9ridien\nOn\u0020fait\u0020l\u0027hypoth\u00E8se\u0020que\u0020le\u0020polygone\u0020respecte\u0020la\u0020r\u00E8gle\u0020GeoJSON\u0020d\u0027orientation\u0020inverse\u0020des\u0020aiguilles\u0020d\u0027une\u0020montre\nPar\u0020contre,\u0020on\u0020fait\u0020aussi\u0020l\u0027hypoth\u00E8se\u0020que\u0020le\u0020polygone\u0020ne\u0020respecte\u0020pas\u0020la\u0020r\u00E8gle\u0020GeoJSON\u0020de\u0020d\u00E9doublage\u0020des\u0020objets\nintersectant\u0020l\u0027antim\u00E9ridien.",
+            "summary": "en\u0020degr\u00E9s\u0020soit\u0020environ\u00201\u0020km",
             "url": "classes/bo-GBoxAsPolygon.html#constant_EPSILON"
         },                {
             "fqsen": "\\bo\\GBoxAsPolygon\u003A\u003A\u0024coords",
@@ -148,7 +143,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GBoxBo",
             "name": "GBoxBo",
-            "summary": "BBox\u0020en\u0020coord.\u0020g\u00E9o.,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Blon,\u0020lat\u005D",
+            "summary": "Ajout\u0020de\u0020fonctionnalit\u00E9s\u0020\u00E0\u0020\\gegeom\\GBox",
             "url": "classes/bo-GBoxBo.html"
         },                {
             "fqsen": "\\bo\\GBoxBo\u003A\u003A__construct\u0028\u0029",
@@ -158,12 +153,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GBoxBo\u003A\u003Astd\u0028\u0029",
             "name": "std",
-            "summary": "",
+            "summary": "standardisation,\u0020cad\u0020respectant\u0020les\u0020conventions",
             "url": "classes/bo-GBoxBo.html#method_std"
         },                {
             "fqsen": "\\bo\\EBoxBo",
             "name": "EBoxBo",
-            "summary": "BBox\u0020en\u0020coord.\u0020projet\u00E9es\u0020euclidiennes,\u0020chaque\u0020position\u0020cod\u00E9e\u0020comme\u0020\u005Bx,\u0020y\u005D",
+            "summary": "extension\u0020de\u0020EBox\u0020avec\u0020possibilit\u00E9\u0020de\u0020cr\u00E9ation\u0020\u00E0\u0020partir\u0020du\u0020champ\u0020cornerCoordinates\u0020de\u0020gdalinfo",
             "url": "classes/bo-EBoxBo.html"
         },                {
             "fqsen": "\\bo\\EBoxBo\u003A\u003A__construct\u0028\u0029",
@@ -183,7 +178,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GdalInfoBo",
             "name": "GdalInfoBo",
-            "summary": "",
+            "summary": "contenu\u0020du\u0020gdalinfo\u0020d\u0027un\u0020fichier\u0020.tif\u0020ou\u0020.pdf.",
             "url": "classes/bo-GdalInfoBo.html"
         },                {
             "fqsen": "\\bo\\GdalInfoBo\u003A\u003A__construct\u0028\u0029",
@@ -198,22 +193,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GdalInfoBo\u003A\u003Ageoref\u0028\u0029",
             "name": "georef",
-            "summary": "",
+            "summary": "indique\u0020si\u0020le\u0020g\u00E9or\u00E9f\u00E9rencement\u0020est\u0020absent,\u0020correct\u0020ou\u0020incorrect.",
             "url": "classes/bo-GdalInfoBo.html#method_georef"
         },                {
             "fqsen": "\\bo\\GdalInfoBo\u003A\u003Agbox\u0028\u0029",
             "name": "gbox",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020GBox\u0020ssi\u0020il\u0020est\u0020d\u00E9fini\u0020dans\u0020le\u0020gdalinfo",
             "url": "classes/bo-GdalInfoBo.html#method_gbox"
         },                {
             "fqsen": "\\bo\\GdalInfoBo\u003A\u003AgoodGeoref\u0028\u0029",
             "name": "goodGeoref",
-            "summary": "",
+            "summary": "Teste\u0020si\u0020le\u0020g\u00E9or\u00E9f\u00E9rencement\u0020fourni\u0020par\u0020gdalinfo\u0020est\u0020correct.",
             "url": "classes/bo-GdalInfoBo.html#method_goodGeoref"
         },                {
             "fqsen": "\\bo\\GdalInfoBo\u003A\u003AtestGoodGeoref\u0028\u0029",
             "name": "testGoodGeoref",
-            "summary": "",
+            "summary": "Test\u0020de\u0020goodGeoref\u0028\u0029",
             "url": "classes/bo-GdalInfoBo.html#method_testGoodGeoref"
         },                {
             "fqsen": "\\bo\\GdalInfoBo\u003A\u003Atest\u0028\u0029",
@@ -416,16 +411,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/html-Radio.html#property_selected"
         },                {
-            "fqsen": "\\dateBetween\u0028\u0029",
-            "name": "dateBetween",
-            "summary": "",
-            "url": "namespaces/default.html#function_dateBetween"
-        },                {
-            "fqsen": "\\testDateBetween\u0028\u0029",
-            "name": "testDateBetween",
-            "summary": "",
-            "url": "namespaces/default.html#function_testDateBetween"
-        },                {
             "fqsen": "\\JSON_OPTIONS",
             "name": "JSON_OPTIONS",
             "summary": "",
@@ -488,7 +473,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\sendMail\u0028\u0029",
             "name": "sendMail",
-            "summary": "",
+            "summary": "test\u0020d\u0027envoi\u0020d\u0027un\u0020mail",
             "url": "namespaces/default.html#function_sendMail"
         },                {
             "fqsen": "\\bo\\GeoRefImage",
@@ -708,7 +693,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\MapMetadata",
             "name": "MapMetadata",
-            "summary": "",
+            "summary": "construit\u0020les\u0020MD\u0020synth\u00E9tiques\u0020d\u0027une\u0020carte\u0020\u00E0\u0020partir\u0020des\u0020MD\u0020ISO\u0020dans\u0020le\u00207z",
             "url": "classes/bo-MapMetadata.html"
         },                {
             "fqsen": "\\bo\\MapMetadata\u003A\u003AganWeek2iso\u0028\u0029",
@@ -723,7 +708,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\MapMetadata\u003A\u003AgetFrom7z\u0028\u0029",
             "name": "getFrom7z",
-            "summary": "SI\u0020\u0024mdName\u0020n\u0027est\u0020pas\u0020d\u00E9fini\u0020et\u0020le\u0020fichier\u0020XML\u0020standard\u0020existe\u0020ALORS\n\u0020\u0020retourne\u0020les\u0020MD\u0020ISO\u0020\u00E0\u0020partir\u0020du\u0020nom\u0020d\u0027entr\u00E9e\u0020standard\u0020des\u0020MD\u0020\/\/\u0020MD\u0020d\u0027une\u0020carte\u0020normale\nSINON_SI\u0020\u0024mdName\u0020est\u0020d\u00E9fini\u0020ALORS\n\u0020\u0020retourne\u0020les\u0020MD\u0020ISO\u0020\u00E0\u0020partir\u0020du\u0020fichier\u0020\u0024mdName\u0020\/\/\u0020cas\u0020o\u00F9\u0020je\u0020veux\u0020les\u0020MD\u0020d\u0027un\u0020cartouche\u0020d\u0027une\u0020carte\u0020normale\nSINON\u0020\/\/\u0020carte\u0020sp\u00E9ciale\n\u0020\u0020S\u0027\u0027il\u0020existe\u0020un\u0020et\u0020un\u0020seul\u0020fichier\u0020XML\u0020ALORS\n\u0020\u0020\u0020\u0020retourne\u0020les\u0020MD\u0020ISO\u0020\u00E0\u0020partir\u0020de\u0020ce\u0020fichier\u0020XML\u0020\/\/\u0020cas\u0020d\u0027une\u0020carte\u0020sp\u00E9ciale\u0020ayant\u0020des\u0020MD\u0020XML\n\u0020\u0020SINON\u0020\/\/\u0020MD\u0020limit\u00E9es\u0020construites\u0020avec\u0020un\u0020.tif\/.pdf\u0020pr\u00E9sent\u0020dans\u0020l\u0027archive\u0020et\u0020servant\u0020de\u0020version\n\u0020\u0020\u0020\u0020S\u0027il\u0020existe\u0020un\u0020seul\u0020.tif\u0020ou\u0020pas\u0020de\u0020.tif\u0020et\u0020un\u0020seul\u0020.pdf\u0020ALORS\n\u0020\u0020\u0020\u0020\u0020\u0020retourne\u0020MD\u0020d\u00E9grad\u00E9es\u0020carte\u0020sp\u00E9ciale\u0020\u00E0\u0020partir\u0020du\u0020.tif\u0020ou\u0020du\u0020.pdf\n\u0020\u0020\u0020\u0020SINON\n\u0020\u0020\u0020\u0020\u0020\u0020retourne\u0020\u005B\u005D\u0020\/\/\u0020ERREUR",
+            "summary": "retoune\u0020les\u0020MD\u0020simplifi\u00E9es\u0020extraites\u0020d\u0027une\u0020archive\u00207z.",
             "url": "classes/bo-MapMetadata.html#method_getFrom7z"
         },                {
             "fqsen": "\\bo\\MapMetadata\u003A\u003Atest\u0028\u0029",

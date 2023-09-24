@@ -146,18 +146,33 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">BBox en coord. géo., chaque position codée comme [lon, lat]</p>
+            <p class="phpdocumentor-summary">Ajout de fonctionnalités à \gegeom\GBox</p>
 
     <section class="phpdocumentor-description"><p>Par convention, on cherche à respecter:
 (-180 &lt;= lon &lt;= 180) &amp;&amp; (-90 &lt;= lat &lt;= 90)
-sauf pour les boites à cheval sur l'anti-méridien où:
+sauf pour les boites à cheval sur l'antiméridien où:
 (-180 &lt;= lonmin &lt;= 180 &lt; lonmax &lt;= 180+360 )
+et sauf pour les boites qui couvrent la totalité de la Terre en longitude.
 Cette convention est différente de celle utilisée par GeoJSON.
 Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin &lt; -180</p>
+<p>J'ajoute à GBox la possibilité de création à partir du polygone GeoJSON dans wgs84extent</p>
+<p>Je considère au final qu'un GBox standardisé respecte les 2 contraintes ci-dessus.</p>
+<p>On essaie ici de réutiliser \gegeom\GBox et \gegeom\EBox en en créant des sous-classes GBox et EBox
+pour leur ajouter des fonctionalités.
+Pour cela les règles à respecter sont le suivantes:</p>
+<ul>
+<li>ne pas redéfinir __construct() avec une signature incompatible avec celle du parent car certaines méthodes
+comme BBox::round() par exemple utilisent le __construct() de ses enfants.
+<ul>
+<li>la signature peut par contre être étendue à de nouvelles possibilités</li>
+</ul>
+</li>
+<li>redéfinir les méthodes comme EBox::geo() car j'ai besoin qu'elle renvoie un GBox</li>
+</ul>
 </section>
 
 
@@ -465,6 +480,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <span>
                                 &nbsp;: self    </span>
 </dt>
+<dd>standardisation, cad respectant les conventions</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_translate360East">translate360East()</a>
@@ -841,7 +857,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -2007,11 +2023,12 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">standardisation, cad respectant les conventions</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">std</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>

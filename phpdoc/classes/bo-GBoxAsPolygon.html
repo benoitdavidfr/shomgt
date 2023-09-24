@@ -145,11 +145,21 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s&#039;il intersecte ou non l&#039;antiméridien</p>
+
+    <section class="phpdocumentor-description"><p>On fait l'hypothèse que le polygone respecte la règle GeoJSON d'orientation inverse des aiguilles d'une montre
+Par contre, on fait aussi l'hypothèse que le polygone ne respecte pas la règle GeoJSON de dédoublage des objets
+intersectant l'antiméridien.
+Ces hypothèses ont été vérifiées sur de nombreuses cartes.
+Détecte les # des segments NS et WE
+Si le segment WE suit le segment NS alors le GBox n'intersecte pas l'AM
+A l'inverse si ce n'est pas le cas alors GBox intersecte l'AM
+NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
+</section>
 
 
 
@@ -178,10 +188,7 @@
     <span>
         &nbsp;= 0.01                            </span>
 </dt>
-<dd>Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s&#039;il intersecte ou non l&#039;antiméridien
-On fait l&#039;hypothèse que le polygone respecte la règle GeoJSON d&#039;orientation inverse des aiguilles d&#039;une montre
-Par contre, on fait aussi l&#039;hypothèse que le polygone ne respecte pas la règle GeoJSON de dédoublage des objets
-intersectant l&#039;antiméridien.</dd>
+<dd>en degrés soit environ 1 km</dd>
 
     </dl>
 
@@ -217,32 +224,35 @@ intersectant l&#039;antiméridien.</dd>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>indique si le polygone intersecte ou non l&#039;anti-méridien</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GBoxAsPolygon.html#method_NEc">NEc()</a>
     <span>
                                 &nbsp;: <abbr title="\bo\TPos">TPos</abbr>    </span>
 </dt>
-<dd>coin NE</dd>
+<dd>position du coin NE, c&#039;est l&#039;indice du point NS + 3 modulo 4</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GBoxAsPolygon.html#method_NSs">NSs()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>numéro du segment Nord-&gt;Sud</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GBoxAsPolygon.html#method_SWc">SWc()</a>
     <span>
                                 &nbsp;: <abbr title="\bo\TPos">TPos</abbr>    </span>
 </dt>
-<dd>coin SW</dd>
+<dd>position du coin SW, c&#039;est la fin du segment NS</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GBoxAsPolygon.html#method_WEs">WEs()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>numéro du segment West-&gt;Est</dd>
 
     </dl>
 
@@ -270,10 +280,7 @@ intersectant l&#039;antiméridien.</dd>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Analyse un GBox fourni par gdalinfo comme polygone GeoJSON pour déterminer s&#039;il intersecte ou non l&#039;antiméridien
-On fait l&#039;hypothèse que le polygone respecte la règle GeoJSON d&#039;orientation inverse des aiguilles d&#039;une montre
-Par contre, on fait aussi l&#039;hypothèse que le polygone ne respecte pas la règle GeoJSON de dédoublage des objets
-intersectant l&#039;antiméridien.</p>
+        <p class="phpdocumentor-summary">en degrés soit environ 1 km</p>
 
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -283,13 +290,7 @@ intersectant l&#039;antiméridien.</p>
 </code>
 
 
-        <section class="phpdocumentor-description"><p>Ces hypothèses ont été vérifiées sur de nombreuses cartes.
-Détecte les # des segments NS et WE
-Si le segment WE suit le segment NS alors le GBox n'intersecte pas l'AM
-A l'inverse si ce n'est pas le cas alors GBox intersecte l'AM
-NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
-</section>
-
+    
     
     
 
@@ -403,7 +404,8 @@ NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">indique si le polygone intersecte ou non l&#039;anti-méridien</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">crossesTheAM</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$verbose</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -448,7 +450,7 @@ NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
 
     </aside>
 
-        <p class="phpdocumentor-summary">coin NE</p>
+        <p class="phpdocumentor-summary">position du coin NE, c&#039;est l&#039;indice du point NS + 3 modulo 4</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -484,7 +486,8 @@ NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">numéro du segment Nord-&gt;Sud</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">NSs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
@@ -519,7 +522,7 @@ NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
 
     </aside>
 
-        <p class="phpdocumentor-summary">coin SW</p>
+        <p class="phpdocumentor-summary">position du coin SW, c&#039;est la fin du segment NS</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -555,7 +558,8 @@ NE TRAITE PAS TOUS LES CAS DE FIGURE POSSIBLE</p>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">numéro du segment West-&gt;Est</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">WEs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>

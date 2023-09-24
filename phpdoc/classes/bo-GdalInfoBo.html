@@ -149,7 +149,13 @@
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">contenu du gdalinfo d&#039;un fichier .tif ou .pdf.</p>
+
+    <section class="phpdocumentor-description"><p>Un fichier peut être géoréférencé, non géoréférencé ou mal géoréférencé.
+Il est géoréférencé ssi les champs coordinateSystem, cornerCoordinates et wgs84Extent sont définis.
+Il est mal géoréférencé ssi son géoréférencement est erroné.
+Voir la définition de mal géoréférencé dans goodGeoref()</p>
+</section>
 
 
 
@@ -206,18 +212,21 @@
     <span>
                                 &nbsp;: <a href="classes/bo-GBoxBo.html"><abbr title="\bo\GBoxBo">GBoxBo</abbr></a>|null    </span>
 </dt>
+<dd>retourne le GBox ssi il est défini dans le gdalinfo</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GdalInfoBo.html#method_georef">georef()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>indique si le géoréférencement est absent, correct ou incorrect.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GdalInfoBo.html#method_goodGeoref">goodGeoref()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Teste si le géoréférencement fourni par gdalinfo est correct.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-GdalInfoBo.html#method_test">test()</a>
@@ -230,6 +239,7 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Test de goodGeoref()</dd>
 
     </dl>
 
@@ -376,11 +386,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">227</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le GBox ssi il est défini dans le gdalinfo</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">gbox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/bo-GBoxBo.html"><abbr title="\bo\GBoxBo">GBoxBo</abbr></a>|null</span></code>
@@ -411,18 +422,26 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">indique si le géoréférencement est absent, correct ou incorrect.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">georef</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>retourne</p>
+<ul>
+<li>null si non géoréférencé cad champ 'coordinateSystem/wkt' non défini ou vide</li>
+<li>'ok' si géoréférencé correctement cad champ 'coordinateSystem/wkt' défini et non vide</li>
+<li>'KO' si géoréférencé incorrectement</li>
+</ul>
+</section>
+
     
     
 
@@ -446,18 +465,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">237</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Teste si le géoréférencement fourni par gdalinfo est correct.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">goodGeoref</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$debug</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Le principe est fondé sur la compraison entre wgs84Extent et la conversion en geo de cornerCoordinates</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -491,7 +513,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -539,11 +561,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/gdalinfobo.inc.php"><a href="files/bo-gdalinfobo-inc.html"><abbr title="bo/gdalinfobo.inc.php">gdalinfobo.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Test de goodGeoref()</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">testGoodGeoref</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$PF_PATH</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>

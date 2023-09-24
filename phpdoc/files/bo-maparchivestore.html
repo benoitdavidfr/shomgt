@@ -122,7 +122,23 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">maparchivestore.php</h2>
 
-        
+            <p class="phpdocumentor-summary">gère les stockage d&#039;archives de cartes - 7/8/2023</p>
+
+    <section class="phpdocumentor-description"><p>Un stockage d'archives de cartes (MapArchiveStore) est un répertoire qui contient</p>
+<ul>
+<li>d'une part un sous-répertoire archives</li>
+<li>d'autre part un sous-répertoire current avec des liens symboliques vers les archives</li>
+</ul>
+<p>La classe MapArchiveStore permet surtout de supporter des méthodes qui lisent et modifient les fichiers.</p>
+<p>Le 20/8/2023, utilisation pour le clonage de la fonction générique cloneDir()</p>
+<p>Ce script propose 4 fonctions:</p>
+<ol>
+<li>vérifier la conformité des liens de current</li>
+<li>si un lien de current est absolu alors le transformer en lien relatif</li>
+<li>dans l'env de préProdData et si shomgeotiffpp n'existe pas alors le créer par clonage de shomgeotiff</li>
+<li>comparer shomgeotiffpp et shomgeotiff</li>
+</ol>
+</section>
 
 
 
@@ -184,7 +200,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchivestore.php"><a href="files/bo-maparchivestore.html"><abbr title="bo/maparchivestore.php">maparchivestore.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
