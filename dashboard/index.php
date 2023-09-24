@@ -1,10 +1,6 @@
 <?php
-namespace dashboard;
-/*PhpDoc:
-title: dashboard/index.php - 12/6/2023
-*/
-/**
- * Tableau de bord de mise à jour des cartes.
+/** Tableau de bord de mise à jour des cartes.
+ *
  * Affiche:
  *  1) les cartes manquantes ou en excès dans le portefeuille par rapport au flux WFS du Shom
  *  2) le degré de péremption des différentes cartes du portefeuille
@@ -14,26 +10,25 @@ title: dashboard/index.php - 12/6/2023
  *  - soit elle intersecte la ZEE
  * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
  *
- * 2/7/2023:
- *  - correction lecture AvailAtTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin
- * 28/6/2023:
- *  - **BUG** Attention, l'action perempt plante lorsqu'une nouvelle carte est ajoutée dans le patrimoine
- *    sans que le GAN soit moissonné sur cette carte
- * 25/6/2023:
- *  - ajout de l'affichage de la disponibilité de la carte dans la boutique
- * 12/6/2023:
- *  - réécriture de l'interface avec le portefeuille à la suite de sa réorganisation
- * 23/4/2023:
- *  - ajout aux cartes manquantes la ZEE intersectée pour facilier leur localisation
- * 21/4/2023:
- *  - prise en compte évol de ../shomft sur la définition du périmètre de gt.json
- *  - modif fonction spatialCoeff() pour mettre à niveau les COM à la suite mail D. Bon
- * 6/1/2023: modif fonction spatialCoeff()
- * 22/8/2022: correction bug
+ * Journal:
+ * - 2/7/2023:
+ *   - correction lecture AvailAtTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin
+ * - 28/6/2023:
+ *   - **BUG** Attention, l'action perempt plante lorsqu'une nouvelle carte est ajoutée dans le patrimoine
+ *     sans que le GAN soit moissonné sur cette carte
+ * - 25/6/2023:
+ *   - ajout de l'affichage de la disponibilité de la carte dans la boutique
+ * - 12/6/2023:
+ *   - réécriture de l'interface avec le portefeuille à la suite de sa réorganisation
+ * - 23/4/2023:
+ *   - ajout aux cartes manquantes la ZEE intersectée pour facilier leur localisation
+ * - 21/4/2023:
+ *   - prise en compte évol de ../shomft sur la définition du périmètre de gt.json
+ *   - modif fonction spatialCoeff() pour mettre à niveau les COM à la suite mail D. Bon
+ * - 6/1/2023: modif fonction spatialCoeff()
+ * - 22/8/2022: correction bug
  */
-/*PhpDoc:
-title: dashboard/index.php - Tableau de bord de l'actualité des cartes - 25/6/2023
-*/
+namespace dashboard;
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
@@ -45,7 +40,7 @@ use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
-// pour un entier fournit une représentation avec un '_' comme séparateur des milliers 
+/** pour un entier fournit une représentation avec un '_' comme séparateur des milliers */
 function addUndescoreForThousand(?int $scaleden): string {
   if ($scaleden === null) return 'undef';
   if ($scaleden < 0)
@@ -135,7 +130,8 @@ class MapFromWfs {
   }
 };
 
-class Perempt { // croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption
+/** croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption */
+class Perempt {
   protected string $mapNum;
   protected ?\mapcat\MapCatItem $mapCat; // info de MapCat
   protected string $pfVersion; // info du portefeuille 
@@ -145,10 +141,12 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   protected array $ganCorrections=[]; // info du GAN
   protected ?float $degree=null; // degré de péremption déduit de la confrontation entre portefeuille et GAN
   
-  /** @var array<string, Perempt> $all */
+  /** tableau de tous les objets de la classse
+   * @var array<string, Perempt> $all */
   static array $all; // [mapNum => Perempt]
 
-  static function init(): void { // construction à partir du portefeuille 
+  /** construction à partir du portefeuille */
+  static function init(): void {
     foreach (Portfolio::$all as $mapnum => $mapMd) {
       self::$all[$mapnum] = new self($mapnum, $mapMd);
     }
@@ -163,7 +161,8 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     $this->pfDate = $mapMd['dateMD']['value'] ?? $mapMd['dateArchive'];
   }
   
-  function setGan(Gan $gan): void { // Mise à jour de perempt à partir du GAN
+  /** Mise à jour de perempt à partir du GAN */
+  function setGan(Gan $gan): void {
     $this->ganVersion = $gan->version();
     $this->ganCorrections = $gan->corrections();
     $this->degree = $this->degree();
@@ -172,8 +171,9 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   function title(): string { return $this->mapCat->title ?? "<i>titre inconnu</i>"; }
   /** @return array<int, string> */
   function mapsFrance(): array { return $this->mapCat->mapsFrance ?? ['unkown']; }
-    
-  function degree(): float { // calcul du degré de péremption 
+  
+  /** calcul du degré de péremption */
+  function degree(): float {
     if (($this->pfVersion == 'undefined') && ($this->ganVersion == 'undefined'))
       return -1;
     if (!$this->mapCat) {
@@ -200,7 +200,8 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
       return 100;
   }
 
-  static function showAll(): void { // Affichage du tableau des degrés de péremption
+  /** Affichage du tableau des degrés de péremption */
+  static function showAll(): void { 
     usort(self::$all,
       function(Perempt $a, Perempt $b) {
         if ($a->degree() < $b->degree()) return 1;
@@ -250,7 +251,8 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
     echo "</table>\n";
   }
   
-  function showAsRow(): void { // Affichage d'une ligne du tableau des degrés de péremption
+  /** Affichage d'une ligne du tableau des degrés de péremption */
+  function showAsRow(): void {
     echo "<tr><td>$this->mapNum</td>";
     echo "<td>",$this->title(),"</td>";
     echo "<td>",implode(', ', $this->mapsFrance()),"</td>";
@@ -274,9 +276,12 @@ class Perempt { // croisement entre le portefeuille et les GANs en vue d'affiche
   }
 };
 
-class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique
+/** lit le fichier disponible.tsv s'il existe et stoke les cartes dispo. dans la boutique */
+class AvailAtTheShop {
+  /** chemin du fichier tsv */
   const FILE_NAME = __DIR__.'/available.tsv';
-  const MAX_DURATION = 7*24*60*60; // durée pendant laquelle le fichier FILE_NAME reste valide
+  /** durée en secondes pendant laquelle le fichier FILE_NAME reste valide */
+  const MAX_DURATION = 7*24*60*60;
   //const MAX_DURATION = 60; // Pour test
   
   /** affiche comme table Html un tableau dont chaque ligne est une chaine avec \t comme séparateur
@@ -296,7 +301,8 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
     echo "</table>\n";
   }
   
-  static function load(): void { // chargement du fichier available.tsv
+  /** chargement du fichier available.tsv */
+  static function load(): void {
     //echo "<pre>POST="; print_r($_POST); echo "</pre>\n";
     if (!isset($_POST['text'])) {// appel intial
       $page = 0;
@@ -340,10 +346,12 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
   /** @var array<string, string> $all */
   static array $all=[]; // [{mapNum} => {maj}]
   
-  static function exists(): bool { return (self::$all <> []); } // indique s'il existe au moins une carte disponible 
+  /** indique s'il existe au moins une carte disponible */
+  static function exists(): bool { return (self::$all <> []); }
   
+  /** charge le fichier dans self::$all */
   static function init(): void {
-    // si le fichier n'existe pas ou s'il date de plus de 2 jours alors abandon 
+    // si le fichier n'existe pas ou s'il est trop  vieux alors abandon 
     if (!is_file(self::FILE_NAME) || (time() - filemtime(self::FILE_NAME) > self::MAX_DURATION))
       return;
     $ftsv = fopen(self::FILE_NAME, 'r');
@@ -365,7 +373,7 @@ class AvailAtTheShop { // lit le fichier disponible.tsv s'il existe et stoke les
 };
 
 
-// Teste si à la fois $now - $first >= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now 
+/** Teste si à la fois $now - $first >= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now */
 function dateBetween(\DateTimeImmutable $first, \DateTimeImmutable $now, int $dayOfWeek=4, int $h=20, int $mn=0): bool {
   //echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
   
@@ -412,6 +420,7 @@ function dateBetween(\DateTimeImmutable $first, \DateTimeImmutable $now, int $da
   }
 }
 
+/** Test de dateBetween() */
 function testDateBetween(): void {
   $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15');
   $now = new \DateTimeImmutable;
@@ -427,10 +436,10 @@ function testDateBetween(): void {
 }
 //testDateBetween();
 
-// indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
-// Si remoisson alors retourne l'age de la moisson en jours
-// Si la moisson n'existe pas alors retourne -1
-// Si la moisson n'a pas à être moissonnée retourne 0
+/** indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
+ * Si remoisson alors retourne l'age de la moisson en jours
+ * Si la moisson n'existe pas alors retourne -1
+ * Si la moisson n'a pas à être moissonnée retourne 0 */
 function ganHarvestAge(): int {
   //return -1;
   if (!is_file(__DIR__.'/../dashboard/gans.yaml'))

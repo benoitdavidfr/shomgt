@@ -1,20 +1,12 @@
 <?php
+/** définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN */
 namespace dashboard;
-/*PhpDoc:
-name: gan.inc.php
-title: dashboard/gan.inc.php - définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN
-classes:
-doc: |
-  restructuration des classes Gan et GanInSet pour fusionner les définitions de gan.php et index.php
-*/
+
 require_once __DIR__.'/portfolio.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-/*PhpDoc: classes
-name: GanInSet
-title: class GanInSet - description d'un cartouche dans la synthèse d'une carte
-*/
+/** description d'un cartouche dans la synthèse d'une carte */
 class GanInSet {
   protected string $title;
   protected ?string $scale=null; // échelle
@@ -44,20 +36,19 @@ class GanInSet {
   }
 };
 
-/*PhpDoc: classes
-name: Gan
-title: class Gan - synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
-methods:
-doc: |
-  Moisonne le GAN des cartes du portefeuille non obsolètes (et donc le champ modified est connu).
-  Analyse les fichiers Html moissonnés et en produit une synthèse.
-*/
+/** synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
+ *
+ * Moisonne le GAN des cartes du portefeuille non obsolètes (et donc le champ modified est connu).
+ * Analyse les fichiers Html moissonnés et en produit une synthèse.
+ */
 class Gan {
-  // le champ édition du GAN comporte des erreurs qui perturbent le TdB, ci-dessous corrections
-  // Il se lit {{num}=> [{edACorriger}=> {edCorrigée}]}
-  // Liste d'écarts transmise le 15/6/2022 au Shom
-  // Les écarts ci-dessous sont ceux restants après corrections du Shom
-  // Revisite le 18/8/2023, vérification par rapport à la carte elle même
+  /** Corrections du champ édition du GAN pour certaines cartes afin de ne pas perturber le TdB
+   * La constante est un tableau avec pour entrée le numéro de carte
+   * et pour valeur un array [{edACorriger}=> {edCorrigée}]
+   * Liste d'écarts transmise le 15/6/2022 au Shom
+   * Les écarts ci-dessous sont ceux restants après corrections du Shom
+   * Revisite le 18/8/2023, vérification par rapport à la carte elle même
+   */
   const CORRECTIONS = [
     '6942'=> ["Edition n°3 - 2015"=> "Edition n°3 - 2016"], // correction vérifiée le 18/8/2023
     //'7143'=> ["Edition n°2 - 2002"=> "Edition n°2 - 2003"], Suppression le 18/8/2023
@@ -69,29 +60,41 @@ class Gan {
     '7755'=> ["Publication 2015"=> "Publication 2016"], // correction vérifiée le 18/8/2023
   ];
 
-  static string $hvalid=''; // intervalles des dates de la moisson des GAN
-  /** @var array<string, Gan> $gans */
-  static array $gans=[]; // dictionnaire [$mapnum => Gan]
+  /** interval des dates de la moisson des GAN */
+  static string $hvalid='';
+  /** dictionnaire [$mapnum => Gan]
+   * @var array<string, Gan> $gans */
+  static array $gans=[];
   
   protected string $mapnum;
-  protected ?string $groupTitle=null; // sur-titre optionnel identifiant un ensemble de cartes
-  protected string $title=''; // titre
-  protected ?string $scale=null; // échelle
-  protected ?string $edition=null; // edition
-  /** @var array<int, array<string, string>> $corrections */
-  protected array $corrections=[]; // liste des corrections
-  /** @var array<string, string> $spatial */
-  protected array $spatial=[]; // sous la forme ['SW'=> sw, 'NE'=> ne]
-  /** @var array<int, GanInSet> $inSets */
-  protected array $inSets=[]; // cartouches
-  /** @var array<int, string> $analyzeErrors */
-  protected array $analyzeErrors=[]; // erreurs éventuelles d'analyse du résultat du moissonnage
-  protected string $valid; // date de moissonnage du GAN en format ISO
-  protected string $harvestError=''; // erreur éventuelle du moissonnage
+  /** sur-titre optionnel identifiant un ensemble de cartes */
+  protected ?string $groupTitle=null;
+  /** titre de la carte */
+  protected string $title='';
+  /** échelle de la carte */
+  protected ?string $scale=null;
+  /** édition de la carte */
+  protected ?string $edition=null;
+  /** liste des corrections
+   * @var array<int, array<string, string>> $corrections */
+  protected array $corrections=[];
+  /** extension spatiale sour la forme ['SW'=> sw, 'NE'=> ne]
+   * @var array<string, string> $spatial */
+  protected array $spatial=[];
+  /** liste des cartouches
+   * @var array<int, GanInSet> $inSets */
+  protected array $inSets=[];
+  /** erreurs éventuelles d'analyse du résultat du moissonnage
+   * @var array<int, string> $analyzeErrors */
+  protected array $analyzeErrors=[];
+  /** date de moissonnage du GAN en format ISO */
+  protected string $valid;
+  /** erreur éventuelle du moissonnage */
+  protected string $harvestError='';
 
-  // record est le résultat de l'analyse du fichier Html, $map est l'enregistrement de maps.json
+  // record est le résultat de l'analyse du fichier Html
   /** @param array<string, mixed> $record */
-  function __construct(string $mapnum, array $record, /*array $map,*/ ?int $mtime) {
+  function __construct(string $mapnum, array $record, ?int $mtime) {
     echo "mapnum=$mapnum\n";
     //echo '$record='; print_r($record);
     //echo '$mapa='; print_r($mapa);
@@ -153,19 +156,9 @@ class Gan {
     //echo '$this='; print_r($this);
   }
   
-  /*static function gans(?string $mapid=null): array { // retourne soit un array de tous les gans soit le gan demandé comme array
-    if (!self::$gans)
-      self::loadFromPser();
-    if (!$mapid)
-      return self::$gans;
-    elseif (isset(self::$gans[$mapid]))
-      return self::$gans[$mapid]->asArray();
-    else
-      return [];
-  }*/
-  
-  /** @return array<string, mixed> */
-  static function allAsArray(): array { // retourne l'ensemble de la classe comme array 
+  /** retourne l'ensemble des objets de la classe comme array
+   * @return array<string, mixed> */
+  static function allAsArray(): array {
     if (!self::$gans)
       GanStatic::loadFromPser();
     return [
@@ -179,8 +172,9 @@ class Gan {
     ];
   }
   
-  /** @return array<string, mixed> */
-  function asArray(): array { // retourne un objet comme array 
+  /** retourne un objet comme array 
+   * @return array<string, mixed> */
+  function asArray(): array {
     return
       ($this->groupTitle ? ['groupTitle'=> $this->groupTitle] : [])
     + ($this->title ? ['title'=> $this->title] : [])
@@ -196,7 +190,8 @@ class Gan {
     ;
   }
 
-  function version(): string { // calcule la version sous la forme {anneeEdition}c{noCorrection}
+  /** calcule la version sous la forme {anneeEdition}c{noCorrection} */
+  function version(): string {
     // COORECTIONS DU GAN
     if (isset(self::CORRECTIONS[$this->mapnum][$this->edition]))
       $this->edition = self::CORRECTIONS[$this->mapnum][$this->edition];
@@ -226,7 +221,7 @@ class Gan {
     echo "<pre>corrections = "; print_r($this->corrections); echo "</pre>";*/
   }
 
-  // retourne le cartouche correspondant au qgbox
+  /** retourne le cartouche correspondant au qgbox */
   function inSet(\gegeom\GBox $qgbox): GanInSet {
     //echo "<pre>"; print_r($this);
     $dmin = INF;
@@ -256,13 +251,15 @@ class Gan {
   }
 };
 
+/** Classe regroupant des méthodes statiques autour de la gestion des GAN */
 class GanStatic {
   const GAN_DIR = __DIR__.'/gan';
   const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
   const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
   const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
   
-  static function week(string $modified): string { // transforme une date en semaine sur 4 caractères comme utilisé par le GAN 
+  /** transforme une date en semaine sur 4 caractères comme utilisé par le GAN */
+  static function week(string $modified): string {
     // Il y a des dates avant 2000 qui font planter le GAN
     if ($modified < '2017-01-01') { // Si la date est avant le 1/1/2017
       //echo "modified = $modified\n";
@@ -325,7 +322,6 @@ class GanStatic {
    * analyzeHtml() - analyse du Html du GAN
    *
    * analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte
-   * fonction complètement réécrite / V1
    * retourne un array avec les champs title, edition et corrections + analyzeErrors en cas d'erreur d'analyse
    * J'ai essayé de minimiser la dépendance au code Html !
    *
@@ -418,7 +414,7 @@ class GanStatic {
     return $record;
   }
   
-  // pour mise au point effectue l'analyse du GAN pour une carte
+  /** pour mise au point effectue l'analyse du GAN pour une carte */
   static function analyzeHtmlOfMap(string $mapnum): void {
     $map = Portfolio::$all[$mapnum];
     echo 'map='; print_r($map);
@@ -444,10 +440,7 @@ class GanStatic {
     }
   }
   
-  /*PhpDoc: methods
-  name: build
-  title: "static function build(): void - construit la synhèse des GAN de la moisson existante"
-  */
+  /** construit la synhèse des GAN de la moisson existante */
   static function build(): void {
     $minvalid = null;
     $maxvalid = null;
@@ -483,14 +476,16 @@ class GanStatic {
     }
   }
  
-  static function storeAsPser(): void { // enregistre le catalogue comme pser 
+  /** enregistre le catalogue comme pser */
+  static function storeAsPser(): void {
     file_put_contents(self::PATH_PSER, serialize([
       'valid'=> Gan::$hvalid,
       'gans'=> Gan::$gans,
     ]));
   }
   
-  static function loadFromPser(): void { // charge les données depuis le pser 
+  /** charge les données depuis le pser */
+  static function loadFromPser(): void {
     $contents = unserialize(file_get_contents(self::PATH_PSER));
     Gan::$hvalid = $contents['valid'];
     Gan::$gans = $contents['gans'];

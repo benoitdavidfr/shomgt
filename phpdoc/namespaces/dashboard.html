@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -84,6 +84,14 @@
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -130,7 +138,12 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Gan.html"><abbr title="\dashboard\Gan">Gan</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-GanStatic.html"><abbr title="\dashboard\GanStatic">GanStatic</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Lock.html"><abbr title="\dashboard\Lock">Lock</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-MapFromWfs.html"><abbr title="\dashboard\MapFromWfs">MapFromWfs</abbr></a></dt><dd>MapFromWfs - liste des cartes définies dans le WFS</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Perempt.html"><abbr title="\dashboard\Perempt">Perempt</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-AvailAtTheShop.html"><abbr title="\dashboard\AvailAtTheShop">AvailAtTheShop</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Portfolio.html"><abbr title="\dashboard\Portfolio">Portfolio</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a></dt><dd>description d&#039;un cartouche dans la synthèse d&#039;une carte</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Gan.html"><abbr title="\dashboard\Gan">Gan</abbr></a></dt><dd>synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d&#039;erreur d&#039;interrogation des GAN</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-GanStatic.html"><abbr title="\dashboard\GanStatic">GanStatic</abbr></a></dt><dd>Classe regroupant des méthodes statiques autour de la gestion des GAN</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Lock.html"><abbr title="\dashboard\Lock">Lock</abbr></a></dt><dd>Verrou d&#039;utilisation pour garantir que le script n&#039;est pas utilisé plusieurs fois simultanément
+3 opérations:
+ - locked() pour connaitre l&#039;état du verrou
+ - lock() pour le vérouiller
+ - unlock() pour le dévérouiller
+Le verrou est implémenté par l&#039;existence d&#039;un fichier.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-MapFromWfs.html"><abbr title="\dashboard\MapFromWfs">MapFromWfs</abbr></a></dt><dd>MapFromWfs - liste des cartes définies dans le WFS</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Perempt.html"><abbr title="\dashboard\Perempt">Perempt</abbr></a></dt><dd>croisement entre le portefeuille et les GANs en vue d&#039;afficher le tableau des degrés de péremption</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-AvailAtTheShop.html"><abbr title="\dashboard\AvailAtTheShop">AvailAtTheShop</abbr></a></dt><dd>lit le fichier disponible.tsv s&#039;il existe et stoke les cartes dispo. dans la boutique</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Portfolio.html"><abbr title="\dashboard\Portfolio">Portfolio</abbr></a></dt><dd>Portefeuille des cartes exposées sur ShomGt issu des fichiers .md.json</dd>    </dl>
 
 
 
@@ -149,36 +162,45 @@
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>extrait le code d&#039;erreur Http</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_httpContext">httpContext()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>fabrique un context Http</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_addUndescoreForThousand">addUndescoreForThousand()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>pour un entier fournit une représentation avec un &#039;_&#039; comme séparateur des milliers</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_dateBetween">dateBetween()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Teste si à la fois $now - $first &gt;= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_testDateBetween">testDateBetween()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Test de dateBetween()</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_ganHarvestAge">ganHarvestAge()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
+<dd>indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
+Si remoisson alors retourne l&#039;age de la moisson en jours
+Si la moisson n&#039;existe pas alors retourne -1
+Si la moisson n&#039;a pas à être moissonnée retourne 0</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_wfsAge">wfsAge()</a>
@@ -205,11 +227,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">extrait le code d&#039;erreur Http</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">http_error_code</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$http_response_header</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -243,11 +266,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">fabrique un context Http</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">httpContext</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -267,11 +291,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">pour un entier fournit une représentation avec un &#039;_&#039; comme séparateur des milliers</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">addUndescoreForThousand</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$scaleden</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -305,11 +330,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">369</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Teste si à la fois $now - $first &gt;= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">dateBetween</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$first</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$now</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dayOfWeek</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">4</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$h</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">20</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mn</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -371,11 +397,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">415</span>
+    <span class="phpdocumentor-element-found-in__line">424</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Test de dateBetween()</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">testDateBetween</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -395,11 +422,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">434</span>
+    <span class="phpdocumentor-element-found-in__line">443</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
+Si remoisson alors retourne l&#039;age de la moisson en jours
+Si la moisson n&#039;existe pas alors retourne -1
+Si la moisson n&#039;a pas à être moissonnée retourne 0</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">ganHarvestAge</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
@@ -423,7 +454,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">451</span>
+    <span class="phpdocumentor-element-found-in__line">460</span>
 
     </aside>
 

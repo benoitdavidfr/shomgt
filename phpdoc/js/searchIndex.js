@@ -86,6 +86,11 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/bo.html#function_cmpVersion"
         },                {
+            "fqsen": "\\AOT",
+            "name": "AOT",
+            "summary": "",
+            "url": "classes/AOT.html"
+        },                {
             "fqsen": "\\bo\\cloneDir\u0028\u0029",
             "name": "cloneDir",
             "summary": "",
@@ -411,6 +416,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/html-Radio.html#property_selected"
         },                {
+            "fqsen": "\\dateBetween\u0028\u0029",
+            "name": "dateBetween",
+            "summary": "",
+            "url": "namespaces/default.html#function_dateBetween"
+        },                {
+            "fqsen": "\\testDateBetween\u0028\u0029",
+            "name": "testDateBetween",
+            "summary": "",
+            "url": "namespaces/default.html#function_testDateBetween"
+        },                {
             "fqsen": "\\JSON_OPTIONS",
             "name": "JSON_OPTIONS",
             "summary": "",
@@ -470,6 +485,11 @@ Search.appendIndex(
             "name": "FORM",
             "summary": "",
             "url": "classes/bo-Login.html#constant_FORM"
+        },                {
+            "fqsen": "\\sendMail\u0028\u0029",
+            "name": "sendMail",
+            "summary": "",
+            "url": "namespaces/default.html#function_sendMail"
         },                {
             "fqsen": "\\bo\\GeoRefImage",
             "name": "GeoRefImage",
@@ -726,95 +746,40 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/bo-My7zArchive.html#method_remove"
         },                {
-            "fqsen": "\\RequiredGraphHtml",
-            "name": "RequiredGraphHtml",
+            "fqsen": "\\SHOMGEOTIFF",
+            "name": "SHOMGEOTIFF",
             "summary": "",
-            "url": "classes/RequiredGraphHtml.html"
+            "url": "namespaces/default.html#constant_SHOMGEOTIFF"
         },                {
-            "fqsen": "\\RequiredGraphHtml\u003A\u003AselectOptions\u0028\u0029",
-            "name": "selectOptions",
+            "fqsen": "\\Map",
+            "name": "Map",
             "summary": "",
-            "url": "classes/RequiredGraphHtml.html#method_selectOptions"
+            "url": "classes/Map.html"
         },                {
-            "fqsen": "\\PhpFile",
-            "name": "PhpFile",
+            "fqsen": "\\Map\u003A\u003Apurge\u0028\u0029",
+            "name": "purge",
             "summary": "",
-            "url": "classes/PhpFile.html"
+            "url": "classes/Map.html#method_purge"
         },                {
-            "fqsen": "\\PhpFile\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
+            "fqsen": "\\Map\u003A\u003A\u0024archives",
+            "name": "archives",
             "summary": "",
-            "url": "classes/PhpFile.html#method___construct"
+            "url": "classes/Map.html#property_archives"
         },                {
-            "fqsen": "\\PhpFile\u003A\u003AaddInc\u0028\u0029",
-            "name": "addInc",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_addInc"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003Aadd\u0028\u0029",
-            "name": "add",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_add"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003AreadPhpFiles\u0028\u0029",
-            "name": "readPhpFiles",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_readPhpFiles"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003AreadLinks\u0028\u0029",
-            "name": "readLinks",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_readLinks"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003AbuildIncludedIn\u0028\u0029",
-            "name": "buildIncludedIn",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_buildIncludedIn"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003AallIncludes\u0028\u0029",
-            "name": "allIncludes",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_allIncludes"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003AallIncluded\u0028\u0029",
-            "name": "allIncluded",
-            "summary": "",
-            "url": "classes/PhpFile.html#method_allIncluded"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024ROOT",
-            "name": "ROOT",
-            "summary": "",
-            "url": "classes/PhpFile.html#property_ROOT"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024path",
-            "name": "path",
-            "summary": "",
-            "url": "classes/PhpFile.html#property_path"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024title",
-            "name": "title",
-            "summary": "",
-            "url": "classes/PhpFile.html#property_title"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024includes",
-            "name": "includes",
-            "summary": "",
-            "url": "classes/PhpFile.html#property_includes"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024includedIn",
-            "name": "includedIn",
-            "summary": "",
-            "url": "classes/PhpFile.html#property_includedIn"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024sameAs",
-            "name": "sameAs",
-            "summary": "",
-            "url": "classes/PhpFile.html#property_sameAs"
-        },                {
-            "fqsen": "\\PhpFile\u003A\u003A\u0024all",
+            "fqsen": "\\Map\u003A\u003A\u0024all",
             "name": "all",
             "summary": "",
-            "url": "classes/PhpFile.html#property_all"
+            "url": "classes/Map.html#property_all"
+        },                {
+            "fqsen": "\\Map\u003A\u003A\u0024nbre",
+            "name": "nbre",
+            "summary": "",
+            "url": "classes/Map.html#property_nbre"
+        },                {
+            "fqsen": "\\Map\u003A\u003A\u0024oneYAgo",
+            "name": "oneYAgo",
+            "summary": "",
+            "url": "classes/Map.html#property_oneYAgo"
         },                {
             "fqsen": "\\MIME_TYPES",
             "name": "MIME_TYPES",
@@ -881,9 +846,29 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/bo-SqlSchema.html#constant_USER_TABLE"
         },                {
+            "fqsen": "\\HTML_HEAD",
+            "name": "HTML_HEAD",
+            "summary": "",
+            "url": "namespaces/default.html#constant_HTML_HEAD"
+        },                {
+            "fqsen": "\\TEST_MAPS",
+            "name": "TEST_MAPS",
+            "summary": "",
+            "url": "namespaces/default.html#constant_TEST_MAPS"
+        },                {
+            "fqsen": "\\MIN_FOR_DISPLAY_IN_COLS",
+            "name": "MIN_FOR_DISPLAY_IN_COLS",
+            "summary": "",
+            "url": "namespaces/default.html#constant_MIN_FOR_DISPLAY_IN_COLS"
+        },                {
+            "fqsen": "\\NBCOLS_FOR_DISPLAY",
+            "name": "NBCOLS_FOR_DISPLAY",
+            "summary": "",
+            "url": "namespaces/default.html#constant_NBCOLS_FOR_DISPLAY"
+        },                {
             "fqsen": "\\dashboard\\GanInSet",
             "name": "GanInSet",
-            "summary": "",
+            "summary": "description\u0020d\u0027un\u0020cartouche\u0020dans\u0020la\u0020synth\u00E8se\u0020d\u0027une\u0020carte",
             "url": "classes/dashboard-GanInSet.html"
         },                {
             "fqsen": "\\dashboard\\GanInSet\u003A\u003A__construct\u0028\u0029",
@@ -918,7 +903,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Gan",
             "name": "Gan",
-            "summary": "",
+            "summary": "synth\u00E8se\u0020des\u0020GAN\u0020par\u0020carte\u0020\u00E0\u0020la\u0020date\u0020de\u0020moisson\u0020des\u0020GAN\u0020\/\u0020catalogue\u0020ou\u0020indication\u0020d\u0027erreur\u0020d\u0027interrogation\u0020des\u0020GAN",
             "url": "classes/dashboard-Gan.html"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A__construct\u0028\u0029",
@@ -928,17 +913,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024scale",
             "name": "scale",
-            "summary": "",
+            "summary": "\u00E9chelle\u0020de\u0020la\u0020carte",
             "url": "classes/dashboard-Gan.html#property_scale"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024spatial",
             "name": "spatial",
-            "summary": "",
+            "summary": "extension\u0020spatiale\u0020sour\u0020la\u0020forme\u0020\u005B\u0027SW\u0027\u003D\u003E\u0020sw,\u0020\u0027NE\u0027\u003D\u003E\u0020ne\u005D",
             "url": "classes/dashboard-Gan.html#property_spatial"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024corrections",
             "name": "corrections",
-            "summary": "",
+            "summary": "liste\u0020des\u0020corrections",
             "url": "classes/dashboard-Gan.html#property_corrections"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003ApostProcessTitle\u0028\u0029",
@@ -948,37 +933,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003AallAsArray\u0028\u0029",
             "name": "allAsArray",
-            "summary": "",
+            "summary": "retourne\u0020l\u0027ensemble\u0020des\u0020objets\u0020de\u0020la\u0020classe\u0020comme\u0020array",
             "url": "classes/dashboard-Gan.html#method_allAsArray"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003AasArray\u0028\u0029",
             "name": "asArray",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020objet\u0020comme\u0020array",
             "url": "classes/dashboard-Gan.html#method_asArray"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003Aversion\u0028\u0029",
             "name": "version",
-            "summary": "",
+            "summary": "calcule\u0020la\u0020version\u0020sous\u0020la\u0020forme\u0020\u007BanneeEdition\u007Dc\u007BnoCorrection\u007D",
             "url": "classes/dashboard-Gan.html#method_version"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003AinSet\u0028\u0029",
             "name": "inSet",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020cartouche\u0020correspondant\u0020au\u0020qgbox",
             "url": "classes/dashboard-Gan.html#method_inSet"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003ACORRECTIONS",
             "name": "CORRECTIONS",
-            "summary": "",
+            "summary": "Corrections\u0020du\u0020champ\u0020\u00E9dition\u0020du\u0020GAN\u0020pour\u0020certaines\u0020cartes\u0020afin\u0020de\u0020ne\u0020pas\u0020perturber\u0020le\u0020TdB\nLa\u0020constante\u0020est\u0020un\u0020tableau\u0020avec\u0020pour\u0020entr\u00E9e\u0020le\u0020num\u00E9ro\u0020de\u0020carte\net\u0020pour\u0020valeur\u0020un\u0020array\u0020\u005B\u007BedACorriger\u007D\u003D\u003E\u0020\u007BedCorrig\u00E9e\u007D\u005D\nListe\u0020d\u0027\u00E9carts\u0020transmise\u0020le\u002015\/6\/2022\u0020au\u0020Shom\nLes\u0020\u00E9carts\u0020ci\u002Ddessous\u0020sont\u0020ceux\u0020restants\u0020apr\u00E8s\u0020corrections\u0020du\u0020Shom\nRevisite\u0020le\u002018\/8\/2023,\u0020v\u00E9rification\u0020par\u0020rapport\u0020\u00E0\u0020la\u0020carte\u0020elle\u0020m\u00EAme",
             "url": "classes/dashboard-Gan.html#constant_CORRECTIONS"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024hvalid",
             "name": "hvalid",
-            "summary": "",
+            "summary": "interval\u0020des\u0020dates\u0020de\u0020la\u0020moisson\u0020des\u0020GAN",
             "url": "classes/dashboard-Gan.html#property_hvalid"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024gans",
             "name": "gans",
-            "summary": "",
+            "summary": "dictionnaire\u0020\u005B\u0024mapnum\u0020\u003D\u003E\u0020Gan\u005D",
             "url": "classes/dashboard-Gan.html#property_gans"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024mapnum",
@@ -988,47 +973,47 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024groupTitle",
             "name": "groupTitle",
-            "summary": "",
+            "summary": "sur\u002Dtitre\u0020optionnel\u0020identifiant\u0020un\u0020ensemble\u0020de\u0020cartes",
             "url": "classes/dashboard-Gan.html#property_groupTitle"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024title",
             "name": "title",
-            "summary": "",
+            "summary": "titre\u0020de\u0020la\u0020carte",
             "url": "classes/dashboard-Gan.html#property_title"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024edition",
             "name": "edition",
-            "summary": "",
+            "summary": "\u00E9dition\u0020de\u0020la\u0020carte",
             "url": "classes/dashboard-Gan.html#property_edition"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024inSets",
             "name": "inSets",
-            "summary": "",
+            "summary": "liste\u0020des\u0020cartouches",
             "url": "classes/dashboard-Gan.html#property_inSets"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024analyzeErrors",
             "name": "analyzeErrors",
-            "summary": "",
+            "summary": "erreurs\u0020\u00E9ventuelles\u0020d\u0027analyse\u0020du\u0020r\u00E9sultat\u0020du\u0020moissonnage",
             "url": "classes/dashboard-Gan.html#property_analyzeErrors"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024valid",
             "name": "valid",
-            "summary": "",
+            "summary": "date\u0020de\u0020moissonnage\u0020du\u0020GAN\u0020en\u0020format\u0020ISO",
             "url": "classes/dashboard-Gan.html#property_valid"
         },                {
             "fqsen": "\\dashboard\\Gan\u003A\u003A\u0024harvestError",
             "name": "harvestError",
-            "summary": "",
+            "summary": "erreur\u0020\u00E9ventuelle\u0020du\u0020moissonnage",
             "url": "classes/dashboard-Gan.html#property_harvestError"
         },                {
             "fqsen": "\\dashboard\\GanStatic",
             "name": "GanStatic",
-            "summary": "",
+            "summary": "Classe\u0020regroupant\u0020des\u0020m\u00E9thodes\u0020statiques\u0020autour\u0020de\u0020la\u0020gestion\u0020des\u0020GAN",
             "url": "classes/dashboard-GanStatic.html"
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003Aweek\u0028\u0029",
             "name": "week",
-            "summary": "",
+            "summary": "transforme\u0020une\u0020date\u0020en\u0020semaine\u0020sur\u00204\u0020caract\u00E8res\u0020comme\u0020utilis\u00E9\u0020par\u0020le\u0020GAN",
             "url": "classes/dashboard-GanStatic.html#method_week"
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003Aharvest\u0028\u0029",
@@ -1043,22 +1028,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003AanalyzeHtmlOfMap\u0028\u0029",
             "name": "analyzeHtmlOfMap",
-            "summary": "",
+            "summary": "pour\u0020mise\u0020au\u0020point\u0020effectue\u0020l\u0027analyse\u0020du\u0020GAN\u0020pour\u0020une\u0020carte",
             "url": "classes/dashboard-GanStatic.html#method_analyzeHtmlOfMap"
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003Abuild\u0028\u0029",
             "name": "build",
-            "summary": "",
+            "summary": "construit\u0020la\u0020synh\u00E8se\u0020des\u0020GAN\u0020de\u0020la\u0020moisson\u0020existante",
             "url": "classes/dashboard-GanStatic.html#method_build"
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003AstoreAsPser\u0028\u0029",
             "name": "storeAsPser",
-            "summary": "",
+            "summary": "enregistre\u0020le\u0020catalogue\u0020comme\u0020pser",
             "url": "classes/dashboard-GanStatic.html#method_storeAsPser"
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003AloadFromPser\u0028\u0029",
             "name": "loadFromPser",
-            "summary": "",
+            "summary": "charge\u0020les\u0020donn\u00E9es\u0020depuis\u0020le\u0020pser",
             "url": "classes/dashboard-GanStatic.html#method_loadFromPser"
         },                {
             "fqsen": "\\dashboard\\GanStatic\u003A\u003Aitem\u0028\u0029",
@@ -1088,57 +1073,57 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\http_error_code\u0028\u0029",
             "name": "http_error_code",
-            "summary": "",
+            "summary": "extrait\u0020le\u0020code\u0020d\u0027erreur\u0020Http",
             "url": "namespaces/dashboard.html#function_http_error_code"
         },                {
             "fqsen": "\\dashboard\\httpContext\u0028\u0029",
             "name": "httpContext",
-            "summary": "",
+            "summary": "fabrique\u0020un\u0020context\u0020Http",
             "url": "namespaces/dashboard.html#function_httpContext"
         },                {
             "fqsen": "\\dashboard\\Lock",
             "name": "Lock",
-            "summary": "",
+            "summary": "Verrou\u0020d\u0027utilisation\u0020pour\u0020garantir\u0020que\u0020le\u0020script\u0020n\u0027est\u0020pas\u0020utilis\u00E9\u0020plusieurs\u0020fois\u0020simultan\u00E9ment\n3\u0020op\u00E9rations\u003A\n\u0020\u002D\u0020locked\u0028\u0029\u0020pour\u0020connaitre\u0020l\u0027\u00E9tat\u0020du\u0020verrou\n\u0020\u002D\u0020lock\u0028\u0029\u0020pour\u0020le\u0020v\u00E9rouiller\n\u0020\u002D\u0020unlock\u0028\u0029\u0020pour\u0020le\u0020d\u00E9v\u00E9rouiller\nLe\u0020verrou\u0020est\u0020impl\u00E9ment\u00E9\u0020par\u0020l\u0027existence\u0020d\u0027un\u0020fichier.",
             "url": "classes/dashboard-Lock.html"
         },                {
             "fqsen": "\\dashboard\\Lock\u003A\u003Alocked\u0028\u0029",
             "name": "locked",
-            "summary": "",
+            "summary": "Si\u0020le\u0020verrou\u0020existe\u0020alors\u0020renvoie\u0020le\u0020contenu\u0020du\u0020fichier\u0020avec\u0020la\u0020date\u0020de\u0020verrou",
             "url": "classes/dashboard-Lock.html#method_locked"
         },                {
             "fqsen": "\\dashboard\\Lock\u003A\u003Alock\u0028\u0029",
             "name": "lock",
-            "summary": "",
+            "summary": "verouille,\u0020renvoie\u0020vrai\u0020si\u0020ok,\u0020false\u0020si\u0020le\u0020verrou\u0020existait\u0020d\u00E9j\u00E0",
             "url": "classes/dashboard-Lock.html#method_lock"
         },                {
             "fqsen": "\\dashboard\\Lock\u003A\u003Aunlock\u0028\u0029",
             "name": "unlock",
-            "summary": "",
+            "summary": "d\u00E9v\u00E9rouille",
             "url": "classes/dashboard-Lock.html#method_unlock"
         },                {
             "fqsen": "\\dashboard\\Lock\u003A\u003ALOCK_FILEPATH",
             "name": "LOCK_FILEPATH",
-            "summary": "",
+            "summary": "chemin\u0020du\u0020fichier\u0020utilis\u00E9\u0020pour\u0020le\u0020verrou",
             "url": "classes/dashboard-Lock.html#constant_LOCK_FILEPATH"
         },                {
             "fqsen": "\\dashboard\\addUndescoreForThousand\u0028\u0029",
             "name": "addUndescoreForThousand",
-            "summary": "",
+            "summary": "pour\u0020un\u0020entier\u0020fournit\u0020une\u0020repr\u00E9sentation\u0020avec\u0020un\u0020\u0027_\u0027\u0020comme\u0020s\u00E9parateur\u0020des\u0020milliers",
             "url": "namespaces/dashboard.html#function_addUndescoreForThousand"
         },                {
             "fqsen": "\\dashboard\\dateBetween\u0028\u0029",
             "name": "dateBetween",
-            "summary": "",
+            "summary": "Teste\u0020si\u0020\u00E0\u0020la\u0020fois\u0020\u0024now\u0020\u002D\u0020\u0024first\u0020\u003E\u003D\u00201\u0020jour\u0020et\u0020il\u0020existe\u0020une\u0020\u0024dayOfWeekT\u0024h\u003A\u0024m\u0020\u0020entre\u0020\u0024first\u0020et\u0020\u0024now",
             "url": "namespaces/dashboard.html#function_dateBetween"
         },                {
             "fqsen": "\\dashboard\\testDateBetween\u0028\u0029",
             "name": "testDateBetween",
-            "summary": "",
+            "summary": "Test\u0020de\u0020dateBetween\u0028\u0029",
             "url": "namespaces/dashboard.html#function_testDateBetween"
         },                {
             "fqsen": "\\dashboard\\ganHarvestAge\u0028\u0029",
             "name": "ganHarvestAge",
-            "summary": "",
+            "summary": "indique\u0020si\u0020la\u0020derni\u00E8re\u0020moisson\u0020du\u0020GAN\u0020est\u0020ancienne\u0020et\u0020le\u0020GAN\u0020doit\u0020donc\u0020\u00EAtre\u0020remoissonn\u00E9\nSi\u0020remoisson\u0020alors\u0020retourne\u0020l\u0027age\u0020de\u0020la\u0020moisson\u0020en\u0020jours\nSi\u0020la\u0020moisson\u0020n\u0027existe\u0020pas\u0020alors\u0020retourne\u0020\u002D1\nSi\u0020la\u0020moisson\u0020n\u0027a\u0020pas\u0020\u00E0\u0020\u00EAtre\u0020moissonn\u00E9e\u0020retourne\u00200",
             "url": "namespaces/dashboard.html#function_ganHarvestAge"
         },                {
             "fqsen": "\\dashboard\\wfsAge\u0028\u0029",
@@ -1193,12 +1178,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Perempt",
             "name": "Perempt",
-            "summary": "",
+            "summary": "croisement\u0020entre\u0020le\u0020portefeuille\u0020et\u0020les\u0020GANs\u0020en\u0020vue\u0020d\u0027afficher\u0020le\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
             "url": "classes/dashboard-Perempt.html"
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "construction\u0020\u00E0\u0020partir\u0020du\u0020portefeuille",
             "url": "classes/dashboard-Perempt.html#method_init"
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003A__construct\u0028\u0029",
@@ -1208,7 +1193,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003AsetGan\u0028\u0029",
             "name": "setGan",
-            "summary": "",
+            "summary": "Mise\u0020\u00E0\u0020jour\u0020de\u0020perempt\u0020\u00E0\u0020partir\u0020du\u0020GAN",
             "url": "classes/dashboard-Perempt.html#method_setGan"
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003Atitle\u0028\u0029",
@@ -1228,12 +1213,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003AshowAll\u0028\u0029",
             "name": "showAll",
-            "summary": "",
+            "summary": "Affichage\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
             "url": "classes/dashboard-Perempt.html#method_showAll"
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003AshowAsRow\u0028\u0029",
             "name": "showAsRow",
-            "summary": "",
+            "summary": "Affichage\u0020d\u0027une\u0020ligne\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
             "url": "classes/dashboard-Perempt.html#method_showAsRow"
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024mapNum",
@@ -1268,12 +1253,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024all",
             "name": "all",
-            "summary": "",
+            "summary": "tableau\u0020de\u0020tous\u0020les\u0020objets\u0020de\u0020la\u0020classse",
             "url": "classes/dashboard-Perempt.html#property_all"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop",
             "name": "AvailAtTheShop",
-            "summary": "",
+            "summary": "lit\u0020le\u0020fichier\u0020disponible.tsv\u0020s\u0027il\u0020existe\u0020et\u0020stoke\u0020les\u0020cartes\u0020dispo.\u0020dans\u0020la\u0020boutique",
             "url": "classes/dashboard-AvailAtTheShop.html"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003AshowTsvAsTable\u0028\u0029",
@@ -1283,17 +1268,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003Aload\u0028\u0029",
             "name": "load",
-            "summary": "",
+            "summary": "chargement\u0020du\u0020fichier\u0020available.tsv",
             "url": "classes/dashboard-AvailAtTheShop.html#method_load"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003Aexists\u0028\u0029",
             "name": "exists",
-            "summary": "",
+            "summary": "indique\u0020s\u0027il\u0020existe\u0020au\u0020moins\u0020une\u0020carte\u0020disponible",
             "url": "classes/dashboard-AvailAtTheShop.html#method_exists"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "charge\u0020le\u0020fichier\u0020dans\u0020self\u003A\u003A\u0024all",
             "url": "classes/dashboard-AvailAtTheShop.html#method_init"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003Amaj\u0028\u0029",
@@ -1303,12 +1288,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003AFILE_NAME",
             "name": "FILE_NAME",
-            "summary": "",
+            "summary": "chemin\u0020du\u0020fichier\u0020tsv",
             "url": "classes/dashboard-AvailAtTheShop.html#constant_FILE_NAME"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003AMAX_DURATION",
             "name": "MAX_DURATION",
-            "summary": "",
+            "summary": "dur\u00E9e\u0020en\u0020secondes\u0020pendant\u0020laquelle\u0020le\u0020fichier\u0020FILE_NAME\u0020reste\u0020valide",
             "url": "classes/dashboard-AvailAtTheShop.html#constant_MAX_DURATION"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop\u003A\u003A\u0024all",
@@ -1318,7 +1303,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\Portfolio",
             "name": "Portfolio",
-            "summary": "",
+            "summary": "Portefeuille\u0020des\u0020cartes\u0020expos\u00E9es\u0020sur\u0020ShomGt\u0020issu\u0020des\u0020fichiers\u0020.md.json",
             "url": "classes/dashboard-Portfolio.html"
         },                {
             "fqsen": "\\dashboard\\Portfolio\u003A\u003Ainit\u0028\u0029",
@@ -1798,7 +1783,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GdalInfo",
             "name": "GdalInfo",
-            "summary": "g\u00E8re\u0020l\u0027extraction\u0020des\u0020infos\u0020d\u0027un\u0020fichier\u0020g\u00E9n\u00E9r\u00E9\u0020par\u0020gdalinfo",
+            "summary": "extrait\u0020des\u0020infos\u0020d\u0027un\u0020fichier\u0020JSON\u0020g\u00E9n\u00E9r\u00E9\u0020par\u0020gdalinfo",
             "url": "classes/GdalInfo.html"
         },                {
             "fqsen": "\\GdalInfo\u003A\u003Afilepath\u0028\u0029",
@@ -2816,14 +2801,19 @@ Search.appendIndex(
             "summary": "reproj\u00E8te\u0020ue\u0020g\u00E9om\u00E9trie,\u0020prend\u0020en\u0020param\u00E8tre\u0020une\u0020fonction\u0020de\u0020reprojection\u0020d\u0027une\u0020position,\u0020retourne\u0020un\u0020objet\u0020g\u00E9om\u00E9trie",
             "url": "classes/gegeom-MultiPolygon.html#method_reproject"
         },                {
+            "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Aarea\u0028\u0029",
+            "name": "area",
+            "summary": "",
+            "url": "classes/gegeom-MultiPolygon.html#method_area"
+        },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003ApointInPolygon\u0028\u0029",
             "name": "pointInPolygon",
-            "summary": "",
+            "summary": "teste\u0020si\u0020une\u0020position\u0020est\u0020dans\u0020un\u0020des\u0020polygones.",
             "url": "classes/gegeom-MultiPolygon.html#method_pointInPolygon"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003Ainters\u0028\u0029",
             "name": "inters",
-            "summary": "",
+            "summary": "teste\u0020l\u0027intersection\u0020entre\u0020les\u00202\u0020polygones\u0020ou\u0020multi\u002Dpolygones",
             "url": "classes/gegeom-MultiPolygon.html#method_inters"
         },                {
             "fqsen": "\\gegeom\\MultiPolygon\u003A\u003AErrorFromGeoArray",
@@ -4566,20 +4556,695 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/mapcat-MapCatFromFile.html#property_deletedMaps"
         },                {
+            "fqsen": "\\PhpBlock",
+            "name": "PhpBlock",
+            "summary": "Block\u0020de\u0020code\u0020Php\u0020encadr\u00E9\u0020par\u0020\u007B\u0020et\u0020\u007D",
+            "url": "classes/PhpBlock.html"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "Cr\u00E9ation\u0020d\u0027un\u0020block\u0020en\u0020distinguant\u0020classe,\u0020fonction\u0020ou\u0020autre\u0020block.",
+            "url": "classes/PhpBlock.html#method_create"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Cr\u00E9ation\u0020d\u0027un\u0020block\u0020de\u0020base.",
+            "url": "classes/PhpBlock.html#method___construct"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020PhpBlock\u0020comme\u0020un\u0020array",
+            "url": "classes/PhpBlock.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003AblocksAsHtml\u0028\u0029",
+            "name": "blocksAsHtml",
+            "summary": "repr\u00E9sente\u0020le\u0020block\u0020comme\u0020une\u0020cellule\u0020d\u0027une\u0020table\u0020Html",
+            "url": "classes/PhpBlock.html#method_blocksAsHtml"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003A\u0024startTokenNr",
+            "name": "startTokenNr",
+            "summary": "",
+            "url": "classes/PhpBlock.html#property_startTokenNr"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003A\u0024lineNr",
+            "name": "lineNr",
+            "summary": "",
+            "url": "classes/PhpBlock.html#property_lineNr"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003A\u0024lastTokenNr",
+            "name": "lastTokenNr",
+            "summary": "",
+            "url": "classes/PhpBlock.html#property_lastTokenNr"
+        },                {
+            "fqsen": "\\PhpBlock\u003A\u003A\u0024subBlocks",
+            "name": "subBlocks",
+            "summary": "",
+            "url": "classes/PhpBlock.html#property_subBlocks"
+        },                {
+            "fqsen": "\\PhpClass",
+            "name": "PhpClass",
+            "summary": "Block\u0020correspondant\u0020\u00E0\u0020la\u0020d\u00E9finition\u0020d\u0027une\u0020classe",
+            "url": "classes/PhpClass.html"
+        },                {
+            "fqsen": "\\PhpClass\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "D\u00E9finition\u0020d\u0027une\u0020classe\u0020\u003B\u0020g\u00E8re\u0020les\u0020diff\u00E9rents\u0020cas\u0020de\u0020figure",
+            "url": "classes/PhpClass.html#method___construct"
+        },                {
+            "fqsen": "\\PhpClass\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020une\u0020PhpClass\u0020comme\u0020un\u0020array",
+            "url": "classes/PhpClass.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpClass\u003A\u003AblocksAsHtml\u0028\u0029",
+            "name": "blocksAsHtml",
+            "summary": "repr\u00E9sente\u0020le\u0020block\u0020comme\u0020une\u0020cellule\u0020d\u0027une\u0020table\u0020Html",
+            "url": "classes/PhpClass.html#method_blocksAsHtml"
+        },                {
+            "fqsen": "\\PhpClass\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "",
+            "url": "classes/PhpClass.html#property_name"
+        },                {
+            "fqsen": "\\PhpClass\u003A\u003A\u0024parentClassName",
+            "name": "parentClassName",
+            "summary": "",
+            "url": "classes/PhpClass.html#property_parentClassName"
+        },                {
+            "fqsen": "\\PhpClass\u003A\u003A\u0024interface",
+            "name": "interface",
+            "summary": "",
+            "url": "classes/PhpClass.html#property_interface"
+        },                {
+            "fqsen": "\\PhpFunction",
+            "name": "PhpFunction",
+            "summary": "Block\u0020correspondant\u0020\u00E0\u0020la\u0020d\u00E9finition\u0020d\u0027une\u0020fonction\u0020ou\u0020d\u0027une\u0020m\u00E9thode",
+            "url": "classes/PhpFunction.html"
+        },                {
+            "fqsen": "\\PhpFunction\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Cr\u00E9ation\u0020d\u0027un\u0020block\u0020de\u0020base.",
+            "url": "classes/PhpFunction.html#method___construct"
+        },                {
+            "fqsen": "\\PhpFunction\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020une\u0020PhpFunction\u0020comme\u0020un\u0020array",
+            "url": "classes/PhpFunction.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpFunction\u003A\u003AblocksAsHtml\u0028\u0029",
+            "name": "blocksAsHtml",
+            "summary": "repr\u00E9sente\u0020le\u0020block\u0020comme\u0020une\u0020cellule\u0020d\u0027une\u0020table\u0020Html",
+            "url": "classes/PhpFunction.html#method_blocksAsHtml"
+        },                {
+            "fqsen": "\\PhpFunction\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "",
+            "url": "classes/PhpFunction.html#property_name"
+        },                {
+            "fqsen": "\\PhpFunction\u003A\u003A\u0024params",
+            "name": "params",
+            "summary": "",
+            "url": "classes/PhpFunction.html#property_params"
+        },                {
+            "fqsen": "\\DefiningFile",
+            "name": "DefiningFile",
+            "summary": "Fichier\u0020Php\u0020avec\u0020les\u0020blocs\u0020dont\u0020certains\u0020sont\u0020des\u0020d\u00E9finitions\u0020de\u0020classe\u0020ou\u0020fonction",
+            "url": "classes/DefiningFile.html"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003AchooseClassOrFunction\u0028\u0029",
+            "name": "chooseClassOrFunction",
+            "summary": "parcourt\u0020tous\u0020les\u0020fichiers\u0020Php\u0020pour\u0020afficher\u0020les\u0020classes\u0020et\u0020les\u0020fonctions\u0020d\u00E9finies",
+            "url": "classes/DefiningFile.html#method_chooseClassOrFunction"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/DefiningFile.html#method___construct"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020l\u0027objet\u0020comme\u0020array.",
+            "url": "classes/DefiningFile.html#method_asArray"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003Aclasses\u0028\u0029",
+            "name": "classes",
+            "summary": "R\u00E9cup\u00E8re\u0020les\u0020classes\u0020dans\u0020les\u0020blocks",
+            "url": "classes/DefiningFile.html#method_classes"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003Afunctions\u0028\u0029",
+            "name": "functions",
+            "summary": "R\u00E9cup\u00E8re\u0020les\u0020fonctions\u0020dans\u0020les\u0020blocks",
+            "url": "classes/DefiningFile.html#method_functions"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003AblocksAsHtml\u0028\u0029",
+            "name": "blocksAsHtml",
+            "summary": "repr\u00E9sente\u0020les\u0020blocks\u0020contenus\u0020dans\u0020le\u0020fichier\u0020comme\u0020une\u0020table\u0020Html",
+            "url": "classes/DefiningFile.html#method_blocksAsHtml"
+        },                {
+            "fqsen": "\\DefiningFile\u003A\u003A\u0024blocks",
+            "name": "blocks",
+            "summary": "",
+            "url": "classes/DefiningFile.html#property_blocks"
+        },                {
+            "fqsen": "\\PhpFile",
+            "name": "PhpFile",
+            "summary": "Fichier\u0020Php\u0020analys\u00E9\u0020avec\u0020son\u0020chemin\u0020relatif\u0020et\u0020organisation\u0020des\u0020fichiers\u0020en\u0020un\u0020arbre",
+            "url": "classes/PhpFile.html"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003AbuildTree\u0028\u0029",
+            "name": "buildTree",
+            "summary": "Construit\u0020et\u0020retourne\u0020l\u0027arbre\u0020des\u0020r\u00E9pertoires\u0020et\u0020fichiers",
+            "url": "classes/PhpFile.html#method_buildTree"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003AtreeAsArray\u0028\u0029",
+            "name": "treeAsArray",
+            "summary": "transforme\u0020l\u0027arbre\u0020des\u0020fichiers\u0020en\u0020un\u0020arbre\u0020compos\u00E9\u0020d\u0027Array.",
+            "url": "classes/PhpFile.html#method_treeAsArray"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003AchooseFile\u0028\u0029",
+            "name": "chooseFile",
+            "summary": "affiche\u0020tous\u0020les\u0020noms\u0020de\u0020fichiers\u0020avec\u0020un\u0020lien\u0020vers\u0020chacun",
+            "url": "classes/PhpFile.html#method_chooseFile"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/PhpFile.html#method___construct"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020l\u0027objet\u0020comme\u0020array.",
+            "url": "classes/PhpFile.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003A\u0024title",
+            "name": "title",
+            "summary": "",
+            "url": "classes/PhpFile.html#property_title"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003A\u0024includes",
+            "name": "includes",
+            "summary": "",
+            "url": "classes/PhpFile.html#property_includes"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003A\u0024namespace",
+            "name": "namespace",
+            "summary": "",
+            "url": "classes/PhpFile.html#property_namespace"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003AEXCLUDED",
+            "name": "EXCLUDED",
+            "summary": "liste\u0020des\u0020sous\u002Dr\u00E9pertoires\u0020exclus\u0020du\u0020parcours\u0020lors\u0020de\u0020la\u0020construction\u0020de\u0020l\u0027arbre",
+            "url": "classes/PhpFile.html#constant_EXCLUDED"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003A\u0024rpath",
+            "name": "rpath",
+            "summary": "",
+            "url": "classes/PhpFile.html#property_rpath"
+        },                {
+            "fqsen": "\\PhpFile\u003A\u003A\u0024root",
+            "name": "root",
+            "summary": "",
+            "url": "classes/PhpFile.html#property_root"
+        },                {
+            "fqsen": "\\FileIncGraph",
+            "name": "FileIncGraph",
+            "summary": "graphe\u0020d\u0027inclusions\u0020entre\u0020fichiers\u0020et\u0020de\u0020fichier\u0020dans\u0020lequel\u0020une\u0020classe\u0020est\u0020d\u00E9finie",
+            "url": "classes/FileIncGraph.html"
+        },                {
+            "fqsen": "\\FileIncGraph\u003A\u003Abuild\u0028\u0029",
+            "name": "build",
+            "summary": "parcours\u0020l\u0027arbre\u0020d\u0027inclusion\u0020et\u0020construit\u0020les\u0020propri\u00E9t\u00E9s\u0020\u0024titles\u0020et\u0020\u0024incIn.",
+            "url": "classes/FileIncGraph.html#method_build"
+        },                {
+            "fqsen": "\\FileIncGraph\u003A\u003AexportInvIncludes\u0028\u0029",
+            "name": "exportInvIncludes",
+            "summary": "export\u0020du\u0020graphe\u0020sous\u0020la\u0020forme\u0020d\u0027un\u0020arbre\u0020d\u0027inclusion\u0020invers\u00E9",
+            "url": "classes/FileIncGraph.html#method_exportInvIncludes"
+        },                {
+            "fqsen": "\\FileIncGraph\u003A\u003AexportClasses\u0028\u0029",
+            "name": "exportClasses",
+            "summary": "export\u0020du\u0020graphe\u0020sous\u0020la\u0020forme\u0020d\u0027un\u0020arbre\u0020\u005B\u007Bclasse\u007D\u0020\u002D\u003E\u0020\u007Bchemin\u0020du\u0020fichier\u007D\u005D",
+            "url": "classes/FileIncGraph.html#method_exportClasses"
+        },                {
+            "fqsen": "\\FileIncGraph\u003A\u003A\u0024titles",
+            "name": "titles",
+            "summary": "",
+            "url": "classes/FileIncGraph.html#property_titles"
+        },                {
+            "fqsen": "\\FileIncGraph\u003A\u003A\u0024incIn",
+            "name": "incIn",
+            "summary": "",
+            "url": "classes/FileIncGraph.html#property_incIn"
+        },                {
+            "fqsen": "\\FileIncGraph\u003A\u003A\u0024classesInFile",
+            "name": "classesInFile",
+            "summary": "",
+            "url": "classes/FileIncGraph.html#property_classesInFile"
+        },                {
+            "fqsen": "\\UseGraph",
+            "name": "UseGraph",
+            "summary": "Graphe\u0020d\u0027utilisation\u0020des\u0020classes\u0020et\u0020fonctions",
+            "url": "classes/UseGraph.html"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003AbuildDefs\u0028\u0029",
+            "name": "buildDefs",
+            "summary": "construction\u0020r\u00E9cursive\u0020des\u0020d\u00E9finitions\u0020d\u0027un\u0020r\u00E9pertoire",
+            "url": "classes/UseGraph.html#method_buildDefs"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003AbuildUses\u0028\u0029",
+            "name": "buildUses",
+            "summary": "",
+            "url": "classes/UseGraph.html#method_buildUses"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/UseGraph.html#method___construct"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003AaddUse\u0028\u0029",
+            "name": "addUse",
+            "summary": "",
+            "url": "classes/UseGraph.html#method_addUse"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003Ashow\u0028\u0029",
+            "name": "show",
+            "summary": "",
+            "url": "classes/UseGraph.html#method_show"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020\u00E9l\u00E9ment\u0020du\u0020graphe\u0020comme\u0020array\u0020pur",
+            "url": "classes/UseGraph.html#method_asArray"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003ASAME_DIR",
+            "name": "SAME_DIR",
+            "summary": "",
+            "url": "classes/UseGraph.html#constant_SAME_DIR"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003A\u0024def",
+            "name": "def",
+            "summary": "",
+            "url": "classes/UseGraph.html#property_def"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003A\u0024uses",
+            "name": "uses",
+            "summary": "",
+            "url": "classes/UseGraph.html#property_uses"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003A\u0024functions",
+            "name": "functions",
+            "summary": "",
+            "url": "classes/UseGraph.html#property_functions"
+        },                {
+            "fqsen": "\\UseGraph\u003A\u003A\u0024classes",
+            "name": "classes",
+            "summary": "",
+            "url": "classes/UseGraph.html#property_classes"
+        },                {
+            "fqsen": "\\ns\\fun1\u0028\u0029",
+            "name": "fun1",
+            "summary": "",
+            "url": "namespaces/ns.html#function_fun1"
+        },                {
+            "fqsen": "\\ns\\fun2\u0028\u0029",
+            "name": "fun2",
+            "summary": "",
+            "url": "namespaces/ns.html#function_fun2"
+        },                {
+            "fqsen": "\\ns\\fun11\u0028\u0029",
+            "name": "fun11",
+            "summary": "",
+            "url": "namespaces/ns.html#function_fun11"
+        },                {
+            "fqsen": "\\ns\\fun21\u0028\u0029",
+            "name": "fun21",
+            "summary": "",
+            "url": "namespaces/ns.html#function_fun21"
+        },                {
+            "fqsen": "\\ns\\C",
+            "name": "C",
+            "summary": "",
+            "url": "classes/ns-C.html"
+        },                {
+            "fqsen": "\\ns\\C\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/ns-C.html#method___construct"
+        },                {
+            "fqsen": "\\ns\\C\u003A\u003AnonStatMeth\u0028\u0029",
+            "name": "nonStatMeth",
+            "summary": "",
+            "url": "classes/ns-C.html#method_nonStatMeth"
+        },                {
+            "fqsen": "\\ns\\C\u003A\u003AstatMeth\u0028\u0029",
+            "name": "statMeth",
+            "summary": "",
+            "url": "classes/ns-C.html#method_statMeth"
+        },                {
+            "fqsen": "\\ns\\D",
+            "name": "D",
+            "summary": "",
+            "url": "classes/ns-D.html"
+        },                {
+            "fqsen": "\\ns\\E",
+            "name": "E",
+            "summary": "",
+            "url": "classes/ns-E.html"
+        },                {
+            "fqsen": "\\ns\\F",
+            "name": "F",
+            "summary": "",
+            "url": "classes/ns-F.html"
+        },                {
+            "fqsen": "\\ns\\I",
+            "name": "I",
+            "summary": "",
+            "url": "classes/ns-I.html"
+        },                {
+            "fqsen": "\\A",
+            "name": "A",
+            "summary": "Test\u0020de\u0020l\u0027h\u00E9ritage\u0020de\u0020m\u00E9thode\u0020statique",
+            "url": "classes/A.html"
+        },                {
+            "fqsen": "\\A\u003A\u003AstatFun\u0028\u0029",
+            "name": "statFun",
+            "summary": "",
+            "url": "classes/A.html#method_statFun"
+        },                {
+            "fqsen": "\\B",
+            "name": "B",
+            "summary": "Test\u0020de\u0020l\u0027h\u00E9ritage\u0020de\u0020m\u00E9thode\u0020statique",
+            "url": "classes/B.html"
+        },                {
+            "fqsen": "\\Token",
+            "name": "Token",
+            "summary": "simplification\u0020de\u0020l\u0027utilisation\u0020des\u0020tokens\u0020Php",
+            "url": "classes/Token.html"
+        },                {
+            "fqsen": "\\Token\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construction\u0020d\u0027un\u0020objet\u0020Token\u0020\u00E0\u0020partir\u0020d\u0027un\u0020des\u0020\u00E9l\u00E9ments\u0020r\u00E9cup\u00E9r\u00E9s\u0020par\u0020token_get_all\u0028\u0029",
+            "url": "classes/Token.html#method___construct"
+        },                {
+            "fqsen": "\\Token\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/Token.html#method___toString"
+        },                {
+            "fqsen": "\\Token\u003A\u003A\u0024lineNr",
+            "name": "lineNr",
+            "summary": "",
+            "url": "classes/Token.html#property_lineNr"
+        },                {
+            "fqsen": "\\Token\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "",
+            "url": "classes/Token.html#property_id"
+        },                {
+            "fqsen": "\\Token\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "",
+            "url": "classes/Token.html#property_name"
+        },                {
+            "fqsen": "\\Token\u003A\u003A\u0024src",
+            "name": "src",
+            "summary": "",
+            "url": "classes/Token.html#property_src"
+        },                {
+            "fqsen": "\\TokenArray",
+            "name": "TokenArray",
+            "summary": "Les\u0020tokens\u0020correspondant\u0020\u00E0\u0020un\u0020fichier\u0020g\u00E9r\u00E9s\u0020comme\u0020un\u0020array\u0020de\u0020Token.",
+            "url": "classes/TokenArray.html"
+        },                {
+            "fqsen": "\\TokenArray\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/TokenArray.html#method___construct"
+        },                {
+            "fqsen": "\\TokenArray\u003A\u003AsymbStr\u0028\u0029",
+            "name": "symbStr",
+            "summary": "G\u00E9n\u00E8re\u0020une\u0020repr\u00E9sentation\u0020symbolique\u0020d\u0027un\u0020fragment\u0020de\u0020code\u0020commencant\u0020au\u0020token\u0020no\u0020\u0024startNr\u0020et\u0020de\u0020longueur\u0020\u0024len.",
+            "url": "classes/TokenArray.html#method_symbStr"
+        },                {
+            "fqsen": "\\TokenArray\u003A\u003AsrcCode\u0028\u0029",
+            "name": "srcCode",
+            "summary": "Reconstruit\u0020le\u0020code\u0020source\u0020entre\u0020le\u0020token\u0020no\u0020\u0024startNr\u0020et\u0020le\u0020token\u0020\u0024endNr.",
+            "url": "classes/TokenArray.html#method_srcCode"
+        },                {
+            "fqsen": "\\TokenArray\u003A\u003AfindSrcBackward\u0028\u0029",
+            "name": "findSrcBackward",
+            "summary": "Retourne\u0020le\u0020no\u0020de\u0020token\u0020correspondant\u0020au\u0020\u0024src\u0020pr\u00E9c\u00E9dent\u0020\u0024startNr.",
+            "url": "classes/TokenArray.html#method_findSrcBackward"
+        },                {
+            "fqsen": "\\PhpUse",
+            "name": "PhpUse",
+            "summary": "classe\u0020abstraite\u0020des\u0020utilisations",
+            "url": "classes/PhpUse.html"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/PhpUse.html#method___construct"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/PhpUse.html#method___toString"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020call\u0020comme\u0020un\u0020array",
+            "url": "classes/PhpUse.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003AusedClassName\u0028\u0029",
+            "name": "usedClassName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020classe\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/PhpUse.html#method_usedClassName"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003AusedFunctionName\u0028\u0029",
+            "name": "usedFunctionName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020fonction\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/PhpUse.html#method_usedFunctionName"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003AqualifName\u0028\u0029",
+            "name": "qualifName",
+            "summary": "fabrique\u0020un\u0020nom\u0020qualifi\u00E9\u0020\u00E0\u0020partir\u0020du\u0020nom\u0020de\u0020classe\u0020ou\u0020fonction\u0020trouv\u00E9\u0020dans\u0020le\u0020fichier\u0020et\u0020du\u0020de\u0020l\u0027espace\u0020de\u0020nom\u0020du\u0020fichier",
+            "url": "classes/PhpUse.html#method_qualifName"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003A\u0024tokenNr",
+            "name": "tokenNr",
+            "summary": "Num\u00E9ro\u0020du\u0020token\u0020de\u0020r\u00E9f\u00E9rence\u0020de\u0020l\u0027appel\n\u0027\u0028\u0027\u0020pour\u0020un\u0020appel\u0020de\u0020fonction\u0020ou\u0020de\u0020m\u00E9thode,\nmot\u002Dcl\u00E9\u0020extends\u0020pour\u0020une\u0020extension\u0020de\u0020classse,\u0020mot\u002Dcl\u00E9\u0020new\u0020pour\u0020une\u0020cr\u00E9ation\u0020d\u0027objet",
+            "url": "classes/PhpUse.html#property_tokenNr"
+        },                {
+            "fqsen": "\\PhpUse\u003A\u003A\u0024lineNr",
+            "name": "lineNr",
+            "summary": "Num\u00E9ro\u0020de\u0020ligne\u0020de\u0020l\u0027appel",
+            "url": "classes/PhpUse.html#property_lineNr"
+        },                {
+            "fqsen": "\\FunctionCall",
+            "name": "FunctionCall",
+            "summary": "appel\u0020de\u0020fonction",
+            "url": "classes/FunctionCall.html"
+        },                {
+            "fqsen": "\\FunctionCall\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/FunctionCall.html#method___construct"
+        },                {
+            "fqsen": "\\FunctionCall\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/FunctionCall.html#method___toString"
+        },                {
+            "fqsen": "\\FunctionCall\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020call\u0020comme\u0020un\u0020array",
+            "url": "classes/FunctionCall.html#method_asArray"
+        },                {
+            "fqsen": "\\FunctionCall\u003A\u003AusedClassName\u0028\u0029",
+            "name": "usedClassName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020classe\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/FunctionCall.html#method_usedClassName"
+        },                {
+            "fqsen": "\\FunctionCall\u003A\u003AusedFunctionName\u0028\u0029",
+            "name": "usedFunctionName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020fonction\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/FunctionCall.html#method_usedFunctionName"
+        },                {
+            "fqsen": "\\FunctionCall\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "Nom\u0020de\u0020la\u0020fonction\u0020appel\u00E9e",
+            "url": "classes/FunctionCall.html#property_name"
+        },                {
+            "fqsen": "\\NewCall",
+            "name": "NewCall",
+            "summary": "cr\u00E9ation\u0020d\u0027un\u0020objet\u0020d\u0027une\u0020classe",
+            "url": "classes/NewCall.html"
+        },                {
+            "fqsen": "\\NewCall\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/NewCall.html#method___construct"
+        },                {
+            "fqsen": "\\NewCall\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/NewCall.html#method___toString"
+        },                {
+            "fqsen": "\\NewCall\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020call\u0020comme\u0020un\u0020array",
+            "url": "classes/NewCall.html#method_asArray"
+        },                {
+            "fqsen": "\\NewCall\u003A\u003AusedClassName\u0028\u0029",
+            "name": "usedClassName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020classe\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/NewCall.html#method_usedClassName"
+        },                {
+            "fqsen": "\\NewCall\u003A\u003AusedFunctionName\u0028\u0029",
+            "name": "usedFunctionName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020fonction\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/NewCall.html#method_usedFunctionName"
+        },                {
+            "fqsen": "\\NewCall\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "nom\u0020de\u0020la\u0020classe\u0020de\u0020la\u0020m\u00E9thode\u0020appel\u00E9e\u0020si\u0020elle\u0020est\u0020connue",
+            "url": "classes/NewCall.html#property_class"
+        },                {
+            "fqsen": "\\StaticMethodCall",
+            "name": "StaticMethodCall",
+            "summary": "Appel\u0020d\u0027une\u0020m\u00E9thode\u0020statique\u0020d\u0027une\u0020classe",
+            "url": "classes/StaticMethodCall.html"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/StaticMethodCall.html#method___construct"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/StaticMethodCall.html#method___toString"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020call\u0020comme\u0020un\u0020array",
+            "url": "classes/StaticMethodCall.html#method_asArray"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003AusedClassName\u0028\u0029",
+            "name": "usedClassName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020classe\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/StaticMethodCall.html#method_usedClassName"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003AusedFunctionName\u0028\u0029",
+            "name": "usedFunctionName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020fonction\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/StaticMethodCall.html#method_usedFunctionName"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "nom\u0020de\u0020la\u0020classe\u0020de\u0020la\u0020m\u00E9thode\u0020appel\u00E9e\u0020\u0028toujours\u0020connue\u0029",
+            "url": "classes/StaticMethodCall.html#property_class"
+        },                {
+            "fqsen": "\\StaticMethodCall\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "Nom\u0020de\u0020la\u0020m\u00E9thode\u0020appel\u00E9e.",
+            "url": "classes/StaticMethodCall.html#property_name"
+        },                {
+            "fqsen": "\\NonStaticMethodCall",
+            "name": "NonStaticMethodCall",
+            "summary": "Appel\u0020d\u0027une\u0020m\u00E9thode\u0020non\u0020statique\u0020d\u0027une\u0020classe\u0020g\u00E9n\u00E9ralement\u0020inconnue",
+            "url": "classes/NonStaticMethodCall.html"
+        },                {
+            "fqsen": "\\NonStaticMethodCall\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/NonStaticMethodCall.html#method___construct"
+        },                {
+            "fqsen": "\\NonStaticMethodCall\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/NonStaticMethodCall.html#method___toString"
+        },                {
+            "fqsen": "\\NonStaticMethodCall\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020call\u0020comme\u0020un\u0020array",
+            "url": "classes/NonStaticMethodCall.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpExtends",
+            "name": "PhpExtends",
+            "summary": "Utilisation\u0020d\u0027une\u0020classe\u0020par\u0020cr\u00E9ation\u0020d\u0027une\u0020sous\u002Dclasse",
+            "url": "classes/PhpExtends.html"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/PhpExtends.html#method___construct"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/PhpExtends.html#method___toString"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020un\u0020call\u0020comme\u0020un\u0020array",
+            "url": "classes/PhpExtends.html#method_asArray"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003AusedClassName\u0028\u0029",
+            "name": "usedClassName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020classe\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/PhpExtends.html#method_usedClassName"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003AusedFunctionName\u0028\u0029",
+            "name": "usedFunctionName",
+            "summary": "Retourne\u0020le\u0020nom\u0020qualifi\u00E9\u0020de\u0020la\u0020fonction\u0020utilis\u00E9e\u0020ou\u0020\u0027\u0027\u0020si\u0020aucune\n\u0024namespace\u0020est\u0020l\u0027espace\u0020de\u0020nom\u0020d\u00E9clar\u00E9\u0020dans\u0020le\u0020fichier\u0020utilisant",
+            "url": "classes/PhpExtends.html#method_usedFunctionName"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003A\u0024extendedClass",
+            "name": "extendedClass",
+            "summary": "",
+            "url": "classes/PhpExtends.html#property_extendedClass"
+        },                {
+            "fqsen": "\\PhpExtends\u003A\u003A\u0024defClass",
+            "name": "defClass",
+            "summary": "",
+            "url": "classes/PhpExtends.html#property_defClass"
+        },                {
+            "fqsen": "\\UsingFile",
+            "name": "UsingFile",
+            "summary": "Fichier\u0020Php\u0020avec\u0020les\u0020utilisations\u0020de\u0020fonctions\u0020et\u0020classes",
+            "url": "classes/UsingFile.html"
+        },                {
+            "fqsen": "\\UsingFile\u003A\u003AusingClassOrFunction\u0028\u0029",
+            "name": "usingClassOrFunction",
+            "summary": "Affiche\u0020les\u0020appels\u0020\u00E0\u0020la\u0020classe\u0020ou\u0020la\u0020fonction\u0020\u0024name",
+            "url": "classes/UsingFile.html#method_usingClassOrFunction"
+        },                {
+            "fqsen": "\\UsingFile\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Cr\u00E9ation\u0020des\u0020utilisations\u0020de\u0020fonctions\u0020et\u0020classes\u0020\u00E0\u0020partir\u0020d\u0027un\u0020fichier\u0020Php",
+            "url": "classes/UsingFile.html#method___construct"
+        },                {
+            "fqsen": "\\UsingFile\u003A\u003AasArray\u0028\u0029",
+            "name": "asArray",
+            "summary": "Retourne\u0020l\u0027objet\u0020comme\u0020array.",
+            "url": "classes/UsingFile.html#method_asArray"
+        },                {
+            "fqsen": "\\UsingFile\u003A\u003A\u0024uses",
+            "name": "uses",
+            "summary": "",
+            "url": "classes/UsingFile.html#property_uses"
+        },                {
             "fqsen": "\\EXCLUDED_MAPS_IN_V0",
             "name": "EXCLUDED_MAPS_IN_V0",
-            "summary": "",
+            "summary": "cartes\u0020exclues\u0020du\u0020service\u0020en\u0020V0\u0020car\u0020incompatible\u0020avec\u0020sgupdt\u0020v0.6",
             "url": "namespaces/default.html#constant_EXCLUDED_MAPS_IN_V0"
         },                {
             "fqsen": "\\SPECIAL_MAPS",
             "name": "SPECIAL_MAPS",
-            "summary": "",
+            "summary": "cartes\u0020sp\u00E9ciales\u0020trait\u00E9es\u0020sp\u00E9cialement\u0020en\u0020version\u0020\u003C\u00204",
             "url": "namespaces/default.html#constant_SPECIAL_MAPS"
-        },                {
-            "fqsen": "\\TEST_MAPS",
-            "name": "TEST_MAPS",
-            "summary": "",
-            "url": "namespaces/default.html#constant_TEST_MAPS"
         },                {
             "fqsen": "\\HTTP_ERROR_CODES",
             "name": "HTTP_ERROR_CODES",
@@ -4811,6 +5476,236 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#function_execCmdeTest"
         },                {
+            "fqsen": "\\shomft\\Zee",
+            "name": "Zee",
+            "summary": "",
+            "url": "classes/shomft-Zee.html"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003Ainters\u0028\u0029",
+            "name": "inters",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020zoneid\u0020des\u0020polygones\u0020intersectant\u0020la\u0020g\u00E9om\u00E9trie",
+            "url": "classes/shomft-Zee.html#method_inters"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "",
+            "url": "classes/shomft-Zee.html#method_init"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/shomft-Zee.html#method___construct"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003AGEOJSON_FILE_PATH",
+            "name": "GEOJSON_FILE_PATH",
+            "summary": "",
+            "url": "classes/shomft-Zee.html#constant_GEOJSON_FILE_PATH"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "",
+            "url": "classes/shomft-Zee.html#property_id"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003A\u0024polygon",
+            "name": "polygon",
+            "summary": "",
+            "url": "classes/shomft-Zee.html#property_polygon"
+        },                {
+            "fqsen": "\\shomft\\Zee\u003A\u003A\u0024all",
+            "name": "all",
+            "summary": "",
+            "url": "classes/shomft-Zee.html#property_all"
+        },                {
+            "fqsen": "\\self\u0028\u0029",
+            "name": "self",
+            "summary": "",
+            "url": "namespaces/default.html#function_self"
+        },                {
+            "fqsen": "\\FtServer",
+            "name": "FtServer",
+            "summary": "",
+            "url": "classes/FtServer.html"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003AreadFeatureTypes\u0028\u0029",
+            "name": "readFeatureTypes",
+            "summary": "",
+            "url": "classes/FtServer.html#method_readFeatureTypes"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "",
+            "url": "classes/FtServer.html#method_get"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003A\u0024collections",
+            "name": "collections",
+            "summary": "",
+            "url": "classes/FtServer.html#property_collections"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003Acollection\u0028\u0029",
+            "name": "collection",
+            "summary": "",
+            "url": "classes/FtServer.html#method_collection"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003Aitems\u0028\u0029",
+            "name": "items",
+            "summary": "",
+            "url": "classes/FtServer.html#method_items"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003Ahome\u0028\u0029",
+            "name": "home",
+            "summary": "",
+            "url": "classes/FtServer.html#method_home"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003Arun\u0028\u0029",
+            "name": "run",
+            "summary": "",
+            "url": "classes/FtServer.html#method_run"
+        },                {
+            "fqsen": "\\FtServer\u003A\u003A\u0024sdmax",
+            "name": "sdmax",
+            "summary": "",
+            "url": "classes/FtServer.html#property_sdmax"
+        },                {
+            "fqsen": "\\WfsServer",
+            "name": "WfsServer",
+            "summary": "",
+            "url": "classes/WfsServer.html"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/WfsServer.html#method___construct"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003Aurl\u0028\u0029",
+            "name": "url",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_url"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003Aquery\u0028\u0029",
+            "name": "query",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_query"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AgetCapabilities\u0028\u0029",
+            "name": "getCapabilities",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_getCapabilities"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AfeatureTypeList\u0028\u0029",
+            "name": "featureTypeList",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_featureTypeList"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AdescribeFeatureType\u0028\u0029",
+            "name": "describeFeatureType",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_describeFeatureType"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AgeomPropertyName\u0028\u0029",
+            "name": "geomPropertyName",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_geomPropertyName"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AgetNumberMatched\u0028\u0029",
+            "name": "getNumberMatched",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_getNumberMatched"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AgetFeature\u0028\u0029",
+            "name": "getFeature",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_getFeature"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AgetFeatureAsArray\u0028\u0029",
+            "name": "getFeatureAsArray",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_getFeatureAsArray"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003AprintAllFeatures\u0028\u0029",
+            "name": "printAllFeatures",
+            "summary": "",
+            "url": "classes/WfsServer.html#method_printAllFeatures"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003ALOG",
+            "name": "LOG",
+            "summary": "",
+            "url": "classes/WfsServer.html#constant_LOG"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003ACAP_CACHE",
+            "name": "CAP_CACHE",
+            "summary": "",
+            "url": "classes/WfsServer.html#constant_CAP_CACHE"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003A\u0024serverUrl",
+            "name": "serverUrl",
+            "summary": "",
+            "url": "classes/WfsServer.html#property_serverUrl"
+        },                {
+            "fqsen": "\\WfsServer\u003A\u003A\u0024options",
+            "name": "options",
+            "summary": "",
+            "url": "classes/WfsServer.html#property_options"
+        },                {
+            "fqsen": "\\WfsGeoJson",
+            "name": "WfsGeoJson",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html"
+        },                {
+            "fqsen": "\\WfsGeoJson\u003A\u003AdescribeFeatureType\u0028\u0029",
+            "name": "describeFeatureType",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html#method_describeFeatureType"
+        },                {
+            "fqsen": "\\WfsGeoJson\u003A\u003AgeomPropertyName\u0028\u0029",
+            "name": "geomPropertyName",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html#method_geomPropertyName"
+        },                {
+            "fqsen": "\\WfsGeoJson\u003A\u003AgetNumberMatched\u0028\u0029",
+            "name": "getNumberMatched",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html#method_getNumberMatched"
+        },                {
+            "fqsen": "\\WfsGeoJson\u003A\u003AgetFeature\u0028\u0029",
+            "name": "getFeature",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html#method_getFeature"
+        },                {
+            "fqsen": "\\WfsGeoJson\u003A\u003AgetFeatureAsArray\u0028\u0029",
+            "name": "getFeatureAsArray",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html#method_getFeatureAsArray"
+        },                {
+            "fqsen": "\\WfsGeoJson\u003A\u003AprintAllFeatures\u0028\u0029",
+            "name": "printAllFeatures",
+            "summary": "",
+            "url": "classes/WfsGeoJson.html#method_printAllFeatures"
+        },                {
+            "fqsen": "\\FeaturesApi",
+            "name": "FeaturesApi",
+            "summary": "",
+            "url": "classes/FeaturesApi.html"
+        },                {
+            "fqsen": "\\FeaturesApi\u003A\u003Acollections\u0028\u0029",
+            "name": "collections",
+            "summary": "",
+            "url": "classes/FeaturesApi.html#method_collections"
+        },                {
+            "fqsen": "\\FeaturesApi\u003A\u003Acollection\u0028\u0029",
+            "name": "collection",
+            "summary": "",
+            "url": "classes/FeaturesApi.html#method_collection"
+        },                {
+            "fqsen": "\\FeaturesApi\u003A\u003Aitems\u0028\u0029",
+            "name": "items",
+            "summary": "",
+            "url": "classes/FeaturesApi.html#method_items"
+        },                {
+            "fqsen": "\\FeaturesApi\u003A\u003Aoutput\u0028\u0029",
+            "name": "output",
+            "summary": "",
+            "url": "classes/FeaturesApi.html#method_output"
+        },                {
             "fqsen": "\\coordDM\u0028\u0029",
             "name": "coordDM",
             "summary": "",
@@ -5040,5 +5935,15 @@ Search.appendIndex(
             "name": "mapcat",
             "summary": "",
             "url": "namespaces/mapcat.html"
+        },                {
+            "fqsen": "\\ns",
+            "name": "ns",
+            "summary": "",
+            "url": "namespaces/ns.html"
+        },                {
+            "fqsen": "\\shomft",
+            "name": "shomft",
+            "summary": "",
+            "url": "namespaces/shomft.html"
         }            ]
 );

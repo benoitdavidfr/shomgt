@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -82,6 +82,14 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/mapcat.html" class="">mapcat</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
 </h4>
 
                         </section>
@@ -256,6 +264,12 @@
 <dd>retourne un point de la géométrie</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/gegeom-MultiPolygon.html#method_area">area()</a>
+    <span>
+                                &nbsp;: float    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-Geometry.html#method_asArray">asArray()</a>
     <span>
                                 &nbsp;: array&lt;string, string|<abbr title="\gegeom\TPos">TPos</abbr>|<abbr title="\gegeom\TLPos">TLPos</abbr>|<abbr title="\gegeom\TLLPos">TLLPos</abbr>|<abbr title="\gegeom\TLLLPos">TLLLPos</abbr>&gt;    </span>
@@ -325,6 +339,7 @@ MutiPolygon-&gt;[Polygon]</dd>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>teste l&#039;intersection entre les 2 polygones ou multi-polygones</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-MultiPolygon.html#method_nbreOfPos">nbreOfPos()</a>
@@ -337,6 +352,7 @@ MutiPolygon-&gt;[Polygon]</dd>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>teste si une position est dans un des polygones.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-MultiPolygon.html#method_reproject">reproject()</a>
@@ -742,6 +758,41 @@ MutiPolygon-&gt;[Polygon]</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_area">
+        area()
+        <a href="classes/gegeom-MultiPolygon.html#method_area" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">916</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">area</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">float</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_asArray">
         asArray()
         <a href="classes/gegeom-Geometry.html#method_asArray" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1096,11 +1147,12 @@ MutiPolygon-&gt;[Polygon]</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">939</span>
+    <span class="phpdocumentor-element-found-in__line">935</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">teste l&#039;intersection entre les 2 polygones ou multi-polygones</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">inters</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-Geometry.html"><abbr title="\gegeom\Geometry">Geometry</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$geom</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1176,11 +1228,12 @@ MutiPolygon-&gt;[Polygon]</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gegeom.inc.php"><a href="files/lib-gegeom-inc.html"><abbr title="lib/gegeom.inc.php">gegeom.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">928</span>
+    <span class="phpdocumentor-element-found-in__line">927</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">teste si une position est dans un des polygones.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">pointInPolygon</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\gegeom\TPos">TPos</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1425,6 +1478,7 @@ MutiPolygon-&gt;[Polygon]</p>
                                             <li><a href="classes/gegeom-MultiPolygon.html#method___construct">__construct()</a></li>
                                             <li><a href="classes/gegeom-Geometry.html#method___toString">__toString()</a></li>
                                             <li><a href="classes/gegeom-MultiPolygon.html#method_aPos">aPos()</a></li>
+                                            <li><a href="classes/gegeom-MultiPolygon.html#method_area">area()</a></li>
                                             <li><a href="classes/gegeom-Geometry.html#method_asArray">asArray()</a></li>
                                             <li><a href="classes/gegeom-MultiPolygon.html#method_center">center()</a></li>
                                             <li><a href="classes/gegeom-Geometry.html#method_decompose">decompose()</a></li>

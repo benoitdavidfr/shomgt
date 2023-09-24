@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -84,6 +84,14 @@
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -132,13 +140,14 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">15</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Fichier Php analysé avec son chemin relatif et organisation des fichiers en un arbre</p>
+
 
 
 
@@ -156,6 +165,20 @@
 
 
 
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/PhpFile.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/PhpFile.html#constant_EXCLUDED">EXCLUDED</a>
+    <span>
+        &nbsp;= [&#039;.&#039;, &#039;..&#039;, &#039;.git&#039;, &#039;.phpdoc&#039;, &#039;vendor&#039;, &#039;shomgeotiff&#039;, &#039;gan&#039;, &#039;data&#039;, &#039;temp&#039;]                            </span>
+</dt>
+<dd>liste des sous-répertoires exclus du parcours lors de la construction de l&#039;arbre</dd>
+
+    </dl>
 
 
 <h4 id="toc-properties">
@@ -165,45 +188,33 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/PhpFile.html#property_all">$all</a>
+    <a href="classes/PhpFile.html#property_includes">$includes</a>
     <span>
-                        &nbsp;: array&lt;string, self&gt;            </span>
+                        &nbsp;: array&lt;int, string&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/PhpFile.html#property_ROOT">$ROOT</a>
+    <a href="classes/PhpFile.html#property_namespace">$namespace</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/PhpFile.html#property_includedIn">$includedIn</a>
-    <span>
-                        &nbsp;: array&lt;int, string&gt;            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/PhpFile.html#property_includes">$includes</a>
-    <span>
-                        &nbsp;: array&lt;string, array&lt;string, string&gt;&gt;            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/PhpFile.html#property_path">$path</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/PhpFile.html#property_root">$root</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/PhpFile.html#property_sameAs">$sameAs</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/PhpFile.html#property_rpath">$rpath</a>
     <span>
-                        &nbsp;: array&lt;int, string&gt;            </span>
+                        &nbsp;: string            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/PhpFile.html#property_title">$title</a>
     <span>
-                        &nbsp;: string|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
     </dl>
@@ -221,46 +232,53 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_add">add()</a>
+    <a href="classes/PhpFile.html#method_asArray">asArray()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Retourne l&#039;objet comme array.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/PhpFile.html#method_buildTree">buildTree()</a>
+    <span>
+                                &nbsp;: array&lt;string, mixed&gt;|<a href="classes/PhpFile.html"><abbr title="\PhpFile">PhpFile</abbr></a>    </span>
+</dt>
+<dd>Construit et retourne l&#039;arbre des répertoires et fichiers</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/PhpFile.html#method_chooseFile">chooseFile()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>affiche tous les noms de fichiers avec un lien vers chacun</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_addInc">addInc()</a>
+    <a href="classes/PhpFile.html#method_includes">includes()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: array&lt;int, string&gt;    </span>
 </dt>
+<dd>Retourne la liste des fichiers inclus dans le fichier Php.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_allIncluded">allIncluded()</a>
+    <a href="classes/PhpFile.html#method_namespace">namespace()</a>
     <span>
-                                &nbsp;: array&lt;string, array&lt;string, mixed&gt;&gt;    </span>
+                                &nbsp;: string    </span>
 </dt>
+<dd>retourne le namespace du fichier ou &#039;&#039; si aucun n&#039;est défini</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_allIncludes">allIncludes()</a>
+    <a href="classes/PhpFile.html#method_title">title()</a>
     <span>
-                                &nbsp;: array&lt;string, array&lt;string, mixed&gt;&gt;    </span>
+                                &nbsp;: string    </span>
 </dt>
+<dd>Retourne le titre du fichier extrait du commentaire PhpDoc</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_buildIncludedIn">buildIncludedIn()</a>
+    <a href="classes/PhpFile.html#method_treeAsArray">treeAsArray()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_readLinks">readLinks()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/PhpFile.html#method_readPhpFiles">readPhpFiles()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
+<dd>transforme l&#039;arbre des fichiers en un arbre composé d&#039;Array.</dd>
 
     </dl>
 
@@ -268,6 +286,42 @@
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/PhpFile.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_EXCLUDED">
+        EXCLUDED
+        <a href="classes/PhpFile.html#constant_EXCLUDED" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">liste des sous-répertoires exclus du parcours lors de la construction de l&#039;arbre</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">EXCLUDED</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;.&#039;, &#039;..&#039;, &#039;.git&#039;, &#039;.phpdoc&#039;, &#039;vendor&#039;, &#039;shomgeotiff&#039;, &#039;gan&#039;, &#039;data&#039;, &#039;temp&#039;]</span>
+</code>
+
+
+    
+    
+    
+
+</article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -281,27 +335,62 @@
             phpdocumentor-element
             -property
             -public
-            -static                                            "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_all">
-        $all
-        <a href="classes/PhpFile.html#property_all" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_includes">
+        $includes
+        <a href="classes/PhpFile.html#property_includes" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, self&gt;</span>
-    <span class="phpdocumentor-signature__name">$all</span>
+        <span class="phpdocumentor-signature__type">array&lt;int, string&gt;</span>
+    <span class="phpdocumentor-signature__name">$includes</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"><p>liste des fichiers inclus</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_namespace">
+        $namespace
+        <a href="classes/PhpFile.html#property_namespace" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">20</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$namespace</span>
     </code>
 
     
@@ -316,17 +405,17 @@
             -public
             -static                                            "
 >
-    <h4 class="phpdocumentor-element__name" id="property_ROOT">
-        $ROOT
-        <a href="classes/PhpFile.html#property_ROOT" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_root">
+        $root
+        <a href="classes/PhpFile.html#property_root" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -334,11 +423,13 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$ROOT</span>
+    <span class="phpdocumentor-signature__name">$root</span>
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>chemin de la racine de l'arbre</p>
+</section>
+
     
 
 </article>
@@ -346,98 +437,34 @@
         class="
             phpdocumentor-element
             -property
-            -protected
-                                                        "
+            -public
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_includedIn">
-        $includedIn
-        <a href="classes/PhpFile.html#property_includedIn" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_rpath">
+        $rpath
+        <a href="classes/PhpFile.html#property_rpath" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;int, string&gt;</span>
-    <span class="phpdocumentor-signature__name">$includedIn</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_includes">
-        $includes
-        <a href="classes/PhpFile.html#property_includes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">41</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string, array&lt;string, string&gt;&gt;</span>
-    <span class="phpdocumentor-signature__name">$includes</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_path">
-        $path
-        <a href="classes/PhpFile.html#property_path" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">38</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
+    <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$path</span>
+    <span class="phpdocumentor-signature__name">$rpath</span>
     </code>
 
     
-    
+        <section class="phpdocumentor-description"><p>chemin relatf par rapport à $root</p>
+</section>
+
     
 
 </article>
@@ -445,62 +472,29 @@
         class="
             phpdocumentor-element
             -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_sameAs">
-        $sameAs
-        <a href="classes/PhpFile.html#property_sameAs" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">45</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;int, string&gt;</span>
-    <span class="phpdocumentor-signature__name">$sameAs</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
+            -public
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_title">
         $title
         <a href="classes/PhpFile.html#property_title" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$title</span>
-     = <span class="phpdocumentor-signature__default-value">\null</span></code>
+    </code>
 
     
     
@@ -527,16 +521,16 @@
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rpath</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tokens</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -544,63 +538,15 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$path</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_add">
-        add()
-        <a href="classes/PhpFile.html#method_add" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">63</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$includedFile</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grepSrc</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$path</span>
+                <span class="phpdocumentor-signature__argument__name">$rpath</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$includedFile</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$grepSrc</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$tokens</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -617,70 +563,23 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_addInc">
-        addInc()
-        <a href="classes/PhpFile.html#method_addInc" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_asArray">
+        asArray()
+        <a href="classes/PhpFile.html#method_asArray" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retourne l&#039;objet comme array.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addInc</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$includedFile</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grepSrc</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$includedFile</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$grepSrc</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_allIncluded">
-        allIncluded()
-        <a href="classes/PhpFile.html#method_allIncluded" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">139</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">allIncluded</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, mixed&gt;&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">asArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -690,7 +589,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, mixed&gt;&gt;</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             </section>
 
 </article>
@@ -700,32 +599,62 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_allIncludes">
-        allIncludes()
-        <a href="classes/PhpFile.html#method_allIncludes" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_buildTree">
+        buildTree()
+        <a href="classes/PhpFile.html#method_buildTree" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Construit et retourne l&#039;arbre des répertoires et fichiers</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">allIncludes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, mixed&gt;&gt;</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">buildTree</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rpath</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$verbose</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<a href="classes/PhpFile.html"><abbr title="\PhpFile">PhpFile</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
-    
+        <section class="phpdocumentor-description"><p>Structure récursive de l'arbre:
+TREE ::= PhpFile # pour un fichier
+| {{rpath} =&gt; TREE} # pour un répertoire</p>
+<p>Peut être appelé avec un nom de sous-classe de PhpFile pour construire un arbre d'objet de cette sous-classe.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$class</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$rpath</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$verbose</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, mixed&gt;&gt;</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<a href="classes/PhpFile.html"><abbr title="\PhpFile">PhpFile</abbr></a></span>
             </section>
 
 </article>
@@ -735,53 +664,23 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_buildIncludedIn">
-        buildIncludedIn()
-        <a href="classes/PhpFile.html#method_buildIncludedIn" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_chooseFile">
+        chooseFile()
+        <a href="classes/PhpFile.html#method_chooseFile" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">affiche tous les noms de fichiers avec un lien vers chacun</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">buildIncludedIn</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_readLinks">
-        readLinks()
-        <a href="classes/PhpFile.html#method_readLinks" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">95</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">readLinks</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">chooseFile</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$action</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rpath</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -789,9 +688,16 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$options</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$action</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$rpath</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -805,34 +711,42 @@
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="method_readPhpFiles">
-        readPhpFiles()
-        <a href="classes/PhpFile.html#method_readPhpFiles" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_includes">
+        includes()
+        <a href="classes/PhpFile.html#method_includes" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="bo/requiregraph.php"><a href="files/bo-requiregraph.html"><abbr title="bo/requiregraph.php">requiregraph.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retourne la liste des fichiers inclus dans le fichier Php.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">readPhpFiles</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">includes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tokens</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Si le fichier inclus est dans root alors fournit un path relatif par rapport à root avec {root} au début du chemin.
+Si le fichier inclus n'existe pas alors:</p>
+<ul>
+<li>signale une erreur</li>
+<li>retourne le chemin absolu suivi de &quot; (BAD)&quot;</li>
+</ul>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$options</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$tokens</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a></span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -840,7 +754,149 @@
 
     
 
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_namespace">
+        namespace()
+        <a href="classes/PhpFile.html#method_namespace" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">155</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">retourne le namespace du fichier ou &#039;&#039; si aucun n&#039;est défini</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">namespace</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tokens</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
     
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$tokens</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_title">
+        title()
+        <a href="classes/PhpFile.html#method_title" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">107</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retourne le titre du fichier extrait du commentaire PhpDoc</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">title</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tokens</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$tokens</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/TokenArray.html"><abbr title="\TokenArray">TokenArray</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_treeAsArray">
+        treeAsArray()
+        <a href="classes/PhpFile.html#method_treeAsArray" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="phpanalyzer/index.php"><a href="files/phpanalyzer-index.html"><abbr title="phpanalyzer/index.php">index.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">62</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">transforme l&#039;arbre des fichiers en un arbre composé d&#039;Array.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">treeAsArray</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|<a href="classes/PhpFile.html"><abbr title="\PhpFile">PhpFile</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tree</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$tree</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|<a href="classes/PhpFile.html"><abbr title="\PhpFile">PhpFile</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
 </article>
             </section>
 
@@ -848,7 +904,7 @@
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/bo/requiregraph.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/phpanalyzer/index.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -947,20 +1003,25 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                        <li><a href="classes/PhpFile.html#toc-constants">Constants</a></li>
                                                             <li><a href="classes/PhpFile.html#toc-properties">Properties</a></li>
                                                             <li><a href="classes/PhpFile.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/PhpFile.html#constant_EXCLUDED">EXCLUDED</a></li>
+                                            </ul>
+                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/PhpFile.html#property_all">$all<a href="classes/PhpFile.html"></li>
-                                                    <li><a href="classes/PhpFile.html#property_ROOT">$ROOT<a href="classes/PhpFile.html"></li>
-                                                    <li><a href="classes/PhpFile.html#property_includedIn">$includedIn<a href="classes/PhpFile.html"></li>
                                                     <li><a href="classes/PhpFile.html#property_includes">$includes<a href="classes/PhpFile.html"></li>
-                                                    <li><a href="classes/PhpFile.html#property_path">$path<a href="classes/PhpFile.html"></li>
-                                                    <li><a href="classes/PhpFile.html#property_sameAs">$sameAs<a href="classes/PhpFile.html"></li>
+                                                    <li><a href="classes/PhpFile.html#property_namespace">$namespace<a href="classes/PhpFile.html"></li>
+                                                    <li><a href="classes/PhpFile.html#property_root">$root<a href="classes/PhpFile.html"></li>
+                                                    <li><a href="classes/PhpFile.html#property_rpath">$rpath<a href="classes/PhpFile.html"></li>
                                                     <li><a href="classes/PhpFile.html#property_title">$title<a href="classes/PhpFile.html"></li>
                                             </ul>
                 </li>
@@ -969,13 +1030,13 @@
             <li>
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/PhpFile.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_add">add()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_addInc">addInc()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_allIncluded">allIncluded()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_allIncludes">allIncludes()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_buildIncludedIn">buildIncludedIn()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_readLinks">readLinks()</a></li>
-                                            <li><a href="classes/PhpFile.html#method_readPhpFiles">readPhpFiles()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_asArray">asArray()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_buildTree">buildTree()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_chooseFile">chooseFile()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_includes">includes()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_namespace">namespace()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_title">title()</a></li>
+                                            <li><a href="classes/PhpFile.html#method_treeAsArray">treeAsArray()</a></li>
                                     </ul>
             </li>
                     </ul>

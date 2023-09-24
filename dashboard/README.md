@@ -3,7 +3,7 @@ L'objectif de *dashboard* est d'identifier :
 
 - les nouvelles cartes à ajouter au portefeuille,
 - les cartes existantes rétirées par le Shom et donc à retirer du portefeuille,
-- les cartes existantes à actualiser car des mises à jour ont été publiées par le Shom.
+- les cartes existantes à actualiser du fait de mises à jour publiées par le Shom.
 
 Cela se fait par l'affichage d'un tableau de bord.
 
@@ -16,7 +16,7 @@ Pour constituer ce tableau de bord, 2 sources du Shom sont consultées:
 
 1. le service WFS permet de détecter de nouvelles cartes ; sa consultation est effectuée dans le [module shomft](../shomft).
 2. le site du GAN permet de détecter des mises à jour et des retraits de cartes existantes ;
-   le GAN prenant la forme d'un site Web, il est donc nécessaire de le scrapper pour en extraire les informations recherchées.
+   le GAN prenant la forme d'un site Web, il est scrappé pour en extraire les informations recherchées.
 
 Le scrapping du GAN est effectué par la commande `php gan.php newHarvest` qui interroge le GAN pour chaque carte
 du portefeuille et enregistre la page Html correspondante dans le répertoire `gan`.  

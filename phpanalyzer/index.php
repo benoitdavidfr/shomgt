@@ -276,6 +276,7 @@ class UseGraph {
 
   // construction des utilisations
   static function buildUses(string $rpath=''): void {
+    $sameDir = $_GET['sameDir'] ?? null; // si vrai alors affichage des utilisations et définitions dans le même module
     foreach (new DirectoryIterator(PhpFile::$root.$rpath) as $entry) {
       if (in_array($entry, PhpFile::EXCLUDED)) continue;
       if (is_dir(PhpFile::$root."$rpath/$entry"))
@@ -296,7 +297,7 @@ class UseGraph {
               }
               else {
                 $defrpath = array_keys(self::$functions[$uFunName])[0];
-                if (self::SAME_DIR || (dirname($defrpath) <> dirname($userpath))) {
+                if ($sameDir || (dirname($defrpath) <> dirname($userpath))) {
                   //echo "Fonction $uFunName utilisée dans $userpath définie dans $defrpath<br>\n";
                   self::$functions[$uFunName][$defrpath]->addUse($userpath, $use);
                 }
@@ -315,7 +316,7 @@ class UseGraph {
               }
               else {
                 $defrpath = array_keys(self::$classes[$uClassName])[0];
-                if (self::SAME_DIR || (dirname($defrpath) <> dirname($userpath))) {
+                if ($sameDir || (dirname($defrpath) <> dirname($userpath))) {
                   //echo "Classe $uClassName utilisée dans $userpath définie dans $defrpath<br>\n";
                   self::$classes[$uClassName][$defrpath]->addUse($userpath, $use);
                 }
@@ -377,7 +378,8 @@ switch ($_GET['action'] ?? null) {
     echo "<a href='?action=buildBlocks'>Test de construction des blocks</a><br>\n";
     echo "<a href='?action=usesInAPhpFile'>Liste des utilisations d'un fichier</a><br>\n";
     echo "<a href='?action=useClassOrFunction'>Affichage des utilisations d'une classe ou d'une fonction</a><br>\n";
-    echo "<a href='?action=useGraph'>useGraph</a><br>\n";
+    echo "<a href='?action=useGraph'>Affichage des utilisations des classes et fonctions entre modules</a><br>\n";
+    echo "<a href='?action=useGraph&sameDir=true'>Affichage des utilisations des classes et fonctions y c. dans le même module</a><br>\n";
     break;
   }
   case 'fileIncludes': {
@@ -449,6 +451,8 @@ switch ($_GET['action'] ?? null) {
     break;
   }
   case 'useGraph': {
+    echo "<h2>Affichage des utilisations des classes et fonctions ",
+          ($_GET['sameDir']??null) ? "y c. dans le même module" : "entre modules","</h2>\n";
     UseGraph::buildDefs();
     //echo "<pre>functions = "; print_r(UseGraph::$functions); echo "classes ="; print_r(UseGraph::$classes); echo "</pre>\n";
     UseGraph::buildUses();

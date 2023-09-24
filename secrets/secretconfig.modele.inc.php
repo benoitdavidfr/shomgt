@@ -1,13 +1,12 @@
 <?php
-/*PhpDoc:
-name: secretconfig.modele.inc.php
-title: secretconfig.modele.inc.php - fichier modèle de config contenant des infos confidentielles
-doc: |
-journal: |
-  10/6/2023:
-    création de ce modèle
-*/
-/** @return array<string>|string */
+/** secretconfig.modele.inc.php - fichier modèle de config contenant des infos confidentielles
+ *
+ * journal:
+ * - 10/6/2023:
+ *   - création de ce modèle
+ */
+/** Lq fonction config() retourne la rubrique définie par $rubriqeu
+ * @return array<string>|string */
 function config(string $rubrique): array|string {
   static $config = [
     // controle activé au non par fonctionnalité
@@ -56,12 +55,7 @@ function config(string $rubrique): array|string {
     
     // liste des login/mdp autorisés comme utilisateurs
     'loginPwds' => [
-      'login:passwd', // exemple de compte avec 'login' comme login et 'passwd' comme mot de passe
-    ],
-    
-    // liste des login/mdp autorisés comme administrateurs
-    'admins'=> [
-      'login:passwd', // exemple de compte avec 'login' comme login et 'passwd' comme mot de passe
+      'login' => ['passwd'=> 'passwd', 'role'=> 'admin'], // exemple de définition d'un commte
     ],
   ];
   

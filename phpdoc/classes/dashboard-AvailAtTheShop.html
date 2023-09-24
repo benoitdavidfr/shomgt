@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -84,6 +84,14 @@
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -135,11 +143,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">lit le fichier disponible.tsv s&#039;il existe et stoke les cartes dispo. dans la boutique</p>
+
 
 
 
@@ -168,12 +177,14 @@
     <span>
         &nbsp;= __DIR__ . &#039;/available.tsv&#039;                            </span>
 </dt>
+<dd>chemin du fichier tsv</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/dashboard-AvailAtTheShop.html#constant_MAX_DURATION">MAX_DURATION</a>
     <span>
         &nbsp;= 7 * 24 * 60 * 60                            </span>
 </dt>
+<dd>durée en secondes pendant laquelle le fichier FILE_NAME reste valide</dd>
 
     </dl>
 
@@ -203,18 +214,21 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>indique s&#039;il existe au moins une carte disponible</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-AvailAtTheShop.html#method_init">init()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>charge le fichier dans self::$all</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-AvailAtTheShop.html#method_load">load()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>chargement du fichier available.tsv</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-AvailAtTheShop.html#method_maj">maj()</a>
@@ -252,11 +266,12 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">282</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">chemin du fichier tsv</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -280,11 +295,12 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">durée en secondes pendant laquelle le fichier FILE_NAME reste valide</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -324,7 +340,7 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">341</span>
+    <span class="phpdocumentor-element-found-in__line">347</span>
 
     </aside>
 
@@ -362,11 +378,12 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">343</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">indique s&#039;il existe au moins une carte disponible</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">exists</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -397,11 +414,12 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">345</span>
+    <span class="phpdocumentor-element-found-in__line">353</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">charge le fichier dans self::$all</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">init</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -428,11 +446,12 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">299</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">chargement du fichier available.tsv</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">load</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -459,7 +478,7 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">364</span>
+    <span class="phpdocumentor-element-found-in__line">372</span>
 
     </aside>
 
@@ -504,7 +523,7 @@ $header est soit une ligne avec séparateurs \t, soit nul</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 

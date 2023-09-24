@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -84,6 +84,14 @@
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -114,7 +122,58 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">gan.php</h2>
 
-        
+            <p class="phpdocumentor-summary">IHM de gestion des GAN
+L&#039;objectif est de moissonner les GAN des cartes définies dans le portefeuille
+et de fabriquer un fichier gans.yaml/pser de synthèse</p>
+
+    <section class="phpdocumentor-description"><p>Le chemin du portefeuille est défini par:</p>
+<ul>
+<li>la var. d'env. SHOMGT3_DASHBOARD_PORTFOLIO_PATH si elle est définie</li>
+<li>sinon la var. d'env. SHOMGT3_PORTFOLIO_PATH si elle est définie</li>
+<li>sinon erreur</li>
+</ul>
+<p>Le script propose en CLI:</p>
+<ul>
+<li>de moissonner les GANs de manière incrémentale, cad uniq. les GAN absents</li>
+<li>de moissonner les GANs en effacant les précédentes moissons</li>
+<li>de fabriquer la synthèse en yaml/pser</li>
+<li>d'afficher cette synthèse</li>
+</ul>
+<p>Certains traitements se font en cli (moissonnage), d'autres en non-CLI (affichage).</p>
+<p>Erreur 500 semble signfier que la carte n'est pas gérée dans le GAN, il s'agit visiblement surtout de cartes outre-mer
+Ex: https://gan.shom.fr/diffusion/qr/gan/6280/1931 - Partie Nord de Raiatea - Port d'Uturoa (1/12000)
+Le qrcode donne:
+Error Page
+status code: 404
+Exception Message: N/A</p>
+<p>Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../secrets/secretconfig.inc.php (non effectif)</p>
+<p>Tests de analyzeHtml() sur qqs cartes types (incomplet):</p>
+<ul>
+<li>6616 - carte avec 2 cartouches et une correction</li>
+<li>7330 - carte sans GAN</li>
+</ul>
+<p>journal: |
+12/6/2023:</p>
+<ul>
+<li>prise en compte de la restructuration du portefeuille
+2/8/2022:</li>
+<li>corrections suite à PhpStan level 6
+2/7/2022:</li>
+<li>ajout de la var;env. SHOMGT3_DASHBOARD_INCOMING_PATH qui permet de référencer des cartes différentes de sgserver</li>
+<li>ajout dans le GAN du champ scale
+12/6/2022:</li>
+<li>fork dans ShomGt3</li>
+<li>restriction fonctionnelle au moissonnage du GAN et à la construction des fichiers gans.yaml/pser
+<ul>
+<li>le calcul du degré de péremption est transféré dans dashboard/index.php</li>
+</ul>
+</li>
+<li>le lien avec la liste des cartes du portefuille est effectué par la fonction maps() qui lit la liste des cartes
+exposées par sgserver
+31/5/2022:</li>
+<li>désactivation de la vérification SSL</li>
+</ul>
+</section>
 
 
 
@@ -135,7 +194,12 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Lock.html"><abbr title="\dashboard\Lock">Lock</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Lock.html"><abbr title="\dashboard\Lock">Lock</abbr></a></dt><dd>Verrou d&#039;utilisation pour garantir que le script n&#039;est pas utilisé plusieurs fois simultanément
+3 opérations:
+ - locked() pour connaitre l&#039;état du verrou
+ - lock() pour le vérouiller
+ - unlock() pour le dévérouiller
+Le verrou est implémenté par l&#039;existence d&#039;un fichier.</dd>    </dl>
 
 
 
@@ -154,12 +218,14 @@
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>extrait le code d&#039;erreur Http</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/dashboard.html#function_httpContext">httpContext()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>fabrique un context Http</dd>
 
     </dl>
 
@@ -182,11 +248,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">extrait le code d&#039;erreur Http</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">http_error_code</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$http_response_header</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -220,11 +287,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">fabrique un context Http</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">httpContext</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>

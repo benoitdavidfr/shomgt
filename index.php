@@ -1,21 +1,17 @@
 <?php
-/*PhpDoc:
-name: index.php
-title: index.php - page d'accueil
-includes: [ lib/accesscntrl.inc.php ]
-doc: |
-journal: |
-  10/8/2023:
-    report dans Access du message lors du refus d'accès
-  9/11/2019
-    amélioration du controle d'accès
-  1/11/2019
-    nlle version
-  11/6/2017
-    chgt de l'URL initiale
-  9/6/2017
-    création
-*/
+/** page d'accueil de shomgt
+ * journal: |
+ * - 10/8/2023:
+ *   - report dans Access du message lors du refus d'accès
+ * - 9/11/2019
+ *   - amélioration du controle d'accès
+ * - 1/11/2019
+ *   - nlle version
+ * - 11/6/2017
+ *   - chgt de l'URL initiale
+ * - 9/6/2017
+ *   - création
+ */
 require_once __DIR__.'/lib/accesscntrl.inc.php';
 
 echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title></head>\n";

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -84,6 +84,14 @@
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -135,11 +143,15 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d&#039;erreur d&#039;interrogation des GAN</p>
+
+    <section class="phpdocumentor-description"><p>Moisonne le GAN des cartes du portefeuille non obsolètes (et donc le champ modified est connu).
+Analyse les fichiers Html moissonnés et en produit une synthèse.</p>
+</section>
 
 
 
@@ -179,6 +191,12 @@
     &#039;7755&#039; =&gt; [&quot;Publication 2015&quot; =&gt; &quot;Publication 2016&quot;],
 ]                            </span>
 </dt>
+<dd>Corrections du champ édition du GAN pour certaines cartes afin de ne pas perturber le TdB
+La constante est un tableau avec pour entrée le numéro de carte
+et pour valeur un array [{edACorriger}=&gt; {edCorrigée}]
+Liste d&#039;écarts transmise le 15/6/2022 au Shom
+Les écarts ci-dessous sont ceux restants après corrections du Shom
+Revisite le 18/8/2023, vérification par rapport à la carte elle même</dd>
 
     </dl>
 
@@ -194,48 +212,56 @@
     <span>
                         &nbsp;: array&lt;string, <a href="classes/dashboard-Gan.html"><abbr title="\dashboard\Gan">Gan</abbr></a>&gt;            </span>
 </dt>
+<dd>dictionnaire [$mapnum =&gt; Gan]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/dashboard-Gan.html#property_hvalid">$hvalid</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>interval des dates de la moisson des GAN</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_analyzeErrors">$analyzeErrors</a>
     <span>
                         &nbsp;: array&lt;int, string&gt;            </span>
 </dt>
+<dd>erreurs éventuelles d&#039;analyse du résultat du moissonnage</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_corrections">$corrections</a>
     <span>
                         &nbsp;: array&lt;int, array&lt;string, string&gt;&gt;            </span>
 </dt>
+<dd>liste des corrections</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_edition">$edition</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
+<dd>édition de la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_groupTitle">$groupTitle</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
+<dd>sur-titre optionnel identifiant un ensemble de cartes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_harvestError">$harvestError</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>erreur éventuelle du moissonnage</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_inSets">$inSets</a>
     <span>
                         &nbsp;: array&lt;int, <a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a>&gt;            </span>
 </dt>
+<dd>liste des cartouches</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_mapnum">$mapnum</a>
@@ -248,24 +274,28 @@
     <span>
                         &nbsp;: string|null            </span>
 </dt>
+<dd>échelle de la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_spatial">$spatial</a>
     <span>
                         &nbsp;: array&lt;string, string&gt;            </span>
 </dt>
+<dd>extension spatiale sour la forme [&#039;SW&#039;=&gt; sw, &#039;NE&#039;=&gt; ne]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_title">$title</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>titre de la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/dashboard-Gan.html#property_valid">$valid</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>date de moissonnage du GAN en format ISO</dd>
 
     </dl>
 
@@ -286,12 +316,14 @@
     <span>
                                 &nbsp;: array&lt;string, mixed&gt;    </span>
 </dt>
+<dd>retourne l&#039;ensemble des objets de la classe comme array</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-Gan.html#method_asArray">asArray()</a>
     <span>
                                 &nbsp;: array&lt;string, mixed&gt;    </span>
 </dt>
+<dd>retourne un objet comme array</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-Gan.html#method_corrections">corrections()</a>
@@ -304,6 +336,7 @@
     <span>
                                 &nbsp;: <a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a>    </span>
 </dt>
+<dd>retourne le cartouche correspondant au qgbox</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-Gan.html#method_scale">scale()</a>
@@ -322,6 +355,7 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>calcule la version sous la forme {anneeEdition}c{noCorrection}</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/dashboard-Gan.html#method_postProcessTitle">postProcessTitle()</a>
@@ -351,11 +385,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Corrections du champ édition du GAN pour certaines cartes afin de ne pas perturber le TdB
+La constante est un tableau avec pour entrée le numéro de carte
+et pour valeur un array [{edACorriger}=&gt; {edCorrigée}]
+Liste d&#039;écarts transmise le 15/6/2022 au Shom
+Les écarts ci-dessous sont ceux restants après corrections du Shom
+Revisite le 18/8/2023, vérification par rapport à la carte elle même</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -406,11 +446,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dictionnaire [$mapnum =&gt; Gan]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, <a href="classes/dashboard-Gan.html"><abbr title="\dashboard\Gan">Gan</abbr></a>&gt;</span>
@@ -439,11 +480,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">interval des dates de la moisson des GAN</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">string</span>
@@ -472,11 +514,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">erreurs éventuelles d&#039;analyse du résultat du moissonnage</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;int, string&gt;</span>
@@ -505,11 +548,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste des corrections</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;int, array&lt;string, string&gt;&gt;</span>
@@ -538,11 +582,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">édition de la carte</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
@@ -571,11 +616,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">sur-titre optionnel identifiant un ensemble de cartes</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
@@ -604,11 +650,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">erreur éventuelle du moissonnage</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -641,7 +688,8 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste des cartouches</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;int, <a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a>&gt;</span>
@@ -670,7 +718,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -703,11 +751,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">échelle de la carte</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
@@ -736,11 +785,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">extension spatiale sour la forme [&#039;SW&#039;=&gt; sw, &#039;NE&#039;=&gt; ne]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string, string&gt;</span>
@@ -769,11 +819,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">titre de la carte</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -802,11 +853,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">date de moissonnage du GAN en format ISO</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -840,7 +892,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -895,11 +947,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne l&#039;ensemble des objets de la classe comme array</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">allAsArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span></code>
@@ -930,11 +983,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne un objet comme array</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">asArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span></code>
@@ -965,7 +1019,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -1004,11 +1058,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le cartouche correspondant au qgbox</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">inSet</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$qgbox</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a></span></code>
@@ -1049,7 +1104,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1084,7 +1139,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -1119,11 +1174,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">199</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcule la version sous la forme {anneeEdition}c{noCorrection}</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">version</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -1154,7 +1210,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.inc.php"><a href="files/dashboard-gan-inc.html"><abbr title="dashboard/gan.inc.php">gan.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 

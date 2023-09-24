@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        configVersion="3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.phpdoc.org"
+>
+    <title>phpDocumentor</title>
+    <paths>
+        <output>phpdoc</output>
+    </paths>
+    <version number="3.0.0">
+        <api>
+            <source dsn=".">
+              <path>index.php</path>
+              <path>index2.php</path>
+              <path>mapwcat.php</path>
+              <path>tile.php</path>
+              <path>wms.php</path>
+              <path>lib</path>
+              <path>view</path>
+              <path>sgupdt</path>
+              <path>sgserver</path>
+              <path>dashboard</path>
+              <path>mapcat</path>
+              <path>shomft</path>
+              <path>bo</path>
+              <path>phpanalyzer</path>
+            </source>
+            <ignore hidden="true" symlinks="true">
+              <path>bo/SevenZipArchive.php</path>
+            </ignore>
+        </api>
+    </version>
+</phpdocumentor>

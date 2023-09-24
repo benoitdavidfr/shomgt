@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>phpDocumentor</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -25,7 +25,7 @@
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">phpDocumentor</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -84,6 +84,14 @@
     <a href="namespaces/mapcat.html" class="">mapcat</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/ns.html" class="">ns</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/shomft.html" class="">shomft</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
@@ -135,11 +143,17 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Verrou d&#039;utilisation pour garantir que le script n&#039;est pas utilisé plusieurs fois simultanément
+3 opérations:
+ - locked() pour connaitre l&#039;état du verrou
+ - lock() pour le vérouiller
+ - unlock() pour le dévérouiller
+Le verrou est implémenté par l&#039;existence d&#039;un fichier.</p>
+
 
 
 
@@ -168,6 +182,7 @@
     <span>
         &nbsp;= __DIR__ . &#039;/LOCK.txt&#039;                            </span>
 </dt>
+<dd>chemin du fichier utilisé pour le verrou</dd>
 
     </dl>
 
@@ -184,18 +199,21 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>verouille, renvoie vrai si ok, false si le verrou existait déjà</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-Lock.html#method_locked">locked()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>Si le verrou existe alors renvoie le contenu du fichier avec la date de verrou</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/dashboard-Lock.html#method_unlock">unlock()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>dévérouille</dd>
 
     </dl>
 
@@ -219,11 +237,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">chemin du fichier utilisé pour le verrou</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -261,11 +280,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">verouille, renvoie vrai si ok, false si le verrou existait déjà</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">lock</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -296,11 +316,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Si le verrou existe alors renvoie le contenu du fichier avec la date de verrou</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">locked</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -335,7 +356,8 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dévérouille</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">unlock</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>

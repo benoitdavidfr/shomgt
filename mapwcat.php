@@ -1,8 +1,5 @@
 <?php
-/*PhpDoc:
-title: mapwcat.php - renvoi vers view/mapwcat.php pour utilisation sur geoapi
-name: mapwcat.php
-*/
+/** renvoi vers view/mapwcat.php pour utilisation sur geoapi */
 
 //echo "<pre>"; print_r($_SERVER);
 $request_scheme = ($_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http');

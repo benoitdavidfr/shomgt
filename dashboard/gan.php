@@ -1,80 +1,79 @@
 <?php
+/** IHM de gestion des GAN
+ * L'objectif est de moissonner les GAN des cartes définies dans le portefeuille
+ * et de fabriquer un fichier gans.yaml/pser de synthèse
+ *
+ * Le chemin du portefeuille est défini par:
+ *   - la var. d'env. SHOMGT3_DASHBOARD_PORTFOLIO_PATH si elle est définie
+ *   - sinon la var. d'env. SHOMGT3_PORTFOLIO_PATH si elle est définie
+ *   - sinon erreur
+ *
+ * Le script propose en CLI:
+ *   - de moissonner les GANs de manière incrémentale, cad uniq. les GAN absents
+ *   - de moissonner les GANs en effacant les précédentes moissons
+ *   - de fabriquer la synthèse en yaml/pser
+ *   - d'afficher cette synthèse
+ *
+ * Certains traitements se font en cli (moissonnage), d'autres en non-CLI (affichage).
+
+ * Erreur 500 semble signfier que la carte n'est pas gérée dans le GAN, il s'agit visiblement surtout de cartes outre-mer
+ * Ex: https://gan.shom.fr/diffusion/qr/gan/6280/1931 - Partie Nord de Raiatea - Port d'Uturoa (1/12000)
+ * Le qrcode donne:
+ *   Error Page
+ *   status code: 404
+ *   Exception Message: N/A
+ *
+ * Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../secrets/secretconfig.inc.php (non effectif)
+ *
+ * Tests de analyzeHtml() sur qqs cartes types (incomplet):
+ *   - 6616 - carte avec 2 cartouches et une correction
+ *   - 7330 - carte sans GAN
+ *
+ * journal: |
+ * 12/6/2023:
+ *   - prise en compte de la restructuration du portefeuille
+ * 2/8/2022:
+ *   - corrections suite à PhpStan level 6
+ * 2/7/2022:
+ *   - ajout de la var;env. SHOMGT3_DASHBOARD_INCOMING_PATH qui permet de référencer des cartes différentes de sgserver
+ *   - ajout dans le GAN du champ scale
+ * 12/6/2022:
+ *   - fork dans ShomGt3
+ *   - restriction fonctionnelle au moissonnage du GAN et à la construction des fichiers gans.yaml/pser
+ *     - le calcul du degré de péremption est transféré dans dashboard/index.php
+ *   - le lien avec la liste des cartes du portefuille est effectué par la fonction maps() qui lit la liste des cartes
+ *     exposées par sgserver
+ * 31/5/2022:
+ *   - désactivation de la vérification SSL
+ */
 namespace dashboard;
-/*PhpDoc:
-name: gan.php
-title: dashboard/gan.php - IHM de gestion des GAN
-classes:
-functions:
-doc: |
-  L'objectif est de moissonner les GAN des cartes définies dans le portefeuille
-  et de fabriquer un fichier gans.yaml/pser de synthèse
 
-  Le chemin du portefeuille est défini par:
-    - la var. d'env. SHOMGT3_DASHBOARD_PORTFOLIO_PATH si elle est définie
-    - sinon la var. d'env. SHOMGT3_PORTFOLIO_PATH si elle est définie
-    - sinon erreur
-
-  Le script propose en CLI:
-    - de moissonner les GANs de manière incrémentale, cad uniq. les GAN absents
-    - de moissonner les GANs en effacant les précédentes moissons
-    - de fabriquer la synthèse en yaml/pser
-    - d'afficher cette synthèse
-
-  Certains traitements se font en cli (moissonnage), d'autres en non-CLI (affichage).
-
-  Erreur 500 semble signfier que la carte n'est pas gérée dans le GAN, il s'agit visiblement surtout de cartes outre-mer
-  Ex: https://gan.shom.fr/diffusion/qr/gan/6280/1931 - Partie Nord de Raiatea - Port d'Uturoa (1/12000)
-  Le qrcode donne:
-    Error Page
-    status code: 404
-    Exception Message: N/A
-
-  Si un proxy est nécessaire pour interroger les GANs, il doit être défini dans ../secrets/secretconfig.inc.php (non effectif)
-
-  Tests de analyzeHtml() sur qqs cartes types (incomplet):
-    - 6616 - carte avec 2 cartouches et une correction
-    - 7330 - carte sans GAN
-
-journal: |
-  12/6/2023:
-    - prise en compte de la restructuration du portefeuille
-  2/8/2022:
-    - corrections suite à PhpStan level 6
-  2/7/2022:
-    - ajout de la var;env. SHOMGT3_DASHBOARD_INCOMING_PATH qui permet de référencer des cartes différentes de sgserver
-    - ajout dans le GAN du champ scale
-  12/6/2022:
-    - fork dans ShomGt3
-    - restriction fonctionnelle au moissonnage du GAN et à la construction des fichiers gans.yaml/pser
-      - le calcul du degré de péremption est transféré dans dashboard/index.php
-    - le lien avec la liste des cartes du portefuille est effectué par la fonction maps() qui lit la liste des cartes
-      exposées par sgserver
-  31/5/2022:
-    - désactivation de la vérification SSL
-includes: [../lib/config.inc.php, mapcat.php]
-*/
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/gan.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-/* Verrou d'utilisation pour garantir que le script n'est pas utilisé plusieurs fois simultanément
-** 3 opération:
-**  - locked() pour connaitre l'état du verrou
-**  - lock() pour le vérouiller
-**  - unlock() pour le dévérouiller
+/** Verrou d'utilisation pour garantir que le script n'est pas utilisé plusieurs fois simultanément
+ * 3 opérations:
+ *  - locked() pour connaitre l'état du verrou
+ *  - lock() pour le vérouiller
+ *  - unlock() pour le dévérouiller
+ * Le verrou est implémenté par l'existence d'un fichier.
 */
 class Lock {
+  /** chemin du fichier utilisé pour le verrou */
   const LOCK_FILEPATH = __DIR__.'/LOCK.txt';
   
-  static function locked(): ?string { // Si le verrou existe alors renvoie le contenu du fichier avec la date de verrou
+  /** Si le verrou existe alors renvoie le contenu du fichier avec la date de verrou */
+  static function locked(): ?string {
     if (is_file(self::LOCK_FILEPATH))
       return file_get_contents(self::LOCK_FILEPATH);
     else
       return null;
   }
   
-  static function lock(): bool { // verouille, renvoie vrai si ok, false si le verrou existait déjà
+  /** verouille, renvoie vrai si ok, false si le verrou existait déjà */
+  static function lock(): bool {
     if (is_file(self::LOCK_FILEPATH))
       return false;
     else {
@@ -83,13 +82,15 @@ class Lock {
     }
   }
   
+  /** dévérouille */
   static function unlock(): void {
     unlink(self::LOCK_FILEPATH);
   }
 };
 
-/** @param array<int, string> $http_response_header */
-function http_error_code(?array $http_response_header): ?string { // extrait le code d'erreur Http 
+/** extrait le code d'erreur Http 
+ * @param array<int, string> $http_response_header */
+function http_error_code(?array $http_response_header): ?string {
   if (!isset($http_response_header))
     return 'indéfini';
   $http_error_code = null;
@@ -100,32 +101,18 @@ function http_error_code(?array $http_response_header): ?string { // extrait le 
   return $http_error_code;
 }
 
-function httpContext(): mixed { // fabrique un context Http
-  //if (1 || !($proxy = config('proxy'))) {
-    //return null;
-    return stream_context_create([
-      'http'=> [
-        'method'=> 'GET',
-      ],
-      'ssl'=> [
-        'verify_peer'=> false,
-        'verify_peer_name'=> false,
-      ],
-    ]);
-  //}
-  
-  /*return stream_context_create([
+/** fabrique un context Http */
+function httpContext(): mixed {
+  return stream_context_create([
     'http'=> [
       'method'=> 'GET',
-      'proxy'=> str_replace('http://', 'tcp://', $proxy),
-    ]
-  ]);*/
+    ],
+    'ssl'=> [
+      'verify_peer'=> false,
+      'verify_peer_name'=> false,
+    ],
+  ]);
 }
-
-
-// Utilisation de la classe Gan
-if ((__FILE__ <> realpath($_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_NAME'])) && (($argv[0] ?? '') <> basename(__FILE__)))
-  return;
 
 
 if (php_sapi_name() == 'cli') {

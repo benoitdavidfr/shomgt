@@ -1,3 +1,6 @@
+<?php
+/** Conditions d'utilisation du serveur de cartes GéoTiff du Shom< */
+?>
 <!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>conditions d'utilisation</title></head><body>
 <h2>Conditions d'utilisation du serveur de cartes GéoTiff du Shom</h2>
 L'utilisation de ce serveur est réservée aux agents de l'Etat et de ses Etablissements publics à caractère Administratif (EPA)

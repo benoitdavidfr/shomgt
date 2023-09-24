@@ -1,10 +1,9 @@
 <?php
+/** lecture du portefeuille de cartes - 12/6/2023c*/
 namespace dashboard;
-/*PhpDoc:
-title: dashboard/portfolio.inc.php - lecture du portefeuille de cartes - 12/6/2023
-*/
 
-class Portfolio { // Portefeuille des cartes exposées sur ShomGt issu des fichiers .md.json
+/** Portefeuille des cartes exposées sur ShomGt issu des fichiers .md.json */
+class Portfolio {
   /** @var array<string, TMapMdNormal|TMapMdLimited> $all */
   static array $all; // contenu des fichiers .md.json structuré par carte comme dictionnaire indexé sur le no de carte 
   
