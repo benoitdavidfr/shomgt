@@ -30,15 +30,15 @@ ShomGT4 se décompose dans les 7 modules suivants:
     - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *shomgt*,
+  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *view*,
     en interrogeant *sgserver*,
     et les stocke dans un [répertoire data décrit ici](data).  
     
     *view* et *sgupdt* peuvent être déployés comme conteneurs Docker,
-    dans ce cas le répertoire data constitue un volume partagé entre ces 2 conteneurs.
+    dans ce cas le répertoire *data* constitue un volume partagé entre ces 2 conteneurs.
     
   - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
-    Il est mis à jour régulièrement au travers du BO en fonction des infos fournies par le *dashboard*.
+    Il est mis à jour régulièrement au travers du *BO* en fonction des infos fournies par le *dashboard*.
   
   - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
     - les cartes les plus périmées à remplacer
@@ -47,7 +47,7 @@ ShomGT4 se décompose dans les 7 modules suivants:
     
     *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
     issues du [GAN du Shom](#gan).
-    Il exploite aussi, pour détecter de nouvelles cartes, la liste des cartes diffusée par le Shom dans son serveur WFS.
+    Il exploite aussi, pour détecter de nouvelles cartes, la liste des cartes diffusée par le Shom sur son serveur WFS.
   
   - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
     Il décrit des informations intemporelles sur les cartes comme le titre de la carte, sa couverture spatiale,
@@ -62,7 +62,14 @@ ShomGT4 se décompose dans les 7 modules suivants:
     Il permet notamment d'ajouter de nouvelles versions des cartes.
 
 Chacun de ces modules correspond à un répertoire ;
-en plus de ces 7 modules, une [bibiothèque commune contient un certain nombre de scripts documentés ici](lib).
+en plus de ces 7 modules, une bibiothèque commune contient un certain nombre de classes et fonctions documentées
+dans la [doc PHPDoc](https://benoitdavidfr.github.io//shomgt/phpdoc/) correspondant aux packages suivants:
+
+- [shomgt\lib](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/shomgt-lib.html),
+- [coordsys](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/coordsys.html) pour gérer différents systèmes de coordonnées,
+- [gegeom](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/gegeom.html) pour gérer des primitives géométriques,
+- [jsonschema](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/jsonschema.html) pour utiliser des schéma JSON,
+- [mysql](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/mysql.html) pour faciliter l'utilisation du serveur MySQL.
 
 ## 2. Termes et concepts utilisés dans ShomGT
 Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
