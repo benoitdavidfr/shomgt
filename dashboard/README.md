@@ -30,6 +30,12 @@ ce qui permet:
 1. de passer les commandes de cartes nécessaires au Shom dans sa boutique https://diffusion.shom.fr/
 2. de déterminer dans le fichier `index.yaml` de la livraison la liste des cartes à retirer.
 
+Ce module correspond aux packages de la doc PhphDoc:
+
+- [shomgt\dashboard](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-dashboard.html).
+- [shomgt\gan](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-gan.html).
+
+
 ## Points d'attention
 1. L'algorithme de scrapping peut être invalidé par une modification des pages Html du site du GAN.
    Ainsi:

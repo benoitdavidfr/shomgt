@@ -4,7 +4,7 @@ les fichiers nécessaires à [view](../view),
 à partir des fichiers 7z fournis par le Shom exposés par [sgserver](../sgserver) et le catalogue [mapcat](../mapcat).
 
 ## Expositions
-Ce module expose le script main.php qui doit être appelé en CLI pour effectuer la mise à jour du répertoire data.
+Ce module expose le script `main.php` qui doit être appelé en CLI pour effectuer la mise à jour du répertoire data.
 
 ## Variables d'environnement
 

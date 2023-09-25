@@ -102,6 +102,10 @@ Le serveur se fonde sur les liens présents dans le répertoire `current` de sho
 Le contenu des fichiers `{num}.md.json` permet de remplir le champ `lastVersion` du point d'accès `/maps.json`
 ou d'indiquer que la carte est obsolète.
 
+Ce module correspond au [package shomgt\sgserver
+de la doc PhphDoc](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-sgserver.html).
+
+
 ## 4. Erreurs rencontrées avec l'année d'édition des cartes
 Dans certains cas, l'année d'édition mentionnée dans les MD ISO 19139 est fausse.
 Il est donc utile de vérifier cette année en la comparant à celle indiquée sur la carte et si nécessaire de la corriger
