@@ -24,7 +24,7 @@ Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 ## 1. Décomposition en modules
 ShomGT4 se décompose dans les 7 modules suivants:
 
-  - **[view](view)** expose les services suivants de consultation des cartes:
+  - **[view](view/README.md)** expose les services suivants de consultation des cartes:
     - une API tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) très utilisé, 
     - un service conforme au [protocole WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
     - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
