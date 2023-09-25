@@ -234,27 +234,28 @@
     <span>
                                 &nbsp;: int    </span>
 </dt>
-<dd>indqieu la version ShomGT</dd>
+<dd>indique la version ShomGT</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_findCurrentMapVersionV4">findCurrentMapVersionV4()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Code en V4.</dd>
+<dd>Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V4).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_findCurrentMapVersionV3">findCurrentMapVersionV3()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>code en V3.</dd>
+<dd>Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V3).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_findCurrentMapVersion">findCurrentMapVersion()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V3 ou V4).</dd>
 
     </dl>
 
@@ -281,7 +282,7 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">indqieu la version ShomGT</p>
+        <p class="phpdocumentor-summary">indique la version ShomGT</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
@@ -306,18 +307,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/mapversion.php"><a href="files/view-mapversion.html"><abbr title="view/mapversion.php">mapversion.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Code en V4.</p>
+        <p class="phpdocumentor-summary">Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V4).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">findCurrentMapVersionV4</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$MAPS_DIR_PATH</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapnum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"><p>Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
-ou 'undefined' si aucun fichier de MD n'est trouvé</p>
+        <section class="phpdocumentor-description"><p>Retourne '' si la carte n'existe pas ou 'undefined' si aucun fichier de MD n'est trouvé</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -355,18 +355,17 @@ ou 'undefined' si aucun fichier de MD n'est trouvé</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/mapversion.php"><a href="files/view-mapversion.html"><abbr title="view/mapversion.php">mapversion.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">code en V3.</p>
+        <p class="phpdocumentor-summary">Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V3).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">findCurrentMapVersionV3</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$MAPS_DIR_PATH</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapnum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"><p>Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
-ou 'undefined' si aucun fichier de MD n'est trouvé</p>
+        <section class="phpdocumentor-description"><p>Retourne '' si la carte n'existe pas ou 'undefined' si aucun fichier de MD n'est trouvé</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -408,12 +407,15 @@ ou 'undefined' si aucun fichier de MD n'est trouvé</p>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V3 ou V4).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">findCurrentMapVersion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$MAPS_DIR_PATH</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapnum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>Retourne '' si la carte n'existe pas ou 'undefined' si aucun fichier de MD n'est trouvé</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">

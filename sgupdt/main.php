@@ -109,12 +109,12 @@ if (($argc > 1) && ($argv[1]=='-v')) { // génération des infos de version
   die();
 }
 
-/* Verrou d'utilisation pour garantir que le script n'est pas utilisé plusieurs fois simultanément
-** 3 opération:
-**  - locked() pour connaitre l'état du verrou
-**  - lock() pour le vérouiller
-**  - unlock() pour le dévérouiller
-*/
+/** Verrou d'utilisation pour garantir que le script n'est pas utilisé plusieurs fois simultanément.
+ * 3 opération:
+ *  - locked() pour connaitre l'état du verrou
+ *  - lock() pour le vérouiller
+ *  - unlock() pour le dévérouiller
+ */
 class Lock {
   const LOCK_FILEPATH = __DIR__.'/LOCK.txt';
   

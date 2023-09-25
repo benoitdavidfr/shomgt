@@ -219,11 +219,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">construction progressive du futur contenu de layers.yaml ; un objet ShomGT décrit un géoTiff</p>
+
 
 
 
@@ -254,60 +255,70 @@
     <span>
                         &nbsp;: array&lt;string, array&lt;string, <a href="classes/ShomGt.html"><abbr title="\ShomGt">ShomGt</abbr></a>&gt;&gt;            </span>
 </dt>
+<dd>contenu de layers.yaml sous la forme [{layername}=&gt; [{gtname} =&gt; ShomGT]]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_borders">$borders</a>
     <span>
                         &nbsp;: array&lt;int, int|string&gt;            </span>
 </dt>
+<dd>bordures au cas où le GéoTiff n&#039;est pas géoréférencé</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_deleted">$deleted</a>
     <span>
                         &nbsp;: array&lt;string, array&lt;int, mixed&gt;&gt;            </span>
 </dt>
+<dd>zones effacées dans le GéoTiff</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_gtname">$gtname</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>nom du GéoTiff</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_layer">$layer</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
+<dd>nom de la couche pour les cartes spéciales, null sinon</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_outgrowth">$outgrowth</a>
     <span>
                         &nbsp;: array&lt;int, array&lt;string, <abbr title="\TPos">TPos</abbr>&gt;&gt;            </span>
 </dt>
+<dd>liste d&#039;excroissances sous la forme [[&#039;SW&#039;=&gt; {pos}, &#039;NE&#039;=&gt; {pos}]]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_scaleDen">$scaleDen</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
+<dd>dénominateur de l&#039;échelle issu du catalogue de cartes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_spatial">$spatial</a>
     <span>
                         &nbsp;: array&lt;string, <abbr title="\TPos">TPos</abbr>&gt;            </span>
 </dt>
+<dd>extension spatiale  sous la forme [&#039;SW&#039;=&gt; {pos}, &#039;NE&#039;=&gt; {pos}], issu du catalogue de cartes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_title">$title</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>titre issu du catalogue de cartes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ShomGt.html#property_zorder">$zorder</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
+<dd>z-order issu du catalogue de cartes</dd>
 
     </dl>
 
@@ -328,30 +339,35 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>ajoute un GT par son nom</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ShomGt.html#method_allAsArray">allAsArray()</a>
     <span>
                                 &nbsp;: array&lt;string, array&lt;string, array&lt;string, mixed&gt;&gt;|string&gt;    </span>
 </dt>
+<dd>génère la représentation array de tous les ShomGt pour sortie Yaml</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ShomGt.html#method_asArray">asArray()</a>
     <span>
                                 &nbsp;: array&lt;string, mixed&gt;    </span>
 </dt>
+<dd>génère la représentation Yaml d&#039;un ShomGt dans un array</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ShomGt.html#method_init">init()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Initialise self::$all</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ShomGt.html#method_sortwzorder">sortwzorder()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>tri des GT de chaque couche selon zorder et gtname</dd>
 
     </dl>
 
@@ -384,11 +400,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">143</span>
+    <span class="phpdocumentor-element-found-in__line">150</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">contenu de layers.yaml sous la forme [{layername}=&gt; [{gtname} =&gt; ShomGT]]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
     <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, array&lt;string, <a href="classes/ShomGt.html"><abbr title="\ShomGt">ShomGt</abbr></a>&gt;&gt;</span>
@@ -417,11 +434,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">bordures au cas où le GéoTiff n&#039;est pas géoréférencé</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;int, int|string&gt;</span>
@@ -450,11 +468,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">zones effacées dans le GéoTiff</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string, array&lt;int, mixed&gt;&gt;</span>
@@ -483,11 +502,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">nom du GéoTiff</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -516,11 +536,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">nom de la couche pour les cartes spéciales, null sinon</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
@@ -549,11 +570,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste d&#039;excroissances sous la forme [[&#039;SW&#039;=&gt; {pos}, &#039;NE&#039;=&gt; {pos}]]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;int, array&lt;string, <abbr title="\TPos">TPos</abbr>&gt;&gt;</span>
@@ -582,11 +604,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">dénominateur de l&#039;échelle issu du catalogue de cartes</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int</span>
@@ -619,7 +642,8 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">extension spatiale  sous la forme [&#039;SW&#039;=&gt; {pos}, &#039;NE&#039;=&gt; {pos}], issu du catalogue de cartes</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string, <abbr title="\TPos">TPos</abbr>&gt;</span>
@@ -648,11 +672,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">titre issu du catalogue de cartes</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -681,11 +706,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">z-order issu du catalogue de cartes</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int</span>
@@ -719,7 +745,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -767,11 +793,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">ajoute un GT par son nom</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">addGt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gtname</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -808,11 +835,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">génère la représentation array de tous les ShomGt pour sortie Yaml</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">allAsArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, array&lt;string, mixed&gt;&gt;|string&gt;</span></code>
@@ -843,11 +871,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">génère la représentation Yaml d&#039;un ShomGt dans un array</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">asArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span></code>
@@ -878,11 +907,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Initialise self::$all</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">init</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -909,11 +939,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">192</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">tri des GT de chaque couche selon zorder et gtname</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">sortwzorder</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>

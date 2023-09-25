@@ -6,25 +6,29 @@ namespace bo;
 
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
-class Login { // Fonctionnalités de login 
-  const COOKIE_NAME = 'shomusrpwd'; // le nom du cookie utilisé pour enregistrer le login/passwd
+/** Gestion du login */
+class Login {
+  /** le nom du cookie utilisé pour enregistrer le login/passwd */
+  const COOKIE_NAME = 'shomusrpwd';
+  /** durée de validité du cookie en nbre de jours */
   const COOKIE_DURATION_IN_DAYS = 30; 
-  // Formulaire de login
+  /** Formulaire de login */
   const FORM = "<form method='post'>
     identifiant:  <input type='text' size=80 name='login' /><br>
     mot de passe: <input type='password' size=80 name='password' /><br>
     <input type='submit' value='Envoi' />
   </form>\n";
   
-  static function loggedIn(): ?string { // Si logué retourne le login en cookie, sinon retourne null
+  /** Si logué retourne le login en cookie, sinon retourne null */
+  static function loggedIn(): ?string {
     return (isset($_COOKIE[self::COOKIE_NAME]) && \Access::cntrl($_COOKIE[self::COOKIE_NAME])) ? 
       substr($_COOKIE[self::COOKIE_NAME], 0, strpos($_COOKIE[self::COOKIE_NAME], ':'))
         : null;
   }
   
-  // Si logué retourne le login, sinon propose à l'utilisateur de se loguer en affichant $htmlHeadAndTitle
-  // si login Ok alors retourne le login, sinon arrête l'exécution avec un message proposant de s'enregistrer
-  // à l'URL définie dans $registerUrl
+  /** Si logué retourne le login, sinon propose à l'utilisateur de se loguer en affichant $htmlHeadAndTitle.
+   * si login Ok alors retourne le login, sinon arrête l'exécution avec un message proposant de s'enregistrer
+   * à l'URL définie dans $registerUrl */
   static function login(string $htmlHeadAndTitle, string $registerUrl): ?string {
     if ($login = Login::loggedIn()) {
       return $login;
@@ -73,6 +77,7 @@ class Login { // Fonctionnalités de login
     return $_POST['login'];
   }
   
+  /* Réalise un logout en effacant le cookie adhoc */
   static function logout(string $HTML_HEAD, string $login): never {
     /*if (setcookie(Login::COOKIE_NAME, 'authorized', -1)) {
       echo "$HTML_HEAD<h2>Interface de gestion de ShomGt ($login)</h2>\n";

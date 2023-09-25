@@ -22,7 +22,7 @@
 require_once __DIR__.'/mysql.inc.php';
 require_once __DIR__.'/sexcept.inc.php';
 
-/** définition de la commande SQL de création de la table */
+/** retourne la commande SQL de création de la table */
 function log_table_schema(): string {
   return "create table log(
       logdt datetime not null comment 'date et heure',
@@ -36,7 +36,8 @@ function log_table_schema(): string {
     )";
 }
 
-define ('COOKIE_NAME', 'shomusrpwd');
+/** nom du cookie utilisé pour le login */
+const COOKIE_NAME = 'shomusrpwd';
 
 /** enregistrement d'un log */
 function write_log(bool $access): bool {

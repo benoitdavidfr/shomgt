@@ -78,22 +78,17 @@ if ($argc == 1) {
   $fout = STDOUT;
 }
 elseif ($argc == 2) {
-  if ($argv[1] == '-v') {
-    echo "Dates de dernière modification des fichiers sources:\n";
-    echo Yaml::dump($VERSION);
-    die();
-  }
-  elseif (!($fout = fopen($argv[1], 'w')))
+  if (!($fout = fopen($argv[1], 'w')))
     throw new Exception("Erreur d'ouverture du fichier $argv[1]");
 }
 else
   throw new Exception("Cas non prévu argc=$argc");
 
-// Définit les couches std et spéciales, permet de savoir à laquelle un GéoTiff appartient
+/** Définit les couches std et spéciales, permet de savoir à laquelle un GéoTiff appartient */
 class LayerDef {
   const ErrorScaleDenNotFound = 'LayerDef::ErrorScaleDenNotFound';
-  // liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d'échelle des GéoTiff
-  // contenus dans la couche
+  /** liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d'échelle des GéoTiff
+   * contenus dans la couche. */
   const LAYERS_SCALE_DEN_MAX = [
     '5k'=> 1.1e4,
     '12k'=> 2.2e4,
@@ -108,14 +103,15 @@ class LayerDef {
     '10M'=> 1.4e7,
     '40M'=> 9e999,
   ];
-  // liste des noms des couches spéciales
+  /** liste des noms des couches spéciales */
   const SPECIAL_LAYERS = [
     'gtaem',
     'gtMancheGrid',
     'gtZonMar',
   ];
   
-  static function getFromScaleDen(int $scaleDen): string { // retourne le nom de la couche en fonction du dén. de l'échelle
+  /** retourne le nom de la couche en fonction du dén. de l'échelle */
+  static function getFromScaleDen(int $scaleDen): string {
     foreach (self::LAYERS_SCALE_DEN_MAX as $lyrId => $scaleDenMax) {
       if ($scaleDen <= $scaleDenMax)
         return "gt$lyrId";
@@ -124,24 +120,36 @@ class LayerDef {
   }
 };
 
-class ShomGt { // construction progressive du futur contenu de layers.yaml
+/** construction progressive du futur contenu de layers.yaml ; un objet ShomGT décrit un géoTiff */
+class ShomGt {
+  /** nom du GéoTiff */
   protected string $gtname;
-  protected string $title; // titre issu du catalogue de cartes
-  /** @var array<string, TPos> $spatial */
-  protected array $spatial; // sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du catalogue de cartes
-  /** @var array<int, array<string, TPos>> $outgrowth */
-  protected array $outgrowth; // liste d'excroissances sous la forme [['SW'=> {pos}, 'NE'=> {pos}]]
-  protected int $scaleDen; // dénominateur de l'échelle issu du catalogue de cartes
-  protected int $zorder; // z-order issu du catalogue de cartes
-  /** @var array<string, array<int, mixed>> $deleted */
-  protected array $deleted; // zones effacées dans le GéoTiff
-  protected ?string $layer; // nom de la couche pour les cartes spéciales, null sinon
-  /** @var array<int, int|string> $borders */
-  protected array $borders=[]; // bordures au cas où le GéoTiff n'est pas géoréférencé
+  /** titre issu du catalogue de cartes */
+  protected string $title;
+  /** extension spatiale  sous la forme ['SW'=> {pos}, 'NE'=> {pos}], issu du catalogue de cartes
+   * @var array<string, TPos> $spatial */
+  protected array $spatial;
+  /** liste d'excroissances sous la forme [['SW'=> {pos}, 'NE'=> {pos}]]
+   * @var list<array<string, TPos>> $outgrowth */
+  protected array $outgrowth;
+  /** dénominateur de l'échelle issu du catalogue de cartes */
+  protected int $scaleDen;
+  /** z-order issu du catalogue de cartes */
+  protected int $zorder;
+  /** zones effacées dans le GéoTiff
+   * @var array<string, array<int, mixed>> $deleted */
+  protected array $deleted;
+  /** nom de la couche pour les cartes spéciales, null sinon */
+  protected ?string $layer;
+  /** bordures au cas où le GéoTiff n'est pas géoréférencé
+   * @var array<int, int|string> $borders */
+  protected array $borders=[];
 
-  /** @var array<string, array<string, ShomGt>> $all */
-  static array $all=[]; // contenu de layers.yaml sous la forme [{layername}=> [{gtname} => ShomGt]]
+  /** contenu de layers.yaml sous la forme [{layername}=> [{gtname} => ShomGT]]
+   * @var array<string, array<string, ShomGt>> $all */
+  static array $all=[];
 
+  /** Initialise self::$all */
   static function init(): void {
     foreach (array_reverse(LayerDef::LAYERS_SCALE_DEN_MAX) as $lyrId => $scaleDenMax) {
       //echo "$lyrId => $scaleDenMax\n";
@@ -151,7 +159,8 @@ class ShomGt { // construction progressive du futur contenu de layers.yaml
       self::$all[$lyrname] = [];
   }
   
-  static function addGt(string $gtname): void { // ajoute un GT par son nom
+  /** ajoute un GT par son nom */
+  static function addGt(string $gtname): void {
     //echo "ShomGt::addGt($gtname)\n";
     $map = TempMapCat::fromGtname($gtname, false);
     //echo "map="; print_r($map);
@@ -189,7 +198,8 @@ class ShomGt { // construction progressive du futur contenu de layers.yaml
     //echo 'ShomGt='; print_r($this);
   }
   
-  static function sortwzorder(): void { // tri de chaque couche selon zorder et gtname
+  /** tri des GT de chaque couche selon zorder et gtname */
+  static function sortwzorder(): void {
     foreach (self::$all as $layername => &$gts) {
       uksort($gts,
         function($a, $b) use($gts) {
@@ -211,8 +221,9 @@ class ShomGt { // construction progressive du futur contenu de layers.yaml
     }
   }
   
-  /** @return array<string, array<string, array<string, mixed>>|string>  */
-  static function allAsArray(): array { // génère la représentation Yaml de tous les ShomGt dans un string
+  /** génère la représentation array de tous les ShomGt pour sortie Yaml
+   * @return array<string, array<string, array<string, mixed>>|string>  */
+  static function allAsArray(): array {
     $array = [
       'title'=> "liste de GéoTiffs préparée pour le container view",
       'description'=> "fichier généré par " .__FILE__,
@@ -228,8 +239,9 @@ class ShomGt { // construction progressive du futur contenu de layers.yaml
     return $array;
   }
   
-  /** @return array<string, mixed> */
-  function asArray(): array { // génère la représentation Yaml d'un ShomGt dans un array
+  /** génère la représentation Yaml d'un ShomGt dans un array
+   * @return array<string, mixed> */
+  function asArray(): array {
     $mapnum = substr($this->gtname, 0, 4);
     $array = [
       'title'=> "$mapnum - $this->title",
@@ -270,8 +282,9 @@ foreach (geotiffs() as $gtname) {
     $geotiffs[$mapnum]['tif'][$gtname] = 1;  
 }
 
-/** @return array<int, string> */
-function obsoleteMaps(): array { // Lecture dans maps.json de la liste des nums des cartes obsolètes
+/** Lecture dans maps.json de la liste des nums des cartes obsolètes.
+ * @return array<int, string> */
+function obsoleteMaps(): array {
   $obsoleteMaps = [];
   if (($maps = @file_get_contents(__DIR__.'/temp/maps.json')) === false) {
     if (!is_dir(__DIR__.'/temp')) mkdir(__DIR__.'/temp');

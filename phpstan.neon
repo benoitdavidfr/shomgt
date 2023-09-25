@@ -114,6 +114,7 @@ parameters:
       - bo/purge.php
       - bo/testworldmerc.php
       - bo/viewmap.php
+      - phpanalyzer/testcode
   universalObjectCratesClasses:
     - mapcat\MapCatItem
   treatPhpDocTypesAsCertain: false

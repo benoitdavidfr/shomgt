@@ -63,21 +63,6 @@ $dirname = dirname($_SERVER['SCRIPT_NAME']);
 $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
 //echo "<pre>"; print_r($_SERVER); die("shomgturl=$shomgturl\n");
 
-/**
- * @param array<string, string> $versions
- * @return array<string, string>
-*/
-function latestVersion(array $versions): array {
-  $latest = null;
-  foreach ($versions as $k => $version) {
-    if (!$latest)
-      $latest = $k;
-    elseif (strcmp($version, $versions[$latest]) > 0)
-      $latest = $k;
-  }
-  return [$latest => $versions[$latest]];
-}
-
 $option_wfs = false;
 $options = explode(',', $_GET['options'] ?? 'none');
 foreach ($options as $option) {
@@ -85,21 +70,10 @@ foreach ($options as $option) {
     case 'help': {
       echo "Options de ce script:<ul>\n";
       echo "<li>help : fournit cette aide</li>\n";
-      echo "<li>version : fournit les dates de modification des fichiers sources</li>\n";
       echo "<li>wfs : affiche les silhouettes des cartes du catalogue Shom exposé en WFS</li>\n";
       echo "<li>center : fournit le centre de la carte sous la forme {lat},{lon}</li>\n";
       // echo "<li>zoom : fournit le zoom de la carte sous la forme d'un entier</li>\n";
       echo "</ul>\n";
-      die();
-    }
-    case 'version': {
-      $VERSION = array_merge(
-        $VERSION,
-        json_decode(file_get_contents("$shomgturl/tile.php?options=version"), true),
-        json_decode(file_get_contents("$shomgturl/maps.php?options=version"), true),
-      );
-      header('Content-type: application/json');
-      echo json_encode(['versions'=> $VERSION, 'latest'=> latestVersion($VERSION)]);
       die();
     }
     case 'wfs': {

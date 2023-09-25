@@ -47,7 +47,7 @@ header('Content-type: text/plain; charset="utf8"');
 //ini_set('memory_limit', '12800M'); // 12 G c'est un peu abuser !!
 ini_set('memory_limit', '2G'); // pour 7330_2016.png 512M, 1G insuffisant ; 2G ok
 
-
+/** affiche le message d'erreur puis met fin au script avec un code 1 */
 function error(string $message): never { echo "$message\n"; die(1); }
   
 //echo "argc=$argc\n";

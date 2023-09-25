@@ -96,11 +96,12 @@
 //define ('DEBUG', true); // le mode DEBUG facilite le test interactif du serveur
 
 /** cartes exclues du service en V0 car incompatible avec sgupdt v0.6 */
-define('EXCLUDED_MAPS_IN_V0', ['8523']);
+const EXCLUDED_MAPS_IN_V0 = ['8523'];
 /** cartes spéciales traitées spécialement en version < 4 */
-define('SPECIAL_MAPS', ['7330','7344','7360','8101','8502','8509','8510','8517','8523']); 
-define('TEST_MAPS', []); // PAS de restriction pour tests
-/*define('TEST_MAPS', [
+const SPECIAL_MAPS = ['7330','7344','7360','8101','8502','8509','8510','8517','8523']; 
+/** liste limitée de cartes pour tests */
+const TEST_MAPS = []; // PAS de restriction pour tests
+/*const TEST_MAPS = [
   '0101', // planisphère
   '6835', // carte à cheval sur l'antiméridien
   '6977', // carte à cheval sur l'antiméridien
@@ -108,13 +109,12 @@ define('TEST_MAPS', []); // PAS de restriction pour tests
   '7620', // carte mal géoréférencée
   '8509', // Action de l'Etat en Mer - Nouvelle-Calédonie - Wallis et Futuna'
   '8510', // Délimitations des zones maritimes
-]
-); // restriction pour tests*/
+]; // restriction pour tests*/
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
-require_once __DIR__.'/httperrorcodes.inc.php';
+require_once __DIR__.'/../lib/httperrorcodes.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 

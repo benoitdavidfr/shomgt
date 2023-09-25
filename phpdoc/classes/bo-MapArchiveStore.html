@@ -224,7 +224,8 @@
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Répertoire contenant 2 sous-répertoires archives et current</p>
+
 
 
 
@@ -326,12 +327,14 @@ Renvoie la liste des entrées qui ne le sont pas sous la forme [entrée =&gt; co
     <span>
                                 &nbsp;: array&lt;int, string&gt;    </span>
 </dt>
+<dd>retourne les motifs des liens dans current soit relatifs soit absolus</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/bo-MapArchiveStore.html#method_wrongCurLink">wrongCurLink()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>Vérifie qu&#039;une entrée de current est un lien relatif vers archives.</dd>
 
     </dl>
 
@@ -727,7 +730,8 @@ Renvoie la liste des entrées qui ne le sont pas sous la forme [entrée =&gt; co
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne les motifs des liens dans current soit relatifs soit absolus</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">targetPatterns</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapNum</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ext</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
@@ -779,14 +783,17 @@ Renvoie la liste des entrées qui ne le sont pas sous la forme [entrée =&gt; co
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Vérifie qu&#039;une entrée de current est un lien relatif vers archives.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">wrongCurLink</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entry</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Renvoie null si ok, sinon le code d'erreur correspondant à l'entrée</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">

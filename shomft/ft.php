@@ -31,7 +31,7 @@
  * @package shomgt\shomft
  */
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../sgserver/httperrorcodes.inc.php';
+require_once __DIR__.'/../lib/httperrorcodes.inc.php';
 require_once __DIR__.'/wfsserver.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -75,6 +75,7 @@ function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): vo
   die("$mesUti\n");
 }
 
+/** Retourne l'URL appellé */
 function self(): string { return "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; }
 
 /** Code du serveur d'objets géographiques */

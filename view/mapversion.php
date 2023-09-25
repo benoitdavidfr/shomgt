@@ -9,7 +9,7 @@ require_once __DIR__.'/../lib/readmapversion.inc.php';
 
 $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
 
-/** indqieu la version ShomGT */
+/** indique la version ShomGT */
 function shomGTVersion(): int {
   switch ($_SERVER['SCRIPT_NAME']) {
     case '/geoapi/shomgt/view/mapversion.php': return 4; // en local
@@ -20,9 +20,8 @@ function shomGTVersion(): int {
   }
 }
 
-/** Code en V4.
- * Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
- * ou 'undefined' si aucun fichier de MD n'est trouvé */
+/** Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V4).
+ * Retourne '' si la carte n'existe pas ou 'undefined' si aucun fichier de MD n'est trouvé */
 function findCurrentMapVersionV4(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';
@@ -77,9 +76,8 @@ function findCurrentMapVersionV4(string $MAPS_DIR_PATH, string $mapnum): string 
   return 'undefined'; // sinon undefined
 }
 
-/** code en V3.
- * Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
- * ou 'undefined' si aucun fichier de MD n'est trouvé */
+/** Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V3).
+ * Retourne '' si la carte n'existe pas ou 'undefined' si aucun fichier de MD n'est trouvé */
 function findCurrentMapVersionV3(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';
@@ -98,6 +96,8 @@ function findCurrentMapVersionV3(string $MAPS_DIR_PATH, string $mapnum): string 
   return 'undefined';
 }
 
+/** Retourne le libellé de la version courante de la carte $mapnum (Code en ShomGT V3 ou V4).
+ * Retourne '' si la carte n'existe pas ou 'undefined' si aucun fichier de MD n'est trouvé */
 function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   switch($shomGTVersion = shomGTVersion()) {
     case 3: return findCurrentMapVersionV3($MAPS_DIR_PATH, $mapnum);

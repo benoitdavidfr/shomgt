@@ -1,13 +1,6 @@
 <?php
 /** Récupération de MD ISO d'un GéoTiff
  *
- * Récupère dans le fichier XML ISO 19139 d'un GéoTiff les 4 champs de métadonnées suivants:
- *   mdDate: date de modification des métadonnées
- *   edition: édition de la carte, example: Edition n° 3 - 2016
- *   lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
- *   scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
- * La méthode statique read() de la classe IsoMd retourne un dict. de ces informations
- *
  * journal:
  * - 22/5/2022:
  *   - utilisation EnVar
@@ -17,10 +10,16 @@
  *   - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
  * @package shomgt\lib
  */
-$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
-
 require_once __DIR__.'/envvar.inc.php';
 
+/** Récupération de MD ISO d'un GéoTiff
+ *
+ * Récupère dans le fichier XML ISO 19139 d'un GéoTiff les 4 champs de métadonnées suivants:
+ *   mdDate: date de modification des métadonnées
+ *   edition: édition de la carte, example: Edition n° 3 - 2016
+ *   lastUpdate: entier indiquant la dernière correction prise en compte dans la carte
+ *   scaleDenominator: dénominateur de l'échelle avec '_' comme séparateur des milliers, example: 50_300
+ */
 class IsoMd {
   const ErrorFileNotFound = 'IsoMd::ErrorFileNotFound';
   const NoMatchForMdDate = 'IsoMd::NoMatchForMdDate';
@@ -36,14 +35,8 @@ class IsoMd {
       return self::addUndescoreForThousand(intval(floor($int/1000))).'_'.sprintf('%03d', $int - 1000 * floor($int/1000));
   }
   
-  /*static function addUndescoreForThousandDebug(int $int): string {
-    echo "addUndescoreForThousand($int)<br>\n";
-    $s = self::addUndescoreForThousand($int);
-    echo " -> $s<br>\n";
-    return $s;
-  }*/
-  
-  /** @return array<string, string> */
+  /** retourne un dict. des informations
+   * @return array<string, string> */
   static function read(string $gtname): array {
     $mapNum = substr($gtname, 0, 4);
     if (!($xmlmd = @file_get_contents(EnvVar::val('SHOMGT3_MAPS_DIR_PATH')."/$mapNum/CARTO_GEOTIFF_$gtname.xml")))

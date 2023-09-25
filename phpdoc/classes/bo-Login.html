@@ -220,11 +220,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">10</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Gestion du login</p>
+
 
 
 
@@ -253,18 +254,21 @@
     <span>
         &nbsp;= 30                            </span>
 </dt>
+<dd>durée de validité du cookie en nbre de jours</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/bo-Login.html#constant_COOKIE_NAME">COOKIE_NAME</a>
     <span>
         &nbsp;= &#039;shomusrpwd&#039;                            </span>
 </dt>
+<dd>le nom du cookie utilisé pour enregistrer le login/passwd</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/bo-Login.html#constant_FORM">FORM</a>
     <span>
         &nbsp;= &quot;&lt;form method=&#039;post&#039;&gt;\n    identifiant:  &lt;input type=&#039;text&#039; size=80 name=&#039;login&#039; /&gt;&lt;br&gt;\n    mot de passe: &lt;input type=&#039;password&#039; size=80 name=&#039;password&#039; /&gt;&lt;br&gt;\n    &lt;input type=&#039;submit&#039; value=&#039;Envoi&#039; /&gt;\n  &lt;/form&gt;\n&quot;                            </span>
 </dt>
+<dd>Formulaire de login</dd>
 
     </dl>
 
@@ -281,12 +285,14 @@
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>Si logué retourne le login en cookie, sinon retourne null</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-Login.html#method_login">login()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>Si logué retourne le login, sinon propose à l&#039;utilisateur de se loguer en affichant $htmlHeadAndTitle.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-Login.html#method_logout">logout()</a>
@@ -316,11 +322,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">14</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">durée de validité du cookie en nbre de jours</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -344,11 +351,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">10</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">le nom du cookie utilisé pour enregistrer le login/passwd</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -372,11 +380,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Formulaire de login</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -414,11 +423,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Si logué retourne le login en cookie, sinon retourne null</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">loggedIn</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -449,18 +459,22 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Si logué retourne le login, sinon propose à l&#039;utilisateur de se loguer en affichant $htmlHeadAndTitle.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">login</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$htmlHeadAndTitle</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$registerUrl</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>si login Ok alors retourne le login, sinon arrête l'exécution avec un message proposant de s'enregistrer
+à l'URL définie dans $registerUrl</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -501,7 +515,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/login.inc.php"><a href="files/bo-login-inc.html"><abbr title="bo/login.inc.php">login.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 

@@ -23,6 +23,7 @@ if (in_array($_SERVER['PATH_INFO'] ?? '', ['', '/'])) { // appel sans paramètre
   die("Appel sans paramètre\n");
 }
 
+/** affiche un message et termine le script avec un code retour de 1 */
 function error(string $message): never { echo "$message\n"; die(1); }
 
 $debug = $_GET['debug'] ?? 0;

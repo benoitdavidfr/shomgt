@@ -26,6 +26,7 @@ $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../lib/layer.inc.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
+require_once __DIR__.'/../lib/httperrorcodes.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -81,18 +82,13 @@ function cornersOfRects(string $lyrname, array $rects): array {
   return $ptsGeojson;
 }
 
-/** classe regroupant qqs méthodes statiques */
+/** classe regroupant qqs méthodes statiques de gestion de l'API maps */
 class GtMaps {
   const ErrorUnknownCRS = 'GtMaps::ErrorUnknownCRS';
   const ErrorImageSaveAlpha = 'GtMaps::ErrorImageSaveAlpha';
-  const HttpErrorMessage = [
-    400 => 'Bad Request',
-    404 => 'Not Found',
-    500 => 'Internal Server Error',
-  ];
 
   static function error(int $httpCode, string $message, string $scode=''): never {
-    header(sprintf('HTTP/1.1 %d %s', $httpCode, self::HttpErrorMessage[$httpCode] ?? "Undefined for $httpCode"));
+    header(sprintf('HTTP/1.1 %d %s', $httpCode, HTTP_ERROR_CODES[$httpCode] ?? "Undefined for $httpCode"));
     header('Content-type: application/json; charset="utf8"');
     if (!$scode)
       die(json_encode($message,  JSON_UNESCAPED_UNICODE));

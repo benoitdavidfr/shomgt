@@ -102,7 +102,7 @@ catch (Exception $e) {
 //WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
 //WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
-/** classe implémentant les fonctions du WMS de ShomGt.
+/** classe implémentant le serveur WMS de ShomGt.
  * La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
  * Le script appelle WmsServer::process() qui appelle les méthodes WmsShomGt::getCapabilities() ou WmsShomGt::getMap()
 */

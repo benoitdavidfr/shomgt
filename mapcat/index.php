@@ -79,7 +79,8 @@ function geoImagesOfMap(string $mapNum, MapCatItem $mapCat): array {
   return $spatials;
 }
 
-function cmpGans(): void { // comparaison MapCat / GAN
+/** comparaison MapCat / GAN */
+function cmpGans(): void {
   echo "<table border=1><th>mapid</th><th>badGan</th><th>inset</th>",
     "<th>cat'scale</th><th>gan'scale</th><th>ok?</th>",
     "<th>cat'SW</th><th>gan'SW</th><th>ok?</th>",

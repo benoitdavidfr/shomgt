@@ -29,7 +29,7 @@ if (!($login = Login::loggedIn())) {
   die("Accès non autorisé\n");
 }
 
-// supprime un répertoire
+/** supprime un répertoire récursivement */
 function rmdirRecursive(string $path): void {
   foreach (new \DirectoryIterator($path) as $filename) {
     if (in_array($filename, ['.','..'])) continue;
@@ -41,7 +41,7 @@ function rmdirRecursive(string $path): void {
   }
 }
 
-// Répertoire contenant 2 sous-répertoires archives et current
+/** Répertoire contenant 2 sous-répertoires archives et current */
 class MapArchiveStore {
   //const PF_PATH_TEST = __DIR__.'/maparchivestore-testpp'; // si définie alors exécution en mode test sur l'objet défini
   const DEBUG = 0; // 1 <=> affichage de messages de debug 
@@ -49,8 +49,8 @@ class MapArchiveStore {
   
   function __construct(?string $path) { $this->path = $path; }
   
-  // retourne les motifs des liens dans current soit relatifs soit absolus
-  /** @return array<int, string> */
+  /** retourne les motifs des liens dans current soit relatifs soit absolus
+   * @return list<string> */
   private function targetPatterns(string $mapNum, string $ext): array {
     $versionCStd = '\d{4}c\d+[a-z]?'; // pattern std carte std
     $versionCSpeciale = '(\d{4}|\d{4}_\d{4})'; // pattern carte spéciale
@@ -64,8 +64,8 @@ class MapArchiveStore {
     return [$targetRelPattern, $targetAbsPattern];
   }
   
-  // Vérifie qu'une entrée de current est un lien relatif vers archives
-  // Renvoie null si ok, sinon le code d'erreur correspondant à l'entrée
+  /** Vérifie qu'une entrée de current est un lien relatif vers archives.
+   * Renvoie null si ok, sinon le code d'erreur correspondant à l'entrée */
   private function wrongCurLink(string $entry): ?string {
     if (!is_link("$this->path/current/$entry")) {
       return 'notALink';

@@ -19,7 +19,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-/** fonctionnalités communes Gml et GeoJSON */
+/** Classe facilitant l'utilisation d'un serveur WFS, fonctionnalités communes Gml et GeoJSON */
 abstract class WfsServer {
   /** chemin du fichier de log ou false pour pas de log */
   const LOG = __DIR__.'/wfsserver.log.yaml';
@@ -161,7 +161,7 @@ abstract class WfsServer {
   abstract function printAllFeatures(string $typename, int $zoom=-1, string $where=''): void;
 };
 
-/** gère les fonctionnalités d'un serveur WFS retournant du GeoJSON */
+/** Classe facilitant l'utilisation d'un serveur WFS, fonctionnalités d'un serveur retournant du GeoJSON */
 class WfsGeoJson extends WfsServer {
   /** @return array<string, mixed> */
   function describeFeatureType(string $typeName): array {
@@ -326,10 +326,11 @@ if (!isset($_SERVER['PATH_INFO']) && ((__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_S
   }
 }
 
-/** transforme un serveur WFS en Api Features */
+/** Classe permettant d'interroger un serveur WFS comme une Api OGC Features */
 class FeaturesApi extends WfsGeoJson { 
-  /** @return list<array<string, string>> */
-  function collections(): array { // retourne la liste des collections
+  /** retourne la liste des collections exposées définies par leur id et leur titre
+   * @return list<array{id: string, title: string}> */
+  function collections(): array {
     $collections = [];
     foreach ($this->featureTypeList() as $typeId => $type) {
       $collections[] = [
@@ -340,10 +341,9 @@ class FeaturesApi extends WfsGeoJson {
     return $collections;
   }
   
-  /** @return array<string, mixed> */
-  function collection(string $id): array { // retourne la description du FeatureType de la collection
-    return $this->describeFeatureType($id);
-  }
+  /** retourne la description du FeatureType de la collection
+   * @return array<string, mixed> */
+  function collection(string $id): array { return $this->describeFeatureType($id); }
   
   /** retourne les items de la collection comme array Php
    * @return TGeoJsonFeatureCollection */

@@ -22,9 +22,9 @@ $LOG_MYSQL_URI = getenv($ve) or die("Erreur, variable d'environnement '$ve' non 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>bo/accesslog@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
 /** Définition du schéma de la table ipaddress et de son contenu */
-class SqlDef {
+class IpAddressSqlDef {
   /** Définition du schéma de la table ipaddress */
-  const IPADDRESS_SCHEMA = [
+  const SCHEMA = [
     'comment' => "table des adresses IP",
     'columns' => [
       'ip' => [
@@ -39,7 +39,7 @@ class SqlDef {
     ],
   ];
   /** Contenu de la table ipaddress */
-  const IPADDRESS_CONTENT = [
+  const CONTENT = [
     ['88.166.143.190', "BDavid"], // domicile
     ['86.244.235.216', "BDavid"], // labergerieduperejule
     ['127.0.0.1', "Accès local"],
@@ -294,8 +294,8 @@ switch ($action = $_GET['action'] ?? null) {
   case 'createTableIpaddress': {
     echo "$HTML_HEAD<h3>Access log</h3>\n";
     \MySql::query("drop table if exists ipaddress");
-    \MySql::query(SqlDef::sql('ipaddress', SqlDef::IPADDRESS_SCHEMA));
-    foreach (SqlDef::IPADDRESS_CONTENT as $iptuple)
+    \MySql::query(IpAddressSqlDef::sql('ipaddress', IpAddressSqlDef::SCHEMA));
+    foreach (IpAddressSqlDef::CONTENT as $iptuple)
       \MySql::query("insert into ipaddress values('$iptuple[0]','$iptuple[1]')");
     die();
   }

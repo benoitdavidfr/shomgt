@@ -28,8 +28,8 @@ use Symfony\Component\Yaml\Yaml;
 //WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
 //WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
-/** classe implémentant les fonctions du WMS-V de ShomGt.
- * La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
+/** classe implémentant le serveur WMS-Vecteur de ShomGt.
+ * La classe WmsvShomGt hérite de la classe WmsServer qui gère le protocole WMS.
  * Le script appelle WmsServer::process() qui appelle les méthodes WmsvShomGt::getCapabilities() ou WmsvShomGt::getMap()
 */
 class WmsvShomGt extends WmsServer {

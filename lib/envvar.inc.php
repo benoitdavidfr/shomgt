@@ -7,6 +7,7 @@
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
+/** gestion des variables d'environnement et de leur valeur par défaut */
 class EnvVar {
   const DEFAULTS = [
     'SHOMGT3_SERVER_URL' => 'https://sgserver.geoapi.fr/index.php',

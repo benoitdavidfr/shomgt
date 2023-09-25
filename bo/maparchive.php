@@ -15,7 +15,6 @@
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';
-#require_once __DIR__.'/../mapcat/index.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/login.inc.php';
 require_once __DIR__.'/lib.inc.php';
@@ -25,13 +24,19 @@ require_once __DIR__.'/gdalinfobo.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-class GeoRefImage { // Image principale ou cartouche de la carte 
-  protected ?string $tif=null; // chemin du tif dans l'archive
-  protected ?string $georef; // ('ok'|'KO'|null)
-  protected ?\gegeom\GBox $georefBox=null; // gbox de géoréférencement de l'image
-  protected ?string $xml=null; // nom de l'xml dans l'archive décrivant l'image
-  /** @var array<string,mixed> $md */
-  protected array $md=[]; // MD simplifiées
+/** Image principale ou cartouche de la carte */
+class GeoRefImage {
+  /** chemin du tif dans l'archive */
+  protected ?string $tif=null;
+  /** ('ok'|'KO'|null) */
+  protected ?string $georef;
+  /** gbox de géoréférencement de l'image */
+  protected ?\gegeom\GBox $georefBox=null;
+  /** nom de l'xml dans l'archive décrivant l'image */
+  protected ?string $xml=null;
+  /** // MD simplifiées
+   * @var array<string,mixed> $md */
+  protected array $md=[];
   
   /** @return array<string, mixed> */
   function asArray(): array {
@@ -53,7 +58,7 @@ class GeoRefImage { // Image principale ou cartouche de la carte
     $archive->remove($tifPath);
   }
   
-  // Attention, je suis dans une bouche sur l'archive, ne pas la passer à MapMetadata
+  // Attention, je suis dans une boucle sur l'archive, ne pas la passer à MapMetadata
   // sinon la 2ème boucle écrase la première
   function setXml(?string $xml, string $pathOf7z): void {
     $this->xml = $xml;
@@ -121,21 +126,31 @@ class GeoRefImage { // Image principale ou cartouche de la carte
   }
 };
 
-class MapArchive { // analyse les fichiers d'une archive d'une carte pour évaluersa validité et afficher le contenu
-  protected string $type='undefined'; // 'undefined'|'normal'|'special'
-  public readonly string $rpathOf7z; // chemin du fichier .7z relativement à $PF_PATH et commencant par '/'
-  public readonly string $mapNum; // no sur 4 chiffres
-  protected ?string $thumbnail=null; // chemin de la vignette dans l'archive
-  protected GeoRefImage $main; // les caractéristiques de l'image principale et les MD de la carte
-  /** @var array<string, GeoRefImage> */
-  protected array $insets=[]; // les cartouches [{name}=> GeoRefImage]
-  /** @var array<string, int> */
-  protected array $suppls=[]; // liste de noms de fichiers hors specs sous la forme [{name} => 1]
-  public readonly ?\mapcat\MapCatItem $mapCat; // enregistrement dans MapCat correspondant à la carte ou null
+/** analyse les fichiers d'une archive d'une carte pour évaluer sa validité et afficher le contenu */
+class MapArchive {
+  /** 'undefined'|'normal'|'special' */
+  protected string $type='undefined';
+  /** chemin du fichier .7z relativement à $PF_PATH et commencant par '/' */
+  public readonly string $rpathOf7z;
+  /** no sur 4 chiffres */
+  public readonly string $mapNum;
+  /** chemin de la vignette dans l'archive */
+  protected ?string $thumbnail=null;
+  /** les caractéristiques de l'image principale et les MD de la carte */
+  protected GeoRefImage $main;
+  /** les cartouches [{name}=> GeoRefImage]
+   * @var array<string, GeoRefImage> */
+  protected array $insets=[];
+  /** liste de noms de fichiers hors specs sous la forme [{name} => 1]
+   * @var array<string, int> */
+  protected array $suppls=[];
+  /** enregistrement dans MapCat correspondant à la carte ou null */
+  public readonly ?\mapcat\MapCatItem $mapCat;
 
   function main(): GeoRefImage { return $this->main; }
   
-  // $rpathOf7z est le chemin relatif du fichier .7z
+  /** fabrique un MapArchive
+   * @param string $rpathOf7z le chemin relatif du fichier .7z */
   function __construct(string $rpathOf7z) {
     echo "MapArchive::__construct(rpathOf7z=$rpathOf7z)<br>\n";
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
@@ -186,8 +201,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     }
   }
   
-  /** @return array<int, string> */
-  function gtiffs(): array { // retourne la liste des GéoTiffs géoréférencés
+  /** retourne la liste des GéoTiffs géoréférencés
+   * @return array<int, string> */
+  function gtiffs(): array {
     $gtiffs = [];
     if ($this->main->georef() == 'ok')
       $gtiffs[] = $this->main->tif();
@@ -196,7 +212,8 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return $gtiffs;
   }
   
-  /* Retourne le GBox de l'image principale SI elle existe et est géoréférencée
+  /** Retourne le GBox de géoréférencement de la carte.
+   * retourne le géoréférencement de l'image principale SI elle existe et est géoréférencée
    * SINON
    *   S'il n'y a pas d'image principale
    *   ALORS retourne null // cas d'erreur
@@ -219,7 +236,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
       return null;
   }
   
-  /** construit la correspondance des cartouches de l'archive avec ceux de MapCat
+  /** construit la correspondance des cartouches de l'archive avec ceux de MapCat.
    * Le résultat est un array avec en clés les noms des cartouches dans l'archive
    * et en valeurs les titres des cartouches dans MapCat
    * @return array<string, string>
@@ -234,7 +251,7 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return $mappingGeoTiffWithMapCat;
   }
   
-  /** Teste la conformité à la spec et au catalogue
+  /** Teste la conformité à la spec et au catalogue.
    * retourne [] si la carte est valide et conforme à sa description dans le catalogue et sans alertes
    * sinon un array comportant un au moins des 2 champs:
    *  - errors listant les erreurs
@@ -342,9 +359,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     return array_merge($errors ? ['errors'=> $errors] : [], $warnings ? ['warnings'=> $warnings] : []);
   }
   
-  // affiche le contenu de l'archive en Html comme table Html sans les balises <table> et </table>
-  // Si $mapCatUpdateOrCreate alors affiche la possibilité de modifier/créer l'enregistrement MapCat
-  // Cela est fait en rappellant le script avec l'action updateMapCat ou insertMapCat et le num de la carte
+  /** affiche le contenu de l'archive en Html comme table Html sans les balises <table> et </table>
+   * Si $mapCatUpdateOrCreate alors affiche la possibilité de modifier/créer l'enregistrement MapCat
+   * Cela est fait en rappellant le script avec l'action updateMapCat ou insertMapCat et le num de la carte */
   function showAsHtml(bool $mapCatUpdateOrCreate=false): void {
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
       or throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
@@ -430,7 +447,8 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     }
   }
   
-  function showAsYaml(): void { // Affichage limité utilisé par la version CLI 
+  /** Affichage limité utilisé par la version CLI */
+  function showAsYaml(): void {
     $mapNum = $this->mapNum;
     $record = ['mapNum'=> $mapNum];
     $mapCat = \mapcat\MapCat::get($mapNum);
@@ -448,8 +466,9 @@ class MapArchive { // analyse les fichiers d'une archive d'une carte pour évalu
     //  print_r($this);
   }
   
-  /** @param array<string, mixed> $options */
-  function showWithOptions(array $options): void { // Affichage avec options utilisé par la version CLI 
+  /** Affichage avec options utilisé par la version CLI 
+   * @param array<string, mixed> $options */
+  function showWithOptions(array $options): void {
     if ($options['yaml'] ?? null) {
       $mapCat = $this->mapCat;
       foreach ($this->insets as $name => $inset)
@@ -545,6 +564,7 @@ switch (callingThisFile(__FILE__)) {
     // la plupart des appels prévoient un paramètre GET rpath qui est un chemin relatif par rapport à $PF_PATH,
     // soit celui de l'archive soit d'un répertoire. Il commence par '/'
     define ('HTML_HEAD', "<!DOCTYPE html>\n<html><head><title>maparchive@$_SERVER[HTTP_HOST]</title></head><body>\n");
+    /** Cartes de test */
     define ('TEST_MAPS', [
         "2 cartes normales sans cartouche" => [
           '/archives/6735/6735-2012c153.7z' =>
@@ -590,8 +610,10 @@ switch (callingThisFile(__FILE__)) {
         ],
       ]
     ); // cartes de tests 
-    define ('MIN_FOR_DISPLAY_IN_COLS', 100); // nbre min d'objets pour affichage en colonnes
-    define ('NBCOLS_FOR_DISPLAY', 24); // nbre de colonnes si affichage en colonnes
+    /** nbre min d'objets pour affichage en colonnes */
+    define ('MIN_FOR_DISPLAY_IN_COLS', 100);
+    /** nbre de colonnes si affichage en colonnes */
+    define ('NBCOLS_FOR_DISPLAY', 24);
 
     $login = Login::loggedIn() or die("Accès non autorisé\n");
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH') or die("Erreur variable d'environnement SHOMGT3_PORTFOLIO_PATH non définie\n");

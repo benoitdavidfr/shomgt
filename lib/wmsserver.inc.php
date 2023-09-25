@@ -178,6 +178,7 @@ EOT;
 if (basename(__FILE__)<>basename($_SERVER['PHP_SELF'])) return;
 
 
+/** Test d'utilisation de la classe WmsServer */
 class WmsServerTest extends WmsServer {
   function getCapabilities(string $version=''): never {
     die("WmsServer::getCapabilities(version=$version)");

@@ -3,6 +3,7 @@
  * @package shomgt\mapcat
  */
 namespace mapcat;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
@@ -313,7 +314,9 @@ EOT;
 /** Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat.
  * La classe porte en outre en constante le modèle de document Yaml */
 readonly class MapCatItem {
+  /** Les types de cartes dans le catalogue */
   const ALL_KINDS = ['alive','uninteresting','deleted'];
+  /** ordre standard des propriétés */
   const STD_PROP = [
     'groupTitle',
     'title',
@@ -341,8 +344,9 @@ readonly class MapCatItem {
       'toDelete',
       'borders',
     ],
-  ]; // ordre standard des propriétés 
+  ];
   
+  /** modèle d'enregistrement affiché pour la saisie */
   const DOC_MODEL_IN_YAML = <<<EOT
 title: # Titre de la carte, peut être recopié du GAN ou lu sur la carte, champ obligatoire
   #exemple: "De Port-Barcarès à l'embouchure de l'Aude"
@@ -466,7 +470,8 @@ EOT;
   }
   
   static function testValidatesAgainstSchema(): void {
-    define('JEUX_TESTS', [
+    /** Enregistrements test pour tester la méthode validatesAgainstSchema() */
+    define ('JEUX_TESTS', [
       "Cas ok sans cartouche, ni mapsFrance" => [
         'yaml' => <<<EOT
 title: "De Port-Barcarès à l'embouchure de l'Aude"
@@ -524,7 +529,8 @@ insetMaps:
     spatial: { SW: '17°49,06''S - 149°19,56''W', NE: '17°46,28''S - 149°17,47''W' }
 EOT
       ],
-    ]);
+      ]
+    );
     foreach (JEUX_TESTS as $title => $jeu) {
       $valid = self::validatesAgainstSchema($jeu['yaml']);
       if (isset($valid['errors']))
@@ -837,12 +843,15 @@ class MapCat {
 
 /** Catalogue MapCat stocke comme fichier Yaml */
 class MapCatFromFile extends MapCat {
-  /** @var array<string, TMapCatItem> $maps */
-  static array $maps=[]; // contenu du champ maps de MapCat
-  /** @var array<string, TMapCatItem> $uninterestingMaps */
-  static array $uninterestingMaps=[]; // contenu du champ uninterestingMaps de MapCat
-  /** @var array<string, TMapCatItem> $deletedMaps */
-  static array $deletedMaps=[]; // contenu du champ deletedMaps de MapCat
+  /** contenu du champ maps de MapCat.
+   * @var array<string, TMapCatItem> $maps */
+  static array $maps=[];
+  /** contenu du champ uninterestingMaps de MapCat
+   * @var array<string, TMapCatItem> $uninterestingMaps */
+  static array $uninterestingMaps=[];
+  /** contenu du champ deletedMaps de MapCat
+   * @var array<string, TMapCatItem> $deletedMaps */
+  static array $deletedMaps=[];
   
   private static function init(): void {
     $mapCat = self::$maps = Yaml::parseFile(__DIR__.'/mapcat.yaml');
@@ -852,7 +861,7 @@ class MapCatFromFile extends MapCat {
     //print_r(self::$uninterestingMaps);
   }
   
-  /** Retourn la liste des numéros de cartes correspondant aux types définis dans $kindOfMaps
+  /** Retourne la liste des numéros de cartes correspondant aux types définis dans $kindOfMaps
    * @param list<TMapCatKind> $kindOfMap
    * @return list<string>
    */

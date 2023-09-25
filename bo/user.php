@@ -14,10 +14,11 @@ require_once __DIR__.'/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-// Classe portant en constante la définition SQL de la table user
-// ainsi qu'une méthode statique traduisant cette constate en requête SQL
-class SqlSchema {
-  // la structuration de la constante est définie dans son champ description
+/** Classe portant en constante la définition SQL de la table user
+ * ainsi qu'une méthode statique traduisant cette constate en requête SQL */
+class UserSqlSchema {
+  /** Définition du schéma de la table user.
+   * la structuration de la constante est définie dans son champ description */
   const USER_TABLE = [
     'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
             ." - le champ 'comment' précisant la table concernée,\n"
@@ -87,10 +88,10 @@ class SqlSchema {
         'comment'=> "commentaire",
       ],
     ],
-  ]; // Définition du schéma de la table user
+  ];
 
-  // fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
-  /** @param array<string, mixed> $schema */
+  /** fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
+   * @param array<string, mixed> $schema */
   static function sql(string $tableName, array $schema): string {
     $cols = [];
     foreach ($schema['columns'] ?? [] as $cname => $col) {
@@ -112,9 +113,10 @@ class SqlSchema {
 $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI') or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
 \MySql::open($LOG_MYSQL_URI);
 
-function createUserTable(): void { // création de la table des utilisateurs 
+/** création de la table des utilisateurs */
+function createUserTable(): void {
   \MySql::query('drop table if exists user');
-  $query = SqlSchema::sql('user', SqlSchema::USER_TABLE);
+  $query = UserSqlSchema::sql('user', UserSqlSchema::USER_TABLE);
   //echo "<pre>query=$query</pre>\n";
   \MySql::query($query);
   // initialisation de la table des utilisateurs
@@ -135,7 +137,8 @@ function createUserTable(): void { // création de la table des utilisateurs
 }
 //createUserTable(); die("FIN ligne ".__LINE__);
 
-function userRole(?string $user): ?string { // renvoit le role de l'utilisateur $user
+/** renvoit le role de l'utilisateur $user */
+function userRole(?string $user): ?string {
   if (!$user) {
     return null;
   }
@@ -162,7 +165,7 @@ if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo/user@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo $HTML_HEAD,"<h2>Gestion utilisateur</h2>\n";
 
-// validation de l'email, renvoit null si valid, sinon l'erreur
+/** validation de l'email, renvoit null si valid, sinon l'erreur */
 function badEmail(string $email): ?string {
   // Vérification simplifiée d'une adresse email - see https://www.linuxjournal.com/article/9585
   if (!preg_match("!^[a-zA-Z0-9\!#\$%&'\*\+\-/=\?^_`\{\|\}~\.]{1,64}@[-a-zA-Z0-9\.]{1,255}$!", $email))
@@ -181,7 +184,7 @@ if (0) { // @phpstan-ignore-line // test de badEmail()
   die("Fin Test badEmail");
 }
 
-// validation du mot de passe, renvoit null si ok, sinon l'erreur
+/** validation du mot de passe, renvoit null si ok, sinon l'erreur */
 function badPasswd(string $passwd, string $passwd2): ?string {
   if ($passwd2 <> $passwd)
     return "Les 2 mots de passe ne sont pas identiques<br>\n";
@@ -191,7 +194,7 @@ function badPasswd(string $passwd, string $passwd2): ?string {
     return null;
 }
 
-// Envoie un email avec le lien contenant le secret
+/** Envoie un email avec le lien contenant le secret */
 function sendMail(string $action, string $email, int $secret, ?string $passwd=null): void {   
   // le lien de confirmation
   $link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[SERVER_NAME]$_SERVER[SCRIPT_NAME]"
@@ -403,7 +406,7 @@ $actions = [
       echo "<a href='user.php'>Revenir au menu de la gestion des utilisateurs</a><br>\n";
   
       echo "</p><b>Rappel du schéma de la table des utilisateurs</b>:<br>",
-           "<pre>",Yaml::dump(SqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+           "<pre>",Yaml::dump(UserSqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
     },
   ],
   'register'=> [
@@ -711,7 +714,7 @@ $actions = [
     'title'=> "Affiche le schéma de la table user",
     'from'=> 'user.menu',
     'apply'=> function(): void {
-      echo '<pre>',Yaml::dump(SqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+      echo '<pre>',Yaml::dump(UserSqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
     },
   ],
   'BO.login'=> [

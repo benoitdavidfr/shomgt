@@ -11,25 +11,25 @@ Search.appendIndex(
             "summary": "retourne\u0020le\u0020texte\u0020de\u0020la\u0020requ\u00EAte\u0020SQL\u0020adhoc",
             "url": "namespaces/bo.html#function_queryForRecentAccess"
         },                {
-            "fqsen": "\\bo\\SqlDef",
-            "name": "SqlDef",
+            "fqsen": "\\bo\\IpAddressSqlDef",
+            "name": "IpAddressSqlDef",
             "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020ipaddress\u0020et\u0020de\u0020son\u0020contenu",
-            "url": "classes/bo-SqlDef.html"
+            "url": "classes/bo-IpAddressSqlDef.html"
         },                {
-            "fqsen": "\\bo\\SqlDef\u003A\u003Asql\u0028\u0029",
+            "fqsen": "\\bo\\IpAddressSqlDef\u003A\u003Asql\u0028\u0029",
             "name": "sql",
             "summary": "fabrique\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020des\u0020constantes\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma.",
-            "url": "classes/bo-SqlDef.html#method_sql"
+            "url": "classes/bo-IpAddressSqlDef.html#method_sql"
         },                {
-            "fqsen": "\\bo\\SqlDef\u003A\u003AIPADDRESS_SCHEMA",
-            "name": "IPADDRESS_SCHEMA",
+            "fqsen": "\\bo\\IpAddressSqlDef\u003A\u003ASCHEMA",
+            "name": "SCHEMA",
             "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020ipaddress",
-            "url": "classes/bo-SqlDef.html#constant_IPADDRESS_SCHEMA"
+            "url": "classes/bo-IpAddressSqlDef.html#constant_SCHEMA"
         },                {
-            "fqsen": "\\bo\\SqlDef\u003A\u003AIPADDRESS_CONTENT",
-            "name": "IPADDRESS_CONTENT",
+            "fqsen": "\\bo\\IpAddressSqlDef\u003A\u003ACONTENT",
+            "name": "CONTENT",
             "summary": "Contenu\u0020de\u0020la\u0020table\u0020ipaddress",
-            "url": "classes/bo-SqlDef.html#constant_IPADDRESS_CONTENT"
+            "url": "classes/bo-IpAddressSqlDef.html#constant_CONTENT"
         },                {
             "fqsen": "\\bo\\Request2GBox",
             "name": "Request2GBox",
@@ -438,17 +438,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\Login",
             "name": "Login",
-            "summary": "",
+            "summary": "Gestion\u0020du\u0020login",
             "url": "classes/bo-Login.html"
         },                {
             "fqsen": "\\bo\\Login\u003A\u003AloggedIn\u0028\u0029",
             "name": "loggedIn",
-            "summary": "",
+            "summary": "Si\u0020logu\u00E9\u0020retourne\u0020le\u0020login\u0020en\u0020cookie,\u0020sinon\u0020retourne\u0020null",
             "url": "classes/bo-Login.html#method_loggedIn"
         },                {
             "fqsen": "\\bo\\Login\u003A\u003Alogin\u0028\u0029",
             "name": "login",
-            "summary": "",
+            "summary": "Si\u0020logu\u00E9\u0020retourne\u0020le\u0020login,\u0020sinon\u0020propose\u0020\u00E0\u0020l\u0027utilisateur\u0020de\u0020se\u0020loguer\u0020en\u0020affichant\u0020\u0024htmlHeadAndTitle.",
             "url": "classes/bo-Login.html#method_login"
         },                {
             "fqsen": "\\bo\\Login\u003A\u003Alogout\u0028\u0029",
@@ -458,17 +458,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\Login\u003A\u003ACOOKIE_NAME",
             "name": "COOKIE_NAME",
-            "summary": "",
+            "summary": "le\u0020nom\u0020du\u0020cookie\u0020utilis\u00E9\u0020pour\u0020enregistrer\u0020le\u0020login\/passwd",
             "url": "classes/bo-Login.html#constant_COOKIE_NAME"
         },                {
             "fqsen": "\\bo\\Login\u003A\u003ACOOKIE_DURATION_IN_DAYS",
             "name": "COOKIE_DURATION_IN_DAYS",
-            "summary": "",
+            "summary": "dur\u00E9e\u0020de\u0020validit\u00E9\u0020du\u0020cookie\u0020en\u0020nbre\u0020de\u0020jours",
             "url": "classes/bo-Login.html#constant_COOKIE_DURATION_IN_DAYS"
         },                {
             "fqsen": "\\bo\\Login\u003A\u003AFORM",
             "name": "FORM",
-            "summary": "",
+            "summary": "Formulaire\u0020de\u0020login",
             "url": "classes/bo-Login.html#constant_FORM"
         },                {
             "fqsen": "\\sendMail\u0028\u0029",
@@ -478,7 +478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GeoRefImage",
             "name": "GeoRefImage",
-            "summary": "",
+            "summary": "Image\u0020principale\u0020ou\u0020cartouche\u0020de\u0020la\u0020carte",
             "url": "classes/bo-GeoRefImage.html"
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003AasArray\u0028\u0029",
@@ -498,17 +498,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003A\u0024tif",
             "name": "tif",
-            "summary": "",
+            "summary": "chemin\u0020du\u0020tif\u0020dans\u0020l\u0027archive",
             "url": "classes/bo-GeoRefImage.html#property_tif"
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003A\u0024georef",
             "name": "georef",
-            "summary": "",
+            "summary": "\u0028\u0027ok\u0027\u007C\u0027KO\u0027\u007Cnull\u0029",
             "url": "classes/bo-GeoRefImage.html#property_georef"
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003A\u0024georefBox",
             "name": "georefBox",
-            "summary": "",
+            "summary": "gbox\u0020de\u0020g\u00E9or\u00E9f\u00E9rencement\u0020de\u0020l\u0027image",
             "url": "classes/bo-GeoRefImage.html#property_georefBox"
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003AgeorefLabel\u0028\u0029",
@@ -518,12 +518,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003A\u0024xml",
             "name": "xml",
-            "summary": "",
+            "summary": "nom\u0020de\u0020l\u0027xml\u0020dans\u0020l\u0027archive\u0020d\u00E9crivant\u0020l\u0027image",
             "url": "classes/bo-GeoRefImage.html#property_xml"
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003A\u0024md",
             "name": "md",
-            "summary": "",
+            "summary": "\/\/\u0020MD\u0020simplifi\u00E9es",
             "url": "classes/bo-GeoRefImage.html#property_md"
         },                {
             "fqsen": "\\bo\\GeoRefImage\u003A\u003Atitle\u0028\u0029",
@@ -538,52 +538,52 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\MapArchive",
             "name": "MapArchive",
-            "summary": "",
+            "summary": "analyse\u0020les\u0020fichiers\u0020d\u0027une\u0020archive\u0020d\u0027une\u0020carte\u0020pour\u0020\u00E9valuer\u0020sa\u0020validit\u00E9\u0020et\u0020afficher\u0020le\u0020contenu",
             "url": "classes/bo-MapArchive.html"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024main",
             "name": "main",
-            "summary": "",
+            "summary": "les\u0020caract\u00E9ristiques\u0020de\u0020l\u0027image\u0020principale\u0020et\u0020les\u0020MD\u0020de\u0020la\u0020carte",
             "url": "classes/bo-MapArchive.html#property_main"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "fabrique\u0020un\u0020MapArchive",
             "url": "classes/bo-MapArchive.html#method___construct"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003Agtiffs\u0028\u0029",
             "name": "gtiffs",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020G\u00E9oTiffs\u0020g\u00E9or\u00E9f\u00E9renc\u00E9s",
             "url": "classes/bo-MapArchive.html#method_gtiffs"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003AgeorefBox\u0028\u0029",
             "name": "georefBox",
-            "summary": "",
+            "summary": "Retourne\u0020le\u0020GBox\u0020de\u0020g\u00E9or\u00E9f\u00E9rencement\u0020de\u0020la\u0020carte.",
             "url": "classes/bo-MapArchive.html#method_georefBox"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003AmappingInsetsWithMapCat\u0028\u0029",
             "name": "mappingInsetsWithMapCat",
-            "summary": "construit\u0020la\u0020correspondance\u0020des\u0020cartouches\u0020de\u0020l\u0027archive\u0020avec\u0020ceux\u0020de\u0020MapCat\nLe\u0020r\u00E9sultat\u0020est\u0020un\u0020array\u0020avec\u0020en\u0020cl\u00E9s\u0020les\u0020noms\u0020des\u0020cartouches\u0020dans\u0020l\u0027archive\net\u0020en\u0020valeurs\u0020les\u0020titres\u0020des\u0020cartouches\u0020dans\u0020MapCat",
+            "summary": "construit\u0020la\u0020correspondance\u0020des\u0020cartouches\u0020de\u0020l\u0027archive\u0020avec\u0020ceux\u0020de\u0020MapCat.",
             "url": "classes/bo-MapArchive.html#method_mappingInsetsWithMapCat"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003Ainvalid\u0028\u0029",
             "name": "invalid",
-            "summary": "Teste\u0020la\u0020conformit\u00E9\u0020\u00E0\u0020la\u0020spec\u0020et\u0020au\u0020catalogue\nretourne\u0020\u005B\u005D\u0020si\u0020la\u0020carte\u0020est\u0020valide\u0020et\u0020conforme\u0020\u00E0\u0020sa\u0020description\u0020dans\u0020le\u0020catalogue\u0020et\u0020sans\u0020alertes\nsinon\u0020un\u0020array\u0020comportant\u0020un\u0020au\u0020moins\u0020des\u00202\u0020champs\u003A\n\u0020\u002D\u0020errors\u0020listant\u0020les\u0020erreurs\n\u0020\u002D\u0020warnings\u0020listant\u0020les\u0020alertes",
+            "summary": "Teste\u0020la\u0020conformit\u00E9\u0020\u00E0\u0020la\u0020spec\u0020et\u0020au\u0020catalogue.",
             "url": "classes/bo-MapArchive.html#method_invalid"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003AshowAsHtml\u0028\u0029",
             "name": "showAsHtml",
-            "summary": "",
+            "summary": "affiche\u0020le\u0020contenu\u0020de\u0020l\u0027archive\u0020en\u0020Html\u0020comme\u0020table\u0020Html\u0020sans\u0020les\u0020balises\u0020\u003Ctable\u003E\u0020et\u0020\u003C\/table\u003E\nSi\u0020\u0024mapCatUpdateOrCreate\u0020alors\u0020affiche\u0020la\u0020possibilit\u00E9\u0020de\u0020modifier\/cr\u00E9er\u0020l\u0027enregistrement\u0020MapCat\nCela\u0020est\u0020fait\u0020en\u0020rappellant\u0020le\u0020script\u0020avec\u0020l\u0027action\u0020updateMapCat\u0020ou\u0020insertMapCat\u0020et\u0020le\u0020num\u0020de\u0020la\u0020carte",
             "url": "classes/bo-MapArchive.html#method_showAsHtml"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003AshowAsYaml\u0028\u0029",
             "name": "showAsYaml",
-            "summary": "",
+            "summary": "Affichage\u0020limit\u00E9\u0020utilis\u00E9\u0020par\u0020la\u0020version\u0020CLI",
             "url": "classes/bo-MapArchive.html#method_showAsYaml"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003AshowWithOptions\u0028\u0029",
             "name": "showWithOptions",
-            "summary": "",
+            "summary": "Affichage\u0020avec\u0020options\u0020utilis\u00E9\u0020par\u0020la\u0020version\u0020CLI",
             "url": "classes/bo-MapArchive.html#method_showWithOptions"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003Acheck\u0028\u0029",
@@ -593,47 +593,47 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024type",
             "name": "type",
-            "summary": "",
+            "summary": "\u0027undefined\u0027\u007C\u0027normal\u0027\u007C\u0027special\u0027",
             "url": "classes/bo-MapArchive.html#property_type"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024rpathOf7z",
             "name": "rpathOf7z",
-            "summary": "",
+            "summary": "chemin\u0020du\u0020fichier\u0020.7z\u0020relativement\u0020\u00E0\u0020\u0024PF_PATH\u0020et\u0020commencant\u0020par\u0020\u0027\/\u0027",
             "url": "classes/bo-MapArchive.html#property_rpathOf7z"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024mapNum",
             "name": "mapNum",
-            "summary": "",
+            "summary": "no\u0020sur\u00204\u0020chiffres",
             "url": "classes/bo-MapArchive.html#property_mapNum"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024thumbnail",
             "name": "thumbnail",
-            "summary": "",
+            "summary": "chemin\u0020de\u0020la\u0020vignette\u0020dans\u0020l\u0027archive",
             "url": "classes/bo-MapArchive.html#property_thumbnail"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024insets",
             "name": "insets",
-            "summary": "",
+            "summary": "les\u0020cartouches\u0020\u005B\u007Bname\u007D\u003D\u003E\u0020GeoRefImage\u005D",
             "url": "classes/bo-MapArchive.html#property_insets"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024suppls",
             "name": "suppls",
-            "summary": "",
+            "summary": "liste\u0020de\u0020noms\u0020de\u0020fichiers\u0020hors\u0020specs\u0020sous\u0020la\u0020forme\u0020\u005B\u007Bname\u007D\u0020\u003D\u003E\u00201\u005D",
             "url": "classes/bo-MapArchive.html#property_suppls"
         },                {
             "fqsen": "\\bo\\MapArchive\u003A\u003A\u0024mapCat",
             "name": "mapCat",
-            "summary": "",
+            "summary": "enregistrement\u0020dans\u0020MapCat\u0020correspondant\u0020\u00E0\u0020la\u0020carte\u0020ou\u0020null",
             "url": "classes/bo-MapArchive.html#property_mapCat"
         },                {
             "fqsen": "\\bo\\rmdirRecursive\u0028\u0029",
             "name": "rmdirRecursive",
-            "summary": "",
+            "summary": "supprime\u0020un\u0020r\u00E9pertoire\u0020r\u00E9cursivement",
             "url": "namespaces/bo.html#function_rmdirRecursive"
         },                {
             "fqsen": "\\bo\\MapArchiveStore",
             "name": "MapArchiveStore",
-            "summary": "",
+            "summary": "R\u00E9pertoire\u0020contenant\u00202\u0020sous\u002Dr\u00E9pertoires\u0020archives\u0020et\u0020current",
             "url": "classes/bo-MapArchiveStore.html"
         },                {
             "fqsen": "\\bo\\MapArchiveStore\u003A\u003A__construct\u0028\u0029",
@@ -643,12 +643,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\MapArchiveStore\u003A\u003AtargetPatterns\u0028\u0029",
             "name": "targetPatterns",
-            "summary": "",
+            "summary": "retourne\u0020les\u0020motifs\u0020des\u0020liens\u0020dans\u0020current\u0020soit\u0020relatifs\u0020soit\u0020absolus",
             "url": "classes/bo-MapArchiveStore.html#method_targetPatterns"
         },                {
             "fqsen": "\\bo\\MapArchiveStore\u003A\u003AwrongCurLink\u0028\u0029",
             "name": "wrongCurLink",
-            "summary": "",
+            "summary": "V\u00E9rifie\u0020qu\u0027une\u0020entr\u00E9e\u0020de\u0020current\u0020est\u0020un\u0020lien\u0020relatif\u0020vers\u0020archives.",
             "url": "classes/bo-MapArchiveStore.html#method_wrongCurLink"
         },                {
             "fqsen": "\\bo\\MapArchiveStore\u003A\u003AwrongCurLinks\u0028\u0029",
@@ -793,43 +793,43 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\createUserTable\u0028\u0029",
             "name": "createUserTable",
-            "summary": "",
+            "summary": "cr\u00E9ation\u0020de\u0020la\u0020table\u0020des\u0020utilisateurs",
             "url": "namespaces/bo.html#function_createUserTable"
         },                {
             "fqsen": "\\bo\\userRole\u0028\u0029",
             "name": "userRole",
-            "summary": "",
+            "summary": "renvoit\u0020le\u0020role\u0020de\u0020l\u0027utilisateur\u0020\u0024user",
             "url": "namespaces/bo.html#function_userRole"
         },                {
             "fqsen": "\\bo\\badEmail\u0028\u0029",
             "name": "badEmail",
-            "summary": "",
+            "summary": "validation\u0020de\u0020l\u0027email,\u0020renvoit\u0020null\u0020si\u0020valid,\u0020sinon\u0020l\u0027erreur",
             "url": "namespaces/bo.html#function_badEmail"
         },                {
             "fqsen": "\\bo\\badPasswd\u0028\u0029",
             "name": "badPasswd",
-            "summary": "",
+            "summary": "validation\u0020du\u0020mot\u0020de\u0020passe,\u0020renvoit\u0020null\u0020si\u0020ok,\u0020sinon\u0020l\u0027erreur",
             "url": "namespaces/bo.html#function_badPasswd"
         },                {
             "fqsen": "\\bo\\sendMail\u0028\u0029",
             "name": "sendMail",
-            "summary": "",
+            "summary": "Envoie\u0020un\u0020email\u0020avec\u0020le\u0020lien\u0020contenant\u0020le\u0020secret",
             "url": "namespaces/bo.html#function_sendMail"
         },                {
-            "fqsen": "\\bo\\SqlSchema",
-            "name": "SqlSchema",
-            "summary": "",
-            "url": "classes/bo-SqlSchema.html"
+            "fqsen": "\\bo\\UserSqlSchema",
+            "name": "UserSqlSchema",
+            "summary": "Classe\u0020portant\u0020en\u0020constante\u0020la\u0020d\u00E9finition\u0020SQL\u0020de\u0020la\u0020table\u0020user\nainsi\u0020qu\u0027une\u0020m\u00E9thode\u0020statique\u0020traduisant\u0020cette\u0020constate\u0020en\u0020requ\u00EAte\u0020SQL",
+            "url": "classes/bo-UserSqlSchema.html"
         },                {
-            "fqsen": "\\bo\\SqlSchema\u003A\u003Asql\u0028\u0029",
+            "fqsen": "\\bo\\UserSqlSchema\u003A\u003Asql\u0028\u0029",
             "name": "sql",
-            "summary": "",
-            "url": "classes/bo-SqlSchema.html#method_sql"
+            "summary": "fabrique\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020des\u0020constantes\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma",
+            "url": "classes/bo-UserSqlSchema.html#method_sql"
         },                {
-            "fqsen": "\\bo\\SqlSchema\u003A\u003AUSER_TABLE",
+            "fqsen": "\\bo\\UserSqlSchema\u003A\u003AUSER_TABLE",
             "name": "USER_TABLE",
-            "summary": "",
-            "url": "classes/bo-SqlSchema.html#constant_USER_TABLE"
+            "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020user.",
+            "url": "classes/bo-UserSqlSchema.html#constant_USER_TABLE"
         },                {
             "fqsen": "\\HTML_HEAD",
             "name": "HTML_HEAD",
@@ -838,7 +838,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\TEST_MAPS",
             "name": "TEST_MAPS",
-            "summary": "",
+            "summary": "liste\u0020limit\u00E9e\u0020de\u0020cartes\u0020pour\u0020tests",
             "url": "namespaces/default.html#constant_TEST_MAPS"
         },                {
             "fqsen": "\\MIN_FOR_DISPLAY_IN_COLS",
@@ -1708,7 +1708,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EnvVar",
             "name": "EnvVar",
-            "summary": "",
+            "summary": "gestion\u0020des\u0020variables\u0020d\u0027environnement\u0020et\u0020de\u0020leur\u0020valeur\u0020par\u0020d\u00E9faut",
             "url": "classes/EnvVar.html"
         },                {
             "fqsen": "\\EnvVar\u003A\u003Aval\u0028\u0029",
@@ -1723,7 +1723,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\error\u0028\u0029",
             "name": "error",
-            "summary": "",
+            "summary": "affiche\u0020un\u0020message\u0020et\u0020termine\u0020le\u0020script\u0020avec\u0020un\u0020code\u0020retour\u0020de\u00201",
             "url": "namespaces/default.html#function_error"
         },                {
             "fqsen": "\\sendErrorTile\u0028\u0029",
@@ -3146,9 +3146,14 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/GeoRefImage.html#constant_ErrorSaveAlpha"
         },                {
+            "fqsen": "\\HTTP_ERROR_CODES",
+            "name": "HTTP_ERROR_CODES",
+            "summary": "liste\u0020de\u0020qqs\u0020codes\u0020d\u0027erreur\u0020Http\u0020avec\u0020leur\u0020label",
+            "url": "namespaces/default.html#constant_HTTP_ERROR_CODES"
+        },                {
             "fqsen": "\\IsoMd",
             "name": "IsoMd",
-            "summary": "",
+            "summary": "R\u00E9cup\u00E9ration\u0020de\u0020MD\u0020ISO\u0020d\u0027un\u0020G\u00E9oTiff",
             "url": "classes/IsoMd.html"
         },                {
             "fqsen": "\\IsoMd\u003A\u003AaddUndescoreForThousand\u0028\u0029",
@@ -3158,7 +3163,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\IsoMd\u003A\u003Aread\u0028\u0029",
             "name": "read",
-            "summary": "",
+            "summary": "retourne\u0020un\u0020dict.\u0020des\u0020informations",
             "url": "classes/IsoMd.html#method_read"
         },                {
             "fqsen": "\\IsoMd\u003A\u003AErrorFileNotFound",
@@ -3658,12 +3663,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\COOKIE_NAME",
             "name": "COOKIE_NAME",
-            "summary": "",
+            "summary": "nom\u0020du\u0020cookie\u0020utilis\u00E9\u0020pour\u0020le\u0020login",
             "url": "namespaces/default.html#constant_COOKIE_NAME"
         },                {
             "fqsen": "\\log_table_schema\u0028\u0029",
             "name": "log_table_schema",
-            "summary": "d\u00E9finition\u0020de\u0020la\u0020commande\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table",
+            "summary": "retourne\u0020la\u0020commande\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table",
             "url": "namespaces/default.html#function_log_table_schema"
         },                {
             "fqsen": "\\write_log\u0028\u0029",
@@ -4163,7 +4168,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsServerTest",
             "name": "WmsServerTest",
-            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
+            "summary": "Test\u0020d\u0027utilisation\u0020de\u0020la\u0020classe\u0020WmsServer",
             "url": "classes/WmsServerTest.html"
         },                {
             "fqsen": "\\WmsServerTest\u003A\u003AgetCapabilities\u0028\u0029",
@@ -4233,12 +4238,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\cmpGans\u0028\u0029",
             "name": "cmpGans",
-            "summary": "",
+            "summary": "comparaison\u0020MapCat\u0020\/\u0020GAN",
             "url": "namespaces/mapcat.html#function_cmpGans"
         },                {
             "fqsen": "\\JEUX_TESTS",
             "name": "JEUX_TESTS",
-            "summary": "",
+            "summary": "Enregistrements\u0020test\u0020pour\u0020tester\u0020la\u0020m\u00E9thode\u0020validatesAgainstSchema\u0028\u0029",
             "url": "namespaces/default.html#constant_JEUX_TESTS"
         },                {
             "fqsen": "\\mapcat\\StdOrderOfProp",
@@ -4453,17 +4458,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AALL_KINDS",
             "name": "ALL_KINDS",
-            "summary": "",
+            "summary": "Les\u0020types\u0020de\u0020cartes\u0020dans\u0020le\u0020catalogue",
             "url": "classes/mapcat-MapCatItem.html#constant_ALL_KINDS"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003ASTD_PROP",
             "name": "STD_PROP",
-            "summary": "",
+            "summary": "ordre\u0020standard\u0020des\u0020propri\u00E9t\u00E9s",
             "url": "classes/mapcat-MapCatItem.html#constant_STD_PROP"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003ADOC_MODEL_IN_YAML",
             "name": "DOC_MODEL_IN_YAML",
-            "summary": "",
+            "summary": "mod\u00E8le\u0020d\u0027enregistrement\u0020affich\u00E9\u0020pour\u0020la\u0020saisie",
             "url": "classes/mapcat-MapCatItem.html#constant_DOC_MODEL_IN_YAML"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003A\u0024item",
@@ -4518,7 +4523,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile\u003A\u003AmapNums\u0028\u0029",
             "name": "mapNums",
-            "summary": "Retourn\u0020la\u0020liste\u0020des\u0020num\u00E9ros\u0020de\u0020cartes\u0020correspondant\u0020aux\u0020types\u0020d\u00E9finis\u0020dans\u0020\u0024kindOfMaps",
+            "summary": "Retourne\u0020la\u0020liste\u0020des\u0020num\u00E9ros\u0020de\u0020cartes\u0020correspondant\u0020aux\u0020types\u0020d\u00E9finis\u0020dans\u0020\u0024kindOfMaps",
             "url": "classes/mapcat-MapCatFromFile.html#method_mapNums"
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile\u003A\u003Aget\u0028\u0029",
@@ -4528,17 +4533,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile\u003A\u003A\u0024maps",
             "name": "maps",
-            "summary": "",
+            "summary": "contenu\u0020du\u0020champ\u0020maps\u0020de\u0020MapCat.",
             "url": "classes/mapcat-MapCatFromFile.html#property_maps"
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile\u003A\u003A\u0024uninterestingMaps",
             "name": "uninterestingMaps",
-            "summary": "",
+            "summary": "contenu\u0020du\u0020champ\u0020uninterestingMaps\u0020de\u0020MapCat",
             "url": "classes/mapcat-MapCatFromFile.html#property_uninterestingMaps"
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile\u003A\u003A\u0024deletedMaps",
             "name": "deletedMaps",
-            "summary": "",
+            "summary": "contenu\u0020du\u0020champ\u0020deletedMaps\u0020de\u0020MapCat",
             "url": "classes/mapcat-MapCatFromFile.html#property_deletedMaps"
         },                {
             "fqsen": "\\PhpBlock",
@@ -5221,11 +5226,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/UsingFile.html#property_uses"
         },                {
-            "fqsen": "\\HTTP_ERROR_CODES",
-            "name": "HTTP_ERROR_CODES",
-            "summary": "liste\u0020de\u0020qqs\u0020codes\u0020d\u0027erreur\u0020Http\u0020et\u0020de\u0020leur\u0020label",
-            "url": "namespaces/default.html#constant_HTTP_ERROR_CODES"
-        },                {
             "fqsen": "\\EXCLUDED_MAPS_IN_V0",
             "name": "EXCLUDED_MAPS_IN_V0",
             "summary": "cartes\u0020exclues\u0020du\u0020service\u0020en\u0020V0\u0020car\u0020incompatible\u0020avec\u0020sgupdt\u0020v0.6",
@@ -5248,17 +5248,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\obsoleteMaps\u0028\u0029",
             "name": "obsoleteMaps",
-            "summary": "",
+            "summary": "Lecture\u0020dans\u0020maps.json\u0020de\u0020la\u0020liste\u0020des\u0020nums\u0020des\u0020cartes\u0020obsol\u00E8tes.",
             "url": "namespaces/default.html#function_obsoleteMaps"
         },                {
             "fqsen": "\\LayerDef",
             "name": "LayerDef",
-            "summary": "",
+            "summary": "D\u00E9finit\u0020les\u0020couches\u0020std\u0020et\u0020sp\u00E9ciales,\u0020permet\u0020de\u0020savoir\u0020\u00E0\u0020laquelle\u0020un\u0020G\u00E9oTiff\u0020appartient",
             "url": "classes/LayerDef.html"
         },                {
             "fqsen": "\\LayerDef\u003A\u003AgetFromScaleDen\u0028\u0029",
             "name": "getFromScaleDen",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020nom\u0020de\u0020la\u0020couche\u0020en\u0020fonction\u0020du\u0020d\u00E9n.\u0020de\u0020l\u0027\u00E9chelle",
             "url": "classes/LayerDef.html#method_getFromScaleDen"
         },                {
             "fqsen": "\\LayerDef\u003A\u003AErrorScaleDenNotFound",
@@ -5268,27 +5268,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\LayerDef\u003A\u003ALAYERS_SCALE_DEN_MAX",
             "name": "LAYERS_SCALE_DEN_MAX",
-            "summary": "",
+            "summary": "liste\u0020des\u0020couches\u0020regroupant\u0020les\u0020G\u00E9oTiff\u0020avec\u0020pour\u0020chacune\u0020la\u0020valeur\u0020max\u0020du\u0020d\u00E9nominateur\u0020d\u0027\u00E9chelle\u0020des\u0020G\u00E9oTiff\ncontenus\u0020dans\u0020la\u0020couche.",
             "url": "classes/LayerDef.html#constant_LAYERS_SCALE_DEN_MAX"
         },                {
             "fqsen": "\\LayerDef\u003A\u003ASPECIAL_LAYERS",
             "name": "SPECIAL_LAYERS",
-            "summary": "",
+            "summary": "liste\u0020des\u0020noms\u0020des\u0020couches\u0020sp\u00E9ciales",
             "url": "classes/LayerDef.html#constant_SPECIAL_LAYERS"
         },                {
             "fqsen": "\\ShomGt",
             "name": "ShomGt",
-            "summary": "",
+            "summary": "construction\u0020progressive\u0020du\u0020futur\u0020contenu\u0020de\u0020layers.yaml\u0020\u003B\u0020un\u0020objet\u0020ShomGT\u0020d\u00E9crit\u0020un\u0020g\u00E9oTiff",
             "url": "classes/ShomGt.html"
         },                {
             "fqsen": "\\ShomGt\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "Initialise\u0020self\u003A\u003A\u0024all",
             "url": "classes/ShomGt.html#method_init"
         },                {
             "fqsen": "\\ShomGt\u003A\u003AaddGt\u0028\u0029",
             "name": "addGt",
-            "summary": "",
+            "summary": "ajoute\u0020un\u0020GT\u0020par\u0020son\u0020nom",
             "url": "classes/ShomGt.html#method_addGt"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A__construct\u0028\u0029",
@@ -5298,67 +5298,67 @@ Search.appendIndex(
         },                {
             "fqsen": "\\ShomGt\u003A\u003Asortwzorder\u0028\u0029",
             "name": "sortwzorder",
-            "summary": "",
+            "summary": "tri\u0020des\u0020GT\u0020de\u0020chaque\u0020couche\u0020selon\u0020zorder\u0020et\u0020gtname",
             "url": "classes/ShomGt.html#method_sortwzorder"
         },                {
             "fqsen": "\\ShomGt\u003A\u003AallAsArray\u0028\u0029",
             "name": "allAsArray",
-            "summary": "",
+            "summary": "g\u00E9n\u00E8re\u0020la\u0020repr\u00E9sentation\u0020array\u0020de\u0020tous\u0020les\u0020ShomGt\u0020pour\u0020sortie\u0020Yaml",
             "url": "classes/ShomGt.html#method_allAsArray"
         },                {
             "fqsen": "\\ShomGt\u003A\u003AasArray\u0028\u0029",
             "name": "asArray",
-            "summary": "",
+            "summary": "g\u00E9n\u00E8re\u0020la\u0020repr\u00E9sentation\u0020Yaml\u0020d\u0027un\u0020ShomGt\u0020dans\u0020un\u0020array",
             "url": "classes/ShomGt.html#method_asArray"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024gtname",
             "name": "gtname",
-            "summary": "",
+            "summary": "nom\u0020du\u0020G\u00E9oTiff",
             "url": "classes/ShomGt.html#property_gtname"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024title",
             "name": "title",
-            "summary": "",
+            "summary": "titre\u0020issu\u0020du\u0020catalogue\u0020de\u0020cartes",
             "url": "classes/ShomGt.html#property_title"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024spatial",
             "name": "spatial",
-            "summary": "",
+            "summary": "extension\u0020spatiale\u0020\u0020sous\u0020la\u0020forme\u0020\u005B\u0027SW\u0027\u003D\u003E\u0020\u007Bpos\u007D,\u0020\u0027NE\u0027\u003D\u003E\u0020\u007Bpos\u007D\u005D,\u0020issu\u0020du\u0020catalogue\u0020de\u0020cartes",
             "url": "classes/ShomGt.html#property_spatial"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024outgrowth",
             "name": "outgrowth",
-            "summary": "",
+            "summary": "liste\u0020d\u0027excroissances\u0020sous\u0020la\u0020forme\u0020\u005B\u005B\u0027SW\u0027\u003D\u003E\u0020\u007Bpos\u007D,\u0020\u0027NE\u0027\u003D\u003E\u0020\u007Bpos\u007D\u005D\u005D",
             "url": "classes/ShomGt.html#property_outgrowth"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024scaleDen",
             "name": "scaleDen",
-            "summary": "",
+            "summary": "d\u00E9nominateur\u0020de\u0020l\u0027\u00E9chelle\u0020issu\u0020du\u0020catalogue\u0020de\u0020cartes",
             "url": "classes/ShomGt.html#property_scaleDen"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024zorder",
             "name": "zorder",
-            "summary": "",
+            "summary": "z\u002Dorder\u0020issu\u0020du\u0020catalogue\u0020de\u0020cartes",
             "url": "classes/ShomGt.html#property_zorder"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024deleted",
             "name": "deleted",
-            "summary": "",
+            "summary": "zones\u0020effac\u00E9es\u0020dans\u0020le\u0020G\u00E9oTiff",
             "url": "classes/ShomGt.html#property_deleted"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024layer",
             "name": "layer",
-            "summary": "",
+            "summary": "nom\u0020de\u0020la\u0020couche\u0020pour\u0020les\u0020cartes\u0020sp\u00E9ciales,\u0020null\u0020sinon",
             "url": "classes/ShomGt.html#property_layer"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024borders",
             "name": "borders",
-            "summary": "",
+            "summary": "bordures\u0020au\u0020cas\u0020o\u00F9\u0020le\u0020G\u00E9oTiff\u0020n\u0027est\u0020pas\u0020g\u00E9or\u00E9f\u00E9renc\u00E9",
             "url": "classes/ShomGt.html#property_borders"
         },                {
             "fqsen": "\\ShomGt\u003A\u003A\u0024all",
             "name": "all",
-            "summary": "",
+            "summary": "contenu\u0020de\u0020layers.yaml\u0020sous\u0020la\u0020forme\u0020\u005B\u007Blayername\u007D\u003D\u003E\u0020\u005B\u007Bgtname\u007D\u0020\u003D\u003E\u0020ShomGT\u005D\u005D",
             "url": "classes/ShomGt.html#property_all"
         },                {
             "fqsen": "\\SGSERVER_VERSION",
@@ -5373,7 +5373,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\findCurrentMapVersion\u0028\u0029",
             "name": "findCurrentMapVersion",
-            "summary": "",
+            "summary": "Retourne\u0020le\u0020libell\u00E9\u0020de\u0020la\u0020version\u0020courante\u0020de\u0020la\u0020carte\u0020\u0024mapnum\u0020\u0028Code\u0020en\u0020ShomGT\u0020V3\u0020ou\u0020V4\u0029.",
             "url": "namespaces/default.html#function_findCurrentMapVersion"
         },                {
             "fqsen": "\\expand\u0028\u0029",
@@ -5388,7 +5388,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Lock",
             "name": "Lock",
-            "summary": "",
+            "summary": "Verrou\u0020d\u0027utilisation\u0020pour\u0020garantir\u0020que\u0020le\u0020script\u0020n\u0027est\u0020pas\u0020utilis\u00E9\u0020plusieurs\u0020fois\u0020simultan\u00E9ment.",
             "url": "classes/Lock.html"
         },                {
             "fqsen": "\\Lock\u003A\u003Alocked\u0028\u0029",
@@ -5463,7 +5463,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\shomft\\Zee",
             "name": "Zee",
-            "summary": "",
+            "summary": "Permet\u0020de\u0020connaitre\u0020pour\u0020un\u0020MultiPolygon\u0020ou\u0020un\u0020GBox\u0020s\u0027il\u0020intersecte\u0020la\u0020ZEE\u0020et\u0020si\u0020oui\u0020quelle\u0020partie\u0020il\u0020intersecte.",
             "url": "classes/shomft-Zee.html"
         },                {
             "fqsen": "\\shomft\\Zee\u003A\u003Ainters\u0028\u0029",
@@ -5503,7 +5503,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\self\u0028\u0029",
             "name": "self",
-            "summary": "",
+            "summary": "Retourne\u0020l\u0027URL\u0020appell\u00E9",
             "url": "namespaces/default.html#function_self"
         },                {
             "fqsen": "\\FtServer",
@@ -5553,7 +5553,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WfsServer",
             "name": "WfsServer",
-            "summary": "fonctionnalit\u00E9s\u0020communes\u0020Gml\u0020et\u0020GeoJSON",
+            "summary": "Classe\u0020facilitant\u0020l\u0027utilisation\u0020d\u0027un\u0020serveur\u0020WFS,\u0020fonctionnalit\u00E9s\u0020communes\u0020Gml\u0020et\u0020GeoJSON",
             "url": "classes/WfsServer.html"
         },                {
             "fqsen": "\\WfsServer\u003A\u003A__construct\u0028\u0029",
@@ -5633,7 +5633,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WfsGeoJson",
             "name": "WfsGeoJson",
-            "summary": "g\u00E8re\u0020les\u0020fonctionnalit\u00E9s\u0020d\u0027un\u0020serveur\u0020WFS\u0020retournant\u0020du\u0020GeoJSON",
+            "summary": "Classe\u0020facilitant\u0020l\u0027utilisation\u0020d\u0027un\u0020serveur\u0020WFS,\u0020fonctionnalit\u00E9s\u0020d\u0027un\u0020serveur\u0020retournant\u0020du\u0020GeoJSON",
             "url": "classes/WfsGeoJson.html"
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AdescribeFeatureType\u0028\u0029",
@@ -5668,17 +5668,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\FeaturesApi",
             "name": "FeaturesApi",
-            "summary": "transforme\u0020un\u0020serveur\u0020WFS\u0020en\u0020Api\u0020Features",
+            "summary": "Classe\u0020permettant\u0020d\u0027interroger\u0020un\u0020serveur\u0020WFS\u0020comme\u0020une\u0020Api\u0020OGC\u0020Features",
             "url": "classes/FeaturesApi.html"
         },                {
             "fqsen": "\\FeaturesApi\u003A\u003Acollections\u0028\u0029",
             "name": "collections",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020collections\u0020expos\u00E9es\u0020d\u00E9finies\u0020par\u0020leur\u0020id\u0020et\u0020leur\u0020titre",
             "url": "classes/FeaturesApi.html#method_collections"
         },                {
             "fqsen": "\\FeaturesApi\u003A\u003Acollection\u0028\u0029",
             "name": "collection",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020description\u0020du\u0020FeatureType\u0020de\u0020la\u0020collection",
             "url": "classes/FeaturesApi.html#method_collection"
         },                {
             "fqsen": "\\FeaturesApi\u003A\u003Aitems\u0028\u0029",
@@ -5708,7 +5708,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GtMaps",
             "name": "GtMaps",
-            "summary": "classe\u0020regroupant\u0020qqs\u0020m\u00E9thodes\u0020statiques",
+            "summary": "classe\u0020regroupant\u0020qqs\u0020m\u00E9thodes\u0020statiques\u0020de\u0020gestion\u0020de\u0020l\u0027API\u0020maps",
             "url": "classes/GtMaps.html"
         },                {
             "fqsen": "\\GtMaps\u003A\u003Aerror\u0028\u0029",
@@ -5771,30 +5771,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/GtMaps.html#constant_ErrorImageSaveAlpha"
         },                {
-            "fqsen": "\\GtMaps\u003A\u003AHttpErrorMessage",
-            "name": "HttpErrorMessage",
-            "summary": "",
-            "url": "classes/GtMaps.html#constant_HttpErrorMessage"
-        },                {
             "fqsen": "\\shomGTVersion\u0028\u0029",
             "name": "shomGTVersion",
-            "summary": "indqieu\u0020la\u0020version\u0020ShomGT",
+            "summary": "indique\u0020la\u0020version\u0020ShomGT",
             "url": "namespaces/default.html#function_shomGTVersion"
         },                {
             "fqsen": "\\findCurrentMapVersionV4\u0028\u0029",
             "name": "findCurrentMapVersionV4",
-            "summary": "Code\u0020en\u0020V4.",
+            "summary": "Retourne\u0020le\u0020libell\u00E9\u0020de\u0020la\u0020version\u0020courante\u0020de\u0020la\u0020carte\u0020\u0024mapnum\u0020\u0028Code\u0020en\u0020ShomGT\u0020V4\u0029.",
             "url": "namespaces/default.html#function_findCurrentMapVersionV4"
         },                {
             "fqsen": "\\findCurrentMapVersionV3\u0028\u0029",
             "name": "findCurrentMapVersionV3",
-            "summary": "code\u0020en\u0020V3.",
+            "summary": "Retourne\u0020le\u0020libell\u00E9\u0020de\u0020la\u0020version\u0020courante\u0020de\u0020la\u0020carte\u0020\u0024mapnum\u0020\u0028Code\u0020en\u0020ShomGT\u0020V3\u0029.",
             "url": "namespaces/default.html#function_findCurrentMapVersionV3"
-        },                {
-            "fqsen": "\\latestVersion\u0028\u0029",
-            "name": "latestVersion",
-            "summary": "",
-            "url": "namespaces/default.html#function_latestVersion"
         },                {
             "fqsen": "\\NB_SECONDS_IN_CACHE",
             "name": "NB_SECONDS_IN_CACHE",
@@ -5808,7 +5798,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsShomGt",
             "name": "WmsShomGt",
-            "summary": "classe\u0020impl\u00E9mentant\u0020les\u0020fonctions\u0020du\u0020WMS\u0020de\u0020ShomGt.",
+            "summary": "classe\u0020impl\u00E9mentant\u0020le\u0020serveur\u0020WMS\u0020de\u0020ShomGt.",
             "url": "classes/WmsShomGt.html"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AgetCapabilities\u0028\u0029",
@@ -5853,7 +5843,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsvShomGt",
             "name": "WmsvShomGt",
-            "summary": "classe\u0020impl\u00E9mentant\u0020les\u0020fonctions\u0020du\u0020WMS\u002DV\u0020de\u0020ShomGt.",
+            "summary": "classe\u0020impl\u00E9mentant\u0020le\u0020serveur\u0020WMS\u002DVecteur\u0020de\u0020ShomGt.",
             "url": "classes/WmsvShomGt.html"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AgetCapabilities\u0028\u0029",

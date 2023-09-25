@@ -220,11 +220,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">analyse les fichiers d&#039;une archive d&#039;une carte pour évaluer sa validité et afficher le contenu</p>
+
 
 
 
@@ -255,48 +256,56 @@
     <span>
                         &nbsp;: <a href="classes/mapcat-MapCatItem.html"><abbr title="\mapcat\MapCatItem">MapCatItem</abbr></a>|null            </span>
 </dt>
+<dd>enregistrement dans MapCat correspondant à la carte ou null</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/bo-MapArchive.html#property_mapNum">$mapNum</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>no sur 4 chiffres</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/bo-MapArchive.html#property_rpathOf7z">$rpathOf7z</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>chemin du fichier .7z relativement à $PF_PATH et commencant par &#039;/&#039;</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/bo-MapArchive.html#property_insets">$insets</a>
     <span>
                         &nbsp;: array&lt;string, <a href="classes/bo-GeoRefImage.html"><abbr title="\bo\GeoRefImage">GeoRefImage</abbr></a>&gt;            </span>
 </dt>
+<dd>les cartouches [{name}=&gt; GeoRefImage]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/bo-MapArchive.html#property_main">$main</a>
     <span>
                         &nbsp;: <a href="classes/bo-GeoRefImage.html"><abbr title="\bo\GeoRefImage">GeoRefImage</abbr></a>            </span>
 </dt>
+<dd>les caractéristiques de l&#039;image principale et les MD de la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/bo-MapArchive.html#property_suppls">$suppls</a>
     <span>
                         &nbsp;: array&lt;string, int&gt;            </span>
 </dt>
+<dd>liste de noms de fichiers hors specs sous la forme [{name} =&gt; 1]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/bo-MapArchive.html#property_thumbnail">$thumbnail</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
+<dd>chemin de la vignette dans l&#039;archive</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/bo-MapArchive.html#property_type">$type</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
+<dd>&#039;undefined&#039;|&#039;normal&#039;|&#039;special&#039;</dd>
 
     </dl>
 
@@ -311,6 +320,7 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>fabrique un MapArchive</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_check">check()</a>
@@ -323,23 +333,21 @@
     <span>
                                 &nbsp;: <a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>|null    </span>
 </dt>
+<dd>Retourne le GBox de géoréférencement de la carte.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_gtiffs">gtiffs()</a>
     <span>
                                 &nbsp;: array&lt;int, string&gt;    </span>
 </dt>
+<dd>retourne la liste des GéoTiffs géoréférencés</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_invalid">invalid()</a>
     <span>
                                 &nbsp;: array&lt;string, array&lt;int, string&gt;&gt;    </span>
 </dt>
-<dd>Teste la conformité à la spec et au catalogue
-retourne [] si la carte est valide et conforme à sa description dans le catalogue et sans alertes
-sinon un array comportant un au moins des 2 champs:
- - errors listant les erreurs
- - warnings listant les alertes</dd>
+<dd>Teste la conformité à la spec et au catalogue.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_main">main()</a>
@@ -352,27 +360,30 @@ sinon un array comportant un au moins des 2 champs:
     <span>
                                 &nbsp;: array&lt;string, string&gt;    </span>
 </dt>
-<dd>construit la correspondance des cartouches de l&#039;archive avec ceux de MapCat
-Le résultat est un array avec en clés les noms des cartouches dans l&#039;archive
-et en valeurs les titres des cartouches dans MapCat</dd>
+<dd>construit la correspondance des cartouches de l&#039;archive avec ceux de MapCat.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_showAsHtml">showAsHtml()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>affiche le contenu de l&#039;archive en Html comme table Html sans les balises &lt;table&gt; et &lt;/table&gt;
+Si $mapCatUpdateOrCreate alors affiche la possibilité de modifier/créer l&#039;enregistrement MapCat
+Cela est fait en rappellant le script avec l&#039;action updateMapCat ou insertMapCat et le num de la carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_showAsYaml">showAsYaml()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Affichage limité utilisé par la version CLI</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/bo-MapArchive.html#method_showWithOptions">showWithOptions()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Affichage avec options utilisé par la version CLI</dd>
 
     </dl>
 
@@ -405,11 +416,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">enregistrement dans MapCat correspondant à la carte ou null</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type"><a href="classes/mapcat-MapCatItem.html"><abbr title="\mapcat\MapCatItem">MapCatItem</abbr></a>|null</span>
@@ -438,11 +450,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">no sur 4 chiffres</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -471,11 +484,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">chemin du fichier .7z relativement à $PF_PATH et commencant par &#039;/&#039;</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -504,11 +518,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">les cartouches [{name}=&gt; GeoRefImage]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string, <a href="classes/bo-GeoRefImage.html"><abbr title="\bo\GeoRefImage">GeoRefImage</abbr></a>&gt;</span>
@@ -537,11 +552,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">les caractéristiques de l&#039;image principale et les MD de la carte</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type"><a href="classes/bo-GeoRefImage.html"><abbr title="\bo\GeoRefImage">GeoRefImage</abbr></a></span>
@@ -570,11 +586,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste de noms de fichiers hors specs sous la forme [{name} =&gt; 1]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string, int&gt;</span>
@@ -603,11 +620,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">chemin de la vignette dans l&#039;archive</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
@@ -636,11 +654,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">&#039;undefined&#039;|&#039;normal&#039;|&#039;special&#039;</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
@@ -674,11 +693,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">fabrique un MapArchive</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rpathOf7z</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -693,7 +713,9 @@ et en valeurs les titres des cartouches dans MapCat</dd>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>le chemin relatif du fichier .7z</p>
+</section>
+
             </dd>
             </dl>
 
@@ -715,7 +737,7 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">483</span>
+    <span class="phpdocumentor-element-found-in__line">502</span>
 
     </aside>
 
@@ -763,18 +785,28 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">208</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retourne le GBox de géoréférencement de la carte.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">georefBox</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-GBox.html"><abbr title="\gegeom\GBox">GBox</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>retourne le géoréférencement de l'image principale SI elle existe et est géoréférencée
+SINON
+S'il n'y a pas d'image principale
+ALORS retourne null // cas d'erreur
+SINON // il y a une image principale et elle n'est pas géoréférencée
+S'il y a des cartouches
+ALORS retourne l'union des cartouches
+SINON retourne null // cas d'erreur, evt carte spéciale</p>
+</section>
+
     
     
 
@@ -798,11 +830,12 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">190</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la liste des GéoTiffs géoréférencés</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">gtiffs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
@@ -833,15 +866,11 @@ et en valeurs les titres des cartouches dans MapCat</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">244</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Teste la conformité à la spec et au catalogue
-retourne [] si la carte est valide et conforme à sa description dans le catalogue et sans alertes
-sinon un array comportant un au moins des 2 champs:
- - errors listant les erreurs
- - warnings listant les alertes</p>
+        <p class="phpdocumentor-summary">Teste la conformité à la spec et au catalogue.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -849,7 +878,14 @@ sinon un array comportant un au moins des 2 champs:
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>retourne [] si la carte est valide et conforme à sa description dans le catalogue et sans alertes
+sinon un array comportant un au moins des 2 champs:</p>
+<ul>
+<li>errors listant les erreurs</li>
+<li>warnings listant les alertes</li>
+</ul>
+</section>
+
     
     
 
@@ -873,7 +909,7 @@ sinon un array comportant un au moins des 2 champs:
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">150</span>
 
     </aside>
 
@@ -908,13 +944,11 @@ sinon un array comportant un au moins des 2 champs:
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">227</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">construit la correspondance des cartouches de l&#039;archive avec ceux de MapCat
-Le résultat est un array avec en clés les noms des cartouches dans l&#039;archive
-et en valeurs les titres des cartouches dans MapCat</p>
+        <p class="phpdocumentor-summary">construit la correspondance des cartouches de l&#039;archive avec ceux de MapCat.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -922,7 +956,10 @@ et en valeurs les titres des cartouches dans MapCat</p>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Le résultat est un array avec en clés les noms des cartouches dans l'archive
+et en valeurs les titres des cartouches dans MapCat</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -956,11 +993,14 @@ et en valeurs les titres des cartouches dans MapCat</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">348</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">affiche le contenu de l&#039;archive en Html comme table Html sans les balises &lt;table&gt; et &lt;/table&gt;
+Si $mapCatUpdateOrCreate alors affiche la possibilité de modifier/créer l&#039;enregistrement MapCat
+Cela est fait en rappellant le script avec l&#039;action updateMapCat ou insertMapCat et le num de la carte</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">showAsHtml</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapCatUpdateOrCreate</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -997,11 +1037,12 @@ et en valeurs les titres des cartouches dans MapCat</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">433</span>
+    <span class="phpdocumentor-element-found-in__line">451</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Affichage limité utilisé par la version CLI</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">showAsYaml</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1028,11 +1069,12 @@ et en valeurs les titres des cartouches dans MapCat</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/maparchive.php"><a href="files/bo-maparchive.html"><abbr title="bo/maparchive.php">maparchive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">452</span>
+    <span class="phpdocumentor-element-found-in__line">471</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Affichage avec options utilisé par la version CLI</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">showWithOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>

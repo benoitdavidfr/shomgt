@@ -219,11 +219,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Définit les couches std et spéciales, permet de savoir à laquelle un GéoTiff appartient</p>
+
 
 
 
@@ -258,12 +259,15 @@
     <span>
         &nbsp;= [&#039;5k&#039; =&gt; 11000.0, &#039;12k&#039; =&gt; 22000.0, &#039;25k&#039; =&gt; 45000.0, &#039;50k&#039; =&gt; 90000.0, &#039;100k&#039; =&gt; 180000.0, &#039;250k&#039; =&gt; 380000.0, &#039;500k&#039; =&gt; 700000.0, &#039;1M&#039; =&gt; 1400000.0, &#039;2M&#039; =&gt; 3000000.0, &#039;4M&#039; =&gt; 6000000.0, &#039;10M&#039; =&gt; 14000000.0, &#039;40M&#039; =&gt; \INF]                            </span>
 </dt>
+<dd>liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d&#039;échelle des GéoTiff
+contenus dans la couche.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/LayerDef.html#constant_SPECIAL_LAYERS">SPECIAL_LAYERS</a>
     <span>
         &nbsp;= [&#039;gtaem&#039;, &#039;gtMancheGrid&#039;, &#039;gtZonMar&#039;]                            </span>
 </dt>
+<dd>liste des noms des couches spéciales</dd>
 
     </dl>
 
@@ -280,6 +284,7 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>retourne le nom de la couche en fonction du dén. de l&#039;échelle</dd>
 
     </dl>
 
@@ -303,7 +308,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -331,11 +336,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste des couches regroupant les GéoTiff avec pour chacune la valeur max du dénominateur d&#039;échelle des GéoTiff
+contenus dans la couche.</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -359,11 +366,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">liste des noms des couches spéciales</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -401,11 +409,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le nom de la couche en fonction du dén. de l&#039;échelle</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getFromScaleDen</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$scaleDen</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
