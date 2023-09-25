@@ -1,16 +1,19 @@
 <?php
-/** étend SevenZipArchive par l'ajout de 2 méthodes simplifiant l'extraction temporaire d'un fichier.
- *
- *  - extract() extrait une entrée de l'archive et retourne le chemin du fichier créé
- *  - remove() supprime le fichier extrait ainsi que les répertoires créés
- * Le fichier est extrait dans un répertoire unique afin d'éviter les collisions.
+/** étend SevenZipArchive par l'ajout de 2 méthodes simplifiant l'extraction temporaire d'un fichier
+ * @package shomgt\bo
  */
 namespace bo;
 
 require_once __DIR__.'/SevenZipArchive.php';
 
+/** étend la classe SevenZipArchive par l'ajout de 2 méthodes simplifiant l'extraction temporaire d'un fichier.
+ *
+ *  - extract() extrait une entrée de l'archive et retourne le chemin du fichier créé
+ *  - remove() supprime le fichier extrait ainsi que les répertoires créés
+ * Le fichier est extrait dans un répertoire unique afin d'éviter les collisions.
+ */
 class My7zArchive extends \SevenZipArchive {
-  // retourne le chemin du l'entrée extraite
+  /** retourne le chemin du l'entrée extraite */
   function extract(string $entryName): string {
     if (!is_dir(__DIR__.'/temp') && !mkdir(__DIR__.'/temp'))
       throw new \Exception("Erreur de création du répertoire __DIR__/temp");
@@ -20,7 +23,8 @@ class My7zArchive extends \SevenZipArchive {
     $this->extractTo(__DIR__."/temp/$uniqid", $entryName);
     return __DIR__."/temp/$uniqid/$entryName"; 
   }
-
+  
+  /** supprime le fichier temporaire */
   function remove(string $path): void {
     unlink($path);
     $path = dirname($path);

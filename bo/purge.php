@@ -1,5 +1,7 @@
 <?php
-/** PERIME */
+/** PERIME
+ * @package PERIME
+ */
 /*PhpDoc:
 name: purge.php
 title: bo/purge.php - proto purge des vieilles livraisons - Benoit DAVID - 16-17/7/2023 (PERIME)

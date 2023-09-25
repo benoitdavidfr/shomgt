@@ -1,9 +1,8 @@
 <?php
+/** accès au catalogue MapCat et vérification des contraintes
+ * @package shomgt\mapcat
+ */
 namespace mapcat;
-/*PhpDoc:
-name: mapcat.inc.php
-title: mapcat/mapcat.inc.php - accès au catalogue MapCat et vérification des contraintes
-*/
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
@@ -15,6 +14,7 @@ require_once __DIR__.'/../shomft/frzee.inc.php';
 use Symfony\Component\Yaml\Yaml;
 
 
+/** standardise l'ordre des propriétés de $src conformément au standard fourni */
 class StdOrderOfProp {
   /** standardise l'ordre des propriétés de $src conformément au standard transmis $std
    * Le standard est défini récursivement comme un array Php dont chaque élément est:
@@ -141,17 +141,20 @@ if (0) { // @phpstan-ignore-line // Test de stdOrderOfPropForDict
 }
 
 /* décode le champ spatial de MapCat pour différentes utilisations
-* et Vérifie les contraintes et les exceptions du champ spatial
-* Les contraintes sont définies dans la constante CONSTRAINTS
-* et la liste des exceptions est dans la constante EXCEPTIONS
-*/
+ * et Vérifie les contraintes et les exceptions du champ spatial
+ *
+ * Les contraintes sont définies dans la constante CONSTRAINTS
+ * et la liste des exceptions est dans la constante EXCEPTIONS
+ */
 class Spatial extends \gegeom\GBox {
+  /** Liste des contraintes */
   const CONSTRAINTS = [
     "les latitudes sont comprises entre -90° et 90°",
     "la latitude North est supérieure à la latitude South",
     "les longitudes West et East sont comprises entre -180° et 180° sauf dans l'exception circumnavigateTheEarth",
     "la longitude East est supérieure à la longitude West sauf dans l'exception astrideTheAntimeridian",
   ];
+  /** Liste des exceptions */
   const EXCEPTIONS = [
     'astrideTheAntimeridian'=> [
       "l'exception astrideTheAntimeridian correspond à une boite à cheval sur l'anti-méridien",
@@ -178,7 +181,8 @@ class Spatial extends \gegeom\GBox {
   /** @return TPos */
   function ne(): array { return $this->max; }
 
-  function badLats(): ?string { // si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null
+  /** si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null */
+  function badLats(): ?string {
     if (($this->sw()[1] < -90) || ($this->ne()[1] > 90))
       return "lat < -90 || > 90";
     if ($this->sw()[1] >= $this->ne()[1])
@@ -186,7 +190,8 @@ class Spatial extends \gegeom\GBox {
     return null;
   }
   
-  function badLons(): ?string { // si les longitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null
+  /** si les longitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null */
+  function badLons(): ?string {
     if ($this->sw()[0] >= $this->ne()[0])
       return "west >= est";
     if ($this->sw()[0] < -180)
@@ -194,7 +199,8 @@ class Spatial extends \gegeom\GBox {
     return null;
   }
   
-  function exceptionLons(): ?string { // si $this correspond à une exception alors renvoie son libellé, sinon null 
+  /** si $this correspond à une exception alors renvoie son libellé, sinon null */
+  function exceptionLons(): ?string {
     if (($this->ne()[0] - $this->sw()[0]) >= 360)
       return 'circumnavigateTheEarth';
     if ($this->ne()[0] > 180)
@@ -202,7 +208,8 @@ class Spatial extends \gegeom\GBox {
     return null;
   }
   
-  function isBad(): ?string { // si $this n'est pas correct alors renvoie la raison, sinon null
+  /** si $this n'est pas correct alors renvoie la raison, sinon null */
+  function isBad(): ?string {
     $bad = false;
     if (($error = $this->badLats()) || ($error = $this->badLons())) {
       return $error;
@@ -224,10 +231,11 @@ class Spatial extends \gegeom\GBox {
   /** @return TLPos */
   private function ring(): array { return [$this->nw(), $this->sw(), $this->se(), $this->ne(), $this->nw()]; }
   
-  // Retourne la boite comme MultiPolygon GeoJSON avec décomposition en 2 polygones
-  // A linear ring MUST follow the right-hand rule with respect to the area it bounds,
-  // i.e., exterior rings are clockwise, and holes are counterclockwise.
-  /** @return TGJMultiPolygon */
+  /** Retourne la boite comme MultiPolygon GeoJSON avec décomposition en 2 polygones.
+   *
+   * A linear ring MUST follow the right-hand rule with respect to the area it bounds,
+   * i.e., exterior rings are clockwise, and holes are counterclockwise.
+   * @return TGJMultiPolygon */
   private function multiPolygon(): array { // génère un MultiPolygone GeoJSON 
     if ($this->max[0] < 180) { // cas standard
       return [
@@ -247,8 +255,9 @@ class Spatial extends \gegeom\GBox {
     }
   }
   
-  /** @return TGeoJsonFeatureCollection */
-  private function layer(string $popupContent): array { // génère une FeatureCollection GeoJson contenant le multiPolygone
+  /** génère une FeatureCollection GeoJson contenant le multiPolygone
+   * @return TGeoJsonFeatureCollection */
+  private function layer(string $popupContent): array {
     return [
       'type'=> 'FeatureCollection',
       'features'=> [[
@@ -274,8 +283,10 @@ class Spatial extends \gegeom\GBox {
 
 EOT;
   }*/
-  /** @param array<string, string|int|float> $style */
-  function lgeoJSON(array $style, string $popupContent): string { // retourne le code JS génèrant l'objet L.geoJSON
+    
+  /** retourne le code JS génèrant l'objet L.geoJSON
+   * @param array<string, string|int|float> $style */
+  function lgeoJSON(array $style, string $popupContent): string {
     return
       sprintf('L.geoJSON(%s,{style: %s, onEachFeature: onEachFeature});',
         json_encode($this->layer($popupContent)),
@@ -299,8 +310,8 @@ EOT;
 };
 //Spatial::test();
 
-// Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat
-// La classe porte en outre en constante le modèle de document Yaml
+/** Un objet MapCatItem correspond à l'enregistrement d'une carte dans le catalogue MapCat.
+ * La classe porte en outre en constante le modèle de document Yaml */
 readonly class MapCatItem {
   const ALL_KINDS = ['alive','uninteresting','deleted'];
   const STD_PROP = [
@@ -558,8 +569,9 @@ EOT
 
   function spatial(): ?Spatial { return $this->spatial ? new Spatial($this->spatial) : null; }
   
-  /** @return array<string, Spatial>*/
-  function spatials(): array { // retourne la liste des extensions spatiales sous la forme [title => Spatial]
+  /** retourne la liste des extensions spatiales sous la forme [title => Spatial]
+   * @return array<string, Spatial>*/
+  function spatials(): array {
     $spatials = $this->spatial ? ['image principale de la carte'=> new Spatial($this->spatial)] : [];
     //echo "<pre>insetMaps = "; print_r($this->insetMaps); echo "</pre>\n";
     foreach ($this->insetMaps ?? [] as $i => $insetMap) {
@@ -581,8 +593,8 @@ EOT
     return $insetTitles;
   }
 
-  // retourne si l'image principale est géoréférencée alors son scaleDenominator
-  // sinon le plus grand scaleDenominator des cartouches
+  /** retourne si l'image principale est géoréférencée alors son scaleDenominator
+   * sinon le plus grand scaleDenominator des cartouches */
   function scaleDenominator(): string {
     if ($this->scaleDenominator)
       return $this->scaleDenominator;
@@ -627,12 +639,13 @@ EOT
     return true;
   }
   
-  // appelée pour mettre à jour la description de la carte $mapNum cad en créer un nouvel enregistrement
-  // la première fois arrête le script en générant le formulaire qui rappelle le même script avec même URL et données en POST
-  // les fois suivantes
-  //   SI ajout ok alors retour de la méthode
-  //   SINON message d'erreur, génération à nouveau du formulaire avant arrêt du script
-  // Avec l'affichage du formulaire un lien d'abandon est affiché.
+  /** appelée pour mettre à jour la description de la carte $mapNum cad en créer un nouvel enregistrement.
+   *
+   * la première fois arrête le script en générant le formulaire qui rappelle le même script avec même URL et données en POST
+   * les fois suivantes
+   *   SI ajout ok alors retour de la méthode
+   *   SINON message d'erreur, génération à nouveau du formulaire avant arrêt du script
+   * Avec l'affichage du formulaire un lien d'abandon est affiché. */
   static function updateMapCat(string $mapNum, string $user, string $abort): bool {
     if (!isset($_POST['yaml'])) { // Premier affichage du formulaire quand l'enregistrement existe
       $mapcat = \MySql::getTuples("select mapnum, jdoc from mapcat where mapnum='FR$mapNum' order by id desc")[0];
@@ -666,10 +679,12 @@ EOT
     die();
   }
 
-  // appelée pour insérer la description de la carte $mapNum
-  // Si le formulaire n'a pas été saisi alors le génère en rappellant le même script avec même URL et données en POST
-  // puis arrête le script
-  // Si le formulaire a été saisi appelle updateMapCat
+  /** appelée pour insérer la description de la carte $mapNum.
+   *
+   * Si le formulaire n'a pas été saisi alors le génère en rappellant le même script avec même URL et données en POST
+   * puis arrête le script
+   * Si le formulaire a été saisi appelle updateMapCat
+   */
   static function insertMapCat(?string $mapNum, string $user, string $abort): bool {
     if (isset($_POST['yaml'])) { // Retour d'une saisie d'une description
       if (isset($_POST['mapNum']))
@@ -698,11 +713,13 @@ EOT
 };
 if ($error = MapCatItem::checkValidity()) throw new \Exception($error);
 
-// La classe MapCat correspond au catalogue MapCat en base 
-// La classe porte en outre en constante la définition SQL de la table mapcat
-// ainsi qu'une méthode statique traduisant la définition SQL en requête SQL
+/** La classe MapCat correspond au catalogue MapCat en base.
+ * La classe porte en outre en constante la définition SQL de la table mapcat
+ * ainsi qu'une méthode statique traduisant la définition SQL en requête SQL
+ */
 class MapCat {
-  // la structuration de la constante est définie dans son champ description
+  /** Définition du schema SQL de la table.
+   * la structuration de la constante est définie dans son champ description */
   const MAPCAT_TABLE_SCHEMA = [
     'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
             ." - le champ 'comment' précisant la table concernée,\n"
@@ -818,6 +835,7 @@ class MapCat {
   }
 };
 
+/** Catalogue MapCat stocke comme fichier Yaml */
 class MapCatFromFile extends MapCat {
   /** @var array<string, TMapCatItem> $maps */
   static array $maps=[]; // contenu du champ maps de MapCat

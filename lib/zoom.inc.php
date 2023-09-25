@@ -12,7 +12,8 @@
  *   - scission depuis gegeom.inc.php
  * - 7/3/2019:
  *   - création
-*/
+ * @package shomgt\lib
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/sexcept.inc.php';

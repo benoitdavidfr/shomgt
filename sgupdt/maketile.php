@@ -1,39 +1,38 @@
 <?php
-/*PhpDoc:
-name: maketile.php
-title: maketile.php - découpage d'un PNG en dalles de 1024 X 1024 + effacement de zones définies dans mapcat.yaml
-doc: |
-  script à appeler en ligne de commande avec en paramètre le chemin du fichier PNG
-  Crée un répertoire ayant le même nom que le png sans l'extension .png
-  et y crée les dalles avec comme nom sprintf('%s/%X-%X.png', $dirpath, $i, $j)
-  Lit le fichier mapcat.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
-  Pour effacer ces zones, utilise le fichier .info créé à partir du tif avec gdalinfo pour géoréférencer l'image
-  
-  limites:
-    - Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
-journal: |
-  1/8/2022:
-    - ajout déclarations PhpStan pour level 6
-  1/7/2022:
-    - correction bug
-  20/6/2022:
-    - ajout d'un die(0) à la fin du script pour s'assurer du renvoi du code 0
-  17/6/2022:
-    - adaptation au transfert de update.yaml dans mapcat.yaml
-  16/5/2022:
-    - le nom du fichier de paramètres est update.yaml
-  8/5/2022:
-    - correction d'un bug
-  7/5/2022:
-    - adaptation pour transfert dans build
-  3/5/2022:
-    - ajout de l'affichage de la progression
-    - ajout possibilité de définir les polygones en DM
-  26-27/4/2022:
-    - chgt du nom tile.php en maketile.php
-    - chgt du positionnement dans l'image Docker dans /var/www/html
-    - lors de la fabrication des dalles effacement des zones définies dans shomgt.yaml
-*/
+/** découpe un PNG en dalles de 1024 X 1024 + effacement de zones définies dans mapcat.yaml
+ *
+ * script à appeler en ligne de commande avec en paramètre le chemin du fichier PNG
+ * Crée un répertoire ayant le même nom que le png sans l'extension .png
+ * et y crée les dalles avec comme nom sprintf('%s/%X-%X.png', $dirpath, $i, $j)
+ * Lit le fichier mapcat.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
+ * Pour effacer ces zones, utilise le fichier .info créé à partir du tif avec gdalinfo pour géoréférencer l'image
+ * 
+ * limites:
+ *   - Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
+ * journal: |
+ * 1/8/2022:
+ *   - ajout déclarations PhpStan pour level 6
+ * 1/7/2022:
+ *   - correction bug
+ * 20/6/2022:
+ *   - ajout d'un die(0) à la fin du script pour s'assurer du renvoi du code 0
+ * 17/6/2022:
+ *   - adaptation au transfert de update.yaml dans mapcat.yaml
+ * 16/5/2022:
+ *   - le nom du fichier de paramètres est update.yaml
+ * 8/5/2022:
+ *   - correction d'un bug
+ * 7/5/2022:
+ *   - adaptation pour transfert dans build
+ * 3/5/2022:
+ *   - ajout de l'affichage de la progression
+ *   - ajout possibilité de définir les polygones en DM
+ * 26-27/4/2022:
+ *   - chgt du nom tile.php en maketile.php
+ *   - chgt du positionnement dans l'image Docker dans /var/www/html
+ *   - lors de la fabrication des dalles effacement des zones définies dans shomgt.yaml
+ * @package \shomgt\sgupdt
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../vendor/autoload.php';

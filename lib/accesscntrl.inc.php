@@ -36,6 +36,7 @@
  *   - refonte
  * - 8/6/2017:
  *   - création
+ * @package shomgt\lib
  */
 //die("OK ligne ".__LINE__." de ".__FILE__);
 require_once __DIR__.'/log.inc.php';

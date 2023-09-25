@@ -15,6 +15,7 @@
  *   - correction bug
  *   - changement du séparateur des milliers en '_' car 1) moins confusant que '.' et 2) utilisé par Php et Yaml
  *   - utilisation de la variable d'environnement SHOMGT3_MAPS_DIR_PATH
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

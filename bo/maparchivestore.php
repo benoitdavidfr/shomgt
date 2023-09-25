@@ -14,6 +14,7 @@
  *  2) si un lien de current est absolu alors le transformer en lien relatif
  *  3) dans l'env de préProdData et si shomgeotiffpp n'existe pas alors le créer par clonage de shomgeotiff
  *  4) comparer shomgeotiffpp et shomgeotiff
+ * @package shomgt\bo
  */
 namespace bo;
 

@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -122,7 +198,40 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">maketile.php</h2>
 
-        
+            <p class="phpdocumentor-summary">découpe un PNG en dalles de 1024 X 1024 + effacement de zones définies dans mapcat.yaml</p>
+
+    <section class="phpdocumentor-description"><p>script à appeler en ligne de commande avec en paramètre le chemin du fichier PNG
+Crée un répertoire ayant le même nom que le png sans l'extension .png
+et y crée les dalles avec comme nom sprintf('%s/%X-%X.png', $dirpath, $i, $j)
+Lit le fichier mapcat.yaml pour y trouver les zones à effacer et en déduit un fichier temporaire todelete.pser.
+Pour effacer ces zones, utilise le fichier .info créé à partir du tif avec gdalinfo pour géoréférencer l'image</p>
+<p>limites:</p>
+<ul>
+<li>Le script détruit les couleurs dans certains cas, par exemple sur 8509_2015.png qui provient d'un PDF
+journal: |
+1/8/2022:</li>
+<li>ajout déclarations PhpStan pour level 6
+1/7/2022:</li>
+<li>correction bug
+20/6/2022:</li>
+<li>ajout d'un die(0) à la fin du script pour s'assurer du renvoi du code 0
+17/6/2022:</li>
+<li>adaptation au transfert de update.yaml dans mapcat.yaml
+16/5/2022:</li>
+<li>le nom du fichier de paramètres est update.yaml
+8/5/2022:</li>
+<li>correction d'un bug
+7/5/2022:</li>
+<li>adaptation pour transfert dans build
+3/5/2022:</li>
+<li>ajout de l'affichage de la progression</li>
+<li>ajout possibilité de définir les polygones en DM
+26-27/4/2022:</li>
+<li>chgt du nom tile.php en maketile.php</li>
+<li>chgt du positionnement dans l'image Docker dans /var/www/html</li>
+<li>lors de la fabrication des dalles effacement des zones définies dans shomgt.yaml</li>
+</ul>
+</section>
 
 
 
@@ -177,7 +286,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/maketile.php"><a href="files/sgupdt-maketile.html"><abbr title="sgupdt/maketile.php">maketile.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 

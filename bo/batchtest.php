@@ -1,5 +1,7 @@
 <?php
-/** script utilisé pour le test de runbatch.php */
+/** script utilisé pour le test de runbatch.php
+ * @package shomgt\bo\TEST
+ */
 $nbre = 150;
 echo "batchtest $nbre\n";
 for($i=0; $i < $nbre; $i++) {

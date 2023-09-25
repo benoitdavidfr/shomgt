@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -128,7 +204,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/shomgt.html">shomgt</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/shomgt-mapcat.html">mapcat</a></li>
                             </ul>
         </div>
     
@@ -145,11 +222,14 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">304</span>
+    <span class="phpdocumentor-element-found-in__line">315</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Un objet MapCatItem correspond à l&#039;enregistrement d&#039;une carte dans le catalogue MapCat.</p>
+
+    <section class="phpdocumentor-description"><p>La classe porte en outre en constante le modèle de document Yaml</p>
+</section>
 
 
 
@@ -317,6 +397,7 @@ EOT
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>appelée pour insérer la description de la carte $mapNum.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-MapCatItem.html#method_insetScale">insetScale()</a>
@@ -342,6 +423,8 @@ EOT
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>retourne si l&#039;image principale est géoréférencée alors son scaleDenominator
+sinon le plus grand scaleDenominator des cartouches</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-MapCatItem.html#method_spatial">spatial()</a>
@@ -354,6 +437,7 @@ EOT
     <span>
                                 &nbsp;: array&lt;string, <a href="classes/mapcat-Spatial.html"><abbr title="\mapcat\Spatial">Spatial</abbr></a>&gt;    </span>
 </dt>
+<dd>retourne la liste des extensions spatiales sous la forme [title =&gt; Spatial]</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-MapCatItem.html#method_testValidatesAgainstSchema">testValidatesAgainstSchema()</a>
@@ -366,6 +450,7 @@ EOT
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>appelée pour mettre à jour la description de la carte $mapNum cad en créer un nouvel enregistrement.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-MapCatItem.html#method_validatesAgainstSchema">validatesAgainstSchema()</a>
@@ -408,7 +493,7 @@ utilisée par updateMapCat()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">316</span>
 
     </aside>
 
@@ -436,7 +521,7 @@ utilisée par updateMapCat()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">335</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 
     </aside>
 
@@ -490,7 +575,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">306</span>
+    <span class="phpdocumentor-element-found-in__line">317</span>
 
     </aside>
 
@@ -563,7 +648,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">527</span>
+    <span class="phpdocumentor-element-found-in__line">538</span>
 
     </aside>
 
@@ -596,7 +681,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">529</span>
+    <span class="phpdocumentor-element-found-in__line">540</span>
 
     </aside>
 
@@ -634,7 +719,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">534</span>
+    <span class="phpdocumentor-element-found-in__line">545</span>
 
     </aside>
 
@@ -682,7 +767,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">540</span>
+    <span class="phpdocumentor-element-found-in__line">551</span>
 
     </aside>
 
@@ -723,7 +808,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">543</span>
+    <span class="phpdocumentor-element-found-in__line">554</span>
 
     </aside>
 
@@ -758,7 +843,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">536</span>
+    <span class="phpdocumentor-element-found-in__line">547</span>
 
     </aside>
 
@@ -793,7 +878,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">600</span>
+    <span class="phpdocumentor-element-found-in__line">612</span>
 
     </aside>
 
@@ -848,7 +933,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">364</span>
+    <span class="phpdocumentor-element-found-in__line">375</span>
 
     </aside>
 
@@ -894,18 +979,23 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">673</span>
+    <span class="phpdocumentor-element-found-in__line">688</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">appelée pour insérer la description de la carte $mapNum.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">insertMapCat</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapNum</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$abort</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>Si le formulaire n'a pas été saisi alors le génère en rappellant le même script avec même URL et données en POST
+puis arrête le script
+Si le formulaire a été saisi appelle updateMapCat</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -953,7 +1043,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">555</span>
+    <span class="phpdocumentor-element-found-in__line">566</span>
 
     </aside>
 
@@ -998,7 +1088,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">574</span>
+    <span class="phpdocumentor-element-found-in__line">586</span>
 
     </aside>
 
@@ -1034,7 +1124,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">551</span>
+    <span class="phpdocumentor-element-found-in__line">562</span>
 
     </aside>
 
@@ -1069,11 +1159,13 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">586</span>
+    <span class="phpdocumentor-element-found-in__line">598</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne si l&#039;image principale est géoréférencée alors son scaleDenominator
+sinon le plus grand scaleDenominator des cartouches</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">scaleDenominator</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -1104,7 +1196,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">559</span>
+    <span class="phpdocumentor-element-found-in__line">570</span>
 
     </aside>
 
@@ -1139,11 +1231,12 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">562</span>
+    <span class="phpdocumentor-element-found-in__line">574</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne la liste des extensions spatiales sous la forme [title =&gt; Spatial]</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">spatials</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, <a href="classes/mapcat-Spatial.html"><abbr title="\mapcat\Spatial">Spatial</abbr></a>&gt;</span></code>
@@ -1174,7 +1267,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">457</span>
+    <span class="phpdocumentor-element-found-in__line">468</span>
 
     </aside>
 
@@ -1205,18 +1298,25 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">636</span>
+    <span class="phpdocumentor-element-found-in__line">649</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">appelée pour mettre à jour la description de la carte $mapNum cad en créer un nouvel enregistrement.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">updateMapCat</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapNum</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$abort</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>la première fois arrête le script en générant le formulaire qui rappelle le même script avec même URL et données en POST
+les fois suivantes
+SI ajout ok alors retour de la méthode
+SINON message d'erreur, génération à nouveau du formulaire avant arrêt du script
+Avec l'affichage du formulaire un lien d'abandon est affiché.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1264,7 +1364,7 @@ EOT
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">383</span>
+    <span class="phpdocumentor-element-found-in__line">394</span>
 
     </aside>
 
@@ -1314,7 +1414,7 @@ retourne un array contenant:
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">617</span>
+    <span class="phpdocumentor-element-found-in__line">629</span>
 
     </aside>
 

@@ -1,6 +1,7 @@
 <?php
 /**
  * construit le graphe des inclusions entre fichiers Php pour afficher différentes informations
+ * @package phpanalyzer
  */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/token.inc.php';

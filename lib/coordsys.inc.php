@@ -63,7 +63,8 @@
  *   - ajout de chg pour améliorer l'indépendance de ce module avec geom2d.inc.php
  * - 23/6/2016
  *   - première version
-*/
+ * @package coordsys
+ */
 namespace coordsys;
 
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));

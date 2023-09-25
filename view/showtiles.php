@@ -1,9 +1,9 @@
 <?php
-/*PhpDoc:
-title: showtiles.php - affiche les tuiles d'un GeoTiff décomposé en tuiles
-doc: |
-  Prend en paramètre le répertoire contenant les tuiles
-*/
+/** affiche les tuiles d'un GeoTiff décomposé en tuiles
+ *
+ * Prend en paramètre le répertoire contenant les tuiles
+ * @package shomgt\view
+ */
 $path = $_GET['path'] ?? '.';
 if (!is_file("$path/0-0.png")) {
   echo "$path n'est pas un répertoire de tuiles<br>\n";

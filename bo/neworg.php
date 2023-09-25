@@ -1,5 +1,7 @@
 <?php
-/** PERIME */
+/** PERIME
+ * @package PERIME
+ */
 /*PhpDoc:
 name: neworg.php
 title: bo/neworg.php - mise en oeuvre de la nouvelle organisation de shomgeotiff (PERIME)

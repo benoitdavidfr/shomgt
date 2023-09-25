@@ -11,6 +11,7 @@
  *  - du caractère '/' et
  *  - de l'entrée dans le fichier 7z
  * Permet aussi de convertir en .png un .tif ou un .pdf
+ * @package shomgt\bo
  */
 namespace bo;
 

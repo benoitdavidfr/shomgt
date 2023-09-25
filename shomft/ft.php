@@ -1,42 +1,43 @@
 <?php
-/*PhpDoc:
-title: shomft/ft.php - serveur d'objets géographiques principalement en provenance du Shom
-name: ft.php
-doc: |
-  Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.
-  Les collections suivantes sont définies:
-    - gt qui regroupe toutes les cartes GT normales
-    - ae qui regroupe les cartes AEM
-    - delmar - délimitations maritimes
-    - delmar - délimitations maritimes
-    - frzee - ZEE française simplifiée et sous la forme de polygones
-  
-  Les points d'entrée sont:
-    - ft.php - page d'accueil
-    - ft.php/collections - liste les collections
-    - ft.php/collections/{coll} - décrit la collection {coll}
-    - ft.php/collections/{coll}/items - retourne le contenu GéoJSON de la collection {coll}
-
-  Si le fichier json n'existe pas alors les données sont téléchargées depuis le serveur WFS du Shom
-  et le fichier json est créé.
-  Si le fichier existe déjà les données sont récupérées dans le fichier json.
-     
-  Pb - très peu d'info dans le serveur WFS du Shom, notamment a priori pas le numéro de la carte ni l'échelle !!!
-  Probablement garder le découpage d'échelles du Shom
-journal: |
-  21/4/2023:
-    - ajout des cartes par intervalle d'échelles (EN COURS)
-    - modif du contenu du fichier gt.json
-  13/6/2022:
-    - création
-*/
+/** serveur d'objets géographiques principalement en provenance du Shom
+ *
+ * Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.
+ * Les collections suivantes sont définies:
+ *   - gt qui regroupe toutes les cartes GT normales
+ *   - ae qui regroupe les cartes AEM
+ *   - delmar - délimitations maritimes
+ *   - delmar - délimitations maritimes
+ *   - frzee - ZEE française simplifiée et sous la forme de polygones
+ * 
+ * Les points d'entrée sont:
+ *   - ft.php - page d'accueil
+ *   - ft.php/collections - liste les collections
+ *   - ft.php/collections/{coll} - décrit la collection {coll}
+ *   - ft.php/collections/{coll}/items - retourne le contenu GéoJSON de la collection {coll}
+ *
+ * Si le fichier json n'existe pas alors les données sont téléchargées depuis le serveur WFS du Shom
+ * et le fichier json est créé.
+ * Si le fichier existe déjà les données sont récupérées dans le fichier json.
+ *    
+ * Pb - très peu d'info dans le serveur WFS du Shom, notamment a priori pas le numéro de la carte ni l'échelle !!!
+ * Probablement garder le découpage d'échelles du Shom
+ *
+ * journal: |
+ * - 21/4/2023:
+ *   - ajout des cartes par intervalle d'échelles (EN COURS)
+ *   - modif du contenu du fichier gt.json
+ * - 13/6/2022:
+ *   - création
+ * @package shomgt\shomft
+ */
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../sgserver/httperrorcodes.inc.php';
 require_once __DIR__.'/wfsserver.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-// enregistrement d'un log temporaire pour aider au déverminage
-/** @param array<mixed> $log */
+/** enregistrement d'un log temporaire pour aider au déverminage
+ * @param array<mixed> $log */
 function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
   $append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
@@ -58,18 +59,7 @@ function logRecord(array $log): void {
     $append|LOCK_EX);
 }
 
-define ('HTTP_ERROR_CODES', [
-  204 => 'No Content', // Requête traitée avec succès mais pas d’information à renvoyer. 
-  400 => 'Bad Request', // paramètres en entrée incorrects
-  401 => 'Unauthorized', // Une authentification est nécessaire pour accéder à la ressource. 
-  403	=> 'Forbidden', // accès interdit
-  404 => 'File Not Found', // ressource demandée non disponible
-  410 => 'Gone', // La ressource n'est plus disponible et aucune adresse de redirection n’est connue
-  500 => 'Internal Server Error', // erreur interne du serveur
-]
-);
-
-// Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys
+/** Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys */
 function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): void {
   logRecord([
     'httpErrorCode'=> $httpErrorCode,
@@ -87,9 +77,10 @@ function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): vo
 
 function self(): string { return "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; }
 
+/** Code du serveur d'objets géographiques */
 class FtServer {
-  // définition des collections de ce serveur à partir de celles du serveur WFS du Shom
-  /** @var array<string, array<string, string|array<string, string>>> $collections */
+  /** définition des collections de ce serveur à partir de celles du serveur WFS du Shom
+   * @var array<string, array<string, string|array<string, string>>> $collections */
   static array $collections = [
     'gt'=> [
       'title'=> "Silhouettes des GéoTiffs hors AEM",
@@ -123,8 +114,8 @@ class FtServer {
     ],
   ];
   
-  // liste des ids de couche avec dénom. d'échelle max associé
-  /** @var array<string, float> $sdmax */
+  /** liste des ids de couche avec dénom. d'échelle max associé
+   * @var array<string, float> $sdmax */
   static array $sdmax = [
     'gt10M'=>  14e6, // échelle comprise entre 1/14.000.000 et 1/6.000.000
     'gt4M'=>    6e6, // échelle comprise entre 1/6.000.000 et 1/3.000.000
@@ -144,8 +135,8 @@ class FtServer {
     echo json_encode($shomFt->collections());
   }
   
-  // lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
-  // et les copie dans le fichier $colName.json, si erreur envoi Exception
+  /** lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
+   * et les copie dans le fichier $colName.json, si erreur envoi Exception */
   function get(string $colName): void {
     $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
     

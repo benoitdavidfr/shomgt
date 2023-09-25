@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -122,7 +198,106 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">wms.php</h2>
 
-        
+            <p class="phpdocumentor-summary">service WMS de shomgt avec authentification</p>
+
+    <section class="phpdocumentor-description"><p>QGis essaie par défaut d'afficher les couches dans leur extension maximum.
+C'est généralement très pénalisant car il faut alors afficher tous les GéoTiffs de la couche alors que cela n'a pas
+beaucoup de sens.
+Pour éviter cela dans le cas général, le serveur détermine si l'échelle demandé est trop petite par rapport à l'échelle
+de référence de la couche et dans ce cas retourne les silhouettes des GéoTiffs sur fond du planisphère 1/40M.
+Il existe des cas particuliers où ce mécanisme n'est pas mis en oeuvre mais l'important est qu'il fonctionne dans le
+cas général généré par QGis.</p>
+<p>*Contrôle d'accès
+Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
+qui teste l'adresse IP de provenance et l'existence d'un cookie adhoc.
+Pour un serveur WMS, le cookie n'est pas utilisé par les clients lourds.
+En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
+Ce dernier mécanisme est notamment utilisé par QGis</p>
+<p>journal:</p>
+<ul>
+<li>28-31/7/2022:
+<ul>
+<li>correction suite à analyse PhpStan level 6</li>
+</ul>
+</li>
+<li>8/7/2022:
+<ul>
+<li>modif paramètres de getMap() pour ajouter styles</li>
+</ul>
+</li>
+<li>11/6/2022:
+<ul>
+<li>augmentation à 10 du repport de tooSmallScale() que je trouve trop faible</li>
+</ul>
+</li>
+<li>8-10/6/2022:
+<ul>
+<li>adaptation du dessin des silhouettes quand l'échelle est trop petite</li>
+<li>test Ok avec QGis</li>
+<li>affinage notamment du niveau de zoom</li>
+</ul>
+</li>
+<li>7/6/2022:
+<ul>
+<li>clonage dans ShomGt3</li>
+</ul>
+</li>
+<li>7-8/2/2022:
+<ul>
+<li>gestion des erreurs sur les latitudes et sur la taille de l'image</li>
+</ul>
+</li>
+<li>6/2/2022:
+<ul>
+<li>ajout possibilité d'effectuer un logout http</li>
+</ul>
+</li>
+<li>5/2/2022:
+<ul>
+<li>ajout de l'envoi d'une exception WMS lorsqu'une exception est levée dans WmsServer::process()
+notamment en cas d'erreur de projection WebMercator ou WorldMercator</li>
+</ul>
+</li>
+<li>29/3/2019:
+<ul>
+<li>adaptation à la V2</li>
+</ul>
+</li>
+<li>22/7/2018:
+<ul>
+<li>possibilité de désactiver le controle d'accès du service WMS par la variable $controlAccessForWms</li>
+<li>configuration du protocole (http/https) dans le GetCapabilities</li>
+</ul>
+</li>
+<li>29/6/2017:
+correction d'un bug</li>
+<li>26/6/2017:
+lorsque l'échelle demandée est trop petite, affichage de la silhouette des cartes de la couche</li>
+<li>25/6/2017
+<ul>
+<li>amélioration du log, avant cette modification chaque requête nécessitant une authentification était loguée
+une fois refusée et une fois acceptée</li>
+</ul>
+</li>
+<li>24/6/2017
+<ul>
+<li>affichage du 1/20M lorsque l'échelle demandée est inappropriée</li>
+</ul>
+</li>
+<li>22-23/6/2017
+<ul>
+<li>ajout du traitement pour toutes les projections</li>
+<li>ajout de couches</li>
+<li>le serveur ne fonctionne pas avec QGis sur certaines couches !!!! Je ne comprends pas</li>
+</ul>
+</li>
+<li>17/6/2017
+<ul>
+<li>Reprise du serveur de cadastre et évolutions</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -143,7 +318,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/WmsShomGt.html"><abbr title="\WmsShomGt">WmsShomGt</abbr></a></dt><dd>classe abstraite WmsServer de gestion du dialogue du serveur avec le client</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/WmsShomGt.html"><abbr title="\WmsShomGt">WmsShomGt</abbr></a></dt><dd>classe implémentant les fonctions du WMS de ShomGt.</dd>    </dl>
 
 
 

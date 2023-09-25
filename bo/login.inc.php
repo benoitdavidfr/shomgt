@@ -1,5 +1,7 @@
 <?php
-/** Fonctionnalités de login dans le BO - 19/7/2023 */
+/** Fonctionnalités de login dans le BO - 19/7/2023
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../lib/accesscntrl.inc.php';

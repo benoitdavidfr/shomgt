@@ -14,7 +14,8 @@
  *   - chgt chemin des cartes
  * - 25/4/2022:
  *   - scission de maps.php
-*/
+ * @package shomgt\lib
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/envvar.inc.php';

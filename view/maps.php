@@ -1,32 +1,27 @@
 <?php
-/*PhpDoc:
-title: maps.php - point d'accès de l'API de maps
-name: maps.php
-classes:
-doc: |
-  Tous les calculs sont effectués dans le CRS des cartes Shom qui est WGS84 World Mercator, abrévié en WoM.
-  test:
-    http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
-journal: |
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-  25/6/2022:
-    - ajout deletedZones
-  30/5/2022:
-    - modif initialisation Layer
-  29/4/2022:
-    - gestion de la superposition de plusieures couches
-  25/4/2022:
-    - renommage en maps.php
-    - scission de layer.inc.php et geotiff.inc.php
-  23-24/4/2022:
-    - modif. en maps
-  22/4/2022:
-    - création
-includes:
-  - ../lib/layer.inc.php
-  - ../lib/accesscntrl.inc.php
-*/
+/** point d'accès de l'API de maps
+ *
+ * Tous les calculs sont effectués dans le CRS des cartes Shom qui est WGS84 World Mercator, abrévié en WoM.
+ * test:
+ *   http://localhost:8081/index.php/collections/gt50k/showmap?bbox=1000,5220,1060,5280&width=6000&height=6000
+ * journal: |
+ * 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * 25/6/2022:
+ *   - ajout deletedZones
+ * 30/5/2022:
+ *   - modif initialisation Layer
+ * 29/4/2022:
+ *   - gestion de la superposition de plusieures couches
+ * 25/4/2022:
+ *   - renommage en maps.php
+ *   - scission de layer.inc.php et geotiff.inc.php
+ * 23-24/4/2022:
+ *   - modif. en maps
+ * 22/4/2022:
+ *   - création
+ * @package shomgt\view
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../lib/layer.inc.php';
@@ -43,21 +38,22 @@ if (Access::cntrlFor('wms') && !Access::cntrl()) {
   die("Accès interdit");
 }
 
-function coordDM(float $coord): string { // affichage en degrés minutes décimales avec 2 chiffres significatifs
+/** affichage en degrés minutes décimales avec 2 chiffres significatifs */
+function coordDM(float $coord): string {
   $coord = sprintf("%0d°%.2f'", floor($coord), ($coord-floor($coord))*60);
   return str_replace('.', ',', $coord);
 }
 
-/** @param TPos $pos */
-function latLonDM(array $pos): string { // affichage lat,lon dans le format de l'exemple
+/** affichage lat,lon dans le format de l'exemple
+ * @param TPos $pos */
+function latLonDM(array $pos): string {
   // example: 43°18,9'N - 10°07,9'E
   $latDM = coordDM(abs($pos[1])).($pos[1]<0 ? 'S' : 'N');
   $lonDM = coordDM(abs($pos[0])).($pos[0]<0 ? 'W' : 'E');
   return "$latDM - $lonDM";
 }
 
-// extraction des coins des rectangles englobants définis dans un array de Features GeoJSON, renvoit un array de Features
-/**
+/** extraction des coins des rectangles englobants définis dans un array de Features GeoJSON, renvoit un array de Features
  * @param array<int, TGeoJsonFeature> $rects
  * @return array<int, TGeoJsonFeature>
 */
@@ -85,7 +81,7 @@ function cornersOfRects(string $lyrname, array $rects): array {
   return $ptsGeojson;
 }
 
-// classe regroupant qqs méthodes statiques
+/** classe regroupant qqs méthodes statiques */
 class GtMaps {
   const ErrorUnknownCRS = 'GtMaps::ErrorUnknownCRS';
   const ErrorImageSaveAlpha = 'GtMaps::ErrorImageSaveAlpha';
@@ -135,8 +131,8 @@ class GtMaps {
     }
   }
   
-  // envoie au navigateur l'image correspondant aux paramètres en GET et à la liste des couches passée en paramètre
-  /** @param array<int, string> $lyrnames */
+  /** envoie au navigateur l'image correspondant aux paramètres en GET et à la liste des couches passée en paramètre
+   * @param array<int, string> $lyrnames */
   static function map(array $lyrnames): void {
     $layers = Layer::layers();
     foreach ($lyrnames as $lyrname) {
@@ -178,8 +174,9 @@ class GtMaps {
     imagepng($grImage->image());
   }
 
-  /** @param array<int, string> $lyrnames */
-  static function items(array $lyrnames): void { // silhouettes des GéoTiffs
+  /** silhouettes des GéoTiffs
+   * @param array<int, string> $lyrnames */
+  static function items(array $lyrnames): void {
     //echo "GtMaps::items(",implode($lyrnames),")<br>\n";
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
@@ -203,8 +200,9 @@ class GtMaps {
     die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
   }
   
-  /** @param array<int, string> $lyrnames */
-  static function corners(array $lyrnames): void { // coins des silhouettes des GéoTiffs
+  /** coins des silhouettes des GéoTiffs
+   * @param array<int, string> $lyrnames */
+  static function corners(array $lyrnames): void {
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
       $bbox = new \gegeom\GBox($bbox); // en coord. géo.
@@ -226,8 +224,9 @@ class GtMaps {
     die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
   }
   
-  /** @param array<int, string> $lyrnames */
-  static function deletedZones(array $lyrnames): void { // coins des silhouettes des GéoTiffs
+  /** coins des silhouettes des GéoTiffs
+   * @param array<int, string> $lyrnames */
+  static function deletedZones(array $lyrnames): void {
     $features = [];
     if ($bbox = $_GET['bbox'] ?? ($_POST['bbox'] ?? null)) {
       $bbox = new \gegeom\GBox($bbox); // en coord. géo.
@@ -250,8 +249,8 @@ class GtMaps {
     die(json_encode($fc, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)); 
   }
   
-  // gère un formulaire HTML pour appeller map
-  /** @param array<int, string> $lyrnames */
+  /** gère un formulaire HTML pour appeller map
+   * @param array<int, string> $lyrnames */
   static function showmap(array $lyrnames): void {
     $layers = Layer::layers();
     foreach ($lyrnames as $lyrname) {

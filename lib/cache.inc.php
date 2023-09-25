@@ -8,6 +8,7 @@
  *   - fork depuis shomgt et simplification
  * - 9/7/2017
  *   - création
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

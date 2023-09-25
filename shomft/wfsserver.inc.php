@@ -1,32 +1,35 @@
 <?php
-/*PhpDoc:
-name: wfsserver.inc.php
-title: wfsserver.inc.php - classes facilitant l'utilisation du serveur WFS du Shom
-functions:
-doc: |
-  La classe WfsGeoJson facilite l'utilisation du serveur WFS du Shom
-
-  Définition de 3 classes:
-    - WfsServer - classe abstraite des fonctionnalités communes Gml et GeoJSON
-    - WfsGeoJson - serveur WFS retournant du GeoJSON comme ceux du Shom ou de l'IGN
-    - FeaturesApi - interface Feature API d'un serveur WfsGeoJson
-journal: |
-  3/8/2022:
-    - simplification pour retirer les bugs
-  28/12/2020:
-    - reprise de YamlDoc
-*/
+/** classes facilitant l'utilisation du serveur WFS du Shom
+ *
+ * La classe WfsGeoJson facilite l'utilisation du serveur WFS du Shom
+ *
+ * Définition de 3 classes:
+ *   - WfsServer - classe abstraite des fonctionnalités communes Gml et GeoJSON
+ *   - WfsGeoJson - serveur WFS retournant du GeoJSON comme ceux du Shom ou de l'IGN
+ *   - FeaturesApi - interface Feature API d'un serveur WfsGeoJson
+ *
+ * journal:
+ * - 3/8/2022:
+ *   - simplification pour retirer les bugs
+ * - 28/12/2020:
+ *   - reprise de YamlDoc
+ * @package shomgt\shomft
+ */
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+/** fonctionnalités communes Gml et GeoJSON */
 abstract class WfsServer {
-  const LOG = __DIR__.'/wfsserver.log.yaml'; // nom du fichier de log ou false pour pas de log
-  const CAP_CACHE = __DIR__.'/wfscapcache'; // nom du répertoire dans lequel sont stockés les fichiers XML
-                                            // de capacités ainsi que les DescribeFeatureType en json
-  protected string $serverUrl; // URL du serveur
-  /** @var array<string, mixed> $options */
-  protected array $options; // sous la forme ['option'=> valeur]
+  /** chemin du fichier de log ou false pour pas de log */
+  const LOG = __DIR__.'/wfsserver.log.yaml';
+  /** chemin du répertoire dans lequel sont stockés les fichiers XML de capacités ainsi que les DescribeFeatureType en json */
+  const CAP_CACHE = __DIR__.'/wfscapcache'; 
+  /** URL du serveur */
+  protected string $serverUrl;
+  /** sous la forme ['option'=> valeur]
+   * @var array<string, mixed> $options */
+  protected array $options;
   
   /** @param array<string, mixed> $options */
   function __construct(string $serverUrl, array $options=[]) {
@@ -34,8 +37,8 @@ abstract class WfsServer {
     $this->options = $options;
   }
   
-  // construit l'URL de la requête à partir des paramètres
-  /** @param array<string, mixed> $params */
+  /** construit l'URL de la requête à partir des paramètres
+   * @param array<string, mixed> $params */
   function url(array $params): string {
     if (self::LOG) { // @phpstan-ignore-line // log
       file_put_contents(
@@ -58,8 +61,8 @@ abstract class WfsServer {
     return $url;
   }
   
-  // envoi une requête et récupère la réponse sous la forme d'un texte
-  /** @param array<string, mixed> $params */
+  /** envoi une requête et récupère la réponse sous la forme d'un texte
+   * @param array<string, mixed> $params */
   function query(array $params): string {
     $url = $this->url($params);
     $context = null;
@@ -107,7 +110,7 @@ abstract class WfsServer {
     return $result;
   }
   
-  // effectue un GetCapabities et retourne le XML. Utilise le cache sauf si force=true
+  /** effectue un GetCapabities et retourne le XML. Utilise le cache sauf si force=true */
   function getCapabilities(bool $force=false): string {
     if (!is_dir(self::CAP_CACHE) && !mkdir(self::CAP_CACHE))
       throw new Exception("Erreur de création du répertoire ".self::CAP_CACHE);
@@ -122,8 +125,8 @@ abstract class WfsServer {
     }
   }
 
-  // liste les couches exposées evt filtré par l'URL des MD
-  /** @return array<string, array<string, string>> */
+  /** liste les couches exposées evt filtré par l'URL des MD
+   * @return array<string, array<string, string>> */
   function featureTypeList(string $metadataUrl=null): array {
     //echo "WfsServerJson::featureTypeList()<br>\n";
     $cap = $this->getCapabilities();
@@ -151,16 +154,15 @@ abstract class WfsServer {
   
   abstract function getFeature(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): string;
 
-  // retourne le résultat de la requête en GeoJSON encodé en array Php
-  /** @return TGeoJsonFeatureCollection */
+  /** retourne le résultat de la requête en GeoJSON encodé en array Php
+   * @return TGeoJsonFeatureCollection */
   abstract function getFeatureAsArray(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): array;
   
   abstract function printAllFeatures(string $typename, int $zoom=-1, string $where=''): void;
 };
 
-
-class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur WFS retournant du GeoJSON
-
+/** gère les fonctionnalités d'un serveur WFS retournant du GeoJSON */
+class WfsGeoJson extends WfsServer {
   /** @return array<string, mixed> */
   function describeFeatureType(string $typeName): array {
     $filepath = self::CAP_CACHE.'/wfs'.md5($this->serverUrl."/$typeName").'-ft.json';
@@ -182,7 +184,7 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
     return $featureType;
   }
   
-  // nom de la propriété géométrique du featureType
+  /** nom de la propriété géométrique du featureType */
   function geomPropertyName(string $typeName): ?string {
     $featureType = $this->describeFeatureType($typeName);
     //var_dump($featureType);
@@ -195,7 +197,7 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
     return null;
   }
     
-  // retourne le nbre d'objets correspondant au résultat de la requête
+  /** retourne le nbre d'objets correspondant au résultat de la requête */
   function getNumberMatched(string $typename, string $where=''): int {
     $geomPropertyName = $this->geomPropertyName($typename);
     $request = [
@@ -217,7 +219,7 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
     return (int)$matches[1];
   }
   
-  // retourne le résultat de la requête en GeoJSON
+  /** retourne le résultat de la requête en GeoJSON */
   function getFeature(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): string {
     $geomPropertyName = $this->geomPropertyName($typename);
     $request = [
@@ -236,14 +238,14 @@ class WfsGeoJson extends WfsServer { // gère les fonctionnalités d'un serveur 
     return $this->query($request);
   }
   
-  // retourne le résultat de la requête en GeoJSON encodé en array Php
-  /** @return TGeoJsonFeatureCollection */
+  /** retourne le résultat de la requête en GeoJSON encodé en array Php
+   * @return TGeoJsonFeatureCollection */
   function getFeatureAsArray(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): array {
     $result = $this->getFeature($typename, $zoom, $where, $count, $startindex);
     return json_decode($result, true);
   }
   
-  // affiche le résultat de la requête en GeoJSON
+  /** affiche le résultat de la requête en GeoJSON */
   function printAllFeatures(string $typename, int $zoom=-1, string $where=''): void {
     //echo "WfsServerJson::printAllFeatures()<br>\n";
     $numberMatched = $this->getNumberMatched($typename, $where);
@@ -324,8 +326,8 @@ if (!isset($_SERVER['PATH_INFO']) && ((__FILE__ == $_SERVER['DOCUMENT_ROOT'].$_S
   }
 }
 
-
-class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Features
+/** transforme un serveur WFS en Api Features */
+class FeaturesApi extends WfsGeoJson { 
   /** @return list<array<string, string>> */
   function collections(): array { // retourne la liste des collections
     $collections = [];
@@ -343,8 +345,8 @@ class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Featu
     return $this->describeFeatureType($id);
   }
   
-  // retourne les items de la collection comme array Php
-  /** @return TGeoJsonFeatureCollection */
+  /** retourne les items de la collection comme array Php
+   * @return TGeoJsonFeatureCollection */
   function items(string $collId, int $count=100, int $startindex=0): array {
     $items = $this->getFeatureAsArray(
       typename: $collId,
@@ -354,8 +356,8 @@ class FeaturesApi extends WfsGeoJson { // transforme un serveur WFS en Api Featu
     return $items;
   }
   
-  // génère un affichage en JSON ou Yaml en fonction du paramètre $f
-  /** @param array<mixed> $array */
+  /** génère un affichage en JSON ou Yaml en fonction du paramètre $f
+   * @param array<mixed> $array */
   static function output(string $f, array $array, int $levels=3): never {
     switch ($f) {
       case 'yaml': die(Yaml::dump($array, $levels, 2));

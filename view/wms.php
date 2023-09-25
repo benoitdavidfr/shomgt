@@ -1,70 +1,63 @@
 <?php
-/*PhpDoc:
-name: wms.php
-title: wms.php - service WMS de shomgt avec authentification
-classes:
-doc: |
-  QGis essaie par défaut d'afficher les couches dans leur extension maximum.
-  C'est généralement très pénalisant car il faut alors afficher tous les GéoTiffs de la couche alors que cela n'a pas
-  beaucoup de sens.
-  Pour éviter cela dans le cas général, le serveur détermine si l'échelle demandé est trop petite par rapport à l'échelle
-  de référence de la couche et dans ce cas retourne les silhouettes des GéoTiffs sur fond du planisphère 1/40M.
-  Il existe des cas particuliers où ce mécanisme n'est pas mis en oeuvre mais l'important est qu'il fonctionne dans le
-  cas général généré par QGis.
-
-  **Contrôle d'accès
-  Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
-  qui teste l'adresse IP de provenance et l'existence d'un cookie adhoc.
-  Pour un serveur WMS, le cookie n'est pas utilisé par les clients lourds.
-  En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
-  Ce dernier mécanisme est notamment utilisé par QGis
-journal: |
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-  8/7/2022:
-    - modif paramètres de getMap() pour ajouter styles
-  11/6/2022:
-    - augmentation à 10 du repport de tooSmallScale() que je trouve trop faible
-  8-10/6/2022:
-    - adaptation du dessin des silhouettes quand l'échelle est trop petite
-    - test Ok avec QGis
-    - affinage notamment du niveau de zoom
-  7/6/2022:
-    - clonage dans ShomGt3
-  7-8/2/2022:
-    - gestion des erreurs sur les latitudes et sur la taille de l'image
-  6/2/2022:
-    - ajout possibilité d'effectuer un logout http
-  5/2/2022:
-    - ajout de l'envoi d'une exception WMS lorsqu'une exception est levée dans WmsServer::process()
-      notamment en cas d'erreur de projection WebMercator ou WorldMercator
-  29/3/2019:
-    - adaptation à la V2
-  22/7/2018:
-    - possibilité de désactiver le controle d'accès du service WMS par la variable $controlAccessForWms
-    - configuration du protocole (http/https) dans le GetCapabilities
-  29/6/2017:
-    correction d'un bug
-  26/6/2017:
-    lorsque l'échelle demandée est trop petite, affichage de la silhouette des cartes de la couche
-  25/6/2017
-    amélioration du log, avant cette modification chaque requête nécessitant une authentification était loguée
-    une fois refusée et une fois acceptée
-  24/6/2017
-    affichage du 1/20M lorsque l'échelle demandée est inappropriée
-  22-23/6/2017
-    ajout du traitement pour toutes les projections
-    ajout de couches
-    le serveur ne fonctionne pas avec QGis sur certaines couches !!!! Je ne comprends pas
-  17/6/2017
-    Reprise du serveur de cadastre et évolutions
-includes:
-  - ../lib/accesscntrl.inc.php
-  - ../lib/coordsys.inc.php
-  - ../lib/gebox.inc.php
-  - ../lib/wmsserver.inc.php
-  - ../lib/layer.inc.php
-*/
+/** service WMS de shomgt avec authentification
+ *
+ * QGis essaie par défaut d'afficher les couches dans leur extension maximum.
+ * C'est généralement très pénalisant car il faut alors afficher tous les GéoTiffs de la couche alors que cela n'a pas
+ * beaucoup de sens.
+ * Pour éviter cela dans le cas général, le serveur détermine si l'échelle demandé est trop petite par rapport à l'échelle
+ * de référence de la couche et dans ce cas retourne les silhouettes des GéoTiffs sur fond du planisphère 1/40M.
+ * Il existe des cas particuliers où ce mécanisme n'est pas mis en oeuvre mais l'important est qu'il fonctionne dans le
+ * cas général généré par QGis.
+ *
+ **Contrôle d'accès
+ * Un contrôle d'accès est géré d'une part avec la fonction Access::cntrl()
+ * qui teste l'adresse IP de provenance et l'existence d'un cookie adhoc.
+ * Pour un serveur WMS, le cookie n'est pas utilisé par les clients lourds.
+ * En cas d'échec des 2 premiers moyens, le mécanisme d'authentification HTTP est utilisé.
+ * Ce dernier mécanisme est notamment utilisé par QGis
+ *
+ * journal:
+ * - 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * - 8/7/2022:
+ *   - modif paramètres de getMap() pour ajouter styles
+ * - 11/6/2022:
+ *   - augmentation à 10 du repport de tooSmallScale() que je trouve trop faible
+ * - 8-10/6/2022:
+ *   - adaptation du dessin des silhouettes quand l'échelle est trop petite
+ *   - test Ok avec QGis
+ *   - affinage notamment du niveau de zoom
+ * - 7/6/2022:
+ *   - clonage dans ShomGt3
+ * - 7-8/2/2022:
+ *   - gestion des erreurs sur les latitudes et sur la taille de l'image
+ * - 6/2/2022:
+ *   - ajout possibilité d'effectuer un logout http
+ * - 5/2/2022:
+ *   - ajout de l'envoi d'une exception WMS lorsqu'une exception est levée dans WmsServer::process()
+ *     notamment en cas d'erreur de projection WebMercator ou WorldMercator
+ * - 29/3/2019:
+ *   - adaptation à la V2
+ * - 22/7/2018:
+ *   - possibilité de désactiver le controle d'accès du service WMS par la variable $controlAccessForWms
+ *   - configuration du protocole (http/https) dans le GetCapabilities
+ * - 29/6/2017:
+ *   correction d'un bug
+ * - 26/6/2017:
+ *   lorsque l'échelle demandée est trop petite, affichage de la silhouette des cartes de la couche
+ * - 25/6/2017
+ *   - amélioration du log, avant cette modification chaque requête nécessitant une authentification était loguée
+ *     une fois refusée et une fois acceptée
+ * - 24/6/2017
+ *   - affichage du 1/20M lorsque l'échelle demandée est inappropriée
+ * - 22-23/6/2017
+ *   - ajout du traitement pour toutes les projections
+ *   - ajout de couches
+ *   - le serveur ne fonctionne pas avec QGis sur certaines couches !!!! Je ne comprends pas
+ * - 17/6/2017
+ *   - Reprise du serveur de cadastre et évolutions
+ * @package shomgt\view
+ */
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
@@ -109,21 +102,20 @@ catch (Exception $e) {
 //WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
 //WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
-/*PhpDoc: classes
-name: class WmsShomGt
-title: class WmsShomGt - classe implémentant les fonctions du WMS de ShomGt
-doc: |
-  La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
-  Le script appelle WmsServer::process() qui appelle les méthodes WmsShomGt::getCapabilities() ou WmsShomGt::getMap()
+/** classe implémentant les fonctions du WMS de ShomGt.
+ * La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
+ * Le script appelle WmsServer::process() qui appelle les méthodes WmsShomGt::getCapabilities() ou WmsShomGt::getMap()
 */
 class WmsShomGt extends WmsServer {
-  const STD_PIXEL_SIZE = 0.00028; // taille du pixel définie par WMS en mètres, soit 90,7 dpi (1 inch = 25,4 mm)
-  // Le Mac demande du 72 dpi, le PC du 96 dpi
-  const BASE = 20037508.3427892476320267; // xmax en Web Mercator en mètres
-  // = demi grand axe de l'ellipsoide WGS84 (6378137.0) * PI
-  const OUTLINE_COLOR = [0, 0, 0xFF]; // couleur des silhouettes sous la forme [R,V,B]
+  /** taille du pixel définie par WMS en mètres, soit 90,7 dpi (1 inch = 25,4 mm) */
+  const STD_PIXEL_SIZE = 0.00028; 
+  // Le Mac demande du 72 dpi, le PC du 96 dpi = demi grand axe de l'ellipsoide WGS84 (6378137.0) * PI
+  /** xmax en Web Mercator en mètres */
+  const BASE = 20037508.3427892476320267; 
+  /** couleur des silhouettes sous la forme [R,V,B] */
+  const OUTLINE_COLOR = [0, 0, 0xFF]; // 
   
-  // méthode GetCapabilities du serveur Shomgt
+  /** méthode GetCapabilities du serveur Shomgt */
   function getCapabilities(string $version=''): never {
     header('Content-Type: text/xml');
     $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
@@ -134,8 +126,9 @@ class WmsShomGt extends WmsServer {
     ));
   }
 
-  /** @param array<int, string> $bbox */
-  private function wombox(string $crs, array $bbox): \gegeom\EBox { // calcul EBox en WorldMercator en fonction de crs 
+  /** calcul EBox en WorldMercator en fonction de crs 
+   * @param array<int, string> $bbox */
+  private function wombox(string $crs, array $bbox): \gegeom\EBox {
     $bbox = [floatval($bbox[0]), floatval($bbox[1]), floatval($bbox[2]), floatval($bbox[3])];
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
@@ -168,7 +161,7 @@ class WmsShomGt extends WmsServer {
     }
   }
   
-  // indique si l'échelle demandée est considérée comme trop petite pour la couche
+  /** indique si l'échelle demandée est considérée comme trop petite pour la couche */
   private function tooSmallScale(float $scaleden, string $lyrname): bool {
     if (ctype_digit(substr($lyrname, 2, 1))) { // les couches correspondant à une échelle
       $layerscaleden = str_replace(['k','M'], ['000','000000'], substr($lyrname, 2)); // dén. échelle de la couche
@@ -187,8 +180,7 @@ class WmsShomGt extends WmsServer {
     return log(self::BASE*2/$wombox->dx() * $width/256, 2);
   }
   
-  // méthode GetMap du serveur WMS Shomgt
-  /**
+  /** méthode GetMap du serveur WMS Shomgt.
   * @param array<int, string> $lyrnames
   * @param array<int, string> $styles
   * @param array<int, string> $bbox

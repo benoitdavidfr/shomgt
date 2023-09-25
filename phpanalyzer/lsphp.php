@@ -1,6 +1,7 @@
 <?php
 /**
  * liste des noms de base des fichiers Php chacun avec les répertoires le contenant 
+ * @package phpanalyzer
  */
 require_once __DIR__.'/../vendor/autoload.php';
 use Symfony\Component\Yaml\Yaml;

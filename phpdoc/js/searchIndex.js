@@ -1,75 +1,75 @@
 Search.appendIndex(
     [
                 {
-            "fqsen": "\\durationInHours\u0028\u0029",
+            "fqsen": "\\bo\\durationInHours\u0028\u0029",
             "name": "durationInHours",
             "summary": "prend\u0020en\u0020compte\u0020l\u0027unit\u00E9\u0020pour\u0020traduire\u0020la\u0020dur\u00E9e\u0020en\u0020heures",
-            "url": "namespaces/default.html#function_durationInHours"
+            "url": "namespaces/bo.html#function_durationInHours"
         },                {
-            "fqsen": "\\queryForRecentAccess\u0028\u0029",
+            "fqsen": "\\bo\\queryForRecentAccess\u0028\u0029",
             "name": "queryForRecentAccess",
             "summary": "retourne\u0020le\u0020texte\u0020de\u0020la\u0020requ\u00EAte\u0020SQL\u0020adhoc",
-            "url": "namespaces/default.html#function_queryForRecentAccess"
+            "url": "namespaces/bo.html#function_queryForRecentAccess"
         },                {
-            "fqsen": "\\SqlDef",
+            "fqsen": "\\bo\\SqlDef",
             "name": "SqlDef",
             "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020ipaddress\u0020et\u0020de\u0020son\u0020contenu",
-            "url": "classes/SqlDef.html"
+            "url": "classes/bo-SqlDef.html"
         },                {
-            "fqsen": "\\SqlDef\u003A\u003Asql\u0028\u0029",
+            "fqsen": "\\bo\\SqlDef\u003A\u003Asql\u0028\u0029",
             "name": "sql",
             "summary": "fabrique\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020des\u0020constantes\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma.",
-            "url": "classes/SqlDef.html#method_sql"
+            "url": "classes/bo-SqlDef.html#method_sql"
         },                {
-            "fqsen": "\\SqlDef\u003A\u003AIPADDRESS_SCHEMA",
+            "fqsen": "\\bo\\SqlDef\u003A\u003AIPADDRESS_SCHEMA",
             "name": "IPADDRESS_SCHEMA",
             "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020ipaddress",
-            "url": "classes/SqlDef.html#constant_IPADDRESS_SCHEMA"
+            "url": "classes/bo-SqlDef.html#constant_IPADDRESS_SCHEMA"
         },                {
-            "fqsen": "\\SqlDef\u003A\u003AIPADDRESS_CONTENT",
+            "fqsen": "\\bo\\SqlDef\u003A\u003AIPADDRESS_CONTENT",
             "name": "IPADDRESS_CONTENT",
             "summary": "Contenu\u0020de\u0020la\u0020table\u0020ipaddress",
-            "url": "classes/SqlDef.html#constant_IPADDRESS_CONTENT"
+            "url": "classes/bo-SqlDef.html#constant_IPADDRESS_CONTENT"
         },                {
-            "fqsen": "\\Request2GBox",
+            "fqsen": "\\bo\\Request2GBox",
             "name": "Request2GBox",
             "summary": "classe\u0020traduisant\u0020un\u0020URI\u0020correspondant\u0020\u00E0\u0020une\u0020requ\u00EAte\u0020WMS\u0020ou\u0020tile\u0020dans\u0020le\u0020GBox\u0020de\u0020la\u0020loc.\u0020de\u0020la\u0020requ\u00EAte",
-            "url": "classes/Request2GBox.html"
+            "url": "classes/bo-Request2GBox.html"
         },                {
-            "fqsen": "\\Request2GBox\u003A\u003Awms\u0028\u0029",
+            "fqsen": "\\bo\\Request2GBox\u003A\u003Awms\u0028\u0029",
             "name": "wms",
             "summary": "extrait\u0020le\u0020bbox\u0020d\u0027une\u0020requ\u00EAte\u0020WMS\u0020et\u0020le\u0020retourne\u0020comme\u0020GBox\u0020ou\u0020null\u0020si\u0020le\u0020BBOX\u0020n\u0027est\u0020pas\u0020d\u00E9tect\u00E9\u0020dans\u0020la\u0020requ\u00EAte",
-            "url": "classes/Request2GBox.html#method_wms"
+            "url": "classes/bo-Request2GBox.html#method_wms"
         },                {
-            "fqsen": "\\Request2GBox\u003A\u003Atile\u0028\u0029",
+            "fqsen": "\\bo\\Request2GBox\u003A\u003Atile\u0028\u0029",
             "name": "tile",
             "summary": "",
-            "url": "classes/Request2GBox.html#method_tile"
+            "url": "classes/bo-Request2GBox.html#method_tile"
         },                {
-            "fqsen": "\\Request2GBox\u003A\u003Atest\u0028\u0029",
+            "fqsen": "\\bo\\Request2GBox\u003A\u003Atest\u0028\u0029",
             "name": "test",
             "summary": "",
-            "url": "classes/Request2GBox.html#method_test"
+            "url": "classes/bo-Request2GBox.html#method_test"
         },                {
-            "fqsen": "\\HeatData",
+            "fqsen": "\\bo\\HeatData",
             "name": "HeatData",
             "summary": "construit\u0020un\u0020enregistrement\u0020pour\u0020carte\u0020de\u0020chaleur\u0020\u00E0\u0020partir\u0020de\u0020l\u0027URI\u0020de\u0020la\u0020requ\u00EAte",
-            "url": "classes/HeatData.html"
+            "url": "classes/bo-HeatData.html"
         },                {
-            "fqsen": "\\HeatData\u003A\u003AfromWmsRequest\u0028\u0029",
+            "fqsen": "\\bo\\HeatData\u003A\u003AfromWmsRequest\u0028\u0029",
             "name": "fromWmsRequest",
             "summary": "retourne\u0020\u005B\u005D\u0020ou\u0020\u005Blat,\u0020lng,\u0020intensity\u005D",
-            "url": "classes/HeatData.html#method_fromWmsRequest"
+            "url": "classes/bo-HeatData.html#method_fromWmsRequest"
         },                {
-            "fqsen": "\\HeatData\u003A\u003AfromTileRequest\u0028\u0029",
+            "fqsen": "\\bo\\HeatData\u003A\u003AfromTileRequest\u0028\u0029",
             "name": "fromTileRequest",
             "summary": "retourne\u0020\u005B\u005D\u0020ou\u0020\u005Blat,\u0020lng,\u0020intensity\u005D",
-            "url": "classes/HeatData.html#method_fromTileRequest"
+            "url": "classes/bo-HeatData.html#method_fromTileRequest"
         },                {
-            "fqsen": "\\HeatData\u003A\u003Atest\u0028\u0029",
+            "fqsen": "\\bo\\HeatData\u003A\u003Atest\u0028\u0029",
             "name": "test",
             "summary": "",
-            "url": "classes/HeatData.html#method_test"
+            "url": "classes/bo-HeatData.html#method_test"
         },                {
             "fqsen": "\\FORCE_VALIDATION",
             "name": "FORCE_VALIDATION",
@@ -718,17 +718,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bo\\My7zArchive",
             "name": "My7zArchive",
-            "summary": "",
+            "summary": "\u00E9tend\u0020la\u0020classe\u0020SevenZipArchive\u0020par\u0020l\u0027ajout\u0020de\u00202\u0020m\u00E9thodes\u0020simplifiant\u0020l\u0027extraction\u0020temporaire\u0020d\u0027un\u0020fichier.",
             "url": "classes/bo-My7zArchive.html"
         },                {
             "fqsen": "\\bo\\My7zArchive\u003A\u003Aextract\u0028\u0029",
             "name": "extract",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020chemin\u0020du\u0020l\u0027entr\u00E9e\u0020extraite",
             "url": "classes/bo-My7zArchive.html#method_extract"
         },                {
             "fqsen": "\\bo\\My7zArchive\u003A\u003Aremove\u0028\u0029",
             "name": "remove",
-            "summary": "",
+            "summary": "supprime\u0020le\u0020fichier\u0020temporaire",
             "url": "classes/bo-My7zArchive.html#method_remove"
         },                {
             "fqsen": "\\SHOMGEOTIFF",
@@ -4243,7 +4243,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\StdOrderOfProp",
             "name": "StdOrderOfProp",
-            "summary": "",
+            "summary": "standardise\u0020l\u0027ordre\u0020des\u0020propri\u00E9t\u00E9s\u0020de\u0020\u0024src\u0020conform\u00E9ment\u0020au\u0020standard\u0020fourni",
             "url": "classes/mapcat-StdOrderOfProp.html"
         },                {
             "fqsen": "\\mapcat\\StdOrderOfProp\u003A\u003AofDict\u0028\u0029",
@@ -4288,22 +4288,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AbadLats\u0028\u0029",
             "name": "badLats",
-            "summary": "",
+            "summary": "si\u0020les\u0020latitudes\u0020ne\u0020sont\u0020pas\u0020correctes\u0020alors\u0020renvoie\u0020la\u0020raison,\u0020sinon\u0020renvoie\u0020null",
             "url": "classes/mapcat-Spatial.html#method_badLats"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AbadLons\u0028\u0029",
             "name": "badLons",
-            "summary": "",
+            "summary": "si\u0020les\u0020longitudes\u0020ne\u0020sont\u0020pas\u0020correctes\u0020alors\u0020renvoie\u0020la\u0020raison,\u0020sinon\u0020renvoie\u0020null",
             "url": "classes/mapcat-Spatial.html#method_badLons"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AexceptionLons\u0028\u0029",
             "name": "exceptionLons",
-            "summary": "",
+            "summary": "si\u0020\u0024this\u0020correspond\u0020\u00E0\u0020une\u0020exception\u0020alors\u0020renvoie\u0020son\u0020libell\u00E9,\u0020sinon\u0020null",
             "url": "classes/mapcat-Spatial.html#method_exceptionLons"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AisBad\u0028\u0029",
             "name": "isBad",
-            "summary": "",
+            "summary": "si\u0020\u0024this\u0020n\u0027est\u0020pas\u0020correct\u0020alors\u0020renvoie\u0020la\u0020raison,\u0020sinon\u0020null",
             "url": "classes/mapcat-Spatial.html#method_isBad"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003Aarea\u0028\u0029",
@@ -4328,17 +4328,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AmultiPolygon\u0028\u0029",
             "name": "multiPolygon",
-            "summary": "",
+            "summary": "Retourne\u0020la\u0020boite\u0020comme\u0020MultiPolygon\u0020GeoJSON\u0020avec\u0020d\u00E9composition\u0020en\u00202\u0020polygones.",
             "url": "classes/mapcat-Spatial.html#method_multiPolygon"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003Alayer\u0028\u0029",
             "name": "layer",
-            "summary": "",
+            "summary": "g\u00E9n\u00E8re\u0020une\u0020FeatureCollection\u0020GeoJson\u0020contenant\u0020le\u0020multiPolygone",
             "url": "classes/mapcat-Spatial.html#method_layer"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AlgeoJSON\u0028\u0029",
             "name": "lgeoJSON",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020code\u0020JS\u0020g\u00E9n\u00E8rant\u0020l\u0027objet\u0020L.geoJSON",
             "url": "classes/mapcat-Spatial.html#method_lgeoJSON"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003Atest\u0028\u0029",
@@ -4348,12 +4348,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003ACONSTRAINTS",
             "name": "CONSTRAINTS",
-            "summary": "",
+            "summary": "Liste\u0020des\u0020contraintes",
             "url": "classes/mapcat-Spatial.html#constant_CONSTRAINTS"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003AEXCEPTIONS",
             "name": "EXCEPTIONS",
-            "summary": "",
+            "summary": "Liste\u0020des\u0020exceptions",
             "url": "classes/mapcat-Spatial.html#constant_EXCEPTIONS"
         },                {
             "fqsen": "\\mapcat\\Spatial\u003A\u003A\u0024exception",
@@ -4363,7 +4363,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatItem",
             "name": "MapCatItem",
-            "summary": "",
+            "summary": "Un\u0020objet\u0020MapCatItem\u0020correspond\u0020\u00E0\u0020l\u0027enregistrement\u0020d\u0027une\u0020carte\u0020dans\u0020le\u0020catalogue\u0020MapCat.",
             "url": "classes/mapcat-MapCatItem.html"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AgetDefSchema\u0028\u0029",
@@ -4418,7 +4418,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003Aspatials\u0028\u0029",
             "name": "spatials",
-            "summary": "",
+            "summary": "retourne\u0020la\u0020liste\u0020des\u0020extensions\u0020spatiales\u0020sous\u0020la\u0020forme\u0020\u005Btitle\u0020\u003D\u003E\u0020Spatial\u005D",
             "url": "classes/mapcat-MapCatItem.html#method_spatials"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AinsetTitlesSorted\u0028\u0029",
@@ -4428,7 +4428,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AscaleDenominator\u0028\u0029",
             "name": "scaleDenominator",
-            "summary": "",
+            "summary": "retourne\u0020si\u0020l\u0027image\u0020principale\u0020est\u0020g\u00E9or\u00E9f\u00E9renc\u00E9e\u0020alors\u0020son\u0020scaleDenominator\nsinon\u0020le\u0020plus\u0020grand\u0020scaleDenominator\u0020des\u0020cartouches",
             "url": "classes/mapcat-MapCatItem.html#method_scaleDenominator"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003Adiff\u0028\u0029",
@@ -4443,12 +4443,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AupdateMapCat\u0028\u0029",
             "name": "updateMapCat",
-            "summary": "",
+            "summary": "appel\u00E9e\u0020pour\u0020mettre\u0020\u00E0\u0020jour\u0020la\u0020description\u0020de\u0020la\u0020carte\u0020\u0024mapNum\u0020cad\u0020en\u0020cr\u00E9er\u0020un\u0020nouvel\u0020enregistrement.",
             "url": "classes/mapcat-MapCatItem.html#method_updateMapCat"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AinsertMapCat\u0028\u0029",
             "name": "insertMapCat",
-            "summary": "",
+            "summary": "appel\u00E9e\u0020pour\u0020ins\u00E9rer\u0020la\u0020description\u0020de\u0020la\u0020carte\u0020\u0024mapNum.",
             "url": "classes/mapcat-MapCatItem.html#method_insertMapCat"
         },                {
             "fqsen": "\\mapcat\\MapCatItem\u003A\u003AALL_KINDS",
@@ -4478,7 +4478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCat",
             "name": "MapCat",
-            "summary": "",
+            "summary": "La\u0020classe\u0020MapCat\u0020correspond\u0020au\u0020catalogue\u0020MapCat\u0020en\u0020base.",
             "url": "classes/mapcat-MapCat.html"
         },                {
             "fqsen": "\\mapcat\\MapCat\u003A\u003AcreateTableSql\u0028\u0029",
@@ -4503,12 +4503,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\mapcat\\MapCat\u003A\u003AMAPCAT_TABLE_SCHEMA",
             "name": "MAPCAT_TABLE_SCHEMA",
-            "summary": "",
+            "summary": "D\u00E9finition\u0020du\u0020schema\u0020SQL\u0020de\u0020la\u0020table.",
             "url": "classes/mapcat-MapCat.html#constant_MAPCAT_TABLE_SCHEMA"
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile",
             "name": "MapCatFromFile",
-            "summary": "",
+            "summary": "Catalogue\u0020MapCat\u0020stocke\u0020comme\u0020fichier\u0020Yaml",
             "url": "classes/mapcat-MapCatFromFile.html"
         },                {
             "fqsen": "\\mapcat\\MapCatFromFile\u003A\u003Ainit\u0028\u0029",
@@ -5221,6 +5221,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/UsingFile.html#property_uses"
         },                {
+            "fqsen": "\\HTTP_ERROR_CODES",
+            "name": "HTTP_ERROR_CODES",
+            "summary": "liste\u0020de\u0020qqs\u0020codes\u0020d\u0027erreur\u0020Http\u0020et\u0020de\u0020leur\u0020label",
+            "url": "namespaces/default.html#constant_HTTP_ERROR_CODES"
+        },                {
             "fqsen": "\\EXCLUDED_MAPS_IN_V0",
             "name": "EXCLUDED_MAPS_IN_V0",
             "summary": "cartes\u0020exclues\u0020du\u0020service\u0020en\u0020V0\u0020car\u0020incompatible\u0020avec\u0020sgupdt\u0020v0.6",
@@ -5231,19 +5236,14 @@ Search.appendIndex(
             "summary": "cartes\u0020sp\u00E9ciales\u0020trait\u00E9es\u0020sp\u00E9cialement\u0020en\u0020version\u0020\u003C\u00204",
             "url": "namespaces/default.html#constant_SPECIAL_MAPS"
         },                {
-            "fqsen": "\\HTTP_ERROR_CODES",
-            "name": "HTTP_ERROR_CODES",
-            "summary": "",
-            "url": "namespaces/default.html#constant_HTTP_ERROR_CODES"
-        },                {
             "fqsen": "\\logRecord\u0028\u0029",
             "name": "logRecord",
-            "summary": "",
+            "summary": "enregistrement\u0020d\u0027un\u0020log\u0020temporaire\u0020pour\u0020afficher\u0020des\u0020infos,\u0020par\u0020ex.\u0020estimer\u0020les\u0020performances",
             "url": "namespaces/default.html#function_logRecord"
         },                {
             "fqsen": "\\sendHttpCode\u0028\u0029",
             "name": "sendHttpCode",
-            "summary": "",
+            "summary": "G\u00E9n\u00E8re\u0020une\u0020erreur\u0020Http\u0020et\u0020un\u0020message\u0020utilisateur\u0020avec\u0020un\u0020content\u002Dtype\u0020text\u0020\u003B\u0020enregistre\u0020un\u0020log\u0020avec\u0020un\u0020\u00E9ventuel\u0020message\u0020sys",
             "url": "namespaces/default.html#function_sendHttpCode"
         },                {
             "fqsen": "\\obsoleteMaps\u0028\u0029",
@@ -5378,12 +5378,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\expand\u0028\u0029",
             "name": "expand",
-            "summary": "",
+            "summary": "expanse\u0020une\u0020carte\u0020t\u00E9l\u00E9charg\u00E9e\u0020comme\u00207z\u0020au\u0020path\u0020indiqu\u00E9",
             "url": "namespaces/default.html#function_expand"
         },                {
             "fqsen": "\\dlExpandInstallMap\u0028\u0029",
             "name": "dlExpandInstallMap",
-            "summary": "",
+            "summary": "t\u00E9l\u00E9charge\u0020la\u0020carte,\u0020l\u0027expanse\u0020et\u0020l\u0027installe\u0020dans\u0020le\u0020r\u00E9pertoire\u0020courant,\u0020retourne\u0020le\u0020libell\u00E9\u0020du\u0020code\u0020http",
             "url": "namespaces/default.html#function_dlExpandInstallMap"
         },                {
             "fqsen": "\\Lock",
@@ -5413,7 +5413,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\UpdtMaps",
             "name": "UpdtMaps",
-            "summary": "",
+            "summary": "stocke\u0020les\u0020informations\u0020t\u00E9l\u00E9charg\u00E9es\u0020de\u0020\u0024SERVER_URL\/maps.json",
             "url": "classes/UpdtMaps.html"
         },                {
             "fqsen": "\\UpdtMaps\u003A\u003Ainit\u0028\u0029",
@@ -5438,12 +5438,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\ShomGtDelZone",
             "name": "ShomGtDelZone",
-            "summary": "",
+            "summary": "lit\u0020dans\u0020le\u0020fichier\u0020layers.yaml\u0020les\u0020zones\u0020effac\u00E9es\u0020et\u0020permet\u0020de\u0020les\u0020comparer\u0020par\u0020mapnum\u0020avec\u0020celles\u0020\u00E0\u0020effacer\u0020de\u0020mapcat.yaml",
             "url": "classes/ShomGtDelZone.html"
         },                {
             "fqsen": "\\ShomGtDelZone\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "lit\u0020le\u0020fichier\u0020et\u0020structure\u0020les\u0020zones\u0020\u00E0\u0020effacer\u0020par\u0020mapnum\u0020et\u0020gtname",
             "url": "classes/ShomGtDelZone.html#method_init"
         },                {
             "fqsen": "\\ShomGtDelZone\u003A\u003A\u0024deleted",
@@ -5453,12 +5453,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\ShomGtDelZone\u003A\u003AsameDelZones\u0028\u0029",
             "name": "sameDelZones",
-            "summary": "",
+            "summary": "Teste\u0020si\u0020pour\u0020un\u0020\u0024mapnum\u0020les\u0020zones\u0020\u00E0\u0020effacer\u0020de\u0020TempMapCat\u0020sont\u0020ou\u0020non\u0020identiques\u0020aux\u0020zones\u0020effac\u00E9es\u0020de\u0020layers.yaml",
             "url": "classes/ShomGtDelZone.html#method_sameDelZones"
         },                {
             "fqsen": "\\execCmdeTest\u0028\u0029",
             "name": "execCmdeTest",
-            "summary": "",
+            "summary": "test\u0020d\u0027appel.",
             "url": "namespaces/default.html#function_execCmdeTest"
         },                {
             "fqsen": "\\shomft\\Zee",
@@ -5508,7 +5508,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\FtServer",
             "name": "FtServer",
-            "summary": "",
+            "summary": "Code\u0020du\u0020serveur\u0020d\u0027objets\u0020g\u00E9ographiques",
             "url": "classes/FtServer.html"
         },                {
             "fqsen": "\\FtServer\u003A\u003AreadFeatureTypes\u0028\u0029",
@@ -5518,12 +5518,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\FtServer\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "",
+            "summary": "lit\u0020dans\u0020ShomWfs\u0020les\u0020Features\u0020correspondant\u0020\u00E0\u0020la\u0020collection\u0020\u0024colName\u0020cl\u00E9\u0020dans\u0020self\u003A\u003A\u0024collections\net\u0020les\u0020copie\u0020dans\u0020le\u0020fichier\u0020\u0024colName.json,\u0020si\u0020erreur\u0020envoi\u0020Exception",
             "url": "classes/FtServer.html#method_get"
         },                {
             "fqsen": "\\FtServer\u003A\u003A\u0024collections",
             "name": "collections",
-            "summary": "",
+            "summary": "d\u00E9finition\u0020des\u0020collections\u0020de\u0020ce\u0020serveur\u0020\u00E0\u0020partir\u0020de\u0020celles\u0020du\u0020serveur\u0020WFS\u0020du\u0020Shom",
             "url": "classes/FtServer.html#property_collections"
         },                {
             "fqsen": "\\FtServer\u003A\u003Acollection\u0028\u0029",
@@ -5548,12 +5548,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\FtServer\u003A\u003A\u0024sdmax",
             "name": "sdmax",
-            "summary": "",
+            "summary": "liste\u0020des\u0020ids\u0020de\u0020couche\u0020avec\u0020d\u00E9nom.\u0020d\u0027\u00E9chelle\u0020max\u0020associ\u00E9",
             "url": "classes/FtServer.html#property_sdmax"
         },                {
             "fqsen": "\\WfsServer",
             "name": "WfsServer",
-            "summary": "",
+            "summary": "fonctionnalit\u00E9s\u0020communes\u0020Gml\u0020et\u0020GeoJSON",
             "url": "classes/WfsServer.html"
         },                {
             "fqsen": "\\WfsServer\u003A\u003A__construct\u0028\u0029",
@@ -5563,22 +5563,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WfsServer\u003A\u003Aurl\u0028\u0029",
             "name": "url",
-            "summary": "",
+            "summary": "construit\u0020l\u0027URL\u0020de\u0020la\u0020requ\u00EAte\u0020\u00E0\u0020partir\u0020des\u0020param\u00E8tres",
             "url": "classes/WfsServer.html#method_url"
         },                {
             "fqsen": "\\WfsServer\u003A\u003Aquery\u0028\u0029",
             "name": "query",
-            "summary": "",
+            "summary": "envoi\u0020une\u0020requ\u00EAte\u0020et\u0020r\u00E9cup\u00E8re\u0020la\u0020r\u00E9ponse\u0020sous\u0020la\u0020forme\u0020d\u0027un\u0020texte",
             "url": "classes/WfsServer.html#method_query"
         },                {
             "fqsen": "\\WfsServer\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "",
+            "summary": "effectue\u0020un\u0020GetCapabities\u0020et\u0020retourne\u0020le\u0020XML.\u0020Utilise\u0020le\u0020cache\u0020sauf\u0020si\u0020force\u003Dtrue",
             "url": "classes/WfsServer.html#method_getCapabilities"
         },                {
             "fqsen": "\\WfsServer\u003A\u003AfeatureTypeList\u0028\u0029",
             "name": "featureTypeList",
-            "summary": "",
+            "summary": "liste\u0020les\u0020couches\u0020expos\u00E9es\u0020evt\u0020filtr\u00E9\u0020par\u0020l\u0027URL\u0020des\u0020MD",
             "url": "classes/WfsServer.html#method_featureTypeList"
         },                {
             "fqsen": "\\WfsServer\u003A\u003AdescribeFeatureType\u0028\u0029",
@@ -5603,7 +5603,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WfsServer\u003A\u003AgetFeatureAsArray\u0028\u0029",
             "name": "getFeatureAsArray",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON\u0020encod\u00E9\u0020en\u0020array\u0020Php",
             "url": "classes/WfsServer.html#method_getFeatureAsArray"
         },                {
             "fqsen": "\\WfsServer\u003A\u003AprintAllFeatures\u0028\u0029",
@@ -5613,27 +5613,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WfsServer\u003A\u003ALOG",
             "name": "LOG",
-            "summary": "",
+            "summary": "chemin\u0020du\u0020fichier\u0020de\u0020log\u0020ou\u0020false\u0020pour\u0020pas\u0020de\u0020log",
             "url": "classes/WfsServer.html#constant_LOG"
         },                {
             "fqsen": "\\WfsServer\u003A\u003ACAP_CACHE",
             "name": "CAP_CACHE",
-            "summary": "",
+            "summary": "chemin\u0020du\u0020r\u00E9pertoire\u0020dans\u0020lequel\u0020sont\u0020stock\u00E9s\u0020les\u0020fichiers\u0020XML\u0020de\u0020capacit\u00E9s\u0020ainsi\u0020que\u0020les\u0020DescribeFeatureType\u0020en\u0020json",
             "url": "classes/WfsServer.html#constant_CAP_CACHE"
         },                {
             "fqsen": "\\WfsServer\u003A\u003A\u0024serverUrl",
             "name": "serverUrl",
-            "summary": "",
+            "summary": "URL\u0020du\u0020serveur",
             "url": "classes/WfsServer.html#property_serverUrl"
         },                {
             "fqsen": "\\WfsServer\u003A\u003A\u0024options",
             "name": "options",
-            "summary": "",
+            "summary": "sous\u0020la\u0020forme\u0020\u005B\u0027option\u0027\u003D\u003E\u0020valeur\u005D",
             "url": "classes/WfsServer.html#property_options"
         },                {
             "fqsen": "\\WfsGeoJson",
             "name": "WfsGeoJson",
-            "summary": "",
+            "summary": "g\u00E8re\u0020les\u0020fonctionnalit\u00E9s\u0020d\u0027un\u0020serveur\u0020WFS\u0020retournant\u0020du\u0020GeoJSON",
             "url": "classes/WfsGeoJson.html"
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AdescribeFeatureType\u0028\u0029",
@@ -5643,32 +5643,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AgeomPropertyName\u0028\u0029",
             "name": "geomPropertyName",
-            "summary": "",
+            "summary": "nom\u0020de\u0020la\u0020propri\u00E9t\u00E9\u0020g\u00E9om\u00E9trique\u0020du\u0020featureType",
             "url": "classes/WfsGeoJson.html#method_geomPropertyName"
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AgetNumberMatched\u0028\u0029",
             "name": "getNumberMatched",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020nbre\u0020d\u0027objets\u0020correspondant\u0020au\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte",
             "url": "classes/WfsGeoJson.html#method_getNumberMatched"
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AgetFeature\u0028\u0029",
             "name": "getFeature",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON",
             "url": "classes/WfsGeoJson.html#method_getFeature"
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AgetFeatureAsArray\u0028\u0029",
             "name": "getFeatureAsArray",
-            "summary": "",
+            "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON\u0020encod\u00E9\u0020en\u0020array\u0020Php",
             "url": "classes/WfsGeoJson.html#method_getFeatureAsArray"
         },                {
             "fqsen": "\\WfsGeoJson\u003A\u003AprintAllFeatures\u0028\u0029",
             "name": "printAllFeatures",
-            "summary": "",
+            "summary": "affiche\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON",
             "url": "classes/WfsGeoJson.html#method_printAllFeatures"
         },                {
             "fqsen": "\\FeaturesApi",
             "name": "FeaturesApi",
-            "summary": "",
+            "summary": "transforme\u0020un\u0020serveur\u0020WFS\u0020en\u0020Api\u0020Features",
             "url": "classes/FeaturesApi.html"
         },                {
             "fqsen": "\\FeaturesApi\u003A\u003Acollections\u0028\u0029",
@@ -5683,32 +5683,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\FeaturesApi\u003A\u003Aitems\u0028\u0029",
             "name": "items",
-            "summary": "",
+            "summary": "retourne\u0020les\u0020items\u0020de\u0020la\u0020collection\u0020comme\u0020array\u0020Php",
             "url": "classes/FeaturesApi.html#method_items"
         },                {
             "fqsen": "\\FeaturesApi\u003A\u003Aoutput\u0028\u0029",
             "name": "output",
-            "summary": "",
+            "summary": "g\u00E9n\u00E8re\u0020un\u0020affichage\u0020en\u0020JSON\u0020ou\u0020Yaml\u0020en\u0020fonction\u0020du\u0020param\u00E8tre\u0020\u0024f",
             "url": "classes/FeaturesApi.html#method_output"
         },                {
             "fqsen": "\\coordDM\u0028\u0029",
             "name": "coordDM",
-            "summary": "",
+            "summary": "affichage\u0020en\u0020degr\u00E9s\u0020minutes\u0020d\u00E9cimales\u0020avec\u00202\u0020chiffres\u0020significatifs",
             "url": "namespaces/default.html#function_coordDM"
         },                {
             "fqsen": "\\latLonDM\u0028\u0029",
             "name": "latLonDM",
-            "summary": "",
+            "summary": "affichage\u0020lat,lon\u0020dans\u0020le\u0020format\u0020de\u0020l\u0027exemple",
             "url": "namespaces/default.html#function_latLonDM"
         },                {
             "fqsen": "\\cornersOfRects\u0028\u0029",
             "name": "cornersOfRects",
-            "summary": "",
+            "summary": "extraction\u0020des\u0020coins\u0020des\u0020rectangles\u0020englobants\u0020d\u00E9finis\u0020dans\u0020un\u0020array\u0020de\u0020Features\u0020GeoJSON,\u0020renvoit\u0020un\u0020array\u0020de\u0020Features",
             "url": "namespaces/default.html#function_cornersOfRects"
         },                {
             "fqsen": "\\GtMaps",
             "name": "GtMaps",
-            "summary": "",
+            "summary": "classe\u0020regroupant\u0020qqs\u0020m\u00E9thodes\u0020statiques",
             "url": "classes/GtMaps.html"
         },                {
             "fqsen": "\\GtMaps\u003A\u003Aerror\u0028\u0029",
@@ -5738,27 +5738,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GtMaps\u003A\u003Amap\u0028\u0029",
             "name": "map",
-            "summary": "",
+            "summary": "envoie\u0020au\u0020navigateur\u0020l\u0027image\u0020correspondant\u0020aux\u0020param\u00E8tres\u0020en\u0020GET\u0020et\u0020\u00E0\u0020la\u0020liste\u0020des\u0020couches\u0020pass\u00E9e\u0020en\u0020param\u00E8tre",
             "url": "classes/GtMaps.html#method_map"
         },                {
             "fqsen": "\\GtMaps\u003A\u003Aitems\u0028\u0029",
             "name": "items",
-            "summary": "",
+            "summary": "silhouettes\u0020des\u0020G\u00E9oTiffs",
             "url": "classes/GtMaps.html#method_items"
         },                {
             "fqsen": "\\GtMaps\u003A\u003Acorners\u0028\u0029",
             "name": "corners",
-            "summary": "",
+            "summary": "coins\u0020des\u0020silhouettes\u0020des\u0020G\u00E9oTiffs",
             "url": "classes/GtMaps.html#method_corners"
         },                {
             "fqsen": "\\GtMaps\u003A\u003AdeletedZones\u0028\u0029",
             "name": "deletedZones",
-            "summary": "",
+            "summary": "coins\u0020des\u0020silhouettes\u0020des\u0020G\u00E9oTiffs",
             "url": "classes/GtMaps.html#method_deletedZones"
         },                {
             "fqsen": "\\GtMaps\u003A\u003Ashowmap\u0028\u0029",
             "name": "showmap",
-            "summary": "",
+            "summary": "g\u00E8re\u0020un\u0020formulaire\u0020HTML\u0020pour\u0020appeller\u0020map",
             "url": "classes/GtMaps.html#method_showmap"
         },                {
             "fqsen": "\\GtMaps\u003A\u003AErrorUnknownCRS",
@@ -5778,17 +5778,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\shomGTVersion\u0028\u0029",
             "name": "shomGTVersion",
-            "summary": "",
+            "summary": "indqieu\u0020la\u0020version\u0020ShomGT",
             "url": "namespaces/default.html#function_shomGTVersion"
         },                {
             "fqsen": "\\findCurrentMapVersionV4\u0028\u0029",
             "name": "findCurrentMapVersionV4",
-            "summary": "",
+            "summary": "Code\u0020en\u0020V4.",
             "url": "namespaces/default.html#function_findCurrentMapVersionV4"
         },                {
             "fqsen": "\\findCurrentMapVersionV3\u0028\u0029",
             "name": "findCurrentMapVersionV3",
-            "summary": "",
+            "summary": "code\u0020en\u0020V3.",
             "url": "namespaces/default.html#function_findCurrentMapVersionV3"
         },                {
             "fqsen": "\\latestVersion\u0028\u0029",
@@ -5798,32 +5798,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\NB_SECONDS_IN_CACHE",
             "name": "NB_SECONDS_IN_CACHE",
-            "summary": "",
+            "summary": "nb\u0020secondes\u0020en\u0020cache\u0020pour\u0020le\u0020navigateur\u0020si\u0020\u003C\u003E\u00200",
             "url": "namespaces/default.html#constant_NB_SECONDS_IN_CACHE"
         },                {
             "fqsen": "\\SERVER_TILECACHE",
             "name": "SERVER_TILECACHE",
-            "summary": "",
+            "summary": "mise\u0020en\u0020cache\u0020des\u0020tuiles\u0020sur\u0020le\u0020serveur",
             "url": "namespaces/default.html#constant_SERVER_TILECACHE"
         },                {
             "fqsen": "\\WmsShomGt",
             "name": "WmsShomGt",
-            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
+            "summary": "classe\u0020impl\u00E9mentant\u0020les\u0020fonctions\u0020du\u0020WMS\u0020de\u0020ShomGt.",
             "url": "classes/WmsShomGt.html"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getCapabilities\u0028\u0029",
+            "summary": "m\u00E9thode\u0020GetCapabilities\u0020du\u0020serveur\u0020Shomgt",
             "url": "classes/WmsShomGt.html#method_getCapabilities"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003Awombox\u0028\u0029",
             "name": "wombox",
-            "summary": "",
+            "summary": "calcul\u0020EBox\u0020en\u0020WorldMercator\u0020en\u0020fonction\u0020de\u0020crs",
             "url": "classes/WmsShomGt.html#method_wombox"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AtooSmallScale\u0028\u0029",
             "name": "tooSmallScale",
-            "summary": "",
+            "summary": "indique\u0020si\u0020l\u0027\u00E9chelle\u0020demand\u00E9e\u0020est\u0020consid\u00E9r\u00E9e\u0020comme\u0020trop\u0020petite\u0020pour\u0020la\u0020couche",
             "url": "classes/WmsShomGt.html#method_tooSmallScale"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003Azoom\u0028\u0029",
@@ -5833,42 +5833,42 @@ Search.appendIndex(
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AgetMap\u0028\u0029",
             "name": "getMap",
-            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getMap\u0028\u0029",
+            "summary": "m\u00E9thode\u0020GetMap\u0020du\u0020serveur\u0020WMS\u0020Shomgt.",
             "url": "classes/WmsShomGt.html#method_getMap"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003ASTD_PIXEL_SIZE",
             "name": "STD_PIXEL_SIZE",
-            "summary": "",
+            "summary": "taille\u0020du\u0020pixel\u0020d\u00E9finie\u0020par\u0020WMS\u0020en\u0020m\u00E8tres,\u0020soit\u002090,7\u0020dpi\u0020\u00281\u0020inch\u0020\u003D\u002025,4\u0020mm\u0029",
             "url": "classes/WmsShomGt.html#constant_STD_PIXEL_SIZE"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003ABASE",
             "name": "BASE",
-            "summary": "",
+            "summary": "xmax\u0020en\u0020Web\u0020Mercator\u0020en\u0020m\u00E8tres",
             "url": "classes/WmsShomGt.html#constant_BASE"
         },                {
             "fqsen": "\\WmsShomGt\u003A\u003AOUTLINE_COLOR",
             "name": "OUTLINE_COLOR",
-            "summary": "",
+            "summary": "couleur\u0020des\u0020silhouettes\u0020sous\u0020la\u0020forme\u0020\u005BR,V,B\u005D",
             "url": "classes/WmsShomGt.html#constant_OUTLINE_COLOR"
         },                {
             "fqsen": "\\WmsvShomGt",
             "name": "WmsvShomGt",
-            "summary": "classe\u0020abstraite\u0020WmsServer\u0020de\u0020gestion\u0020du\u0020dialogue\u0020du\u0020serveur\u0020avec\u0020le\u0020client",
+            "summary": "classe\u0020impl\u00E9mentant\u0020les\u0020fonctions\u0020du\u0020WMS\u002DV\u0020de\u0020ShomGt.",
             "url": "classes/WmsvShomGt.html"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
-            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getCapabilities\u0028\u0029",
+            "summary": "m\u00E9thode\u0020GetCapabilities\u0020du\u0020serveur\u0020Shomgt",
             "url": "classes/WmsvShomGt.html#method_getCapabilities"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003Awombox\u0028\u0029",
             "name": "wombox",
-            "summary": "",
+            "summary": "calcul\u0020EBox\u0020en\u0020WorldMercator\u0020en\u0020fonction\u0020de\u0020crs",
             "url": "classes/WmsvShomGt.html#method_wombox"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AgetMap\u0028\u0029",
             "name": "getMap",
-            "summary": "La\u0020classe\u0020concr\u00E8te\u0020doit\u0020fournir\u0020une\u0020m\u00E9thode\u0020getMap\u0028\u0029",
+            "summary": "m\u00E9thode\u0020GetMap\u0020du\u0020serveur\u0020WMS\u0020Shomgt",
             "url": "classes/WmsvShomGt.html#method_getMap"
         },                {
             "fqsen": "\\WmsvShomGt\u003A\u003AtoGeo\u0028\u0029",

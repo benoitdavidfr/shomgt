@@ -11,6 +11,7 @@
  *   - migration shomgt v2
  * - 9/11/2016
  *   - première version
+ * @package shomgt\lib
  */ 
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);

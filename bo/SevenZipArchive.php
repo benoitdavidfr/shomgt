@@ -1,47 +1,41 @@
 <?php
-/*PhpDoc:
-name: SevenZipArchive.php
-title: SevenZipArchive.php - Contains the SevenZipArchive and SevenZipArchiveException classes.
-doc: |
-  7-Zip archive class. Front end to 7za or 7zr executable.
-  Modifié par BD le 25/12/2020 pour typer les paramètres et le résultat des méthodes
-
-  Example(s):
-  $archive = new SevenZipArchive('docs.7z');
- 
-  # Test integrity of archive:
-  print 'Archive is ' . ($archive->test() ? 'OK' : 'broken') . "\n";
- 
-  # Show number of contained files:
-  print $archive->count() . " file(s) in archive\n";
- 
-  # Show info about the first contained file:
-  $entry = $archive->get(0);
-  print 'First file name: ' . $entry['Name'] . "\n";
-
-  # Iterate over all the contained files in archive, and dump all their info:
-  foreach ($archive as $entry) {
-    print_r($entry);
-  }
-
-  # Extract a single contained file by name into the current directory:
-  $archive->extractTo('.', 'test.txt');
-
-  # Extract all contained files:
-  $archive->extractTo('.');
- 
-  Which binary:
-  For Windows there are 2 possible binaries to download from http://www.7-zip.org/download.html
-    If you install the CLI version, then the binary is called 7za.
-    If you install the GUI version, then the binary is called 7z and it is installed in the path "c:\Program Files\7-Zip" by default.
-  For other OS's, the minimal CLI version is called 7zr, and the full version is called 7za.
-journal: |
-  7/2/2022:
-    - ajout de types de retour à certaines méthodes pour passage en Php 8.1
-*/
-$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
-
-/**
+/** SevenZipArchive.php - Contains the SevenZipArchive and SevenZipArchiveException classes.
+ *
+ * 7-Zip archive class. Front end to 7za or 7zr executable.
+ * Modifié par BD le 25/12/2020 pour typer les paramètres et le résultat des méthodes
+ *
+ * Example(s):
+ * $archive = new SevenZipArchive('docs.7z');
+ *
+ * # Test integrity of archive:
+ * print 'Archive is ' . ($archive->test() ? 'OK' : 'broken') . "\n";
+ *
+ * # Show number of contained files:
+ * print $archive->count() . " file(s) in archive\n";
+ *
+ * # Show info about the first contained file:
+ * $entry = $archive->get(0);
+ * print 'First file name: ' . $entry['Name'] . "\n";
+ *
+ * # Iterate over all the contained files in archive, and dump all their info:
+ * foreach ($archive as $entry) {
+ *   print_r($entry);
+ * }
+ *
+ * # Extract a single contained file by name into the current directory:
+ * $archive->extractTo('.', 'test.txt');
+ *
+ * # Extract all contained files:
+ * $archive->extractTo('.');
+ *
+ * Which binary:
+ * For Windows there are 2 possible binaries to download from http://www.7-zip.org/download.html
+ *   If you install the CLI version, then the binary is called 7za.
+ *   If you install the GUI version, then the binary is called 7z and it is installed in the path "c:\Program Files\7-Zip" by default.
+ * For other OS's, the minimal CLI version is called 7zr, and the full version is called 7za.
+ * journal: |
+ * - 7/2/2022:
+ *   - ajout de types de retour à certaines méthodes pour passage en Php 8.1
 *
 * Dependencies:
 * <pre>

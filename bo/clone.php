@@ -7,6 +7,7 @@
  *  - pour chaque fichier de src un lien dur dans dest
  *  - pour chaque lien symbolique des src un lien symbolique dans dest ayant même cible
  * Peut s'exécuter soit en CLI soit en web
+ * @package shomgt\bo
  */
 namespace bo;
 //require_once __DIR__.'/../vendor/autoload.php';

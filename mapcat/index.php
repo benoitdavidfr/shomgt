@@ -1,36 +1,37 @@
 <?php
+/** gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN
+ *
+ * L'objectif est d'une part de vérifier les contraintes sur MapCat et, d'autre part, d'identifier les écarts entre mapcat
+ * et le GAN pour
+ *   - s'assurer que mapcat est correct
+ *   - marquer dans mapcat dans le champ badGan l'écart
+ *
+ * Le traitement dans le GAN des excroissances de cartes est hétérogène.
+ * Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
+ *
+ * Le script est aussi utilisé pour mettre à jour ou insérer un enregistrement MapCat depuis bo/addmaps
+ *
+ * journal: |
+ * - 27-28/8/2023:
+ *   - évolution du schéma
+ * - 22-25/8/2023:
+ *   - ajout mise en base de MapCat + mise à jour/saisie d'un enregistrement
+ * - 13/8/2023:
+ *   - restructuration dans le cadre du BO v4 et ajout de la vérification des contraintes
+ * - 24/4/2023:
+ *   - prise en compte dans CmpMapCat::scale() de la possibilité que scaleDenominator ne soit pas défini
+ *   - prise en compte dans CmpMapCat::cmpGans() que la carte soit définie dans MapCat et absente du GAN
+ * - 3/8/2022:
+ *   - corrections listée par PhpStan level 6
+ * - 2/7/2022:
+ *   - reprise après correction des GAN par le Shom à la suite de mon message
+ *   - ajout comparaison des échelles
+ * - 24/6/2022:
+ *   - migration
+ * @package shomgt\mapcat
+ */
 namespace mapcat;
-{/*PhpDoc:
-title: mapcat/index.php - gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN
-classes:
-doc: |
-  L'objectif est d'une part de vérifier les contraintes sur MapCat et, d'autre part, d'identifier les écarts entre mapcat
-  et le GAN pour
-    - s'assurer que mapcat est correct
-    - marquer dans mapcat dans le champ badGan l'écart
 
-  Le traitement dans le GAN des excroissances de cartes est hétérogène.
-  Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.
-
-  Le script est aussi utilisé pour mettre à jour ou insérer un enregistrement MapCat depuis bo/addmaps
-journal: |
-  27-28/8/2023:
-    - évolution du schéma
-  22-25/8/2023:
-    - ajout mise en base de MapCat + mise à jour/saisie d'un enregistrement
-  13/8/2023:
-    - restructuration dans le cadre du BO v4 et ajout de la vérification des contraintes
-  24/4/2023:
-    - prise en compte dans CmpMapCat::scale() de la possibilité que scaleDenominator ne soit pas défini
-    - prise en compte dans CmpMapCat::cmpGans() que la carte soit définie dans MapCat et absente du GAN
-  3/8/2022:
-    - corrections listée par PhpStan level 6
-  2/7/2022:
-    - reprise après correction des GAN par le Shom à la suite de mon message
-    - ajout comparaison des échelles
-  24/6/2022:
-    - migration
-*/}
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../bo/login.inc.php';
 require_once __DIR__.'/../shomft/frzee.inc.php';

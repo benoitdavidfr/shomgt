@@ -1,26 +1,19 @@
 <?php
-/*PhpDoc:
-name: wmsv.php
-title: wmsv.php - service WMS-V de shomgt
-classes:
-doc: |
-  Ce service WMS est paramétré par
-    - le fichier wmsvcapabilities.xml qui contient
-      - la documentation sur le serveur (titre, résumé, mots-clés, contraintes d'accès, ...)
-      - la liste des systèmes de coordonnées autorisés et l'extension des coordonnées
-    - le fichier wmsvlayers.yaml qui définit les couches et les styles de représentation graphique utilisables
-      le contenu de ce fichier doit respecter le schéma JSON défini dans le fichier
-journal: |
-  10/7/2022:
-    - ajout des couches catalogues des cartes raster
-  8-9/7/2022:
-    - fork de wms.php
-includes:
-  - ../lib/coordsys.inc.php
-  - ../lib/gebox.inc.php
-  - ../lib/wmsserver.inc.php
-  - ../lib/vectorlayer.inc.php
-*/
+/** service WMS-Vecteur de shomgt
+ *
+ * Ce service WMS est paramétré par
+ *   - le fichier wmsvcapabilities.xml qui contient
+ *     - la documentation sur le serveur (titre, résumé, mots-clés, contraintes d'accès, ...)
+ *     - la liste des systèmes de coordonnées autorisés et l'extension des coordonnées
+ *   - le fichier wmsvlayers.yaml qui définit les couches et les styles de représentation graphique utilisables
+ *     le contenu de ce fichier doit respecter le schéma JSON défini dans le fichier
+ * journal: |
+ * - 10/7/2022:
+ *   - ajout des couches catalogues des cartes raster
+ * - 8-9/7/2022:
+ *   - fork de wms.php
+ * @package shomgt\view
+ */
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/coordsys.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
@@ -35,15 +28,12 @@ use Symfony\Component\Yaml\Yaml;
 //WmsServer::log("appel avec REQUEST_URI=$_SERVER[REQUEST_URI]\n");
 //WmsServer::log("appel avec GET=".json_encode($_GET, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
 
-/*PhpDoc: classes
-name: class WmsvShomGt
-title: class WmsvShomGt - classe implémentant les fonctions du WMS-V de ShomGt
-doc: |
-  La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
-  Le script appelle WmsServer::process() qui appelle les méthodes WmsvShomGt::getCapabilities() ou WmsvShomGt::getMap()
+/** classe implémentant les fonctions du WMS-V de ShomGt.
+ * La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
+ * Le script appelle WmsServer::process() qui appelle les méthodes WmsvShomGt::getCapabilities() ou WmsvShomGt::getMap()
 */
 class WmsvShomGt extends WmsServer {
-  // méthode GetCapabilities du serveur Shomgt
+  /** méthode GetCapabilities du serveur Shomgt */
   function getCapabilities(string $version=''): never {
     header('Content-Type: text/xml');
     $request_scheme = $_SERVER['REQUEST_SCHEME'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
@@ -57,8 +47,9 @@ class WmsvShomGt extends WmsServer {
     die($cap);
   }
 
-  /** @param array<int, string> $bbox */
-  private function wombox(string $crs, array $bbox): \gegeom\EBox { // calcul EBox en WorldMercator en fonction de crs 
+  /** calcul EBox en WorldMercator en fonction de crs 
+   * @param array<int, string> $bbox */
+  private function wombox(string $crs, array $bbox): \gegeom\EBox {
     $bbox = [floatval($bbox[0]), floatval($bbox[1]), floatval($bbox[2]), floatval($bbox[3])];
     switch ($crs) {
       case 'EPSG:3395': { // WorldMercator
@@ -91,8 +82,7 @@ class WmsvShomGt extends WmsServer {
     }
   }
   
-  // méthode GetMap du serveur WMS Shomgt
-  /**
+  /** méthode GetMap du serveur WMS Shomgt
   * @param array<int, string> $lyrnames
   * @param array<int, string> $styles
   * @param array<int, string> $bbox

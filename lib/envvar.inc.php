@@ -3,6 +3,7 @@
  * journal:
  * - 10/6/2022:
  *   - chgt de la valeur par défaut pour SHOMGT3_MAPS_DIR_PATH
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

@@ -7,6 +7,7 @@
  *   - modif pour traiter un téléchargement avec authentification
  * - 18/5/2022:
  *   - création à partir de main.php
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

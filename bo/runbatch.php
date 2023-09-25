@@ -6,6 +6,7 @@
  * notamment dans le cas où l'exécution est assez longue.
  * Revient à la fin au menu du BO en demandant d'effacer le fichier temporaire.
  * C'est à l'utilisateur de décider quand la mise à jour est terminée.
+ * @package shomgt\bo
  */  
 namespace bo;
 

@@ -45,6 +45,7 @@
  *     exposées par sgserver
  * 31/5/2022:
  *   - désactivation de la vérification SSL
+ * @package shomgt\gan
  */
 namespace dashboard;
 

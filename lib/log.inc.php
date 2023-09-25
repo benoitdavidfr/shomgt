@@ -17,6 +17,7 @@
  *   - de plus dans openMySQL() sur localhost la base est créée si elle n'existe pas
  * - 20/7/2017:
  *   - suppression de l'utilisation du champ phpserver
+ * @package shomgt\lib
  */
 require_once __DIR__.'/mysql.inc.php';
 require_once __DIR__.'/sexcept.inc.php';

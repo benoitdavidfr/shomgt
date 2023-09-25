@@ -3,6 +3,7 @@
  *
  * - 28/7/2022:
  *   - correction suite à analyse PhpStan level 4
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

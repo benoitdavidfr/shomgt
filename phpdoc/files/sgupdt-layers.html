@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -122,7 +198,78 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">layers.php</h2>
 
-        
+            <p class="phpdocumentor-summary">génération du fichier layers.yaml</p>
+
+    <section class="phpdocumentor-description"><p>Ce script génère le fichier layers.yaml soit s'il est défini dans le fichier en paramètre soit sinon sur STDOUT
+Il prend en entrée:</p>
+<ul>
+<li>le catalogue des cartes téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}</li>
+<li>la liste des géotiffs prévus dans view, avec pour certains leur géoréférencement (GdalInfo)
+Il retourne:</li>
+<li>le code 0 ssi la sortie est du Yaml correct et est conforme au schéma layers.schema.yaml</li>
+<li>le code 1 ssi la sortie n'est pas du Yaml</li>
+<li>le code 2 ssi la sortie n'est pas conforme au schéma layers.schema.yaml</li>
+<li>le code &gt;= 3 ssi une autre erreur est rencontrée</li>
+</ul>
+<p>La liste des cartes prévues correspond à:</p>
+<ul>
+<li>les cartes existantes (que je vais trouver dans ../data/)</li>
+<li>moins les cartes obsolètes à supprimer (que je trouve dans maps.json)</li>
+</ul>
+<p>Les couches avec leur seuil d'échelles sont définies dans la classe LayerDef.</p>
+<p>L'algorithme est le suivant:</p>
+<ul>
+<li>j'initialise Map à partir de mapcat.yaml téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}</li>
+<li>j'initialise ShomGt avec la liste des couches définie dans LayerDef</li>
+<li>je construis la liste des géotiffs à mettre dans layers en scannant le répertoire de ../data/curent</li>
+<li>pour chacun de ces géotiffs
+<ul>
+<li>je l'ajoute à ShomGt</li>
+<li>pour cela je recherche dans Map les infos sur ce GéoTiff</li>
+<li>à partir de ces infos je construis l'objet ShomGt</li>
+<li>je récupère l'échelle et j'en déduis avec LayerDef la couche à laquelle il appartient</li>
+<li>enfin, je l'insère dans ShomGt</li>
+</ul>
+</li>
+<li>je vérifie que la structure ShomGT est conforme à son schéma</li>
+<li>enfin, j'affiche ShomGt en Yaml</li>
+</ul>
+<p>La classe LayerDef définit les couches à créer dans layers et permet d'associer une couche à un géotiff.
+La classe Map gère le catalogue des cartes et retrouve pour un géotiff les infos correspondantes.
+La classe ShomGt contient une représentation de layers.yaml qui se construit progressivement.</p>
+<p>journal: |
+3/9/2023:</p>
+<ul>
+<li>chgt du nom du fichier Yaml en layers.yaml</li>
+<li>chgt du nom de ce script
+22/8/2023:</li>
+<li>déplacement des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
+2/8/2022:</li>
+<li>corrections suites à PhpStan level 6
+17/6/2022:</li>
+<li>adaptation au transfert de update.yaml dans mapcat.yaml
+6/6/2022:</li>
+<li>correction bug
+3/6/2022:</li>
+<li>si update.yaml contient une info spatial, elle remplace celle du catalogue</li>
+<li>l'idée est que le catalogue définit le rectangle officiel mais que ce rectangle peut devoir être modifié
+pour effacer une partie de la carte et dans ce cas cette info est dans update.yaml
+22/5/2022:</li>
+<li>ajout possibilité d'écrire shomgt.yaml dans un fichier et pas uniquement sur STDOUT
+18/5/2022:</li>
+<li>adaptation à l'utilisation dans le conteneur
+17/5/2022:</li>
+<li>modif georefrect() car il n'y a plus de GéoTiffs dans temp
+16/5/2022:</li>
+<li>transfert dans sgupdt</li>
+<li>chgt de méthode pour vérifier la conformité Yaml du flux de sortie ainsi que sa conformité à son schéma
+8/5/2022:</li>
+<li>chgt du nom de la classe LayerName en layerDef</li>
+<li>vérif. que le flux de sortie est du yaml correct et qu'il est conforme à son schéma
+7/5/2022:</li>
+<li>création</li>
+</ul>
+</section>
 
 
 
@@ -184,7 +331,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/layers.php"><a href="files/sgupdt-layers.html"><abbr title="sgupdt/layers.php">layers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">274</span>
 
     </aside>
 

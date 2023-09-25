@@ -1,5 +1,7 @@
 <?php
-/** fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023 */
+/** fourniture d'un gdalinfo d'un fichier .tif ou .pdf - 3/8/2023
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';

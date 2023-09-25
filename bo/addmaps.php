@@ -1,5 +1,7 @@
 <?php
-/** ajout et vérification de nouvelles cartes dans le BO */
+/** ajout et vérification de nouvelles cartes dans le BO
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';

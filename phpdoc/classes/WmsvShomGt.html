@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -130,7 +206,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/shomgt.html">shomgt</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/shomgt-view.html">view</a></li>
                             </ul>
         </div>
     
@@ -145,15 +222,14 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/wmsv.php"><a href="files/view-wmsv.html"><abbr title="view/wmsv.php">wmsv.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">classe abstraite WmsServer de gestion du dialogue du serveur avec le client</p>
+            <p class="phpdocumentor-summary">classe implémentant les fonctions du WMS-V de ShomGt.</p>
 
-    <section class="phpdocumentor-description"><p>Cette classe gère de manière minimum les protocole WMS 1.1.1 et 1.3.0 et fournit qqs méthodes génériques ;
-elle est indépendante des fonctionnalités du serveur de shomgt.
-Elle génère un fichier temporaire de log utile au déverminage</p>
+    <section class="phpdocumentor-description"><p>La classe WmsShomGt hérite de la classe WmsServer qui gère le protocole WMS.
+Le script appelle WmsServer::process() qui appelle les méthodes WmsvShomGt::getCapabilities() ou WmsvShomGt::getMap()</p>
 </section>
 
 
@@ -212,7 +288,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <span>
                                 &nbsp;: never    </span>
 </dt>
-<dd>La classe concrète doit fournir une méthode getCapabilities()</dd>
+<dd>méthode GetCapabilities du serveur Shomgt</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WmsvShomGt.html#method_getFeatureInfo">getFeatureInfo()</a>
@@ -226,7 +302,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <span>
                                 &nbsp;: never    </span>
 </dt>
-<dd>La classe concrète doit fournir une méthode getMap()</dd>
+<dd>méthode GetMap du serveur WMS Shomgt</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/WmsServer.html#method_init">init()</a>
@@ -260,6 +336,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <span>
                                 &nbsp;: <a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a>    </span>
 </dt>
+<dd>calcul EBox en WorldMercator en fonction de crs</dd>
 
     </dl>
 
@@ -292,7 +369,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/wmsserver.inc.php"><a href="files/lib-wmsserver-inc.html"><abbr title="lib/wmsserver.inc.php">wmsserver.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -325,7 +402,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/wmsserver.inc.php"><a href="files/lib-wmsserver-inc.html"><abbr title="lib/wmsserver.inc.php">wmsserver.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -363,7 +440,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/wmsserver.inc.php"><a href="files/lib-wmsserver-inc.html"><abbr title="lib/wmsserver.inc.php">wmsserver.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -434,11 +511,11 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/wmsv.php"><a href="files/view-wmsv.html"><abbr title="view/wmsv.php">wmsv.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">La classe concrète doit fournir une méthode getCapabilities()</p>
+        <p class="phpdocumentor-summary">méthode GetCapabilities du serveur Shomgt</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -480,7 +557,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/wmsv.php"><a href="files/view-wmsv.html"><abbr title="view/wmsv.php">wmsv.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
@@ -561,11 +638,11 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/wmsv.php"><a href="files/view-wmsv.html"><abbr title="view/wmsv.php">wmsv.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">La classe concrète doit fournir une méthode getMap()</p>
+        <p class="phpdocumentor-summary">méthode GetMap du serveur WMS Shomgt</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -670,7 +747,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/wmsserver.inc.php"><a href="files/lib-wmsserver-inc.html"><abbr title="lib/wmsserver.inc.php">wmsserver.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -712,7 +789,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/wmsserver.inc.php"><a href="files/lib-wmsserver-inc.html"><abbr title="lib/wmsserver.inc.php">wmsserver.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -754,7 +831,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/wmsserver.inc.php"><a href="files/lib-wmsserver-inc.html"><abbr title="lib/wmsserver.inc.php">wmsserver.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -802,7 +879,7 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/wmsv.php"><a href="files/view-wmsv.html"><abbr title="view/wmsv.php">wmsv.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -854,11 +931,12 @@ Elle génère un fichier temporaire de log utile au déverminage</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="view/wmsv.php"><a href="files/view-wmsv.html"><abbr title="view/wmsv.php">wmsv.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">calcul EBox en WorldMercator en fonction de crs</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">wombox</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$crs</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$bbox</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/gegeom-EBox.html"><abbr title="\gegeom\EBox">EBox</abbr></a></span></code>

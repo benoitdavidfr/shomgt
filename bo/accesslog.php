@@ -2,8 +2,9 @@
 /** analyse et affiche les logs d'accès y compris sous la forme de carte Leaflet.
  *
  * Utilise https://github.com/Leaflet/Leaflet.heat pour les cartes de chaleur
+ * @package shomgt\bo
  */
-//namespace bo;
+namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/mysql.inc.php';

@@ -1,65 +1,64 @@
 <?php
-/*PhpDoc:
-title: main.php - procédure principale de mise à jour des cartes ShomGT V4 - 4/8/2023
-name: main.php
-doc: |
-  Variable_d'Environnement:
-    SHOMGT3_SERVER_URL: url du serveur de cartes en 7z
-    SHOMGT3_MAPS_DIR_PATH: répertoire dans lequel les cartes expansées doivent être copiées
-
-  A faire:
-    - afficher à la fin une synthèse du traitement
-journal: |
-  17/8/2023:
-    - correction de la version des cartes spéciales
-  8/8/2023:
-    - ajout d'un verrou pour interdire des exécutions simultanées
-  3/8/2023:
-    - chgt de la constante VERSION en '4' pour obtenir les vraies versions des cartes spéciales
-    - modif de findCurrentMapVersion() sur les cartes spéciales
-  18/6/2023:
-    - déplacement lib dans ../lib
-  1/8/2022:
-    - ajout déclarations PhpStan pour level 6
-  22/6/2022:
-    - correction d'un bug
-  20/6/2022:
-    - correction d'un bug
-  19/6/2022:
-    - ajout mention d'une version dans l'appel à $SERVER_URL/maps.json
-  17/6/2022:
-    - adaptation au transfert de update.yaml dans mapcat.yaml
-  30/5/2022:
-    - ajout suppression du cache de tuiles
-    - passage en paramètres des variables globales
-    - mise en oeuvre du nouveau protocole du serveur de ce jour
-  19/5/2022:
-    - ajout création du répertoire $MAPS_DIR_PATH s'il n'existe pas
-    - définition de valeurs par défaut pour $SERVER_URL et $MAPS_DIR_PATH
-  18/5/2022:
-    - évolution du code pour fonctionner en contenenur
-    - utilisation des 2 variables d'environnement
-      - formalisation sous la forme de variables globales en majuscules - plus faciles à utiliser
-    - en php:cli le répertoire par défaut est / et non le répertoire dans lequel php est lancé
-      - il faut donc que les références aux fichiers soient toutes absolues
-    - création du dossier temp au démarrage s'il n'existe pas
-    - transfert de temp dans SHOMGT3_MAPS_DIR_PATH
-      - pour permettre le déplacement du répertoire de carte de temp vers SHOMGT3_MAPS_DIR_PATH
-  16/5/2022:
-    - détection de la liste des cartes obsolètes dans maps.json
-    - construction du layers.yaml et transfert dans le répertoire data
-    - effacement des cartes obsolètes
-    - le bug sur 0101 provenait d'un bug de sgserver
-  15/5/2022:
-    - initialisation de la liste des cartes par interrogation du serveur sur /maps.json
-    - test KO sur nouveau patrimoine
-      - pourquoi avec ajout de incoming/20200225, obsoleteMaps=Array([0] => 0101) ?
-      - l'utilisation de mapcat pour fabriquer la liste des cartes ne permet pas de tester la gestion des cartes obsolètes
-  13/5/2022:
-    - création initiale
-    - gestion du cas particuliers des cartes sans métadonnées
-    - test OK sur un patrimoine courant identique au patrimoine archivé
-*/
+/** procédure principale de mise à jour des cartes ShomGT V4 - 4/8/2023
+ *
+ * Variable_d'Environnement:
+ *   SHOMGT3_SERVER_URL: url du serveur de cartes en 7z
+ *   SHOMGT3_MAPS_DIR_PATH: répertoire dans lequel les cartes expansées doivent être copiées
+ *
+ * A faire:
+ *   - afficher à la fin une synthèse du traitement
+ * journal: |
+ * - 17/8/2023:
+ *   - correction de la version des cartes spéciales
+ * - 8/8/2023:
+ *   - ajout d'un verrou pour interdire des exécutions simultanées
+ * - 3/8/2023:
+ *   - chgt de la constante VERSION en '4' pour obtenir les vraies versions des cartes spéciales
+ *   - modif de findCurrentMapVersion() sur les cartes spéciales
+ * - 18/6/2023:
+ *   - déplacement lib dans ../lib
+ * - 1/8/2022:
+ *   - ajout déclarations PhpStan pour level 6
+ * - 22/6/2022:
+ *   - correction d'un bug
+ * - 20/6/2022:
+ *   - correction d'un bug
+ * - 19/6/2022:
+ *   - ajout mention d'une version dans l'appel à $SERVER_URL/maps.json
+ * - 17/6/2022:
+ *   - adaptation au transfert de update.yaml dans mapcat.yaml
+ * - 30/5/2022:
+ *   - ajout suppression du cache de tuiles
+ *   - passage en paramètres des variables globales
+ *   - mise en oeuvre du nouveau protocole du serveur de ce jour
+ * - 19/5/2022:
+ *   - ajout création du répertoire $MAPS_DIR_PATH s'il n'existe pas
+ *   - définition de valeurs par défaut pour $SERVER_URL et $MAPS_DIR_PATH
+ * - 18/5/2022:
+ *   - évolution du code pour fonctionner en contenenur
+ *   - utilisation des 2 variables d'environnement
+ *     - formalisation sous la forme de variables globales en majuscules - plus faciles à utiliser
+ *   - en php:cli le répertoire par défaut est / et non le répertoire dans lequel php est lancé
+ *     - il faut donc que les références aux fichiers soient toutes absolues
+ *   - création du dossier temp au démarrage s'il n'existe pas
+ *   - transfert de temp dans SHOMGT3_MAPS_DIR_PATH
+ *     - pour permettre le déplacement du répertoire de carte de temp vers SHOMGT3_MAPS_DIR_PATH
+ * - 16/5/2022:
+ *   - détection de la liste des cartes obsolètes dans maps.json
+ *   - construction du layers.yaml et transfert dans le répertoire data
+ *   - effacement des cartes obsolètes
+ *   - le bug sur 0101 provenait d'un bug de sgserver
+ * - 15/5/2022:
+ *   - initialisation de la liste des cartes par interrogation du serveur sur /maps.json
+ *   - test KO sur nouveau patrimoine
+ *     - pourquoi avec ajout de incoming/20200225, obsoleteMaps=Array([0] => 0101) ?
+ *     - l'utilisation de mapcat pour fabriquer la liste des cartes ne permet pas de tester la gestion des cartes obsolètes
+ * - 13/5/2022:
+ *   - création initiale
+ *   - gestion du cas particuliers des cartes sans métadonnées
+ *   - test OK sur un patrimoine courant identique au patrimoine archivé
+ * @package shomgt\sgupdt
+ */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
 require_once __DIR__.'/../lib/envvar.inc.php';
@@ -140,7 +139,8 @@ class Lock {
   }
 };
 
-class UpdtMaps { // stocke les informations téléchargées de $SERVER_URL/maps.json
+/** stocke les informations téléchargées de $SERVER_URL/maps.json */
+class UpdtMaps {
   /** @var array<string, string> $validMaps */
   static array $validMaps=[]; // liste des numéros de cartes non obsoletes trouvés dans maps.json avec leur version
   /** @var array<int, string> $obsoleteMaps */
@@ -167,12 +167,13 @@ class UpdtMaps { // stocke les informations téléchargées de $SERVER_URL/maps.
   }
 };
 
-// lit dans le fichier layers.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml
+/** lit dans le fichier layers.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml */
 class ShomGtDelZone {
   /** @var array<string, array<string, array<string, mixed>>> $deleted */
   static array $deleted=[]; // [{mapnum} => [{gtname} => {toDel}]]
   
-  static function init(): void { // lit le fichier et structure les zones à effacer par mapnum et gtname
+  /** lit le fichier et structure les zones à effacer par mapnum et gtname */
+  static function init(): void {
     if (is_file(__DIR__.'/../data/layers.yaml'))
       $yaml = Yaml::parseFile(__DIR__.'/../data/layers.yaml');
     else
@@ -200,7 +201,7 @@ class ShomGtDelZone {
       return [];
   }
 
-  // Teste si pour un $mapnum les zones à effacer de TempMapCat sont ou non identiques aux zones effacées de layers.yaml
+  /** Teste si pour un $mapnum les zones à effacer de TempMapCat sont ou non identiques aux zones effacées de layers.yaml */
   static function sameDelZones(string $mapnum): bool {
     //echo "ShomGtDelZone::deleted="; print_r(ShomGtDelZone::deleted($mapnum));
     //echo "TempMapCat::toDeleteByGtname="; print_r(TempMapCat::toDeleteByGtname("FR$mapnum"));
@@ -208,7 +209,7 @@ class ShomGtDelZone {
   }
 };
 
-// Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
+/** Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas */
 function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';
@@ -262,7 +263,8 @@ function findCurrentMapVersion(string $MAPS_DIR_PATH, string $mapnum): string {
   return 'undefined'; // sinon undefined
 }
 
-function expand(string $map7zpath): void { // expansion d'une carte téléchargée comme 7z au path indiqué
+/** expanse une carte téléchargée comme 7z au path indiqué */
+function expand(string $map7zpath): void {
   echo "expand($map7zpath)\n";
   $mapdir = dirname($map7zpath);
   $mapbasename = basename($map7zpath);
@@ -295,7 +297,7 @@ function expand(string $map7zpath): void { // expansion d'une carte télécharg�
   }
 }
 
-// télécharge la carte, l'expanse et l'installe dans le répertoire courant, retourne le libellé du code http
+/** télécharge la carte, l'expanse et l'installe dans le répertoire courant, retourne le libellé du code http */
 function dlExpandInstallMap(string $SERVER_URL, string $MAPS_DIR_PATH, string $TEMP, string $mapnum): string {
   $url = "$SERVER_URL/maps/$mapnum.7z";
   //echo "\$url=$url\n";

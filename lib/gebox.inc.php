@@ -31,6 +31,7 @@
  *   - scission de gegeom.inc.php
  * - 7/3/2019:
  *   - création
+ * @package gegeom
  */
 namespace gegeom;
 

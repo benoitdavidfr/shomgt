@@ -4,6 +4,7 @@
  * paramètres GET
  *  - path - chemin du répertoire contenant le fichier 7z de la carte
  *  - map  - nom de base du fichier 7z d'une carte (sans l'extension .7z)
+ * @package shomgt\bo
  */
 namespace bo;
 

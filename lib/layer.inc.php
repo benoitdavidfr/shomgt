@@ -37,6 +37,7 @@
  *   - gestion de la superposition de plusieures couches
  * 25/4/2022:
  *   - scission de maps.php
+ * @package shomgt\lib
 */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

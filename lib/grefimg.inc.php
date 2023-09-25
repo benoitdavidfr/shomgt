@@ -21,6 +21,7 @@
  *   - ajout GeoRefImage::imagefilledrectangle()
  * - 22/4/2022:
  *   - création
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

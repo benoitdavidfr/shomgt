@@ -27,6 +27,7 @@
  *   - modif fonction spatialCoeff() pour mettre à niveau les COM à la suite mail D. Bon
  * - 6/1/2023: modif fonction spatialCoeff()
  * - 22/8/2022: correction bug
+ * @package shomgt\dashboard
  */
 namespace dashboard;
 

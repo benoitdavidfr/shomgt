@@ -3,6 +3,7 @@
  *
  *  Améliorations à apporter:
  *    - au moins faire un log des actions
+ * @package shomgt\bo
  */
 namespace bo;
 

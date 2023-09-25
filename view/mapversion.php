@@ -1,12 +1,15 @@
 <?php
-// mapversion.php - versions des cartes dans shomgt/data
-// Fonction à la fois en V3 et en V4
-
+/** mapversion.php - versions des cartes dans shomgt/data.
+ *
+ * Fonction à la fois en V3 et en V4
+ * @package shomgt\view
+ */
 require_once __DIR__.'/../lib/envvar.inc.php';
 require_once __DIR__.'/../lib/readmapversion.inc.php';
 
 $MAPS_DIR_PATH = EnvVar::val('SHOMGT3_MAPS_DIR_PATH');
 
+/** indqieu la version ShomGT */
 function shomGTVersion(): int {
   switch ($_SERVER['SCRIPT_NAME']) {
     case '/geoapi/shomgt/view/mapversion.php': return 4; // en local
@@ -17,9 +20,9 @@ function shomGTVersion(): int {
   }
 }
 
-// Code en V4
-// Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
-// ou 'undefined' si aucun fichier de MD n'est trouvé
+/** Code en V4.
+ * Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
+ * ou 'undefined' si aucun fichier de MD n'est trouvé */
 function findCurrentMapVersionV4(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';
@@ -74,9 +77,9 @@ function findCurrentMapVersionV4(string $MAPS_DIR_PATH, string $mapnum): string 
   return 'undefined'; // sinon undefined
 }
 
-// code en V3
-// Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
-// ou 'undefined' si aucun fichier de MD n'est trouvé
+/** code en V3.
+ * Renvoit le libellé de la version courante de la carte $mapnum ou '' si la carte n'existe pas
+ * ou 'undefined' si aucun fichier de MD n'est trouvé */
 function findCurrentMapVersionV3(string $MAPS_DIR_PATH, string $mapnum): string {
   /* cherche un des fichiers de MD ISO dans le répertoire de carte et en extrait la version */
   $mappath = '';

@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -131,7 +207,8 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/shomgt.html">shomgt</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/shomgt-mapcat.html">mapcat</a></li>
                             </ul>
         </div>
     
@@ -146,7 +223,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -187,6 +264,7 @@ Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin &lt;
     <span>
         &nbsp;= [&quot;les latitudes sont comprises entre -90° et 90°&quot;, &quot;la latitude North est supérieure à la latitude South&quot;, &quot;les longitudes West et East sont comprises entre -180° et 180° sauf dans l&#039;exception circumnavigateTheEarth&quot;, &quot;la longitude East est supérieure à la longitude West sauf dans l&#039;exception astrideTheAntimeridian&quot;]                            </span>
 </dt>
+<dd>Liste des contraintes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/gegeom-GBox.html#constant_ErrorDistanceOfEmptyGBox">ErrorDistanceOfEmptyGBox</a>
@@ -235,6 +313,7 @@ Toutefois, uGeoJSON génère des bbox avec des coord. qqc, y compris lonmin &lt;
     <span>
         &nbsp;= [&#039;astrideTheAntimeridian&#039; =&gt; [&quot;l&#039;exception astrideTheAntimeridian correspond à une boite à cheval sur l&#039;anti-méridien&quot;, &quot;sauf dans l&#039;exception circumnavigateTheEarth&quot;, &quot;elle est indiquée par la valeur &#039;astrideTheAntimeridian&#039; dans le champ exception&quot;, &quot;dans ce cas East &lt; West mais Spatial::__construct() augmente East de 360° pour que East &gt; West&quot;], &#039;circumnavigateTheEarth&#039; =&gt; [&quot;l&#039;exception circumnavigateTheEarth correspond à une boite couvrant la totalité de la Terre en longitude&quot;, &quot;elle est indiquée par la valeur &#039;circumnavigateTheEarth&#039; dans le champ exception&quot;, &quot;dans ce cas (East - West) &gt;= 360 et -180° &lt;= West &lt; 180° &lt; East &lt; 540° (360+180)&quot;]]                            </span>
 </dt>
+<dd>Liste des exceptions</dd>
 
     </dl>
 
@@ -317,12 +396,14 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-Spatial.html#method_badLons">badLons()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>si les longitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-BBox.html#method_bound">bound()</a>
@@ -400,6 +481,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>si $this correspond à une exception alors renvoie son libellé, sinon null</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/gegeom-GBox.html#method_fromGeoDMd">fromGeoDMd()</a>
@@ -465,12 +547,14 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>si $this n&#039;est pas correct alors renvoie la raison, sinon null</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-Spatial.html#method_lgeoJSON">lgeoJSON()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>retourne le code JS génèrant l&#039;objet L.geoJSON</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/mapcat-Spatial.html#method_ne">ne()</a>
@@ -570,12 +654,14 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <span>
                                 &nbsp;: <abbr title="\mapcat\TGeoJsonFeatureCollection">TGeoJsonFeatureCollection</abbr>    </span>
 </dt>
+<dd>génère une FeatureCollection GeoJson contenant le multiPolygone</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/mapcat-Spatial.html#method_multiPolygon">multiPolygon()</a>
     <span>
                                 &nbsp;: <abbr title="\mapcat\TGJMultiPolygon">TGJMultiPolygon</abbr>    </span>
 </dt>
+<dd>Retourne la boite comme MultiPolygon GeoJSON avec décomposition en 2 polygones.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/mapcat-Spatial.html#method_nw">nw()</a>
@@ -617,11 +703,12 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">149</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Liste des contraintes</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -645,7 +732,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">291</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 
     </aside>
 
@@ -673,7 +760,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">290</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 
@@ -701,7 +788,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -729,7 +816,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -757,7 +844,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -785,7 +872,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -813,7 +900,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">289</span>
+    <span class="phpdocumentor-element-found-in__line">290</span>
 
     </aside>
 
@@ -841,11 +928,12 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Liste des exceptions</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
@@ -885,7 +973,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -918,7 +1006,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -953,7 +1041,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -988,7 +1076,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">293</span>
+    <span class="phpdocumentor-element-found-in__line">294</span>
 
     </aside>
 
@@ -1026,7 +1114,7 @@ en fonction de la $precision définie dans la classe appelée</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
@@ -1069,7 +1157,7 @@ respectant le format Spatial défini dans MapCat et shomgt.yaml</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">172</span>
 
     </aside>
 
@@ -1106,7 +1194,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -1141,7 +1229,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">167</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -1176,7 +1264,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">372</span>
+    <span class="phpdocumentor-element-found-in__line">373</span>
 
     </aside>
 
@@ -1212,11 +1300,12 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">si les latitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">badLats</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -1247,11 +1336,12 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">si les longitudes ne sont pas correctes alors renvoie la raison, sinon renvoie null</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">badLons</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -1282,7 +1372,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -1328,7 +1418,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -1364,7 +1454,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">324</span>
+    <span class="phpdocumentor-element-found-in__line">325</span>
 
     </aside>
 
@@ -1395,7 +1485,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">401</span>
+    <span class="phpdocumentor-element-found-in__line">402</span>
 
     </aside>
 
@@ -1443,7 +1533,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">427</span>
+    <span class="phpdocumentor-element-found-in__line">428</span>
 
     </aside>
 
@@ -1489,7 +1579,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">420</span>
+    <span class="phpdocumentor-element-found-in__line">421</span>
 
     </aside>
 
@@ -1520,7 +1610,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">415</span>
+    <span class="phpdocumentor-element-found-in__line">416</span>
 
     </aside>
 
@@ -1565,7 +1655,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">350</span>
+    <span class="phpdocumentor-element-found-in__line">351</span>
 
     </aside>
 
@@ -1600,7 +1690,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">349</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
@@ -1635,7 +1725,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -1670,7 +1760,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1706,11 +1796,12 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">si $this correspond à une exception alors renvoie son libellé, sinon null</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">exceptionLons</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -1741,7 +1832,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">355</span>
+    <span class="phpdocumentor-element-found-in__line">356</span>
 
     </aside>
 
@@ -1787,7 +1878,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">271</span>
 
     </aside>
 
@@ -1840,7 +1931,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">476</span>
+    <span class="phpdocumentor-element-found-in__line">477</span>
 
     </aside>
 
@@ -1871,7 +1962,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">267</span>
+    <span class="phpdocumentor-element-found-in__line">268</span>
 
     </aside>
 
@@ -1917,7 +2008,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">231</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -1963,7 +2054,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">358</span>
+    <span class="phpdocumentor-element-found-in__line">359</span>
 
     </aside>
 
@@ -1999,7 +2090,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">360</span>
+    <span class="phpdocumentor-element-found-in__line">361</span>
 
     </aside>
 
@@ -2030,7 +2121,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -2061,7 +2152,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
@@ -2106,11 +2197,12 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">205</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">si $this n&#039;est pas correct alors renvoie la raison, sinon null</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isBad</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -2141,11 +2233,12 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">retourne le code JS génèrant l&#039;objet L.geoJSON</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">lgeoJSON</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string, string|int|float&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$popupContent</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -2193,7 +2286,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -2228,7 +2321,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -2263,7 +2356,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">192</span>
 
     </aside>
 
@@ -2299,7 +2392,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">499</span>
+    <span class="phpdocumentor-element-found-in__line">500</span>
 
     </aside>
 
@@ -2345,7 +2438,7 @@ avec des coord. arrondies en fonction de la $precision définie dans la classe a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">153</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
@@ -2383,7 +2476,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">392</span>
 
     </aside>
 
@@ -2419,7 +2512,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -2454,7 +2547,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -2489,7 +2582,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">297</span>
 
     </aside>
 
@@ -2530,7 +2623,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">385</span>
+    <span class="phpdocumentor-element-found-in__line">386</span>
 
     </aside>
 
@@ -2566,7 +2659,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">379</span>
 
     </aside>
 
@@ -2602,7 +2695,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -2648,7 +2741,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">205</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
@@ -2693,7 +2786,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/gebox.inc.php"><a href="files/lib-gebox-inc.html"><abbr title="lib/gebox.inc.php">gebox.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -2728,11 +2821,12 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">génère une FeatureCollection GeoJson contenant le multiPolygone</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">layer</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$popupContent</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\mapcat\TGeoJsonFeatureCollection">TGeoJsonFeatureCollection</abbr></span></code>
@@ -2773,18 +2867,22 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">231</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retourne la boite comme MultiPolygon GeoJSON avec décomposition en 2 polygones.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">multiPolygon</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\mapcat\TGJMultiPolygon">TGJMultiPolygon</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>A linear ring MUST follow the right-hand rule with respect to the area it bounds,
+i.e., exterior rings are clockwise, and holes are counterclockwise.</p>
+</section>
+
     
     
 
@@ -2808,7 +2906,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">220</span>
+    <span class="phpdocumentor-element-found-in__line">227</span>
 
     </aside>
 
@@ -2843,7 +2941,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -2878,7 +2976,7 @@ en fonction de la $precision définie dans la classe appelée</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/mapcat.inc.php"><a href="files/mapcat-mapcat-inc.html"><abbr title="mapcat/mapcat.inc.php">mapcat.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 

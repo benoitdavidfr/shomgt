@@ -1,5 +1,7 @@
 <?php
-/** Fichier test d'utilisation de définitions avec espace de nom explicite */
+/** Fichier test d'utilisation de définitions avec espace de nom explicite
+* @package phpanalyzer\TEST
+ */
 require_once __DIR__.'/def.php';
 
 \ns\fun1(); // appel fonction

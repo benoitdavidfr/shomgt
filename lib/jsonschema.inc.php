@@ -75,6 +75,7 @@
  *   - ajout patternProperties et test sur http://localhost/yamldoc/?doc=dublincoreyd&ypath=%2Ftables%2Fdcmes%2Fdata
  * - 1/1/2019
  *   - première version
+ * @package jsonschema
  */
 namespace jsonschema;
 

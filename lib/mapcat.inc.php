@@ -14,6 +14,7 @@
  *   - correction suite à analyse PhpStan level 6
  * - 17-18/6/2022:
  *   - création
+ * @package shomgt\lib
  */
 require_once __DIR__.'/envvar.inc.php';
 require_once __DIR__.'/execdl.inc.php';

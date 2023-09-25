@@ -1,6 +1,7 @@
 <?php
 /**
  * Gestion des tokens d'un fichier Php pour phpanalyzer
+ * @package phpanalyzer
  */
 require_once __DIR__.'/../vendor/autoload.php';
 

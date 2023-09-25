@@ -1,5 +1,7 @@
 <?php
-/** lecture du portefeuille de cartes - 12/6/2023c*/
+/** lecture du portefeuille de cartes - 12/6/2023
+ * @package shomgt\dashboard
+ */
 namespace dashboard;
 
 /** Portefeuille des cartes exposées sur ShomGt issu des fichiers .md.json */

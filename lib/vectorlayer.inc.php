@@ -8,6 +8,7 @@
  *   - rajout des couches de catalogue en réutilisant le code de layer.inc.php
  * - 8-9/7/2022:
  *   - création sur le modèle de layer.inc.php
+ * @package shomgt\lib
  */
 require_once __DIR__.'/layer.inc.php';
 require_once __DIR__.'/gegeom.inc.php';

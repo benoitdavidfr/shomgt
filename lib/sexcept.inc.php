@@ -1,5 +1,7 @@
 <?php
-/** Exception avec code string */
+/** Exception avec code string
+ * @package shomgt\lib
+ */
 
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

@@ -1,5 +1,7 @@
 <?php
-/** BO de ShomGT4 - Benoit DAVID - 5-13/8/2023 */
+/** BO de ShomGT4 - Benoit DAVID - 5-13/8/2023
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';

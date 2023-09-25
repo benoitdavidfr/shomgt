@@ -21,6 +21,7 @@
  *   - définition de la classe GdalInfo
  * - 18-20/4/2022:
  *   - création pour répondre aux besoins de décodage des infos CRS liées aux cartes Shom
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

@@ -2,6 +2,7 @@
 /** Formulaires HTML composés de un ou plusieurs champs
  *
  * Manque checkedBox
+ * @package html
  */
 namespace html;
 require_once __DIR__.'/lib.inc.php';

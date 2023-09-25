@@ -10,6 +10,7 @@
  *  - soit inclus dans un script de BO
  *  - soit en CLI pour tester un ensemble de cartes.
  *  - soit en web pour visualiser une archive ou la liste des archives
+ * @package shomgt\bo
  */
 namespace bo;
 

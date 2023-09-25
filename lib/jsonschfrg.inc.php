@@ -20,7 +20,8 @@
  *   - scission du fichier jsonschema.inc.php en jsonschema.inc.php et jsonschelt.inc.php
  * - 1-18/1/2019:
  *   - Voir journal dans jsonschema.inc.php
-*/
+ * @package jsonschema
+ */
 namespace jsonschema;
 
 use Symfony\Component\Yaml\Yaml;

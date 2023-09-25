@@ -1,5 +1,7 @@
 <?php
-/** définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN */
+/** définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN
+ * @package shomgt\gan
+ */
 namespace dashboard;
 
 require_once __DIR__.'/portfolio.inc.php';

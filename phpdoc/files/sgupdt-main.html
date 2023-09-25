@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -122,7 +198,123 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">main.php</h2>
 
-        
+            <p class="phpdocumentor-summary">procédure principale de mise à jour des cartes ShomGT V4 - 4/8/2023</p>
+
+    <section class="phpdocumentor-description"><p>Variable_d'Environnement:
+SHOMGT3_SERVER_URL: url du serveur de cartes en 7z
+SHOMGT3_MAPS_DIR_PATH: répertoire dans lequel les cartes expansées doivent être copiées</p>
+<p>A faire:</p>
+<ul>
+<li>afficher à la fin une synthèse du traitement
+journal: |</li>
+<li>17/8/2023:
+<ul>
+<li>correction de la version des cartes spéciales</li>
+</ul>
+</li>
+<li>8/8/2023:
+<ul>
+<li>ajout d'un verrou pour interdire des exécutions simultanées</li>
+</ul>
+</li>
+<li>3/8/2023:
+<ul>
+<li>chgt de la constante VERSION en '4' pour obtenir les vraies versions des cartes spéciales</li>
+<li>modif de findCurrentMapVersion() sur les cartes spéciales</li>
+</ul>
+</li>
+<li>18/6/2023:
+<ul>
+<li>déplacement lib dans ../lib</li>
+</ul>
+</li>
+<li>1/8/2022:
+<ul>
+<li>ajout déclarations PhpStan pour level 6</li>
+</ul>
+</li>
+<li>22/6/2022:
+<ul>
+<li>correction d'un bug</li>
+</ul>
+</li>
+<li>20/6/2022:
+<ul>
+<li>correction d'un bug</li>
+</ul>
+</li>
+<li>19/6/2022:
+<ul>
+<li>ajout mention d'une version dans l'appel à $SERVER_URL/maps.json</li>
+</ul>
+</li>
+<li>17/6/2022:
+<ul>
+<li>adaptation au transfert de update.yaml dans mapcat.yaml</li>
+</ul>
+</li>
+<li>30/5/2022:
+<ul>
+<li>ajout suppression du cache de tuiles</li>
+<li>passage en paramètres des variables globales</li>
+<li>mise en oeuvre du nouveau protocole du serveur de ce jour</li>
+</ul>
+</li>
+<li>19/5/2022:
+<ul>
+<li>ajout création du répertoire $MAPS_DIR_PATH s'il n'existe pas</li>
+<li>définition de valeurs par défaut pour $SERVER_URL et $MAPS_DIR_PATH</li>
+</ul>
+</li>
+<li>18/5/2022:
+<ul>
+<li>évolution du code pour fonctionner en contenenur</li>
+<li>utilisation des 2 variables d'environnement
+<ul>
+<li>formalisation sous la forme de variables globales en majuscules - plus faciles à utiliser</li>
+</ul>
+</li>
+<li>en php:cli le répertoire par défaut est / et non le répertoire dans lequel php est lancé
+<ul>
+<li>il faut donc que les références aux fichiers soient toutes absolues</li>
+</ul>
+</li>
+<li>création du dossier temp au démarrage s'il n'existe pas</li>
+<li>transfert de temp dans SHOMGT3_MAPS_DIR_PATH
+<ul>
+<li>pour permettre le déplacement du répertoire de carte de temp vers SHOMGT3_MAPS_DIR_PATH</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>16/5/2022:
+<ul>
+<li>détection de la liste des cartes obsolètes dans maps.json</li>
+<li>construction du layers.yaml et transfert dans le répertoire data</li>
+<li>effacement des cartes obsolètes</li>
+<li>le bug sur 0101 provenait d'un bug de sgserver</li>
+</ul>
+</li>
+<li>15/5/2022:
+<ul>
+<li>initialisation de la liste des cartes par interrogation du serveur sur /maps.json</li>
+<li>test KO sur nouveau patrimoine
+<ul>
+<li>pourquoi avec ajout de incoming/20200225, obsoleteMaps=Array([0] =&gt; 0101) ?</li>
+<li>l'utilisation de mapcat pour fabriquer la liste des cartes ne permet pas de tester la gestion des cartes obsolètes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>13/5/2022:
+<ul>
+<li>création initiale</li>
+<li>gestion du cas particuliers des cartes sans métadonnées</li>
+<li>test OK sur un patrimoine courant identique au patrimoine archivé</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -143,7 +335,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Lock.html"><abbr title="\Lock">Lock</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/UpdtMaps.html"><abbr title="\UpdtMaps">UpdtMaps</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/ShomGtDelZone.html"><abbr title="\ShomGtDelZone">ShomGtDelZone</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Lock.html"><abbr title="\Lock">Lock</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/UpdtMaps.html"><abbr title="\UpdtMaps">UpdtMaps</abbr></a></dt><dd>stocke les informations téléchargées de $SERVER_URL/maps.json</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/ShomGtDelZone.html"><abbr title="\ShomGtDelZone">ShomGtDelZone</abbr></a></dt><dd>lit dans le fichier layers.yaml les zones effacées et permet de les comparer par mapnum avec celles à effacer de mapcat.yaml</dd>    </dl>
 
 
 
@@ -181,18 +373,21 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Renvoit le libellé de la version courante de la carte $mapnum ou &#039;&#039; si la carte n&#039;existe pas</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_expand">expand()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>expanse une carte téléchargée comme 7z au path indiqué</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/default.html#function_dlExpandInstallMap">dlExpandInstallMap()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>télécharge la carte, l&#039;expanse et l&#039;installe dans le répertoire courant, retourne le libellé du code http</dd>
 
     </dl>
 
@@ -215,7 +410,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/main.php"><a href="files/sgupdt-main.html"><abbr title="sgupdt/main.php">main.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -243,7 +438,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/main.php"><a href="files/sgupdt-main.html"><abbr title="sgupdt/main.php">main.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -278,11 +473,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/main.php"><a href="files/sgupdt-main.html"><abbr title="sgupdt/main.php">main.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Renvoit le libellé de la version courante de la carte $mapnum ou &#039;&#039; si la carte n&#039;existe pas</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">findCurrentMapVersion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$MAPS_DIR_PATH</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapnum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -323,11 +519,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/main.php"><a href="files/sgupdt-main.html"><abbr title="sgupdt/main.php">main.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">265</span>
+    <span class="phpdocumentor-element-found-in__line">267</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">expanse une carte téléchargée comme 7z au path indiqué</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">expand</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$map7zpath</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -357,11 +554,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="sgupdt/main.php"><a href="files/sgupdt-main.html"><abbr title="sgupdt/main.php">main.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">299</span>
+    <span class="phpdocumentor-element-found-in__line">301</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">télécharge la carte, l&#039;expanse et l&#039;installe dans le répertoire courant, retourne le libellé du code http</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
                     <span class="phpdocumentor-signature__name">dlExpandInstallMap</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$SERVER_URL</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$MAPS_DIR_PATH</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$TEMP</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapnum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>

@@ -1,5 +1,7 @@
 <?php
-/** biblio de fonctions - 2-13/8/2023 */
+/** biblio de fonctions - 2-13/8/2023
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';

@@ -1,5 +1,7 @@
 <?php
-/** gestion du poids des cartes du portefeuille - 1/8/2023 */
+/** gestion du poids des cartes du portefeuille - 1/8/2023
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';

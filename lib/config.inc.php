@@ -14,6 +14,7 @@
  *   - ajout du contrôle IPv6
  * - 9/11/2019
  *   - amélioration du controle d'accès
+ * @package shomgt\lib
  */
 if (is_file(__DIR__.'/../secrets/secretconfig.inc.php'))
   require_once __DIR__.'/../secrets/secretconfig.inc.php';

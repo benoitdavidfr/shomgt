@@ -13,6 +13,7 @@
  *   - modif format de l'édition dans le XML
  * - 1/8/2022:
  *   - ajout déclarations PhpStan pour level 6
+ * @package shomgt\lib
  */
 
 /**

@@ -12,6 +12,7 @@
  *  - lineNo: numéro de la ligne à afficher (facultatif)
  *
  * Utilise des ancres pour chaque ligne du fichier nommées line{lineNo}
+ * @package phpanalyzer
  */
 
 { // Propose de changer noToken en gardant rpath et lineNo

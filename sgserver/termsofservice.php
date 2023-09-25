@@ -1,5 +1,7 @@
 <?php
-/** Conditions d'utilisation du serveur de cartes GéoTiff du Shom< */
+/** Conditions d'utilisation du serveur de cartes GéoTiff du Shom
+ * @package shomgt\sgserver
+ */
 ?>
 <!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>conditions d'utilisation</title></head><body>
 <h2>Conditions d'utilisation du serveur de cartes GéoTiff du Shom</h2>

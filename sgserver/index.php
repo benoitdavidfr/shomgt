@@ -91,6 +91,7 @@
  *   - utilisation passthru() à la place de file_get_contents() pour éviter une explosion mémoire
  * - 11/5/2022:
  *   - création
+ * @package shomgt\sgserver
  */
 //define ('DEBUG', true); // le mode DEBUG facilite le test interactif du serveur
 
@@ -113,6 +114,7 @@ define('TEST_MAPS', []); // PAS de restriction pour tests
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
+require_once __DIR__.'/httperrorcodes.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -141,17 +143,6 @@ function logRecord(array $log): void {
 }
 
 //logRecord($_SERVER);
-
-/** liste de qqs codes d'erreur et de leur label */
-const HTTP_ERROR_CODES = [
-  204 => 'No Content', // Requête traitée avec succès mais pas d’information à renvoyer. 
-  400 => 'Bad Request', // paramètres en entrée incorrects
-  401 => 'Unauthorized', // Une authentification est nécessaire pour accéder à la ressource. 
-  403	=> 'Forbidden', // accès interdit
-  404 => 'File Not Found', // ressource demandée non disponible
-  410 => 'Gone', // La ressource n'est plus disponible et aucune adresse de redirection n’est connue
-  500 => 'Internal Server Error', // erreur interne du serveur
-];
 
 /** Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys */
 function sendHttpCode(int $httpErrorCode, string $mesUti, string $mesSys=''): void {

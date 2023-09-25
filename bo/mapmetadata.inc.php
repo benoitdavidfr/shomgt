@@ -1,5 +1,7 @@
 <?php
-/** génération d'une MD simplifiée à partir du fichier XML ISO - 4/8/2023 */
+/** génération d'une MD simplifiée à partir du fichier XML ISO - 4/8/2023
+ * @package shomgt\bo
+ */
 namespace bo;
 
 require_once __DIR__.'/../vendor/autoload.php';

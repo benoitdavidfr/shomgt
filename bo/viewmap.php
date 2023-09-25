@@ -1,5 +1,7 @@
 <?php
-/** PERIME */
+/** PERIME
+ * @package PERIME
+ */
 die("PERIME");
 /*PhpDoc:
 title: bo/viewmap.php - Visualisation d'une carte Shom 7z pour éventuelle validation- Benoit DAVID - 7-8/2023

@@ -1,53 +1,51 @@
 <?php
-/*PhpDoc:
-name: mapwcat.php
-title: mapwcat.php - carte Leaflet avec les couches de geotiff, les catalogues, la ZEE, delmar, ...
-doc: |
-journal: |
-  24/6/2023:
-    - mise en https d'OSM
-  9/5/2023:
-    - mise en https de https://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png
-  21/4/2023:
-    - ajout de l'affichage en option des silhouettes du catalogue Shom exposé en WFS
-  19/4/2023:
-    - correction de l'URL des GAN dans la carte Leaflet
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-  1/6/2022:
-    - ajout utilisation de la variable d'environnement SHOMGT3_MAPWCAT_FORCE_HTTPS
-      - si elle vaut 'true' les appels générés sont en https même si l'appel de mapwcat.php est en http
-      - indispensable pour utiliser shomgt derrière Traefik en https
-  22/5/2022:
-    - modif affichage des caractéristiques de chaque GeoTiff
-    - corr. bug dans catalogues cartesAEM
-  1-3/5/2022:
-    - clonage dans shomgt3 et adaptation
-  26/4/2022:
-    - ajout d'une couche des points des rectangles des GéoTiffs
-  12/12/2020:
-    - correction du lien du GAN dans les cartes
-    - ajout du champ mdDate qui est la date des métadonnées ISO 19139
-  22/11/2019:
-    - modification du code afin que la carte Leaflet fonctionne sur un poste non connecté à internet
-      (demande Dominique Bon du CROSS Corsen)
-    - téléchargement dans le répertoire leaflet du code nécessaire à la carte Leaflet et intégration dans le Github
-  21/11/2019:
-    ajout OSM!
-  19/11/2019:
-    correction de URL générique du GAN suite à erreur constatée, a priori cette nouvelle URL n'est plus celle du QR Code !
-  15/11/2019
-    passage igngp.geoapi.fr en https pour résoudre bug
-  9/11/2019
-    amélioration du controle d'accès
-  4/11/2019:
-    - ajout bindTooltip() dans onEachFeature()
-  1-2/11/2019:
-    - adaptation à la nouvelle version
-  10/4/2019:
-    - ajout des numéros de carte Shom
-includes: [ ../lib/accesscntrl.inc.php ]
-*/
+/** carte Leaflet avec les couches de geotiff, les catalogues, la ZEE, delmar, ...
+ *
+ * journal:
+ * - 24/6/2023:
+ *   - mise en https d'OSM
+ * - 9/5/2023:
+ *   - mise en https de https://visu.gexplor.fr/utilityserver.php/debug/{z}/{x}/{y}.png
+ * - 21/4/2023:
+ *   - ajout de l'affichage en option des silhouettes du catalogue Shom exposé en WFS
+ * - 19/4/2023:
+ *   - correction de l'URL des GAN dans la carte Leaflet
+ * - 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * - 1/6/2022:
+ *   - ajout utilisation de la variable d'environnement SHOMGT3_MAPWCAT_FORCE_HTTPS
+ *     - si elle vaut 'true' les appels générés sont en https même si l'appel de mapwcat.php est en http
+ *     - indispensable pour utiliser shomgt derrière Traefik en https
+ * - 22/5/2022:
+ *   - modif affichage des caractéristiques de chaque GeoTiff
+ *   - corr. bug dans catalogues cartesAEM
+ * - 1-3/5/2022:
+ *   - clonage dans shomgt3 et adaptation
+ * - 26/4/2022:
+ *   - ajout d'une couche des points des rectangles des GéoTiffs
+ * - 12/12/2020:
+ *   - correction du lien du GAN dans les cartes
+ *   - ajout du champ mdDate qui est la date des métadonnées ISO 19139
+ * - 22/11/2019:
+ *   - modification du code afin que la carte Leaflet fonctionne sur un poste non connecté à internet
+ *     (demande Dominique Bon du CROSS Corsen)
+ *   - téléchargement dans le répertoire leaflet du code nécessaire à la carte Leaflet et intégration dans le Github
+ * - 21/11/2019:
+ *   - ajout OSM!
+ * - 19/11/2019:
+ *   - correction de URL générique du GAN suite à erreur constatée, a priori cette nouvelle URL n'est plus celle du QR Code !
+ * - 15/11/2019
+ *   - passage igngp.geoapi.fr en https pour résoudre bug
+ * - 9/11/2019
+ *   - amélioration du controle d'accès
+ * - 4/11/2019:
+ *   - ajout bindTooltip() dans onEachFeature()
+ * - 1-2/11/2019:
+ *   - adaptation à la nouvelle version
+ * - 10/4/2019:
+ *   - ajout des numéros de carte Shom
+ * @package shomgt\view
+ */
 require_once __DIR__.'/../lib/accesscntrl.inc.php';
 
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));

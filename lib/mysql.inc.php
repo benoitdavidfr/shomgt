@@ -19,7 +19,8 @@
  *   - ajout MySql::server()
  * - 3/8/2018
  *   - création
-*/
+ * @package mysql
+ */
 require_once __DIR__.'/sexcept.inc.php';
 
 

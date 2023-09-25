@@ -8,6 +8,7 @@
  * si la carte n'apparait pas dans sgserver alors le client conserve la carte qu'il détient.
  * L'obsolescence peut être décidée soit par ce que la carte a été retirée par le Shom de son propre portefeuille,
  * soit par ce que on décide que la carte n'est plus d'intérêt pour ShomGT.
+ * @package shomgt\bo
  */
 namespace bo;
 

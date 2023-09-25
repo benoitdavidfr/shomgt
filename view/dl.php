@@ -1,15 +1,15 @@
 <?php
-/*PhpDoc:
-title: dl.php - téléchargements appelé depuis la carte avec un gtname en paramètre
-name: dl.php
-doc: |
-  Propose différents téléchargements (le GéoTiff en PNG, les MD en XML, gdalinfo en JSON et la carte en 7z).
-journal: |
-  25/6/2022:
-    - ajout différents téléchargements
-  3/6/2022:
-    - correction d'un bug sur SHOMGT3_MAPS_DIR_PATH
-*/
+/** téléchargements appelé depuis la carte avec un gtname en paramètre
+ *
+ * Propose différents téléchargements (le GéoTiff en PNG, les MD en XML, gdalinfo en JSON et la carte en 7z).
+ *
+ * journal:
+ * - 25/6/2022:
+ *   - ajout différents téléchargements
+ * - 3/6/2022:
+ *   - correction d'un bug sur SHOMGT3_MAPS_DIR_PATH
+ * @package shomgt\view
+ */
 require_once __DIR__.'/../lib/envvar.inc.php';
 require_once __DIR__.'/../lib/gdalinfo.inc.php';
 require_once __DIR__.'/../lib/accesscntrl.inc.php';

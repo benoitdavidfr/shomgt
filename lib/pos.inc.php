@@ -18,6 +18,7 @@
  *    - ajout roundToIntIfPossible()  
  *  - 17/12/2020:  
  *    - création  
+ * @package gegeom
  */
 namespace gegeom;
 

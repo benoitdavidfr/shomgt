@@ -1,74 +1,71 @@
 <?php
-/*PhpDoc:
-title: layers.php - génération du fichier layers.yaml
-name: layers.php
-doc: |
-  Ce script génère le fichier layers.yaml soit s'il est défini dans le fichier en paramètre soit sinon sur STDOUT 
-  Il prend en entrée:
-    - le catalogue des cartes téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
-    - la liste des géotiffs prévus dans view, avec pour certains leur géoréférencement (GdalInfo)
-  Il retourne:
-    - le code 0 ssi la sortie est du Yaml correct et est conforme au schéma layers.schema.yaml
-    - le code 1 ssi la sortie n'est pas du Yaml
-    - le code 2 ssi la sortie n'est pas conforme au schéma layers.schema.yaml
-    - le code >= 3 ssi une autre erreur est rencontrée
-
-  La liste des cartes prévues correspond à:
-    - les cartes existantes (que je vais trouver dans ../data/)
-    - moins les cartes obsolètes à supprimer (que je trouve dans maps.json)
-
-  Les couches avec leur seuil d'échelles sont définies dans la classe LayerDef.
-
-  L'algorithme est le suivant:
-    - j'initialise Map à partir de mapcat.yaml téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
-    - j'initialise ShomGt avec la liste des couches définie dans LayerDef
-    - je construis la liste des géotiffs à mettre dans layers en scannant le répertoire de ../data/curent
-    - pour chacun de ces géotiffs
-      - je l'ajoute à ShomGt
-      - pour cela je recherche dans Map les infos sur ce GéoTiff
-      - à partir de ces infos je construis l'objet ShomGt
-      - je récupère l'échelle et j'en déduis avec LayerDef la couche à laquelle il appartient
-      - enfin, je l'insère dans ShomGt
-    - je vérifie que la structure ShomGT est conforme à son schéma
-    - enfin, j'affiche ShomGt en Yaml
-
-  La classe LayerDef définit les couches à créer dans layers et permet d'associer une couche à un géotiff.
-  La classe Map gère le catalogue des cartes et retrouve pour un géotiff les infos correspondantes.
-  La classe ShomGt contient une représentation de layers.yaml qui se construit progressivement.
-
-journal: |
-  3/9/2023:
-    - chgt du nom du fichier Yaml en layers.yaml
-    - chgt du nom de ce script
-  22/8/2023:
-    - déplacement des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
-  2/8/2022:
-    - corrections suites à PhpStan level 6
-  17/6/2022:
-    - adaptation au transfert de update.yaml dans mapcat.yaml
-  6/6/2022:
-    - correction bug
-  3/6/2022:
-    - si update.yaml contient une info spatial, elle remplace celle du catalogue
-    - l'idée est que le catalogue définit le rectangle officiel mais que ce rectangle peut devoir être modifié
-      pour effacer une partie de la carte et dans ce cas cette info est dans update.yaml
-  22/5/2022:
-    - ajout possibilité d'écrire shomgt.yaml dans un fichier et pas uniquement sur STDOUT
-  18/5/2022:
-    - adaptation à l'utilisation dans le conteneur
-  17/5/2022:
-    - modif georefrect() car il n'y a plus de GéoTiffs dans temp
-  16/5/2022:
-    - transfert dans sgupdt
-    - chgt de méthode pour vérifier la conformité Yaml du flux de sortie ainsi que sa conformité à son schéma
-  8/5/2022:
-    - chgt du nom de la classe LayerName en layerDef
-    - vérif. que le flux de sortie est du yaml correct et qu'il est conforme à son schéma
-  7/5/2022:
-    - création
+/** génération du fichier layers.yaml
+ *
+ * Ce script génère le fichier layers.yaml soit s'il est défini dans le fichier en paramètre soit sinon sur STDOUT 
+ * Il prend en entrée:
+ *   - le catalogue des cartes téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
+ *   - la liste des géotiffs prévus dans view, avec pour certains leur géoréférencement (GdalInfo)
+ * Il retourne:
+ *   - le code 0 ssi la sortie est du Yaml correct et est conforme au schéma layers.schema.yaml
+ *   - le code 1 ssi la sortie n'est pas du Yaml
+ *   - le code 2 ssi la sortie n'est pas conforme au schéma layers.schema.yaml
+ *   - le code >= 3 ssi une autre erreur est rencontrée
+ *
+ * La liste des cartes prévues correspond à:
+ *   - les cartes existantes (que je vais trouver dans ../data/)
+ *   - moins les cartes obsolètes à supprimer (que je trouve dans maps.json)
+ *
+ * Les couches avec leur seuil d'échelles sont définies dans la classe LayerDef.
+ *
+ * L'algorithme est le suivant:
+ *   - j'initialise Map à partir de mapcat.yaml téléchargé depuis le serveur ${SHOMGT3_SERVER_URL}
+ *   - j'initialise ShomGt avec la liste des couches définie dans LayerDef
+ *   - je construis la liste des géotiffs à mettre dans layers en scannant le répertoire de ../data/curent
+ *   - pour chacun de ces géotiffs
+ *     - je l'ajoute à ShomGt
+ *     - pour cela je recherche dans Map les infos sur ce GéoTiff
+ *     - à partir de ces infos je construis l'objet ShomGt
+ *     - je récupère l'échelle et j'en déduis avec LayerDef la couche à laquelle il appartient
+ *     - enfin, je l'insère dans ShomGt
+ *   - je vérifie que la structure ShomGT est conforme à son schéma
+ *   - enfin, j'affiche ShomGt en Yaml
+ *
+ * La classe LayerDef définit les couches à créer dans layers et permet d'associer une couche à un géotiff.
+ * La classe Map gère le catalogue des cartes et retrouve pour un géotiff les infos correspondantes.
+ * La classe ShomGt contient une représentation de layers.yaml qui se construit progressivement.
+ *
+ * journal: |
+ * 3/9/2023:
+ *   - chgt du nom du fichier Yaml en layers.yaml
+ *   - chgt du nom de ce script
+ * 22/8/2023:
+ *   - déplacement des 3 fichiers de schema/ dans ../lib/ et chgt du nom de predef.yaml en jsonschpredef.yaml
+ * 2/8/2022:
+ *   - corrections suites à PhpStan level 6
+ * 17/6/2022:
+ *   - adaptation au transfert de update.yaml dans mapcat.yaml
+ * 6/6/2022:
+ *   - correction bug
+ * 3/6/2022:
+ *   - si update.yaml contient une info spatial, elle remplace celle du catalogue
+ *   - l'idée est que le catalogue définit le rectangle officiel mais que ce rectangle peut devoir être modifié
+ *     pour effacer une partie de la carte et dans ce cas cette info est dans update.yaml
+ * 22/5/2022:
+ *   - ajout possibilité d'écrire shomgt.yaml dans un fichier et pas uniquement sur STDOUT
+ * 18/5/2022:
+ *   - adaptation à l'utilisation dans le conteneur
+ * 17/5/2022:
+ *   - modif georefrect() car il n'y a plus de GéoTiffs dans temp
+ * 16/5/2022:
+ *   - transfert dans sgupdt
+ *   - chgt de méthode pour vérifier la conformité Yaml du flux de sortie ainsi que sa conformité à son schéma
+ * 8/5/2022:
+ *   - chgt du nom de la classe LayerName en layerDef
+ *   - vérif. que le flux de sortie est du yaml correct et qu'il est conforme à son schéma
+ * 7/5/2022:
+ *   - création
+ * @package shomgt\sgupdt
 */
-$VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
-
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/jsonschema.inc.php';
 require_once __DIR__.'/../lib/geotiffs.inc.php';

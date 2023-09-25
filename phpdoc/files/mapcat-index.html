@@ -96,8 +96,84 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/shomgt.html" class="">shomgt</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/shomgt-bo.html" class="">bo</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-lib.html" class="">lib</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-mapcat.html" class="">mapcat</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgserver.html" class="">sgserver</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-sgupdt.html" class="">sgupdt</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-shomft.html" class="">shomft</a>
+                
+            </li>
+                    <li>
+                <a href="packages/shomgt-view.html" class="">view</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/html.html" class="">html</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
 </h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/PERIME.html" class="">PERIME</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/coordsys.html" class="">coordsys</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/gegeom.html" class="">gegeom</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/jsonschema.html" class="">jsonschema</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/mysql.html" class="">mysql</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/phpanalyzer.html" class="">phpanalyzer</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/phpanalyzer-TEST.html" class="">TEST</a>
+                
+            </li>
+            </ul>
 
                         </section>
             
@@ -122,7 +198,58 @@
     <article class="phpdocumentor-element -file">
         <h2 class="phpdocumentor-content__title">index.php</h2>
 
-        
+            <p class="phpdocumentor-summary">gestion du catalogue MapCat et confrontation des données de localisation de MapCat avec celles du GAN</p>
+
+    <section class="phpdocumentor-description"><p>L'objectif est d'une part de vérifier les contraintes sur MapCat et, d'autre part, d'identifier les écarts entre mapcat
+et le GAN pour</p>
+<ul>
+<li>s'assurer que mapcat est correct</li>
+<li>marquer dans mapcat dans le champ badGan l'écart</li>
+</ul>
+<p>Le traitement dans le GAN des excroissances de cartes est hétérogène.
+Parfois l'extension spatiale du GAN les intègre et parfois elle ne les intègre pas.</p>
+<p>Le script est aussi utilisé pour mettre à jour ou insérer un enregistrement MapCat depuis bo/addmaps</p>
+<p>journal: |</p>
+<ul>
+<li>27-28/8/2023:
+<ul>
+<li>évolution du schéma</li>
+</ul>
+</li>
+<li>22-25/8/2023:
+<ul>
+<li>ajout mise en base de MapCat + mise à jour/saisie d'un enregistrement</li>
+</ul>
+</li>
+<li>13/8/2023:
+<ul>
+<li>restructuration dans le cadre du BO v4 et ajout de la vérification des contraintes</li>
+</ul>
+</li>
+<li>24/4/2023:
+<ul>
+<li>prise en compte dans CmpMapCat::scale() de la possibilité que scaleDenominator ne soit pas défini</li>
+<li>prise en compte dans CmpMapCat::cmpGans() que la carte soit définie dans MapCat et absente du GAN</li>
+</ul>
+</li>
+<li>3/8/2022:
+<ul>
+<li>corrections listée par PhpStan level 6</li>
+</ul>
+</li>
+<li>2/7/2022:
+<ul>
+<li>reprise après correction des GAN par le Shom à la suite de mon message</li>
+<li>ajout comparaison des échelles</li>
+</ul>
+</li>
+<li>24/6/2022:
+<ul>
+<li>migration</li>
+</ul>
+</li>
+</ul>
+</section>
 
 
 
@@ -184,7 +311,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/index.php"><a href="files/mapcat-index.html"><abbr title="mapcat/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -230,7 +357,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="mapcat/index.php"><a href="files/mapcat-index.html"><abbr title="mapcat/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 

@@ -8,6 +8,7 @@
  *   - utilisation EnvVar
  * - 24/4/2022:
  *   - documentation
+ * @package shomgt\lib
  */
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 

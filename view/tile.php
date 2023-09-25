@@ -1,46 +1,39 @@
 <?php
-/*PhpDoc:
-name: tile.php
-title: tile.php - webservice au standard XYZ d'accès aux GéoTIFF du Shom
-doc: |
-  Affichage des cartes Shom conformément au standard XYZ (voir https://en.wikipedia.org/wiki/Tiled_web_map)
-  facile à utiliser dans une carte Leaflet.
-  L'utilisation de l'option GET verbose=1 permet d'afficher des commentaires
-  Point d'accès:
-    end_point API:
-      http://localhost/geoapi/shomgt/view/tile.php
-      https://geoapi.fr/shomgt/view/tile.php
-    end_point layer:
-      http://localhost/geoapi/shomgt/view/tile.php/{layer}
-      https://geoapi.fr/shomgt/view/tile.php/{layer}
-    end_point tile:
-      http://localhost/geoapi/shomgt/view/tile.php/{layer}/{z}/{x}/{y}.png
-      https://geoapi.fr/shomgt/view/tile.php/{layer}/{z}/{x}/{y}.png
-  Test:
-    http://localhost/geoapi/shomgt/view/tile.php/gtpyr/17/63957/45506.png
-journal: |
-  28-31/7/2022:
-    - correction suite à analyse PhpStan level 6
-  2/7/2022:
-    - ajout du log
-  6/6/2022:
-    - mise en constantes du débrayage des caches
-  30/5/2022:
-    - modif initialisation Layer
-  26/5/2022:
-    - activation des headers de mise en cache
-    - ajout du cache de tuiles
-  24/5/2022:
-    - correction du code affichant la version
-  1/5/2022:
-    création par copie de la version de shomgt2
-includes:
-  - ../lib/log.inc.php
-  - ../lib/gegeom.inc.php
-  - ../lib/layer.inc.php
-  - ../lib/cache.inc.php
-  - ../lib/errortile.inc.php
-*/
+/** webservice au standard XYZ d'accès aux GéoTIFF du Shom
+ *
+ * Affichage des cartes Shom conformément au standard XYZ (voir https://en.wikipedia.org/wiki/Tiled_web_map)
+ * facile à utiliser dans une carte Leaflet.
+ ** L'utilisation de l'option GET verbose=1 permet d'afficher des commentaires
+ * Point d'accès:
+ *   end_point API:
+ *     http://localhost/geoapi/shomgt/view/tile.php
+ *     https://geoapi.fr/shomgt/view/tile.php
+ *   end_point layer:
+ *     http://localhost/geoapi/shomgt/view/tile.php/{layer}
+ *     https://geoapi.fr/shomgt/view/tile.php/{layer}
+ *   end_point tile:
+ *     http://localhost/geoapi/shomgt/view/tile.php/{layer}/{z}/{x}/{y}.png
+ *     https://geoapi.fr/shomgt/view/tile.php/{layer}/{z}/{x}/{y}.png
+ * Test:
+ *   http://localhost/geoapi/shomgt/view/tile.php/gtpyr/17/63957/45506.png
+ * journal: |
+ * 28-31/7/2022:
+ *   - correction suite à analyse PhpStan level 6
+ * 2/7/2022:
+ *   - ajout du log
+ * 6/6/2022:
+ *   - mise en constantes du débrayage des caches
+ * 30/5/2022:
+ *   - modif initialisation Layer
+ * 26/5/2022:
+ *   - activation des headers de mise en cache
+ *   - ajout du cache de tuiles
+ * 24/5/2022:
+ *   - correction du code affichant la version
+ * 1/5/2022:
+ *   création par copie de la version de shomgt2
+ * @package shomgt\view
+ */
 $start = ['time'=>  microtime(true), 'memory'=> memory_get_usage(true)];
 $VERSION[basename(__FILE__)] = date(DATE_ATOM, filemtime(__FILE__));
 
@@ -53,18 +46,20 @@ require_once __DIR__.'/../vendor/autoload.php'; // utile pour logRecord()
 
 use Symfony\Component\Yaml\Yaml; // utile pour pour logRecord()
 
-define ('NB_SECONDS_IN_CACHE', 0.5*24*60*60); // nb secondes en cache pour le navigateur si <> 0
-//define ('NB_SECONDS_IN_CACHE', 0); // pas de mise en cache par le navigateur
-define ('SERVER_TILECACHE', true); // mise en cache des tuiles sur le serveur
-//define ('SERVER_TILECACHE', false); // PAS de mise en cache des tuiles sur le serveur
+/** nb secondes en cache pour le navigateur si <> 0 */
+const NB_SECONDS_IN_CACHE = 0.5*24*60*60;
+//const NB_SECONDS_IN_CACHE = 0; // pas de mise en cache par le navigateur
+/** mise en cache des tuiles sur le serveur */
+const SERVER_TILECACHE = true;
+//const SERVER_TILECACHE = false; // PAS de mise en cache des tuiles sur le serveur
 
 if (is_file(__DIR__.'/../secrets/tileaccess.inc.php')) {
   require_once __DIR__.'/../secrets/tileaccess.inc.php';
 }
 write_log(true); // log en base selon la var. d'env. adhoc 
 
-// enregistrement d'un log temporaire pour afficher des infos, par ex. estimer les performances
-/** @param array<mixed> $log */
+/** enregistrement d'un log temporaire pour afficher des infos, par ex. estimer les performances
+ * @param array<mixed> $log */
 function logRecord(array $log): void {
   // Si le log n'a pas été modifié depuis plus de 5' alors il est remplacé
   $flag_append = (is_file(__DIR__.'/log.yaml') && (time() - filemtime(__DIR__.'/log.yaml') > 5*60)) ? 0 : FILE_APPEND;
