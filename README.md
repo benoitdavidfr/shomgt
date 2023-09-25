@@ -22,6 +22,7 @@ Pour utiliser ces web-services, des cartes Shom doivent être intégrées au ser
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## 1. Décomposition en modules
+MAJ
 ShomGT4 se décompose dans les 7 modules suivants:
 
   - **[view](view/README.md)** expose les services suivants de consultation des cartes:
