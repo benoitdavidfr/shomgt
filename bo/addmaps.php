@@ -12,8 +12,9 @@ require_once __DIR__.'/maparchive.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-//define ('JSON_OPTIONS', JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
-define ('FORCE_VALIDATION', false); // vrai ssi possibilité de forcer la validation d'une carte invalide
+
+/** vrai ssi possibilité de forcer la validation d'une carte invalide */
+const FORCE_VALIDATION = false;
   
 //echo "upload_max_filesize=",ini_get('upload_max_filesize'),"<br>\n";
 //echo "post_max_size=",ini_get('post_max_size'),"<br>\n";
@@ -63,7 +64,7 @@ function cmpVersion(string $v1, string $v2): int {
     return 0;
 }
 
-echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
+//echo '<pre>',Yaml::dump(['$_POST'=> $_POST, '$_GET'=> $_GET]),"</pre>\n";
 
 switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à réaliser
   case null: break;
@@ -85,7 +86,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) { // action à r�
       }
       default: break;
     }
-    echo "verifyMap@addmaps<br>\n";
+    //echo "verifyMap@addmaps<br>\n";
     $map = new MapArchive("/users/$login/$mapNum.7z");
     echo "<table border=1>\n";
     $map->showAsHtml(true);

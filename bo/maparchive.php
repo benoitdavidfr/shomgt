@@ -152,7 +152,7 @@ class MapArchive {
   /** fabrique un MapArchive
    * @param string $rpathOf7z le chemin relatif du fichier .7z */
   function __construct(string $rpathOf7z) {
-    echo "MapArchive::__construct(rpathOf7z=$rpathOf7z)<br>\n";
+    //echo "MapArchive::__construct(rpathOf7z=$rpathOf7z)<br>\n";
     $PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH')
       or throw new \Exception("Variables d'env. SHOMGT3_PORTFOLIO_PATH non définie");
     if (!is_file($PF_PATH.$rpathOf7z))
