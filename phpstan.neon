@@ -101,6 +101,7 @@ parameters:
     - sgserver
     - secrets
     - dashboard
+    - gan
     - mapcat
     - shomft
     - phpanalyzer

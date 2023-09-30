@@ -1,12 +1,77 @@
 <?php
-/** définition des classes GanStatic, Gan et GanInSet pour gérer et utiliser les GAN
+/** définition des classes Gan et GanInSet pour gérer et utiliser les GAN
  * @package shomgt\gan
  */
-namespace dashboard;
+namespace gan;
 
-require_once __DIR__.'/portfolio.inc.php';
+//require_once __DIR__.'/../dashboard/portfolio.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
+
+
+/** Teste si à la fois $now - $first >= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now */
+function dateBetween(\DateTimeImmutable $first, \DateTimeImmutable $now, int $dayOfWeek=4, int $h=20, int $mn=0): bool {
+  //echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
+  
+  //$diff = $first->diff($now); print_r($diff); echo "<br>\n";
+  /*if ($diff->invert == 1) {
+    echo "diff.invert==1 <=> now < first<br>\n";
+  }
+  else {
+    echo "diff.invert<>=1 <=> first < now<br>\n";
+  }*/
+  if ($first->diff($now)->d == 0) // Il y a moins d'un jour d'écart
+    return false;
+  if ($first->diff($now)->days >= 7) // Il y a plus de 7 jours d'écart
+    return true;
+  
+  $W = $now->format('W'); // le no de la semaine de $now
+  //echo "Le no de la semaine de now est $W<br>\n";
+  $o = $now->format('o'); // l'année ISO semaine de $last
+  //echo "L'année (ISO semaine) d'aujourd'hui est $o<br>\n";
+  // j'appelle $thursday le jour qui doit être le $dayOfWeek
+  $thursday = $now->setISODate(intval($o), intval($W), $dayOfWeek)->setTime($h, $mn);
+  //echo "Le jeudi 20h UTC de la semaine d'aujourd'hui est ",$thursday->format(DateTimeInterface::ISO8601),"<br>\n";
+  
+  $diff = $thursday->diff($now); // intervalle de $thursday à $now
+  //print_r($diff); echo "<br>\n";
+  if ($diff->invert == 1) { // c'est le jeudi d'après now => prendre le jeudi d'avant
+    //echo $thursday->format(DateTimeInterface::ISO8601)," est après maintenant<br>\n";
+    $oneWeek = new \DateInterval("P7D"); // 7 jours
+    $thursday = $thursday->sub($oneWeek);
+    //echo $thursday->format(DateTimeInterface::ISO8601)," est le jeudi de la semaine précédente<br>\n";
+  }
+  else {
+    //echo $thursday->format(DateTimeInterface::ISO8601)," est avant maintenant, c'est donc le jeudi précédent<br>\n";
+  }
+  $thursday_minus_first = $first->diff($thursday);
+  //print_r($thursday_minus_first);
+  if ($thursday_minus_first->invert == 1) {
+    //echo "thursday_minus_first->invert == 1 <=> thursday < first<br>\n";
+    return false;
+  }
+  else {
+    //echo "thursday_minus_first->invert <> 1 <=> first < thursday <br>\n";
+    return true;
+  }
+}
+
+/** Test de dateBetween() */
+function testDateBetween(): void {
+  $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15');
+  $now = new \DateTimeImmutable;
+  echo 'first = ',$first->format(\DateTimeInterface::ISO8601),', now = ',$now->format(\DateTimeInterface::ISO8601),"<br>\n";
+  $db = dateBetween($first, $now, 4, 20, 00);
+  echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
+  
+  $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-11'); // Ve
+  $now = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15'); // Ma
+  echo 'first = ',$first->format(\DateTimeInterface::ISO8601),', now = ',$now->format(\DateTimeInterface::ISO8601),"<br>\n";
+  $db = dateBetween($first, $now, 4, 20, 00);
+  echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
+}
+//testDateBetween();
+
 
 /** description d'un cartouche dans la synthèse d'une carte */
 class GanInSet {
@@ -38,14 +103,19 @@ class GanInSet {
   }
 };
 
-/** synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN
- *
- * Moisonne le GAN des cartes du portefeuille non obsolètes (et donc le champ modified est connu).
- * Analyse les fichiers Html moissonnés et en produit une synthèse.
- */
+/** synthèse du GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN */
 class Gan {
-  /** Corrections du champ édition du GAN pour certaines cartes afin de ne pas perturber le TdB
-   * La constante est un tableau avec pour entrée le numéro de carte
+  /** chemin des fichiers stockant la synthèse en pser ou en yaml, sans l'extension */
+  const PATH = __DIR__.'/gans.';
+  /** chemin du fichier stockant le catalogue en pser */
+  const PATH_PSER = self::PATH.'pser';
+  /** chemin du fichier stockant le catalogue en  Yaml */
+  const PATH_YAML = self::PATH.'yaml';
+  
+  /** Corrections du champ édition du GAN pour certaines cartes afin de ne pas perturber le TdB.
+   * Le GAN contient quelques erreurs sur l'année d'édition des cartes.
+   * La référence est pour ShomGT la date indiquée sur la acrte.
+   * Cette constante est un tableau avec pour entrée le numéro de carte
    * et pour valeur un array [{edACorriger}=> {edCorrigée}]
    * Liste d'écarts transmise le 15/6/2022 au Shom
    * Les écarts ci-dessous sont ceux restants après corrections du Shom
@@ -65,9 +135,10 @@ class Gan {
   /** interval des dates de la moisson des GAN */
   static string $hvalid='';
   /** dictionnaire [$mapnum => Gan]
-   * @var array<string, Gan> $gans */
-  static array $gans=[];
+   * @var array<string, Gan> $all */
+  static array $all=[];
   
+  /** numéro de la carte */
   protected string $mapnum;
   /** sur-titre optionnel identifiant un ensemble de cartes */
   protected ?string $groupTitle=null;
@@ -94,8 +165,45 @@ class Gan {
   /** erreur éventuelle du moissonnage */
   protected string $harvestError='';
 
-  // record est le résultat de l'analyse du fichier Html
-  /** @param array<string, mixed> $record */
+  /** indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
+   * Si remoisson alors retourne l'age de la moisson en jours
+   * Si la moisson n'existe pas alors retourne -1
+   * Si la moisson n'a pas à être moissonnée retourne 0 */
+  static function age(): int {
+    //return -1;
+    if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
+      return -1;
+    $now = new \DateTimeImmutable;
+    $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
+    $valid = explode('/', $gans['valid']);
+    //echo "valid="; print_r($valid); echo "<br>\n";
+    $valid = \DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
+    if (dateBetween($valid, $now, 4, 20, 00)) {
+      //print_r($valid->diff($now));
+      return $valid->diff($now)->days;
+    }
+    else
+      return 0;
+  }
+  
+  /** enregistre le catalogue comme pser */
+  static function storeAsPser(): void {
+    file_put_contents(self::PATH_PSER, serialize([
+      'valid'=> Gan::$hvalid,
+      'gans'=> Gan::$all,
+    ]));
+  }
+  
+  /** initialise les données de la classe depuis le fichier pser */
+  static function loadFromPser(): void {
+    $contents = unserialize(file_get_contents(self::PATH_PSER));
+    Gan::$hvalid = $contents['valid'];
+    Gan::$all = $contents['gans'];
+  }
+  
+  static function item(string $mapnum): ?Gan { return Gan::$all[$mapnum] ?? null; }
+  
+  /** @param array<string, mixed> $record; résultat de l'analyse du fichier Html*/
   function __construct(string $mapnum, array $record, ?int $mtime) {
     echo "mapnum=$mapnum\n";
     //echo '$record='; print_r($record);
@@ -161,15 +269,15 @@ class Gan {
   /** retourne l'ensemble des objets de la classe comme array
    * @return array<string, mixed> */
   static function allAsArray(): array {
-    if (!self::$gans)
-      GanStatic::loadFromPser();
+    if (!self::$all)
+      Gan::loadFromPser();
     return [
       'title'=> "Synthèse du résultat du moissonnage des GAN des cartes du catalogue",
       'description'=> "Seules sont présentes les cartes non obsolètes présentes sur sgserver",
       '$id'=> 'https://geoapi.fr/shomgt4/cat2/gans',
       '$schema'=> __DIR__.'/gans',
       'valid'=> self::$hvalid,
-      'gans'=> array_map(function(Gan $gan) { return $gan->asArray(); }, self::$gans),
+      'gans'=> array_map(function(Gan $gan) { return $gan->asArray(); }, self::$all),
       'eof'=> null,
     ];
   }
@@ -251,247 +359,4 @@ class Gan {
       throw new \SExcept("Aucun Part");
     return $this->inSets[$pmin];
   }
-};
-
-/** Classe regroupant des méthodes statiques autour de la gestion des GAN */
-class GanStatic {
-  const GAN_DIR = __DIR__.'/gan';
-  const PATH = __DIR__.'/gans.'; // chemin des fichiers stockant la synthèse en pser ou en yaml, lui ajouter l'extension
-  const PATH_PSER = self::PATH.'pser'; // chemin du fichier stockant le catalogue en pser
-  const PATH_YAML = self::PATH.'yaml'; // chemin du fichier stockant le catalogue en  Yaml
-  
-  /** transforme une date en semaine sur 4 caractères comme utilisé par le GAN */
-  static function week(string $modified): string {
-    // Il y a des dates avant 2000 qui font planter le GAN
-    if ($modified < '2017-01-01') { // Si la date est avant le 1/1/2017
-      //echo "modified = $modified\n";
-      return '1701'; // alors je démarre à la semaine 1 de 2017
-    }
-    $time = strtotime($modified);
-    $ganWeek = substr(date('o', $time), 2) . date('W', $time);
-    //echo "week($modified) -> $ganWeek\n";
-    return $ganWeek;
-  }
-  
-  /**
-   * function harvest() - moissonne les GAN par carte dans le répertoire self::GAN_DIR
-   *
-   * Les cartes interrogées sont celles de Portfolio::$all
-   *
-   * @param array<string, bool> $options
-   */
-  static function harvest(array $options=[]): void {
-    //echo "Harvest ligne ",__LINE__,"\n";
-    $gandir = self::GAN_DIR;
-    if (!file_exists(self::GAN_DIR))
-      mkdir(self::GAN_DIR);
-    elseif ($options['reinit'] ?? false) { // suppression des fichiers existants
-      foreach (new \DirectoryIterator(self::GAN_DIR) as $filename) {
-        if (!in_array($filename, ['.','..']))
-          unlink("$gandir/$filename");
-      }
-    }
-    $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
-    //print_r($errors);
-    foreach (Portfolio::$all as $mapnum => $map) {
-      //echo "mapnum=$mapnum\n"; print_r($map);
-      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
-        $ganWeek = GanStatic::week($modified);
-        if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
-          //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
-          $url = "https://gan.shom.fr/diffusion/qr/gan/$mapnum/$ganWeek";
-          //echo "url=$url\n";
-          if (($contents = file_get_contents($url, false, httpContext())) === false) {
-            $message = "Erreur "
-              .(isset($http_response_header) ? http_error_code($http_response_header) : 'non définie') // @phpstan-ignore-line
-              ." de lecture de $url";
-            echo "$message\n";
-            file_put_contents("$gandir/errors.yaml", "$mapnum-$ganWeek: $message\n", FILE_APPEND);
-          }
-          else {
-            file_put_contents("$gandir/$mapnum-$ganWeek.html", $contents);
-            echo "Lecture $url ok\n";
-          }
-        }
-        elseif (0) { // @phpstan-ignore-line // déverminage 
-          echo "le fichier $gandir/$mapnum-$ganWeek.html existe || errors[$mapnum-$ganWeek]\n";
-        }
-      }
-    }
-  }
-  
-  /**
-   * analyzeHtml() - analyse du Html du GAN
-   *
-   * analyse du html du Gan notamment pour identifier les corrections et l'édition d'une carte
-   * retourne un array avec les champs title, edition et corrections + analyzeErrors en cas d'erreur d'analyse
-   * J'ai essayé de minimiser la dépendance au code Html !
-   *
-   * @return array<string, mixed>
-   */
-  static function analyzeHtml(string $html): array {
-    //echo "<tr><td colspan=6><pre>";
-    $record = [];
-    $html = preg_replace('!(<font [^>]*>|</font>|<b>|</b>)!', '', $html);
-
-    //echo $html;
-    
-    // lit les cellules de la colonne scale du tableau du haut
-    $pattern = '!<td class="column-scale align-top">([^<]*)</td>!';
-    while (preg_match($pattern, $html, $matches)) {
-      if (!isset($record['scale']))
-        $record['scale'] = [];
-      $record['scale'][] = $matches[1];
-      $html = preg_replace($pattern, '', $html, 1);
-    }
-      
-    // lit la colonne title du tableau du haut qui contient titre, cartouches, édition, coordonnées
-    $pattern = '!<td class="column-title align-top">(([^<]*|<div|</div)*)</td>!';
-    while (preg_match($pattern, $html, $matches)) {
-      if (!isset($record['title']))
-        $record['title'] = [];
-      $record['title'][] = str_replace(['<','>'], ['{','}'], $matches[1]);
-      $html = preg_replace($pattern, '', $html, 1);
-    }
-    if (isset($record['title']))
-      $record['edition'] = array_pop($record['title']);
-  
-    // modèle de no de correction + semaineAvis
-    $pattern = '!<tr class="mapNumber-[^ ]+ externalId-(\d+-\d+)[^>]*>'
-      .'<td [^>]*>\s*<\!-- [^>]*>[^(]*\((\d+)\)!';
-    // modèle: <tr class="mapNumber-6643 externalId-1938-184-6643"><td width="60" align="left"> <!-- COUPER ICI 54-->6643 (16)</td><td colspan="6" width="538"><p align="left">Cartouche A </p></td></tr>
-    // modèle: <tr class="mapNumber-5417 externalId-1739-267-5417"><td width="60" align="left"><!-- COUPER ICI 25--><a href="INTERNET/2017/1739/calques/1739_FR5417.pdf" target="blank">5417</a> (87)
-    while (preg_match($pattern, $html, $matches)) {
-      if (!isset($record['corrections'])) {
-        $record['corrections'] = [['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]]];
-      }
-      else {
-        $record['corrections'][] = ['num'=> intval($matches[2]), 'semaineAvis'=> $matches[1]];
-      }
-      $html = preg_replace($pattern, '', $html, 1);
-    }
-  
-    // un autre modèle de no de correction
-    $pattern = '!<td>(<a href=[^>]*>)?<span class="correction_map_FR-strong">[^<]*</span>(</a>)?\s*\((\d+)\)(<br>|</td>)!';
-    // modèle: <td><span class="correction_map_FR-strong">4232</span> (1)</td>
-    // modèle: <td><a href="INTRADEF/2020/2012/calques/2012_FR4233.pdf" target="_blank"><span class="correction_map_FR-strong">4233</span></a> (5)</td>
-    // modèle: <td><a href="INTRADEF/2020/2007/calques/2007_FR6608.pdf" target="_blank"><span class="correction_map_FR-strong">6608</span></a> (7)<br><span class="correction_map_FR-strong">INT 140</span></td>
-    while (preg_match($pattern, $html, $matches)) {
-      if (!isset($record['corrections'])) {
-        $record['corrections'] = [['num'=> intval($matches[3])]];
-      }
-      else {
-        $record['corrections'][] = ['num'=> intval($matches[3])];
-      }
-      $html = preg_replace($pattern, '', $html, 1);
-    }
-  
-    // modèle de semaineAvis
-    $pattern = '!<table class="mapNumber-[^ ]+ externalId-(\d+-\d+)!';
-    //modèle: <table class="mapNumber-4233 externalId-2012-39-4233 correction_map_FR-avoidPageBreak">
-    $semaineAvis = [];
-    while (preg_match($pattern, $html, $matches)) {
-      $semaineAvis[] = $matches[1];
-      $html = preg_replace($pattern, '', $html, 1);
-    }
-    /*if ($semaineAvis) {
-      $record['semaineAvisInitiales'] = $semaineAvis;
-      $record['correctionsInitiales'] = $record['corrections'];
-    }*/
-  
-    foreach ($record['corrections'] ?? [] as $no => $correction) {
-      if (!isset($correction['semaineAvis'])) {
-        if ($semaineAvis) {
-          $record['corrections'][$no]['semaineAvis'] = array_shift($semaineAvis);
-        }
-        else {
-          $record['analyzeErrors'][] = "semaineAvis insuffisant pour $no";
-          //echo "semaineAvis insuffisant pour $no\n";
-        }
-      }
-    }
-    if ($semaineAvis)
-      $record['analyzeErrors'][] = "semaineAvis supplémentaires";
-    //echo "</pre></td></tr>";
-    return $record;
-  }
-  
-  /** pour mise au point effectue l'analyse du GAN pour une carte */
-  static function analyzeHtmlOfMap(string $mapnum): void {
-    $map = Portfolio::$all[$mapnum];
-    echo 'map='; print_r($map);
-    $modified = $map['dateMD']['value'] ?? $map['dateArchive'];
-    $ganWeek = GanStatic::week($modified);
-    $gandir = self::GAN_DIR;
-    $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
-    if (isset($errors["$mapnum-$ganWeek"])) {
-      echo $errors["$mapnum-$ganWeek"];
-    }
-    elseif (!file_exists(self::GAN_DIR."/$mapnum-$ganWeek.html")) {
-      echo "moisson $mapnum-$ganWeek absente à moissonner\n";
-    }
-    else {
-      $mtime = filemtime(self::GAN_DIR."/$mapnum-$ganWeek.html");
-      $html = file_get_contents(self::GAN_DIR."/$mapnum-$ganWeek.html");
-      $analyze = self::analyzeHtml($html);
-      echo 'analyzeHtml='; print_r($analyze);
-      //echo 'analyzeHtml='; var_dump($analyze);
-      //echo Yaml::dump(['analyzeHtml'=> $analyze], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-      $gan = new Gan($mapnum, $analyze, /*$map,*/ $mtime);
-      echo Yaml::dump(['gan'=> $gan->asArray()], 4, 2);
-    }
-  }
-  
-  /** construit la synhèse des GAN de la moisson existante */
-  static function build(): void {
-    $minvalid = null;
-    $maxvalid = null;
-
-    // Ce code permet de détecter les fichiers Html manquants nécessitant une moisson
-    $gandir = self::GAN_DIR;
-    $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
-    foreach (Portfolio::$all as $mapnum => $map) {
-      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
-        $ganWeek = GanStatic::week($modified);
-        if (isset($errors["$mapnum-$ganWeek"])) { }
-        elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
-          echo "moisson $mapnum-$ganWeek absente à moissonner\n";
-        }
-        else {
-          $mtime = filemtime("$gandir/$mapnum-$ganWeek.html");
-          if (!$minvalid || ($mtime < $minvalid))
-            $minvalid = $mtime;
-          if (!$maxvalid || ($mtime > $maxvalid))
-            $maxvalid = $mtime;
-          $html = file_get_contents("$gandir/$mapnum-$ganWeek.html");
-          Gan::$gans[$mapnum] = new Gan($mapnum, self::analyzeHtml($html), /*$map,*/ $mtime);
-        }
-      }
-    }
-    Gan::$hvalid = date('Y-m-d', $minvalid).'/'.date('Y-m-d', $maxvalid);
-
-    $errors = file_exists(self::GAN_DIR.'/errors.yaml') ? Yaml::parsefile(self::GAN_DIR.'/errors.yaml') : [];
-    //print_r($errors);
-    foreach ($errors as $id => $errorMessage) {
-      $mapid = substr($id, 0, 4);
-      Gan::$gans[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
-    }
-  }
- 
-  /** enregistre le catalogue comme pser */
-  static function storeAsPser(): void {
-    file_put_contents(self::PATH_PSER, serialize([
-      'valid'=> Gan::$hvalid,
-      'gans'=> Gan::$gans,
-    ]));
-  }
-  
-  /** charge les données depuis le pser */
-  static function loadFromPser(): void {
-    $contents = unserialize(file_get_contents(self::PATH_PSER));
-    Gan::$hvalid = $contents['valid'];
-    Gan::$gans = $contents['gans'];
-  }
-  
-  static function item(string $mapnum): ?Gan { return Gan::$gans[$mapnum] ?? null; }
 };

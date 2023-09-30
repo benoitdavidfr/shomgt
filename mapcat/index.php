@@ -41,7 +41,7 @@ require_once __DIR__.'/../gan/gan.inc.php';
 require_once __DIR__.'/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
-
+#use gan\Gan;
 
 if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 
@@ -89,7 +89,7 @@ function cmpGans(): void {
     $mapCat = MapCat::get($mapNum);
     if ($mapCat->obsolete) continue; // on ne compare pas les cartes obsolètes
     //echo "<pre>"; print_r($map); echo "</pre>";
-    if (!($gan = \dashboard\Gan::$gans[$mapNum] ?? null)) { // carte définie dans MapCat et absente du GAN
+    if (!($gan = \gan\Gan::$all[$mapNum] ?? null)) { // carte définie dans MapCat et absente du GAN
       echo "<tr><td>$mapNum</td><td>",$mapCat->badGan ?? '',"</td><td></td>";
       echo "<td>",$mapCat->scale(),"</td><td colspan=9>Absente du GAN</td></tr>\n";
       continue;
@@ -117,7 +117,7 @@ function cmpGans(): void {
     }
     foreach ($mapCat->insetMaps ?? [] as $i => $insetMap) {
       try {
-        $ganpart = \dashboard\Gan::$gans[$mapNum]->inSet(new \gegeom\GBox($insetMap['spatial']));
+        $ganpart = \gan\Gan::$all[$mapNum]->inSet(new \gegeom\GBox($insetMap['spatial']));
         $ganpartspatial = [
           'SW' => str_replace('—', '-', $ganpart->spatial()['SW']),
           'NE' => str_replace('—', '-', $ganpart->spatial()['NE']),
@@ -238,7 +238,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
     break;
   }
   case 'cmpGan': { // Confronte les données de localisation de MapCat avec celles du GAN
-    \dashboard\GanStatic::loadFromPser(); // charge les GANs sepuis le fichier gans.pser du dashboard
+    \gan\Gan::loadFromPser(); // charge les GANs sepuis le fichier gans.pser
     //echo '<pre>gans='; print_r(Gan::$gans);
     cmpGans();
     break;

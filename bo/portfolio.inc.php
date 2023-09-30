@@ -1,13 +1,14 @@
 <?php
-/** lecture du portefeuille de cartes - 12/6/2023
- * @package shomgt\dashboard
+/** lecture de la liste des cartes du portefeuille - 12/6/2023
+ * @package shomgt\bo
  */
-namespace dashboard;
+namespace bo;
 
 /** Portefeuille des cartes exposées sur ShomGt issu des fichiers .md.json */
 class Portfolio {
-  /** @var array<string, TMapMdNormal|TMapMdLimited> $all */
-  static array $all; // contenu des fichiers .md.json structuré par carte comme dictionnaire indexé sur le no de carte 
+  /** contenu des fichiers .md.json structuré par carte comme dictionnaire indexé sur le no de carte 
+   * @var array<string, TMapMdNormal|TMapMdLimited> $all */
+  static array $all;
   
   static function init(): void {
     if (!(($PF_PATH = getenv('SHOMGT3_DASHBOARD_PORTFOLIO_PATH')) || ($PF_PATH = getenv('SHOMGT3_PORTFOLIO_PATH'))))
@@ -20,6 +21,7 @@ class Portfolio {
       $id = substr($entry, 0, -8);
       self::$all[$id] = $mapMd;
     }
+    ksort(self::$all);
     //echo '<pre>'; print_r(self::$all);
   }
   
@@ -28,3 +30,4 @@ class Portfolio {
     return isset(self::$all[$mapnum]);
   }
 };
+Portfolio::init();

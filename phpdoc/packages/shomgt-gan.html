@@ -69,6 +69,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/gan.html" class="">gan</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/coordsys.html" class="">coordsys</a>
 </h4>
 
@@ -104,11 +108,11 @@
                 
             </li>
                     <li>
-                <a href="packages/shomgt-gan.html" class="-active">gan</a>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
                 
             </li>
                     <li>
-                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                <a href="packages/shomgt-gan.html" class="-active">gan</a>
                 
             </li>
                     <li>
@@ -215,7 +219,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-GanInSet.html"><abbr title="\dashboard\GanInSet">GanInSet</abbr></a></dt><dd>description d&#039;un cartouche dans la synthèse d&#039;une carte</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Gan.html"><abbr title="\dashboard\Gan">Gan</abbr></a></dt><dd>synthèse des GAN par carte à la date de moisson des GAN / catalogue ou indication d&#039;erreur d&#039;interrogation des GAN</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-GanStatic.html"><abbr title="\dashboard\GanStatic">GanStatic</abbr></a></dt><dd>Classe regroupant des méthodes statiques autour de la gestion des GAN</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Lock.html"><abbr title="\dashboard\Lock">Lock</abbr></a></dt><dd>Verrou d&#039;utilisation pour garantir que le script n&#039;est pas utilisé plusieurs fois simultanément
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gan-GanInSet.html"><abbr title="\gan\GanInSet">GanInSet</abbr></a></dt><dd>description d&#039;un cartouche dans la synthèse d&#039;une carte</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gan-Gan.html"><abbr title="\gan\Gan">Gan</abbr></a></dt><dd>synthèse du GAN par carte à la date de moisson des GAN / catalogue ou indication d&#039;erreur d&#039;interrogation des GAN</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gan-GanStatic.html"><abbr title="\gan\GanStatic">GanStatic</abbr></a></dt><dd>Classe regroupant des méthodes statiques autour de la gestion des GAN</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/gan-Lock.html"><abbr title="\gan\Lock">Lock</abbr></a></dt><dd>Verrou d&#039;utilisation pour garantir que le script n&#039;est pas utilisé plusieurs fois simultanément
 3 opérations:
  - locked() pour connaitre l&#039;état du verrou
  - lock() pour le vérouiller
@@ -235,14 +239,28 @@ Le verrou est implémenté par l&#039;existence d&#039;un fichier.</dd>    </dl>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/dashboard.html#function_http_error_code">http_error_code()</a>
+    <a href="namespaces/gan.html#function_dateBetween">dateBetween()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Teste si à la fois $now - $first &gt;= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/gan.html#function_testDateBetween">testDateBetween()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Test de dateBetween()</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/gan.html#function_http_error_code">http_error_code()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>extrait le code d&#039;erreur Http</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/dashboard.html#function_httpContext">httpContext()</a>
+    <a href="namespaces/gan.html#function_httpContext">httpContext()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -259,13 +277,105 @@ Le verrou est implémenté par l&#039;existence d&#039;un fichier.</dd>    </dl>
 
         </h3>
                     <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_http_error_code">
-        http_error_code()
-        <a href="namespaces/dashboard.html#function_http_error_code" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="function_dateBetween">
+        dateBetween()
+        <a href="namespaces/gan.html#function_dateBetween" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="gan/gan.inc.php"><a href="files/gan-gan-inc.html"><abbr title="gan/gan.inc.php">gan.inc.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">13</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Teste si à la fois $now - $first &gt;= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">dateBetween</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$first</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$now</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dayOfWeek</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">4</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$h</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">20</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mn</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$first</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$now</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$dayOfWeek</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">4</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$h</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">20</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$mn</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_testDateBetween">
+        testDateBetween()
+        <a href="namespaces/gan.html#function_testDateBetween" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="gan/gan.inc.php"><a href="files/gan-gan-inc.html"><abbr title="gan/gan.inc.php">gan.inc.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">60</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Test de dateBetween()</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">testDateBetween</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+    
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_http_error_code">
+        http_error_code()
+        <a href="namespaces/gan.html#function_http_error_code" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="gan/gan.php"><a href="files/gan-gan.html"><abbr title="gan/gan.php">gan.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">94</span>
 
@@ -300,11 +410,11 @@ Le verrou est implémenté par l&#039;existence d&#039;un fichier.</dd>    </dl>
                     <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_httpContext">
         httpContext()
-        <a href="namespaces/dashboard.html#function_httpContext" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="namespaces/gan.html#function_httpContext" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="dashboard/gan.php"><a href="files/dashboard-gan.html"><abbr title="dashboard/gan.php">gan.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="gan/gan.php"><a href="files/gan-gan.html"><abbr title="gan/gan.php">gan.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">106</span>
 
@@ -436,8 +546,10 @@ Le verrou est implémenté par l&#039;existence d&#039;un fichier.</dd>    </dl>
                             <li class="phpdocumentor-on-this-page-section__title">Functions</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="namespaces/dashboard.html#function_http_error_code">http_error_code()</a></li>
-                                                    <li><a href="namespaces/dashboard.html#function_httpContext">httpContext()</a></li>
+                                                    <li><a href="namespaces/gan.html#function_dateBetween">dateBetween()</a></li>
+                                                    <li><a href="namespaces/gan.html#function_http_error_code">http_error_code()</a></li>
+                                                    <li><a href="namespaces/gan.html#function_httpContext">httpContext()</a></li>
+                                                    <li><a href="namespaces/gan.html#function_testDateBetween">testDateBetween()</a></li>
                                             </ul>
                 </li>
                     </ul>

@@ -11,6 +11,7 @@
  * @package shomgt\lib
  */
 require_once __DIR__.'/envvar.inc.php';
+require_once __DIR__.'/addusforthousand.inc.php';
 
 /** Récupération de MD ISO d'un GéoTiff
  *
@@ -24,16 +25,6 @@ class IsoMd {
   const ErrorFileNotFound = 'IsoMd::ErrorFileNotFound';
   const NoMatchForMdDate = 'IsoMd::NoMatchForMdDate';
   const NoMatchForEdition = 'IsoMd::NoMatchForEdition';
-  
-  /** pour un entier fournit une représentation avec un '_' comme séparateur des milliers */
-  static function addUndescoreForThousand(int $int): string {
-    if ($int < 0)
-      return '-'.self::addUndescoreForThousand(-$int);
-    elseif ($int < 1000)
-      return sprintf('%d', $int);
-    else
-      return self::addUndescoreForThousand(intval(floor($int/1000))).'_'.sprintf('%03d', $int - 1000 * floor($int/1000));
-  }
   
   /** retourne un dict. des informations
    * @return array<string, string> */
@@ -75,8 +66,7 @@ class IsoMd {
       throw new SExcept("edition non trouvé pour $gtname", self::NoMatchForEdition);
     }
     //echo "$matches[1]<br>\n";
-    //echo self::addUndescoreForThousand($matches[1]),"<br>\n";
-    $md['scaleDenominator'] = self::addUndescoreForThousand(intval($matches[1]));
+    $md['scaleDenominator'] = addUndescoreForThousand(intval($matches[1]));
     
     return $md;
   }
@@ -84,12 +74,5 @@ class IsoMd {
 
 
 if (basename(__FILE__) <> basename($_SERVER['PHP_SELF'])) return; // Test unitaire
-
-echo IsoMd::addUndescoreForThousand(789),"<br>\n";
-echo IsoMd::addUndescoreForThousand(56812789),"<br>\n";
-echo IsoMd::addUndescoreForThousand(-56812789),"<br>\n";
-echo IsoMd::addUndescoreForThousand(250000),"<br>\n";
-echo IsoMd::addUndescoreForThousand(10000000),"<br>\n";
-echo IsoMd::addUndescoreForThousand(10_000_000),"<br>\n";
 
 print_r(IsoMd::read('6822_pal300'));

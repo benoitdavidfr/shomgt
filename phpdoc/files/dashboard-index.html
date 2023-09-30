@@ -69,6 +69,10 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/gan.html" class="">gan</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/coordsys.html" class="">coordsys</a>
 </h4>
 
@@ -104,11 +108,11 @@
                 
             </li>
                     <li>
-                <a href="packages/shomgt-gan.html" class="">gan</a>
+                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
                 
             </li>
                     <li>
-                <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
+                <a href="packages/shomgt-gan.html" class="">gan</a>
                 
             </li>
                     <li>
@@ -205,14 +209,13 @@
 <li>les cartes manquantes ou en excès dans le portefeuille par rapport au flux WFS du Shom</li>
 <li>le degré de péremption des différentes cartes du portefeuille</li>
 </ol>
-<p>Une carte du flux WFS est d'intérêt ssi</p>
-<ul>
-<li>soit elle est à petite échelle (&lt; 1/6M)</li>
-<li>soit elle intersecte la ZEE
-Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.</li>
-</ul>
 <p>Journal:</p>
 <ul>
+<li>30/9/2023:
+<ul>
+<li>transfert de la classe MapFromWfs dans le module shomft ainsi que la fonction wfsAge()</li>
+</ul>
+</li>
 <li>2/7/2023:
 <ul>
 <li>correction lecture AvailAtTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin</li>
@@ -270,7 +273,7 @@ sans que le GAN soit moissonné sur cette carte</li>
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-MapFromWfs.html"><abbr title="\dashboard\MapFromWfs">MapFromWfs</abbr></a></dt><dd>MapFromWfs - liste des cartes définies dans le WFS</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Perempt.html"><abbr title="\dashboard\Perempt">Perempt</abbr></a></dt><dd>croisement entre le portefeuille et les GANs en vue d&#039;afficher le tableau des degrés de péremption</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-AvailAtTheShop.html"><abbr title="\dashboard\AvailAtTheShop">AvailAtTheShop</abbr></a></dt><dd>lit le fichier disponible.tsv s&#039;il existe et stoke les cartes dispo. dans la boutique</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-Perempt.html"><abbr title="\dashboard\Perempt">Perempt</abbr></a></dt><dd>croisement entre le portefeuille et les GANs en vue d&#039;afficher le tableau des degrés de péremption</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/dashboard-AvailAtTheShop.html"><abbr title="\dashboard\AvailAtTheShop">AvailAtTheShop</abbr></a></dt><dd>lit le fichier disponible.tsv s&#039;il existe et stoke les cartes dispo. dans la boutique</dd>    </dl>
 
 
 
@@ -290,36 +293,6 @@ sans que le GAN soit moissonné sur cette carte</li>
                                 &nbsp;: string    </span>
 </dt>
 <dd>pour un entier fournit une représentation avec un &#039;_&#039; comme séparateur des milliers</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/dashboard.html#function_dateBetween">dateBetween()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Teste si à la fois $now - $first &gt;= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/dashboard.html#function_testDateBetween">testDateBetween()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Test de dateBetween()</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/dashboard.html#function_ganHarvestAge">ganHarvestAge()</a>
-    <span>
-                                &nbsp;: int    </span>
-</dt>
-<dd>indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
-Si remoisson alors retourne l&#039;age de la moisson en jours
-Si la moisson n&#039;existe pas alors retourne -1
-Si la moisson n&#039;a pas à être moissonnée retourne 0</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/dashboard.html#function_wfsAge">wfsAge()</a>
-    <span>
-                                &nbsp;: int    </span>
-</dt>
 
     </dl>
 
@@ -342,7 +315,7 @@ Si la moisson n&#039;a pas à être moissonnée retourne 0</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -369,158 +342,6 @@ Si la moisson n&#039;a pas à être moissonnée retourne 0</dd>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_dateBetween">
-        dateBetween()
-        <a href="namespaces/dashboard.html#function_dateBetween" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">378</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Teste si à la fois $now - $first &gt;= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">dateBetween</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$first</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$now</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dayOfWeek</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">4</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$h</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">20</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mn</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$first</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$now</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTimeImmutable">DateTimeImmutable</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$dayOfWeek</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">4</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$h</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">20</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$mn</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_testDateBetween">
-        testDateBetween()
-        <a href="namespaces/dashboard.html#function_testDateBetween" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">425</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Test de dateBetween()</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">testDateBetween</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-    
-    
-
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_ganHarvestAge">
-        ganHarvestAge()
-        <a href="namespaces/dashboard.html#function_ganHarvestAge" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">444</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
-Si remoisson alors retourne l&#039;age de la moisson en jours
-Si la moisson n&#039;existe pas alors retourne -1
-Si la moisson n&#039;a pas à être moissonnée retourne 0</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">ganHarvestAge</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-    
-    
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
-            </section>
-
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_wfsAge">
-        wfsAge()
-        <a href="namespaces/dashboard.html#function_wfsAge" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="dashboard/index.php"><a href="files/dashboard-index.html"><abbr title="dashboard/index.php">index.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">461</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">wfsAge</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-    
-    
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
             </section>
 
 </article>
@@ -639,10 +460,6 @@ Si la moisson n&#039;a pas à être moissonnée retourne 0</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li><a href="namespaces/dashboard.html#function_addUndescoreForThousand">addUndescoreForThousand()</a></li>
-                                                    <li><a href="namespaces/dashboard.html#function_dateBetween">dateBetween()</a></li>
-                                                    <li><a href="namespaces/dashboard.html#function_ganHarvestAge">ganHarvestAge()</a></li>
-                                                    <li><a href="namespaces/dashboard.html#function_testDateBetween">testDateBetween()</a></li>
-                                                    <li><a href="namespaces/dashboard.html#function_wfsAge">wfsAge()</a></li>
                                             </ul>
                 </li>
                     </ul>

@@ -5,12 +5,9 @@
  *  1) les cartes manquantes ou en excès dans le portefeuille par rapport au flux WFS du Shom
  *  2) le degré de péremption des différentes cartes du portefeuille
  *
- * Une carte du flux WFS est d'intérêt ssi
- *  - soit elle est à petite échelle (< 1/6M)
- *  - soit elle intersecte la ZEE
- * Les cartes d'intérêt qui n'appartient pas au portefeuille sont signalées pour vérification.
- *
  * Journal:
+ * - 30/9/2023:
+ *   - transfert de la classe MapFromWfs dans le module shomft ainsi que la fonction wfsAge()
  * - 2/7/2023:
  *   - correction lecture AvailAtTheShop pour que la lecture du fichier disponible.tsv fonctionne avec des lignes vides à la fin
  * - 28/6/2023:
@@ -33,7 +30,8 @@ namespace dashboard;
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
-require_once __DIR__.'/../shomft/frzee.inc.php';
+//require_once __DIR__.'/../shomft/frzee.inc.php';
+require_once __DIR__.'/../shomft/mapfromwfs.inc.php';
 require_once __DIR__.'/../gan/gan.inc.php';
 require_once __DIR__.'/portfolio.inc.php';
 
@@ -41,114 +39,32 @@ use Symfony\Component\Yaml\Yaml;
 
 echo "<!DOCTYPE HTML><html><head><title>dashboard@$_SERVER[HTTP_HOST]</title></head><body>\n";
 
-/** pour un entier fournit une représentation avec un '_' comme séparateur des milliers */
-function addUndescoreForThousand(?int $scaleden): string {
-  if ($scaleden === null) return 'undef';
-  if ($scaleden < 0)
-    return '-'.addUndescoreForThousand(-$scaleden);
-  elseif ($scaleden < 1000)
-    return sprintf('%d', $scaleden);
-  else
-    return addUndescoreForThousand(intval(floor($scaleden/1000)))
-      .'_'.sprintf('%03d', $scaleden - 1000 * floor($scaleden/1000));
-}
-
-/**
- * MapFromWfs - liste des cartes définies dans le WFS 
- *
- * Chaque carte est définie par ses propriétés et sa géométrie
- * La liste des cartes est fournie dans la variable $fts indexée sur la propriété carte_id
- */
-class MapFromWfs {
-  /** @var array<string, string> $prop */
-  public readonly array $prop; // properties 
-  public readonly \gegeom\MultiPolygon $mpol; // géométrie comme MultiPolygon
-  
-  /** @var array<string, MapFromWfs> $fts */
-  static array $fts; // liste des MapFromWfs indexés sur carte_id
-  
-  static function init(): void {
-    $gt = json_decode(file_get_contents(__DIR__.'/../shomft/gt.json'), true);
-    $aem = json_decode(file_get_contents(__DIR__.'/../shomft/aem.json'), true);
-    foreach (array_merge($gt['features'], $aem['features']) as $gmap) {
-      //if ($gmap['properties']['carte_id'] == '0101') continue; // Pour test du code
-      self::$fts[$gmap['properties']['carte_id']] = new self($gmap);
-    }
-    ksort(self::$fts);
-  }
-  
-  /** @param TGeoJsonFeature $gmap */
-  function __construct(array $gmap) {
-    $this->prop = $gmap['properties'];
-    $this->mpol = \gegeom\MultiPolygon::fromGeoArray($gmap['geometry']);
-  }
-  
-  function mawwcatUrl(): string { // construction de l'URL vers mapwcat.php bien centré et avec le bon niveau de zoom
-    $center = $this->mpol->center();
-    $center = "center=$center[1],$center[0]";
-    
-    if (isset($this->prop['scale'])) {
-      $zoom = round(log(1e7 / (int)$this->prop['scale'], 2));
-      if ($zoom < 3) $zoom = 3;
-    }
-    else {
-      $zoom = 6;
-    }
-    return "../mapwcat.php?options=wfs&zoom=$zoom&$center";
-  }
-  
-  function showOne(): void { // affiche une carte 
-    //echo '<pre>gmap = '; print_r($gmap); echo "</pre>\n";
-    $array = [
-      'title'=> '{a}'.$this->prop['name'].'{/a}',
-      'scale'=> isset($this->prop['scale']) ? '1:'.addUndescoreForThousand((int)$this->prop['scale']) : 'undef',
-    ];
-    
-    if (!isset($this->prop['scale']))
-      $array['status'] = 'sans échelle';
-    elseif ($this->prop['scale'] > 6e6)
-      $array['status'] = 'à petite échelle (< 1/6M)';
-    elseif ($mapsFr = \shomft\Zee::inters($this->mpol))
-      $array['status'] = 'intersecte '.implode(',',$mapsFr);
-    else
-      $array['status'] = "Hors ZEE française";
-    
-    $url = $this->mawwcatUrl();
-    //echo "<a href='$url'>lien zoom=$zoom</a>\n";
-    echo str_replace(["-\n ",'{a}','{/a}'], ['-',"<a href='$url'>","</a>"], Yaml::dump([$array]));
-  }
-  
-  /** @return array<string, array<int, string>> */
-  static function interest(): array { // liste des cartes d'intérêt sous la forme [carte_id => ZeeIds]
-    $list = [];
-    foreach (self::$fts as $id => $gmap) {
-      if (isset($gmap->prop['scale']) && ($gmap->prop['scale'] > 6e6))
-        $list[$gmap->prop['carte_id']] = ['SmallScale'];
-      elseif ($zeeIds = \shomft\Zee::inters($gmap->mpol))
-        $list[$gmap->prop['carte_id']] = $zeeIds;
-    }
-    return $list;
-  }
-};
-
-/** croisement entre le portefeuille et les GANs en vue d'afficher le tableau des degrés de péremption */
-class Perempt {
-  protected string $mapNum;
-  protected ?\mapcat\MapCatItem $mapCat; // info de MapCat
-  protected string $pfVersion; // info du portefeuille 
-  protected ?string $pfDate; // info du portefeuille 
-  protected string $ganVersion=''; // info du GAN 
-  /** @var array<int, array<string, string>> $ganCorrections */
+/** chaque objet est une ligne du TdB croisant pour une carte les infos du portefeuille et celles du GAN
+ * en vue d'afficher le tableau de péremption des cartes */
+class DashboardRow {
+  /** num de la carte */
+  readonly public string $mapNum;
+  /** infos de MapCat */
+  readonly public ?\mapcat\MapCatItem $mapCat;
+  /** version provenant du portefeuille */
+  readonly public string $pfVersion;
+  /** date provenant du portefeuille */
+  readonly public ?string $pfDate;
+  /** version fournie par le GAN */
+  protected string $ganVersion='';
+  /** liste des corrections apportées àa la carte
+   * @var array<int, array<string, string>> $ganCorrections */
   protected array $ganCorrections=[]; // info du GAN
-  protected ?float $degree=null; // degré de péremption déduit de la confrontation entre portefeuille et GAN
+  /**  degré de péremption déduit de la confrontation entre portefeuille et GAN */
+  protected ?float $degree=null;
   
-  /** tableau de tous les objets de la classse
-   * @var array<string, Perempt> $all */
-  static array $all; // [mapNum => Perempt]
+  /** tableau de tous les objets de la classse [mapNum => self]
+   * @var array<string, self> $all */
+  static array $all;
 
   /** construction à partir du portefeuille */
   static function init(): void {
-    foreach (Portfolio::$all as $mapnum => $mapMd) {
+    foreach (\bo\Portfolio::$all as $mapnum => $mapMd) {
       self::$all[$mapnum] = new self($mapnum, $mapMd);
     }
   }
@@ -163,7 +79,7 @@ class Perempt {
   }
   
   /** Mise à jour de perempt à partir du GAN */
-  function setGan(Gan $gan): void {
+  function setGan(\gan\Gan $gan): void {
     $this->ganVersion = $gan->version();
     $this->ganCorrections = $gan->corrections();
     $this->degree = $this->degree();
@@ -204,7 +120,7 @@ class Perempt {
   /** Affichage du tableau des degrés de péremption */
   static function showAll(): void { 
     usort(self::$all,
-      function(Perempt $a, Perempt $b) {
+      function(self $a, self $b) {
         if ($a->degree() < $b->degree()) return 1;
         elseif ($a->degree() == $b->degree()) return 0;
         else return -1;
@@ -216,7 +132,7 @@ class Perempt {
       "L'objectif du grand tableau ci-dessous est de fournir le degré de péremption des cartes du portefeuille",
       " mesuré par rapport aux <a href='https://gan.shom.fr/' target='_blank'>GAN (Groupes d'Avis aux Navigateurs)</a>",
       " qui indiquent chaque semaine notamment les corrections apportées aux cartes.</p>\n";
-    echo "<table border=1><tr><td><b>Validité du GAN</b></td><td>",Gan::$hvalid,"</td></tr></table>\n";
+    echo "<table border=1><tr><td><b>Validité du GAN</b></td><td>",\gan\Gan::$hvalid,"</td></tr></table>\n";
     echo "<h3>Signification des colonnes du tableau ci-dessous</h3>\n";
     echo "<table border=1>\n";
     $headers = [
@@ -246,8 +162,8 @@ class Perempt {
     echo "<table border=1><th>",implode('</th><th>', array_keys($headers)),"</th>\n";
     if (AvailAtTheShop::exists())
       echo "<th>boutique</th>\n";
-    foreach (Perempt::$all as $p) {
-      $p->showAsRow();
+    foreach (self::$all as $row) {
+      $row->showAsRow();
     }
     echo "</table>\n";
   }
@@ -372,101 +288,7 @@ class AvailAtTheShop {
   // retourne le champ 'Informations de mise à jour ' pour la carte de numéro $mapNum
   static function maj(string $mapNum): string { return self::$all[$mapNum] ?? ''; }
 };
-
-
-/** Teste si à la fois $now - $first >= 1 jour et il existe une $dayOfWeekT$h:$m  entre $first et $now */
-function dateBetween(\DateTimeImmutable $first, \DateTimeImmutable $now, int $dayOfWeek=4, int $h=20, int $mn=0): bool {
-  //echo 'first = ',$first->format(DateTimeInterface::ISO8601),', now = ',$now->format(DateTimeInterface::ISO8601),"<br>\n";
-  
-  //$diff = $first->diff($now); print_r($diff); echo "<br>\n";
-  /*if ($diff->invert == 1) {
-    echo "diff.invert==1 <=> now < first<br>\n";
-  }
-  else {
-    echo "diff.invert<>=1 <=> first < now<br>\n";
-  }*/
-  if ($first->diff($now)->d == 0) // Il y a moins d'un jour d'écart
-    return false;
-  if ($first->diff($now)->days >= 7) // Il y a plus de 7 jours d'écart
-    return true;
-  
-  $W = $now->format('W'); // le no de la semaine de $now
-  //echo "Le no de la semaine de now est $W<br>\n";
-  $o = $now->format('o'); // l'année ISO semaine de $last
-  //echo "L'année (ISO semaine) d'aujourd'hui est $o<br>\n";
-  // j'appelle $thursday le jour qui doit être le $dayOfWeek
-  $thursday = $now->setISODate(intval($o), intval($W), $dayOfWeek)->setTime($h, $mn);
-  //echo "Le jeudi 20h UTC de la semaine d'aujourd'hui est ",$thursday->format(DateTimeInterface::ISO8601),"<br>\n";
-  
-  $diff = $thursday->diff($now); // intervalle de $thursday à $now
-  //print_r($diff); echo "<br>\n";
-  if ($diff->invert == 1) { // c'est le jeudi d'après now => prendre le jeudi d'avant
-    //echo $thursday->format(DateTimeInterface::ISO8601)," est après maintenant<br>\n";
-    $oneWeek = new \DateInterval("P7D"); // 7 jours
-    $thursday = $thursday->sub($oneWeek);
-    //echo $thursday->format(DateTimeInterface::ISO8601)," est le jeudi de la semaine précédente<br>\n";
-  }
-  else {
-    //echo $thursday->format(DateTimeInterface::ISO8601)," est avant maintenant, c'est donc le jeudi précédent<br>\n";
-  }
-  $thursday_minus_first = $first->diff($thursday);
-  //print_r($thursday_minus_first);
-  if ($thursday_minus_first->invert == 1) {
-    //echo "thursday_minus_first->invert == 1 <=> thursday < first<br>\n";
-    return false;
-  }
-  else {
-    //echo "thursday_minus_first->invert <> 1 <=> first < thursday <br>\n";
-    return true;
-  }
-}
-
-/** Test de dateBetween() */
-function testDateBetween(): void {
-  $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15');
-  $now = new \DateTimeImmutable;
-  echo 'first = ',$first->format(\DateTimeInterface::ISO8601),', now = ',$now->format(\DateTimeInterface::ISO8601),"<br>\n";
-  $db = dateBetween($first, $now, 4, 20, 00);
-  echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
-  
-  $first = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-11'); // Ve
-  $now = \DateTimeImmutable::createFromFormat('Y-m-d', '2023-08-15'); // Ma
-  echo 'first = ',$first->format(\DateTimeInterface::ISO8601),', now = ',$now->format(\DateTimeInterface::ISO8601),"<br>\n";
-  $db = dateBetween($first, $now, 4, 20, 00);
-  echo "dateBetween=",$db ? 'true' : 'false',"<br>\n";
-}
-//testDateBetween();
-
-/** indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
- * Si remoisson alors retourne l'age de la moisson en jours
- * Si la moisson n'existe pas alors retourne -1
- * Si la moisson n'a pas à être moissonnée retourne 0 */
-function ganHarvestAge(): int {
-  //return -1;
-  if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
-    return -1;
-  $now = new \DateTimeImmutable;
-  $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
-  $valid = explode('/', $gans['valid']);
-  //echo "valid="; print_r($valid); echo "<br>\n";
-  $valid = \DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
-  if (dateBetween($valid, $now, 4, 20, 00)) {
-    //print_r($valid->diff($now));
-    return $valid->diff($now)->days;
-  }
-  else
-    return 0;
-}
-
-function wfsAge(): int {
-  if (!is_file(__DIR__."/../shomft/gt.json"))
-    return -1;
-  //echo 'filemtime=',date('Y-m-d', filemtime(__DIR__."/../shomft/gt.json")),"<br>\n";
-  $now = new \DateTimeImmutable;
-  $filemtime = $now->setTimestamp(filemtime(__DIR__."/../shomft/gt.json"));
-  //echo "filemtime="; print_r($filemtime); echo "<br>\n";
-  return $filemtime->diff($now)->days;
-}
+AvailAtTheShop::init();
 
 switch ($action = ($_GET['action'] ?? null)) {
   case null:
@@ -479,12 +301,12 @@ switch ($action = ($_GET['action'] ?? null)) {
     }
     //echo "<pre>"; print_r($_GET); echo "</pre>\n";
     echo "<h2>Tableau de bord de l'actualité des cartes</h2><ul>\n";
-    $ganHarvestAge = ganHarvestAge();
+    $ganHarvestAge = \gan\Gan::age();
     //echo "ganHarvestAge=$ganHarvestAge<br>\n";
     if (($ganHarvestAge == -1) || ($ganHarvestAge > 0))
       echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
-    $wfsAge = wfsAge();
+    $wfsAge = \shomft\MapFromWfs::age();
     if (($wfsAge >= 7) || ($wfsAge == -1))
       echo "<li><a href='../shomft/updatecolls.php?collections=gt,aem,delmar'>",
            "Mettre à jour de la liste des cartes à partir du serveur WFS du Shom ",
@@ -502,17 +324,12 @@ switch ($action = ($_GET['action'] ?? null)) {
   }
   case 'newObsoleteMaps': { // détecte de nouvelles cartes à ajouter au portefeuille et les cartes obsolètes
     //echo "<pre>";
-    MapFromWfs::init();
-    Portfolio::init();
-    //MapFromWfs::show();
-    $listOfInterest = MapFromWfs::interest();
-    //echo count($list)," / ",count(MapFromWfs::$fc['features']),"\n";
-    $newMaps = [];
+    $listOfInterest = \shomft\MapFromWfs::interest();
+    $newMaps = []; // liste des nouvelles cartes
     foreach ($listOfInterest as $mapid => $zeeIds) {
-      if (!Portfolio::exists($mapid)) {
+      if (!\bo\Portfolio::exists($mapid)) {
         $newMaps[$mapid] = $zeeIds;
         //echo "$mapid dans WFS et pas dans sgserver<br>\n";
-        //echo "<pre>"; print_r(MapFromWfs::$fts[$mapid]['properties']); echo "</pre>\n"; 
       }
     }
     if (!$newMaps)
@@ -520,14 +337,14 @@ switch ($action = ($_GET['action'] ?? null)) {
     else {
       echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
       foreach ($newMaps as $mapid => $zeeIds) {
-        $map = MapFromWfs::$fts[$mapid]->prop;
+        $map = \shomft\MapFromWfs::$all[$mapid]->prop;
         $scale = '1/'.addUndescoreForThousand(isset($map['scale']) ? (int)$map['scale'] : null);
         echo "- $map[name] ($scale) intersecte ",implode(',', $zeeIds),"<br>\n";
       }
     }
   
-    $obsoletes = [];
-    foreach (array_keys(Portfolio::$all) as $mapid) {
+    $obsoletes = []; // liste des cartes obsoletes
+    foreach (array_keys(\bo\Portfolio::$all) as $mapid) {
       if (!isset($listOfInterest[$mapid]))
         $obsoletes[] = $mapid;
     }
@@ -549,40 +366,30 @@ switch ($action = ($_GET['action'] ?? null)) {
     die();
   }
   case 'perempt': { // construction puis affichage des degrés de péremption 
-    Portfolio::init(); // initialisation à partir du portefeuille
-    //DbMapCat::init(); // chargement du fichier mapcat.yaml
-    GanStatic::loadFromPser(); // chargement de la synthèse des GANs
-    AvailAtTheShop::init();
-    Perempt::init(); // construction à partir du portefeuille
+    \gan\Gan::loadFromPser(); // chargement de la synthèse des GANs
+    DashboardRow::init(); // construction à partir du portefeuille
     // Mise à jour de perempt à partir du GAN
-    foreach (Perempt::$all as $mapNum => $perempt) {
-      if (!($gan = GanStatic::item($mapNum)))
+    foreach (DashboardRow::$all as $mapNum => $row) {
+      if (!($gan = \gan\Gan::item($mapNum)))
         echo "Erreur, Gan absent pour carte $mapNum\n";
       else
-        $perempt->setGan($gan);
+        $row->setGan($gan);
     }
-    Perempt::showAll(); // Affichage du tableau des degrés de péremption
+    DashboardRow::showAll(); // Affichage du tableau des degrés de péremption
     die();
   }
-  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3
-    echo "<h2>Liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT3</h2><pre>\n";
-    MapFromWfs::init();
-    foreach (MapFromWfs::$fts as $gmap) {
+  case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT
+    echo "<h2>Liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT</h2><pre>\n";
+    foreach (\shomft\MapFromWfs::$all as $gmap) {
       $gmap->showOne();
     }
     die();
   }
   case 'listOfInterest': { // Affichage simple des cartes d'intérêt du serveur WFS
-    MapFromWfs::init();
-    $listOfInterest = MapFromWfs::interest();
+    $listOfInterest = \shomft\MapFromWfs::interest();
     ksort($listOfInterest);
     //echo "<pre>listOfInterest="; print_r($listOfInterest); echo "</pre>\n";
     echo "<h2>Liste des cartes d'inérêt</h2><pre>\n",Yaml::dump($listOfInterest, 1),"</pre>\n";
-    die();
-  }
-  case 'availAtTheShop': { // Test de AvailAtTheShop::init();
-    echo "<pre>";
-    AvailAtTheShop::init();
     die();
   }
   default: { die("Action $action non définie\n"); }
