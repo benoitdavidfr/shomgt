@@ -37,7 +37,7 @@ require_once __DIR__.'/../bo/login.inc.php';
 require_once __DIR__.'/../shomft/frzee.inc.php';
 require_once __DIR__.'/../lib/gebox.inc.php';
 require_once __DIR__.'/../lib/mysql.inc.php';
-require_once __DIR__.'/../dashboard/gan.inc.php';
+require_once __DIR__.'/../gan/gan.inc.php';
 require_once __DIR__.'/mapcat.inc.php';
 
 use Symfony\Component\Yaml\Yaml;

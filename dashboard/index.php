@@ -34,7 +34,7 @@ namespace dashboard;
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/../shomft/frzee.inc.php';
-require_once __DIR__.'/gan.inc.php';
+require_once __DIR__.'/../gan/gan.inc.php';
 require_once __DIR__.'/portfolio.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
