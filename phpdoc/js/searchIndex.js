@@ -736,6 +736,26 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#constant_SHOMGEOTIFF"
         },                {
+            "fqsen": "\\bo\\Portfolio",
+            "name": "Portfolio",
+            "summary": "Portefeuille\u0020des\u0020cartes\u0020expos\u00E9es\u0020sur\u0020ShomGt\u0020issu\u0020des\u0020fichiers\u0020.md.json",
+            "url": "classes/bo-Portfolio.html"
+        },                {
+            "fqsen": "\\bo\\Portfolio\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "",
+            "url": "classes/bo-Portfolio.html#method_init"
+        },                {
+            "fqsen": "\\bo\\Portfolio\u003A\u003Aexists\u0028\u0029",
+            "name": "exists",
+            "summary": "",
+            "url": "classes/bo-Portfolio.html#method_exists"
+        },                {
+            "fqsen": "\\bo\\Portfolio\u003A\u003A\u0024all",
+            "name": "all",
+            "summary": "contenu\u0020des\u0020fichiers\u0020.md.json\u0020structur\u00E9\u0020par\u0020carte\u0020comme\u0020dictionnaire\u0020index\u00E9\u0020sur\u0020le\u0020no\u0020de\u0020carte",
+            "url": "classes/bo-Portfolio.html#property_all"
+        },                {
             "fqsen": "\\MIME_TYPES",
             "name": "MIME_TYPES",
             "summary": "",
@@ -801,90 +821,85 @@ Search.appendIndex(
             "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020user.",
             "url": "classes/bo-UserSqlSchema.html#constant_USER_TABLE"
         },                {
-            "fqsen": "\\dashboard\\addUndescoreForThousand\u0028\u0029",
-            "name": "addUndescoreForThousand",
-            "summary": "pour\u0020un\u0020entier\u0020fournit\u0020une\u0020repr\u00E9sentation\u0020avec\u0020un\u0020\u0027_\u0027\u0020comme\u0020s\u00E9parateur\u0020des\u0020milliers",
-            "url": "namespaces/dashboard.html#function_addUndescoreForThousand"
+            "fqsen": "\\dashboard\\DashboardRow",
+            "name": "DashboardRow",
+            "summary": "chaque\u0020objet\u0020est\u0020une\u0020ligne\u0020du\u0020TdB\u0020croisant\u0020pour\u0020une\u0020carte\u0020les\u0020infos\u0020du\u0020portefeuille\u0020et\u0020celles\u0020du\u0020GAN\nen\u0020vue\u0020d\u0027afficher\u0020le\u0020tableau\u0020de\u0020p\u00E9remption\u0020des\u0020cartes",
+            "url": "classes/dashboard-DashboardRow.html"
         },                {
-            "fqsen": "\\dashboard\\Perempt",
-            "name": "Perempt",
-            "summary": "croisement\u0020entre\u0020le\u0020portefeuille\u0020et\u0020les\u0020GANs\u0020en\u0020vue\u0020d\u0027afficher\u0020le\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
-            "url": "classes/dashboard-Perempt.html"
-        },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003Ainit\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003Ainit\u0028\u0029",
             "name": "init",
             "summary": "construction\u0020\u00E0\u0020partir\u0020du\u0020portefeuille",
-            "url": "classes/dashboard-Perempt.html#method_init"
+            "url": "classes/dashboard-DashboardRow.html#method_init"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/dashboard-Perempt.html#method___construct"
+            "url": "classes/dashboard-DashboardRow.html#method___construct"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003AsetGan\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003AsetGan\u0028\u0029",
             "name": "setGan",
             "summary": "Mise\u0020\u00E0\u0020jour\u0020de\u0020perempt\u0020\u00E0\u0020partir\u0020du\u0020GAN",
-            "url": "classes/dashboard-Perempt.html#method_setGan"
+            "url": "classes/dashboard-DashboardRow.html#method_setGan"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003Atitle\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003Atitle\u0028\u0029",
             "name": "title",
             "summary": "",
-            "url": "classes/dashboard-Perempt.html#method_title"
+            "url": "classes/dashboard-DashboardRow.html#method_title"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003AmapsFrance\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003AmapsFrance\u0028\u0029",
             "name": "mapsFrance",
             "summary": "",
-            "url": "classes/dashboard-Perempt.html#method_mapsFrance"
+            "url": "classes/dashboard-DashboardRow.html#method_mapsFrance"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024degree",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024degree",
             "name": "degree",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_degree"
+            "summary": "degr\u00E9\u0020de\u0020p\u00E9remption\u0020d\u00E9duit\u0020de\u0020la\u0020confrontation\u0020entre\u0020portefeuille\u0020et\u0020GAN",
+            "url": "classes/dashboard-DashboardRow.html#property_degree"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003AshowAll\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003AshowAll\u0028\u0029",
             "name": "showAll",
             "summary": "Affichage\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
-            "url": "classes/dashboard-Perempt.html#method_showAll"
+            "url": "classes/dashboard-DashboardRow.html#method_showAll"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003AshowAsRow\u0028\u0029",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003AshowAsRow\u0028\u0029",
             "name": "showAsRow",
             "summary": "Affichage\u0020d\u0027une\u0020ligne\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
-            "url": "classes/dashboard-Perempt.html#method_showAsRow"
+            "url": "classes/dashboard-DashboardRow.html#method_showAsRow"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024mapNum",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024mapNum",
             "name": "mapNum",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_mapNum"
+            "summary": "num\u0020de\u0020la\u0020carte",
+            "url": "classes/dashboard-DashboardRow.html#property_mapNum"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024mapCat",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024mapCat",
             "name": "mapCat",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_mapCat"
+            "summary": "infos\u0020de\u0020MapCat",
+            "url": "classes/dashboard-DashboardRow.html#property_mapCat"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024pfVersion",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024pfVersion",
             "name": "pfVersion",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_pfVersion"
+            "summary": "version\u0020provenant\u0020du\u0020portefeuille",
+            "url": "classes/dashboard-DashboardRow.html#property_pfVersion"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024pfDate",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024pfDate",
             "name": "pfDate",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_pfDate"
+            "summary": "date\u0020provenant\u0020du\u0020portefeuille",
+            "url": "classes/dashboard-DashboardRow.html#property_pfDate"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024ganVersion",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024ganVersion",
             "name": "ganVersion",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_ganVersion"
+            "summary": "version\u0020fournie\u0020par\u0020le\u0020GAN",
+            "url": "classes/dashboard-DashboardRow.html#property_ganVersion"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024ganCorrections",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024ganCorrections",
             "name": "ganCorrections",
-            "summary": "",
-            "url": "classes/dashboard-Perempt.html#property_ganCorrections"
+            "summary": "liste\u0020des\u0020corrections\u0020apport\u00E9es\u0020\u00E0a\u0020la\u0020carte",
+            "url": "classes/dashboard-DashboardRow.html#property_ganCorrections"
         },                {
-            "fqsen": "\\dashboard\\Perempt\u003A\u003A\u0024all",
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024all",
             "name": "all",
-            "summary": "tableau\u0020de\u0020tous\u0020les\u0020objets\u0020de\u0020la\u0020classse",
-            "url": "classes/dashboard-Perempt.html#property_all"
+            "summary": "tableau\u0020de\u0020tous\u0020les\u0020objets\u0020de\u0020la\u0020classse\u0020\u005BmapNum\u0020\u003D\u003E\u0020self\u005D",
+            "url": "classes/dashboard-DashboardRow.html#property_all"
         },                {
             "fqsen": "\\dashboard\\AvailAtTheShop",
             "name": "AvailAtTheShop",
@@ -930,26 +945,6 @@ Search.appendIndex(
             "name": "all",
             "summary": "",
             "url": "classes/dashboard-AvailAtTheShop.html#property_all"
-        },                {
-            "fqsen": "\\dashboard\\Portfolio",
-            "name": "Portfolio",
-            "summary": "Portefeuille\u0020des\u0020cartes\u0020expos\u00E9es\u0020sur\u0020ShomGt\u0020issu\u0020des\u0020fichiers\u0020.md.json",
-            "url": "classes/dashboard-Portfolio.html"
-        },                {
-            "fqsen": "\\dashboard\\Portfolio\u003A\u003Ainit\u0028\u0029",
-            "name": "init",
-            "summary": "",
-            "url": "classes/dashboard-Portfolio.html#method_init"
-        },                {
-            "fqsen": "\\dashboard\\Portfolio\u003A\u003Aexists\u0028\u0029",
-            "name": "exists",
-            "summary": "",
-            "url": "classes/dashboard-Portfolio.html#method_exists"
-        },                {
-            "fqsen": "\\dashboard\\Portfolio\u003A\u003A\u0024all",
-            "name": "all",
-            "summary": "",
-            "url": "classes/dashboard-Portfolio.html#property_all"
         },                {
             "fqsen": "\\gan\\dateBetween\u0028\u0029",
             "name": "dateBetween",
@@ -1005,6 +1000,11 @@ Search.appendIndex(
             "name": "age",
             "summary": "indique\u0020si\u0020la\u0020derni\u00E8re\u0020moisson\u0020du\u0020GAN\u0020est\u0020ancienne\u0020et\u0020le\u0020GAN\u0020doit\u0020donc\u0020\u00EAtre\u0020remoissonn\u00E9\nSi\u0020remoisson\u0020alors\u0020retourne\u0020l\u0027age\u0020de\u0020la\u0020moisson\u0020en\u0020jours\nSi\u0020la\u0020moisson\u0020n\u0027existe\u0020pas\u0020alors\u0020retourne\u0020\u002D1\nSi\u0020la\u0020moisson\u0020n\u0027a\u0020pas\u0020\u00E0\u0020\u00EAtre\u0020moissonn\u00E9e\u0020retourne\u00200",
             "url": "classes/gan-Gan.html#method_age"
+        },                {
+            "fqsen": "\\gan\\Gan\u003A\u003AstoreAsPser\u0028\u0029",
+            "name": "storeAsPser",
+            "summary": "enregistre\u0020le\u0020catalogue\u0020comme\u0020pser",
+            "url": "classes/gan-Gan.html#method_storeAsPser"
         },                {
             "fqsen": "\\gan\\Gan\u003A\u003AloadFromPser\u0028\u0029",
             "name": "loadFromPser",
@@ -1131,46 +1131,6 @@ Search.appendIndex(
             "summary": "erreur\u0020\u00E9ventuelle\u0020du\u0020moissonnage",
             "url": "classes/gan-Gan.html#property_harvestError"
         },                {
-            "fqsen": "\\gan\\GanStatic",
-            "name": "GanStatic",
-            "summary": "Classe\u0020regroupant\u0020des\u0020m\u00E9thodes\u0020statiques\u0020autour\u0020de\u0020la\u0020gestion\u0020des\u0020GAN",
-            "url": "classes/gan-GanStatic.html"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003Aweek\u0028\u0029",
-            "name": "week",
-            "summary": "transforme\u0020une\u0020date\u0020en\u0020semaine\u0020sur\u00204\u0020caract\u00E8res\u0020comme\u0020utilis\u00E9\u0020par\u0020le\u0020GAN",
-            "url": "classes/gan-GanStatic.html#method_week"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003Aharvest\u0028\u0029",
-            "name": "harvest",
-            "summary": "function\u0020harvest\u0028\u0029\u0020\u002D\u0020moissonne\u0020les\u0020GAN\u0020par\u0020carte\u0020dans\u0020le\u0020r\u00E9pertoire\u0020self\u003A\u003AGAN_DIR",
-            "url": "classes/gan-GanStatic.html#method_harvest"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003AanalyzeHtml\u0028\u0029",
-            "name": "analyzeHtml",
-            "summary": "analyzeHtml\u0028\u0029\u0020\u002D\u0020analyse\u0020du\u0020Html\u0020du\u0020GAN",
-            "url": "classes/gan-GanStatic.html#method_analyzeHtml"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003AanalyzeHtmlOfMap\u0028\u0029",
-            "name": "analyzeHtmlOfMap",
-            "summary": "pour\u0020mise\u0020au\u0020point\u0020effectue\u0020l\u0027analyse\u0020du\u0020GAN\u0020pour\u0020une\u0020carte",
-            "url": "classes/gan-GanStatic.html#method_analyzeHtmlOfMap"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003Abuild\u0028\u0029",
-            "name": "build",
-            "summary": "construit\u0020la\u0020synh\u00E8se\u0020des\u0020GAN\u0020de\u0020la\u0020moisson\u0020existante",
-            "url": "classes/gan-GanStatic.html#method_build"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003AstoreAsPser\u0028\u0029",
-            "name": "storeAsPser",
-            "summary": "enregistre\u0020le\u0020catalogue\u0020comme\u0020pser",
-            "url": "classes/gan-GanStatic.html#method_storeAsPser"
-        },                {
-            "fqsen": "\\gan\\GanStatic\u003A\u003AGAN_DIR",
-            "name": "GAN_DIR",
-            "summary": "",
-            "url": "classes/gan-GanStatic.html#constant_GAN_DIR"
-        },                {
             "fqsen": "\\gan\\http_error_code\u0028\u0029",
             "name": "http_error_code",
             "summary": "extrait\u0020le\u0020code\u0020d\u0027erreur\u0020Http",
@@ -1205,6 +1165,41 @@ Search.appendIndex(
             "name": "LOCK_FILEPATH",
             "summary": "chemin\u0020du\u0020fichier\u0020utilis\u00E9\u0020pour\u0020le\u0020verrou",
             "url": "classes/gan-Lock.html#constant_LOCK_FILEPATH"
+        },                {
+            "fqsen": "\\gan\\GanStatic",
+            "name": "GanStatic",
+            "summary": "Classe\u0020regroupant\u0020des\u0020m\u00E9thodes\u0020statiques\u0020de\u0020gestion\u0020des\u0020GAN",
+            "url": "classes/gan-GanStatic.html"
+        },                {
+            "fqsen": "\\gan\\GanStatic\u003A\u003Aweek\u0028\u0029",
+            "name": "week",
+            "summary": "transforme\u0020une\u0020date\u0020en\u0020semaine\u0020sur\u00204\u0020caract\u00E8res\u0020comme\u0020utilis\u00E9\u0020par\u0020le\u0020GAN",
+            "url": "classes/gan-GanStatic.html#method_week"
+        },                {
+            "fqsen": "\\gan\\GanStatic\u003A\u003Aharvest\u0028\u0029",
+            "name": "harvest",
+            "summary": "function\u0020harvest\u0028\u0029\u0020\u002D\u0020moissonne\u0020les\u0020GAN\u0020par\u0020carte\u0020dans\u0020le\u0020r\u00E9pertoire\u0020self\u003A\u003AGAN_DIR",
+            "url": "classes/gan-GanStatic.html#method_harvest"
+        },                {
+            "fqsen": "\\gan\\GanStatic\u003A\u003AanalyzeHtml\u0028\u0029",
+            "name": "analyzeHtml",
+            "summary": "analyzeHtml\u0028\u0029\u0020\u002D\u0020analyse\u0020du\u0020Html\u0020du\u0020GAN",
+            "url": "classes/gan-GanStatic.html#method_analyzeHtml"
+        },                {
+            "fqsen": "\\gan\\GanStatic\u003A\u003AanalyzeHtmlOfMap\u0028\u0029",
+            "name": "analyzeHtmlOfMap",
+            "summary": "pour\u0020mise\u0020au\u0020point\u0020effectue\u0020l\u0027analyse\u0020du\u0020GAN\u0020pour\u0020une\u0020carte",
+            "url": "classes/gan-GanStatic.html#method_analyzeHtmlOfMap"
+        },                {
+            "fqsen": "\\gan\\GanStatic\u003A\u003Abuild\u0028\u0029",
+            "name": "build",
+            "summary": "construit\u0020la\u0020synh\u00E8se\u0020des\u0020GAN\u0020de\u0020la\u0020moisson\u0020existante",
+            "url": "classes/gan-GanStatic.html#method_build"
+        },                {
+            "fqsen": "\\gan\\GanStatic\u003A\u003AGAN_DIR",
+            "name": "GAN_DIR",
+            "summary": "",
+            "url": "classes/gan-GanStatic.html#constant_GAN_DIR"
         },                {
             "fqsen": "\\Access",
             "name": "Access",
@@ -1260,6 +1255,11 @@ Search.appendIndex(
             "name": "FORBIDDEN_ACCESS_MESSAGE",
             "summary": "",
             "url": "classes/Access.html#constant_FORBIDDEN_ACCESS_MESSAGE"
+        },                {
+            "fqsen": "\\addUndescoreForThousand\u0028\u0029",
+            "name": "addUndescoreForThousand",
+            "summary": "pour\u0020un\u0020entier\u0020fournit\u0020une\u0020repr\u00E9sentation\u0020avec\u0020un\u0020\u0027_\u0027\u0020comme\u0020s\u00E9parateur\u0020des\u0020milliers",
+            "url": "namespaces/default.html#function_addUndescoreForThousand"
         },                {
             "fqsen": "\\Cache",
             "name": "Cache",
@@ -3055,11 +3055,6 @@ Search.appendIndex(
             "name": "IsoMd",
             "summary": "R\u00E9cup\u00E9ration\u0020de\u0020MD\u0020ISO\u0020d\u0027un\u0020G\u00E9oTiff",
             "url": "classes/IsoMd.html"
-        },                {
-            "fqsen": "\\IsoMd\u003A\u003AaddUndescoreForThousand\u0028\u0029",
-            "name": "addUndescoreForThousand",
-            "summary": "pour\u0020un\u0020entier\u0020fournit\u0020une\u0020repr\u00E9sentation\u0020avec\u0020un\u0020\u0027_\u0027\u0020comme\u0020s\u00E9parateur\u0020des\u0020milliers",
-            "url": "classes/IsoMd.html#method_addUndescoreForThousand"
         },                {
             "fqsen": "\\IsoMd\u003A\u003Aread\u0028\u0029",
             "name": "read",
