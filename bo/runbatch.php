@@ -28,7 +28,7 @@ $batches = [
   ],
   'harvestGan'=> [
     'title'=> "Moissonnage du GAN",
-    'cmde'=> 'php ../dashboard/gan.php newHarvestAndStore',
+    'cmde'=> 'php ../gan/gan.php newHarvestAndStore',
   ],
 ]; // batches prévus
 
