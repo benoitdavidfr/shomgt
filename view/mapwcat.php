@@ -2,6 +2,8 @@
 /** carte Leaflet avec les couches de geotiff, les catalogues, la ZEE, delmar, ...
  *
  * journal:
+ * - 30/9/2023:
+ *   - utilisation de la posssibilité de sous-domaines sur tile.php dans les appels L.TileLayer() 
  * - 24/6/2023:
  *   - mise en https d'OSM
  * - 9/5/2023:
@@ -62,6 +64,9 @@ $request_scheme = (getenv('SHOMGT3_MAPWCAT_FORCE_HTTPS') == 'true') ? 'https'
 $dirname = dirname($_SERVER['SCRIPT_NAME']);
 $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$dirname/");
 //echo "<pre>"; print_r($_SERVER); die("shomgturl=$shomgturl\n");
+
+// url avec subdomain si sur geoapi
+$shomgturlwsd = str_replace('/geoapi.fr/', '/{s}.geoapi.fr/', $shomgturl);
 
 $option_wfs = false;
 $options = explode(',', $_GET['options'] ?? 'none');
@@ -126,7 +131,8 @@ $zoom = $_GET['zoom'] ?? 6;
 <body>
   <div id="map" style="height: 100%; width: 100%"></div>
   <script>
-var shomgturl = <?php echo "'$shomgturl';\n"; ?>
+    var shomgturl = <?php echo "'$shomgturl';\n"; ?>
+    var shomgturlwsd = <?php echo "'$shomgturlwsd';\n"; ?>
     var attrshom = "&copy; <a href='http://data.shom.fr' target='_blank'>Shom</a>";
 
 // affichage des caractéristiques de chaque GeoTiff
@@ -252,17 +258,17 @@ map.on('click', function(e) { c.setCoordinates(e); });
 var baseLayers = {
   // PYR
   "Pyramide GéoTIFF" : new L.TileLayer(
-    shomgturl+'tile.php/gtpyr/{z}/{x}/{y}.png',
+    shomgturlwsd+'tile.php/gtpyr/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:18, detectRetina:false, attribution:attrshom }
   ),
   // Planisphère 1/40M
   "Planisphère 1/40M" : new L.TileLayer(
-    shomgturl+'tile.php/gt40M/{z}/{x}/{y}.png',
+    shomgturlwsd+'tile.php/gt40M/{z}/{x}/{y}.png',
     { format:"png", minZoom:0, maxZoom:17, detectRetina:false, attribution:attrshom }
   ),
   // gtDelMar
   "Zones maritimes" : new L.TileLayer(
-    shomgturl+'tile.php/gtZonMar/{z}/{x}/{y}.png',
+    shomgturlwsd+'tile.php/gtZonMar/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":8,"detectRetina":false,"attribution":attrshom}
   ),
   // IGN
@@ -327,7 +333,7 @@ var overlays = {
          "         pointToLayer: pointToLayer\n",
          "       }),\n",
          "       new L.TileLayer(\n", // la couche des étiquettes des GéoTiffs
-         "         shomgturl+'tile.php/num$sd/{z}/{x}/{y}.png',\n",
+         "         shomgturlwsd+'tile.php/num$sd/{z}/{x}/{y}.png',\n",
          "         {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}\n",
          "       ),\n",
          "    ]),\n";
@@ -337,14 +343,14 @@ var overlays = {
          "         style: { color: 'orange'}, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeatureWfs\n",
          "     }),\n";
     echo "    \"GéoTIFF 1/$sd\" : new L.TileLayer(\n", // le contenu des GéoTiffs
-         "       shomgturl+'tile.php/gt$sd/{z}/{x}/{y}.png',\n",
+         "       shomgturlwsd+'tile.php/gt$sd/{z}/{x}/{y}.png',\n",
          "       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false,'attribution':attrshom}\n",
          "    ),\n";
   }
 
   if ($option_wfs)
     echo "    \"WFS cartes spéciales\" : new L.UGeoJSONLayer({\n", // la couche des WFS
-         "         endpoint: shomgturl+'../shomft/ft.php/collections/aem/items',\n",
+         "         endpoint: shomgturlwsd+'../shomft/ft.php/collections/aem/items',\n",
          "         style: { color: 'orange'}, minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeatureWfs\n",
          "     }),\n";
 ?>
@@ -356,13 +362,13 @@ var overlays = {
       minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
     }),
     new L.TileLayer(
-      shomgturl+'tile.php/numaem/{z}/{x}/{y}.png',
+      shomgturlwsd+'tile.php/numaem/{z}/{x}/{y}.png',
       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}
     )
   ]),
 
   "Cartes AEM" : new L.TileLayer(
-    shomgturl+'tile.php/gtaem/{z}/{x}/{y}.png',
+    shomgturlwsd+'tile.php/gtaem/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
   ),
   
@@ -373,12 +379,12 @@ var overlays = {
       minZoom: 0, maxZoom: 18, usebbox: true, onEachFeature: onEachFeature
     }),
     new L.TileLayer(
-      shomgturl+'tile.php/numMancheGrid/{z}/{x}/{y}.png',
+      shomgturlwsd+'tile.php/numMancheGrid/{z}/{x}/{y}.png',
       {'format':'png','minZoom':0,'maxZoom':18,'detectRetina':false}
     )
   ]),
   "Carte MancheGrid" : new L.TileLayer(
-    shomgturl+'tile.php/gtMancheGrid/{z}/{x}/{y}.png',
+    shomgturlwsd+'tile.php/gtMancheGrid/{z}/{x}/{y}.png',
     {"format":"png","minZoom":0,"maxZoom":18,"detectRetina":false,"attribution":attrshom}
   ),
 
