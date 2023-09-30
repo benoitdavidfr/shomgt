@@ -117,6 +117,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) { // Test unitaire de 
          "<br>\n ->geo('WebMercator') -> ", Zoom::tileEBox(0,0,0)->geo('WebMercator'),"<br>\n";
     echo "Zoom::tileEBox(9, 253, 176)=",Zoom::tileEBox(9, 253, 176),
          "<br>\n ->geo('WebMercator') -> ",Zoom::tileEBox(9, 253, 176)->geo('WebMercator'),"<br>\n";
+   echo "Zoom::tileEBox(14, 8063, 5731)=",Zoom::tileEBox(14, 8063, 5731),
+        "<br>\n ->geo('WebMercator') -> ",Zoom::tileEBox(14, 8063, 5731)->geo('WebMercator'),"<br>\n";
     echo "<h2>Test de Zoom::gboxToTiles()</h2>\n";
     foreach ([
         ['gbox'=> new \gegeom\GBox([[4.5,43.0], [5.1,43.5]]), 'width'=> 1200, 'height'=> 800],

@@ -148,11 +148,11 @@ class Request2GBox {
   
   // transforme en GBox une requête sur une tuile ou null si l'URI ne correspond pas à une requête sur une tuile
   static function tile(string $request_uri): ?\gegeom\GBox {
-  //static function tile(string $request_uri): ?GBox {
-    if (!preg_match('!^/view/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
+    if (!preg_match('!/tile.php/[^/]+/(\d+)/(\d+)/(\d+).png$!', $request_uri, $matches))
       return null;
     //echo "<pre>request_uri=$request_uri</pre>\n";
     $ebox = \Zoom::tileEBox(intval($matches[1]), intval($matches[2]), intval($matches[3])); // $ebox en coord. WebMercator
+    //echo "ebox=$ebox<br>\n";
     return $ebox->geo('WebMercator');
   }
 
@@ -329,7 +329,8 @@ switch ($action = $_GET['action'] ?? null) {
     $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip']);
     echo "<pre>sql=$sql</pre>\n";
     echo "<a href='?action=mapOfLogs&amp;access=$_GET[access]&amp;duration=$_GET[duration]&ip=$_GET[ip]'>",
-          "Carte des accès</a><br>\n";
+          "Carte des accès</a>\n";
+    echo "(<a href='?action=geojson&amp;access=$_GET[access]&amp;duration=$_GET[duration]&ip=$_GET[ip]'>geojson</a>)<br>\n";
     echo "<a href='?action=heatMap&amp;access=$_GET[access]&amp;duration=$_GET[duration]&ip=$_GET[ip]'>",
           "Carte de chaleur</a><br>\n";
     echo "<table border=1>\n";
@@ -437,6 +438,7 @@ EOT;
     $durationInHours = durationInHours($_GET['duration']);
     $sql = queryForRecentAccess($_GET['access'], $durationInHours, $_GET['ip'] ?? null);
     $first = true;
+    //echo "sql=$sql<br>\n";
     foreach (\MySql::query($sql) as $tuple) {
       //print_r($tuple); echo "<br>\n";
       //echo "<pre>",Yaml::dump($tuple),"</pre>\n";

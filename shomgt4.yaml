@@ -388,6 +388,17 @@ découpageEnComposantsV4:
 questions:
   - faut-il vraiment limiter aux utilisateurs connectés dans le BO le dépôt de nouvelles versions de cartes ?
     - inconvénient, cela complique l'adoption de cette fonctionnalité par les utilisateurs
+
+rôles:
+  - mainteneur
+  - admin
+  - hébergeur
+  - développeur
+nones:
+  3 métro: FX-Atl, FX-MMN, FX-Med
+  attlantique: GP, MQ, GF, BL, MF, PM
+  Pacifique: PF, WF, CP, NC
+  indien: RE, YT, TF
 backlog:
   stratégie:
     - ajouter progressivement les nouvelles fonctionnalités
@@ -518,15 +529,23 @@ backlog:
     - dans la V4, je crée le cookie dans le répertoire bo et par défaut il n'est pas dispo dans le répertoire racine
   horsSprint:
     - meilleure gestion en production de l'affichage des erreurs
-    - filtrer dans dashboard sur une zone
-    - gérer un log plus fin des actions du BO - NON
-    - automatiser la maj du GAN et de la purge des cartes ? NON
     - gestion des stats d'utilisation
       - agrégation des stats ?
     - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
-    - tableau des cartes du portefeuille (réservé admins) -> '#fonctionnalités/pfdb'
-    - mettre en oeuvre un filtre sur sgupdt/sgserver pour ne pas installer ttes les cartes
-      - var. d'env. sur sgupdt -> var. GET sur sgserver avec zone
+  dashboard:
+    - amélioration du dashboard
+    - gérer à part dans dashboard les cartes hors GAN
+      - distinguer celles non trouvées dans le GAN de celles qui n'y sont pas
+    - dissocier gan de dashboard
+    - possibilité de dashboard par zone
+    - revoir l'org. du code
+    - afficher un indicateur de réalisation dans le moissonnage des GAN
+  doc:
+    - préciser ce que chaque module expose
+  accessLog:
+    - faire un comptage du nbre d'accès par jour sur le dernier mois
+      - et par mois sur la dernière année
+      - avec possibilité de zoomer sur le mois ou le jour
 bugs:
   7507@8/8/2023(ok):
     - pourquoi dashboard indique que la version GAN de la 7507 est la 1996c131
@@ -552,6 +571,18 @@ bugs:
     errors:
         - "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive"
 
+php.ini:
+  dev: |
+    display_errors = On
+    display_startup_errors = On
+    error_reporting = -1
+    log_errors = On
+  prod: |
+    display_errors = Off
+    display_startup_errors = Off
+    error_reporting = E_ALL
+    log_errors = On
+  src: https://php.developpez.com/tutoriels/php-la-bonne-pratique/?page=securite#LX-F
 restructurationV5SousFormeDApi:
   date: 26/8/2023
   description: |

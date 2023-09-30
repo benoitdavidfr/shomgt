@@ -40,7 +40,7 @@ Ce module correspond aux packages de la doc PhphDoc:
 1. L'algorithme de scrapping peut être invalidé par une modification des pages Html du site du GAN.
    Ainsi:
 
-   1. le code d'analyse du Html est concentrée dans la méthode statique `analyzeHtml(string $html): array`
+   1. le code d'analyse du Html est concentré dans la méthode statique `analyzeHtml(string $html): array`
       de la classe `GanStatic` définie dans le fichier `gan.inc.php`.  
    2. Cette analyse peut être testée au moyen de la commande `php gan.php analyzeHtml {mapNum}`
       où `{mapNum}` est le numéro de la carte à analyser.

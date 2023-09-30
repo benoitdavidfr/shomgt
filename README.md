@@ -11,102 +11,120 @@ comme [Leaflet](https://leafletjs.com/) ou [QGis](https://www.qgis.org/).
 
 Ce dépôt correspond la version 4 de ShomGT.
 Cette version, en cours de développement, propose des outils en mode web pour gérer le portefeuille de cartes 
-(ajout/suppression d'une carte ou d'une version d'une carte).
+(ajout/suppression de cartes et mise à jour).
 Son objectif est de permettre à différentes personnes d'effectuer les mises à jour du portefeuille de cartes.
 
-La version 3 avait pour objectif de simplifier la mise en place d'un serveur local, son approvisionnement
-avec les cartes du Shom, puis la mise à jour de ces cartes ;
+La version 3 avait pour objectif de simplifier la mise en place d'un serveur local et son actualisation régulière
+avec les cartes du Shom ;
 cette simplification s'appuie sur l'utilisation de conteneurs Docker et de docker-compose.
 
-Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur, ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes. C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
+Pour utiliser ces web-services, des cartes Shom doivent être intégrées au serveur,
+ce qui nécessite que les utilisateurs disposent des droits d'utilisation de ces cartes.
+C'est le cas notamment des services et des EPA de l'Etat conformément à l'[article 1 de la loi 
+Pour une République numérique](https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte).
 Pour les autres acteurs, consulter le Shom (bureau.prestations@shom.fr).
 
 ## 1. Décomposition en modules
-ShomGT4 se décompose dans les 7 modules suivants:
+ShomGT4 se décompose dans les 8 modules suivants:
 
   - **[view](view)** expose les services suivants de consultation des cartes:
     - une API tuiles au [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) très utilisé, 
     - un service conforme au [protocole WMS](https://www.ogc.org/standards/wms), utilisé par de nombreux SIG,
-    - un service GeoJSON exposant les silhouettes des GéoTiffs et d'autres couches vecteur,
+    - un service GeoJSON exposant les silhouettes des cartes et d'autres couches vecteur,
     - une carte Leaflet de visualisation des tuiles et des silhouettes des GéoTiffs et permettant de télécharger les cartes.
     
-  - **[sgupdt](sgupdt)** construit et met à jour les fichiers nécessaires à *view*,
-    en interrogeant *sgserver*,
-    et les stocke dans un [répertoire data décrit ici](data).  
+  - **[sgupdt](sgupdt)** construit et met à jour les données nécessaires à *view*,
+    à partir des cartes exposées par *sgserver*,
+    et les stocke dans le [répertoire data décrit ici](data).  
     
     *view* et *sgupdt* peuvent être déployés comme conteneurs Docker,
     dans ce cas le répertoire *data* constitue un volume partagé entre ces 2 conteneurs.
     
-  - **[sgserver](sgserver)** expose à *sgupdt* les cartes du Shom au travers d'une API http.
-    Il est mis à jour régulièrement au travers du *BO* en fonction des infos fournies par le *dashboard*.
-  
-  - **[dashboard](dashboard)** expose un tableau de bord permettant d'identifier:
-    - les cartes les plus périmées à remplacer
-    - les cartes obsolètes à retirer
-    - les nouvelles cartes à prendre en compte
+  - **[sgserver](sgserver)** expose à *sgupdt* au travers d'une API http
+    les cartes du Shom structurées selon le format de livraison du Shom.
+    Il peut être consulté par différents clients notamment ceux déployés comme conteneurs Docker.
+    Les cartes sont mises à jour régulièrement au travers du *BO* en fonction des infos fournies par le *dashboard*.
     
-    *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
-    issues du [GAN du Shom](#gan).
-    Il exploite aussi, pour détecter de nouvelles cartes, la liste des cartes diffusée par le Shom sur son serveur WFS.
+  - **[BO](bo)** est le module de gestion du portefeuille des cartes exposées par *sgserver*.
+    Il permet notamment d'ajouter de nouvelles cartes, de les mettre à jour, de les supprimer lorsqu'elles sont obsolètes,
+    et de gérer les utilisateurs autorisés à le faire.
   
-  - **[mapcat](mapcat)** est un catalogue des cartes Shom couvrant les zones sous juridiction française.
-    Il décrit des informations intemporelles sur les cartes comme le titre de la carte, sa couverture spatiale,
+  - **[mapcat](mapcat)** expose un catalogue des cartes Shom couvrant les zones sous juridiction française.
+    Il décrit des informations intemporelles sur les cartes comme le titre de la carte, son échelle, sa couverture spatiale,
     la liste de ses cartouches, ....
+    ainsi que des informations améliorant la juxtaposition des cartes (effacement de certaines parties,
+    ordre de priorité entre cartes, ...).
     Il est notamment utilisé par *sgupdt* au travers de *sgserver*.
   
-  - **[shomft](shomft)** expose différents jeux de données GeoJSON, notamment certains issus du serveur WFS du Shom.
-    Il comprend aussi une version simplifiée des zones sous juridiction française afin d'identifier les cartes
-    d'intérêt pour ShomGT dans *dashboard*.
+  - **[dashboard](dashboard)** construit et expose un tableau de bord permettant d'identifier:
+    - les cartes les plus périmées à remplacer
+    - les cartes obsolètes à retirer
+    - les nouvelles cartes à intégrer
     
-  - **[BO](bo)** est le module de gestion du portefeuille de cartes exposé par sgserver.
-    Il permet notamment d'ajouter de nouvelles versions des cartes.
+    *dashboard* confronte les versions des cartes du portefeuille aux informations d'actualité des cartes
+    fournies par le module *gan*.
+    Pour détecter de nouvelles cartes et les cartes obsolètes, il exploite la liste des cartes d'intérêt
+    exposée par le module *shomft*.
+  
+  - **[gan](gan)** expose sous une forme structurée adaptée au module *dashboard* les informations d'actualité des cartes
+    extraites du site [GAN du Shom](#gan).
+
+  - **[shomft](shomft)** expose différents jeux de données GeoJSON,
+    notamment la liste des cartes d'intérêt construite à partir de données exposées par le serveur WFS du Shom
+    croisées avec l'extension spatiale des zones sous juridiction française.
 
 Chacun de ces modules correspond à un répertoire ;
-en plus de ces 7 modules, une bibiothèque commune contient un certain nombre de classes et fonctions documentées
-dans la [doc PHPDoc](https://benoitdavidfr.github.io//shomgt/phpdoc/) correspondant aux packages suivants:
+en plus de ces 8 modules, une bibiothèque commune contient un certain nombre de définitions de classes et fonctions
+documentées dans la [doc PHPDoc](https://benoitdavidfr.github.io//shomgt/phpdoc/) correspondant aux packages suivants:
 
-- [shomgt\lib](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/shomgt-lib.html),
-- [coordsys](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/coordsys.html) pour gérer différents systèmes de coordonnées,
-- [gegeom](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/gegeom.html) pour gérer des primitives géométriques,
-- [jsonschema](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/jsonschema.html) pour utiliser des schéma JSON,
-- [mysql](https://benoitdavidfr.github.io//shomgt/phpdoc/packages/mysql.html) pour faciliter l'utilisation du serveur MySQL.
+- [coordsys](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/coordsys.html) pour réaliser des conversions
+  entre différents systèmes de coordonnées,
+- [gegeom](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/gegeom.html) pour gérer des primitives géométriques,
+- [jsonschema](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/jsonschema.html) pour utiliser des schéma JSON,
+- [mysql](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/mysql.html) pour utiliser le serveur MySQL,
+- [shomgt\lib](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-lib.html) pour les classes et fonctions
+  spécifiques à ShomGT.
 
 ## 2. Termes et concepts utilisés dans ShomGT
 Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
 
-- **portefeuille de cartes**: l'ensemble des cartes exposées dans *sgserver*, chacune dans une certaine version,
+- **portefeuille de cartes**: l'ensemble des cartes exposées par *sgserver*, chacune dans une certaine version,
 - **carte d'intérêt (pour ShomGT)**: carte ayant vocation à être dans le portefeuille.  
   Il s'agit:
-    - des cartes intersectant la ZEE française,
+    - des cartes cartographiant une zone sous juridiction française,
       - sauf quelques cartes ayant un intérêt insuffisant et listées explicitement dans le catalogue MapCat,
     - plus quelques cartes à petite échelle (<1/6M) facilitant la navigation autour de la Terre,
-    - plus quelques cartes à proximité de la ZEE française et jugée utiles.
+    - plus quelques cartes cartographiant des zones proches de la ZEE française et jugées utiles.
 - **ZEE**: [Zone Economique Exclusive](https://fr.wikipedia.org/wiki/Zone_%C3%A9conomique_exclusive),
   intégrant parfois les extensions du [plateau continental](https://fr.wikipedia.org/wiki/Plateau_continental_(droit)).
+  Dans ShomGT les zones sous juridiction française sont définies par l'extension de la ZEE
+  étendue aux extensions du plateau continental.
 - **carte Shom** : c'est l'unité de livraison du Shom, qui correspond à une carte papier numérisée ;
-  chaque carte est identifiée par un numéro sur 4 chiffres
-  qui est parfois précédé des lettres FR pour indiquer qu'il s'agit d'un numéro français.
+  chacune identifiée par un numéro à 4 chiffres
+  parfois précédé des lettres 'FR' pour indiquer qu'il s'agit d'un numéro français.
   La livraison par le Shom d'une carte correspond à une version particulière et prend la forme numérique d'une archive 7z.
 - **carte spéciale** : dans ShomGT, on distingue :
-  - les cartes normales, c'est à dire les [Cartes marines numériques raster
-    (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
+  - les cartes normales, c'est à dire
+    les [Cartes marines numériques raster (images)](https://diffusion.shom.fr/searchproduct/product/configure/id/208)
     dont le [format de livraison
     est bien défini](https://services.data.shom.fr/static/specifications/Descriptif_Contenu_geotiff.pdf) ;
+    le portefeuille de ShomGT comporte plus de 450 cartes normales ;
   - les [cartes spéciales](https://diffusion.shom.fr/cartes/cartes-speciales-aem.html) dont le format de livraison
-    n'est pas fixé et varie d'une carte à l'autre. ShomGT expose les 9 cartes spéciales suivantes:
+    varie d'une carte à l'autre. Le portefeuille contient les 9 cartes spéciales suivantes:
     - les 7 cartes d'action de l'Etat en mer (AEM),
     - la carte des délimitations des zones maritimes et la carte Manche GRID.
-- **Fac similé** : carte normale reproduction d'une carte étrangère, son format de livraison peut être légèrement différent
+- **Fac similé** : carte normale reproduisant une carte étrangère, son format de livraison peut être légèrement différent
   de celui des cartes normales.
 - **version** : une carte est livrée dans une certaine version qui est exprimée en 2 parties:
   - l'année d'édition ou de publication de la carte,
   - le numéro de la correction sur l'édition.
-    Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devait la reporter sur la carte.  
+    Historiquement, lorsqu'une correction était publiée, les détenteurs de la carte concernée devaient la reporter sur la carte.  
   
   Dans ShomGT, la version est identifiée par un libellé de la forme {année}c{#correction}, où {année} est l'année d'édition
-  ou de publication de la carte et {#correction} est le numéro de correction sur cette édition.
+  ou de publication de la carte et {#correction} est le numéro de la dernière correction sur cette édition.
   Cette notation n'est pas utilisée par le Shom qui utilise plutôt le numéro de la semaine de publication de la correction.  
-  Certaines cartes spéciales ont pour identifiant de version uniquement l'année de publication.
+  Les cartes spéciales ne font pas l'objet de corrections et certaines ont pour identifiant de version
+  uniquement l'année de publication.
 - **carte obsolète** : carte retirée par le Shom de son catalogue, et qui est donc retirée du portefeuille ShomGT,
 - **carte périmée** : carte pour laquelle le Shom distribue une versions plus récente que celle du portefeuille ;
   une carte du portefeuille peut être plus ou moins périmée et cette péremption peut être mesurée
@@ -116,13 +134,13 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   Les actualisations sont publiées chaque semaine (le jeudi) et datée par un libellé de 4 chiffres
   dont les 2 premiers correspondent aux 2 derniers chiffres de l'année, et les 2 derniers chiffres à la semaine dans l'année
   conformément à [la définition ISO](https://fr.wikipedia.org/wiki/Num%C3%A9rotation_ISO_des_semaines).
-  Le GAN prend la forme du site https://gan.shom.fr/ qui est un site HTML 
+  Le GAN est exposé par le Shom sous la forme du site https://gan.shom.fr/ qui est un site HTML 
   et les informations d'actualisation ne sont pas disponibles de manière structurée au travers d'une API.
   Dans ShomGT ce site est scrappé pour retrouver la version courante d'une carte et la comparer 
-  avec celle dans le portefeuille.  
+  avec celle du portefeuille.  
   Seules les cartes normales sont mentionnées dans le GAN, à l'exception de la carte 0101 qui est le planisphère terrestre.
-  Les cartes spéciales ne sont pas mentionnées dans le GAN.
-- **Image** : la numérisation d'une carte produit des images géoréférencées
+  Les cartes spéciales ne sont pas citées dans le GAN.
+- **Image d'une carte (ou GéoTiff)** : la numérisation d'une carte produit des images géoréférencées
   correspondant aux différentes zones géographiques de la carte, souvent une zone principale et des cartouches,
   chaque zone corespond dans la livraison à une image géoréférencée
   au [format GeoTIFF](https://fr.wikipedia.org/wiki/GeoTIFF).
@@ -135,7 +153,7 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   en [projection Mercator](https://fr.wikipedia.org/wiki/Projection_de_Mercator)
   dans le [système géodésique WGS84](https://fr.wikipedia.org/wiki/WGS_84),
   ce système de coordonnées est appelé **World Mercator**.  
-  Les coordonnées, par exemple dans le GAN, ne sont pas fournies en World Mercator mais en coordonnées géographiques,
+  Les coordonnées, par exemple dans le GAN, ne sont jamais fournies en World Mercator mais en coordonnées géographiques,
   en dégrés et minutes décimales en WGS84 ;
   par exemple "41°28,00'N - 010°30,00'W" signifie latitude 41° et 28,00 minutes Nord, et longitude 10° et 30,00 minutes Ouest.  
   De son côté, pour permettre de superposer de multiples couches,
@@ -144,7 +162,7 @@ Dans ShomGT sont utilisés différents termes et concepts définis ci-dessous:
   (différent de World Mercator) popularisé par Google et son produit Google Maps.  
   Il est donc souvent nécessaire de changer une position d'un système de coordonnées à un autre.  
 - **niveau de zoom**: le [standard defacto XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) définit ce concept
-  de niveau de zoom par:
+  de niveau de zoom récursivement par:
   - le niveau de zoom 0 correspond à un affichage de la Terre entière en projection Web Mercator sur une tuile 256 x 256,
   - puis le niveau de zoom n correspond à une décomposition en 4 de chaque tuile du niveau de zoom n-1.
   
@@ -184,7 +202,7 @@ A partir d'un serveur sur le réseau de l'Etat ou d'un EPA,
 le conteneur sgupdt se connecte au serveur sgserver pour télécharger les cartes du Shom.  
 Si un proxy doit être utilisé, il doit être défini en s'inspirant des exemples
 du fichier [docker-compose.yml](docker-compose.yml).  
-En dehors du réseau de l'Etat ou des EPA, l'accès au serveur nécessite une authentification qui peut être défini grâce
+En dehors du réseau de l'Etat ou des EPA, l'accès au serveur nécessite une authentification qui peut être définie grâce
 à la variable d'environnement `SHOMGT3_SERVER_URL`
 contenant l'URL `http://{login}:{passwd}@sgserver.geoapi.fr/index.php`
 en remplacant `{login}` et `{passwd}` respectivement par le login et le mot de passe sur le serveur.  
