@@ -95,19 +95,19 @@ abstract class WfsServer {
       if (isset($http_response_header)) { // @phpstan-ignore-line
         echo "http_response_header="; var_dump($http_response_header);
       }
-      throw new Exception("Erreur dans WfsServer::query() : sur url=$url");
+      throw new \Exception("Erreur dans WfsServer::query() : sur url=$url");
     }
     //die($result);
     //if (substr($result, 0, 17) == '<ExceptionReport>') {
     if (preg_match('!ExceptionReport!', $result)) {
       if (preg_match('!<ExceptionReport><[^>]*>([^<]*)!', $result, $matches)) {
-        throw new Exception ("Erreur dans WfsServer::query() : $matches[1]");
+        throw new \Exception ("Erreur dans WfsServer::query() : $matches[1]");
       }
       if (preg_match('!<ows:ExceptionText>([^<]*)!', $result, $matches)) {
-        throw new Exception ("Erreur dans WfsServer::query() : $matches[1]");
+        throw new \Exception ("Erreur dans WfsServer::query() : $matches[1]");
       }
       echo $result;
-      throw new Exception("Erreur dans WfsServer::query() : message d'erreur non détecté");
+      throw new \Exception("Erreur dans WfsServer::query() : message d'erreur non détecté");
     }
     return $result;
   }
@@ -115,7 +115,7 @@ abstract class WfsServer {
   /** effectue un GetCapabities et retourne le XML. Utilise le cache sauf si force=true */
   function getCapabilities(bool $force=false): string {
     if (!is_dir(self::CAP_CACHE) && !mkdir(self::CAP_CACHE))
-      throw new Exception("Erreur de création du répertoire ".self::CAP_CACHE);
+      throw new \Exception("Erreur de création du répertoire ".self::CAP_CACHE);
     $wfsVersion = $this->options['version'] ?? '2.0.0';
     $filepath = self::CAP_CACHE.'/wfs'.md5($this->serverUrl.$wfsVersion).'-cap.xml';
     if (!$force && file_exists($filepath))
@@ -134,7 +134,7 @@ abstract class WfsServer {
     $cap = $this->getCapabilities();
     $cap = str_replace(['xlink:href'], ['xlink_href'], $cap);
     $featureTypeList = [];
-    $cap = new SimpleXMLElement($cap);
+    $cap = new \SimpleXMLElement($cap);
     foreach ($cap->FeatureTypeList->FeatureType as $featureType) {
       $name = (string)$featureType->Name;
       if (!$metadataUrl || ($featureType['MetadataURL'] == $metadataUrl))
@@ -150,16 +150,20 @@ abstract class WfsServer {
   /** @return array<string, mixed> */
   abstract function describeFeatureType(string $typeName): array;
   
+  /** nom de la propriété géométrique du featureType */
   abstract function geomPropertyName(string $typeName): ?string;
   
+  /** retourne le nbre d'objets correspondant au résultat de la requête */
   abstract function getNumberMatched(string $typename, string $where=''): int;
   
+  /** retourne le résultat de la requête en GeoJSON */
   abstract function getFeature(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): string;
 
   /** retourne le résultat de la requête en GeoJSON encodé en array Php
    * @return TGeoJsonFeatureCollection */
   abstract function getFeatureAsArray(string $typename, int $zoom=-1, string $where='', int $count=100, int $startindex=0): array;
   
+  /** affiche le résultat de la requête en GeoJSON */
   abstract function printAllFeatures(string $typename, int $zoom=-1, string $where=''): void;
 };
 
@@ -179,7 +183,7 @@ class WfsGeoJson extends WfsServer {
         'TYPENAME'=> $typeName,
       ]);
       if (!is_dir(self::CAP_CACHE) && !mkdir(self::CAP_CACHE))
-        throw new Exception("Erreur de création du répertoire ".self::CAP_CACHE);
+        throw new \Exception("Erreur de création du répertoire ".self::CAP_CACHE);
       file_put_contents($filepath, $featureType);
     }
     $featureType = json_decode($featureType, true);
@@ -216,7 +220,7 @@ class WfsGeoJson extends WfsServer {
     $result = $this->query($request);
     if (!preg_match('! numberMatched="(\d+)" !', $result, $matches)) {
       //echo "result=",$result,"\n";
-      throw new Exception("Erreur dans WfsServerJson::getNumberMatched() : no match on result $result");
+      throw new \Exception("Erreur dans WfsServerJson::getNumberMatched() : no match on result $result");
     }
     return (int)$matches[1];
   }

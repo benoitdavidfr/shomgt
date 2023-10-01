@@ -218,7 +218,7 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-Zee.html"><abbr title="\shomft\Zee">Zee</abbr></a></dt><dd>Permet de connaitre pour un MultiPolygon ou un GBox s&#039;il intersecte la ZEE et si oui quelle partie il intersecte.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-MapFromWfs.html"><abbr title="\shomft\MapFromWfs">MapFromWfs</abbr></a></dt><dd>MapFromWfs - liste des cartes définies dans le WFS</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-Zee.html"><abbr title="\shomft\Zee">Zee</abbr></a></dt><dd>Permet de connaitre pour un MultiPolygon ou un GBox s&#039;il intersecte la ZEE et si oui quelle partie il intersecte.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-FtServer.html"><abbr title="\shomft\FtServer">FtServer</abbr></a></dt><dd>Code du serveur d&#039;objets géographiques</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-MapFromWfs.html"><abbr title="\shomft\MapFromWfs">MapFromWfs</abbr></a></dt><dd>MapFromWfs - liste des cartes définies dans le WFS</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-WfsServer.html"><abbr title="\shomft\WfsServer">WfsServer</abbr></a></dt><dd>Classe facilitant l&#039;utilisation d&#039;un serveur WFS, fonctionnalités communes Gml et GeoJSON</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-WfsGeoJson.html"><abbr title="\shomft\WfsGeoJson">WfsGeoJson</abbr></a></dt><dd>Classe facilitant l&#039;utilisation d&#039;un serveur WFS, fonctionnalités d&#039;un serveur retournant du GeoJSON</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/shomft-FeaturesApi.html"><abbr title="\shomft\FeaturesApi">FeaturesApi</abbr></a></dt><dd>Classe permettant d&#039;interroger un serveur WFS comme une Api OGC Features</dd>    </dl>
 
 
 
@@ -226,10 +226,158 @@
 
 
 
+<h4 id="toc-functions">
+    Functions
+    <a href="namespaces/shomft.html#toc-functions" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/shomft.html#function_logRecord">logRecord()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>enregistrement d&#039;un log temporaire pour aider au déverminage</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/shomft.html#function_sendHttpCode">sendHttpCode()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/shomft.html#function_self">self()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Retourne l&#039;URL appellé</dd>
+
+    </dl>
 
         
 
-        
+            <section class="phpdocumentor-functions">
+        <h3 class="phpdocumentor-elements__header" id="functions">
+            Functions
+            <a href="namespaces/shomft.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_logRecord">
+        logRecord()
+        <a href="namespaces/shomft.html#function_logRecord" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">enregistrement d&#039;un log temporaire pour aider au déverminage</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">logRecord</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$log</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$log</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_sendHttpCode">
+        sendHttpCode()
+        <a href="namespaces/shomft.html#function_sendHttpCode" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">78</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Génère une erreur Http et un message utilisateur avec un content-type text ; enregistre un log avec un éventuel message sys</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">sendHttpCode</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$httpErrorCode</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mesUti</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mesSys</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$httpErrorCode</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$mesUti</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$mesSys</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_self">
+        self()
+        <a href="namespaces/shomft.html#function_self" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">94</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retourne l&#039;URL appellé</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">self</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
+</article>
+            </section>
+
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
@@ -334,10 +482,19 @@
             <li>
                 <ul class="phpdocumentor-list -clean">
                                                                                                     <li><a href="namespaces/shomft.html#toc-classes">Classes</a></li>
-                                                                                                                    </ul>
+                                                                                                                        <li><a href="namespaces/shomft.html#toc-functions">Functions</a></li>
+                                    </ul>
             </li>
 
             
+                            <li class="phpdocumentor-on-this-page-section__title">Functions</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="namespaces/shomft.html#function_logRecord">logRecord()</a></li>
+                                                    <li><a href="namespaces/shomft.html#function_self">self()</a></li>
+                                                    <li><a href="namespaces/shomft.html#function_sendHttpCode">sendHttpCode()</a></li>
+                                            </ul>
+                </li>
                     </ul>
     </section>
 

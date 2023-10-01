@@ -167,7 +167,7 @@ class FtServer {
     }
     else {
       if (!isset(self::$collections[$colName]))
-        throw new Exception("Erreur colName='$colName' non définie dans la liste des collections");
+        throw new \Exception("Erreur colName='$colName' non définie dans la liste des collections");
       $features = []; // liste des features à construire
       foreach (self::$collections[$colName]['shomIds'] as $sid => $shomId) {
         $startindex = 0;

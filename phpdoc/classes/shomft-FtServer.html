@@ -202,7 +202,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    MapFromWfs
+    FtServer
 
     
             <div class="phpdocumentor-element__package">
@@ -222,18 +222,14 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">MapFromWfs - liste des cartes définies dans le WFS</p>
+            <p class="phpdocumentor-summary">Code du serveur d&#039;objets géographiques</p>
 
-    <section class="phpdocumentor-description"><p>Chaque carte est définie par ses propriétés et sa géométrie.
-La liste des cartes est fournie dans la variable $all indexée sur la propriété carte_id.
-Cette liste est actualisée tous les MAX_AGE jours à partir du serveur WFS du Shom.</p>
-</section>
 
 
 
@@ -241,7 +237,7 @@ Cette liste est actualisée tous les MAX_AGE jours à partir du serveur WFS du S
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/shomft-MapFromWfs.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/shomft-FtServer.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -251,105 +247,79 @@ Cette liste est actualisée tous les MAX_AGE jours à partir du serveur WFS du S
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/shomft-MapFromWfs.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/shomft-MapFromWfs.html#constant_MAX_AGE">MAX_AGE</a>
-    <span>
-        &nbsp;= 7                            </span>
-</dt>
-<dd>Age en jours à partir duquel les collections sont actualisées depuis le serveur WFS du Shom</dd>
-
-    </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/shomft-MapFromWfs.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/shomft-FtServer.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/shomft-MapFromWfs.html#property_all">$all</a>
+    <a href="classes/shomft-FtServer.html#property_collections">$collections</a>
     <span>
-                        &nbsp;: array&lt;string, <a href="classes/shomft-MapFromWfs.html"><abbr title="\shomft\MapFromWfs">MapFromWfs</abbr></a>&gt;            </span>
+                        &nbsp;: array&lt;string, array&lt;string, string|array&lt;string, string&gt;&gt;&gt;            </span>
 </dt>
-<dd>liste des MapFromWfs indexés sur carte_id</dd>
+<dd>définition des collections de ce serveur à partir de celles du serveur WFS du Shom</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/shomft-MapFromWfs.html#property_mpol">$mpol</a>
+    <a href="classes/shomft-FtServer.html#property_sdmax">$sdmax</a>
     <span>
-                        &nbsp;: <a href="classes/gegeom-MultiPolygon.html"><abbr title="\gegeom\MultiPolygon">MultiPolygon</abbr></a>            </span>
+                        &nbsp;: array&lt;string, float&gt;            </span>
 </dt>
-<dd>géométrie comme MultiPolygone</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/shomft-MapFromWfs.html#property_prop">$prop</a>
-    <span>
-                        &nbsp;: array&lt;string, string&gt;            </span>
-</dt>
-<dd>properties</dd>
+<dd>liste des ids de couche avec dénom. d&#039;échelle max associé</dd>
 
     </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/shomft-MapFromWfs.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/shomft-FtServer.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method___construct">__construct()</a>
+    <a href="classes/shomft-FtServer.html#method_collection">collection()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: never    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method_age">age()</a>
+    <a href="classes/shomft-FtServer.html#method_collections">collections()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: never    </span>
 </dt>
-<dd>retourne l&#039;ancienneté du moissonnage du WFS en nombre de jours ou -1 si le fichier n&#039;existe pas</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method_init">init()</a>
+    <a href="classes/shomft-FtServer.html#method_get">get()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>initialise la liste des cartes depuis les fichiers jsoncs&#039;ils ne sont pas trop agés,
-s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
+<dd>lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
+et les copie dans le fichier $colName.json, si erreur envoi Exception</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method_interest">interest()</a>
+    <a href="classes/shomft-FtServer.html#method_home">home()</a>
     <span>
-                                &nbsp;: array&lt;string, array&lt;int, string&gt;&gt;    </span>
+                                &nbsp;: never    </span>
 </dt>
-<dd>liste des cartes d&#039;intérêt construite à partir du flux WFS du Shom</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method_mapwcatUrl">mapwcatUrl()</a>
+    <a href="classes/shomft-FtServer.html#method_items">items()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: never    </span>
 </dt>
-<dd>construit l&#039;URL vers mapwcat.php bien centré sur la carte et avec le bon niveau de zoom</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method_showOne">showOne()</a>
+    <a href="classes/shomft-FtServer.html#method_readFeatureTypes">readFeatureTypes()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>affiche une carte</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/shomft-MapFromWfs.html#method_updateFromShom">updateFromShom()</a>
+    <a href="classes/shomft-FtServer.html#method_run">run()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Met à jour les 3 collections gt, aem et delmar depuis le serveur WFS du Shom</dd>
 
     </dl>
 
@@ -357,48 +327,12 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/shomft-MapFromWfs.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_MAX_AGE">
-        MAX_AGE
-        <a href="classes/shomft-MapFromWfs.html#constant_MAX_AGE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">22</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Age en jours à partir duquel les collections sont actualisées depuis le serveur WFS du Shom</p>
-
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">MAX_AGE</span>
-    = <span class="phpdocumentor-signature__default-value">7</span>
-</code>
-
-
-    
-    
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/shomft-MapFromWfs.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/shomft-FtServer.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -408,27 +342,27 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
             -public
             -static                                            "
 >
-    <h4 class="phpdocumentor-element__name" id="property_all">
-        $all
-        <a href="classes/shomft-MapFromWfs.html#property_all" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_collections">
+        $collections
+        <a href="classes/shomft-FtServer.html#property_collections" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">liste des MapFromWfs indexés sur carte_id</p>
+        <p class="phpdocumentor-summary">définition des collections de ce serveur à partir de celles du serveur WFS du Shom</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, <a href="classes/shomft-MapFromWfs.html"><abbr title="\shomft\MapFromWfs">MapFromWfs</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$all</span>
-    </code>
+    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, array&lt;string, string|array&lt;string, string&gt;&gt;&gt;</span>
+    <span class="phpdocumentor-signature__name">$collections</span>
+     = <span class="phpdocumentor-signature__default-value">[&#039;gt&#039; =&gt; [&#039;title&#039; =&gt; &quot;Silhouettes des GéoTiffs hors AEM&quot;, &#039;url&#039; =&gt; &#039;&#039;, &#039;shomIds&#039; =&gt; [&#039;gt800&#039; =&gt; &#039;CARTES_MARINES_GRILLE:grille_geotiff_800&#039;, &#039;gt300-800&#039; =&gt; &#039;CARTES_MARINES_GRILLE:grille_geotiff_300_800&#039;, &#039;gt30-300&#039; =&gt; &#039;CARTES_MARINES_GRILLE:grille_geotiff_30_300&#039;, &#039;gt30&#039; =&gt; &#039;CARTES_MARINES_GRILLE:grille_geotiff_30&#039;]], &#039;aem&#039; =&gt; [&#039;title&#039; =&gt; &quot;Silhouettes des cartes AEM&quot;, &#039;url&#039; =&gt; &#039;&#039;, &#039;shomIds&#039; =&gt; [&#039;gtaem&#039; =&gt; &#039;GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table&#039;]], &#039;delmar&#039; =&gt; [&#039;title&#039; =&gt; &quot;Délimitations maritimes&quot;, &#039;url&#039; =&gt; &#039;&#039;, &#039;shomIds&#039; =&gt; [&#039;baseline&#039; =&gt; &#039;DELMAR_BDD_WFS:au_baseline&#039;, &#039;agreedmaritimeboundary&#039; =&gt; &#039;DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary&#039;, &#039;contiguouszone&#039; =&gt; &#039;DELMAR_BDD_WFS:au_maritimeboundary_contiguouszone&#039;, &#039;continentalshelf&#039; =&gt; &#039;DELMAR_BDD_WFS:au_maritimeboundary_continentalshelf&#039;, &#039;economicexclusivezone&#039; =&gt; &#039;DELMAR_BDD_WFS:au_maritimeboundary_economicexclusivezone&#039;, &#039;nonagreedmaritimeboundary&#039; =&gt; &#039;DELMAR_BDD_WFS:au_maritimeboundary_nonagreedmaritimeboundary&#039;, &#039;territorialsea&#039; =&gt; &#039;DELMAR_BDD_WFS:au_maritimeboundary_territorialsea&#039;]]]</span></code>
 
     
     
@@ -440,63 +374,51 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
             phpdocumentor-element
             -property
             -public
-                                                -read-only        "
+            -static                                            "
 >
-    <h4 class="phpdocumentor-element__name" id="property_mpol">
-        $mpol
-        <a href="classes/shomft-MapFromWfs.html#property_mpol" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_sdmax">
+        $sdmax
+        <a href="classes/shomft-FtServer.html#property_sdmax" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+                                </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">géométrie comme MultiPolygone</p>
+        <p class="phpdocumentor-summary">liste des ids de couche avec dénom. d&#039;échelle max associé</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/gegeom-MultiPolygon.html"><abbr title="\gegeom\MultiPolygon">MultiPolygon</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$mpol</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_prop">
-        $prop
-        <a href="classes/shomft-MapFromWfs.html#property_prop" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">25</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">properties</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string, string&gt;</span>
-    <span class="phpdocumentor-signature__name">$prop</span>
-    </code>
+    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">array&lt;string, float&gt;</span>
+    <span class="phpdocumentor-signature__name">$sdmax</span>
+     = <span class="phpdocumentor-signature__default-value">[
+    &#039;gt10M&#039; =&gt; 14000000.0,
+    // échelle comprise entre 1/14.000.000 et 1/6.000.000
+    &#039;gt4M&#039; =&gt; 6000000.0,
+    // échelle comprise entre 1/6.000.000 et 1/3.000.000
+    &#039;gt2M&#039; =&gt; 3000000.0,
+    // échelle comprise entre 1/3.000.000 et 1/1.400.000
+    &#039;gt1M&#039; =&gt; 1400000.0,
+    // échelle comprise entre 1/1.400.000 et 1/700.000
+    &#039;gt500k&#039; =&gt; 700000.0,
+    // échelle comprise entre 1/700.000 et 1/380.000
+    &#039;gt250k&#039; =&gt; 380000.0,
+    // échelle comprise entre 1/380.000 et 1/180.000
+    &#039;gt100k&#039; =&gt; 180000.0,
+    // échelle comprise entre 1/180.000 et 1/90.000
+    &#039;gt50k&#039; =&gt; 90000.0,
+    // échelle comprise entre 1/90.000 et 1/45.000
+    &#039;gt25k&#039; =&gt; 45000.0,
+    // échelle comprise entre 1/45.000 et 1/22.000
+    &#039;gt12k&#039; =&gt; 22000.0,
+    // échelle comprise entre 1/22.000 et 1/11.000
+    &#039;gt5k&#039; =&gt; 11000.0,
+]</span></code>
 
     
     
@@ -508,7 +430,7 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/shomft-MapFromWfs.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/shomft-FtServer.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -517,22 +439,22 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method___construct">
-        __construct()
-        <a href="classes/shomft-MapFromWfs.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_collection">
+        collection()
+        <a href="classes/shomft-FtServer.html#method_collection" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gmap</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">collection</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$colName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">never</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -540,8 +462,90 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$gmap</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                <span class="phpdocumentor-signature__argument__name">$colName</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">never</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_collections">
+        collections()
+        <a href="classes/shomft-FtServer.html#method_collections" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">210</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">collections</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">never</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">never</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_get">
+        get()
+        <a href="classes/shomft-FtServer.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">156</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
+et les copie dans le fichier $colName.json, si erreur envoi Exception</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$colName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$colName</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -556,25 +560,24 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="method_age">
-        age()
-        <a href="classes/shomft-MapFromWfs.html#method_age" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_home">
+        home()
+        <a href="classes/shomft-FtServer.html#method_home" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">retourne l&#039;ancienneté du moissonnage du WFS en nombre de jours ou -1 si le fichier n&#039;existe pas</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">age</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">home</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">never</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -584,85 +587,7 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</dd>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_init">
-        init()
-        <a href="classes/shomft-MapFromWfs.html#method_init" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">56</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">initialise la liste des cartes depuis les fichiers jsoncs&#039;ils ne sont pas trop agés,
-s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">init</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-        <section class="phpdocumentor-description"><p>Cette initialisation est effectuée à la lecture du fichier Php.</p>
-</section>
-
-    
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_interest">
-        interest()
-        <a href="classes/shomft-MapFromWfs.html#method_interest" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">122</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">liste des cartes d&#039;intérêt construite à partir du flux WFS du Shom</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">interest</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;int, string&gt;&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-        <section class="phpdocumentor-description"><p>Une carte est d'intérêt ssi</p>
-<ul>
-<li>soit elle intersecte la ZEE</li>
-<li>soit elle est à petite échelle (&lt; 1/6M)</li>
-</ul>
-<p>Retour sous la forme [carte_id =&gt; [ZeeId]|['SmallScale']]</p>
-</section>
-
-    
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;int, string&gt;&gt;</span>
+        <span class="phpdocumentor-signature__response_type">never</span>
             </section>
 
 </article>
@@ -672,33 +597,42 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_mapwcatUrl">
-        mapwcatUrl()
-        <a href="classes/shomft-MapFromWfs.html#method_mapwcatUrl" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_items">
+        items()
+        <a href="classes/shomft-FtServer.html#method_items" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">242</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">construit l&#039;URL vers mapwcat.php bien centré sur la carte et avec le bon niveau de zoom</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">mapwcatUrl</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">items</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$colName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">never</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$colName</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
+        <span class="phpdocumentor-signature__response_type">never</span>
             </section>
 
 </article>
@@ -706,25 +640,24 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_showOne">
-        showOne()
-        <a href="classes/shomft-MapFromWfs.html#method_showOne" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_readFeatureTypes">
+        readFeatureTypes()
+        <a href="classes/shomft-FtServer.html#method_readFeatureTypes" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">affiche une carte</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">showOne</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">readFeatureTypes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -738,30 +671,39 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="method_updateFromShom">
-        updateFromShom()
-        <a href="classes/shomft-MapFromWfs.html#method_updateFromShom" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_run">
+        run()
+        <a href="classes/shomft-FtServer.html#method_run" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="shomft/mapfromwfs.inc.php"><a href="files/shomft-mapfromwfs-inc.html"><abbr title="shomft/mapfromwfs.inc.php">mapfromwfs.inc.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="shomft/ft.php"><a href="files/shomft-ft.html"><abbr title="shomft/ft.php">ft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Met à jour les 3 collections gt, aem et delmar depuis le serveur WFS du Shom</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">updateFromShom</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">run</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path_info</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$path_info</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
     
@@ -772,7 +714,7 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/shomft/mapfromwfs.inc.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/shomft/ft.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -871,37 +813,29 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/shomft-MapFromWfs.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/shomft-MapFromWfs.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/shomft-MapFromWfs.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/shomft-FtServer.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/shomft-FtServer.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/shomft-MapFromWfs.html#constant_MAX_AGE">MAX_AGE</a></li>
-                                            </ul>
-                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/shomft-MapFromWfs.html#property_all">$all<a href="classes/shomft-MapFromWfs.html"></li>
-                                                    <li><a href="classes/shomft-MapFromWfs.html#property_mpol">$mpol<a href="classes/shomft-MapFromWfs.html"></li>
-                                                    <li><a href="classes/shomft-MapFromWfs.html#property_prop">$prop<a href="classes/shomft-MapFromWfs.html"></li>
+                                                    <li><a href="classes/shomft-FtServer.html#property_collections">$collections<a href="classes/shomft-FtServer.html"></li>
+                                                    <li><a href="classes/shomft-FtServer.html#property_sdmax">$sdmax<a href="classes/shomft-FtServer.html"></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/shomft-MapFromWfs.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/shomft-MapFromWfs.html#method_age">age()</a></li>
-                                            <li><a href="classes/shomft-MapFromWfs.html#method_init">init()</a></li>
-                                            <li><a href="classes/shomft-MapFromWfs.html#method_interest">interest()</a></li>
-                                            <li><a href="classes/shomft-MapFromWfs.html#method_mapwcatUrl">mapwcatUrl()</a></li>
-                                            <li><a href="classes/shomft-MapFromWfs.html#method_showOne">showOne()</a></li>
-                                            <li><a href="classes/shomft-MapFromWfs.html#method_updateFromShom">updateFromShom()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_collection">collection()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_collections">collections()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_get">get()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_home">home()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_items">items()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_readFeatureTypes">readFeatureTypes()</a></li>
+                                            <li><a href="classes/shomft-FtServer.html#method_run">run()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -921,7 +855,7 @@ s&#039;ils le sont les actualisent avant depuis le WFS du Shom.</p>
     </section>
 </section>
         </div>
-        <a href="classes/shomft-MapFromWfs.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/shomft-FtServer.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

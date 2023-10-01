@@ -5401,55 +5401,65 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/shomft-Zee.html#property_all"
         },                {
-            "fqsen": "\\self\u0028\u0029",
+            "fqsen": "\\shomft\\logRecord\u0028\u0029",
+            "name": "logRecord",
+            "summary": "enregistrement\u0020d\u0027un\u0020log\u0020temporaire\u0020pour\u0020aider\u0020au\u0020d\u00E9verminage",
+            "url": "namespaces/shomft.html#function_logRecord"
+        },                {
+            "fqsen": "\\shomft\\sendHttpCode\u0028\u0029",
+            "name": "sendHttpCode",
+            "summary": "G\u00E9n\u00E8re\u0020une\u0020erreur\u0020Http\u0020et\u0020un\u0020message\u0020utilisateur\u0020avec\u0020un\u0020content\u002Dtype\u0020text\u0020\u003B\u0020enregistre\u0020un\u0020log\u0020avec\u0020un\u0020\u00E9ventuel\u0020message\u0020sys",
+            "url": "namespaces/shomft.html#function_sendHttpCode"
+        },                {
+            "fqsen": "\\shomft\\self\u0028\u0029",
             "name": "self",
             "summary": "Retourne\u0020l\u0027URL\u0020appell\u00E9",
-            "url": "namespaces/default.html#function_self"
+            "url": "namespaces/shomft.html#function_self"
         },                {
-            "fqsen": "\\FtServer",
+            "fqsen": "\\shomft\\FtServer",
             "name": "FtServer",
             "summary": "Code\u0020du\u0020serveur\u0020d\u0027objets\u0020g\u00E9ographiques",
-            "url": "classes/FtServer.html"
+            "url": "classes/shomft-FtServer.html"
         },                {
-            "fqsen": "\\FtServer\u003A\u003AreadFeatureTypes\u0028\u0029",
+            "fqsen": "\\shomft\\FtServer\u003A\u003AreadFeatureTypes\u0028\u0029",
             "name": "readFeatureTypes",
             "summary": "",
-            "url": "classes/FtServer.html#method_readFeatureTypes"
+            "url": "classes/shomft-FtServer.html#method_readFeatureTypes"
         },                {
-            "fqsen": "\\FtServer\u003A\u003Aget\u0028\u0029",
+            "fqsen": "\\shomft\\FtServer\u003A\u003Aget\u0028\u0029",
             "name": "get",
             "summary": "lit\u0020dans\u0020ShomWfs\u0020les\u0020Features\u0020correspondant\u0020\u00E0\u0020la\u0020collection\u0020\u0024colName\u0020cl\u00E9\u0020dans\u0020self\u003A\u003A\u0024collections\net\u0020les\u0020copie\u0020dans\u0020le\u0020fichier\u0020\u0024colName.json,\u0020si\u0020erreur\u0020envoi\u0020Exception",
-            "url": "classes/FtServer.html#method_get"
+            "url": "classes/shomft-FtServer.html#method_get"
         },                {
-            "fqsen": "\\FtServer\u003A\u003A\u0024collections",
+            "fqsen": "\\shomft\\FtServer\u003A\u003A\u0024collections",
             "name": "collections",
             "summary": "d\u00E9finition\u0020des\u0020collections\u0020de\u0020ce\u0020serveur\u0020\u00E0\u0020partir\u0020de\u0020celles\u0020du\u0020serveur\u0020WFS\u0020du\u0020Shom",
-            "url": "classes/FtServer.html#property_collections"
+            "url": "classes/shomft-FtServer.html#property_collections"
         },                {
-            "fqsen": "\\FtServer\u003A\u003Acollection\u0028\u0029",
+            "fqsen": "\\shomft\\FtServer\u003A\u003Acollection\u0028\u0029",
             "name": "collection",
             "summary": "",
-            "url": "classes/FtServer.html#method_collection"
+            "url": "classes/shomft-FtServer.html#method_collection"
         },                {
-            "fqsen": "\\FtServer\u003A\u003Aitems\u0028\u0029",
+            "fqsen": "\\shomft\\FtServer\u003A\u003Aitems\u0028\u0029",
             "name": "items",
             "summary": "",
-            "url": "classes/FtServer.html#method_items"
+            "url": "classes/shomft-FtServer.html#method_items"
         },                {
-            "fqsen": "\\FtServer\u003A\u003Ahome\u0028\u0029",
+            "fqsen": "\\shomft\\FtServer\u003A\u003Ahome\u0028\u0029",
             "name": "home",
             "summary": "",
-            "url": "classes/FtServer.html#method_home"
+            "url": "classes/shomft-FtServer.html#method_home"
         },                {
-            "fqsen": "\\FtServer\u003A\u003Arun\u0028\u0029",
+            "fqsen": "\\shomft\\FtServer\u003A\u003Arun\u0028\u0029",
             "name": "run",
             "summary": "",
-            "url": "classes/FtServer.html#method_run"
+            "url": "classes/shomft-FtServer.html#method_run"
         },                {
-            "fqsen": "\\FtServer\u003A\u003A\u0024sdmax",
+            "fqsen": "\\shomft\\FtServer\u003A\u003A\u0024sdmax",
             "name": "sdmax",
             "summary": "liste\u0020des\u0020ids\u0020de\u0020couche\u0020avec\u0020d\u00E9nom.\u0020d\u0027\u00E9chelle\u0020max\u0020associ\u00E9",
-            "url": "classes/FtServer.html#property_sdmax"
+            "url": "classes/shomft-FtServer.html#property_sdmax"
         },                {
             "fqsen": "\\shomft\\MapFromWfs",
             "name": "MapFromWfs",
@@ -5461,9 +5471,14 @@ Search.appendIndex(
             "summary": "retourne\u0020l\u0027anciennet\u00E9\u0020du\u0020moissonnage\u0020du\u0020WFS\u0020en\u0020nombre\u0020de\u0020jours\u0020ou\u0020\u002D1\u0020si\u0020le\u0020fichier\u0020n\u0027existe\u0020pas",
             "url": "classes/shomft-MapFromWfs.html#method_age"
         },                {
+            "fqsen": "\\shomft\\MapFromWfs\u003A\u003AupdateFromShom\u0028\u0029",
+            "name": "updateFromShom",
+            "summary": "Met\u0020\u00E0\u0020jour\u0020les\u00203\u0020collections\u0020gt,\u0020aem\u0020et\u0020delmar\u0020depuis\u0020le\u0020serveur\u0020WFS\u0020du\u0020Shom",
+            "url": "classes/shomft-MapFromWfs.html#method_updateFromShom"
+        },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "",
+            "summary": "initialise\u0020la\u0020liste\u0020des\u0020cartes\u0020depuis\u0020les\u0020fichiers\u0020jsoncs\u0027ils\u0020ne\u0020sont\u0020pas\u0020trop\u0020ag\u00E9s,\ns\u0027ils\u0020le\u0020sont\u0020les\u0020actualisent\u0020avant\u0020depuis\u0020le\u0020WFS\u0020du\u0020Shom.",
             "url": "classes/shomft-MapFromWfs.html#method_init"
         },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003A__construct\u0028\u0029",
@@ -5478,168 +5493,173 @@ Search.appendIndex(
         },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003AshowOne\u0028\u0029",
             "name": "showOne",
-            "summary": "",
+            "summary": "affiche\u0020une\u0020carte",
             "url": "classes/shomft-MapFromWfs.html#method_showOne"
         },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003Ainterest\u0028\u0029",
             "name": "interest",
-            "summary": "liste\u0020des\u0020cartes\u0020d\u0027int\u00E9r\u00EAt",
+            "summary": "liste\u0020des\u0020cartes\u0020d\u0027int\u00E9r\u00EAt\u0020construite\u0020\u00E0\u0020partir\u0020du\u0020flux\u0020WFS\u0020du\u0020Shom",
             "url": "classes/shomft-MapFromWfs.html#method_interest"
+        },                {
+            "fqsen": "\\shomft\\MapFromWfs\u003A\u003AMAX_AGE",
+            "name": "MAX_AGE",
+            "summary": "Age\u0020en\u0020jours\u0020\u00E0\u0020partir\u0020duquel\u0020les\u0020collections\u0020sont\u0020actualis\u00E9es\u0020depuis\u0020le\u0020serveur\u0020WFS\u0020du\u0020Shom",
+            "url": "classes/shomft-MapFromWfs.html#constant_MAX_AGE"
         },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003A\u0024prop",
             "name": "prop",
-            "summary": "",
+            "summary": "properties",
             "url": "classes/shomft-MapFromWfs.html#property_prop"
         },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003A\u0024mpol",
             "name": "mpol",
-            "summary": "",
+            "summary": "g\u00E9om\u00E9trie\u0020comme\u0020MultiPolygone",
             "url": "classes/shomft-MapFromWfs.html#property_mpol"
         },                {
             "fqsen": "\\shomft\\MapFromWfs\u003A\u003A\u0024all",
             "name": "all",
-            "summary": "",
+            "summary": "liste\u0020des\u0020MapFromWfs\u0020index\u00E9s\u0020sur\u0020carte_id",
             "url": "classes/shomft-MapFromWfs.html#property_all"
         },                {
-            "fqsen": "\\WfsServer",
+            "fqsen": "\\shomft\\WfsServer",
             "name": "WfsServer",
             "summary": "Classe\u0020facilitant\u0020l\u0027utilisation\u0020d\u0027un\u0020serveur\u0020WFS,\u0020fonctionnalit\u00E9s\u0020communes\u0020Gml\u0020et\u0020GeoJSON",
-            "url": "classes/WfsServer.html"
+            "url": "classes/shomft-WfsServer.html"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/WfsServer.html#method___construct"
+            "url": "classes/shomft-WfsServer.html#method___construct"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003Aurl\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003Aurl\u0028\u0029",
             "name": "url",
             "summary": "construit\u0020l\u0027URL\u0020de\u0020la\u0020requ\u00EAte\u0020\u00E0\u0020partir\u0020des\u0020param\u00E8tres",
-            "url": "classes/WfsServer.html#method_url"
+            "url": "classes/shomft-WfsServer.html#method_url"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003Aquery\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003Aquery\u0028\u0029",
             "name": "query",
             "summary": "envoi\u0020une\u0020requ\u00EAte\u0020et\u0020r\u00E9cup\u00E8re\u0020la\u0020r\u00E9ponse\u0020sous\u0020la\u0020forme\u0020d\u0027un\u0020texte",
-            "url": "classes/WfsServer.html#method_query"
+            "url": "classes/shomft-WfsServer.html#method_query"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003AgetCapabilities\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AgetCapabilities\u0028\u0029",
             "name": "getCapabilities",
             "summary": "effectue\u0020un\u0020GetCapabities\u0020et\u0020retourne\u0020le\u0020XML.\u0020Utilise\u0020le\u0020cache\u0020sauf\u0020si\u0020force\u003Dtrue",
-            "url": "classes/WfsServer.html#method_getCapabilities"
+            "url": "classes/shomft-WfsServer.html#method_getCapabilities"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003AfeatureTypeList\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AfeatureTypeList\u0028\u0029",
             "name": "featureTypeList",
             "summary": "liste\u0020les\u0020couches\u0020expos\u00E9es\u0020evt\u0020filtr\u00E9\u0020par\u0020l\u0027URL\u0020des\u0020MD",
-            "url": "classes/WfsServer.html#method_featureTypeList"
+            "url": "classes/shomft-WfsServer.html#method_featureTypeList"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003AdescribeFeatureType\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AdescribeFeatureType\u0028\u0029",
             "name": "describeFeatureType",
             "summary": "",
-            "url": "classes/WfsServer.html#method_describeFeatureType"
+            "url": "classes/shomft-WfsServer.html#method_describeFeatureType"
         },                {
-            "fqsen": "\\WfsServer\u003A\u003AgeomPropertyName\u0028\u0029",
-            "name": "geomPropertyName",
-            "summary": "",
-            "url": "classes/WfsServer.html#method_geomPropertyName"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003AgetNumberMatched\u0028\u0029",
-            "name": "getNumberMatched",
-            "summary": "",
-            "url": "classes/WfsServer.html#method_getNumberMatched"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003AgetFeature\u0028\u0029",
-            "name": "getFeature",
-            "summary": "",
-            "url": "classes/WfsServer.html#method_getFeature"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003AgetFeatureAsArray\u0028\u0029",
-            "name": "getFeatureAsArray",
-            "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON\u0020encod\u00E9\u0020en\u0020array\u0020Php",
-            "url": "classes/WfsServer.html#method_getFeatureAsArray"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003AprintAllFeatures\u0028\u0029",
-            "name": "printAllFeatures",
-            "summary": "",
-            "url": "classes/WfsServer.html#method_printAllFeatures"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003ALOG",
-            "name": "LOG",
-            "summary": "chemin\u0020du\u0020fichier\u0020de\u0020log\u0020ou\u0020false\u0020pour\u0020pas\u0020de\u0020log",
-            "url": "classes/WfsServer.html#constant_LOG"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003ACAP_CACHE",
-            "name": "CAP_CACHE",
-            "summary": "chemin\u0020du\u0020r\u00E9pertoire\u0020dans\u0020lequel\u0020sont\u0020stock\u00E9s\u0020les\u0020fichiers\u0020XML\u0020de\u0020capacit\u00E9s\u0020ainsi\u0020que\u0020les\u0020DescribeFeatureType\u0020en\u0020json",
-            "url": "classes/WfsServer.html#constant_CAP_CACHE"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003A\u0024serverUrl",
-            "name": "serverUrl",
-            "summary": "URL\u0020du\u0020serveur",
-            "url": "classes/WfsServer.html#property_serverUrl"
-        },                {
-            "fqsen": "\\WfsServer\u003A\u003A\u0024options",
-            "name": "options",
-            "summary": "sous\u0020la\u0020forme\u0020\u005B\u0027option\u0027\u003D\u003E\u0020valeur\u005D",
-            "url": "classes/WfsServer.html#property_options"
-        },                {
-            "fqsen": "\\WfsGeoJson",
-            "name": "WfsGeoJson",
-            "summary": "Classe\u0020facilitant\u0020l\u0027utilisation\u0020d\u0027un\u0020serveur\u0020WFS,\u0020fonctionnalit\u00E9s\u0020d\u0027un\u0020serveur\u0020retournant\u0020du\u0020GeoJSON",
-            "url": "classes/WfsGeoJson.html"
-        },                {
-            "fqsen": "\\WfsGeoJson\u003A\u003AdescribeFeatureType\u0028\u0029",
-            "name": "describeFeatureType",
-            "summary": "",
-            "url": "classes/WfsGeoJson.html#method_describeFeatureType"
-        },                {
-            "fqsen": "\\WfsGeoJson\u003A\u003AgeomPropertyName\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AgeomPropertyName\u0028\u0029",
             "name": "geomPropertyName",
             "summary": "nom\u0020de\u0020la\u0020propri\u00E9t\u00E9\u0020g\u00E9om\u00E9trique\u0020du\u0020featureType",
-            "url": "classes/WfsGeoJson.html#method_geomPropertyName"
+            "url": "classes/shomft-WfsServer.html#method_geomPropertyName"
         },                {
-            "fqsen": "\\WfsGeoJson\u003A\u003AgetNumberMatched\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AgetNumberMatched\u0028\u0029",
             "name": "getNumberMatched",
             "summary": "retourne\u0020le\u0020nbre\u0020d\u0027objets\u0020correspondant\u0020au\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte",
-            "url": "classes/WfsGeoJson.html#method_getNumberMatched"
+            "url": "classes/shomft-WfsServer.html#method_getNumberMatched"
         },                {
-            "fqsen": "\\WfsGeoJson\u003A\u003AgetFeature\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AgetFeature\u0028\u0029",
             "name": "getFeature",
             "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON",
-            "url": "classes/WfsGeoJson.html#method_getFeature"
+            "url": "classes/shomft-WfsServer.html#method_getFeature"
         },                {
-            "fqsen": "\\WfsGeoJson\u003A\u003AgetFeatureAsArray\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AgetFeatureAsArray\u0028\u0029",
             "name": "getFeatureAsArray",
             "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON\u0020encod\u00E9\u0020en\u0020array\u0020Php",
-            "url": "classes/WfsGeoJson.html#method_getFeatureAsArray"
+            "url": "classes/shomft-WfsServer.html#method_getFeatureAsArray"
         },                {
-            "fqsen": "\\WfsGeoJson\u003A\u003AprintAllFeatures\u0028\u0029",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003AprintAllFeatures\u0028\u0029",
             "name": "printAllFeatures",
             "summary": "affiche\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON",
-            "url": "classes/WfsGeoJson.html#method_printAllFeatures"
+            "url": "classes/shomft-WfsServer.html#method_printAllFeatures"
         },                {
-            "fqsen": "\\FeaturesApi",
+            "fqsen": "\\shomft\\WfsServer\u003A\u003ALOG",
+            "name": "LOG",
+            "summary": "chemin\u0020du\u0020fichier\u0020de\u0020log\u0020ou\u0020false\u0020pour\u0020pas\u0020de\u0020log",
+            "url": "classes/shomft-WfsServer.html#constant_LOG"
+        },                {
+            "fqsen": "\\shomft\\WfsServer\u003A\u003ACAP_CACHE",
+            "name": "CAP_CACHE",
+            "summary": "chemin\u0020du\u0020r\u00E9pertoire\u0020dans\u0020lequel\u0020sont\u0020stock\u00E9s\u0020les\u0020fichiers\u0020XML\u0020de\u0020capacit\u00E9s\u0020ainsi\u0020que\u0020les\u0020DescribeFeatureType\u0020en\u0020json",
+            "url": "classes/shomft-WfsServer.html#constant_CAP_CACHE"
+        },                {
+            "fqsen": "\\shomft\\WfsServer\u003A\u003A\u0024serverUrl",
+            "name": "serverUrl",
+            "summary": "URL\u0020du\u0020serveur",
+            "url": "classes/shomft-WfsServer.html#property_serverUrl"
+        },                {
+            "fqsen": "\\shomft\\WfsServer\u003A\u003A\u0024options",
+            "name": "options",
+            "summary": "sous\u0020la\u0020forme\u0020\u005B\u0027option\u0027\u003D\u003E\u0020valeur\u005D",
+            "url": "classes/shomft-WfsServer.html#property_options"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson",
+            "name": "WfsGeoJson",
+            "summary": "Classe\u0020facilitant\u0020l\u0027utilisation\u0020d\u0027un\u0020serveur\u0020WFS,\u0020fonctionnalit\u00E9s\u0020d\u0027un\u0020serveur\u0020retournant\u0020du\u0020GeoJSON",
+            "url": "classes/shomft-WfsGeoJson.html"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson\u003A\u003AdescribeFeatureType\u0028\u0029",
+            "name": "describeFeatureType",
+            "summary": "",
+            "url": "classes/shomft-WfsGeoJson.html#method_describeFeatureType"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson\u003A\u003AgeomPropertyName\u0028\u0029",
+            "name": "geomPropertyName",
+            "summary": "nom\u0020de\u0020la\u0020propri\u00E9t\u00E9\u0020g\u00E9om\u00E9trique\u0020du\u0020featureType",
+            "url": "classes/shomft-WfsGeoJson.html#method_geomPropertyName"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson\u003A\u003AgetNumberMatched\u0028\u0029",
+            "name": "getNumberMatched",
+            "summary": "retourne\u0020le\u0020nbre\u0020d\u0027objets\u0020correspondant\u0020au\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte",
+            "url": "classes/shomft-WfsGeoJson.html#method_getNumberMatched"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson\u003A\u003AgetFeature\u0028\u0029",
+            "name": "getFeature",
+            "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON",
+            "url": "classes/shomft-WfsGeoJson.html#method_getFeature"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson\u003A\u003AgetFeatureAsArray\u0028\u0029",
+            "name": "getFeatureAsArray",
+            "summary": "retourne\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON\u0020encod\u00E9\u0020en\u0020array\u0020Php",
+            "url": "classes/shomft-WfsGeoJson.html#method_getFeatureAsArray"
+        },                {
+            "fqsen": "\\shomft\\WfsGeoJson\u003A\u003AprintAllFeatures\u0028\u0029",
+            "name": "printAllFeatures",
+            "summary": "affiche\u0020le\u0020r\u00E9sultat\u0020de\u0020la\u0020requ\u00EAte\u0020en\u0020GeoJSON",
+            "url": "classes/shomft-WfsGeoJson.html#method_printAllFeatures"
+        },                {
+            "fqsen": "\\shomft\\FeaturesApi",
             "name": "FeaturesApi",
             "summary": "Classe\u0020permettant\u0020d\u0027interroger\u0020un\u0020serveur\u0020WFS\u0020comme\u0020une\u0020Api\u0020OGC\u0020Features",
-            "url": "classes/FeaturesApi.html"
+            "url": "classes/shomft-FeaturesApi.html"
         },                {
-            "fqsen": "\\FeaturesApi\u003A\u003Acollections\u0028\u0029",
+            "fqsen": "\\shomft\\FeaturesApi\u003A\u003Acollections\u0028\u0029",
             "name": "collections",
             "summary": "retourne\u0020la\u0020liste\u0020des\u0020collections\u0020expos\u00E9es\u0020d\u00E9finies\u0020par\u0020leur\u0020id\u0020et\u0020leur\u0020titre",
-            "url": "classes/FeaturesApi.html#method_collections"
+            "url": "classes/shomft-FeaturesApi.html#method_collections"
         },                {
-            "fqsen": "\\FeaturesApi\u003A\u003Acollection\u0028\u0029",
+            "fqsen": "\\shomft\\FeaturesApi\u003A\u003Acollection\u0028\u0029",
             "name": "collection",
             "summary": "retourne\u0020la\u0020description\u0020du\u0020FeatureType\u0020de\u0020la\u0020collection",
-            "url": "classes/FeaturesApi.html#method_collection"
+            "url": "classes/shomft-FeaturesApi.html#method_collection"
         },                {
-            "fqsen": "\\FeaturesApi\u003A\u003Aitems\u0028\u0029",
+            "fqsen": "\\shomft\\FeaturesApi\u003A\u003Aitems\u0028\u0029",
             "name": "items",
             "summary": "retourne\u0020les\u0020items\u0020de\u0020la\u0020collection\u0020comme\u0020array\u0020Php",
-            "url": "classes/FeaturesApi.html#method_items"
+            "url": "classes/shomft-FeaturesApi.html#method_items"
         },                {
-            "fqsen": "\\FeaturesApi\u003A\u003Aoutput\u0028\u0029",
+            "fqsen": "\\shomft\\FeaturesApi\u003A\u003Aoutput\u0028\u0029",
             "name": "output",
             "summary": "g\u00E9n\u00E8re\u0020un\u0020affichage\u0020en\u0020JSON\u0020ou\u0020Yaml\u0020en\u0020fonction\u0020du\u0020param\u00E8tre\u0020\u0024f",
-            "url": "classes/FeaturesApi.html#method_output"
+            "url": "classes/shomft-FeaturesApi.html#method_output"
         },                {
             "fqsen": "\\coordDM\u0028\u0029",
             "name": "coordDM",
