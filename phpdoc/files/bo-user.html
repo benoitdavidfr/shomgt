@@ -234,6 +234,38 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
 
 
 
+<h4 id="toc-constants">
+    Constants
+    <a href="files/bo-user.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/bo.html#constant_ZONES_ZEE">ZONES_ZEE</a>
+    <span>
+        &nbsp;= [
+    //&#039;FR&#039;=&gt; &quot;France entière&quot;,
+    &#039;FX-MMN&#039; =&gt; &quot;Métropole - Zone Manche et Mer du Nord&quot;,
+    &#039;FX-Atl&#039; =&gt; &quot;Métropole - Zone Maritime Atlantique&quot;,
+    &#039;FX-Med&#039; =&gt; &quot;Métropole - Zone Méditerranée&quot;,
+    &#039;GP&#039; =&gt; &quot;Guadeloupe&quot;,
+    &#039;MQ&#039; =&gt; &quot;Martinique&quot;,
+    &#039;GF&#039; =&gt; &quot;Guyane&quot;,
+    &#039;BL&#039; =&gt; &quot;Saint-Barthelémy&quot;,
+    &#039;MF&#039; =&gt; &quot;Saint-Martin&quot;,
+    &#039;PM&#039; =&gt; &quot;Saint-Pierre-et-Miquelon&quot;,
+    &#039;RE&#039; =&gt; &quot;La Réunion&quot;,
+    &#039;YT&#039; =&gt; &quot;Mayotte&quot;,
+    &#039;TF&#039; =&gt; &quot;TAAF&quot;,
+    &#039;CP&#039; =&gt; &quot;Clipperton&quot;,
+    &#039;PF&#039; =&gt; &quot;Polynésie Française&quot;,
+    &#039;WF&#039; =&gt; &quot;Wallis-et-Futuna&quot;,
+    &#039;NC&#039; =&gt; &quot;Nouvelle-Calédonie&quot;,
+]                            </span>
+</dt>
+<dd>Liste des zones de la ZEE sous la forme [{nom} =&gt; {label}]</dd>
+
+    </dl>
 
 
 
@@ -257,6 +289,13 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>renvoit le role de l&#039;utilisateur $user</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/bo.html#function_migrationAddExtraToUserTable">migrationAddExtraToUserTable()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Fonction de migration d&#039;ajout d&#039;un champ extra dans la table user s&#039;il n&#039;existe pas</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/bo.html#function_badEmail">badEmail()</a>
@@ -284,6 +323,60 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="files/bo-user.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ZONES_ZEE">
+        ZONES_ZEE
+        <a href="namespaces/bo.html#constant_ZONES_ZEE" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">169</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Liste des zones de la ZEE sous la forme [{nom} =&gt; {label}]</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ZONES_ZEE</span>
+    = <span class="phpdocumentor-signature__default-value">[
+    //&#039;FR&#039;=&gt; &quot;France entière&quot;,
+    &#039;FX-MMN&#039; =&gt; &quot;Métropole - Zone Manche et Mer du Nord&quot;,
+    &#039;FX-Atl&#039; =&gt; &quot;Métropole - Zone Maritime Atlantique&quot;,
+    &#039;FX-Med&#039; =&gt; &quot;Métropole - Zone Méditerranée&quot;,
+    &#039;GP&#039; =&gt; &quot;Guadeloupe&quot;,
+    &#039;MQ&#039; =&gt; &quot;Martinique&quot;,
+    &#039;GF&#039; =&gt; &quot;Guyane&quot;,
+    &#039;BL&#039; =&gt; &quot;Saint-Barthelémy&quot;,
+    &#039;MF&#039; =&gt; &quot;Saint-Martin&quot;,
+    &#039;PM&#039; =&gt; &quot;Saint-Pierre-et-Miquelon&quot;,
+    &#039;RE&#039; =&gt; &quot;La Réunion&quot;,
+    &#039;YT&#039; =&gt; &quot;Mayotte&quot;,
+    &#039;TF&#039; =&gt; &quot;TAAF&quot;,
+    &#039;CP&#039; =&gt; &quot;Clipperton&quot;,
+    &#039;PF&#039; =&gt; &quot;Polynésie Française&quot;,
+    &#039;WF&#039; =&gt; &quot;Wallis-et-Futuna&quot;,
+    &#039;NC&#039; =&gt; &quot;Nouvelle-Calédonie&quot;,
+]</span>
+</code>
+
+
+    
+    
+    
+
+</article>
+            </section>
 
             <section class="phpdocumentor-functions">
         <h3 class="phpdocumentor-elements__header" id="functions">
@@ -300,7 +393,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -325,7 +418,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -356,6 +449,31 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
 
 </article>
                     <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_migrationAddExtraToUserTable">
+        migrationAddExtraToUserTable()
+        <a href="namespaces/bo.html#function_migrationAddExtraToUserTable" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">193</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fonction de migration d&#039;ajout d&#039;un champ extra dans la table user s&#039;il n&#039;existe pas</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">migrationAddExtraToUserTable</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+    
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_badEmail">
         badEmail()
         <a href="namespaces/bo.html#function_badEmail" class="headerlink"><i class="fas fa-link"></i></a>
@@ -364,7 +482,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -403,7 +521,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
@@ -449,7 +567,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">238</span>
 
     </aside>
 
@@ -602,10 +720,17 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
             <li>
                 <ul class="phpdocumentor-list -clean">
                                                                                                         <li><a href="files/bo-user.html#toc-classes">Classes</a></li>
-                                                                                                                            <li><a href="files/bo-user.html#toc-functions">Functions</a></li>
+                                                                                                        <li><a href="files/bo-user.html#toc-constants">Constants</a></li>
+                                                                <li><a href="files/bo-user.html#toc-functions">Functions</a></li>
                                     </ul>
             </li>
 
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="namespaces/bo.html#constant_ZONES_ZEE">ZONES_ZEE</a></li>
+                                            </ul>
+                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Functions</li>
                 <li>
@@ -613,6 +738,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
                                                     <li><a href="namespaces/bo.html#function_badEmail">badEmail()</a></li>
                                                     <li><a href="namespaces/bo.html#function_badPasswd">badPasswd()</a></li>
                                                     <li><a href="namespaces/bo.html#function_createUserTable">createUserTable()</a></li>
+                                                    <li><a href="namespaces/bo.html#function_migrationAddExtraToUserTable">migrationAddExtraToUserTable()</a></li>
                                                     <li><a href="namespaces/bo.html#function_sendMail">sendMail()</a></li>
                                                     <li><a href="namespaces/bo.html#function_userRole">userRole()</a></li>
                                             </ul>

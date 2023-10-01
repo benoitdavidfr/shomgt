@@ -411,6 +411,41 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/html-Radio.html#property_selected"
         },                {
+            "fqsen": "\\html\\checkBox",
+            "name": "checkBox",
+            "summary": "Champ\u0020de\u0020formulaire\u0020case\u0020\u00E0\u0020cocher",
+            "url": "classes/html-checkBox.html"
+        },                {
+            "fqsen": "\\html\\checkBox\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Cr\u00E9ation\u0020du\u0020champ",
+            "url": "classes/html-checkBox.html#method___construct"
+        },                {
+            "fqsen": "\\html\\checkBox\u003A\u003AtoString\u0028\u0029",
+            "name": "toString",
+            "summary": "retourne\u0020le\u0020code\u0020Html",
+            "url": "classes/html-checkBox.html#method_toString"
+        },                {
+            "fqsen": "\\html\\checkBox\u003A\u003A\u0024selected",
+            "name": "selected",
+            "summary": "",
+            "url": "classes/html-checkBox.html#property_selected"
+        },                {
+            "fqsen": "\\html\\checkBox\u003A\u003A\u0024choices",
+            "name": "choices",
+            "summary": "",
+            "url": "classes/html-checkBox.html#property_choices"
+        },                {
+            "fqsen": "\\html\\checkBox\u003A\u003A\u0024label",
+            "name": "label",
+            "summary": "",
+            "url": "classes/html-checkBox.html#property_label"
+        },                {
+            "fqsen": "\\html\\checkBox\u003A\u003A\u0024long",
+            "name": "long",
+            "summary": "",
+            "url": "classes/html-checkBox.html#property_long"
+        },                {
             "fqsen": "\\JSON_OPTIONS",
             "name": "JSON_OPTIONS",
             "summary": "",
@@ -781,6 +816,11 @@ Search.appendIndex(
             "summary": "transforme\u0020un\u0020GBox\u0020en\u0020une\u0020structure\u0020latLngBounds\u0040Leaflet",
             "url": "namespaces/bo.html#function_latLngBounds"
         },                {
+            "fqsen": "\\bo\\ZONES_ZEE",
+            "name": "ZONES_ZEE",
+            "summary": "Liste\u0020des\u0020zones\u0020de\u0020la\u0020ZEE\u0020sous\u0020la\u0020forme\u0020\u005B\u007Bnom\u007D\u0020\u003D\u003E\u0020\u007Blabel\u007D\u005D",
+            "url": "namespaces/bo.html#constant_ZONES_ZEE"
+        },                {
             "fqsen": "\\bo\\createUserTable\u0028\u0029",
             "name": "createUserTable",
             "summary": "cr\u00E9ation\u0020de\u0020la\u0020table\u0020des\u0020utilisateurs",
@@ -790,6 +830,11 @@ Search.appendIndex(
             "name": "userRole",
             "summary": "renvoit\u0020le\u0020role\u0020de\u0020l\u0027utilisateur\u0020\u0024user",
             "url": "namespaces/bo.html#function_userRole"
+        },                {
+            "fqsen": "\\bo\\migrationAddExtraToUserTable\u0028\u0029",
+            "name": "migrationAddExtraToUserTable",
+            "summary": "Fonction\u0020de\u0020migration\u0020d\u0027ajout\u0020d\u0027un\u0020champ\u0020extra\u0020dans\u0020la\u0020table\u0020user\u0020s\u0027il\u0020n\u0027existe\u0020pas",
+            "url": "namespaces/bo.html#function_migrationAddExtraToUserTable"
         },                {
             "fqsen": "\\bo\\badEmail\u0028\u0029",
             "name": "badEmail",
@@ -863,7 +908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\dashboard\\DashboardRow\u003A\u003AshowAsRow\u0028\u0029",
             "name": "showAsRow",
-            "summary": "Affichage\u0020d\u0027une\u0020ligne\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
+            "summary": "Affichage\u0020d\u0027une\u0020ligne\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption\u0020dont\u0020ganVersion\u0020est\u0020d\u00E9finie",
             "url": "classes/dashboard-DashboardRow.html#method_showAsRow"
         },                {
             "fqsen": "\\dashboard\\DashboardRow\u003A\u003A\u0024mapNum",
