@@ -15,6 +15,8 @@
  *   - reprise de YamlDoc
  * @package shomgt\shomft
  */
+namespace shomft;
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -44,7 +46,7 @@ abstract class WfsServer {
       file_put_contents(
           self::LOG,
           Yaml::dump([
-            'date'=> date(DateTime::ATOM),
+            'date'=> date(\DateTime::ATOM),
             'appel'=> 'WfsServer::url',
             'params'=> $params,
           ]),

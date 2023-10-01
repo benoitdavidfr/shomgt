@@ -3468,13 +3468,8 @@ maps:
     mapsFrance: [FX-Atl, FX-MMN]
     scaleDenominator: 1.070.000
     spatial: {SW: "41°28,00'N - 010°30,00'W", NE: "52°00,00'N - 000°00,00'E"}
-    borders:
-      left: 148
-      top: 126
-      right: 148
-      bottom: 151
+    borders: { left: 148, top: 126, right: 148, bottom: 151 }
     layer: gtaem
-    #geotiffname: '7330_2016'
   FR7337:
     groupTitle: 'Côtes de Guyane et du Brésil'
     title: 'Baie de l''Oyapok'
@@ -3500,7 +3495,6 @@ maps:
     scaleDenominator: '655.000'
     spatial: {SW: "47°30,00'N - 007°00,00'W", NE: "51°55,00'N - 003°00,00'E"}
     layer: gtaem
-    #geotiffname: '7344_2016'
   FR7345:
     groupTitle: 'Petites Antilles'
     title: 'Guadeloupe - De Montserrat à Marie-Galante (Spéciale P)'
@@ -3755,7 +3749,6 @@ maps:
     scaleDenominator: '700.000'
     spatial: {SW: "39°57,00'N - 001°30,00'E", NE: "44°40,00'N - 010°50,00'E"}
     layer: gtaem
-    #geotiffname: '7360_2016'
   FR7368:
     groupTitle: 'Océan Pacifique Sud'
     title: 'De l''Ile Malden aux Iles de la Société'
@@ -3842,8 +3835,7 @@ maps:
   FR7375:
     groupTitle: 'Côte Ouest de Nouvelle Calédonie'
     title: 'De la Passe de Poya à la Passe de Koné'
-    mapsFrance:
-      - NC
+    mapsFrance: [NC]
     scaleDenominator: '60.000'
     spatial:
       SW: '21°29,84''S - 164°31,10''E'
@@ -5493,7 +5485,7 @@ maps:
     mapsFrance: [FR]
     scaleDenominator: 38.000.000
     spatial: { SW: "76°46'S - 088°E", NE: "79°17'N - 448°E", exception: circumnavigateTheEarth }
-    borders: { left: 217, bottom: 202, right: 224, top: 212 }
+    borders: { left: 578, bottom: 535, right: 600, top: 566 }
     noteCatalog: "Carte spéciale absente du GAN et non géoréférencée, fait le tour de la Terre, le bord Est est supérieur à 180°"
     badGan: "Carte spéciale absente du GAN"
     layer: gtZonMar
@@ -5520,6 +5512,7 @@ uninterestingMaps:
   FR7678:
     title: 7678 - Îles Anjouan et Mohéli
     scaleDenominator: '156.000'
+    mapsFrance: [YT]
     reason: la faible intersection avec la France est couverte par FR7677 à la même échelle
   FR8102:
     title: 8102 XG - Carte MancheGrid - Partie Ouest
@@ -5529,9 +5522,14 @@ uninterestingMaps:
     title: 8103 XG - Carte MancheGrid - Partie Est
     mapsFrance: [FX-Atl,FX-MMN]
     reason: peu d'intérêt par rapport à la carte 8101
+  FR8508:
+    title: 8508 CX - Carte d'usages et activités - en Manche et Mer du Nord
+    mapsFrance: [FX-Atl,FX-MMN]
+    reason: pas jugée utile pour le moment de par son objet
   FR9999:
     title: 9999 - Carte Spéciale d'Exercice - Permis Mer Hauturier
     scaleDenominator: '50.000'
+    mapsFrance: [FX-Atl]
     reason: carte inutile de par son objet
 deletedMaps:
   FR0982:

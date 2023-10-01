@@ -171,11 +171,11 @@ class Gan {
    * Si la moisson n'a pas à être moissonnée retourne 0 */
   static function age(): int {
     //return -1;
-    if (!is_file(__DIR__.'/../dashboard/gans.yaml'))
+    if (!is_file(self::PATH_PSER))
       return -1;
     $now = new \DateTimeImmutable;
-    $gans = Yaml::parseFile(__DIR__.'/../dashboard/gans.yaml');
-    $valid = explode('/', $gans['valid']);
+    $contents = unserialize(file_get_contents(self::PATH_PSER));
+    $valid = explode('/', $contents['valid']);
     //echo "valid="; print_r($valid); echo "<br>\n";
     $valid = \DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
     if (dateBetween($valid, $now, 4, 20, 00)) {

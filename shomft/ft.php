@@ -1,13 +1,23 @@
 <?php
-/** serveur d'objets géographiques principalement en provenance du Shom
+/** serveur d'objets géographiques exposant qqs collections en provenance du Shom + frzee
  *
  * Le protocole s'inspire de celui d'API Features sans en reprendre tous les détails.
  * Les collections suivantes sont définies:
- *   - gt qui regroupe toutes les cartes GT normales
- *   - ae qui regroupe les cartes AEM
- *   - delmar - délimitations maritimes
- *   - delmar - délimitations maritimes
  *   - frzee - ZEE française simplifiée et sous la forme de polygones
+ *   - delmar - délimitations maritimes
+ *   - aem - cartes AEM
+ *   - gt - regroupe toutes les cartes GT normales
+ *   - gt10M - les cartes GT normales dont l'échelle est comprise entre 1/14M et 1/6M
+ *   - gt4M - les cartes GT normales dont l'échelle est comprise entre 1/6M et 1/3M
+ *   - gt2M - les cartes GT normales dont l'échelle est comprise entre 1/3M et 1/1.4M
+ *   - gt1M - les cartes GT normales dont l'échelle est comprise entre 1/1.4M et 1/700k
+ *   - gt500k - les cartes GT normales dont l'échelle est comprise entre 1/700k et 1/300k
+ *   - gt250k - les cartes GT normales dont l'échelle est comprise entre 1/300k et 1/180k
+ *   - gt100k - les cartes GT normales dont l'échelle est comprise entre 1/180k et 1/90k
+ *   - gt50k - les cartes GT normales dont l'échelle est comprise entre 1/90k et 1/45k
+ *   - gt25k - les cartes GT normales dont l'échelle est comprise entre 1/45k et 1/22k
+ *   - gt12k - les cartes GT normales dont l'échelle est comprise entre 1/22k et 1/11k
+ *   - gt5k - les cartes GT normales dont l'échelle est supérieure 1/11k
  * 
  * Les points d'entrée sont:
  *   - ft.php - page d'accueil
@@ -22,16 +32,21 @@
  * Pb - très peu d'info dans le serveur WFS du Shom, notamment a priori pas le numéro de la carte ni l'échelle !!!
  * Probablement garder le découpage d'échelles du Shom
  *
- * journal: |
+ * journal:
+ * - 1/10/2023
+ *   - ajout utilisation de la classe par inclusion du fichier
  * - 21/4/2023:
- *   - ajout des cartes par intervalle d'échelles (EN COURS)
+ *   - ajout des cartes par intervalle d'échelles
  *   - modif du contenu du fichier gt.json
  * - 13/6/2022:
  *   - création
  * @package shomgt\shomft
  */
+namespace shomft;
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../lib/httperrorcodes.inc.php';
+require_once __DIR__.'/../bo/lib.inc.php';
 require_once __DIR__.'/wfsserver.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -118,17 +133,17 @@ class FtServer {
   /** liste des ids de couche avec dénom. d'échelle max associé
    * @var array<string, float> $sdmax */
   static array $sdmax = [
-    'gt10M'=>  14e6, // échelle comprise entre 1/14.000.000 et 1/6.000.000
-    'gt4M'=>    6e6, // échelle comprise entre 1/6.000.000 et 1/3.000.000
-    'gt2M'=>    3e6, // échelle comprise entre 1/3.000.000 et 1/1.400.000
-    'gt1M'=>  1.4e6, // échelle comprise entre 1/1.400.000 et 1/700.000
-    'gt500k'=>700e3, // échelle comprise entre 1/700.000 et 1/380.000
-    'gt250k'=>380e3, // échelle comprise entre 1/380.000 et 1/180.000
-    'gt100k'=>180e3, // échelle comprise entre 1/180.000 et 1/90.000
-    'gt50k'=>  90e3, // échelle comprise entre 1/90.000 et 1/45.000
-    'gt25k'=>  45e3, // échelle comprise entre 1/45.000 et 1/22.000
-    'gt12k'=>  22e3, // échelle comprise entre 1/22.000 et 1/11.000
-    'gt5k'=>   11e3, // échelle supérieure au 1/11.000
+    'gt10M'=>   14e6, // échelle comprise entre 1/14.000.000 et 1/6.000.000
+    'gt4M'=>     6e6, // échelle comprise entre 1/6.000.000 et 1/3.000.000
+    'gt2M'=>     3e6, // échelle comprise entre 1/3.000.000 et 1/1.400.000
+    'gt1M'=>   1.4e6, // échelle comprise entre 1/1.400.000 et 1/700.000
+    'gt500k'=> 700e3, // échelle comprise entre 1/700.000 et 1/380.000
+    'gt250k'=> 380e3, // échelle comprise entre 1/380.000 et 1/180.000
+    'gt100k'=> 180e3, // échelle comprise entre 1/180.000 et 1/90.000
+    'gt50k'=>   90e3, // échelle comprise entre 1/90.000 et 1/45.000
+    'gt25k'=>   45e3, // échelle comprise entre 1/45.000 et 1/22.000
+    'gt12k'=>   22e3, // échelle comprise entre 1/22.000 et 1/11.000
+    'gt5k'=>    11e3, // échelle supérieure au 1/11.000
   ];
   
   static function readFeatureTypes(): void {
@@ -151,6 +166,8 @@ class FtServer {
       die();
     }
     else {
+      if (!isset(self::$collections[$colName]))
+        throw new Exception("Erreur colName='$colName' non définie dans la liste des collections");
       $features = []; // liste des features à construire
       foreach (self::$collections[$colName]['shomIds'] as $sid => $shomId) {
         $startindex = 0;
@@ -283,6 +300,10 @@ class FtServer {
       sendHttpCode(400, "commande non prévue");
   }
 };
+
+
+if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
+
 
 //FtServer::readFeatureTypes(); die();
 

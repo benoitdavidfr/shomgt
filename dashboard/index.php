@@ -30,10 +30,9 @@ namespace dashboard;
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../mapcat/mapcat.inc.php';
-//require_once __DIR__.'/../shomft/frzee.inc.php';
 require_once __DIR__.'/../shomft/mapfromwfs.inc.php';
 require_once __DIR__.'/../gan/gan.inc.php';
-require_once __DIR__.'/portfolio.inc.php';
+require_once __DIR__.'/../bo/portfolio.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -306,12 +305,12 @@ switch ($action = ($_GET['action'] ?? null)) {
     if (($ganHarvestAge == -1) || ($ganHarvestAge > 0))
       echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
-    $wfsAge = \shomft\MapFromWfs::age();
+    /*$wfsAge = \shomft\MapFromWfs::age();
     if (($wfsAge >= 7) || ($wfsAge == -1))
       echo "<li><a href='../shomft/updatecolls.php?collections=gt,aem,delmar'>",
            "Mettre à jour de la liste des cartes à partir du serveur WFS du Shom ",
            ($wfsAge <> -1) ? "précédemment mise à jour il y a $wfsAge jours" : '',
-           "</a></li>\n";
+           "</a></li>\n";*/
     echo "<li><a href='?action=newObsoleteMaps'>",
          "Voir les nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
     echo "<li><a href='?action=loadAvailableAtTheShop'>",
@@ -335,11 +334,22 @@ switch ($action = ($_GET['action'] ?? null)) {
     if (!$newMaps)
       echo "<h2>Toutes les cartes d'intérêt du flux WFS sont dans le portefeuille</h2>>\n";
     else {
-      echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
+      echo "<h2>Cartes présentes dans le flux WFS et absentes du portefeuille mais jugées inintéressantes</h2>\n";
       foreach ($newMaps as $mapid => $zeeIds) {
-        $map = \shomft\MapFromWfs::$all[$mapid]->prop;
-        $scale = '1/'.addUndescoreForThousand(isset($map['scale']) ? (int)$map['scale'] : null);
-        echo "- $map[name] ($scale) intersecte ",implode(',', $zeeIds),"<br>\n";
+        if ($mapcat = \mapcat\MapCatFromFile::get($mapid, ['uninteresting'])) {
+          echo "<pre>",Yaml::dump([$mapcat->item]),"</pre>";
+          unset($newMaps[$mapid]);
+        }
+      }
+      if (!$newMaps)
+        echo "<h2>Toutes les cartes d'intérêt du flux WFS sont dans le portefeuille</h2>>\n";
+      else {
+        echo "<h2>Cartes d'intérêt présentes dans le flux WFS et absentes du portefeuille</h2>\n";
+        foreach ($newMaps as $mapid => $zeeIds) {
+          $map = \shomft\MapFromWfs::$all[$mapid]->prop;
+          $scale = '1/'.addUndescoreForThousand(isset($map['scale']) ? (int)$map['scale'] : null);
+          echo "- $map[name] ($scale) intersecte ",implode(',', $zeeIds),"<br>\n";
+        }
       }
     }
   
