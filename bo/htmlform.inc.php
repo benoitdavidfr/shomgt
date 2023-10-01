@@ -130,13 +130,13 @@ readonly class Radio extends Field {
   }
 };
 
-/** Champ de formulaire boutons radio */
+/** Champ de formulaire case à cocher */
 readonly class checkBox extends Field {
   /** Création du champ
    * @param list<string>|array<string,string> $choices soit une liste de nom=libellé, soit un dict [nom => libelléDuChoix]
    * @param string $label libellé pour indiquer ce champ dans le formulaire
    * @param list<string> $selected liste des noms des choix par défaut
-   * @param bool $long vrai ssi les labels sont longs et doivent être affichés un par ligne
+   * @param bool $long vrai ssi les labels sont longs et doivent être affichés chacun sur une ligne
    */
   function __construct(public array $choices, public string $label='', public array $selected=[], public bool $long=false) {}
   
@@ -152,14 +152,17 @@ readonly class checkBox extends Field {
     return $form."</div></fieldset>";
   }
   
-  /** extrait des paramètres GET ceux correspondant au champ $fielfName et les restructurent comme une liste */
+  /** extrait des paramètres GET/POST ceux correspondant au champ $fielfName et les restructurent comme une liste
+   * @param array<string,string> $get la liste des champs get ou post en fonction de la méthode utilisée
+   * @return list<string> la liste des noms de choix sélectionnés
+   */
   static function selected(string $fieldName, array $get): array {
     $result = [];
     foreach ($get as $k => $v) {
       if (substr($k, 0, strlen($fieldName)+1) == "$fieldName-")
         $result[] = substr($k, strlen($fieldName)+1);
     }
-    echo "<pre>selected($fieldName)="; print_r($result); echo "</pre>\n";
+    //echo "<pre>selected($fieldName)="; print_r($result); echo "</pre>\n";
     return $result;
   }
 };
