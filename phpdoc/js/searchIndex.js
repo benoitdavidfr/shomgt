@@ -906,6 +906,11 @@ Search.appendIndex(
             "summary": "Affichage\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption",
             "url": "classes/dashboard-DashboardRow.html#method_showAll"
         },                {
+            "fqsen": "\\dashboard\\DashboardRow\u003A\u003AmatchZones\u0028\u0029",
+            "name": "matchZones",
+            "summary": "Teste\u0020si\u0020la\u0020carte\u0020correspond\u0020aux\u0020zones\u0020d\u0027int\u00E9r\u00EAt\u0020de\u0020l\u0027utilisateur",
+            "url": "classes/dashboard-DashboardRow.html#method_matchZones"
+        },                {
             "fqsen": "\\dashboard\\DashboardRow\u003A\u003AshowAsRow\u0028\u0029",
             "name": "showAsRow",
             "summary": "Affichage\u0020d\u0027une\u0020ligne\u0020du\u0020tableau\u0020des\u0020degr\u00E9s\u0020de\u0020p\u00E9remption\u0020dont\u0020ganVersion\u0020est\u0020d\u00E9finie",

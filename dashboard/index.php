@@ -33,6 +33,7 @@ require_once __DIR__.'/../mapcat/mapcat.inc.php';
 require_once __DIR__.'/../shomft/mapfromwfs.inc.php';
 require_once __DIR__.'/../gan/gan.inc.php';
 require_once __DIR__.'/../bo/portfolio.inc.php';
+require_once __DIR__.'/../bo/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -116,8 +117,10 @@ class DashboardRow {
       return 100;
   }
 
-  /** Affichage du tableau des degrés de péremption */
-  static function showAll(bool $ganUndef): void { 
+  /** Affichage du tableau des degrés de péremption
+   * @param list<string> $zonesOfInterest liste des codes de zones
+   */
+  static function showAll(bool $ganUndef, array $zonesOfInterest): void { 
     usort(self::$all,
       function(self $a, self $b) {
         if ($a->degree() < $b->degree()) return 1;
@@ -128,6 +131,7 @@ class DashboardRow {
     echo "<h2> ",
          $ganUndef ? "Cartes du portefeuille absentes du GAN"
            : "Degrés de péremption des cartes du portefeuille définies dans le GAN",
+         $zonesOfInterest ? " filtrées sur [".implode(', ', $zonesOfInterest).']' : '',
          "</h2>\n";
     echo "<p>On appelle <b>portefeuille</b>, l'ensemble des dernières versions des cartes non obsolètes",
       " exposées par le serveur de cartes 7z.<br>",
@@ -165,14 +169,31 @@ class DashboardRow {
     if (AvailAtTheShop::exists())
       echo "<th>boutique</th>\n";
     foreach (self::$all as $row) {
-      $row->showAsRow($ganUndef);
+      $row->showAsRow($ganUndef, $zonesOfInterest);
     }
     echo "</table>\n";
   }
   
-  /** Affichage d'une ligne du tableau des degrés de péremption dont ganVersion est définie */
-  function showAsRow(bool $ganUndef): void {
+  /** Teste si la carte correspond aux zones d'intérêt de l'utilisateur
+   * @param list<string> $zonesOfInterest liste des codes des zones
+   */
+  function matchZones(array $zonesOfInterest): bool {
+    if (!$zonesOfInterest) // $zonesOfInterest vide signifie pas de sélection
+      return true;
+    if ($this->mapsFrance() == ['FR'])
+      return true;
+    $int = array_intersect($this->mapsFrance(), $zonesOfInterest);
+    //print_r($this->mapsFrance()); print_r($zonesOfInterest); print_r($int);
+    return $int <> [];
+  }
+    
+  /** Affichage d'une ligne du tableau des degrés de péremption dont ganVersion est définie
+   * @param list<string> $zonesOfInterest liste des codes de zones
+   */
+  function showAsRow(bool $ganUndef, array $zonesOfInterest): void {
     if (($this->ganVersion == 'undefined') <> $ganUndef)
+      return;
+    if (!$this->matchZones($zonesOfInterest))
       return;
     echo "<tr><td>$this->mapNum</td>";
     echo "<td>",$this->title(),"</td>";
@@ -294,6 +315,17 @@ class AvailAtTheShop {
 };
 AvailAtTheShop::init();
 
+// détermination des zones d'inérêt de l'utilisateur
+$zonesOfInterest = [];
+if ($email = \bo\Login::loggedIn()) {
+  $users = \MySql::getTuples("select extra from user where email='$email'");
+  //echo "<pre>users="; print_r($users); echo "</pre>\n";
+  $extra = $users[0]['extra'] ?? '';
+  $extra = $extra ? json_decode($extra, true, 512, JSON_INVALID_UTF8_IGNORE|JSON_THROW_ON_ERROR) : [];
+  $zonesOfInterest = $extra['zones'] ?? [];
+  //echo "zonesOfInterest=[",implode(',', $zonesOfInterest),"]<br>\n";
+}
+
 switch ($action = ($_GET['action'] ?? null)) {
   case null:
   case 'deleteTempOutputBatch': { // menu avec éventuelle action préalable
@@ -310,16 +342,14 @@ switch ($action = ($_GET['action'] ?? null)) {
     if (($ganHarvestAge == -1) || ($ganHarvestAge > 0))
       echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
-    /*$wfsAge = \shomft\MapFromWfs::age();
-    if (($wfsAge >= 7) || ($wfsAge == -1))
-      echo "<li><a href='../shomft/updatecolls.php?collections=gt,aem,delmar'>",
-           "Mettre à jour de la liste des cartes à partir du serveur WFS du Shom ",
-           ($wfsAge <> -1) ? "précédemment mise à jour il y a $wfsAge jours" : '',
-           "</a></li>\n";*/
     echo "<li><a href='?action=newObsoleteMaps'>",
          "Voir les nouvelles cartes et les cartes obsolètes du portefeuille par rapport au WFS</li>\n";
-    echo "<li><a href='?action=perempt'>Afficher le degré de péremption des cartes du portefeuille définies dans le GAN</li>\n";
-    echo "<li><a href='?action=ganUndef'>Afficher les cartes du portefeuille absentes du GAN</li>\n";
+    echo "<li><a href='?action=perempt'>",
+          "Afficher le degré de péremption des cartes du portefeuille définies dans le GAN",
+          $zonesOfInterest ? " filtrées sur [".implode(', ', $zonesOfInterest).']' : '',"</li>\n";
+    echo "<li><a href='?action=ganUndef'>",
+          "Afficher les cartes du portefeuille absentes du GAN",
+          $zonesOfInterest ? " filtrées sur [".implode(', ', $zonesOfInterest).']' : '',"</li>\n";
     //echo "<li><a href='?action=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
     echo "<li><a href='?action=loadAvailableAtTheShop'>",
          "Charger les versions disponibles dans le site de diffusion du Shom</li>\n";
@@ -394,7 +424,7 @@ switch ($action = ($_GET['action'] ?? null)) {
       else
         $row->setGan($gan);
     }
-    DashboardRow::showAll($action=='ganUndef'); // Affichage du tableau des degrés de péremption
+    DashboardRow::showAll($action=='ganUndef', $zonesOfInterest); // Affichage du tableau des degrés de péremption
     die();
   }
   case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT

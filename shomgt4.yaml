@@ -26,6 +26,10 @@ abstract: |
 journal:
   30/9-1/10/2023:
     - amélioration du dashboard
+    - ajout dans la table des utilisateurs du champ extra de type JSON
+      - ajout d'un mécanisme de migration
+    - ajout pour un utilisateur de la possibilité de définir sa zone d'intérêt
+      - stockage de cette info dans le champ extra
   26-29/9/2023:
     - amélioration de la doc
     - cmde au Shom de 103 cartes (dp > 0)
