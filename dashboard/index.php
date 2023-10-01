@@ -117,7 +117,7 @@ class DashboardRow {
   }
 
   /** Affichage du tableau des degrés de péremption */
-  static function showAll(): void { 
+  static function showAll(bool $ganUndef): void { 
     usort(self::$all,
       function(self $a, self $b) {
         if ($a->degree() < $b->degree()) return 1;
@@ -125,7 +125,10 @@ class DashboardRow {
         else return -1;
       });
     //echo "<pre>Perempt="; print_r(Perempt::$all);
-    echo "<h2>Degrés de péremption des cartes du portefeuille</h2>\n";
+    echo "<h2> ",
+         $ganUndef ? "Cartes du portefeuille absentes du GAN"
+           : "Degrés de péremption des cartes du portefeuille définies dans le GAN",
+         "</h2>\n";
     echo "<p>On appelle <b>portefeuille</b>, l'ensemble des dernières versions des cartes non obsolètes",
       " exposées par le serveur de cartes 7z.<br>",
       "L'objectif du grand tableau ci-dessous est de fournir le degré de péremption des cartes du portefeuille",
@@ -162,13 +165,15 @@ class DashboardRow {
     if (AvailAtTheShop::exists())
       echo "<th>boutique</th>\n";
     foreach (self::$all as $row) {
-      $row->showAsRow();
+      $row->showAsRow($ganUndef);
     }
     echo "</table>\n";
   }
   
-  /** Affichage d'une ligne du tableau des degrés de péremption */
-  function showAsRow(): void {
+  /** Affichage d'une ligne du tableau des degrés de péremption dont ganVersion est définie */
+  function showAsRow(bool $ganUndef): void {
+    if (($this->ganVersion == 'undefined') <> $ganUndef)
+      return;
     echo "<tr><td>$this->mapNum</td>";
     echo "<td>",$this->title(),"</td>";
     echo "<td>",implode(', ', $this->mapsFrance()),"</td>";
@@ -250,7 +255,7 @@ class AvailAtTheShop {
       self::showTsvAsTable($data);
       return;
     }
-    echo "Copier dans le cadre ci-dessous une copie de la liste des produits téléchageables",
+    echo "Copier dans le cadre ci-dessous une copie de la liste des produits téléchargeables",
          " sur le <a href='https://diffusion.shom.fr/' target='_blank'>site de diffusion du Shom</a> (page $page)<br>\n";
     echo "<table border=1><form method='post'>\n";
     echo "  <input type='hidden' name='page' value='$page'/>\n";
@@ -312,11 +317,12 @@ switch ($action = ($_GET['action'] ?? null)) {
            ($wfsAge <> -1) ? "précédemment mise à jour il y a $wfsAge jours" : '',
            "</a></li>\n";*/
     echo "<li><a href='?action=newObsoleteMaps'>",
-         "Voir les nouvelles cartes et cartes obsolètes dans le portefeuille par rapport au WFS</li>\n";
+         "Voir les nouvelles cartes et les cartes obsolètes du portefeuille par rapport au WFS</li>\n";
+    echo "<li><a href='?action=perempt'>Afficher le degré de péremption des cartes du portefeuille définies dans le GAN</li>\n";
+    echo "<li><a href='?action=ganUndef'>Afficher les cartes du portefeuille absentes du GAN</li>\n";
+    //echo "<li><a href='?action=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
     echo "<li><a href='?action=loadAvailableAtTheShop'>",
          "Charger les versions disponibles dans le site de diffusion du Shom</li>\n";
-    echo "<li><a href='?action=perempt'>Afficher le degré de péremption des cartes du portefeuille</li>\n";
-    //echo "<li><a href='?action=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
     echo "<li><a href='?action=listWfs'>Afficher la liste des cartes du serveur WFS du Shom avec leur intérêt</li>\n";
     echo "</ul>\n";
     die();
@@ -359,12 +365,14 @@ switch ($action = ($_GET['action'] ?? null)) {
         $obsoletes[] = $mapid;
     }
     if (!$obsoletes)
-      echo "<h2>Toutes les cartes du portefeuille sont présentes dans le flux WFS</h2>\n";
+      echo "<h2>Toutes les cartes du portefeuille sont présentes dans le flux WFS donc aucune carte du portefeuille est obsolète</h2>\n";
     else {
-      echo "<h2>Cartes du portefeuille absentes du flux WFS</h2>\n";
+      echo "<h2>Cartes du portefeuille absentes du flux WFS et donc obsolètes</h2>\n";
       //echo "<pre>"; print_r($listOfInterest); echo "</pre>\n";
       foreach ($obsoletes as $mapid) {
-        echo "- $mapid<br>\n";
+        //echo "- $mapid<br>\n";
+        $mapcat = \mapcat\MapCat::get($mapid);
+        echo "<pre>",Yaml::dump([$mapcat->item]),"</pre>";
       }
     }
     die();
@@ -375,17 +383,18 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<a href='index.php'>Retour au menu</a><br>\n";
     die();
   }
-  case 'perempt': { // construction puis affichage des degrés de péremption 
+  case 'perempt':
+  case 'ganUndef': { // construction puis affichage du tableau des degrés de péremption 
     \gan\Gan::loadFromPser(); // chargement de la synthèse des GANs
-    DashboardRow::init(); // construction à partir du portefeuille
-    // Mise à jour de perempt à partir du GAN
+    DashboardRow::init(); // initialisation du tableau à partir du portefeuille
+    // Mise à jour des éléments du tableau à partir du GAN
     foreach (DashboardRow::$all as $mapNum => $row) {
       if (!($gan = \gan\Gan::item($mapNum)))
         echo "Erreur, Gan absent pour carte $mapNum\n";
       else
         $row->setGan($gan);
     }
-    DashboardRow::showAll(); // Affichage du tableau des degrés de péremption
+    DashboardRow::showAll($action=='ganUndef'); // Affichage du tableau des degrés de péremption
     die();
   }
   case 'listWfs': { // liste des cartes du serveur WFS du Shom avec intérêt pour ShomGT

@@ -9,7 +9,7 @@ require_once __DIR__.'/lib.inc.php';
 
 /** Sur-classe des champs de formulaire
  *
- * un champdoit pouvoir s'afficher avec un paramètre name et doit exposer son champ label */
+ * un champ doit pouvoir s'afficher avec un paramètre name et doit exposer son champ label */
 abstract readonly class Field {
   /** pour faire plaisir à phpstan */
   function __construct(public string $label='') { }
@@ -130,11 +130,45 @@ readonly class Radio extends Field {
   }
 };
 
+/** Champ de formulaire boutons radio */
+readonly class checkBox extends Field {
+  /** Création du champ
+   * @param list<string>|array<string,string> $choices soit une liste de nom=libellé, soit un dict [nom => libelléDuChoix]
+   * @param string $label libellé pour indiquer ce champ dans le formulaire
+   * @param list<string> $selected liste des noms des choix par défaut
+   * @param bool $long vrai ssi les labels sont longs et doivent être affichés un par ligne
+   */
+  function __construct(public array $choices, public string $label='', public array $selected=[], public bool $long=false) {}
+  
+  function toString(string $name): string {
+    $form = "<fieldset>\n"
+      ."  <div>\n";
+    foreach ($this->choices as $choice => $label) {
+      if (is_int($choice)) $choice = $label;
+      $form .= "<input type='checkbox' id='$choice' name='$name-$choice' value='true' "
+        .(in_array($choice, $this->selected)?' checked':'')." />\n"
+        ."<label for='$choice'>$label".($this->long?'<br>':'')."</label>\n";
+    }
+    return $form."</div></fieldset>";
+  }
+  
+  /** extrait des paramètres GET ceux correspondant au champ $fielfName et les restructurent comme une liste */
+  static function selected(string $fieldName, array $get): array {
+    $result = [];
+    foreach ($get as $k => $v) {
+      if (substr($k, 0, strlen($fieldName)+1) == "$fieldName-")
+        $result[] = substr($k, strlen($fieldName)+1);
+    }
+    echo "<pre>selected($fieldName)="; print_r($result); echo "</pre>\n";
+    return $result;
+  }
+};
+
 
 if (!\bo\callingThisFile(__FILE__)) return;
 
 
-echo '$_GET = '; print_r($_GET);
+echo '<pre>$_GET = '; print_r($_GET); echo "</pre>";
 
 // Utilisation
 if (1) { // @phpstan-ignore-line
@@ -152,6 +186,16 @@ if (1) { // @phpstan-ignore-line
           'mail',
         ],
         selected: $_GET['contact'] ?? 'mail'
+      ),
+      'contact2' => new checkBox(
+        label: 'contact method2',
+        choices: [
+          'email'=> "courrier électronique xxxxxxxxxxx xxxxxxx xxxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxxx xxxx",
+          'phone'=> "téléphone",
+          'mail'=>"courrier papier",
+        ],
+        selected: checkBox::selected('contact2', $_GET),
+        long: true
       ),
     ],
     submit: 'ajout',

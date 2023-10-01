@@ -83,9 +83,13 @@ class UserSqlSchema {
         'type'=> 'datetime',
         'comment'=> "date et heure de dernière validation, null ssi compte non validé",
       ],
+      /*'extra'=> [
+        'type'=> 'JSON',
+        'comment'=> "données complémentaires stockées en JSON, notamment la liste des codes des zones dans le champ zones",
+      ],*/
       'comment'=> [
         'type'=> 'longtext',
-        'comment'=> "commentaire",
+        'comment'=> "commentaire en texte libre",
       ],
     ],
   ];
@@ -161,9 +165,45 @@ function userRole(?string $user): ?string {
 
 if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier est inclus
 
+/** Liste des zones de la ZEE sous la forme [{nom} => {label}] */
+const ZONES_ZEE = [
+  //'FR'=> "France entière",
+  'FX-MMN'=> "Métropole - Zone Manche et Mer du Nord",
+  'FX-Atl'=> "Métropole - Zone Maritime Atlantique",
+  'FX-Med'=> "Métropole - Zone Méditerranée",
+  'GP'=> "Guadeloupe",
+  'MQ'=> "Martinique",
+  'GF'=> "Guyane",
+  'BL'=> "Saint-Barthelémy",
+  'MF'=> "Saint-Martin",
+  'PM'=> "Saint-Pierre-et-Miquelon",
+  'RE'=> "La Réunion",
+  'YT'=> "Mayotte",
+  'TF'=> "TAAF",
+  'CP'=> "Clipperton",
+  'PF'=> "Polynésie Française",
+  'WF'=> "Wallis-et-Futuna",
+  'NC'=> "Nouvelle-Calédonie",
+];
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo/user@$_SERVER[HTTP_HOST]</title></head><body>\n";
 echo $HTML_HEAD,"<h2>Gestion utilisateur</h2>\n";
+
+/** Fonction de migration d'ajout d'un champ extra dans la table user s'il n'existe pas */
+function migrationAddExtraToUserTable(): void {
+  foreach(\MySql::query("describe user") as $field)
+    if ($field['Field']=='extra')
+      return; // le champ extra a déjà été ajouté
+  echo "<pre>";
+  foreach(\MySql::query("describe user") as $field)
+    print_r($field);
+  $query = "alter table user add extra JSON 
+    comment \"données complémentaires stockées en JSON, notamment la liste des codes des zones dans le champ zones\"
+    after valid";
+  \MySql::query($query);
+  die("Fin migrationAddExtraToUserTable\n");
+}
+migrationAddExtraToUserTable();
 
 /** validation de l'email, renvoit null si valid, sinon l'erreur */
 function badEmail(string $email): ?string {
@@ -288,10 +328,12 @@ $actions = [
       'actionTestB',
       'editUsers',
       'reinitUserBase',
+      'zoneSubmit',
     ],
     'to'=> [
       'actionTestA',
       'changePasswd',
+      'setZone',
       'reValidateByUser',
       'closeAccount',
       'BO.menu',
@@ -319,6 +361,7 @@ $actions = [
       if ($role) {
         //echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
         echo "<li><a href='?action=changePasswd'>Changer mon mot de passe</a></li>\n";
+        echo "<li><a href='?action=setZone'>Définir ma zone d'intérêt</a></li>\n";
         echo "<li><a href='?action=reValidateByUser'>Revalider mon compte</a></li>\n";
         echo "<li><a href='?action=closeAccount'>Fermer mon compte</a></li>\n";
       }
@@ -529,6 +572,78 @@ $actions = [
         echo "Erreur, aucun enregistrement validé<br>\n";
       }
       echo "<a href='index.php'>Revenir au menu du BO.</a><br>\n";
+      die();
+    },
+  ],
+  'setZone'=> [
+    'title'=> "formulaire de définition de sa zone par un utilisateur logué",
+    'from'=> 'user.menu',
+    'scenario'=> [
+      "un utilisateur logué demande à changer sa zone",
+      "il fournit la nouvelle zone",
+    ],
+    'to'=> 'zoneSubmit',
+    'apply'=> function(): void  { // un utilisateur logué demande à changer sa zone
+      $email = Login::loggedIn() or die("Erreur, pour setZone l'utilisateur doit être loggé");
+      try {
+        $users = \MySql::getTuples("select extra from user where email='$email'");
+      }
+      catch(\SExcept $e) {
+        echo "<pre>"; print_r($e);
+        die();
+      }
+      echo "<pre>users="; print_r($users); echo "</pre>\n";
+      $extra = $users[0]['extra'] ?? '';
+      $selected = [];
+      if ($extra) {
+        $extra = json_decode($extra, true, 512, JSON_INVALID_UTF8_IGNORE|JSON_THROW_ON_ERROR);
+        $selected = $extra['zones'] ?? [];
+      }
+      
+      echo "<b>Choix de la zone d'intérêt</b><br>\n";
+      echo new \html\Form(
+        hiddens: ['action'=> 'zoneSubmit'],
+        fields: [
+          'zee' => new \html\checkBox(
+            label: 'zones',
+            choices: ZONES_ZEE,
+            selected: $selected,
+            long: true
+          ),
+        ],
+        submit: 'définir',
+        action: '',
+        method: 'get'
+      );
+      die();
+    },
+  ],
+  'zoneSubmit'=> [
+    'title'=> "traitement du formulaire de définition de sa zone par un utilisateur logué",
+    'from'=> ['setZone'],
+    'scenario'=> [
+      "enregistrement de la zone en base dans le champ extra",
+    ],
+    'to'=> 'user.menu',
+    'apply'=> function(): void {
+      write_log(true);
+      $email = Login::loggedIn() or die("Erreur, pour setZone l'utilisateur doit être loggé");
+      $users = \MySql::getTuples("select extra from user where email='$email'");
+      echo "<pre>users="; print_r($users); echo "</pre>\n";
+      $extra = $users[0]['extra'] ?? '';
+      $extra = $extra ? json_decode($extra, true, 512, JSON_INVALID_UTF8_IGNORE|JSON_THROW_ON_ERROR) : [];
+      $zones = \html\checkBox::selected('zee', $_GET);
+      if ($zones)
+        $extra['zones'] = $zones;
+      else
+        unset($extra['zones']);
+      if ($extra)
+        $query = "update user set extra='".json_encode($extra)."' where email='$email'";
+      else
+        $query = "update user set extra=null where email='$email'";
+      echo "query=$query<br>\n";
+      \MySql::query($query);
+      echo "<a href='user.php'>Retour au menu de gestion des utilisateurs</a><br>\n";
       die();
     },
   ],
