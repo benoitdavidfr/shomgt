@@ -61,7 +61,7 @@ function write_log(bool $access): bool {
   $sql = "insert into log(logdt, ip, referer, login, user, host, request_uri, access) "
         ."values (now(), '$_SERVER[REMOTE_ADDR]', $referer, $login, $user,"
           ." '$_SERVER[HTTP_HOST]', '$_SERVER[REQUEST_URI]', '".($access?'T':'F')."')";
-  //  echo "<pre>",$sql,"</pre>\n";
+  //echo "<pre>",$sql,"</pre>\n";
   try {
     MySql::query($sql);
   }

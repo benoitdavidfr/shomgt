@@ -277,7 +277,7 @@ switch ($action = $_POST['action'] ?? $_GET['action'] ?? null) {
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
     \MySql::open($LOG_MYSQL_URI);
     \MySql::query('drop table if exists mapcat');
-    $query = MapCat::createTableSql('mapcat', MapCat::MAPCAT_TABLE_SCHEMA);
+    $query = \MySql::createTableSql('mapcat', MapCat::MAPCAT_TABLE_SCHEMA);
     //echo "<pre>query=$query</pre>\n";
     \MySql::query($query);
 

@@ -772,25 +772,6 @@ class MapCat {
     ],
   ]; // Définition du schéma SQL de la table mapcat
 
-  /** fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
-   * @param array<string, mixed> $schema */
-  static function createTableSql(string $tableName, array $schema): string {
-    $cols = [];
-    foreach ($schema['columns'] ?? [] as $cname => $col) {
-      $cols[] = "  $cname "
-        .match($col['type'] ?? null) {
-          'enum' => "enum('".implode("','", array_keys($col['enum']))."') ",
-          default => "$col[type] ",
-          null => die("<b>Erreur, la colonne '$cname' doit comporter un champ 'type'</b>."),
-      }
-      .($col['keyOrNull'] ?? '')
-      .(isset($col['comment']) ? " comment \"$col[comment]\"" : '');
-    }
-    return ("create table $tableName (\n"
-      .implode(",\n", $cols)."\n)"
-      .(isset($schema['comment']) ? " comment \"$schema[comment]\"\n" : ''));
-  }
-  
   /** Retourne la liste des numéros de carte (sans FR) en fonction de la liste des types
    * @param list<TMapCatKind> $kindOfMap
    * @return list<string>

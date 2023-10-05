@@ -154,6 +154,8 @@ class GanStatic {
     }
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     //print_r($errors);
+    $i = 0;
+    $n = count(\bo\Portfolio::$all);
     foreach (\bo\Portfolio::$all as $mapnum => $map) {
       //echo "mapnum=$mapnum\n"; print_r($map);
       if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
@@ -171,13 +173,14 @@ class GanStatic {
           }
           else {
             file_put_contents("$gandir/$mapnum-$ganWeek.html", $contents);
-            echo "Lecture $url ok\n";
+            echo "Lecture $url ok [$i/$n]\n";
           }
         }
         elseif (0) { // @phpstan-ignore-line // déverminage 
           echo "le fichier $gandir/$mapnum-$ganWeek.html existe || errors[$mapnum-$ganWeek]\n";
         }
       }
+      $i++;
     }
   }
   

@@ -1,6 +1,6 @@
 <?php
 /** page d'accueil de shomgt
- * journal: |
+ * journal:
  * - 10/8/2023:
  *   - report dans Access du message lors du refus d'accès
  * - 9/11/2019
@@ -11,8 +11,10 @@
  *   - chgt de l'URL initiale
  * - 9/6/2017
  *   - création
+ * @package shomgt
  */
 require_once __DIR__.'/lib/accesscntrl.inc.php';
+require_once __DIR__.'/bo/login.inc.php';
 
 echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title></head>\n";
 
@@ -20,7 +22,8 @@ echo "<!DOCTYPE HTML><html><head><meta charset='UTF-8'><title>cartes shom</title
 try {
   if (Access::cntrlFor('homePage') && !Access::cntrl()) {
     header('HTTP/1.1 403 Forbidden');
-    die(str_replace('{adip}', $_SERVER['REMOTE_ADDR'], Access::FORBIDDEN_ACCESS_MESSAGE));
+    //die(str_replace('{adip}', $_SERVER['REMOTE_ADDR'], Access::FORBIDDEN_ACCESS_MESSAGE));
+    die(str_replace('{adip}', $_SERVER['REMOTE_ADDR'], file_get_contents(__DIR__.'/login.html')));
   }
 }
 catch (Exception $e) {

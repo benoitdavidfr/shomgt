@@ -24,12 +24,20 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  4-5/10/2023:
+    - restructuration de parcours utilisateur de login pour que
+      - pour les utilisateurs dont l'IP est hors liste blanche
+        - page de login lors de l'accueil avec un message sur l'intérêt du site
+      - pour ceux dont l'IP est dans la liste blanche
+        - page de login lors de l'entrée dans le BO
+    - modif. de la gestion des cookies de login pour qu'ils soient dispo. sur les sous-domaines
   30/9-1/10/2023:
     - amélioration du dashboard
     - ajout dans la table des utilisateurs du champ extra de type JSON
       - ajout d'un mécanisme de migration
     - ajout pour un utilisateur de la possibilité de définir sa zone d'intérêt
       - stockage de cette info dans le champ extra
+    - utilisation de cette zone d'intérêt dans le dashboard
   26-29/9/2023:
     - amélioration de la doc
     - cmde au Shom de 103 cartes (dp > 0)
@@ -403,7 +411,7 @@ rôles:
   - admin
   - hébergeur
   - développeur
-nones:
+zones:
   3 métro: FX-Atl, FX-MMN, FX-Med
   attlantique: GP, MQ, GF, BL, MF, PM
   Pacifique: PF, WF, CP, NC
@@ -540,15 +548,6 @@ backlog:
     - meilleure gestion en production de l'affichage des erreurs
     - gestion des stats d'utilisation
       - agrégation des stats ?
-    - modifier le nom des versions dans archives pour qu'elles soient automatiquement triées dans l'ordre chronologique
-  dashboard:
-    - amélioration du dashboard
-    - gérer à part dans dashboard les cartes hors GAN
-      - distinguer celles non trouvées dans le GAN de celles qui n'y sont pas
-    - dissocier gan de dashboard
-    - possibilité de dashboard par zone
-    - revoir l'org. du code
-    - afficher un indicateur de réalisation dans le moissonnage des GAN
   doc:
     - préciser ce que chaque module expose
   accessLog:
@@ -580,6 +579,19 @@ bugs:
     errors:
         - "L'extension spatiale définie dans MapCat n'est pas inclues dans le géoréférencement de l'archive"
 
+restructurationLogin:
+  existant:
+    - process du login
+    - la page index.php teste si cntrl() ok
+      - si non propose d'aller sur bo/index.php
+    - la page bo/index.php appelle Login::login()
+      - si pas de login alors affiche le formulaire de login et la possibilité de s'enregistrer
+  àFaire:
+    - pour les utilisateurs dont l'IP est hors liste blanche
+      le formulaire de login doit être affiché dès la page d'accueil de ShomGT
+    - pour ceux dont l'IP est dans la liste blanche
+      la page de login doit être affichée lors de l'accès au BO
+    
 php.ini:
   dev: |
     display_errors = On

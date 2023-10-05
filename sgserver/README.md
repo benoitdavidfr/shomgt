@@ -2,6 +2,10 @@
 L'objectif de sgserver est d'exposer à *sgupdt* les cartes du Shom gérées dans un répertoire appelé **shomgeotiff**.
 Il est mis à jour régulièrement grâce à *dashboard*.
 
+## Expositions
+Le seul service exposé dans ce module est le serveur implémenté par le script `index.php` ;
+Ce service est documenté selon la méthode de l'OpenApi au travers de l'URL `ìndex.php/api`.
+
 ## 1. Variables d'environnement
 - `SHOMGT3_PORTFOLIO_PATH`: chemin du répertoire shomgeotiff  
   Ce répertoire ne doit pas être accessible depuis internet pour éviter un contournement du contrôle d'accès
@@ -105,9 +109,11 @@ ou d'indiquer que la carte est obsolète.
 Ce module correspond au [package shomgt\sgserver
 de la doc PhphDoc](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-sgserver.html).
 
-
 ## 4. Erreurs rencontrées avec l'année d'édition des cartes
 Dans certains cas, l'année d'édition mentionnée dans les MD ISO 19139 est fausse.
 Il est donc utile de vérifier cette année en la comparant à celle indiquée sur la carte et si nécessaire de la corriger
 avec un éditeur de texte.
 
+## 5. Documentation PHPDoc du code source
+Le code source de ce module est documenté dans
+le [package shomgt\sgserver de PHPDoc](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-sgserver.html).

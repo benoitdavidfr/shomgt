@@ -119,6 +119,39 @@ class MySql {
       $tuples[] = $tuple;
     return $tuples;
   }
+
+  /** génère le code SQL de création d'une table à partir d'une constante de définition du schéma.
+   *
+   * Cette constante est un dictionnaire ayant la structure suivante:
+   *  - le champ 'description' décrit la structure du dictionnaire,
+   *  - le champ 'comment' précise la table concernée,
+   *  - le champ obligatoire 'columns' définit le dictionnaire des colonnes avec pour chaque entrée:
+   *    - la clé définit le nom SQL de la colonne,\n"
+   *    - le champ 'type' obligatoire définit le type SQL de la colonne,
+   *    - le champ 'keyOrNull' définit si la colonne est ou non une clé et si elle peut ou non être nulle
+   *    - le champ 'comment' précise un commentaire sur la colonne.
+   *    - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'
+   *      définit les valeurs possibles dans un dictionnaire où chaque entrée a:
+   *      - pour clé la valeur de l'énumération et
+   *      - pour valeur une définition et/ou un commentaire sur cette valeur.
+   *
+   * @param array{description: string, comment: string, columns: array<string,mixed>} $schema */
+  static function createTableSql(string $tableName, array $schema): string {
+    $cols = [];
+    foreach ($schema['columns'] ?? [] as $cname => $col) {
+      $cols[] = "  $cname "
+        .match($col['type'] ?? null) {
+          'enum' => "enum('".implode("','", array_keys($col['enum']))."') ",
+          default => "$col[type] ",
+          null => die("<b>Erreur, la colonne '$cname' doit comporter un champ 'type'</b>."),
+      }
+      .($col['keyOrNull'] ?? '')
+      .(isset($col['comment']) ? " comment \"$col[comment]\"" : '');
+    }
+    return ("create table $tableName (\n"
+      .implode(",\n", $cols)."\n)"
+      .(isset($schema['comment']) ? " comment \"$schema[comment]\"\n" : ''));
+  }
 };
 
 /** la classe MySqlResult permet d'utiliser le résultat d'une requête comme un itérateur

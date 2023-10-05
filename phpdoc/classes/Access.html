@@ -108,6 +108,10 @@
                 
             </li>
                     <li>
+                <a href="packages/shomgt-bojournal.html" class="">bojournal</a>
+                
+            </li>
+                    <li>
                 <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
                 
             </li>
@@ -223,25 +227,27 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">Regroupe la logique du contrôle d&#039;accès</p>
 
-    <section class="phpdocumentor-description"><p>Le contrôle d'accès s'effectue selon 3 modes de contrôle distincts:</p>
+    <section class="phpdocumentor-description"><p>Le contrôle d'accès de base (hors accès aux tuiles) s'effectue selon 3 modes de contrôle distincts:</p>
 <ol>
-<li>vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
-les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.</li>
-<li>vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.</li>
-<li>authentification HTTP Basic, utilisé pour le service WMS.</li>
+<li>pour tous les types d'accès, vérification que l'IP d'appel appartient à une liste blanche prédéfinie,
+ce mode permet notamment d'autoriser les requêtes provenant du RIE. Il est utilisé pour la plupart des fonctionnalités.</li>
+<li>pour les accès Web depuis un navigateur, vérification que le cookie adhoc contient un login/mot de passe valide,</li>
+<li>pour le service WMS authentification HTTP Basic.</li>
 </ol>
-<p>Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp</p>
+<p>Le cookie adhoc est créé lors du login effectué dans le BO.</p>
+<p>Le contrôle de l'accès aux tuiles est différent ; il est par défaut autorisé sauf pour les IP en liste noire
+et pour les referer en liste noire.</p>
 <p>Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:</p>
 <ul>
 <li>exploite le fichier de config</li>
-<li>expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle</li>
-<li>expose la méthode cntrl() pour réaliser le contrôle</li>
+<li>définit la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle</li>
+<li>définit la méthode cntrl() pour réaliser le contrôle</li>
 </ul>
 </section>
 
@@ -272,12 +278,7 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <span>
         &nbsp;= &#039;shomusrpwd&#039;                            </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Access.html#constant_FORBIDDEN_ACCESS_MESSAGE">FORBIDDEN_ACCESS_MESSAGE</a>
-    <span>
-        &nbsp;= &quot;&lt;body&gt;Bonjour,&lt;/p&gt;\n      &lt;b&gt;Ce site est réservé aux agents de l&#039;Etat et de ses Etablissements publics administratifs (EPA).&lt;/b&gt;&lt;br&gt;\n      L&#039;accès s&#039;effectue normalement au travers d&#039;une adresse IP correspondant à un intranet de l&#039;Etat\n      ou d&#039;un de ses EPA (RIE, ...).&lt;br&gt;\n      Vous accédez actuellement à ce site au travers de l&#039;adresse IP &lt;b&gt;{adip}&lt;/b&gt; qui n&#039;est pas enregistrée\n      comme une telle adresse IP.&lt;br&gt;\n      Si vous souhaitez accéder à ce site et que vous appartenez à un service de l&#039;Etat ou à un de ses EPA,\n      vous pouvez transmettre cette adresse IP à Benoit DAVID du MTE/CGDD (contact at geoapi.fr)\n      qui regardera la possibilité d&#039;autoriser votre accès.&lt;/p&gt;\n      Si vous avez un compte sur ce site,\n      vous pouvez &lt;a href=&#039;bo/index.php&#039; target=&#039;_parent&#039;&gt;y accéder en vous authentifiant ici&lt;/a&gt;.  \n  &quot;                            </span>
-</dt>
+<dd>nom du cookie utilisé pour stocker le login/mdp dans le navigateur</dd>
 
     </dl>
 
@@ -294,24 +295,28 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Effectue le contôle.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Access.html#method_cntrlFor">cntrlFor()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>test si le contrôle est ou non activé pour une fonctionnalité</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Access.html#method_ipInBlackList">ipInBlackList()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>teste si la l&#039;adresse IP dans la liste noire, utilisée pour tile.php</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Access.html#method_refererInBlackList">refererInBlackList()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Teste si le referer est dans la liste noire, utilisée pour tile.php</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Access.html#method_test">test()</a>
@@ -324,6 +329,7 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>teste si la l&#039;adresse IP dans la liste blanche</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Access.html#method_loginPwdInCookie">loginPwdInCookie()</a>
@@ -359,44 +365,17 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">nom du cookie utilisé pour stocker le login/mdp dans le navigateur</p>
+
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">COOKIENAME</span>
     = <span class="phpdocumentor-signature__default-value">&#039;shomusrpwd&#039;</span>
-</code>
-
-
-    
-    
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FORBIDDEN_ACCESS_MESSAGE">
-        FORBIDDEN_ACCESS_MESSAGE
-        <a href="classes/Access.html#constant_FORBIDDEN_ACCESS_MESSAGE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">64</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FORBIDDEN_ACCESS_MESSAGE</span>
-    = <span class="phpdocumentor-signature__default-value">&quot;&lt;body&gt;Bonjour,&lt;/p&gt;\n      &lt;b&gt;Ce site est réservé aux agents de l&#039;Etat et de ses Etablissements publics administratifs (EPA).&lt;/b&gt;&lt;br&gt;\n      L&#039;accès s&#039;effectue normalement au travers d&#039;une adresse IP correspondant à un intranet de l&#039;Etat\n      ou d&#039;un de ses EPA (RIE, ...).&lt;br&gt;\n      Vous accédez actuellement à ce site au travers de l&#039;adresse IP &lt;b&gt;{adip}&lt;/b&gt; qui n&#039;est pas enregistrée\n      comme une telle adresse IP.&lt;br&gt;\n      Si vous souhaitez accéder à ce site et que vous appartenez à un service de l&#039;Etat ou à un de ses EPA,\n      vous pouvez transmettre cette adresse IP à Benoit DAVID du MTE/CGDD (contact at geoapi.fr)\n      qui regardera la possibilité d&#039;autoriser votre accès.&lt;/p&gt;\n      Si vous avez un compte sur ce site,\n      vous pouvez &lt;a href=&#039;bo/index.php&#039; target=&#039;_parent&#039;&gt;y accéder en vous authentifiant ici&lt;/a&gt;.  \n  &quot;</span>
 </code>
 
 
@@ -429,18 +408,23 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">159</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Effectue le contôle.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">cntrl</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$usrpwd</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$nolog</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-    
+        <section class="phpdocumentor-description"><p>si $usrpwd est défini alors cntrl() teste si le couple est correct
+s'il n'est pas défini alors teste l'accès par l'adresse IP, l'existence d'un cookie
+si $nolog est passé à true alors pas de log de l'accès.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -481,11 +465,12 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">test si le contrôle est ou non activé pour une fonctionnalité</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">cntrlFor</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$what</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -526,11 +511,12 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">teste si la l&#039;adresse IP dans la liste noire, utilisée pour tile.php</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">ipInBlackList</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -561,11 +547,12 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Teste si le referer est dans la liste noire, utilisée pour tile.php</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">refererInBlackList</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -596,7 +583,7 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -627,11 +614,12 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">teste si la l&#039;adresse IP dans la liste blanche</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">ipInWhiteList</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -662,7 +650,7 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">150</span>
 
     </aside>
 
@@ -697,7 +685,7 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="lib/accesscntrl.inc.php"><a href="files/lib-accesscntrl-inc.html"><abbr title="lib/accesscntrl.inc.php">accesscntrl.inc.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -841,7 +829,6 @@ les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li><a href="classes/Access.html#constant_COOKIENAME">COOKIENAME</a></li>
-                                                    <li><a href="classes/Access.html#constant_FORBIDDEN_ACCESS_MESSAGE">FORBIDDEN_ACCESS_MESSAGE</a></li>
                                             </ul>
                 </li>
             

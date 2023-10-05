@@ -1,6 +1,9 @@
 <?php
 /** Fonctionnalités de login dans le BO - 19/7/2023
  * @package shomgt\bo
+ *
+ * journal:
+ *    -rajout du paramètre $domain dans setcookie() pour prendre en compte les sous-domaines
  */
 namespace bo;
 
@@ -30,48 +33,51 @@ class Login {
    * si login Ok alors retourne le login, sinon arrête l'exécution avec un message proposant de s'enregistrer
    * à l'URL définie dans $registerUrl */
   static function login(string $htmlHeadAndTitle, string $registerUrl): ?string {
+    // si l'utilisateur est déjà logué alors renvoie son identifiant de login
     if ($login = Login::loggedIn()) {
       return $login;
     }
-    elseif (!isset($_POST['login']) || !isset($_POST['password'])) { // pas de paramètre de login
+    
+    // pas de paramètre de login -> affichage du formulaire de login
+    if (!isset($_POST['login']) || !isset($_POST['password'])) {
       echo $htmlHeadAndTitle,
            "Site à accès restreint, veuillez vous loguer",Login::FORM,
            "</p>ou <a href='$registerUrl'>vous inscrire ou changer votre mot de passe si vous l'avez oublié.</a>.<br>\n";
       die();
     }
+    
     // appel avec paramètres de login incorrects -> affichage d'un message d'erreur et du formulaire
-    elseif (!\Access::cntrl("$_POST[login]:$_POST[password]")) {
+    if (!\Access::cntrl("$_POST[login]:$_POST[password]")) {
       echo $htmlHeadAndTitle,
            "Identifiant/mot de passe incorrect<br>Site à accès restreint, veuillez vous loguer",Login::FORM,
            "</p>ou <a href='$registerUrl'>vous inscrire sur cette plateforme (en développement)</a>.<br>\n";
       die();
     }
-    // appel avec paramètres de login corrects -> création d'un cookie
-    // nécessité d'utiliser le paramètre path pour que le cookie soit aussi disponible dans le front
-    else {
-      /*if (!setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]",
-                       time()+60*60*24*self::COOKIE_DURATION_IN_DAYS,)) {
+    
+    // appel avec paramètres de login corrects -> création de 2 cookies
+    // nécessité
+    //   - d'utiliser le paramètre path pour que le cookie soit aussi disponible dans le front
+    //   - de faire 2 appels, l'un avec le paramètre domain et l'autre sans afin que le cookie soit défini
+    //     dans le domaine principal et les sous-domaines
+    $parent = dirname(dirname($_SERVER['SCRIPT_NAME']));
+    if ($parent <> '/') $parent .= '/';
+    setcookie(
+      Login::COOKIE_NAME, // string $name,
+      "$_POST[login]:$_POST[password]", // string $value = "",
+      time()+60*60*24*self::COOKIE_DURATION_IN_DAYS, // int $expires_or_options = 0,
+      $parent, //  string $path = "",
+      '') // string $domain = "",
         // Erreur de création du cookie
-        echo $htmlHeadAndTitle;
-        echo "Erreur de création du cookie courant<br>\n";
-      }
-      else {
-        echo "création ok du cookie courant<br>\n";
-      }*/
-      
-      $parent = dirname(dirname($_SERVER['SCRIPT_NAME']));
-      if ($parent <> '/') $parent .= '/';
-      if (!setcookie(Login::COOKIE_NAME, "$_POST[login]:$_POST[password]",
-                       time()+60*60*24*self::COOKIE_DURATION_IN_DAYS,
-                       $parent)) {
+        or die("$htmlHeadAndTitle Erreur de création du cookie<br>\n");
+    setcookie(
+      Login::COOKIE_NAME, // string $name,
+      "$_POST[login]:$_POST[password]", // string $value = "",
+      time()+60*60*24*self::COOKIE_DURATION_IN_DAYS, // int $expires_or_options = 0,
+      $parent, //  string $path = "",
+      $_SERVER['HTTP_HOST']) // string $domain = "",
         // Erreur de création du cookie
-        echo $htmlHeadAndTitle;
-        die("Erreur de création du cookie<br>\n");
-      }
-      else {
-        //echo "création ok du cookie sur $parent<br>\n";
-      }
-    }
+        or die("$htmlHeadAndTitle Erreur de création du cookie<br>\n");
+  
     // login ok
     echo "Login/mot de passe correct, vous êtes authentifiés pour ",self::COOKIE_DURATION_IN_DAYS," jours<br>\n";
     return $_POST['login'];
@@ -79,20 +85,13 @@ class Login {
   
   /* Réalise un logout en effacant le cookie adhoc */
   static function logout(string $HTML_HEAD, string $login): never {
-    /*if (setcookie(Login::COOKIE_NAME, 'authorized', -1)) {
-      echo "$HTML_HEAD<h2>Interface de gestion de ShomGt ($login)</h2>\n";
-      echo "Vous êtes bien délogué sur le répertoire par défaut<br>\n";
-    }
-    else
-      die("Erreur de suppression du cookie<br>\n");
-    */
     $parent = dirname(dirname($_SERVER['SCRIPT_NAME']));
     if ($parent <> '/') $parent .= '/';
-    if (setcookie(Login::COOKIE_NAME, 'authorized', -1, $parent)) {
-      echo "$HTML_HEAD<h2>Interface de gestion de ShomGt ($login)</h2>\n";
-      die("Vous êtes bien délogué<br>\n<a href='index.php'>Se reloguer ?<br>\n");
-    }
-    else
-      die("Erreur de suppression du cookie<br>\n");
+    setcookie(Login::COOKIE_NAME, '', -1, $parent)
+      or die("Erreur de suppression du cookie<br>\n");
+    setcookie(Login::COOKIE_NAME, '', -1, $parent, $_SERVER['HTTP_HOST'])
+      or die("Erreur de suppression du cookie<br>\n");
+    echo "$HTML_HEAD<h2>Interface de gestion de ShomGt ($login)</h2>\n";
+    die("Vous êtes bien délogué<br>\n<a href='index.php'>Se reloguer ?<br>\n");
   }
 };

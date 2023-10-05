@@ -420,7 +420,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     // Mise à jour des éléments du tableau à partir du GAN
     foreach (DashboardRow::$all as $mapNum => $row) {
       if (!($gan = \gan\Gan::item($mapNum)))
-        echo "Erreur, Gan absent pour carte $mapNum\n";
+        echo "Erreur, Gan absent pour la carte $mapNum<br>\n";
       else
         $row->setGan($gan);
     }

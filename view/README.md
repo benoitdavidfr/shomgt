@@ -38,3 +38,6 @@ Ce module utilise les variables d'environnement suivantes:
 - `SHOMGT3_MAPWCAT_FORCE_HTTPS`: si `true` alors https est forcé dans mapwcat ;
   cette variable est nécessaire par exemple pour utiliser view derrière un proxy inverse Traefik
 
+## Documentation PHPDoc du code source
+Le code source de ce module est documenté dans
+le [package shomgt\view de PHPDoc](https://benoitdavidfr.github.io/shomgt/phpdoc/packages/shomgt-view.html).

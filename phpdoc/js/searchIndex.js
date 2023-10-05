@@ -816,9 +816,14 @@ Search.appendIndex(
             "summary": "transforme\u0020un\u0020GBox\u0020en\u0020une\u0020structure\u0020latLngBounds\u0040Leaflet",
             "url": "namespaces/bo.html#function_latLngBounds"
         },                {
+            "fqsen": "\\bo\\USER_TABLE_SCHEMA",
+            "name": "USER_TABLE_SCHEMA",
+            "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020user\u0020selon\u0020la\u0020structuration\u0020d\u00E9finie\u0020dans\u0020son\u0020champ\u0020description.",
+            "url": "namespaces/bo.html#constant_USER_TABLE_SCHEMA"
+        },                {
             "fqsen": "\\bo\\ZONES_ZEE",
             "name": "ZONES_ZEE",
-            "summary": "Liste\u0020des\u0020zones\u0020de\u0020la\u0020ZEE\u0020sous\u0020la\u0020forme\u0020\u005B\u007Bnom\u007D\u0020\u003D\u003E\u0020\u007Blabel\u007D\u005D",
+            "summary": "Liste\u0020des\u0020zones\u0020de\u0020la\u0020ZEE\u0020sous\u0020la\u0020forme\u0020\u005B\u007Bnom\u007D\u0020\u003D\u003E\u0020\u007Blabel\u007D\u005D.",
             "url": "namespaces/bo.html#constant_ZONES_ZEE"
         },                {
             "fqsen": "\\bo\\createUserTable\u0028\u0029",
@@ -850,21 +855,6 @@ Search.appendIndex(
             "name": "sendMail",
             "summary": "Envoie\u0020un\u0020email\u0020avec\u0020le\u0020lien\u0020contenant\u0020le\u0020secret",
             "url": "namespaces/bo.html#function_sendMail"
-        },                {
-            "fqsen": "\\bo\\UserSqlSchema",
-            "name": "UserSqlSchema",
-            "summary": "Classe\u0020portant\u0020en\u0020constante\u0020la\u0020d\u00E9finition\u0020SQL\u0020de\u0020la\u0020table\u0020user\nainsi\u0020qu\u0027une\u0020m\u00E9thode\u0020statique\u0020traduisant\u0020cette\u0020constate\u0020en\u0020requ\u00EAte\u0020SQL",
-            "url": "classes/bo-UserSqlSchema.html"
-        },                {
-            "fqsen": "\\bo\\UserSqlSchema\u003A\u003Asql\u0028\u0029",
-            "name": "sql",
-            "summary": "fabrique\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020des\u0020constantes\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma",
-            "url": "classes/bo-UserSqlSchema.html#method_sql"
-        },                {
-            "fqsen": "\\bo\\UserSqlSchema\u003A\u003AUSER_TABLE",
-            "name": "USER_TABLE",
-            "summary": "D\u00E9finition\u0020du\u0020sch\u00E9ma\u0020de\u0020la\u0020table\u0020user.",
-            "url": "classes/bo-UserSqlSchema.html#constant_USER_TABLE"
         },                {
             "fqsen": "\\dashboard\\DashboardRow",
             "name": "DashboardRow",
@@ -1258,22 +1248,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Access\u003A\u003AcntrlFor\u0028\u0029",
             "name": "cntrlFor",
-            "summary": "",
+            "summary": "test\u0020si\u0020le\u0020contr\u00F4le\u0020est\u0020ou\u0020non\u0020activ\u00E9\u0020pour\u0020une\u0020fonctionnalit\u00E9",
             "url": "classes/Access.html#method_cntrlFor"
         },                {
             "fqsen": "\\Access\u003A\u003AipInWhiteList\u0028\u0029",
             "name": "ipInWhiteList",
-            "summary": "",
+            "summary": "teste\u0020si\u0020la\u0020l\u0027adresse\u0020IP\u0020dans\u0020la\u0020liste\u0020blanche",
             "url": "classes/Access.html#method_ipInWhiteList"
         },                {
             "fqsen": "\\Access\u003A\u003AipInBlackList\u0028\u0029",
             "name": "ipInBlackList",
-            "summary": "",
+            "summary": "teste\u0020si\u0020la\u0020l\u0027adresse\u0020IP\u0020dans\u0020la\u0020liste\u0020noire,\u0020utilis\u00E9e\u0020pour\u0020tile.php",
             "url": "classes/Access.html#method_ipInBlackList"
         },                {
             "fqsen": "\\Access\u003A\u003ArefererInBlackList\u0028\u0029",
             "name": "refererInBlackList",
-            "summary": "",
+            "summary": "Teste\u0020si\u0020le\u0020referer\u0020est\u0020dans\u0020la\u0020liste\u0020noire,\u0020utilis\u00E9e\u0020pour\u0020tile.php",
             "url": "classes/Access.html#method_refererInBlackList"
         },                {
             "fqsen": "\\Access\u003A\u003AloginPwdInTable\u0028\u0029",
@@ -1288,7 +1278,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Access\u003A\u003Acntrl\u0028\u0029",
             "name": "cntrl",
-            "summary": "",
+            "summary": "Effectue\u0020le\u0020cont\u00F4le.",
             "url": "classes/Access.html#method_cntrl"
         },                {
             "fqsen": "\\Access\u003A\u003Atest\u0028\u0029",
@@ -1298,13 +1288,8 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Access\u003A\u003ACOOKIENAME",
             "name": "COOKIENAME",
-            "summary": "",
+            "summary": "nom\u0020du\u0020cookie\u0020utilis\u00E9\u0020pour\u0020stocker\u0020le\u0020login\/mdp\u0020dans\u0020le\u0020navigateur",
             "url": "classes/Access.html#constant_COOKIENAME"
-        },                {
-            "fqsen": "\\Access\u003A\u003AFORBIDDEN_ACCESS_MESSAGE",
-            "name": "FORBIDDEN_ACCESS_MESSAGE",
-            "summary": "",
-            "url": "classes/Access.html#constant_FORBIDDEN_ACCESS_MESSAGE"
         },                {
             "fqsen": "\\addUndescoreForThousand\u0028\u0029",
             "name": "addUndescoreForThousand",
@@ -3721,6 +3706,11 @@ Search.appendIndex(
             "summary": "renvoie\u0020le\u0020r\u00E9sultat\u0020d\u0027une\u0020requ\u00EAte\u0020sous\u0020la\u0020forme\u0020d\u0027une\u0020liste\u0020de\u0020tuples",
             "url": "classes/MySql.html#method_getTuples"
         },                {
+            "fqsen": "\\MySql\u003A\u003AcreateTableSql\u0028\u0029",
+            "name": "createTableSql",
+            "summary": "g\u00E9n\u00E8re\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020d\u0027une\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020constante\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma.",
+            "url": "classes/MySql.html#method_createTableSql"
+        },                {
             "fqsen": "\\MySql\u003A\u003AErrorOpen",
             "name": "ErrorOpen",
             "summary": "",
@@ -4430,11 +4420,6 @@ Search.appendIndex(
             "name": "MapCat",
             "summary": "La\u0020classe\u0020MapCat\u0020correspond\u0020au\u0020catalogue\u0020MapCat\u0020en\u0020base.",
             "url": "classes/mapcat-MapCat.html"
-        },                {
-            "fqsen": "\\mapcat\\MapCat\u003A\u003AcreateTableSql\u0028\u0029",
-            "name": "createTableSql",
-            "summary": "fabrique\u0020le\u0020code\u0020SQL\u0020de\u0020cr\u00E9ation\u0020de\u0020la\u0020table\u0020\u00E0\u0020partir\u0020d\u0027une\u0020des\u0020constantes\u0020de\u0020d\u00E9finition\u0020du\u0020sch\u00E9ma",
-            "url": "classes/mapcat-MapCat.html#method_createTableSql"
         },                {
             "fqsen": "\\mapcat\\MapCat\u003A\u003AmapNums\u0028\u0029",
             "name": "mapNums",

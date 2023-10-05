@@ -108,6 +108,10 @@
                 
             </li>
                     <li>
+                <a href="packages/shomgt-bojournal.html" class="">bojournal</a>
+                
+            </li>
+                    <li>
                 <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
                 
             </li>
@@ -204,11 +208,6 @@
 
             <p class="phpdocumentor-summary">création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023.</p>
 
-    <section class="phpdocumentor-description"><p>Améliorations à apporter:</p>
-<ul>
-<li>au moins faire un log des actions</li>
-</ul>
-</section>
 
 
 
@@ -223,14 +222,6 @@
 
 
 
-    <h4 id="toc-classes">
-        Classes
-        <a href="files/bo-user.html#toc-classes" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bo-UserSqlSchema.html"><abbr title="\bo\UserSqlSchema">UserSqlSchema</abbr></a></dt><dd>Classe portant en constante la définition SQL de la table user
-ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</dd>    </dl>
 
 
 
@@ -240,6 +231,13 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/bo.html#constant_USER_TABLE_SCHEMA">USER_TABLE_SCHEMA</a>
+    <span>
+        &nbsp;= [&#039;description&#039; =&gt; &quot;Ce dictionnaire définit le schéma d&#039;une table SQL avec:\n&quot; . &quot; - le champ &#039;comment&#039; précisant la table concernée,\n&quot; . &quot; - le champ obligatoire &#039;columns&#039; définissant le dictionnaire des colonnes avec pour chaque entrée:\n&quot; . &quot;   - la clé définissant le nom SQL de la colonne,\n&quot; . &quot;   - le champ &#039;type&#039; obligatoire définissant le type SQL de la colonne,\n&quot; . &quot;   - le champ &#039;keyOrNull&#039; définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n&quot; . &quot;   - le champ &#039;comment&#039; précisant un commentaire sur la colonne.\n&quot; . &quot;   - pour les colonnes de type &#039;enum&#039; correspondant à une énumération le champ &#039;enum&#039;\n&quot; . &quot;     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n&quot; . &quot;     - pour clé la valeur de l&#039;énumération et\n&quot; . &quot;     - pour valeur une définition et/ou un commentaire sur cette valeur.&quot;, &#039;comment&#039; =&gt; &quot;table des utilisateurs&quot;, &#039;columns&#039; =&gt; [&#039;email&#039; =&gt; [&#039;type&#039; =&gt; &#039;varchar(256)&#039;, &#039;keyOrNull&#039; =&gt; &#039;primary key&#039;, &#039;comment&#039; =&gt; &quot;adresse email&quot;], &#039;epasswd&#039; =&gt; [&#039;type&#039; =&gt; &#039;longtext&#039;, &#039;comment&#039; =&gt; &quot;mot de passe encrypté, null à la créatin d&#039;un compte temporaire non valide&quot;], &#039;newepasswd&#039; =&gt; [&#039;type&#039; =&gt; &#039;longtext&#039;, &#039;comment&#039; =&gt; &quot;nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe&quot;], &#039;role&#039; =&gt; [&#039;type&#039; =&gt; &#039;enum&#039;, &#039;enum&#039; =&gt; [&#039;normal&#039; =&gt; &quot;utilisateur normal ayant le droit de consulter les cartes, d&#039;en ajouter et d&#039;en supprimer&quot;, &#039;admin&#039; =&gt; &quot;administrateur ayant en plus de l&#039;utilisateur normal des droits supplémentaires,\n&quot; . &quot;notamment le droit de changer le rôle des utilisateurs&quot;, &#039;restricted&#039; =&gt; &quot;utilisateur ayant le droit de consulter les cartes mais pas d&#039;en ajouter, ni d&#039;en supprimer&quot;, &#039;banned&#039; =&gt; &quot;utilisateur banni n&#039;ayant aucun droit, et n&#039;ayant pas le droit de réactiver son compte&quot;, &#039;suspended&#039; =&gt; &quot;utilisateur suspendu en l&#039;absence de confirmation pendant un délai d&#039;un an,\n&quot; . &quot;il n&#039;a plus aucun droit jusqu&#039;à ce qu&#039;il réactive son compte.\n&quot; . &quot;Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n&quot; . &quot;soit en exécutant le processus de création de compte&quot;, &#039;closed&#039; =&gt; &quot;utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n&quot; . &quot;en exécutant à nouveau le processus de création de compte&quot;, &#039;temp&#039; =&gt; &quot;utilisateur en cours de création dont la validité n&#039;a pas été vérifiée,\n&quot; . &quot;et n&#039;ayant aucun droit en attendant sa validation par mail&quot;, &#039;system&#039; =&gt; &quot;utilisateur utilisé en interne à ShomGT&quot;], &#039;comment&#039; =&gt; &quot;rôle de l&#039;utilisateur&quot;], &#039;secret&#039; =&gt; [&#039;type&#039; =&gt; &#039;varchar(256)&#039;, &#039;comment&#039; =&gt; &quot;secret envoyé par email et attendu en retour, null ssi le secret a été utilisé&quot;], &#039;createdt&#039; =&gt; [&#039;type&#039; =&gt; &#039;datetime&#039;, &#039;keyOrNull&#039; =&gt; &#039;not null&#039;, &#039;comment&#039; =&gt; &quot;date et heure de création initiale du compte&quot;], &#039;sent&#039; =&gt; [&#039;type&#039; =&gt; &#039;datetime&#039;, &#039;comment&#039; =&gt; &quot;date et heure d&#039;envoi du dernier mail de validation, null ssi le lien du mail a été activé&quot;], &#039;valid&#039; =&gt; [&#039;type&#039; =&gt; &#039;datetime&#039;, &#039;comment&#039; =&gt; &quot;date et heure de dernière validation, null ssi compte non validé&quot;], &#039;extra&#039; =&gt; [&#039;type&#039; =&gt; &#039;JSON&#039;, &#039;comment&#039; =&gt; &quot;données complémentaires stockées en JSON, notamment la liste des codes des zones dans le champ zones&quot;], &#039;comment&#039; =&gt; [&#039;type&#039; =&gt; &#039;longtext&#039;, &#039;comment&#039; =&gt; &quot;commentaire en texte libre&quot;]]]                            </span>
+</dt>
+<dd>Définition du schéma de la table user selon la structuration définie dans son champ description.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="namespaces/bo.html#constant_ZONES_ZEE">ZONES_ZEE</a>
     <span>
@@ -263,7 +261,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     &#039;NC&#039; =&gt; &quot;Nouvelle-Calédonie&quot;,
 ]                            </span>
 </dt>
-<dd>Liste des zones de la ZEE sous la forme [{nom} =&gt; {label}]</dd>
+<dd>Liste des zones de la ZEE sous la forme [{nom} =&gt; {label}].</dd>
 
     </dl>
 
@@ -330,6 +328,37 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_USER_TABLE_SCHEMA">
+        USER_TABLE_SCHEMA
+        <a href="namespaces/bo.html#constant_USER_TABLE_SCHEMA" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">19</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Définition du schéma de la table user selon la structuration définie dans son champ description.</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">array{description: string, comment: string, columns: array<string,mixed>}</span>
+    <span class="phpdocumentor-signature__name">USER_TABLE_SCHEMA</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;description&#039; =&gt; &quot;Ce dictionnaire définit le schéma d&#039;une table SQL avec:\n&quot; . &quot; - le champ &#039;comment&#039; précisant la table concernée,\n&quot; . &quot; - le champ obligatoire &#039;columns&#039; définissant le dictionnaire des colonnes avec pour chaque entrée:\n&quot; . &quot;   - la clé définissant le nom SQL de la colonne,\n&quot; . &quot;   - le champ &#039;type&#039; obligatoire définissant le type SQL de la colonne,\n&quot; . &quot;   - le champ &#039;keyOrNull&#039; définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n&quot; . &quot;   - le champ &#039;comment&#039; précisant un commentaire sur la colonne.\n&quot; . &quot;   - pour les colonnes de type &#039;enum&#039; correspondant à une énumération le champ &#039;enum&#039;\n&quot; . &quot;     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n&quot; . &quot;     - pour clé la valeur de l&#039;énumération et\n&quot; . &quot;     - pour valeur une définition et/ou un commentaire sur cette valeur.&quot;, &#039;comment&#039; =&gt; &quot;table des utilisateurs&quot;, &#039;columns&#039; =&gt; [&#039;email&#039; =&gt; [&#039;type&#039; =&gt; &#039;varchar(256)&#039;, &#039;keyOrNull&#039; =&gt; &#039;primary key&#039;, &#039;comment&#039; =&gt; &quot;adresse email&quot;], &#039;epasswd&#039; =&gt; [&#039;type&#039; =&gt; &#039;longtext&#039;, &#039;comment&#039; =&gt; &quot;mot de passe encrypté, null à la créatin d&#039;un compte temporaire non valide&quot;], &#039;newepasswd&#039; =&gt; [&#039;type&#039; =&gt; &#039;longtext&#039;, &#039;comment&#039; =&gt; &quot;nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe&quot;], &#039;role&#039; =&gt; [&#039;type&#039; =&gt; &#039;enum&#039;, &#039;enum&#039; =&gt; [&#039;normal&#039; =&gt; &quot;utilisateur normal ayant le droit de consulter les cartes, d&#039;en ajouter et d&#039;en supprimer&quot;, &#039;admin&#039; =&gt; &quot;administrateur ayant en plus de l&#039;utilisateur normal des droits supplémentaires,\n&quot; . &quot;notamment le droit de changer le rôle des utilisateurs&quot;, &#039;restricted&#039; =&gt; &quot;utilisateur ayant le droit de consulter les cartes mais pas d&#039;en ajouter, ni d&#039;en supprimer&quot;, &#039;banned&#039; =&gt; &quot;utilisateur banni n&#039;ayant aucun droit, et n&#039;ayant pas le droit de réactiver son compte&quot;, &#039;suspended&#039; =&gt; &quot;utilisateur suspendu en l&#039;absence de confirmation pendant un délai d&#039;un an,\n&quot; . &quot;il n&#039;a plus aucun droit jusqu&#039;à ce qu&#039;il réactive son compte.\n&quot; . &quot;Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n&quot; . &quot;soit en exécutant le processus de création de compte&quot;, &#039;closed&#039; =&gt; &quot;utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n&quot; . &quot;en exécutant à nouveau le processus de création de compte&quot;, &#039;temp&#039; =&gt; &quot;utilisateur en cours de création dont la validité n&#039;a pas été vérifiée,\n&quot; . &quot;et n&#039;ayant aucun droit en attendant sa validation par mail&quot;, &#039;system&#039; =&gt; &quot;utilisateur utilisé en interne à ShomGT&quot;], &#039;comment&#039; =&gt; &quot;rôle de l&#039;utilisateur&quot;], &#039;secret&#039; =&gt; [&#039;type&#039; =&gt; &#039;varchar(256)&#039;, &#039;comment&#039; =&gt; &quot;secret envoyé par email et attendu en retour, null ssi le secret a été utilisé&quot;], &#039;createdt&#039; =&gt; [&#039;type&#039; =&gt; &#039;datetime&#039;, &#039;keyOrNull&#039; =&gt; &#039;not null&#039;, &#039;comment&#039; =&gt; &quot;date et heure de création initiale du compte&quot;], &#039;sent&#039; =&gt; [&#039;type&#039; =&gt; &#039;datetime&#039;, &#039;comment&#039; =&gt; &quot;date et heure d&#039;envoi du dernier mail de validation, null ssi le lien du mail a été activé&quot;], &#039;valid&#039; =&gt; [&#039;type&#039; =&gt; &#039;datetime&#039;, &#039;comment&#039; =&gt; &quot;date et heure de dernière validation, null ssi compte non validé&quot;], &#039;extra&#039; =&gt; [&#039;type&#039; =&gt; &#039;JSON&#039;, &#039;comment&#039; =&gt; &quot;données complémentaires stockées en JSON, notamment la liste des codes des zones dans le champ zones&quot;], &#039;comment&#039; =&gt; [&#039;type&#039; =&gt; &#039;longtext&#039;, &#039;comment&#039; =&gt; &quot;commentaire en texte libre&quot;]]]</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"><p>USER_TABLE_SCHEMA</p>
+</section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_ZONES_ZEE">
         ZONES_ZEE
         <a href="namespaces/bo.html#constant_ZONES_ZEE" class="headerlink"><i class="fas fa-link"></i></a>
@@ -339,15 +368,15 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Liste des zones de la ZEE sous la forme [{nom} =&gt; {label}]</p>
+        <p class="phpdocumentor-summary">Liste des zones de la ZEE sous la forme [{nom} =&gt; {label}].</p>
 
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__type">array&lt;string, string&gt;</span>
     <span class="phpdocumentor-signature__name">ZONES_ZEE</span>
     = <span class="phpdocumentor-signature__default-value">[
     //&#039;FR&#039;=&gt; &quot;France entière&quot;,
@@ -371,7 +400,9 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
 </code>
 
 
-    
+        <section class="phpdocumentor-description"><p>Pour la définition de la zone d'intérêt, la valeur 'FR' est inutile car elle correspond à quasiment toutes les cartes.</p>
+</section>
+
     
     
 
@@ -393,7 +424,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -418,7 +449,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -457,7 +488,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -482,7 +513,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -521,7 +552,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">210</span>
 
     </aside>
 
@@ -567,7 +598,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="bo/user.php"><a href="files/bo-user.html"><abbr title="bo/user.php">user.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">220</span>
 
     </aside>
 
@@ -719,8 +750,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                        <li><a href="files/bo-user.html#toc-classes">Classes</a></li>
-                                                                                                        <li><a href="files/bo-user.html#toc-constants">Constants</a></li>
+                                                                                                                                                                    <li><a href="files/bo-user.html#toc-constants">Constants</a></li>
                                                                 <li><a href="files/bo-user.html#toc-functions">Functions</a></li>
                                     </ul>
             </li>
@@ -728,6 +758,7 @@ ainsi qu&#039;une méthode statique traduisant cette constate en requête SQL</d
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="namespaces/bo.html#constant_USER_TABLE_SCHEMA">USER_TABLE_SCHEMA</a></li>
                                                     <li><a href="namespaces/bo.html#constant_ZONES_ZEE">ZONES_ZEE</a></li>
                                             </ul>
                 </li>

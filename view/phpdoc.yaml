@@ -1,5 +1,5 @@
 title: ShomGt3/shomgt - conteneur shomgt d'exposition des cartes sous forme d'un WMS et de tuiles
-path: /geoapi/shomgt/shomgt
+path: /geoapi/shomgt/view
 doc: |
   Ce module contient le code définissant le conteneur stockant et exposant un ensemble de GéoTiffs au travers:
     - une interface WMS
@@ -59,16 +59,14 @@ journal: |
       - l'intégration ne traite que les fichiers tif géoréférencés
   18/4/2022:
     - création Dockerfile pour test du mécanisme d'expansion
-submodules:
-  - /geoapi/shomgt/shomgt/lib
 phpScripts:
-  - /geoapi/shomgt/shomgt/maps.php
-  - /geoapi/shomgt/shomgt/mapwcat.php
-  - /geoapi/shomgt/shomgt/tile.php
-  - /geoapi/shomgt/shomgt/wms.php
-  - /geoapi/shomgt/shomgt/wmsv.php
-  - /geoapi/shomgt/shomgt/showtiles.php
+  - /geoapi/shomgt/view/maps.php
+  - /geoapi/shomgt/view/mapwcat.php
+  - /geoapi/shomgt/view/tile.php
+  - /geoapi/shomgt/view/wms.php
+  - /geoapi/shomgt/view/wmsv.php
+  - /geoapi/shomgt/view/showtiles.php
 htmlFiles:
-  - /geoapi/shomgt/shomgt/api.yaml
-  - /geoapi/shomgt/shomgt/shomgt.schema.yaml
-  - /geoapi/shomgt/shomgt/wmsvlayers.yaml
+  - /geoapi/shomgt/view/api.yaml
+  - /geoapi/shomgt/view/shomgt.schema.yaml
+  - /geoapi/shomgt/view/wmsvlayers.yaml

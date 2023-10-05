@@ -1,8 +1,6 @@
 <?php
 /** création de comptes et gestion de son compte par un utilisateur - 9-11/8/2023.
  *
- *  Améliorations à apporter:
- *    - au moins faire un log des actions
  * @package shomgt\bo
  */
 namespace bo;
@@ -14,105 +12,84 @@ require_once __DIR__.'/login.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-/** Classe portant en constante la définition SQL de la table user
- * ainsi qu'une méthode statique traduisant cette constate en requête SQL */
-class UserSqlSchema {
-  /** Définition du schéma de la table user.
-   * la structuration de la constante est définie dans son champ description */
-  const USER_TABLE = [
-    'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
-            ." - le champ 'comment' précisant la table concernée,\n"
-            ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
-            ."   - la clé définissant le nom SQL de la colonne,\n"
-            ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
-            ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
-            ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
-            ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
-            ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
-            ."     - pour clé la valeur de l'énumération et\n"
-            ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
-    'comment' => "table des utilisateurs",
-    'columns' => [
-      'email' => [
-        'type'=> 'varchar(256)',
-        'keyOrNull'=> 'primary key',
-        'comment'=> "adresse email",
-      ],
-      'epasswd'=> [
-        'type'=> 'longtext',
-        'comment'=> "mot de passe encrypté, null à la créatin d'un compte temporaire non valide",
-      ],
-      'newepasswd'=> [
-        'type'=> 'longtext',
-        'comment'=> "nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe",
-      ],
-      'role'=> [
-        'type'=> 'enum',
-        'enum'=> [
-          'normal' => "utilisateur normal ayant le droit de consulter les cartes, d'en ajouter et d'en supprimer",
-          'admin' => "administrateur ayant en plus de l'utilisateur normal des droits supplémentaires,\n"
-                    ."notamment le droit de changer le rôle des utilisateurs",
-          'restricted' => "utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter, ni d'en supprimer",
-          'banned' => "utilisateur banni n'ayant aucun droit, et n'ayant pas le droit de réactiver son compte",
-          'suspended' => "utilisateur suspendu en l'absence de confirmation pendant un délai d'un an,\n"
-                    ."il n'a plus aucun droit jusqu'à ce qu'il réactive son compte.\n"
-                    ."Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n"
-                    ."soit en exécutant le processus de création de compte",
-          'closed' => "utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n"
-                    ."en exécutant à nouveau le processus de création de compte",
-          'temp' => "utilisateur en cours de création dont la validité n'a pas été vérifiée,\n"
-                    ."et n'ayant aucun droit en attendant sa validation par mail",
-          'system' => "utilisateur utilisé en interne à ShomGT",
-        ],
-        'comment'=> "rôle de l'utilisateur",
-      ],
-      'secret'=> [
-        'type'=> 'varchar(256)',
-        'comment'=> "secret envoyé par email et attendu en retour, null ssi le secret a été utilisé",
-      ],
-      'createdt'=> [
-        'type'=> 'datetime',
-        'keyOrNull'=> 'not null',
-        'comment'=> "date et heure de création initiale du compte",
-      ],
-      'sent'=> [
-        'type'=> 'datetime',
-        'comment'=> "date et heure d'envoi du dernier mail de validation, null ssi le lien du mail a été activé",
-      ],
-      'valid'=> [
-        'type'=> 'datetime',
-        'comment'=> "date et heure de dernière validation, null ssi compte non validé",
-      ],
-      /*'extra'=> [
-        'type'=> 'JSON',
-        'comment'=> "données complémentaires stockées en JSON, notamment la liste des codes des zones dans le champ zones",
-      ],*/
-      'comment'=> [
-        'type'=> 'longtext',
-        'comment'=> "commentaire en texte libre",
-      ],
+/** Définition du schéma de la table user selon la structuration définie dans son champ description.
+ *
+ * @var array{description: string, comment: string, columns: array<string,mixed>} USER_TABLE_SCHEMA
+ */
+const USER_TABLE_SCHEMA = [
+  'description' => "Ce dictionnaire définit le schéma d'une table SQL avec:\n"
+          ." - le champ 'comment' précisant la table concernée,\n"
+          ." - le champ obligatoire 'columns' définissant le dictionnaire des colonnes avec pour chaque entrée:\n"
+          ."   - la clé définissant le nom SQL de la colonne,\n"
+          ."   - le champ 'type' obligatoire définissant le type SQL de la colonne,\n"
+          ."   - le champ 'keyOrNull' définissant si la colonne est ou non une clé et si elle peut ou non être nulle\n"
+          ."   - le champ 'comment' précisant un commentaire sur la colonne.\n"
+          ."   - pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'\n"
+          ."     définit les valeurs possibles dans un dictionnaire où chaque entrée a:\n"
+          ."     - pour clé la valeur de l'énumération et\n"
+          ."     - pour valeur une définition et/ou un commentaire sur cette valeur.",
+  'comment' => "table des utilisateurs",
+  'columns' => [
+    'email' => [
+      'type'=> 'varchar(256)',
+      'keyOrNull'=> 'primary key',
+      'comment'=> "adresse email",
     ],
-  ];
-
-  /** fabrique le code SQL de création de la table à partir d'une des constantes de définition du schéma
-   * @param array<string, mixed> $schema */
-  static function sql(string $tableName, array $schema): string {
-    $cols = [];
-    foreach ($schema['columns'] ?? [] as $cname => $col) {
-      $cols[] = "  $cname "
-        .match($col['type'] ?? null) {
-          'enum' => "enum('".implode("','", array_keys($col['enum']))."')",
-          default => "$col[type] ",
-          null => die("<b>Erreur, la colonne '$cname' doit comporter un champ 'type'</b>."),
-      }
-      .($col['keyOrNull'] ?? '')
-      .(isset($col['comment']) ? " comment \"$col[comment]\"" : '');
-    }
-    return "create table $tableName (\n"
-      .implode(",\n", $cols)."\n)"
-      .(isset($schema['comment']) ? " comment \"$schema[comment]\"\n" : '');
-  }
-};
+    'epasswd'=> [
+      'type'=> 'longtext',
+      'comment'=> "mot de passe encrypté, null à la créatin d'un compte temporaire non valide",
+    ],
+    'newepasswd'=> [
+      'type'=> 'longtext',
+      'comment'=> "nouveau mot de passe encrypté, utilisé en cas de chgt de mot de passe",
+    ],
+    'role'=> [
+      'type'=> 'enum',
+      'enum'=> [
+        'normal' => "utilisateur normal ayant le droit de consulter les cartes, d'en ajouter et d'en supprimer",
+        'admin' => "administrateur ayant en plus de l'utilisateur normal des droits supplémentaires,\n"
+                  ."notamment le droit de changer le rôle des utilisateurs",
+        'restricted' => "utilisateur ayant le droit de consulter les cartes mais pas d'en ajouter, ni d'en supprimer",
+        'banned' => "utilisateur banni n'ayant aucun droit, et n'ayant pas le droit de réactiver son compte",
+        'suspended' => "utilisateur suspendu en l'absence de confirmation pendant un délai d'un an,\n"
+                  ."il n'a plus aucun droit jusqu'à ce qu'il réactive son compte.\n"
+                  ."Il peut réactiver son compte soit en cliquant sur le lien qui lui a été envoyé par mail,\n"
+                  ."soit en exécutant le processus de création de compte",
+        'closed' => "utilisateur ayant demandé à fermer son compte et pouvant le réactiver\n"
+                  ."en exécutant à nouveau le processus de création de compte",
+        'temp' => "utilisateur en cours de création dont la validité n'a pas été vérifiée,\n"
+                  ."et n'ayant aucun droit en attendant sa validation par mail",
+        'system' => "utilisateur utilisé en interne à ShomGT",
+      ],
+      'comment'=> "rôle de l'utilisateur",
+    ],
+    'secret'=> [
+      'type'=> 'varchar(256)',
+      'comment'=> "secret envoyé par email et attendu en retour, null ssi le secret a été utilisé",
+    ],
+    'createdt'=> [
+      'type'=> 'datetime',
+      'keyOrNull'=> 'not null',
+      'comment'=> "date et heure de création initiale du compte",
+    ],
+    'sent'=> [
+      'type'=> 'datetime',
+      'comment'=> "date et heure d'envoi du dernier mail de validation, null ssi le lien du mail a été activé",
+    ],
+    'valid'=> [
+      'type'=> 'datetime',
+      'comment'=> "date et heure de dernière validation, null ssi compte non validé",
+    ],
+    'extra'=> [
+      'type'=> 'JSON',
+      'comment'=> "données complémentaires stockées en JSON, notamment la liste des codes des zones dans le champ zones",
+    ],
+    'comment'=> [
+      'type'=> 'longtext',
+      'comment'=> "commentaire en texte libre",
+    ],
+  ],
+];
 
 $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI') or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
 \MySql::open($LOG_MYSQL_URI);
@@ -120,7 +97,7 @@ $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI') or die("Erreur, variable d'envi
 /** création de la table des utilisateurs */
 function createUserTable(): void {
   \MySql::query('drop table if exists user');
-  $query = UserSqlSchema::sql('user', UserSqlSchema::USER_TABLE);
+  $query = \MySql::createTableSql('user', USER_TABLE_SCHEMA);
   //echo "<pre>query=$query</pre>\n";
   \MySql::query($query);
   // initialisation de la table des utilisateurs
@@ -165,7 +142,12 @@ function userRole(?string $user): ?string {
 
 if (!callingThisFile(__FILE__)) return; // n'exécute pas la suite si le fichier est inclus
 
-/** Liste des zones de la ZEE sous la forme [{nom} => {label}] */
+/** Liste des zones de la ZEE sous la forme [{nom} => {label}].
+ *
+ * Pour la définition de la zone d'intérêt, la valeur 'FR' est inutile car elle correspond à quasiment toutes les cartes.
+ *
+ * @var array<string,string>
+ */
 const ZONES_ZEE = [
   //'FR'=> "France entière",
   'FX-MMN'=> "Métropole - Zone Manche et Mer du Nord",
@@ -187,7 +169,7 @@ const ZONES_ZEE = [
 ];
 
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo/user@$_SERVER[HTTP_HOST]</title></head><body>\n";
-echo $HTML_HEAD,"<h2>Gestion utilisateur</h2>\n";
+//echo $HTML_HEAD,"<h2>Gestion utilisateur</h2>\n";
 
 /** Fonction de migration d'ajout d'un champ extra dans la table user s'il n'existe pas */
 function migrationAddExtraToUserTable(): void {
@@ -302,14 +284,17 @@ function sendMail(string $action, string $email, int $secret, ?string $passwd=nu
     echo "Erreur d'envoi du mail à $email refusé<br>\n";
 }
 
-/** Le script est décomposé en "écrans" qui s'enchainent les uns après les autres
- * Chaque écran est défini comme une entrée de la table $actions ci-dessous avec
- *  - commé clé le nom ou id de l'écran
- *  - un champ title fournissant le titre de l'écran
- *  - un champ from avec l'écran ou les écrans qui y conduisent (string ou [string])
- *  - un champ scenario avec le pseudo-code de l'écran
- *  - un champ to avec l'écran ou les écrans auquel il conduit (string ou [string])
- *  - un champ apply avec la fonction à exécuter pour afficher cet écran
+/** Le script est décomposé en "actions" qui s'enchainent les unes après les autres
+ * Chaque action est définie comme une entrée de la table $actions ci-dessous avec
+ *  - commé clé le nom ou id de l'action
+ *  - un champ title fournissant le titre de l'action
+ *  - un champ from avec l'action ou les actions qui y conduisent (string ou [string])
+ *  - un champ scenario avec le pseudo-code de l'action
+ *  - un champ to avec l'action ou les actions auxquelles elle conduit (string ou [string])
+ *    si l'action ne se termine pas par un die() et qu'il y a qu'une seule action suivante
+ *    alors elle est enchainée automatiquement
+ *  - un champ apply avec la fonction à exécuter pour réaliser l'action et/ou afficher l'écran correspondant
+ *
  * @var array<string, array{
  *     title: string,
  *     from?: string|list<string>,
@@ -343,7 +328,7 @@ $actions = [
       'reinitUserBase',
       'showUserTableSchema',
     ],
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       $user = Login::loggedIn();
       $role = userRole($user);
       if ($role)
@@ -359,7 +344,7 @@ $actions = [
   
       echo "<h3>Menu</h3><ul>\n";
       if ($role) {
-        //echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
+        echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
         echo "<li><a href='?action=changePasswd'>Changer mon mot de passe</a></li>\n";
         echo "<li><a href='?action=setZone'>Définir ma zone d'intérêt</a></li>\n";
         echo "<li><a href='?action=reValidateByUser'>Revalider mon compte</a></li>\n";
@@ -395,7 +380,7 @@ $actions = [
       " -> appel de B",
     ],
     'to'=> 'actionTestB',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       echo "Action Test A<br>\n";
       echo new \html\Form(submit: 'go', hiddens: ['action'=> 'actionTestB'], method: 'get');
     },
@@ -406,18 +391,27 @@ $actions = [
     'scenario'=> [
       "action test B appelée de actionTestA",
     ],
-    'to'=> 'user.menu',
-    'apply'=> function(): void {
+    'to'=> 'actionTestC',
+    'apply'=> function(string $HTML_HEAD): void {
       echo "Action Test B<br>\n";
-      echo "<a href='user.php'>Menu user</a>\n";
-      die();
+    },
+  ],
+  'actionTestC'=> [
+    'title'=> "Action test C",
+    'from'=> 'actionTestB',
+    'scenario'=> [
+      "action test C appelée de actionTestB",
+    ],
+    'to'=> 'user.menu',
+    'apply'=> function(string $HTML_HEAD): void {
+      echo "Action Test C<br>\n";
     },
   ],
   'editUsers' => [
     'title'=> "Afficher/modifier les utilisateurs",
     'from'=> 'user.menu',
     'to'=> 'user.menu',
-    'apply'=> function (): void {
+    'apply'=> function (string $HTML_HEAD): void {
       echo '<pre>'; print_r($_GET); echo "</pre>\n";
       if (isset($_GET['role'])) {
         \MySql::query("update user set role='$_GET[role]' where email='$_GET[email]'");
@@ -449,7 +443,8 @@ $actions = [
       echo "<a href='user.php'>Revenir au menu de la gestion des utilisateurs</a><br>\n";
   
       echo "</p><b>Rappel du schéma de la table des utilisateurs</b>:<br>",
-           "<pre>",Yaml::dump(UserSqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+           "<pre>",Yaml::dump(USER_TABLE_SCHEMA, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+      die();
     },
   ],
   'register'=> [
@@ -460,13 +455,39 @@ $actions = [
       "il fournit une adresse email et un mot de passe en 2 exemplaires",
     ],
     'to'=> 'registerSubmit',
-    'apply'=> function (): void {
+    'apply'=> function (string $HTML_HEAD): void {
+      echo $HTML_HEAD,"<h2>Inscription d'un nouvel utilisateur ou changement d'un mot de passe oublié</h2>\n";
+      echo "Ce formulaire vous permet de vous inscrire sur ShomGT avec votre adresse professionelle
+        de courrier électronique.</p>
+        En vous innscrivant, vous vous engagez à utiliser les services de ShomGT dans le cadre de votre activité
+        professionnelle pour le compte de l'Etat ou d'un de ses Etablissements publics à caractère administratif.<br>
+        Vous vous engagez aussi à garder secret votre mot de passe et à ne pas le fournir à une autre personne.</p>
+        En cas de non respect de ces contraintes, vous pourrez être bannis du site.</p>
+        La liste des domaines des adresses électroniques autorisées est actuellement la suivante:<ul>
+          <li>*.gouv.fr</li>
+          <li>ofb.fr</li>
+          <li>cerema.fr</li>
+          <li>shom.fr</li>
+          <li>ign.fr</li>
+        </ul>
+        Si votre adresse n'est pas dans un de ces domaines, vous pouvez contacter \"contact @ geoapi.fr\"
+        pour la faire ajouter.</p>
+        Une fois votre adresse et votre mot de passe saisis, un lien vous sera envoyé à cette adresse afin de valider
+        votre inscription.</p>
+        Votre compte sur ShomGT vous permet d'une part d'accéder au services de visualisation et,
+        d'autre part, de mettre à jour les cartes Shom en les commandant au Shom.</p>
+        ";
       echo "<table border=1><form method='post'>
           <input type='hidden' name='action' value='registerSubmit'>
           <tr><td>adresse email:</td><td><input type='text' size=80 name='email' /></td></tr>
           <tr><td>mot de passe:</td><td><input type='password' size=80 name='passwd' /></td></tr>
           <tr><td>mot de passe2:</td><td><input type='password' size=80 name='passwd2' /></td></tr>
-          <tr><td colspan=2><center><input type='submit' value='Envoi' /></center></td></tr>
+          <tr><td colspan=2>
+            <center>
+              <input type='submit' 
+                value=\"Je m'inscris et je m'engage à respecter les contraintes d'utilisation ci-dessus\" />
+            </center>
+          </td></tr>
         </form></table>\n";
       die();
     },
@@ -479,7 +500,7 @@ $actions = [
       "il fournit le nouveau mot de passe souhaité en 2 exemplaires",
     ],
     'to'=> 'registerSubmit',
-    'apply'=> function(): void  { // un utilisateur logué 
+    'apply'=> function(string $HTML_HEAD): void  { // un utilisateur logué 
       $email = Login::loggedIn() or die("Erreur, pour changePasswd l'utilisateur doit être loggé");
       echo "<table border=1><form method='post'>
           <input type='hidden' name='action' value='registerSubmit'>
@@ -508,7 +529,7 @@ $actions = [
       "envoi d'un email avec un lien vers validateRegistration",
     ],
     'to'=> 'validateRegistration',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       write_log(true);
       $email = $_POST['email'] ?? $_GET['email'] ?? die("Erreur, email non défini dans registerSubmit");
       $passwd = $_POST['passwd'] ?? $_GET['passwd'] ?? die("Erreur, passwd non défini dans registerSubmit");
@@ -551,7 +572,7 @@ $actions = [
       "modification table role=nouvRole, valid=now, epasswd=newepasswd, newepasswd=null, secret=null, sent=null / email+secret",
     ],
     'to'=> "BO.menu",
-    'apply' => function(): void {
+    'apply' => function(string $HTML_HEAD): void {
       $email = $_GET['email'] ?? die("Appel incorrect, paramètre absent<br>\n");
       $secret = $_GET['secret'] ?? die("Appel incorrect, paramètre absent<br>\n");
       // modification table valid=now, role='normal', secret=null / email+secret
@@ -583,7 +604,7 @@ $actions = [
       "il fournit la nouvelle zone",
     ],
     'to'=> 'zoneSubmit',
-    'apply'=> function(): void  { // un utilisateur logué demande à changer sa zone
+    'apply'=> function(string $HTML_HEAD): void  { // un utilisateur logué demande à changer sa zone
       $email = Login::loggedIn() or die("Erreur, pour setZone l'utilisateur doit être loggé");
       try {
         $users = \MySql::getTuples("select extra from user where email='$email'");
@@ -592,7 +613,7 @@ $actions = [
         echo "<pre>"; print_r($e);
         die();
       }
-      echo "<pre>users="; print_r($users); echo "</pre>\n";
+      //echo "<pre>users="; print_r($users); echo "</pre>\n";
       $extra = $users[0]['extra'] ?? '';
       $selected = [];
       if ($extra) {
@@ -622,14 +643,14 @@ $actions = [
     'title'=> "traitement du formulaire de définition de sa zone par un utilisateur logué",
     'from'=> ['setZone'],
     'scenario'=> [
-      "enregistrement de la zone en base dans le champ extra",
+      "enregistrement de la zone en base dans le champ extra et retour au menu user",
     ],
     'to'=> 'user.menu',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       write_log(true);
       $email = Login::loggedIn() or die("Erreur, pour setZone l'utilisateur doit être loggé");
       $users = \MySql::getTuples("select extra from user where email='$email'");
-      echo "<pre>users="; print_r($users); echo "</pre>\n";
+      //echo "<pre>users="; print_r($users); echo "</pre>\n";
       $extra = $users[0]['extra'] ?? '';
       $extra = $extra ? json_decode($extra, true, 512, JSON_INVALID_UTF8_IGNORE|JSON_THROW_ON_ERROR) : [];
       $zones = \html\checkBox::selected('zee', $_GET);
@@ -641,10 +662,10 @@ $actions = [
         $query = "update user set extra='".json_encode($extra)."' where email='$email'";
       else
         $query = "update user set extra=null where email='$email'";
-      echo "query=$query<br>\n";
+      //echo "query=$query<br>\n";
       \MySql::query($query);
-      echo "<a href='user.php'>Retour au menu de gestion des utilisateurs</a><br>\n";
-      die();
+      //echo "<a href='user.php'>Retour au menu de gestion des utilisateurs</a><br>\n";
+      echo "Votre zone d'intérêt est définie comme ",json_encode($zones),".<br>\n";
     },
   ],
   'closeAccount'=> [
@@ -657,7 +678,7 @@ $actions = [
       "envoi d'un email avec un lien vers validateCloseAccount",
     ],
     'to'=> 'validateCloseAccount',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       $email = Login::loggedIn() or die("Erreur, pour fermer son compte un utilisateur soit être loggé");
       $secret = random_int(0, 1000000); // un secret est généré aléatoirement
       \MySql::query("update user set secret='$secret', sent=now() where email='$email'");
@@ -673,7 +694,7 @@ $actions = [
       "update user set role='closed', valid=null, secret=null, sent=null where email='\$email' and secret='\$secret'",
     ],
     'to'=> 'BO.menu',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       $email = $_GET['email'] ?? die("Erreur: email non défini dans validateCloseAccount");
       $secret = $_GET['secret'] ?? die("Erreur: secret non défini dans validateCloseAccount");
       // modification table valid=now, role='normal', secret=null / email+secret
@@ -699,7 +720,7 @@ $actions = [
       "envoi email avec lien vers validateReValidation",
     ],
     'to'=> 'validateReValidation',
-    'apply'=> function(): void { 
+    'apply'=> function(string $HTML_HEAD): void { 
       $email = Login::loggedIn();
       $secret = random_int(0, 1000000);
       \MySql::query("update user set secret='$secret', sent=now() where email='$email'");
@@ -718,7 +739,7 @@ $actions = [
       "  envoi email avec lien vers validateReValidation",
     ],
     'to'=> 'validateReValidation',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       if ($email = $_GET['email'] ?? null) {
         $secret = random_int(0, 1000000);
         \MySql::query("update user set secret='$secret', sent=now() where email='$email'");
@@ -756,7 +777,7 @@ $actions = [
       "update user set valid=now(), secret=null, sent=null where email='\$email' and secret='\$secret'"
     ],
     'to'=> 'BO.menu',
-    'apply'=> function(): void  {
+    'apply'=> function(string $HTML_HEAD): void  {
       $email = $_GET['email'] ?? die("Erreur paramètre email absent dans validateReValidation");
       $secret = $_GET['secret'] ?? die("Erreur paramètre secret absent dans validateReValidation");
       $query = "update user set valid=now(), secret=null, sent=null where email='$email' and secret='$secret'";
@@ -781,7 +802,7 @@ $actions = [
       "  envoi email avec lien -> validateAfterSuspension",
     ],
     'to'=> 'validateAfterSuspension',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       if ($email = $_GET['email'] ?? null) {
         $secret = random_int(0, 1000000);
         \MySql::query("update user set role='suspended', secret='$secret', sent=now() where email='$email'");
@@ -819,7 +840,7 @@ $actions = [
     'title'=> "Réinitialiser la base des utilisateurs",
     'from'=> 'user.menu',
     'to'=> 'user.menu',
-    'apply'=> function(): void {
+    'apply'=> function(string $HTML_HEAD): void {
       createUserTable();
       echo "<a href='user.php'>Retour au menu de la gestion des utilisateurs</a><br>\n";
       die();
@@ -828,8 +849,8 @@ $actions = [
   'showUserTableSchema'=> [
     'title'=> "Affiche le schéma de la table user",
     'from'=> 'user.menu',
-    'apply'=> function(): void {
-      echo '<pre>',Yaml::dump(UserSqlSchema::USER_TABLE, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
+    'apply'=> function(string $HTML_HEAD): void {
+      echo '<pre>',Yaml::dump(USER_TABLE_SCHEMA, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK),"</pre>\n";
     },
   ],
   'BO.login'=> [
@@ -844,8 +865,7 @@ $actions = [
       'validateCloseAccount',
       'validateReValidation',
     ],
-    'to'=> [
-    ],
+    'to'=> [],
   ],
 ];
 $actions['validateAfterSuspension'] = [
@@ -856,7 +876,7 @@ $actions['validateAfterSuspension'] = [
 ];
 $actions['showActions'] = [
   'title'=> "Affiche les actions",
-  'apply'=> function() use($actions): void {
+  'apply'=> function(string $HTML_HEAD) use($actions): void {
     echo "<h3>Scenarios</h3>",
           "<pre>",
             Yaml::dump(
@@ -869,7 +889,7 @@ $actions['showActions'] = [
 ];
 $actions['showSequenceBetweenActions'] = [
   'title'=> "Affiche l'enchainement entre actions",
-  'apply'=> function() use($actions): void {
+  'apply'=> function(string $HTML_HEAD) use($actions): void {
     echo "<h3>Scenarios simplifiés (title, from, to) pour vérifier les enchainements</h3>",
           "<pre>",
             Yaml::dump(
@@ -884,7 +904,7 @@ $actions['showSequenceBetweenActions'] = [
 ];
 $actions['checkSequenceBetweenActions'] = [
   'title'=> "Vérifie les enchainements entre actions",
-  'apply'=> function() use($actions): void {
+  'apply'=> function(string $HTML_HEAD) use($actions): void {
     foreach ($actions as $action => $actionDef) {
       if (isset($actionDef['from'])) {
         if (is_string($actionDef['from']) && isset($actions[$actionDef['from']])) {
@@ -963,8 +983,11 @@ $actions['checkSequenceBetweenActions'] = [
 ];
 
 $action = $_POST['action'] ?? $_GET['action'] ?? 'user.menu';
-if (isset($actions[$action]['apply']))
-  $actions[$action]['apply']();
-else
-  echo "action '$action' inconnue<br>\n";
-die();
+//echo "action='$action'<br>\n";
+while ($action) {
+  if (!isset($actions[$action]['apply']))
+    die("<b>Erreur, action '$action' inconnue ou champ apply non défini</b><br>\n");
+  //echo "exécution de $action ->apply()<br>\n";
+  $actions[$action]['apply']($HTML_HEAD); // @phpstan-ignore-line
+  $action = $actions[$action]['to'] ?? null;
+}

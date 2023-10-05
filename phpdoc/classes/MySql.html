@@ -108,6 +108,10 @@
                 
             </li>
                     <li>
+                <a href="packages/shomgt-bojournal.html" class="">bojournal</a>
+                
+            </li>
+                    <li>
                 <a href="packages/shomgt-dashboard.html" class="">dashboard</a>
                 
             </li>
@@ -304,6 +308,13 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/MySql.html#method_createTableSql">createTableSql()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>génère le code SQL de création d&#039;une table à partir d&#039;une constante de définition du schéma.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/MySql.html#method_getTuples">getTuples()</a>
     <span>
@@ -539,6 +550,80 @@
             <a href="classes/MySql.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_createTableSql">
+        createTableSql()
+        <a href="classes/MySql.html#method_createTableSql" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="lib/mysql.inc.php"><a href="files/lib-mysql-inc.html"><abbr title="lib/mysql.inc.php">mysql.inc.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">139</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">génère le code SQL de création d&#039;une table à partir d&#039;une constante de définition du schéma.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">createTableSql</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tableName</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array{description: string, comment: string, columns: array<string,mixed>}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$schema</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+        <section class="phpdocumentor-description"><p>Cette constante est un dictionnaire ayant la structure suivante:</p>
+<ul>
+<li>le champ 'description' décrit la structure du dictionnaire,</li>
+<li>le champ 'comment' précise la table concernée,</li>
+<li>le champ obligatoire 'columns' définit le dictionnaire des colonnes avec pour chaque entrée:
+<ul>
+<li>la clé définit le nom SQL de la colonne,\n&quot;</li>
+<li>le champ 'type' obligatoire définit le type SQL de la colonne,</li>
+<li>le champ 'keyOrNull' définit si la colonne est ou non une clé et si elle peut ou non être nulle</li>
+<li>le champ 'comment' précise un commentaire sur la colonne.</li>
+<li>pour les colonnes de type 'enum' correspondant à une énumération le champ 'enum'
+définit les valeurs possibles dans un dictionnaire où chaque entrée a:
+<ul>
+<li>pour clé la valeur de l'énumération et</li>
+<li>pour valeur une définition et/ou un commentaire sur cette valeur.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$tableName</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$schema</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array{description: string, comment: string, columns: array<string,mixed>}</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
+</article>
                     <article
         class="phpdocumentor-element
             -method
@@ -845,6 +930,7 @@ Enregistre le handle en variable statique.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/MySql.html#method_createTableSql">createTableSql()</a></li>
                                             <li><a href="classes/MySql.html#method_getTuples">getTuples()</a></li>
                                             <li><a href="classes/MySql.html#method_open">open()</a></li>
                                             <li><a href="classes/MySql.html#method_query">query()</a></li>

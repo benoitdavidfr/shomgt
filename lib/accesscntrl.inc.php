@@ -46,40 +46,55 @@ require_once __DIR__.'/config.inc.php';
 
 /** Regroupe la logique du contrôle d'accès
  *
- * Le contrôle d'accès s'effectue selon 3 modes de contrôle distincts:
- *   1) vérification que l'IP d'appel appartient à une liste blanche prédéfinie, ce mode permet notamment d'autoriser
- *      les requêtes provenant du RIE. Il est utilisé pour toutes les fonctionnalités.
- *   2) vérification qu'un cookie contient un login/mot de passe, utilisé pour les accès Web depuis un navigateur.
- *   3) authentification HTTP Basic, utilisé pour le service WMS.
+ * Le contrôle d'accès de base (hors accès aux tuiles) s'effectue selon 3 modes de contrôle distincts:
+ *   1) pour tous les types d'accès, vérification que l'IP d'appel appartient à une liste blanche prédéfinie,
+ *      ce mode permet notamment d'autoriser les requêtes provenant du RIE. Il est utilisé pour la plupart des fonctionnalités.
+ *   2) pour les accès Web depuis un navigateur, vérification que le cookie adhoc contient un login/mot de passe valide,
+ *   3) pour le service WMS authentification HTTP Basic.
  *
- * Pour la vérification du cookie, la page de login du BO permet de stocker dans le cookie le login/mdp
+ * Le cookie adhoc est créé lors du login effectué dans le BO.
+ *
+ * Le contrôle de l'accès aux tuiles est différent ; il est par défaut autorisé sauf pour les IP en liste noire
+ * et pour les referer en liste noire.
  *
  * Toute la logique de contrôle d'accès est regroupée dans la classe Access qui:
  *   - exploite le fichier de config
- *   - expose la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
- *   - expose la méthode cntrl() pour réaliser le contrôle 
+ *   - définit la méthode cntrlFor(what) pour tester si une fonctionnalité est ou non soumise au contrôle
+ *   - définit la méthode cntrl() pour réaliser le contrôle
  */
 class Access {
-  const COOKIENAME = 'shomusrpwd'; // nom du cookie utilisé pour stocker le login/mdp dans le navigateur
-  const FORBIDDEN_ACCESS_MESSAGE = "<body>Bonjour,</p>
-      <b>Ce site est réservé aux agents de l'Etat et de ses Etablissements publics administratifs (EPA).</b><br>
-      L'accès s'effectue normalement au travers d'une adresse IP correspondant à un intranet de l'Etat
+  /** nom du cookie utilisé pour stocker le login/mdp dans le navigateur */
+  const COOKIENAME = 'shomusrpwd';
+  /* message à afficher lors d'un refus d'accès en mode Web
+  const FORBIDDEN_ACCESS_MESSAGE = "
+      <body>Bonjour,</p>
+      <b>Ce site est réservé aux personnels de l'Etat et de ses Etablissements publics administratifs (EPA)</b>
+      en application de la
+      <a href='https://www.legifrance.gouv.fr/eli/loi/2016/10/7/2016-1321/jo/texte' target='LRN'>loi pour une
+      République Numérique</a>.</p>
+      
+      L'accès s'effectue généralement au travers d'une adresse IP correspondant à un intranet de l'Etat
       ou d'un de ses EPA (RIE, ...).<br>
       Vous accédez actuellement à ce site au travers de l'adresse IP <b>{adip}</b> qui n'est pas enregistrée
-      comme une telle adresse IP.<br>
-      Si vous souhaitez accéder à ce site et que vous appartenez à un service de l'Etat ou à un de ses EPA,
-      vous pouvez transmettre cette adresse IP à Benoit DAVID du MTE/CGDD (contact at geoapi.fr)
-      qui regardera la possibilité d'autoriser votre accès.</p>
+      comme une telle adresse IP.</p>
+      
       Si vous avez un compte sur ce site,
-      vous pouvez <a href='bo/index.php' target='_parent'>y accéder en vous authentifiant ici</a>.  
-  ";
+      vous pouvez <a href='bo/index.php' target='_parent'>y accéder en vous authentifiant ici</a>.<br>
+      
+      Si vous appartenez à un service de l'Etat ou à un de ses EPA et que vous n'avez pas encore de compte,
+      ou que vous avez oublié votre mot de passe,<br>
+      vous pouvez vous
+      <a href='bo/user.php?action=register'>enregistrer ici
+      au moyen de votre adresse professionelle de courrier électronique</a>.</p>
+      </body>
+  ";*/
   
-  // activation ou non du controle d'accès par fonctionnalité
+  /** test si le contrôle est ou non activé pour une fonctionnalité */
   static function cntrlFor(string $what): bool {
     return config('cntrlFor')[$what] ?? true;
   }
   
-  // teste si la l'adresse IP dans la liste blanche
+  /** teste si la l'adresse IP dans la liste blanche */
   private static function ipInWhiteList(): bool {
     if (in_array($_SERVER['REMOTE_ADDR'], config('ipV4WhiteList')))
       return true;
@@ -89,7 +104,7 @@ class Access {
     return false;
   }
   
-  // teste si la l'adresse IP dans la liste noire, utilisée pour tile.php
+  /** teste si la l'adresse IP dans la liste noire, utilisée pour tile.php */
   static function ipInBlackList(): bool {
     if (in_array($_SERVER['REMOTE_ADDR'], config('ipV4BlackList')))
       return true;
@@ -99,11 +114,12 @@ class Access {
     return false;
   }
   
-  // Teste si le referer est dans la liste noire, utilisée pour tile.php
+  /** Teste si le referer est dans la liste noire, utilisée pour tile.php */
   static function refererInBlackList(): bool {
     return in_array($_SERVER['HTTP_REFERER'] ?? null, config('refererBlackList'));
   }
   
+  /* Teste si le login est enregistré dans la table MySql des utilisateurs */
   private static function loginPwdInTable(string $usrpwd): bool {
     $LOG_MYSQL_URI = getenv('SHOMGT3_LOG_MYSQL_URI')
       or die("Erreur, variable d'environnement SHOMGT3_LOG_MYSQL_URI non définie");
@@ -130,13 +146,16 @@ class Access {
     return $access;
   }
   
+  /* Teste si le login est enregistré dans lle cookie */
   private static function loginPwdInCookie(): bool {
     return isset($_COOKIE[SELF::COOKIENAME]) && self::loginPwdInTable($_COOKIE[SELF::COOKIENAME]);
   }
   
-  // si $usrpwd est défini cntrl() teste si le couple est correct
-  // s'il n'est pas défini alors teste l'accès par l'adresse IP, l'existence d'un cookie
-  // si $nolog est passé à true alors pas de log de l'accès
+  /** Effectue le contôle.
+   *
+   * si $usrpwd est défini alors cntrl() teste si le couple est correct
+   * s'il n'est pas défini alors teste l'accès par l'adresse IP, l'existence d'un cookie
+   * si $nolog est passé à true alors pas de log de l'accès. */
   static function cntrl(string $usrpwd=null, bool $nolog=false): bool {
     //return true; // désactivation du controle d'accès
     //$verbose = true;
@@ -167,29 +186,6 @@ class Access {
     if (!$nolog) write_log(false);
     return false;
   }
-  
-  // teste si le rôle admin est autorisé
-  /*static function roleAdmin(): bool {
-    if (!self::USERS_IN_MYSQL) {
-      $access = in_array($_COOKIE[SELF::COOKIENAME] ?? null, config('admins'));
-    }
-    else {
-      $usrpwd = $_COOKIE[SELF::COOKIENAME] ?? null;
-      //echo "usrpwd=$usrpwd<br>\n";
-      $pos = strpos($usrpwd, ':');
-      $email = substr($usrpwd, 0, $pos);
-      $passwd = substr($usrpwd, $pos+1);
-      //echo "email=$email, passswd=$passwd<br>\n";
-      $epasswds = MySql::getTuples("select epasswd from user where email='$email'");
-      //echo '<pre>'; print_r($epasswds); echo "</pre>\n";
-      $access = isset($epasswds[0]['epasswd']) && password_verify($passwd, $epasswds[0]['epasswd']);
-      //echo "access=",$access ? 'true' : 'false',"<br>\n";
-      die("Fin dans ".__FILE__.", ligne ".__LINE__."<br>\n");
-    }
-    
-    write_log($access);
-    return $access;
-  }*/
   
   static function test(): void {
     echo "L'adresse IP est $_SERVER[REMOTE_ADDR]<br>\n";

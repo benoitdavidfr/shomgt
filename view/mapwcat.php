@@ -66,7 +66,7 @@ $shomgturl = "$request_scheme://$_SERVER[HTTP_HOST]".($dirname=='/' ? '/' : "$di
 //echo "<pre>"; print_r($_SERVER); die("shomgturl=$shomgturl\n");
 
 // url avec subdomain si sur geoapi
-$shomgturlwsd = str_replace('/geoapi.fr/', '/{s}.geoapi.fr/', $shomgturl);
+$shomgturlwsd = str_replace(['//geoapi.fr/','//sgpp.geoapi.fr/'], ['//{s}.geoapi.fr/','//{s}.sgpp.geoapi.fr/'], $shomgturl);
 
 $option_wfs = false;
 $options = explode(',', $_GET['options'] ?? 'none');
