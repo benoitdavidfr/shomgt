@@ -80,7 +80,8 @@ class GanInSet {
   /** @var array<string, string> $spatial */
   protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
   
-  function __construct(string $html) {
+  function __construct(?string $html) {
+    if (!$html) return;
     //echo "html=$html\n";
     if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $html, $matches))
       throw new \Exception("Erreur de construction de GanInSet sur '$html'");
@@ -100,6 +101,14 @@ class GanInSet {
       'scale'=> $this->scale,
       'spatial'=> $this->spatial,
     ];
+  }
+  
+  static function buildFromArray(array $array): self {
+    $inset = new self(null);
+    $inset->title = $array['title'];
+    $inset->scale = $array['scale'];
+    $inset->spatial = $array['spatial'];
+    return $inset;
   }
 };
 
@@ -282,6 +291,14 @@ class Gan {
     ];
   }
   
+  /** Reconstruit la classe Gan à partir de l'array produit par allAsArray() */
+  static function buildFromArrayOfAll(array $all): void {
+    self::$hvalid = $all['valid'];
+    foreach ($all['gans'] as $mapnum => $ganAsArray) {
+      self::$all[$mapnum] = self::buildFromArray($mapnum, $ganAsArray);
+    }
+  }
+  
   /** retourne un objet comme array 
    * @return array<string, mixed> */
   function asArray(): array {
@@ -299,6 +316,24 @@ class Gan {
     + ($this->harvestError ? ['harvestError'=> $this->harvestError] : [])
     ;
   }
+  
+  /** reconstruit un objet Gan à partir de l'arry produit par asArray() */
+  static function buildFromArray(string $mapnum, array $array): self {
+    $gan = new self($mapnum, [], null);
+    //print_r($array);
+    $gan->groupTitle = $array['groupTitle'] ?? null;
+    $gan->title = $array['title'] ?? '';
+    $gan->scale = $array['scale'] ?? null;
+    $gan->spatial = $array['spatial'] ?? [];
+    foreach ($array['inSets'] ?? [] as $inSet)
+      $gan->inSets[] = GanInSet::buildFromArray($inSet);
+    $gan->edition = $array['edition'] ?? null;
+    $gan->corrections = $array['corrections'] ?? [];
+    $gan->analyzeErrors = $array['analyzeErrors'] ?? [];
+    $gan->valid = $array['valid'] ?? null;
+    $gan->harvestError = $array['harvestError'] ?? '';
+    return $gan;
+  } 
 
   /** calcule la version sous la forme {anneeEdition}c{noCorrection} */
   function version(): string {

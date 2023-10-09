@@ -1026,6 +1026,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/gan-GanInSet.html#method_asArray"
         },                {
+            "fqsen": "\\gan\\GanInSet\u003A\u003AbuildFromArray\u0028\u0029",
+            "name": "buildFromArray",
+            "summary": "",
+            "url": "classes/gan-GanInSet.html#method_buildFromArray"
+        },                {
             "fqsen": "\\gan\\GanInSet\u003A\u003A\u0024title",
             "name": "title",
             "summary": "",
@@ -1086,10 +1091,20 @@ Search.appendIndex(
             "summary": "retourne\u0020l\u0027ensemble\u0020des\u0020objets\u0020de\u0020la\u0020classe\u0020comme\u0020array",
             "url": "classes/gan-Gan.html#method_allAsArray"
         },                {
+            "fqsen": "\\gan\\Gan\u003A\u003AbuildFromArrayOfAll\u0028\u0029",
+            "name": "buildFromArrayOfAll",
+            "summary": "Reconstruit\u0020la\u0020classe\u0020Gan\u0020\u00E0\u0020partir\u0020de\u0020l\u0027array\u0020produit\u0020par\u0020allAsArray\u0028\u0029",
+            "url": "classes/gan-Gan.html#method_buildFromArrayOfAll"
+        },                {
             "fqsen": "\\gan\\Gan\u003A\u003AasArray\u0028\u0029",
             "name": "asArray",
             "summary": "retourne\u0020un\u0020objet\u0020comme\u0020array",
             "url": "classes/gan-Gan.html#method_asArray"
+        },                {
+            "fqsen": "\\gan\\Gan\u003A\u003AbuildFromArray\u0028\u0029",
+            "name": "buildFromArray",
+            "summary": "reconstruit\u0020un\u0020objet\u0020Gan\u0020\u00E0\u0020partir\u0020de\u0020l\u0027arry\u0020produit\u0020par\u0020asArray\u0028\u0029",
+            "url": "classes/gan-Gan.html#method_buildFromArray"
         },                {
             "fqsen": "\\gan\\Gan\u003A\u003Aversion\u0028\u0029",
             "name": "version",

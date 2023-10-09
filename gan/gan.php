@@ -353,6 +353,7 @@ if (php_sapi_name() == 'cli') {
     echo "  - newHarvest - Moissonne les Gan en réinitialisant au péalable\n";
     echo "  - showHarvest - Affiche la moisson en Yaml\n";
     echo "  - storeHarvest - Enregistre la moisson en Yaml/pser\n";
+    echo "  - buildPserFromYaml - Reconstruit le pser à partir du Yaml\n";
     echo "  - analyzeHtml {mapNum} - Analyse le GAN de la carte {mapNum}\n";
     die();
   }
@@ -372,6 +373,7 @@ switch ($a) {
     echo "<li><a href='?a=storeHarvest'>Enregistre la moisson en Yaml/pser</a></li>\n";
     //echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
     //echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour les plus périmées d'abord</a></li>\n";
+    echo "<li><a href='?a=unlock'>Supprime le verrou</a></li>\n";
     echo "</ul>\n";
     die();
   }
@@ -427,6 +429,13 @@ switch ($a) {
     Gan::storeAsPser();
     Lock::unlock();
     die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
+  }
+  case 'buildPserFromYaml': { // Reconstruit le pser à partir du Yaml
+    $array = Yaml::parseFile(Gan::PATH_YAML);
+    Gan::buildFromArrayOfAll($array);
+    //echo Yaml::dump(Gan::allAsArray(), 4, 2);
+    Gan::storeAsPser();
+    die("Fin ok, fichier pser créé\n");
   }
   case 'analyzeHtml': { // analyse l'Html du GAN d'une carte particulière 
     if (!($mapNum = $argv[2] ?? null))

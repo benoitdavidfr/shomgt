@@ -37,6 +37,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<ul>\n";
     echo "<li><a href='?action=logout'>Se déloguer</a>, <a href='user.php'>gérer son compte</a></li>\n";
     if ($role == 'restricted') die();
+    echo "<li><a href='../index.php'>Visualiser les cartes</a></li>\n";
     echo "<li><a href='../dashboard/' target='_blank'>",
          "Identifier les cartes à actualiser grâce au tableau de bord de l'actualité des cartes</a></li>\n";
     echo "<li><a href='https://diffusion.shom.fr' target='_blank'>",

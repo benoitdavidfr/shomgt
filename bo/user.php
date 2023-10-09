@@ -344,7 +344,7 @@ $actions = [
   
       echo "<h3>Menu</h3><ul>\n";
       if ($role) {
-        echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
+        //echo "<li><a href='?action=actionTestA'>actionTestA</a></li>\n";
         echo "<li><a href='?action=changePasswd'>Changer mon mot de passe</a></li>\n";
         echo "<li><a href='?action=setZone'>Définir ma zone d'intérêt</a></li>\n";
         echo "<li><a href='?action=reValidateByUser'>Revalider mon compte</a></li>\n";
@@ -459,7 +459,7 @@ $actions = [
       echo $HTML_HEAD,"<h2>Inscription d'un nouvel utilisateur ou changement d'un mot de passe oublié</h2>\n";
       echo "Ce formulaire vous permet de vous inscrire sur ShomGT avec votre adresse professionelle
         de courrier électronique.</p>
-        En vous innscrivant, vous vous engagez à utiliser les services de ShomGT dans le cadre de votre activité
+        En vous innscrivant, vous vous engagez à utiliser les services de ShomGT uniquement dans le cadre de votre activité
         professionnelle pour le compte de l'Etat ou d'un de ses Etablissements publics à caractère administratif.<br>
         Vous vous engagez aussi à garder secret votre mot de passe et à ne pas le fournir à une autre personne.</p>
         En cas de non respect de ces contraintes, vous pourrez être bannis du site.</p>
@@ -470,11 +470,11 @@ $actions = [
           <li>shom.fr</li>
           <li>ign.fr</li>
         </ul>
-        Si votre adresse n'est pas dans un de ces domaines, vous pouvez contacter \"contact @ geoapi.fr\"
+        Si votre adresse n'est pas dans un de ces domaines, vous pouvez contacter \"contact(at)geoapi.fr\"
         pour la faire ajouter.</p>
         Une fois votre adresse et votre mot de passe saisis, un lien vous sera envoyé à cette adresse afin de valider
         votre inscription.</p>
-        Votre compte sur ShomGT vous permet d'une part d'accéder au services de visualisation et,
+        Votre compte sur ShomGT vous permettra d'une part d'accéder au services de visualisation et,
         d'autre part, de mettre à jour les cartes Shom en les commandant au Shom.</p>
         ";
       echo "<table border=1><form method='post'>
