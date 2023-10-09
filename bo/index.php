@@ -11,7 +11,7 @@ require_once __DIR__.'/clone.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-$VERSION = '4.4';
+$VERSION = '4.5';
 $HTML_HEAD = "<!DOCTYPE html>\n<html><head><title>shomgt-bo@$_SERVER[HTTP_HOST]</title></head><body>\n";
 $HTML_TITLE = "<h2>Interface Back Office (BO) de ShomGT $VERSION</h2>\n";
 
