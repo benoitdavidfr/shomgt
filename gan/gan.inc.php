@@ -94,7 +94,8 @@ class GanInSet {
   /** @return array<string, string> */
   function spatial(): array { return $this->spatial; }
   
-  /** @return array<string, mixed> */
+  /** Exporte un cartouche comme un array.
+   * @return array<string, mixed> */
   function asArray(): array {
     return [
       'title'=> $this->title,
@@ -103,6 +104,8 @@ class GanInSet {
     ];
   }
   
+  /** construit un cartouche à partir d'un array structuré par asArray().
+   @param array<string,mixed> $array */
   static function buildFromArray(array $array): self {
     $inset = new self(null);
     $inset->title = $array['title'];
@@ -291,7 +294,8 @@ class Gan {
     ];
   }
   
-  /** Reconstruit la classe Gan à partir de l'array produit par allAsArray() */
+  /** Reconstruit la classe Gan à partir de l'array produit par allAsArray()
+   * @param array<string, mixed> $all */
   static function buildFromArrayOfAll(array $all): void {
     self::$hvalid = $all['valid'];
     foreach ($all['gans'] as $mapnum => $ganAsArray) {
@@ -317,7 +321,8 @@ class Gan {
     ;
   }
   
-  /** reconstruit un objet Gan à partir de l'arry produit par asArray() */
+  /** reconstruit un objet Gan à partir de l'arry produit par asArray()
+   * @param array<string, mixed> $array */
   static function buildFromArray(string $mapnum, array $array): self {
     $gan = new self($mapnum, [], null);
     //print_r($array);
