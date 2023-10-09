@@ -27,6 +27,7 @@ journal:
   9/10/2023:
     - passage de la 4.4 en production
     - merge de la branche git 4.4
+    - création de la branche 4.5
   7-8/10/2023:
     - test d'une solution de contournement
   6/10/2023:
