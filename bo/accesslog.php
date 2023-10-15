@@ -237,13 +237,14 @@ function durationInHours(string $duration): int {
 
 /** retourne le texte de la requête SQL adhoc */
 function queryForRecentAccess(string $access, int $durationInHours, ?string $param=null): string {
+  $benoit = "in ('benoit.david@free.fr','benoit.david@developpement-durable.gouv.fr')";
   switch ($param) {
     case 'agg': { // req agrégée sur les IP
       return "select ip, label labelip, referer, login, user, count(*) nbre
         from log left join ipaddress using(ip) 
         where
-          (login is null or login <> 'benoit.david@free.fr')
-          and (user is null or user <> 'benoit.david@free.fr')
+          (login is null or login not $benoit)
+          and (user is null or user not $benoit)
           and access='$access'
           and TIMESTAMPDIFF(HOUR,logdt,now()) < $durationInHours
         group by ip, labelip, referer, login, user
@@ -253,8 +254,8 @@ function queryForRecentAccess(string $access, int $durationInHours, ?string $par
       return "select logdt, ip, label labelip, referer, login, user, request_uri
         from log left join ipaddress using(ip) 
         where
-          (login is null or login <> 'benoit.david@free.fr')
-          and (user is null or user <> 'benoit.david@free.fr')
+          (login is null or login not $benoit)
+          and (user is null or user not $benoit)
           and access='$access'
           and TIMESTAMPDIFF(HOUR,logdt,now()) < $durationInHours
       ";

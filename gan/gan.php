@@ -431,10 +431,7 @@ switch ($a) {
     die("Moisson puis enregistrement des fichiers Yaml et pser ok\n");
   }
   case 'buildPserFromYaml': { // Reconstruit le pser à partir du Yaml
-    $array = Yaml::parseFile(Gan::PATH_YAML);
-    Gan::buildFromArrayOfAll($array);
-    //echo Yaml::dump(Gan::allAsArray(), 4, 2);
-    Gan::storeAsPser();
+    Gan::buildPserFromYaml();
     die("Fin ok, fichier pser créé\n");
   }
   case 'analyzeHtml': { // analyse l'Html du GAN d'une carte particulière 

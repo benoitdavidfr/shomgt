@@ -165,46 +165,44 @@ class FtServer {
       echo json_encode($cols);
       die();
     }
-    else {
-      if (!isset(self::$collections[$colName]))
-        throw new \Exception("Erreur colName='$colName' non définie dans la liste des collections");
-      $features = []; // liste des features à construire
-      foreach (self::$collections[$colName]['shomIds'] as $sid => $shomId) {
-        $startindex = 0;
-        $count = 1000;
-        $numberReturned = 0;
-        while (1) {
-          $items = $shomFt->items($shomId, $count, $startindex);
-          //$gt[$sid][$startindex] = $items;
-          foreach ($items['features'] as $ft) {
-            if ($sid == 'gtaem') { // adaptation des propriétés des cartes spéciales 
-              $ft['properties'] = [
-                'name'=> $ft['properties']['name'],
-                'id_md'=> $ft['properties']['id_md'],
-                'carte_id'=> $ft['properties']['source'],
-              ];
-            }
-            $features[] = [
-              'type'=> 'Feature',
-              'id'=> $ft['id'],
-              'properties'=> array_merge(
-                ['layerName'=> $shomId],
-                $ft['properties']
-              ),
-              'geometry'=> $ft['geometry'],
+    if (!isset(self::$collections[$colName]))
+      throw new \Exception("Erreur colName='$colName' non définie dans la liste des collections");
+    $features = []; // liste des features à construire
+    foreach (self::$collections[$colName]['shomIds'] as $sid => $shomId) {
+      $startindex = 0;
+      $count = 1000;
+      $numberReturned = 0;
+      while (1) {
+        $items = $shomFt->items($shomId, $count, $startindex);
+        //$gt[$sid][$startindex] = $items;
+        foreach ($items['features'] as $ft) {
+          if ($sid == 'gtaem') { // adaptation des propriétés des cartes spéciales 
+            $ft['properties'] = [
+              'name'=> $ft['properties']['name'],
+              'id_md'=> $ft['properties']['id_md'],
+              'carte_id'=> $ft['properties']['source'],
             ];
           }
-          $numberReturned += $items['numberReturned'];
-          if ($numberReturned >= $items['totalFeatures'])
-            break;
-          $startindex += $count;
+          $features[] = [
+            'type'=> 'Feature',
+            'id'=> $ft['id'],
+            'properties'=> array_merge(
+              ['layerName'=> $shomId],
+              $ft['properties']
+            ),
+            'geometry'=> $ft['geometry'],
+          ];
         }
+        $numberReturned += $items['numberReturned'];
+        if ($numberReturned >= $items['totalFeatures'])
+          break;
+        $startindex += $count;
       }
-      file_put_contents(__DIR__."/$colName.json",
-        json_encode(
-          ['type'=>'FeatureCollection', 'features'=> $features],
-          JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
     }
+    file_put_contents(__DIR__."/$colName.json",
+      json_encode(
+        ['type'=>'FeatureCollection', 'features'=> $features],
+        JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR));
   }
   
   function collections(): never {
@@ -247,7 +245,7 @@ class FtServer {
       header('Content-type: application/json; charset="utf-8"');
       fpassthru(fopen(__DIR__."/$colName.json",  'r'));
     }
-    elseif (isset(self::$sdmax[$colName])) { // couches corespondant à un découpage par échelles
+    elseif (isset(self::$sdmax[$colName])) { // couches correspondant à un découpage par échelles
       foreach (array_keys(self::$sdmax) as $i => $cname) {
         if ($cname == $colName) break;
       }
@@ -296,6 +294,8 @@ class FtServer {
       $this->collection($matches[1]);
     elseif (preg_match('!^/collections/([^/]+)/items$!', $path_info, $matches))
       $this->items($matches[1]);
+    elseif (preg_match('!^/collections/([^/]+)/get$!', $path_info, $matches))
+      $this->get($matches[1]);
     else
       sendHttpCode(400, "commande non prévue");
   }
@@ -308,4 +308,8 @@ if (!\bo\callingThisFile(__FILE__)) return; // retourne si le fichier est inclus
 //FtServer::readFeatureTypes(); die();
 
 $server = new FtServer;
-$server->run($_SERVER['PATH_INFO'] ?? null);
+try {
+  $server->run($_SERVER['PATH_INFO'] ?? null);
+} catch (\Exception $e) {
+  echo $e->getMessage();
+}

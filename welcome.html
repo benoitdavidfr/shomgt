@@ -3,9 +3,13 @@
 <h2>Accès aux cartes du Shom</h2>
 <h3>Actualité</h3>
 <ul>
+  <li>9/10/2023:<ul>
+    <li>ouverture d'une fonctionnalité back-office (BO) permettant à un utilisateur authentifié d'actualiser les cartes Shom,</li>
+    <li>actualisation d'une centaine de cartes.</li>
+  </ul></li>
   <li>6/8/2023 :<ul>
     <li>passage de ShomGT en version 4 proposant des outils en mode web pour gérer le portefeuille de cartes
-        (ajout/suppression d'une carte, ajout/suppression d'une version d'une une carte).<br>
+        (ajout/suppression d'une carte, ajout/suppression d'une version d'une carte).<br>
         Cette version permettra une gestion collaborative du portefeuille de cartes.</li>
     <li>actualisation/ajout d'environ 25 cartes</li>
   </ul></li>
@@ -111,7 +115,7 @@ L'objectif de ce site est de simplifier l'accès au contenu des cartes GéoTIFF 
 aux agents de l'Etat et de ses EPA afin de leur permettre de travailler lorsque leur service
 n'a pas acquis une licence d'utilisation de RasterMARINE.</p>
 
-<h3>Une proposition décomposée en 4 éléments</h3>
+<h3>Une proposition décomposée en 6 éléments</h3>
 <ol>
 <li>Une <a href='mapwcat.php' target='_blank'>carte accessible à tous pour visualiser et télécharger les cartes du SHOM</a>
   (<a href='doc.html#mapwcat' target='doc'>Plus d'infos ici</a>)</li>
@@ -124,10 +128,21 @@ n'a pas acquis une licence d'utilisation de RasterMARINE.</p>
   <code><a href='wms.php?SERVICE=WMS&REQUEST=GetCapabilities' target='_blank'>https://geoapi.fr/shomgt/wms.php</a></code>
   (<a href='doc.html#wms' target='doc'>Plus d'infos ici</a>)</li>
 
+<li>Deux images Docker  disponibles sur
+  <code><a href='https://hub.docker.com/r/benoitdavid/shomgt3/tags'
+     target='_blank'>https://hub.docker.com/r/benoitdavid/shomgt3/tags</a></code>
+    pour installer un serveur de tuiles et services WMS localement.
+  </li>
+
 <li>Pour les serveurs installés localement, un serveur d'accès aux cartes Shom au format 7z :
   <code><a href='https://sgserver.geoapi.fr/index.php'
      target='_blank'>https://sgserver.geoapi.fr/index.php</a></code>
-  </ol>
+  </li>
+
+<li>Un <a href='bo' target='_blank'>BO (back-office)</a> pour notamment mettre à jour les cartes dans ShomGT
+  après avoir créé son compte.
+</li>
+</ol>
 
 
 <h3>Liste des couches définies</h3>

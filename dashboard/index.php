@@ -339,7 +339,7 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<h2>Tableau de bord de l'actualité des cartes</h2><ul>\n";
     $ganHarvestAge = \gan\Gan::age();
     //echo "ganHarvestAge=$ganHarvestAge<br>\n";
-    if (($ganHarvestAge == -1) || ($ganHarvestAge > 0))
+    if (1 || (($ganHarvestAge == -1) || ($ganHarvestAge > 0)))
       echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
     echo "<li><a href='?action=newObsoleteMaps'>",

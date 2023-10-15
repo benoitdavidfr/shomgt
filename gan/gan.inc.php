@@ -115,7 +115,15 @@ class GanInSet {
   }
 };
 
-/** synthèse du GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN */
+/** synthèse du GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN.
+ *
+ * Une fois moissonné le GAN est stocké dans Gan::$all avec un objet Gan par carte référencé par le numéro de la carte.
+ * L'ensemble des objets Gan ainsi que la variable statique $hvalid qui définit l'intervalle des dates de validation
+ * sont enregistrés dans un fichier pser et dans un fichier Yaml.
+ * L'utilisation du fichier pser présente l'avantage de la rapidité de lecture et l'inconvénient de dépendre de la structure Php,
+ * De son côté, le fichier Yaml est indépendant de la structure Php et est facile à lire par un humain mais sa lecture
+ * est moins rapide.
+ */
 class Gan {
   /** chemin des fichiers stockant la synthèse en pser ou en yaml, sans l'extension */
   const PATH = __DIR__.'/gans.';
@@ -183,11 +191,12 @@ class Gan {
    * Si la moisson n'a pas à être moissonnée retourne 0 */
   static function age(): int {
     //return -1;
-    if (!is_file(self::PATH_PSER))
-      return -1;
+    if (!self::$hvalid) { // la classe n'a pas déjà été chargée
+      if (!self::loadFromPser()) // aucune moisson disponible
+        return -1;
+    }
     $now = new \DateTimeImmutable;
-    $contents = unserialize(file_get_contents(self::PATH_PSER));
-    $valid = explode('/', $contents['valid']);
+    $valid = explode('/', self::$hvalid);
     //echo "valid="; print_r($valid); echo "<br>\n";
     $valid = \DateTimeImmutable::createFromFormat('Y-m-d', $valid[1]);
     if (dateBetween($valid, $now, 4, 20, 00)) {
@@ -198,6 +207,16 @@ class Gan {
       return 0;
   }
   
+  /** Construit le fichier pser à partir du fichie Yaml */
+  static function buildPserFromYaml(): void {
+    if (!is_file(self::PATH_YAML))
+      throw new \Exception("Erreur, fichier gans.yaml absent");
+    $array = Yaml::parseFile(Gan::PATH_YAML);
+    self::buildFromArrayOfAll($array);
+    //echo Yaml::dump(Gan::allAsArray(), 4, 2);
+    self::storeAsPser();
+  }
+  
   /** enregistre le catalogue comme pser */
   static function storeAsPser(): void {
     file_put_contents(self::PATH_PSER, serialize([
@@ -206,18 +225,24 @@ class Gan {
     ]));
   }
   
-  /** initialise les données de la classe depuis le fichier pser */
-  static function loadFromPser(): void {
+  /** initialise les données de la classe depuis le fichier pser, ou s'il n'existe pas du fichier Yaml */
+  static function loadFromPser(): bool {
+    if (!is_file(self::PATH_PSER)) {
+      if (!is_file(self::PATH_YAML))
+        return false;
+      self::buildPserFromYaml();
+    }
     $contents = unserialize(file_get_contents(self::PATH_PSER));
     Gan::$hvalid = $contents['valid'];
     Gan::$all = $contents['gans'];
+    return true;
   }
   
   static function item(string $mapnum): ?Gan { return Gan::$all[$mapnum] ?? null; }
   
   /** @param array<string, mixed> $record; résultat de l'analyse du fichier Html*/
   function __construct(string $mapnum, array $record, ?int $mtime) {
-    echo "mapnum=$mapnum\n";
+    //echo "mapnum=$mapnum\n";
     //echo '$record='; print_r($record);
     //echo '$mapa='; print_r($mapa);
     $this->mapnum = $mapnum;
@@ -245,13 +270,6 @@ class Gan {
     $this->valid = $mtime ? date('Y-m-d', $mtime) : '';
   }
   
-  function scale(): ?string { return $this->scale; }
-  /** @return array<string, string> */
-  function spatial(): array { return $this->spatial; }
-  
-  /** @return array<int, array<string, string>> $corrections */
-  function corrections(): array { return $this->corrections; }
-  
   /** @param array<string, mixed> $record */
   private function postProcessTitle(array $record): void { // complète __construct()
     if (!$record) return;
@@ -277,6 +295,13 @@ class Gan {
     }
     //echo '$this='; print_r($this);
   }
+  
+  function scale(): ?string { return $this->scale; }
+  /** @return array<string, string> */
+  function spatial(): array { return $this->spatial; }
+  
+  /** @return array<int, array<string, string>> $corrections */
+  function corrections(): array { return $this->corrections; }
   
   /** retourne l'ensemble des objets de la classe comme array
    * @return array<string, mixed> */
