@@ -339,11 +339,13 @@ switch ($action = ($_GET['action'] ?? null)) {
     echo "<h2>Tableau de bord de l'actualité des cartes</h2><ul>\n";
     $ganHarvestAge = \gan\Gan::age();
     //echo "ganHarvestAge=$ganHarvestAge<br>\n";
+    /*
     if (1 || (($ganHarvestAge == -1) || ($ganHarvestAge > 0)))
       echo "<li><a href='../bo/runbatch.php?batch=harvestGan&returnTo=dashboard'>Moissonner le GAN",
            ($ganHarvestAge <> -1) ? " précédemment moissonné il y a $ganHarvestAge jours" : '',"</a></li>\n";
     echo "<li><a href='?action=newObsoleteMaps'>",
          "Voir les nouvelles cartes et les cartes obsolètes du portefeuille par rapport au WFS</li>\n";
+    */
     echo "<li><a href='?action=perempt'>",
           "Afficher le degré de péremption des cartes du portefeuille définies dans le GAN",
           $zonesOfInterest ? " filtrées sur [".implode(', ', $zonesOfInterest).']' : '',"</li>\n";
@@ -351,9 +353,10 @@ switch ($action = ($_GET['action'] ?? null)) {
           "Afficher les cartes du portefeuille absentes du GAN",
           $zonesOfInterest ? " filtrées sur [".implode(', ', $zonesOfInterest).']' : '',"</li>\n";
     //echo "<li><a href='?action=listOfInterest'>liste des cartes d'intérêt issue du serveur WFS du Shom</li>\n";
-    echo "<li><a href='?action=loadAvailableAtTheShop'>",
+    /*echo "<li><a href='?action=loadAvailableAtTheShop'>",
          "Charger les versions disponibles dans le site de diffusion du Shom</li>\n";
     echo "<li><a href='?action=listWfs'>Afficher la liste des cartes du serveur WFS du Shom avec leur intérêt</li>\n";
+    */
     echo "</ul>\n";
     die();
   }

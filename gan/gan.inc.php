@@ -159,7 +159,7 @@ class Gan {
   static array $all=[];
   
   /** numéro de la carte */
-  protected string $mapnum;
+  readonly public string $mapnum;
   /** sur-titre optionnel identifiant un ensemble de cartes */
   protected ?string $groupTitle=null;
   /** titre de la carte */
@@ -167,10 +167,10 @@ class Gan {
   /** échelle de la carte */
   protected ?string $scale=null;
   /** édition de la carte */
-  protected ?string $edition=null;
+  readonly public ?string $edition;
   /** liste des corrections
    * @var array<int, array<string, string>> $corrections */
-  protected array $corrections=[];
+  readonly public array $corrections;
   /** extension spatiale sour la forme ['SW'=> sw, 'NE'=> ne]
    * @var array<string, string> $spatial */
   protected array $spatial=[];
@@ -179,11 +179,11 @@ class Gan {
   protected array $inSets=[];
   /** erreurs éventuelles d'analyse du résultat du moissonnage
    * @var array<int, string> $analyzeErrors */
-  protected array $analyzeErrors=[];
+  readonly public array $analyzeErrors;
   /** date de moissonnage du GAN en format ISO */
-  protected string $valid;
+  readonly public string $valid;
   /** erreur éventuelle du moissonnage */
-  protected string $harvestError='';
+  readonly public string $harvestError;
 
   /** indique si la dernière moisson du GAN est ancienne et le GAN doit donc être remoissonné
    * Si remoisson alors retourne l'age de la moisson en jours

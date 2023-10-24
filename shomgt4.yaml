@@ -24,6 +24,8 @@ abstract: |
       - conservation de l'utilisateur ayant déposé la carte
     - gestion du bug Shom de mauvais géoréférencement de la carte 7620-2242, voir '#bug7620'
 journal:
+  20/10/2023:
+    - je vois qu'il manque la carte "5878 - Îlots dans l'archipel des Tuamotu" (1/200k) qui n'est pas mentionnée dans le WFS
   10/10/2023:
     - pb avec dashboard quand la maj WFS plante !
       - ShomGT ne devrait pas planter quand un webservice du Shom est inaccessible !

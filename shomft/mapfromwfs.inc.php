@@ -130,4 +130,4 @@ class MapFromWfs {
     return $list;
   }
 };
-MapFromWfs::init();
+//MapFromWfs::init();

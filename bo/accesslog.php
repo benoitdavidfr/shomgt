@@ -102,7 +102,6 @@ class IpAddressSqlDef {
 class Request2GBox {
   /** extrait le bbox d'une requête WMS et le retourne comme GBox ou null si le BBOX n'est pas détecté dans la requête */
   static function wms(string $request_uri): ?\gegeom\GBox {
-  //static function wms(string $request_uri): ?GBox {
     // détermination du bbox
     $bboxPattern = '!BBOX=(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)(%2C|,)(-?\d+(\.\d+)?)&!i';
     if (!preg_match($bboxPattern, $request_uri, $matches)) {
@@ -110,7 +109,6 @@ class Request2GBox {
     }
     //echo "<pre>request_uri=$request_uri</pre>\n";
     $ebox = new \gegeom\EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
-    //$ebox = new EBox([(float)$matches[1], (float)$matches[4], (float)$matches[7], (float)$matches[10]]);
 
     // détermination du CRS WMS 1.3.0 / 1.1.1
     if (preg_match('!version=1\.3\.0!i', $request_uri)) {
@@ -135,14 +133,16 @@ class Request2GBox {
       throw new \Exception("Dans requête WMS, version ni 1.1.0 ni 1.3.0");
     }
     
-    // conversion de l'ebox en GBox et génération du GeoJSON
+    // conversion de l'ebox en GBox
     $proj = match ($crs) {
-      'CRS:84' => 'LonLatDd',
+      'CRS:84', 'CRS%3A84' => 'LonLatDd',
       'EPSG:4326', 'EPSG%3A4326' => 'LatLonDd',
       'EPSG:3857','EPSG%3A3857' => 'WebMercator',
       'EPSG:3395','EPSG%3A3395' => 'WorldMercator',
-      default => die("CRS $crs non pris en compte dans GJGeom::bbox2GJGeom()"),
+      default => null,
     };
+    if (!$proj)
+      return null;
     return $ebox->geo($proj);
   }
   
