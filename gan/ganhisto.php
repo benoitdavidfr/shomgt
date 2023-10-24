@@ -12,16 +12,20 @@ class GanHisto {
   const FILE_PATH = __DIR__.'/ganhisto.yaml';
   
   protected ?Gan $gan=null;
-  protected array $corrs=[]; // corr par édition [{édition} => [{num} => ['semaineAvis' => {SemaineAvis}, 'valid'=> {valid}]]]
+  /** corr par édition [{édition} => [c{num} => ['semaineAvis' => {SemaineAvis}, 'valid'=> {valid}]]]
+   * @var array<string,array<string,array{semaineAvis: string, valid: string}>> $corrs */
+  protected array $corrs=[];
   
   static string $start=''; // plus ancienne date de moissonnage
   static string $end=''; // plus récente date de moissonnage
-  static array $all=[]; // dictionnaire [{numDeCarte} => MapCorr]
+  /** dictionnaire [{numDeCarte} => MapCorr]
+   * @var array<string,GanHisto> $all */
+  static array $all=[];
   
   function setGan(Gan $gan): void { $this->gan = $gan; }
   
   /** Ajoute une correction à une édition */
-  function addHisto(string $edition, string $num, $semaineAvis, $valid) {
+  function addHisto(string $edition, string $num, string $semaineAvis, string $valid): void {
     $this->corrs[$edition][$num] = ['semaineAvis'=> $semaineAvis, 'valid'=> $valid];
     //echo "strcmp(",self::$start,",$valid)=",strcmp(self::$start, $valid),"\n";
     if (!self::$start || (strcmp(self::$start, $valid)==1))
@@ -30,7 +34,7 @@ class GanHisto {
       self::$end = $valid;
   }
   
-  /** Chargement d'un fichier du fichier de corrections existant */
+  /** Chargement d'un fichier de corrections existant */
   static function load(): void {
     if (!is_file(self::FILE_PATH))
       return;
@@ -49,12 +53,14 @@ class GanHisto {
     rename(self::FILE_PATH, $backupName);
   }
   
+  /** @return array<mixed> */
   function asArray(): array {
     $gan = $this->gan->asArray();
     $gan['corrections'] = $this->corrs;
     return $gan;
   }
   
+  /** @return array<mixed> */
   static function allAsArray(): array {
     return [
       'title'=> "Synthèse du résultat du moissonnage des GAN des cartes du catalogue avec historique des corrections",

@@ -80,20 +80,23 @@ class GanInSet {
   /** @var array<string, string> $spatial */
   protected array $spatial; // sous la forme ['SW'=> sw, 'NE'=> ne]
   
-  function __construct(?string $html) {
-    if (!$html) return;
-    //echo "html=$html\n";
-    if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $html, $matches))
-      throw new \Exception("Erreur de construction de GanInSet sur '$html'");
-    $this->title = trim($matches[1]);
-    $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
+  /** construit un cartouche à partir soit d'un texte html soit d'un array structuré par asArray().
+   @param string|array<string,mixed> $content */
+  function __construct(string|array $content) {
+    if (is_string($content)) {
+      //echo "html=$html\n";
+      if (!preg_match('!^\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*{div}\s*([^{]*){/div}\s*$!', $content, $matches))
+        throw new \Exception("Erreur de construction de GanInSet sur '$content'");
+      $this->title = trim($matches[1]);
+      $this->spatial = ['SW'=> trim($matches[2]), 'NE'=> trim($matches[3])];
+    }
+    else {
+      $this->title = $content['title'];
+      $this->scale = $content['scale'];
+      $this->spatial = $content['spatial'];
+    }
   }
-  
-  function scale(): ?string { return $this->scale; }
-  function setScale(string $scale): void { $this->scale = $scale; }
-  /** @return array<string, string> */
-  function spatial(): array { return $this->spatial; }
-  
+ 
   /** Exporte un cartouche comme un array.
    * @return array<string, mixed> */
   function asArray(): array {
@@ -104,16 +107,11 @@ class GanInSet {
     ];
   }
   
-  /** construit un cartouche à partir d'un array structuré par asArray().
-   @param array<string,mixed> $array */
-  static function buildFromArray(array $array): self {
-    $inset = new self(null);
-    $inset->title = $array['title'];
-    $inset->scale = $array['scale'];
-    $inset->spatial = $array['spatial'];
-    return $inset;
-  }
-};
+  function scale(): ?string { return $this->scale; }
+  function setScale(string $scale): void { $this->scale = $scale; }
+  /** @return array<string, string> */
+  function spatial(): array { return $this->spatial; }
+ };
 
 /** synthèse du GAN par carte à la date de moisson des GAN / catalogue ou indication d'erreur d'interrogation des GAN.
  *
@@ -212,7 +210,7 @@ class Gan {
     if (!is_file(self::PATH_YAML))
       throw new \Exception("Erreur, fichier gans.yaml absent");
     $array = Yaml::parseFile(Gan::PATH_YAML);
-    self::buildFromArrayOfAll($array);
+    self::buildAllFromArray($array);
     //echo Yaml::dump(Gan::allAsArray(), 4, 2);
     self::storeAsPser();
   }
@@ -240,34 +238,61 @@ class Gan {
   
   static function item(string $mapnum): ?Gan { return Gan::$all[$mapnum] ?? null; }
   
-  /** @param array<string, mixed> $record; résultat de l'analyse du fichier Html*/
-  function __construct(string $mapnum, array $record, ?int $mtime) {
-    //echo "mapnum=$mapnum\n";
-    //echo '$record='; print_r($record);
-    //echo '$mapa='; print_r($mapa);
+  /** @param array<string, mixed> $record; résultat de l'analyse du fichier Html ou array issu de asArray en fn de $srce */
+  function __construct(string $srce, string $mapnum, array $record, ?int $mtime) {
     $this->mapnum = $mapnum;
-    // cas où soit le GAN ne renvoie aucune info signifiant qu'il n'y a pas de corrections, soit il renvoie une erreur
-    if (!$record || isset($record['harvestError'])) {
-      $this->edition = null;
-    }
-    else { // cas où il existe des corrections
-      $this->postProcessTitle($record['title']);
-      $this->edition = $record['edition'];
-    }
+    switch ($srce) {
+      case 'html': {
+        //echo "mapnum=$mapnum\n";
+        //echo '$record='; print_r($record);
+        //echo '$mapa='; print_r($mapa);
+        // cas où soit le GAN ne renvoie aucune info signifiant qu'il n'y a pas de corrections, soit il renvoie une erreur
+        if (!$record || isset($record['harvestError'])) {
+          $edition = null;
+        }
+        else { // cas où il existe des corrections
+          $this->postProcessTitle($record['title']);
+          $edition = $record['edition'];
+        }
+        
+        // CORRECTIONS DU GAN
+        if (isset(self::CORRECTIONS[$this->mapnum][$edition]))
+          $this->edition = self::CORRECTIONS[$this->mapnum][$edition];
+        else
+          $this->edition = $edition;
     
-    // transfert des infos sur l'échelle des différents espaces
-    if (isset($record['scale'][0])) {
-      $this->scale = $record['scale'][0];
-      array_shift($record['scale']);
-    }
-    foreach ($this->inSets ?? [] as $i => $inSet) {
-      $inSet->setScale($record['scale'][$i]);
-    }
+        // transfert des infos sur l'échelle des différents espaces
+        if (isset($record['scale'][0])) {
+          $this->scale = $record['scale'][0];
+          array_shift($record['scale']);
+        }
+        foreach ($this->inSets ?? [] as $i => $inSet) {
+          $inSet->setScale($record['scale'][$i]);
+        }
     
-    $this->corrections = $record['corrections'] ?? [];
-    $this->analyzeErrors = $record['analyzeErrors'] ?? [];
-    $this->harvestError = $record['harvestError'] ?? '';
-    $this->valid = $mtime ? date('Y-m-d', $mtime) : '';
+        $this->corrections = $record['corrections'] ?? [];
+        $this->analyzeErrors = $record['analyzeErrors'] ?? [];
+        $this->harvestError = $record['harvestError'] ?? '';
+        $this->valid = $mtime ? date('Y-m-d', $mtime) : '';
+        break;
+      }
+      case 'array': {
+        //print_r($record);
+        $this->groupTitle = $record['groupTitle'] ?? null;
+        $this->title = $record['title'] ?? '';
+        $this->scale = $record['scale'] ?? null;
+        $this->spatial = $record['spatial'] ?? [];
+        foreach ($record['inSets'] ?? [] as $inSet)
+          $this->inSets[] = new GanInSet($inSet);
+        $this->edition = $record['edition'] ?? null;
+        $this->corrections = $record['corrections'] ?? [];
+        $this->analyzeErrors = $record['analyzeErrors'] ?? [];
+        $this->valid = $record['valid'] ?? null;
+        $this->harvestError = $record['harvestError'] ?? '';
+        break;
+      }
+      default: throw new \Exception("$srce non prévu");
+    }
   }
   
   /** @param array<string, mixed> $record */
@@ -321,10 +346,10 @@ class Gan {
   
   /** Reconstruit la classe Gan à partir de l'array produit par allAsArray()
    * @param array<string, mixed> $all */
-  static function buildFromArrayOfAll(array $all): void {
+  static function buildAllFromArray(array $all): void {
     self::$hvalid = $all['valid'];
     foreach ($all['gans'] as $mapnum => $ganAsArray) {
-      self::$all[$mapnum] = self::buildFromArray($mapnum, $ganAsArray);
+      self::$all[$mapnum] = new self('yaml', $mapnum, $ganAsArray, null);
     }
   }
   
@@ -346,31 +371,8 @@ class Gan {
     ;
   }
   
-  /** reconstruit un objet Gan à partir de l'arry produit par asArray()
-   * @param array<string, mixed> $array */
-  static function buildFromArray(string $mapnum, array $array): self {
-    $gan = new self($mapnum, [], null);
-    //print_r($array);
-    $gan->groupTitle = $array['groupTitle'] ?? null;
-    $gan->title = $array['title'] ?? '';
-    $gan->scale = $array['scale'] ?? null;
-    $gan->spatial = $array['spatial'] ?? [];
-    foreach ($array['inSets'] ?? [] as $inSet)
-      $gan->inSets[] = GanInSet::buildFromArray($inSet);
-    $gan->edition = $array['edition'] ?? null;
-    $gan->corrections = $array['corrections'] ?? [];
-    $gan->analyzeErrors = $array['analyzeErrors'] ?? [];
-    $gan->valid = $array['valid'] ?? null;
-    $gan->harvestError = $array['harvestError'] ?? '';
-    return $gan;
-  } 
-
   /** calcule la version sous la forme {anneeEdition}c{noCorrection} */
   function version(): string {
-    // COORECTIONS DU GAN
-    if (isset(self::CORRECTIONS[$this->mapnum][$this->edition]))
-      $this->edition = self::CORRECTIONS[$this->mapnum][$this->edition];
-
     if (!$this->edition && !$this->corrections)
       return 'undefined';
     if (preg_match('!^Edition n°\d+ - (\d+)$!', $this->edition, $matches)) {

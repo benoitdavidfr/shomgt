@@ -301,7 +301,7 @@ class GanStatic {
       echo 'analyzeHtml='; print_r($analyze);
       //echo 'analyzeHtml='; var_dump($analyze);
       //echo Yaml::dump(['analyzeHtml'=> $analyze], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-      $gan = new Gan($mapnum, $analyze, /*$map,*/ $mtime);
+      $gan = new Gan('html', $mapnum, $analyze, $mtime);
       echo Yaml::dump(['gan'=> $gan->asArray()], 4, 2);
     }
   }
@@ -328,7 +328,7 @@ class GanStatic {
           if (!$maxvalid || ($mtime > $maxvalid))
             $maxvalid = $mtime;
           $html = file_get_contents("$gandir/$mapnum-$ganWeek.html");
-          Gan::$all[$mapnum] = new Gan($mapnum, self::analyzeHtml($html), /*$map,*/ $mtime);
+          Gan::$all[$mapnum] = new Gan('html', $mapnum, self::analyzeHtml($html), $mtime);
         }
       }
     }
@@ -338,7 +338,7 @@ class GanStatic {
     //print_r($errors);
     foreach ($errors as $id => $errorMessage) {
       $mapid = substr($id, 0, 4);
-      Gan::$all[$mapid] = new Gan($mapid, ['harvestError'=> $errorMessage], /*$mapa,*/ null);
+      Gan::$all[$mapid] = new Gan('html', $mapid, ['harvestError'=> $errorMessage], null);
     }
   }
 };
