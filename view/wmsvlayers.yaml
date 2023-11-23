@@ -210,6 +210,311 @@ vectorLayers:
     title: Cat. de la carte Manche-grid
     description: Silhouette de la carte Shom du carroyage MANCHEGRID à utiliser dans l'application du MANCHEPLAN
     style: *sdodgerblue
+  amp-pf-aghe:
+    title: 'Aires marines protégées - Aire de gestion des habitats ou des espèces (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-aghe.geojson
+    style: *sgreen
+  amp-pfn-agdr:
+    title: 'Aires marines protégées - Aire de gestion durable des ressources (Nouvelle-Calédonie, Province Nord)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pfn-agdr.geojson
+    style: *sgreen
+  amp-pfs-agdr:
+    title: 'Aires marines protégées - Aire de gestion durable des ressources (Nouvelle-Calédonie, Province Sud)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pfs-agdr.geojson
+    style: *sgreen
+  amp-apb:
+    title: 'Aires marines protégées - Aire de protection de biotope'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-apb.geojson
+    style: *sgreen
+  amp-pf-arcpgem:
+    title: 'Aires marines protégées - Aire de repos des cétacés de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-arcpgem.geojson
+    style: *sgreen
+  amp-pf-amppgem:
+    title: 'Aires marines protégées - Aire marine protégée de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-amppgem.geojson
+    style: *sgreen
+  amp-pf-aprng:
+    title: 'Aires marines protégées - Aire protégée de ressources naturelles gérées (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-aprng.geojson
+    style: *sgreen
+  amp-aspim:
+    title: 'Aires marines protégées - Aire spécialement protégée d''importance méditerranéenne'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-aspim.geojson
+    style: *sgreen
+  amp-bipm:
+    title: 'Aires marines protégées - Bien inscrit sur la liste du patrimoine mondial'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-bipm.geojson
+    style: *sgreen
+  amp-bipm-c:
+    title: 'Aires marines protégées - Bien inscrit sur la liste du patrimoine mondial (zone coeur)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-bipm-c.geojson
+    style: *sgreen
+  amp-bipm-t:
+    title: 'Aires marines protégées - Bien inscrit sur la liste du patrimoine mondial (zone tampon)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-bipm-t.geojson
+    style: *sgreen
+  amp-cl-dpm:
+    title: 'Aires marines protégées - Domaine public maritime (Conservatoire du littoral)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-cl-dpm.geojson
+    style: *sgreen
+  amp-cl-dpma:
+    title: 'Aires marines protégées - Domaine public maritime attribué (Conservatoire du littoral)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-cl-dpma.geojson
+    style: *sgreen
+  amp-pf-mn:
+    title: 'Aires marines protégées - Monument naturel (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-mn.geojson
+    style: *sgreen
+  amp-pn:
+    title: 'Aires marines protégées - Parc national'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pn.geojson
+    style: *sgreen
+  amp-pn-aa:
+    title: 'Aires marines protégées - Parc national (aire d''adhésion)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pn-aa.geojson
+    style: *sgreen
+  amp-pn-ama:
+    title: 'Aires marines protégées - Parc national (aire maritime adjacente)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pn-ama.geojson
+    style: *sgreen
+  amp-pn-c:
+    title: 'Aires marines protégées - Parc national (coeur)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pn-c.geojson
+    style: *sgreen
+  amp-nc-pn:
+    title: 'Aires marines protégées - Parc naturel (Nouvelle-Calédonie)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-nc-pn.geojson
+    style: *sgreen
+  amp-pnm:
+    title: 'Aires marines protégées - Parc naturel marin'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pnm.geojson
+    style: *sgreen
+  amp-ncn-pp:
+    title: 'Aires marines protégées - Parc provincial (Nouvelle-Calédonie, Province Nord)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncn-pp.geojson
+    style: *sgreen
+  amp-ncs-pp:
+    title: 'Aires marines protégées - Parc provincial (Nouvelle-Calédonie, Province Sud)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncs-pp.geojson
+    style: *sgreen
+  amp-pf-pnp:
+    title: 'Aires marines protégées - Paysage naturel protégé (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-pnp.geojson
+    style: *sgreen
+  amp-pf-pgem:
+    title: 'Aires marines protégées - Plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-pgem.geojson
+    style: *sgreen
+  amp-pf-pprni:
+    title: 'Aires marines protégées - Périmètre de protection de réserve naturelle intégrale (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-pprni.geojson
+    style: *sgreen
+  amp-rb:
+    title: 'Aires marines protégées - Réserve de biosphère'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rb.geojson
+    style: *sgreen
+  amp-rb-c:
+    title: 'Aires marines protégées - Réserve de biosphère (zone centrale)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rb-c.geojson
+    style: *sgreen
+  amp-rb-tr:
+    title: 'Aires marines protégées - Réserve de biosphère (zone de transition)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rb-tr.geojson
+    style: *sgreen
+  amp-rb-ta:
+    title: 'Aires marines protégées - Réserve de biosphère (zone tampon)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rb-ta.geojson
+    style: *sgreen
+  amp-ncn-rns:
+    title: 'Aires marines protégées - Réserve de nature sauvage (Nouvelle-Calédonie, Province Nord)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncn-rns.geojson
+    style: *sgreen
+  amp-nc-ri:
+    title: 'Aires marines protégées - Réserve intégrale (Nouvelle-Calédonie)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-nc-ri.geojson
+    style: *sgreen
+  amp-rncfs:
+    title: 'Aires marines protégées - Réserve nationale de chasse et de faune sauvage'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rncfs.geojson
+    style: *sgreen
+  amp-nc-rn:
+    title: 'Aires marines protégées - Réserve naturelle (Nouvelle-Calédonie)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-nc-rn.geojson
+    style: *sgreen
+  amp-ncs-rn:
+    title: 'Aires marines protégées - Réserve naturelle (Nouvelle-Calédonie, Province Sud)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncs-rn.geojson
+    style: *sgreen
+  amp-rnctc:
+    title: 'Aires marines protégées - Réserve naturelle de la collectivité territoriale de Corse'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rnctc.geojson
+    style: *sgreen
+  amp-ncn-rni:
+    title: 'Aires marines protégées - Réserve naturelle intégrale (Nouvelle-Calédonie, Province Nord)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncn-rni.geojson
+    style: *sgreen
+  amp-ncs-rni:
+    title: 'Aires marines protégées - Réserve naturelle intégrale (Nouvelle-Calédonie, Province Sud)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncs-rni.geojson
+    style: *sgreen
+  amp-pf-rni:
+    title: 'Aires marines protégées - Réserve naturelle intégrale (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-rni.geojson
+    style: *sgreen
+  amp-ncs-rnis:
+    title: 'Aires marines protégées - Réserve naturelle intégrale saisonnière (Nouvelle-Calédonie, Province Sud)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncs-rnis.geojson
+    style: *sgreen
+  amp-rnn:
+    title: 'Aires marines protégées - Réserve naturelle nationale'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rnn.geojson
+    style: *sgreen
+  amp-rnn-pp:
+    title: 'Aires marines protégées - Réserve naturelle nationale (périmètre de protection)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rnn-pp.geojson
+    style: *sgreen
+  amp-rnn-zpr:
+    title: 'Aires marines protégées - Réserve naturelle nationale (zone de protection renforcée)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rnn-zpr.geojson
+    style: *sgreen
+  amp-rnr:
+    title: 'Aires marines protégées - Réserve naturelle régionale'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-rnr.geojson
+    style: *sgreen
+  amp-ncs-rns:
+    title: 'Aires marines protégées - Réserve naturelle saisonnière (Nouvelle-Calédonie, Province Sud)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ncs-rns.geojson
+    style: *sgreen
+  amp-sic:
+    title: 'Aires marines protégées - Site d''importance communautaire (N2000, DHFF)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-sic.geojson
+    style: *sgreen
+  amp-pf-zmpgem:
+    title: 'Aires marines protégées - Zone de mouillage de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zmpgem.geojson
+    style: *sgreen
+  amp-pf-zns:
+    title: 'Aires marines protégées - Zone de nature sauvage (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zns.geojson
+    style: *sgreen
+  amp-zps:
+    title: 'Aires marines protégées - Zone de protection spéciale (N2000, DO)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-zps.geojson
+    style: *sgreen
+  amp-pf-zpapgem:
+    title: 'Aires marines protégées - Zone de pêche aux Ature de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zpapgem.geojson
+    style: *sgreen
+  amp-pf-zpr:
+    title: 'Aires marines protégées - Zone de pêche réglementée (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zpr.geojson
+    style: *sgreen
+  amp-pf-zrspgem:
+    title: 'Aires marines protégées - Zone de recherche scientifique de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zrspgem.geojson
+    style: *sgreen
+  amp-pf-zsppgem:
+    title: 'Aires marines protégées - Zone de stationnement des paquebots de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zsppgem.geojson
+    style: *sgreen
+  amp-ramsar:
+    title: 'Aires marines protégées - Zone humide d''importance internationale (Ramsar)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ramsar.geojson
+    style: *sgreen
+  amp-ospar:
+    title: 'Aires marines protégées - Zone marine protégée de la convention OSPAR'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-ospar.geojson
+    style: *sgreen
+  amp-pf-znppgem:
+    title: 'Aires marines protégées - Zone naturelle protégée de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-znppgem.geojson
+    style: *sgreen
+  amp-apia:
+    title: 'Aires marines protégées - Zone protégée de la convention d''Apia'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-apia.geojson
+    style: *sgreen
+  amp-pf-zrppgem:
+    title: 'Aires marines protégées - Zone réglementée de pêche de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-zrppgem.geojson
+    style: *sgreen
+  amp-zsc:
+    title: 'Aires marines protégées - Zone spéciale de conservation (N2000, DHFF)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-zsc.geojson
+    style: *sgreen
+  amp-antarctique:
+    title: 'Aires marines protégées - Zone spécialement protégée de l''Antarctique'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-antarctique.geojson
+    style: *sgreen
+  amp-carthagene:
+    title: 'Aires marines protégées - Zone spécialement protégée de la convention de Carthagène'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-carthagene.geojson
+    style: *sgreen
+  amp-pf-ztpgem:
+    title: 'Aires marines protégées - Zone touristique de plan de gestion de l''espace maritime (Polynésie française)'
+    description: 'Sélection dans la collection des AMP du service WMS de l''OFB en focntion du champ designation'
+    path: geojson/amp/amp-pf-ztpgem.geojson
+    style: *sgreen
 vectorLayerModels:
   cat{sd}:
     note: entrée paramétrée par le dénominateur de l'échelle {sd}

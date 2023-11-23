@@ -51,6 +51,8 @@ require_once __DIR__.'/wfsserver.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+ini_set('memory_limit', '10G');
+
 /** enregistrement d'un log temporaire pour aider au déverminage
  * @param array<mixed> $log */
 function logRecord(array $log): void {
@@ -100,7 +102,7 @@ class FtServer {
   static array $collections = [
     'gt'=> [
       'title'=> "Silhouettes des GéoTiffs hors AEM",
-      'url'=> '',
+      'url'=> 'https://services.data.shom.fr/INSPIRE/wfs',
       'shomIds'=> [
         'gt800'=> 'CARTES_MARINES_GRILLE:grille_geotiff_800',
         'gt300-800'=> 'CARTES_MARINES_GRILLE:grille_geotiff_300_800',
@@ -110,14 +112,14 @@ class FtServer {
     ],
     'aem'=> [
       'title'=> "Silhouettes des cartes AEM",
-      'url'=> '',
+      'url'=> 'https://services.data.shom.fr/INSPIRE/wfs',
       'shomIds'=> [
         'gtaem'=> 'GRILLE_CARTES_SPECIALES_AEM_WFS:emprises_aem_3857_table',
       ],
     ],
     'delmar'=> [
       'title'=> "Délimitations maritimes",
-      'url'=> '',
+      'url'=> 'https://services.data.shom.fr/INSPIRE/wfs',
       'shomIds'=> [
         'baseline'=> 'DELMAR_BDD_WFS:au_baseline',
         'agreedmaritimeboundary'=> 'DELMAR_BDD_WFS:au_maritimeboundary_agreedmaritimeboundary',
@@ -128,6 +130,13 @@ class FtServer {
         'territorialsea'=> 'DELMAR_BDD_WFS:au_maritimeboundary_territorialsea',
       ],
     ],
+    'amp'=> [
+      'title'=> "AMP (OFB)",
+      'url'=> 'https://wxs.ofb.fr/geoserver/gestion/ows',
+      'shomIds'=> [
+        'aamp'=> 'ges_omon_amp_ofb_pol_3857_vue',
+      ],
+    ]
   ];
   
   /** liste des ids de couche avec dénom. d'échelle max associé
@@ -154,7 +163,11 @@ class FtServer {
   /** lit dans ShomWfs les Features correspondant à la collection $colName clé dans self::$collections
    * et les copie dans le fichier $colName.json, si erreur envoi Exception */
   function get(string $colName): void {
-    $shomFt = new FeaturesApi('https://services.data.shom.fr/INSPIRE/wfs');
+    
+    if (!isset(self::$collections[$colName]))
+      throw new \Exception("Erreur colName='$colName' non définie dans la liste des collections");
+
+    $shomFt = new FeaturesApi(self::$collections[$colName]['url']);
     
     if (0) { // @phpstan-ignore-line // affiche les FeatureTypes
       $cols = [];
@@ -165,8 +178,6 @@ class FtServer {
       echo json_encode($cols);
       die();
     }
-    if (!isset(self::$collections[$colName]))
-      throw new \Exception("Erreur colName='$colName' non définie dans la liste des collections");
     $features = []; // liste des features à construire
     foreach (self::$collections[$colName]['shomIds'] as $sid => $shomId) {
       $startindex = 0;
@@ -237,6 +248,7 @@ class FtServer {
     die();
   }
   
+  // Retourne le contenu de la collection
   function items(string $colName): never {
     if (isset(self::$collections[$colName])) {
       if (!is_file(__DIR__."/$colName.json")) {

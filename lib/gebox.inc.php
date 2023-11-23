@@ -15,6 +15,8 @@
  * Ils peuvent être pris en compte en gérant les positions à l'Est de l'anti-méridien avec une longitude > 180°.
  *
  * journal: |
+ * - 23/11/2023:
+ *    - correction d'un bug dans BBox::__construct(), cas llpos
  * - 31/8/2023:
  *   - modif de BBox pour mettre en readonly les prop. $min et $max, modif des méthodes modifiant $min ou $max
  * - 15/8/2023:
@@ -117,7 +119,7 @@ abstract class BBox {
       $max = $param[0][0];
       foreach ($param as $lpos) {
         $min = LPos::min([$min, LPos::min($lpos)]);
-        $max = LPos::min([$min, LPos::max($lpos)]);
+        $max = LPos::max([$max, LPos::max($lpos)]);
       }
       $this->min = $min;
       $this->max = $max;

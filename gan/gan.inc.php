@@ -349,7 +349,7 @@ class Gan {
   static function buildAllFromArray(array $all): void {
     self::$hvalid = $all['valid'];
     foreach ($all['gans'] as $mapnum => $ganAsArray) {
-      self::$all[$mapnum] = new self('yaml', $mapnum, $ganAsArray, null);
+      self::$all[$mapnum] = new self('array', $mapnum, $ganAsArray, null);
     }
   }
   

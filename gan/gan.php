@@ -158,27 +158,23 @@ class GanStatic {
     $n = count(\bo\Portfolio::$all);
     foreach (\bo\Portfolio::$all as $mapnum => $map) {
       //echo "mapnum=$mapnum\n"; print_r($map);
-      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
-        $ganWeek = GanStatic::week($modified);
-        if (!file_exists("$gandir/$mapnum-$ganWeek.html") && !isset($errors["$mapnum-$ganWeek"])) {
-          //$url = "https://www.shom.fr/qr/gan/$mapnum/$ganWeek";
-          $url = "https://gan.shom.fr/diffusion/qr/gan/$mapnum/$ganWeek";
-          //echo "url=$url\n";
-          if (($contents = file_get_contents($url, false, httpContext())) === false) {
-            $message = "Erreur "
-              .(isset($http_response_header) ? http_error_code($http_response_header) : 'non définie') // @phpstan-ignore-line
-              ." de lecture de $url";
-            echo "$message\n";
-            file_put_contents("$gandir/errors.yaml", "$mapnum-$ganWeek: $message\n", FILE_APPEND);
-          }
-          else {
-            file_put_contents("$gandir/$mapnum-$ganWeek.html", $contents);
-            echo "Lecture $url ok [$i/$n]\n";
-          }
+      if (!file_exists("$gandir/$mapnum.html") && !isset($errors[$mapnum])) {
+        $url = "https://gan.shom.fr/diffusion/qr/gan/$mapnum";
+        //echo "url=$url\n";
+        if (($contents = file_get_contents($url, false, httpContext())) === false) {
+          $message = "Erreur "
+            .(isset($http_response_header) ? http_error_code($http_response_header) : 'non définie') // @phpstan-ignore-line
+            ." de lecture de $url";
+          echo "$message\n";
+          file_put_contents("$gandir/errors.yaml", "$mapnum: $message\n", FILE_APPEND);
         }
-        elseif (0) { // @phpstan-ignore-line // déverminage 
-          echo "le fichier $gandir/$mapnum-$ganWeek.html existe || errors[$mapnum-$ganWeek]\n";
+        else {
+          file_put_contents("$gandir/$mapnum.html", $contents);
+          echo "Lecture $url ok [$i/$n]\n";
         }
+      }
+      elseif (1) { // @phpstan-ignore-line // déverminage 
+        echo "le fichier $gandir/$mapnum-$ganWeek.html existe || errors[$mapnum-$ganWeek]\n";
       }
       $i++;
     }
@@ -281,7 +277,7 @@ class GanStatic {
   }
   
   /** pour mise au point effectue l'analyse du GAN pour une carte */
-  static function analyzeHtmlOfMap(string $mapnum): void {
+  static function analyzeHtmlOfMapPERIME(string $mapnum): void {
     $map = \bo\Portfolio::$all[$mapnum];
     echo 'map='; print_r($map);
     $modified = $map['dateMD']['value'] ?? $map['dateArchive'];
@@ -315,21 +311,18 @@ class GanStatic {
     $gandir = self::GAN_DIR;
     $errors = file_exists("$gandir/errors.yaml") ? Yaml::parsefile("$gandir/errors.yaml") : [];
     foreach (\bo\Portfolio::$all as $mapnum => $map) {
-      if ($modified = $map['dateMD']['value'] ?? $map['dateArchive']) {
-        $ganWeek = GanStatic::week($modified);
-        if (isset($errors["$mapnum-$ganWeek"])) { }
-        elseif (!file_exists("$gandir/$mapnum-$ganWeek.html")) {
-          echo "moisson $mapnum-$ganWeek absente à moissonner\n";
-        }
-        else {
-          $mtime = filemtime("$gandir/$mapnum-$ganWeek.html");
-          if (!$minvalid || ($mtime < $minvalid))
-            $minvalid = $mtime;
-          if (!$maxvalid || ($mtime > $maxvalid))
-            $maxvalid = $mtime;
-          $html = file_get_contents("$gandir/$mapnum-$ganWeek.html");
-          Gan::$all[$mapnum] = new Gan('html', $mapnum, self::analyzeHtml($html), $mtime);
-        }
+      if (isset($errors[$mapnum])) { }
+      elseif (!file_exists("$gandir/$mapnum.html")) {
+        echo "moisson $mapnum absente à moissonner\n";
+      }
+      else {
+        $mtime = filemtime("$gandir/$mapnum.html");
+        if (!$minvalid || ($mtime < $minvalid))
+          $minvalid = $mtime;
+        if (!$maxvalid || ($mtime > $maxvalid))
+          $maxvalid = $mtime;
+        $html = file_get_contents("$gandir/$mapnum.html");
+        Gan::$all[$mapnum] = new Gan('html', $mapnum, self::analyzeHtml($html), $mtime);
       }
     }
     Gan::$hvalid = date('Y-m-d', $minvalid).'/'.date('Y-m-d', $maxvalid);
@@ -367,12 +360,13 @@ else { // non CLI
 
 switch ($a) {
   case 'menu': { // menu non CLI
-    echo "gan.php - Menu:<ul>\n";
+    echo "</pre>gan.php - Menu:<ul>\n";
     echo "<li>La moisson des GAN doit être effectuée en CLI</li>\n";
     echo "<li><a href='?a=showHarvest'>Affiche la moisson en Yaml</a></li>\n";
     echo "<li><a href='?a=storeHarvest'>Enregistre la moisson en Yaml/pser</a></li>\n";
     //echo "<li><a href='?a=listMaps'>Affiche en Html les cartes avec synthèse moisson et lien vers Gan</a></li>\n";
     //echo "<li><a href='?f=html'>Affiche en Html les cartes à mettre à jour les plus périmées d'abord</a></li>\n";
+    echo "<li><a href='?a=listGamMaps'>Liste les cartes GAN moissonées</a></li>\n";
     echo "<li><a href='?a=unlock'>Supprime le verrou</a></li>\n";
     echo "</ul>\n";
     die();
@@ -443,6 +437,26 @@ switch ($a) {
   case 'unlock': {
     Lock::unlock();
     die("Verrou supprimé\n");
+  }
+  case 'listGamMaps': {
+    foreach (new \DirectoryIterator(GanStatic::GAN_DIR) as $entry) {
+      if (in_array($entry,['.','..'])) continue;
+      echo "<a href='?a=analyzeHtmlWeb&entry=$entry'>$entry</a>\n";
+    }
+    die();
+  }
+  case 'analyzeHtmlWeb': { // analyse du Html en mode 
+    $entry = $_GET['entry'];
+    $html = file_get_contents(GanStatic::GAN_DIR."/$entry");
+    $mtime = filemtime(GanStatic::GAN_DIR."/$entry");
+    $mapnum = substr($entry, 0, 4);
+    $analyze = GanStatic::analyzeHtml($html);
+    echo 'analyzeHtml='; print_r($analyze);
+    //echo 'analyzeHtml='; var_dump($analyze);
+    //echo Yaml::dump(['analyzeHtml'=> $analyze], 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+    $gan = new Gan('html', $mapnum, $analyze, $mtime);
+    echo Yaml::dump(['gan'=> $gan->asArray()], 4, 2);
+    die();
   }
   default: die("Action $a inconnue");
 }

@@ -56,7 +56,7 @@ class MapFromWfs {
   static function init(): void {
     $age = self::age();
     //echo "MapFromWfs::age()=$age<br>\n";
-    if (($age == -1) || ($age >= self::MAX_AGE))
+    if ((($age == -1) || ($age >= self::MAX_AGE)) && ($_SERVER['HTTP_HOST']=='localhost'))
       self::updateFromShom();
     $gt = json_decode(file_get_contents(__DIR__.'/gt.json'), true);
     $aem = json_decode(file_get_contents(__DIR__.'/aem.json'), true);
@@ -130,4 +130,4 @@ class MapFromWfs {
     return $list;
   }
 };
-//MapFromWfs::init();
+MapFromWfs::init();

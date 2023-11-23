@@ -112,6 +112,7 @@ class VectorLayer {
       return $rasterLayer->items($rasterLayerName, null);
     }
     else {
+      print_r($this);
       throw new Exception("Cas non prévu");
     }
   }

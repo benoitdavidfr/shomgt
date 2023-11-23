@@ -22,6 +22,8 @@ require_once __DIR__.'/../lib/vectorlayer.inc.php';
 
 use Symfony\Component\Yaml\Yaml;
 
+ini_set('memory_limit', '1G');
+
 //die("Fin ligne ".__LINE__."\n");
 
 // écrit dans le fichier de log les params de l'appel, notamment por connaitre et reproduire les appels effectués par QGis
@@ -215,6 +217,49 @@ if (!isset($_GET['SERVICE']) && !isset($_GET['service'])) {
       'width'=> '1200',
       'crs'=> 'CRS:84',
       'bbox'=> '-11,38,11,52',
+    ],
+    "AMP-PN + ZEE sur la métropole en CRS:84 dans le style green" => [
+      'service'=> 'WMS',
+      'version'=> '1.3.0',
+      'request'=> 'GetMap',
+      'layers'=> 'frzee,amp-pn',
+      'styles'=> 'blue,green',
+      'format'=> 'image/png',
+      'transparent'=> 'true',
+      'height'=> '600',
+      'width'=> '1200',
+      'crs'=> 'CRS:84',
+      'bbox'=> '-11,38,11,52',
+    ],
+    "AMP en EPSG:3857"=> [
+      'SERVICE'=> 'WMS',
+      'VERSION'=> '1.3.0',
+      'REQUEST'=> 'GetMap',
+      'LAYERS'=> 'amp-pn',
+      'STYLES'=> '',
+      'FORMAT'=> 'image/png',
+      'TRANSPARENT'=> 'TRUE',
+      'WIDTH'=> '1724',
+      'HEIGHT'=> '1486',
+      'CRS'=> 'EPSG:3857',
+      'BBOX'=> '-2452861,2428683,4029370,8008516',
+    ],
+    "GetFeatureInfo sur AMP-PN"=> [
+      'SERVICE'=> 'WMS',
+      'VERSION'=> '1.3.0',
+      'REQUEST'=> 'GetFeatureInfo',
+      'LAYERS'=> 'amp-pn',
+      'STYLES'=> '',
+      'FORMAT'=> 'image/png',
+      'TRANSPARENT'=> 'TRUE',
+      'WIDTH'=> '1724',
+      'HEIGHT'=> '442',
+      'CRS'=> 'EPSG:3857',
+      'BBOX'=> '560598,5295695,682642,5358275',
+      'QUERY_LAYERS'=> 'amp-pn',
+      'INFO_FORMAT'=> 'text/html',
+      'I'=> '313',
+      'J'=> '178',
     ],
     'GetMap en EPSG:3857' => [
       'service'=> 'WMS',
